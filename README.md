@@ -19,13 +19,13 @@ Prerequisites:
 
 `config.js` contains all available options and its default values are defined in the `src/config.ts`
 
-1. Firstly install all required dependencies.
+1. Install all required dependencies.
 
 ```
 npm install
 ```
 
-2. Then, build the project and start it.
+2. Build the project and start it.
 
 ```
 npm run build
@@ -40,15 +40,15 @@ The client is an Angular application.
 https://angular.io/. 
 The source code of the client is located in the `ptcg-play` directory.
 
-1. The server package is a dependency required by the client. First you must build the server, then the client.
+The server package is a dependency required by the client. First you must build the server, then the client.
 
-2. When the server is running, you can go now to the `ptcg-play` directory and install dependencies.
+1. When the server is running, you can go now to the `ptcg-play` directory and install dependencies.
 
 ```
 npm install
 ```
 
-3. Start the aplication.
+2. Start the aplication.
 
 ```
 npm start
@@ -58,7 +58,14 @@ The command above will start the application in the debug mode at http://localho
 
 Credits:
 Foundation: Ryu + TheEPSD
-Additional: TheEPSD
+
+### Pokemon TCG Sim Team:
+Joey Myerscough
+Jake Gearhart
+Jared Grimes
+Charles Lockyer
+Robin Schulz
+Daniel Middleton
 
 ### License
 MIT
