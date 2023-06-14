@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NestBallSR = void 0;
+exports.NestBall = void 0;
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
@@ -31,7 +31,7 @@ function* playCard(next, store, state, effect) {
         player.deck.applyOrder(order);
     });
 }
-class NestBallSR extends trainer_card_1.TrainerCard {
+class NestBall extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;

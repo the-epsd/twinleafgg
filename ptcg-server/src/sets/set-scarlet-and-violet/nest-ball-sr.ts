@@ -52,7 +52,7 @@ if (cards.length === 0) {
   });
 }
 
-export class NestBallSR extends TrainerCard {
+export class NestBall extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
