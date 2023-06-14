@@ -56,8 +56,10 @@ npm start
 
 The command above will start the application in the debug mode at http://localhost:4200
 
-Credits:
+### Credits:
+
 Foundation: Ryu + TheEPSD
+
 
 ### Pokemon TCG Sim Team:
 Joey Myerscough
