@@ -61,11 +61,17 @@ Foundation: Ryu + TheEPSD
 
 ### Pokemon TCG Sim Team:
 Joey Myerscough
+
 Jake Gearhart
+
 Jared Grimes
+
 Charles Lockyer
+
 Robin Schulz
+
 Daniel Middleton
+
 
 ### License
 MIT
