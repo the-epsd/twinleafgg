@@ -57,7 +57,8 @@ npm start
 The command above will start the application in the debug mode at http://localhost:4200
 
 Credits:
-Foundation: Ryuu + Joey
+Foundation: Ryu + TheEPSD
+Additional: TheEPSD
 
 ### License
 MIT
