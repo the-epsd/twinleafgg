@@ -1,0 +1,17 @@
+<div class="ptcg-choose-pokemons-pane">
+  <div class="ptcg-pokemon-row" *ngFor="let row of rows"
+    [ngClass]="{'upside-down': row.pokemonRow.playerType === PlayerType.TOP_PLAYER}">
+    <ptcg-board-card *ngFor="let item of row.items"
+      [dropTarget]="item.target"
+      ptcgDropHighlight="outside"
+      [ptcgDropHighlightVisible]="item.pokemonItem.selected || (item.highlight$ | async)"
+      [cardList]="item.pokemonItem.cardList"
+      (cardClick)="onCardClick(item.pokemonItem)">
+      <button mat-mini-fab color="accent" class="ptcg-card-button"
+        *ngIf="item.pokemonItem.cardList.cards.length > 0"
+        (click)="onBadgeClick($event, item.pokemonItem)">
+        <mat-icon>search</mat-icon>
+      </button>
+    </ptcg-board-card>
+  </div>
+</div>

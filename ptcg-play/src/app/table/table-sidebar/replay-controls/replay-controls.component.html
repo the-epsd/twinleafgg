@@ -1,0 +1,51 @@
+<div class="ptcg-replay-controls-header">
+  <h4 class="ptcg-replay-controls-header-text" translate>TABLE_REPLAY</h4>
+  <span class="ptcg-u-spacer"></span>
+  <mat-icon [matTooltip]="'TABLE_REPLAY_POSITION' | translate: { position: position, count: stateCount}">
+    info
+  </mat-icon>
+</div>
+
+<div class="ptcg-replay-controls-content">
+
+  <div class="replay-buttons">
+    <button mat-icon-button (click)="showPreviousTurn()">
+      <mat-icon>first_page</mat-icon>
+    </button>
+    <button mat-icon-button (click)="showPreviousState()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button mat-icon-button
+      [color]="playInterval !== undefined ? 'primary' : ''"
+      (click)="togglePlay()">
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+    <button mat-icon-button (click)="showNextState()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+    <button mat-icon-button (click)="showNextTurn()">
+      <mat-icon>last_page</mat-icon>
+    </button>
+  </div>
+
+  <div class="replay-slider">
+    <mat-slider thumbLabel color="primary"
+      [value]="position"
+      [min]="1"
+      [max]="stateCount"
+      (input)="onSliderChange($event)">
+    </mat-slider>
+  </div>
+
+  <div class="replay-options">
+    <mat-form-field>
+      <mat-label translate>TABLE_REPLAY_STATES_PER_SECOND</mat-label>
+      <mat-select [(value)]="statesPerSecond"
+        (selectionChange)="onStatesPerSecondChange($event)">
+        <mat-option *ngFor="let option of statesPerSecondOptions" [value]="option.value">
+          {{option.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

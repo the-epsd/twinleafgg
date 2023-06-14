@@ -1,0 +1,21 @@
+<h2 class="ptcg-prompt-title" translate>PROMPT_GAME_OVER_TITLE</h2>
+
+<div class="ptcg-prompt-content">
+  <div [ngSwitch]="prompt.winner">
+    <p *ngSwitchCase="GameWinner.DRAW" translate>PROMPT_GAME_OVER_DRAW</p>
+    <p *ngSwitchCase="GameWinner.PLAYER_1"
+      translate [translateParams]="{name: gameState.state.players[0].name}">
+      PROMPT_GAME_OVER_WINNER
+    <p *ngSwitchCase="GameWinner.PLAYER_2"
+      translate [translateParams]="{name: gameState.state.players[1].name}">
+      PROMPT_GAME_OVER_WINNER
+    </p>
+    <p *ngSwitchDefault translate>PROMPT_GAME_OVER_FINISHED</p>
+  </div>
+</div>
+
+<div class="ptcg-prompt-actions">
+  <button mat-raised-button color="primary" (click)="confirm()">
+    {{ 'BUTTON_OK' | translate }}
+  </button>
+</div>

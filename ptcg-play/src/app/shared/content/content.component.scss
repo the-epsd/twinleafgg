@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+mat-progress-bar {
+  z-index: 3;
+}
+
+.ptcg-content-container {
+  display: block;
+  height: 100%;
+  overflow: auto;
+  width: 100%;
+}

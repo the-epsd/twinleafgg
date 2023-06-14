@@ -1,0 +1,42 @@
+@use '~@angular/material' as mat;
+
+
+@mixin ptcg-user-info-theme($theme) {
+  $background: map-get($theme, background);
+  $primary: map-get($theme, primary);
+
+  $avatar-background-color: mat.get-color-from-palette($background, app-bar);
+
+  ptcg-avatar {
+    .ptcg-avatar {
+      background-color: $avatar-background-color;
+    }
+
+    .ptcg-avatar.hoverable:hover:after {
+      background-color: mat.get-color-from-palette($background, hover);
+    }
+  }
+
+  ptcg-user-info-popup {
+    .ptcg-user-info-popup-pane {
+      background-color: mat.get-color-from-palette($background, focused-button);
+    }
+  }
+
+  ptcg-user-bar {
+    .ptcg-user-bar.marked .ptcg-user-name {
+      color: mat.get-color-from-palette($primary);
+    }
+  }
+
+}
+
+@mixin ptcg-user-info-typography($config) {
+  ptcg-user-bar {
+    @include mat.typography-level($config, caption);
+    
+    .ptcg-user-name {
+      @include mat.typography-level($config, body-2);
+    }
+  }
+}

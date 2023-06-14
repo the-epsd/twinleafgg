@@ -1,0 +1,42 @@
+@use '~@angular/material' as mat;
+@use '~@angular/cdk' as cdk;
+
+@mixin ptcg-prompt-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  $ptcg-cards-container-background: mat.get-color-from-palette($background, app-bar);
+  $swift-ease-out-duration: 400ms !default;
+  $swift-ease-out-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;
+
+  ptcg-prompt {
+    .ptcg-prompt-overlay {
+      background: cdk.$overlay-backdrop-color;
+      transition: opacity $swift-ease-out-duration $swift-ease-out-timing-function;
+    }
+
+    .ptcg-prompt-container {
+      @include mat.elevation(24);
+      background-color: mat.get-color-from-palette($background, dialog);
+      color: mat.get-color-from-palette($foreground, text);
+    }
+  }
+
+  ptcg-cards-container .ptcg-cards-container,
+  ptcg-choose-pokemons-pane .ptcg-choose-pokemons-pane {
+    background-color: $ptcg-cards-container-background;
+  }
+
+}
+
+
+@mixin ptcg-prompt-typography($config) {
+
+  ptcg-prompt-move-damage {
+    .ptcg-damage-value {
+      @include mat.typography-level($config, button);
+      font-size: 1.5em;
+    }
+  }
+
+}

@@ -1,0 +1,55 @@
+<div class="ptcg-board-card" [ngClass]="{empty: isEmpty, 'face-down': isFaceDown}">
+
+  <div class="ptcg-energy-cards">
+    <ptcg-card [card]="energyCard" *ngFor="let energyCard of energyCards"
+    (click)="onCardClick(energyCard)"></ptcg-card>
+  </div>
+
+  <div class="ptcg-energy-more" *ngIf="moreEnergies > 0">
+    <ptcg-badge color="primary">
+      {{ 'TABLE_MORE_ENERGY' | translate: { count: moreEnergies } }}
+    </ptcg-badge>
+  </div>
+
+  <div class="ptcg-trainer-card" *ngIf="trainerCard">
+    <ptcg-card [card]="trainerCard"
+    (click)="onCardClick(trainerCard)"></ptcg-card>
+  </div>
+
+  <ptcg-card
+    [card]="mainCard" *ngIf="mainCard"
+    (click)="onCardClick(mainCard)">
+    <ng-content></ng-content>
+  </ptcg-card>
+
+  <div class="ptcg-card-damage" *ngIf="damage > 0">
+    <ptcg-badge color="warn">{{ damage }}</ptcg-badge>
+  </div>
+
+  <div class="ptcg-special-conditions" *ngIf="specialConditions.length > 0">
+    <div *ngFor="let condition of specialConditions" [ngSwitch]="condition">
+      <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.PARALYZED">
+        {{ 'LABEL_PARALYZED' | translate }}
+      </ptcg-badge>
+      <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.CONFUSED">
+        {{ 'LABEL_CONFUSED' | translate }}
+      </ptcg-badge>
+      <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.ASLEEP">
+        {{ 'LABEL_ASLEEP' | translate }}
+      </ptcg-badge>
+      <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.POISONED">
+        {{ 'LABEL_POISONED' | translate }}
+      </ptcg-badge>
+      <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.BURNED">
+        {{ 'LABEL_BURNED' | translate }}
+      </ptcg-badge>
+    </div>
+  </div>
+
+  <div class="ptcg-card-counts" *ngIf="showCardCount && cardCount > 0">
+    <ptcg-badge>
+      {{ 'TABLE_CARDS_COUNT' | translate: { count: cardCount } }}
+    </ptcg-badge>
+  </div>
+
+</div>

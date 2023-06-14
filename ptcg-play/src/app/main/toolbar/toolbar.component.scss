@@ -1,0 +1,35 @@
+@use '~@angular/material' as mat;
+@import '../../../theme/variables.scss';
+
+@mixin ptcg-toolbar-height() {
+  height: $ptcg-toolbar-height-desktop;
+
+  @media (max-width: 599px) {
+    height: $ptcg-toolbar-height-mobile;
+  }
+}
+
+:host {
+  z-index: 3;
+}
+
+mat-toolbar {
+  @include mat.elevation(5);
+  @include ptcg-toolbar-height();
+  flex: 0 0 auto;
+
+  .epsd-spacer {
+    flex: 1 1 auto;
+  }
+
+  &.is-logged-in {
+    padding-right: 0;
+  }
+}
+
+ptcg-user-bar {
+  cursor: pointer;
+  display: block;
+  left: unset;
+  width: map-get($ptcg-size, sidebar);
+}

@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.ptcg-table {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+ptcg-board {
+  flex: 1 1 auto;
+}
+
+ptcg-hand {
+  flex: 0 0 auto;
+}

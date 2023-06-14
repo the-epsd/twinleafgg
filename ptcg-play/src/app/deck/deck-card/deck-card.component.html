@@ -1,0 +1,13 @@
+<div class="ptcg-deck-card">
+  <ptcg-card [card]="card.card" [dragSource]="source" [noHTML5Preview]="true"
+    (click)="onCardClick()">
+    <ptcg-badge color="accent" class="ptcg-deck-card-count mat-title"
+      *ngIf="showCardCount && card.count > 0"
+      (click)="onCountClick($event)">
+      {{ 'DECK_CARDS_X' | translate:{count: card.count } }}
+    </ptcg-badge>
+  </ptcg-card>
+  <span class="ptcg-deck-card-label">
+    {{ card.card.fullName }}
+  </span>
+</div>

@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<mat-dialog-content>
+  <p *ngIf="message">{{ message }}</p>
+
+  <form #form="ngForm" autocomplete="off">
+
+    <!-- Number -->
+    <mat-form-field>
+      <mat-label>{{placeholder}}</mat-label>
+      <input matInput type="text" name="value" [placeholder]="placeholder"
+        ptcgNameValidator [ptcgInvalidValue]="invalidValue" required maxlength="32"
+        [(ngModel)]="value" #nameField="ngModel">
+      <mat-error *ngIf="!nameField.pristine && nameField.invalid">
+        <div *ngIf="nameField.errors?.name" translate>VALIDATION_INVALID_NAME_FORMAT</div>
+        <div *ngIf="nameField.errors?.invalidValue" translate>VALIDATION_NAME_ALREADY_IN_USE</div>
+      </mat-error>
+    </mat-form-field>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="cancel()">
+    {{ 'BUTTON_CANCEL' | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="confirm()" [disabled]="form.invalid">
+    {{ 'BUTTON_OK' | translate }}
+  </button>
+</mat-dialog-actions>

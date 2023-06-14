@@ -1,0 +1,16 @@
+
+.ptcg-messages-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+mat-toolbar {
+  flex: 0 0;
+}
+
+ptcg-conversation {
+  display: flex;
+  flex: 1 1;
+  height: 100%;
+}

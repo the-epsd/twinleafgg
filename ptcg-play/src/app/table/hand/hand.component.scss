@@ -1,0 +1,43 @@
+@import '../../../theme/variables.scss';
+
+$ptcg-hand-padding: map-get($padding, normal);
+$ptcg-hand-height: calc(var(--card-size) * #{$card-aspect-ratio} + #{2 * $ptcg-hand-padding});
+
+.ptcg-hand {
+  display: flex;
+  height: $ptcg-hand-height;
+  overflow: auto;
+}
+
+.ptcg-hand-container {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  margin: 0 auto;
+}
+
+dnd-sortable-list {
+  display: flex;
+}
+
+ptcg-card {
+  flex: 0 0 auto;
+  width: var(--card-size);
+
+  &.draggable {
+    touch-action: none;
+  }
+}
+
+ptcg-card:first-child {
+  margin-left: $ptcg-hand-padding;
+}
+
+ptcg-card:last-child {
+  margin-right: $ptcg-hand-padding;
+}
+
+.ptcg-card-preview {
+  position: absolute;
+  width: var(--card-size);
+}

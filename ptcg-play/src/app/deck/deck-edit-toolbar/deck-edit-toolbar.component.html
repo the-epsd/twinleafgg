@@ -1,0 +1,48 @@
+<mat-toolbar class="ptcg-deck-edit-toolbar">
+  <mat-toolbar-row>
+    <h1 *ngIf="deck" translate [translateParams]="{name: deck.name}">
+      DECK_EDIT_TITLE
+    </h1>
+
+    <span class="ptcg-u-spacer"></span>
+
+    <button mat-raised-button [routerLink]="['/deck']">
+      <mat-icon>arrow_back</mat-icon>
+      <span translate>DECK_EDIT_BACK</span>
+    </button>
+
+    <button mat-raised-button [disabled]="disabled" (click)="exportToFile()">
+      {{ 'BUTTON_EXPORT' | translate }}
+    </button>
+
+    <button mat-raised-button [disabled]="disabled" (click)="importFromFile()">
+      {{ 'BUTTON_IMPORT_FROM_FILE' | translate }}
+    </button>
+
+    <button mat-raised-button color="primary" [disabled]="disabled" (click)="onSave()">
+      {{ 'BUTTON_SAVE' | translate }}
+    </button>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="search-toolbar">
+    <mat-form-field floatLabel="never" appearance="legacy">
+      <mat-select multiple [placeholder]="'DECK_EDIT_ALL_CARDS' | translate" (selectionChange)="onSuperTypeChange($event)">
+        <mat-option *ngFor="let superType of superTypes" [value]="superType.value">
+          {{ superType.label | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field floatLabel="never" appearance="legacy">
+      <mat-select multiple [placeholder]="'DECK_EDIT_ALL_TYPES' | translate" (selectionChange)="onCardTypeChange($event)">
+        <mat-option *ngFor="let cardType of cardTypes" [value]="cardType.value">
+          {{ cardType.label | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <span class="ptcg-u-spacer"></span>
+
+    <ptcg-search-box (search)="onSearch($event)"></ptcg-search-box>
+  </mat-toolbar-row>
+</mat-toolbar>
