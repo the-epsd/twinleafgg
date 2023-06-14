@@ -68,7 +68,7 @@ Jake Gearhart
 
 Jared Grimes
 
-Charles Lockyer
+Charlie Lockyer
 
 Robin Schulz
 
