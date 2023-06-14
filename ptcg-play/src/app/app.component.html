@@ -1,0 +1,12 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<ptcg-toolbar (logoClick)="sidenav.toggle()"></ptcg-toolbar>
+
+<mat-sidenav-container hasBackdrop="false">
+  <mat-sidenav #sidenav opened mode="side" class="ptcg-app-sidenav">
+    <ptcg-sidenav></ptcg-sidenav>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

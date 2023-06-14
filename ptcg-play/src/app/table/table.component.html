@@ -1,0 +1,41 @@
+<ptcg-sidebar-container>
+
+  <!-- Table sidebar -->
+  <ptcg-sidebar>
+    <ptcg-table-sidebar
+      [clientId]="clientId"
+      [gameState]="gameState"
+      [topPlayer]="topPlayer"
+      [bottomPlayer]="bottomPlayer"
+      (join)="play()">
+    </ptcg-table-sidebar>
+  </ptcg-sidebar>
+
+  <ptcg-content [loading]="loading || waiting">
+    <div class="ptcg-table" *ngIf="gameState">
+
+      <!-- Table board -->
+      <ptcg-board
+        [clientId]="clientId"
+        [gameState]="gameState"
+        [topPlayer]="topPlayer"
+        [bottomPlayer]="bottomPlayer">
+      </ptcg-board>
+
+      <!-- Player's hand -->
+      <ptcg-hand
+        [clientId]="clientId"
+        [gameState]="gameState"
+        [player]="bottomPlayer">
+      </ptcg-hand>
+
+      <!-- Player prompt -->
+      <ptcg-prompt
+        [gameState]="gameState"
+        [clientId]="clientId">
+      </ptcg-prompt>
+
+    </div>
+  </ptcg-content>
+
+</ptcg-sidebar-container>

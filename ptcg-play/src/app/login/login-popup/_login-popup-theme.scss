@@ -1,0 +1,28 @@
+@use '~@angular/material' as mat;
+
+
+@mixin ptcg-login-popup-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  $deck-login-popup-background-color: mat.get-color-from-palette($background, dialog);
+
+  ptcg-login-popup {
+
+    // Disable autocomplete fill color
+    input, textarea, select {
+      &:-webkit-autofill,
+      &:-internal-autofill-selected {
+        -webkit-box-shadow: 0 0 0 50px $deck-login-popup-background-color inset;
+        -webkit-text-fill-color: mat.get-color-from-palette($foreground, text);
+      }
+    }
+
+    .ptcg-login-popup-link.disabled {
+      color: mat.get-color-from-palette($foreground, disabled-text);
+    }
+
+  }
+}
+
+@mixin ptcg-deck-edit-typography($config) { }

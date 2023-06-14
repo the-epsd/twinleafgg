@@ -1,0 +1,27 @@
+@import '../../../theme/variables.scss';
+
+:host {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.ptcg-deck-edit-pane {
+  flex: 1 1 0;
+  max-width: 100%;
+}
+
+ptcg-deck-card.placeholder {
+  opacity: $ptcg-disabled-opacity;
+}
+
+.ptcg-card-preview {
+  border-radius: $card-border-radius;
+  position: absolute;
+  width: map-get($ptcg-size, card);
+}
+
+.ptcg-deck-edit-pane.secondary {
+  border-width: map-get($padding, small);
+  overflow: auto;
+}

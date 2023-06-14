@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<mat-dialog-content>
+  <p *ngIf="message">{{ message }}</p>
+
+  <form #form="ngForm" autocomplete="off">
+
+    <!-- Select -->
+    <mat-form-field>
+      <mat-label>{{placeholder}}</mat-label>
+      <mat-select [(value)]="value">
+        <mat-option *ngFor="let option of options" [value]="option.value">
+          {{option.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="cancel()">
+    {{ 'BUTTON_CANCEL' | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="confirm()" [disabled]="form.invalid">
+    {{ 'BUTTON_OK' | translate }}
+  </button>
+</mat-dialog-actions>

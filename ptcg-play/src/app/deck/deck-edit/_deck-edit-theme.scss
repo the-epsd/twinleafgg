@@ -1,0 +1,52 @@
+@use '~@angular/material' as mat;
+
+
+@mixin ptcg-deck-edit-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $primary: map-get($theme, primary);
+
+  $deck-edit-border: solid 1px mat.get-color-from-palette($foreground, divider);
+  $deck-edit-background-color: mat.get-color-from-palette($background, app-bar);
+  $deck-edit-toolbar-background-color: mat.get-color-from-palette($background, dialog);
+
+  ptcg-deck-edit-panes {
+    .ptcg-deck-edit-pane.secondary {
+      background-color: $deck-edit-background-color;
+      border-top: $deck-edit-border;
+      color: mat.get-color-from-palette($foreground, text);
+    }
+  }
+
+  ptcg-deck-edit-toolbar {
+    
+    .search-toolbar {
+      background-color: $deck-edit-toolbar-background-color;
+      border-bottom: $deck-edit-border;
+
+      & .mat-form-field-underline {
+        color: mat.get-color-from-palette($primary, text);
+      }
+
+      & .mat-select {
+        color: mat.get-color-from-palette($foreground, text);
+      }
+    }
+  }
+
+  ptcg-deck-card {
+    .ptcg-deck-card-label {
+      color: mat.get-color-from-palette($foreground, text);
+    }
+  }
+}
+
+@mixin ptcg-deck-edit-typography($config) {
+
+  ptcg-deck-card {
+    .ptcg-deck-card-label {
+      @include mat.typography-level($config, caption);
+    }
+  }
+
+}

@@ -1,0 +1,12 @@
+@import '../../../theme/variables.scss';
+
+:host {
+  box-sizing: content-box;
+  display: block;
+  height: 100%;
+  overflow: auto;
+  position: absolute;
+  right: 0;
+  width: map-get($ptcg-size, sidebar);
+  z-index: 1;
+}

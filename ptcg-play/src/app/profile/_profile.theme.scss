@@ -1,0 +1,13 @@
+@use '~@angular/material' as mat;
+
+@mixin ptcg-profile-theme($theme) {
+  $background: map-get($theme, background);
+
+  $avatar-table-background-color: mat.get-color-from-palette($background, hover);
+
+  ptcg-edit-avatars-popup {
+    .mat-table th, .mat-table td {
+      background-color: $avatar-table-background-color;
+    }
+  }
+}
