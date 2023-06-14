@@ -1,0 +1,83 @@
+{
+  "name": "@progress/pako-esm",
+  "description": "Pako fork with bundler-friendly packaging",
+  "author": "Progress",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "version": "1.0.1",
+  "main": "./dist/pako.js",
+  "module": "./dist/pako-esm5.js",
+  "es2015": "./dist/pako-esm2015.js",
+  "types": "./index.d.ts",
+  "jsdelivr": "./dist/pako.min.js",
+  "unpkg": "./dist/pako.min.js",
+  "sideEffects": false,
+  "scripts": {
+    "build-package": "rollup -c",
+    "test": "mocha",
+    "lint": "eslint lib",
+    "semantic-release": "semantic-release pre && semantic-prerelease publish --public && semantic-release post"
+  },
+  "keywords": [
+    "Kendo UI",
+    "Pako",
+    "Module"
+  ],
+  "contributors": [
+    "Andrei Tuputcyn (https://github.com/andr83)",
+    "Vitaly Puzrin (https://github.com/puzrin)",
+    "Friedel Ziegelmayer (https://github.com/dignifiedquire)",
+    "Kirill Efimov (https://github.com/Kirill89)",
+    "Jean-loup Gailly",
+    "Mark Adler"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@rollup/plugin-buble": "^0.21.1",
+    "@telerik/semantic-prerelease": "^1.0.0",
+    "cz-conventional-changelog": "^1.1.5",
+    "eslint": "^6.8.0",
+    "husky": "^4.2.5",
+    "mocha": "^7.1.1",
+    "reify": "^0.20.12",
+    "rollup": "^2.3.3",
+    "rollup-plugin-terser": "^5.3.0",
+    "semantic-release": "^6.3.6",
+    "zlibjs": "^0.3.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "ghooks": {
+      "pre-commit": "npm run lint",
+      "commit-msg": "validate-commit-msg"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/telerik/pako-esm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/telerik/pako-esm"
+  },
+  "release": {
+    "debug": false,
+    "branchTags": {
+      "develop": "dev"
+    },
+    "fallbackTags": {
+      "dev": "latest"
+    },
+    "analyzeCommits": "@telerik/semantic-prerelease/analyzeCommits",
+    "generateNotes": "@telerik/semantic-prerelease/generateNotes",
+    "getLastRelease": "@telerik/semantic-prerelease/getLastRelease",
+    "verifyConditions": "@telerik/semantic-prerelease/verifyConditions",
+    "verifyRelease": "@telerik/semantic-prerelease/verifyRelease"
+  },
+  "files": [
+    "dist",
+    "index.d.ts"
+  ]
+}
