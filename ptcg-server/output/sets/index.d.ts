@@ -8,3 +8,4 @@ export * from './set-op9';
 export * from './set-sword-and-shield';
 export * from './set-sword-and-shield-8';
 export * from './set-scarlet-and-violet';
+export * from './set-pokemon-151';
