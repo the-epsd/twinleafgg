@@ -12,7 +12,7 @@ class Ursaluna extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        // this.evolvesFrom = 'Ursaring';
+        //this.evolvesFrom = 'Ursaring';
         this.cardType = card_types_1.CardType.COLORLESS;
         this.hp = 180;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
@@ -26,8 +26,8 @@ class Ursaluna extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Bulky Bump',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 100,
+                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                damage: 200,
                 text: 'Discard 2 Energy from this Pokemon.'
             }
         ];
