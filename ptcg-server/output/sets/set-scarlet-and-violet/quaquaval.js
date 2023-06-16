@@ -35,7 +35,7 @@ class Quaquaval extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'SVI';
         this.name = 'Quaquaval';
-        this.fullName = 'Quaquaval SVI 54';
+        this.fullName = 'Quaquaval SVI 054';
         this.ENERGY_CIRCUS_MAREKER = 'ENERGY_CIRCUS_MAREKER';
     }
     reduceEffect(store, state, effect) {

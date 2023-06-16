@@ -9,7 +9,7 @@ class FireEnergy extends energy_card_1.EnergyCard {
         this.provides = [card_types_1.CardType.FIRE];
         this.set = 'SVI';
         this.name = 'Fire Energy';
-        this.fullName = 'Basic Fire Energy SVE 2';
+        this.fullName = 'Basic Fire Energy SVE 002';
     }
 }
 exports.FireEnergy = FireEnergy;

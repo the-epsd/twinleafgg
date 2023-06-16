@@ -27,7 +27,7 @@ class Quaxwell extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'SVI';
         this.name = 'Quaxwell';
-        this.fullName = 'Quaxwell SVI 53';
+        this.fullName = 'Quaxwell SVI 053';
     }
 }
 exports.Quaxwell = Quaxwell;

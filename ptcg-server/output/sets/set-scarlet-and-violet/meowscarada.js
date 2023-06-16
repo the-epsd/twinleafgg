@@ -48,7 +48,7 @@ class Meowscarada extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'SVI';
         this.name = 'Meowscarada';
-        this.fullName = 'Meowscarada SVI 15';
+        this.fullName = 'Meowscarada SVI 015';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

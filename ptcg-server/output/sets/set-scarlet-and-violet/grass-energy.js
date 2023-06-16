@@ -9,7 +9,7 @@ class GrassEnergy extends energy_card_1.EnergyCard {
         this.provides = [card_types_1.CardType.GRASS];
         this.set = 'SVI';
         this.name = 'Grass Energy';
-        this.fullName = 'Basic Grass Energy SVE 1';
+        this.fullName = 'Basic Grass Energy SVE 001';
     }
 }
 exports.GrassEnergy = GrassEnergy;

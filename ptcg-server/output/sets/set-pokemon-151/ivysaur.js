@@ -4,9 +4,6 @@ exports.Ivysaur = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
-const game_message_1 = require("../../game/game-message");
-const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 
 function* useLeechSeed(next, store, state, effect) {

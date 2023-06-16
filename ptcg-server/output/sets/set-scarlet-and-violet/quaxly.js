@@ -26,7 +26,7 @@ class Quaxly extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'SVI';
         this.name = 'Quaxly';
-        this.fullName = 'Quaxly SVI 52';
+        this.fullName = 'Quaxly SVI 052';
     }
 }
 exports.Quaxly = Quaxly;

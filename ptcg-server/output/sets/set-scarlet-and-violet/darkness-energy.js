@@ -7,9 +7,9 @@ class DarknessEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
         this.provides = [card_types_1.CardType.DARK];
-        this.set = 'DP';
+        this.set = 'SVI';
         this.name = 'Darkness Energy';
-        this.fullName = 'Darkness Energy EVO';
+        this.fullName = 'Darkness Energy SVE 007';
     }
 }
 exports.DarknessEnergy = DarknessEnergy;

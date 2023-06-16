@@ -26,7 +26,7 @@ class Sprigatito extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'SVI';
         this.name = 'Sprigatito';
-        this.fullName = 'Sprigatito SVI 13';
+        this.fullName = 'Sprigatito SVI 013';
     }
 }
 exports.Sprigatito = Sprigatito;

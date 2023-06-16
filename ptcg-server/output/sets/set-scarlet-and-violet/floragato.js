@@ -27,7 +27,7 @@ class Floragato extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'SVI';
         this.name = 'Floragato';
-        this.fullName = 'Floragato SVI 14';
+        this.fullName = 'Floragato SVI 014';
     }
 }
 exports.Floragato = Floragato;

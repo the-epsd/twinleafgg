@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setScarletAndViolet = void 0;
+const darkness_energy_1 = require("./darkness-energy");
 const floragato_1 = require("./floragato");
 const grass_energy_1 = require("./grass-energy");
 const meowscarada_1 = require("./meowscarada");
@@ -16,6 +17,7 @@ const sprigatito_1 = require("./sprigatito");
 const ultra_ball_1 = require("./ultra-ball");
 const youngster_1 = require("./youngster");
 exports.setScarletAndViolet = [
+    new darkness_energy_1.DarknessEnergy(),
     new floragato_1.Floragato(),
     new grass_energy_1.GrassEnergy(),
     new meowscarada_1.Meowscarada(),
