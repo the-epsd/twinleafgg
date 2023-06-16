@@ -14,6 +14,7 @@ import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-fi
 import { DeckService } from '../../api/services/deck.service';
 import { FileDownloadService } from '../../shared/file-download/file-download.service';
 
+
 @UntilDestroy()
 @Component({
   selector: 'ptcg-deck-edit',
@@ -88,12 +89,15 @@ export class DeckEditComponent implements OnInit {
   public async exportDeck() {
     const cardNames = [];
     for (const item of this.deckItems) {
-      for (let i = 0; i < item.count; i++) {
-        cardNames.push(item.card.fullName);
+      if (!cardNames.includes(item.card.fullName)) {
+        cardNames.push(item.count + ' ' + item.card.fullName);
       }
     }
     const data = cardNames.join('\n') + '\n';
     const fileName = this.deck.name + '.txt';
+    
+
+
     try {
       await this.fileDownloadService.downloadFile(data, fileName);
       this.alertService.toast(this.translate.instant('DECK_EXPORTED'));
