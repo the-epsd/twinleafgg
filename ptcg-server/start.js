@@ -19,8 +19,11 @@ cardManager.defineSet(sets.setBlackAndWhite3);
 cardManager.defineSet(sets.setBlackAndWhite4);
 cardManager.defineSet(sets.setPokemon151);
 cardManager.defineSet(sets.setSwordAndShield);
+cardManager.defineSet(sets.setSwordAndShieldPromos);
 //cardManager.defineSet(sets.setSwordAndShield8);
-cardManager.defineSet(sets.setScarletAndViolet);
+//cardManager.defineSet(sets.setSwordAndShield9);
+//cardManager.defineSet(sets.setScarletAndViolet);
+//cardManager.defineSet(sets.setScarletAndViolet2);
 
 StateSerializer.setKnownCards(cardManager.getAllCards());
 

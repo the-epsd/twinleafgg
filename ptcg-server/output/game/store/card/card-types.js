@@ -7,8 +7,14 @@ var CardTag;
     CardTag["POKEMON_EX"] = "EX";
     CardTag["POKEMON_GX"] = "GX";
     CardTag["POKEMON_LV_X"] = "LV_X";
+    CardTag["POKEMON_V"] = "V";
+    CardTag["POKEMON_VMAX"] = "VMAX";
+    CardTag["POKEMON_VSTAR"] = "VSTAR";
     CardTag["ACE_SPEC"] = "ACE_SPEC";
     CardTag["RADIANT"] = "RADIANT";
+    CardTag["FUSION_STRIKE"] = "FUSION_STRIKE";
+    CardTag["SINGLE_STRIKE"] = "SINGLE_STRIKE";
+    CardTag["RAPID_STRIKE"] = "RAPID_STRIKE";
 })(CardTag = exports.CardTag || (exports.CardTag = {}));
 var SuperType;
 (function (SuperType) {

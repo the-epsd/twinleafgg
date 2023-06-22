@@ -8,6 +8,7 @@
   $accent: map-get($theme, accent);
   $warn: map-get($theme, warn);
 
+  //Board + Card Slot Border
   $table-border: solid 1px mat.get-color-from-palette($foreground, divider);
   $active-player-background-color: mat.get-color-from-palette($background, focused-button);
   $hand-background-color: mat.get-color-from-palette($background, app-bar);

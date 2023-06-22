@@ -30,16 +30,11 @@ function* playCard(next, store, state, self, effect) {
     }
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
-    const max = Math.min(3, pokemonsOrEnergyInDiscard);
     let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: 1, max: 3, allowCancel: true, blocked }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: 1, max: 3, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });
-    // Operation canceled by the user
-    if (cards.length === 0) {
-        return state;
-    }
     player.hand.moveCardTo(self, player.discard);
     player.discard.moveCardsTo(cards, player.deck);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {

@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.config = void 0;
-const poop1 = 'poop1';
 exports.config = {
     backend: {
         address: 'localhost',
@@ -51,9 +50,9 @@ exports.config = {
     },
     bots: {
         // Default password for bot user
-        defaultPassword: poop1,
+        defaultPassword: '',
         // Delay between every action that bot is making
-        actionDelay: 250,
+        actionDelay: 2500,
         // Simulate matches every X ticks of the scheduler
         // If set to 0, the bot matches are disabled
         botGamesIntervalCount: 0

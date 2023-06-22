@@ -12,7 +12,6 @@ const oranguru_1 = require("./oranguru");
 const radiant_greninja_1 = require("./radiant-greninja");
 const rosa_1 = require("./rosa");
 const snorlax_1 = require("./snorlax");
-const ursaluna_1 = require("./ursaluna");
 const welder_1 = require("./welder");
 exports.setSwordAndShield = [
     new charizard_1.Charizard(),
@@ -26,6 +25,5 @@ exports.setSwordAndShield = [
     new radiant_greninja_1.RadiantGreninja(),
     new rosa_1.Rosa(),
     new snorlax_1.Snorlax(),
-    new ursaluna_1.Ursaluna(),
-    new welder_1.Welder(),
+    new welder_1.Welder()
 ];

@@ -22,9 +22,9 @@ export class DeckAnalyser {
 
   public isValid(): boolean {
     const countMap: { [name: string]: number } = { };
-    let hasBasicPokemon: boolean = false;
-    let hasAceSpec: boolean = false;
-    let hasRadiant: boolean = false;
+    let hasBasicPokemon = false;
+    let hasAceSpec = false;
+    let hasRadiant = false;
 
     if (this.cards.length !== 60) {
       return false;
@@ -52,15 +52,13 @@ export class DeckAnalyser {
         }
         hasAceSpec = true;
       }
-    }
-
-    if (card.tags.includes(CardTag.RADIANT)) {
-      if (hasRadiant) {
-        return false;
+      if (card.tags.includes(CardTag.RADIANT)) {
+        if (hasRadiant) {
+          return false;
+        }
+        hasRadiant = true;
       }
-      hasRadiant = true;
     }
-  }
 
     return hasBasicPokemon;
   }

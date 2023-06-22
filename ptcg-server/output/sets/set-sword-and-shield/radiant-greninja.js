@@ -5,11 +5,12 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_message_1 = require("../../game/game-message");
+const energy_card_1 = require("../../game/store/card/energy-card");
+const check_effects_1 = require("../../game/store/effects/check-effects");
+const choose_energy_prompt_1 = require("../../game/store/prompts/choose-energy-prompt");
 class RadiantGreninja extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -40,7 +41,7 @@ class RadiantGreninja extends pokemon_card_1.PokemonCard {
         this.set = 'SSH';
         this.name = 'Radiant Greninja';
         this.fullName = 'Radiant Greninja ASR 46';
-        this.CONCEALED_CARDS_MARKER = 'CONCEALED_CARDS_MAREKER';
+        this.CONCEALED_CARDS_MAREKER = 'CONCEALED_CARDS_MAREKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
@@ -50,15 +51,15 @@ class RadiantGreninja extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const hasEnergyInHand = player.hand.cards.some(c => {
-                return c instanceof game_1.EnergyCard
+                return c instanceof energy_card_1.EnergyCard;
             });
             if (!hasEnergyInHand) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (player.marker.hasMarker(this.CONCEALED_CARDS_MARKER, this)) {
-                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+            if (player.marker.hasMarker(this.CONCEALED_CARDS_MAREKER, this)) {
+                throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: 1, max: 1 }), cards => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: 1, max: 1 }), cards => {
                 cards = cards || [];
                 if (cards.length === 0) {
                     return;
@@ -70,27 +71,29 @@ class RadiantGreninja extends pokemon_card_1.PokemonCard {
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-          const player = effect.player;
-          const opponent = effect.opponent;
-          const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
-          state = store.reduceEffect(state, checkProvidedEnergy);
-          state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
-            const cards = (energy || []).map(e => e.card);
-            const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
-            discardEnergy.target = player.active;
-            store.reduceEffect(state, discardEnergy);
+            const player = effect.player;
+            const opponent = effect.opponent;
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+            state = store.reduceEffect(state, checkProvidedEnergy);
+            state = store.prompt(state, new choose_energy_prompt_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
+                const cards = (energy || []).map(e => e.card);
+                const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+                discardEnergy.target = player.active;
+                store.reduceEffect(state, discardEnergy);
+            });
             const max = Math.min(2);
-          return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: max, max, allowCancel: false }), selected => {
-              const targets = selected || [];
-              targets.forEach(target => {
-                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 90);
-                damageEffect.target = target;
-                store.reduceEffect(state, damageEffect);
-              });
-          });
-        });
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: max, max, allowCancel: false }), selected => {
+                const targets = selected || [];
+                if (targets.includes(opponent.active)) {
+                    targets.forEach(target => {
+                        const damageEffect = new attack_effects_1.PutDamageEffect(effect, 90);
+                        damageEffect.target = target;
+                        store.reduceEffect(state, damageEffect);
+                    });
+                }
+            });
         }
         return state;
     }
 }
-exports.RadiantGreninja = RadiantGreninja
+exports.RadiantGreninja = RadiantGreninja;

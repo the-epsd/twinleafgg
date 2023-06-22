@@ -3,8 +3,8 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class RadiantGreninja extends PokemonCard {
-    stage: Stage;
     tags: CardTag[];
+    stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {

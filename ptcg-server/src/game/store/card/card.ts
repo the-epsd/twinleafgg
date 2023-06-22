@@ -16,6 +16,7 @@ export abstract class Card {
   public id: number = -1;
 
   public tags: string[] = [];
+  static tags: any;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;

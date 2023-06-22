@@ -48,7 +48,6 @@ export class DeckAnalyser {
                 hasRadiant = true;
             }
         }
-        
         return hasBasicPokemon;
     }
     getDeckType() {

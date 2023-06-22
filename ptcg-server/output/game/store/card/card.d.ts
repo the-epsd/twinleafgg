@@ -9,5 +9,6 @@ export declare abstract class Card {
     abstract name: string;
     id: number;
     tags: string[];
+    static tags: any;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
