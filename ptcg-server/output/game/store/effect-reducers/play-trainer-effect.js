@@ -74,8 +74,6 @@ function playTrainerReducer(store, state, effect) {
         }
         return state;
     }
-
     return state;
 }
-
 exports.playTrainerReducer = playTrainerReducer;

@@ -1,7 +1,7 @@
 @import '../../../../theme/variables.scss';
 
 $ptcg-max-energy-cards: 4;
-$ptcg-energy-card-offset: 15%;
+$ptcg-energy-card-offset: 10%;
 
 .ptcg-board-card {
   max-width: map-get($ptcg-size, card);

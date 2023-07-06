@@ -7,4 +7,6 @@ export * from './set-hgss';
 export * from './set-op9';
 export * from './set-sword-and-shield';
 export * from './set-sword-and-shield-promos';
+export * from './set-battle-styles';
+export * from './set-paldea-evolved';
 export * from './set-pokemon-151';

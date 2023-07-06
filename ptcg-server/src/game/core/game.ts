@@ -13,7 +13,7 @@ import { AbortGameAction, AbortGameReason } from '../store/actions/abort-game-ac
 
 export class Game implements StoreHandler {
 
-  private readonly maxInvalidMoves: number = 15;
+  private readonly maxInvalidMoves: number = 100;
 
   public id: number;
   public clients: Client[] = [];

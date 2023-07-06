@@ -63,8 +63,8 @@ export class RadiantGreninja extends PokemonCard {
       const hasEnergyInHand = player.hand.cards.some(c => {
         return c instanceof EnergyCard;
       });
-        if (!hasEnergyInHand) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
+      if (!hasEnergyInHand) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
       if (player.marker.hasMarker(this.CONCEALED_CARDS_MAREKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -117,12 +117,12 @@ export class RadiantGreninja extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         if (targets.includes(opponent.active)) {
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 90);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-      }});
+          targets.forEach(target => {
+            const damageEffect = new PutDamageEffect(effect, 90);
+            damageEffect.target = target;
+            store.reduceEffect(state, damageEffect);
+          });
+        }});
     }
 
     return state;

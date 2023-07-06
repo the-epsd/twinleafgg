@@ -11,6 +11,7 @@ var GameCoreError;
     GameCoreError["ERROR_INVALID_STATE"] = "ERROR_INVALID_STATE";
     GameCoreError["ERROR_SERIALIZER"] = "ERROR_SERIALIZER";
     GameCoreError["ERROR_SIMULATOR_NOT_STABLE"] = "ERROR_SIMULATOR_NOT_STABLE";
+    GameCoreError["MUST_BE_IN_ACTIVE_SPOT"] = "MUST_BE_IN_ACTIVE_SPOT";
 })(GameCoreError = exports.GameCoreError || (exports.GameCoreError = {}));
 var GameStoreMessage;
 (function (GameStoreMessage) {

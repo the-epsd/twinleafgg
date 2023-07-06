@@ -19,4 +19,7 @@ __exportStar(require("./set-hgss"), exports);
 __exportStar(require("./set-op9"), exports);
 __exportStar(require("./set-sword-and-shield"), exports);
 __exportStar(require("./set-sword-and-shield-promos"), exports);
+__exportStar(require("./set-battle-styles"), exports);
+//export * from './set-scarlet-and-violet';
+__exportStar(require("./set-paldea-evolved"), exports);
 __exportStar(require("./set-pokemon-151"), exports);

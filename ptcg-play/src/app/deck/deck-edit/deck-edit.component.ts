@@ -94,13 +94,13 @@ export class DeckEditComponent implements OnInit {
       }
     }
     const data = cardNames.join('\n') + '\n';
-    const fileName = this.deck.name + '.txt';
+
     
 
 
     try {
-      await this.fileDownloadService.downloadFile(data, fileName);
-      this.alertService.toast(this.translate.instant('DECK_EXPORTED'));
+      await navigator.clipboard.writeText(data);
+      this.alertService.toast(this.translate.instant('DECK_EXPORTED_TO_CLIPBOARD'));
     } catch (error) {
       this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
     }

@@ -10,7 +10,7 @@ class Game {
     constructor(core, id, gameSettings) {
         this.core = core;
         this.gameSettings = gameSettings;
-        this.maxInvalidMoves = 15;
+        this.maxInvalidMoves = 100;
         this.clients = [];
         this.playerStats = [];
         this.arbiter = new arbiter_1.Arbiter();

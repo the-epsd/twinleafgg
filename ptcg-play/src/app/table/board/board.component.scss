@@ -2,12 +2,38 @@
 @import '../../../theme/variables.scss';
 
 $board-min-width: calc((4 + #{$ptcg-bench-slots}) * (var(--card-size) + #{map-get($padding, small)}));
-$board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map-get($padding, normal)});
+$board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map-get($padding, small)});
 
 :host {
   display: flex;
   overflow: auto;
 }
+
+* {
+  box-sizing: content-box;
+  justify-content: center;
+  align-items: center;
+  }
+  
+  .parent {
+    width: 70em;
+    display: flex;
+    padding: auto;
+  }
+  
+  .parent.perspective {
+    perspective: 65em;
+  }
+  
+  .child {
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .parent.transform .child {
+    transform: perspective(50em) rotateX(30deg);
+  }
 
 .ptcg-board-container {
   display: grid;
@@ -58,7 +84,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   > ptcg-board-card,
   > .ptcg-board-drop-target {
     max-width: var(--card-size);
-    width: calc(#{math.div(100, $ptcg-bench-slots) * 3}% - #{map-get($padding, small)});
+    width: calc(#{math.div(600, $ptcg-bench-slots) * 4}% - #{map-get($padding, large)});
   }
 }
 

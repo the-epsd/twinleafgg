@@ -1,3 +1,5 @@
+
+
 <dnd-preview [allBackends]="true">
     <ng-template let-type let-item="item">
         <ng-container [ngSwitch]="type">
@@ -13,8 +15,11 @@
     </ng-template>
 </dnd-preview>
 
-<div class="ptcg-board-container" [dropTarget]="boardTarget">
 
+
+<div class="ptcg-board-container" [dropTarget]="boardTarget">
+  <div class="parent transform">
+    <div class="child">
   <div class="ptcg-board-player upside-down">
     <!-- Top Active -->
     <div class="ptcg-board-row ptcg-board-active">
@@ -125,3 +130,4 @@
   </div>
 
 </div>
+</div></div>
