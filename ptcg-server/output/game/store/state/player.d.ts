@@ -20,6 +20,8 @@ export declare class Player {
     stadiumUsedTurn: number;
     marker: Marker;
     avatarName: string;
+    usedRapidStrikeSearchThisTurn: any;
+    usedExcitingStageThisTurn: any;
     getPrizeLeft(): number;
     forEachPokemon(player: PlayerType, handler: (cardList: PokemonCardList, pokemonCard: PokemonCard, target: CardTarget) => void): void;
     switchPokemon(target: PokemonCardList): void;

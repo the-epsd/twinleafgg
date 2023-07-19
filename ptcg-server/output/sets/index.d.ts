@@ -10,3 +10,4 @@ export * from './set-sword-and-shield-promos';
 export * from './set-battle-styles';
 export * from './set-paldea-evolved';
 export * from './set-pokemon-151';
+export * from './set-fusion-strike';

@@ -21,6 +21,7 @@ cardManager.defineSet(sets.setPokemon151);
 cardManager.defineSet(sets.setSwordAndShield);
 cardManager.defineSet(sets.setSwordAndShieldPromos);
 cardManager.defineSet(sets.setBattleStyles);
+cardManager.defineSet(sets.setFusionStrike);
 //cardManager.defineSet(sets.setSwordAndShield8);
 //cardManager.defineSet(sets.setSwordAndShield9);
 //cardManager.defineSet(sets.setScarletAndViolet);

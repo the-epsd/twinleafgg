@@ -23,3 +23,4 @@ __exportStar(require("./set-battle-styles"), exports);
 //export * from './set-scarlet-and-violet';
 __exportStar(require("./set-paldea-evolved"), exports);
 __exportStar(require("./set-pokemon-151"), exports);
+__exportStar(require("./set-fusion-strike"), exports);

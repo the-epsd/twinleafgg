@@ -10,6 +10,7 @@ const game_2 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const card_types_2 = require("../../game/store/card/card-types");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class KricketuneV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -41,17 +42,34 @@ class KricketuneV extends pokemon_card_1.PokemonCard {
         this.set = 'BST';
         this.name = 'Kricketune V';
         this.fullName = 'Kricketune V BST 006';
+        this.EXCITING_STAGE_MARKER = 'EXCITING_STAGE_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            if (player.marker.hasMarker('ability_used')) {
-                return state;
+            player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
+        }
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+            const player = effect.player;
+            if (player.marker.hasMarker(this.EXCITING_STAGE_MARKER)) {
+                throw new game_1.GameError(game_2.GameMessage.POWER_ALREADY_USED);
             }
-            player.marker.addMarker('ability_used', this);
-            while (player.hand.cards.length < 3) {
-                player.deck.moveTo(player.hand, 1);
+            player.marker.addMarker(this.EXCITING_STAGE_MARKER, this);
+            if (player.active.getPokemonCard() === this) {
+                while (player.hand.cards.length < 4) {
+                    player.deck.moveTo(player.hand, 1);
+                }
             }
+            else {
+                while (player.hand.cards.length < 3) {
+                    player.deck.moveTo(player.hand, 1);
+                }
+            }
+            return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;

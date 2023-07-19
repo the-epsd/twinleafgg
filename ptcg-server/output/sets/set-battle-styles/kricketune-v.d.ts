@@ -29,5 +29,6 @@ export declare class KricketuneV extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    readonly EXCITING_STAGE_MARKER = "EXCITING_STAGE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

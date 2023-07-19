@@ -11,3 +11,4 @@ export * from './set-battle-styles';
 //export * from './set-scarlet-and-violet';
 export * from './set-paldea-evolved';
 export * from './set-pokemon-151';
+export * from './set-fusion-strike';

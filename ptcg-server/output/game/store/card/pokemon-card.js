@@ -8,6 +8,7 @@ class PokemonCard extends card_1.Card {
         super(...arguments);
         this.superType = card_types_1.SuperType.POKEMON;
         this.cardType = card_types_1.CardType.NONE;
+        this.cardTag = [];
         this.pokemonType = card_types_1.PokemonType.NORMAL;
         this.evolvesFrom = '';
         this.stage = card_types_1.Stage.BASIC;

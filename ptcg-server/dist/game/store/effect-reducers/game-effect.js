@@ -78,8 +78,11 @@ export function gameReducer(store, state, effect) {
         const card = effect.target.getPokemonCard();
         if (card !== undefined) {
             // Pokemon ex rule
-            if (card.tags.includes(CardTag.POKEMON_EX)) {
+            if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V)) {
                 effect.prizeCount += 1;
+            }
+            if (card.tags.includes(CardTag.POKEMON_VMAX)) {
+                effect.prizeCount += 2;  
             }
             store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
             effect.target.moveTo(effect.player.discard);

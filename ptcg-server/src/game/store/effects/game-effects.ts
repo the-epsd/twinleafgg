@@ -90,6 +90,7 @@ export class AttackEffect implements Effect {
   public damage: number;
   public ignoreWeakness = false;
   public ignoreResistance = false;
+  target: any;
 
   constructor(player: Player, opponent: Player, attack: Attack) {
     this.player = player;

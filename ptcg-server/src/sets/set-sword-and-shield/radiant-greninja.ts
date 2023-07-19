@@ -9,6 +9,7 @@ import { GameMessage } from '../../game/game-message';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { ChooseEnergyPrompt } from '../../game/store/prompts/choose-energy-prompt';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class RadiantGreninja extends PokemonCard {
 
@@ -50,12 +51,17 @@ export class RadiantGreninja extends PokemonCard {
 
   public fullName: string = 'Radiant Greninja ASR 46';
 
-  public readonly CONCEALED_CARDS_MAREKER = 'CONCEALED_CARDS_MAREKER';
+  public readonly CONCEALED_CARDS_MARKER = 'CONCEALED_CARDS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.CONCEALED_CARDS_MAREKER, this);
+      player.marker.removeMarker(this.CONCEALED_CARDS_MARKER, this);
+    }
+    
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.CONCEALED_CARDS_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
@@ -66,7 +72,7 @@ export class RadiantGreninja extends PokemonCard {
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      if (player.marker.hasMarker(this.CONCEALED_CARDS_MAREKER, this)) {
+      if (player.marker.hasMarker(this.CONCEALED_CARDS_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
       state = store.prompt(state, new ChooseCardsPrompt(
@@ -80,14 +86,16 @@ export class RadiantGreninja extends PokemonCard {
         if (cards.length === 0) {
           return;
         }
-        player.marker.addMarker(this.CONCEALED_CARDS_MAREKER, this);
+        player.marker.addMarker(this.CONCEALED_CARDS_MARKER, this);
         player.hand.moveCardsTo(cards, player.discard);
         player.deck.moveTo(player.hand, 2);
+        
+
       });
 
       return state;
     }
-
+  
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = effect.opponent;
@@ -124,8 +132,6 @@ export class RadiantGreninja extends PokemonCard {
           });
         }});
     }
-
-    return state;
+    return state; 
   }
-
 }

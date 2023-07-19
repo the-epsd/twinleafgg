@@ -2,14 +2,15 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
-import { PowerType } from '../../game';
+import { GameError, PowerType } from '../../game';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CardTag } from '../../game/store/card/card-types';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class KricketuneV extends PokemonCard {
 
@@ -52,20 +53,41 @@ export class KricketuneV extends PokemonCard {
 
   public fullName: string = 'Kricketune V BST 006';
 
+  public readonly EXCITING_STAGE_MARKER = 'EXCITING_STAGE_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-
-      if (player.marker.hasMarker('ability_used')) {
-        return state;
-      }
-
-      player.marker.addMarker('ability_used', this);
-      while (player.hand.cards.length < 3) {
-        player.deck.moveTo(player.hand, 1);
-      }
+      player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
     }
+    
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
+    }
+    
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+      if (player.marker.hasMarker(this.EXCITING_STAGE_MARKER)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
   
+      player.marker.addMarker(this.EXCITING_STAGE_MARKER, this);
+      if (player.active.getPokemonCard() === this) {
+        while (player.hand.cards.length < 4) {
+          player.deck.moveTo(player.hand, 1);
+        }
+      } else {
+        while (player.hand.cards.length < 3) {
+          player.deck.moveTo(player.hand, 1);
+        }
+      }
+  
+      return state;
+    }
+
+
+    
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       return store.prompt(state, [
@@ -77,7 +99,7 @@ export class KricketuneV extends PokemonCard {
         return state;
       });
     } 
-
+    
     return state;
   }
 }

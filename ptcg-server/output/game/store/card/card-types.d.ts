@@ -38,7 +38,9 @@ export declare enum Stage {
     RESTORED = 1,
     BASIC = 2,
     STAGE_1 = 3,
-    STAGE_2 = 4
+    STAGE_2 = 4,
+    VMAX = 5,
+    VSTAR = 6
 }
 export declare enum CardType {
     ANY = 0,
