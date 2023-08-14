@@ -14,11 +14,13 @@ export enum CardTag {
   RAPID_STRIKE = 'RAPID_STRIKE',
 }
 
+
 export enum SuperType {
   NONE,
   POKEMON,
   TRAINER,
   ENERGY,
+  ANY
 }
 
 export enum EnergyType {
@@ -71,4 +73,9 @@ export enum SpecialCondition {
   ASLEEP,
   POISONED,
   BURNED
+}
+export declare enum Format {
+  STANDARD = 0,
+  EXPANDED = 1,
+  RETRO = 2,
 }

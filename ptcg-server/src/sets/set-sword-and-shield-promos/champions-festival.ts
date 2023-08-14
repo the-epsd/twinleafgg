@@ -13,10 +13,10 @@ import { PlayerType } from '../../game/store/actions/play-card-action';
 
 export class ChampionsFestival extends TrainerCard {
   trainerType = TrainerType.STADIUM;
-  set = 'SSH';
+  set = 'SWSH';
   name = 'Champion\'s Festival';
   fullName = 'Champion\'s Festival SWSH296';
-  text = 'Once during each player\'s turn, if that player has .' + 
+  text = 'Once during each player\'s turn, if that player has ' + 
     '6 Pokémon in play, they may heal 10 damage from ' +
     'each of their Pokémon. ';
     

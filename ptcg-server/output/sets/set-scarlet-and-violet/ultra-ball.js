@@ -55,12 +55,10 @@ class UltraBall extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
         this.name = 'Ultra Ball';
-        this.fullName = 'Ultra Ball SVI 196';
-        this.text = 'You can only use this card if you discard 2 other cards from ' +
-            'your hand. ' +
-            ''+
-            'Search your deck for a Pokémon, reveal it, and put it into ' +
-            'your hand. Then, shuffle your deck. ';
+        this.fullName = 'Ultra Ball SVI';
+        this.text = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, you ' +
+            'can\'t play this card.) Search your deck for a Pokemon, reveal it, and ' +
+            'put it into your hand. Shuffle your deck afterward.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

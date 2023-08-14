@@ -26,7 +26,7 @@ class RadiantGreninja extends pokemon_card_1.PokemonCard {
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'You must discard an Energy card from your hand in order ' +
-                    'to use this ability. Once during your turn, you may draw' +
+                    'to use this ability. Once during your turn, you may draw ' +
                     '2 cards.'
             }];
         this.attacks = [
@@ -39,7 +39,7 @@ class RadiantGreninja extends pokemon_card_1.PokemonCard {
                     'Weakness and Resistance for Benched Pokémon.)'
             }
         ];
-        this.set = 'SSH';
+        this.set = 'SWSH10';
         this.name = 'Radiant Greninja';
         this.fullName = 'Radiant Greninja ASR 46';
         this.CONCEALED_CARDS_MARKER = 'CONCEALED_CARDS_MARKER';

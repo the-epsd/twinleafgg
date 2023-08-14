@@ -91,12 +91,11 @@ class RareCandy extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
         this.name = 'Rare Candy';
-        this.fullName = 'Rare Candy SVI 191';
-        this.text = 'Choose 1 of your Basic Pokémon in play. If you have a Stage ' +
-            '2 card in your hand that evolves from that Pokémon, put ' +
-            'that card onto the Basic Pokémon to evolve it, skipping the ' +
-            'Stage 1. You can\'t use this card during your first turn or on ' +
-            'a Basic Pokémon that was put into play this turn.';
+        this.fullName = 'Rare Candy SVI';
+        this.text = 'Choose 1 of your Basic Pokemon in play. If you have a Stage 2 card in ' +
+            'your hand that evolves from that Pokemon, put that card onto the Basic ' +
+            'Pokemon to evolve it. You can\'t use this card during your first turn ' +
+            'or on a Basic Pokemon that was put into play this turn.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

@@ -6,6 +6,7 @@ var Rank;
     Rank["JUNIOR"] = "JUNIOR";
     Rank["SENIOR"] = "SENIOR";
     Rank["MASTER"] = "MASTER";
+    Rank["ADMIN"] = "ADMIN";
 })(Rank = exports.Rank || (exports.Rank = {}));
 exports.rankLevels = [
     { points: 0, rank: Rank.JUNIOR },

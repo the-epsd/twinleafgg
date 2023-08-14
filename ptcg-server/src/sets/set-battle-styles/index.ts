@@ -18,6 +18,10 @@ import { TapuKokoVMAX } from './tapu-koko-vmax';
 import { NecrozmaV } from './necrozma-v';
 import { TapuKokoV } from './tapu-koko-v';
 import { SingleStrikeUrshifuV } from './single-strike-urshifu-v';
+import { Houndoom } from './houndoom';
+import { Bronzong } from './bronzong';
+import { TyranitarV } from './tyranitar-v';
+
 export const setBattleStyles: Card[] = [
   new Bellsprout(),
   new Weepinbell(),
@@ -37,5 +41,8 @@ export const setBattleStyles: Card[] = [
   new NecrozmaV(),
   new SingleStrikeUrshifuV(),
   new RapidStrikeUrshifuV(),
-  new RapidStrikeUrshifuVMAX()
+  new RapidStrikeUrshifuVMAX(),
+  new Houndoom(),
+  new Bronzong(),
+  new TyranitarV()
 ];

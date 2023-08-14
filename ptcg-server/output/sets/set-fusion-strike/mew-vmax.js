@@ -11,6 +11,7 @@ class MewVMAX extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VMAX, card_types_1.CardTag.FUSION_STRIKE];
         this.stage = card_types_1.Stage.BASIC;
+        //public evolvesFrom = 'Mew V';
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 310;
         this.weakness = [{ type: card_types_1.CardType.DARK }];
@@ -80,7 +81,7 @@ class MewVMAX extends pokemon_card_1.PokemonCard {
     }
     checkAttack(state, store, player, card, pokemonCards, blocked) {
         {
-            // Only include Pokemon V cards
+            // Only include Fusion Strike cards
             if (!card.tags.includes(card_types_1.CardTag.FUSION_STRIKE)) {
                 return;
             }

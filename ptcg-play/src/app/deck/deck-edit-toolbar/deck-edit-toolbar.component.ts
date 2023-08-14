@@ -57,6 +57,7 @@ export class DeckEditToolbarComponent {
       searchValue: '',
       superTypes: [],
       cardTypes: [],
+      format: [],
     };
   }
 

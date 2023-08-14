@@ -10,10 +10,12 @@
   ptcg-avatar {
     .ptcg-avatar {
       background-color: $avatar-background-color;
+      border-radius: 50%;
     }
 
     .ptcg-avatar.hoverable:hover:after {
       background-color: mat.get-color-from-palette($background, hover);
+      border-radius: 50%;
     }
   }
 

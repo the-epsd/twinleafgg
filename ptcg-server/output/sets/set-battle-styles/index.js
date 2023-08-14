@@ -19,6 +19,10 @@ const tapu_koko_vmax_1 = require("./tapu-koko-vmax");
 //import { MimikyuV } from './mimikyu-v';
 const necrozma_v_1 = require("./necrozma-v");
 const tapu_koko_v_1 = require("./tapu-koko-v");
+const single_strike_urshifu_v_1 = require("./single-strike-urshifu-v");
+const houndoom_1 = require("./houndoom");
+const bronzong_1 = require("./bronzong");
+const tyranitar_v_1 = require("./tyranitar-v");
 exports.setBattleStyles = [
     new bellsprout_1.Bellsprout(),
     new weepinbell_1.Weepinbell(),
@@ -36,6 +40,10 @@ exports.setBattleStyles = [
     new tapu_koko_vmax_1.TapuKokoVMAX(),
     //new MimikyuV(),
     new necrozma_v_1.NecrozmaV(),
+    new single_strike_urshifu_v_1.SingleStrikeUrshifuV(),
     new rapid_strike_urshifu_v_1.RapidStrikeUrshifuV(),
-    new rapid_strike_urshifu_vmax_1.RapidStrikeUrshifuVMAX()
+    new rapid_strike_urshifu_vmax_1.RapidStrikeUrshifuVMAX(),
+    new houndoom_1.Houndoom(),
+    new bronzong_1.Bronzong(),
+    new tyranitar_v_1.TyranitarV()
 ];

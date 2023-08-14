@@ -31,13 +31,15 @@ function* useFireOff(next, store, state, effect) {
             blockedMap.push({ source: target, blocked });
         }
     });
-    return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, blockedMap }), transfers => {
-        if (transfers === null) {
+    return store.prompt(state, new game_1.MoveEnergyPrompt(player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], // Only allow moving to active
+    { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, blockedMap }), transfers => {
+        if (!transfers) {
             return;
         }
         for (const transfer of transfers) {
+            // Can only move energy to the active Pokemon
+            const target = player.active;
             const source = game_1.StateUtils.getTarget(state, player, transfer.from);
-            const target = game_1.StateUtils.getTarget(state, player, transfer.to);
             source.moveCardTo(transfer.card, target);
         }
     });

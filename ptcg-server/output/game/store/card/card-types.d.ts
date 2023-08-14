@@ -16,7 +16,8 @@ export declare enum SuperType {
     NONE = 0,
     POKEMON = 1,
     TRAINER = 2,
-    ENERGY = 3
+    ENERGY = 3,
+    ANY = 4
 }
 export declare enum EnergyType {
     BASIC = 0,
@@ -63,4 +64,9 @@ export declare enum SpecialCondition {
     ASLEEP = 2,
     POISONED = 3,
     BURNED = 4
+}
+export declare enum Format {
+    STANDARD = 0,
+    EXPANDED = 1,
+    RETRO = 2
 }

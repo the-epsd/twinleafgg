@@ -22,6 +22,7 @@ var SuperType;
     SuperType[SuperType["POKEMON"] = 1] = "POKEMON";
     SuperType[SuperType["TRAINER"] = 2] = "TRAINER";
     SuperType[SuperType["ENERGY"] = 3] = "ENERGY";
+    SuperType[SuperType["ANY"] = 4] = "ANY";
 })(SuperType = exports.SuperType || (exports.SuperType = {}));
 var EnergyType;
 (function (EnergyType) {

@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProfessorsResearch = void 0;
+exports.ProfessorJuniper = void 0;
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
-class ProfessorsResearch extends trainer_card_1.TrainerCard {
+class ProfessorJuniper extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'SVI';
         this.name = 'Professor\'s Research';
-        this.fullName = 'Professor\'s Research SVI 190';
+        this.fullName = 'Professors Research SVI';
         this.text = 'Discard your hand and draw 7 cards.';
     }
     reduceEffect(store, state, effect) {
@@ -28,4 +28,4 @@ class ProfessorsResearch extends trainer_card_1.TrainerCard {
         return state;
     }
 }
-exports.ProfessorsResearch = ProfessorsResearch;
+exports.ProfessorJuniper = ProfessorJuniper;

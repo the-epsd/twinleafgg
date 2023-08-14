@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, ShuffleDeckPrompt, GameMessage, ConfirmPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -21,15 +21,15 @@ export class MewV extends PokemonCard {
   public attacks = [
     {
       name: 'Strafe',
-      cost: [CardType.FIGHTING],
+      cost: [CardType.PSYCHIC],
       damage: 30,
-      text: 'You may switch this Pokémon with 1 of your Benched ' +
-      'Pokémon. '
+      text: 'Search your deck for an Energy card and attach it to 1 of  ' +
+      'your Fusion Strike Pokémon. Then, shuffle your deck.'
     }, {
       name: 'Psychic Leap',
       cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
       damage: 70,
-      text: ''
+      text: 'You may shuffle this Pokémon and all attached cards into your deck.'
     }
   ];
 
@@ -45,16 +45,28 @@ export class MewV extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
   
-      player.active.moveTo(player.deck);
-      player.active.clearEffects();
+      return store.prompt(state, new ConfirmPrompt(
+        player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (wantToUse) {
   
-      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
+          player.active.moveTo(player.deck);
+          player.active.clearEffects();
+  
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+            return state; 
+          });
+  
+        } else {
+          return state;
+        }
       });
+  
     }
   
     return state;
+  
   }
-  
-}
-  
+} 

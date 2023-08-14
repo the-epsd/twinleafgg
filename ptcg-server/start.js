@@ -21,16 +21,20 @@ cardManager.defineSet(sets.setPokemon151);
 cardManager.defineSet(sets.setSwordAndShield);
 cardManager.defineSet(sets.setSwordAndShieldPromos);
 cardManager.defineSet(sets.setBattleStyles);
+cardManager.defineSet(sets.setEvolvingSkies);
 cardManager.defineSet(sets.setFusionStrike);
+cardManager.defineSet(sets.setBrilliantStars);
+cardManager.defineSet(sets.setCrownZenith);
 //cardManager.defineSet(sets.setSwordAndShield8);
 //cardManager.defineSet(sets.setSwordAndShield9);
-//cardManager.defineSet(sets.setScarletAndViolet);
+cardManager.defineSet(sets.setScarletAndViolet);
 cardManager.defineSet(sets.setPaldeaEvolved);
+cardManager.defineSet(sets.setObsidianFlames);
 
 StateSerializer.setKnownCards(cardManager.getAllCards());
 
 const botManager = BotManager.getInstance();
-botManager.registerBot(new SimpleBot('charizard'));
+botManager.registerBot(new SimpleBot('blastoise'));
 
 const app = new App();
 

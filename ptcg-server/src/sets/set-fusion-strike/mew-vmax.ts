@@ -11,6 +11,8 @@ export class MewVMAX extends PokemonCard {
   public tags = [ CardTag.POKEMON_VMAX, CardTag.FUSION_STRIKE ];
 
   public stage: Stage = Stage.BASIC;
+  
+  //public evolvesFrom = 'Mew V';
 
   public cardType: CardType = CardType.PSYCHIC;
 
@@ -112,7 +114,7 @@ export class MewVMAX extends PokemonCard {
     blocked: { index: number, attack: string }[]
   ) {
     {
-      // Only include Pokemon V cards
+      // Only include Fusion Strike cards
       if (!card.tags.includes(CardTag.FUSION_STRIKE)) {
         return;
       }

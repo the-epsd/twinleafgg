@@ -10,6 +10,10 @@ export class RankComponent {
 
   @Input() set rank(rank: Rank) {
     switch (rank) {
+      case Rank.ADMIN:
+        this.rankColor = 'warn';
+        this.rankName = 'USERS_RANK_ADMIN';
+        break;
       case Rank.MASTER:
         this.rankColor = 'warn';
         this.rankName = 'USERS_RANK_MASTER';

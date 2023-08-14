@@ -37,9 +37,9 @@ class Pokegear30 extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'BW';
+        this.set = 'SVI';
         this.name = 'Pokegear 3.0';
-        this.fullName = 'Pokegear 30 UNB';
+        this.fullName = 'Pokegear SVI';
         this.text = 'Look at the top 7 cards of your deck. You may reveal a Supporter card ' +
             'you find there and put it into your hand. Shuffle the other cards back ' +
             'into your deck.';

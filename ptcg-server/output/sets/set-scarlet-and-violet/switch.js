@@ -31,9 +31,9 @@ class Switch extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'BW';
+        this.set = 'SVI';
         this.name = 'Switch';
-        this.fullName = 'Switch SSH';
+        this.fullName = 'Switch SVI';
         this.text = 'Switch your Active Pokemon with 1 of your Benched Pokemon.';
     }
     reduceEffect(store, state, effect) {

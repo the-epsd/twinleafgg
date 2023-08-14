@@ -130,6 +130,15 @@ ptcg-board-deck {
   }
 }
 
+.lost-zone {
+  align-self: flex-start;
+  transform: rotate(-90deg);
+
+  .upside-down & {
+    transform: rotate(90deg);
+  }
+}
+
 .ptcg-card-preview {
   border-radius: $card-border-radius;
   position: absolute;

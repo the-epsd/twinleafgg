@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Iono = void 0;
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
 const state_utils_1 = require("../../game/store/state-utils");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
+const game_1 = require("../../game");
 class Iono extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,18 +20,22 @@ class Iono extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            //Filter out Iono
             const cards = player.hand.cards.filter(c => c !== this);
-            player.hand.moveCardsTo(cards, player.deck);
-            opponent.hand.moveTo(opponent.deck);
-            store.prompt(state, [
-                new shuffle_prompt_1.ShuffleDeckPrompt(player.id),
-                new shuffle_prompt_1.ShuffleDeckPrompt(opponent.id)
-            ], deckOrder => {
-                player.deck.applyOrder(deckOrder[0]);
-                opponent.deck.applyOrder(deckOrder[1]);
-                player.deck.moveTo(player.hand, player.getPrizeLeft());
-                opponent.deck.moveTo(opponent.hand, opponent.getPrizeLeft());
-            });
+            // Create deckTop and move hand into it
+            const deckTop = new game_1.CardList();
+            player.hand.moveTo(deckTop, cards.filter(c => c !== this).length);
+            // Create deckTop for opponent and move hand
+            const opponentDeckTop = new game_1.CardList();
+            opponent.hand.moveTo(opponentDeckTop);
+            // Later, move deckTop to player's deck
+            deckTop.moveTo(player.deck, cards.length);
+            opponentDeckTop.moveTo(opponent.deck, cards.length);
+            player.deck.moveTo(player.hand, player.getPrizeLeft());
+            opponent.deck.moveTo(opponent.hand, opponent.getPrizeLeft());
         }
         return state;
     }

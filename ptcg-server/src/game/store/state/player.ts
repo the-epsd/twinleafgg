@@ -3,8 +3,13 @@ import { CardTarget, PlayerType, SlotType } from '../actions/play-card-action';
 import { PokemonCard } from '../card/pokemon-card';
 import { PokemonCardList } from './pokemon-card-list';
 import { Marker } from './card-marker';
+import { ChooseCardsPrompt } from '../prompts/choose-cards-prompt';
+import { State } from './state';
 
 export class Player {
+  prompt(state: State, arg1: ChooseCardsPrompt) {
+    throw new Error('Method not implemented.');
+  }
 
   id: number = 0;
 

@@ -55,3 +55,8 @@ export declare enum SpecialCondition {
     POISONED = 3,
     BURNED = 4
 }
+export declare enum Format {
+    STANDARD = 0,
+    EXPANDED = 1,
+    RETRO = 2,
+}

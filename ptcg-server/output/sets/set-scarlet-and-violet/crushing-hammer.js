@@ -51,9 +51,9 @@ class CrushingHammer extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'BW';
+        this.set = 'SVI';
         this.name = 'Crushing Hammer';
-        this.fullName = 'Crushing Hammer EPO';
+        this.fullName = 'Crushing Hammer SVI';
         this.text = 'Flip a coin. If heads, discard an Energy attached to 1 of your ' +
             'opponent\'s Pokemon.';
     }

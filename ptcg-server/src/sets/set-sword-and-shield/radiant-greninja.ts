@@ -30,7 +30,7 @@ export class RadiantGreninja extends PokemonCard {
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'You must discard an Energy card from your hand in order ' +
-    'to use this ability. Once during your turn, you may draw' +
+    'to use this ability. Once during your turn, you may draw ' +
     '2 cards.'
   }];
 
@@ -45,7 +45,7 @@ export class RadiantGreninja extends PokemonCard {
     }
   ];
 
-  public set: string = 'SSH';
+  public set: string = 'SWSH10';
 
   public name: string = 'Radiant Greninja';
 

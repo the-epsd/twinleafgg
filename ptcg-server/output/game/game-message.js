@@ -60,6 +60,7 @@ var GameCardMessage;
 (function (GameCardMessage) {
     GameCardMessage["ALL_FIRE_ENERGIES"] = "ALL_FIRE_ENERGIES";
     GameCardMessage["ALL_LIGHTNING_ENERGIES"] = "ALL_LIGHTNING_ENERGIES";
+    GameCardMessage["ALL_WATER_ENERGIES"] = "ALL_WATER_ENERGIES";
     GameCardMessage["ATTACH_ENERGY_CARDS"] = "ATTACH_ENERGY_CARDS";
     GameCardMessage["ATTACH_ENERGY_TO_ACTIVE"] = "ATTACH_ENERGY_TO_BENCH";
     GameCardMessage["ATTACH_ENERGY_TO_BENCH"] = "ATTACH_ENERGY_TO_BENCH";

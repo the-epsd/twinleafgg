@@ -19,9 +19,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  if (player.bench.length === 5 || player.bench.length === 8) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -49,8 +46,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
-}
 
+}
 export class NestBall extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;

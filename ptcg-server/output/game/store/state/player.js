@@ -24,6 +24,9 @@ class Player {
         this.marker = new card_marker_1.Marker();
         this.avatarName = '';
     }
+    prompt(state, arg1) {
+        throw new Error('Method not implemented.');
+    }
     getPrizeLeft() {
         return this.prizes.reduce((left, p) => left + p.cards.length, 0);
     }

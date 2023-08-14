@@ -37,23 +37,30 @@ function* useFireOff(next: Function, store: StoreLike, state: State, effect: Pow
   });
 
   return store.prompt(state, new MoveEnergyPrompt(
-    effect.player.id,
+    player.id, 
     GameMessage.MOVE_ENERGY_CARDS,
     PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH, SlotType.ACTIVE], 
-    { superType: SuperType.ENERGY },
+    [SlotType.ACTIVE], // Only allow moving to active
+    { superType: SuperType.ENERGY }, 
     { allowCancel: true, blockedMap }
   ), transfers => {
-    if (transfers === null) {
+
+    if (!transfers) {
       return;
     }
 
     for (const transfer of transfers) {
+      
+      // Can only move energy to the active Pokemon
+      const target = player.active;  
       const source = StateUtils.getTarget(state, player, transfer.from);
-      const target = StateUtils.getTarget(state, player, transfer.to);
+
       source.moveCardTo(transfer.card, target);
+
     }
+
   });
+
 }
 
 
