@@ -45,11 +45,11 @@ export class RadiantGreninja extends PokemonCard {
     }
   ];
 
-  public set: string = 'SWSH10';
+  public set: string = 'ASR';
 
   public name: string = 'Radiant Greninja';
 
-  public fullName: string = 'Radiant Greninja ASR 46';
+  public fullName: string = 'Radiant Greninja ASR';
 
   public readonly CONCEALED_CARDS_MARKER = 'CONCEALED_CARDS_MARKER';
 

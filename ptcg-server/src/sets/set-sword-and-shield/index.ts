@@ -7,7 +7,6 @@ import { FireCrystal } from './fire-crystal';
 import { GiantHearth } from './giant-hearth';
 import { Leon } from './leon';
 import { Oranguru } from './oranguru';
-import { RadiantGreninja } from './radiant-greninja';
 import { Rosa } from './rosa';
 import { Snorlax } from './snorlax';
 import { Welder } from './welder';
@@ -21,7 +20,6 @@ export const setSwordAndShield: Card[] = [
   new GiantHearth(),
   new Leon(),
   new Oranguru(),
-  new RadiantGreninja(),
   new Rosa(),
   new Snorlax(),
   new Welder()
