@@ -7,7 +7,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 
-export class ProfessorJuniper extends TrainerCard {
+export class ProfessorsResearch extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 

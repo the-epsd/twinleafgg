@@ -10,8 +10,8 @@ class UmbreonVMAX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VMAX, card_types_1.CardTag.SINGLE_STRIKE];
-        this.stage = card_types_1.Stage.BASIC;
-        //public evolvesFrom = 'Umbreon V';
+        this.stage = card_types_1.Stage.VMAX;
+        this.evolvesFrom = 'Umbreon V';
         this.cardType = card_types_1.CardType.DARK;
         this.hp = 310;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];

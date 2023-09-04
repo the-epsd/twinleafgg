@@ -9,7 +9,7 @@ const game_message_1 = require("../../game/game-message");
 class ChienPaoex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.POKEMON_EX];
+        this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 220;
@@ -52,41 +52,44 @@ class ChienPaoex extends pokemon_card_1.PokemonCard {
                 });
             });
         }
-        //    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        //
-        //      const player = effect.player;
-        //    
-        //      const checkEnergy = new CheckProvidedEnergyEffect(player);
-        //      store.reduceEffect(state, checkEnergy);
-        //    
-        //      const waterEnergies = checkEnergy.energyMap.filter(em => 
-        //        Array.isArray(em.provides) && em.provides.some(p => {
-        //          if (p instanceof EnergyCard) {
-        //            return p.energyType === EnergyType.BASIC && p.superType === SuperType.ENERGY && p.name === 'Water Energy';
-        //          }
-        //          return false;
-        //        })
-        //
-        //      );
-        //    
-        //      
-        //      return store.prompt(state, new ChooseCardsPrompt(
-        //        player.id,
-        //        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        //        PlayerType.BOTTOM_PLAYER,
-        //        [ SlotType.ACTIVE, SlotType.BENCH ],
-        //        waterEnergies.map(em => em.card),
-        //      ), cards => {
-        //    
-        //        const discardEffect = new DiscardCardsEffect(effect, cards);
-        //        discardEffect.target = player.active;
-        //        store.reduceEffect(state, discardEffect);
-        //    
-        //        effect.damage = cards.length * 60;
-        //    
-        //      });
-        //    
-        //    }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            let hasPokemonWithEnergy = false;
+            const blocked = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                if (cardList.cards.some(c => c.superType === card_types_1.SuperType.ENERGY)) {
+                    hasPokemonWithEnergy = true;
+                }
+                else {
+                    blocked.push(target);
+                }
+            });
+            if (!hasPokemonWithEnergy) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            let targets = [];
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 100, allowCancel: false, blocked }), results => {
+                targets = results || [];
+                let cards = [];
+                targets.forEach(target => {
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY }, { min: 0, max: 100, allowCancel: false }), selected => {
+                        cards = cards.concat(selected);
+                    });
+                    return state;
+                });
+                state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_message_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+                    if (wantToUse) {
+                        return state;
+                    }
+                    const damage = cards.length * 60;
+                    effect.damage = damage;
+                    targets.forEach(target => {
+                        target.moveCardsTo(cards, player.discard);
+                    });
+                    return state;
+                });
+            });
+        }
         return state;
     }
 }

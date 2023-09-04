@@ -56,7 +56,7 @@ export const config = {
     },
     sets: {
         scansDir: '',
-        scansUrl: '/scans/{set}/{name}.jpg'
+        scansUrl: 'https://assets.pokemon.com/assets/cms2/img/cards/web/{set}/{set}_EN_{fullName}.png'
     },
     email: {
         transporter: {

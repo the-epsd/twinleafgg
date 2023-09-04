@@ -11,7 +11,9 @@ export class ArceusVSTAR extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_VSTAR ];
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VSTAR;
+
+  public evolvesFrom = 'Arceus V';
 
   public cardType: CardType = CardType.COLORLESS;
 
@@ -68,7 +70,7 @@ export class ArceusVSTAR extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         {},
-        { min: 0, max: 2, allowCancel: true }
+        { min: 1, max: 2, allowCancel: false }
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);
 
@@ -91,6 +93,7 @@ export class ArceusVSTAR extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.deck,
         PlayerType.BOTTOM_PLAYER,
+        
         [ SlotType.BENCH, SlotType.ACTIVE ],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { allowCancel: true, min: 0, max: 3 },
@@ -102,9 +105,24 @@ export class ArceusVSTAR extends PokemonCard {
           return state;
         }
         for (const transfer of transfers) {
+
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
+        
+          if (!target.cards[0].tags.includes(CardTag.POKEMON_V) && 
+          !target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) &&
+          !target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
+            throw new GameError(GameMessage.INVALID_TARGET);
+          }
+
+          if (target.cards[0].tags.includes(CardTag.POKEMON_V) || 
+              target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
+              target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
+        
+            player.deck.moveCardTo(transfer.card, target); 
+          }
+        
         }
+        
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });

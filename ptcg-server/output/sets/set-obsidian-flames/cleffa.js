@@ -27,7 +27,7 @@ class Cleffa extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            const cardsToDraw = 6 - player.hand.cards.length;
+            const cardsToDraw = 7 - player.hand.cards.length;
             if (cardsToDraw <= 0) {
                 return state;
             }

@@ -1,22 +1,27 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils,
   GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
+import { RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 export class Gardevoirex extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public tags = [ CardTag.POKEMON_ex ];
 
-  //public evolvesFrom = 'Wartortle';
+  public stage: Stage = Stage.STAGE_2;
+
+  public evolvesFrom = 'Kirlia';
 
   public cardType: CardType = CardType.PSYCHIC;
 
   public hp: number = 310;
 
   public weakness = [{ type: CardType.DARK }];
+
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
   public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
 
@@ -47,6 +52,7 @@ export class Gardevoirex extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+      
 
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
@@ -65,14 +71,19 @@ export class Gardevoirex extends PokemonCard {
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
+          target.damage += 20;
         }
-        if (effect instanceof AttackEffect) {
-          (effect as AttackEffect).damage += transfers.length * 20;
-        }
+        return state;
       });
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+        const player = effect.player;
+  
+        const removeSpecialCondition = new RemoveSpecialConditionsEffect(effect, undefined);
+        removeSpecialCondition.target = player.active;
+        state = store.reduceEffect(state, removeSpecialCondition);
+        return state;
+      }
     }
-
     return state;
   }
-
 }

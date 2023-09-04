@@ -10,9 +10,9 @@ export class UmbreonVMAX extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE ];
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VMAX;
   
-  //public evolvesFrom = 'Umbreon V';
+  public evolvesFrom = 'Umbreon V';
 
   public cardType: CardType = CardType.DARK;
 

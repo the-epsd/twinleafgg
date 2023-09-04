@@ -10,7 +10,8 @@ export declare enum CardTag {
     RADIANT = "RADIANT",
     FUSION_STRIKE = "FUSION_STRIKE",
     SINGLE_STRIKE = "SINGLE_STRIKE",
-    RAPID_STRIKE = "RAPID_STRIKE"
+    RAPID_STRIKE = "RAPID_STRIKE",
+    POKEMON_ex = "ex"
 }
 export declare enum SuperType {
     NONE = 0,
@@ -68,5 +69,6 @@ export declare enum SpecialCondition {
 export declare enum Format {
     STANDARD = 0,
     EXPANDED = 1,
-    RETRO = 2
+    UNLIMITED = 2,
+    RETRO = 3
 }

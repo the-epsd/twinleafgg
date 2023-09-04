@@ -35,9 +35,9 @@ class NestBall extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'PAL';
+        this.set = 'SVI';
         this.name = 'Nest Ball';
-        this.fullName = 'Nest Ball PAL';
+        this.fullName = 'Nest Ball SVI';
         this.text = 'Search your deck for a Basic Pokémon and put it onto your ' +
             'Bench. Then, shuffle your deck.';
     }

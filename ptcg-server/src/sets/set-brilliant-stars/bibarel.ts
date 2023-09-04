@@ -11,8 +11,7 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Bibarel extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
-  //public stage: Stage = Stage.STAGE_1;
+  public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Bidoof';
 

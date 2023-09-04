@@ -28,15 +28,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 }
 
-export class Lysandre extends TrainerCard {
+export class BossOrders extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'BW2';
+  public set: string = 'PAL';
 
-  public name: string = 'Lysandre';
+  public name: string = 'Boss\'s Orders';
 
-  public fullName: string = 'Lysandre FLF';
+  public fullName: string = 'Boss\'s Orders PAL';
 
   public text: string =
     'Switch 1 of your opponent\'s Benched Pokemon with his or her ' +

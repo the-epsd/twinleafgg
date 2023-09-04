@@ -84,6 +84,9 @@ export function gameReducer(store, state, effect) {
             if (card.tags.includes(CardTag.POKEMON_VMAX)) {
                 effect.prizeCount += 2;  
             }
+            if (card.tags.includes(CardTag.POKEMON_ex)) {
+                effect.prizeCount += 1;  
+            }
             store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
             effect.target.moveTo(effect.player.discard);
             effect.target.clearEffects();

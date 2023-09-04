@@ -11,8 +11,9 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class Pidgeotex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
-        //public evolvesFrom = 'Pidgeotto';
+        this.tags = [card_types_1.CardTag.POKEMON_ex];
+        this.stage = card_types_1.Stage.STAGE_2;
+        this.evolvesFrom = 'Pidgeotto';
         this.cardType = card_types_1.CardType.COLORLESS;
         this.hp = 280;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];

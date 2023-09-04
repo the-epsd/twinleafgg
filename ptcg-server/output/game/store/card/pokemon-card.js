@@ -16,6 +16,7 @@ class PokemonCard extends card_1.Card {
         this.hp = 0;
         this.weakness = [];
         this.resistance = [];
+        this.format = [];
         this.powers = [];
         this.attacks = [];
     }

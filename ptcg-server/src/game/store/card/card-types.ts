@@ -12,6 +12,7 @@ export enum CardTag {
   FUSION_STRIKE = 'FUSION_STRIKE',
   SINGLE_STRIKE = 'SINGLE_STRIKE',
   RAPID_STRIKE = 'RAPID_STRIKE',
+  POKEMON_ex = 'ex',
 }
 
 
@@ -74,8 +75,10 @@ export enum SpecialCondition {
   POISONED,
   BURNED
 }
-export declare enum Format {
-  STANDARD = 0,
-  EXPANDED = 1,
-  RETRO = 2,
+
+export enum Format {
+STANDARD,
+EXPANDED,
+UNLIMITED,
+RETRO,
 }

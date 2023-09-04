@@ -92,10 +92,10 @@ export class AppComponent implements OnInit {
     const toolbarHeight = 64;
     const contentHeight = element.offsetHeight - toolbarHeight;
     const cardAspectRatio = 1.37;
-    const padding = 16;
+    const padding = 32;
     const cardHeight = (contentHeight - (padding * 5)) / 7;
     let cardSize = Math.floor(cardHeight / cardAspectRatio);
-    cardSize = Math.min(Math.max(cardSize, 50), 100);
+    cardSize = Math.min(Math.max(cardSize, 60), 60);
     element.style.setProperty('--card-size', cardSize + 'px');
   }
 

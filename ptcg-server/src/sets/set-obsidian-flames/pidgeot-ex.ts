@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, ConfirmPrompt, PowerType, ChooseCardsPrompt, ShuffleDeckPrompt, GameError} from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -10,9 +10,11 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Pidgeotex extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public tags = [ CardTag.POKEMON_ex ];
 
-  //public evolvesFrom = 'Pidgeotto';
+  public stage: Stage = Stage.STAGE_2;
+
+  public evolvesFrom = 'Pidgeotto';
 
   public cardType: CardType = CardType.COLORLESS;
 

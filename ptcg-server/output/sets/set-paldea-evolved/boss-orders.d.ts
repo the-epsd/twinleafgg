@@ -3,7 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Lysandre extends TrainerCard {
+export declare class BossOrders extends TrainerCard {
     trainerType: TrainerType;
     set: string;
     name: string;

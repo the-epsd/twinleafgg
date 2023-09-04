@@ -1,17 +1,19 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils,
   GameMessage, PlayerType, SlotType, ConfirmPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { AttackEffect, EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import {AttachEnergyPrompt} from '../../game/store/prompts/attach-energy-prompt';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Charizardex extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public tags = [ CardTag.POKEMON_ex ];
 
-  //public evolvesFrom = 'Charmeleon';
+  public stage: Stage = Stage.STAGE_2;
+
+  public evolvesFrom = 'Charmeleon';
 
   public cardType: CardType = CardType.DARK;
 
@@ -23,8 +25,8 @@ export class Charizardex extends PokemonCard {
 
   public powers = [{
     name: 'Infernal Reign',
-    powerType: PowerType.ABILITY,
     useWhenInPlay: true,
+    powerType: PowerType.ABILITY,
     text: 'When you play this Pokémon from your hand to evolve ' +
       '1 of your Pokémon during your turn, you may search your ' +
       'deck for up to 3 Basic F Energy cards and attach them to ' +
@@ -50,7 +52,9 @@ export class Charizardex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+    if ((effect instanceof EvolveEffect) && effect.pokemonCard === this) {
+
+    
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
@@ -65,7 +69,9 @@ export class Charizardex extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-          state = store.prompt(state, new AttachEnergyPrompt(
+
+          const player = effect.player;
+          return store.prompt(state, new AttachEnergyPrompt(
             player.id,
             GameMessage.ATTACH_ENERGY_TO_BENCH,
             player.deck,
@@ -102,6 +108,37 @@ export class Charizardex extends PokemonCard {
 
       effect.damage = this.attacks[0].damage; // base damage
       effect.damage += prizesTaken * damagePerPrize; // add bonus damage
+    }
+
+    if (effect instanceof PutDamageEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Target is not Active
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[1], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
+      }
+
+      // Target is this Charizard
+      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const powerEffect = new PowerEffect(player, this.powers[1], this);
+          store.reduceEffect(state, powerEffect);
+        } catch {
+          return state;
+        }
+
+        effect.preventDefault = true;
+      }
     }
 
     return state;

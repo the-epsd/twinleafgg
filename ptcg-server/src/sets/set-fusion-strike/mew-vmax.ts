@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage,
-  PlayerType, ChooseAttackPrompt, Player } from '../../game';
+  PlayerType, ChooseAttackPrompt, Player, EnergyMap } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { ApplyWeaknessEffect, AfterDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class MewVMAX extends PokemonCard {
 
@@ -100,17 +101,21 @@ export class MewVMAX extends PokemonCard {
     state: State, store: StoreLike, player: Player
   ): { pokemonCards: PokemonCard[], blocked: { index: number, attack: string }[] } {
 
+    const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
+    store.reduceEffect(state, checkProvidedEnergyEffect);
+    const energyMap = checkProvidedEnergyEffect.energyMap;
+
     const pokemonCards: PokemonCard[] = [];
     const blocked: { index: number, attack: string }[] = [];
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-      this.checkAttack(state, store, player, card, pokemonCards, blocked);
+      this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
     });
 
     return { pokemonCards, blocked };
   }
 
   private checkAttack(state: State, store: StoreLike, player: Player,
-    card: PokemonCard, pokemonCards: PokemonCard[],
+    card: PokemonCard, energyMap: EnergyMap[], pokemonCards: PokemonCard[],
     blocked: { index: number, attack: string }[]
   ) {
     {
@@ -124,12 +129,18 @@ export class MewVMAX extends PokemonCard {
       }
 
       const attacks = card.attacks.filter(attack => {
+  
       });
       const index = pokemonCards.length;
       pokemonCards.push(card);
       card.attacks.forEach(attack => {
+        
+        const cost = attack.cost;
+        cost.length == 0;
+
         if (!attacks.includes(attack)) {
           blocked.push({ index, attack: attack.name });
+          
         }
       });
     }

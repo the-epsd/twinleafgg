@@ -1,12 +1,20 @@
 import { Card } from '../../game/store/card/card';
+import { ArceusV } from './arceus-v';
 import { ArceusVSTAR } from './arceus-vstar';
 import { Bibarel } from './bibarel';
 import { CollapsedStadium } from './collapsed-stadium';
+import { DoubleTurboEnergy } from './double-turbo-energy';
+import { LumineonV } from './lumineon-v';
 import { Manaphy } from './manaphy';
+import { RaikouV } from './raikou-v';
 
 export const setBrilliantStars: Card[] = [
   new CollapsedStadium(),
   new Manaphy(),
   new Bibarel(),
-  new ArceusVSTAR()
+  new ArceusV(),
+  new ArceusVSTAR(),
+  new DoubleTurboEnergy(),
+  new RaikouV(),
+  new LumineonV(),
 ];

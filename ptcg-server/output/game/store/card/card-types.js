@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SpecialCondition = exports.CardType = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
+exports.Format = exports.SpecialCondition = exports.CardType = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
 var CardTag;
 (function (CardTag) {
     CardTag["POKEMON_SP"] = "SP";
@@ -15,6 +15,7 @@ var CardTag;
     CardTag["FUSION_STRIKE"] = "FUSION_STRIKE";
     CardTag["SINGLE_STRIKE"] = "SINGLE_STRIKE";
     CardTag["RAPID_STRIKE"] = "RAPID_STRIKE";
+    CardTag["POKEMON_ex"] = "ex";
 })(CardTag = exports.CardTag || (exports.CardTag = {}));
 var SuperType;
 (function (SuperType) {
@@ -76,3 +77,10 @@ var SpecialCondition;
     SpecialCondition[SpecialCondition["POISONED"] = 3] = "POISONED";
     SpecialCondition[SpecialCondition["BURNED"] = 4] = "BURNED";
 })(SpecialCondition = exports.SpecialCondition || (exports.SpecialCondition = {}));
+var Format;
+(function (Format) {
+    Format[Format["STANDARD"] = 0] = "STANDARD";
+    Format[Format["EXPANDED"] = 1] = "EXPANDED";
+    Format[Format["UNLIMITED"] = 2] = "UNLIMITED";
+    Format[Format["RETRO"] = 3] = "RETRO";
+})(Format = exports.Format || (exports.Format = {}));

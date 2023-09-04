@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 class Alakazamex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
+        this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 310;

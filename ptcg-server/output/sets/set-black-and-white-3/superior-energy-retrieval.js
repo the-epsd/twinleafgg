@@ -38,9 +38,8 @@ function* playCard(next, store, state, self, effect) {
     if (cards.length === 0) {
         return state;
     }
-    const count = Math.min(4, basicEnergies);
     let recovered = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: count, max: count, allowCancel: true }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, max: 4, allowCancel: true }), selected => {
         recovered = selected || [];
         next();
     });
@@ -60,10 +59,12 @@ class SuperiorEnergyRetrieval extends trainer_card_1.TrainerCard {
         this.set = 'BW3';
         this.name = 'Superior Energy Retrieval';
         this.fullName = 'Superior Energy Retrieval PLF';
-        this.text = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' +
-            'you can\'t play this card.) Put 4 basic Energy cards from your discard ' +
-            'pile into your hand. (You can\'t choose a card you discarded with ' +
-            'the effect of this card.)';
+        this.text = 'You can use this card only if you discard 2 other cards from ' +
+            'your hand.' +
+            '' +
+            'Put up to 4 Basic Energy cards from your discard pile into ' +
+            'your hand. (You can\'t choose a card you discarded with the ' +
+            'effect of this card.)';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

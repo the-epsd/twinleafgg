@@ -1,14 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, Card, CardTarget, ChoosePokemonPrompt, PlayerType, PokemonCardList, SlotType, GameError, ConfirmPrompt } from '../../game';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 
 
 export class ChienPaoex extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_EX ];
+  public tags = [ CardTag.POKEMON_ex ];
 
   public stage: Stage = Stage.BASIC;
 
@@ -75,42 +75,73 @@ export class ChienPaoex extends PokemonCard {
 
     }
 
-    //    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-    //
-    //      const player = effect.player;
-    //    
-    //      const checkEnergy = new CheckProvidedEnergyEffect(player);
-    //      store.reduceEffect(state, checkEnergy);
-    //    
-    //      const waterEnergies = checkEnergy.energyMap.filter(em => 
-    //        Array.isArray(em.provides) && em.provides.some(p => {
-    //          if (p instanceof EnergyCard) {
-    //            return p.energyType === EnergyType.BASIC && p.superType === SuperType.ENERGY && p.name === 'Water Energy';
-    //          }
-    //          return false;
-    //        })
-    //
-    //      );
-    //    
-    //      
-    //      return store.prompt(state, new ChooseCardsPrompt(
-    //        player.id,
-    //        GameMessage.CHOOSE_CARD_TO_DISCARD,
-    //        PlayerType.BOTTOM_PLAYER,
-    //        [ SlotType.ACTIVE, SlotType.BENCH ],
-    //        waterEnergies.map(em => em.card),
-    //      ), cards => {
-    //    
-    //        const discardEffect = new DiscardCardsEffect(effect, cards);
-    //        discardEffect.target = player.active;
-    //        store.reduceEffect(state, discardEffect);
-    //    
-    //        effect.damage = cards.length * 60;
-    //    
-    //      });
-    //    
-    //    }
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      const player = effect.player;
+      
+      let hasPokemonWithEnergy = false;
+      const blocked: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
+          hasPokemonWithEnergy = true;
+        } else {
+          blocked.push(target);
+        }
+      });
+      
+      if (!hasPokemonWithEnergy) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+      
+      let targets: PokemonCardList[] = [];
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+        PlayerType.BOTTOM_PLAYER,
+        [ SlotType.ACTIVE, SlotType.BENCH ],
+        { min: 1, max: 100, allowCancel: false, blocked }
+      ), results => {
+        targets = results || [];
+        
+  
+        let cards: Card[] = [];
+        targets.forEach(target => {
+          return store.prompt(state, new ChooseCardsPrompt(
+            player.id,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            target,
+            { superType: SuperType.ENERGY },
+            { min: 0, max: 100, allowCancel: false }  
+          ), selected => {
+            cards = cards.concat(selected);
+          });
+          return state;
+        });
+        
+
+        state = store.prompt(state, new ConfirmPrompt(
+          effect.player.id,
+          GameMessage.WANT_TO_USE_ABILITY,
+        ), wantToUse => {
+          if (wantToUse) {
+            return state;
+          }
+
+ 
+
+          const damage = cards.length * 60;
+          effect.damage = damage;
     
+          targets.forEach(target => {
+            target.moveCardsTo(cards, player.discard); 
+          });
+    
+          return state;
+        });
+      
+      });
+    }
     return state;
   }
 }
+

@@ -1,10 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameError, GameMessage,
-  ChooseCardsPrompt } from '../../game';
+  ChooseCardsPrompt, 
+  PlayerType} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Kirlia extends PokemonCard {
 
@@ -30,7 +32,7 @@ export class Kirlia extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Attack Command',
+      name: 'Slap',
       cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
       damage: 30,
       text: '   '
@@ -75,7 +77,15 @@ export class Kirlia extends PokemonCard {
         player.deck.moveTo(player.hand, 2);
       });
 
-      return state;
+    }
+
+    if (effect instanceof EndTurnEffect) {
+
+      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
+        if (player instanceof Kirlia) {
+          player.marker.removeMarker(this.REFINEMENT_MARKER);
+        }
+      });
     }
     return state;
   }

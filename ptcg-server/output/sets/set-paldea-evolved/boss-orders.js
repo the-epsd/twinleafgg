@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Lysandre = void 0;
+exports.BossOrders = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon-prompt");
@@ -18,13 +18,13 @@ function* playCard(next, store, state, effect) {
         opponent.switchPokemon(cardList);
     });
 }
-class Lysandre extends trainer_card_1.TrainerCard {
+class BossOrders extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'BW2';
-        this.name = 'Lysandre';
-        this.fullName = 'Lysandre FLF';
+        this.set = 'PAL';
+        this.name = 'Boss\'s Orders';
+        this.fullName = 'Boss\'s Orders PAL';
         this.text = 'Switch 1 of your opponent\'s Benched Pokemon with his or her ' +
             'Active Pokemon.';
     }
@@ -36,4 +36,4 @@ class Lysandre extends trainer_card_1.TrainerCard {
         return state;
     }
 }
-exports.Lysandre = Lysandre;
+exports.BossOrders = BossOrders;

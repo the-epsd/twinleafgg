@@ -22,19 +22,26 @@ cardManager.defineSet(sets.setSwordAndShield);
 cardManager.defineSet(sets.setSwordAndShieldPromos);
 cardManager.defineSet(sets.setBattleStyles);
 cardManager.defineSet(sets.setEvolvingSkies);
+cardManager.defineSet(sets.setCelebrations);
 cardManager.defineSet(sets.setFusionStrike);
 cardManager.defineSet(sets.setBrilliantStars);
+cardManager.defineSet(sets.setAstralRadiance);
+cardManager.defineSet(sets.setLostOrigin);
+cardManager.defineSet(sets.setSilverTempest);
 cardManager.defineSet(sets.setCrownZenith);
 //cardManager.defineSet(sets.setSwordAndShield8);
 //cardManager.defineSet(sets.setSwordAndShield9);
 cardManager.defineSet(sets.setScarletAndViolet);
 cardManager.defineSet(sets.setPaldeaEvolved);
 cardManager.defineSet(sets.setObsidianFlames);
+cardManager.defineSet(sets.setParadoxRift);
 
 StateSerializer.setKnownCards(cardManager.getAllCards());
 
 const botManager = BotManager.getInstance();
-botManager.registerBot(new SimpleBot('blastoise'));
+botManager.registerBot(new SimpleBot('Charizard'));
+botManager.registerBot(new SimpleBot('Blastoise'));
+botManager.registerBot(new SimpleBot('Venusaur'));
 
 const app = new App();
 

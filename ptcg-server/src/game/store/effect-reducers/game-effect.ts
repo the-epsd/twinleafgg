@@ -110,8 +110,11 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     if (card !== undefined) {
 
       // Pokemon ex rule
-      if (card.tags.includes(CardTag.POKEMON_EX)) {
+      if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex)) {
         effect.prizeCount += 1;
+      }
+      if (card.tags.includes(CardTag.POKEMON_VMAX)) {
+        effect.prizeCount += 2;
       }
 
       store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });

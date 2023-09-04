@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class ArceusVSTAR extends PokemonCard {
     tags: CardTag[];
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {

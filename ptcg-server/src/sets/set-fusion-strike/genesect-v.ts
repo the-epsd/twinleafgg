@@ -37,8 +37,8 @@ export class GenesectV extends PokemonCard {
   public attacks = [
     {
       name: 'Techno Blast',
-      cost: [ CardType.COLORLESS ],
-      damage: 190,
+      cost: [ CardType.METAL, CardType.METAL, CardType.COLORLESS ],
+      damage: 210,
       text: 'During your next turn, this Pokémon can’t attack. '
     }
   ];

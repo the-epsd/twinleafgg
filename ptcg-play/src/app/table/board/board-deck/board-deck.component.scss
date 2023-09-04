@@ -3,11 +3,11 @@
 .ptcg-board-deck {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 330px;
   justify-content: space-around;
   margin: 0 auto;
-  max-width: map-get($ptcg-size, card);
   width: calc(50% - #{map-get($padding, small)});
+  max-width: map-get($ptcg-size, card);
 }
 
 ptcg-board-card {

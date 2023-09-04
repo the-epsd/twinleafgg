@@ -52,11 +52,11 @@ export class NestBall extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'PAL';
+  public set: string = 'SVI';
 
   public name: string = 'Nest Ball';
 
-  public fullName: string = 'Nest Ball PAL';
+  public fullName: string = 'Nest Ball SVI';
 
   public text: string =
     'Search your deck for a Basic Pokémon and put it onto your ' +

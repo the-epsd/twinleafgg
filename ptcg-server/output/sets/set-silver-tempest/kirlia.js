@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Kirlia extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -24,7 +25,7 @@ class Kirlia extends pokemon_card_1.PokemonCard {
             }];
         this.attacks = [
             {
-                name: 'Attack Command',
+                name: 'Slap',
                 cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
                 damage: 30,
                 text: '   '
@@ -57,7 +58,13 @@ class Kirlia extends pokemon_card_1.PokemonCard {
                 player.hand.moveCardsTo(cards, player.discard);
                 player.deck.moveTo(player.hand, 2);
             });
-            return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
+                if (player instanceof Kirlia) {
+                    player.marker.removeMarker(this.REFINEMENT_MARKER);
+                }
+            });
         }
         return state;
     }

@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { CardTag, CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { StoreLike, State, PowerType, StateUtils, CardTarget, GameError, GameMessage, PlayerType, PokemonCardList, ChoosePokemonPrompt, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
 export class Venusaurex extends PokemonCard {
+  public tags = [ CardTag.POKEMON_ex ];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.GRASS;
   public hp: number = 330;

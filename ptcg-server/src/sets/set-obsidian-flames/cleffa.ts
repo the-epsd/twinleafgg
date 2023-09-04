@@ -37,7 +37,7 @@ export class Cleffa extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      const cardsToDraw = 6 - player.hand.cards.length;
+      const cardsToDraw = 7 - player.hand.cards.length;
       if (cardsToDraw <= 0) {
         return state;
       }

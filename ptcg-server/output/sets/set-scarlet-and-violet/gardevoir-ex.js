@@ -6,14 +6,17 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attach_energy_prompt_1 = require("../../game/store/prompts/attach-energy-prompt");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Gardevoirex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
-        //public evolvesFrom = 'Wartortle';
+        this.tags = [card_types_1.CardTag.POKEMON_ex];
+        this.stage = card_types_1.Stage.STAGE_2;
+        this.evolvesFrom = 'Kirlia';
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 310;
         this.weakness = [{ type: card_types_1.CardType.DARK }];
+        this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Psychic Embrace',
@@ -46,11 +49,17 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.discard.moveCardTo(transfer.card, target);
+                    target.damage += 20;
                 }
-                if (effect instanceof game_effects_1.AttackEffect) {
-                    effect.damage += transfers.length * 20;
-                }
+                return state;
             });
+            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+                const player = effect.player;
+                const removeSpecialCondition = new attack_effects_1.RemoveSpecialConditionsEffect(effect, undefined);
+                removeSpecialCondition.target = player.active;
+                state = store.reduceEffect(state, removeSpecialCondition);
+                return state;
+            }
         }
         return state;
     }

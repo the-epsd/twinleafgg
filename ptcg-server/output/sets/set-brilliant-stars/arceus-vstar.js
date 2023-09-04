@@ -10,7 +10,8 @@ class ArceusVSTAR extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VSTAR];
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.VSTAR;
+        this.evolvesFrom = 'Arceus V';
         this.cardType = card_types_1.CardType.COLORLESS;
         this.hp = 280;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
@@ -49,7 +50,7 @@ class ArceusVSTAR extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             player.marker.addMarker(this.VSTAR_MARKER, this);
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 2, allowCancel: true }), cards => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 2, allowCancel: false }), cards => {
                 player.deck.moveCardsTo(cards, player.hand);
                 state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
@@ -70,7 +71,16 @@ class ArceusVSTAR extends pokemon_card_1.PokemonCard {
                 }
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    player.deck.moveCardTo(transfer.card, target);
+                    if (!target.cards[0].tags.includes(card_types_1.CardTag.POKEMON_V) &&
+                        !target.cards[0].tags.includes(card_types_1.CardTag.POKEMON_VSTAR) &&
+                        !target.cards[0].tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
+                        throw new game_1.GameError(game_1.GameMessage.INVALID_TARGET);
+                    }
+                    if (target.cards[0].tags.includes(card_types_1.CardTag.POKEMON_V) ||
+                        target.cards[0].tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||
+                        target.cards[0].tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
+                        player.deck.moveCardTo(transfer.card, target);
+                    }
                 }
                 state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
