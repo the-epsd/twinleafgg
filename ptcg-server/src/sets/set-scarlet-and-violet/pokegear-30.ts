@@ -54,6 +54,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 export class Pokegear30 extends TrainerCard {
 
+  public regulationMark = 'G';
+
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'SVI';

@@ -11,6 +11,9 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 export class Squirtle extends PokemonCard {
+
+  public regulationMark = 'G';
+  
   stage = Stage.BASIC;
   cardType = CardType.WATER;
   hp = 60;

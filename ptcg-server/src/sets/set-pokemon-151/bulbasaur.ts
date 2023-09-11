@@ -14,6 +14,9 @@ function* useLeechSeed(next: () => any, store: StoreLike, state: State, effect: 
 }
 
 export class Bulbasaur extends PokemonCard {
+
+  public regulationMark = 'G';
+  
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.GRASS;
   public hp: number = 70;

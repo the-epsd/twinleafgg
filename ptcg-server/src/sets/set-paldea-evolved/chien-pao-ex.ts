@@ -8,6 +8,8 @@ import { GameMessage } from '../../game/game-message';
 
 export class ChienPaoex extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public tags = [ CardTag.POKEMON_ex ];
 
   public stage: Stage = Stage.BASIC;

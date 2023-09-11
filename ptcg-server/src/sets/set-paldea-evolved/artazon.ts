@@ -10,6 +10,9 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 
 export class Artazon extends TrainerCard {
+
+  public regulationMark = 'G';
+  
   trainerType = TrainerType.STADIUM;
   set = 'PAL';
   name = 'Artazon';

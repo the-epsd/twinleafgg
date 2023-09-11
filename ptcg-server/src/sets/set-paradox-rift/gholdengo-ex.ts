@@ -11,6 +11,8 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Gholdengoex extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public tags = [ CardTag.POKEMON_ex ];
 
   public stage: Stage = Stage.STAGE_1;

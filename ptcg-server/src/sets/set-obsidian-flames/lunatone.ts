@@ -7,6 +7,8 @@ import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 
 export class Lunatone extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.PSYCHIC;

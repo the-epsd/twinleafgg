@@ -9,6 +9,8 @@ import { CardList } from '../../game';
 
 export class Skwovet extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.COLORLESS;

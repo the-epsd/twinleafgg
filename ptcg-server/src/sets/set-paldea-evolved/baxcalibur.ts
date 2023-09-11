@@ -9,6 +9,8 @@ import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class Baxcalibur extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public stage: Stage = Stage.BASIC;
   //public stage: Stage = Stage.STAGE_2;
 

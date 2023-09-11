@@ -9,6 +9,8 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Blastoiseex extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public tags = [ CardTag.POKEMON_ex ];
 
   public stage: Stage = Stage.STAGE_2;

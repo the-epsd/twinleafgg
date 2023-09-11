@@ -9,6 +9,8 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class Charmeleon extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Charmander';

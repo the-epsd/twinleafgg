@@ -10,6 +10,8 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class Charizardex extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public tags = [ CardTag.POKEMON_ex ];
 
   public stage: Stage = Stage.STAGE_2;

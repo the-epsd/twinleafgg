@@ -8,6 +8,9 @@ import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 
 export class Squirtle extends PokemonCard {
+
+  public regulationMark = 'G';
+  
   stage = Stage.BASIC;
   cardType = CardType.WATER;
   hp = 60;

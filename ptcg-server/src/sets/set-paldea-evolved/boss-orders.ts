@@ -30,6 +30,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 export class BossOrders extends TrainerCard {
 
+  public regulationMark = 'G';
+
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'PAL';

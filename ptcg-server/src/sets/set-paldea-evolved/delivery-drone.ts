@@ -35,6 +35,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class DeliveryDrone extends TrainerCard {
+
+  public regulationMark = 'G';
+  
   public trainerType = TrainerType.ITEM;
   public set = 'PAL';
   public name = 'Delivery Drone';

@@ -10,6 +10,8 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Pidgeotex extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public tags = [ CardTag.POKEMON_ex ];
 
   public stage: Stage = Stage.STAGE_2;

@@ -9,6 +9,8 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Miraidonex extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public tags = [ CardTag.POKEMON_ex ];
 
   public stage: Stage = Stage.BASIC;

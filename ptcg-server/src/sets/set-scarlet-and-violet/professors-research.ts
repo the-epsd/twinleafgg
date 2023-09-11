@@ -9,6 +9,8 @@ import { TrainerType } from '../../game/store/card/card-types';
 
 export class ProfessorsResearch extends TrainerCard {
 
+  public regulationMark = 'G';
+
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'SVI';

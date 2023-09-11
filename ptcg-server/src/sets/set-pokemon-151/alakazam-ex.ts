@@ -4,6 +4,8 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 
 export class Alakazamex extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public tags = [ CardTag.POKEMON_ex ];
 
   public stage: Stage = Stage.BASIC;

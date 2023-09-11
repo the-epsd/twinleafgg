@@ -3,6 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 
 export class Ralts extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.PSYCHIC;

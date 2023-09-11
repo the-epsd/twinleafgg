@@ -60,6 +60,8 @@ function* useGenomeHacking(next: Function, store: StoreLike, state: State,
 
 export class Mewex extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public stage: Stage = Stage.BASIC;
 
   public tags = [ CardTag.POKEMON_ex ];

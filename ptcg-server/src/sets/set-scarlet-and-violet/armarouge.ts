@@ -66,6 +66,8 @@ function* useFireOff(next: Function, store: StoreLike, state: State, effect: Pow
 
 export class Armarouge extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.FIRE;

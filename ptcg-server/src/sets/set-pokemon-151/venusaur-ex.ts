@@ -5,6 +5,9 @@ import { StoreLike, State, PowerType, StateUtils, CardTarget, GameError, GameMes
 import { Effect } from '../../game/store/effects/effect';
 
 export class Venusaurex extends PokemonCard {
+
+  public regulationMark = 'G';
+  
   public tags = [ CardTag.POKEMON_ex ];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.GRASS;

@@ -10,6 +10,8 @@ import { GameMessage } from '../../game/game-message';
 
 export class Spiritomb extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.PSYCHIC;

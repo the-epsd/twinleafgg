@@ -8,6 +8,8 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Charmander extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.FIRE;

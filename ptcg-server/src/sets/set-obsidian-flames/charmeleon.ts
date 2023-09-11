@@ -8,6 +8,8 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Charmeleon extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Charmander';

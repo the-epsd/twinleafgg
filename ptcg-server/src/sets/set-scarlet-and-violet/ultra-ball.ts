@@ -83,6 +83,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
 export class UltraBall extends TrainerCard {
 
+  public regulationMark = 'G';
+
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'SVI';

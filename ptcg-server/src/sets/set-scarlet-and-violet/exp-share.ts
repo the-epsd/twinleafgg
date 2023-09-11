@@ -12,6 +12,8 @@ import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 
 export class ExpShare extends TrainerCard {
 
+  public regulationMark = 'G';
+
   public trainerType: TrainerType = TrainerType.TOOL;
 
   public set: string = 'SVI';

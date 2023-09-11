@@ -15,6 +15,8 @@ export abstract class Card {
 
   public id: number = -1;
 
+  public regulationMark: string = '';
+
   public tags: string[] = [];
   static tags: any;
 

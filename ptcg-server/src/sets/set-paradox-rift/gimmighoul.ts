@@ -38,6 +38,8 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
 
 export class Gimmighoul extends PokemonCard {
 
+  public regulationMark = 'G';
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.PSYCHIC;

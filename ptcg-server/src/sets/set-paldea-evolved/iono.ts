@@ -12,6 +12,8 @@ import { CardList, GameError, GameMessage } from '../../game';
 
 export class Iono extends TrainerCard {
 
+  public regulationMark = 'G';
+
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'PAL';
