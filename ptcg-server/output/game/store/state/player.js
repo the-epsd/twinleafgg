@@ -22,6 +22,8 @@ class Player {
         this.stadiumPlayedTurn = 0;
         this.stadiumUsedTurn = 0;
         this.marker = new card_marker_1.Marker();
+        this.attackMarker = new card_marker_1.Marker();
+        this.abilityMarker = new card_marker_1.Marker();
         this.avatarName = '';
     }
     prompt(state, arg1) {

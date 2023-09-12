@@ -94,7 +94,7 @@ export class RaikouV extends PokemonCard {
       
       const totalBenched = playerBenched + opponentBenched;
     
-      effect.damage = totalBenched * 20;
+      effect.damage = 20 + totalBenched * 20;
     }
     return state;
   }

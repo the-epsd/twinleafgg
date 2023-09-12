@@ -9,7 +9,6 @@ const fire_crystal_1 = require("./fire-crystal");
 const giant_hearth_1 = require("./giant-hearth");
 const leon_1 = require("./leon");
 const oranguru_1 = require("./oranguru");
-const radiant_greninja_1 = require("./radiant-greninja");
 const rosa_1 = require("./rosa");
 const snorlax_1 = require("./snorlax");
 const welder_1 = require("./welder");
@@ -22,7 +21,6 @@ exports.setSwordAndShield = [
     new giant_hearth_1.GiantHearth(),
     new leon_1.Leon(),
     new oranguru_1.Oranguru(),
-    new radiant_greninja_1.RadiantGreninja(),
     new rosa_1.Rosa(),
     new snorlax_1.Snorlax(),
     new welder_1.Welder()

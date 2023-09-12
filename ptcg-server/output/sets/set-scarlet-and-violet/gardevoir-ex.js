@@ -53,7 +53,7 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
                 }
                 return state;
             });
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
                 const player = effect.player;
                 const removeSpecialCondition = new attack_effects_1.RemoveSpecialConditionsEffect(effect, undefined);
                 removeSpecialCondition.target = player.active;

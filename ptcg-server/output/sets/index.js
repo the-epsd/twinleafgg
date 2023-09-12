@@ -20,6 +20,7 @@ __exportStar(require("./set-op9"), exports);
 __exportStar(require("./set-sword-and-shield"), exports);
 __exportStar(require("./set-sword-and-shield-promos"), exports);
 __exportStar(require("./set-battle-styles"), exports);
+__exportStar(require("./set-chilling-reign"), exports);
 __exportStar(require("./set-evolving-skies"), exports);
 __exportStar(require("./set-celebrations"), exports);
 __exportStar(require("./set-fusion-strike"), exports);

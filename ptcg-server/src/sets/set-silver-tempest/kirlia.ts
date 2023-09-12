@@ -1,8 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameError, GameMessage,
-  ChooseCardsPrompt, 
-  PlayerType} from '../../game';
+  ChooseCardsPrompt} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -77,16 +76,14 @@ export class Kirlia extends PokemonCard {
         player.deck.moveTo(player.hand, 2);
       });
 
+      return state;
     }
 
     if (effect instanceof EndTurnEffect) {
-
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player instanceof Kirlia) {
-          player.marker.removeMarker(this.REFINEMENT_MARKER);
-        }
-      });
+      effect.player.marker.removeMarker(this.REFINEMENT_MARKER, this);
     }
+
     return state;
   }
+
 }

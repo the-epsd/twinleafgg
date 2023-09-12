@@ -41,6 +41,10 @@ export class Player {
 
   marker = new Marker();
 
+  attackMarker = new Marker();
+
+  abilityMarker = new Marker();
+
   avatarName: string = '';
   usedRapidStrikeSearchThisTurn: any;
   usedExcitingStageThisTurn: any;

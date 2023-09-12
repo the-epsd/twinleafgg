@@ -7,6 +7,7 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
+const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const hasSupporter = player.discard.cards.some(c => {
@@ -24,9 +25,11 @@ function* playCard(next, store, state, self, effect) {
     });
     if (cards.length > 0) {
         player.hand.moveCardTo(self, player.discard);
-        player.discard.moveCardsTo(cards, player.hand);
+        player.discard.moveCardsTo(cards, player.deck);
     }
-    return state;
+    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+        player.deck.applyOrder(order);
+    });
 }
 class PalPad extends trainer_card_1.TrainerCard {
     constructor() {

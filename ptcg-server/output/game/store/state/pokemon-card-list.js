@@ -36,6 +36,9 @@ class PokemonCardList extends card_list_1.CardList {
         }
         return pokemons[0].stage === card_types_1.Stage.BASIC;
     }
+    clearAttackEffects() {
+        this.marker.markers = [];
+    }
     clearEffects() {
         this.marker.markers = [];
         this.specialConditions = [];

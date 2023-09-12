@@ -21,6 +21,7 @@ import { SingleStrikeUrshifuV } from './single-strike-urshifu-v';
 import { Houndoom } from './houndoom';
 import { Bronzong } from './bronzong';
 import { TyranitarV } from './tyranitar-v';
+import { SingleStrikeEnergy } from './single-strike-energy';
 
 export const setBattleStyles: Card[] = [
   new Bellsprout(),
@@ -44,5 +45,6 @@ export const setBattleStyles: Card[] = [
   new RapidStrikeUrshifuVMAX(),
   new Houndoom(),
   new Bronzong(),
-  new TyranitarV()
+  new TyranitarV(),
+  new SingleStrikeEnergy(),
 ];

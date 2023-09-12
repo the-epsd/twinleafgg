@@ -72,7 +72,7 @@ class RaikouV extends pokemon_card_1.PokemonCard {
             const playerBenched = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
             const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
             const totalBenched = playerBenched + opponentBenched;
-            effect.damage = totalBenched * 20;
+            effect.damage = 20 + totalBenched * 20;
         }
         return state;
     }

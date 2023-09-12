@@ -78,10 +78,6 @@ export class ArceusVSTAR extends PokemonCard {
           player.deck.applyOrder(order);
         });
 
-        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-
         return state;
       });
     }

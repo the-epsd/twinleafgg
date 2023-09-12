@@ -11,6 +11,8 @@ function* useLuminousSign(next: Function, store: StoreLike, state: State,
   self: LumineonV, effect: PlayPokemonEffect): IterableIterator<State> {
   const player = effect.player;
 
+  
+
   if (player.deck.cards.length === 0) {
     return state;
   }

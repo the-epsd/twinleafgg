@@ -6,7 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 class MewVMAX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -73,17 +72,14 @@ class MewVMAX extends pokemon_card_1.PokemonCard {
         return state;
     }
     buildAttackList(state, store, player) {
-        const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player);
-        store.reduceEffect(state, checkProvidedEnergyEffect);
-        const energyMap = checkProvidedEnergyEffect.energyMap;
         const pokemonCards = [];
         const blocked = [];
         player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-            this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
+            this.checkAttack(state, store, player, card, pokemonCards, blocked);
         });
         return { pokemonCards, blocked };
     }
-    checkAttack(state, store, player, card, energyMap, pokemonCards, blocked) {
+    checkAttack(state, store, player, card, pokemonCards, blocked) {
         {
             // Only include Fusion Strike cards
             if (!card.tags.includes(card_types_1.CardTag.FUSION_STRIKE)) {

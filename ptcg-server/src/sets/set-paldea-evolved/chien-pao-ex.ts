@@ -101,7 +101,7 @@ export class ChienPaoex extends PokemonCard {
         GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.ACTIVE, SlotType.BENCH ],
-        { min: 1, max: 100, allowCancel: false, blocked }
+        { min: 1, allowCancel: false, blocked }
       ), results => {
         targets = results || [];
         

@@ -73,45 +73,48 @@ export class Miraidonex extends PokemonCard {
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      if (slots.length < 0) {
+      // Check if bench has open slots
+      const openSlots = player.bench.filter(b => b.cards.length === 0);
+
+      if (openSlots.length === 0) {
+        // No open slots, throw error
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      } else {
-        // handle no open slots
+      }
        
     
-        let cards: Card[] = [];
-        return store.prompt(state, new ChooseCardsPrompt(
-          player.id,
-          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-          player.deck,
-          { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: CardType.LIGHTNING },
-          { min: 0, max: 2, allowCancel: true }
-        ), selectedCards => {
-          cards = selectedCards || [];
+      let cards: Card[] = [];
+      return store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+        player.deck,
+        { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: CardType.LIGHTNING },
+        { min: 0, max: 2, allowCancel: true }
+      ), selectedCards => {
+        cards = selectedCards || [];
     
 
-          cards.forEach((card, index) => {
-            player.deck.moveCardTo(card, slots[index]);
-            slots[index].pokemonPlayedTurn = state.turn;
-            player.marker.addMarker(this.TANDEM_UNIT_MARKER, this);
-            return state;
-          });
-
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-
-            if (effect instanceof EndTurnEffect) {
-              effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-                if (player instanceof Miraidonex) {
-                  player.marker.removeMarker(this.TANDEM_UNIT_MARKER);
-                  return state;
-                }
-              });
-            }
-            return state;
-          });
+        cards.forEach((card, index) => {
+          player.deck.moveCardTo(card, slots[index]);
+          slots[index].pokemonPlayedTurn = state.turn;
+          player.marker.addMarker(this.TANDEM_UNIT_MARKER, this);
+          return state;
         });
-      }
+
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+
+          if (effect instanceof EndTurnEffect) {
+            effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
+              if (player instanceof Miraidonex) {
+                player.marker.removeMarker(this.TANDEM_UNIT_MARKER);
+                return state;
+              }
+            });
+            return state;
+          }
+          return state;
+        });
+      });
     }
     return state;
   }

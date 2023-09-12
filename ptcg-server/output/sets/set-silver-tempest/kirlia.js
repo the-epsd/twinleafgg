@@ -58,13 +58,10 @@ class Kirlia extends pokemon_card_1.PokemonCard {
                 player.hand.moveCardsTo(cards, player.discard);
                 player.deck.moveTo(player.hand, 2);
             });
+            return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
-                if (player instanceof Kirlia) {
-                    player.marker.removeMarker(this.REFINEMENT_MARKER);
-                }
-            });
+            effect.player.marker.removeMarker(this.REFINEMENT_MARKER, this);
         }
         return state;
     }

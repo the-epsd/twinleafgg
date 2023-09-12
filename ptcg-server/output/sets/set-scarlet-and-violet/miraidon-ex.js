@@ -55,34 +55,35 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            if (slots.length < 0) {
+            // Check if bench has open slots
+            const openSlots = player.bench.filter(b => b.cards.length === 0);
+            if (openSlots.length === 0) {
+                // No open slots, throw error
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            else {
-                // handle no open slots
-                let cards = [];
-                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC, cardType: card_types_1.CardType.LIGHTNING }, { min: 0, max: 2, allowCancel: true }), selectedCards => {
-                    cards = selectedCards || [];
-                    cards.forEach((card, index) => {
-                        player.deck.moveCardTo(card, slots[index]);
-                        slots[index].pokemonPlayedTurn = state.turn;
-                        player.marker.addMarker(this.TANDEM_UNIT_MARKER, this);
-                        return state;
-                    });
-                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                        player.deck.applyOrder(order);
-                        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-                            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
-                                if (player instanceof Miraidonex) {
-                                    player.marker.removeMarker(this.TANDEM_UNIT_MARKER);
-                                    return state;
-                                }
-                            });
-                        }
-                        return state;
-                    });
+            let cards = [];
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC, cardType: card_types_1.CardType.LIGHTNING }, { min: 0, max: 2, allowCancel: true }), selectedCards => {
+                cards = selectedCards || [];
+                cards.forEach((card, index) => {
+                    player.deck.moveCardTo(card, slots[index]);
+                    slots[index].pokemonPlayedTurn = state.turn;
+                    player.marker.addMarker(this.TANDEM_UNIT_MARKER, this);
+                    return state;
                 });
-            }
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                    if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+                        effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
+                            if (player instanceof Miraidonex) {
+                                player.marker.removeMarker(this.TANDEM_UNIT_MARKER);
+                                return state;
+                            }
+                        });
+                        return state;
+                    }
+                    return state;
+                });
+            });
         }
         return state;
     }

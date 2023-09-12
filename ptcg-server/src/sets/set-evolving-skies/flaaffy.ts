@@ -12,7 +12,7 @@ export class Flaaffy extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Tynamo';
+  public evolvesFrom = 'Mareep';
 
   public cardType: CardType = CardType.LIGHTNING;
 
@@ -32,7 +32,7 @@ export class Flaaffy extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Electric Ball',
+      name: 'Electro Ball',
       cost: [ CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS ],
       damage: 50,
       text: ''

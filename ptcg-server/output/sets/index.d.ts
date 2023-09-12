@@ -8,6 +8,7 @@ export * from './set-op9';
 export * from './set-sword-and-shield';
 export * from './set-sword-and-shield-promos';
 export * from './set-battle-styles';
+export * from './set-chilling-reign';
 export * from './set-evolving-skies';
 export * from './set-celebrations';
 export * from './set-fusion-strike';

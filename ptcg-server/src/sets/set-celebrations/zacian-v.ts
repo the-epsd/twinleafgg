@@ -61,7 +61,7 @@ export class ZacianV extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH, SlotType.ACTIVE ],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
-        { allowCancel: true, min: 0, max: 3 },
+        { allowCancel: true, min: 0, max: 1 },
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user

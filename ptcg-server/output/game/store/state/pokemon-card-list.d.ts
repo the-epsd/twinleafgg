@@ -14,6 +14,7 @@ export declare class PokemonCardList extends CardList {
     getPokemons(): PokemonCard[];
     getPokemonCard(): PokemonCard | undefined;
     isBasic(): boolean;
+    clearAttackEffects(): void;
     clearEffects(): void;
     removeSpecialCondition(sp: SpecialCondition): void;
     addSpecialCondition(sp: SpecialCondition): void;

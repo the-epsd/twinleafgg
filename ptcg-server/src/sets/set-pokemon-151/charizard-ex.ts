@@ -18,11 +18,11 @@ export class Charizardex extends PokemonCard {
 
   public evolvesFrom = 'Charmeleon';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = CardType.FIRE;
 
   public hp: number = 330;
 
-  public weakness = [{ type: CardType.GRASS }];
+  public weakness = [{ type: CardType.WATER }];
 
   public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
 

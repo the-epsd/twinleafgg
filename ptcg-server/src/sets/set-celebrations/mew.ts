@@ -1,4 +1,4 @@
-import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
+import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -73,7 +73,7 @@ export class Mew extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
-        { superType: SuperType.TRAINER },
+        { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         player.marker.addMarker(this.MYSTERIOUS_TAIL_MARKER, this);

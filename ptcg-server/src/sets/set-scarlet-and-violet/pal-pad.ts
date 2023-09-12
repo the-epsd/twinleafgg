@@ -8,6 +8,7 @@ import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { Card} from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { ShuffleDeckPrompt } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, self: PalPad, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -37,10 +38,11 @@ function* playCard(next: Function, store: StoreLike, state: State, self: PalPad,
 
   if (cards.length > 0) {
     player.hand.moveCardTo(self, player.discard);
-    player.discard.moveCardsTo(cards, player.hand);
+    player.discard.moveCardsTo(cards, player.deck);
   }
-
-  return state;
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    player.deck.applyOrder(order);
+  });
 }
 
 export class PalPad extends TrainerCard {
