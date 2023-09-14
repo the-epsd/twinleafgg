@@ -2,7 +2,7 @@ export enum Rank {
   JUNIOR = 'JUNIOR',
   SENIOR = 'SENIOR',
   MASTER = 'MASTER',
-  ADMIN = "ADMIN"
+  ADMIN = 'ADMIN'
 }
 
 export interface RankLevel {
