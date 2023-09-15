@@ -19,7 +19,7 @@ export class PathToThePeak extends TrainerCard {
     if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this) {
       const pokemonCard = effect.card;
       
-      if (pokemonCard.tags.includes(CardTag.POKEMON_V)) {
+      if (pokemonCard.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_GX || CardTag.POKEMON_VMAX || CardTag.POKEMON_EX || CardTag.POKEMON_VSTAR || CardTag.RADIANT || CardTag.POKEMON_ex)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
