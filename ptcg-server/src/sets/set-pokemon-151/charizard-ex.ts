@@ -7,6 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { DISCARD_ENERGY_FROM_SELF } from '../../game/store/effect-factories/prefabs';
 
 export class Charizardex extends PokemonCard {
 
@@ -62,23 +63,7 @@ export class Charizardex extends PokemonCard {
     }
   
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        const player = effect.player;
-  
-        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-        state = store.reduceEffect(state, checkProvidedEnergy);
-  
-        state = store.prompt(state, new ChooseEnergyPrompt(
-          player.id,
-          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-          checkProvidedEnergy.energyMap,
-          [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
-          { allowCancel: false }
-        ), energy => {
-          const cards: Card[] = (energy || []).map(e => e.card);
-          const discardEnergy = new DiscardCardsEffect(effect, cards);
-          discardEnergy.target = player.active;
-          return store.reduceEffect(state, discardEnergy);
-        });
+        DISCARD_ENERGY_FROM_SELF(state, effect, store, CardType.COLORLESS, 3);
       }
   
       return state;

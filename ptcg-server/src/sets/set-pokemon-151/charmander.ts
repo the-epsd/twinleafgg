@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { DISCARD_STADIUM_IN_PLAY, WAS_ATTACK_USED } from '../../game/store/effect-factories/prefabs';
 
 
 export class Charmander extends PokemonCard {
@@ -32,19 +33,8 @@ export class Charmander extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const stadiumCard = StateUtils.getStadiumCard(state);
-      if (stadiumCard !== undefined) {
-  
-  
-        // Discard Stadium
-        const cardList = StateUtils.findCardList(state, stadiumCard);
-        const player = StateUtils.findOwner(state, cardList);
-        cardList.moveTo(player.discard);
-        return state;
-      }
-      return state;
-        
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      DISCARD_STADIUM_IN_PLAY(state);
     }
     return state;
   }
