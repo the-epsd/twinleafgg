@@ -22,7 +22,7 @@ export class Mew extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
   
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [ CardType.COLORLESS ];
   
   public powers = [{
     name: 'Mysterious Tail',

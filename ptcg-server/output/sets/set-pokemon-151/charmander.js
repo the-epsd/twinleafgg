@@ -3,8 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Charmander = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const game_1 = require("../../game");
-const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/effect-factories/prefabs");
 class Charmander extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -18,21 +17,13 @@ class Charmander extends pokemon_card_1.PokemonCard {
             { name: 'Blazing Destruction', cost: [card_types_1.CardType.FIRE], damage: 0, text: 'Discard a Stadium in play.' },
             { name: 'Steady Firebreathing', cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE], damage: 30, text: '' }
         ];
-        this.set = 'MEW';
+        this.set = '151';
         this.name = 'Charmander';
         this.fullName = 'Charmander MEW';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const stadiumCard = game_1.StateUtils.getStadiumCard(state);
-            if (stadiumCard !== undefined) {
-                // Discard Stadium
-                const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-                const player = game_1.StateUtils.findOwner(state, cardList);
-                cardList.moveTo(player.discard);
-                return state;
-            }
-            return state;
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
+            prefabs_1.DISCARD_STADIUM_IN_PLAY(state);
         }
         return state;
     }
