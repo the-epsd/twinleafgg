@@ -4,6 +4,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 export declare class DeliveryDrone extends TrainerCard {
+    regulationMark: string;
     trainerType: TrainerType;
     set: string;
     name: string;

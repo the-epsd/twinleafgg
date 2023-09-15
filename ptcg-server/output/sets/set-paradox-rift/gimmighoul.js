@@ -28,6 +28,7 @@ function* useCallForFamily(next, store, state, effect) {
 class Gimmighoul extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'G';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 50;

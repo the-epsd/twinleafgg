@@ -10,6 +10,7 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 class Baxcalibur extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'G';
         this.stage = card_types_1.Stage.BASIC;
         //public stage: Stage = Stage.STAGE_2;
         this.evolvesFrom = 'Arctibax';

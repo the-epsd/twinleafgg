@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 export declare class Poppy extends TrainerCard {
+    regulationMark: string;
     trainerType: TrainerType;
     set: string;
     name: string;

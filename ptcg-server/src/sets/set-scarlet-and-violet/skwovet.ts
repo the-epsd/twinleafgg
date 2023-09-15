@@ -50,13 +50,13 @@ export class Skwovet extends PokemonCard {
       const player = effect.player;
       const cards = player.hand.cards.filter(c => c !== this);
     
-      // Create deckTop and move hand into it
-      const deckTop = new CardList();
-      player.hand.moveTo(deckTop, cards.length);
+      // Create deckBottom and move hand into it
+      const deckBottom = new CardList();
+      player.hand.moveTo(deckBottom, cards.length);
     
-      // Later, move deckTop to player's deck
+      // Later, move deckBottom to player's deck
     
-      deckTop.moveTo(player.deck, cards.length);
+      deckBottom.moveTo(player.deck, cards.length);
     
       player.deck.moveTo(player.hand, 1);
   

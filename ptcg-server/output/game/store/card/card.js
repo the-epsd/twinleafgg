@@ -4,6 +4,7 @@ exports.Card = void 0;
 class Card {
     constructor() {
         this.id = -1;
+        this.regulationMark = '';
         this.tags = [];
     }
     reduceEffect(store, state, effect) {

@@ -14,6 +14,8 @@ export class Klefki extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'G';
+
   public cardType: CardType = CardType.PSYCHIC;
 
   public hp: number = 70;
@@ -61,7 +63,7 @@ export class Klefki extends PokemonCard {
         store.reduceEffect(state, checkPokemonType);
       }
 
-      // We are not blocking the Abilities from Psychic Pokemon
+      // We are not blocking the Abilities from Non-Basic Pokemon
       if (effect.card.stage !== Stage.BASIC) {
         return state;
       }
@@ -71,14 +73,6 @@ export class Klefki extends PokemonCard {
         const playerPowerEffect = new PowerEffect(player, this.powers[0], this);
         store.reduceEffect(state, playerPowerEffect);
       } catch {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-
-      try {
-        const opponentPowerEffect = new PowerEffect(opponent, this.powers[0], this);
-        store.reduceEffect(state, opponentPowerEffect);
-      } catch {
-
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }
       return state;

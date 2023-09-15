@@ -55,6 +55,7 @@ function* playCard(next, store, state, self, effect) {
 class SuperiorEnergyRetrieval extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'PAL';
         this.name = 'Superior Energy Retrieval';

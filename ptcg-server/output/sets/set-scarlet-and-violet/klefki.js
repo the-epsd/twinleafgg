@@ -13,6 +13,7 @@ class Klefki extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.regulationMark = 'G';
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 70;
         this.weakness = [{ type: card_types_1.CardType.METAL }];
@@ -48,7 +49,7 @@ class Klefki extends pokemon_card_1.PokemonCard {
                 const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(cardList);
                 store.reduceEffect(state, checkPokemonType);
             }
-            // We are not blocking the Abilities from Psychic Pokemon
+            // We are not blocking the Abilities from Non-Basic Pokemon
             if (effect.card.stage !== card_types_1.Stage.BASIC) {
                 return state;
             }
@@ -58,13 +59,6 @@ class Klefki extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, playerPowerEffect);
             }
             catch (_a) {
-                throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
-            }
-            try {
-                const opponentPowerEffect = new game_effects_1.PowerEffect(opponent, this.powers[0], this);
-                store.reduceEffect(state, opponentPowerEffect);
-            }
-            catch (_b) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
             }
             return state;

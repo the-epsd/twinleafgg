@@ -11,9 +11,11 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Houndoom extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
-  public cardTag: CardTag[] = [CardTag.SINGLE_STRIKE];
+  public evolvesFrom = 'Houndour';
+
+  public tags = [ CardTag.SINGLE_STRIKE ];
 
   public cardType: CardType = CardType.DARK;
 
@@ -65,7 +67,7 @@ export class Houndoom extends PokemonCard {
         player.deck,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH, SlotType.ACTIVE ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Single Strike Energy' },
         { allowCancel: true, min: 0, max: 1 }
       ), transfers => {
         transfers = transfers || [];

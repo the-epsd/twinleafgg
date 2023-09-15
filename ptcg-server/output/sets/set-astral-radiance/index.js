@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setAstralRadiance = void 0;
 const gallade_1 = require("./gallade");
 const irida_1 = require("./irida");
+const origin_forme_palkia_v_1 = require("./origin-forme-palkia-v");
 const origin_forme_palkia_vstar_1 = require("./origin-forme-palkia-vstar");
 const radiant_greninja_1 = require("./radiant-greninja");
 const ralts_1 = require("./ralts");
@@ -12,4 +13,5 @@ exports.setAstralRadiance = [
     new gallade_1.Gallade(),
     new radiant_greninja_1.RadiantGreninja(),
     new origin_forme_palkia_vstar_1.OriginFormePalkiaVSTAR(),
+    new origin_forme_palkia_v_1.OriginFormePalkiaV(),
 ];

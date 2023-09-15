@@ -65,6 +65,10 @@ export class Mew extends PokemonCard {
       if (player.marker.hasMarker(this.MYSTERIOUS_TAIL_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
+
+      if (player.active.cards[0] !== this) {
+        return state; // Not active
+      }
   
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 6);

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, SpecialCondition, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike, State, Card, PowerType, StateUtils,
   CardTarget, PlayerType, MoveEnergyPrompt, SlotType} from '../../game';
 import { GameMessage } from '../../game/game-message';
@@ -40,8 +40,8 @@ function* useFireOff(next: Function, store: StoreLike, state: State, effect: Pow
     player.id, 
     GameMessage.MOVE_ENERGY_CARDS,
     PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE], // Only allow moving to active
-    { superType: SuperType.ENERGY }, 
+    [SlotType.BENCH], // Only allow moving to active
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' }, 
     { allowCancel: true, blockedMap }
   ), transfers => {
 
@@ -69,6 +69,8 @@ export class Armarouge extends PokemonCard {
   public regulationMark = 'G';
 
   public stage: Stage = Stage.BASIC;
+
+  //public evolvesFrom = 'Charcadet';
 
   public cardType: CardType = CardType.FIRE;
   

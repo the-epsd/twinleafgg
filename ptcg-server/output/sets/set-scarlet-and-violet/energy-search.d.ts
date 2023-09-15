@@ -4,6 +4,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 export declare class EnergySearch extends TrainerCard {
+    regulationMark: string;
     trainerType: TrainerType;
     set: string;
     name: string;

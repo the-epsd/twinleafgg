@@ -10,8 +10,9 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 class Houndoom extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
-        this.cardTag = [card_types_1.CardTag.SINGLE_STRIKE];
+        this.stage = card_types_1.Stage.STAGE_1;
+        this.evolvesFrom = 'Houndour';
+        this.tags = [card_types_1.CardTag.SINGLE_STRIKE];
         this.cardType = card_types_1.CardType.DARK;
         this.hp = 130;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
@@ -46,7 +47,7 @@ class Houndoom extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { allowCancel: true, min: 0, max: 1 }), transfers => {
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL, name: 'Single Strike Energy' }, { allowCancel: true, min: 0, max: 1 }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {

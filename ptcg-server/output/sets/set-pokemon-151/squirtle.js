@@ -13,6 +13,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Squirtle extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'G';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 60;

@@ -3,6 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Pidgeotex extends PokemonCard {
+    regulationMark: string;
     tags: CardTag[];
     stage: Stage;
     evolvesFrom: string;

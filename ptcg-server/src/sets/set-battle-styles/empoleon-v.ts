@@ -8,34 +8,32 @@ import { GameMessage } from '../../game/game-message';
 
 export class EmpoleonV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_EX ];
+  public tags = [ CardTag.POKEMON_V, CardTag.RAPID_STRIKE ];
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = CardType.WATER;
 
-  public hp: number = 170;
+  public hp: number = 210;
 
   public weakness = [{ type: CardType.LIGHTNING }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
   public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
 
   public powers = [{
-    name: 'Bide Barricade',
+    name: 'Emperor\'s Eyes',
     powerType: PowerType.ABILITY,
-    text: 'As long as this Pokemon is your Active Pokemon, each Pokemon in ' +
+    text: 'As long as this Pokémon is your Active Pokémon, each Pokémon in ' +
       'play, in each player\'s hand, and in each player\'s discard pile has ' +
-      'no Abilities (except for P Pokemon).'
+      'no Abilities (except for P Pokémon).'
   }];
 
   public attacks = [
     {
-      name: 'Y Cyclone',
-      cost: [ CardType.DARK, CardType.COLORLESS, CardType.COLORLESS ],
-      damage: 90,
-      text: 'Move an Energy from this Pokemon to 1 of your Benched Pokemon.'
+      name: 'Swirling Slice',
+      cost: [ CardType.WATER, CardType.COLORLESS, CardType.COLORLESS ],
+      damage: 130,
+      text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.'
     },
   ];
 
@@ -75,39 +73,40 @@ export class EmpoleonV extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
-      // Empoleon V is not active Pokemon
+
+      // Empoleon is not active Pokemon
       if (player.active.getPokemonCard() !== this
-          && opponent.active.getPokemonCard() !== this) {
+        && opponent.active.getPokemonCard() !== this) {
         return state;
       }
-  
-  
+
       const cardList = StateUtils.findCardList(state, effect.card);
       if (cardList instanceof PokemonCardList) {
         const checkPokemonType = new CheckPokemonTypeEffect(cardList);
         store.reduceEffect(state, checkPokemonType);
-        checkPokemonType.cardTypes;
       }
-  
+
+      // We are not blocking the Abilities from Non-Basic Pokemon
+      if (effect.card.stage !== Stage.BASIC) {
+        return state;
+      }
       // We are not blocking the Abilities from Pokemon V, VMAX or VSTAR
-      if (CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR) {
-        return state;
-      }
-  
-      // Try to reduce PowerEffect, to check if something is blocking our ability
+      //if (CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR || CardTag.POKEMON_EX || CardTag.POKEMON_GX || CardTag.POKEMON_ex || CardTag.POKEMON_LV_X || CardTag.RADIANT) {
+      //  return state;
+      //}
+
+      // Try reducing ability for each player  
       try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
+        const playerPowerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, playerPowerEffect);
+
       } catch {
-        return state;
+        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }
-  
-      throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      return state;
     }
-  
     return state;
   }
-  
 }
+
   

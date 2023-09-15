@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { Artazon } from './artazon';
 import { Baxcalibur } from './baxcalibur';
 import { BossOrders } from './boss-orders';
+import { BraveyCharm } from './bravery-charm';
 import { ChienPaoex } from './chien-pao-ex';
 import { DeliveryDrone } from './delivery-drone';
 import { Flamigo } from './flamigo';
@@ -22,4 +23,5 @@ export const setPaldeaEvolved: Card[] = [
   new Flamigo(),
   new Spiritomb(),
   new BossOrders(),
+  new BraveyCharm(),
 ];

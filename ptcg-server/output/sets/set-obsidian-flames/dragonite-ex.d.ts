@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Dragoniteex extends PokemonCard {
+    regulationMark: string;
     tags: CardTag[];
     stage: Stage;
     evolvesFrom: string;

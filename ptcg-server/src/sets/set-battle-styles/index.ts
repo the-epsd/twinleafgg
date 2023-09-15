@@ -22,6 +22,8 @@ import { Houndoom } from './houndoom';
 import { Bronzong } from './bronzong';
 import { TyranitarV } from './tyranitar-v';
 import { SingleStrikeEnergy } from './single-strike-energy';
+import { Houndour } from './houndour';
+import { UrnOfVitality } from './urn-of-vitality';
 
 export const setBattleStyles: Card[] = [
   new Bellsprout(),
@@ -47,4 +49,6 @@ export const setBattleStyles: Card[] = [
   new Bronzong(),
   new TyranitarV(),
   new SingleStrikeEnergy(),
+  new Houndour(),
+  new UrnOfVitality(),
 ];

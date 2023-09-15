@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, Card, CardTarget, ChoosePokemonPrompt, PlayerType, PokemonCardList, SlotType, GameError, ConfirmPrompt } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 
 export class ChienPaoex extends PokemonCard {
@@ -77,73 +78,40 @@ export class ChienPaoex extends PokemonCard {
 
     }
 
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
-      
-      let hasPokemonWithEnergy = false;
-      const blocked: CardTarget[] = [];
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
-          hasPokemonWithEnergy = true;
-        } else {
-          blocked.push(target);
-        }
-      });
-      
-      if (!hasPokemonWithEnergy) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-      
-      let targets: PokemonCardList[] = [];
+    
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
-        { min: 1, allowCancel: false, blocked }
-      ), results => {
-        targets = results || [];
-        
-  
-        let cards: Card[] = [];
+        [SlotType.ACTIVE, SlotType.BENCH], 
+        { min: 1, max: 6, allowCancel: false }
+      ), targets => {
         targets.forEach(target => {
+
           return store.prompt(state, new ChooseCardsPrompt(
             player.id,
-            GameMessage.CHOOSE_CARD_TO_DISCARD,
-            target,
-            { superType: SuperType.ENERGY },
-            { min: 0, max: 100, allowCancel: false }  
+            GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+            target, // Card source is target Pokemon
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+            { min: 1, allowCancel: false }
           ), selected => {
-            cards = cards.concat(selected);
-          });
-          return state;
-        });
-        
-
-        state = store.prompt(state, new ConfirmPrompt(
-          effect.player.id,
-          GameMessage.WANT_TO_USE_ABILITY,
-        ), wantToUse => {
-          if (wantToUse) {
-            return state;
-          }
-
- 
-
-          const damage = cards.length * 60;
-          effect.damage = damage;
+            const cards = selected || [];
+            if (cards.length > 0) {
     
-          targets.forEach(target => {
-            target.moveCardsTo(cards, player.discard); 
-          });
+              const discardEnergy = new DiscardCardsEffect(effect, cards);
+              discardEnergy.target = target;
+              store.reduceEffect(state, discardEnergy);
     
-          return state;
+              effect.damage = discardEnergy.cards.length * 60;
+            }
+          });
         });
-      
       });
     }
     return state;
   }
 }
-

@@ -74,7 +74,7 @@ export class Zapdosex extends PokemonCard {
 
         if (hasLightning) {
         // Set retreat cost to empty if Lightning attached
-          effect.cost = []; 
+          effect.cost = [ 0 ]; 
         }});
       return state;
     }

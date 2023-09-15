@@ -10,6 +10,8 @@ export class ElectricGenerator extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
+  public regulationMark = 'G';
+
   public set: string = 'SVI';
 
   public name: string = 'Electric Generator';

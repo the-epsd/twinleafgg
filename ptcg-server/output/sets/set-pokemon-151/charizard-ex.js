@@ -11,6 +11,7 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 class Charizardex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Charmeleon';

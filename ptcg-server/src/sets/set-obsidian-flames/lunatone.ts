@@ -53,8 +53,6 @@ export class Lunatone extends PokemonCard {
       }
     }
   
-    // Rest of effect handling
-  
     return state;
   
   }

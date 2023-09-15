@@ -4,6 +4,7 @@ exports.setScarletAndViolet = void 0;
 const crushing_hammer_1 = require("../set-black-and-white/crushing-hammer");
 const exp_share_1 = require("../set-black-and-white/exp-share");
 const armarouge_1 = require("./armarouge");
+const arven_1 = require("./arven");
 const electric_generator_1 = require("./electric-generator");
 const gardevoir_ex_1 = require("./gardevoir-ex");
 const hawlucha_1 = require("./hawlucha");
@@ -38,4 +39,5 @@ exports.setScarletAndViolet = [
     new hawlucha_1.Hawlucha(),
     new klefki_1.Klefki(),
     new electric_generator_1.ElectricGenerator(),
+    new arven_1.Arven(),
 ];

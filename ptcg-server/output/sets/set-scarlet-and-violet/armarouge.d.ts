@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Armarouge extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;

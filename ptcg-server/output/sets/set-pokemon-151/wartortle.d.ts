@@ -4,6 +4,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Squirtle extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;

@@ -10,10 +10,6 @@ export declare class EmpoleonV extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    resistance: {
-        type: CardType;
-        value: number;
-    }[];
     retreat: CardType[];
     powers: {
         name: string;
