@@ -56,19 +56,20 @@ class ChienPaoex extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 6, allowCancel: false }), targets => {
-                targets.forEach(target => {
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false }), targets => {
+                if (targets && targets.length > 0) {
+                    const target = targets[0];
                     return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, target, // Card source is target Pokemon
                     { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { min: 1, allowCancel: false }), selected => {
                         const cards = selected || [];
                         if (cards.length > 0) {
                             const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
-                            discardEnergy.target = target;
+                            discardEnergy.target = player.active;
                             store.reduceEffect(state, discardEnergy);
                             effect.damage = discardEnergy.cards.length * 60;
                         }
                     });
-                });
+                }
             });
         }
         return state;

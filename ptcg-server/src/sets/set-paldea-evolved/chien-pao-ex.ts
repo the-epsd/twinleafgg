@@ -88,9 +88,11 @@ export class ChienPaoex extends PokemonCard {
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH], 
-        { min: 1, max: 6, allowCancel: false }
+        { allowCancel: false }
       ), targets => {
-        targets.forEach(target => {
+        if (targets && targets.length > 0) {
+
+          const target = targets[0];
 
           return store.prompt(state, new ChooseCardsPrompt(
             player.id,
@@ -103,13 +105,14 @@ export class ChienPaoex extends PokemonCard {
             if (cards.length > 0) {
     
               const discardEnergy = new DiscardCardsEffect(effect, cards);
-              discardEnergy.target = target;
+              discardEnergy.target = player.active;
               store.reduceEffect(state, discardEnergy);
     
               effect.damage = discardEnergy.cards.length * 60;
             }
           });
-        });
+
+        }
       });
     }
     return state;
