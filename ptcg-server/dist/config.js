@@ -49,14 +49,14 @@ export const config = {
         // Default password for bot user
         defaultPassword: '',
         // Delay between every action that bot is making
-        actionDelay: 250,
+        actionDelay: 2500,
         // Simulate matches every X ticks of the scheduler
         // If set to 0, the bot matches are disabled
         botGamesIntervalCount: 0
     },
     sets: {
         scansDir: '',
-        scansUrl: 'https://assets.pokemon.com/assets/cms2/img/cards/web/{set}/{set}_EN_{fullName}.png'
+        scansUrl: '/scans/{set}/{name}.jpg'
     },
     email: {
         transporter: {

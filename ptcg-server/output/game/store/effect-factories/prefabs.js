@@ -30,7 +30,7 @@ function DISCARD_ENERGY_FROM_SELF(state, effect, store, type, amount) {
     const player = effect.player;
     const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
     state = store.reduceEffect(state, checkProvidedEnergy);
-    let energyList = [];
+    const energyList = [];
     for (let i = 0; i < amount; i++) {
         energyList.push(type);
     }

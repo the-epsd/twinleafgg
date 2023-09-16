@@ -4,8 +4,16 @@ export var CardTag;
     CardTag["POKEMON_EX"] = "EX";
     CardTag["POKEMON_GX"] = "GX";
     CardTag["POKEMON_LV_X"] = "LV_X";
+    CardTag["POKEMON_V"] = "V";
+    CardTag["POKEMON_VMAX"] = "VMAX";
+    CardTag["POKEMON_VSTAR"] = "VSTAR";
     CardTag["ACE_SPEC"] = "ACE_SPEC";
     CardTag["RADIANT"] = "RADIANT";
+    CardTag["FUSION_STRIKE"] = "FUSION_STRIKE";
+    CardTag["SINGLE_STRIKE"] = "SINGLE_STRIKE";
+    CardTag["RAPID_STRIKE"] = "RAPID_STRIKE";
+    CardTag["POKEMON_ex"] = "ex";
+    CardTag["FUTURE"] = "Future";
 })(CardTag || (CardTag = {}));
 export var SuperType;
 (function (SuperType) {
@@ -13,6 +21,7 @@ export var SuperType;
     SuperType[SuperType["POKEMON"] = 1] = "POKEMON";
     SuperType[SuperType["TRAINER"] = 2] = "TRAINER";
     SuperType[SuperType["ENERGY"] = 3] = "ENERGY";
+    SuperType[SuperType["ANY"] = 4] = "ANY";
 })(SuperType || (SuperType = {}));
 export var EnergyType;
 (function (EnergyType) {
@@ -39,6 +48,8 @@ export var Stage;
     Stage[Stage["BASIC"] = 2] = "BASIC";
     Stage[Stage["STAGE_1"] = 3] = "STAGE_1";
     Stage[Stage["STAGE_2"] = 4] = "STAGE_2";
+    Stage[Stage["VMAX"] = 5] = "VMAX";
+    Stage[Stage["VSTAR"] = 6] = "VSTAR";
 })(Stage || (Stage = {}));
 export var CardType;
 (function (CardType) {
@@ -64,3 +75,10 @@ export var SpecialCondition;
     SpecialCondition[SpecialCondition["POISONED"] = 3] = "POISONED";
     SpecialCondition[SpecialCondition["BURNED"] = 4] = "BURNED";
 })(SpecialCondition || (SpecialCondition = {}));
+export var Format;
+(function (Format) {
+    Format[Format["STANDARD"] = 0] = "STANDARD";
+    Format[Format["EXPANDED"] = 1] = "EXPANDED";
+    Format[Format["UNLIMITED"] = 2] = "UNLIMITED";
+    Format[Format["RETRO"] = 3] = "RETRO";
+})(Format || (Format = {}));

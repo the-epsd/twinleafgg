@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { State, StoreLike } from '../../game';
+import { GamePhase, State, StateUtils, StoreLike } from '../../game';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -41,15 +41,29 @@ export class IronHandsex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-  
-      if (effect instanceof KnockOutEffect) {
-        effect.prizeCount += 1; 
+    if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Do not activate between turns, or when it's not opponents turn.
+      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+        return state;
       }
-  
+
+      // Iron Hands wasn't attacking
+      const pokemonCard = opponent.active.getPokemonCard();
+      if (pokemonCard !== this) {
+        return state;
+      }
+
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+
+        effect.prizeCount += 1;
+        return state;
+      }
+
+      return state;
     }
-  
     return state;
-  
   }
 }

@@ -3,7 +3,7 @@ import { State } from '../..';
 import { Effect } from '../effects/effect';
 import { AttackEffect } from '../effects/game-effects';
 import { StoreLike } from '../../../game';
-import { CardType } from "../card/card-types";
+import { CardType } from '../card/card-types';
 export declare function WAS_ATTACK_USED(effect: Effect, index: number, user: PokemonCard): boolean;
 export declare function WAS_ABILITY_USED(effect: Effect, index: number, user: PokemonCard): boolean;
 export declare function DISCARD_STADIUM_IN_PLAY(state: State): State;

@@ -3,13 +3,23 @@ export declare enum CardTag {
     POKEMON_EX = "EX",
     POKEMON_GX = "GX",
     POKEMON_LV_X = "LV_X",
-    ACE_SPEC = "ACE_SPEC"
+    POKEMON_V = "V",
+    POKEMON_VMAX = "VMAX",
+    POKEMON_VSTAR = "VSTAR",
+    ACE_SPEC = "ACE_SPEC",
+    RADIANT = "RADIANT",
+    FUSION_STRIKE = "FUSION_STRIKE",
+    SINGLE_STRIKE = "SINGLE_STRIKE",
+    RAPID_STRIKE = "RAPID_STRIKE",
+    POKEMON_ex = "ex",
+    FUTURE = "Future"
 }
 export declare enum SuperType {
     NONE = 0,
     POKEMON = 1,
     TRAINER = 2,
-    ENERGY = 3
+    ENERGY = 3,
+    ANY = 4
 }
 export declare enum EnergyType {
     BASIC = 0,
@@ -31,7 +41,9 @@ export declare enum Stage {
     RESTORED = 1,
     BASIC = 2,
     STAGE_1 = 3,
-    STAGE_2 = 4
+    STAGE_2 = 4,
+    VMAX = 5,
+    VSTAR = 6
 }
 export declare enum CardType {
     ANY = 0,
@@ -58,5 +70,6 @@ export declare enum SpecialCondition {
 export declare enum Format {
     STANDARD = 0,
     EXPANDED = 1,
-    RETRO = 2,
+    UNLIMITED = 2,
+    RETRO = 3
 }

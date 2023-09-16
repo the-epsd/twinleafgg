@@ -5,6 +5,7 @@ export class TrainerCard extends Card {
         super(...arguments);
         this.superType = SuperType.TRAINER;
         this.trainerType = TrainerType.ITEM;
+        this.format = [];
         this.text = '';
     }
 }
