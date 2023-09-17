@@ -1,17 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { HealTargetEffect } from '../../game/store/effects/attack-effects';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-
-function* useLeechSeed(next: () => any, store: StoreLike, state: State, effect: AttackEffect) {
-  const player = effect.player;
-  const healTargetEffect = new HealTargetEffect(effect, 20);
-  healTargetEffect.target = player.active;
-  state = store.reduceEffect(state, healTargetEffect);
-  return state; 
-}
+import { WAS_ATTACK_USED, HEAL_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/effect-factories/prefabs';
 
 export class Ivysaur extends PokemonCard {
 
@@ -41,8 +32,8 @@ export class Ivysaur extends PokemonCard {
   public fullName: string = 'Ivysaur MEW 002';
   
   reduceEffect( store: StoreLike, state: State, effect: Effect) {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useLeechSeed(() => generator.next(), store, state, effect as AttackEffect);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      HEAL_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 20);
     }
     return state;
   }

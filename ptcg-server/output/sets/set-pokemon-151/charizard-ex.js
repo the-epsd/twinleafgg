@@ -4,7 +4,6 @@ exports.Charizardex = void 0;
 /* eslint-disable indent */
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const game_effects_1 = require("../../game/store/effects/game-effects");
 const prefabs_1 = require("../../game/store/effect-factories/prefabs");
 class Charizardex extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -37,16 +36,12 @@ class Charizardex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Charizard ex';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            const source = player.active;
-            // Check if source Pokemon has damage
-            const damage = source.damage;
-            if (damage > 0) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
+            if (prefabs_1.THIS_POKEMON_HAS_DAMAGE_COUNTERS(effect, this)) {
                 effect.damage += 100;
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                prefabs_1.DISCARD_ENERGY_FROM_SELF(state, effect, store, card_types_1.CardType.COLORLESS, 3);
+            if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
+                prefabs_1.DISCARD_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.COLORLESS, 3);
             }
             return state;
         }

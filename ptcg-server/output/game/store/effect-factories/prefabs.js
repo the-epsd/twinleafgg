@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DISCARD_ENERGY_FROM_SELF = exports.DISCARD_STADIUM_IN_PLAY = exports.WAS_ABILITY_USED = exports.WAS_ATTACK_USED = void 0;
+exports.THIS_POKEMON_HAS_DAMAGE_COUNTERS = exports.HEAL_DAMAGE_FROM_THIS_POKEMON = exports.FLIP_IF_HEADS = exports.DISCARD_ENERGY_FROM_THIS_POKEMON = exports.DISCARD_STADIUM_IN_PLAY = exports.WAS_ABILITY_USED = exports.WAS_ATTACK_USED = void 0;
 const __1 = require("../..");
 const game_effects_1 = require("../effects/game-effects");
 const attack_effects_1 = require("../effects/attack-effects");
+const attack_effects_2 = require("../effects/attack-effects");
 const check_effects_1 = require("../effects/check-effects");
 const game_1 = require("../../../game");
 function WAS_ATTACK_USED(effect, index, user) {
@@ -26,7 +27,7 @@ function DISCARD_STADIUM_IN_PLAY(state) {
     return state;
 }
 exports.DISCARD_STADIUM_IN_PLAY = DISCARD_STADIUM_IN_PLAY;
-function DISCARD_ENERGY_FROM_SELF(state, effect, store, type, amount) {
+function DISCARD_ENERGY_FROM_THIS_POKEMON(state, effect, store, type, amount) {
     const player = effect.player;
     const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
     state = store.reduceEffect(state, checkProvidedEnergy);
@@ -36,9 +37,32 @@ function DISCARD_ENERGY_FROM_SELF(state, effect, store, type, amount) {
     }
     state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, energyList, { allowCancel: false }), energy => {
         const cards = (energy || []).map(e => e.card);
-        const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+        const discardEnergy = new attack_effects_2.DiscardCardsEffect(effect, cards);
         discardEnergy.target = player.active;
         return store.reduceEffect(state, discardEnergy);
     });
 }
-exports.DISCARD_ENERGY_FROM_SELF = DISCARD_ENERGY_FROM_SELF;
+exports.DISCARD_ENERGY_FROM_THIS_POKEMON = DISCARD_ENERGY_FROM_THIS_POKEMON;
+function FLIP_IF_HEADS() {
+}
+exports.FLIP_IF_HEADS = FLIP_IF_HEADS;
+function HEAL_DAMAGE_FROM_THIS_POKEMON(effect, store, state, damage) {
+    const player = effect.player;
+    const healTargetEffect = new attack_effects_1.HealTargetEffect(effect, damage);
+    healTargetEffect.target = player.active;
+    state = store.reduceEffect(state, healTargetEffect);
+    return state;
+}
+exports.HEAL_DAMAGE_FROM_THIS_POKEMON = HEAL_DAMAGE_FROM_THIS_POKEMON;
+function THIS_POKEMON_HAS_DAMAGE_COUNTERS(effect, user) {
+    // TODO: Would like to check if Pokemon has damage without needing the effect
+    const player = effect.player;
+    const source = player.active;
+    // Check if source Pokemon has damage
+    const damage = source.damage;
+    if (damage > 0) {
+        return true;
+    }
+    return false;
+}
+exports.THIS_POKEMON_HAS_DAMAGE_COUNTERS = THIS_POKEMON_HAS_DAMAGE_COUNTERS;

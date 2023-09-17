@@ -9,11 +9,11 @@ import { StoreLike, Card, ChooseEnergyPrompt, GameMessage } from '../../../game'
 import {CardType} from '../card/card-types';
 
 export function WAS_ATTACK_USED(effect: Effect, index: number, user: PokemonCard): effect is AttackEffect{
-  return effect instanceof AttackEffect && effect.attack === user.attacks[0]
+  return effect instanceof AttackEffect && effect.attack === user.attacks[0];
 }
 
 export function WAS_ABILITY_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect{
-  return effect instanceof PowerEffect && effect.power === user.powers[0]
+  return effect instanceof PowerEffect && effect.power === user.powers[0];
 }
 
 export function DISCARD_STADIUM_IN_PLAY(state: State){
@@ -57,9 +57,9 @@ export function FLIP_IF_HEADS(){
 
 }
 
-export function HEAL_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, amount: number){
+export function HEAL_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, damage: number){
   const player = effect.player;
-  const healTargetEffect = new HealTargetEffect(effect, amount);
+  const healTargetEffect = new HealTargetEffect(effect, damage);
   healTargetEffect.target = player.active;
   state = store.reduceEffect(state, healTargetEffect);
   return state; 
@@ -70,10 +70,10 @@ export function THIS_POKEMON_HAS_DAMAGE_COUNTERS(effect: AttackEffect, user: Pok
   const player = effect.player;
   const source = player.active;
   
-    // Check if source Pokemon has damage
-    const damage = source.damage;
-    if (damage > 0) {
-      return true;
-    }
-    return false;
+  // Check if source Pokemon has damage
+  const damage = source.damage;
+  if (damage > 0) {
+    return true;
+  }
+  return false;
 }

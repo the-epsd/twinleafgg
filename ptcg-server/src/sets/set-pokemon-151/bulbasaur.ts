@@ -1,11 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { HealTargetEffect } from '../../game/store/effects/attack-effects';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/effect-factories/prefabs';
-import { HEAL_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/effect-factories/prefabs';
+import { HEAL_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../game/store/effect-factories/prefabs';
 
 export class Bulbasaur extends PokemonCard {
 

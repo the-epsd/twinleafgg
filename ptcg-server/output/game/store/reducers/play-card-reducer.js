@@ -39,12 +39,19 @@ function playCardReducer(store, state, action) {
                 if (!(target instanceof pokemon_card_list_1.PokemonCardList) || target.cards.length === 0) {
                     throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
                 }
-                if (player.energyPlayedTurn === state.turn) {
-                    throw new game_error_1.GameError(game_message_1.GameMessage.ENERGY_ALREADY_ATTACHED);
+                if (state.rules.firstTurnUseSupporter) {
+                    // Allow multiple energy attachments per turn
+                    const effect = new play_card_effects_1.AttachEnergyEffect(player, handCard, target);
+                    return store.reduceEffect(state, effect);
                 }
-                player.energyPlayedTurn = state.turn;
-                const effect = new play_card_effects_1.AttachEnergyEffect(player, handCard, target);
-                return store.reduceEffect(state, effect);
+                else {
+                    if (player.energyPlayedTurn === state.turn) {
+                        throw new game_error_1.GameError(game_message_1.GameMessage.ENERGY_ALREADY_ATTACHED);
+                    }
+                    player.energyPlayedTurn = state.turn;
+                    const effect = new play_card_effects_1.AttachEnergyEffect(player, handCard, target);
+                    return store.reduceEffect(state, effect);
+                }
             }
             if (handCard instanceof pokemon_card_1.PokemonCard) {
                 const target = findCardList(state, action.target);
