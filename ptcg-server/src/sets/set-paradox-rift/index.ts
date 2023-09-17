@@ -8,8 +8,8 @@ import { TechnoRadar } from './techno-radar';
 export const setParadoxRift: Card[] = [
   new Gholdengoex(),
   new Gimmighoul(),
-  new IronHandsex(),
   new Mewtwoex(),
   new EarthenVessel(),
   new TechnoRadar(),
+  new IronHandsex(),
 ];

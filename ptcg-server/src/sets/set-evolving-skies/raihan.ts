@@ -39,7 +39,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // This will prevent unblocked supporter to appear in the discard pile
   effect.preventDefault = true;
   
-  yield store.prompt(state, new AttachEnergyPrompt(
+  return store.prompt(state, new AttachEnergyPrompt(
     player.id,
     GameMessage.ATTACH_ENERGY_TO_BENCH,
     player.discard,
@@ -53,27 +53,30 @@ function* playCard(next: Function, store: StoreLike, state: State,
         const target = StateUtils.getTarget(state, player, transfer.to);
         player.discard.moveCardTo(transfer.card, target);
       }
+    
+  
+      let cards: Card[] = [];
+      return store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        player.deck,
+        {},
+        {min: 1, max: 1, allowCancel: false}
+      ), selected => {
+        cards = selected || [];
+        next();
+      
+  
+        player.hand.moveCardTo(self, player.supporter);
+        player.deck.moveCardsTo(cards, player.hand);
+  
+  
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
+      });
     }
-  });
-  
-  let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    {},
-    {min: 1, max: 1, allowCancel: false}
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
-  
-  player.hand.moveCardTo(self, player.supporter);
-  player.deck.moveCardsTo(cards, player.hand);
-  
-  
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
+    return state;
   });
 }
 

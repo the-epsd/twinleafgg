@@ -24,6 +24,7 @@ import { TyranitarV } from './tyranitar-v';
 import { SingleStrikeEnergy } from './single-strike-energy';
 import { Houndour } from './houndour';
 import { UrnOfVitality } from './urn-of-vitality';
+import { EscapeRope } from './escape-rope';
 
 export const setBattleStyles: Card[] = [
   new Bellsprout(),
@@ -51,4 +52,5 @@ export const setBattleStyles: Card[] = [
   new SingleStrikeEnergy(),
   new Houndour(),
   new UrnOfVitality(),
+  new EscapeRope(),
 ];

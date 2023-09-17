@@ -26,6 +26,7 @@ const tyranitar_v_1 = require("./tyranitar-v");
 const single_strike_energy_1 = require("./single-strike-energy");
 const houndour_1 = require("./houndour");
 const urn_of_vitality_1 = require("./urn-of-vitality");
+const escape_rope_1 = require("./escape-rope");
 exports.setBattleStyles = [
     new bellsprout_1.Bellsprout(),
     new weepinbell_1.Weepinbell(),
@@ -52,4 +53,5 @@ exports.setBattleStyles = [
     new single_strike_energy_1.SingleStrikeEnergy(),
     new houndour_1.Houndour(),
     new urn_of_vitality_1.UrnOfVitality(),
+    new escape_rope_1.EscapeRope(),
 ];
