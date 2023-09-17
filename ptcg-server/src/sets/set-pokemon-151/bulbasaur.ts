@@ -4,6 +4,8 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { HealTargetEffect } from '../../game/store/effects/attack-effects';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/effect-factories/prefabs';
+import { HEAL_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/effect-factories/prefabs';
 
 function* useLeechSeed(next: () => any, store: StoreLike, state: State, effect: AttackEffect) {
   const player = effect.player;
@@ -35,8 +37,8 @@ export class Bulbasaur extends PokemonCard {
   public fullName: string = 'Bulbasaur MEW 001';
   
   reduceEffect( store: StoreLike, state: State, effect: Effect) {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useLeechSeed(() => generator.next(), store, state, effect as AttackEffect);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      HEAL_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 20);
     }
     return state;
   }

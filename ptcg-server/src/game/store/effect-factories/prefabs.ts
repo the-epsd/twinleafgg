@@ -2,6 +2,7 @@ import { PokemonCard } from '../../store/card/pokemon-card';
 import { State, StateUtils } from '../..';
 import { Effect } from '../effects/effect';
 import { AttackEffect, PowerEffect } from '../effects/game-effects';
+import { HealTargetEffect } from '../effects/attack-effects';
 import { DiscardCardsEffect } from '../effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { StoreLike, Card, ChooseEnergyPrompt, GameMessage } from '../../../game';
@@ -18,7 +19,6 @@ export function WAS_ABILITY_USED(effect: Effect, index: number, user: PokemonCar
 export function DISCARD_STADIUM_IN_PLAY(state: State){
   const stadiumCard = StateUtils.getStadiumCard(state);
   if (stadiumCard !== undefined) {
-  
   
     // Discard Stadium
     const cardList = StateUtils.findCardList(state, stadiumCard);
@@ -57,8 +57,12 @@ export function FLIP_IF_HEADS(){
 
 }
 
-export function HEAL_FROM_THIS_POKEMON(){
-
+export function HEAL_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, amount: number){
+  const player = effect.player;
+  const healTargetEffect = new HealTargetEffect(effect, amount);
+  healTargetEffect.target = player.active;
+  state = store.reduceEffect(state, healTargetEffect);
+  return state; 
 }
 
 export function THIS_POKEMON_HAS_DAMAGE_COUNTERS(effect: AttackEffect, user: PokemonCard){
