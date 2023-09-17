@@ -1,6 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 export declare class Alakazamex extends PokemonCard {
+    regulationMark: string;
     tags: CardTag[];
     stage: Stage;
     cardType: CardType;

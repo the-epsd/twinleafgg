@@ -10038,3 +10038,4 @@ ptcg-server/database.sq3
 ptcg-server/scans/.DS_Store
 ptcg-server/database.sq3
 .DS_Store
+ptcg-server/node_modules/.cache

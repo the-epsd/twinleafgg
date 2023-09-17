@@ -6,6 +6,7 @@ import { CollapsedStadium } from './collapsed-stadium';
 import { DoubleTurboEnergy } from './double-turbo-energy';
 import { LumineonV } from './lumineon-v';
 import { Manaphy } from './manaphy';
+import { RaichuV } from './raichu-v';
 import { RaikouV } from './raikou-v';
 
 export const setBrilliantStars: Card[] = [
@@ -17,4 +18,5 @@ export const setBrilliantStars: Card[] = [
   new DoubleTurboEnergy(),
   new RaikouV(),
   new LumineonV(),
+  new RaichuV(),
 ];

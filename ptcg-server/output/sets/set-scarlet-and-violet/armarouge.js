@@ -31,8 +31,8 @@ function* useFireOff(next, store, state, effect) {
             blockedMap.push({ source: target, blocked });
         }
     });
-    return store.prompt(state, new game_1.MoveEnergyPrompt(player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], // Only allow moving to active
-    { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, blockedMap }), transfers => {
+    return store.prompt(state, new game_1.MoveEnergyPrompt(player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], // Only allow moving to active
+    { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: true, blockedMap }), transfers => {
         if (!transfers) {
             return;
         }
@@ -47,7 +47,9 @@ function* useFireOff(next, store, state, effect) {
 class Armarouge extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'G';
         this.stage = card_types_1.Stage.BASIC;
+        //public evolvesFrom = 'Charcadet';
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 130;
         this.weakness = [{ type: card_types_1.CardType.WATER }];

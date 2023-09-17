@@ -4,7 +4,7 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class SingleStrikeUrshifuV extends PokemonCard {
     stage: Stage;
-    cardTag: CardTag[];
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
@@ -20,5 +20,7 @@ export declare class SingleStrikeUrshifuV extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    WITHDRAW_MARKER: string;
+    CLEAR_WITHDRAW_MARKER: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

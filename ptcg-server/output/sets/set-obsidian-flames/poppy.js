@@ -9,6 +9,7 @@ const game_1 = require("../../game");
 class Poppy extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'OBF';
         this.name = 'Poppy';

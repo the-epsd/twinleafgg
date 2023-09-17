@@ -13,6 +13,7 @@ const pokemon_card_list_1 = require("../../game/store/state/pokemon-card-list");
 class ExpShare extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'SVI';
         this.name = 'Exp Share';

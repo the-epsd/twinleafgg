@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils,
   GameError, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -72,14 +72,32 @@ export class Cherrim extends PokemonCard {
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
+
           const target = StateUtils.getTarget(state, player, transfer.to);
-          const energyCard = transfer.card as EnergyCard;
-          const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
-          store.reduceEffect(state, attachEnergyEffect);
+
+          if (target.cards[0].tags.includes(CardTag.POKEMON_V) && 
+          target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) &&
+          target.cards[0].tags.includes(CardTag.POKEMON_VMAX) && 
+          target.cards[0].tags.includes(CardTag.POKEMON_EX) &&
+          target.cards[0].tags.includes(CardTag.POKEMON_GX) &&
+          target.cards[0].tags.includes(CardTag.POKEMON_LV_X) &&
+          target.cards[0].tags.includes(CardTag.POKEMON_ex) &&
+          target.cards[0].tags.includes(CardTag.RADIANT)) {
+            throw new GameError(GameMessage.INVALID_TARGET);
+          }
+          else {
+
+            const energyCard = transfer.card as EnergyCard;
+            const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+            store.reduceEffect(state, attachEnergyEffect);
+
+          }
+          return state;
         }
+
+        return state;
       });
     }
-
     return state;
   }
 

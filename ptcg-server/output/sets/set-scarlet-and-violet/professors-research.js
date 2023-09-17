@@ -9,6 +9,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 class ProfessorsResearch extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'SVI';
         this.name = 'Professor\'s Research';

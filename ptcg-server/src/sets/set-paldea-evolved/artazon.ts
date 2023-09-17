@@ -58,9 +58,7 @@ export class Artazon extends TrainerCard {
       cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
       cards[0].tags.includes(CardTag.POKEMON_VMAX)  ||
       cards[0].tags.includes(CardTag.POKEMON_EX)    ||
-      cards[0].tags.includes(CardTag.RADIANT)
-        ) 
-      
+      cards[0].tags.includes(CardTag.RADIANT)) 
         {
           throw new GameError(GameMessage.INVALID_TARGET);
         }

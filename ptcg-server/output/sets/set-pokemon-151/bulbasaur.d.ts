@@ -3,6 +3,7 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Bulbasaur extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;

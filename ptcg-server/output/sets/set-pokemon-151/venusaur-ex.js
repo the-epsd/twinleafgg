@@ -8,6 +8,7 @@ const game_1 = require("../../game");
 class Venusaurex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.GRASS;

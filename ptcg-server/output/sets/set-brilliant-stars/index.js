@@ -8,6 +8,7 @@ const collapsed_stadium_1 = require("./collapsed-stadium");
 const double_turbo_energy_1 = require("./double-turbo-energy");
 const lumineon_v_1 = require("./lumineon-v");
 const manaphy_1 = require("./manaphy");
+const raichu_v_1 = require("./raichu-v");
 const raikou_v_1 = require("./raikou-v");
 exports.setBrilliantStars = [
     new collapsed_stadium_1.CollapsedStadium(),
@@ -18,4 +19,5 @@ exports.setBrilliantStars = [
     new double_turbo_energy_1.DoubleTurboEnergy(),
     new raikou_v_1.RaikouV(),
     new lumineon_v_1.LumineonV(),
+    new raichu_v_1.RaichuV(),
 ];

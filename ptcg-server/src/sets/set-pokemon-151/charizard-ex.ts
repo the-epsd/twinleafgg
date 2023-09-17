@@ -1,8 +1,7 @@
 /* eslint-disable indent */
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, ChooseEnergyPrompt, GameMessage
-   } from '../../game';
+import { StoreLike, State   } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';

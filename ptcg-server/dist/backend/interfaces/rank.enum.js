@@ -3,6 +3,7 @@ export var Rank;
     Rank["JUNIOR"] = "JUNIOR";
     Rank["SENIOR"] = "SENIOR";
     Rank["MASTER"] = "MASTER";
+    Rank["ADMIN"] = "ADMIN";
 })(Rank || (Rank = {}));
 export const rankLevels = [
     { points: 0, rank: Rank.JUNIOR },

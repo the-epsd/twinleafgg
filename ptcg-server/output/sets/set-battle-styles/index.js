@@ -24,6 +24,8 @@ const houndoom_1 = require("./houndoom");
 const bronzong_1 = require("./bronzong");
 const tyranitar_v_1 = require("./tyranitar-v");
 const single_strike_energy_1 = require("./single-strike-energy");
+const houndour_1 = require("./houndour");
+const urn_of_vitality_1 = require("./urn-of-vitality");
 exports.setBattleStyles = [
     new bellsprout_1.Bellsprout(),
     new weepinbell_1.Weepinbell(),
@@ -48,4 +50,6 @@ exports.setBattleStyles = [
     new bronzong_1.Bronzong(),
     new tyranitar_v_1.TyranitarV(),
     new single_strike_energy_1.SingleStrikeEnergy(),
+    new houndour_1.Houndour(),
+    new urn_of_vitality_1.UrnOfVitality(),
 ];

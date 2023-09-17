@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
 export declare class Spiritomb extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;

@@ -19,7 +19,12 @@ export class Player {
         this.stadiumPlayedTurn = 0;
         this.stadiumUsedTurn = 0;
         this.marker = new Marker();
+        this.attackMarker = new Marker();
+        this.abilityMarker = new Marker();
         this.avatarName = '';
+    }
+    prompt(state, arg1) {
+        throw new Error('Method not implemented.');
     }
     getPrizeLeft() {
         return this.prizes.reduce((left, p) => left + p.cards.length, 0);

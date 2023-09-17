@@ -17,6 +17,7 @@ import { PutDamagePrompt } from '../store/prompts/put-damage-prompt';
 import { SelectPrompt } from '../store/prompts/select-prompt';
 import { ShowCardsPrompt } from '../store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../store/prompts/shuffle-prompt';
+import { ShuffleHandPrompt } from '../store/prompts/shuffle-hand-prompt';
 export class PromptSerializer {
     constructor() {
         this.rows = [
@@ -37,6 +38,7 @@ export class PromptSerializer {
             { classValue: SelectPrompt, type: 'SelectPrompt' },
             { classValue: ShowCardsPrompt, type: 'ShowCardsPrompt' },
             { classValue: ShuffleDeckPrompt, type: 'ShuffleDeckPrompt' },
+            { classValue: ShuffleHandPrompt, type: 'ShuffleHandPrompt' }
         ];
         this.types = this.rows.map(p => p.type);
         this.classes = this.rows.map(p => p.classValue);

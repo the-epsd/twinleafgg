@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Pokegear30 extends TrainerCard {
+    regulationMark: string;
     trainerType: TrainerType;
     set: string;
     name: string;

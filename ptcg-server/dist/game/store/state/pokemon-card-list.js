@@ -33,6 +33,9 @@ export class PokemonCardList extends CardList {
         }
         return pokemons[0].stage === Stage.BASIC;
     }
+    clearAttackEffects() {
+        this.marker.markers = [];
+    }
     clearEffects() {
         this.marker.markers = [];
         this.specialConditions = [];

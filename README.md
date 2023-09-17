@@ -60,20 +60,5 @@ The command above will start the application in the debug mode at http://localho
 
 Foundation: Ryu + TheEPSD
 
-
-### Pokemon TCG Sim Team:
-Joey Myerscough
-
-Jake Gearhart
-
-Jared Grimes
-
-Charlie Lockyer
-
-Robin Schulz
-
-Daniel Middleton
-
-
 ### License
 MIT

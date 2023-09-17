@@ -88,6 +88,7 @@ function* playCard(next, store, state, effect) {
 class RareCandy extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
         this.name = 'Rare Candy';

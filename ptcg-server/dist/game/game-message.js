@@ -8,6 +8,7 @@ export var GameCoreError;
     GameCoreError["ERROR_INVALID_STATE"] = "ERROR_INVALID_STATE";
     GameCoreError["ERROR_SERIALIZER"] = "ERROR_SERIALIZER";
     GameCoreError["ERROR_SIMULATOR_NOT_STABLE"] = "ERROR_SIMULATOR_NOT_STABLE";
+    GameCoreError["MUST_BE_IN_ACTIVE_SPOT"] = "MUST_BE_IN_ACTIVE_SPOT";
 })(GameCoreError || (GameCoreError = {}));
 export var GameStoreMessage;
 (function (GameStoreMessage) {
@@ -56,6 +57,7 @@ export var GameCardMessage;
 (function (GameCardMessage) {
     GameCardMessage["ALL_FIRE_ENERGIES"] = "ALL_FIRE_ENERGIES";
     GameCardMessage["ALL_LIGHTNING_ENERGIES"] = "ALL_LIGHTNING_ENERGIES";
+    GameCardMessage["ALL_WATER_ENERGIES"] = "ALL_WATER_ENERGIES";
     GameCardMessage["ATTACH_ENERGY_CARDS"] = "ATTACH_ENERGY_CARDS";
     GameCardMessage["ATTACH_ENERGY_TO_ACTIVE"] = "ATTACH_ENERGY_TO_BENCH";
     GameCardMessage["ATTACH_ENERGY_TO_BENCH"] = "ATTACH_ENERGY_TO_BENCH";
@@ -71,6 +73,7 @@ export var GameCardMessage;
     GameCardMessage["CHOOSE_CARD_TO_EVOLVE"] = "CHOOSE_CARD_TO_EVOLVE";
     GameCardMessage["CHOOSE_CARD_TO_PUT_ONTO_BENCH"] = "CHOOSE_CARD_TO_PUT_ONTO_BENCH";
     GameCardMessage["CHOOSE_ENERGIES_TO_DISCARD"] = "CHOOSE_ENERGIES_TO_DISCARD";
+    GameCardMessage["CHOOSE_ENERGIES_TO_HAND"] = "CHOOSE_ENERGIES_TO_HAND";
     GameCardMessage["CHOOSE_POKEMON_TO_ATTACH_CARDS"] = "CHOOSE_POKEMON_TO_ATTACH_CARDS";
     GameCardMessage["CHOOSE_POKEMON_TO_DAMAGE"] = "CHOOSE_POKEMON_TO_DAMAGE";
     GameCardMessage["CHOOSE_POKEMON_TO_DISCARD"] = "CHOOSE_POKEMON_TO_DISCARD";

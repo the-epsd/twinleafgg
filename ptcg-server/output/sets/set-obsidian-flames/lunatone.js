@@ -8,6 +8,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Lunatone extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'G';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 90;
@@ -39,7 +40,6 @@ class Lunatone extends pokemon_card_1.PokemonCard {
                 return state;
             }
         }
-        // Rest of effect handling
         return state;
     }
 }

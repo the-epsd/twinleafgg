@@ -4,7 +4,7 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class TyranitarV extends PokemonCard {
     stage: Stage;
-    cardTag: CardTag[];
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {

@@ -1,7 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { DISCARD_STADIUM_IN_PLAY, WAS_ATTACK_USED } from '../../game/store/effect-factories/prefabs';
 
@@ -25,7 +24,7 @@ export class Charmander extends PokemonCard {
     { name: 'Steady Firebreathing', cost: [CardType.FIRE, CardType.FIRE], damage: 30, text: '' }
   ];
 
-  public set: string = 'MEW';
+  public set: string = '151';
 
   public name: string = 'Charmander';
 
