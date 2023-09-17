@@ -32,7 +32,6 @@ export class Charmander extends PokemonCard {
   public fullName: string = 'Charmander MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DISCARD_STADIUM_IN_PLAY(state);
     }

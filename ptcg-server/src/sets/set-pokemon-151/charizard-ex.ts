@@ -7,7 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { DISCARD_ENERGY_FROM_SELF } from '../../game/store/effect-factories/prefabs';
+import { DISCARD_ENERGY_FROM_THIS_POKEMON, THIS_POKEMON_HAS_DAMAGE_COUNTERS, WAS_ATTACK_USED } from '../../game/store/effect-factories/prefabs';
 
 export class Charizardex extends PokemonCard {
 
@@ -51,19 +51,14 @@ export class Charizardex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-  if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+  if (WAS_ATTACK_USED(effect, 0, this)) {
 
-    const player = effect.player;
-    const source = player.active;
-  
-    // Check if source Pokemon has damage
-    const damage = source.damage;
-    if (damage > 0) {
-      effect.damage += 100; 
+    if (THIS_POKEMON_HAS_DAMAGE_COUNTERS(effect, this)) {
+      effect.damage += 100;
     }
   
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        DISCARD_ENERGY_FROM_SELF(state, effect, store, CardType.COLORLESS, 3);
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+        DISCARD_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 3);
       }
   
       return state;
