@@ -1,4 +1,7 @@
 import {CardType} from './card-types';
+import {StoreLike} from '../store-like';
+import {State} from '../state/state';
+import {AttackEffect, PowerEffect} from '../effects/game-effects';
 
 export interface Weakness {
   type: CardType;
@@ -15,6 +18,7 @@ export interface Attack {
   damage: number;
   name: string;
   text: string;
+  effect?: (store: StoreLike, state: State, effect: AttackEffect) => void;
 }
 
 export enum PowerType {
@@ -28,6 +32,7 @@ export interface Power {
   name: string;
   powerType: PowerType;
   text: string;
+  effect?: (store: StoreLike, state: State, effect: PowerEffect) => void;
   useWhenInPlay?: boolean;
   useFromHand?: boolean;
   useFromDiscard?: boolean;

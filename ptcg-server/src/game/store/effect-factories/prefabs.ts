@@ -6,7 +6,7 @@ import { HealTargetEffect } from '../effects/attack-effects';
 import { DiscardCardsEffect } from '../effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { StoreLike, Card, ChooseEnergyPrompt, GameMessage } from '../../../game';
-import {CardType} from '../card/card-types';
+import { CardType } from '../card/card-types';
 
 export function WAS_ATTACK_USED(effect: Effect, index: number, user: PokemonCard): effect is AttackEffect{
   return effect instanceof AttackEffect && effect.attack === user.attacks[0];
@@ -29,7 +29,7 @@ export function DISCARD_STADIUM_IN_PLAY(state: State){
   return state;
 }
 
-export function DISCARD_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackEffect, store: StoreLike, type: CardType, amount: number){
+export function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackEffect, store: StoreLike, type: CardType, amount: number){
   const player = effect.player;
   const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
   state = store.reduceEffect(state, checkProvidedEnergy);
@@ -57,7 +57,7 @@ export function FLIP_IF_HEADS(){
 
 }
 
-export function HEAL_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, damage: number){
+export function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, damage: number){
   const player = effect.player;
   const healTargetEffect = new HealTargetEffect(effect, damage);
   healTargetEffect.target = player.active;
@@ -65,7 +65,7 @@ export function HEAL_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: Store
   return state; 
 }
 
-export function THIS_POKEMON_HAS_DAMAGE_COUNTERS(effect: AttackEffect, user: PokemonCard){
+export function THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect: AttackEffect, user: PokemonCard){
   // TODO: Would like to check if Pokemon has damage without needing the effect
   const player = effect.player;
   const source = player.active;

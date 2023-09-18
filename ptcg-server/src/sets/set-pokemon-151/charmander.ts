@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-import { DISCARD_STADIUM_IN_PLAY, WAS_ATTACK_USED } from '../../game/store/effect-factories/prefabs';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DISCARD_STADIUM_IN_PLAY } from '../../game/store/effect-factories/prefabs';
 
 
 export class Charmander extends PokemonCard {
@@ -20,8 +20,20 @@ export class Charmander extends PokemonCard {
   public retreat = [ CardType.COLORLESS ];
 
   public attacks = [
-    { name: 'Blazing Destruction', cost: [CardType.FIRE], damage: 0, text: 'Discard a Stadium in play.' },
-    { name: 'Steady Firebreathing', cost: [CardType.FIRE, CardType.FIRE], damage: 30, text: '' }
+    { name: 'Blazing Destruction',
+      cost: [CardType.FIRE],
+      damage: 0,
+      text: 'Discard a Stadium in play.',
+      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
+        DISCARD_STADIUM_IN_PLAY(state);
+      },
+    },
+    { name: 'Steady Firebreathing',
+      cost: [CardType.FIRE, CardType.FIRE],
+      damage: 30,
+      text: '',
+      effect: undefined
+    }
   ];
 
   public set: string = '151';
@@ -30,10 +42,4 @@ export class Charmander extends PokemonCard {
 
   public fullName: string = 'Charmander MEW';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      DISCARD_STADIUM_IN_PLAY(state);
-    }
-    return state;
-  }
 }

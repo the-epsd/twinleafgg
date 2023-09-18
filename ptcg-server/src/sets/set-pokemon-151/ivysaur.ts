@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, HEAL_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/effect-factories/prefabs';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/effect-factories/prefabs';
 
 export class Ivysaur extends PokemonCard {
 
@@ -18,23 +18,21 @@ export class Ivysaur extends PokemonCard {
       name: 'Leech Seed',
       cost: [CardType.GRASS, CardType.COLORLESS],
       damage: 30,
-      text: 'Heal 20 damage from this Pokémon.'
+      text: 'Heal 20 damage from this Pokémon.',
+      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
+        HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 20);
+      }
     },
     {
       name: 'Vine Whip',
       cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
       damage: 80,
-      text: ''
+      text: '',
+      effect: undefined
     }
   ];
   public set: string = '151';
   public name: string = 'Ivysaur';
   public fullName: string = 'Ivysaur MEW 002';
   
-  reduceEffect( store: StoreLike, state: State, effect: Effect) {
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      HEAL_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 20);
-    }
-    return state;
-  }
 }

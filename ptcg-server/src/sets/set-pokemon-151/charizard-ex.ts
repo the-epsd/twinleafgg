@@ -2,8 +2,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State   } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-import { DISCARD_ENERGY_FROM_THIS_POKEMON, THIS_POKEMON_HAS_DAMAGE_COUNTERS, WAS_ATTACK_USED } from '../../game/store/effect-factories/prefabs';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON, THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT } from '../../game/store/effect-factories/prefabs';
 
 export class Charizardex extends PokemonCard {
 
@@ -29,14 +29,22 @@ export class Charizardex extends PokemonCard {
       cost: [ CardType.FIRE ],
       damage: 60,
       text: 'If this Pokémon has any damage counters on it, this attack ' +
-      'does 100 more damage.'
+      'does 100 more damage.',
+      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
+        if (THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect, this)) {
+          effect.damage += 100;
+        }
+      }
     },
     {
-        name: 'Explosive Vortex',
-        cost: [ CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.FIRE ],
-        damage: 330,
-        text: 'Discard 3 Energy from this Pokémon. '
-      },
+      name: 'Explosive Vortex',
+      cost: [ CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.FIRE ],
+      damage: 330,
+      text: 'Discard 3 Energy from this Pokémon. ',
+      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
+        DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 3);
+      }
+    },
   ];
 
   public set: string = '151';
@@ -45,21 +53,4 @@ export class Charizardex extends PokemonCard {
 
   public fullName: string = 'Charizard ex';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-
-      if (THIS_POKEMON_HAS_DAMAGE_COUNTERS(effect, this)) {
-        effect.damage += 100;
-      }
-    
-      if (WAS_ATTACK_USED(effect, 1, this)) {
-          DISCARD_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 3);
-        }
-    
-        return state;
-      }
-    
-    return state;
-  }
 }
