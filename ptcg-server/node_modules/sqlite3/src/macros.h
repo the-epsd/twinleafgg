@@ -23,6 +23,9 @@ inline bool OtherIsInt(Napi::Number source) {
     }
 }
 
+#define IS_FUNCTION(cb) \
+    !cb.IsUndefined() && cb.IsFunction()
+
 #define REQUIRE_ARGUMENTS(n)                                                   \
     if (info.Length() < (n)) {                                                 \
         Napi::TypeError::New(env, "Expected " #n "arguments").ThrowAsJavaScriptException(); \
@@ -125,7 +128,7 @@ inline bool OtherIsInt(Napi::Number source) {
     if ((argc != 0) && (passed_argv != NULL)) {\
       args.assign(passed_argv, passed_argv + argc);\
     }\
-    Napi::Value res = (callback).MakeCallback(Napi::Value(context), args);     \
+    Napi::Value res = (callback).Call(Napi::Value(context), args);             \
     if (res.IsEmpty()) return __VA_ARGS__;
 
 #define WORK_DEFINITION(name)                                                  \

@@ -11,14 +11,17 @@ using namespace node_sqlite3;
 Napi::Object Statement::Init(Napi::Env env, Napi::Object exports) {
     Napi::HandleScope scope(env);
 
+    // declare napi_default_method here as it is only available in Node v14.12.0+
+    napi_property_attributes napi_default_method = static_cast<napi_property_attributes>(napi_writable | napi_configurable);
+
     Napi::Function t = DefineClass(env, "Statement", {
-      InstanceMethod("bind", &Statement::Bind),
-      InstanceMethod("get", &Statement::Get),
-      InstanceMethod("run", &Statement::Run),
-      InstanceMethod("all", &Statement::All),
-      InstanceMethod("each", &Statement::Each),
-      InstanceMethod("reset", &Statement::Reset),
-      InstanceMethod("finalize", &Statement::Finalize_),
+      InstanceMethod("bind", &Statement::Bind, napi_default_method),
+      InstanceMethod("get", &Statement::Get, napi_default_method),
+      InstanceMethod("run", &Statement::Run, napi_default_method),
+      InstanceMethod("all", &Statement::All, napi_default_method),
+      InstanceMethod("each", &Statement::Each, napi_default_method),
+      InstanceMethod("reset", &Statement::Reset, napi_default_method),
+      InstanceMethod("finalize", &Statement::Finalize_, napi_default_method),
     });
 
     exports.Set("Statement", t);
@@ -74,7 +77,7 @@ template <class T> void Statement::Error(T* baton) {
 
     Napi::Function cb = baton->callback.Value();
 
-    if (!cb.IsUndefined() && cb.IsFunction()) {
+    if (IS_FUNCTION(cb)) {
         Napi::Value argv[] = { exception };
         TRY_CATCH_CALL(stmt->Value(), cb, 1, argv);
     }
@@ -205,7 +208,13 @@ template <class T> Values::Field*
         return new Values::Float(pos, source.ToNumber().DoubleValue());
     }
     else if (source.IsObject()) {
-        std::string val = source.ToString().Utf8Value();
+        Napi::String napiVal = Napi::String::New(source.Env(), "[object Object]");
+        // Check whether toString returned a value that is not undefined.
+        if(napiVal.Type() == 0) {
+            return NULL;
+        }
+
+        std::string val = napiVal.Utf8Value();
         return new Values::Text(pos, val.length(), val.c_str());
     }
     else {
@@ -366,7 +375,7 @@ void Statement::Work_AfterBind(napi_env e, napi_status status, void* data) {
     else {
         // Fire callbacks.
         Napi::Function cb = baton->callback.Value();
-        if (!cb.IsUndefined() && cb.IsFunction()) {
+        if (IS_FUNCTION(cb)) {
             Napi::Value argv[] = { env.Null() };
             TRY_CATCH_CALL(stmt->Value(), cb, 1, argv);
         }
@@ -433,7 +442,7 @@ void Statement::Work_AfterGet(napi_env e, napi_status status, void* data) {
     else {
         // Fire callbacks.
         Napi::Function cb = baton->callback.Value();
-        if (!cb.IsUndefined() && cb.IsFunction()) {
+        if (IS_FUNCTION(cb)) {
             if (stmt->status == SQLITE_ROW) {
                 // Create the result array from the data we acquired.
                 Napi::Value argv[] = { env.Null(), RowToJS(env, &baton->row) };
@@ -507,7 +516,7 @@ void Statement::Work_AfterRun(napi_env e, napi_status status, void* data) {
     else {
         // Fire callbacks.
         Napi::Function cb = baton->callback.Value();
-        if (!cb.IsUndefined() && cb.IsFunction()) {
+        if (IS_FUNCTION(cb)) {
             (stmt->Value()).Set(Napi::String::New(env, "lastID"), Napi::Number::New(env, baton->inserted_id));
             (stmt->Value()).Set( Napi::String::New(env, "changes"), Napi::Number::New(env, baton->changes));
 
@@ -577,7 +586,7 @@ void Statement::Work_AfterAll(napi_env e, napi_status status, void* data) {
     else {
         // Fire callbacks.
         Napi::Function cb = baton->callback.Value();
-        if (!cb.IsUndefined() && cb.IsFunction()) {
+        if (IS_FUNCTION(cb)) {
             if (baton->rows.size()) {
                 // Create the result array from the data we acquired.
                 Napi::Array result(Napi::Array::New(env, baton->rows.size()));
@@ -707,7 +716,7 @@ void Statement::AsyncEach(uv_async_t* handle) {
         }
 
         Napi::Function cb = async->item_cb.Value();
-        if (!cb.IsUndefined() && cb.IsFunction()) {
+        if (IS_FUNCTION(cb)) {
             Napi::Value argv[2];
             argv[0] = env.Null();
 
@@ -782,7 +791,7 @@ void Statement::Work_AfterReset(napi_env e, napi_status status, void* data) {
 
     // Fire callbacks.
     Napi::Function cb = baton->callback.Value();
-    if (!cb.IsUndefined() && cb.IsFunction()) {
+    if (IS_FUNCTION(cb)) {
         Napi::Value argv[] = { env.Null() };
         TRY_CATCH_CALL(stmt->Value(), cb, 1, argv);
     }
@@ -829,11 +838,15 @@ Napi::Value Statement::RowToJS(Napi::Env env, Row* row) {
 }
 
 void Statement::GetRow(Row* row, sqlite3_stmt* stmt) {
-    int rows = sqlite3_column_count(stmt);
+    int cols = sqlite3_column_count(stmt);
 
-    for (int i = 0; i < rows; i++) {
+    for (int i = 0; i < cols; i++) {
         int type = sqlite3_column_type(stmt, i);
         const char* name = sqlite3_column_name(stmt, i);
+        if (name == NULL) {
+            assert(false);
+        }
+
         switch (type) {
             case SQLITE_INTEGER: {
                 row->push_back(new Values::Integer(name, sqlite3_column_int64(stmt, i)));
@@ -880,7 +893,7 @@ void Statement::Finalize_(Baton* b) {
 
     // Fire callback in case there was one.
     Napi::Function cb = baton->callback.Value();
-    if (!cb.IsUndefined() && cb.IsFunction()) {
+    if (IS_FUNCTION(cb)) {
         TRY_CATCH_CALL(baton->stmt->Value(), cb, 0, NULL);
     }
 }
