@@ -1,11 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
+import { GameMessage, Card, ChooseCardsPrompt, EnergyCard } from '../../game';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class LugiaEX extends PokemonCard {
 
@@ -45,6 +47,38 @@ export class LugiaEX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      let cards: Card[] = [];
+
+      const player = effect.player;
+      const pokemon = player.active;
+  
+      const checkEnergy = new CheckProvidedEnergyEffect(player, pokemon);
+      store.reduceEffect(state, checkEnergy);
+  
+      checkEnergy.energyMap.forEach(em => {
+        const energyCard = em.card;
+        if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL && energyCard.name !== 'Plasma Energy') {
+          effect.damage = 0;
+          return state;
+        }
+      });
+
+      return store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        player.active,
+        { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Plasma Energy'},
+        { min: 1, max: 1, allowCancel: false }
+      ), selected => {
+        cards = selected || [];
+        if (cards.length === 0) {
+          return;
+        }
+        player.active.moveCardsTo(cards, player.discard);
+      });
+    }
+
     // Overflow
     if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
       const player = effect.player;
@@ -66,6 +100,4 @@ export class LugiaEX extends PokemonCard {
     }
     return state;
   }
-
 }
-

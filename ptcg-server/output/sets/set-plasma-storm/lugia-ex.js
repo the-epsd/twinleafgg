@@ -7,6 +7,8 @@ const state_1 = require("../../game/store/state/state");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const state_utils_1 = require("../../game/store/state-utils");
+const game_1 = require("../../game");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 class LugiaEX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -34,6 +36,27 @@ class LugiaEX extends pokemon_card_1.PokemonCard {
         this.fullName = 'Lugia EX PLS';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            let cards = [];
+            const player = effect.player;
+            const pokemon = player.active;
+            const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, pokemon);
+            store.reduceEffect(state, checkEnergy);
+            checkEnergy.energyMap.forEach(em => {
+                const energyCard = em.card;
+                if (energyCard instanceof game_1.EnergyCard && energyCard.energyType === card_types_1.EnergyType.SPECIAL && energyCard.name !== 'Plasma Energy') {
+                    effect.damage = 0;
+                    return state;
+                }
+            });
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL, name: 'Plasma Energy' }, { min: 1, max: 1, allowCancel: false }), selected => {
+                cards = selected || [];
+                if (cards.length === 0) {
+                    return;
+                }
+                player.active.moveCardsTo(cards, player.discard);
+            });
+        }
         // Overflow
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target === effect.player.active) {
             const player = effect.player;
