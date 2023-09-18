@@ -18,24 +18,22 @@ class Ivysaur extends pokemon_card_1.PokemonCard {
                 name: 'Leech Seed',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS],
                 damage: 30,
-                text: 'Heal 20 damage from this Pokémon.'
+                text: 'Heal 20 damage from this Pokémon.',
+                effect: (store, state, effect) => {
+                    prefabs_1.HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 20);
+                }
             },
             {
                 name: 'Vine Whip',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS],
                 damage: 80,
-                text: ''
+                text: '',
+                effect: undefined
             }
         ];
         this.set = '151';
         this.name = 'Ivysaur';
         this.fullName = 'Ivysaur MEW 002';
-    }
-    reduceEffect(store, state, effect) {
-        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
-            prefabs_1.HEAL_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 20);
-        }
-        return state;
     }
 }
 exports.Ivysaur = Ivysaur;

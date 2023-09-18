@@ -22,30 +22,26 @@ class Charizardex extends pokemon_card_1.PokemonCard {
                 cost: [card_types_1.CardType.FIRE],
                 damage: 60,
                 text: 'If this Pokémon has any damage counters on it, this attack ' +
-                    'does 100 more damage.'
+                    'does 100 more damage.',
+                effect: (store, state, effect) => {
+                    if (prefabs_1.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect, this)) {
+                        effect.damage += 100;
+                    }
+                }
             },
             {
                 name: 'Explosive Vortex',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.FIRE],
                 damage: 330,
-                text: 'Discard 3 Energy from this Pokémon. '
+                text: 'Discard 3 Energy from this Pokémon. ',
+                effect: (store, state, effect) => {
+                    prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.COLORLESS, 3);
+                }
             },
         ];
         this.set = '151';
         this.name = 'Charizard ex';
         this.fullName = 'Charizard ex';
-    }
-    reduceEffect(store, state, effect) {
-        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
-            if (prefabs_1.THIS_POKEMON_HAS_DAMAGE_COUNTERS(effect, this)) {
-                effect.damage += 100;
-            }
-            if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
-                prefabs_1.DISCARD_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.COLORLESS, 3);
-            }
-            return state;
-        }
-        return state;
     }
 }
 exports.Charizardex = Charizardex;

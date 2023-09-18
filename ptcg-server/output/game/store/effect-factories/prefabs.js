@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.THIS_POKEMON_HAS_DAMAGE_COUNTERS = exports.HEAL_DAMAGE_FROM_THIS_POKEMON = exports.FLIP_IF_HEADS = exports.DISCARD_ENERGY_FROM_THIS_POKEMON = exports.DISCARD_STADIUM_IN_PLAY = exports.WAS_ABILITY_USED = exports.WAS_ATTACK_USED = void 0;
+exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.DISCARD_STADIUM_IN_PLAY = exports.WAS_ABILITY_USED = exports.WAS_ATTACK_USED = void 0;
 const __1 = require("../..");
 const game_effects_1 = require("../effects/game-effects");
 const attack_effects_1 = require("../effects/attack-effects");
@@ -27,7 +27,7 @@ function DISCARD_STADIUM_IN_PLAY(state) {
     return state;
 }
 exports.DISCARD_STADIUM_IN_PLAY = DISCARD_STADIUM_IN_PLAY;
-function DISCARD_ENERGY_FROM_THIS_POKEMON(state, effect, store, type, amount) {
+function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, type, amount) {
     const player = effect.player;
     const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
     state = store.reduceEffect(state, checkProvidedEnergy);
@@ -42,19 +42,20 @@ function DISCARD_ENERGY_FROM_THIS_POKEMON(state, effect, store, type, amount) {
         return store.reduceEffect(state, discardEnergy);
     });
 }
-exports.DISCARD_ENERGY_FROM_THIS_POKEMON = DISCARD_ENERGY_FROM_THIS_POKEMON;
+exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = DISCARD_X_ENERGY_FROM_THIS_POKEMON;
 function FLIP_IF_HEADS() {
+    console.log("Heads again!");
 }
 exports.FLIP_IF_HEADS = FLIP_IF_HEADS;
-function HEAL_DAMAGE_FROM_THIS_POKEMON(effect, store, state, damage) {
+function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, damage) {
     const player = effect.player;
     const healTargetEffect = new attack_effects_1.HealTargetEffect(effect, damage);
     healTargetEffect.target = player.active;
     state = store.reduceEffect(state, healTargetEffect);
     return state;
 }
-exports.HEAL_DAMAGE_FROM_THIS_POKEMON = HEAL_DAMAGE_FROM_THIS_POKEMON;
-function THIS_POKEMON_HAS_DAMAGE_COUNTERS(effect, user) {
+exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = HEAL_X_DAMAGE_FROM_THIS_POKEMON;
+function THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect, user) {
     // TODO: Would like to check if Pokemon has damage without needing the effect
     const player = effect.player;
     const source = player.active;
@@ -65,4 +66,4 @@ function THIS_POKEMON_HAS_DAMAGE_COUNTERS(effect, user) {
     }
     return false;
 }
-exports.THIS_POKEMON_HAS_DAMAGE_COUNTERS = THIS_POKEMON_HAS_DAMAGE_COUNTERS;
+exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT;

@@ -14,18 +14,24 @@ class Charmander extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.WATER }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
-            { name: 'Blazing Destruction', cost: [card_types_1.CardType.FIRE], damage: 0, text: 'Discard a Stadium in play.' },
-            { name: 'Steady Firebreathing', cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE], damage: 30, text: '' }
+            { name: 'Blazing Destruction',
+                cost: [card_types_1.CardType.FIRE],
+                damage: 0,
+                text: 'Discard a Stadium in play.',
+                effect: (store, state, effect) => {
+                    prefabs_1.DISCARD_STADIUM_IN_PLAY(state);
+                },
+            },
+            { name: 'Steady Firebreathing',
+                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE],
+                damage: 30,
+                text: '',
+                effect: undefined
+            }
         ];
         this.set = '151';
         this.name = 'Charmander';
         this.fullName = 'Charmander MEW';
-    }
-    reduceEffect(store, state, effect) {
-        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
-            prefabs_1.DISCARD_STADIUM_IN_PLAY(state);
-        }
-        return state;
     }
 }
 exports.Charmander = Charmander;
