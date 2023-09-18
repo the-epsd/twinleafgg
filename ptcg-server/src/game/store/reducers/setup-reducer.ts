@@ -149,6 +149,7 @@ function createPlayer(id: number, name: string): Player {
 
   player.active.isPublic = true;
   player.discard.isPublic = true;
+  player.lostzone.isPublic = true;
   player.stadium.isPublic = true;
   player.supporter.isPublic = true;
   return player;

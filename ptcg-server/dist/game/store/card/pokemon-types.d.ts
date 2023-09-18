@@ -26,4 +26,5 @@ export interface Power {
     useWhenInPlay?: boolean;
     useFromHand?: boolean;
     useFromDiscard?: boolean;
+    useFromLostZone?: boolean;
 }

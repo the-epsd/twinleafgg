@@ -21,6 +21,8 @@ export class Player {
 
   discard: CardList = new CardList();
 
+  lostzone: CardList = new CardList();
+
   stadium: CardList = new CardList();
 
   supporter: CardList = new CardList();

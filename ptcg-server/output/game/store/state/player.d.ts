@@ -12,6 +12,7 @@ export declare class Player {
     deck: CardList;
     hand: CardList;
     discard: CardList;
+    lostzone: CardList;
     stadium: CardList;
     supporter: CardList;
     active: PokemonCardList;

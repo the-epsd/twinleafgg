@@ -40,9 +40,9 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
             if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
                 return state;
             }
-            // Iron Hands wasn't attacking
+            // Iron Hands wasn't attacking or the attack wasn't 'Extreme Amplifier'
             const pokemonCard = opponent.active.getPokemonCard();
-            if (pokemonCard !== this) {
+            if (pokemonCard !== this || !this.attacks.some(attack => attack.name === 'Extreme Amplifier')) {
                 return state;
             }
             effect.prizeCount += 1;

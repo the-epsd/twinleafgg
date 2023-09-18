@@ -11,7 +11,8 @@ export enum SlotType {
   ACTIVE,
   BENCH,
   HAND,
-  DISCARD
+  DISCARD,
+  LOSTZONE
 }
 
 export interface CardTarget {

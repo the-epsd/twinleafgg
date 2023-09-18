@@ -12,6 +12,7 @@ class Player {
         this.deck = new card_list_1.CardList();
         this.hand = new card_list_1.CardList();
         this.discard = new card_list_1.CardList();
+        this.lostzone = new card_list_1.CardList();
         this.stadium = new card_list_1.CardList();
         this.supporter = new card_list_1.CardList();
         this.active = new pokemon_card_list_1.PokemonCardList();
