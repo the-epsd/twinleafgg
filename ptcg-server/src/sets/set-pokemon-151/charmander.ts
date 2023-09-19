@@ -20,7 +20,8 @@ export class Charmander extends PokemonCard {
   public retreat = [ CardType.COLORLESS ];
 
   public attacks = [
-    { name: 'Blazing Destruction',
+    { 
+      name: 'Blazing Destruction',
       cost: [CardType.FIRE],
       damage: 0,
       text: 'Discard a Stadium in play.',
@@ -28,7 +29,8 @@ export class Charmander extends PokemonCard {
         DISCARD_STADIUM_IN_PLAY(state);
       },
     },
-    { name: 'Steady Firebreathing',
+    { 
+      name: 'Steady Firebreathing',
       cost: [CardType.FIRE, CardType.FIRE],
       damage: 30,
       text: '',
