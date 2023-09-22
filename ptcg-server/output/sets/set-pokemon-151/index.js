@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPokemon151 = void 0;
-const squirtle_1 = require("../set-black-and-white-3/squirtle");
-const wartortle_1 = require("../set-black-and-white-3/wartortle");
+const squirtle_1 = require("./squirtle");
 const alakazam_ex_1 = require("./alakazam-ex");
 const blastoise_ex_1 = require("./blastoise-ex");
 const bulbasaur_1 = require("./bulbasaur");
@@ -13,6 +12,7 @@ const ivysaur_1 = require("./ivysaur");
 const mew_ex_1 = require("./mew-ex");
 const venusaur_ex_1 = require("./venusaur-ex");
 const zapdos_ex_1 = require("./zapdos-ex");
+const wartortle_1 = require("./wartortle");
 exports.setPokemon151 = [
     new alakazam_ex_1.Alakazamex(),
     new bulbasaur_1.Bulbasaur(),

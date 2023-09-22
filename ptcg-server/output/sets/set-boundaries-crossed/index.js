@@ -1,0 +1,33 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.setBoundariesCrossed = void 0;
+const aspertia_city_gym_1 = require("./aspertia-city-gym");
+const blastoise_1 = require("./blastoise");
+const computer_search_1 = require("./computer-search");
+const dusclops_1 = require("./dusclops");
+const dusknoir_1 = require("./dusknoir");
+const duskull_1 = require("./duskull");
+const keldeo_ex_1 = require("./keldeo-ex");
+const landorus_ex_1 = require("./landorus-ex");
+const munna_1 = require("./munna");
+const potion_1 = require("./potion");
+const rocky_helmet_1 = require("./rocky-helmet");
+const skyla_1 = require("./skyla");
+const squirtle_1 = require("./squirtle");
+const wartortle_1 = require("./wartortle");
+exports.setBoundariesCrossed = [
+    new aspertia_city_gym_1.AspertiaCityGym(),
+    new blastoise_1.Blastoise(),
+    new computer_search_1.ComputerSearch(),
+    new dusclops_1.Dusclops(),
+    new dusknoir_1.Dusknoir(),
+    new duskull_1.Duskull(),
+    new keldeo_ex_1.KeldeoEx(),
+    new landorus_ex_1.LandorusEx(),
+    new munna_1.Munna(),
+    new potion_1.Potion(),
+    new rocky_helmet_1.RockyHelmet(),
+    new skyla_1.Skyla(),
+    new squirtle_1.Squirtle(),
+    new wartortle_1.Wartortle(),
+];

@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { CrushingHammer } from '../set-black-and-white/crushing-hammer';
-import { ExpShare } from '../set-black-and-white/exp-share';
+import { CrushingHammer } from './crushing-hammer';
+import { ExpShare } from './exp-share';
 import { Armarouge } from './armarouge';
 import { Arven } from './arven';
 import { ElectricGenerator } from './electric-generator';

@@ -10,11 +10,11 @@ import { Murkrow } from './murkrow';
 import { Spiritomb } from './spiritomb';
 import { SuperRod } from './super-rod';
 import { Wattrel } from './wattrel';
-//import { Iono } from './iono';
+import { Iono } from './iono';
 export const setPaldeaEvolved: Card[] = [
   new Artazon(),
   new DeliveryDrone(),
-  //new Iono(),
+  new Iono(),
   new Baxcalibur(),
   new ChienPaoex(),
   new SuperRod(),

@@ -25,9 +25,9 @@ export class Charmander extends PokemonCard {
       cost: [CardType.FIRE],
       damage: 0,
       text: 'Discard a Stadium in play.',
-      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
+      reduceEffect: (store: StoreLike, state: State, effect: AttackEffect) => {
         DISCARD_STADIUM_IN_PLAY(state);
-      },
+      }
     },
     { 
       name: 'Steady Firebreathing',

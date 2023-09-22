@@ -49,7 +49,9 @@ class ElectricGenerator extends trainer_card_1.TrainerCard {
                                 player.deck.applyOrder(order);
                             });
                         });
+                        return state;
                     }
+                    return state;
                 });
             }
         }

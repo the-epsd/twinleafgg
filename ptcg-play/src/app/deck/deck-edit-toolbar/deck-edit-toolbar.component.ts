@@ -80,20 +80,28 @@ export class DeckEditToolbarComponent {
     this.filterChange.next({...this.filterValue});
   }
 
-  public importFromFile() {
-    const dialogRef = this.importDeckPopupService.openDialog();
-    dialogRef.afterClosed()
-      .pipe(untilDestroyed(this))
-      .subscribe({
-        next: cardNames => {
-          if (cardNames) {
-            this.import.next(cardNames);
-          }
-      }});
+  public importFromClipboard() {
+
+    // Read clipboard text
+    navigator.clipboard.readText()
+      .then(text => {
+  
+        // Parse text into card names  
+        const cardNames = text.split('\n')
+          .map(line => line.trim())
+          .filter(line => !!line);
+        
+        // Import card names
+        this.import.next(cardNames);
+  
+      });
+  
   }
+  
 
   public exportToFile() {
     this.export.next();
   }
 
 }
+                                

@@ -34,7 +34,7 @@ class Blastoiseex extends pokemon_card_1.PokemonCard {
                     'this way.'
             }
         ];
-        this.set = 'MEW';
+        this.set = '151';
         this.name = 'Blastoise ex';
         this.fullName = 'Blastoise ex MEW';
     }

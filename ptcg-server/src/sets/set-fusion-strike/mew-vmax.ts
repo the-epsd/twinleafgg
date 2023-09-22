@@ -11,8 +11,6 @@ export class MewVMAX extends PokemonCard {
   public tags = [ CardTag.POKEMON_VMAX, CardTag.FUSION_STRIKE ];
 
   public stage: Stage = Stage.BASIC;
-  
-  //public evolvesFrom = 'Mew V';
 
   public cardType: CardType = CardType.PSYCHIC;
 
@@ -102,7 +100,6 @@ export class MewVMAX extends PokemonCard {
 
     const pokemonCards: PokemonCard[] = [];
     const blocked: { index: number, attack: string }[] = [];
-    
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
       this.checkAttack(state, store, player, card, pokemonCards, blocked);
     });
@@ -111,11 +108,11 @@ export class MewVMAX extends PokemonCard {
   }
 
   private checkAttack(state: State, store: StoreLike, player: Player,
-    card: PokemonCard, pokemonCards: PokemonCard[], blocked: { index: number, attack: string }[]
+    card: PokemonCard, pokemonCards: PokemonCard[],
+    blocked: { index: number, attack: string }[]
   ) {
-    
     {
-      // Only include Fusion Strike cards
+      // Only include Pokemon V cards
       if (!card.tags.includes(CardTag.FUSION_STRIKE)) {
         return;
       }
@@ -125,18 +122,12 @@ export class MewVMAX extends PokemonCard {
       }
 
       const attacks = card.attacks.filter(attack => {
-  
       });
       const index = pokemonCards.length;
       pokemonCards.push(card);
       card.attacks.forEach(attack => {
-        
-        const cost = attack.cost;
-        cost.length == 0;
-
         if (!attacks.includes(attack)) {
           blocked.push({ index, attack: attack.name });
-          
         }
       });
     }
