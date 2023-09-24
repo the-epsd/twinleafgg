@@ -75,6 +75,7 @@ __exportStar(require("./set-celebrations"), exports);
 __exportStar(require("./set-fusion-strike"), exports);
 __exportStar(require("./set-brilliant-stars"), exports);
 __exportStar(require("./set-astral-radiance"), exports);
+__exportStar(require("./set-pokemon-go"), exports);
 __exportStar(require("./set-lost-origin"), exports);
 __exportStar(require("./set-silver-tempest"), exports);
 __exportStar(require("./set-crown-zenith"), exports);

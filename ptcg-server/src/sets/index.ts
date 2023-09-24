@@ -69,6 +69,7 @@ export * from './set-celebrations';
 export * from './set-fusion-strike';
 export * from './set-brilliant-stars';
 export * from './set-astral-radiance';
+export * from './set-pokemon-go';
 export * from './set-lost-origin';
 export * from './set-silver-tempest';
 export * from './set-crown-zenith';
