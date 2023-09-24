@@ -5,7 +5,7 @@
       [deck]="deck"
       (filterChange)="toolbarFilter = $event"
       (save)="saveDeck()"
-      (import)="importDeck($event)"
+      (import)="importFromClipboard()"
       (export)="exportDeck()">
     </ptcg-deck-edit-toolbar>
 

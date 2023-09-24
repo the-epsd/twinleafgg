@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Squirtle = void 0;
+exports.Wartortle = void 0;
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const game_message_1 = require("../../game/game-message");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class Squirtle extends pokemon_card_1.PokemonCard {
+class Wartortle extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'G';
@@ -33,7 +33,7 @@ class Squirtle extends pokemon_card_1.PokemonCard {
         ];
         this.set = '151';
         this.name = 'Wartortle';
-        this.fullName = 'Wartortle MEW 001';
+        this.fullName = 'Wartortle MEW';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -51,4 +51,4 @@ class Squirtle extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.Squirtle = Squirtle;
+exports.Wartortle = Wartortle;

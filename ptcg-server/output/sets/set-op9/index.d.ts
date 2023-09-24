@@ -1,2 +1,2 @@
 import { Card } from '../../game/store/card/card';
-export declare const setOp9: Card[];
+export declare const setOP9: Card[];

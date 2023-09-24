@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Iono = void 0;
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Iono extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -25,18 +25,12 @@ class Iono extends trainer_card_1.TrainerCard {
             if (cards.length === 0 && player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            // Create deckBottom and move hand into it
             const deckBottom = new game_1.CardList();
-            player.hand.moveTo(deckBottom, cards.length);
-            // Create deckBottom for opponent and move hand
-            const opponentdeckBottom = new game_1.CardList();
-            opponent.hand.moveTo(opponentdeckBottom, cards.length);
-            // Later, move deckBottom to player's deck
-            deckBottom.moveTo(player.deck, cards.length);
-            opponentdeckBottom.moveTo(opponent.deck, cards.length);
+            const opponentDeckBottom = new game_1.CardList();
+            player.hand.moveCardsTo(cards, deckBottom);
+            opponent.hand.moveCardsTo(cards, opponentDeckBottom);
             player.deck.moveTo(player.hand, player.getPrizeLeft());
             opponent.deck.moveTo(opponent.hand, opponent.getPrizeLeft());
-            return state;
         }
         return state;
     }

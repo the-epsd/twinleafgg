@@ -69,11 +69,11 @@ export class Arven extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'PAL';
+  public set: string = 'SVI';
 
   public name: string = 'Arven';
 
-  public fullName: string = 'Arven PAL';
+  public fullName: string = 'Arven SVI';
 
   public text: string =
     'Search your deck for a W Pokemon and an Item ' +

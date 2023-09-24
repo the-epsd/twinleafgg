@@ -50,9 +50,9 @@ class Arven extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'PAL';
+        this.set = 'SVI';
         this.name = 'Arven';
-        this.fullName = 'Arven PAL';
+        this.fullName = 'Arven SVI';
         this.text = 'Search your deck for a W Pokemon and an Item ' +
             'card, reveal them, and put them into your hand. ' +
             'Then, shuffle your deck.';

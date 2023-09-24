@@ -12,11 +12,11 @@ const murkrow_1 = require("./murkrow");
 const spiritomb_1 = require("./spiritomb");
 const super_rod_1 = require("./super-rod");
 const wattrel_1 = require("./wattrel");
-//import { Iono } from './iono';
+const iono_1 = require("./iono");
 exports.setPaldeaEvolved = [
     new artazon_1.Artazon(),
     new delivery_drone_1.DeliveryDrone(),
-    //new Iono(),
+    new iono_1.Iono(),
     new baxcalibur_1.Baxcalibur(),
     new chien_pao_ex_1.ChienPaoex(),
     new super_rod_1.SuperRod(),

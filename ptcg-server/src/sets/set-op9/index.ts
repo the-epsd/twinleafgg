@@ -15,7 +15,7 @@ import { Raichu } from './raichu';
 import { Rotom } from './rotom';
 import { Turtwig } from './turtwig';
 
-export const setOp9: Card[] = [
+export const setOP9: Card[] = [
   new Buizel(),
   new Buneary(),
   new Chimchar(),

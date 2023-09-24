@@ -5,7 +5,7 @@ const play_card_effects_1 = require("../effects/play-card-effects");
 const game_error_1 = require("../../game-error");
 const game_message_1 = require("../../game-message");
 const state_utils_1 = require("../state-utils");
-//import { TrainerType } from '../card/card-types';
+const card_types_1 = require("../card/card-types");
 function playTrainerReducer(store, state, effect) {
     /* Play supporter card */
     if (effect instanceof play_card_effects_1.PlaySupporterEffect) {
@@ -69,10 +69,10 @@ function playTrainerReducer(store, state, effect) {
     if (effect instanceof play_card_effects_1.TrainerEffect) {
         if (effect.player.hand.cards.includes(effect.trainerCard)) {
             // IF DIAMOND/PEARL FORMAT, SUPPORTER WILL STAY ON FIELD UNTIL THE END OF YOUR TURN
-            //const isSupporter = effect.trainerCard.trainerType === TrainerType.SUPPORTER;
-            //const target = isSupporter ? effect.player.supporter : effect.player.discard;
-            //effect.player.hand.moveCardTo(effect.trainerCard, target);
-            effect.player.hand.moveCardTo(effect.trainerCard, effect.player.discard);
+            const isSupporter = effect.trainerCard.trainerType === card_types_1.TrainerType.SUPPORTER;
+            const target = isSupporter ? effect.player.supporter : effect.player.discard;
+            effect.player.hand.moveCardTo(effect.trainerCard, target);
+            //effect.player.hand.moveCardTo(effect.trainerCard, effect.player.discard);
         }
         return state;
     }

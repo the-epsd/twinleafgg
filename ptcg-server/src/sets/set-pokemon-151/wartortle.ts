@@ -7,7 +7,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 
-export class Squirtle extends PokemonCard {
+export class Wartortle extends PokemonCard {
 
   public regulationMark = 'G';
   
@@ -35,7 +35,7 @@ export class Squirtle extends PokemonCard {
 
   public set: string = '151';
   public name: string = 'Wartortle';
-  public fullName: string = 'Wartortle MEW 001';
+  public fullName: string = 'Wartortle MEW';
     
   reduceEffect(store: StoreLike, state: State, effect: Effect) {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -1,6 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { Squirtle } from '../set-black-and-white-3/squirtle';
-import { Wartortle } from '../set-black-and-white-3/wartortle';
+import { Squirtle } from './squirtle';
 import { Alakazamex } from './alakazam-ex';
 import { Blastoiseex } from './blastoise-ex';
 import { Bulbasaur } from './bulbasaur';
@@ -11,6 +10,7 @@ import { Ivysaur } from './ivysaur';
 import { Mewex } from './mew-ex';
 import { Venusaurex } from './venusaur-ex';
 import { Zapdosex } from './zapdos-ex';
+import { Wartortle } from './wartortle';
 export const setPokemon151: Card[] = [
   new Alakazamex(),
   new Bulbasaur(),

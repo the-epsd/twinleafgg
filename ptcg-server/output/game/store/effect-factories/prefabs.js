@@ -44,7 +44,7 @@ function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, type, amount) 
 }
 exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = DISCARD_X_ENERGY_FROM_THIS_POKEMON;
 function FLIP_IF_HEADS() {
-    console.log("Heads again!");
+    console.log('Heads again!');
 }
 exports.FLIP_IF_HEADS = FLIP_IF_HEADS;
 function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, damage) {

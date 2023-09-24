@@ -54,7 +54,7 @@ export function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackE
 }
 
 export function FLIP_IF_HEADS(){
-  console.log("Heads again!");
+  console.log('Heads again!');
 }
 
 export function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, damage: number){

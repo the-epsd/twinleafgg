@@ -18,9 +18,9 @@ class Charmander extends pokemon_card_1.PokemonCard {
                 cost: [card_types_1.CardType.FIRE],
                 damage: 0,
                 text: 'Discard a Stadium in play.',
-                effect: (store, state, effect) => {
+                reduceEffect: (store, state, effect) => {
                     prefabs_1.DISCARD_STADIUM_IN_PLAY(state);
-                },
+                }
             },
             { name: 'Steady Firebreathing',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE],

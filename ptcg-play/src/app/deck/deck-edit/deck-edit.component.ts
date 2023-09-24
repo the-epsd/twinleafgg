@@ -82,8 +82,26 @@ export class DeckEditComponent implements OnInit {
     return deckItems;
   }
 
+  importFromClipboard() {
+
+    // Read clipboard text
+    navigator.clipboard.readText()
+      .then(text => {
+      
+        // Parse text into card names
+        const cardNames = text.split('\n')
+          .map(line => line.trim())
+          .filter(line => !!line);
+  
+        // Call import deck method  
+        this.importDeck(cardNames);
+  
+      });
+  
+  }
+  
   public importDeck(cardNames: string[]) {
-    this.deckItems = this.loadDeckItems(cardNames);
+    this.deckItems = this.loadDeckItems(cardNames); 
   }
 
   public async exportDeck() {

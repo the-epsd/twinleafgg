@@ -21,7 +21,7 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
             { name: 'Combustion', cost: [card_types_1.CardType.FIRE], damage: 20, text: '' },
             { name: 'Fire Blast', cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.FIRE], damage: 70, text: 'Discard an Energy from this Pokémon.' }
         ];
-        this.set = 'MEW';
+        this.set = '151';
         this.name = 'Charmeleon';
         this.fullName = 'Charmeleon MEW';
     }

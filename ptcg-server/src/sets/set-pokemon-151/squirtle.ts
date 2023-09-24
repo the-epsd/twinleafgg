@@ -35,7 +35,7 @@ export class Squirtle extends PokemonCard {
   }];
   set = '151';
   name = 'Squirtle';
-  fullName = 'Squirtle MEW 007';
+  fullName = 'Squirtle MEW';
   CLEAR_WITHDRAW_MARKER = 'CLEAR_WITHDRAW_MARKER';
   WITHDRAW_MARKER = 'WITHDRAW_MARKER';
 

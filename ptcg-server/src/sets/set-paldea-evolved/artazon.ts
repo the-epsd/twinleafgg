@@ -9,6 +9,53 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 
+function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
+  const player = effect.player;
+  
+  const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+
+  if (player.deck.cards.length === 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+  if (slots.length < 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  } else {
+    // handle no open slots
+ 
+
+    let cards: Card[] = [];
+    return store.prompt(state, new ChooseCardsPrompt(
+      player.id,
+      GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+      player.deck,
+      { superType: SuperType.POKEMON, stage: Stage.BASIC },
+      { min: 1, max: 1, allowCancel: true }
+    ), selectedCards => {
+      cards = selectedCards || [];
+
+      if (cards[0].tags.includes(CardTag.POKEMON_V) || 
+    cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
+    cards[0].tags.includes(CardTag.POKEMON_VMAX)  ||
+    cards[0].tags.includes(CardTag.POKEMON_EX)    ||
+    cards[0].tags.includes(CardTag.RADIANT)) 
+      {
+        throw new GameError(GameMessage.INVALID_TARGET);
+      }
+      else {
+        cards.forEach((card, index) => {
+          player.deck.moveCardTo(card, slots[index]);
+          slots[index].pokemonPlayedTurn = state.turn;
+        });
+
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+          return state;
+        });
+      }
+    });
+  }
+}
+
 export class Artazon extends TrainerCard {
 
   public regulationMark = 'G';
@@ -22,58 +69,13 @@ export class Artazon extends TrainerCard {
   'and put it onto their Bench. Then, that player shuffles their deck. ' +
   '(Pokémon ex, Pokémon V, etc. have Rule Boxes.)';
     
-  reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
-      return this.useStadium(store, state, effect);
-      
+      const generator = useStadium(() => generator.next(), store, state, effect);
+      return generator.next().value;
     }
+
     return state;
   }
-    
-  useStadium(store: StoreLike, state: State, effect: UseStadiumEffect): State {
-    const player = effect.player;
-    
-    const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
-    if (player.deck.cards.length === 0) {
-      throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-    }
-    if (slots.length < 0) {
-      throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-    } else {
-      // handle no open slots
-   
-
-      let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.deck,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 1, max: 1, allowCancel: true }
-      ), selectedCards => {
-        cards = selectedCards || [];
-
-        if (cards[0].tags.includes(CardTag.POKEMON_V) || 
-      cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
-      cards[0].tags.includes(CardTag.POKEMON_VMAX)  ||
-      cards[0].tags.includes(CardTag.POKEMON_EX)    ||
-      cards[0].tags.includes(CardTag.RADIANT)) 
-        {
-          throw new GameError(GameMessage.INVALID_TARGET);
-        }
-        else {
-          cards.forEach((card, index) => {
-            player.deck.moveCardTo(card, slots[index]);
-            slots[index].pokemonPlayedTurn = state.turn;
-          });
-
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-            return state;
-          });
-        }
-      });
-    }
-  }
 }

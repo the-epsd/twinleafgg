@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setScarletAndViolet = void 0;
-const crushing_hammer_1 = require("../set-black-and-white/crushing-hammer");
-const exp_share_1 = require("../set-black-and-white/exp-share");
+const crushing_hammer_1 = require("./crushing-hammer");
+const exp_share_1 = require("./exp-share");
 const armarouge_1 = require("./armarouge");
 const arven_1 = require("./arven");
 const electric_generator_1 = require("./electric-generator");
