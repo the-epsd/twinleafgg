@@ -1,31 +1,30 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-export declare class Charmeleon extends PokemonCard {
-    regulationMark: string;
+import { StoreLike, State, PowerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+export declare class Solrock extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
     retreat: CardType[];
-    attacks: ({
+    powers: {
+        name: string;
+        powerType: PowerType;
+        useWhenInPlay: boolean;
+        text: string;
+    }[];
+    attacks: {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-        effect: undefined;
-    } | {
-        name: string;
-        cost: CardType[];
-        damage: number;
-        text: string;
-        effect: (store: StoreLike, state: State, effect: AttackEffect) => void;
-    })[];
+    }[];
     set: string;
     name: string;
     fullName: string;
+    readonly SUN_ENERGY_MARKER = "SUN_ENERGY_MARKER";
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

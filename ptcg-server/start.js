@@ -75,6 +75,7 @@ cardManager.defineSet(sets.setCelebrations);
 cardManager.defineSet(sets.setFusionStrike);
 cardManager.defineSet(sets.setBrilliantStars);
 cardManager.defineSet(sets.setAstralRadiance);
+cardManager.defineSet(sets.setPokemonGO);
 cardManager.defineSet(sets.setLostOrigin);
 cardManager.defineSet(sets.setSilverTempest);
 cardManager.defineSet(sets.setCrownZenith);
