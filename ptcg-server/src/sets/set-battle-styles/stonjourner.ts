@@ -26,13 +26,38 @@ export class Stonjourner extends PokemonCard {
       name: 'Land\'s Pulse',
       cost: [ CardType.FIGHTING, CardType.COLORLESS ],
       damage: 60,
-      text: 'If a Stadium is in play, this attack does 30 more damage.'
+      text: 'If a Stadium is in play, this attack does 30 more damage.',
+      effect: (store: StoreLike, state: State, effect: AttackEffect) =>{
+        const stadiumCard = StateUtils.getStadiumCard(state);
+        if (stadiumCard !== undefined) {
+          effect.damage += 30;
+          // Discard Stadium
+          const cardList = StateUtils.findCardList(state, stadiumCard);
+          const player = StateUtils.findOwner(state, cardList);
+          cardList.moveTo(player.discard);
+        }
+      }
     },
     {
       name: 'Single Strike Crush',
       cost: [ CardType.COLORLESS ],
       damage: 120,
-      text: 'During your next turn, this Pokémon can\'t use Giga Hammer.'
+      text: 'During your next turn, this Pokémon can\'t use Giga Hammer.',
+      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
+        const player = effect.player;
+        if (player.active.cards[0] !== this) {
+          player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+          player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+          console.log('removed markers because not active');
+        }
+        // Check marker
+        if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+          console.log('attack blocked');
+          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+        }
+        effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+        console.log('marker added');
+      }
     }
   ];
 
@@ -64,32 +89,6 @@ export class Stonjourner extends PokemonCard {
       console.log('second marker added');
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const stadiumCard = StateUtils.getStadiumCard(state);
-      if (stadiumCard !== undefined) {
-        effect.damage += 30;
-        // Discard Stadium
-        const cardList = StateUtils.findCardList(state, stadiumCard);
-        const player = StateUtils.findOwner(state, cardList);
-        cardList.moveTo(player.discard);
-      }
-      return state;
-    }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-      if (player.active.cards[0] !== this) {
-        player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-        player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-        console.log('removed markers because not active');
-      }
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
-    }
-    return state;
+    return super.reduceEffect(store, state, effect);
   }
 }
