@@ -10041,3 +10041,4 @@ ptcg-server/database.sq3
 ptcg-server/node_modules/.cache
 ptcg-server/database.sq3
 ptcg-server/database.sq3
+.DS_Store
