@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-
 import { PowerType, StoreLike, State, 
   GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt, GameError, PokemonCardList, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
@@ -48,6 +48,8 @@ export class Miraidonex extends PokemonCard {
   public fullName: string = 'Miraidon ex SVI';
 
   public readonly TANDEM_UNIT_MARKER = 'TANDEM_UNIT_MARKER';
+  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -60,7 +62,24 @@ export class Miraidonex extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.TANDEM_UNIT_MARKER, this);
     }
-    
+  
+
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    }
+  
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('marker cleared');
+    }
+  
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('second marker added');
+    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
@@ -110,10 +129,26 @@ export class Miraidonex extends PokemonCard {
                 return state;
               }
             });
+            if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+              const player = effect.player;
+              if (player.active.cards[0] !== this) {
+                player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+                player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+                console.log('removed markers because not active');
+              }
+              // Check marker
+              if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+                console.log('attack blocked');
+                throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+              }
+              effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+              console.log('marker added');
+            }
             return state;
           }
           return state;
         });
+
       });
     }
     return state;

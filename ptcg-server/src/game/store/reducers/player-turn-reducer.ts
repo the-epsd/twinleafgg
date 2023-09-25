@@ -36,6 +36,7 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
 
       const retreatEffect = new RetreatEffect(player, action.benchIndex);
       state = store.reduceEffect(state, retreatEffect);
+      player.active.clearEffects();
       return state;
     }
 

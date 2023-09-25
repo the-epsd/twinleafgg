@@ -28,6 +28,7 @@ function playerTurnReducer(store, state, action) {
             }
             const retreatEffect = new game_effects_1.RetreatEffect(player, action.benchIndex);
             state = store.reduceEffect(state, retreatEffect);
+            player.active.clearEffects();
             return state;
         }
         if (action instanceof game_actions_1.AttackAction) {

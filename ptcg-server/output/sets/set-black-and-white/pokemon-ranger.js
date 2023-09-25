@@ -19,10 +19,11 @@ class PokemonRanger extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const topPlayer = state.players[game_1.PlayerType.TOP_PLAYER];
             const bottomPlayer = state.players[game_1.PlayerType.BOTTOM_PLAYER];
-            topPlayer.active.clearAttackEffects();
-            topPlayer.bench.forEach(b => b.clearAttackEffects());
-            bottomPlayer.active.clearAttackEffects();
-            bottomPlayer.bench.forEach(b => b.clearAttackEffects());
+            topPlayer.active.clearEffects();
+            topPlayer.bench.forEach(b => b.clearEffects());
+            bottomPlayer.active.clearEffects();
+            bottomPlayer.bench.forEach(b => b.clearEffects());
+            return state;
         }
         return state;
     }

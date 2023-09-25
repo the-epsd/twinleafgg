@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -8,6 +8,8 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 export class Meloetta extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
+
+  public tags = [ CardTag.FUSION_STRIKE ];
 
   public cardType: CardType = CardType.PSYCHIC;
 

@@ -1,8 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-export declare class Meloetta extends PokemonCard {
+export declare class Yveltal extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
     tags: CardTag[];
     cardType: CardType;
@@ -24,5 +23,4 @@ export declare class Meloetta extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
-    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

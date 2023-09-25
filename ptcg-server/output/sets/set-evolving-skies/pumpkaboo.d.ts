@@ -1,20 +1,21 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Miraidonex extends PokemonCard {
-    regulationMark: string;
-    tags: CardTag[];
+export declare class Pumpkaboo extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
+    resistance: {
+        type: CardType;
+        value: number;
+    }[];
     retreat: CardType[];
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];
@@ -27,8 +28,5 @@ export declare class Miraidonex extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
-    readonly TANDEM_UNIT_MARKER = "TANDEM_UNIT_MARKER";
-    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
-    readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

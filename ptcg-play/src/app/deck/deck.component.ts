@@ -8,13 +8,31 @@ import { ApiError } from '../api/api.error';
 import { DeckListEntry } from '../api/interfaces/deck.interface';
 import { DeckService } from '../api/services/deck.service';
 
+enum Format {
+  Standard,
+  Expanded,
+  Unlimited,
+  Retro
+}
+
 @UntilDestroy()
+
+
 @Component({
   selector: 'ptcg-deck',
   templateUrl: './deck.component.html',
   styleUrls: ['./deck.component.scss']
 })
 export class DeckComponent implements OnInit {
+
+// In component class
+selectedFormat: Format = Format.Standard;
+
+formats = [
+  {value: Format.Standard, label: 'Standard'},
+  {value: Format.Expanded, label: 'Expanded'},
+  {value: Format.Unlimited, label: 'Unlimited'}
+];
 
   public displayedColumns: string[] = ['name', 'cardTypes', 'isValid', 'actions'];
   public decks: DeckListEntry[] = [];

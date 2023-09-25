@@ -25,6 +25,7 @@ import { SingleStrikeEnergy } from './single-strike-energy';
 import { Houndour } from './houndour';
 import { UrnOfVitality } from './urn-of-vitality';
 import { EscapeRope } from './escape-rope';
+import { Stonjourner } from './stonjourner';
 
 export const setBattleStyles: Card[] = [
   new Bellsprout(),
@@ -53,4 +54,5 @@ export const setBattleStyles: Card[] = [
   new Houndour(),
   new UrnOfVitality(),
   new EscapeRope(),
+  new Stonjourner(),
 ];

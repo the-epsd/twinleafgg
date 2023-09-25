@@ -11,6 +11,7 @@ import { Spiritomb } from './spiritomb';
 import { SuperRod } from './super-rod';
 import { Wattrel } from './wattrel';
 import { Iono } from './iono';
+import { JetEnergy } from './jet-energy';
 export const setPaldeaEvolved: Card[] = [
   new Artazon(),
   new DeliveryDrone(),
@@ -24,4 +25,5 @@ export const setPaldeaEvolved: Card[] = [
   new Spiritomb(),
   new BossOrders(),
   new BraveyCharm(),
+  new JetEnergy(),
 ];

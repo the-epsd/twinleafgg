@@ -13,6 +13,7 @@ const spiritomb_1 = require("./spiritomb");
 const super_rod_1 = require("./super-rod");
 const wattrel_1 = require("./wattrel");
 const iono_1 = require("./iono");
+const jet_energy_1 = require("./jet-energy");
 exports.setPaldeaEvolved = [
     new artazon_1.Artazon(),
     new delivery_drone_1.DeliveryDrone(),
@@ -26,4 +27,5 @@ exports.setPaldeaEvolved = [
     new spiritomb_1.Spiritomb(),
     new boss_orders_1.BossOrders(),
     new bravery_charm_1.BraveyCharm(),
+    new jet_energy_1.JetEnergy(),
 ];

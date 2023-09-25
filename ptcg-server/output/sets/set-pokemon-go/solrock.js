@@ -41,13 +41,8 @@ class Solrock extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            // Get Lunatone in play
-            const target = player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card.name === 'Lunatone') {
-                    return card;
-                }
-            });
-            if (target === undefined) {
+            const hasBench = player.bench.some(b => b.cards.length > 0);
+            if (!hasBench) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             const hasEnergyInDiscard = player.discard.cards.some(c => {

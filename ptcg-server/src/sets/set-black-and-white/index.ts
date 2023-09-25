@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { Pignite } from './pignite';
 import { PlusPower } from './plus-power';
+import { PokemonRanger } from './pokemon-ranger';
 import { ProfessorJuniper } from './professor-juniper';
 import { Reshiram } from './reshiram';
 import { Revive } from './revive';
@@ -14,5 +15,6 @@ export const setBlackAndWhite: Card[] = [
   new Reshiram(),
   new Revive(),
   new Tepig(),
-  new Zekrom()
+  new Zekrom(),
+  new PokemonRanger(),
 ];

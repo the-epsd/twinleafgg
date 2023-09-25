@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setBlackAndWhite = void 0;
 const pignite_1 = require("./pignite");
 const plus_power_1 = require("./plus-power");
+const pokemon_ranger_1 = require("./pokemon-ranger");
 const professor_juniper_1 = require("./professor-juniper");
 const reshiram_1 = require("./reshiram");
 const revive_1 = require("./revive");
@@ -15,5 +16,6 @@ exports.setBlackAndWhite = [
     new reshiram_1.Reshiram(),
     new revive_1.Revive(),
     new tepig_1.Tepig(),
-    new zekrom_1.Zekrom()
+    new zekrom_1.Zekrom(),
+    new pokemon_ranger_1.PokemonRanger(),
 ];

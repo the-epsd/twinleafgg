@@ -25,12 +25,12 @@ export class PokemonRanger extends TrainerCard {
       const topPlayer = state.players[PlayerType.TOP_PLAYER];
       const bottomPlayer = state.players[PlayerType.BOTTOM_PLAYER];
     
-      topPlayer.active.clearAttackEffects();
-      topPlayer.bench.forEach(b => b.clearAttackEffects());
+      topPlayer.active.clearEffects();
+      topPlayer.bench.forEach(b => b.clearEffects());
     
-      bottomPlayer.active.clearAttackEffects(); 
-      bottomPlayer.bench.forEach(b => b.clearAttackEffects());
-    
+      bottomPlayer.active.clearEffects(); 
+      bottomPlayer.bench.forEach(b => b.clearEffects());
+      return state;
     }
     
     return state;
