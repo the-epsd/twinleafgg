@@ -39,8 +39,8 @@ export class Stonjourner extends PokemonCard {
       }
     },
     {
-      name: 'Single Strike Crush',
-      cost: [ CardType.COLORLESS ],
+      name: 'Giga Hammer',
+      cost: [ CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS ],
       damage: 120,
       text: 'During your next turn, this Pokémon can\'t use Giga Hammer.',
       effect: (store: StoreLike, state: State, effect: AttackEffect) => {
@@ -70,7 +70,7 @@ export class Stonjourner extends PokemonCard {
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  public override reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
