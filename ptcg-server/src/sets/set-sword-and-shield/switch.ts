@@ -36,7 +36,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Discard trainer only when user selected a Pokemon
   player.hand.moveCardTo(effect.trainerCard, player.discard);
-
+  player.active.clearEffects();
   player.switchPokemon(targets[0]);
   return state;
 }

@@ -29,9 +29,16 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
       GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
       player.deck,
       { superType: SuperType.POKEMON, stage: Stage.BASIC },
-      { min: 1, max: 1, allowCancel: true }
+      { min: 0, max: 1, allowCancel: true }
     ), selectedCards => {
       cards = selectedCards || [];
+
+
+      // Operation canceled by the user
+      if (cards.length === 0) {
+        return state;
+      }
+
 
       if (cards[0].tags.includes(CardTag.POKEMON_V) || 
     cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||

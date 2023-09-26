@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.IronHandsex = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 class IronHandsex extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -33,19 +32,13 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Iron Hands ex PAR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.KnockOutEffect && effect.target === effect.player.active) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            // Do not activate between turns, or when it's not opponents turn.
-            if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-                return state;
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const target = effect.target;
+            if (target.hp <= 0) {
+                const knockoutEffect = new game_effects_1.KnockOutEffect(effect.player, target);
+                knockoutEffect.prizeCount += 1;
+                store.reduceEffect(state, knockoutEffect);
             }
-            // Iron Hands wasn't attacking or the attack wasn't 'Extreme Amplifier'
-            const pokemonCard = opponent.active.getPokemonCard();
-            if (pokemonCard !== this || !this.attacks.some(attack => attack.name === 'Extreme Amplifier')) {
-                return state;
-            }
-            effect.prizeCount += 1;
             return state;
         }
         return state;

@@ -16,15 +16,13 @@ export declare class Charmander extends PokemonCard {
         cost: CardType[];
         damage: number;
         text: string;
-        reduceEffect: (store: StoreLike, state: State, effect: AttackEffect) => void;
-        effect?: undefined;
+        effect: (store: StoreLike, state: State, effect: AttackEffect) => void;
     } | {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
         effect: undefined;
-        reduceEffect?: undefined;
     })[];
     set: string;
     name: string;

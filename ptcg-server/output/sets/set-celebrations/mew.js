@@ -56,7 +56,7 @@ class Mew extends game_1.PokemonCard {
             }
             const deckTop = new card_list_1.CardList();
             player.deck.moveTo(deckTop, 6);
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 1, max: 1, allowCancel: false }), selected => {
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 1, max: 1, allowCancel: true }), selected => {
                 player.marker.addMarker(this.MYSTERIOUS_TAIL_MARKER, this);
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.deck);

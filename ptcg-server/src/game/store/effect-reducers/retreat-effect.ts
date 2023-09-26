@@ -23,6 +23,7 @@ function retreatPokemon(store: StoreLike, state: State, effect: RetreatEffect) {
     active: activePokemon.name,
     benched: benchedPokemon.name
   });
+  
   player.retreatedTurn = state.turn;
   player.switchPokemon(player.bench[effect.benchIndex]);
 }
@@ -78,6 +79,7 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
       }
 
       const cards = energy.map(e => e.card);
+      player.active.clearEffects();
       player.active.moveCardsTo(cards, player.discard);
       retreatPokemon(store, state, effect);
     });

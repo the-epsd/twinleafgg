@@ -6,7 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Miraidonex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -28,7 +27,7 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Photon Blaster',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.COLORLESS],
                 damage: 220,
                 text: 'During your next turn, this Pokémon can\'t attack.'
             }
@@ -41,19 +40,6 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
-            const player = effect.player;
-            player.marker.removeMarker(this.TANDEM_UNIT_MARKER, this);
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const player = effect.player;
-            player.marker.removeMarker(this.TANDEM_UNIT_MARKER, this);
-        }
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
-            const player = effect.player;
-            player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-            player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-        }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
             effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
             effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
@@ -62,6 +48,15 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
             effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            // Check marker
+            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+                console.log('attack blocked');
+                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+            }
+            effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+            console.log('marker added');
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
@@ -96,24 +91,8 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
                                 return state;
                             }
                         });
-                        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                            const player = effect.player;
-                            if (player.active.cards[0] !== this) {
-                                player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-                                player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-                                console.log('removed markers because not active');
-                            }
-                            // Check marker
-                            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                                console.log('attack blocked');
-                                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
-                            }
-                            effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-                            console.log('marker added');
-                        }
                         return state;
                     }
-                    return state;
                 });
             });
         }

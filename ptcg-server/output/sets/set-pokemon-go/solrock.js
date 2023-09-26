@@ -34,6 +34,7 @@ class Solrock extends pokemon_card_1.PokemonCard {
         this.fullName = 'Solrock PGO';
         this.SUN_ENERGY_MARKER = 'SUN_ENERGY_MARKER';
     }
+    // BEGIN: abpxx6d04wxr
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
@@ -56,22 +57,35 @@ class Solrock extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.SUN_ENERGY_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
+            const blocked = [];
+            player.deck.cards.forEach((card, index) => {
+                if (!(card instanceof pokemon_card_1.PokemonCard && card.name === 'Lunatone')) {
+                    blocked.push(index);
+                }
+            });
             state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Psychic Energy' }, { allowCancel: true, min: 1, max: 1 }), transfers => {
+                var _a;
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {
                     return;
                 }
-                player.marker.addMarker(this.SUN_ENERGY_MARKER, this);
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                    if (((_a = target.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.name) !== 'Lunatone') {
+                        throw new game_1.GameError(game_1.GameMessage.INVALID_TARGET);
+                    }
                     player.discard.moveCardTo(transfer.card, target);
+                    player.marker.addMarker(this.SUN_ENERGY_MARKER, this);
                 }
             });
+            // END: abpxx6d04wxr
+            // BEGIN: ed8c6549bwf9
+            if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+                effect.player.marker.removeMarker(this.SUN_ENERGY_MARKER, this);
+            }
             return state;
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.SUN_ENERGY_MARKER, this);
+            // END: ed8c6549bwf9
         }
         return state;
     }

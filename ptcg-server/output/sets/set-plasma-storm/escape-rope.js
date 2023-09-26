@@ -21,6 +21,7 @@ function* playCard(next, store, state, effect) {
             next();
         });
         if (targets.length > 0) {
+            opponent.active.clearEffects();
             opponent.switchPokemon(targets[0]);
         }
     }
@@ -30,6 +31,7 @@ function* playCard(next, store, state, effect) {
             next();
         });
         if (targets.length > 0) {
+            player.active.clearEffects();
             player.switchPokemon(targets[0]);
         }
     }

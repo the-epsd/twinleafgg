@@ -51,8 +51,8 @@ class Player {
     switchPokemon(target) {
         const benchIndex = this.bench.indexOf(target);
         if (benchIndex !== -1) {
-            this.active.clearEffects();
             const temp = this.active;
+            this.active.clearEffects();
             this.active = this.bench[benchIndex];
             this.bench[benchIndex] = temp;
         }

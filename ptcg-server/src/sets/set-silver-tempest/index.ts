@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Archeops } from './archeops';
+import { CapturingAroma } from './capturing-aroma';
 import { ForestSealStone } from './forest-seal-stone';
 import { Kirlia } from './kirlia';
 import { LugiaV } from './lugia-v';
@@ -15,4 +16,5 @@ export const setSilverTempest: Card[] = [
   new LugiaV(),
   new LugiaVSTAR(),
   new Archeops(),
+  new CapturingAroma(),
 ];

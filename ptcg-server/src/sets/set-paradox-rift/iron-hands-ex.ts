@@ -1,9 +1,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { GamePhase, State, StateUtils, StoreLike } from '../../game';
+import { State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 
 export class IronHandsex extends PokemonCard {
 
@@ -42,26 +42,21 @@ export class IronHandsex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-        return state;
+      const target = effect.target;
+
+      if (target.hp <= 0) {
+    
+        const knockoutEffect = new KnockOutEffect(effect.player, target);
+        knockoutEffect.prizeCount += 1;
+        store.reduceEffect(state, knockoutEffect);
+    
       }
-
-      // Iron Hands wasn't attacking or the attack wasn't 'Extreme Amplifier'
-      const pokemonCard = opponent.active.getPokemonCard();
-      if (pokemonCard !== this || !this.attacks.some(attack => attack.name === 'Extreme Amplifier')) {
-        return state;
-      }
-
-      effect.prizeCount += 1;
+    
       return state;
+    
     }
-
     return state;
   }
-}
+}    

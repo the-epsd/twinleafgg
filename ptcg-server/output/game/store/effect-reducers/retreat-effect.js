@@ -59,6 +59,7 @@ function retreatReducer(store, state, effect) {
                 return;
             }
             const cards = energy.map(e => e.card);
+            player.active.clearEffects();
             player.active.moveCardsTo(cards, player.discard);
             retreatPokemon(store, state, effect);
         });

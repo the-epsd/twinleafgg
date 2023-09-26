@@ -314,6 +314,7 @@ export class BoardComponent implements OnDestroy {
           this.gameService.ability(this.gameState.gameId, result.ability, target);
         }
       });
+
   }
 
   public onStadiumClick(card: Card) {
