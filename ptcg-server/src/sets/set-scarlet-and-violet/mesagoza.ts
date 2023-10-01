@@ -10,6 +10,7 @@ import { CoinFlipPrompt, ChooseCardsPrompt, ShuffleDeckPrompt, ShowCardsPrompt }
 
 export class ChampionsFestival extends TrainerCard {
   trainerType = TrainerType.STADIUM;
+  public regulationMark = 'G';
   set = 'SVI';
   name = 'Mesagoza';
   fullName = 'Mesagoza SVI';

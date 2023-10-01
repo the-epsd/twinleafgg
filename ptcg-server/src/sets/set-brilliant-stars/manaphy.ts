@@ -13,6 +13,8 @@ export class Manaphy extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'F';
+
   public cardType: CardType = CardType.WATER;
 
   public hp: number = 70;

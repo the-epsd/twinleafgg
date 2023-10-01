@@ -9,6 +9,7 @@ class Ralts extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.regulationMark = 'F';
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 70;
         this.weakness = [{ type: card_types_1.CardType.DARK }];

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { PokemonCatcher } from '../set-scarlet-and-violet/pokemon-catcher';
+import { PokemonCatcher } from './pokemon-catcher';
 import { FireCrystal } from './fire-crystal';
 import { GiantHearth } from './giant-hearth';
 import { Oranguru } from './oranguru';

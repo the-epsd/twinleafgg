@@ -8,6 +8,8 @@ export class Durant extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public cardType: CardType = CardType.GRASS;
 
   public hp: number = 90;

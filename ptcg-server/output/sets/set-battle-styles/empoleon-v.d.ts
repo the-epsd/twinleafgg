@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class EmpoleonV extends PokemonCard {
     tags: CardTag[];
     stage: Stage;
+    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {

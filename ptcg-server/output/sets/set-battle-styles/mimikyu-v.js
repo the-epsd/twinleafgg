@@ -37,6 +37,7 @@ class MimikyuV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
+        this.regulationMark = 'E';
         this.name = 'Mimikyu V';
         this.fullName = 'Mimikyu V BST 062';
         this.TIME_CIRCLE_MARKER = 'TIME_CIRCLE_MARKER';

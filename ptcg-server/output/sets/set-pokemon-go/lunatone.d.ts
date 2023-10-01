@@ -4,6 +4,7 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Lunatone extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {

@@ -24,6 +24,7 @@ export declare class Gardevoir extends PokemonCard {
         text: string;
     }[];
     set: string;
+    regulationMark: string;
     name: string;
     fullName: string;
     readonly FLEET_FOOTED_MARKER = "FLEET_FOOTED_MARKER";

@@ -9,6 +9,8 @@ export class Meloetta extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public tags = [ CardTag.FUSION_STRIKE ];
 
   public cardType: CardType = CardType.PSYCHIC;

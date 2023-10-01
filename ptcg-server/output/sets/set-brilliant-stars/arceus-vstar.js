@@ -10,6 +10,7 @@ class ArceusVSTAR extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VSTAR];
+        this.regulationMark = 'F';
         this.stage = card_types_1.Stage.VSTAR;
         this.evolvesFrom = 'Arceus V';
         this.cardType = card_types_1.CardType.COLORLESS;

@@ -16,6 +16,8 @@ export class KricketuneV extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_V ];
 
+  public regulationMark = 'E';
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.GRASS;

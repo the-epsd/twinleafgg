@@ -12,6 +12,8 @@ export class DoubleTurboEnergy extends EnergyCard {
 
   public set: string = 'BRS';
 
+  public regulationMark = 'F';
+
   public name = 'Double Turbo Energy';
 
   public fullName = 'Double Turbo Energy BRS';

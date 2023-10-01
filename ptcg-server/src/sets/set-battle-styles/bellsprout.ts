@@ -7,6 +7,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { SpecialCondition } from '../../game/store/card/card-types';
 
 export class Bellsprout extends PokemonCard {
+  public regulationMark = 'E';
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.GRASS;
   public hp: number = 50;

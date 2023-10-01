@@ -43,6 +43,8 @@ export class Gardevoir extends PokemonCard {
 
   public set: string = 'CRE';
 
+  public regulationMark = 'E';
+
   public name: string = 'Gardevoir';
 
   public fullName: string = 'Gardevoir CRE';

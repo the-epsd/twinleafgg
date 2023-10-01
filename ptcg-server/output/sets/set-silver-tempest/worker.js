@@ -12,6 +12,7 @@ class Worker extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'SIT';
+        this.regulationMark = 'F';
         this.name = 'Worker';
         this.fullName = 'Worker SIT';
         this.text = 'Draw 3 cards. Discard a Stadium in play.';

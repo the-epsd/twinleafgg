@@ -8,7 +8,7 @@ export abstract class TrainerCard extends Card {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public format: Format[] = [];
+  public format: Format = Format.NONE;
 
   public text: string = '';
 }

@@ -13,6 +13,8 @@ export class Houndoom extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public regulationMark = 'E';
+
   public evolvesFrom = 'Houndour';
 
   public tags = [ CardTag.SINGLE_STRIKE ];
@@ -79,6 +81,7 @@ export class Houndoom extends PokemonCard {
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.deck.moveCardTo(transfer.card, target);
+          target.damage += 20;
         }
       });
 

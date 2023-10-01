@@ -13,6 +13,8 @@ export class SingleStrikeEnergy extends EnergyCard {
 
   public cardTag: CardTag[] = [CardTag.SINGLE_STRIKE];
 
+  public regulationMark = 'E';
+
   public provides: CardType[] = [ CardType.COLORLESS ];
 
   public energyType = EnergyType.SPECIAL;
@@ -48,7 +50,7 @@ export class SingleStrikeEnergy extends EnergyCard {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const pokemon = effect.source;
       if (pokemon.getPokemonCard()?.tags.includes(CardTag.SINGLE_STRIKE)) {
-        effect.energyMap.push({ card: this, provides: [ CardType.FIGHTING && CardType.DARK ] });
+        effect.energyMap.push({ card: this, provides: [ CardType.FIGHTING || CardType.DARK ] });
       }
       return state;
     }

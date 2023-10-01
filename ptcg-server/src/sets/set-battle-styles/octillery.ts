@@ -63,6 +63,8 @@ export class Octillery extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public tags = [ CardTag.RAPID_STRIKE ];
 
   public cardType: CardType = CardType.WATER;

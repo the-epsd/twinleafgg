@@ -10,6 +10,7 @@ class BattleVIPPass extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'FST';
+        this.regulationMark = 'E';
         this.name = 'Battle VIP Pass';
         this.fullName = 'Battle VIP Pass FST';
         this.text = 'You can use this card only during your first turn. ' +

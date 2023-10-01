@@ -1,10 +1,12 @@
 import { Response } from './response.interface';
-import { CardType } from 'ptcg-server';
+import { CardTag, CardType, Format } from 'ptcg-server';
 
 export interface DeckListEntry {
   id: number;
   name: string;
   cardType: CardType[];
+  cardTag: CardTag[];
+  format: Format[];
   isValid: boolean;
 }
 
@@ -16,6 +18,8 @@ export interface Deck {
   id: number;
   name: string;
   cardType: CardType[];
+  cardTag: CardTag[];
+  format: Format[];
   isValid: boolean;
   cards: string[];
 }

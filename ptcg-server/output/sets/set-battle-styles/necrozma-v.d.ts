@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 export declare class NecrozmaV extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     tags: CardTag[];
     cardType: CardType;
     hp: number;

@@ -8,6 +8,8 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class TapuKokoVMAX extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_VMAX ];
+
+  public regulationMark = 'E';
   
   public stage: Stage = Stage.VMAX;
 

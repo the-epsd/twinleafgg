@@ -13,6 +13,7 @@ class Mew extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.regulationMark = 'E';
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 60;
         this.weakness = [{ type: card_types_1.CardType.DARK }];
@@ -56,7 +57,7 @@ class Mew extends game_1.PokemonCard {
             }
             const deckTop = new card_list_1.CardList();
             player.deck.moveTo(deckTop, 6);
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 1, max: 1, allowCancel: true }), selected => {
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 0, max: 1, allowCancel: true }), selected => {
                 player.marker.addMarker(this.MYSTERIOUS_TAIL_MARKER, this);
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.deck);

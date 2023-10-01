@@ -4,6 +4,7 @@ import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class LugiaVSTAR extends PokemonCard {
     tags: CardTag[];
+    regulationMark: string;
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;

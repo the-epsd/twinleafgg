@@ -13,13 +13,18 @@ const miraidon_ex_1 = require("./miraidon-ex");
 const nest_ball_1 = require("./nest-ball");
 const pal_pad_1 = require("./pal-pad");
 const pokegear_30_1 = require("./pokegear-30");
-const pokemon_catcher_1 = require("./pokemon-catcher");
 const professors_research_1 = require("./professors-research");
 const ralts_1 = require("./ralts");
 const rare_candy_1 = require("./rare-candy");
 const skwovet_1 = require("./skwovet");
 const switch_1 = require("./switch");
 const ultra_ball_1 = require("./ultra-ball");
+const penny_1 = require("./penny");
+const beach_court_1 = require("./beach-court");
+const pokemon_catcher_1 = require("./pokemon-catcher");
+const choice_belt_1 = require("./choice-belt");
+const vitality_band_1 = require("./vitality-band");
+const defiance_band_1 = require("./defiance-band");
 exports.setScarletAndViolet = [
     new armarouge_1.Armarouge(),
     new gardevoir_ex_1.Gardevoirex(),
@@ -27,7 +32,6 @@ exports.setScarletAndViolet = [
     new exp_share_1.ExpShare(),
     new nest_ball_1.NestBall(),
     new pokegear_30_1.Pokegear30(),
-    new pokemon_catcher_1.PokemonCatcher(),
     new professors_research_1.ProfessorsResearch(),
     new rare_candy_1.RareCandy(),
     new switch_1.Switch(),
@@ -40,4 +44,10 @@ exports.setScarletAndViolet = [
     new klefki_1.Klefki(),
     new electric_generator_1.ElectricGenerator(),
     new arven_1.Arven(),
+    new penny_1.Penny(),
+    new beach_court_1.BeachCourt(),
+    new pokemon_catcher_1.PokemonCatcher(),
+    new choice_belt_1.ChoiceBelt(),
+    new vitality_band_1.VitalityBand(),
+    new defiance_band_1.DefianceBand(),
 ];

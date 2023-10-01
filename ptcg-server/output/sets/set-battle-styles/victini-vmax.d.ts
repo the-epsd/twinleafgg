@@ -4,6 +4,7 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class VictiniVMAX extends PokemonCard {
     tags: CardTag[];
+    regulationMark: string;
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;

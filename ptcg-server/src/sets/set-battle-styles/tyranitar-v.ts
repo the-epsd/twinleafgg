@@ -9,6 +9,8 @@ export class TyranitarV extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public tags = [ CardTag.POKEMON_V, CardTag.SINGLE_STRIKE ];
 
   public cardType: CardType = CardType.DARK;

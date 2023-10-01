@@ -14,6 +14,8 @@ export class CapturingAroma extends TrainerCard {
 
   public set: string = 'SIT';
 
+  public regulationMark = 'F';
+
   public name: string = 'Capturing Aroma';
 
   public fullName: string = 'Capturing Aroma SIT';

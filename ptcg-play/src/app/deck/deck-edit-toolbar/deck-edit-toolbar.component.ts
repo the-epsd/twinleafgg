@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { CardType, SuperType } from 'ptcg-server';
+import { CardTag, CardType, Format, SuperType } from 'ptcg-server';
 import { MatSelectChange } from '@angular/material/select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -48,6 +48,19 @@ export class DeckEditToolbarComponent {
     {value: SuperType.ENERGY, label: 'LABEL_ENERGY' },
   ];
 
+  public formats = [
+    {value: Format.STANDARD, label: 'LABEL_STANDARD' },
+    {value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
+    {value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
+    {value: Format.RETRO, label: 'LABEL_RETRO' },
+  ];
+
+  public cardTags = [
+    {value: CardTag.POKEMON_V, label: 'Pokemon V' },
+    {value: CardTag.POKEMON_VSTAR, label: 'Pokemon VSTAR' },
+    {value: CardTag.POKEMON_VMAX, label: 'Pokemon VMAX' },
+  ];
+
   public filterValue: DeckEditToolbarFilter;
 
   constructor(
@@ -57,7 +70,8 @@ export class DeckEditToolbarComponent {
       searchValue: '',
       superTypes: [],
       cardTypes: [],
-      format: [],
+      formats: [],
+      tags: [],
     };
   }
 
@@ -77,6 +91,16 @@ export class DeckEditToolbarComponent {
 
   public onCardTypeChange(change: MatSelectChange) {
     this.filterValue.cardTypes = change.value;
+    this.filterChange.next({...this.filterValue});
+  }
+
+  public onFormatChange(change: MatSelectChange) {
+    this.filterValue.formats = change.value;
+    this.filterChange.next({...this.filterValue});
+  }
+
+  public onTagChange(change: MatSelectChange) {
+    this.filterValue.tags = change.value;
     this.filterChange.next({...this.filterValue});
   }
 

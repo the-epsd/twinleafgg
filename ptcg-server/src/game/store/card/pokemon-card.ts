@@ -28,11 +28,11 @@ export abstract class PokemonCard extends Card {
   
   public resistance: Resistance[] = [];
 
-  public format: Format[] = [];
-
   public powers: Power[] = [];
 
   public attacks: Attack[] = [];
+
+  public format: Format = Format.NONE;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect){

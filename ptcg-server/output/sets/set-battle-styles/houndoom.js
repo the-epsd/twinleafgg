@@ -11,6 +11,7 @@ class Houndoom extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
+        this.regulationMark = 'E';
         this.evolvesFrom = 'Houndour';
         this.tags = [card_types_1.CardTag.SINGLE_STRIKE];
         this.cardType = card_types_1.CardType.DARK;
@@ -57,6 +58,7 @@ class Houndoom extends pokemon_card_1.PokemonCard {
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.deck.moveCardTo(transfer.card, target);
+                    target.damage += 20;
                 }
             });
             return state;

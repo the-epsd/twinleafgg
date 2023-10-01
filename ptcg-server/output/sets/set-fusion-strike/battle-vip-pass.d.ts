@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class BattleVIPPass extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    regulationMark: string;
     name: string;
     fullName: string;
     text: string;

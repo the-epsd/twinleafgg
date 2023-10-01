@@ -9,6 +9,8 @@ export class Lunatone extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'F';
+
   public cardType: CardType = CardType.PSYCHIC;
 
   public hp: number = 90;

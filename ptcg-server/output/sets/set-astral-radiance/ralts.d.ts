@@ -4,6 +4,7 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Ralts extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {

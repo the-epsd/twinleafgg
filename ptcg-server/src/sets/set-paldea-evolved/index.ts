@@ -12,6 +12,7 @@ import { SuperRod } from './super-rod';
 import { Wattrel } from './wattrel';
 import { Iono } from './iono';
 import { JetEnergy } from './jet-energy';
+import { Squawkabillyex } from './squawkabilly-ex';
 export const setPaldeaEvolved: Card[] = [
   new Artazon(),
   new DeliveryDrone(),
@@ -26,4 +27,5 @@ export const setPaldeaEvolved: Card[] = [
   new BossOrders(),
   new BraveyCharm(),
   new JetEnergy(),
+  new Squawkabillyex(),
 ];

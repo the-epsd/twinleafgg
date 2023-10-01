@@ -40,6 +40,7 @@ class EscapeRope extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BST';
+        this.regulationMark = 'E';
         this.name = 'Escape Rope';
         this.fullName = 'Escape Rope BST';
         this.text = 'Each player switches his or her Active Pokemon with 1 of his or her ' +

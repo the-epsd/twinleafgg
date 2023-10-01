@@ -79,8 +79,9 @@ export enum SpecialCondition {
 }
 
 export enum Format {
+NONE,
 STANDARD,
 EXPANDED,
 UNLIMITED,
-RETRO,
+RETRO
 }

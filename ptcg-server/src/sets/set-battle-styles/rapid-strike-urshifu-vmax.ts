@@ -10,6 +10,8 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 export class RapidStrikeUrshifuVMAX extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE ];
+
+  public regulationMark = 'E';
   
   public stage: Stage = Stage.VMAX;
 

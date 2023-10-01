@@ -10,6 +10,8 @@ export class Solrock extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'F';
+
   public cardType: CardType = CardType.FIGHTING;
 
   public hp: number = 90;

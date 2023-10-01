@@ -69,8 +69,9 @@ export declare enum SpecialCondition {
     BURNED = 4
 }
 export declare enum Format {
-    STANDARD = 0,
-    EXPANDED = 1,
-    UNLIMITED = 2,
-    RETRO = 3
+    NONE = 0,
+    STANDARD = 1,
+    EXPANDED = 2,
+    UNLIMITED = 3,
+    RETRO = 4
 }

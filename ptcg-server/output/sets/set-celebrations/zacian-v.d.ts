@@ -24,6 +24,7 @@ export declare class ZacianV extends PokemonCard {
         text: string;
     }[];
     set: string;
+    regulationMark: string;
     name: string;
     fullName: string;
     readonly RUSH_IN_MARKER = "RUSH_IN_MARKER";

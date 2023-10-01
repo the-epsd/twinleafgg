@@ -13,6 +13,8 @@ export class ForestSealStone extends TrainerCard {
 
   public set: string = 'SIT';
 
+  public regulationMark = 'F';
+
   public name: string = 'Forest Seal Stone';
 
   public fullName: string = 'Forest Seal Stone SIT';

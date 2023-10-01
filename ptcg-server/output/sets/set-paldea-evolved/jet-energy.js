@@ -10,6 +10,7 @@ class JetEnergy extends energy_card_1.EnergyCard {
         this.provides = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'PAL';
+        this.regulationMark = 'G';
         this.name = 'Jet Energy';
         this.fullName = 'Jet Energy PAL';
     }

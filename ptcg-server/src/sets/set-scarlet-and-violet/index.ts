@@ -11,13 +11,18 @@ import { Miraidonex } from './miraidon-ex';
 import { NestBall } from './nest-ball';
 import { PalPad } from './pal-pad';
 import { Pokegear30 } from './pokegear-30';
-import { PokemonCatcher } from './pokemon-catcher';
 import { ProfessorsResearch } from './professors-research';
 import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
 import { Skwovet } from './skwovet';
 import { Switch } from './switch';
 import { UltraBall } from './ultra-ball';
+import { Penny } from './penny';
+import { BeachCourt } from './beach-court';
+import { PokemonCatcher } from './pokemon-catcher';
+import { ChoiceBelt } from './choice-belt';
+import { VitalityBand } from './vitality-band';
+import { DefianceBand } from './defiance-band';
 export const setScarletAndViolet: Card[] = [
   new Armarouge(),
   new Gardevoirex(),
@@ -25,7 +30,6 @@ export const setScarletAndViolet: Card[] = [
   new ExpShare(),
   new NestBall(),
   new Pokegear30(),
-  new PokemonCatcher(),
   new ProfessorsResearch(),
   new RareCandy(),
   new Switch(),
@@ -38,4 +42,10 @@ export const setScarletAndViolet: Card[] = [
   new Klefki(),
   new ElectricGenerator(),
   new Arven(),
+  new Penny(),
+  new BeachCourt(),
+  new PokemonCatcher(),
+  new ChoiceBelt(),
+  new VitalityBand(),
+  new DefianceBand(),
 ];

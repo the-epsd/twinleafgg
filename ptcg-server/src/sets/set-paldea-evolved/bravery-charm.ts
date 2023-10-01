@@ -10,6 +10,8 @@ export class BraveyCharm extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
 
+  public regulationMark = 'G';
+
   public set: string = 'PAL';
 
   public name: string = 'Bravery Charm';

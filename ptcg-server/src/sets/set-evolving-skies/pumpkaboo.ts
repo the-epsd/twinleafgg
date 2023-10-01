@@ -9,6 +9,8 @@ export class Pumpkaboo extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public cardType: CardType = CardType.PSYCHIC;
 
   public hp: number = 60;

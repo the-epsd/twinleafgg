@@ -1,8 +1,9 @@
-import { CardType, SuperType, Format } from 'ptcg-server';
+import { CardType, SuperType, Format, CardTag } from 'ptcg-server';
 
 export interface DeckEditToolbarFilter {
-  format: Format[];
+  formats: Format[];
   superTypes: SuperType[];
   cardTypes: CardType[];
+  tags: CardTag[];
   searchValue: string;
 }

@@ -12,6 +12,7 @@ class EmpoleonV extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_V, card_types_1.CardTag.RAPID_STRIKE];
         this.stage = card_types_1.Stage.BASIC;
+        this.regulationMark = 'E';
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 210;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];

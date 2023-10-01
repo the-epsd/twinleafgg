@@ -12,6 +12,8 @@ export class Oricorio extends PokemonCard {
 
   public tags = [ CardTag.FUSION_STRIKE ];
 
+  public regulationMark = 'E';
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.FIRE;

@@ -36,6 +36,7 @@ class Gardevoir extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'CRE';
+        this.regulationMark = 'E';
         this.name = 'Gardevoir';
         this.fullName = 'Gardevoir CRE';
         this.FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';

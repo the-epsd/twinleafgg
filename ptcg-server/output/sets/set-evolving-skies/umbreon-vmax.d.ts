@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class UmbreonVMAX extends PokemonCard {
     tags: CardTag[];
     stage: Stage;
+    regulationMark: string;
     evolvesFrom: string;
     cardType: CardType;
     hp: number;

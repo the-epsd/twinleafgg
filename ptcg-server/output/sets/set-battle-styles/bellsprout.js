@@ -8,6 +8,7 @@ const card_types_2 = require("../../game/store/card/card-types");
 class Bellsprout extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'E';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 50;

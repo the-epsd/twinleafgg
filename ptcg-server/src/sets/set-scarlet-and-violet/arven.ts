@@ -69,6 +69,8 @@ export class Arven extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
+  public regulationMark = 'G';
+
   public set: string = 'SVI';
 
   public name: string = 'Arven';

@@ -46,6 +46,8 @@ export class MimikyuV extends PokemonCard {
 
   public set: string = 'BST';
 
+  public regulationMark = 'E';
+
   public name: string = 'Mimikyu V';
 
   public fullName: string = 'Mimikyu V BST 062';

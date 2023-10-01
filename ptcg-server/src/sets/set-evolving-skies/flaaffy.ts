@@ -12,6 +12,8 @@ export class Flaaffy extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public regulationMark = 'E';
+
   public evolvesFrom = 'Mareep';
 
   public cardType: CardType = CardType.LIGHTNING;

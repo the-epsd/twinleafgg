@@ -13,6 +13,8 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Gallade extends PokemonCard {
 
+  public regulationMark = 'F';
+
   public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Kirlia';

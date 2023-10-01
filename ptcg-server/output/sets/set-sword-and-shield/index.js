@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSwordAndShield = void 0;
-const pokemon_catcher_1 = require("../set-scarlet-and-violet/pokemon-catcher");
+const pokemon_catcher_1 = require("./pokemon-catcher");
 const fire_crystal_1 = require("./fire-crystal");
 const giant_hearth_1 = require("./giant-hearth");
 const oranguru_1 = require("./oranguru");

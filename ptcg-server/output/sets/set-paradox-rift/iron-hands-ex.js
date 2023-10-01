@@ -8,6 +8,7 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.FUTURE];
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 230;
@@ -32,13 +33,8 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Iron Hands ex PAR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            const target = effect.target;
-            if (target.hp <= 0) {
-                const knockoutEffect = new game_effects_1.KnockOutEffect(effect.player, target);
-                knockoutEffect.prizeCount += 1;
-                store.reduceEffect(state, knockoutEffect);
-            }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1] && effect instanceof game_effects_1.KnockOutEffect) {
+            effect.prizeCount += 1;
             return state;
         }
         return state;

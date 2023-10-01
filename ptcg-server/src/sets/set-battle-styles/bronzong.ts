@@ -60,6 +60,8 @@ export class Bronzong extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public cardType: CardType = CardType.METAL;
   
   public hp: number = 110;

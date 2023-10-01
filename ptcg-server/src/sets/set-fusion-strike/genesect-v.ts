@@ -15,6 +15,8 @@ export class GenesectV extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_V, CardTag.FUSION_STRIKE ];
 
+  public regulationMark = 'E';
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.METAL;

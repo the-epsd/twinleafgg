@@ -11,6 +11,8 @@ export class BattleVIPPass extends TrainerCard {
 
   public set: string = 'FST';
 
+  public regulationMark = 'E';
+
   public name: string = 'Battle VIP Pass';
 
   public fullName: string = 'Battle VIP Pass FST';

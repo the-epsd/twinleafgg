@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class ChampionsFestival extends TrainerCard {
     trainerType: TrainerType;
+    regulationMark: string;
     set: string;
     name: string;
     fullName: string;

@@ -12,6 +12,7 @@ class CollapsedStadium extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
+        this.regulationMark = 'F';
         this.set = 'BRS';
         this.name = 'Collapsed Stadium';
         this.fullName = 'Collapsed Stadium BRS 137';

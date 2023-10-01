@@ -4,6 +4,7 @@ import { PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Houndoom extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     evolvesFrom: string;
     tags: CardTag[];
     cardType: CardType;

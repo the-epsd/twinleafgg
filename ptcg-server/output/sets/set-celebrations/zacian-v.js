@@ -34,6 +34,7 @@ class ZacianV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'CEL';
+        this.regulationMark = 'E';
         this.name = 'Zacian V';
         this.fullName = 'Zacian V CEL';
         this.RUSH_IN_MARKER = 'RUSH_IN_MARKER';

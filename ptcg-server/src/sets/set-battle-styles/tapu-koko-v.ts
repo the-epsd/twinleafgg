@@ -8,6 +8,8 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 export class TapuKokoV extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_V ];
+
+  public regulationMark = 'E';
   
   public stage: Stage = Stage.BASIC;
 

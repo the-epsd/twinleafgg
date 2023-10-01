@@ -13,6 +13,8 @@ export class CollapsedStadium extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
 
+  public regulationMark = 'F';
+
   public set: string = 'BRS';
 
   public name: string = 'Collapsed Stadium';

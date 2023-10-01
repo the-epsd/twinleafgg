@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 export declare class Raihan extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    regulationMark: string;
     name: string;
     fullName: string;
     text: string;

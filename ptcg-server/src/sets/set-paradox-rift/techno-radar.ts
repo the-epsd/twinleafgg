@@ -85,6 +85,8 @@ export class TechnoRadar extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
+  public regulationMark = 'G';
+
   public set: string = 'PAR';
 
   public name: string = 'Techno Radar';

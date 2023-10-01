@@ -10,6 +10,8 @@ export class LugiaVSTAR extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_VSTAR ];
 
+  public regulationMark = 'F';
+
   public stage: Stage = Stage.VSTAR;
 
   public evolvesFrom = 'Lugia V';

@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard, PowerType } from '../../game';
 export declare class Mew extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {

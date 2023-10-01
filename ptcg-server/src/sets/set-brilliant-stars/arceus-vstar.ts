@@ -11,6 +11,8 @@ export class ArceusVSTAR extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_VSTAR ];
 
+  public regulationMark = 'F';
+
   public stage: Stage = Stage.VSTAR;
 
   public evolvesFrom = 'Arceus V';

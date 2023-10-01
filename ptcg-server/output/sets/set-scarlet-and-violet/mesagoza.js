@@ -11,6 +11,7 @@ class ChampionsFestival extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
+        this.regulationMark = 'G';
         this.set = 'SVI';
         this.name = 'Mesagoza';
         this.fullName = 'Mesagoza SVI';

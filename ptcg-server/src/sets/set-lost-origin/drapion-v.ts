@@ -11,6 +11,8 @@ export class DrapionV extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_V ];
 
+  public regulationMark = 'F';
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.DARK;

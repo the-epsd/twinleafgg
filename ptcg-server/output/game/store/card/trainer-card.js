@@ -8,7 +8,7 @@ class TrainerCard extends card_1.Card {
         super(...arguments);
         this.superType = card_types_1.SuperType.TRAINER;
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.format = [];
+        this.format = card_types_1.Format.NONE;
         this.text = '';
     }
 }

@@ -8,6 +8,8 @@ import { GameMessage } from '../../game/game-message';
 export class RapidStrikeUrshifuV extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_V, CardTag.RAPID_STRIKE ];
+
+  public regulationMark = 'E';
   
   public stage: Stage = Stage.BASIC;
 

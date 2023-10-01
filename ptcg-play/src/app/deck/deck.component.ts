@@ -8,13 +8,6 @@ import { ApiError } from '../api/api.error';
 import { DeckListEntry } from '../api/interfaces/deck.interface';
 import { DeckService } from '../api/services/deck.service';
 
-enum Format {
-  Standard,
-  Expanded,
-  Unlimited,
-  Retro
-}
-
 @UntilDestroy()
 
 
@@ -25,14 +18,6 @@ enum Format {
 })
 export class DeckComponent implements OnInit {
 
-// In component class
-selectedFormat: Format = Format.Standard;
-
-formats = [
-  {value: Format.Standard, label: 'Standard'},
-  {value: Format.Expanded, label: 'Expanded'},
-  {value: Format.Unlimited, label: 'Unlimited'}
-];
 
   public displayedColumns: string[] = ['name', 'cardTypes', 'isValid', 'actions'];
   public decks: DeckListEntry[] = [];

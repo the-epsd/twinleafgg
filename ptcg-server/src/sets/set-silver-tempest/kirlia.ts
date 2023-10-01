@@ -13,6 +13,8 @@ export class Kirlia extends PokemonCard {
 
   public evolvesFrom = 'Ralts';
 
+  public regulationMark = 'F';
+
   public cardType: CardType = CardType.PSYCHIC;
 
   public hp: number = 80;

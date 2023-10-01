@@ -13,6 +13,8 @@ export class FlappleV extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public tags = [ CardTag.POKEMON_V ];
 
   public cardType: CardType = CardType.GRASS;

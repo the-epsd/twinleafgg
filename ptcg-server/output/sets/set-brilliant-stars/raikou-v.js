@@ -11,6 +11,7 @@ class RaikouV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_V];
+        this.regulationMark = 'F';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 200;

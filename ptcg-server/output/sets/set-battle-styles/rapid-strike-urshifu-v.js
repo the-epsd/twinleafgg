@@ -10,6 +10,7 @@ class RapidStrikeUrshifuV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_V, card_types_1.CardTag.RAPID_STRIKE];
+        this.regulationMark = 'E';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.FIGHTING;
         this.hp = 220;

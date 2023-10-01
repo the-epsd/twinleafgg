@@ -7,6 +7,7 @@ import { PowerType } from '../../game';
 export declare class ForestSealStone extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    regulationMark: string;
     name: string;
     fullName: string;
     readonly VSTAR_MARKER = "VSTAR_MARKER";

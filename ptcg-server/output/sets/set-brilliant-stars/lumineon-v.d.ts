@@ -4,6 +4,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../game';
 export declare class LumineonV extends PokemonCard {
     tags: CardTag[];
+    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;

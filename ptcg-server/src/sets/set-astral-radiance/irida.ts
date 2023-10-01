@@ -70,6 +70,8 @@ export class Irida extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
+  public regulationMark = 'F';
+
   public set: string = 'ASR';
 
   public name: string = 'Irida';

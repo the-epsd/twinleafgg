@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
 export declare class Manaphy extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {

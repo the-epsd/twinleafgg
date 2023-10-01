@@ -12,6 +12,7 @@ class Flaaffy extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
+        this.regulationMark = 'E';
         this.evolvesFrom = 'Mareep';
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 90;

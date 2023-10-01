@@ -13,6 +13,8 @@ export class Bibarel extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public regulationMark = 'F';
+
   public evolvesFrom = 'Bidoof';
 
   public cardType: CardType = CardType.COLORLESS;

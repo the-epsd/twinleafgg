@@ -12,6 +12,8 @@ export class FlappleVMAX extends PokemonCard {
 
   public evolvesFrom = 'Flapple V';
 
+  public regulationMark = 'E';
+
   public tags = [ CardTag.POKEMON_VMAX ];
 
   public cardType: CardType = CardType.GRASS;

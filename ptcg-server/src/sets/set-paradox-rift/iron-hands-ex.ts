@@ -9,6 +9,8 @@ export class IronHandsex extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'G';
+
   public tags = [CardTag.POKEMON_ex, CardTag.FUTURE];
 
   public cardType: CardType = CardType.LIGHTNING;
@@ -42,21 +44,12 @@ export class IronHandsex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1] && effect instanceof KnockOutEffect) {
 
-      const target = effect.target;
-
-      if (target.hp <= 0) {
-    
-        const knockoutEffect = new KnockOutEffect(effect.player, target);
-        knockoutEffect.prizeCount += 1;
-        store.reduceEffect(state, knockoutEffect);
-    
-      }
-    
+      effect.prizeCount += 1;
       return state;
-    
     }
     return state;
   }
-}    
+    
+}

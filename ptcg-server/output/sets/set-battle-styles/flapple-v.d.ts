@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { CardTag } from '../../game/store/card/card-types';
 export declare class FlappleV extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     tags: CardTag[];
     cardType: CardType;
     hp: number;

@@ -42,6 +42,8 @@ export class ZacianV extends PokemonCard {
 
   public set: string = 'CEL';
 
+  public regulationMark = 'E';
+
   public name: string = 'Zacian V';
 
   public fullName: string = 'Zacian V CEL';

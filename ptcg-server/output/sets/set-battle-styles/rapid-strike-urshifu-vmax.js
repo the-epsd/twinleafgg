@@ -12,6 +12,7 @@ class RapidStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VMAX, card_types_1.CardTag.RAPID_STRIKE];
+        this.regulationMark = 'E';
         this.stage = card_types_1.Stage.VMAX;
         this.evolvesFrom = 'Rapid Strike Urshifu V';
         this.cardType = card_types_1.CardType.FIGHTING;

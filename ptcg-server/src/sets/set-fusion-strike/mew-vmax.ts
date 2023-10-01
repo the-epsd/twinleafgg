@@ -10,6 +10,8 @@ export class MewVMAX extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_VMAX, CardTag.FUSION_STRIKE ];
 
+  public regulationMark = 'E';
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.PSYCHIC;

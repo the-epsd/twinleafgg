@@ -13,6 +13,8 @@ export class Zapdosex extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'G';
+
   public tags = [ CardTag.POKEMON_ex ];
 
   public cardType: CardType = CardType.LIGHTNING;

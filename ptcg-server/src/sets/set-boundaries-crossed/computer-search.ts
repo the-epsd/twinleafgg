@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardTag } from '../../game/store/card/card-types';
+import { TrainerType, CardTag, Format } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -71,6 +71,8 @@ export class ComputerSearch extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public tags = [ CardTag.ACE_SPEC ];
+
+  public format: Format = Format.RETRO;
 
   public set: string = 'BCR';
 

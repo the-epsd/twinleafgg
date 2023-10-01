@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class Kirlia extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
+    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {

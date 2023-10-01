@@ -12,6 +12,8 @@ export class JetEnergy extends EnergyCard {
 
   public set: string = 'PAL';
 
+  public regulationMark = 'G';
+
   public name = 'Jet Energy';
 
   public fullName = 'Jet Energy PAL';

@@ -10,6 +10,7 @@ class VictiniVMAX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VMAX];
+        this.regulationMark = 'E';
         this.stage = card_types_1.Stage.VMAX;
         this.evolvesFrom = 'Victini V';
         this.cardType = card_types_1.CardType.FIRE;

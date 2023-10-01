@@ -12,6 +12,7 @@ class GiftEnergy extends energy_card_1.EnergyCard {
         this.provides = [card_types_1.CardType.COLORLESS];
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'LOR';
+        this.regulationMark = 'F';
         this.name = 'Gift Energy';
         this.fullName = 'Gift Energy LOR';
         this.GIFT_ENERGY_MARKER = 'GIFT_ENERGY_MARKER';

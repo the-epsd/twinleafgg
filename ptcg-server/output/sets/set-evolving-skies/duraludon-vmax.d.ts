@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
 export declare class DuraludonVMAX extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     tags: CardTag[];
     cardType: CardType;
     hp: number;

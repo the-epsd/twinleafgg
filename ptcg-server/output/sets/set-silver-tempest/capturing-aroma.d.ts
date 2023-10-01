@@ -6,6 +6,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 export declare class CapturingAroma extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    regulationMark: string;
     name: string;
     fullName: string;
     text: string;

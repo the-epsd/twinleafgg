@@ -11,6 +11,8 @@ export class UmbreonV extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public cardType: CardType = CardType.DARK;
 
   public hp: number = 200;

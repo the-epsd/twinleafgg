@@ -37,6 +37,7 @@ class Octillery extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.regulationMark = 'E';
         this.tags = [card_types_1.CardTag.RAPID_STRIKE];
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 110;

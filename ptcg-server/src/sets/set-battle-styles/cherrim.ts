@@ -11,6 +11,8 @@ export class Cherrim extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public regulationMark = 'E';
+
   public evolvesFrom = 'Cherubi';
 
   public cardType: CardType = CardType.GRASS;

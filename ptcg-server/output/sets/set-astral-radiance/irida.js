@@ -51,6 +51,7 @@ class Irida extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
+        this.regulationMark = 'F';
         this.set = 'ASR';
         this.name = 'Irida';
         this.fullName = 'Irida ASR';

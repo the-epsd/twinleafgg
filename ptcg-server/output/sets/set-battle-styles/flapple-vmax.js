@@ -10,6 +10,7 @@ class FlappleVMAX extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.VMAX;
         this.evolvesFrom = 'Flapple V';
+        this.regulationMark = 'E';
         this.tags = [card_types_2.CardTag.POKEMON_VMAX];
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 320;

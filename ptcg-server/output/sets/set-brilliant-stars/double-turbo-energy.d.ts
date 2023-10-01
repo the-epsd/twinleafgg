@@ -6,6 +6,7 @@ export declare class DoubleTurboEnergy extends EnergyCard {
     provides: CardType[];
     energyType: EnergyType;
     set: string;
+    regulationMark: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

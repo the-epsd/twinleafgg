@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FogCrystal = void 0;
-const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
@@ -10,17 +9,36 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const show_cards_prompt_1 = require("../../game/store/prompts/show-cards-prompt");
 const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
+const game_1 = require("../../game");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     let cards = [];
-    if (player.deck.cards.length === 0) {
-        throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-    }
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.PSYCHIC, stage: card_types_1.Stage.BASIC || card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Psychic Energy' }, { min: 1, max: 1, allowCancel: true }), selected => {
+    let pokemons = 0;
+    let trainers = 0;
+    const blocked = [];
+    player.deck.cards.forEach((c, index) => {
+        if (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Psychic Energy') {
+            trainers += 1;
+        }
+        else if (c instanceof game_1.PokemonCard && c.cardType === card_types_1.CardType.PSYCHIC && c.stage === card_types_1.Stage.BASIC) {
+            pokemons += 1;
+        }
+        else {
+            blocked.push(index);
+        }
+    });
+    // We will discard this card after prompt confirmation
+    // This will prevent unblocked supporter to appear in the discard pile
+    effect.preventDefault = true;
+    const maxPokemons = Math.min(pokemons, 1);
+    const maxTrainers = Math.min(trainers, 1);
+    const count = maxPokemons || maxTrainers;
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTrainers }), selected => {
         cards = selected || [];
         next();
     });
+    player.hand.moveCardTo(effect.trainerCard, player.discard);
     player.deck.moveCardsTo(cards, player.hand);
     if (cards.length > 0) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
@@ -34,6 +52,7 @@ class FogCrystal extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'CRE';
+        this.regulationMark = 'E';
         this.name = 'Fog Crystal';
         this.fullName = 'Fog Crystal CRE';
         this.text = 'Search your deck for a Pokemon with 90 HP or less, reveal it, ' +

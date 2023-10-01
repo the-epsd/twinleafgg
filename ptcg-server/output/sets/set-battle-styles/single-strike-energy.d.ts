@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class SingleStrikeEnergy extends EnergyCard {
     cardTag: CardTag[];
+    regulationMark: string;
     provides: CardType[];
     energyType: EnergyType;
     set: string;

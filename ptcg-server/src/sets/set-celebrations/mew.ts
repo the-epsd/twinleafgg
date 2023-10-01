@@ -13,6 +13,8 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 export class Mew extends PokemonCard {
   
   public stage: Stage = Stage.BASIC;
+
+  public regulationMark = 'E';
   
   public cardType: CardType = CardType.PSYCHIC;
   
@@ -78,7 +80,7 @@ export class Mew extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-        { min: 1, max: 1, allowCancel: true }
+        { min: 0, max: 1, allowCancel: true }
       ), selected => {
         player.marker.addMarker(this.MYSTERIOUS_TAIL_MARKER, this);
         deckTop.moveCardsTo(selected, player.hand);

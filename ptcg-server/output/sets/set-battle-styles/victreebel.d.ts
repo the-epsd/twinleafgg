@@ -7,6 +7,7 @@ export declare class Victreebel extends PokemonCard {
     readonly CLEAR_TIME_CIRCLE_MARKER: string;
     stage: Stage;
     evolvesFrom: string;
+    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {

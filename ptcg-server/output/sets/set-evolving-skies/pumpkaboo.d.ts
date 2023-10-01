@@ -4,6 +4,7 @@ import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Pumpkaboo extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {

@@ -11,6 +11,7 @@ class Solrock extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.regulationMark = 'F';
         this.cardType = card_types_1.CardType.FIGHTING;
         this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];

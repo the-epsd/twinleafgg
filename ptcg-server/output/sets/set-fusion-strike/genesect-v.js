@@ -14,6 +14,7 @@ class GenesectV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_2.CardTag.POKEMON_V, card_types_2.CardTag.FUSION_STRIKE];
+        this.regulationMark = 'E';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.METAL;
         this.hp = 190;

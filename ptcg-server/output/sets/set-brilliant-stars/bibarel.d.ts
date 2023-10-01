@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
 export declare class Bibarel extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     evolvesFrom: string;
     cardType: CardType;
     hp: number;

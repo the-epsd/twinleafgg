@@ -26,6 +26,7 @@ export declare class MimikyuV extends PokemonCard {
         text: string;
     }[];
     set: string;
+    regulationMark: string;
     name: string;
     fullName: string;
     readonly TIME_CIRCLE_MARKER: string;

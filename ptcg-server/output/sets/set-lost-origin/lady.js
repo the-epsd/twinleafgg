@@ -34,6 +34,7 @@ class Lady extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'LOR';
+        this.regulationMark = 'F';
         this.name = 'Lady';
         this.fullName = 'Lady LOR';
         this.text = 'Search your deck for up to 4 basic Energy cards, reveal ' +

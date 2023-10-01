@@ -14,6 +14,8 @@ export class Worker extends TrainerCard {
 
   public set: string = 'SIT';
 
+  public regulationMark = 'F';
+
   public name: string = 'Worker';
 
   public fullName: string = 'Worker SIT';

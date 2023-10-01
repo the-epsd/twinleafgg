@@ -15,6 +15,8 @@ export class DuraludonVMAX extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public tags = [ CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE ];
 
   //public evolvesFrom = 'Duraludon V';

@@ -12,6 +12,7 @@ class SingleStrikeEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
         this.cardTag = [card_types_1.CardTag.SINGLE_STRIKE];
+        this.regulationMark = 'E';
         this.provides = [card_types_1.CardType.COLORLESS];
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'BST';
@@ -41,7 +42,7 @@ class SingleStrikeEnergy extends energy_card_1.EnergyCard {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const pokemon = effect.source;
             if ((_b = pokemon.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.tags.includes(card_types_1.CardTag.SINGLE_STRIKE)) {
-                effect.energyMap.push({ card: this, provides: [card_types_1.CardType.FIGHTING && card_types_1.CardType.DARK] });
+                effect.energyMap.push({ card: this, provides: [card_types_1.CardType.FIGHTING || card_types_1.CardType.DARK] });
             }
             return state;
         }

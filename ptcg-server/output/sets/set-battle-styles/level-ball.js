@@ -41,6 +41,7 @@ class LevelBall extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BST';
+        this.regulationMark = 'E';
         this.name = 'Level Ball';
         this.fullName = 'Level Ball BST';
         this.text = 'Search your deck for a Pokemon with 90 HP or less, reveal it, ' +

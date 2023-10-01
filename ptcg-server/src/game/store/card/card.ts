@@ -1,4 +1,4 @@
-import { SuperType } from './card-types';
+import { Format, SuperType } from './card-types';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
@@ -9,6 +9,8 @@ export abstract class Card {
 
   public abstract superType: SuperType;
 
+  public abstract format: Format;
+
   public abstract fullName: string;
 
   public abstract name: string;
@@ -18,6 +20,9 @@ export abstract class Card {
   public regulationMark: string = '';
 
   public tags: string[] = [];
+
+
+  
   static tags: any;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

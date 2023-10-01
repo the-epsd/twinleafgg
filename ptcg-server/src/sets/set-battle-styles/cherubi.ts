@@ -4,7 +4,9 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 
 export class Cherubi extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;    
+  public stage: Stage = Stage.BASIC;  
+  
+  public regulationMark = 'E';
 
   public cardType: CardType = CardType.GRASS;
 

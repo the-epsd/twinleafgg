@@ -57,6 +57,7 @@ class Raihan extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'EVS';
+        this.regulationMark = 'E';
         this.name = 'Raihan';
         this.fullName = 'Raihan EVS';
         this.text = 'You can play this card only if 1 of your Pokemon was Knocked Out ' +

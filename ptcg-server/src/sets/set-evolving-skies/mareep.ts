@@ -5,6 +5,8 @@ export class Mareep extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public cardType: CardType = CardType.LIGHTNING;
 
   public hp: number = 60;

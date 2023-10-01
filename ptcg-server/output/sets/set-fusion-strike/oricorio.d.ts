@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
 export declare class Oricorio extends PokemonCard {
     tags: CardTag[];
+    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;

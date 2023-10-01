@@ -4,6 +4,7 @@ import { PowerType, StoreLike, State } from '../../game';
 import { Stage, CardType } from '../../game/store/card/card-types';
 export declare class Weepinbell extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     evolvesFrom: string;
     cardType: CardType;
     hp: number;

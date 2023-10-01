@@ -13,6 +13,7 @@ class Victreebel extends pokemon_card_1.PokemonCard {
         this.CLEAR_TIME_CIRCLE_MARKER = 'CLEAR_TIME_CIRCLE_MARKER';
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Weepinbell';
+        this.regulationMark = 'E';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 150;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];

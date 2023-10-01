@@ -62,6 +62,8 @@ export class EscapeRope extends TrainerCard {
 
   public set: string = 'BST';
 
+  public regulationMark = 'E';
+
   public name: string = 'Escape Rope';
 
   public fullName: string = 'Escape Rope BST';

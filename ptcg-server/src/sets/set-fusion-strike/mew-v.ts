@@ -7,6 +7,8 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class MewV extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_V, CardTag.FUSION_STRIKE ];
+
+  public regulationMark = 'E';
   
   public stage: Stage = Stage.BASIC;
 

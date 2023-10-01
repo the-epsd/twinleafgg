@@ -61,6 +61,8 @@ export class LevelBall extends TrainerCard {
 
   public set: string = 'BST';
 
+  public regulationMark = 'E';
+
   public name: string = 'Level Ball';
 
   public fullName: string = 'Level Ball BST';

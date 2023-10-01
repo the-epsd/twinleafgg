@@ -5,6 +5,7 @@ import { OriginFormePalkiaV } from './origin-forme-palkia-v';
 import { OriginFormePalkiaVSTAR } from './origin-forme-palkia-vstar';
 import { RadiantGreninja } from './radiant-greninja';
 import { Ralts } from './ralts';
+import { SwitchCart } from './switch-cart';
 
 export const setAstralRadiance: Card[] = [
   new Irida(),
@@ -13,4 +14,5 @@ export const setAstralRadiance: Card[] = [
   new RadiantGreninja(),
   new OriginFormePalkiaVSTAR(),
   new OriginFormePalkiaV(),
+  new SwitchCart(),
 ];

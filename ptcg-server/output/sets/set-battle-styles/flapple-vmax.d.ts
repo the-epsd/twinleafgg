@@ -7,6 +7,7 @@ import { CardTag } from '../../game/store/card/card-types';
 export declare class FlappleVMAX extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
+    regulationMark: string;
     tags: CardTag[];
     cardType: CardType;
     hp: number;

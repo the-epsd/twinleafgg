@@ -7,6 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { CardTag } from '../../game/store/card/card-types';
 export declare class GenesectV extends PokemonCard {
     tags: CardTag[];
+    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;

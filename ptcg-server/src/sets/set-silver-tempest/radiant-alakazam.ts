@@ -16,6 +16,8 @@ export class RadiantAlakazam extends PokemonCard {
 
   public tags = [ CardTag.RADIANT ];
 
+  public regulationMark = 'F';
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.PSYCHIC;

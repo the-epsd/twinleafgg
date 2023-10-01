@@ -13,6 +13,8 @@ export class Archeops extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 
+  public regulationMark = 'F';
+
   public evolvesFrom = 'Archen';
 
   public cardType: CardType = CardType.COLORLESS;

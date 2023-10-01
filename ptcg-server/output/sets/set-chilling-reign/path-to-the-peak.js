@@ -12,6 +12,7 @@ class PathToThePeak extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'CRE';
+        this.regulationMark = 'E';
         this.name = 'Path to the Peak';
         this.fullName = 'Path to the Peak CRE';
         this.text = 'Pokémon with a Rule Box in play (both yours and your opponent\'s) have no Abilities. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';

@@ -81,8 +81,9 @@ var SpecialCondition;
 })(SpecialCondition = exports.SpecialCondition || (exports.SpecialCondition = {}));
 var Format;
 (function (Format) {
-    Format[Format["STANDARD"] = 0] = "STANDARD";
-    Format[Format["EXPANDED"] = 1] = "EXPANDED";
-    Format[Format["UNLIMITED"] = 2] = "UNLIMITED";
-    Format[Format["RETRO"] = 3] = "RETRO";
+    Format[Format["NONE"] = 0] = "NONE";
+    Format[Format["STANDARD"] = 1] = "STANDARD";
+    Format[Format["EXPANDED"] = 2] = "EXPANDED";
+    Format[Format["UNLIMITED"] = 3] = "UNLIMITED";
+    Format[Format["RETRO"] = 4] = "RETRO";
 })(Format = exports.Format || (exports.Format = {}));

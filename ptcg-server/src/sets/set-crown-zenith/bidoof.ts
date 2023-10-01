@@ -14,6 +14,8 @@ export class Bidoof extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'F';
+
   public cardType: CardType = CardType.COLORLESS;
 
   public hp: number = 60;

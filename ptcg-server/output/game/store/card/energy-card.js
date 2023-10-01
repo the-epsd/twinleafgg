@@ -8,6 +8,7 @@ class EnergyCard extends card_1.Card {
         super(...arguments);
         this.superType = card_types_1.SuperType.ENERGY;
         this.energyType = card_types_1.EnergyType.BASIC;
+        this.format = card_types_1.Format.NONE;
         this.provides = [];
         this.text = '';
     }

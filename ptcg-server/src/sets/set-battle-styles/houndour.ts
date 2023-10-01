@@ -7,6 +7,8 @@ export class Houndour extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public tags = [ CardTag.SINGLE_STRIKE ];
 
   public cardType: CardType = CardType.DARK;

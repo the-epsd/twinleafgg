@@ -1,9 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, SuperType, CardType, Stage, EnergyType } from '../../game/store/card/card-types';
+import { TrainerType, CardType, EnergyType, Stage } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
@@ -11,27 +10,46 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { EnergyCard, PokemonCard } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-  if (player.deck.cards.length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
+  let pokemons = 0;
+  let trainers = 0;
+  const blocked: number[] = [];
+  player.deck.cards.forEach((c, index) => {
+    if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Psychic Energy') {
+      trainers += 1;
+    } else if (c instanceof PokemonCard && c.cardType === CardType.PSYCHIC && c.stage === Stage.BASIC) {
+      pokemons += 1;
+    } else {
+      blocked.push(index);
+    }
+  });
+
+  // We will discard this card after prompt confirmation
+  // This will prevent unblocked supporter to appear in the discard pile
+  effect.preventDefault = true;
+
+  const maxPokemons = Math.min(pokemons, 1);
+  const maxTrainers = Math.min(trainers, 1);
+  const count = maxPokemons || maxTrainers;
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { superType: SuperType.POKEMON, cardType: CardType.PSYCHIC, stage: Stage.BASIC  ||  SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
-    { min: 1, max: 1, allowCancel: true }
+    { },
+    { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTrainers }
   ), selected => {
     cards = selected || [];
     next();
   });
 
+  player.hand.moveCardTo(effect.trainerCard, player.discard);
   player.deck.moveCardsTo(cards, player.hand);
 
   if (cards.length > 0) {
@@ -52,6 +70,8 @@ export class FogCrystal extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'CRE';
+
+  public regulationMark = 'E';
 
   public name: string = 'Fog Crystal';
 

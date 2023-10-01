@@ -4,6 +4,7 @@ import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class OriginFormePalkiaVSTAR extends PokemonCard {
     tags: CardTag[];
+    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;

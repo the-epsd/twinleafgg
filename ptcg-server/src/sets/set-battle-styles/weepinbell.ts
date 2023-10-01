@@ -9,6 +9,8 @@ export class Weepinbell extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public regulationMark = 'E';
+
   public evolvesFrom = 'Bellsprout';
 
   public cardType: CardType = CardType.GRASS;

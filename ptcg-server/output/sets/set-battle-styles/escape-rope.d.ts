@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class EscapeRope extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    regulationMark: string;
     name: string;
     fullName: string;
     text: string;
