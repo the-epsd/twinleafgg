@@ -11,9 +11,9 @@ class Charizardex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'G';
-        this.tags = [card_types_1.CardTag.POKEMON_ex];
-        this.stage = card_types_1.Stage.STAGE_2;
-        this.evolvesFrom = 'Charmeleon';
+        //public tags = [ CardTag.POKEMON_ex ];
+        this.stage = card_types_1.Stage.BASIC;
+        //public evolvesFrom = 'Charmeleon';
         this.cardType = card_types_1.CardType.DARK;
         this.hp = 330;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
@@ -75,10 +75,9 @@ class Charizardex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const prizesTaken = opponent.prizes.length;
+            const prizesTaken = 6 - opponent.getPrizeLeft();
             const damagePerPrize = 30;
-            effect.damage = this.attacks[0].damage; // base damage
-            effect.damage += prizesTaken * damagePerPrize; // add bonus damage
+            effect.damage = this.attacks[0].damage + (prizesTaken * damagePerPrize);
         }
         if (effect instanceof attack_effects_1.PutDamageEffect) {
             const player = effect.player;

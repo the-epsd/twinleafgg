@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils,
   GameMessage, PlayerType, SlotType, ConfirmPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -11,11 +11,11 @@ export class Charizardex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  //public tags = [ CardTag.POKEMON_ex ];
 
-  public stage: Stage = Stage.STAGE_2;
+  public stage: Stage = Stage.BASIC;
 
-  public evolvesFrom = 'Charmeleon';
+  //public evolvesFrom = 'Charmeleon';
 
   public cardType: CardType = CardType.DARK;
 
@@ -104,13 +104,14 @@ export class Charizardex extends PokemonCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
-      const prizesTaken = opponent.prizes.length;
+    
+      const prizesTaken = 6 - opponent.getPrizeLeft();
+    
       const damagePerPrize = 30;
-
-      effect.damage = this.attacks[0].damage; // base damage
-      effect.damage += prizesTaken * damagePerPrize; // add bonus damage
+    
+      effect.damage = this.attacks[0].damage + (prizesTaken * damagePerPrize);
     }
+
 
     if (effect instanceof PutDamageEffect) {
       const player = effect.player;
@@ -131,7 +132,7 @@ export class Charizardex extends PokemonCard {
 
       // Target is this Charizard
       if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-      // Try to reduce PowerEffect, to check if something is blocking our ability
+        // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const powerEffect = new PowerEffect(player, this.powers[1], this);
           store.reduceEffect(state, powerEffect);
@@ -142,7 +143,6 @@ export class Charizardex extends PokemonCard {
         effect.preventDefault = true;
       }
     }
-
     return state;
   }
 }
