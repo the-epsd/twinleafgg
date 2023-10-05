@@ -36,6 +36,9 @@ class ArceusV extends pokemon_card_1.PokemonCard {
         this.fullName = 'Arceus V BRS';
     }
     reduceEffect(store, state, effect) {
+        // console.log('Store:', JSON.stringify(store, null, 2));
+        // console.log('State:', JSON.stringify(state, null, 2));
+        // console.log('Effect:', JSON.stringify(effect, null, 2));
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: true, min: 0, max: 3 }), transfers => {

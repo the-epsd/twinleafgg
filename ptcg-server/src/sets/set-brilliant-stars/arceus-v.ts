@@ -46,6 +46,9 @@ export class ArceusV extends PokemonCard {
   public fullName: string = 'Arceus V BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // console.log('Store:', JSON.stringify(store, null, 2));
+    // console.log('State:', JSON.stringify(state, null, 2));
+    // console.log('Effect:', JSON.stringify(effect, null, 2));
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;

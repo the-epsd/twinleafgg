@@ -91,7 +91,13 @@ export class DeckEditComponent implements OnInit {
         // Parse text into card names
         const cardNames = text.split('\n')
           .map(line => line.trim())
-          .filter(line => !!line);
+          .filter(line => !!line)
+          .flatMap(line => {
+            const parts = line.split(' ');
+            const count = parseInt(parts[0], 10);
+            const cardName = parts.slice(1).join(' ');
+            return new Array(count).fill(cardName);
+          });
   
         // Call import deck method  
         this.importDeck(cardNames);
