@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { BattleVIPPass } from './battle-vip-pass';
+import { CrossSwitcher } from './cross-switcher';
 import { GenesectV } from './genesect-v';
 import { Judge } from './judge';
 import { MewV } from './mew-v';
@@ -14,4 +15,5 @@ export const setFusionStrike: Card[] = [
   new BattleVIPPass(),
   new Judge(),
   new Yveltal(),
+  new CrossSwitcher(),
 ];

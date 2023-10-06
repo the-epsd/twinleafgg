@@ -4,6 +4,7 @@ exports.setBrilliantStars = void 0;
 const arceus_v_1 = require("./arceus-v");
 const arceus_vstar_1 = require("./arceus-vstar");
 const bibarel_1 = require("./bibarel");
+const cherens_care_1 = require("./cherens-care");
 const collapsed_stadium_1 = require("./collapsed-stadium");
 const double_turbo_energy_1 = require("./double-turbo-energy");
 const lumineon_v_1 = require("./lumineon-v");
@@ -20,4 +21,5 @@ exports.setBrilliantStars = [
     new raikou_v_1.RaikouV(),
     new lumineon_v_1.LumineonV(),
     new raichu_v_1.RaichuV(),
+    new cherens_care_1.CherensCare(),
 ];

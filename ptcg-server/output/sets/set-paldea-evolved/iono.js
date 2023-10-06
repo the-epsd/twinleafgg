@@ -22,11 +22,14 @@ class Iono extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             const cards = player.hand.cards.filter(c => c !== this);
+            const deckBottom = new game_1.CardList();
+            const opponentDeckBottom = new game_1.CardList();
             if (cards.length === 0 && player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            const deckBottom = new game_1.CardList();
-            const opponentDeckBottom = new game_1.CardList();
+            if (player.hand.cards.length === 0 && opponent.hand.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
             player.hand.moveCardsTo(cards, deckBottom);
             opponent.hand.moveCardsTo(cards, opponentDeckBottom);
             player.deck.moveTo(player.hand, player.getPrizeLeft());

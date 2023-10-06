@@ -8,18 +8,25 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_message_1 = require("../../game/game-message");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class RapidStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VMAX, card_types_1.CardTag.RAPID_STRIKE];
         this.regulationMark = 'E';
-        this.stage = card_types_1.Stage.VMAX;
-        this.evolvesFrom = 'Rapid Strike Urshifu V';
+        this.stage = card_types_1.Stage.BASIC;
+        //public evolvesFrom = 'Rapid Strike Urshifu V';
         this.cardType = card_types_1.CardType.FIGHTING;
         this.hp = 330;
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
+            {
+                name: 'Gale Thrust',
+                cost: [card_types_1.CardType.COLORLESS],
+                damage: 30,
+                text: ''
+            },
             {
                 name: 'G-Max Rapid Flow',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
@@ -34,7 +41,18 @@ class RapidStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
         this.fullName = 'Rapid Strike Urshifu VMAX BST 088';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.active.movedToActiveThisTurn = false;
+            console.log('movedToActiveThisTurn = false');
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            if (player.active.movedToActiveThisTurn) {
+                effect.damage += 120;
+            }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);

@@ -12,6 +12,7 @@ var AttackEffects;
     AttackEffects["DISCARD_CARD_EFFECT"] = "DISCARD_CARD_EFFECT";
     AttackEffects["ADD_MARKER_EFFECT"] = "ADD_MARKER_EFFECT";
     AttackEffects["ADD_SPECIAL_CONDITIONS_EFFECT"] = "ADD_SPECIAL_CONDITIONS_EFFECT";
+    AttackEffects["MOVED_TO_ACTIVE_BONUS_EFFECT"] = "MOVED_TO_ACTIVE_BONUS_EFFECT";
 })(AttackEffects = exports.AttackEffects || (exports.AttackEffects = {}));
 class AbstractAttackEffect {
     constructor(base) {

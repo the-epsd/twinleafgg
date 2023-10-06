@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { ArceusV } from './arceus-v';
 import { ArceusVSTAR } from './arceus-vstar';
 import { Bibarel } from './bibarel';
+import { CherensCare } from './cherens-care';
 import { CollapsedStadium } from './collapsed-stadium';
 import { DoubleTurboEnergy } from './double-turbo-energy';
 import { LumineonV } from './lumineon-v';
@@ -19,4 +20,5 @@ export const setBrilliantStars: Card[] = [
   new RaikouV(),
   new LumineonV(),
   new RaichuV(),
+  new CherensCare(),
 ];

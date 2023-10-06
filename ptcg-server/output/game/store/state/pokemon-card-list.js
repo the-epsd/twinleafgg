@@ -13,6 +13,7 @@ class PokemonCardList extends card_list_1.CardList {
         this.burnDamage = 20;
         this.marker = new card_marker_1.Marker();
         this.pokemonPlayedTurn = 0;
+        this.movedToActiveThisTurn = false;
     }
     getPokemons() {
         const result = [];

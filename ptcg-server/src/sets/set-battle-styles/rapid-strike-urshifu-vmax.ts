@@ -6,6 +6,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { GameMessage } from '../../game/game-message';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class RapidStrikeUrshifuVMAX extends PokemonCard {
 
@@ -13,9 +14,9 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
 
   public regulationMark = 'E';
   
-  public stage: Stage = Stage.VMAX;
+  public stage: Stage = Stage.BASIC;
 
-  public evolvesFrom = 'Rapid Strike Urshifu V';
+  //public evolvesFrom = 'Rapid Strike Urshifu V';
 
   public cardType: CardType = CardType.FIGHTING;
 
@@ -26,6 +27,12 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
   public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
 
   public attacks = [
+    {
+      name: 'Gale Thrust',
+      cost: [CardType.COLORLESS],
+      damage: 30,
+      text: ''
+    },
     {
       name: 'G-Max Rapid Flow',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
@@ -43,11 +50,25 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
   public fullName: string = 'Rapid Strike Urshifu VMAX BST 088';
 
 
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.active.movedToActiveThisTurn = false;
+      console.log('movedToActiveThisTurn = false');
+    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player); 
+      if (player.active.movedToActiveThisTurn) {
+        effect.damage += 120;
+      }
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
@@ -74,6 +95,6 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
           });
         }});
     }
-    return state; 
+    return state;
   }
 }

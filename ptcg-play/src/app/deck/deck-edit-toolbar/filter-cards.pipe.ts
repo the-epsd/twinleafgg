@@ -70,6 +70,9 @@ export class FilterCardsPipe implements PipeTransform {
     if (card.set === '151' || card.set === 'ASR' || card.set === 'BRS' || card.set === 'BST' || card.set === 'CEL' || card.set === 'CRE' || card.set === 'EVS' || card.set === 'FST' || card.set === 'LOR' || card.set === 'OBF' || card.set === 'PAL' || card.set === 'PAR' || card.set === 'PGO' || card.set === 'SIT' || card.set === 'SVE' || card.set === 'SVI' || card.set === 'BKP' || card.set === 'BLW' || card.set === 'BND' || card.set === 'BRC' || card.set === 'BRT' || card.set === 'BWP' || card.set === 'CL' || card.set === 'CLS' || card.set === 'COL' || card.set === 'CR' || card.set === 'DCR' || card.set === 'DEX' || card.set === 'DP' || card.set === 'DRX' || card.set === 'DS' || card.set === 'DSK' || card.set === 'EM' || card.set === 'EP' || card.set === 'EPO' || card.set === 'EX' || card.set === 'FCO' || card.set === 'FLF' || card.set === 'FUF' || card.set === 'GRI' || card.set === 'HGSS' || card.set === 'HS' || card.set === 'LT' || card.set === 'LTR' || card.set === 'MA' || card.set === 'MCD' || card.set === 'MD' || card.set === 'MMA' || card.set === 'NVI' || card.set === 'NXD' || card.set === 'PL' || card.set === 'PLB' || card.set === 'PLF' || card.set === 'PLS' || card.set === 'POP' || card.set === 'PR' || card.set === 'PS' || card.set === 'PV' || card.set === 'RR' || card.set === 'RS' || card.set === 'SM' || card.set === 'SS' || card.set === 'SV' || card.set === 'SW' || card.set === 'TM' || card.set === 'TR' || card.set === 'TRR' || card.set === 'UL' || card.set === 'UNB' || card.set === 'UPR') {
     return Format.EXPANDED;
     }
+    if (card.set === 'BS') {
+      return Format.RETRO;
+      }
     }
 
 /* private getFormat(card: PokemonCard | TrainerCard | Card): Format {

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setFusionStrike = void 0;
 const battle_vip_pass_1 = require("./battle-vip-pass");
+const cross_switcher_1 = require("./cross-switcher");
 const genesect_v_1 = require("./genesect-v");
 const judge_1 = require("./judge");
 const mew_v_1 = require("./mew-v");
@@ -16,4 +17,5 @@ exports.setFusionStrike = [
     new battle_vip_pass_1.BattleVIPPass(),
     new judge_1.Judge(),
     new yveltal_1.Yveltal(),
+    new cross_switcher_1.CrossSwitcher(),
 ];

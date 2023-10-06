@@ -32,13 +32,16 @@ export class Iono extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const cards = player.hand.cards.filter(c => c !== this);
-    
+      const deckBottom = new CardList();
+      const opponentDeckBottom = new CardList();
+
       if (cards.length === 0 && player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-    
-      const deckBottom = new CardList();
-      const opponentDeckBottom = new CardList();
+
+      if (player.hand.cards.length === 0 && opponent.hand.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
     
       player.hand.moveCardsTo(cards, deckBottom);
       opponent.hand.moveCardsTo(cards, opponentDeckBottom);
@@ -50,4 +53,3 @@ export class Iono extends TrainerCard {
     return state;
   }
 }
-    

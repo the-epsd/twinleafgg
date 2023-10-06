@@ -1,3 +1,4 @@
+export * from './set-base-set';
 export * from './set-diamond-and-pearl';
 export * from './set-op9';
 export * from './set-heartgold-and-soulsilver';

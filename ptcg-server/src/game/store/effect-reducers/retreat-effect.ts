@@ -82,6 +82,8 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
       player.active.clearEffects();
       player.active.moveCardsTo(cards, player.discard);
       retreatPokemon(store, state, effect);
+      player.active.movedToActiveThisTurn = true;
+      console.log('movedToActiveThisTurn = true');
     });
   }
 

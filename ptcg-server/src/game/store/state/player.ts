@@ -5,7 +5,6 @@ import { PokemonCardList } from './pokemon-card-list';
 import { Marker } from './card-marker';
 import { ChooseCardsPrompt } from '../prompts/choose-cards-prompt';
 import { State } from './state';
-
 export class Player {
   prompt(state: State, arg1: ChooseCardsPrompt) {
     throw new Error('Method not implemented.');
@@ -81,6 +80,9 @@ export class Player {
   switchPokemon(target: PokemonCardList) {
     const benchIndex = this.bench.indexOf(target);
     if (benchIndex !== -1) {
+      // Set movedToActiveThisTurn 
+      target.movedToActiveThisTurn = true;
+      console.log('movedToActiveThisTurn = true');
       const temp = this.active;
       this.active.clearEffects();
       this.active = this.bench[benchIndex];
