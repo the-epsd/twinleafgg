@@ -10,18 +10,23 @@ import { PlayerType } from '../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+
 export class Squirtle extends PokemonCard {
 
   public regulationMark = 'G';
   
-  stage = Stage.BASIC;
-  cardType = CardType.WATER;
-  hp = 60;
-  weakness = [{
+  public stage = Stage.BASIC;
+
+  public cardType = CardType.WATER;
+
+  public hp = 60;
+
+  public weakness = [{
     type: CardType.LIGHTNING,
   }];
-  retreat = [CardType.COLORLESS];
-  attacks = [{
+  public retreat = [CardType.COLORLESS];
+
+  public attacks = [{
     name: 'Withdraw',
     cost: [CardType.WATER],
     damage: 0,
@@ -33,9 +38,13 @@ export class Squirtle extends PokemonCard {
     damage: 20,
     text: ''
   }];
-  set = '151';
-  name = 'Squirtle';
-  fullName = 'Squirtle MEW';
+
+  public set = '151';
+
+  public name = 'Squirtle';
+
+  public fullName = 'Squirtle MEW';
+
   CLEAR_WITHDRAW_MARKER = 'CLEAR_WITHDRAW_MARKER';
   WITHDRAW_MARKER = 'WITHDRAW_MARKER';
 

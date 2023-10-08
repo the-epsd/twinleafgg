@@ -13,6 +13,7 @@ const mew_ex_1 = require("./mew-ex");
 const venusaur_ex_1 = require("./venusaur-ex");
 const zapdos_ex_1 = require("./zapdos-ex");
 const wartortle_1 = require("./wartortle");
+const kangaskhan_ex_1 = require("./kangaskhan-ex");
 exports.setPokemon151 = [
     new alakazam_ex_1.Alakazamex(),
     new bulbasaur_1.Bulbasaur(),
@@ -26,4 +27,5 @@ exports.setPokemon151 = [
     new blastoise_ex_1.Blastoiseex(),
     new zapdos_ex_1.Zapdosex(),
     new mew_ex_1.Mewex(),
+    new kangaskhan_ex_1.Kangaskhanex(),
 ];

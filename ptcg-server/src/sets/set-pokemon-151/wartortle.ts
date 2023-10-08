@@ -11,13 +11,15 @@ export class Wartortle extends PokemonCard {
 
   public regulationMark = 'G';
   
-  stage = Stage.BASIC;
-  cardType = CardType.WATER;
-  hp = 60;
-  weakness = [{
-    type: CardType.LIGHTNING,
-  }];
-  retreat = [CardType.COLORLESS];
+  public stage = Stage.STAGE_1;
+  
+  public cardType = CardType.WATER;
+
+  public hp = 100;
+
+  public weakness = [{type: CardType.LIGHTNING,}];
+
+  retreat = [CardType.COLORLESS, CardType.COLORLESS];
   attacks = [
     {
       name: 'Free Dive',
