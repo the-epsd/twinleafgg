@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Attack, PowerType } from '../../game/store/card/pokemon-types';
-import { ChooseAttackPrompt, GameError, GameLog, GameMessage, PlayerType } from '../../game';
+import { ChooseAttackPrompt, GameError, GameLog, GameMessage, PlayerType, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
@@ -13,7 +13,8 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 function* useGenomeHacking(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
-  const pokemonCard = player.active.getPokemonCard();
+  const opponent = StateUtils.getOpponent(state, player);
+  const pokemonCard = opponent.active.getPokemonCard();
   
   if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
     return state;
@@ -43,7 +44,7 @@ function* useGenomeHacking(next: Function, store: StoreLike, state: State,
   });
   
   // Perform attack
-  const attackEffect = new AttackEffect(player, player,attack);
+  const attackEffect = new AttackEffect(player, opponent, attack);
   store.reduceEffect(state, attackEffect);
   
   if (store.hasPrompts()) {

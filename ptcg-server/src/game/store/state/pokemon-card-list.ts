@@ -18,8 +18,6 @@ export class PokemonCardList extends CardList {
 
   public pokemonPlayedTurn: number = 0;
 
-  public movedToActiveThisTurn = false;
-
   // Some pokemon cards can be attached as a tool,
   // we must remember, which card acts as a pokemon tool.
   public tool: Card | undefined;

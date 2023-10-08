@@ -34,7 +34,12 @@ class BattleVIPPass extends trainer_card_1.TrainerCard {
                     throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
                 }
                 else {
-                    // handle no open slots
+                    // Check if bench has open slots
+                    const openSlots = player.bench.filter(b => b.cards.length === 0);
+                    if (openSlots.length === 0) {
+                        // No open slots, throw error
+                        throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+                    }
                     let cards = [];
                     return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 2, allowCancel: true }), selectedCards => {
                         cards = selectedCards || [];

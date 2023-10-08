@@ -26,6 +26,7 @@ import { Houndour } from './houndour';
 import { UrnOfVitality } from './urn-of-vitality';
 import { EscapeRope } from './escape-rope';
 import { Stonjourner } from './stonjourner';
+import { SingleStrikeUrshifuVMAX } from './single-strike-urshifu-vmax';
 
 export const setBattleStyles: Card[] = [
   new Bellsprout(),
@@ -45,6 +46,7 @@ export const setBattleStyles: Card[] = [
   //new MimikyuV(),
   new NecrozmaV(),
   new SingleStrikeUrshifuV(),
+  new SingleStrikeUrshifuVMAX(),
   new RapidStrikeUrshifuV(),
   new RapidStrikeUrshifuVMAX(),
   new Houndoom(),

@@ -21,7 +21,7 @@ export declare class SingleStrikeUrshifuV extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
-    WITHDRAW_MARKER: string;
-    CLEAR_WITHDRAW_MARKER: string;
+    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
+    readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

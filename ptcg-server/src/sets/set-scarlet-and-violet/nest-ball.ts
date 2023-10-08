@@ -18,6 +18,13 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
+  // Check if bench has open slots
+  const openSlots = player.bench.filter(b => b.cards.length === 0);
+      
+  if (openSlots.length === 0) {
+    // No open slots, throw error
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
 
 
   let cards: Card[] = [];

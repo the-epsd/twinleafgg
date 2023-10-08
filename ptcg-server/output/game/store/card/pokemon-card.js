@@ -20,6 +20,7 @@ class PokemonCard extends card_1.Card {
         this.powers = [];
         this.attacks = [];
         this.format = card_types_1.Format.NONE;
+        this.movedToActiveThisTurn = false;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect) {

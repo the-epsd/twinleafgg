@@ -8,6 +8,7 @@ import { RetreatEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
 import { CheckRetreatCostEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { SpecialCondition } from '../card/card-types';
+import { PokemonCard } from '../..';
 
 
 function retreatPokemon(store: StoreLike, state: State, effect: RetreatEffect) {
@@ -78,11 +79,13 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
         return;
       }
 
+
       const cards = energy.map(e => e.card);
       player.active.clearEffects();
       player.active.moveCardsTo(cards, player.discard);
       retreatPokemon(store, state, effect);
-      player.active.movedToActiveThisTurn = true;
+      const activePokemonCard = player.active.getPokemonCard() as PokemonCard;
+      activePokemonCard.movedToActiveThisTurn = true;
       console.log('movedToActiveThisTurn = true');
     });
   }

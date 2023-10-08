@@ -1,0 +1,53 @@
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+
+export class DarkraiV extends PokemonCard {
+
+  public tags = [ CardTag.POKEMON_V ];
+
+  public regulationMark = 'F';
+
+  public stage: Stage = Stage.BASIC;
+
+  public cardType: CardType = CardType.DARK;
+
+  public hp: number = 210;
+
+  public weakness = [{ type: CardType.GRASS }];
+
+  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+
+  public attacks = [
+    {
+      name: 'Wind of Darkness',
+      cost: [ CardType.DARK, CardType.COLORLESS ],
+      damage: 50,
+      text: ''
+    },
+    {
+      name: 'Dark Void',
+      cost: [ CardType.DARK, CardType.DARK, CardType.COLORLESS ],
+      damage: 130,
+      text: 'Your opponent\'s Active Pokémon is now Asleep.'
+    }
+  ];
+
+  public set: string = 'ASR';
+
+  public name: string = 'Darkrai V';
+
+  public fullName: string = 'Darkrai V ASR';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      opponent.active.specialConditions.push(SpecialCondition.ASLEEP);
+    }
+    return state;
+  }
+}

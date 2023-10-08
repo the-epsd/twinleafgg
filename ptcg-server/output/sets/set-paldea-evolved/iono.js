@@ -31,7 +31,9 @@ class Iono extends trainer_card_1.TrainerCard {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             player.hand.moveCardsTo(cards, deckBottom);
-            opponent.hand.moveCardsTo(cards, opponentDeckBottom);
+            opponent.hand.moveTo(opponentDeckBottom);
+            deckBottom.moveTo(player.deck);
+            opponentDeckBottom.moveTo(opponent.deck);
             player.deck.moveTo(player.hand, player.getPrizeLeft());
             opponent.deck.moveTo(opponent.hand, opponent.getPrizeLeft());
         }

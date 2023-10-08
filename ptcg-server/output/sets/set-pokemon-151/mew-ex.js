@@ -11,7 +11,8 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 function* useGenomeHacking(next, store, state, effect) {
     const player = effect.player;
-    const pokemonCard = player.active.getPokemonCard();
+    const opponent = game_1.StateUtils.getOpponent(state, player);
+    const pokemonCard = opponent.active.getPokemonCard();
     if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
         return state;
     }
@@ -29,7 +30,7 @@ function* useGenomeHacking(next, store, state, effect) {
         attack: attack.name
     });
     // Perform attack
-    const attackEffect = new game_effects_1.AttackEffect(player, player, attack);
+    const attackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
     store.reduceEffect(state, attackEffect);
     if (store.hasPrompts()) {
         yield store.waitPrompt(state, () => next());

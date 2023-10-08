@@ -1,9 +1,9 @@
 /* eslint-disable indent */
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, State, StoreLike } from '../../game';
+import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag } from '../../game/store/card/card-types';
-import { CheckAttackCostEffect, CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
@@ -49,40 +49,37 @@ export class DrapionV extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
   
-  if (effect instanceof CheckAttackCostEffect) {
-    const player = effect.player;
-    const index = effect.cost.indexOf(CardType.COLORLESS);
+      if (effect instanceof CheckAttackCostEffect) {
+        const player = effect.player;
+        const opponent = StateUtils.getOpponent(state, player);
+        const attack = player.active.getPokemonCard() as PokemonCard;
+        const cost = attack.attacks[0].cost;
 
-    // No cost to reduce
-    if (index === -1) {
-      return state;
-    }
+        // No cost to reduce
+        if (cost.length === 0) {
+          return state;
+        }
 
-    let wildStyleCount = 0;
+        let wildStyleCount = 0;
 
-    if (player.active?.getPokemonCard()?.tags.includes(CardTag.FUSION_STRIKE || CardTag.RAPID_STRIKE || CardTag.SINGLE_STRIKE)) {
-      wildStyleCount++;
-  }
+        if (opponent.active?.getPokemonCard()?.tags.includes(CardTag.FUSION_STRIKE || CardTag.RAPID_STRIKE || CardTag.SINGLE_STRIKE)) {
+          wildStyleCount++;
+        }
 
-  player.bench.forEach(benchSpot => {
-      if (benchSpot.getPokemonCard()?.tags.includes(CardTag.FUSION_STRIKE || CardTag.RAPID_STRIKE || CardTag.SINGLE_STRIKE)) {
-        wildStyleCount++;
+        opponent.bench.forEach(benchSpot => {
+          if (benchSpot.getPokemonCard()?.tags.includes(CardTag.FUSION_STRIKE || CardTag.RAPID_STRIKE || CardTag.SINGLE_STRIKE)) {
+            wildStyleCount++;
+          }
+        });
+
+        const modifiedCost = new CheckAttackCostEffect(player, this.attacks[0]);
+        modifiedCost.cost.splice(cost.length - wildStyleCount, wildStyleCount);
+        state = store.reduceEffect(state, modifiedCost);
+
       }
-  });
-
-    const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
-    store.reduceEffect(state, checkPokemonTypeEffect);
-
-for (let i = 0; i < wildStyleCount; i++) {
-  if (index !== -1) {
-    effect.cost.splice(index, 1);
-  }
     }
 
     return state;
   }
-  return state;
-}
-return state;
-}
+
 }

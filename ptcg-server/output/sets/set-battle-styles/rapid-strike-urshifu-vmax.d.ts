@@ -6,6 +6,7 @@ export declare class RapidStrikeUrshifuVMAX extends PokemonCard {
     tags: CardTag[];
     regulationMark: string;
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {

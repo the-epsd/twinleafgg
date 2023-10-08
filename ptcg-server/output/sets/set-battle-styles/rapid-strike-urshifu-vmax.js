@@ -14,8 +14,8 @@ class RapidStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VMAX, card_types_1.CardTag.RAPID_STRIKE];
         this.regulationMark = 'E';
-        this.stage = card_types_1.Stage.BASIC;
-        //public evolvesFrom = 'Rapid Strike Urshifu V';
+        this.stage = card_types_1.Stage.VMAX;
+        this.evolvesFrom = 'Rapid Strike Urshifu V';
         this.cardType = card_types_1.CardType.FIGHTING;
         this.hp = 330;
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
@@ -25,7 +25,7 @@ class RapidStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
                 name: 'Gale Thrust',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 30,
-                text: ''
+                text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 120 more damage.'
             },
             {
                 name: 'G-Max Rapid Flow',
@@ -42,13 +42,11 @@ class RapidStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const player = effect.player;
-            player.active.movedToActiveThisTurn = false;
+            this.movedToActiveThisTurn = false;
             console.log('movedToActiveThisTurn = false');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            if (player.active.movedToActiveThisTurn) {
+            if (this.movedToActiveThisTurn) {
                 effect.damage += 120;
             }
         }

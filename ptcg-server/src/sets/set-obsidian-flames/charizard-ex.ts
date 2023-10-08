@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils,
   GameMessage, PlayerType, SlotType, ConfirmPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -11,11 +11,11 @@ export class Charizardex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  //public tags = [ CardTag.POKEMON_ex ];
+  public tags = [ CardTag.POKEMON_ex ];
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
 
-  //public evolvesFrom = 'Charmeleon';
+  public evolvesFrom = 'Charmeleon';
 
   public cardType: CardType = CardType.DARK;
 

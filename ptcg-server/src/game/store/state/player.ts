@@ -80,13 +80,12 @@ export class Player {
   switchPokemon(target: PokemonCardList) {
     const benchIndex = this.bench.indexOf(target);
     if (benchIndex !== -1) {
-      // Set movedToActiveThisTurn 
-      target.movedToActiveThisTurn = true;
-      console.log('movedToActiveThisTurn = true');
       const temp = this.active;
+      const tempCard = temp.getPokemonCard() as PokemonCard;
       this.active.clearEffects();
       this.active = this.bench[benchIndex];
       this.bench[benchIndex] = temp;
+      tempCard.movedToActiveThisTurn = true;
     }
   }
 

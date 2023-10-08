@@ -28,6 +28,7 @@ const houndour_1 = require("./houndour");
 const urn_of_vitality_1 = require("./urn-of-vitality");
 const escape_rope_1 = require("./escape-rope");
 const stonjourner_1 = require("./stonjourner");
+const single_strike_urshifu_vmax_1 = require("./single-strike-urshifu-vmax");
 exports.setBattleStyles = [
     new bellsprout_1.Bellsprout(),
     new weepinbell_1.Weepinbell(),
@@ -46,6 +47,7 @@ exports.setBattleStyles = [
     //new MimikyuV(),
     new necrozma_v_1.NecrozmaV(),
     new single_strike_urshifu_v_1.SingleStrikeUrshifuV(),
+    new single_strike_urshifu_vmax_1.SingleStrikeUrshifuVMAX(),
     new rapid_strike_urshifu_v_1.RapidStrikeUrshifuV(),
     new rapid_strike_urshifu_vmax_1.RapidStrikeUrshifuVMAX(),
     new houndoom_1.Houndoom(),

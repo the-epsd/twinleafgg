@@ -18,5 +18,6 @@ export declare abstract class PokemonCard extends Card {
     powers: Power[];
     attacks: Attack[];
     format: Format;
+    movedToActiveThisTurn: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

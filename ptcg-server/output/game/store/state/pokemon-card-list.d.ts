@@ -10,7 +10,6 @@ export declare class PokemonCardList extends CardList {
     burnDamage: number;
     marker: Marker;
     pokemonPlayedTurn: number;
-    movedToActiveThisTurn: boolean;
     tool: Card | undefined;
     getPokemons(): PokemonCard[];
     getPokemonCard(): PokemonCard | undefined;

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChooseCardsPrompt, PlayerType } from '../../game';
+import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameError } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -45,10 +45,22 @@ export class SingleStrikeUrshifuV extends PokemonCard {
 
   public fullName: string = 'Single Strike Urshifu V BST 085';
 
-  WITHDRAW_MARKER = 'WITHDRAW_MARKER';
-  CLEAR_WITHDRAW_MARKER = 'CLEAR_WITHDRAW_MARKER';
+  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('marker cleared');
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('second marker added');
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
@@ -71,27 +83,16 @@ export class SingleStrikeUrshifuV extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      player.active.marker.addMarker(this.WITHDRAW_MARKER, this);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
-      if (effect instanceof AttackEffect 
-        && player.active.marker.hasMarker(this.WITHDRAW_MARKER)) {
-        effect.preventDefault = true;
-        return state;
+      // Check marker
+      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        console.log('attack blocked');
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
-      if (effect instanceof EndTurnEffect 
-        && effect.player.marker.hasMarker(this.CLEAR_WITHDRAW_MARKER, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_WITHDRAW_MARKER, this);
-        effect.player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.marker.removeMarker(this.WITHDRAW_MARKER, this);
-        });
-      }
+      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+      console.log('marker added');
     }
-
     return state;
   }
-
-  
-
 }

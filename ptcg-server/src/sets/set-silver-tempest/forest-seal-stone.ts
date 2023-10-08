@@ -61,10 +61,6 @@ export class ForestSealStone extends TrainerCard {
           player.deck.applyOrder(order);
         });
       
-        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      
         return state;
       });
     }
