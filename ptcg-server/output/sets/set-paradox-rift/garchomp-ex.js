@@ -12,8 +12,8 @@ class Garchompex extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.POKEMON_ex];
-        this.stage = card_types_1.Stage.BASIC;
-        //public evolvesFrom = 'Gabite';
+        this.stage = card_types_1.Stage.STAGE_2;
+        this.evolvesFrom = 'Gabite';
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 320;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];

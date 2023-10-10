@@ -1,13 +1,15 @@
 import { Card } from '../../game/store/card/card';
-import { Gabite } from './Gabite';
 import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
+import { Deoxys } from './deoxys';
 import { EarthenVessel } from './earthen-vessel';
 import { Froslassex } from './froslass-ex';
+import { Gabite } from './gabite';
 import { Garchompex } from './garchomp-ex';
 import { Gholdengoex } from './gholdengo-ex';
 import { Gible } from './gible';
 import { Gimmighoul } from './gimmighoul';
 import { IronHandsex } from './iron-hands-ex';
+import { IronValiantex } from './iron-valiant-ex';
 import { Mewtwoex } from './mewtwo-ex';
 import { RoaringMoonex } from './roaring-moon-ex';
 import { Snorunt } from './snorunt';
@@ -26,4 +28,6 @@ export const setParadoxRift: Card[] = [
   new Garchompex(),
   new Snorunt(),
   new Froslassex(),
+  new Deoxys(),
+  new IronValiantex(),
 ];

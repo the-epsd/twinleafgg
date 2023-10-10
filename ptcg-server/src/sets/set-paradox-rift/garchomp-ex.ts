@@ -14,9 +14,9 @@ export class Garchompex extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_ex ];
   
-  public stage = Stage.BASIC;
+  public stage = Stage.STAGE_2;
 
-  //public evolvesFrom = 'Gabite';
+  public evolvesFrom = 'Gabite';
 
   public  cardType = CardType.WATER;
 

@@ -44,7 +44,7 @@ export class Deoxys extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
 

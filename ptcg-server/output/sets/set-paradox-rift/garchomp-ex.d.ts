@@ -7,6 +7,7 @@ export declare class Garchompex extends PokemonCard {
     regulationMark: string;
     tags: CardTag[];
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {

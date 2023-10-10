@@ -17,15 +17,20 @@ class IronValiantex extends pokemon_card_1.PokemonCard {
         this.hp = 220;
         this.weakness = [{ type: card_types_1.CardType.METAL }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
-        this.powers = [];
+        this.powers = [
+            {
+                name: 'Tachyon Bits',
+                useWhenInPlay: true,
+                powerType: game_1.PowerType.ABILITY,
+                text: 'Once during your turn, when this Pokémon moves from your Bench to the Active Spot, you may put 2 damage counters on 1 of your opponent\'s Pokémon.'
+            }
+        ];
         this.attacks = [
             {
-                name: 'G-Max Rapid Flow',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 0,
-                text: 'Discard 2 energy from this Pokémon. This attack does ' +
-                    '90 damage to 2 of your opponent\'s Pokémon. (Don\'t apply ' +
-                    'Weakness and Resistance for Benched Pokémon.)'
+                name: 'Laser Blade',
+                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
+                damage: 200,
+                text: 'During your next turn, this Pokémon can’t attack.'
             }
         ];
         this.set = 'PAR';
@@ -51,17 +56,18 @@ class IronValiantex extends pokemon_card_1.PokemonCard {
             effect.player.marker.removeMarker(this.TACHYON_BITS_MARKER, this);
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
-            if (this.movedToActiveThisTurn) {
-                const player = effect.player;
-                return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: true }), selected => {
-                    if (!selected || selected.length === 0) {
-                        return state;
-                    }
-                    effect.player.marker.addMarker(this.TACHYON_BITS_MARKER, this);
-                    const target = selected[0];
-                    target.damage += 20;
-                });
+            const player = effect.player;
+            if (!this.movedToActiveThisTurn) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { max: 1, allowCancel: true }), selected => {
+                if (!selected || selected.length === 0) {
+                    return state;
+                }
+                effect.player.marker.addMarker(this.TACHYON_BITS_MARKER, this);
+                const target = selected[0];
+                target.damage += 20;
+            });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker
