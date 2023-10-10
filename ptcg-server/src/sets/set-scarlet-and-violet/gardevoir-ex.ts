@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils,
-  GameMessage, PlayerType, SlotType } from '../../game';
+  GameMessage, PlayerType, SlotType, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
@@ -54,7 +54,6 @@ export class Gardevoirex extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      
 
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
@@ -72,9 +71,14 @@ export class Gardevoirex extends PokemonCard {
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
+          const pokemonCard = target.cards[0] as PokemonCard;
+          if (pokemonCard.cardType !== CardType.PSYCHIC) {
+            throw new GameError(GameMessage.INVALID_TARGET);
+          }
           player.discard.moveCardTo(transfer.card, target);
           target.damage += 20;
         }
+
         return state;
       });
       if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

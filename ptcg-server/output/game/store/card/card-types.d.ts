@@ -13,7 +13,8 @@ export declare enum CardTag {
     SINGLE_STRIKE = "SINGLE_STRIKE",
     RAPID_STRIKE = "RAPID_STRIKE",
     POKEMON_ex = "ex",
-    FUTURE = "Future"
+    FUTURE = "Future",
+    ANCIENT = "Ancient"
 }
 export declare enum SuperType {
     NONE = 0,

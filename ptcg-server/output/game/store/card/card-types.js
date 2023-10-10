@@ -18,6 +18,7 @@ var CardTag;
     CardTag["RAPID_STRIKE"] = "RAPID_STRIKE";
     CardTag["POKEMON_ex"] = "ex";
     CardTag["FUTURE"] = "Future";
+    CardTag["ANCIENT"] = "Ancient";
 })(CardTag = exports.CardTag || (exports.CardTag = {}));
 var SuperType;
 (function (SuperType) {

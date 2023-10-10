@@ -49,6 +49,10 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
                 }
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                    const pokemonCard = target.cards[0];
+                    if (pokemonCard.cardType !== card_types_1.CardType.PSYCHIC) {
+                        throw new game_1.GameError(game_1.GameMessage.INVALID_TARGET);
+                    }
                     player.discard.moveCardTo(transfer.card, target);
                     target.damage += 20;
                 }
