@@ -24,6 +24,7 @@ const beach_court_1 = require("./beach-court");
 const pokemon_catcher_1 = require("./pokemon-catcher");
 const vitality_band_1 = require("./vitality-band");
 const defiance_band_1 = require("./defiance-band");
+const energy_retrieval_1 = require("./energy-retrieval");
 exports.setScarletAndViolet = [
     new armarouge_1.Armarouge(),
     new gardevoir_ex_1.Gardevoirex(),
@@ -48,4 +49,5 @@ exports.setScarletAndViolet = [
     new pokemon_catcher_1.PokemonCatcher(),
     new vitality_band_1.VitalityBand(),
     new defiance_band_1.DefianceBand(),
+    new energy_retrieval_1.EnergyRetrieval(),
 ];

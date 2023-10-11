@@ -22,6 +22,7 @@ import { BeachCourt } from './beach-court';
 import { PokemonCatcher } from './pokemon-catcher';
 import { VitalityBand } from './vitality-band';
 import { DefianceBand } from './defiance-band';
+import { EnergyRetrieval } from './energy-retrieval';
 export const setScarletAndViolet: Card[] = [
   new Armarouge(),
   new Gardevoirex(),
@@ -46,4 +47,5 @@ export const setScarletAndViolet: Card[] = [
   new PokemonCatcher(),
   new VitalityBand(),
   new DefianceBand(),
+  new EnergyRetrieval(),
 ];

@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Venusaurex extends PokemonCard {
+export declare class Venomoth extends PokemonCard {
     regulationMark: string;
-    tags: CardTag[];
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;
@@ -13,12 +12,6 @@ export declare class Venusaurex extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    powers: {
-        name: string;
-        useWhenInPlay: boolean;
-        powerType: PowerType;
-        text: string;
-    }[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -30,5 +23,6 @@ export declare class Venusaurex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly PERPLEXING_POWDER_MARKER = "PERPLEXING_POWDER_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

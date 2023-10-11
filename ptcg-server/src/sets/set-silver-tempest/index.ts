@@ -6,6 +6,7 @@ import { Kirlia } from './kirlia';
 import { LugiaV } from './lugia-v';
 import { LugiaVSTAR } from './lugia-vstar';
 import { RadiantAlakazam } from './radiant-alakazam';
+import { RadiantTsareena } from './radiant-tsareena';
 import { Worker } from './worker';
 
 export const setSilverTempest: Card[] = [
@@ -17,4 +18,5 @@ export const setSilverTempest: Card[] = [
   new LugiaVSTAR(),
   new Archeops(),
   new CapturingAroma(),
+  new RadiantTsareena(),
 ];

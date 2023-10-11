@@ -52,8 +52,8 @@ export class RoaringMoonex extends PokemonCard {
       const activePokemon = opponent.active.getPokemonCard();
       if (activePokemon) {
         activePokemon.hp = 0;
+        this.hp -= 200;
       }
-      this.hp -= 200;
       
       return state;
     }

@@ -1,12 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType } from '../../game';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Venusaurex extends PokemonCard {
-    regulationMark: string;
+export declare class RadiantCharizard extends PokemonCard {
     tags: CardTag[];
+    regulationMark: string;
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
@@ -15,7 +14,6 @@ export declare class Venusaurex extends PokemonCard {
     retreat: CardType[];
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];
@@ -30,5 +28,7 @@ export declare class Venusaurex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
+    readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

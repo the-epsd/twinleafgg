@@ -9,6 +9,7 @@ export class Ivysaur extends PokemonCard {
   public regulationMark = 'G';
   
   public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom = 'Bulbasaur';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 100;
   public weakness = [{ type: CardType.FIRE }];
