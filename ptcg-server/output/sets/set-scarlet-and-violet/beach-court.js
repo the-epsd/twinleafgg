@@ -14,6 +14,8 @@ class BeachCourt extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.regulationMark = 'G';
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '167';
         this.name = 'Beach Court';
         this.fullName = 'Beach Court SVI';
         this.text = 'The Retreat Cost of each Basic Pokémon in play (both yours and your opponent\'s) is C less.';

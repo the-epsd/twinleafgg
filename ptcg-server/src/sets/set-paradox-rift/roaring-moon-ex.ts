@@ -38,6 +38,8 @@ export class RoaringMoonex extends PokemonCard {
   ];
 
   public set: string = 'PAR';
+  public set2: string = 'ancientroar';
+  public setNumber: string = '54';
   public name: string = 'Roaring Moon ex';
   public fullName: string = 'Roaring Moon ex PAR';
 

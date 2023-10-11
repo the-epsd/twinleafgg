@@ -31,6 +31,8 @@ class GalarianMoltres extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
+        this.set2 = 'evolvingskies';
+        this.setNumber = '93';
         this.name = 'Galarian Moltres';
         this.fullName = 'Galarian Moltres EVS';
     }

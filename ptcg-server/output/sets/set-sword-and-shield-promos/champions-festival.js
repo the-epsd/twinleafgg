@@ -12,6 +12,8 @@ class ChampionsFestival extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'SWSH';
+        this.set2 = 'swshpromos';
+        this.setNumber = '296';
         this.name = 'Champion\'s Festival';
         this.fullName = 'Champion\'s Festival SWSH296';
         this.text = 'Once during each player\'s turn, if that player has ' +

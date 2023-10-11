@@ -63,6 +63,10 @@ export class NestBall extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '181';
+
   public name: string = 'Nest Ball';
 
   public fullName: string = 'Nest Ball SVI';

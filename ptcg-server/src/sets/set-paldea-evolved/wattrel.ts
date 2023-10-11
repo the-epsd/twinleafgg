@@ -38,6 +38,10 @@ export class Wattrel extends PokemonCard {
 
   public set: string = 'PAL';
 
+  public set2: string = 'paldeaevolved';
+
+  public setNumber: string = '80';
+
   public name: string = 'Wattrel';
 
   public fullName: string = 'Wattrel PAL';

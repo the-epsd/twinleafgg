@@ -19,6 +19,8 @@ export declare class Squirtle extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     CLEAR_WITHDRAW_MARKER: string;

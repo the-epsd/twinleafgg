@@ -38,6 +38,10 @@ export class OriginFormePalkiaV extends PokemonCard {
 
   public set: string = 'ASR';
 
+  public set2: string = 'astralradiance';
+
+  public setNumber: string = '39';
+
   public name: string = 'Origin Forme Palkia V';
 
   public fullName: string = 'Origin Forme Palkia V ASR';

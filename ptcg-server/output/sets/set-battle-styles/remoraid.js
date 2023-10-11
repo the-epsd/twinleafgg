@@ -29,6 +29,8 @@ class Remoraid extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'BST';
+        this.set2 = 'battlestyles';
+        this.setNumber = '36';
         this.name = 'Remoraid';
         this.fullName = 'Remoraid BST 036';
     }

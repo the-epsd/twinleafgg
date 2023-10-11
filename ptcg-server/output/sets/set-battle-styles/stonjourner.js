@@ -56,6 +56,8 @@ class Stonjourner extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
+        this.set2 = 'battlestyles';
+        this.setNumber = '84';
         this.name = 'Stonjourner';
         this.fullName = 'Stonjourner BST';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

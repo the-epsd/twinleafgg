@@ -44,6 +44,10 @@ export class FlyingPikachuV extends PokemonCard {
 
   public set: string = 'CEL';
 
+  public set2: string = 'celebrations';
+
+  public setNumber: string = '6';
+
   public name: string = 'Flying Pikachu V';
 
   public fullName: string = 'Flying Pikachu V CEL';

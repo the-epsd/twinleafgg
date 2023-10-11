@@ -18,6 +18,10 @@ export class ExpShare extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '174';
+
   public name: string = 'Exp Share';
 
   public fullName: string = 'Exp Share SVI';

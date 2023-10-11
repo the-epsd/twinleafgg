@@ -31,9 +31,15 @@ export class Ralts extends PokemonCard {
 
   public set: string = 'ASR';
 
+  public set2: string = 'astralradiance';
+
+  public setNumber: string = '60';
+
   public name: string = 'Ralts';
 
   public fullName: string = 'Ralts ASR';
+
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

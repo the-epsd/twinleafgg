@@ -12,10 +12,10 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class DuraludonVMAX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.VMAX;
         this.regulationMark = 'E';
         this.tags = [card_types_1.CardTag.POKEMON_VMAX, card_types_1.CardTag.SINGLE_STRIKE];
-        //public evolvesFrom = 'Duraludon V';
+        this.evolvesFrom = 'Duraludon V';
         this.cardType = card_types_1.CardType.DRAGON;
         this.hp = 330;
         this.weakness = [];
@@ -35,6 +35,8 @@ class DuraludonVMAX extends pokemon_card_1.PokemonCard {
                     'opponent\'s Active Pokémon.'
             }];
         this.set = 'EVS';
+        this.set2 = 'evolvingskies';
+        this.setNumber = '123';
         this.name = 'Duraludon VMAX';
         this.fullName = 'Duraludon VMAX EVS';
     }

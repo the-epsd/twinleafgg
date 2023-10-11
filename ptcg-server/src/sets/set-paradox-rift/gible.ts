@@ -23,6 +23,10 @@ export class Gible extends PokemonCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'ragingsurf';
+
+  public setNumber: string = '27';
+
   public name: string = 'Gible';
 
   public fullName: string = 'Gible PAR';

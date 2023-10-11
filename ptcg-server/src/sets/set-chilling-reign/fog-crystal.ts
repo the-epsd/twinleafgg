@@ -71,6 +71,10 @@ export class FogCrystal extends TrainerCard {
 
   public set: string = 'CRE';
 
+  public set2: string = 'chillingreign';
+
+  public setNumber: string = '140';
+
   public regulationMark = 'E';
 
   public name: string = 'Fog Crystal';

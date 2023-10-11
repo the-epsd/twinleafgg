@@ -67,6 +67,8 @@ class Mewex extends pokemon_card_1.PokemonCard {
                     'as this attack.'
             }];
         this.set = '151';
+        this.set2 = '151';
+        this.setNumber = '151';
         this.name = 'Mew ex';
         this.fullName = 'Mew ex';
         this.RESTART_MARKER = 'RESTART_MARKER';

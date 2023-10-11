@@ -13,13 +13,13 @@ import { AfterDamageEffect, ApplyWeaknessEffect, PutDamageEffect } from '../../g
 
 export class DuraludonVMAX extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VMAX;
 
   public regulationMark = 'E';
 
   public tags = [ CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE ];
 
-  //public evolvesFrom = 'Duraludon V';
+  public evolvesFrom = 'Duraludon V';
 
   public cardType: CardType = CardType.DRAGON;
 
@@ -46,6 +46,10 @@ export class DuraludonVMAX extends PokemonCard {
   }];
 
   public set: string = 'EVS';
+
+  public set2: string = 'evolvingskies';
+
+  public setNumber: string = '123';
 
   public name: string = 'Duraludon VMAX';
 

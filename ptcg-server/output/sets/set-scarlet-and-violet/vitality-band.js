@@ -10,6 +10,8 @@ class VitalityBand extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '197';
         this.regulationMark = 'G';
         this.name = 'Vitality Band';
         this.fullName = 'Vitality Band SVI';

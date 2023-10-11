@@ -45,6 +45,10 @@ export class NecrozmaV extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '63';
+
   public name: string = 'Necrozma V';
 
   public fullName: string = 'Necrozma V BST 063';

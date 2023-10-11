@@ -19,6 +19,8 @@ export declare class SingleStrikeUrshifuV extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";

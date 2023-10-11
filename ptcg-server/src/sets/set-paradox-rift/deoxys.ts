@@ -38,6 +38,10 @@ export class Deoxys extends PokemonCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'startersetterastalmewtwoex';
+  
+  public setNumber: string = '6';
+
   public name: string = 'Deoxys';
 
   public fullName: string = 'Deoxys PAR';

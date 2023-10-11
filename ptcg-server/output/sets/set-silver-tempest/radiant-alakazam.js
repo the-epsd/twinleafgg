@@ -37,6 +37,8 @@ class RadiantAlakazam extends pokemon_card_1.PokemonCard {
                     'opponent\'s hand.'
             }];
         this.set = 'SIT';
+        this.set2 = 'silvertempest';
+        this.setNumber = '59';
         this.name = 'Radiant Alakazam';
         this.fullName = 'Radiant Alakazam SIT';
     }

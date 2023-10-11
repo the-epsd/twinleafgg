@@ -32,6 +32,8 @@ class PokemonCatcher extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '187';
         this.name = 'Pokemon Catcher';
         this.fullName = 'Pokemon Catcher SVI';
         this.text = 'Flip a coin. If heads, switch 1 of your opponent\'s Benched Pokemon ' +

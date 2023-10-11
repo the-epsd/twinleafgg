@@ -36,6 +36,8 @@ class LugiaVSTAR extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SIT';
+        this.set2 = 'silvertempest';
+        this.setNumber = '139';
         this.name = 'Lugia VSTAR';
         this.fullName = 'Lugia VSTAR SIT';
         this.VSTAR_MARKER = 'VSTAR_MARKER';

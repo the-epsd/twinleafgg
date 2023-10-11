@@ -38,6 +38,10 @@ export class Durant extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '10';
+
   public name: string = 'Durant';
 
   public fullName: string = 'Durant BST 010';

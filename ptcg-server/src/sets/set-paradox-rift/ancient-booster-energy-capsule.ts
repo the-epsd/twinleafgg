@@ -17,6 +17,10 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'ancientroar';
+
+  public setNumber: string = '61';
+
   public name: string = 'Ancient Booster Energy Capsule';
 
   public fullName: string = 'Ancient Booster Energy Capsule PAR';

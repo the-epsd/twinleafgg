@@ -33,6 +33,8 @@ class Switch extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '194';
         this.name = 'Switch';
         this.fullName = 'Switch SVI';
         this.text = 'Switch your Active Pokemon with 1 of your Benched Pokemon.';

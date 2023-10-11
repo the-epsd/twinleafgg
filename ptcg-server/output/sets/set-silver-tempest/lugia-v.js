@@ -31,6 +31,8 @@ class LugiaV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SIT';
+        this.set2 = 'silvertempest';
+        this.setNumber = '138';
         this.name = 'Lugia V';
         this.fullName = 'Lugia V SIT';
     }

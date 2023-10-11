@@ -21,6 +21,8 @@ export declare class Stonjourner extends PokemonCard {
         effect: (store: StoreLike, state: State, effect: AttackEffect) => void;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";

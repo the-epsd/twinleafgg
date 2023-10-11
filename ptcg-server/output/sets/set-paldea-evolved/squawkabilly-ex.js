@@ -32,6 +32,8 @@ class Squawkabillyex extends pokemon_card_1.PokemonCard {
                 text: 'Attach up to 2 Basic Energy cards from your discard pile to 1 of your Benched Pokémon.'
             }];
         this.set = 'PAL';
+        this.set2 = 'paldeaevolved';
+        this.setNumber = '169';
         this.name = 'Squawkabilly ex';
         this.fullName = 'Squawkabilly ex PAL';
     }

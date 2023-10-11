@@ -30,6 +30,8 @@ export declare class Xatu extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly AKASHIC_SENSE_MARKER = "AKASHIC_SENSE_MARKER";

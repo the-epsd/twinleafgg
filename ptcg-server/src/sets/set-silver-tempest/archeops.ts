@@ -46,6 +46,10 @@ export class Archeops extends PokemonCard {
 
   public set: string = 'SIT';
 
+  public set2: string = 'silvertempest';
+
+  public setNumber: string = '147';
+
   public name: string = 'Archeops';
 
   public fullName: string = 'Archeops SIT';

@@ -33,8 +33,10 @@ class EmpoleonV extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'BST';
+        this.set2 = 'battlestyles';
+        this.setNumber = '40';
         this.name = 'Empoleon V';
-        this.fullName = 'Empoleon V BST 040';
+        this.fullName = 'Empoleon V BST';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

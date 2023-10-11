@@ -35,6 +35,8 @@ class Gallade extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
+        this.set2 = 'astralradiance';
+        this.setNumber = '62';
         this.name = 'Gallade';
         this.fullName = 'Gallade ASR';
         this.BUDDY_CATCH_MARKER = 'BUDDY_CATCH_MARKER';

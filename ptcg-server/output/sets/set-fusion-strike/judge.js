@@ -11,6 +11,8 @@ class Judge extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'FST';
+        this.set2 = 'fusionstrike';
+        this.setNumber = '235';
         this.regulationMark = 'E';
         this.name = 'Judge';
         this.fullName = 'Judge FST';

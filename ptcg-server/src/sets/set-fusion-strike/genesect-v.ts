@@ -47,6 +47,10 @@ export class GenesectV extends PokemonCard {
 
   public set: string = 'FST';
 
+  public set2: string = 'fusionstrike';
+
+  public setNumber: string = '185';
+
   public name: string = 'Genesect V';
 
   public fullName: string = 'Genesect V FST 185';

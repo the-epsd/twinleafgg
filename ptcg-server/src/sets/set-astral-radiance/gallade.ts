@@ -49,6 +49,10 @@ export class Gallade extends PokemonCard {
 
   public set: string = 'ASR';
 
+  public set2: string = 'astralradiance';
+
+  public setNumber: string = '62';
+
   public name: string = 'Gallade';
 
   public fullName: string = 'Gallade ASR';

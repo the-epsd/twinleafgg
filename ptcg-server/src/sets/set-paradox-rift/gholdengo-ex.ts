@@ -50,6 +50,10 @@ export class Gholdengoex extends PokemonCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'ragingsurf';
+
+  public setNumber: string = '50';
+
   public name: string = 'Gholdengo ex';
 
   public fullName: string = 'Gholdengo ex PAR';

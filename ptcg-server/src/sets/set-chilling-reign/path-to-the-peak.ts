@@ -11,6 +11,8 @@ import { Effect } from '../../game/store/effects/effect';
 export class PathToThePeak extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'CRE';
+  public set2: string = 'chillingreign';
+  public setNumber: string = '148';
   public regulationMark = 'E';
   public name = 'Path to the Peak';
   public fullName = 'Path to the Peak CRE';

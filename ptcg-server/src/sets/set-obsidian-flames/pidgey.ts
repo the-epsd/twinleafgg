@@ -27,6 +27,10 @@ export class Pidgey extends PokemonCard {
 
   public set: string = 'OBF';
 
+  public set2: string = 'obsidianflames';
+
+  public setNumber: string = '162';
+
   public name: string = 'Pidgey';
 
   public fullName: string = 'Pidgey OBF';

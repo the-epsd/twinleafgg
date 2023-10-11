@@ -25,6 +25,10 @@ export class Dratini extends PokemonCard {
 
   public set: string = 'OBF';
 
+  public set2: string = 'obsidianflames';
+
+  public setNumber: string = '157';
+
   public name: string = 'Dratini';
 
   public fullName: string = 'Dratini OBF';

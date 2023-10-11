@@ -13,6 +13,7 @@ import { Wattrel } from './wattrel';
 import { Iono } from './iono';
 import { JetEnergy } from './jet-energy';
 import { Squawkabillyex } from './squawkabilly-ex';
+import { ChoiceBelt } from './choice-belt';
 export const setPaldeaEvolved: Card[] = [
   new Artazon(),
   new DeliveryDrone(),
@@ -28,4 +29,5 @@ export const setPaldeaEvolved: Card[] = [
   new BraveyCharm(),
   new JetEnergy(),
   new Squawkabillyex(),
+  new ChoiceBelt(),
 ];

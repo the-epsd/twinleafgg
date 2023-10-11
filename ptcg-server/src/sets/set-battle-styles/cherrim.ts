@@ -45,9 +45,13 @@ export class Cherrim extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '8';
+
   public name: string = 'Cherrim';
 
-  public fullName: string = 'Cherrim BST 008';
+  public fullName: string = 'Cherrim BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

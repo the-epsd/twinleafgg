@@ -8,6 +8,8 @@ class MetalEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.METAL];
         this.set = 'SVE';
+        this.set2 = 'smpromo';
+        this.setNumber = '135';
         this.name = 'Metal Energy';
         this.fullName = 'Metal Energy SVE';
     }

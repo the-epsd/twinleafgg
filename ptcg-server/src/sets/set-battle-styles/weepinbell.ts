@@ -42,6 +42,10 @@ export class Weepinbell extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '2';
+
   public name: string = 'Weepinbell';
 
   public fullName: string = 'Weepinbell BST 002';

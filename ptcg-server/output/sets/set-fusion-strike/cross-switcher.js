@@ -45,6 +45,8 @@ class CrossSwitcher extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.tags = [card_types_1.CardTag.FUSION_STRIKE];
         this.regulationMark = 'E';
+        this.set2 = 'fusionstrike';
+        this.setNumber = '230';
         this.set = 'FST';
         this.name = 'Cross Switcher';
         this.fullName = 'Cross Switcher FST';

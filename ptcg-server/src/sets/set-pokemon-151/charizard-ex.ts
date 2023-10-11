@@ -49,6 +49,10 @@ export class Charizardex extends PokemonCard {
 
   public set: string = '151';
 
+  public set2: string = '151';
+
+  public setNumber: string = '6';
+
   public name: string = 'Charizard ex';
 
   public fullName: string = 'Charizard ex';

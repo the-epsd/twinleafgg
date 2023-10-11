@@ -40,6 +40,10 @@ export class RaichuV extends PokemonCard {
 
   public set: string = 'BRS';
 
+  public set2: string = 'brilliantstars';
+
+  public setNumber: string = '45';
+
   public name: string = 'Raichu V';
 
   public fullName: string = 'Raichu V BRS';

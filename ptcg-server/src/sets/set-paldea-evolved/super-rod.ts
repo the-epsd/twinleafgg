@@ -63,6 +63,10 @@ export class SuperRod extends TrainerCard {
 
   public set: string = 'PAL';
 
+  public set2: string = 'paldeaevolved';
+
+  public setNumber: string = '188';
+
   public name: string = 'Super Rod';
 
   public fullName: string = 'Super Rod PAL';

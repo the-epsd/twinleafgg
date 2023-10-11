@@ -37,6 +37,8 @@ class Houndoom extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
+        this.set2 = 'battlestyles';
+        this.setNumber = '96';
         this.name = 'Houndoom';
         this.fullName = 'Houndoom BST 096';
         this.SINGLE_STRIKE_ROAR_MARKER = 'SINGLE_STRIKE_ROAR_MARKER';

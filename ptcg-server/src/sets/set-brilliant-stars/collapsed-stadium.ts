@@ -17,6 +17,10 @@ export class CollapsedStadium extends TrainerCard {
 
   public set: string = 'BRS';
 
+  public set2: string = 'brilliantstars';
+
+  public setNumber: string = '137';
+
   public name: string = 'Collapsed Stadium';
 
   public fullName: string = 'Collapsed Stadium BRS 137';

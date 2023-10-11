@@ -46,6 +46,10 @@ export class PokemonCatcher extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '187';
+
   public name: string = 'Pokemon Catcher';
 
   public fullName: string = 'Pokemon Catcher SVI';

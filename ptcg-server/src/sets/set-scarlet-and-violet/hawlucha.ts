@@ -42,6 +42,10 @@ export class Hawlucha extends PokemonCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '118';
+
   public name: string = 'Hawlucha';
 
   public fullName: string = 'Hawlucha SVI';

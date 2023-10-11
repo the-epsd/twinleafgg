@@ -38,6 +38,10 @@ export class TyranitarV extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '97';
+
   public name: string = 'Tyranitar V';
 
   public fullName: string = 'Tyranitar V BST 097';

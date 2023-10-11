@@ -35,8 +35,10 @@ class Cherrim extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
+        this.set2 = 'battlestyles';
+        this.setNumber = '8';
         this.name = 'Cherrim';
-        this.fullName = 'Cherrim BST 008';
+        this.fullName = 'Cherrim BST';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

@@ -41,6 +41,10 @@ export class UmbreonV extends PokemonCard {
 
   public set: string = 'EVS';
 
+  public set2: string = 'evolvingskies';
+
+  public setNumber: string = '94';
+
   public name: string = 'Umbreon V';
 
   public fullName: string = 'Umbreon V EVS';

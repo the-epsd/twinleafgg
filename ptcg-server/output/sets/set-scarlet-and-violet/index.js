@@ -22,7 +22,6 @@ const ultra_ball_1 = require("./ultra-ball");
 const penny_1 = require("./penny");
 const beach_court_1 = require("./beach-court");
 const pokemon_catcher_1 = require("./pokemon-catcher");
-const choice_belt_1 = require("./choice-belt");
 const vitality_band_1 = require("./vitality-band");
 const defiance_band_1 = require("./defiance-band");
 exports.setScarletAndViolet = [
@@ -47,7 +46,6 @@ exports.setScarletAndViolet = [
     new penny_1.Penny(),
     new beach_court_1.BeachCourt(),
     new pokemon_catcher_1.PokemonCatcher(),
-    new choice_belt_1.ChoiceBelt(),
     new vitality_band_1.VitalityBand(),
     new defiance_band_1.DefianceBand(),
 ];

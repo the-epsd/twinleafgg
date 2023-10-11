@@ -33,6 +33,8 @@ class Hawlucha extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '118';
         this.name = 'Hawlucha';
         this.fullName = 'Hawlucha SVI';
     }

@@ -41,6 +41,8 @@ export class ScreamTail extends PokemonCard {
   ];
 
   public set: string = 'PAR';
+  public set2: string = 'ancientroar';
+  public setNumber: string = '32';
   public name: string = 'Scream Tail';
   public fullName: string = 'Scream Tail PAR';
 

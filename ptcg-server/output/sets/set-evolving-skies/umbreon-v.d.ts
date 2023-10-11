@@ -19,6 +19,8 @@ export declare class UmbreonV extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly METAL_LINKS_MAREKER = "IRON_BREAKER_MAREKER";

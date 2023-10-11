@@ -47,6 +47,10 @@ export class LugiaVSTAR extends PokemonCard {
 
   public set: string = 'SIT';
 
+  public set2: string = 'silvertempest';
+
+  public setNumber: string = '139';
+
   public name: string = 'Lugia VSTAR';
 
   public fullName: string = 'Lugia VSTAR SIT';

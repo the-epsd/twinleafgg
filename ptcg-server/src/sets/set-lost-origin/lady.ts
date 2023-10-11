@@ -54,6 +54,10 @@ export class Lady extends TrainerCard {
 
   public set: string = 'LOR';
 
+  public set2: string = 'lostorigin';
+
+  public setNumber: string = '159';
+
   public regulationMark = 'F';
 
   public name: string = 'Lady';

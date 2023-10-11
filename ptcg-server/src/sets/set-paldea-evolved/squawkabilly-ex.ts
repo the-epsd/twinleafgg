@@ -44,6 +44,10 @@ export class Squawkabillyex extends PokemonCard {
 
   public set: string = 'PAL';
 
+  public set2: string = 'paldeaevolved';
+
+  public setNumber: string = '169';
+
   public name: string = 'Squawkabilly ex';
 
   public fullName: string = 'Squawkabilly ex PAL';

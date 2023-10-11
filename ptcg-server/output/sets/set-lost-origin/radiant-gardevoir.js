@@ -31,6 +31,8 @@ class RadiantGardevoir extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 20 more damage for each Energy attached to your opponent\'s Active Pokémon.'
             }];
         this.set = 'LOR';
+        this.set2 = 'lostorigin';
+        this.setNumber = '69';
         this.name = 'Radiant Gardevoir';
         this.fullName = 'Radiant Gardevoir LOR';
     }

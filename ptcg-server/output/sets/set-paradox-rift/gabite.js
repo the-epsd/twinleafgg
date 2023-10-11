@@ -24,6 +24,8 @@ class Gabite extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'PAR';
+        this.set2 = 'ragingsurf';
+        this.setNumber = '28';
         this.name = 'Gabite';
         this.fullName = 'Gabite PAR';
     }

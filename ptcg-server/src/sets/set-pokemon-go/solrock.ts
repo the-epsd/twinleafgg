@@ -37,6 +37,10 @@ export class Solrock extends PokemonCard {
 
   public set: string = 'PGO';
 
+  public set2: string = 'pokemongo';
+
+  public setNumber: string = '39';
+
   public name: string = 'Solrock';
 
   public fullName: string = 'Solrock PGO';

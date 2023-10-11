@@ -24,6 +24,8 @@ export declare class Gardevoir extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     regulationMark: string;
     name: string;
     fullName: string;

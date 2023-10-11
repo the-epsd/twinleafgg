@@ -19,6 +19,8 @@ export declare class Dragoniteex extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     NO_ATTACK_NEXT_TURN_MARKER: string;

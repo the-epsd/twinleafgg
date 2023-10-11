@@ -11,6 +11,8 @@ class ElectricGenerator extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'G';
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '170';
         this.name = 'Electric Generator';
         this.fullName = 'Electric Generator SVI';
         this.text = 'Look at the top 5 cards of your deck and attach up to 2 Basic Lightning Energy cards you find there to your Benched Lightning Pokémon in any way you like. Shuffle the other cards back into your deck.';

@@ -15,6 +15,10 @@ export class ProfessorsResearch extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '189';
+
   public name: string = 'Professor\'s Research';
 
   public fullName: string = 'Professors Research SVI';

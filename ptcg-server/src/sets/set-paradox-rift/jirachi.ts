@@ -36,6 +36,10 @@ export class Jirachi extends PokemonCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'ragingsurf';
+
+  public setNumber: string = '42';
+
   public name: string = 'Jirachi';
 
   public fullName: string = 'Jirachi PAR';

@@ -14,6 +14,10 @@ export class GiftEnergy extends EnergyCard {
 
   public set: string = 'LOR';
 
+  public set2: string = 'lostorigin';
+
+  public setNumber: string = '171';
+
   public regulationMark = 'F';
 
   public name = 'Gift Energy';

@@ -29,6 +29,8 @@ class Jirachi extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
+        this.set2 = 'ragingsurf';
+        this.setNumber = '42';
         this.name = 'Jirachi';
         this.fullName = 'Jirachi PAR';
     }

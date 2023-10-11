@@ -70,6 +70,10 @@ export class Gimmighoul extends PokemonCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'ragingsurf';
+
+  public setNumber: string = '20';
+
   public name: string = 'Gimmighoul';
 
   public fullName: string = 'Gimmighoul PAR';

@@ -43,6 +43,10 @@ export class Bibarel extends PokemonCard {
 
   public set: string = 'BRS';
 
+  public set2: string = 'brilliantstars';
+
+  public setNumber: string = '121';
+
   public name: string = 'Bibarel';
 
   public fullName: string = 'Bibarel BRS';

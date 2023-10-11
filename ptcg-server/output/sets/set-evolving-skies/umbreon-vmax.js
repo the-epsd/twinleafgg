@@ -33,6 +33,8 @@ class UmbreonVMAX extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
+        this.set2 = 'evolvingskies';
+        this.setNumber = '95';
         this.name = 'Umbreon VMAX';
         this.fullName = 'Umbreon VMAX EVS';
     }

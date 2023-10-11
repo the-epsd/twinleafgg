@@ -38,6 +38,10 @@ export class Mewtwoex extends PokemonCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'startersetterastalmewtwoex';
+  
+  public setNumber: string = '1';
+
   public name: string = 'Mewtwo ex';
 
   public fullName: string = 'Mewtwo ex PAR';

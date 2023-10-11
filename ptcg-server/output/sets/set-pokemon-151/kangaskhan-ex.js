@@ -28,6 +28,8 @@ class Kangaskhanex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = '151';
+        this.set2 = '151';
+        this.setNumber = '115';
         this.name = 'Kangaskhan ex';
         this.fullName = 'Kangaskhan ex MEW';
     }

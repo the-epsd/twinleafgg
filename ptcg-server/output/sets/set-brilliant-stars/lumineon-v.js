@@ -55,6 +55,8 @@ class LumineonV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BRS';
+        this.set2 = 'brilliantstars';
+        this.setNumber = '40';
         this.name = 'Lumineon V';
         this.fullName = 'Lumineon V BRS';
     }

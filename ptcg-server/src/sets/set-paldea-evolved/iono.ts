@@ -18,9 +18,13 @@ export class Iono extends TrainerCard {
 
   public set: string = 'PAL';
 
+  public set2: string = 'paldeaevolved';
+
+  public setNumber: string = '185';
+
   public name: string = 'Iono';
 
-  public fullName: string = 'Iono';
+  public fullName: string = 'Iono PAL';
 
   public text: string =
     'Each player shuffles his or her hand into his or her deck. ' +

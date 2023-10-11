@@ -12,6 +12,8 @@ export class ChampionsFestival extends TrainerCard {
   trainerType = TrainerType.STADIUM;
   public regulationMark = 'G';
   set = 'SVI';
+  public set2: string = 'scarletviolet';
+  public setNumber: string = '178';
   name = 'Mesagoza';
   fullName = 'Mesagoza SVI';
   text = 'Once during each player\'s turn, that player may flip a coin. If heads, that player searches their deck for a Pokémon, reveals it, and puts it into their hand. Then, that player shuffles their deck.';

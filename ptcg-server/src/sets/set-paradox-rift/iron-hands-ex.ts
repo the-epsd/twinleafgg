@@ -38,6 +38,10 @@ export class IronHandsex extends PokemonCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'futureflash';
+  
+  public setNumber: string = '27';
+
   public name: string = 'Iron Hands ex';
 
   public fullName: string = 'Iron Hands ex PAR';

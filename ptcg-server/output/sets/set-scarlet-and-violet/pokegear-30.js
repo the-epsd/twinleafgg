@@ -39,6 +39,8 @@ class Pokegear30 extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '186';
         this.name = 'Pokegear 3.0';
         this.fullName = 'Pokegear SVI';
         this.text = 'Look at the top 7 cards of your deck. You may reveal a Supporter card ' +

@@ -31,6 +31,10 @@ export class Gabite extends PokemonCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'ragingsurf';
+
+  public setNumber: string = '28';
+
   public name: string = 'Gabite';
 
   public fullName: string = 'Gabite PAR';

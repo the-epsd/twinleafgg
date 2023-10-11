@@ -30,6 +30,10 @@ export class Cleffa extends PokemonCard {
 
   public set: string = 'OBF';
 
+  public set2: string = 'obsidianflames';
+
+  public setNumber: string = '80';
+
   public name: string = 'Cleffa';
 
   public fullName: string = 'Cleffa OBF';

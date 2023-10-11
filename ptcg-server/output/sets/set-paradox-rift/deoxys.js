@@ -31,6 +31,8 @@ class Deoxys extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'PAR';
+        this.set2 = 'startersetterastalmewtwoex';
+        this.setNumber = '6';
         this.name = 'Deoxys';
         this.fullName = 'Deoxys PAR';
     }

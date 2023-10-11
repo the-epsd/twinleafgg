@@ -14,6 +14,10 @@ export class BraveyCharm extends TrainerCard {
 
   public set: string = 'PAL';
 
+  public set2: string = 'paldeaevolved';
+
+  public setNumber: string = '173';
+
   public name: string = 'Bravery Charm';
 
   public fullName: string = 'Bravery Charm PAL';

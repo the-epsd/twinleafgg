@@ -19,6 +19,8 @@ export declare class Bulbasaur extends PokemonCard {
         effect: (store: StoreLike, state: State, effect: AttackEffect) => void;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
 }

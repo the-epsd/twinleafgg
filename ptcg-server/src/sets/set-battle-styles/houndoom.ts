@@ -48,6 +48,10 @@ export class Houndoom extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '96';
+
   public name: string = 'Houndoom';
 
   public fullName: string = 'Houndoom BST 096';

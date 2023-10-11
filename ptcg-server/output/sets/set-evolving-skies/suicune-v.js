@@ -34,6 +34,8 @@ class SuicuneV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BRS';
+        this.set2 = 'evolvingskies';
+        this.setNumber = '31';
         this.name = 'Suicune V';
         this.fullName = 'Suicune V BRS';
         this.FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';

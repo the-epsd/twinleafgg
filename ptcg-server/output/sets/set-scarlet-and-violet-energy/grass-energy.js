@@ -8,6 +8,8 @@ class GrassEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.GRASS];
         this.set = 'SVE';
+        this.set2 = 'smpromo';
+        this.setNumber = '128';
         this.name = 'Grass Energy';
         this.fullName = 'Grass Energy SVE';
     }

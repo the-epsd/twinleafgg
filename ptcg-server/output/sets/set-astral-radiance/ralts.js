@@ -24,6 +24,8 @@ class Ralts extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
+        this.set2 = 'astralradiance';
+        this.setNumber = '60';
         this.name = 'Ralts';
         this.fullName = 'Ralts ASR';
     }

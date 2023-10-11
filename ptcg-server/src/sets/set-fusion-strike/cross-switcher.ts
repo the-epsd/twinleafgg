@@ -61,6 +61,10 @@ export class CrossSwitcher extends TrainerCard {
 
   public regulationMark = 'E';
 
+  public set2: string = 'fusionstrike';
+
+  public setNumber: string = '230';
+
   public set: string = 'FST';
 
   public name: string = 'Cross Switcher';

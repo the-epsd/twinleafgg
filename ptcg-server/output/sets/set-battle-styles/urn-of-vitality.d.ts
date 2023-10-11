@@ -8,6 +8,8 @@ export declare class UrnOfVitality extends TrainerCard {
     tags: CardTag[];
     trainerType: TrainerType;
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     text: string;

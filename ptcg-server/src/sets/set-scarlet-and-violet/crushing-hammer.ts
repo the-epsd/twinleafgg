@@ -77,6 +77,10 @@ export class CrushingHammer extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '168';
+
   public name: string = 'Crushing Hammer';
 
   public fullName: string = 'Crushing Hammer SVI';

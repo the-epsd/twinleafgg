@@ -29,8 +29,12 @@ export class Cherubi extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '7';
+
   public name: string = 'Cherubi';
 
-  public fullName: string = 'Cherubi BST 007';
+  public fullName: string = 'Cherubi BST';
 
 }

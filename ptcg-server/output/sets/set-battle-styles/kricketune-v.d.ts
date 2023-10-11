@@ -28,6 +28,8 @@ export declare class KricketuneV extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly EXCITING_STAGE_MARKER = "EXCITING_STAGE_MARKER";

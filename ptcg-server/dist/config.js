@@ -56,7 +56,7 @@ export const config = {
     },
     sets: {
         scansDir: '',
-        scansUrl: '/scans/{set}/{name}.jpg'
+        scansUrl: ''
     },
     email: {
         transporter: {

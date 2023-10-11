@@ -31,6 +31,8 @@ export declare class Mewex extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly RESTART_MARKER = "RESTART_MARKER";

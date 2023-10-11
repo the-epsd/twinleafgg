@@ -7,6 +7,8 @@ export declare class Switch extends TrainerCard {
     regulationMark: string;
     trainerType: TrainerType;
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     text: string;

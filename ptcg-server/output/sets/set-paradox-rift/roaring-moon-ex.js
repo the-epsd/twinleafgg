@@ -30,6 +30,8 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
+        this.set2 = 'ancientroar';
+        this.setNumber = '54';
         this.name = 'Roaring Moon ex';
         this.fullName = 'Roaring Moon ex PAR';
     }

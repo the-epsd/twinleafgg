@@ -25,6 +25,8 @@ export declare class RadiantGreninja extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly CONCEALED_CARDS_MARKER = "CONCEALED_CARDS_MARKER";

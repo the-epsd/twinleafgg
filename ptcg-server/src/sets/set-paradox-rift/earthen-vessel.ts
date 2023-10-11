@@ -90,6 +90,10 @@ export class EarthenVessel extends TrainerCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'ancientroar';
+
+  public setNumber: string = '60';
+
   public name: string = 'Earthen Vessel';
 
   public fullName: string = 'Earthen Vessel PAR';

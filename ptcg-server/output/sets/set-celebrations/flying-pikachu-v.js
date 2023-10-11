@@ -33,6 +33,8 @@ class FlyingPikachuV extends pokemon_card_1.PokemonCard {
                 text: 'Flip a coin. If tails, this attack does nothing. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
             }];
         this.set = 'CEL';
+        this.set2 = 'celebrations';
+        this.setNumber = '6';
         this.name = 'Flying Pikachu V';
         this.fullName = 'Flying Pikachu V CEL';
         this.CLEAR_FLY_MARKER = 'CLEAR_FLY_MARKER';

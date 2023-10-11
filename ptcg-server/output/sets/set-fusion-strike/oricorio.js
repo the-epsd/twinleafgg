@@ -32,6 +32,8 @@ class Oricorio extends pokemon_card_1.PokemonCard {
                     'any way you like.'
             }];
         this.set = 'FST';
+        this.set2 = 'fusionstrike';
+        this.setNumber = '42';
         this.name = 'Oricorio';
         this.fullName = 'Oricorio FST';
     }

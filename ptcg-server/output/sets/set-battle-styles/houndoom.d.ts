@@ -26,6 +26,8 @@ export declare class Houndoom extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly SINGLE_STRIKE_ROAR_MARKER = "SINGLE_STRIKE_ROAR_MARKER";

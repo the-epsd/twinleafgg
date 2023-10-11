@@ -42,6 +42,10 @@ export class EnteiV extends PokemonCard {
 
   public set: string = 'BRS';
 
+  public set2: string = 'brilliantstars';
+
+  public setNumber: string = '22';
+
   public name: string = 'Entei V';
 
   public fullName: string = 'Entei V BRS';

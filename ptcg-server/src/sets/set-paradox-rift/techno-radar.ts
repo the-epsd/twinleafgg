@@ -89,6 +89,10 @@ export class TechnoRadar extends TrainerCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'futureflash';
+  
+  public setNumber: string = '60';
+
   public name: string = 'Techno Radar';
 
   public fullName: string = 'Techno Radar PAR';

@@ -35,6 +35,8 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '86';
         this.name = 'Gardevoir ex';
         this.fullName = 'Gardevoir ex SVI';
     }

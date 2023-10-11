@@ -25,6 +25,8 @@ export declare class Miraidonex extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly TANDEM_UNIT_MARKER = "TANDEM_UNIT_MARKER";

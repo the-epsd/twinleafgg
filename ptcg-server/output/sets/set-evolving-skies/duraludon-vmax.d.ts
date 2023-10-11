@@ -8,6 +8,7 @@ export declare class DuraludonVMAX extends PokemonCard {
     stage: Stage;
     regulationMark: string;
     tags: CardTag[];
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: never[];
@@ -24,6 +25,8 @@ export declare class DuraludonVMAX extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

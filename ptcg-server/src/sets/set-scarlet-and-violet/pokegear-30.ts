@@ -60,6 +60,10 @@ export class Pokegear30 extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '186';
+
   public name: string = 'Pokegear 3.0';
 
   public fullName: string = 'Pokegear SVI';

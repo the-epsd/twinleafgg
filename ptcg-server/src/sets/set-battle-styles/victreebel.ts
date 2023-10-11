@@ -44,6 +44,10 @@ export class Victreebel extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '3';
+
   public name: string = 'Victreebel';
 
   public fullName: string = 'Victreebel BST 003';

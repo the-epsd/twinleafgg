@@ -74,9 +74,11 @@ export class CardsBaseService {
   public getScanUrl(card: Card): string {
     const config = this.sessionService.session.config;
     const scansUrl = config && config.scansUrl || '';
-    const apiUrl = this.apiService.getApiUrl();
+    const apiUrl = 'https://www.serebii.net/card'
+    //const apiUrl = this.apiService.getApiUrl();
     return apiUrl + scansUrl
-      .replace('{set}', card.set)
+      .replace('{set2}', card.set2)
+      .replace('{setNumber}', card.setNumber)
       .replace('{name}', card.fullName);
   }
 

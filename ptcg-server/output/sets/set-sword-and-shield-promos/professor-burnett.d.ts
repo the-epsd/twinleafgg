@@ -6,6 +6,8 @@ import { State } from '../../game/store/state/state';
 export declare class ProfessorBurnet extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     text: string;

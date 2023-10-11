@@ -29,6 +29,10 @@ export class Pidgeotto extends PokemonCard {
 
   public set: string = 'OBF';
 
+  public set2: string = 'obsidianflames';
+
+  public setNumber: string = '163';
+
   public name: string = 'Pidgeotto';
 
   public fullName: string = 'Pidgeotto OBF';

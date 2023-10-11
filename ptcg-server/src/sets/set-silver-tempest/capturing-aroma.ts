@@ -14,6 +14,10 @@ export class CapturingAroma extends TrainerCard {
 
   public set: string = 'SIT';
 
+  public set2: string = 'silvertempest';
+
+  public setNumber: string = '153';
+
   public regulationMark = 'F';
 
   public name: string = 'Capturing Aroma';

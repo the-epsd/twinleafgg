@@ -44,6 +44,10 @@ export class Dragoniteex extends PokemonCard {
 
   public set: string = 'OBF';
 
+  public set2: string = 'obsidianflames';
+
+  public setNumber: string = '159';
+
   public name: string = 'Dragonite ex';
 
   public fullName: string = 'Dragonite ex OBF';

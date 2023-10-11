@@ -36,6 +36,10 @@ export class BossOrders extends TrainerCard {
 
   public set: string = 'PAL';
 
+  public set2: string = 'paldeaevolved';
+
+  public setNumber: string = '172';
+
   public name: string = 'Boss\'s Orders';
 
   public fullName: string = 'Boss\'s Orders PAL';

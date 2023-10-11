@@ -37,6 +37,8 @@ class ChienPaoex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAL';
+        this.set2 = 'paldeaevolved';
+        this.setNumber = '61';
         this.name = 'Chien-Pao ex';
         this.fullName = 'Chien-Pao ex PAL';
     }

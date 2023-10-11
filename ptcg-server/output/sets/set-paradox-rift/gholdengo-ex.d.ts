@@ -30,6 +30,8 @@ export declare class Gholdengoex extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly MAKE_IT_RAIN_MARKER = "MAKE_IT_RAIN_MARKER";

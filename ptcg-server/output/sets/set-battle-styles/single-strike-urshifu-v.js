@@ -34,6 +34,8 @@ class SingleStrikeUrshifuV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
+        this.set2 = 'battlestyles';
+        this.setNumber = '85';
         this.name = 'Single Strike Urshifu V';
         this.fullName = 'Single Strike Urshifu V BST 085';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

@@ -21,6 +21,10 @@ export class SingleStrikeEnergy extends EnergyCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '141';
+
   public name = 'Single Strike Energy';
 
   public fullName = 'Single Strike Energy BST';

@@ -13,6 +13,8 @@ class TrekkingShoes extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'ASR';
+        this.set2 = 'astralradiance';
+        this.setNumber = '156';
         this.name = 'Trekking Shoes';
         this.fullName = 'Trekking Shoes ASR';
         this.text = 'Look at the top card of your deck. You may put that card into your hand. If you don\'t, discard that card and draw a card.';

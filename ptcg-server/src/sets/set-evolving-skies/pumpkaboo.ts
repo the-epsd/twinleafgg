@@ -38,6 +38,10 @@ export class Pumpkaboo extends PokemonCard {
 
   public set: string = 'EVS';
 
+  public set2: string = 'evolvingskies';
+
+  public setNumber: string = '76';
+
   public name: string = 'Pumpkaboo';
 
   public fullName: string = 'Pumpkaboo EVS';

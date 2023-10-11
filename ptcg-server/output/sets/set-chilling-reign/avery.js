@@ -10,6 +10,8 @@ class Avery extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'CRE';
+        this.set2 = 'chillingreign';
+        this.setNumber = '130';
         this.regulationMark = 'E';
         this.name = 'Avery';
         this.fullName = 'Avery CRE';

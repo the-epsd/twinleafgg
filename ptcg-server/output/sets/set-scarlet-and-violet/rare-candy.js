@@ -91,6 +91,8 @@ class RareCandy extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '191';
         this.name = 'Rare Candy';
         this.fullName = 'Rare Candy SVI';
         this.text = 'Choose 1 of your Basic Pokemon in play. If you have a Stage 2 card in ' +

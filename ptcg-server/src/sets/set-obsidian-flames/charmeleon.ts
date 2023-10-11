@@ -28,6 +28,10 @@ export class Charmeleon extends PokemonCard {
 
   public set: string = 'OBF';
 
+  public set2: string = 'obsidianflames';
+
+  public setNumber: string = '27';
+
   public name: string = 'Charmeleon';
 
   public fullName: string = 'Charmeleon OBF';

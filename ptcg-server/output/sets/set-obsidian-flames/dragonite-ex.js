@@ -33,6 +33,8 @@ class Dragoniteex extends pokemon_card_1.PokemonCard {
                     'If tails, during your next turn, this Pokémon can\'t attack.'
             }];
         this.set = 'OBF';
+        this.set2 = 'obsidianflames';
+        this.setNumber = '159';
         this.name = 'Dragonite ex';
         this.fullName = 'Dragonite ex OBF';
         this.NO_ATTACK_NEXT_TURN_MARKER = 'NO_ATTACK_NEXT_TURN_MARKER';

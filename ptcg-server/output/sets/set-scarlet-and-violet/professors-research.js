@@ -12,6 +12,8 @@ class ProfessorsResearch extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '189';
         this.name = 'Professor\'s Research';
         this.fullName = 'Professors Research SVI';
         this.text = 'Discard your hand and draw 7 cards.';

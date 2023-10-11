@@ -13,6 +13,10 @@ export class Judge extends TrainerCard {
 
   public set: string = 'FST';
 
+  public set2: string = 'fusionstrike';
+
+  public setNumber: string = '235';
+
   public regulationMark = 'E';
 
   public name: string = 'Judge';

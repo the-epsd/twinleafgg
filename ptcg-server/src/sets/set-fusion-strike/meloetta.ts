@@ -35,6 +35,10 @@ export class Meloetta extends PokemonCard {
 
   public set: string = 'FST';
 
+  public set2: string = 'fusionstrike';
+
+  public setNumber: string = '124';
+
   public name: string = 'Meloetta';
 
   public fullName: string = 'Meloetta FST';

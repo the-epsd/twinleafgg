@@ -38,6 +38,10 @@ export class Murkrow extends PokemonCard {
 
   public set: string = 'PAL';
 
+  public set2: string = 'paldeaevolved';
+
+  public setNumber: string = '131';
+
   public name: string = 'Murkrow';
 
   public fullName: string = 'Murkrow PAL';

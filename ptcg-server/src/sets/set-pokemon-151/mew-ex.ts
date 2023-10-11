@@ -95,6 +95,10 @@ export class Mewex extends PokemonCard {
 
   public set: string = '151';
 
+  public set2: string = '151';
+
+  public setNumber: string = '151';
+
   public name: string = 'Mew ex';
 
   public fullName: string = 'Mew ex';

@@ -23,7 +23,13 @@ export class Bellsprout extends PokemonCard {
     }
   ];
   public set: string = 'BST';
+
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '1';
+
   public name: string = 'Bellsprout';
+
   public fullName: string = 'Bellsprout BST 001';
 
   reduceEffect(store: StoreLike, state: State, effect: Effect) {

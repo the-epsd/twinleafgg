@@ -45,6 +45,10 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '88';
+
   public name: string = 'Rapid Strike Urshifu VMAX';
 
   public fullName: string = 'Rapid Strike Urshifu VMAX BST 088';

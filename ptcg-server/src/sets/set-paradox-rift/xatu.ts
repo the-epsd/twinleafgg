@@ -41,6 +41,10 @@ export class Xatu extends PokemonCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'startersetterastalmewtwoex';
+  
+  public setNumber: string = '5';
+
   public name: string = 'Xatu';
 
   public fullName: string = 'Xatu PAR';

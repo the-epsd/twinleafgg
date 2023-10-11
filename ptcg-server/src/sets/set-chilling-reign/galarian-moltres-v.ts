@@ -42,9 +42,13 @@ export class GalarianMoltesV extends PokemonCard {
 
   public set: string = 'CRE';
 
-  public name: string = 'Galarian Moltes V';
+  public set2: string = 'chillingreign';
 
-  public fullName: string = 'Galarian Moltes V CRE';
+  public setNumber: string = '97';
+
+  public name: string = 'Galarian Moltres V';
+
+  public fullName: string = 'Galarian Moltres V CRE';
 
   public readonly DIREFLAME_WINGS_MARKER = 'DIREFLAME_WINGS_MARKER';
 

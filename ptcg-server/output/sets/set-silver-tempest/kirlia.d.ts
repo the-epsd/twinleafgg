@@ -25,6 +25,8 @@ export declare class Kirlia extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly REFINEMENT_MARKER = "REFINEMENT_MARKER";

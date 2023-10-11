@@ -24,6 +24,8 @@ export declare class FlyingPikachuV extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly CLEAR_FLY_MARKER = "CLEAR_FLY_MARKER";

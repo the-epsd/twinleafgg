@@ -33,6 +33,8 @@ class VictiniV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
+        this.set2 = 'battlestyles';
+        this.setNumber = '21';
         this.name = 'Victini V';
         this.fullName = 'Victini V BST 021';
     }

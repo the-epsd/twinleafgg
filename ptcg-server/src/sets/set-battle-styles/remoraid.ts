@@ -37,6 +37,10 @@ export class Remoraid extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '36';
+
   public name: string = 'Remoraid';
 
   public fullName: string = 'Remoraid BST 036';

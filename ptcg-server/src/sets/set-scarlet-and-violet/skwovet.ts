@@ -39,6 +39,10 @@ export class Skwovet extends PokemonCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '151';
+
   public name: string = 'Skwovet';
 
   public fullName: string = 'Skwovet SVI';

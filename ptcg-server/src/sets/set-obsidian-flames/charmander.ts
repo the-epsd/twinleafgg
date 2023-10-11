@@ -26,6 +26,10 @@ export class Charmander extends PokemonCard {
 
   public set: string = 'OBF';
 
+  public set2: string = 'obsidianflames';
+
+  public setNumber: string = '26';
+
   public name: string = 'Charmander';
 
   public fullName: string = 'Charmander OBF';

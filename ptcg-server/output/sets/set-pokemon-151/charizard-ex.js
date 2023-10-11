@@ -40,6 +40,8 @@ class Charizardex extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = '151';
+        this.set2 = '151';
+        this.setNumber = '6';
         this.name = 'Charizard ex';
         this.fullName = 'Charizard ex';
     }

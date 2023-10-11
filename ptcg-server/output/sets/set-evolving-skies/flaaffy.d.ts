@@ -25,6 +25,8 @@ export declare class Flaaffy extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly DYNAMOTOR_MAREKER = "DYNAMOTOR_MAREKER";

@@ -37,6 +37,8 @@ class GenesectV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'FST';
+        this.set2 = 'fusionstrike';
+        this.setNumber = '185';
         this.name = 'Genesect V';
         this.fullName = 'Genesect V FST 185';
         this.FUSION_STRIKE_SYSTEM_MARKER = 'FUSION_STRIKE_SYSTEM_MARKER';

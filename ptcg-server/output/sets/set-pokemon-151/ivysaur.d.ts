@@ -25,6 +25,8 @@ export declare class Ivysaur extends PokemonCard {
         effect: undefined;
     })[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
 }

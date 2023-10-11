@@ -31,6 +31,8 @@ class Murkrow extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAL';
+        this.set2 = 'paldeaevolved';
+        this.setNumber = '131';
         this.name = 'Murkrow';
         this.fullName = 'Murkrow PAL';
     }

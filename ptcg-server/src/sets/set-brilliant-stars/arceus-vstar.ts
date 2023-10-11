@@ -48,6 +48,10 @@ export class ArceusVSTAR extends PokemonCard {
 
   public set: string = 'BRS';
 
+  public set2: string = 'brilliantstars';
+
+  public setNumber: string = '123';
+
   public name: string = 'Arceus VSTAR';
 
   public fullName: string = 'Arceus VSTAR BRS';

@@ -35,6 +35,8 @@ class DarkraiVSTAR extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
+        this.set2 = 'astralradiance';
+        this.setNumber = '99';
         this.name = 'Darkrai VSTAR';
         this.fullName = 'Darkrai VSTAR ASR';
         this.VSTAR_MARKER = 'VSTAR_MARKER';
