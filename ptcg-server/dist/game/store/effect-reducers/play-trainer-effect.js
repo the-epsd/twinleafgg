@@ -65,9 +65,11 @@ export function playTrainerReducer(store, state, effect) {
     // Process trainer effect
     if (effect instanceof TrainerEffect) {
         if (effect.player.hand.cards.includes(effect.trainerCard)) {
+            // IF DIAMOND/PEARL FORMAT, SUPPORTER WILL STAY ON FIELD UNTIL THE END OF YOUR TURN
             const isSupporter = effect.trainerCard.trainerType === TrainerType.SUPPORTER;
             const target = isSupporter ? effect.player.supporter : effect.player.discard;
             effect.player.hand.moveCardTo(effect.trainerCard, target);
+            //effect.player.hand.moveCardTo(effect.trainerCard, effect.player.discard);
         }
         return state;
     }

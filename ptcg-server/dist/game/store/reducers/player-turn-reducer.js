@@ -25,6 +25,7 @@ export function playerTurnReducer(store, state, action) {
             }
             const retreatEffect = new RetreatEffect(player, action.benchIndex);
             state = store.reduceEffect(state, retreatEffect);
+            player.active.clearEffects();
             return state;
         }
         if (action instanceof AttackAction) {

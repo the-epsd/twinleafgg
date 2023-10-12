@@ -5,9 +5,9 @@ import { RainbowEnergy } from './rainbow-energy';
 import { RareCandy } from './rare-candy';
 
 export const setSunAndMoon: Card[] = [
-new EnergyRetrieval(),
-new ExpShare(),
-new RainbowEnergy(),
-new RareCandy(),
+  new EnergyRetrieval(),
+  new ExpShare(),
+  new RainbowEnergy(),
+  new RareCandy(),
 
 ];

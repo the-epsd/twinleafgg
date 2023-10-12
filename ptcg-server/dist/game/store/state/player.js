@@ -9,6 +9,7 @@ export class Player {
         this.deck = new CardList();
         this.hand = new CardList();
         this.discard = new CardList();
+        this.lostzone = new CardList();
         this.stadium = new CardList();
         this.supporter = new CardList();
         this.active = new PokemonCardList();
@@ -47,10 +48,12 @@ export class Player {
     switchPokemon(target) {
         const benchIndex = this.bench.indexOf(target);
         if (benchIndex !== -1) {
-            this.active.clearEffects();
             const temp = this.active;
+            const tempCard = temp.getPokemonCard();
+            this.active.clearEffects();
             this.active = this.bench[benchIndex];
             this.bench[benchIndex] = temp;
+            tempCard.movedToActiveThisTurn = true;
         }
     }
 }

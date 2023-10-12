@@ -23,6 +23,7 @@ export class PathToThePeak extends TrainerCard {
       const pokemonCard = effect.card;
       
       if (pokemonCard.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_GX || CardTag.POKEMON_VMAX || CardTag.POKEMON_EX || CardTag.POKEMON_VSTAR || CardTag.RADIANT || CardTag.POKEMON_ex)) {
+        pokemonCard.powers = [];
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 

@@ -9,11 +9,13 @@ export var CardTag;
     CardTag["POKEMON_VSTAR"] = "VSTAR";
     CardTag["ACE_SPEC"] = "ACE_SPEC";
     CardTag["RADIANT"] = "RADIANT";
+    CardTag["TEAM_PLASMA"] = "TEAM_PLASMA";
     CardTag["FUSION_STRIKE"] = "FUSION_STRIKE";
     CardTag["SINGLE_STRIKE"] = "SINGLE_STRIKE";
     CardTag["RAPID_STRIKE"] = "RAPID_STRIKE";
     CardTag["POKEMON_ex"] = "ex";
     CardTag["FUTURE"] = "Future";
+    CardTag["ANCIENT"] = "Ancient";
 })(CardTag || (CardTag = {}));
 export var SuperType;
 (function (SuperType) {
@@ -77,8 +79,9 @@ export var SpecialCondition;
 })(SpecialCondition || (SpecialCondition = {}));
 export var Format;
 (function (Format) {
-    Format[Format["STANDARD"] = 0] = "STANDARD";
-    Format[Format["EXPANDED"] = 1] = "EXPANDED";
-    Format[Format["UNLIMITED"] = 2] = "UNLIMITED";
-    Format[Format["RETRO"] = 3] = "RETRO";
+    Format[Format["NONE"] = 0] = "NONE";
+    Format[Format["STANDARD"] = 1] = "STANDARD";
+    Format[Format["EXPANDED"] = 2] = "EXPANDED";
+    Format[Format["UNLIMITED"] = 3] = "UNLIMITED";
+    Format[Format["RETRO"] = 4] = "RETRO";
 })(Format || (Format = {}));
