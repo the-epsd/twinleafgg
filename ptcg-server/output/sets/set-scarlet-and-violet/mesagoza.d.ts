@@ -8,6 +8,8 @@ export declare class ChampionsFestival extends TrainerCard {
     trainerType: TrainerType;
     regulationMark: string;
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     text: string;

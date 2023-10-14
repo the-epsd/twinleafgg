@@ -34,6 +34,8 @@ class Mew extends game_1.PokemonCard {
             }
         ];
         this.set = 'CEL';
+        this.set2 = 'celebrations';
+        this.setNumber = '11';
         this.name = 'Mew';
         this.fullName = 'Mew CEL';
         this.MYSTERIOUS_TAIL_MARKER = 'MYSTERIOUS_TAIL_MARKER';

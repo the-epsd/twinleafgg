@@ -30,6 +30,8 @@ class Wattrel extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAL';
+        this.set2 = 'paldeaevolved';
+        this.setNumber = '80';
         this.name = 'Wattrel';
         this.fullName = 'Wattrel PAL';
     }

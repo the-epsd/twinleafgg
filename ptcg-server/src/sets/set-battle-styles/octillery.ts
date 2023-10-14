@@ -96,6 +96,10 @@ export class Octillery extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '37';
+
   public name: string = 'Octillery';
 
   public fullName: string = 'Octillery BST 037';

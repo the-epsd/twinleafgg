@@ -11,6 +11,8 @@ export declare abstract class Card {
     id: number;
     regulationMark: string;
     tags: string[];
+    setNumber: string;
+    set2: string;
     static tags: any;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

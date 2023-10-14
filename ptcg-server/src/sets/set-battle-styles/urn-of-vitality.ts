@@ -55,6 +55,10 @@ export class UrnOfVitality extends TrainerCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '139';
+
   public name: string = 'Urn of Vitality';
 
   public fullName: string = 'Urn of Vitality BST';

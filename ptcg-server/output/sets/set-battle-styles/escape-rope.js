@@ -40,6 +40,8 @@ class EscapeRope extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BST';
+        this.set2 = 'battlestyles';
+        this.setNumber = '125';
         this.regulationMark = 'E';
         this.name = 'Escape Rope';
         this.fullName = 'Escape Rope BST';

@@ -33,6 +33,8 @@ class MewVMAX extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'FST';
+        this.set2 = 'fusionstrike';
+        this.setNumber = '114';
         this.name = 'Mew VMAX';
         this.fullName = 'Mew VMAX FST 114';
     }

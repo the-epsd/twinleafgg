@@ -53,6 +53,8 @@ class CrushingHammer extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '168';
         this.name = 'Crushing Hammer';
         this.fullName = 'Crushing Hammer SVI';
         this.text = 'Flip a coin. If heads, discard an Energy attached to 1 of your ' +

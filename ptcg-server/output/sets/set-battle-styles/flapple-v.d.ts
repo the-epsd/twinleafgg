@@ -22,6 +22,8 @@ export declare class FlappleV extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly FLAPPLE_V_MARKER = "FLAPPLE_V_MARKER";

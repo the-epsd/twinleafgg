@@ -12,8 +12,10 @@ class Iono extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'PAL';
+        this.set2 = 'paldeaevolved';
+        this.setNumber = '185';
         this.name = 'Iono';
-        this.fullName = 'Iono';
+        this.fullName = 'Iono PAL';
         this.text = 'Each player shuffles his or her hand into his or her deck. ' +
             'Then, each player draws a card for each of his or her remaining Prize cards.';
     }

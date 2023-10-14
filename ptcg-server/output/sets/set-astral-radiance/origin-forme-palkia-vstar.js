@@ -35,6 +35,8 @@ class OriginFormePalkiaVSTAR extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
+        this.set2 = 'astralradiance';
+        this.setNumber = '40';
         this.name = 'Origin Forme Palkia VSTAR';
         this.fullName = 'Origin Forme Palkia VSTAR ASR';
         this.VSTAR_MARKER = 'VSTAR_MARKER';

@@ -8,11 +8,13 @@
     "lint": "eslint -c .eslintrc.js --ext .ts src",
     "compile": "tsc && tsc -p tsconfig.dist.json",
     "build": "npm run lint && npm run test && npm run compile",
+    "outputs": ".vercel/**",
     "start": "node start.js",
     "start:dev": "nodemon -e ts --exec \"tsc && npm run start\"",
     "test": "nyc -e \".ts\" -x \"src/**/*.spec.ts\" jasmine-ts \"src/**/*.spec.ts\"",
     "coverage": "npm test && nyc report -r html"
   },
+  
   "author": "",
   "license": "MIT",
   "dependencies": {

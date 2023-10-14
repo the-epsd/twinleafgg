@@ -41,6 +41,10 @@ export class SingleStrikeUrshifuVMAX extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '86';
+
   public name: string = 'Single Strike Urshifu VMAX';
 
   public fullName: string = 'Single Strike Urshifu VMAX BST';

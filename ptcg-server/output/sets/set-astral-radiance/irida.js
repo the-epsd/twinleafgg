@@ -53,6 +53,8 @@ class Irida extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'F';
         this.set = 'ASR';
+        this.set2 = 'astralradiance';
+        this.setNumber = '147';
         this.name = 'Irida';
         this.fullName = 'Irida ASR';
         this.text = 'Search your deck for a W Pokemon and an Item ' +

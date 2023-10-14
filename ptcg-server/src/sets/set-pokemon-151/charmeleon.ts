@@ -42,6 +42,10 @@ export class Charmeleon extends PokemonCard {
 
   public set: string = '151';
 
+  public set2: string = '151';
+
+  public setNumber: string = '5';
+
   public name: string = 'Charmeleon';
 
   public fullName: string = 'Charmeleon MEW';

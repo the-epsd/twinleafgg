@@ -49,6 +49,10 @@ export class Switch extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '194';
+
   public name: string = 'Switch';
 
   public fullName: string = 'Switch SVI';

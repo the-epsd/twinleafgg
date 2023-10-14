@@ -38,6 +38,10 @@ export class Lunatone extends PokemonCard {
 
   public set: string = 'OBF';
 
+  public set2: string = 'obsidianflames';
+
+  public setNumber: string = '92';
+
   public name: string = 'Lunatone';
 
   public fullName: string = 'Lunatone OBF';

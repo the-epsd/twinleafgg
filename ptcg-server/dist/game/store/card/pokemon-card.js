@@ -1,4 +1,5 @@
 import { AttackEffect, PowerEffect } from '../effects/game-effects';
+import { AttackEffect, PowerEffect } from '../effects/game-effects';
 import { Card } from './card';
 import { SuperType, Stage, PokemonType, CardType, Format } from './card-types';
 export class PokemonCard extends Card {

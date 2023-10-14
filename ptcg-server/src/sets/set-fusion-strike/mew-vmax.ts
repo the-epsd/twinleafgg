@@ -41,6 +41,10 @@ export class MewVMAX extends PokemonCard {
 
   public set: string = 'FST';
 
+  public set2: string = 'fusionstrike';
+
+  public setNumber: string = '114';
+
   public name: string = 'Mew VMAX';
 
   public fullName: string = 'Mew VMAX FST 114';

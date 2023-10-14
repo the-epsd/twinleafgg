@@ -74,6 +74,10 @@ export class Irida extends TrainerCard {
 
   public set: string = 'ASR';
 
+  public set2: string = 'astralradiance';
+
+  public setNumber: string = '147';
+
   public name: string = 'Irida';
 
   public fullName: string = 'Irida ASR';

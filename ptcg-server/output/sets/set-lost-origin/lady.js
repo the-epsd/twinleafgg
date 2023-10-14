@@ -34,6 +34,8 @@ class Lady extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'LOR';
+        this.set2 = 'lostorigin';
+        this.setNumber = '159';
         this.regulationMark = 'F';
         this.name = 'Lady';
         this.fullName = 'Lady LOR';

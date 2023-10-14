@@ -12,6 +12,8 @@ class Worker extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'SIT';
+        this.set2 = 'silvertempest';
+        this.setNumber = '167';
         this.regulationMark = 'F';
         this.name = 'Worker';
         this.fullName = 'Worker SIT';

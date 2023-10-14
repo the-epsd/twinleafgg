@@ -45,6 +45,10 @@ export class Blastoiseex extends PokemonCard {
 
   public set: string = '151';
 
+  public set2: string = '151';
+
+  public setNumber: string = '9';
+
   public name: string = 'Blastoise ex';
 
   public fullName: string = 'Blastoise ex MEW';

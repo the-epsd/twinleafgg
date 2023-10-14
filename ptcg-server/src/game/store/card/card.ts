@@ -20,6 +20,10 @@ export abstract class Card {
   public regulationMark: string = '';
 
   public tags: string[] = [];
+  
+  public setNumber: string = '';
+
+  public set2: string = '';
 
 
   

@@ -7,6 +7,10 @@ export class LightningEnergy extends EnergyCard {
 
   public set: string = 'SVE';
 
+  public set2: string = 'smpromo';
+
+  public setNumber: string = '131';
+
   public name = 'Lightning Energy';
 
   public fullName = 'Lightning Energy SVE';

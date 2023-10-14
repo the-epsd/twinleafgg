@@ -28,6 +28,8 @@ class ProfessorBurnet extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'SWSH';
+        this.set2 = 'swshpromos';
+        this.setNumber = '167';
         this.name = 'Professor Burnet';
         this.fullName = 'Professor Burnet SWSH';
         this.text = 'Search your deck for up to 2 cards and discard them. ' +

@@ -76,6 +76,10 @@ export class LumineonV extends PokemonCard {
 
   public set: string = 'BRS';
 
+  public set2: string = 'brilliantstars';
+
+  public setNumber: string = '40';
+
   public name: string = 'Lumineon V';
 
   public fullName: string = 'Lumineon V BRS';

@@ -42,6 +42,10 @@ export class ProfessorBurnet extends TrainerCard {
 
   public set: string = 'SWSH';
 
+  public set2: string = 'swshpromos';
+
+  public setNumber: string = '167';
+
   public name: string = 'Professor Burnet';
 
   public fullName: string = 'Professor Burnet SWSH';

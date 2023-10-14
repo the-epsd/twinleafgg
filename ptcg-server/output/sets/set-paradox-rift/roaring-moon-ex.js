@@ -30,6 +30,8 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
+        this.set2 = 'ancientroar';
+        this.setNumber = '54';
         this.name = 'Roaring Moon ex';
         this.fullName = 'Roaring Moon ex PAR';
     }
@@ -40,8 +42,8 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
             const activePokemon = opponent.active.getPokemonCard();
             if (activePokemon) {
                 activePokemon.hp = 0;
+                this.hp -= 200;
             }
-            this.hp -= 200;
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

@@ -11,6 +11,8 @@ class ForestSealStone extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'SIT';
+        this.set2 = 'silvertempest';
+        this.setNumber = '156';
         this.regulationMark = 'F';
         this.name = 'Forest Seal Stone';
         this.fullName = 'Forest Seal Stone SIT';

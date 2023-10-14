@@ -25,6 +25,8 @@ export class Bulbasaur extends PokemonCard {
     }
   ];
   public set: string = '151';
+  public set2: string = '151';
+  public setNumber: string = '1';
   public name: string = 'Bulbasaur';
   public fullName: string = 'Bulbasaur MEW 001';
   

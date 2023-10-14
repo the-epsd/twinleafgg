@@ -65,6 +65,8 @@ class Bronzong extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'BST';
+        this.set2 = 'battlestyles';
+        this.setNumber = '102';
         this.name = 'Bronzong';
         this.fullName = 'Bronzong BST 102';
     }

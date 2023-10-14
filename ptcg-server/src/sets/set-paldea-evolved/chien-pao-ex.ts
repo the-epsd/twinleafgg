@@ -46,6 +46,10 @@ export class ChienPaoex extends PokemonCard {
 
   public set: string = 'PAL';
 
+  public set2: string = 'paldeaevolved';
+
+  public setNumber: string = '61';
+
   public name: string = 'Chien-Pao ex';
 
   public fullName: string = 'Chien-Pao ex PAL';

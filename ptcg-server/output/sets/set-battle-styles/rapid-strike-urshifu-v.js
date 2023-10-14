@@ -31,6 +31,8 @@ class RapidStrikeUrshifuV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
+        this.set2 = 'battlestyles';
+        this.setNumber = '87';
         this.name = 'Rapid Strike Urshifu V';
         this.fullName = 'Rapid Strike Urshifu V BST 087';
     }

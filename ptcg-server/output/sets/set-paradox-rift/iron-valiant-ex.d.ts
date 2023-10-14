@@ -25,6 +25,8 @@ export declare class IronValiantex extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly TACHYON_BITS_MARKER = "TACHYON_BITS_MARKER";

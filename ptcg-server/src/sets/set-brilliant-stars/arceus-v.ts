@@ -41,6 +41,10 @@ export class ArceusV extends PokemonCard {
 
   public set: string = 'BRS';
 
+  public set2: string = 'brilliantstars';
+
+  public setNumber: string = '122';
+
   public name: string = 'Arceus V';
 
   public fullName: string = 'Arceus V BRS';

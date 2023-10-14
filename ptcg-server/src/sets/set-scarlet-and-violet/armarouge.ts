@@ -68,9 +68,9 @@ export class Armarouge extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
-  //public evolvesFrom = 'Charcadet';
+  public evolvesFrom = 'Charcadet';
 
   public cardType: CardType = CardType.FIRE;
   
@@ -95,7 +95,13 @@ export class Armarouge extends PokemonCard {
     text: 'Your opponent\'s Active Pokémon is now Burned.'
   }];
   public set = 'SVI';
+
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '41';
+
   public name = 'Armarouge';
+
   public fullName: string = 'Armarouge SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

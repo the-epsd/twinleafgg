@@ -54,6 +54,8 @@ class Sableye extends pokemon_card_1.PokemonCard {
                 text: 'You can use this attack only if you have 10 or more cards in the Lost Zone. Put 12 damage counters on your opponent\'s Pokémon in any way you like.'
             }];
         this.set = 'LOR';
+        this.set2 = 'lostorigin';
+        this.setNumber = '70';
         this.name = 'Sableye';
         this.fullName = 'Sableye LOR';
     }

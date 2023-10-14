@@ -30,6 +30,10 @@ export class Natu extends PokemonCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'startersetterastalmewtwoex';
+  
+  public setNumber: string = '4';
+
   public name: string = 'Natu';
 
   public fullName: string = 'Natu PAR';

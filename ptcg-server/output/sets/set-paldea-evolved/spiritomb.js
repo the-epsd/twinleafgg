@@ -30,6 +30,8 @@ class Spiritomb extends pokemon_card_1.PokemonCard {
                 text: 'Put this Pokémon and all attached cards into your hand. '
             }];
         this.set = 'PAL';
+        this.set2 = 'paldeaevolved';
+        this.setNumber = '89';
         this.name = 'Spiritomb';
         this.fullName = 'Spiritomb PAL';
     }

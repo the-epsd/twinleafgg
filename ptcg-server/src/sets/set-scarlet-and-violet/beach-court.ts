@@ -17,6 +17,10 @@ export class BeachCourt extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '167';
+
   public name: string = 'Beach Court';
 
   public fullName: string = 'Beach Court SVI';

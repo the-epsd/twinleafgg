@@ -52,6 +52,8 @@ class Arven extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'G';
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '166';
         this.name = 'Arven';
         this.fullName = 'Arven SVI';
         this.text = 'Search your deck for a W Pokemon and an Item ' +

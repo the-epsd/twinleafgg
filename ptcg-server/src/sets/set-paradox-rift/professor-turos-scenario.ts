@@ -40,6 +40,10 @@ export class ProfessorTurosScenario extends TrainerCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'futureflash';
+  
+  public setNumber: string = '65';
+
   public name: string = 'Professor Turo\'s Scenario';
 
   public fullName: string = 'Professor Turo\'s Scenario PAR';

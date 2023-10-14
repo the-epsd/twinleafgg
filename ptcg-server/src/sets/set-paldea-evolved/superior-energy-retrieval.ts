@@ -88,6 +88,10 @@ export class SuperiorEnergyRetrieval extends TrainerCard {
 
   public set: string = 'PAL';
 
+  public set2: string = 'paldeaevolved';
+
+  public setNumber: string = '189';
+
   public name: string = 'Superior Energy Retrieval';
 
   public fullName: string = 'Superior Energy Retrieval PAL';

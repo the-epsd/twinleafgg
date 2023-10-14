@@ -13,6 +13,8 @@ class ChampionsFestival extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.regulationMark = 'G';
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '178';
         this.name = 'Mesagoza';
         this.fullName = 'Mesagoza SVI';
         this.text = 'Once during each player\'s turn, that player may flip a coin. If heads, that player searches their deck for a Pokémon, reveals it, and puts it into their hand. Then, that player shuffles their deck.';

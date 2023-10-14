@@ -7,6 +7,7 @@ const bibarel_1 = require("./bibarel");
 const cherens_care_1 = require("./cherens-care");
 const collapsed_stadium_1 = require("./collapsed-stadium");
 const double_turbo_energy_1 = require("./double-turbo-energy");
+const entei_v_1 = require("./entei-v");
 const lumineon_v_1 = require("./lumineon-v");
 const manaphy_1 = require("./manaphy");
 const raichu_v_1 = require("./raichu-v");
@@ -22,4 +23,5 @@ exports.setBrilliantStars = [
     new lumineon_v_1.LumineonV(),
     new raichu_v_1.RaichuV(),
     new cherens_care_1.CherensCare(),
+    new entei_v_1.EnteiV(),
 ];

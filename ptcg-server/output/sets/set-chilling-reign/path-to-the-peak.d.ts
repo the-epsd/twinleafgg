@@ -6,6 +6,8 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class PathToThePeak extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    set2: string;
+    setNumber: string;
     regulationMark: string;
     name: string;
     fullName: string;

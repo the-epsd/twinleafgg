@@ -39,6 +39,10 @@ export class Manaphy extends PokemonCard {
 
   public set: string = 'BRS';
 
+  public set2: string = 'brilliantstars';
+
+  public setNumber: string = '41';
+
   public name: string = 'Manaphy';
 
   public fullName: string = 'Manaphy BRS';

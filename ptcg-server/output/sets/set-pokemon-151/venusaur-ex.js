@@ -10,7 +10,8 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.POKEMON_ex];
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
+        this.evolvesFrom = 'Ivysaur';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 330;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
@@ -32,6 +33,8 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = '151';
+        this.set2 = '151';
+        this.setNumber = '3';
         this.name = 'Venusaur ex';
         this.fullName = 'Venusaur ex MEW 003';
     }

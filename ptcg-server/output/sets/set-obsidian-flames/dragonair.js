@@ -28,6 +28,8 @@ class Dragonair extends pokemon_card_1.PokemonCard {
                 text: 'Flip 2 coins. This attack does 70 damage for each heads.'
             }];
         this.set = 'OBF';
+        this.set2 = 'obsidianflames';
+        this.setNumber = '158';
         this.name = 'Dragonair';
         this.fullName = 'Dragonair OBF';
     }

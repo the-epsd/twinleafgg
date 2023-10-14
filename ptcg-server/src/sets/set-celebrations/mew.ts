@@ -43,6 +43,10 @@ export class Mew extends PokemonCard {
   ];
   
   public set: string = 'CEL';
+
+  public set2: string = 'celebrations';
+
+  public setNumber: string = '11';
   
   public name: string = 'Mew';
   

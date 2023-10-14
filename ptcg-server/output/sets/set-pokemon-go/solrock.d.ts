@@ -24,6 +24,8 @@ export declare class Solrock extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly SUN_ENERGY_MARKER = "SUN_ENERGY_MARKER";

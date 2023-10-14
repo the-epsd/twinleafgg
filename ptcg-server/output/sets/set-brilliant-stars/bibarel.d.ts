@@ -27,6 +27,8 @@ export declare class Bibarel extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly INDUSTRIOUS_INCISORS_MARKER = "INDUSTRIOUS_INCISORS_MARKER";

@@ -26,6 +26,8 @@ export declare class ArceusVSTAR extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly VSTAR_MARKER = "VSTAR_MARKER";

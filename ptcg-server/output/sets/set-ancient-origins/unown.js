@@ -31,7 +31,7 @@ class Unown extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'AOR';
         this.name = 'Unown';
-        this.fullName = 'Unown AOR';
+        this.fullName = 'AOR_030_R_EN';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

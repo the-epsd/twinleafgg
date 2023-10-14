@@ -51,6 +51,10 @@ export class KricketuneV extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '6';
+
   public name: string = 'Kricketune V';
 
   public fullName: string = 'Kricketune V BST 006';

@@ -41,6 +41,8 @@ class LevelBall extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BST';
+        this.set2 = 'battlestyles';
+        this.setNumber = '129';
         this.regulationMark = 'E';
         this.name = 'Level Ball';
         this.fullName = 'Level Ball BST';

@@ -29,6 +29,8 @@ class Yveltal extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'FST';
+        this.set2 = 'fusionstrike';
+        this.setNumber = '175';
         this.name = 'Yveltal';
         this.fullName = 'Yveltal FST';
     }

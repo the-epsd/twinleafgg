@@ -41,6 +41,10 @@ export class Oricorio extends PokemonCard {
 
   public set: string = 'FST';
 
+  public set2: string = 'fusionstrike';
+
+  public setNumber: string = '42';
+
   public name: string = 'Oricorio';
 
   public fullName: string = 'Oricorio FST';

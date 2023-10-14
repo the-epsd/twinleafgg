@@ -12,6 +12,10 @@ export class VitalityBand extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '197';
+
   public regulationMark = 'G';
 
   public name: string = 'Vitality Band';

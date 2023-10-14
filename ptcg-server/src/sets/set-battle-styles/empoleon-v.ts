@@ -41,9 +41,13 @@ export class EmpoleonV extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '40';
+
   public name: string = 'Empoleon V';
 
-  public fullName: string = 'Empoleon V BST 040';
+  public fullName: string = 'Empoleon V BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -40,6 +40,10 @@ export class GalarianMoltres extends PokemonCard {
 
   public set: string = 'EVS';
 
+  public set2: string = 'evolvingskies';
+
+  public setNumber: string = '93';
+
   public name: string = 'Galarian Moltres';
 
   public fullName: string = 'Galarian Moltres EVS';

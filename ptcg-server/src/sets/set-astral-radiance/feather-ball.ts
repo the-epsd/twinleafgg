@@ -15,6 +15,10 @@ export class FeatherBall extends TrainerCard {
 
   public set: string = 'ASR';
 
+  public set2: string = 'astralradiance';
+
+  public setNumber: string = '141';
+
   public name: string = 'Feather Ball';
 
   public fullName: string = 'Feather Ball ASR';

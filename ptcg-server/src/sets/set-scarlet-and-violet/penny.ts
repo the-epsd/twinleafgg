@@ -57,6 +57,10 @@ export class Penny extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '183';
+
   public name: string = 'Penny';
 
   public fullName: string = 'Penny SVI';

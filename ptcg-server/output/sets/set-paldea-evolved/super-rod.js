@@ -47,6 +47,8 @@ class SuperRod extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'PAL';
+        this.set2 = 'paldeaevolved';
+        this.setNumber = '188';
         this.name = 'Super Rod';
         this.fullName = 'Super Rod PAL';
         this.text = 'Shuffle 3 in any combination of Pokemon and basic Energy cards from ' +

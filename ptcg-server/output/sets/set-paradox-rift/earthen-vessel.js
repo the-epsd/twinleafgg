@@ -55,6 +55,8 @@ class EarthenVessel extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'G';
         this.set = 'PAR';
+        this.set2 = 'ancientroar';
+        this.setNumber = '60';
         this.name = 'Earthen Vessel';
         this.fullName = 'Earthen Vessel PAR';
         this.text = 'You can play this card only if you discard another card from your hand.' +

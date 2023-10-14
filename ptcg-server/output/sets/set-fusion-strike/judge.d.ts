@@ -6,6 +6,8 @@ import { TrainerType } from '../../game/store/card/card-types';
 export declare class Judge extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    set2: string;
+    setNumber: string;
     regulationMark: string;
     name: string;
     fullName: string;

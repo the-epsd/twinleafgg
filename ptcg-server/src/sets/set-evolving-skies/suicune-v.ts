@@ -42,6 +42,10 @@ export class SuicuneV extends PokemonCard {
 
   public set: string = 'BRS';
 
+  public set2: string = 'evolvingskies';
+
+  public setNumber: string = '31';
+
   public name: string = 'Suicune V';
 
   public fullName: string = 'Suicune V BRS';

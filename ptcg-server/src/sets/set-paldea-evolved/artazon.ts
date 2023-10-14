@@ -66,6 +66,10 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 export class Artazon extends TrainerCard {
 
   public regulationMark = 'G';
+
+  public set2: string = 'paldeaevolved';
+
+  public setNumber: string = '171';
   
   trainerType = TrainerType.STADIUM;
   set = 'PAL';

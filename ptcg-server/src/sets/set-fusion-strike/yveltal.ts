@@ -36,6 +36,10 @@ export class Yveltal extends PokemonCard {
 
   public set: string = 'FST';
 
+  public set2: string = 'fusionstrike';
+
+  public setNumber: string = '175';
+
   public name: string = 'Yveltal';
 
   public fullName: string = 'Yveltal FST';

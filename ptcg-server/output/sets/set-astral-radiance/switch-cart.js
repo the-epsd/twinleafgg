@@ -43,6 +43,8 @@ class SwitchCart extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'F';
         this.set = 'ASR';
+        this.set2 = 'astralradiance';
+        this.setNumber = '154';
         this.name = 'Switch Cart';
         this.fullName = 'Switch Cart ASR';
         this.text = 'Switch your Active Pokemon with 1 of your Benched Pokemon.';

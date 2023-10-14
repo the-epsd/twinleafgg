@@ -30,6 +30,8 @@ export declare class Pidgeotex extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly QUICK_SEARCH_MARKER = "QUICK_SEARCH_MARKER";

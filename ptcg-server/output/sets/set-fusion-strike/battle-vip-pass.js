@@ -10,6 +10,8 @@ class BattleVIPPass extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'FST';
+        this.set2 = 'fusionstrike';
+        this.setNumber = '225';
         this.regulationMark = 'E';
         this.name = 'Battle VIP Pass';
         this.fullName = 'Battle VIP Pass FST';

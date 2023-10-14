@@ -32,6 +32,8 @@ class DrapionV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
+        this.set2 = 'lostorigin';
+        this.setNumber = '118';
         this.name = 'Drapion V';
         this.fullName = 'Drapion V LOR';
     }

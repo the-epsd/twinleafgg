@@ -57,6 +57,8 @@ class Raihan extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'EVS';
+        this.set2 = 'evolvingskies';
+        this.setNumber = '152';
         this.regulationMark = 'E';
         this.name = 'Raihan';
         this.fullName = 'Raihan EVS';

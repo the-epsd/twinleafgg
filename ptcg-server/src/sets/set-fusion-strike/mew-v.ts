@@ -37,6 +37,10 @@ export class MewV extends PokemonCard {
 
   public set: string = 'FST';
 
+  public set2: string = 'fusionstrike';
+
+  public setNumber: string = '113';
+
   public name: string = 'Mew V';
 
   public fullName: string = 'Mew V FST 113';

@@ -8,6 +8,8 @@ class LightningEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.LIGHTNING];
         this.set = 'SVE';
+        this.set2 = 'smpromo';
+        this.setNumber = '131';
         this.name = 'Lightning Energy';
         this.fullName = 'Lightning Energy SVE';
     }

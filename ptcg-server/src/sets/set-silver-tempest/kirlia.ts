@@ -42,6 +42,10 @@ export class Kirlia extends PokemonCard {
 
   public set: string = 'SIT';
 
+  public set2: string = 'silvertempest';
+
+  public setNumber: string = '68';
+
   public name: string = 'Kirlia';
 
   public fullName: string = 'Kirlia SIT';

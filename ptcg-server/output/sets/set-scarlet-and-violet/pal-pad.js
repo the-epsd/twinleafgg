@@ -37,6 +37,8 @@ class PalPad extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '182';
         this.name = 'Pal Pad';
         this.fullName = 'Pal Pad SVI';
         this.text = 'Shuffle up to 2 Supporter cards from your discard pile into' +

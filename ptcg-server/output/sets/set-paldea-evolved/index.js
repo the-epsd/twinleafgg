@@ -15,6 +15,8 @@ const wattrel_1 = require("./wattrel");
 const iono_1 = require("./iono");
 const jet_energy_1 = require("./jet-energy");
 const squawkabilly_ex_1 = require("./squawkabilly-ex");
+const choice_belt_1 = require("./choice-belt");
+const superior_energy_retrieval_1 = require("./superior-energy-retrieval");
 exports.setPaldeaEvolved = [
     new artazon_1.Artazon(),
     new delivery_drone_1.DeliveryDrone(),
@@ -30,4 +32,6 @@ exports.setPaldeaEvolved = [
     new bravery_charm_1.BraveyCharm(),
     new jet_energy_1.JetEnergy(),
     new squawkabilly_ex_1.Squawkabillyex(),
+    new choice_belt_1.ChoiceBelt(),
+    new superior_energy_retrieval_1.SuperiorEnergyRetrieval(),
 ];

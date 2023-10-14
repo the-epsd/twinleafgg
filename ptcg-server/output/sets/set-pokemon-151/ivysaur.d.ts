@@ -5,6 +5,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export declare class Ivysaur extends PokemonCard {
     regulationMark: string;
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
@@ -25,6 +26,8 @@ export declare class Ivysaur extends PokemonCard {
         effect: undefined;
     })[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
 }

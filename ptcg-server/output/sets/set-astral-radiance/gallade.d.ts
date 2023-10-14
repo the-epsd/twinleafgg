@@ -29,6 +29,8 @@ export declare class Gallade extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly BUDDY_CATCH_MARKER = "BUDDY_CATCH_MARKER";

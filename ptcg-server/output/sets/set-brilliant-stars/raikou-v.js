@@ -34,6 +34,8 @@ class RaikouV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BRS';
+        this.set2 = 'brilliantstars';
+        this.setNumber = '48';
         this.name = 'Raikou V';
         this.fullName = 'Raikou V BRS';
         this.FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';

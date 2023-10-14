@@ -39,6 +39,10 @@ export class Froslassex extends PokemonCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'ragingsurf';
+
+  public setNumber: string = '1';
+
   public name: string = 'Froslass ex';
 
   public fullName: string = 'Froslass ex PAR';

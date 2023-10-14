@@ -41,6 +41,10 @@ export class Bidoof extends PokemonCard {
 
   public set: string = 'CRZ';
 
+  public set2: string = 'crownzenith';
+
+  public setNumber: string = '111';
+
   public name: string = 'Bidoof';
 
   public fullName: string = 'Bidoof CRZ';

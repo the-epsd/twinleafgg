@@ -32,6 +32,8 @@ class RaichuV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BRS';
+        this.set2 = 'brilliantstars';
+        this.setNumber = '45';
         this.name = 'Raichu V';
         this.fullName = 'Raichu V BRS';
     }

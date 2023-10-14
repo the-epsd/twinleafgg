@@ -12,6 +12,8 @@ import { Venusaurex } from './venusaur-ex';
 import { Zapdosex } from './zapdos-ex';
 import { Wartortle } from './wartortle';
 import { Kangaskhanex } from './kangaskhan-ex';
+import { Venonat } from './venonat';
+import { Venomoth } from './venomoth';
 export const setPokemon151: Card[] = [
   new Alakazamex(),
   new Bulbasaur(),
@@ -26,4 +28,6 @@ export const setPokemon151: Card[] = [
   new Zapdosex(),
   new Mewex(),
   new Kangaskhanex(),
+  new Venonat(),
+  new Venomoth(),
 ];

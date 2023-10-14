@@ -34,6 +34,8 @@ class IronValiantex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
+        this.set2 = 'futureflash';
+        this.setNumber = '38';
         this.name = 'Iron Valiant ex';
         this.fullName = 'Iron Valiant ex PAR';
         this.TACHYON_BITS_MARKER = 'TACHYON_BITS_MARKER';

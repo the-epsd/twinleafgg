@@ -14,6 +14,8 @@ class CollapsedStadium extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.regulationMark = 'F';
         this.set = 'BRS';
+        this.set2 = 'brilliantstars';
+        this.setNumber = '137';
         this.name = 'Collapsed Stadium';
         this.fullName = 'Collapsed Stadium BRS 137';
         this.text = 'Each player can’t have more than 4 Benched Pokémon. ' +

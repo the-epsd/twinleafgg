@@ -40,6 +40,10 @@ export class RadiantGardevoir extends PokemonCard {
 
   public set: string = 'LOR';
 
+  public set2: string = 'lostorigin';
+
+  public setNumber: string = '69';
+
   public name: string = 'Radiant Gardevoir';
 
   public fullName: string = 'Radiant Gardevoir LOR';

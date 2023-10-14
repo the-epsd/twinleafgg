@@ -77,6 +77,10 @@ export class Flamigo extends PokemonCard {
 
   public set: string = 'PAL';
 
+  public set2: string = 'paldeaevolved';
+
+  public setNumber: string = '170';
+
   public name: string = 'Flamigo';
 
   public fullName: string = 'Flamigo PAL';

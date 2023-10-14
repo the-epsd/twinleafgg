@@ -43,6 +43,10 @@ export class Flaaffy extends PokemonCard {
 
   public set: string = 'EVS';
 
+  public set2: string = 'evolvingskies';
+
+  public setNumber: string = '55';
+
   public name: string = 'Flaaffy';
 
   public fullName: string = 'Flaaffy EVS';

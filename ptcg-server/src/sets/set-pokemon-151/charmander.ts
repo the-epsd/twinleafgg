@@ -47,6 +47,10 @@ export class Charmander extends PokemonCard {
 
   public set: string = '151';
 
+  public set2: string = '151';
+
+  public setNumber: string = '4';
+
   public name: string = 'Charmander';
 
   public fullName: string = 'Charmander MEW';

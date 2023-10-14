@@ -48,8 +48,8 @@ class Armarouge extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'G';
-        this.stage = card_types_1.Stage.BASIC;
-        //public evolvesFrom = 'Charcadet';
+        this.stage = card_types_1.Stage.STAGE_1;
+        this.evolvesFrom = 'Charcadet';
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 130;
         this.weakness = [{ type: card_types_1.CardType.WATER }];
@@ -69,6 +69,8 @@ class Armarouge extends pokemon_card_1.PokemonCard {
                 text: 'Your opponent\'s Active Pokémon is now Burned.'
             }];
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '41';
         this.name = 'Armarouge';
         this.fullName = 'Armarouge SVI';
     }

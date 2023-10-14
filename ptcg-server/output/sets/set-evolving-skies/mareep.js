@@ -27,6 +27,8 @@ class Mareep extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
+        this.set2 = 'evolvingskies';
+        this.setNumber = '54';
         this.name = 'Mareep';
         this.fullName = 'Mareep EVS';
     }

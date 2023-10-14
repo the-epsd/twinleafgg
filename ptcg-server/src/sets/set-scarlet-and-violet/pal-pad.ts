@@ -53,6 +53,10 @@ export class PalPad extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '182';
+
   public name: string = 'Pal Pad';
 
   public fullName: string = 'Pal Pad SVI';

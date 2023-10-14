@@ -41,6 +41,10 @@ export class Klefki extends PokemonCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '96';
+
   public name: string = 'Klefki';
 
   public fullName: string = 'Klefki SVI';

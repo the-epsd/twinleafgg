@@ -58,6 +58,8 @@ class SuperiorEnergyRetrieval extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'PAL';
+        this.set2 = 'paldeaevolved';
+        this.setNumber = '189';
         this.name = 'Superior Energy Retrieval';
         this.fullName = 'Superior Energy Retrieval PAL';
         this.text = 'You can use this card only if you discard 2 other cards from ' +

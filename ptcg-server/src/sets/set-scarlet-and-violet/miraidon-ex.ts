@@ -42,6 +42,10 @@ export class Miraidonex extends PokemonCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '81';
+
   public name: string = 'Miraidon ex';
 
   public fullName: string = 'Miraidon ex SVI';

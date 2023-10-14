@@ -56,6 +56,10 @@ export class EnergySearch extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '172';
+
   public name: string = 'Energy Search';
 
   public fullName: string = 'Energy Search SVI';

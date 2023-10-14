@@ -49,6 +49,10 @@ export class RadiantAlakazam extends PokemonCard {
 
   public set: string = 'SIT';
 
+  public set2: string = 'silvertempest';
+
+  public setNumber: string = '59';
+
   public name: string = 'Radiant Alakazam';
 
   public fullName: string = 'Radiant Alakazam SIT';

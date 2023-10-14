@@ -38,6 +38,8 @@ export class Eevee extends PokemonCard {
   ];
 
   public set: string = '151';
+  public set2: string = '151';
+  public setNumber: string = '133';
   public name: string = 'Eevee';
   public fullName: string = 'Eevee MEW';
 

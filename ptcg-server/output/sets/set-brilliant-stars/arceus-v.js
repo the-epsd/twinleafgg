@@ -32,6 +32,8 @@ class ArceusV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BRS';
+        this.set2 = 'brilliantstars';
+        this.setNumber = '122';
         this.name = 'Arceus V';
         this.fullName = 'Arceus V BRS';
     }

@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { DarkraiV } from './darkrai-v';
 import { DarkraiVSTAR } from './darkrai-vstar';
 import { Gallade } from './gallade';
+import { GardeniasVigor } from './gardenias-vigor';
 import { Irida } from './irida';
 import { OriginFormePalkiaV } from './origin-forme-palkia-v';
 import { OriginFormePalkiaVSTAR } from './origin-forme-palkia-vstar';
@@ -21,4 +22,5 @@ export const setAstralRadiance: Card[] = [
   new DarkraiV(),
   new DarkraiVSTAR(),
   new TrekkingShoes(),
+  new GardeniasVigor(),
 ];

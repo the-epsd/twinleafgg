@@ -40,6 +40,10 @@ export class Spiritomb extends PokemonCard {
 
   public set: string = 'PAL';
 
+  public set2: string = 'paldeaevolved';
+
+  public setNumber: string = '89';
+
   public name: string = 'Spiritomb';
 
   public fullName: string = 'Spiritomb PAL';

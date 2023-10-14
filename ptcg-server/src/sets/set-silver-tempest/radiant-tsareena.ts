@@ -42,6 +42,10 @@ export class RadiantTsareena extends PokemonCard {
 
   public set: string = 'SIT';
 
+  public set2: string = 'silvertempest';
+
+  public setNumber: string = '16';
+
   public name: string = 'Radiant Tsareena';
 
   public fullName: string = 'Radiant Tsareena SIT';

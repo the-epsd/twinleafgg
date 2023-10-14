@@ -44,6 +44,10 @@ export class DarkraiVSTAR extends PokemonCard {
 
   public set: string = 'ASR';
 
+  public set2: string = 'astralradiance';
+
+  public setNumber: string = '99';
+
   public name: string = 'Darkrai VSTAR';
 
   public fullName: string = 'Darkrai VSTAR ASR';

@@ -15,6 +15,8 @@ class FeatherBall extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'F';
         this.set = 'ASR';
+        this.set2 = 'astralradiance';
+        this.setNumber = '141';
         this.name = 'Feather Ball';
         this.fullName = 'Feather Ball ASR';
         this.text = 'Search your deck for 1 Pokemon with no retreat cost, ' +

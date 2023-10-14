@@ -9,6 +9,7 @@ class Ivysaur extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.stage = card_types_1.Stage.STAGE_1;
+        this.evolvesFrom = 'Bulbasaur';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 100;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
@@ -32,6 +33,8 @@ class Ivysaur extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = '151';
+        this.set2 = '151';
+        this.setNumber = '2';
         this.name = 'Ivysaur';
         this.fullName = 'Ivysaur MEW 002';
     }

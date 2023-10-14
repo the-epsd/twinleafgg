@@ -20,9 +20,9 @@ import { UltraBall } from './ultra-ball';
 import { Penny } from './penny';
 import { BeachCourt } from './beach-court';
 import { PokemonCatcher } from './pokemon-catcher';
-import { ChoiceBelt } from './choice-belt';
 import { VitalityBand } from './vitality-band';
 import { DefianceBand } from './defiance-band';
+import { EnergyRetrieval } from './energy-retrieval';
 export const setScarletAndViolet: Card[] = [
   new Armarouge(),
   new Gardevoirex(),
@@ -45,7 +45,7 @@ export const setScarletAndViolet: Card[] = [
   new Penny(),
   new BeachCourt(),
   new PokemonCatcher(),
-  new ChoiceBelt(),
   new VitalityBand(),
   new DefianceBand(),
+  new EnergyRetrieval(),
 ];

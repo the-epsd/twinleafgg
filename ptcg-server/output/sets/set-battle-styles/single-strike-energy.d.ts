@@ -9,6 +9,8 @@ export declare class SingleStrikeEnergy extends EnergyCard {
     provides: CardType[];
     energyType: EnergyType;
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     text: string;

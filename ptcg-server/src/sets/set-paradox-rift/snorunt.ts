@@ -26,6 +26,10 @@ export class Snorunt extends PokemonCard {
 
   public set: string = 'PAR';
 
+  public set2: string = 'ragingsurf';
+
+  public setNumber: string = '5';
+
   public name: string = 'Snorunt';
 
   public fullName: string = 'Snorunt PAR';

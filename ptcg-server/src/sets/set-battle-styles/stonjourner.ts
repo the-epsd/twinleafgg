@@ -67,6 +67,10 @@ export class Stonjourner extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '84';
+
   public name: string = 'Stonjourner';
 
   public fullName: string = 'Stonjourner BST';

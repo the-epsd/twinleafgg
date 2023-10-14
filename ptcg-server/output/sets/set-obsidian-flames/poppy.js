@@ -12,6 +12,8 @@ class Poppy extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'OBF';
+        this.set2 = 'obsidianflames';
+        this.setNumber = '193';
         this.name = 'Poppy';
         this.fullName = 'Poppy OBF';
         this.text = 'Move up to 2 Energy from 1 of your Pokémon to another ' +

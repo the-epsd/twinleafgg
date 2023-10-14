@@ -40,6 +40,10 @@ export class DrapionV extends PokemonCard {
 
   public set: string = 'LOR';
 
+  public set2: string = 'lostorigin';
+
+  public setNumber: string = '118';
+
   public name: string = 'Drapion V';
 
   public fullName: string = 'Drapion V LOR';

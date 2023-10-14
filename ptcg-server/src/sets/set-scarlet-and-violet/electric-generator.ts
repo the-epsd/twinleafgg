@@ -14,6 +14,10 @@ export class ElectricGenerator extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '170';
+
   public name: string = 'Electric Generator';
 
   public fullName: string = 'Electric Generator SVI';

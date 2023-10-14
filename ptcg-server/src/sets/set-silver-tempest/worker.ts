@@ -14,6 +14,10 @@ export class Worker extends TrainerCard {
 
   public set: string = 'SIT';
 
+  public set2: string = 'silvertempest';
+
+  public setNumber: string = '167';
+
   public regulationMark = 'F';
 
   public name: string = 'Worker';

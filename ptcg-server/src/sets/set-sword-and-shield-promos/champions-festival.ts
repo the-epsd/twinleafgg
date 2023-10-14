@@ -11,6 +11,8 @@ import { PlayerType } from '../../game/store/actions/play-card-action';
 export class ChampionsFestival extends TrainerCard {
   trainerType = TrainerType.STADIUM;
   set = 'SWSH';
+  public set2: string = 'swshpromos';
+  public setNumber: string = '296';
   name = 'Champion\'s Festival';
   fullName = 'Champion\'s Festival SWSH296';
   text = 'Once during each player\'s turn, if that player has ' + 

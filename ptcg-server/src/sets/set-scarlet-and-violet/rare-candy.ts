@@ -123,6 +123,10 @@ export class RareCandy extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '191';
+
   public name: string = 'Rare Candy';
 
   public fullName: string = 'Rare Candy SVI';

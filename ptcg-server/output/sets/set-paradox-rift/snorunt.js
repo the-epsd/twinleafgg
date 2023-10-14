@@ -20,6 +20,8 @@ class Snorunt extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
+        this.set2 = 'ragingsurf';
+        this.setNumber = '5';
         this.name = 'Snorunt';
         this.fullName = 'Snorunt PAR';
     }

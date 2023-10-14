@@ -43,6 +43,10 @@ export class Zapdosex extends PokemonCard {
 
   public set: string = '151';
 
+  public set2: string = '151';
+
+  public setNumber: string = '145';
+
   public name: string = 'Zapdos ex';
 
   public fullName: string = 'Zapdos ex MEW';

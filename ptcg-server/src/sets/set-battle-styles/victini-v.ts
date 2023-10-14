@@ -41,6 +41,10 @@ export class VictiniV extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '21';
+
   public name: string = 'Victini V';
 
   public fullName: string = 'Victini V BST 021';

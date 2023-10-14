@@ -16,6 +16,8 @@ class ExpShare extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '174';
         this.name = 'Exp Share';
         this.fullName = 'Exp Share SVI';
         this.text = 'When your Active Pokemon is Knocked Out by damage from an opponent\'s ' +

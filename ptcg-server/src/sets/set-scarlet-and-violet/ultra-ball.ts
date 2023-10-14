@@ -89,6 +89,10 @@ export class UltraBall extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '196';
+
   public name: string = 'Ultra Ball';
 
   public fullName: string = 'Ultra Ball SVI';

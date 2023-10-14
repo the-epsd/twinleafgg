@@ -49,6 +49,10 @@ export class RadiantGreninja extends PokemonCard {
 
   public set: string = 'ASR';
 
+  public set2: string = 'astralradiance';
+
+  public setNumber: string = '46';
+
   public name: string = 'Radiant Greninja';
 
   public fullName: string = 'Radiant Greninja ASR';

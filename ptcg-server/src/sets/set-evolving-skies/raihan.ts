@@ -86,6 +86,10 @@ export class Raihan extends TrainerCard {
 
   public set: string = 'EVS';
 
+  public set2: string = 'evolvingskies';
+
+  public setNumber: string = '152';
+
   public regulationMark = 'E';
 
   public name: string = 'Raihan';

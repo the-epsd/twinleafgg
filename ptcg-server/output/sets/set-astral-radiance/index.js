@@ -4,6 +4,7 @@ exports.setAstralRadiance = void 0;
 const darkrai_v_1 = require("./darkrai-v");
 const darkrai_vstar_1 = require("./darkrai-vstar");
 const gallade_1 = require("./gallade");
+const gardenias_vigor_1 = require("./gardenias-vigor");
 const irida_1 = require("./irida");
 const origin_forme_palkia_v_1 = require("./origin-forme-palkia-v");
 const origin_forme_palkia_vstar_1 = require("./origin-forme-palkia-vstar");
@@ -22,4 +23,5 @@ exports.setAstralRadiance = [
     new darkrai_v_1.DarkraiV(),
     new darkrai_vstar_1.DarkraiVSTAR(),
     new trekking_shoes_1.TrekkingShoes(),
+    new gardenias_vigor_1.GardeniasVigor(),
 ];

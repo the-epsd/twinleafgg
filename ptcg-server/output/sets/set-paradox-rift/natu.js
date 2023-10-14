@@ -22,6 +22,8 @@ class Natu extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
+        this.set2 = 'startersetterastalmewtwoex';
+        this.setNumber = '4';
         this.name = 'Natu';
         this.fullName = 'Natu PAR';
     }

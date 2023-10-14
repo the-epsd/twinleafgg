@@ -41,6 +41,8 @@ class Penny extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'G';
         this.set = 'SVI';
+        this.set2 = 'scarletviolet';
+        this.setNumber = '183';
         this.name = 'Penny';
         this.fullName = 'Penny SVI';
         this.text = 'Put 1 of your Basic Pokémon and all attached cards into your hand.';

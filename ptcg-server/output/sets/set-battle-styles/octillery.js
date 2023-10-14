@@ -61,6 +61,8 @@ class Octillery extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
+        this.set2 = 'battlestyles';
+        this.setNumber = '37';
         this.name = 'Octillery';
         this.fullName = 'Octillery BST 037';
     }

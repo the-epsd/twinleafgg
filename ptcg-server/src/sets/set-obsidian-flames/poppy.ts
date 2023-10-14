@@ -15,6 +15,10 @@ export class Poppy extends TrainerCard {
 
   public set: string = 'OBF';
 
+  public set2: string = 'obsidianflames';
+
+  public setNumber: string = '193';
+
   public name: string = 'Poppy';
 
   public fullName: string = 'Poppy OBF';

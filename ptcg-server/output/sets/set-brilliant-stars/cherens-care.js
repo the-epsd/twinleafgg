@@ -41,6 +41,8 @@ class CherensCare extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'F';
         this.set = 'BRS';
+        this.set2 = 'brilliantstars';
+        this.setNumber = '134';
         this.name = 'Cheren\'s Care';
         this.fullName = 'Cheren\'s Care BRS';
         this.text = 'Put 1 of your Basic Pokémon and all attached cards into your hand.';

@@ -41,6 +41,10 @@ export class Lunatone extends PokemonCard {
 
   public set: string = 'PGO';
 
+  public set2: string = 'pokemongo';
+
+  public setNumber: string = '34';
+
   public name: string = 'Lunatone';
 
   public fullName: string = 'Lunatone PGO';

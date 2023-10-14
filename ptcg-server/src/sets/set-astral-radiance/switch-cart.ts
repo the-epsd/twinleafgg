@@ -62,6 +62,10 @@ export class SwitchCart extends TrainerCard {
 
   public set: string = 'ASR';
 
+  public set2: string = 'astralradiance';
+
+  public setNumber: string = '154';
+
   public name: string = 'Switch Cart';
 
   public fullName: string = 'Switch Cart ASR';

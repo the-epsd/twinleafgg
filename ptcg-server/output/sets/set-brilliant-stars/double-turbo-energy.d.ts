@@ -6,6 +6,8 @@ export declare class DoubleTurboEnergy extends EnergyCard {
     provides: CardType[];
     energyType: EnergyType;
     set: string;
+    set2: string;
+    setNumber: string;
     regulationMark: string;
     name: string;
     fullName: string;

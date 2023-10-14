@@ -34,6 +34,8 @@ class VictiniVMAX extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
+        this.set2 = 'battlestyles';
+        this.setNumber = '22';
         this.name = 'Victini VMAX';
         this.fullName = 'Victini VMAX BST 022';
     }

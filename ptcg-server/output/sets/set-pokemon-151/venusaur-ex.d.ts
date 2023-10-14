@@ -6,6 +6,7 @@ export declare class Venusaurex extends PokemonCard {
     regulationMark: string;
     tags: CardTag[];
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
@@ -25,6 +26,8 @@ export declare class Venusaurex extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

@@ -35,8 +35,10 @@ class GalarianMoltesV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'CRE';
-        this.name = 'Galarian Moltes V';
-        this.fullName = 'Galarian Moltes V CRE';
+        this.set2 = 'chillingreign';
+        this.setNumber = '97';
+        this.name = 'Galarian Moltres V';
+        this.fullName = 'Galarian Moltres V CRE';
         this.DIREFLAME_WINGS_MARKER = 'DIREFLAME_WINGS_MARKER';
     }
     reduceEffect(store, state, effect) {

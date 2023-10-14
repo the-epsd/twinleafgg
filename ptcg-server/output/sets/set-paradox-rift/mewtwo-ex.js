@@ -31,6 +31,8 @@ class Mewtwoex extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'PAR';
+        this.set2 = 'startersetterastalmewtwoex';
+        this.setNumber = '1';
         this.name = 'Mewtwo ex';
         this.fullName = 'Mewtwo ex PAR';
     }

@@ -73,6 +73,10 @@ export class Arven extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '166';
+
   public name: string = 'Arven';
 
   public fullName: string = 'Arven SVI';

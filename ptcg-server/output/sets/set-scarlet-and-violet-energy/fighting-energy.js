@@ -8,6 +8,8 @@ class FightingEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.FIGHTING];
         this.set = 'SVE';
+        this.set2 = 'smpromo';
+        this.setNumber = '133';
         this.name = 'Fighting Energy';
         this.fullName = 'Fighting Energy SVE';
     }

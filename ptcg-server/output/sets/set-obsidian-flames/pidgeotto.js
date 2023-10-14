@@ -21,6 +21,8 @@ class Pidgeotto extends pokemon_card_1.PokemonCard {
                 text: '' },
         ];
         this.set = 'OBF';
+        this.set2 = 'obsidianflames';
+        this.setNumber = '163';
         this.name = 'Pidgeotto';
         this.fullName = 'Pidgeotto OBF';
     }

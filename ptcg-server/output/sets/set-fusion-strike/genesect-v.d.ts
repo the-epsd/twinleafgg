@@ -28,6 +28,8 @@ export declare class GenesectV extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly FUSION_STRIKE_SYSTEM_MARKER = "FUSION_STRIKE_SYSTEM_MARKER";

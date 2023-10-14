@@ -35,6 +35,10 @@ export class Alakazamex extends PokemonCard {
 
   public set: string = '151';
 
+  public set2: string = '151';
+
+  public setNumber: string = '65';
+
   public name: string = 'Alakazam ex';
 
   public fullName: string = 'Alakazam ex MEW 065';

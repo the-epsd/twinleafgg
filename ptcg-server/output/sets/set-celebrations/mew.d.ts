@@ -29,6 +29,8 @@ export declare class Mew extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly MYSTERIOUS_TAIL_MARKER = "MYSTERIOUS_TAIL_MARKER";

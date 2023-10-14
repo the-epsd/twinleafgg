@@ -9,7 +9,8 @@ export class Venusaurex extends PokemonCard {
   public regulationMark = 'G';
   
   public tags = [ CardTag.POKEMON_ex ];
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
+  public evolvesFrom = 'Ivysaur';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 330;
   public weakness = [{ type: CardType.FIRE }];
@@ -31,6 +32,8 @@ export class Venusaurex extends PokemonCard {
     }
   ];
   public set: string = '151';
+  public set2: string = '151';
+  public setNumber: string = '3';
   public name: string = 'Venusaur ex';
   public fullName: string = 'Venusaur ex MEW 003';
   

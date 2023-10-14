@@ -57,6 +57,10 @@ export class CherensCare extends TrainerCard {
 
   public set: string = 'BRS';
 
+  public set2: string = 'brilliantstars';
+
+  public setNumber: string = '134';
+
   public name: string = 'Cheren\'s Care';
 
   public fullName: string = 'Cheren\'s Care BRS';

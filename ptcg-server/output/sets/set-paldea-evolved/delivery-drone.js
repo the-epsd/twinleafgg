@@ -38,6 +38,8 @@ class DeliveryDrone extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'PAL';
+        this.set2 = 'paldeaevolved';
+        this.setNumber = '178';
         this.name = 'Delivery Drone';
         this.fullName = 'Delivery Drone PAL 178';
         this.text = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' +

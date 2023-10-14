@@ -5,8 +5,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
@@ -17,6 +15,10 @@ export class DefianceBand extends TrainerCard {
   public regulationMark = 'G';
 
   public set: string = 'SVI';
+
+  public set2: string = 'scarletviolet';
+
+  public setNumber: string = '169';
 
   public name: string = 'Defiance Band';
 
@@ -36,7 +38,7 @@ export class DefianceBand extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+        return state;
       }
 
       player.marker.addMarker(this.DEFIANCE_BAND_MARKER, this);

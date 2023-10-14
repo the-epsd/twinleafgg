@@ -35,6 +35,10 @@ export class TapuKokoVMAX extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '51';
+
   public name: string = 'Tapu Koko VMAX';
 
   public fullName: string = 'Tapu Koko VMAX BST 051';

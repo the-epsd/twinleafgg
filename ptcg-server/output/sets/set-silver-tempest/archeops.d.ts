@@ -29,6 +29,8 @@ export declare class Archeops extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly PRIMAL_TURBO_MARKER = "PRIMAL_TURBO_MARKER";

@@ -7,6 +7,10 @@ export class FightingEnergy extends EnergyCard {
 
   public set: string = 'SVE';
 
+  public set2: string = 'smpromo';
+
+  public setNumber: string = '133';
+
   public name = 'Fighting Energy';
 
   public fullName = 'Fighting Energy SVE';

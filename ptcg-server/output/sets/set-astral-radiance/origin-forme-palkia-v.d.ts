@@ -19,6 +19,8 @@ export declare class OriginFormePalkiaV extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly HYDRO_BREAK_MARKER = "HYDRO_BREAK_MARKER";

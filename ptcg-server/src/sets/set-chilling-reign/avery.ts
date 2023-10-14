@@ -13,6 +13,10 @@ export class Avery extends TrainerCard {
 
   public set: string = 'CRE';
 
+  public set2: string = 'chillingreign';
+
+  public setNumber: string = '130';
+
   public regulationMark = 'E';
 
   public name: string = 'Avery';

@@ -43,6 +43,10 @@ export class Baxcalibur extends PokemonCard {
 
   public set: string = 'PAL';
 
+  public set2: string = 'paldeaevolved';
+
+  public setNumber: string = '60';
+
   public name: string = 'Baxcalibur';
 
   public fullName: string = 'Baxcalibur PAL';

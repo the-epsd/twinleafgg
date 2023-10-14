@@ -78,6 +78,10 @@ export class Sableye extends PokemonCard {
 
   public set: string = 'LOR';
 
+  public set2: string = 'lostorigin';
+
+  public setNumber: string = '70';
+
   public name: string = 'Sableye';
 
   public fullName: string = 'Sableye LOR';

@@ -24,6 +24,8 @@ export declare class GalarianMoltesV extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly DIREFLAME_WINGS_MARKER = "DIREFLAME_WINGS_MARKER";

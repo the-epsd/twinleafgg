@@ -42,6 +42,10 @@ export class FlappleV extends PokemonCard {
 
   public set: string = 'BST';
 
+  public set2: string = 'battlestyles';
+
+  public setNumber: string = '18';
+
   public name: string = 'Flapple V';
 
   public fullName: string = 'Flapple V BST 018';

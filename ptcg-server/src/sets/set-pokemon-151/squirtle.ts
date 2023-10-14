@@ -41,6 +41,10 @@ export class Squirtle extends PokemonCard {
 
   public set = '151';
 
+  public set2: string = '151';
+
+  public setNumber: string = '7';
+
   public name = 'Squirtle';
 
   public fullName = 'Squirtle MEW';
