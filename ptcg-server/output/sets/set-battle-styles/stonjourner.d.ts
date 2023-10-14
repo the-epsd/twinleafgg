@@ -18,7 +18,7 @@ export declare class Stonjourner extends PokemonCard {
         cost: CardType[];
         damage: number;
         text: string;
-        effect: (store: StoreLike, state: State, effect: AttackEffect) => void;
+        effect: (store: StoreLike, state: State, effect: AttackEffect) => State;
     }[];
     set: string;
     name: string;

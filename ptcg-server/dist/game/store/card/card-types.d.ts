@@ -8,11 +8,13 @@ export declare enum CardTag {
     POKEMON_VSTAR = "VSTAR",
     ACE_SPEC = "ACE_SPEC",
     RADIANT = "RADIANT",
+    TEAM_PLASMA = "TEAM_PLASMA",
     FUSION_STRIKE = "FUSION_STRIKE",
     SINGLE_STRIKE = "SINGLE_STRIKE",
     RAPID_STRIKE = "RAPID_STRIKE",
     POKEMON_ex = "ex",
-    FUTURE = "Future"
+    FUTURE = "Future",
+    ANCIENT = "Ancient"
 }
 export declare enum SuperType {
     NONE = 0,
@@ -68,8 +70,9 @@ export declare enum SpecialCondition {
     BURNED = 4
 }
 export declare enum Format {
-    STANDARD = 0,
-    EXPANDED = 1,
-    UNLIMITED = 2,
-    RETRO = 3
+    NONE = 0,
+    STANDARD = 1,
+    EXPANDED = 2,
+    UNLIMITED = 3,
+    RETRO = 4
 }

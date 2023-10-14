@@ -14,8 +14,8 @@ export const config = {
         avatarMinSize: 64,
         avatarMaxSize: 512,
         replayFileSize: 512 * 1024,
-        rateLimitCount: 10,
-        rateLimitTime: 60 * 60 * 1000 // How long the user should be banned
+        rateLimitCount: 50,
+        rateLimitTime: 0 // How long the user should be banned
     },
     storage: {
         type: 'mysql',
@@ -35,7 +35,7 @@ export const config = {
         // If you wish to disable this feature set IntervalCount to 0
         rankingDecraseRate: 0.95,
         rankingDecraseTime: 24 * 60 * 60 * 1000,
-        rankingDecreaseIntervalCount: 4,
+        rankingDecreaseIntervalCount: 0,
         // Deletes matches older than `keepMatchTike` from the database, to keep it small.
         // If you wish to disable this feature set IntervalCount to 0
         keepMatchTime: 31 * 24 * 60 * 60 * 1000,
@@ -47,7 +47,7 @@ export const config = {
     },
     bots: {
         // Default password for bot user
-        defaultPassword: '',
+        defaultPassword: 'bot',
         // Delay between every action that bot is making
         actionDelay: 2500,
         // Simulate matches every X ticks of the scheduler

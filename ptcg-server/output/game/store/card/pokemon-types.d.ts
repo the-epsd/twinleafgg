@@ -27,7 +27,7 @@ export interface Power {
     name: string;
     powerType: PowerType;
     text: string;
-    effect?: (store: StoreLike, state: State, effect: PowerEffect) => void;
+    effect?: (store: StoreLike, state: State, effect: PowerEffect) => State;
     useWhenInPlay?: boolean;
     useFromHand?: boolean;
     useFromDiscard?: boolean;

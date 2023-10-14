@@ -3,7 +3,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { TAKE_X_MORE_PRIZE_CARDS, WAS_ATTACK_USED, YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK } from '../../game/store/prefabs/prefabs';
 
 export class IronHandsex extends PokemonCard {
 
@@ -23,13 +23,13 @@ export class IronHandsex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Arm Spike',
+      name: 'Arm Press',
       cost: [CardType.COLORLESS],
       damage: 160,
       text: ''
     },
     {
-      name: 'Extreme Amplifier',
+      name: 'Amp You Very Much',
       cost: [CardType.COLORLESS],
       damage: 120,
       text: 'If your opponent\'s Pokemon is Knocked Out by damage from this attack, take I more Prize card.'
@@ -44,10 +44,10 @@ export class IronHandsex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1] && effect instanceof KnockOutEffect) {
-
-      effect.prizeCount += 1;
-      return state;
+    if(WAS_ATTACK_USED(effect, 1, this)){
+      if(YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK(effect, state)){
+        return TAKE_X_MORE_PRIZE_CARDS(effect, state);
+      }
     }
     return state;
   }

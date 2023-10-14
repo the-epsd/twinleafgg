@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Bulbasaur = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const prefabs_1 = require("../../game/store/effect-factories/prefabs");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Bulbasaur extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);

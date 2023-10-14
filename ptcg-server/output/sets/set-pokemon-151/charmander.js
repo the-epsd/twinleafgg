@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Charmander = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const prefabs_1 = require("../../game/store/effect-factories/prefabs");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Charmander extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -20,7 +20,14 @@ class Charmander extends pokemon_card_1.PokemonCard {
                 damage: 0,
                 text: 'Discard a Stadium in play.',
                 effect: (store, state, effect) => {
-                    prefabs_1.DISCARD_STADIUM_IN_PLAY(state);
+                    console.log('Entering effect function');
+                    try {
+                        // DISCARD_A_STADIUM_CARD_IN_PLAY(state);
+                        console.log('destroying a stadium:');
+                    }
+                    catch (error) {
+                        console.error('Error when discarding a stadium:', error);
+                    }
                 }
             },
             {
@@ -34,6 +41,12 @@ class Charmander extends pokemon_card_1.PokemonCard {
         this.set = '151';
         this.name = 'Charmander';
         this.fullName = 'Charmander MEW';
+    }
+    reduceEffect(store, state, effect) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
+            prefabs_1.DISCARD_A_STADIUM_CARD_IN_PLAY(state);
+        }
+        return state;
     }
 }
 exports.Charmander = Charmander;

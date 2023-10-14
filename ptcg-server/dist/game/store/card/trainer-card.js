@@ -1,11 +1,11 @@
 import { Card } from './card';
-import { SuperType, TrainerType } from './card-types';
+import { Format, SuperType, TrainerType } from './card-types';
 export class TrainerCard extends Card {
     constructor() {
         super(...arguments);
         this.superType = SuperType.TRAINER;
         this.trainerType = TrainerType.ITEM;
-        this.format = [];
+        this.format = Format.NONE;
         this.text = '';
     }
 }

@@ -4,7 +4,7 @@ exports.Charizardex = void 0;
 /* eslint-disable indent */
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const prefabs_1 = require("../../game/store/effect-factories/prefabs");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Charizardex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -25,8 +25,9 @@ class Charizardex extends pokemon_card_1.PokemonCard {
                     'does 100 more damage.',
                 effect: (store, state, effect) => {
                     if (prefabs_1.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect, this)) {
-                        effect.damage += 100;
+                        prefabs_1.THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 100);
                     }
+                    return state;
                 }
             },
             {

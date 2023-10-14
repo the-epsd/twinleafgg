@@ -31,6 +31,7 @@ class Stonjourner extends pokemon_card_1.PokemonCard {
                         const player = game_1.StateUtils.findOwner(state, cardList);
                         cardList.moveTo(player.discard);
                     }
+                    return state;
                 }
             },
             {
@@ -52,6 +53,7 @@ class Stonjourner extends pokemon_card_1.PokemonCard {
                     }
                     effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
                     console.log('marker added');
+                    return state;
                 }
             }
         ];

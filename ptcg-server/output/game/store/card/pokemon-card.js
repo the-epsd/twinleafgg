@@ -25,15 +25,19 @@ class PokemonCard extends card_1.Card {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect) {
             for (let i = 0; i < this.attacks.length; i++) {
-                if (effect.attack === this.attacks[i] && effect.attack.effect !== undefined) {
-                    effect.attack.effect(store, state, effect);
+                const attackEffect = this.attacks[i].effect;
+                console.log(this.attacks[i].name);
+                if (effect.attack.name === this.attacks[i].name && attackEffect !== undefined) {
+                    console.log(attackEffect);
+                    console.log('we made it to handling!');
+                    attackEffect(store, state, effect);
                 }
             }
         }
         else if (effect instanceof game_effects_1.PowerEffect) {
             for (let i = 0; i < this.powers.length; i++) {
-                if (effect.power === this.powers[i] && effect.power.effect !== undefined) {
-                    effect.power.effect(store, state, effect);
+                if (effect.power.name === this.powers[i].name && effect.power.effect !== undefined) {
+                    return effect.power.effect(store, state, effect);
                 }
             }
         }

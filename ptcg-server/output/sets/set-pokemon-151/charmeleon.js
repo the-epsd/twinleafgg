@@ -3,9 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Charmeleon = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const game_1 = require("../../game");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Charmeleon extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -30,15 +28,7 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
                 damage: 70,
                 text: 'Discard an Energy from this Pokémon.',
                 effect: (store, state, effect) => {
-                    const player = effect.player;
-                    const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
-                    state = store.reduceEffect(state, checkProvidedEnergy);
-                    state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
-                        const cards = (energy || []).map(e => e.card);
-                        const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
-                        discardEnergy.target = player.active;
-                        return store.reduceEffect(state, discardEnergy);
-                    });
+                    prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.COLORLESS, 1);
                 }
             }
         ];

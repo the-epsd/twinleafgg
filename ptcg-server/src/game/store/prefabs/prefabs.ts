@@ -1,0 +1,134 @@
+import { PokemonCard } from '../card/pokemon-card';
+import { State, StateUtils } from '../..';
+import { Effect } from '../effects/effect';
+import { AttackEffect, PowerEffect, KnockOutEffect } from '../effects/game-effects';
+import { HealTargetEffect, PutDamageEffect, DiscardCardsEffect } from '../effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../effects/check-effects';
+import { StoreLike, Card, ChooseEnergyPrompt, ChoosePokemonPrompt, PlayerType, SlotType, GameMessage } from '../..';
+import { CardType } from '../card/card-types';
+
+/**
+ * 
+ * A basic effect for checking the use of attacks.
+ * @returns whether or not a specific attack was used.
+ */
+export function WAS_ATTACK_USED(effect: Effect, index: number, user: PokemonCard): effect is AttackEffect{
+  return effect instanceof AttackEffect && effect.attack === user.attacks[index];
+}
+
+/**
+ * 
+ * A basic effect for checking the use of abilites.
+ * @returns whether or not a specific ability was used.
+ */
+export function WAS_ABILITY_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect{
+  return effect instanceof PowerEffect && effect.power === user.powers[index];
+}
+
+/**
+ * 
+ * A basic effect for checking whether or not a passive ability gets activated.
+ * @returns whether or not a passive ability was activated.
+ */
+export function PASSIVE_ABILITY_ACTIVATED(effect: Effect, user: PokemonCard){
+  return effect instanceof KnockOutEffect && effect.target.cards.includes(user);
+}
+
+/**
+ * 
+ * @param state is the game state.
+ * @returns the game state after discarding a stadium card in play.
+ */
+export function DISCARD_A_STADIUM_CARD_IN_PLAY(state: State){
+  const stadiumCard = StateUtils.getStadiumCard(state);
+  if (stadiumCard !== undefined) {
+  
+    const cardList = StateUtils.findCardList(state, stadiumCard);
+    const player = StateUtils.findOwner(state, cardList);
+    cardList.moveTo(player.discard);
+  }
+}
+
+export function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackEffect, store: StoreLike, type: CardType, amount: number){
+  const player = effect.player;
+  const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+  state = store.reduceEffect(state, checkProvidedEnergy);
+
+  const energyList: CardType[] = [];
+  for(let i = 0; i < amount; i++){
+    energyList.push(type);
+  }
+
+  state = store.prompt(state, new ChooseEnergyPrompt(
+    player.id,
+    GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+    checkProvidedEnergy.energyMap,
+    energyList,
+    { allowCancel: false }
+  ), energy => {
+    const cards: Card[] = (energy || []).map(e => e.card);
+    const discardEnergy = new DiscardCardsEffect(effect, cards);
+    discardEnergy.target = player.active;
+    return store.reduceEffect(state, discardEnergy);
+  });
+  return state;
+}
+
+export function FLIP_IF_HEADS(){
+  console.log('Heads again!');
+}
+
+export function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: StoreLike, state: State, damage: number){
+  effect.damage += 100;
+  return state;
+}
+
+export function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, damage: number){
+  const player = effect.player;
+  const healTargetEffect = new HealTargetEffect(effect, damage);
+  healTargetEffect.target = player.active;
+  state = store.reduceEffect(state, healTargetEffect);
+  return state; 
+}
+
+export function THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect: AttackEffect, user: PokemonCard){
+  // TODO: Would like to check if Pokemon has damage without needing the effect
+  const player = effect.player;
+  const source = player.active;
+  
+  // Check if source Pokemon has damage
+  const damage = source.damage;
+  return damage > 0;
+}
+
+export function YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK(effect: Effect, state: State): effect is KnockOutEffect{
+  // TODO: this shouldn't work for attacks with damage counters, but I think it will
+  return effect instanceof KnockOutEffect;
+}
+
+export function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State){
+  effect.prizeCount += 1;
+  return state;
+}
+
+export function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State){
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  const targets = opponent.bench.filter(b => b.cards.length > 0);
+  if (targets.length === 0) {
+    return state;
+  }
+
+  return store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+    PlayerType.TOP_PLAYER,
+    [SlotType.BENCH],
+  ), selected => {
+    const target = selected[0];
+    const damageEffect = new PutDamageEffect(effect, damage);
+    damageEffect.target = target;
+    store.reduceEffect(state, damageEffect);
+  });
+}

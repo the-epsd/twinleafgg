@@ -3,7 +3,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State   } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON, THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT } from '../../game/store/effect-factories/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON, THIS_ATTACK_DOES_X_MORE_DAMAGE, THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT } from '../../game/store/prefabs/prefabs';
 
 export class Charizardex extends PokemonCard {
 
@@ -32,8 +32,9 @@ export class Charizardex extends PokemonCard {
       'does 100 more damage.',
       effect: (store: StoreLike, state: State, effect: AttackEffect) => {
         if (THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect, this)) {
-          effect.damage += 100;
+          THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 100);
         }
+        return state;
       }
     },
     {

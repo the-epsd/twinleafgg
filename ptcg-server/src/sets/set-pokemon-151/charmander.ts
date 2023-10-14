@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DISCARD_STADIUM_IN_PLAY } from '../../game/store/effect-factories/prefabs';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../game/store/prefabs/prefabs';
 
 
 export class Charmander extends PokemonCard {
@@ -26,7 +27,13 @@ export class Charmander extends PokemonCard {
       damage: 0,
       text: 'Discard a Stadium in play.',
       effect: (store: StoreLike, state: State, effect: AttackEffect) => {
-        DISCARD_STADIUM_IN_PLAY(state);
+        console.log('Entering effect function');
+        try {
+          // DISCARD_A_STADIUM_CARD_IN_PLAY(state);
+          console.log('destroying a stadium:');
+        } catch (error) {
+          console.error('Error when discarding a stadium:', error);
+        }
       }
     },
     { 
@@ -43,5 +50,12 @@ export class Charmander extends PokemonCard {
   public name: string = 'Charmander';
 
   public fullName: string = 'Charmander MEW';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      DISCARD_A_STADIUM_CARD_IN_PLAY(state);
+    }
+    return state;
+  }
 
 }

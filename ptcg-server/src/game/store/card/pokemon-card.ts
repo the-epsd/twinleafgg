@@ -39,15 +39,19 @@ export abstract class PokemonCard extends Card {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect){
       for (let i = 0; i < this.attacks.length; i++) {
-        if (effect.attack === this.attacks[i] && effect.attack.effect !== undefined){
-          effect.attack.effect(store, state, effect);
+        const attackEffect = this.attacks[i].effect;
+        console.log(this.attacks[i].name);
+        if (effect.attack === this.attacks[i] && attackEffect !== undefined){
+          console.log(attackEffect);
+          console.log('we made it to handling!');
+          attackEffect(store, state, effect);
         }
       }
     }
     else if (effect instanceof PowerEffect){
-      for(let i = 0; i < this.powers.length; i++){
+      for (let i = 0; i < this.powers.length; i++){
         if (effect.power === this.powers[i] && effect.power.effect !== undefined){
-          effect.power.effect(store, state, effect);
+          return effect.power.effect(store, state, effect);
         }
       }
     }

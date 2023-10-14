@@ -1,10 +1,11 @@
 import { Card } from './card';
-import { SuperType, EnergyType } from './card-types';
+import { SuperType, EnergyType, Format } from './card-types';
 export class EnergyCard extends Card {
     constructor() {
         super(...arguments);
         this.superType = SuperType.ENERGY;
         this.energyType = EnergyType.BASIC;
+        this.format = Format.NONE;
         this.provides = [];
         this.text = '';
     }
