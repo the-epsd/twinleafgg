@@ -84,3 +84,6 @@ ptcg-server/database.sq3
 .DS_Store
 node_modules
 image_translation
+ptcg-server/package-lock.json
+ptcg-server/.nyc_output
+ptcg-server/node_modules
