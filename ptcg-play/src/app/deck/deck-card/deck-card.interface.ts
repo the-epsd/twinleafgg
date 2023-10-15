@@ -11,5 +11,5 @@ export interface DeckItem {
 }
 
 export interface LibraryItem extends DeckItem {
-  spec: SortableSpec<DeckItem, any>;
+    spec: SortableSpec<DeckItem, any>;
 }

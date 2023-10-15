@@ -73,15 +73,24 @@ export class RaichuV extends PokemonCard {
           ), selected => {
             const cards = selected || [];
             if (cards.length > 0) {
-    
-              const discardEnergy = new DiscardCardsEffect(effect, cards);
-              discardEnergy.target = target;
-              store.reduceEffect(state, discardEnergy);
-    
-              effect.damage = discardEnergy.cards.length * 60;
-            }
-          });
+
+              let totalDiscarded = 0; 
+
+              targets.forEach(target => {
+
+                const discardEnergy = new DiscardCardsEffect(effect, cards);
+                discardEnergy.target = target;
+
+                totalDiscarded += discardEnergy.cards.length;
+      
+                effect.damage = totalDiscarded * 60;
+
+                store.reduceEffect(state, discardEnergy);
+              });
+              return state;
+            }});
         });
+        return state;
       });
     }
     return state;

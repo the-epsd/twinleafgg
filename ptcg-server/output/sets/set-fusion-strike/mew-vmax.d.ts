@@ -24,6 +24,4 @@ export declare class MewVMAX extends PokemonCard {
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
-    private buildAttackList;
-    private checkAttack;
 }

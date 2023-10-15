@@ -44,12 +44,7 @@ class DrapionV extends pokemon_card_1.PokemonCard {
             if (effect instanceof check_effects_1.CheckAttackCostEffect) {
                 const player = effect.player;
                 const opponent = game_1.StateUtils.getOpponent(state, player);
-                const attack = player.active.getPokemonCard();
-                const cost = attack.attacks[0].cost;
-                // No cost to reduce
-                if (cost.length === 0) {
-                    return state;
-                }
+                const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
                 let wildStyleCount = 0;
                 if ((_b = (_a = opponent.active) === null || _a === void 0 ? void 0 : _a.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.tags.includes(card_types_2.CardTag.FUSION_STRIKE || card_types_2.CardTag.RAPID_STRIKE || card_types_2.CardTag.SINGLE_STRIKE)) {
                     wildStyleCount++;
@@ -59,10 +54,12 @@ class DrapionV extends pokemon_card_1.PokemonCard {
                     if ((_a = benchSpot.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_2.CardTag.FUSION_STRIKE || card_types_2.CardTag.RAPID_STRIKE || card_types_2.CardTag.SINGLE_STRIKE)) {
                         wildStyleCount++;
                     }
+                    const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(player.active);
+                    store.reduceEffect(state, checkPokemonTypeEffect);
+                    if (wildStyleCount > 0 && checkPokemonTypeEffect.cardTypes.includes(card_types_1.CardType.DARK) && index > 0) {
+                        effect.cost.splice(index, 1);
+                    }
                 });
-                const modifiedCost = new check_effects_1.CheckAttackCostEffect(player, this.attacks[0]);
-                modifiedCost.cost.splice(cost.length - wildStyleCount, wildStyleCount);
-                state = store.reduceEffect(state, modifiedCost);
             }
         }
         return state;

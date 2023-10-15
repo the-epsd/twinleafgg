@@ -6,16 +6,19 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { ApplyWeaknessEffect, AfterDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 
-function* useGenomeHacking(next: Function, store: StoreLike, state: State,
+function* useCrossFusionStrike(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  const pokemonCard = opponent.active.getPokemonCard();
+  const pokemonCard = player.bench[0].getPokemonCard() && PokemonCard.tags.includes(CardTag.FUSION_STRIKE);
+
+  
   
   if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
     return state;
   }
   
+
   let selected: any;
   yield store.prompt(state, new ChooseAttackPrompt(
     player.id,
@@ -58,9 +61,9 @@ export class MewVMAX extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_VMAX, CardTag.FUSION_STRIKE ];
 
+  public regulationMark = 'E';
+
   public stage: Stage = Stage.BASIC;
-  
-  //public evolvesFrom = 'Mew V';
 
   public cardType: CardType = CardType.PSYCHIC;
 
@@ -89,21 +92,16 @@ export class MewVMAX extends PokemonCard {
 
   public set: string = 'FST';
 
+  public set2: string = 'fusionstrike';
+
+  public setNumber: string = '114';
+
   public name: string = 'Mew VMAX';
 
   public fullName: string = 'Mew VMAX FST 114';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const generator = useGenomeHacking(() => generator.next(), store, state, effect);
-        return generator.next().value;
-      }
-    
-      return state;
-    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
@@ -123,6 +121,12 @@ export class MewVMAX extends PokemonCard {
     }
     
 
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const generator = useCrossFusionStrike(() => generator.next(), store, state, effect);
+      return generator.next().value;
+    }
+  
     return state;
   }
+  
 }

@@ -47,13 +47,19 @@ class RaichuV extends pokemon_card_1.PokemonCard {
                     { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { min: 1, allowCancel: false }), selected => {
                         const cards = selected || [];
                         if (cards.length > 0) {
-                            const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
-                            discardEnergy.target = target;
-                            store.reduceEffect(state, discardEnergy);
-                            effect.damage = discardEnergy.cards.length * 60;
+                            let totalDiscarded = 0;
+                            targets.forEach(target => {
+                                const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+                                discardEnergy.target = target;
+                                totalDiscarded += discardEnergy.cards.length;
+                                effect.damage = totalDiscarded * 60;
+                                store.reduceEffect(state, discardEnergy);
+                            });
+                            return state;
                         }
                     });
                 });
+                return state;
             });
         }
         return state;

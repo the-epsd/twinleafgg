@@ -29,7 +29,7 @@ export class MewV extends PokemonCard {
       'your Fusion Strike Pokémon. Then, shuffle your deck.'
     }, {
       name: 'Psychic Leap',
-      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 70,
       text: 'You may shuffle this Pokémon and all attached cards into your deck.'
     }
@@ -48,7 +48,7 @@ export class MewV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
   
       return store.prompt(state, new ConfirmPrompt(

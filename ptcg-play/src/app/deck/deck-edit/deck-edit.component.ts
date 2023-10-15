@@ -72,7 +72,7 @@ export class DeckEditComponent implements OnInit {
             card,
             count: 1,
             pane: DeckEditPane.DECK,
-            scanUrl: this.cardsBaseService.getScanUrl(card)
+            scanUrl: this.cardsBaseService.getScanUrl(card),
           };
           deckItems.push(itemMap[name]);
         }

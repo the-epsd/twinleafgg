@@ -6,10 +6,10 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-function* useGenomeHacking(next, store, state, effect) {
+function* useCrossFusionStrike(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
-    const pokemonCard = opponent.active.getPokemonCard();
+    const pokemonCard = player.bench[0].getPokemonCard() && pokemon_card_1.PokemonCard.tags.includes(card_types_1.CardTag.FUSION_STRIKE);
     if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
         return state;
     }
@@ -42,8 +42,8 @@ class MewVMAX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VMAX, card_types_1.CardTag.FUSION_STRIKE];
+        this.regulationMark = 'E';
         this.stage = card_types_1.Stage.BASIC;
-        //public evolvesFrom = 'Mew V';
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 310;
         this.weakness = [{ type: card_types_1.CardType.DARK }];
@@ -65,17 +65,12 @@ class MewVMAX extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'FST';
+        this.set2 = 'fusionstrike';
+        this.setNumber = '114';
         this.name = 'Mew VMAX';
         this.fullName = 'Mew VMAX FST 114';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                const generator = useGenomeHacking(() => generator.next(), store, state, effect);
-                return generator.next().value;
-            }
-            return state;
-        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
@@ -88,6 +83,10 @@ class MewVMAX extends pokemon_card_1.PokemonCard {
                 const afterDamage = new attack_effects_1.AfterDamageEffect(effect, damage);
                 state = store.reduceEffect(state, afterDamage);
             }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const generator = useCrossFusionStrike(() => generator.next(), store, state, effect);
+            return generator.next().value;
         }
         return state;
     }

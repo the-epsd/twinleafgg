@@ -1,10 +1,55 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage,
-  PlayerType, ChooseAttackPrompt, Player } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage,
+  ChooseAttackPrompt, Attack, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
-import { ApplyWeaknessEffect, AfterDamageEffect } from '../../game/store/effects/attack-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { ApplyWeaknessEffect, AfterDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+
+function* useCrossFusionStrike(next: Function, store: StoreLike, state: State,
+  effect: AttackEffect): IterableIterator<State> {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+  
+  const pokemonCard = player.bench[0].getPokemonCard() && PokemonCard.tags.includes(CardTag.FUSION_STRIKE);
+  
+  let selected: any;
+  yield store.prompt(state, new ChooseAttackPrompt(
+    player.id,
+    GameMessage.CHOOSE_ATTACK_TO_COPY,
+    [ pokemonCard ],
+    { allowCancel: false }
+  ), result => {
+    selected = result;
+    next();
+  });
+  
+  const attack: Attack | null = selected;
+  
+  if (attack === null) {
+    return state;
+  }
+  
+  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
+    name: player.name,
+    attack: attack.name
+  });
+  
+  // Perform attack
+  const attackEffect = new AttackEffect(player, opponent, attack);
+  store.reduceEffect(state, attackEffect);
+  
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+  
+  if (attackEffect.damage > 0) {
+    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+    state = store.reduceEffect(state, dealDamage);
+  }
+  
+  return state;
+}
 
 export class MewVMAX extends PokemonCard {
 
@@ -50,34 +95,7 @@ export class MewVMAX extends PokemonCard {
   public fullName: string = 'Mew VMAX FST 114';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const pokemonCard = player.active.getPokemonCard();
 
-      if (pokemonCard !== this) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      // Build cards and blocked for Choose Attack prompt
-      const { pokemonCards, blocked } = this.buildAttackList(state, store, player);
-
-      // No attacks to copy
-      if (pokemonCards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_COPY,
-        pokemonCards,
-        { allowCancel: true, blocked }
-      ), attack => {
-        if (attack !== null) {
-          const useAttackEffect = new UseAttackEffect(player, attack);
-          store.reduceEffect(state, useAttackEffect);
-        }
-      });
-    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
@@ -97,45 +115,12 @@ export class MewVMAX extends PokemonCard {
     }
     
 
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const generator = useCrossFusionStrike(() => generator.next(), store, state, effect);
+      return generator.next().value;
+    }
+  
     return state;
   }
-
-  private buildAttackList(
-    state: State, store: StoreLike, player: Player
-  ): { pokemonCards: PokemonCard[], blocked: { index: number, attack: string }[] } {
-
-    const pokemonCards: PokemonCard[] = [];
-    const blocked: { index: number, attack: string }[] = [];
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-      this.checkAttack(state, store, player, card, pokemonCards, blocked);
-    });
-
-    return { pokemonCards, blocked };
-  }
-
-  private checkAttack(state: State, store: StoreLike, player: Player,
-    card: PokemonCard, pokemonCards: PokemonCard[],
-    blocked: { index: number, attack: string }[]
-  ) {
-    {
-      // Only include Pokemon V cards
-      if (!card.tags.includes(CardTag.FUSION_STRIKE)) {
-        return;
-      }
-      // No need to include this Mew VMAX to the list
-      if (card === this) {
-        return;
-      }
-
-      const attacks = card.attacks.filter(attack => {
-      });
-      const index = pokemonCards.length;
-      pokemonCards.push(card);
-      card.attacks.forEach(attack => {
-        if (!attacks.includes(attack)) {
-          blocked.push({ index, attack: attack.name });
-        }
-      });
-    }
-  }
+  
 }

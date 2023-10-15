@@ -8,13 +8,14 @@
     </ng-template>
 </dnd-preview>
 
+
 <cdk-virtual-scroll-viewport class="ptcg-deck-edit-pane"
   [dropTarget]="libraryTarget"
   ptcgDropHighlight [ptcgDropHighlightVisible]="libraryHighlight$ | async">
   <ptcg-deck-card
     *cdkVirtualFor="let card of (cards | filterCards: toolbarFilter)"
     [dndSortableExternal]="card.spec" #ext="dndSortableExternal" [source]="ext.source"
-    (cardClick)="showCardInfo(card)"
+    (cardClick)="onLibraryCardClick(card)"
     [card]="card">
   </ptcg-deck-card>
 </cdk-virtual-scroll-viewport>
@@ -31,16 +32,17 @@
     <ng-template dndSortableTemplate let-context>
       <!-- dndSortableRender configures a DragSource for you, but you have to attach it. -->
       <ptcg-deck-card
-        [dndSortableRender]="context"
+        [dndSortableRender]="context" 
         #render="dndSortableRender"
         [ptcgCardPlaceholder]="render.isDragging$"
         [source]="render.source"
         showCardCount="true"
-        (cardClick)="showCardInfo(render.data)"
+        (cardClick)="onDeckCardClick(card)"
         (countClick)="setCardCount(render.data)"
         [card]="render.data">
       </ptcg-deck-card>
     </ng-template>
   </dnd-sortable-list>
 
+  
 </div>

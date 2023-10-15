@@ -92,31 +92,37 @@ export class ChienPaoex extends PokemonCard {
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH], 
-        { allowCancel: false }
+        { min: 1, max: 6, allowCancel: false }
       ), targets => {
-        if (targets && targets.length > 0) {
-
-          const target = targets[0];
+        targets.forEach(target => {
 
           return store.prompt(state, new ChooseCardsPrompt(
             player.id,
             GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
             target, // Card source is target Pokemon
             { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-            { min: 1, allowCancel: false }
+            { allowCancel: false }
           ), selected => {
             const cards = selected || [];
             if (cards.length > 0) {
-    
-              const discardEnergy = new DiscardCardsEffect(effect, cards);
-              discardEnergy.target = player.active;
-              store.reduceEffect(state, discardEnergy);
-    
-              effect.damage = discardEnergy.cards.length * 60;
-            }
-          });
 
-        }
+              let totalDiscarded = 0; 
+
+              targets.forEach(target => {
+
+                const discardEnergy = new DiscardCardsEffect(effect, cards);
+                discardEnergy.target = target;
+
+                totalDiscarded += discardEnergy.cards.length;
+      
+                effect.damage = totalDiscarded * 60;
+
+                store.reduceEffect(state, discardEnergy);
+              });
+              return state;
+            }});
+        });
+        return state;
       });
     }
     return state;

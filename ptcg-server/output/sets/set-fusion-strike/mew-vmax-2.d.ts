@@ -4,6 +4,7 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class MewVMAX extends PokemonCard {
     tags: CardTag[];
+    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;
@@ -18,6 +19,8 @@ export declare class MewVMAX extends PokemonCard {
         text: string;
     }[];
     set: string;
+    set2: string;
+    setNumber: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

@@ -241,4 +241,14 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     this.deckTarget.unsubscribe();
   }
 
+    // deck-edit-panes.component.ts
+
+onDeckCardClick(card: DeckItem) {
+  this.removeCardFromDeck(card);
+}
+
+onLibraryCardClick(card: DeckItem) {
+  this.addCardToDeck(card);
+}
+
 }

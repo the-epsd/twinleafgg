@@ -3,7 +3,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag } from '../../game/store/card/card-types';
-import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
@@ -56,13 +56,7 @@ export class DrapionV extends PokemonCard {
       if (effect instanceof CheckAttackCostEffect) {
         const player = effect.player;
         const opponent = StateUtils.getOpponent(state, player);
-        const attack = player.active.getPokemonCard() as PokemonCard;
-        const cost = attack.attacks[0].cost;
-
-        // No cost to reduce
-        if (cost.length === 0) {
-          return state;
-        }
+        const index = effect.cost.indexOf(CardType.COLORLESS);
 
         let wildStyleCount = 0;
 
@@ -74,11 +68,16 @@ export class DrapionV extends PokemonCard {
           if (benchSpot.getPokemonCard()?.tags.includes(CardTag.FUSION_STRIKE || CardTag.RAPID_STRIKE || CardTag.SINGLE_STRIKE)) {
             wildStyleCount++;
           }
+
+          const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
+          store.reduceEffect(state, checkPokemonTypeEffect);
+
+          if (wildStyleCount > 0 && checkPokemonTypeEffect.cardTypes.includes(CardType.DARK) && index > 0) {
+            effect.cost.splice(index, 1);
+          }
+
         });
 
-        const modifiedCost = new CheckAttackCostEffect(player, this.attacks[0]);
-        modifiedCost.cost.splice(cost.length - wildStyleCount, wildStyleCount);
-        state = store.reduceEffect(state, modifiedCost);
 
       }
     }

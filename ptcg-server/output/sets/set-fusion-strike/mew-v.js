@@ -24,7 +24,7 @@ class MewV extends pokemon_card_1.PokemonCard {
                     'your Fusion Strike Pokémon. Then, shuffle your deck.'
             }, {
                 name: 'Psychic Leap',
-                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
                 damage: 70,
                 text: 'You may shuffle this Pokémon and all attached cards into your deck.'
             }
@@ -36,7 +36,7 @@ class MewV extends pokemon_card_1.PokemonCard {
         this.fullName = 'Mew V FST 113';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             return store.prompt(state, new game_1.ConfirmPrompt(player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
                 if (wantToUse) {
