@@ -11,13 +11,15 @@ function* useCrossFusionStrike(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   
-  const pokemonCard = player.bench[0].getPokemonCard() && PokemonCard.tags.includes(CardTag.FUSION_STRIKE);
-  
+  const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
+  const fusionStrike = benchPokemon.filter(card => card.tags.includes(CardTag.FUSION_STRIKE));
+
+
   let selected: any;
   yield store.prompt(state, new ChooseAttackPrompt(
     player.id,
     GameMessage.CHOOSE_ATTACK_TO_COPY,
-    [ pokemonCard ],
+    benchPokemon && fusionStrike,
     { allowCancel: false }
   ), result => {
     selected = result;
@@ -57,7 +59,9 @@ export class MewVMAX extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VMAX;
+
+  public evolvesFrom = 'Mew V';
 
   public cardType: CardType = CardType.PSYCHIC;
 

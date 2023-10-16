@@ -69,6 +69,7 @@ export class RaikouV extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       
       const player = effect.player;
+      //Already used this turn
       if (player.marker.hasMarker(this.FLEET_FOOTED_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -81,7 +82,7 @@ export class RaikouV extends PokemonCard {
       player.marker.addMarker(this.FLEET_FOOTED_MARKER, this);
     }
     if (effect instanceof EndTurnEffect) {
-
+      //Remove Fleet Footed Marker
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
         if (player instanceof RaikouV) {
           player.marker.removeMarker(this.FLEET_FOOTED_MARKER);
@@ -94,7 +95,7 @@ export class RaikouV extends PokemonCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+      //Get number of benched pokemon
       const playerBenched = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
       const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
       

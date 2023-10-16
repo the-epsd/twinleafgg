@@ -9,9 +9,10 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 function* useCrossFusionStrike(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
-    const pokemonCard = player.bench[0].getPokemonCard() && pokemon_card_1.PokemonCard.tags.includes(card_types_1.CardTag.FUSION_STRIKE);
+    const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
+    const fusionStrike = benchPokemon.filter(card => card.tags.includes(card_types_1.CardTag.FUSION_STRIKE));
     let selected;
-    yield store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, [pokemonCard], { allowCancel: false }), result => {
+    yield store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, benchPokemon && fusionStrike, { allowCancel: false }), result => {
         selected = result;
         next();
     });
@@ -40,7 +41,8 @@ class MewVMAX extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VMAX, card_types_1.CardTag.FUSION_STRIKE];
         this.regulationMark = 'E';
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.VMAX;
+        this.evolvesFrom = 'Mew V';
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 310;
         this.weakness = [{ type: card_types_1.CardType.DARK }];

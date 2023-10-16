@@ -33,7 +33,7 @@ class GenesectV extends pokemon_card_1.PokemonCard {
                 name: 'Techno Blast',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
                 damage: 210,
-                text: 'During your next turn, this Pokémon can’t attack. '
+                text: 'During your next turn, this Pokémon can\'t attack. '
             }
         ];
         this.set = 'FST';
@@ -42,9 +42,29 @@ class GenesectV extends pokemon_card_1.PokemonCard {
         this.name = 'Genesect V';
         this.fullName = 'Genesect V FST 185';
         this.FUSION_STRIKE_SYSTEM_MARKER = 'FUSION_STRIKE_SYSTEM_MARKER';
+        this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+        this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(_store, state, effect) {
         var _a, _b;
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+            effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('marker cleared');
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('second marker added');
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            // Check marker
+            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+                console.log('attack blocked');
+                throw new game_1.GameError(game_2.GameMessage.BLOCKED_BY_EFFECT);
+            }
+            effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+            console.log('marker added');
+        }
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
             player.marker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);

@@ -33,5 +33,7 @@ export declare class GenesectV extends PokemonCard {
     name: string;
     fullName: string;
     readonly FUSION_STRIKE_SYSTEM_MARKER = "FUSION_STRIKE_SYSTEM_MARKER";
+    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
+    readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     reduceEffect(_store: StoreLike, state: State, effect: Effect): State;
 }

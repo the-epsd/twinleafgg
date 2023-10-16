@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, ShuffleDeckPrompt, GameMessage, ConfirmPrompt } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, ShuffleDeckPrompt, GameMessage, ConfirmPrompt, AttachEnergyPrompt, EnergyCard, SlotType, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class MewV extends PokemonCard {
 
@@ -48,6 +49,36 @@ export class MewV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      // let fusionStrikePokemon: PokemonCard | null = null;
+      // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      //   if (card.tags.includes(CardTag.FUSION_STRIKE)) {
+      //     fusionStrikePokemon = card;
+      //   }
+      // });
+
+      return store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_CARDS,
+        player.deck,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE], 
+        { superType: SuperType.ENERGY },
+        { min: 0, max: 1, allowCancel: true }
+      ), transfers => {
+        transfers = transfers || [];
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          const energyCard = transfer.card as EnergyCard;
+          const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+          store.reduceEffect(state, attachEnergyEffect);
+        }
+        return state;
+      });
+    }
+  
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
   
@@ -62,17 +93,14 @@ export class MewV extends PokemonCard {
   
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
-            return state; 
+            return state;
           });
   
         } else {
           return state;
         }
       });
-  
     }
-  
     return state;
-  
   }
-} 
+}
