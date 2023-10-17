@@ -45,6 +45,9 @@
     <ptcg-badge>
       {{ 'TABLE_DISCARD_COUNT' | translate: { count: discardCount } }}
     </ptcg-badge>
+    <ptcg-badge>
+      {{ 'TABLE_LOSTZONE_COUNT' | translate: { count: lostzoneCount } }}
+    </ptcg-badge>
   </div>
 
   <ptcg-player-time class="ptcg-time-left" *ngIf="playerStats && timeLimit > 0"

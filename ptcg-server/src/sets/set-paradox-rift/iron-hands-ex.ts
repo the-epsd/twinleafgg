@@ -55,5 +55,4 @@ export class IronHandsex extends PokemonCard {
     }
     return state;
   }
-    
 }

@@ -1,3 +1,4 @@
+import { Power } from '../../..';
 import { Card } from './card';
 import { Format, SuperType, TrainerType } from './card-types';
 
@@ -11,4 +12,6 @@ export abstract class TrainerCard extends Card {
   public format: Format = Format.NONE;
 
   public text: string = '';
+
+  public powers: Power[] = [];
 }

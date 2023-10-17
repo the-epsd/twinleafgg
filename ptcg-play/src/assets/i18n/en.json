@@ -252,6 +252,7 @@
   "TABLE_CHOOSE_AVATAR": "Choose avatar",
   "TABLE_DECK_COUNT": "Deck: {{count}}",
   "TABLE_DISCARD_COUNT": "Discard: {{count}}",
+  "TABLE_LOSTZONE_COUNT": "Lost Zone: {{count}}",
   "TABLE_DISCONNECTED": "Disconnected",
   "TABLE_END_YOUR_TURN": "End your turn",
   "TABLE_ERROR_LOADING": "Error while loading the content.",

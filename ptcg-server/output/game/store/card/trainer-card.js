@@ -10,6 +10,7 @@ class TrainerCard extends card_1.Card {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.format = card_types_1.Format.NONE;
         this.text = '';
+        this.powers = [];
     }
 }
 exports.TrainerCard = TrainerCard;

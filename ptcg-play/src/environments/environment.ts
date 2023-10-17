@@ -5,10 +5,10 @@
 export const environment = {
   apiUrl: 'http://localhost:12021',
   timeout: 5000,
-  production: true,
+  production: false,
   apiVersion: 2,
   defaultPageSize: 50,
-  allowServerChange: false,
+  allowServerChange: true,
   refreshTokenInterval: 60 * 60 * 1000,
   enableImageCache: false,
   defaultLanguage: 'en',

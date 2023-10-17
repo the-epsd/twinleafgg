@@ -30,6 +30,7 @@ export class PlayerBarComponent implements OnChanges {
   public deckCount: number;
   public handCount: number;
   public discardCount: number;
+  public lostzoneCount: number;
   public name: string;
   public allowAvatarClick: boolean;
   public avatarName: string;
@@ -106,6 +107,7 @@ export class PlayerBarComponent implements OnChanges {
     this.deckCount = player.deck.cards.length;
     this.handCount = player.hand.cards.length;
     this.discardCount = player.discard.cards.length;
+    this.lostzoneCount = player.lostzone.cards.length;
     this.timeLimit = this.gameState.timeLimit;
     this.name = player.name;
     this.avatarName = player.avatarName;

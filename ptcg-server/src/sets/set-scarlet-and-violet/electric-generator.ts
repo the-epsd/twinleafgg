@@ -30,7 +30,6 @@ export class ElectricGenerator extends TrainerCard {
       const player = effect.player;
       const temp = new CardList();
   
-  
       player.deck.moveTo(temp, 5);
   
       // Check if any cards drawn are basic energy
@@ -40,59 +39,63 @@ export class ElectricGenerator extends TrainerCard {
   
       // If no energy cards were drawn, move all cards to deck
       if (energyCardsDrawn.length == 0) {
-
-        state = store.prompt(state, new ShowCardsPrompt(
+        
+        return store.prompt(state, new ShowCardsPrompt(
           player.id, 
           GameMessage.CARDS_SHOWED_BY_EFFECT,
           temp.cards
         ), () => {
-      
-          temp.cards.slice(0, 5).forEach(card => {
+          
+          temp.cards.forEach(card => {
             temp.moveCardTo(card, player.deck);
-      
-            state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-            });
           });
-          return state;
-        });
-        // Attach energy if drawn
-        if (energyCardsDrawn.length > 0) {
-        
-          // Prompt to attach energy if any were drawn
-          return store.prompt(state, new AttachEnergyPrompt(
-            player.id,
-            GameMessage.ATTACH_ENERGY_CARDS, 
-            temp, // Only show drawn energies
-            PlayerType.BOTTOM_PLAYER,
-            [SlotType.BENCH],
-            {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy'},
-            {min: 0, max: 2}
-          ), transfers => {
-      
-            // Attach energy based on prompt selection
-            if (transfers) {
-              for (const transfer of transfers) {
-                const target = StateUtils.getTarget(state, player, transfer.to);
-                temp.moveCardTo(transfer.card, target); // Move card to target
-              }
-              temp.cards.forEach(card => {
-                temp.moveCardTo(card, player.deck); // Move card to deck
-                state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-                  player.deck.applyOrder(order);
-                });
-                return state;
-              });
-              return state;
-            }
+          
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
             return state;
           });
-        }
-        return state;
+          
+        });
+        
+      } else {
+      
+        // Attach energy if drawn
+        return store.prompt(state, new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS, 
+          temp, // Only show drawn energies
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy'},
+          {min: 0, max: 2}
+        ), transfers => {
+  
+          // Attach energy based on prompt selection
+          if (transfers) {
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              temp.moveCardTo(transfer.card, target); // Move card to target
+            }
+            
+            temp.cards.forEach(card => {
+              temp.moveCardTo(card, player.deck); // Move remaining cards to deck
+            });
+            
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+              return state;
+            });
+            
+          }
+          
+          return state;
+          
+        });
+        
       }
-      return state;
+      
     }
+    
     return state;
   }
 }
-            
