@@ -30,5 +30,6 @@ export declare class Skwovet extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly NEST_STASH_MARKER = "NEST_STASH_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

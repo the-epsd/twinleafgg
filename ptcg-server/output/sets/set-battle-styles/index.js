@@ -29,6 +29,7 @@ const urn_of_vitality_1 = require("./urn-of-vitality");
 const escape_rope_1 = require("./escape-rope");
 const stonjourner_1 = require("./stonjourner");
 const single_strike_urshifu_vmax_1 = require("./single-strike-urshifu-vmax");
+const rapid_strike_energy_1 = require("./rapid-strike-energy");
 exports.setBattleStyles = [
     new bellsprout_1.Bellsprout(),
     new weepinbell_1.Weepinbell(),
@@ -58,4 +59,5 @@ exports.setBattleStyles = [
     new urn_of_vitality_1.UrnOfVitality(),
     new escape_rope_1.EscapeRope(),
     new stonjourner_1.Stonjourner(),
+    new rapid_strike_energy_1.RapidStrikeEnergy(),
 ];

@@ -13,7 +13,7 @@ function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     let cards = [];
-    let pokemons = 0;
+    let tools = 0;
     let trainers = 0;
     const blocked = [];
     player.deck.cards.forEach((c, index) => {
@@ -21,7 +21,7 @@ function* playCard(next, store, state, self, effect) {
             trainers += 1;
         }
         else if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL) {
-            pokemons += 1;
+            tools += 1;
         }
         else {
             blocked.push(index);
@@ -30,10 +30,10 @@ function* playCard(next, store, state, self, effect) {
     // We will discard this card after prompt confirmation
     // This will prevent unblocked supporter to appear in the discard pile
     effect.preventDefault = true;
-    const maxPokemons = Math.min(pokemons, 1);
+    const maxTools = Math.min(tools, 1);
     const maxTrainers = Math.min(trainers, 1);
-    const count = maxPokemons + maxTrainers;
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTrainers }), selected => {
+    const count = maxTools + maxTrainers;
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked }), selected => {
         cards = selected || [];
         next();
     });
@@ -56,9 +56,7 @@ class Arven extends trainer_card_1.TrainerCard {
         this.setNumber = '166';
         this.name = 'Arven';
         this.fullName = 'Arven SVI';
-        this.text = 'Search your deck for a W Pokemon and an Item ' +
-            'card, reveal them, and put them into your hand. ' +
-            'Then, shuffle your deck.';
+        this.text = 'Search your deck for an Item card and a Pokémon Tool card, reveal them, and put them into your hand. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

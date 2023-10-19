@@ -14,6 +14,8 @@ import { Wartortle } from './wartortle';
 import { Kangaskhanex } from './kangaskhan-ex';
 import { Venonat } from './venonat';
 import { Venomoth } from './venomoth';
+import { Doduo } from './doduo';
+import { Dodrio } from './dodrio';
 export const setPokemon151: Card[] = [
   new Alakazamex(),
   new Bulbasaur(),
@@ -30,4 +32,6 @@ export const setPokemon151: Card[] = [
   new Kangaskhanex(),
   new Venonat(),
   new Venomoth(),
+  new Doduo(),
+  new Dodrio(),
 ];

@@ -17,6 +17,8 @@ const jet_energy_1 = require("./jet-energy");
 const squawkabilly_ex_1 = require("./squawkabilly-ex");
 const choice_belt_1 = require("./choice-belt");
 const superior_energy_retrieval_1 = require("./superior-energy-retrieval");
+const frigibax_1 = require("./frigibax");
+const frigibax2_1 = require("./frigibax2");
 exports.setPaldeaEvolved = [
     new artazon_1.Artazon(),
     new delivery_drone_1.DeliveryDrone(),
@@ -34,4 +36,6 @@ exports.setPaldeaEvolved = [
     new squawkabilly_ex_1.Squawkabillyex(),
     new choice_belt_1.ChoiceBelt(),
     new superior_energy_retrieval_1.SuperiorEnergyRetrieval(),
+    new frigibax_1.Frigibax(),
+    new frigibax2_1.Frigibax2(),
 ];

@@ -15,6 +15,8 @@ import { JetEnergy } from './jet-energy';
 import { Squawkabillyex } from './squawkabilly-ex';
 import { ChoiceBelt } from './choice-belt';
 import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
+import { Frigibax } from './frigibax';
+import { Frigibax2 } from './frigibax2';
 export const setPaldeaEvolved: Card[] = [
   new Artazon(),
   new DeliveryDrone(),
@@ -32,4 +34,6 @@ export const setPaldeaEvolved: Card[] = [
   new Squawkabillyex(),
   new ChoiceBelt(),
   new SuperiorEnergyRetrieval(),
+  new Frigibax(),
+  new Frigibax2(),
 ];

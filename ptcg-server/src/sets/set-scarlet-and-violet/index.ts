@@ -23,6 +23,11 @@ import { PokemonCatcher } from './pokemon-catcher';
 import { VitalityBand } from './vitality-band';
 import { DefianceBand } from './defiance-band';
 import { EnergyRetrieval } from './energy-retrieval';
+import { Magnemite } from './magnemite';
+import { Magnezoneex } from './magnezone-ex';
+import { Mareep } from './mareep';
+import { Drifloon } from './drifloon';
+import { Magneton } from './magneton';
 export const setScarletAndViolet: Card[] = [
   new Armarouge(),
   new Gardevoirex(),
@@ -48,4 +53,9 @@ export const setScarletAndViolet: Card[] = [
   new VitalityBand(),
   new DefianceBand(),
   new EnergyRetrieval(),
+  new Magnemite(),
+  new Magnezoneex(),
+  new Mareep(),
+  new Drifloon(),
+  new Magneton(),
 ];

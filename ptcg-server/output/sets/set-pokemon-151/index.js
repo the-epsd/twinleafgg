@@ -16,6 +16,8 @@ const wartortle_1 = require("./wartortle");
 const kangaskhan_ex_1 = require("./kangaskhan-ex");
 const venonat_1 = require("./venonat");
 const venomoth_1 = require("./venomoth");
+const doduo_1 = require("./doduo");
+const dodrio_1 = require("./dodrio");
 exports.setPokemon151 = [
     new alakazam_ex_1.Alakazamex(),
     new bulbasaur_1.Bulbasaur(),
@@ -32,4 +34,6 @@ exports.setPokemon151 = [
     new kangaskhan_ex_1.Kangaskhanex(),
     new venonat_1.Venonat(),
     new venomoth_1.Venomoth(),
+    new doduo_1.Doduo(),
+    new dodrio_1.Dodrio(),
 ];

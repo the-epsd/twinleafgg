@@ -6,7 +6,7 @@ import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class JetEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public provides: CardType[] = [ CardType.COLORLESS ];
 
   public energyType = EnergyType.SPECIAL;
 

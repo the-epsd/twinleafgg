@@ -17,14 +17,14 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-  let pokemons = 0;
+  let tools = 0;
   let trainers = 0;
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
     if (c instanceof TrainerCard && c.trainerType === TrainerType.ITEM) {
       trainers += 1;
     } else if (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL) {
-      pokemons += 1;
+      tools += 1;
     } else {
       blocked.push(index);
     }
@@ -34,16 +34,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // This will prevent unblocked supporter to appear in the discard pile
   effect.preventDefault = true;
 
-  const maxPokemons = Math.min(pokemons, 1);
+  const maxTools = Math.min(tools, 1);
   const maxTrainers = Math.min(trainers, 1);
-  const count = maxPokemons + maxTrainers;
+  const count = maxTools + maxTrainers;
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { },
-    { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTrainers }
+    { min: 0, max: count, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();
@@ -65,6 +65,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 }
 
+
 export class Arven extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -82,9 +83,7 @@ export class Arven extends TrainerCard {
   public fullName: string = 'Arven SVI';
 
   public text: string =
-    'Search your deck for a W Pokemon and an Item ' +
-    'card, reveal them, and put them into your hand. ' +
-    'Then, shuffle your deck.';
+    'Search your deck for an Item card and a Pokémon Tool card, reveal them, and put them into your hand. Then, shuffle your deck.';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

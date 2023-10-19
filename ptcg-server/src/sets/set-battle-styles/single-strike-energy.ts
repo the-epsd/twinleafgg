@@ -6,8 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { GameError, GameMessage, PlayerType } from '../../game';
-import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { PlayerType } from '../../game';
 
 export class SingleStrikeEnergy extends EnergyCard {
 
@@ -40,15 +39,6 @@ export class SingleStrikeEnergy extends EnergyCard {
     'Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    // Cannot attach to other than Single Strike Pokemon
-    if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
-      const pokemon = effect.target;
-      if (!pokemon.getPokemonCard()?.tags.includes(CardTag.SINGLE_STRIKE)) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-      return state;
-    }
     
     // Provide energy when attached to Single Strike Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {

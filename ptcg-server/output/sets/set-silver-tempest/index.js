@@ -9,6 +9,7 @@ const lugia_v_1 = require("./lugia-v");
 const lugia_vstar_1 = require("./lugia-vstar");
 const radiant_alakazam_1 = require("./radiant-alakazam");
 const radiant_tsareena_1 = require("./radiant-tsareena");
+const regidrago_vstar_1 = require("./regidrago-vstar");
 const worker_1 = require("./worker");
 exports.setSilverTempest = [
     new kirlia_1.Kirlia(),
@@ -20,4 +21,5 @@ exports.setSilverTempest = [
     new archeops_1.Archeops(),
     new capturing_aroma_1.CapturingAroma(),
     new radiant_tsareena_1.RadiantTsareena(),
+    new regidrago_vstar_1.RegidragoVSTAR(),
 ];

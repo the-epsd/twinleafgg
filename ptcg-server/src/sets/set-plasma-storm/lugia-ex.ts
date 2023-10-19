@@ -62,40 +62,44 @@ export class LugiaEX extends PokemonCard {
           effect.damage = 0;
           return state;
         }
+
+
+        if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL && energyCard.name == 'Plasma Energy')
+
+          return store.prompt(state, new ChooseCardsPrompt(
+            player.id,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            player.active,
+            { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Plasma Energy'},
+            { min: 1, max: 1, allowCancel: false }
+          ), selected => {
+            cards = selected || [];
+            if (cards.length === 0) {
+              return;
+            }
+            player.active.moveCardsTo(cards, player.discard);
+          });
       });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.active,
-        { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Plasma Energy'},
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        cards = selected || [];
-        if (cards.length === 0) {
-          return;
+      // Overflow
+      if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
+        const player = effect.player;
+        const opponent = StateUtils.getOpponent(state, player);
+
+        // Do not activate between turns, or when it's not opponents turn.
+        if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+          return state;
         }
-        player.active.moveCardsTo(cards, player.discard);
-      });
-    }
 
-    // Overflow
-    if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+        // Lugia wasn't attacking
+        const pokemonCard = opponent.active.getPokemonCard();
+        if (pokemonCard !== this) {
+          return state;
+        }
 
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+        effect.prizeCount += 1;
         return state;
       }
-
-      // Lugia wasn't attacking
-      const pokemonCard = opponent.active.getPokemonCard();
-      if (pokemonCard !== this) {
-        return state;
-      }
-
-      effect.prizeCount += 1;
       return state;
     }
     return state;

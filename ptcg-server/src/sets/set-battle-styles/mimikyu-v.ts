@@ -7,6 +7,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PlayerType, PowerType, StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class MimikyuV extends PokemonCard {
 
@@ -61,38 +62,50 @@ export class MimikyuV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-  
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.TIME_CIRCLE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_TIME_CIRCLE_MARKER, this);
-      return state;
-    }
-  
-    if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
-      const player = StateUtils.getOpponent(state, effect.player);
-      player.marker.removeMarker(this.CLEAR_TIME_CIRCLE_MARKER, this);
-      player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        if (cardList.marker.hasMarker(this.TIME_CIRCLE_MARKER)) {
-          cardList.marker.removeMarker(this.TIME_CIRCLE_MARKER, this);
-        }
-      });
-      return state;
-    }
-  
-    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.TIME_CIRCLE_MARKER)) {
+      const player = StateUtils.findOwner(state, effect.target);
 
-      const sourcePokemon = effect.source.getPokemonCard();
-    
-      if (sourcePokemon !== this) {
-        effect.preventDefault = true; 
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
       }
-    
-      return state;
-    
-    }
   
+      if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+        const player = effect.player;
+        const opponent = StateUtils.getOpponent(state, player);
+        player.active.marker.addMarker(this.TIME_CIRCLE_MARKER, this);
+        opponent.marker.addMarker(this.CLEAR_TIME_CIRCLE_MARKER, this);
+        return state;
+      }
+  
+      if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
+        const player = StateUtils.getOpponent(state, effect.player);
+        player.marker.removeMarker(this.CLEAR_TIME_CIRCLE_MARKER, this);
+        player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+          if (cardList.marker.hasMarker(this.TIME_CIRCLE_MARKER)) {
+            cardList.marker.removeMarker(this.TIME_CIRCLE_MARKER, this);
+          }
+        });
+        return state;
+      }
+  
+      if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.TIME_CIRCLE_MARKER)) {
+
+        const sourcePokemon = effect.source.getPokemonCard();
+    
+        if (sourcePokemon !== this) {
+          effect.preventDefault = true; 
+        }
+    
+        return state;
+    
+      }
+  
+      return state;
+    }
     return state;
   }
 }

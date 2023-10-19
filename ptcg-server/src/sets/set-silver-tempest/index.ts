@@ -7,6 +7,7 @@ import { LugiaV } from './lugia-v';
 import { LugiaVSTAR } from './lugia-vstar';
 import { RadiantAlakazam } from './radiant-alakazam';
 import { RadiantTsareena } from './radiant-tsareena';
+import { RegidragoVSTAR } from './regidrago-vstar';
 import { Worker } from './worker';
 
 export const setSilverTempest: Card[] = [
@@ -19,4 +20,5 @@ export const setSilverTempest: Card[] = [
   new Archeops(),
   new CapturingAroma(),
   new RadiantTsareena(),
+  new RegidragoVSTAR(),
 ];

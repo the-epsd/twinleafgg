@@ -27,6 +27,7 @@ import { UrnOfVitality } from './urn-of-vitality';
 import { EscapeRope } from './escape-rope';
 import { Stonjourner } from './stonjourner';
 import { SingleStrikeUrshifuVMAX } from './single-strike-urshifu-vmax';
+import { RapidStrikeEnergy } from './rapid-strike-energy';
 
 export const setBattleStyles: Card[] = [
   new Bellsprout(),
@@ -57,4 +58,5 @@ export const setBattleStyles: Card[] = [
   new UrnOfVitality(),
   new EscapeRope(),
   new Stonjourner(),
+  new RapidStrikeEnergy(),
 ];

@@ -7,7 +7,6 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const game_1 = require("../../game");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class SingleStrikeEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -31,19 +30,11 @@ class SingleStrikeEnergy extends energy_card_1.EnergyCard {
             'Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        var _a, _b;
-        // Cannot attach to other than Single Strike Pokemon
-        if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard === this) {
-            const pokemon = effect.target;
-            if (!((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.SINGLE_STRIKE))) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-            }
-            return state;
-        }
+        var _a;
         // Provide energy when attached to Single Strike Pokemon
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const pokemon = effect.source;
-            if ((_b = pokemon.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.tags.includes(card_types_1.CardTag.SINGLE_STRIKE)) {
+            if ((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.SINGLE_STRIKE)) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.FIGHTING || card_types_1.CardType.DARK] });
             }
             return state;

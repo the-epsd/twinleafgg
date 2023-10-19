@@ -25,6 +25,11 @@ const pokemon_catcher_1 = require("./pokemon-catcher");
 const vitality_band_1 = require("./vitality-band");
 const defiance_band_1 = require("./defiance-band");
 const energy_retrieval_1 = require("./energy-retrieval");
+const magnemite_1 = require("./magnemite");
+const magnezone_ex_1 = require("./magnezone-ex");
+const mareep_1 = require("./mareep");
+const drifloon_1 = require("./drifloon");
+const magneton_1 = require("./magneton");
 exports.setScarletAndViolet = [
     new armarouge_1.Armarouge(),
     new gardevoir_ex_1.Gardevoirex(),
@@ -50,4 +55,9 @@ exports.setScarletAndViolet = [
     new vitality_band_1.VitalityBand(),
     new defiance_band_1.DefianceBand(),
     new energy_retrieval_1.EnergyRetrieval(),
+    new magnemite_1.Magnemite(),
+    new magnezone_ex_1.Magnezoneex(),
+    new mareep_1.Mareep(),
+    new drifloon_1.Drifloon(),
+    new magneton_1.Magneton(),
 ];

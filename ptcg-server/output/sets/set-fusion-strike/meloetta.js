@@ -39,10 +39,11 @@ class Meloetta extends pokemon_card_1.PokemonCard {
             let energyCount = 0;
             checkProvidedEnergyEffect.energyMap.forEach(em => {
                 energyCount += em.provides.filter(cardType => {
-                    return card_types_1.EnergyType.SPECIAL && this.name == 'Fusion Strike Energy';
+                    return em.card.tags.includes(card_types_1.CardTag.FUSION_STRIKE);
                 }).length;
             });
-            effect.damage == energyCount * 70;
+            effect.damage = energyCount * 70;
+            return state;
         }
         return state;
     }

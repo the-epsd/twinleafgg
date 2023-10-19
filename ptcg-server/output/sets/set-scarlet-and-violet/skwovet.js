@@ -6,6 +6,8 @@ const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Skwovet extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -34,18 +36,30 @@ class Skwovet extends pokemon_card_1.PokemonCard {
         this.setNumber = '151';
         this.name = 'Skwovet';
         this.fullName = 'Skwovet SVI';
+        this.NEST_STASH_MARKER = 'NEST_STASH_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+            const player = effect.player;
+            player.marker.removeMarker(this.NEST_STASH_MARKER, this);
+        }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const cards = player.hand.cards.filter(c => c !== this);
+            if (player.marker.hasMarker(this.NEST_STASH_MARKER, this)) {
+                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+            }
             // Create deckBottom and move hand into it
             const deckBottom = new game_1.CardList();
             player.hand.moveTo(deckBottom, cards.length);
             // Later, move deckBottom to player's deck
             deckBottom.moveTo(player.deck, cards.length);
+            player.marker.addMarker(this.NEST_STASH_MARKER, this);
             player.deck.moveTo(player.hand, 1);
             return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.marker.removeMarker(this.NEST_STASH_MARKER, this);
         }
         return state;
     }

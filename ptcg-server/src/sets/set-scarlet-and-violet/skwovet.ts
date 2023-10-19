@@ -5,7 +5,9 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { CardList } from '../../game';
+import { CardList, GameError, GameMessage } from '../../game';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Skwovet extends PokemonCard {
 
@@ -47,12 +49,23 @@ export class Skwovet extends PokemonCard {
 
   public fullName: string = 'Skwovet SVI';
 
+  public readonly NEST_STASH_MARKER = 'NEST_STASH_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.NEST_STASH_MARKER, this);
+    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
     
       const player = effect.player;
       const cards = player.hand.cards.filter(c => c !== this);
+
+      if (player.marker.hasMarker(this.NEST_STASH_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
     
       // Create deckBottom and move hand into it
       const deckBottom = new CardList();
@@ -61,10 +74,13 @@ export class Skwovet extends PokemonCard {
       // Later, move deckBottom to player's deck
     
       deckBottom.moveTo(player.deck, cards.length);
-    
+      player.marker.addMarker(this.NEST_STASH_MARKER, this);
       player.deck.moveTo(player.hand, 1);
   
       return state;
+    }
+    if (effect instanceof EndTurnEffect) {
+      effect.player.marker.removeMarker(this.NEST_STASH_MARKER, this);
     }
     return state;
   }
