@@ -1,12 +1,12 @@
 export const environment = {
-  apiUrl: '',
+  apiUrl: 'https://twinleaf-server.vercel.app/',
   timeout: 5000,
   production: true,
   apiVersion: 2,
   defaultPageSize: 50,
-  allowServerChange: true,
+  allowServerChange: false,
   refreshTokenInterval: 60 * 60 * 1000,
-  enableImageCache: true,
+  enableImageCache: false,
   defaultLanguage: 'en',
   languages: { en: 'English' }
 };

@@ -1,6 +1,6 @@
 const { config } = require('./output/config');
 
-config.backend.address = 'https://twinleaf-app.ondigitalocean.app';
+config.backend.address = 'https://twinleaf-server.vercel.app/';
 config.backend.port = 8080;
 config.backend.avatarsDir = __dirname + '/avatars';
 

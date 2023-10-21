@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl: 'https://twinleaf-app.ondigitalocean.app',
+  apiUrl: 'https://twinleaf-server.vercel.app/',
   timeout: 5000,
   production: true,
   apiVersion: 2,
