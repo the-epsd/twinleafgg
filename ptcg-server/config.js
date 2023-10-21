@@ -1,7 +1,7 @@
 const { config } = require('./output/config');
 
-config.backend.address = 'cloud.digitalocean.com';
-config.backend.port = 8080;
+config.backend.address = '104.18.155.42';
+config.backend.port = 12021;
 config.backend.avatarsDir = __dirname + '/avatars';
 
 config.storage.type = 'sqlite';
