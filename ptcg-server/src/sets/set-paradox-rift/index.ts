@@ -10,24 +10,36 @@ import { Gible } from './gible';
 import { Gimmighoul } from './gimmighoul';
 import { IronHandsex } from './iron-hands-ex';
 import { IronValiantex } from './iron-valiant-ex';
+import { Jirachi } from './jirachi';
 import { Mewtwoex } from './mewtwo-ex';
+import { Natu } from './natu';
+import { ProfessorTurosScenario } from './professor-turos-scenario';
 import { RoaringMoonex } from './roaring-moon-ex';
+import { ScreamTail } from './scream-tail';
 import { Snorunt } from './snorunt';
 import { TechnoRadar } from './techno-radar';
+import { Xatu } from './xatu';
+
 export const setParadoxRift: Card[] = [
-  new Gholdengoex(),
-  new Gimmighoul(),
-  new Mewtwoex(),
-  new EarthenVessel(),
-  new TechnoRadar(),
-  new IronHandsex(),
-  new RoaringMoonex(),
+  
   new AncientBoosterEnergyCapsule(),
-  new Gible(),
+  new Deoxys(),
+  new EarthenVessel(),
+  new Froslassex(),
   new Gabite(),
   new Garchompex(),
-  new Snorunt(),
-  new Froslassex(),
-  new Deoxys(),
+  new Gholdengoex(),
+  new Gible(),
+  new Gimmighoul(),
+  new IronHandsex(),
   new IronValiantex(),
+  new Jirachi(),
+  new Mewtwoex(),
+  new Natu(),
+  new ProfessorTurosScenario(),
+  new RoaringMoonex(),
+  new ScreamTail(),
+  new Snorunt(),
+  new TechnoRadar(),
+  new Xatu(),
 ];

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setFusionStrike = void 0;
 const battle_vip_pass_1 = require("./battle-vip-pass");
 const cross_switcher_1 = require("./cross-switcher");
+const dunsparce_1 = require("./dunsparce");
 const fusion_strike_energy_1 = require("./fusion-strike-energy");
 const genesect_v_1 = require("./genesect-v");
 const inteleon_v_1 = require("./inteleon-v");
@@ -26,4 +27,5 @@ exports.setFusionStrike = [
     new fusion_strike_energy_1.FusionStrikeEnergy(),
     new inteleon_v_1.InteleonV(),
     new inteleon_vmax_1.InteleonVMAX(),
+    new dunsparce_1.Dunsparce(),
 ];

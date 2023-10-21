@@ -5,8 +5,9 @@ import { Gardevoir } from './gardevoir';
 import { PathToThePeak } from './path-to-the-peak';
 
 export const setChillingReign: Card[] = [
+  
   new FogCrystal(),
+  new GalarianMoltesV(),
   new Gardevoir(),
   new PathToThePeak(),
-  new GalarianMoltesV(),
 ];

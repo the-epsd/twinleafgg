@@ -8,30 +8,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
-  const player = effect.player;
-
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
-
-  return store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
-    PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
-    { allowCancel: true }
-  ), targets => {
-    if (targets && targets.length > 0) {
-      // Discard trainer only when user selected a Pokemon
-      player.hand.moveCardTo(effect.trainerCard, player.discard);
-
-      targets[0].moveTo(player.hand);
-      targets[0].damage = 0;
-      targets[0].clearEffects();
-    }
-  });
-}
-
 export class ProfessorTurosScenario extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -53,11 +29,27 @@ export class ProfessorTurosScenario extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
-      return generator.next().value;
+      const player = effect.player;
+  
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
+        PlayerType.BOTTOM_PLAYER,
+        [ SlotType.ACTIVE, SlotType.BENCH ],
+        { allowCancel: false }
+      ), result => {
+        const cardList = result.length > 0 ? result[0] : null;
+        if (cardList !== null) {
+          const pokemons = cardList.getPokemons();
+          cardList.moveCardsTo(pokemons, player.hand);
+          cardList.moveTo(player.discard);
+          cardList.clearEffects();
+        }
+      });
     }
-
+  
     return state;
   }
-
+  
 }
+  

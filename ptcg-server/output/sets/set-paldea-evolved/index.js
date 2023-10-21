@@ -19,6 +19,10 @@ const choice_belt_1 = require("./choice-belt");
 const superior_energy_retrieval_1 = require("./superior-energy-retrieval");
 const frigibax_1 = require("./frigibax");
 const frigibax2_1 = require("./frigibax2");
+const great_ball_1 = require("./great-ball");
+const luminous_energy_1 = require("./luminous-energy");
+const fighting_au_lait_1 = require("./fighting-au-lait");
+const dudunsparce_1 = require("./dudunsparce");
 exports.setPaldeaEvolved = [
     new artazon_1.Artazon(),
     new delivery_drone_1.DeliveryDrone(),
@@ -38,4 +42,8 @@ exports.setPaldeaEvolved = [
     new superior_energy_retrieval_1.SuperiorEnergyRetrieval(),
     new frigibax_1.Frigibax(),
     new frigibax2_1.Frigibax2(),
+    new great_ball_1.GreatBall(),
+    new luminous_energy_1.LuminousEnergy(),
+    new fighting_au_lait_1.FightingAuLait(),
+    new dudunsparce_1.Dudunsparce(),
 ];

@@ -53,6 +53,13 @@ class MimikyuV extends pokemon_card_1.PokemonCard {
             opponent.marker.addMarker(this.CLEAR_TIME_CIRCLE_MARKER, this);
             return state;
         }
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.marker.hasMarker(this.TIME_CIRCLE_MARKER)) {
+            const sourcePokemon = effect.source.getPokemonCard();
+            if (sourcePokemon !== this) {
+                effect.preventDefault = true;
+            }
+            return state;
+        }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player === game_1.StateUtils.getOpponent(state, effect.player)) {
             const player = game_1.StateUtils.getOpponent(state, effect.player);
             player.marker.removeMarker(this.CLEAR_TIME_CIRCLE_MARKER, this);
@@ -61,13 +68,6 @@ class MimikyuV extends pokemon_card_1.PokemonCard {
                     cardList.marker.removeMarker(this.TIME_CIRCLE_MARKER, this);
                 }
             });
-            return state;
-        }
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.marker.hasMarker(this.TIME_CIRCLE_MARKER)) {
-            const sourcePokemon = effect.source.getPokemonCard();
-            if (sourcePokemon !== this) {
-                effect.preventDefault = true;
-            }
             return state;
         }
         return state;

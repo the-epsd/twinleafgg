@@ -17,10 +17,7 @@ class DefianceBand extends trainer_card_1.TrainerCard {
         this.setNumber = '169';
         this.name = 'Defiance Band';
         this.fullName = 'Defiance Band SVI';
-        this.text = 'You may use this card only if you have more Prize cards left than your ' +
-            'opponent. During this turn, each of your Active Pokemon\'s attacks does ' +
-            '40 more damage to your opponent\'s Active Pokemon (before applying ' +
-            'Weakness and Resistance).';
+        this.text = 'If you have more Prize cards remaining than your opponent, the attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
         this.DEFIANCE_BAND_MARKER = 'DEFIANCE_BAND_MARKER';
     }
     reduceEffect(store, state, effect) {

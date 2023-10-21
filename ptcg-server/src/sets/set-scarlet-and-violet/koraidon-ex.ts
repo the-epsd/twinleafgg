@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
-export class Miraidonex extends PokemonCard {
+export class Koraidonex extends PokemonCard {
 
   public regulationMark = 'G';
 
@@ -42,11 +42,11 @@ export class Miraidonex extends PokemonCard {
 
   public set2: string = 'scarletviolet';
 
-  public setNumber: string = '81';
+  public setNumber: string = '125';
 
-  public name: string = 'Miraidon ex';
+  public name: string = 'Koraidon ex';
 
-  public fullName: string = 'Miraidon ex SVI';
+  public fullName: string = 'Koraidon ex SVI';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

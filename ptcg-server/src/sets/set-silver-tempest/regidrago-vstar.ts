@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
-function* useCrossFusionStrike(next: Function, store: StoreLike, state: State,
+function* useApexDragon(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
@@ -14,14 +14,14 @@ function* useCrossFusionStrike(next: Function, store: StoreLike, state: State,
   const discardPokemon = player.discard.cards
     .filter(card => card.superType === SuperType.POKEMON) as PokemonCard[];
 
-  const fusionStrike = discardPokemon.filter(card => card.tags.includes(CardTag.FUSION_STRIKE));
+  const dragonTypePokemon = discardPokemon.filter(card => card.cardType === CardType.DRAGON);
 
 
   let selected: any;
   yield store.prompt(state, new ChooseAttackPrompt(
     player.id,
     GameMessage.CHOOSE_ATTACK_TO_COPY,
-    discardPokemon && fusionStrike,
+    dragonTypePokemon,
     { allowCancel: false }
   ), result => {
     selected = result;
@@ -55,6 +55,7 @@ function* useCrossFusionStrike(next: Function, store: StoreLike, state: State,
   return state;
 }
 
+
 export class RegidragoVSTAR extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_VSTAR ];
@@ -65,7 +66,7 @@ export class RegidragoVSTAR extends PokemonCard {
 
   //   public evolvesFrom = 'Regidrago V';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType = CardType.DRAGON;
 
   public hp: number = 280;
 
@@ -73,27 +74,28 @@ export class RegidragoVSTAR extends PokemonCard {
 
   public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
 
-  public attacks = [{
-    name: 'Apex Dragon',
-    cost: [ CardType.COLORLESS ],
-    damage: 0,
-    text: 'Choose an attack from a [N] Pokémon in your discard pile and use it as this attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Apex Dragon',
+      cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+      damage: 0,
+      text: 'Choose an attack from a [N] Pokémon in your discard pile and use it as this attack.'
+    }];
 
-  public set: string = 'FST';
+  public set: string = 'SIT';
 
-  public set2: string = 'fusionstrike';
+  public set2: string = 'silvertempest';
 
-  public setNumber: string = '114';
+  public setNumber: string = '136';
 
   public name: string = 'Regidrago VSTAR';
 
-  public fullName: string = 'Regidrago VSTAR FST 114';
+  public fullName: string = 'Regidrago VSTAR SIT 114';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useCrossFusionStrike(() => generator.next(), store, state, effect);
+      const generator = useApexDragon(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
   

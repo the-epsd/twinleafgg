@@ -1,37 +1,41 @@
 import { Card } from '../../game/store/card/card';
-import { Squirtle } from './squirtle';
 import { Alakazamex } from './alakazam-ex';
 import { Blastoiseex } from './blastoise-ex';
 import { Bulbasaur } from './bulbasaur';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
+import { Dodrio } from './dodrio';
+import { Doduo } from './doduo';
+import { Eevee } from './eevee';
 import { Ivysaur } from './ivysaur';
-import { Mewex } from './mew-ex';
-import { Venusaurex } from './venusaur-ex';
-import { Zapdosex } from './zapdos-ex';
-import { Wartortle } from './wartortle';
 import { Kangaskhanex } from './kangaskhan-ex';
+import { Mewex } from './mew-ex';
+import { Squirtle } from './squirtle';
 import { Venonat } from './venonat';
 import { Venomoth } from './venomoth';
-import { Doduo } from './doduo';
-import { Dodrio } from './dodrio';
+import { Venusaurex } from './venusaur-ex';
+import { Wartortle } from './wartortle';
+import { Zapdosex } from './zapdos-ex';
+
 export const setPokemon151: Card[] = [
+  
   new Alakazamex(),
-  new Bulbasaur(),
-  new Ivysaur(),
-  new Venusaurex(),
-  new Charmander(),
-  new Charmeleon(),
-  new Charizardex(),
-  new Squirtle(),
-  new Wartortle(),
   new Blastoiseex(),
-  new Zapdosex(),
-  new Mewex(),
+  new Bulbasaur(),
+  new Charizardex(),
+  new Charmeleon(),
+  new Charmander(),
+  new Dodrio(),
+  new Doduo(),
+  new Eevee(),
+  new Ivysaur(),
   new Kangaskhanex(),
+  new Mewex(),
+  new Squirtle(),
   new Venonat(),
   new Venomoth(),
-  new Doduo(),
-  new Dodrio(),
+  new Venusaurex(),
+  new Wartortle(),
+  new Zapdosex(),
 ];

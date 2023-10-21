@@ -12,15 +12,17 @@ import { RaichuV } from './raichu-v';
 import { RaikouV } from './raikou-v';
 
 export const setBrilliantStars: Card[] = [
-  new CollapsedStadium(),
-  new Manaphy(),
-  new Bibarel(),
+  
   new ArceusV(),
   new ArceusVSTAR(),
-  new DoubleTurboEnergy(),
-  new RaikouV(),
-  new LumineonV(),
-  new RaichuV(),
+  new Bibarel(),
   new CherensCare(),
+  new CollapsedStadium(),
+  new DoubleTurboEnergy(),
   new EnteiV(),
+  new LumineonV(),
+  new Manaphy(),
+  new RaichuV(),
+  new RaikouV(),
+  
 ];

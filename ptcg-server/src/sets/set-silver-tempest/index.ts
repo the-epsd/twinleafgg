@@ -1,24 +1,33 @@
 import { Card } from '../../game/store/card/card';
 import { Archeops } from './archeops';
+import { Articuno } from './articuno';
+import { Braixen } from './braixen';
 import { CapturingAroma } from './capturing-aroma';
 import { ForestSealStone } from './forest-seal-stone';
 import { Kirlia } from './kirlia';
 import { LugiaV } from './lugia-v';
 import { LugiaVSTAR } from './lugia-vstar';
+import { Metagross } from './metagross';
 import { RadiantAlakazam } from './radiant-alakazam';
 import { RadiantTsareena } from './radiant-tsareena';
 import { RegidragoVSTAR } from './regidrago-vstar';
 import { Worker } from './worker';
+import { Zeraora } from './zeraora';
 
 export const setSilverTempest: Card[] = [
-  new Kirlia(),
-  new RadiantAlakazam(),
-  new Worker(),
+
+  new Archeops(),
+  new Articuno(),
+  new Braixen(),
+  new CapturingAroma(),
   new ForestSealStone(),
+  new Kirlia(),
   new LugiaV(),
   new LugiaVSTAR(),
-  new Archeops(),
-  new CapturingAroma(),
+  new Metagross(),
+  new RadiantAlakazam(),
   new RadiantTsareena(),
   new RegidragoVSTAR(),
+  new Worker(),
+  new Zeraora(),
 ];

@@ -1,61 +1,74 @@
 import { Card } from '../../game/store/card/card';
-import { CrushingHammer } from './crushing-hammer';
-import { ExpShare } from './exp-share';
 import { Armarouge } from './armarouge';
 import { Arven } from './arven';
+import { BeachCourt } from './beach-court';
+import { CrushingHammer } from './crushing-hammer';
+import { Cyclizar } from './cyclizar';
+import { DefianceBand } from './defiance-band';
+import { Drifloon } from './drifloon';
 import { ElectricGenerator } from './electric-generator';
+import { EnergyRetrieval } from './energy-retrieval';
+import { EnergySearch } from './energy-search';
+import { ExpShare } from './exp-share';
 import { Gardevoirex } from './gardevoir-ex';
 import { Hawlucha } from './hawlucha';
 import { Klefki } from './klefki';
+import { Koraidonex } from './koraidon-ex';
+import { Magnemite } from './magnemite';
+import { Magneton } from './magneton';
+import { Magnezoneex } from './magnezone-ex';
+import { Mareep } from './mareep';
+import { Mesagoza } from './mesagoza';
 import { Miraidonex } from './miraidon-ex';
+import { Miriam } from './miriam';
 import { NestBall } from './nest-ball';
 import { PalPad } from './pal-pad';
+import { Penny } from './penny';
 import { Pokegear30 } from './pokegear-30';
+import { PokemonCatcher } from './pokemon-catcher';
 import { ProfessorsResearch } from './professors-research';
 import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
 import { Skwovet } from './skwovet';
 import { Switch } from './switch';
 import { UltraBall } from './ultra-ball';
-import { Penny } from './penny';
-import { BeachCourt } from './beach-court';
-import { PokemonCatcher } from './pokemon-catcher';
 import { VitalityBand } from './vitality-band';
-import { DefianceBand } from './defiance-band';
-import { EnergyRetrieval } from './energy-retrieval';
-import { Magnemite } from './magnemite';
-import { Magnezoneex } from './magnezone-ex';
-import { Mareep } from './mareep';
-import { Drifloon } from './drifloon';
-import { Magneton } from './magneton';
+
 export const setScarletAndViolet: Card[] = [
+  
   new Armarouge(),
-  new Gardevoirex(),
+  new Arven(),
+  new BeachCourt(),
   new CrushingHammer(),
+  new Cyclizar(),
+  new DefianceBand(),
+  new Drifloon(),
+  new ElectricGenerator(),
+  new EnergyRetrieval(),
+  new EnergySearch(),
   new ExpShare(),
-  new NestBall(),
-  new Pokegear30(),
-  new ProfessorsResearch(),
-  new RareCandy(),
-  new Switch(),
-  new UltraBall(),
-  new Skwovet(),
-  new Miraidonex(),
-  new Ralts(),
-  new PalPad(),
+  new Gardevoirex(),
   new Hawlucha(),
   new Klefki(),
-  new ElectricGenerator(),
-  new Arven(),
-  new Penny(),
-  new BeachCourt(),
-  new PokemonCatcher(),
-  new VitalityBand(),
-  new DefianceBand(),
-  new EnergyRetrieval(),
+  new Koraidonex(),
   new Magnemite(),
+  new Magneton(),
   new Magnezoneex(),
   new Mareep(),
-  new Drifloon(),
-  new Magneton(),
+  new Mesagoza(),
+  new Miraidonex(),
+  new Miriam(),
+  new NestBall(),
+  new PalPad(),
+  new Penny(),
+  new Pokegear30(),
+  new PokemonCatcher(),
+  new ProfessorsResearch(),
+  new Ralts(),
+  new RareCandy(),
+  new Skwovet(),
+  new Switch(),
+  new UltraBall(),
+  new VitalityBand(),
+  
 ];

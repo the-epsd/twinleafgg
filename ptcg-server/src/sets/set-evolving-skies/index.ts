@@ -5,17 +5,24 @@ import { DuraludonVMAX } from './duraludon-vmax';
 import { Flaaffy } from './flaaffy';
 import { GalarianMoltres } from './galarian-moltres';
 import { Mareep } from './mareep';
+import { Pumpkaboo } from './pumpkaboo';
 import { Raihan } from './raihan';
+import { SuicuneV } from './suicune-v';
 import { UmbreonV } from './umbreon-v';
 import { UmbreonVMAX } from './umbreon-vmax';
+
 export const setEvolvingSkies: Card[] = [
-  new UmbreonVMAX(),
-  new UmbreonV(),
-  new DuraludonVMAX(),
-  new Mareep(),
-  new Flaaffy(),
-  new Raihan(),
-  new GalarianMoltres(),
+  
   new Copycat(),
   new DragoniteV(),
+  new DuraludonVMAX(),
+  new Flaaffy(),
+  new GalarianMoltres(),
+  new Mareep(),
+  new Pumpkaboo(),
+  new Raihan(),
+  new SuicuneV(),
+  new UmbreonV(),
+  new UmbreonVMAX(),
+  
 ];

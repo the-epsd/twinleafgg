@@ -1,6 +1,8 @@
 import { Card } from '../../game/store/card/card';
+import { Miltank } from '../set-flashfire/miltank';
 import { DarkraiV } from './darkrai-v';
 import { DarkraiVSTAR } from './darkrai-vstar';
+import { FeatherBall } from './feather-ball';
 import { Gallade } from './gallade';
 import { GardeniasVigor } from './gardenias-vigor';
 import { Irida } from './irida';
@@ -12,15 +14,19 @@ import { SwitchCart } from './switch-cart';
 import { TrekkingShoes } from './trekking-shoes';
 
 export const setAstralRadiance: Card[] = [
-  new Irida(),
-  new Ralts(),
-  new Gallade(),
-  new RadiantGreninja(),
-  new OriginFormePalkiaVSTAR(),
-  new OriginFormePalkiaV(),
-  new SwitchCart(),
+  
   new DarkraiV(),
   new DarkraiVSTAR(),
-  new TrekkingShoes(),
+  new FeatherBall(),
+  new Gallade(),
   new GardeniasVigor(),
+  new Irida(),
+  new Miltank(),
+  new OriginFormePalkiaV(),
+  new OriginFormePalkiaVSTAR(),
+  new RadiantGreninja(),
+  new Ralts(),
+  new SwitchCart(),
+  new TrekkingShoes(),
+  
 ];

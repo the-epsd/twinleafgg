@@ -4,7 +4,8 @@ import { Pokestop } from './pokestop';
 import { Solrock } from './solrock';
 
 export const setPokemonGO: Card[] = [
+  
   new Lunatone(),
-  new Solrock(),
   new Pokestop(),
+  new Solrock(),
 ];

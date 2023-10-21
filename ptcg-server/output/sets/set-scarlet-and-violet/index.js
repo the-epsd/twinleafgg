@@ -30,6 +30,8 @@ const magnezone_ex_1 = require("./magnezone-ex");
 const mareep_1 = require("./mareep");
 const drifloon_1 = require("./drifloon");
 const magneton_1 = require("./magneton");
+const cyclizar_1 = require("./cyclizar");
+const miriam_1 = require("./miriam");
 exports.setScarletAndViolet = [
     new armarouge_1.Armarouge(),
     new gardevoir_ex_1.Gardevoirex(),
@@ -60,4 +62,6 @@ exports.setScarletAndViolet = [
     new mareep_1.Mareep(),
     new drifloon_1.Drifloon(),
     new magneton_1.Magneton(),
+    new cyclizar_1.Cyclizar(),
+    new miriam_1.Miriam(),
 ];
