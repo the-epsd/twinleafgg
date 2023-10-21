@@ -3,12 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl: 'http://localhost:12021',
+  apiUrl: 'https://twinleaf-app.ondigitalocean.app',
   timeout: 5000,
-  production: false,
+  production: true,
   apiVersion: 2,
   defaultPageSize: 50,
-  allowServerChange: true,
+  allowServerChange: false,
   refreshTokenInterval: 60 * 60 * 1000,
   enableImageCache: false,
   defaultLanguage: 'en',
