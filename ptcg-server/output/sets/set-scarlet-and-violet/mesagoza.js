@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChampionsFestival = void 0;
+exports.Mesagoza = void 0;
 const game_message_1 = require("../../game/game-message");
 const state_utils_1 = require("../../game/store/state-utils");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
-class ChampionsFestival extends trainer_card_1.TrainerCard {
+class Mesagoza extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
@@ -47,4 +47,4 @@ class ChampionsFestival extends trainer_card_1.TrainerCard {
         });
     }
 }
-exports.ChampionsFestival = ChampionsFestival;
+exports.Mesagoza = Mesagoza;

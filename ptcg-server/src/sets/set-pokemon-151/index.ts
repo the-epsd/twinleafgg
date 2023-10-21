@@ -11,6 +11,8 @@ import { Eevee } from './eevee';
 import { Ivysaur } from './ivysaur';
 import { Kangaskhanex } from './kangaskhan-ex';
 import { Mewex } from './mew-ex';
+import { Pidgeotto } from './pidgeotto';
+import { Pidgey } from './pidgey';
 import { Squirtle } from './squirtle';
 import { Venonat } from './venonat';
 import { Venomoth } from './venomoth';
@@ -32,6 +34,8 @@ export const setPokemon151: Card[] = [
   new Ivysaur(),
   new Kangaskhanex(),
   new Mewex(),
+  new Pidgeotto(),
+  new Pidgey(),
   new Squirtle(),
   new Venonat(),
   new Venomoth(),

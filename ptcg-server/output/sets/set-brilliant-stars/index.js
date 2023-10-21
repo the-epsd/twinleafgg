@@ -13,15 +13,15 @@ const manaphy_1 = require("./manaphy");
 const raichu_v_1 = require("./raichu-v");
 const raikou_v_1 = require("./raikou-v");
 exports.setBrilliantStars = [
-    new collapsed_stadium_1.CollapsedStadium(),
-    new manaphy_1.Manaphy(),
-    new bibarel_1.Bibarel(),
     new arceus_v_1.ArceusV(),
     new arceus_vstar_1.ArceusVSTAR(),
-    new double_turbo_energy_1.DoubleTurboEnergy(),
-    new raikou_v_1.RaikouV(),
-    new lumineon_v_1.LumineonV(),
-    new raichu_v_1.RaichuV(),
+    new bibarel_1.Bibarel(),
     new cherens_care_1.CherensCare(),
+    new collapsed_stadium_1.CollapsedStadium(),
+    new double_turbo_energy_1.DoubleTurboEnergy(),
     new entei_v_1.EnteiV(),
+    new lumineon_v_1.LumineonV(),
+    new manaphy_1.Manaphy(),
+    new raichu_v_1.RaichuV(),
+    new raikou_v_1.RaikouV(),
 ];

@@ -23,10 +23,8 @@ export class PokemonCard extends Card {
         if (effect instanceof AttackEffect) {
             for (let i = 0; i < this.attacks.length; i++) {
                 const attackEffect = this.attacks[i].effect;
-                console.log('store:', store);
-                console.log('state:', state);
-                console.log('effect:', effect);
-                if (effect.attack.name === this.attacks[i].name && attackEffect !== undefined) {
+                console.log(this.attacks[i].name);
+                if (effect.attack === this.attacks[i] && attackEffect !== undefined) {
                     console.log(attackEffect);
                     console.log('we made it to handling!');
                     attackEffect(store, state, effect);
@@ -35,7 +33,7 @@ export class PokemonCard extends Card {
         }
         else if (effect instanceof PowerEffect) {
             for (let i = 0; i < this.powers.length; i++) {
-                if (effect.power.name === this.powers[i].name && effect.power.effect !== undefined) {
+                if (effect.power === this.powers[i] && effect.power.effect !== undefined) {
                     return effect.power.effect(store, state, effect);
                 }
             }

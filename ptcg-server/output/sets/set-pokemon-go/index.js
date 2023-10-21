@@ -6,6 +6,6 @@ const pokestop_1 = require("./pokestop");
 const solrock_1 = require("./solrock");
 exports.setPokemonGO = [
     new lunatone_1.Lunatone(),
-    new solrock_1.Solrock(),
     new pokestop_1.Pokestop(),
+    new solrock_1.Solrock(),
 ];

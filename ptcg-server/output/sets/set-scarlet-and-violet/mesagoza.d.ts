@@ -4,7 +4,7 @@ import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-export declare class ChampionsFestival extends TrainerCard {
+export declare class Mesagoza extends TrainerCard {
     trainerType: TrainerType;
     regulationMark: string;
     set: string;

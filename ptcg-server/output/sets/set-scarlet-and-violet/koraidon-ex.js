@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Miraidonex = void 0;
+exports.Koraidonex = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-class Miraidonex extends pokemon_card_1.PokemonCard {
+class Koraidonex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'G';
@@ -32,9 +32,9 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'SVI';
         this.set2 = 'scarletviolet';
-        this.setNumber = '81';
-        this.name = 'Miraidon ex';
-        this.fullName = 'Miraidon ex SVI';
+        this.setNumber = '125';
+        this.name = 'Koraidon ex';
+        this.fullName = 'Koraidon ex SVI';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
         this.DINO_CRY_MARKER = 'DINO_CRY_MARKER';
@@ -95,4 +95,4 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.Miraidonex = Miraidonex;
+exports.Koraidonex = Koraidonex;

@@ -7,5 +7,6 @@ export class TrainerCard extends Card {
         this.trainerType = TrainerType.ITEM;
         this.format = Format.NONE;
         this.text = '';
+        this.powers = [];
     }
 }

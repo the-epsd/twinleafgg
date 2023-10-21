@@ -8,6 +8,7 @@ const game_message_1 = require("../../game/game-message");
 const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon-prompt");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const state_utils_1 = require("../../game/store/state-utils");
+const game_1 = require("../../game");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
@@ -38,6 +39,25 @@ function* playCard(next, store, state, effect) {
             opponent.switchPokemon(targets[0]);
         });
     }
+    const hasBench = player.bench.some(b => b.cards.length > 0);
+    if (hasBench === false) {
+        throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
+    // Do not discard the card yet
+    effect.preventDefault = true;
+    let target = [];
+    return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { allowCancel: true }), results => {
+        target = results || [];
+        next();
+        if (target.length === 0) {
+            return state;
+        }
+        // Discard trainer only when user selected a Pokemon
+        player.hand.moveCardTo(effect.trainerCard, player.discard);
+        player.active.clearEffects();
+        player.switchPokemon(target[0]);
+        return state;
+    });
 }
 class CrossSwitcher extends trainer_card_1.TrainerCard {
     constructor() {

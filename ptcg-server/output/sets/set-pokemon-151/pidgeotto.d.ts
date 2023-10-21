@@ -1,16 +1,19 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-export declare class Zeraora extends PokemonCard {
-    stage: Stage;
+export declare class Pidgeotto extends PokemonCard {
     regulationMark: string;
+    stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
     retreat: never[];
+    resistance: {
+        type: CardType;
+        value: number;
+    }[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -22,5 +25,4 @@ export declare class Zeraora extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

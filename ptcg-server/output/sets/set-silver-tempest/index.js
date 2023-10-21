@@ -14,18 +14,20 @@ const radiant_alakazam_1 = require("./radiant-alakazam");
 const radiant_tsareena_1 = require("./radiant-tsareena");
 const regidrago_vstar_1 = require("./regidrago-vstar");
 const worker_1 = require("./worker");
+const zeraora_1 = require("./zeraora");
 exports.setSilverTempest = [
-    new kirlia_1.Kirlia(),
-    new radiant_alakazam_1.RadiantAlakazam(),
-    new worker_1.Worker(),
+    new archeops_1.Archeops(),
+    new articuno_1.Articuno(),
+    new braixen_1.Braixen(),
+    new capturing_aroma_1.CapturingAroma(),
     new forest_seal_stone_1.ForestSealStone(),
+    new kirlia_1.Kirlia(),
     new lugia_v_1.LugiaV(),
     new lugia_vstar_1.LugiaVSTAR(),
-    new archeops_1.Archeops(),
-    new capturing_aroma_1.CapturingAroma(),
+    new metagross_1.Metagross(),
+    new radiant_alakazam_1.RadiantAlakazam(),
     new radiant_tsareena_1.RadiantTsareena(),
     new regidrago_vstar_1.RegidragoVSTAR(),
-    new metagross_1.Metagross(),
-    new braixen_1.Braixen(),
-    new articuno_1.Articuno(),
+    new worker_1.Worker(),
+    new zeraora_1.Zeraora(),
 ];

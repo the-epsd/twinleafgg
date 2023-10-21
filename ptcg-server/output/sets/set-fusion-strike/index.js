@@ -15,17 +15,17 @@ const mew_vmax_1 = require("./mew-vmax");
 const oricorio_1 = require("./oricorio");
 const yveltal_1 = require("./yveltal");
 exports.setFusionStrike = [
-    new mew_v_1.MewV(),
-    new mew_vmax_1.MewVMAX(),
-    new genesect_v_1.GenesectV(),
-    new oricorio_1.Oricorio(),
     new battle_vip_pass_1.BattleVIPPass(),
-    new judge_1.Judge(),
-    new yveltal_1.Yveltal(),
     new cross_switcher_1.CrossSwitcher(),
-    new meloetta_1.Meloetta(),
+    new dunsparce_1.Dunsparce(),
     new fusion_strike_energy_1.FusionStrikeEnergy(),
+    new genesect_v_1.GenesectV(),
     new inteleon_v_1.InteleonV(),
     new inteleon_vmax_1.InteleonVMAX(),
-    new dunsparce_1.Dunsparce(),
+    new judge_1.Judge(),
+    new meloetta_1.Meloetta(),
+    new mew_v_1.MewV(),
+    new mew_vmax_1.MewVMAX(),
+    new oricorio_1.Oricorio(),
+    new yveltal_1.Yveltal(),
 ];
