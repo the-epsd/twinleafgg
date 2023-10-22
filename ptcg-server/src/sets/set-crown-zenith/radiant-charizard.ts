@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
+import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
@@ -65,26 +65,38 @@ export class RadiantCharizard extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      if (effect instanceof CheckAttackCostEffect) {
+        const player = effect.player;
+        const opponent = StateUtils.getOpponent(state, player);
 
-      const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
-      state = store.reduceEffect(state, checkCost);
-            
-      const prizesTaken = 6 - opponent.getPrizeLeft();
+        const index = effect.cost.indexOf(CardType.COLORLESS);
 
-      this.attacks[0].cost = this.attacks[0].cost.map(c => c - prizesTaken);
-    }
+        // No cost to reduce
+        if (index === -1) {
+          return state;
+        }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+        const prizesTaken = 6 - opponent.getPrizeLeft();
+        const attack = this.attacks[0];
 
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+        if (attack.cost.includes(CardType.COLORLESS)) {
+          const index = attack.cost.indexOf(CardType.COLORLESS);
+          attack.cost.splice(index, 1, prizesTaken); 
+        }
+
+        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+          // Check marker
+          if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            console.log('attack blocked');
+            throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+          }
+          effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+          console.log('marker added');
+        }
+        return state;
       }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
+      return state;
     }
     return state;
   }

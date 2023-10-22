@@ -17,14 +17,14 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-  let tools = 0;
+  let pokemons = 0;
   let trainers = 0;
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
     if (c instanceof TrainerCard && c.trainerType === TrainerType.ITEM) {
       trainers += 1;
     } else if (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL) {
-      tools += 1;
+      pokemons += 1;
     } else {
       blocked.push(index);
     }
@@ -34,16 +34,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // This will prevent unblocked supporter to appear in the discard pile
   effect.preventDefault = true;
 
-  const maxTools = Math.min(tools, 1);
+  const maxPokemons = Math.min(pokemons, 1);
   const maxTrainers = Math.min(trainers, 1);
-  const count = maxTools + maxTrainers;
+  const count = maxPokemons + maxTrainers;
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { },
-    { min: 0, max: count, allowCancel: false, blocked }
+    { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTrainers }
   ), selected => {
     cards = selected || [];
     next();

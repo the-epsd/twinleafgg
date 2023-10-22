@@ -36,7 +36,7 @@ export class RapidStrikeEnergy extends EnergyCard {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const pokemon = effect.source;
       if (pokemon.getPokemonCard()?.tags.includes(CardTag.RAPID_STRIKE)) {
-        effect.energyMap.push({ card: this, provides: [ CardType.FIGHTING || CardType.WATER ] });
+        effect.energyMap.push({ card: this, provides: [ CardType.FIGHTING, CardType.WATER] });
       }
       return state;
     }

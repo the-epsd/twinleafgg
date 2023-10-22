@@ -13,7 +13,7 @@ function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     let cards = [];
-    let tools = 0;
+    let pokemons = 0;
     let trainers = 0;
     const blocked = [];
     player.deck.cards.forEach((c, index) => {
@@ -21,7 +21,7 @@ function* playCard(next, store, state, self, effect) {
             trainers += 1;
         }
         else if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL) {
-            tools += 1;
+            pokemons += 1;
         }
         else {
             blocked.push(index);
@@ -30,10 +30,10 @@ function* playCard(next, store, state, self, effect) {
     // We will discard this card after prompt confirmation
     // This will prevent unblocked supporter to appear in the discard pile
     effect.preventDefault = true;
-    const maxTools = Math.min(tools, 1);
+    const maxPokemons = Math.min(pokemons, 1);
     const maxTrainers = Math.min(trainers, 1);
-    const count = maxTools + maxTrainers;
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked }), selected => {
+    const count = maxPokemons + maxTrainers;
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTrainers }), selected => {
         cards = selected || [];
         next();
     });
