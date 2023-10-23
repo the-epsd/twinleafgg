@@ -10,6 +10,8 @@ export class IceRiderCalyrexV extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public cardType: CardType = CardType.WATER;
 
   public tags = [ CardTag.POKEMON_V ];

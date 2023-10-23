@@ -11,6 +11,7 @@ class Mimikyuex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 190;
@@ -30,7 +31,6 @@ class Mimikyuex extends pokemon_card_1.PokemonCard {
         this.set = 'SVP';
         this.set2 = 'svpromos';
         this.setNumber = '4';
-        this.regulationMark = 'E';
         this.name = 'Mimikyu ex';
         this.fullName = 'Mimikyu ex SVP';
     }

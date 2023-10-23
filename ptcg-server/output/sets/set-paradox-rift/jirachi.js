@@ -10,6 +10,7 @@ class Jirachi extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.regulationMark = 'G';
         this.cardType = card_types_1.CardType.METAL;
         this.hp = 70;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];

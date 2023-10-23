@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class EnergyRetrieval extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    regulationMark: string;
     set2: string;
     setNumber: string;
     name: string;

@@ -12,6 +12,8 @@ export class Mimikyuex extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'G';
+
   public tags = [ CardTag.POKEMON_ex ];
 
   public cardType: CardType = CardType.PSYCHIC;
@@ -39,8 +41,6 @@ export class Mimikyuex extends PokemonCard {
   public set2: string = 'svpromos';
 
   public setNumber: string = '4';
-
-  public regulationMark = 'E';
 
   public name: string = 'Mimikyu ex';
 

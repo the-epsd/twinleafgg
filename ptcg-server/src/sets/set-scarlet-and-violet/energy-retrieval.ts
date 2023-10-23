@@ -50,6 +50,8 @@ export class EnergyRetrieval extends TrainerCard {
 
   public set: string = 'SVI';
 
+  public regulationMark = 'G';
+
   public set2: string = 'scarletviolet';
 
   public setNumber: string = '171';

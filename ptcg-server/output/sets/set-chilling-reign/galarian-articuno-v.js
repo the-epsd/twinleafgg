@@ -12,6 +12,7 @@ class GalarianArticunoV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.regulationMark = 'E';
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.tags = [card_types_1.CardTag.POKEMON_V];
         this.hp = 210;

@@ -13,6 +13,7 @@ class GardeniasVigor extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'ASR';
+        this.regulationMark = 'F';
         this.set2 = 'astralradiance';
         this.setNumber = '143';
         this.name = 'Gardenia\'s Vigor';

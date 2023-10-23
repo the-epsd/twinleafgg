@@ -4,6 +4,7 @@ import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 export declare class Gabite extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     evolvesFrom: string;
     cardType: CardType;
     hp: number;

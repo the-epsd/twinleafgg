@@ -13,6 +13,8 @@ export class ColresssExperiment extends TrainerCard {
 
   public set: string = 'LOR';
 
+  public regulationMark = 'F';
+
   public set2: string = 'lostorigin';
 
   public setNumber: string = '155';

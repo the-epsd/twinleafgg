@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game';
 export declare class Xatu extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     evolvesFrom: string;
     cardType: CardType;
     hp: number;

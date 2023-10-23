@@ -9,6 +9,8 @@ export class Jirachi extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'G';
+
   public cardType: CardType = CardType.METAL;
 
   public hp: number = 70;

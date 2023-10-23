@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class IceRiderCalyrexVMAX extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
+    regulationMark: string;
     cardType: CardType;
     tags: CardTag[];
     hp: number;

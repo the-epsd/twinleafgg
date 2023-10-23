@@ -56,6 +56,8 @@ export class RescueCarrier extends TrainerCard {
 
   public set: string = 'EVS';
 
+  public regulationMark = 'E';
+
   public set2: string = 'evolvingskies';
 
   public setNumber: string = '154';

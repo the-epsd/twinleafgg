@@ -29,12 +29,12 @@ class Dunsparce extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.regulationMark = 'G';
-        this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
-        this.setNumber = '157';
-        this.name = 'Dudunsparce';
-        this.fullName = 'Dudunsparce PAL';
+        this.regulationMark = 'E';
+        this.set = 'FST';
+        this.set2 = 'fusionstrike';
+        this.setNumber = '207';
+        this.name = 'Dunsparce';
+        this.fullName = 'Dunsparce FST';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

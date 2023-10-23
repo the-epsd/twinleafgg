@@ -12,6 +12,8 @@ export class Xatu extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public regulationMark = 'G';
+
   public evolvesFrom = 'Natu';
 
   public cardType: CardType = CardType.PSYCHIC;

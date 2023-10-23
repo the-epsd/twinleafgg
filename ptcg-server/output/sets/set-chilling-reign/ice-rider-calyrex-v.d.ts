@@ -4,6 +4,7 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class IceRiderCalyrexV extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     cardType: CardType;
     tags: CardTag[];
     hp: number;

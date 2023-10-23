@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Kangaskhanex extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     tags: CardTag[];
     cardType: CardType;
     hp: number;

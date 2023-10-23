@@ -11,8 +11,7 @@ export class Baxcalibur extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public stage: Stage = Stage.BASIC;
-  //public stage: Stage = Stage.STAGE_2;
+  public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Arctibax';
 

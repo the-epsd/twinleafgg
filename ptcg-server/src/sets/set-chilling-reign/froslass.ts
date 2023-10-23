@@ -48,6 +48,8 @@ export class Froslass extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public regulationMark = 'E';
+
   public evolvesFrom = 'Snorunt';
 
   public cardType: CardType = CardType.WATER;

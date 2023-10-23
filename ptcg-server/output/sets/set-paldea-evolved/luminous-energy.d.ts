@@ -7,6 +7,7 @@ export declare class LuminousEnergy extends EnergyCard {
     provides: CardType[];
     energyType: EnergyType;
     set: string;
+    regulationMark: string;
     set2: string;
     setNumber: string;
     name: string;

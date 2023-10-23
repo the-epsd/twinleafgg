@@ -13,6 +13,8 @@ export class LuminousEnergy extends EnergyCard {
 
   public set: string = 'PAL';
 
+  public regulationMark = 'G';
+
   public set2: string = 'paldeaevolved';
 
   public setNumber: string = '191';

@@ -10,6 +10,8 @@ export class Froslassex extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public regulationMark = 'G';
+
   public tags = [ CardTag.POKEMON_ex ];
 
   public evolvesFrom = 'Snorunt';

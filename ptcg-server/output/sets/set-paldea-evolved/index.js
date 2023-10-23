@@ -32,8 +32,6 @@ exports.setPaldeaEvolved = [
     new baxcalibur_1.Baxcalibur(),
     new chien_pao_ex_1.ChienPaoex(),
     new super_rod_1.SuperRod(),
-    new murkrow_1.Murkrow(),
-    new wattrel_1.Wattrel(),
     new flamigo_1.Flamigo(),
     new spiritomb_1.Spiritomb(),
     new boss_orders_1.BossOrders(),

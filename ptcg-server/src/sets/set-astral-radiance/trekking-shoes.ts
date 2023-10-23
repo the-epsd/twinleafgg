@@ -15,6 +15,8 @@ export class TrekkingShoes extends TrainerCard {
 
   public set: string = 'ASR';
 
+  public regulationMark = 'F';
+
   public set2: string = 'astralradiance';
 
   public setNumber: string = '156';

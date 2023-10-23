@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Mimikyuex extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     tags: CardTag[];
     cardType: CardType;
     hp: number;
@@ -21,7 +22,6 @@ export declare class Mimikyuex extends PokemonCard {
     set: string;
     set2: string;
     setNumber: string;
-    regulationMark: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

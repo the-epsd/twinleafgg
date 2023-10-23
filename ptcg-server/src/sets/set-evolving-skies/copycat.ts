@@ -34,6 +34,8 @@ export class Copycat extends TrainerCard {
 
   public set: string = 'EVS';
 
+  public regulationMark = 'E';
+
   public set2: string = 'evolvingskies';
 
   public setNumber: string = '143';

@@ -11,6 +11,7 @@ class ColresssExperiment extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'LOR';
+        this.regulationMark = 'F';
         this.set2 = 'lostorigin';
         this.setNumber = '155';
         this.name = 'Colress\'s Experiment';

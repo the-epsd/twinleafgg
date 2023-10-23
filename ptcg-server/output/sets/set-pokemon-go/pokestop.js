@@ -21,7 +21,7 @@ function* useStadium(next, store, state, effect) {
 class Pokestop extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'G';
+        this.regulationMark = 'F';
         this.set2 = 'pokemongo';
         this.setNumber = '68';
         this.trainerType = card_types_1.TrainerType.STADIUM;

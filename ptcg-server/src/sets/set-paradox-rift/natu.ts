@@ -10,6 +10,8 @@ export class Natu extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'G';
+
   public cardType: CardType = CardType.PSYCHIC;
 
   public hp: number = 50;

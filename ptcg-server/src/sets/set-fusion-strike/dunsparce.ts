@@ -36,17 +36,17 @@ export class Dunsparce extends PokemonCard {
       text: ''
     }];
 
-  public regulationMark = 'G';
+  public regulationMark = 'E';
 
-  public set: string = 'PAL';
+  public set: string = 'FST';
 
-  public set2: string = 'paldeaevolved';
+  public set2: string = 'fusionstrike';
 
-  public setNumber: string = '157';
+  public setNumber: string = '207';
 
-  public name: string = 'Dudunsparce';
+  public name: string = 'Dunsparce';
 
-  public fullName: string = 'Dudunsparce PAL';
+  public fullName: string = 'Dunsparce FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

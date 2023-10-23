@@ -4,6 +4,7 @@ import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Froslassex extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     tags: CardTag[];
     evolvesFrom: string;
     cardType: CardType;

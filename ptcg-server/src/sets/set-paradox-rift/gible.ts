@@ -5,6 +5,8 @@ export class Gible extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'G';
+
   public cardType: CardType = CardType.FIGHTING;
 
   public hp: number = 70;

@@ -23,7 +23,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
 export class Pokestop extends TrainerCard {
 
-  public regulationMark = 'G';
+  public regulationMark = 'F';
 
   public set2: string = 'pokemongo';
 

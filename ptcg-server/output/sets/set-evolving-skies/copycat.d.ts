@@ -6,6 +6,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 export declare class Copycat extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    regulationMark: string;
     set2: string;
     setNumber: string;
     name: string;

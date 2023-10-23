@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 export declare class GardeniasVigor extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    regulationMark: string;
     set2: string;
     setNumber: string;
     name: string;

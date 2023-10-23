@@ -5,6 +5,8 @@ export class Snorunt extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public cardType: CardType = CardType.WATER;
 
   public hp: number = 60;

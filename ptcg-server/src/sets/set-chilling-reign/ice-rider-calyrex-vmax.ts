@@ -12,6 +12,8 @@ export class IceRiderCalyrexVMAX extends PokemonCard {
 
   public evolvesFrom = 'Ice Rider Calyrex V';
 
+  public regulationMark = 'E';
+
   public cardType: CardType = CardType.WATER;
 
   public tags = [ CardTag.POKEMON_VMAX ];

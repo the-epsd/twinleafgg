@@ -32,8 +32,6 @@ export const setPaldeaEvolved: Card[] = [
   new Baxcalibur(),
   new ChienPaoex(),
   new SuperRod(),
-  new Murkrow(),
-  new Wattrel(),
   new Flamigo(),
   new Spiritomb(),
   new BossOrders(),

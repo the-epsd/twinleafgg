@@ -8,6 +8,8 @@ export class Gabite extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public regulationMark = 'G';
+
   public evolvesFrom = 'Gible';
 
   public cardType: CardType = CardType.FIGHTING;

@@ -12,6 +12,7 @@ class IceRiderCalyrexVMAX extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.VMAX;
         this.evolvesFrom = 'Ice Rider Calyrex V';
+        this.regulationMark = 'E';
         this.cardType = card_types_1.CardType.WATER;
         this.tags = [card_types_1.CardTag.POKEMON_VMAX];
         this.hp = 320;
