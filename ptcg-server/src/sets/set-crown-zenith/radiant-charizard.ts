@@ -69,7 +69,7 @@ export class RadiantCharizard extends PokemonCard {
         const player = effect.player;
         const opponent = StateUtils.getOpponent(state, player);
 
-        const index = effect.cost.indexOf(CardType.COLORLESS);
+        const index = this.attacks[0].cost.indexOf(CardType.COLORLESS);
 
         // No cost to reduce
         if (index === -1) {
@@ -77,12 +77,11 @@ export class RadiantCharizard extends PokemonCard {
         }
 
         const prizesTaken = 6 - opponent.getPrizeLeft();
-        const attack = this.attacks[0];
+        
+        this.attacks[0].cost[index] -= prizesTaken;
 
-        if (attack.cost.includes(CardType.COLORLESS)) {
-          const index = attack.cost.indexOf(CardType.COLORLESS);
-          attack.cost.splice(index, 1, prizesTaken); 
-        }
+        const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
+        state = store.reduceEffect(state, checkCost);
 
         if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
@@ -100,4 +99,5 @@ export class RadiantCharizard extends PokemonCard {
     }
     return state;
   }
+
 }

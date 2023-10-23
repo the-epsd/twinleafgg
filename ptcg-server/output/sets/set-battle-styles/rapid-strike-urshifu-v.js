@@ -43,12 +43,17 @@ class RapidStrikeUrshifuV extends pokemon_card_1.PokemonCard {
             if (!hasBenched) {
                 return state;
             }
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_NEW_ACTIVE_POKEMON, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: true }), selected => {
-                if (!selected || selected.length === 0) {
-                    return state;
+            state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_message_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+                if (wantToUse) {
+                    return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_NEW_ACTIVE_POKEMON, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: true }), selected => {
+                        if (!selected || selected.length === 0) {
+                            return state;
+                        }
+                        const target = selected[0];
+                        player.switchPokemon(target);
+                    });
                 }
-                const target = selected[0];
-                player.switchPokemon(target);
+                return state;
             });
         }
         return state;

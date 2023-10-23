@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { ChooseCardsPrompt, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SlotType, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class GiratinaVSTAR extends PokemonCard {
   
@@ -47,9 +48,13 @@ export class GiratinaVSTAR extends PokemonCard {
   
   public fullName: string = 'Giratina VSTAR LOR';
 
-  public readonly FLOWER_SELECTING_MARKER = 'FLOWER_SELECTING_MARKER';
+  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.VSTAR_MARKER, this);
+    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
@@ -87,6 +92,10 @@ export class GiratinaVSTAR extends PokemonCard {
       if (player.lostzone.cards.length <= 9) {
         throw new GameError (GameMessage.CANNOT_USE_POWER);  
       }
+
+      if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
           
       if (player.lostzone.cards.length >= 10) {
 
@@ -95,6 +104,7 @@ export class GiratinaVSTAR extends PokemonCard {
         const activePokemon = opponent.active.getPokemonCard();
         if (activePokemon) {
           activePokemon.hp = 0;
+          player.marker.addMarker(this.VSTAR_MARKER, this);
         }
       }
     }

@@ -1,15 +1,18 @@
-import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PokemonCard } from '../../game';
-export declare class GiratinaVSTAR extends PokemonCard {
+export declare class LucarioVSTAR extends PokemonCard {
     stage: Stage;
-    cardTag: CardTag[];
+    tags: CardTag[];
     evolvesFrom: string;
-    regulationMark: string;
     cardType: CardType;
+    regulationMark: string;
     hp: number;
+    weakness: {
+        type: CardType;
+    }[];
     retreat: CardType[];
     attacks: {
         name: string;

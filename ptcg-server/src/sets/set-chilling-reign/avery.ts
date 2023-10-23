@@ -4,6 +4,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCardList, SlotType, StateUtils } from '../../game';
 
 //Avery is not done yet!! have to add the "remove from bench" logic
 
@@ -36,17 +37,56 @@ export class Avery extends TrainerCard {
       player.deck.moveTo(player.hand, 3);
 
       // Get opponent
+      const opponent = StateUtils.getOpponent(state, player);
 
-      // Opponent discards cards if more than 3 bench Pokemon
+      // Get opponent's bench length
+      const opponentBenchLength = opponent.bench.length;
 
-      // Prompt to choose bench
+      let PokemonToDiscard = 0;
 
-      // Remove last Pokemon from bench
-  
-      // Prompt opponent to discard Pokemon
+      if (opponentBenchLength === 1) {
+        PokemonToDiscard = 0;
+      }
+      if (opponentBenchLength === 2) {
+        PokemonToDiscard = 0;
+      }
+      if (opponentBenchLength === 3) {
+        PokemonToDiscard = 0;
+      }
+      if (opponentBenchLength === 4) {
+        PokemonToDiscard = 1; 
+      }
+      if (opponentBenchLength === 5) {
+        PokemonToDiscard = 2;
+      }
 
+      let targets: PokemonCardList[] = [];
+
+      // Prompt opponent to discard Pokemon from bench
+      if(PokemonToDiscard === 1 || PokemonToDiscard === 2) {
+        
+        return store.prompt(state, new ChoosePokemonPrompt(
+          opponent.id,
+          GameMessage.CHOOSE_POKEMON_TO_DISCARD,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          {allowCancel: false, min: PokemonToDiscard, max: PokemonToDiscard}
+        ), results => {
+          targets = results || [];
+          
+          targets.forEach(target => {
+            target.moveTo(opponent.discard);
+          });
+
+        });
+        
+      }
+      
+      return state;
     }
-
+    
     return state;
   }
+
+
 }

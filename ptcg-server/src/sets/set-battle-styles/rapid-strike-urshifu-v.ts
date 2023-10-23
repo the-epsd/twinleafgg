@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, ConfirmPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { GameMessage } from '../../game/game-message';
@@ -56,24 +56,30 @@ export class RapidStrikeUrshifuV extends PokemonCard {
       if (!hasBenched) {
         return state;
       }
+
+      state = store.prompt(state, new ConfirmPrompt(
+        effect.player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (wantToUse) {
   
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
-        PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
-        { allowCancel: true },
-      ), selected => {
-        if (!selected || selected.length === 0) {
-          return state;
+          return store.prompt(state, new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
+            PlayerType.BOTTOM_PLAYER,
+            [ SlotType.BENCH ],
+            { allowCancel: true },
+          ), selected => {
+            if (!selected || selected.length === 0) {
+              return state;
+            }
+            const target = selected[0];
+            player.switchPokemon(target);
+          });
         }
-        const target = selected[0];
-        player.switchPokemon(target);
+        return state;
       });
     }
-
-
     return state;
-
   }
 }

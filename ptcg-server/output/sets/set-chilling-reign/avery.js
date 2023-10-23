@@ -4,6 +4,7 @@ exports.Avery = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const game_1 = require("../../game");
 //Avery is not done yet!! have to add the "remove from bench" logic
 class Avery extends trainer_card_1.TrainerCard {
     constructor() {
@@ -23,10 +24,36 @@ class Avery extends trainer_card_1.TrainerCard {
             // Draw 3 cards
             player.deck.moveTo(player.hand, 3);
             // Get opponent
-            // Opponent discards cards if more than 3 bench Pokemon
-            // Prompt to choose bench
-            // Remove last Pokemon from bench
-            // Prompt opponent to discard Pokemon
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Get opponent's bench length
+            const opponentBenchLength = opponent.bench.length;
+            let PokemonToDiscard = 0;
+            if (opponentBenchLength === 1) {
+                PokemonToDiscard = 0;
+            }
+            if (opponentBenchLength === 2) {
+                PokemonToDiscard = 0;
+            }
+            if (opponentBenchLength === 3) {
+                PokemonToDiscard = 0;
+            }
+            if (opponentBenchLength === 4) {
+                PokemonToDiscard = 1;
+            }
+            if (opponentBenchLength === 5) {
+                PokemonToDiscard = 2;
+            }
+            let targets = [];
+            // Prompt opponent to discard Pokemon from bench
+            if (PokemonToDiscard === 1 || PokemonToDiscard === 2) {
+                return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, min: PokemonToDiscard, max: PokemonToDiscard }), results => {
+                    targets = results || [];
+                    targets.forEach(target => {
+                        target.moveTo(opponent.discard);
+                    });
+                });
+            }
+            return state;
         }
         return state;
     }

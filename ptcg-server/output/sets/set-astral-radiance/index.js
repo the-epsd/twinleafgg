@@ -1,13 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setAstralRadiance = void 0;
-const miltank_1 = require("../set-flashfire/miltank");
 const darkrai_v_1 = require("./darkrai-v");
 const darkrai_vstar_1 = require("./darkrai-vstar");
 const feather_ball_1 = require("./feather-ball");
 const gallade_1 = require("./gallade");
 const gardenias_vigor_1 = require("./gardenias-vigor");
 const irida_1 = require("./irida");
+const lucario_v_1 = require("./lucario-v");
+const miltank_1 = require("./miltank");
 const origin_forme_palkia_v_1 = require("./origin-forme-palkia-v");
 const origin_forme_palkia_vstar_1 = require("./origin-forme-palkia-vstar");
 const radiant_greninja_1 = require("./radiant-greninja");
@@ -21,6 +22,7 @@ exports.setAstralRadiance = [
     new gallade_1.Gallade(),
     new gardenias_vigor_1.GardeniasVigor(),
     new irida_1.Irida(),
+    new lucario_v_1.LucarioV(),
     new miltank_1.Miltank(),
     new origin_forme_palkia_v_1.OriginFormePalkiaV(),
     new origin_forme_palkia_vstar_1.OriginFormePalkiaVSTAR(),

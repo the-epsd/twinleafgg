@@ -1,16 +1,23 @@
-import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PokemonCard } from '../../game';
-export declare class GiratinaVSTAR extends PokemonCard {
+import { PowerType } from '../../game/store/card/pokemon-types';
+export declare class Snorlax extends PokemonCard {
     stage: Stage;
-    cardTag: CardTag[];
-    evolvesFrom: string;
-    regulationMark: string;
     cardType: CardType;
+    regulationMark: string;
     hp: number;
+    weakness: {
+        type: CardType;
+    }[];
     retreat: CardType[];
+    powers: {
+        name: string;
+        powerType: PowerType;
+        text: string;
+    }[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -22,6 +29,5 @@ export declare class GiratinaVSTAR extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly VSTAR_MARKER = "VSTAR_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
