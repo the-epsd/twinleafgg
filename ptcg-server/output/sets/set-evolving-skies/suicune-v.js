@@ -33,11 +33,11 @@ class SuicuneV extends pokemon_card_1.PokemonCard {
                     'Pokémon (both yours and your opponent\'s).'
             }
         ];
-        this.set = 'BRS';
+        this.set = 'EVS';
         this.set2 = 'evolvingskies';
         this.setNumber = '31';
         this.name = 'Suicune V';
-        this.fullName = 'Suicune V BRS';
+        this.fullName = 'Suicune V EVS';
         this.FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';
     }
     reduceEffect(store, state, effect) {

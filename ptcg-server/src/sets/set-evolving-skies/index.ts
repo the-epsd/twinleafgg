@@ -7,6 +7,7 @@ import { GalarianMoltres } from './galarian-moltres';
 import { Mareep } from './mareep';
 import { Pumpkaboo } from './pumpkaboo';
 import { Raihan } from './raihan';
+import { Regieleki } from './regieleki';
 import { RescueCarrier } from './rescue-carrier';
 import { SuicuneV } from './suicune-v';
 import { UmbreonV } from './umbreon-v';
@@ -22,6 +23,7 @@ export const setEvolvingSkies: Card[] = [
   new Mareep(),
   new Pumpkaboo(),
   new Raihan(),
+  new Regieleki(),
   new RescueCarrier(),
   new SuicuneV(),
   new UmbreonV(),

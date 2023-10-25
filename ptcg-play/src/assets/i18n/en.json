@@ -163,7 +163,7 @@
   "MAIN_TABLES": "Tables",
   "MAIN_TABLE_NAME": "#{{id}} {{name}}",
   "MAIN_TABLE_UNKNOWN": "#{{id}} Unknown",
-  "MAIN_TITLE": "Pokemon Trading Card Game Elite",
+  "MAIN_TITLE": "twinleaf.gg",
   "MESSAGES_DELETE_CONVERSATION": "Delete conversation",
   "MESSAGES_DELETE_CONVERSATION_CONFIRM": "Delete this conversation from your profile?",
   "MESSAGES_ENTER_MESSAGE": "Enter message",

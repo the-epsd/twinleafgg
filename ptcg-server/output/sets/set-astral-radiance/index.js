@@ -13,6 +13,7 @@ const origin_forme_palkia_v_1 = require("./origin-forme-palkia-v");
 const origin_forme_palkia_vstar_1 = require("./origin-forme-palkia-vstar");
 const radiant_greninja_1 = require("./radiant-greninja");
 const ralts_1 = require("./ralts");
+const roxanne_1 = require("./roxanne");
 const switch_cart_1 = require("./switch-cart");
 const trekking_shoes_1 = require("./trekking-shoes");
 exports.setAstralRadiance = [
@@ -28,6 +29,7 @@ exports.setAstralRadiance = [
     new origin_forme_palkia_vstar_1.OriginFormePalkiaVSTAR(),
     new radiant_greninja_1.RadiantGreninja(),
     new ralts_1.Ralts(),
+    new roxanne_1.Roxanne(),
     new switch_cart_1.SwitchCart(),
     new trekking_shoes_1.TrekkingShoes(),
 ];

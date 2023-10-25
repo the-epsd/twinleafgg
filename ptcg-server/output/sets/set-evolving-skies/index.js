@@ -9,6 +9,7 @@ const galarian_moltres_1 = require("./galarian-moltres");
 const mareep_1 = require("./mareep");
 const pumpkaboo_1 = require("./pumpkaboo");
 const raihan_1 = require("./raihan");
+const regieleki_1 = require("./regieleki");
 const rescue_carrier_1 = require("./rescue-carrier");
 const suicune_v_1 = require("./suicune-v");
 const umbreon_v_1 = require("./umbreon-v");
@@ -22,6 +23,7 @@ exports.setEvolvingSkies = [
     new mareep_1.Mareep(),
     new pumpkaboo_1.Pumpkaboo(),
     new raihan_1.Raihan(),
+    new regieleki_1.Regieleki(),
     new rescue_carrier_1.RescueCarrier(),
     new suicune_v_1.SuicuneV(),
     new umbreon_v_1.UmbreonV(),
