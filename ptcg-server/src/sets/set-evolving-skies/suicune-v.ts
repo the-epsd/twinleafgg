@@ -40,7 +40,7 @@ export class SuicuneV extends PokemonCard {
     }
   ];
 
-  public set: string = 'BRS';
+  public set: string = 'EVS';
 
   public set2: string = 'evolvingskies';
 
@@ -48,7 +48,7 @@ export class SuicuneV extends PokemonCard {
 
   public name: string = 'Suicune V';
 
-  public fullName: string = 'Suicune V BRS';
+  public fullName: string = 'Suicune V EVS';
 
   public readonly FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';
 

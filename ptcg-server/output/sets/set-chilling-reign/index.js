@@ -9,6 +9,8 @@ const galarian_moltres_v_1 = require("./galarian-moltres-v");
 const gardevoir_1 = require("./gardevoir");
 const ice_rider_calyrex_v_1 = require("./ice-rider-calyrex-v");
 const ice_rider_calyrex_vmax_1 = require("./ice-rider-calyrex-vmax");
+const kirlia_1 = require("./kirlia");
+const melony_1 = require("./melony");
 const path_to_the_peak_1 = require("./path-to-the-peak");
 const snorunt_1 = require("./snorunt");
 exports.setChillingReign = [
@@ -20,6 +22,8 @@ exports.setChillingReign = [
     new gardevoir_1.Gardevoir(),
     new ice_rider_calyrex_v_1.IceRiderCalyrexV(),
     new ice_rider_calyrex_vmax_1.IceRiderCalyrexVMAX(),
+    new kirlia_1.Kirlia(),
+    new melony_1.Melony(),
     new path_to_the_peak_1.PathToThePeak(),
     new snorunt_1.Snorunt(),
 ];

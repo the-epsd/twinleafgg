@@ -68,7 +68,7 @@ exports.config = {
             path: '/usr/sbin/sendmail'
         },
         sender: 'example@example.com',
-        appName: 'Pokemon Trading Card Game Elite',
+        appName: 'AAAAA',
         publicAddress: 'http://localhost' // Address inside the e-mail messages
     }
 };
