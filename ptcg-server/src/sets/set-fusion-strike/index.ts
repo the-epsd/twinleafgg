@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { BattleVIPPass } from './battle-vip-pass';
+import { Creamomatic } from './cram-o-matic';
 import { CrossSwitcher } from './cross-switcher';
 import { Dunsparce } from './dunsparce';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
@@ -11,11 +12,13 @@ import { Meloetta } from './meloetta';
 import { MewV } from './mew-v';
 import { MewVMAX } from './mew-vmax';
 import { Oricorio } from './oricorio';
+import { PowerTablet } from './power-tablet';
 import { Yveltal } from './yveltal';
 
 export const setFusionStrike: Card[] = [
 
   new BattleVIPPass(),
+  new Creamomatic(),
   new CrossSwitcher(),
   new Dunsparce(),
   new FusionStrikeEnergy(),
@@ -27,5 +30,6 @@ export const setFusionStrike: Card[] = [
   new MewV(),
   new MewVMAX(),
   new Oricorio(),
+  new PowerTablet(),
   new Yveltal(),
 ];

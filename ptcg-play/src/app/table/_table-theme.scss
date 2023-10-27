@@ -9,14 +9,14 @@
   $warn: map-get($theme, warn);
 
   //Board + Card Slot Border
-  $table-border: solid 1px mat.get-color-from-palette($foreground, divider);
-  $active-player-background-color: mat.get-color-from-palette($background, focused-button);
-  $hand-background-color: mat.get-color-from-palette($background, app-bar);
-  $table-sidebar-header-background-color: mat.get-color-from-palette($background, background);
-  $table-sidebar-logs-background-color: mat.get-color-from-palette($background, focused-button);
-  $table-sidebar-time-empty-progress: mat.get-color-from-palette($foreground, divider);
-  $table-sidebar-time-disabled-progress: mat.get-color-from-palette($foreground, disabled-button);
-  $table-sidebar-time-running-progress: mat.get-color-from-palette($accent);
+  $table-border: solid 1px mat.get-color-from-palette($primary, A100);
+  $active-player-background-color: mat.get-color-from-palette($primary, A400);
+  $hand-background-color: mat.get-color-from-palette($primary, A200);
+  $table-sidebar-header-background-color: mat.get-color-from-palette($primary, A400);
+  $table-sidebar-logs-background-color: mat.get-color-from-palette($primary, A400);
+  $table-sidebar-time-empty-progress: mat.get-color-from-palette($primary, A200);
+  $table-sidebar-time-disabled-progress: mat.get-color-from-palette($primary, A100);
+  $table-sidebar-time-running-progress: mat.get-color-from-palette($primary, A700);
   $choose-avatar-background-color: mat.get-color-from-palette($background, hover);
 
   ptcg-hand {
@@ -49,7 +49,7 @@
 
   ptcg-game-logs {
     .ptcg-system {
-      color: mat.get-color-from-palette($accent);
+      color: red;
     }
     .ptcg-player1 {
       color: mat.get-color-from-palette($primary);

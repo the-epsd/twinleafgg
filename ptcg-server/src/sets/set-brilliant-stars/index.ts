@@ -3,6 +3,7 @@ import { ArceusV } from './arceus-v';
 import { ArceusVSTAR } from './arceus-vstar';
 import { Bibarel } from './bibarel';
 import { CherensCare } from './cherens-care';
+import { CleansingGloves } from './cleansing-gloves';
 import { CollapsedStadium } from './collapsed-stadium';
 import { DoubleTurboEnergy } from './double-turbo-energy';
 import { EnteiV } from './entei-v';
@@ -17,6 +18,7 @@ export const setBrilliantStars: Card[] = [
   new ArceusVSTAR(),
   new Bibarel(),
   new CherensCare(),
+  new CleansingGloves(),
   new CollapsedStadium(),
   new DoubleTurboEnergy(),
   new EnteiV(),

@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+// import mappings from '../../sets/card-mappings.json';
 class Miraidonex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -33,15 +34,21 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.set2 = 'svi';
         this.setNumber = '81';
-        this.name = 'Miraidon ex';
-        this.fullName = 'Miraidon ex SVI';
+        this.name = 'svi 81';
+        this.fullName = 'svi 81';
         this.TANDEM_UNIT_MARKER = 'TANDEM_UNIT_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
+        // const changes: any = mappings[this.setNumber];
+        // if(changes) {
+        //   this.set2 = changes.set2;
+        //   this.name = changes.name;
+        //   this.fullName = changes.fullName;
+        // }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
             effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
             effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);

@@ -1,7 +1,7 @@
 @import '../../../theme/variables.scss';
 
 $ptcg-hand-padding: map-get($padding, normal);
-$ptcg-hand-height: calc(var(--card-size) * #{$card-aspect-ratio} + #{3 * $ptcg-hand-padding});
+$ptcg-hand-height: calc(var(--card-size) * #{$card-aspect-ratio} + #{4 * $ptcg-hand-padding});
 
 .ptcg-hand {
   display: flex;
@@ -22,7 +22,7 @@ dnd-sortable-list {
 
 ptcg-card {
   flex: 0 0 auto;
-  width: 80px;
+  width: 95px;
   padding: 5px;
 
   &.draggable {

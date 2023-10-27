@@ -1,5 +1,5 @@
 <mat-toolbar color="accent" [ngClass]="{'is-logged-in': loggedUser}">
-  <button mat-button (click)="onLogoClick()">{{ 'MAIN_TITLE' | translate }}</button>
+  <button color="primary" mat-button (click)="onLogoClick()">{{ 'MAIN_TITLE' | translate }}</button>
   <span class="epsd-spacer"></span>
 
   <!-- Language select -->
@@ -9,12 +9,14 @@
     <button *ngIf="!loggedUser" mat-button (click)="login()">
       {{ 'BUTTON_LOGIN' | translate }}
     </button>
+   
     <ptcg-user-bar *ngIf="loggedUser"
       class="ptcg-logged-user"
       [openUserPopup]="false"
       [user]="loggedUser"
       [matMenuTriggerFor]="menu">
     </ptcg-user-bar>
+  
     <mat-menu #menu="matMenu">
       <button mat-menu-item [routerLink]="['/profile', loggedUser?.userId]">
         {{ 'BUTTON_SHOW_PROFILE' | translate }}

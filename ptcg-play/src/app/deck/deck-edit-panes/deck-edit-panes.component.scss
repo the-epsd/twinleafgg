@@ -3,25 +3,30 @@
 :host {
   display: flex;
   flex: 1 1 auto;
-  flex-direction: column;
+  flex-direction: row;
+  overflow: auto;
 }
 
 .ptcg-deck-edit-pane {
   flex: 1 1 0;
-  max-width: 100%;
+  overflow: auto;
+  max-width: 40%;
 }
 
 ptcg-deck-card.placeholder {
   opacity: $ptcg-disabled-opacity;
+  overflow: auto;
 }
 
 .ptcg-card-preview {
   border-radius: $card-border-radius;
   position: absolute;
   width: map-get($ptcg-size, card);
+  overflow: auto;
 }
 
 .ptcg-deck-edit-pane.secondary {
-  border-width: map-get($padding, small);
+  border-width: 0px;
   overflow: auto;
+  max-width: 60%;
 }

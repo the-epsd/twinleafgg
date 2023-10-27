@@ -20,6 +20,7 @@ $avatar-size: map-get($ptcg-size, avatar);
 }
 
 ptcg-avatar {
+  padding-left: 10px;
   bottom: 0;
   left: 0;
   position: absolute;
@@ -27,6 +28,7 @@ ptcg-avatar {
 }
 
 .ptcg-user-info {
+  padding-left: 10px;
   display: flex;
   flex: 1 1;
   flex-direction: column;
@@ -36,11 +38,13 @@ ptcg-avatar {
 }
 
 .ptcg-user-name {
+  padding-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .ptcg-user-ranking {
+  padding-left: 10px;
   align-items: center;
   display: flex;
 }

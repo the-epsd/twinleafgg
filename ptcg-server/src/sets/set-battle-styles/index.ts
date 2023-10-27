@@ -3,6 +3,7 @@ import { Bellsprout } from './bellsprout';
 import { Bronzong } from './bronzong';
 import { Cherrim } from './cherrim';
 import { Cherubi } from './cherubi';
+import { Cheryl } from './cheryl';
 import { Durant } from './durant';
 import { EmpoleonV } from './empoleon-v';
 import { EscapeRope } from './escape-rope';
@@ -38,6 +39,7 @@ export const setBattleStyles: Card[] = [
   new Bronzong(),
   new Cherrim(),
   new Cherubi(),
+  new Cheryl(),
   new Durant(),
   new EmpoleonV(),
   new EscapeRope(),

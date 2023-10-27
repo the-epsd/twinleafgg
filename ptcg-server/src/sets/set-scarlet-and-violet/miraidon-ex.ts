@@ -6,6 +6,10 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
+// import mappings from '../../sets/card-mappings.json';
+
+
+
 export class Miraidonex extends PokemonCard {
 
   public regulationMark = 'G';
@@ -40,21 +44,29 @@ export class Miraidonex extends PokemonCard {
     }
   ];
 
+
   public set: string = 'SVI';
 
-  public set2: string = 'scarletviolet';
-
+  public set2: string = 'svi';
+  
   public setNumber: string = '81';
 
-  public name: string = 'Miraidon ex';
+  public name: string = 'svi 81';
 
-  public fullName: string = 'Miraidon ex SVI';
+  public fullName: string = 'svi 81';
 
   public readonly TANDEM_UNIT_MARKER = 'TANDEM_UNIT_MARKER';
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    // const changes: any = mappings[this.setNumber];
+    // if(changes) {
+    //   this.set2 = changes.set2;
+    //   this.name = changes.name;
+    //   this.fullName = changes.fullName;
+    // }
   
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);

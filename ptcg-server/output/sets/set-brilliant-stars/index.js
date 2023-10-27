@@ -5,6 +5,7 @@ const arceus_v_1 = require("./arceus-v");
 const arceus_vstar_1 = require("./arceus-vstar");
 const bibarel_1 = require("./bibarel");
 const cherens_care_1 = require("./cherens-care");
+const cleansing_gloves_1 = require("./cleansing-gloves");
 const collapsed_stadium_1 = require("./collapsed-stadium");
 const double_turbo_energy_1 = require("./double-turbo-energy");
 const entei_v_1 = require("./entei-v");
@@ -17,6 +18,7 @@ exports.setBrilliantStars = [
     new arceus_vstar_1.ArceusVSTAR(),
     new bibarel_1.Bibarel(),
     new cherens_care_1.CherensCare(),
+    new cleansing_gloves_1.CleansingGloves(),
     new collapsed_stadium_1.CollapsedStadium(),
     new double_turbo_energy_1.DoubleTurboEnergy(),
     new entei_v_1.EnteiV(),

@@ -5,6 +5,7 @@ const bellsprout_1 = require("./bellsprout");
 const bronzong_1 = require("./bronzong");
 const cherrim_1 = require("./cherrim");
 const cherubi_1 = require("./cherubi");
+const cheryl_1 = require("./cheryl");
 const durant_1 = require("./durant");
 const empoleon_v_1 = require("./empoleon-v");
 const escape_rope_1 = require("./escape-rope");
@@ -38,6 +39,7 @@ exports.setBattleStyles = [
     new bronzong_1.Bronzong(),
     new cherrim_1.Cherrim(),
     new cherubi_1.Cherubi(),
+    new cheryl_1.Cheryl(),
     new durant_1.Durant(),
     new empoleon_v_1.EmpoleonV(),
     new escape_rope_1.EscapeRope(),
