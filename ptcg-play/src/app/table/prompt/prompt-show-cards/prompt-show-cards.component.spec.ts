@@ -10,7 +10,7 @@ describe('PromptShowCardsComponent', () => {
   let component: PromptShowCardsComponent;
   let fixture: ComponentFixture<PromptShowCardsComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach((() => {
     TestBed.configureTestingModule({
       imports: [
         ApiModule,
