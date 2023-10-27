@@ -19,7 +19,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
     
     margin: 0;
     width: 100%;
-    transform: perspective(55em) rotateX(32deg);
+    transform: perspective(55em) rotateX(30deg);
     display: flex;
     padding: 0;
   }
@@ -70,7 +70,6 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 
 .ptcg-board-row {
   align-items: center;
-  align-content: center;
   display: flex;
   flex-direction: row;
   height: 100%;
