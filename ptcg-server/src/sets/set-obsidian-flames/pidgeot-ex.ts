@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../game/store/prefabs/prefabs';
 
 
 export class Pidgeotex extends PokemonCard {
@@ -103,12 +104,7 @@ export class Pidgeotex extends PokemonCard {
           GameMessage.WANT_TO_USE_ABILITY,
         ), (wantToUse) => {
           if (wantToUse) {
-
-            // Discard Stadium
-            const cardList = StateUtils.findCardList(state, stadiumCard);
-            const player = StateUtils.findOwner(state, cardList);
-            cardList.moveTo(player.discard);
-            return state;
+            DISCARD_A_STADIUM_CARD_IN_PLAY(state);
           }
           return state;
         });

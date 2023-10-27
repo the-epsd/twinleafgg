@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND } from '../../game/store/prefabs/attack-effects';
 
 
 export class Cleffa extends PokemonCard {
@@ -40,15 +41,8 @@ export class Cleffa extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-
-      const cardsToDraw = 7 - player.hand.cards.length;
-      if (cardsToDraw <= 0) {
-        return state;
-      }
-
-      player.deck.moveTo(player.hand, cardsToDraw);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND(7, effect, state);
     }
 
     return state;

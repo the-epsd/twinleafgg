@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/prefabs/prefabs';
+import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Ivysaur extends PokemonCard {
 
@@ -21,7 +21,7 @@ export class Ivysaur extends PokemonCard {
       damage: 30,
       text: 'Heal 20 damage from this Pokémon.',
       effect: (store: StoreLike, state: State, effect: AttackEffect) => {
-        HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 20);
+        HEAL_X_DAMAGE_FROM_THIS_POKEMON(20, effect, store, state);
       }
     },
     {

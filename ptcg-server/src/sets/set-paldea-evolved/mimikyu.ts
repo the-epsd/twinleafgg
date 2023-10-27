@@ -7,6 +7,7 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
+import { PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Mimikyu extends PokemonCard {
 
@@ -47,7 +48,7 @@ export class Mimikyu extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Prevent damage from Pokemon-EX
+    // Prevent damage from Pokemon-ex
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const pokemonCard = effect.target.getPokemonCard();
       const sourceCard = effect.source.getPokemonCard();
@@ -84,12 +85,7 @@ export class Mimikyu extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const dealDamage = new PutDamageEffect(effect, 70);
-      dealDamage.target = opponent.active;
-      return store.reduceEffect(state, dealDamage);
+      PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(7, store, state, effect);
     }
     return state;
   }

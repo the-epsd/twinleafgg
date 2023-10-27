@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE } from '../../game/store/prefabs/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Murkrow extends PokemonCard {
 
@@ -48,7 +49,7 @@ export class Murkrow extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
   
       const hasBenched = player.bench.some(b => b.cards.length > 0);
@@ -71,19 +72,9 @@ export class Murkrow extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-
-      let pokemonCount = 0;
-      player.discard.cards.forEach(c => {
-        if (c instanceof PokemonCard && c.attacks.some(a => a.name === 'United Wings')) {
-          pokemonCount += 1;
-        }
-      });
-
-      effect.damage = pokemonCount * 20;
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE(20, c => c.attacks.some(a => a.name === 'United Wings'), effect);
     }
-
     return state;
   }
 

@@ -6,6 +6,8 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Dudunsparce extends PokemonCard {
@@ -28,7 +30,7 @@ export class Dudunsparce extends PokemonCard {
     damage: 30,
     text: ''
   }, {
-    name: 'Deck and Cover',
+    name: 'Dig AWay Flash',
     cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
     damage: 100,
     text: 'Your opponent\'s Active Pokémon is now Paralyzed. Shuffle this Pokémon and all attached cards into your deck.'
@@ -48,20 +50,9 @@ export class Dudunsparce extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-
-      const specialConditionEffect = new AddSpecialConditionsEffect(
-        effect, [ SpecialCondition.PARALYZED ]
-      );
-      store.reduceEffect(state, specialConditionEffect);
-
-      player.active.moveTo(player.deck);
-      player.active.clearEffects();
-
-      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-      });
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+      SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(store, state, effect);
     }
 
     return state;
