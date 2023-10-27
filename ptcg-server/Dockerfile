@@ -25,7 +25,7 @@ FROM base as deps
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
     --mount=type=cache,target=/root/.npm \
-    npm ci --omit=dev
+    npm ci
 
 ################################################################################
 # Create a stage for building the application.
@@ -38,9 +38,6 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=cache,target=/root/.npm \
     npm ci
 
-# Install sqlite3
-RUN apk add --no-cache sqlite
-
 # Copy the rest of the source files into the image.
 COPY . .
 # Run the build script.
@@ -51,8 +48,9 @@ RUN npm run build
 # where the necessary files are copied from the build stage.
 FROM base as final
 
-# Use production node environment by default.
-ENV NODE_ENV production
+# Use development node environment by default.
+ENV NODE_ENV development
+
 
 # Run the application as a non-root user.
 USER node
