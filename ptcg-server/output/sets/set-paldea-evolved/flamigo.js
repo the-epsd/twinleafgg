@@ -6,6 +6,8 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const attack_effects_1 = require("../../game/store/prefabs/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 function* useLeParfum(next, store, state, self, effect) {
     const player = effect.player;
     if (player.deck.cards.length === 0) {
@@ -66,15 +68,8 @@ class Flamigo extends pokemon_card_1.PokemonCard {
             const generator = useLeParfum(() => generator.next(), store, state, this, effect);
             return generator.next().value;
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            let pokemonCount = 0;
-            player.discard.cards.forEach(c => {
-                if (c instanceof pokemon_card_1.PokemonCard && c.attacks.some(a => a.name === 'United Wings')) {
-                    pokemonCount += 1;
-                }
-            });
-            effect.damage = pokemonCount * 20;
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
+            attack_effects_1.THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE(20, c => c.attacks.some(a => a.name === 'United Wings'), effect);
         }
         return state;
     }

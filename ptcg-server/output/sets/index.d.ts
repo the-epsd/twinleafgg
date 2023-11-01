@@ -50,6 +50,7 @@ export * from './set-silver-tempest';
 export * from './set-crown-zenith';
 export * from './set-scarlet-and-violet';
 export * from './set-scarlet-and-violet-energy';
+export * from './set-scarlet-and-violet-promos';
 export * from './set-paldea-evolved';
 export * from './set-obsidian-flames';
 export * from './set-pokemon-151';

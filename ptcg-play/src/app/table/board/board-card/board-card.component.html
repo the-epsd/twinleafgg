@@ -22,6 +22,7 @@
     <ng-content></ng-content>
   </ptcg-card>
 
+  
   <div class="ptcg-card-damage" *ngIf="damage > 0">
     <ptcg-badge color="warn">{{ damage }}</ptcg-badge>
   </div>
@@ -34,9 +35,10 @@
       <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.CONFUSED">
         {{ 'LABEL_CONFUSED' | translate }}
       </ptcg-badge>
+      <div class="asleep">
       <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.ASLEEP">
         {{ 'LABEL_ASLEEP' | translate }}
-      </ptcg-badge>
+      </ptcg-badge></div>
       <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.POISONED">
         {{ 'LABEL_POISONED' | translate }}
       </ptcg-badge>
@@ -45,6 +47,10 @@
       </ptcg-badge>
     </div>
   </div>
+
+  <div class="ptcg-card-damage" *ngIf="">
+    <ptcg-badge color="warn">{{card.name}}</ptcg-badge>
+  </div> 
 
   <div class="ptcg-card-counts" *ngIf="showCardCount && cardCount > 0">
     <ptcg-badge>

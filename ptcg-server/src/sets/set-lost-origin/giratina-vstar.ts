@@ -9,7 +9,7 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class GiratinaVSTAR extends PokemonCard {
   
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VSTAR;
 
   public cardTag = [ CardTag.POKEMON_VSTAR ];
 

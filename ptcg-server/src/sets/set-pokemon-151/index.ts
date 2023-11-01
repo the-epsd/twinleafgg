@@ -8,6 +8,7 @@ import { Charmeleon } from './charmeleon';
 import { Dodrio } from './dodrio';
 import { Doduo } from './doduo';
 import { Eevee } from './eevee';
+import { Grabber } from './grabber';
 import { Ivysaur } from './ivysaur';
 import { Kangaskhanex } from './kangaskhan-ex';
 import { Mewex } from './mew-ex';
@@ -31,6 +32,7 @@ export const setPokemon151: Card[] = [
   new Dodrio(),
   new Doduo(),
   new Eevee(),
+  new Grabber(),
   new Ivysaur(),
   new Kangaskhanex(),
   new Mewex(),

@@ -8,6 +8,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const state_utils_1 = require("../../game/store/state-utils");
+const attack_effects_2 = require("../../game/store/prefabs/attack-effects");
 class Mimikyu extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -35,7 +36,7 @@ class Mimikyu extends pokemon_card_1.PokemonCard {
         this.fullName = 'Mimikyu PAL';
     }
     reduceEffect(store, state, effect) {
-        // Prevent damage from Pokemon-EX
+        // Prevent damage from Pokemon-ex
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             const pokemonCard = effect.target.getPokemonCard();
             const sourceCard = effect.source.getPokemonCard();
@@ -66,11 +67,7 @@ class Mimikyu extends pokemon_card_1.PokemonCard {
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            const player = effect.player;
-            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            const dealDamage = new attack_effects_1.PutDamageEffect(effect, 70);
-            dealDamage.target = opponent.active;
-            return store.reduceEffect(state, dealDamage);
+            attack_effects_2.PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(7, store, state, effect);
         }
         return state;
     }

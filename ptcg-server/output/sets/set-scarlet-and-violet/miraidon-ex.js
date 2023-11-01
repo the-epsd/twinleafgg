@@ -28,16 +28,16 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Photon Blaster',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
                 damage: 220,
                 text: 'During your next turn, this Pokémon can\'t attack.'
             }
         ];
         this.set = 'SVI';
-        this.set2 = 'svi';
+        this.set2 = 'scarletviolet';
         this.setNumber = '81';
-        this.name = 'svi 81';
-        this.fullName = 'svi 81';
+        this.name = 'Miraidon ex';
+        this.fullName = 'Miraidon ex SVI';
         this.TANDEM_UNIT_MARKER = 'TANDEM_UNIT_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

@@ -74,8 +74,8 @@ $ptcg-energy-card-offset: 10%;
 
 .ptcg-card-damage {
   position: absolute;
-  top: 15%;
-  left: 10%;
+  top: 0%;
+  right: 0%;
 
   :host-context(.upside-down) & {
     transform: rotate(180deg);
@@ -95,5 +95,9 @@ $ptcg-energy-card-offset: 10%;
 
   :host-context(.upside-down) & {
     transform: translateX(-100%) rotate(180deg);
+
+    .asleep {
+      transform: rotate(90deg);
+    }
   }
 }

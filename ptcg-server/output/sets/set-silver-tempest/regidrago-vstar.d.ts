@@ -1,11 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class RegidragoVSTAR extends PokemonCard {
     tags: CardTag[];
     regulationMark: string;
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: never[];
@@ -16,10 +17,17 @@ export declare class RegidragoVSTAR extends PokemonCard {
         damage: number;
         text: string;
     }[];
+    powers: {
+        name: string;
+        useWhenInPlay: boolean;
+        powerType: PowerType;
+        text: string;
+    }[];
     set: string;
     set2: string;
     setNumber: string;
     name: string;
     fullName: string;
+    readonly VSTAR_MARKER = "VSTAR_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

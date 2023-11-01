@@ -8,8 +8,6 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 // import mappings from '../../sets/card-mappings.json';
 
-
-
 export class Miraidonex extends PokemonCard {
 
   public regulationMark = 'G';
@@ -38,7 +36,7 @@ export class Miraidonex extends PokemonCard {
   public attacks = [
     {
       name: 'Photon Blaster',
-      cost: [ CardType.COLORLESS ],
+      cost: [ CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS ],
       damage: 220,
       text: 'During your next turn, this Pokémon can\'t attack.'
     }
@@ -47,13 +45,13 @@ export class Miraidonex extends PokemonCard {
 
   public set: string = 'SVI';
 
-  public set2: string = 'svi';
+  public set2: string = 'scarletviolet';
   
   public setNumber: string = '81';
 
-  public name: string = 'svi 81';
+  public name: string = 'Miraidon ex';
 
-  public fullName: string = 'svi 81';
+  public fullName: string = 'Miraidon ex SVI';
 
   public readonly TANDEM_UNIT_MARKER = 'TANDEM_UNIT_MARKER';
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

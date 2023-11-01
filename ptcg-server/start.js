@@ -85,6 +85,7 @@ cardManager.defineSet(sets.setCrownZenith);
 
 cardManager.defineSet(sets.setScarletAndViolet);
 cardManager.defineSet(sets.setScarletAndVioletEnergy);
+cardManager.defineSet(sets.setScarletAndVioletPromos);
 cardManager.defineSet(sets.setPaldeaEvolved);
 cardManager.defineSet(sets.setObsidianFlames);
 cardManager.defineSet(sets.setPokemon151);

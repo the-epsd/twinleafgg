@@ -20,6 +20,23 @@ dnd-sortable-list {
   display: flex;
 }
 
+ptcg-card-damage {
+  position: absolute;
+  width: 80%;
+  padding: 5px;
+  font-size: smaller;
+  z-index: 1;
+}
+
+
+ptcg-badge {
+  position: absolute;
+  width: 80%;
+  padding: 5px;
+  font-size: smaller;
+  z-index: 1;
+}
+
 ptcg-card {
   flex: 0 0 auto;
   width: 95px;

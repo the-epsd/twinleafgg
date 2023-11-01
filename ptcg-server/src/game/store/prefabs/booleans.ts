@@ -1,11 +1,7 @@
 import { PokemonCard } from '../card/pokemon-card';
-import { State, StateUtils } from '../..';
+import { State } from '../..';
 import { Effect } from '../effects/effect';
-import { AttackEffect, PowerEffect, KnockOutEffect } from '../effects/game-effects';
-import { HealTargetEffect, PutDamageEffect, DiscardCardsEffect } from '../effects/attack-effects';
-import { CheckProvidedEnergyEffect } from '../effects/check-effects';
-import { StoreLike, Card, ChooseEnergyPrompt, ChoosePokemonPrompt, PlayerType, SlotType, GameMessage } from '../..';
-import { CardType } from '../card/card-types';
+import { AttackEffect, KnockOutEffect } from '../effects/game-effects';
 
 /**
  * These prefabs are for "boolean" card effects. Boolean card effects oftentimes start with 

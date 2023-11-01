@@ -10,7 +10,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class DefianceBand extends TrainerCard {
 
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  public trainerType: TrainerType = TrainerType.TOOL;
 
   public regulationMark = 'G';
 

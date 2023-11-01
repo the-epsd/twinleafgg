@@ -1,8 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, TrainerType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, TrainerCard, ChooseCardsPrompt } from '../../game';
+import { Stage, CardType, TrainerType } from '../../game/store/card/card-types';
+import { StoreLike, State, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { GameMessage } from '../../game/game-message';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND } from '../../game/store/prefabs/attack-effects';
 
@@ -47,7 +46,7 @@ export class Lillipup extends PokemonCard {
         store, 
         state, 
         effect
-        );
+      );
     }
     return state;
   }

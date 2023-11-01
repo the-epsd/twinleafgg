@@ -34,8 +34,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // This will prevent unblocked supporter to appear in the discard pile
   effect.preventDefault = true;
 
-  const maxPokemons = Math.min(pokemons, 1);
-  const maxTrainers = Math.min(trainers, 1);
+  const maxPokemons = Math.min(pokemons, 1); 
+  const maxTrainers = Math.min(trainers, 1);  
   const count = maxPokemons + maxTrainers;
 
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -43,7 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { },
-    { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTrainers }
+    { min: 0, max: count, allowCancel: false, blocked, maxPokemons: 1, maxTrainers: 1 }
   ), selected => {
     cards = selected || [];
     next();

@@ -1,5 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
+import { Bounsweet } from './bounsweet';
+import { BruteBonnet } from './brute-bonnet';
 import { Deoxys } from './deoxys';
 import { EarthenVessel } from './earthen-vessel';
 import { Froslassex } from './froslass-ex';
@@ -17,12 +19,16 @@ import { ProfessorTurosScenario } from './professor-turos-scenario';
 import { RoaringMoonex } from './roaring-moon-ex';
 import { ScreamTail } from './scream-tail';
 import { Snorunt } from './snorunt';
+import { Steenee } from './steenee';
 import { TechnoRadar } from './techno-radar';
+import { Tsareenaex } from './tsareena-ex';
 import { Xatu } from './xatu';
 
 export const setParadoxRift: Card[] = [
   
   new AncientBoosterEnergyCapsule(),
+  new BruteBonnet(),
+  new Bounsweet(),
   new Deoxys(),
   new EarthenVessel(),
   new Froslassex(),
@@ -40,6 +46,8 @@ export const setParadoxRift: Card[] = [
   new RoaringMoonex(),
   new ScreamTail(),
   new Snorunt(),
+  new Steenee(),
   new TechnoRadar(),
+  new Tsareenaex(),
   new Xatu(),
 ];

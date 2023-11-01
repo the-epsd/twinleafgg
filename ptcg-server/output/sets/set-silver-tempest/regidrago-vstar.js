@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 function* useApexDragon(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
@@ -42,8 +43,8 @@ class RegidragoVSTAR extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VSTAR];
         this.regulationMark = 'F';
-        this.stage = card_types_1.Stage.BASIC;
-        //   public evolvesFrom = 'Regidrago V';
+        this.stage = card_types_1.Stage.VSTAR;
+        this.evolvesFrom = 'Regidrago V';
         this.cardType = card_types_1.CardType.DRAGON;
         this.hp = 280;
         this.weakness = [];
@@ -51,9 +52,17 @@ class RegidragoVSTAR extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Apex Dragon',
-                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.GRASS, card_types_1.CardType.GRASS, card_types_1.CardType.FIRE],
                 damage: 0,
                 text: 'Choose an attack from a [N] Pokémon in your discard pile and use it as this attack.'
+            }
+        ];
+        this.powers = [
+            {
+                name: 'Summoning Star',
+                useWhenInPlay: true,
+                powerType: game_1.PowerType.ABILITY,
+                text: 'During your turn, you may discard the top 7 cards of your deck. Then, put up to 2 cards from your discard pile into your hand. (You can\'t use more than 1 VSTAR Power in a game.)'
             }
         ];
         this.set = 'SIT';
@@ -61,11 +70,36 @@ class RegidragoVSTAR extends pokemon_card_1.PokemonCard {
         this.setNumber = '136';
         this.name = 'Regidrago VSTAR';
         this.fullName = 'Regidrago VSTAR SIT 114';
+        this.VSTAR_MARKER = 'VSTAR_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+            const player = effect.player;
+            player.marker.removeMarker(this.VSTAR_MARKER, this);
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const generator = useApexDragon(() => generator.next(), store, state, effect);
             return generator.next().value;
+        }
+        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+            const player = effect.player;
+            player.marker.removeMarker(this.VSTAR_MARKER, this);
+        }
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+            const player = effect.player;
+            if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+            }
+            player.marker.addMarker(this.VSTAR_MARKER, this);
+            player.deck.moveTo(player.discard, 7);
+            let cards = [];
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 1, max: 2, allowCancel: true }), selected => {
+                cards = selected || [];
+                cards.forEach((card, index) => {
+                    player.discard.moveCardTo(card, player.hand);
+                });
+                return state;
+            });
         }
         return state;
     }

@@ -243,22 +243,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
     // deck-edit-panes.component.ts
 
-onDeckCardClick(item: DeckItem) {
-  const index = this.tempList.findIndex(c => c.card.fullName === item.card.fullName);
-  if (index === -1) {
-    return;
-  }
-
-  const count = 1;
-  const list = this.tempList.slice();
-  if (list[index].count <= count) {
-    list.splice(index, 1);
-  } else {
-    list[index].count -= count;
-  }
-
-  this.tempList = this.list = list;
-  this.deckItemsChange.next(list);
+    onDeckCardClick(card: DeckItem) {
+      this.removeCardFromDeck(card);
 }
 
 onLibraryCardClick(card: DeckItem) {

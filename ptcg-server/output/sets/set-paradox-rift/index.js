@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setParadoxRift = void 0;
 const ancient_booster_energy_capsule_1 = require("./ancient-booster-energy-capsule");
+const bounsweet_1 = require("./bounsweet");
+const brute_bonnet_1 = require("./brute-bonnet");
 const deoxys_1 = require("./deoxys");
 const earthen_vessel_1 = require("./earthen-vessel");
 const froslass_ex_1 = require("./froslass-ex");
@@ -19,10 +21,14 @@ const professor_turos_scenario_1 = require("./professor-turos-scenario");
 const roaring_moon_ex_1 = require("./roaring-moon-ex");
 const scream_tail_1 = require("./scream-tail");
 const snorunt_1 = require("./snorunt");
+const steenee_1 = require("./steenee");
 const techno_radar_1 = require("./techno-radar");
+const tsareena_ex_1 = require("./tsareena-ex");
 const xatu_1 = require("./xatu");
 exports.setParadoxRift = [
     new ancient_booster_energy_capsule_1.AncientBoosterEnergyCapsule(),
+    new brute_bonnet_1.BruteBonnet(),
+    new bounsweet_1.Bounsweet(),
     new deoxys_1.Deoxys(),
     new earthen_vessel_1.EarthenVessel(),
     new froslass_ex_1.Froslassex(),
@@ -40,6 +46,8 @@ exports.setParadoxRift = [
     new roaring_moon_ex_1.RoaringMoonex(),
     new scream_tail_1.ScreamTail(),
     new snorunt_1.Snorunt(),
+    new steenee_1.Steenee(),
     new techno_radar_1.TechnoRadar(),
+    new tsareena_ex_1.Tsareenaex(),
     new xatu_1.Xatu(),
 ];

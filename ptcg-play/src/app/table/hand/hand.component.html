@@ -8,6 +8,7 @@
       [children]="tempList"
       [listId]="handListId">
       <ng-template dndSortableTemplate let-context>
+        <!-- <div class="ptcg-card-damage"><ptcg-badge color="warn">{{context.data.card.name}}</ptcg-badge></div> -->
         <ptcg-card
           [dndSortableRender]="context"
           #render="dndSortableRender"

@@ -85,6 +85,7 @@ __exportStar(require("./set-crown-zenith"), exports);
 //SVI Era
 __exportStar(require("./set-scarlet-and-violet"), exports);
 __exportStar(require("./set-scarlet-and-violet-energy"), exports);
+__exportStar(require("./set-scarlet-and-violet-promos"), exports);
 __exportStar(require("./set-paldea-evolved"), exports);
 __exportStar(require("./set-obsidian-flames"), exports);
 __exportStar(require("./set-pokemon-151"), exports);

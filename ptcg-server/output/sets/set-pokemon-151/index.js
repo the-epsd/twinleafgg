@@ -10,6 +10,7 @@ const charmeleon_1 = require("./charmeleon");
 const dodrio_1 = require("./dodrio");
 const doduo_1 = require("./doduo");
 const eevee_1 = require("./eevee");
+const grabber_1 = require("./grabber");
 const ivysaur_1 = require("./ivysaur");
 const kangaskhan_ex_1 = require("./kangaskhan-ex");
 const mew_ex_1 = require("./mew-ex");
@@ -31,6 +32,7 @@ exports.setPokemon151 = [
     new dodrio_1.Dodrio(),
     new doduo_1.Doduo(),
     new eevee_1.Eevee(),
+    new grabber_1.Grabber(),
     new ivysaur_1.Ivysaur(),
     new kangaskhan_ex_1.Kangaskhanex(),
     new mew_ex_1.Mewex(),
