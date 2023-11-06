@@ -40,19 +40,16 @@ class ScreamTail extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            const opponent = effect.opponent;
             const max = Math.min(1);
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: max, max, allowCancel: false }), selected => {
                 const targets = selected || [];
-                if (targets.includes(opponent.active)) {
-                    targets.forEach(target => {
-                        const damageCounters = effect.player.active.damage;
-                        const damageOutput = damageCounters * 20;
-                        const damageEffect = new attack_effects_1.PutDamageEffect(effect, damageOutput);
-                        damageEffect.target = target;
-                        store.reduceEffect(state, damageEffect);
-                    });
-                }
+                targets.forEach(target => {
+                    const damageCounters = effect.player.active.damage;
+                    const damageOutput = damageCounters * 2;
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, damageOutput);
+                    damageEffect.target = target;
+                    store.reduceEffect(state, damageEffect);
+                });
                 return state;
             });
         }

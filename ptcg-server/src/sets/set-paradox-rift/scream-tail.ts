@@ -50,7 +50,6 @@ export class ScreamTail extends PokemonCard {
     
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      const opponent = effect.opponent;
       
       const max = Math.min(1);
       return store.prompt(state, new ChoosePokemonPrompt(
@@ -61,15 +60,13 @@ export class ScreamTail extends PokemonCard {
         { min: max, max, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        if (targets.includes(opponent.active)) {
-          targets.forEach(target => {
-            const damageCounters = effect.player.active.damage;
-            const damageOutput = damageCounters * 20;
-            const damageEffect = new PutDamageEffect(effect, damageOutput);
-            damageEffect.target = target;
-            store.reduceEffect(state, damageEffect);
-          });
-        }
+        targets.forEach(target => {
+          const damageCounters = effect.player.active.damage;
+          const damageOutput = damageCounters * 2;
+          const damageEffect = new PutDamageEffect(effect, damageOutput);
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
+        });
         return state;
       });
     }

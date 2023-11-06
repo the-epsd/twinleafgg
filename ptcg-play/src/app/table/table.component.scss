@@ -1,12 +1,14 @@
 :host {
   display: block;
   height: 100%;
+  width: 100%;
 }
 
 .ptcg-table {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
 }
 
 ptcg-board {
@@ -14,8 +16,8 @@ ptcg-board {
   background-color: #212835;
   background-image: url(~src/assets/twinleaf-board-center.png);
   background-repeat: no-repeat;
-  background-size: 12% 12%;
-  background-position-y: 288px;
+  background-size: 12% 16%;
+  background-position-y: 277px;
   background-position-x: center;
 }
 

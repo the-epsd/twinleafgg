@@ -12,6 +12,7 @@ const lunatone_1 = require("./lunatone");
 const pidgeot_ex_1 = require("./pidgeot-ex");
 const pidgeotto_1 = require("./pidgeotto");
 const pidgey_1 = require("./pidgey");
+const pokemon_league_headquarters_1 = require("./pokemon-league-headquarters");
 const poppy_1 = require("./poppy");
 exports.setObsidianFlames = [
     new charizard_ex_1.Charizardex(),
@@ -25,5 +26,6 @@ exports.setObsidianFlames = [
     new pidgeotto_1.Pidgeotto(),
     new pidgeot_ex_1.Pidgeotex(),
     new pidgey_1.Pidgey(),
+    new pokemon_league_headquarters_1.PokemonLeagueHeadquarters(),
     new poppy_1.Poppy(),
 ];

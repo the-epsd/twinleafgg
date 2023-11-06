@@ -53,10 +53,6 @@ class RadiantCharizard extends pokemon_card_1.PokemonCard {
                 const player = effect.player;
                 const opponent = game_1.StateUtils.getOpponent(state, player);
                 const index = this.attacks[0].cost.indexOf(card_types_1.CardType.COLORLESS);
-                // No cost to reduce
-                if (index === -1) {
-                    return state;
-                }
                 const prizesTaken = 6 - opponent.getPrizeLeft();
                 this.attacks[0].cost[index] -= prizesTaken;
                 const checkCost = new check_effects_1.CheckAttackCostEffect(player, this.attacks[0]);

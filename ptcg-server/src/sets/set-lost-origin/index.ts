@@ -10,6 +10,7 @@ import { Lady } from './lady';
 import { LostCity } from './lost-city';
 import { MirageGate } from './mirage-gate';
 import { RadiantGardevoir } from './radiant-gardevoir';
+import { RotomV } from './rotom-v';
 import { Sableye } from './sableye';
 import { Snorlax } from './snorlax';
 
@@ -26,6 +27,7 @@ export const setLostOrigin: Card[] = [
   new LostCity(),
   new MirageGate(),
   new RadiantGardevoir(),
+  new RotomV(),
   new Sableye(),  
   new Snorlax(),
 ];

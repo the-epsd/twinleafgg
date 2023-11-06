@@ -12,6 +12,7 @@ const lady_1 = require("./lady");
 const lost_city_1 = require("./lost-city");
 const mirage_gate_1 = require("./mirage-gate");
 const radiant_gardevoir_1 = require("./radiant-gardevoir");
+const rotom_v_1 = require("./rotom-v");
 const sableye_1 = require("./sableye");
 const snorlax_1 = require("./snorlax");
 exports.setLostOrigin = [
@@ -26,6 +27,7 @@ exports.setLostOrigin = [
     new lost_city_1.LostCity(),
     new mirage_gate_1.MirageGate(),
     new radiant_gardevoir_1.RadiantGardevoir(),
+    new rotom_v_1.RotomV(),
     new sableye_1.Sableye(),
     new snorlax_1.Snorlax(),
 ];

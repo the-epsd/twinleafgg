@@ -7,6 +7,7 @@ import { GardeniasVigor } from './gardenias-vigor';
 import { Irida } from './irida';
 import { LucarioV } from './lucario-v';
 import { Miltank } from './miltank';
+import { OriginFormeDialgaVSTAR } from './origin-forme-dialga-vstar';
 import { OriginFormePalkiaV } from './origin-forme-palkia-v';
 import { OriginFormePalkiaVSTAR } from './origin-forme-palkia-vstar';
 import { RadiantGreninja } from './radiant-greninja';
@@ -26,6 +27,7 @@ export const setAstralRadiance: Card[] = [
   new Irida(),
   new LucarioV(),
   new Miltank(),
+  new OriginFormeDialgaVSTAR(),
   new OriginFormePalkiaV(),
   new OriginFormePalkiaVSTAR(),
   new RadiantGreninja(),

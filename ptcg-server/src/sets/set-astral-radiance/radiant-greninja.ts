@@ -104,7 +104,6 @@ export class RadiantGreninja extends PokemonCard {
   
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const opponent = effect.opponent;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
@@ -127,17 +126,18 @@ export class RadiantGreninja extends PokemonCard {
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
         [ SlotType.ACTIVE, SlotType.BENCH ],
-        { min: max, max, allowCancel: false }
+        { min: 1, max: max, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        if (targets.includes(opponent.active)) {
-          targets.forEach(target => {
-            const damageEffect = new PutDamageEffect(effect, 90);
-            damageEffect.target = target;
-            store.reduceEffect(state, damageEffect);
-          });
-        }});
+        targets.forEach(target => {
+          const damageEffect = new PutDamageEffect(effect, 90);
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
+        });
+        return state; 
+      });
     }
     return state; 
   }
 }
+

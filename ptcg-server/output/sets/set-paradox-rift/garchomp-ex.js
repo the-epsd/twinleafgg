@@ -39,53 +39,39 @@ class Garchompex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Garchomp ex PAR';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+            state = store.reduceEffect(state, checkProvidedEnergy);
+            state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
+                const cards = (energy || []).map(e => e.card);
+                const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+                discardEnergy.target = player.active;
+                store.reduceEffect(state, discardEnergy);
+            });
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
+                const targets = selected || [];
+                targets.forEach(target => {
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 120);
+                    damageEffect.target = target;
+                    store.reduceEffect(state, damageEffect);
+                });
+                return state;
+            });
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            const hasBench = player.bench.some(b => b.cards.length > 0);
-            if (!hasBench) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-            }
-            const hasEnergyInDiscard = player.discard.cards.some(c => {
-                return c instanceof game_1.EnergyCard
-                    && c.energyType === card_types_1.EnergyType.BASIC
-                    && c.provides.includes(card_types_1.CardType.FIGHTING);
-            });
-            if (!hasEnergyInDiscard) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-            }
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { allowCancel: true, min: 1, max: 3 }), transfers => {
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { allowCancel: true, min: 0, max: 3 }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {
-                    return;
+                    return state;
                 }
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.discard.moveCardTo(transfer.card, target);
-                    return state;
                 }
             });
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
-                state = store.reduceEffect(state, checkProvidedEnergy);
-                state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
-                    const cards = (energy || []).map(e => e.card);
-                    const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
-                    discardEnergy.target = player.active;
-                    store.reduceEffect(state, discardEnergy);
-                });
-                const max = Math.min(1);
-                return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: max, max, allowCancel: false }), selected => {
-                    const targets = selected || [];
-                    targets.forEach(target => {
-                        const damageEffect = new attack_effects_1.PutDamageEffect(effect, 120);
-                        damageEffect.target = target;
-                        store.reduceEffect(state, damageEffect);
-                    });
-                    return state;
-                });
-            }
             return state;
         }
         return state;

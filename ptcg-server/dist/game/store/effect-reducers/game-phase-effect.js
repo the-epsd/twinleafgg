@@ -38,9 +38,9 @@ export function initNextTurn(store, state) {
     state.turn++;
     store.log(state, GameLog.LOG_TURN, { turn: state.turn });
     // Skip draw card on first turn
-    //if (state.turn === 1 && !state.rules.firstTurnDrawCard) {
+    // if (state.turn === this.turn && state.rules.firstTurnDrawCard) {
     //  return state;
-    //}
+    // }
     // Draw card at the beginning
     store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
     if (player.deck.cards.length === 0) {

@@ -16,10 +16,10 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   }
   
   .parent {
-    
+    height: 640px;
     margin: 0;
-    width: 100%;
-    transform: perspective(55em) rotateX(30deg);
+    width: 900px;
+    transform: perspective(55em) rotateX(18deg);
     display: flex;
     padding: 0;
   }
@@ -45,6 +45,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   min-height: $board-min-height;
   min-width: $board-min-width;
   width: calc(var(--card-size) * #{$ptcg-bench-slots} + #{($ptcg-bench-slots + 1) * map-get($padding, small)});
+  height: calc(var(--card-size) * #{$ptcg-bench-slots} + #{($ptcg-bench-slots + 1) * map-get($padding, small)});
 }
 
 .ptcg-board-player {
@@ -77,18 +78,18 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-    max-width: var(--card-size);
-    width: calc(#{math.div(100, $ptcg-bench-slots)}% - #{map-get($padding, small)});
+width: 82px;
   }
 }
 
 .ptcg-board-active,
+
 .ptcg-board-supporter,
 .ptcg-board-stadium {
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-    max-width: var(--card-size);
-    width: calc(#{math.div(600, $ptcg-bench-slots) * 4}% - #{map-get($padding, large)});
+    width: 82px;
+
   }
 }
 

@@ -6,10 +6,9 @@
   height: 330px;
   justify-content: space-around;
   margin: 0 auto;
-  width: calc(50% - #{map-get($padding, small)});
-  max-width: map-get($ptcg-size, card);
+  width: 50%;
 }
 
 ptcg-board-card {
-  width: 100%
+  width: 82px;
 }

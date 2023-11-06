@@ -10,6 +10,7 @@ import { Lunatone } from './lunatone';
 import { Pidgeotex } from './pidgeot-ex';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
+import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
 
 export const setObsidianFlames: Card[] = [
@@ -25,5 +26,6 @@ export const setObsidianFlames: Card[] = [
   new Pidgeotto(),
   new Pidgeotex(),
   new Pidgey(),
+  new PokemonLeagueHeadquarters(),
   new Poppy(),  
 ];

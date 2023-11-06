@@ -80,7 +80,6 @@ class RadiantGreninja extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            const opponent = effect.opponent;
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkProvidedEnergy);
             state = store.prompt(state, new choose_energy_prompt_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
@@ -90,15 +89,14 @@ class RadiantGreninja extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, discardEnergy);
             });
             const max = Math.min(2);
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: max, max, allowCancel: false }), selected => {
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: false }), selected => {
                 const targets = selected || [];
-                if (targets.includes(opponent.active)) {
-                    targets.forEach(target => {
-                        const damageEffect = new attack_effects_1.PutDamageEffect(effect, 90);
-                        damageEffect.target = target;
-                        store.reduceEffect(state, damageEffect);
-                    });
-                }
+                targets.forEach(target => {
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 90);
+                    damageEffect.target = target;
+                    store.reduceEffect(state, damageEffect);
+                });
+                return state;
             });
         }
         return state;

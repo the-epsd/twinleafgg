@@ -71,11 +71,6 @@ export class RadiantCharizard extends PokemonCard {
 
         const index = this.attacks[0].cost.indexOf(CardType.COLORLESS);
 
-        // No cost to reduce
-        if (index === -1) {
-          return state;
-        }
-
         const prizesTaken = 6 - opponent.getPrizeLeft();
         
         this.attacks[0].cost[index] -= prizesTaken;
