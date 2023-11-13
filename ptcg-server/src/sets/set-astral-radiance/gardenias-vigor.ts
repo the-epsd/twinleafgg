@@ -41,7 +41,7 @@ export class GardeniasVigor extends TrainerCard {
         player.hand,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Grass Energy' },
         { min: 1, max: 2, allowCancel: true }
       ), transfers => {
         transfers = transfers || [];

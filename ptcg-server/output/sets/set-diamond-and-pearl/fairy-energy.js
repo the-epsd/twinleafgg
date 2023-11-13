@@ -8,8 +8,8 @@ class FairyEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.FAIRY];
         this.set = 'DP';
-        this.name = 'Fairy Energy';
-        this.fullName = 'Fairy Energy EVO';
+        this.name = 'Basic Fairy Energy';
+        this.fullName = 'Basic Fairy Energy EVO';
     }
 }
 exports.FairyEnergy = FairyEnergy;

@@ -54,7 +54,7 @@ export class Pignite extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
         player.deck,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fire Energy' },
         { min: 1, max: 1, allowCancel: true }
       ), cards => {
         cards = cards || [];

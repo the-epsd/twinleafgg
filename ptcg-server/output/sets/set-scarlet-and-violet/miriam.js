@@ -45,13 +45,12 @@ class Miriam extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
+        this.set = 'SVI';
+        this.set2 = 'scarletviolet';
         this.setNumber = '179';
         this.name = 'Miriam';
-        this.fullName = 'Miriam PAL';
-        this.text = 'Shuffle 3 in any combination of Pokemon and basic Energy cards from ' +
-            'your discard pile back into your deck.';
+        this.fullName = 'Miriam SVI';
+        this.text = 'Shuffle up to 5 Pokémon from your discard pile into your deck. If you shuffled any cards into your deck in this way, draw 3 cards.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

@@ -75,6 +75,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
       endDrag: () => {
         this.hasDropped = false;
         this.tempList = this.list;
+        this.tempList.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
+        this.tempList.sort((a, b) => a.card.superType - b.card.superType);
       },
       isDragging: (ground: DeckItem, inFlight: DraggedItem<DeckItem>) => {
         return ground.card.fullName === inFlight.data.card.fullName;
@@ -175,6 +177,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
     this.tempList = this.list = list;
     this.deckItemsChange.next(list);
+    this.tempList.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
+    this.tempList.sort((a, b) => a.card.superType - b.card.superType);
   }
 
   public async removeCardFromDeck(item: DeckItem) {
@@ -193,6 +197,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
     this.tempList = this.list = list;
     this.deckItemsChange.next(list);
+    this.tempList.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
+    this.tempList.sort((a, b) => a.card.superType - b.card.superType);
   }
 
   public async setCardCount(item: DeckItem) {

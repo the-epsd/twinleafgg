@@ -44,7 +44,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fire Energy' },
     { min: 1, max: 2, allowCancel: true }
   ), selected => {
     cards = selected || [];

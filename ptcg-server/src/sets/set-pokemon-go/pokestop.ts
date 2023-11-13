@@ -33,21 +33,19 @@ export class Pokestop extends TrainerCard {
 
     const deckTop = new CardList();
     player.deck.moveTo(deckTop, 3);
-
+  
+    // Move all cards to discard
+    deckTop.moveTo(player.discard, deckTop.cards.length);
+  
     // Filter for item cards
-    const itemCards = deckTop.cards.filter(c =>
-      c instanceof TrainerCard &&
+    const itemCards = deckTop.cards.filter(c => 
+      c instanceof TrainerCard && 
       c.trainerType === TrainerType.ITEM
     );
-
-    // Move all item cards to hand
+  
+    // Move item cards to hand
     deckTop.moveCardsTo(itemCards, player.hand);
-
-    // Move remaining cards back to deck
-    const remainingCards = deckTop.cards;
-    deckTop.moveTo(player.discard, remainingCards.length);
-
+  
     return state;
   }
-
 }

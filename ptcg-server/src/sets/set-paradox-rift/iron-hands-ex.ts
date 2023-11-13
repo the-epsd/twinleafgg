@@ -31,7 +31,7 @@ export class IronHandsex extends PokemonCard {
     {
       name: 'Amp You Very Much',
       cost: [CardType.COLORLESS],
-      damage: 120,
+      damage: 220,
       text: 'If your opponent\'s Pokemon is Knocked Out by damage from this attack, take I more Prize card.'
     },
   ];

@@ -87,7 +87,7 @@ export class GalarianMoltres extends PokemonCard {
             player.id,
             GameMessage.CHOOSE_CARD_TO_ATTACH,
             player.hand,
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Darkness Energy' },
             { min: 0, max: 2, allowCancel: true }
           ), cards => {
             cards = cards || [];

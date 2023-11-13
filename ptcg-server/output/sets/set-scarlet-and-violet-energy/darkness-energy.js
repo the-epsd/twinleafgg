@@ -8,10 +8,10 @@ class DarknessEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.DARK];
         this.set = 'SVE';
-        this.set2 = 'smpromo';
-        this.setNumber = '134';
-        this.name = 'Darkness Energy';
-        this.fullName = 'Darkness Energy SVE';
+        this.set2 = 'evolvingskies';
+        this.setNumber = '236';
+        this.name = 'Basic Darkness Energy';
+        this.fullName = 'Basic Darkness Energy SVE';
     }
 }
 exports.DarknessEnergy = DarknessEnergy;

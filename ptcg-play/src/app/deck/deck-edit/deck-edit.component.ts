@@ -75,6 +75,8 @@ export class DeckEditComponent implements OnInit {
             scanUrl: this.cardsBaseService.getScanUrl(card),
           };
           deckItems.push(itemMap[name]);
+          deckItems.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
+          deckItems.sort((a, b) => a.card.superType - b.card.superType);
         }
       }
     }

@@ -32,7 +32,7 @@ function* useFireOff(next, store, state, effect) {
         }
     });
     return store.prompt(state, new game_1.MoveEnergyPrompt(player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], // Only allow moving to active
-    { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: true, blockedMap }), transfers => {
+    { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Fire Energy' }, { allowCancel: true, blockedMap }), transfers => {
         if (!transfers) {
             return;
         }

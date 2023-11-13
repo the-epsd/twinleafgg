@@ -34,7 +34,7 @@ export class RotomV extends PokemonCard {
   public attacks = [
     {
       name: 'Scrap Short',
-      cost: [CardType.METAL ],
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING ],
       damage: 0,
       text: 'Put any number of Pokémon Tool cards from your discard pile in the Lost Zone. This attack does 40 more damage for each card you put in the Lost Zone in this way.'
     }
@@ -44,7 +44,7 @@ export class RotomV extends PokemonCard {
 
   public set2: string = 'lostorigin';
 
-  public setNumber: string = '45';
+  public setNumber: string = '58';
 
   public name: string = 'Rotom V';
 

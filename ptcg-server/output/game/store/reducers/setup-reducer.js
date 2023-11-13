@@ -38,6 +38,8 @@ function* setupGame(next, store, state) {
     const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
     const player = state.players[0];
     const opponent = state.players[1];
+    let playerCardsToDraw = 0;
+    let opponentCardsToDraw = 0;
     let playerHasBasic = false;
     let opponentHasBasic = false;
     while (!playerHasBasic || !opponentHasBasic) {
@@ -66,7 +68,7 @@ function* setupGame(next, store, state) {
                 new alert_prompt_1.AlertPrompt(opponent.id, game_message_1.GameMessage.SETUP_PLAYER_NO_BASIC)
             ], results => {
                 if (results[0]) {
-                    player.deck.moveTo(player.hand, 1);
+                    playerCardsToDraw++;
                 }
                 next();
             });
@@ -78,7 +80,7 @@ function* setupGame(next, store, state) {
                 new alert_prompt_1.AlertPrompt(player.id, game_message_1.GameMessage.SETUP_PLAYER_NO_BASIC)
             ], results => {
                 if (results[0]) {
-                    opponent.deck.moveTo(opponent.hand, 1);
+                    opponentCardsToDraw++;
                 }
                 next();
             });
@@ -90,6 +92,8 @@ function* setupGame(next, store, state) {
     ], choice => {
         putStartingPokemonsAndPrizes(player, choice[0]);
         putStartingPokemonsAndPrizes(opponent, choice[1]);
+        player.deck.moveTo(player.hand, playerCardsToDraw);
+        opponent.deck.moveTo(opponent.hand, opponentCardsToDraw);
         next();
     });
     const whoBeginsEffect = new game_phase_effects_1.WhoBeginsEffect();

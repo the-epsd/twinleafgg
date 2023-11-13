@@ -28,7 +28,6 @@ export class RetreatEffect implements Effect {
     this.benchIndex = benchIndex;
   }
 }
-
 export class UsePowerEffect implements Effect {
   readonly type: string = GameEffects.USE_POWER_EFFECT;
   public preventDefault = false;
@@ -78,6 +77,18 @@ export class UseStadiumEffect implements Effect {
   constructor(player: Player, stadium: Card) {
     this.player = player;
     this.stadium = stadium;
+  }
+}
+
+export class useToolEffect implements Effect {
+  readonly type: string = GameEffects.USE_STADIUM_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public tool: Card;
+
+  constructor(player: Player, tool: Card) {
+    this.player = player;
+    this.tool = tool;
   }
 }
 

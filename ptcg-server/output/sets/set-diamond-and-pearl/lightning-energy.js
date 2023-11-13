@@ -8,8 +8,8 @@ class LightningEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.LIGHTNING];
         this.set = 'DP';
-        this.name = 'Lightning Energy';
-        this.fullName = 'Lightning Energy EVO';
+        this.name = 'Basic Lightning Energy';
+        this.fullName = 'Basic Lightning Energy EVO';
     }
 }
 exports.LightningEnergy = LightningEnergy;

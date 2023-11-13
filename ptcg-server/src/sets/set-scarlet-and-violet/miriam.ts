@@ -59,19 +59,18 @@ export class Miriam extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'PAL';
+  public set: string = 'SVI';
 
-  public set2: string = 'paldeaevolved';
+  public set2: string = 'scarletviolet';
 
   public setNumber: string = '179';
 
   public name: string = 'Miriam';
 
-  public fullName: string = 'Miriam PAL';
+  public fullName: string = 'Miriam SVI';
 
   public text: string =
-    'Shuffle 3 in any combination of Pokemon and basic Energy cards from ' +
-    'your discard pile back into your deck.';
+    'Shuffle up to 5 Pokémon from your discard pile into your deck. If you shuffled any cards into your deck in this way, draw 3 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

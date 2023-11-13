@@ -7,12 +7,12 @@ export class FireEnergy extends EnergyCard {
 
   public set: string = 'SVE';
 
-  public set2: string = 'smpromo';
+  public set2: string = 'fusionstrike';
 
-  public setNumber: string = '129';
+  public setNumber: string = '284';
 
-  public name = 'Fire Energy';
+  public name = 'Basic Fire Energy';
 
-  public fullName = 'Fire Energy SVE';
+  public fullName = 'Basic Fire Energy SVE';
 
 }

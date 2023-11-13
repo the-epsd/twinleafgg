@@ -5,6 +5,8 @@ const archeops_1 = require("./archeops");
 const articuno_1 = require("./articuno");
 const braixen_1 = require("./braixen");
 const capturing_aroma_1 = require("./capturing-aroma");
+const cobalion_1 = require("./cobalion");
+const dragonite_1 = require("./dragonite");
 const forest_seal_stone_1 = require("./forest-seal-stone");
 const hisuian_braviary_1 = require("./hisuian-braviary");
 const kirlia_1 = require("./kirlia");
@@ -16,6 +18,7 @@ const radiant_tsareena_1 = require("./radiant-tsareena");
 const regidrago_v_1 = require("./regidrago-v");
 const regidrago_vstar_1 = require("./regidrago-vstar");
 const rufflet_1 = require("./rufflet");
+const v_guard_energy_1 = require("./v-guard-energy");
 const worker_1 = require("./worker");
 const zeraora_1 = require("./zeraora");
 exports.setSilverTempest = [
@@ -23,6 +26,8 @@ exports.setSilverTempest = [
     new articuno_1.Articuno(),
     new braixen_1.Braixen(),
     new capturing_aroma_1.CapturingAroma(),
+    new cobalion_1.Cobalion(),
+    new dragonite_1.Dragonite(),
     new forest_seal_stone_1.ForestSealStone(),
     new hisuian_braviary_1.HisuianBraviary(),
     new kirlia_1.Kirlia(),
@@ -34,6 +39,7 @@ exports.setSilverTempest = [
     new regidrago_v_1.RegidragoV(),
     new regidrago_vstar_1.RegidragoVSTAR(),
     new rufflet_1.Rufflet(),
+    new v_guard_energy_1.VGuardEnergy(),
     new worker_1.Worker(),
     new zeraora_1.Zeraora(),
 ];

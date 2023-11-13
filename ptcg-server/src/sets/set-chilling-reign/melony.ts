@@ -24,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Water Energy' },
     { min: 1, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];

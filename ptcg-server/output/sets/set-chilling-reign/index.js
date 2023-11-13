@@ -13,6 +13,7 @@ const ice_rider_calyrex_vmax_1 = require("./ice-rider-calyrex-vmax");
 const justified_gloves_1 = require("./justified-gloves");
 const kirlia_1 = require("./kirlia");
 const melony_1 = require("./melony");
+//import { OldCemetery } from './old-cemetery';
 const path_to_the_peak_1 = require("./path-to-the-peak");
 const snorunt_1 = require("./snorunt");
 exports.setChillingReign = [
@@ -28,6 +29,7 @@ exports.setChillingReign = [
     new justified_gloves_1.JustifiedGloves(),
     new kirlia_1.Kirlia(),
     new melony_1.Melony(),
+    //new OldCemetery(),
     new path_to_the_peak_1.PathToThePeak(),
     new snorunt_1.Snorunt(),
 ];

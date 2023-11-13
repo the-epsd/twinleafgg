@@ -28,7 +28,7 @@ export class DragoniteV extends PokemonCard {
     damage: 50,
     text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
   }, {
-    name: 'Mighty Meteor',
+    name: 'Dragon Gale',
     cost: [ CardType.WATER, CardType.WATER, CardType.LIGHTNING ],
     damage: 250,
     text: 'This attack also does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'

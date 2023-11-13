@@ -71,11 +71,15 @@ export class Artazon extends TrainerCard {
 
   public setNumber: string = '171';
   
-  trainerType = TrainerType.STADIUM;
-  set = 'PAL';
-  name = 'Artazon';
-  fullName = 'Artazon PAL';
-  text = 'Once during each player\'s turn, that player may search their ' +
+  public  trainerType = TrainerType.STADIUM;
+
+  public set = 'PAL';
+
+  public name = 'Artazon';
+
+  public fullName = 'Artazon PAL';
+  
+  public  text = 'Once during each player\'s turn, that player may search their ' +
   'deck for a Basic Pokémon that doesn\'t have a Rule Box ' +
   'and put it onto their Bench. Then, that player shuffles their deck. ' +
   '(Pokémon ex, Pokémon V, etc. have Rule Boxes.)';

@@ -34,7 +34,7 @@ export class ElectricGenerator extends TrainerCard {
   
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
-        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Lightning Energy';
+        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Basic Lightning Energy';
       });
   
       // If no energy cards were drawn, move all cards to deck
@@ -66,7 +66,7 @@ export class ElectricGenerator extends TrainerCard {
           temp, // Only show drawn energies
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH],
-          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy'},
+          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Lightning Energy'},
           {min: 0, max: 2}
         ), transfers => {
   

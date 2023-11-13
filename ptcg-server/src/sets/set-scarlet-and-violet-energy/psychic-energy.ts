@@ -7,12 +7,12 @@ export class PsychicEnergy extends EnergyCard {
 
   public set: string = 'SVE';
 
-  public set2: string = 'smpromo';
+  public set2: string = 'chillingreign';
 
-  public setNumber: string = '132';
+  public setNumber: string = '232';
 
-  public name = 'Psychic Energy';
+  public name = 'Basic Psychic Energy';
 
-  public fullName = 'Psychic Energy SVE';
+  public fullName = 'Basic Psychic Energy SVE';
 
 }

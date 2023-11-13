@@ -22,6 +22,7 @@ const venomoth_1 = require("./venomoth");
 const venusaur_ex_1 = require("./venusaur-ex");
 const wartortle_1 = require("./wartortle");
 const zapdos_ex_1 = require("./zapdos-ex");
+const erikas_invitation_1 = require("./erikas-invitation");
 exports.setPokemon151 = [
     new alakazam_ex_1.Alakazamex(),
     new blastoise_ex_1.Blastoiseex(),
@@ -32,6 +33,7 @@ exports.setPokemon151 = [
     new dodrio_1.Dodrio(),
     new doduo_1.Doduo(),
     new eevee_1.Eevee(),
+    new erikas_invitation_1.EreikasInvitation(),
     new grabber_1.Grabber(),
     new ivysaur_1.Ivysaur(),
     new kangaskhan_ex_1.Kangaskhanex(),

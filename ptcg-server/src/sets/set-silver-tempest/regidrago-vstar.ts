@@ -56,7 +56,6 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
   return state;
 }
 
-
 export class RegidragoVSTAR extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_VSTAR ];

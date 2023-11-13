@@ -64,6 +64,7 @@ export class PutDamageEffect extends AbstractAttackEffect implements Effect {
   readonly type: string = AttackEffects.PUT_DAMAGE_EFFECT;
   public preventDefault = false;
   public damage: number;
+  public damageReduced = false;
 
   constructor(base: AttackEffect, damage: number) {
     super(base);

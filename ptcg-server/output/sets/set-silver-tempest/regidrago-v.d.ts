@@ -20,6 +20,5 @@ export declare class RegidragoV extends PokemonCard {
     regulationMark: string;
     name: string;
     fullName: string;
-    readonly FLEET_FOOTED_MARKER = "FLEET_FOOTED_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

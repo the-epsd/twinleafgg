@@ -7,12 +7,12 @@ export class MetalEnergy extends EnergyCard {
 
   public set: string = 'SVE';
 
-  public set2: string = 'smpromo';
+  public set2: string = 'evolvingskies';
 
-  public setNumber: string = '135';
+  public setNumber: string = '237';
 
-  public name = 'Metal Energy';
+  public name = 'Basic Metal Energy';
 
-  public fullName = 'Metal Energy SVE';
+  public fullName = 'Basic Metal Energy SVE';
 
 }

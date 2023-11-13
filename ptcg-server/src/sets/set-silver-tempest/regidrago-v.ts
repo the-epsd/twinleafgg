@@ -3,7 +3,6 @@ import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/stor
 import { StoreLike, State, PlayerType, GameMessage, AttachEnergyPrompt, EnergyCard, SlotType, StateUtils, CardList, ChoosePokemonPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class RegidragoV extends PokemonCard {
@@ -19,6 +18,12 @@ export class RegidragoV extends PokemonCard {
   public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
 
   public attacks = [
+    {
+      name: 'Celestial Roar',
+      cost: [ CardType.COLORLESS ],
+      damage: 0,
+      text: 'Discard the top 3 cards of your deck. If any of those cards are Energy cards, attach them to this Pokémon.'
+    },
     {
       name: 'Dragon Laser',
       cost: [ CardType.GRASS, CardType.GRASS, CardType.FIRE ],
@@ -39,16 +44,8 @@ export class RegidragoV extends PokemonCard {
 
   public fullName: string = 'Regidrago V SIT';
 
-  public readonly FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
-    }
-    
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       
@@ -56,7 +53,7 @@ export class RegidragoV extends PokemonCard {
       const temp = new CardList();
 
 
-      player.deck.moveTo(temp, 2);
+      player.deck.moveTo(temp, 3);
 
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
@@ -66,7 +63,7 @@ export class RegidragoV extends PokemonCard {
       // If no energy cards were drawn, move all cards to hand
       if (energyCardsDrawn.length == 0) {
         temp.cards.slice(0, 3).forEach(card => {
-          temp.moveCardTo(card, player.hand); 
+          temp.moveCardTo(card, player.discard); 
         });
       } else {
       

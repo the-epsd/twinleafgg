@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
 import { Bounsweet } from './bounsweet';
 import { BruteBonnet } from './brute-bonnet';
+import { CounterCatcher } from './counter-catcher';
 import { Deoxys } from './deoxys';
 import { EarthenVessel } from './earthen-vessel';
 import { Froslassex } from './froslass-ex';
@@ -14,7 +15,9 @@ import { IronHandsex } from './iron-hands-ex';
 import { IronValiantex } from './iron-valiant-ex';
 import { Jirachi } from './jirachi';
 import { Mewtwoex } from './mewtwo-ex';
+import { Morpeko } from './morpeko';
 import { Natu } from './natu';
+import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
 import { RoaringMoonex } from './roaring-moon-ex';
 import { ScreamTail } from './scream-tail';
@@ -29,6 +32,7 @@ export const setParadoxRift: Card[] = [
   new AncientBoosterEnergyCapsule(),
   new BruteBonnet(),
   new Bounsweet(),
+  new CounterCatcher(),
   new Deoxys(),
   new EarthenVessel(),
   new Froslassex(),
@@ -41,7 +45,9 @@ export const setParadoxRift: Card[] = [
   new IronValiantex(),
   new Jirachi(),
   new Mewtwoex(),
+  new Morpeko(),
   new Natu(),
+  new ProfessorSadasVitality(),
   new ProfessorTurosScenario(),
   new RoaringMoonex(),
   new ScreamTail(),

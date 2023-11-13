@@ -102,7 +102,7 @@ export class Kyogre extends PokemonCard {
         player.deck,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.ACTIVE ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Water Energy' },
         { allowCancel: true, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];

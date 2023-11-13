@@ -7,12 +7,12 @@ export class GrassEnergy extends EnergyCard {
 
   public set: string = 'SVE';
 
-  public set2: string = 'smpromo';
+  public set2: string = 'fusionstrike';
 
-  public setNumber: string = '128';
+  public setNumber: string = '283';
 
-  public name = 'Grass Energy';
+  public name = 'Basic Grass Energy';
 
-  public fullName = 'Grass Energy SVE';
+  public fullName = 'Basic Grass Energy SVE';
 
 }

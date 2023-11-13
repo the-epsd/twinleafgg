@@ -13,27 +13,30 @@ function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     let cards = [];
-    let pokemons = 0;
-    let trainers = 0;
-    const blocked = [];
+    // Count tools and items separately
+    let tools = 0;
+    let items = 0;
     player.deck.cards.forEach((c, index) => {
-        if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.ITEM) {
-            trainers += 1;
+        if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL) {
+            tools += 1;
         }
-        else if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL) {
-            pokemons += 1;
-        }
-        else {
-            blocked.push(index);
+        else if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.ITEM) {
+            items += 1;
         }
     });
-    // We will discard this card after prompt confirmation
-    // This will prevent unblocked supporter to appear in the discard pile
-    effect.preventDefault = true;
-    const maxPokemons = Math.min(pokemons, 1);
-    const maxTrainers = Math.min(trainers, 1);
-    const count = maxPokemons + maxTrainers;
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked, maxPokemons: 1, maxTrainers: 1 }), selected => {
+    // Limit max for each type to 1
+    const maxTools = Math.min(tools, 1);
+    const maxItems = Math.min(items, 1);
+    // Total max is sum of max for each 
+    const count = maxTools + maxItems;
+    // Pass max counts to prompt options
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, {
+        min: 0,
+        max: count,
+        allowCancel: false,
+        maxTools,
+        maxItems
+    }), selected => {
         cards = selected || [];
         next();
     });

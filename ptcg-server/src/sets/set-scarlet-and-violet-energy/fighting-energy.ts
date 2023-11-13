@@ -7,12 +7,12 @@ export class FightingEnergy extends EnergyCard {
 
   public set: string = 'SVE';
 
-  public set2: string = 'smpromo';
+  public set2: string = 'chillingreign';
 
-  public setNumber: string = '133';
+  public setNumber: string = '233';
 
-  public name = 'Fighting Energy';
+  public name = 'Basic Fighting Energy';
 
-  public fullName = 'Fighting Energy SVE';
+  public fullName = 'Basic Fighting Energy SVE';
 
 }

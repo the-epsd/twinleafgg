@@ -27,14 +27,14 @@ class RotomV extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Scrap Short',
-                cost: [card_types_1.CardType.METAL],
+                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING],
                 damage: 0,
                 text: 'Put any number of Pokémon Tool cards from your discard pile in the Lost Zone. This attack does 40 more damage for each card you put in the Lost Zone in this way.'
             }
         ];
         this.set = 'LOR';
         this.set2 = 'lostorigin';
-        this.setNumber = '45';
+        this.setNumber = '58';
         this.name = 'Rotom V';
         this.fullName = 'Rotom V LOR';
     }

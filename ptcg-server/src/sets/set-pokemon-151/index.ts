@@ -20,6 +20,7 @@ import { Venomoth } from './venomoth';
 import { Venusaurex } from './venusaur-ex';
 import { Wartortle } from './wartortle';
 import { Zapdosex } from './zapdos-ex';
+import { EreikasInvitation } from './erikas-invitation';
 
 export const setPokemon151: Card[] = [
   
@@ -32,6 +33,7 @@ export const setPokemon151: Card[] = [
   new Dodrio(),
   new Doduo(),
   new Eevee(),
+  new EreikasInvitation(),
   new Grabber(),
   new Ivysaur(),
   new Kangaskhanex(),

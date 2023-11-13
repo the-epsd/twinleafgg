@@ -7,8 +7,8 @@ export class FairyEnergy extends EnergyCard {
 
   public set: string = 'DP';
 
-  public name = 'Fairy Energy';
+  public name = 'Basic Fairy Energy';
 
-  public fullName = 'Fairy Energy EVO';
+  public fullName = 'Basic Fairy Energy EVO';
 
 }

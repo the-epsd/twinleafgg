@@ -70,7 +70,7 @@ export class ChienPaoex extends PokemonCard {
         player.id, 
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck, 
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Water Energy' },
         { min: 0, max: 2, allowCancel: true }
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);
@@ -100,7 +100,7 @@ export class ChienPaoex extends PokemonCard {
             player.id,
             GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
             target, // Card source is target Pokemon
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Water Energy' },
             { allowCancel: false }
           ), selected => {
             const cards = selected || [];

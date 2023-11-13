@@ -42,6 +42,9 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
   const player = state.players[0];
   const opponent = state.players[1];
 
+  let playerCardsToDraw = 0;
+  let opponentCardsToDraw = 0;
+
   let playerHasBasic = false;
   let opponentHasBasic = false;
 
@@ -74,7 +77,7 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
         new AlertPrompt(opponent.id, GameMessage.SETUP_PLAYER_NO_BASIC)
       ], results => {
         if (results[0]) {
-          player.deck.moveTo(player.hand, 1);
+          playerCardsToDraw++;
         }
         next();
       });
@@ -88,7 +91,7 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
         new AlertPrompt(player.id, GameMessage.SETUP_PLAYER_NO_BASIC)
       ], results => {
         if (results[0]) {
-          opponent.deck.moveTo(opponent.hand, 1);
+          opponentCardsToDraw++;
         }
         next();
       });
@@ -103,6 +106,8 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
   ], choice => {
     putStartingPokemonsAndPrizes(player, choice[0]);
     putStartingPokemonsAndPrizes(opponent, choice[1]);
+    player.deck.moveTo(player.hand, playerCardsToDraw);
+    opponent.deck.moveTo(opponent.hand, opponentCardsToDraw);
     next();
   });
 

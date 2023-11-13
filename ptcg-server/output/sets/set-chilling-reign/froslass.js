@@ -21,7 +21,7 @@ function* useLeParfum(next, store, state, self, effect) {
     catch (_a) {
         return state;
     }
-    yield state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: true, min: 0, max: 1 }), transfers => {
+    yield state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Water Energy' }, { allowCancel: true, min: 0, max: 1 }), transfers => {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {

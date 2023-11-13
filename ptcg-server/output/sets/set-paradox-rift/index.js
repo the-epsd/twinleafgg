@@ -4,6 +4,7 @@ exports.setParadoxRift = void 0;
 const ancient_booster_energy_capsule_1 = require("./ancient-booster-energy-capsule");
 const bounsweet_1 = require("./bounsweet");
 const brute_bonnet_1 = require("./brute-bonnet");
+const counter_catcher_1 = require("./counter-catcher");
 const deoxys_1 = require("./deoxys");
 const earthen_vessel_1 = require("./earthen-vessel");
 const froslass_ex_1 = require("./froslass-ex");
@@ -16,7 +17,9 @@ const iron_hands_ex_1 = require("./iron-hands-ex");
 const iron_valiant_ex_1 = require("./iron-valiant-ex");
 const jirachi_1 = require("./jirachi");
 const mewtwo_ex_1 = require("./mewtwo-ex");
+const morpeko_1 = require("./morpeko");
 const natu_1 = require("./natu");
+const professor_sadas_vitality_1 = require("./professor-sadas-vitality");
 const professor_turos_scenario_1 = require("./professor-turos-scenario");
 const roaring_moon_ex_1 = require("./roaring-moon-ex");
 const scream_tail_1 = require("./scream-tail");
@@ -29,6 +32,7 @@ exports.setParadoxRift = [
     new ancient_booster_energy_capsule_1.AncientBoosterEnergyCapsule(),
     new brute_bonnet_1.BruteBonnet(),
     new bounsweet_1.Bounsweet(),
+    new counter_catcher_1.CounterCatcher(),
     new deoxys_1.Deoxys(),
     new earthen_vessel_1.EarthenVessel(),
     new froslass_ex_1.Froslassex(),
@@ -41,7 +45,9 @@ exports.setParadoxRift = [
     new iron_valiant_ex_1.IronValiantex(),
     new jirachi_1.Jirachi(),
     new mewtwo_ex_1.Mewtwoex(),
+    new morpeko_1.Morpeko(),
     new natu_1.Natu(),
+    new professor_sadas_vitality_1.ProfessorSadasVitality(),
     new professor_turos_scenario_1.ProfessorTurosScenario(),
     new roaring_moon_ex_1.RoaringMoonex(),
     new scream_tail_1.ScreamTail(),

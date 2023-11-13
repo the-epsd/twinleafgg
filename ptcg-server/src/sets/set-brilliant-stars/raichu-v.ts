@@ -51,7 +51,7 @@ export class RaichuV extends PokemonCard {
   // Implement power
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       const player = effect.player;
     
@@ -68,7 +68,7 @@ export class RaichuV extends PokemonCard {
             player.id,
             GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
             target, // Card source is target Pokemon
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Lightning Energy' },
             { min: 1, allowCancel: false }
           ), selected => {
             const cards = selected || [];

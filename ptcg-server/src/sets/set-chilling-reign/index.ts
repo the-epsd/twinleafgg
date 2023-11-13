@@ -11,6 +11,7 @@ import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
 import { JustifiedGloves } from './justified-gloves';
 import { Kirlia } from './kirlia';
 import { Melony } from './melony';
+//import { OldCemetery } from './old-cemetery';
 import { PathToThePeak } from './path-to-the-peak';
 import { Snorunt } from './snorunt';
 
@@ -28,6 +29,7 @@ export const setChillingReign: Card[] = [
   new JustifiedGloves(),
   new Kirlia(),
   new Melony(),
+  //new OldCemetery(),
   new PathToThePeak(),
   new Snorunt(),
 ];

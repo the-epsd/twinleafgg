@@ -41,7 +41,7 @@ function* useFireOff(next: Function, store: StoreLike, state: State, effect: Pow
     GameMessage.MOVE_ENERGY_CARDS,
     PlayerType.BOTTOM_PLAYER,
     [SlotType.BENCH], // Only allow moving to active
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' }, 
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fire Energy' }, 
     { allowCancel: true, blockedMap }
   ), transfers => {
 

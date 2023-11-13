@@ -16,7 +16,7 @@ function* useEmeraldSlash(next, store, state, effect) {
         return state;
     }
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.ENERGY, name: 'Grass Energy' }, { min: 1, max: 2, allowCancel: true }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.ENERGY, name: 'Basic Grass Energy' }, { min: 1, max: 2, allowCancel: true }), selected => {
         cards = selected || [];
         next();
     });

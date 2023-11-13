@@ -50,6 +50,7 @@ class PutDamageEffect extends AbstractAttackEffect {
         super(base);
         this.type = AttackEffects.PUT_DAMAGE_EFFECT;
         this.preventDefault = false;
+        this.damageReduced = false;
         this.damage = damage;
     }
 }

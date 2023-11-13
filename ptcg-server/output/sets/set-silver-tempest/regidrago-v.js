@@ -5,7 +5,6 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class RegidragoV extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -16,6 +15,12 @@ class RegidragoV extends pokemon_card_1.PokemonCard {
         this.hp = 220;
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
+            {
+                name: 'Celestial Roar',
+                cost: [card_types_1.CardType.COLORLESS],
+                damage: 0,
+                text: 'Discard the top 3 cards of your deck. If any of those cards are Energy cards, attach them to this Pokémon.'
+            },
             {
                 name: 'Dragon Laser',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.GRASS, card_types_1.CardType.FIRE],
@@ -29,17 +34,12 @@ class RegidragoV extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'F';
         this.name = 'Regidrago V';
         this.fullName = 'Regidrago V SIT';
-        this.FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
-            const player = effect.player;
-            player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
-        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const temp = new game_1.CardList();
-            player.deck.moveTo(temp, 2);
+            player.deck.moveTo(temp, 3);
             // Check if any cards drawn are basic energy
             const energyCardsDrawn = temp.cards.filter(card => {
                 return card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC;
@@ -47,7 +47,7 @@ class RegidragoV extends pokemon_card_1.PokemonCard {
             // If no energy cards were drawn, move all cards to hand
             if (energyCardsDrawn.length == 0) {
                 temp.cards.slice(0, 3).forEach(card => {
-                    temp.moveCardTo(card, player.hand);
+                    temp.moveCardTo(card, player.discard);
                 });
             }
             else {

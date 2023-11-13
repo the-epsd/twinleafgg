@@ -61,7 +61,7 @@ export class Mewtwoex extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
         player.discard,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Psychic Energy' },
         { min: 0, max: 2, allowCancel: true }
       ), cards => {
         cards = cards || [];

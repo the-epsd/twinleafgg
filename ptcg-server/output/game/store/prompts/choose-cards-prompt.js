@@ -21,7 +21,9 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
             differentTypes: false,
             maxPokemons: undefined,
             maxEnergies: undefined,
-            maxTrainers: undefined
+            maxTrainers: undefined,
+            maxTools: undefined,
+            maxItems: undefined,
         }, options);
     }
     decode(result) {
@@ -60,7 +62,9 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
         const { maxPokemons, maxEnergies, maxTrainers } = this.options;
         if ((maxPokemons !== undefined && maxPokemons < countMap[card_types_1.SuperType.POKEMON])
             || (maxEnergies !== undefined && maxEnergies < countMap[card_types_1.SuperType.ENERGY])
-            || (maxTrainers !== undefined && maxTrainers < countMap[card_types_1.SuperType.TRAINER])) {
+            || (maxTrainers !== undefined && maxTrainers < countMap[card_types_1.SuperType.TRAINER])
+            || (maxTrainers !== undefined && maxTrainers < countMap[card_types_1.SuperType.TRAINER && card_types_1.TrainerType.TOOL])
+            || (maxTrainers !== undefined && maxTrainers < countMap[card_types_1.SuperType.TRAINER && card_types_1.TrainerType.ITEM])) {
             return false;
         }
         const blocked = this.options.blocked;

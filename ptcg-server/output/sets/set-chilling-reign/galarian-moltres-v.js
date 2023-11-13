@@ -64,7 +64,7 @@ class GalarianMoltesV extends pokemon_card_1.PokemonCard {
             if (cardList === undefined) {
                 return state;
             }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Darkness Energy' }, { min: 0, max: 1, allowCancel: true }), cards => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Darkness Energy' }, { min: 0, max: 1, allowCancel: true }), cards => {
                 cards = cards || [];
                 if (cards.length > 0) {
                     player.marker.addMarker(this.DIREFLAME_WINGS_MARKER, this);

@@ -34,7 +34,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
-    {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy'},
+    {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fire Energy'},
     {min: max, max, allowCancel: true}
   ), selected => {
     if (selected && selected.length > 0) {

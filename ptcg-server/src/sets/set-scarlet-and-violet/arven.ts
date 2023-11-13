@@ -17,33 +17,38 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-  let pokemons = 0;
-  let trainers = 0;
-  const blocked: number[] = [];
+  // Count tools and items separately
+  let tools = 0; 
+  let items = 0;
+
   player.deck.cards.forEach((c, index) => {
-    if (c instanceof TrainerCard && c.trainerType === TrainerType.ITEM) {
-      trainers += 1;
-    } else if (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL) {
-      pokemons += 1;
-    } else {
-      blocked.push(index);
+    if (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL) {
+      tools += 1; 
+    } else if (c instanceof TrainerCard && c.trainerType === TrainerType.ITEM) {
+      items += 1;
     }
   });
 
-  // We will discard this card after prompt confirmation
-  // This will prevent unblocked supporter to appear in the discard pile
-  effect.preventDefault = true;
+  // Limit max for each type to 1
+  const maxTools = Math.min(tools, 1);
+  const maxItems = Math.min(items, 1);
 
-  const maxPokemons = Math.min(pokemons, 1); 
-  const maxTrainers = Math.min(trainers, 1);  
-  const count = maxPokemons + maxTrainers;
+  // Total max is sum of max for each 
+  const count = maxTools + maxItems; 
 
+  // Pass max counts to prompt options
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player.id, 
     GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
+    player.deck, 
     { },
-    { min: 0, max: count, allowCancel: false, blocked, maxPokemons: 1, maxTrainers: 1 }
+    {
+      min: 0, 
+      max: count,  
+      allowCancel: false,
+      maxTools,
+      maxItems
+    }
   ), selected => {
     cards = selected || [];
     next();
@@ -64,7 +69,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.deck.applyOrder(order);
   });
 }
-
 
 export class Arven extends TrainerCard {
 

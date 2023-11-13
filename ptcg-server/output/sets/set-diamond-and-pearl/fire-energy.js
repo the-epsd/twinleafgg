@@ -8,8 +8,8 @@ class FireEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.FIRE];
         this.set = 'DP';
-        this.name = 'Fire Energy';
-        this.fullName = 'Fire Energy EVO';
+        this.name = 'Basic Fire Energy';
+        this.fullName = 'Basic Fire Energy EVO';
     }
 }
 exports.FireEnergy = FireEnergy;

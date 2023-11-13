@@ -57,7 +57,7 @@ class DarkPatch extends trainer_card_1.TrainerCard {
             }
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
-            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Darkness Energy' }, { allowCancel: true, min: 1, max: 1, blockedTo }), transfers => {
+            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Darkness Energy' }, { allowCancel: true, min: 1, max: 1, blockedTo }), transfers => {
                 transfers = transfers || [];
                 if (transfers.length === 0) {
                     return;

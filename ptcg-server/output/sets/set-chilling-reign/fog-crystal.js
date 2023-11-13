@@ -18,7 +18,7 @@ function* playCard(next, store, state, effect) {
     let trainers = 0;
     const blocked = [];
     player.deck.cards.forEach((c, index) => {
-        if (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Psychic Energy') {
+        if (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Basic Psychic Energy') {
             trainers += 1;
         }
         else if (c instanceof game_1.PokemonCard && c.cardType === card_types_1.CardType.PSYCHIC && c.stage === card_types_1.Stage.BASIC) {

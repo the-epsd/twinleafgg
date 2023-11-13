@@ -23,27 +23,28 @@ import { Squawkabillyex } from './squawkabilly-ex';
 import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
 import { SuperRod } from './super-rod';
 import { Wattrel } from './wattrel';
+import { Luxray } from './luxray';
+//import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [
 
   new Artazon(),
+  //new CalamitousSnowyMountain(),
   new DeliveryDrone(),
   new Iono(),
   new Baxcalibur(),
   new ChienPaoex(),
-  new SuperRod(),
   new Flamigo(),
   new Spiritomb(),
   new BossOrders(),
   new BraveyCharm(),
   new JetEnergy(),
-  new Squawkabillyex(),
   new ChoiceBelt(),
-  new SuperiorEnergyRetrieval(),
   new Frigibax(),
   new Frigibax2(),
   new GreatBall(),
   new LuminousEnergy(),
+  new Luxray(),
   new Mimikyu(),
   new Murkrow(),
   new FightingAuLait(),

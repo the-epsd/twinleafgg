@@ -7,12 +7,12 @@ export class WaterEnergy extends EnergyCard {
 
   public set: string = 'SVE';
 
-  public set2: string = 'smpromo';
+  public set2: string = 'chillingreign';
 
-  public setNumber: string = '130';
+  public setNumber: string = '231';
 
-  public name = 'Water Energy';
+  public name = 'Basic Water Energy';
 
-  public fullName = 'Water Energy SVE';
+  public fullName = 'Basic Water Energy SVE';
 
 }

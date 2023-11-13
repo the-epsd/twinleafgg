@@ -57,7 +57,7 @@ class Celebi extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
             const hasEnergyInHand = player.hand.cards.some(c => {
-                return c instanceof game_1.EnergyCard && c.name === 'Grass Energy';
+                return c instanceof game_1.EnergyCard && c.name === 'Basic Grass Energy';
             });
             if (!hasEnergyInHand) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
@@ -65,7 +65,7 @@ class Celebi extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.FOREST_BREATH_MARKER, this)) {
                 throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
-            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, name: 'Grass Energy' }, { allowCancel: true, min: 1, max: 1 }), transfers => {
+            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, name: 'Basic Grass Energy' }, { allowCancel: true, min: 1, max: 1 }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {

@@ -25,25 +25,26 @@ const squawkabilly_ex_1 = require("./squawkabilly-ex");
 const superior_energy_retrieval_1 = require("./superior-energy-retrieval");
 const super_rod_1 = require("./super-rod");
 const wattrel_1 = require("./wattrel");
+const luxray_1 = require("./luxray");
+//import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 exports.setPaldeaEvolved = [
     new artazon_1.Artazon(),
+    //new CalamitousSnowyMountain(),
     new delivery_drone_1.DeliveryDrone(),
     new iono_1.Iono(),
     new baxcalibur_1.Baxcalibur(),
     new chien_pao_ex_1.ChienPaoex(),
-    new super_rod_1.SuperRod(),
     new flamigo_1.Flamigo(),
     new spiritomb_1.Spiritomb(),
     new boss_orders_1.BossOrders(),
     new bravery_charm_1.BraveyCharm(),
     new jet_energy_1.JetEnergy(),
-    new squawkabilly_ex_1.Squawkabillyex(),
     new choice_belt_1.ChoiceBelt(),
-    new superior_energy_retrieval_1.SuperiorEnergyRetrieval(),
     new frigibax_1.Frigibax(),
     new frigibax2_1.Frigibax2(),
     new great_ball_1.GreatBall(),
     new luminous_energy_1.LuminousEnergy(),
+    new luxray_1.Luxray(),
     new mimikyu_1.Mimikyu(),
     new murkrow_1.Murkrow(),
     new fighting_au_lait_1.FightingAuLait(),

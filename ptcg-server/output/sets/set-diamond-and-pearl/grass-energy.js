@@ -8,8 +8,8 @@ class GrassEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.GRASS];
         this.set = 'DP';
-        this.name = 'Grass Energy';
-        this.fullName = 'Grass Energy EVO';
+        this.name = 'Basic Grass Energy';
+        this.fullName = 'Basic Grass Energy EVO';
     }
 }
 exports.GrassEnergy = GrassEnergy;

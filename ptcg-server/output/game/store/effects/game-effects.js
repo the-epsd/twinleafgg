@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EvolveEffect = exports.HealEffect = exports.KnockOutEffect = exports.AttackEffect = exports.UseStadiumEffect = exports.UseAttackEffect = exports.PowerEffect = exports.UsePowerEffect = exports.RetreatEffect = exports.GameEffects = void 0;
+exports.EvolveEffect = exports.HealEffect = exports.KnockOutEffect = exports.AttackEffect = exports.useToolEffect = exports.UseStadiumEffect = exports.UseAttackEffect = exports.PowerEffect = exports.UsePowerEffect = exports.RetreatEffect = exports.GameEffects = void 0;
 var GameEffects;
 (function (GameEffects) {
     GameEffects["RETREAT_EFFECT"] = "RETREAT_EFFECT";
@@ -60,6 +60,15 @@ class UseStadiumEffect {
     }
 }
 exports.UseStadiumEffect = UseStadiumEffect;
+class useToolEffect {
+    constructor(player, tool) {
+        this.type = GameEffects.USE_STADIUM_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.tool = tool;
+    }
+}
+exports.useToolEffect = useToolEffect;
 class AttackEffect {
     constructor(player, opponent, attack) {
         this.type = GameEffects.ATTACK_EFFECT;

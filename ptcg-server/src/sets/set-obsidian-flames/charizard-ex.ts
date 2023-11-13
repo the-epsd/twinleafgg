@@ -83,7 +83,7 @@ export class Charizardex extends PokemonCard {
             player.deck,
             PlayerType.BOTTOM_PLAYER,
             [ SlotType.BENCH, SlotType.ACTIVE ],
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fire Energy' },
             { allowCancel: true, min: 0, max: 3 },
           ), transfers => {
             transfers = transfers || [];

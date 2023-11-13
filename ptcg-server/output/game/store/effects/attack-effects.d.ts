@@ -43,6 +43,7 @@ export declare class PutDamageEffect extends AbstractAttackEffect implements Eff
     readonly type: string;
     preventDefault: boolean;
     damage: number;
+    damageReduced: boolean;
     constructor(base: AttackEffect, damage: number);
 }
 export declare class AfterDamageEffect extends AbstractAttackEffect implements Effect {
