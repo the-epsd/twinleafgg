@@ -110,8 +110,8 @@ export class ArceusVSTAR extends PokemonCard {
 
           const target = StateUtils.getTarget(state, player, transfer.to);
         
-          if (!target.cards[0].tags.includes(CardTag.POKEMON_V) && 
-          !target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) &&
+          if (!target.cards[0].tags.includes(CardTag.POKEMON_V) || 
+          !target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
           !target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
             throw new GameError(GameMessage.INVALID_TARGET);
           }

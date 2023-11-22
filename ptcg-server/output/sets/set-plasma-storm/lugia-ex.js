@@ -44,11 +44,11 @@ class LugiaEX extends pokemon_card_1.PokemonCard {
             store.reduceEffect(state, checkEnergy);
             checkEnergy.energyMap.forEach(em => {
                 const energyCard = em.card;
-                if (energyCard instanceof game_1.EnergyCard && energyCard.energyType === card_types_1.EnergyType.SPECIAL && energyCard.name !== 'Plasma Energy') {
+                if (energyCard instanceof game_1.EnergyCard && energyCard.name !== 'Plasma Energy') {
                     effect.damage = 0;
                     return state;
                 }
-                if (energyCard instanceof game_1.EnergyCard && energyCard.energyType === card_types_1.EnergyType.SPECIAL && energyCard.name == 'Plasma Energy')
+                if (energyCard instanceof game_1.EnergyCard && energyCard.name == 'Plasma Energy')
                     return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL, name: 'Plasma Energy' }, { min: 1, max: 1, allowCancel: false }), selected => {
                         cards = selected || [];
                         if (cards.length === 0) {

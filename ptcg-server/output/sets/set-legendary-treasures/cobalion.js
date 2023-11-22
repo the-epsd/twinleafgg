@@ -34,7 +34,7 @@ class Cobalion extends pokemon_card_1.PokemonCard {
         this.set = 'LTR';
         this.name = 'Cobalion';
         this.fullName = 'Cobalion LT';
-        this.METAL_LINKS_MAREKER = 'IRON_BREAKER_MAREKER';
+        this.IRON_BREAKER_MARKER = 'IRON_BREAKER_MAREKER';
     }
     reduceEffect(store, state, effect) {
         // Energy Press
@@ -50,13 +50,13 @@ class Cobalion extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            opponent.active.marker.addMarker(this.METAL_LINKS_MAREKER, this);
+            opponent.active.marker.addMarker(this.IRON_BREAKER_MARKER, this);
         }
-        if (effect instanceof game_effects_1.UseAttackEffect && effect.player.active.marker.hasMarker(this.METAL_LINKS_MAREKER, this)) {
+        if (effect instanceof game_effects_1.UseAttackEffect && effect.player.active.marker.hasMarker(this.IRON_BREAKER_MARKER, this)) {
             throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_EFFECT);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.active.marker.removeMarker(this.METAL_LINKS_MAREKER, this);
+            effect.player.active.marker.removeMarker(this.IRON_BREAKER_MARKER, this);
         }
         return state;
     }

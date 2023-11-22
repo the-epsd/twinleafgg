@@ -41,6 +41,10 @@ class Cramorant extends game_1.PokemonCard {
                 state = store.reduceEffect(state, checkCost);
                 this.attacks[0].cost = [];
             }
+            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+                effect.ignoreWeakness = true;
+                return state;
+            }
         }
         return state;
     }

@@ -44,17 +44,8 @@ export class Avery extends TrainerCard {
 
       let PokemonToDiscard = 0;
 
-      if (opponentBenchLength === 1) {
-        PokemonToDiscard = 0;
-      }
-      if (opponentBenchLength === 2) {
-        PokemonToDiscard = 0;
-      }
-      if (opponentBenchLength === 3) {
-        PokemonToDiscard = 0;
-      }
       if (opponentBenchLength === 4) {
-        PokemonToDiscard = 1; 
+        PokemonToDiscard = 1;
       }
       if (opponentBenchLength === 5) {
         PokemonToDiscard = 2;
@@ -62,31 +53,51 @@ export class Avery extends TrainerCard {
 
       let targets: PokemonCardList[] = [];
 
+      if (PokemonToDiscard === 0) {
+        return state;
+      }
+
       // Prompt opponent to discard Pokemon from bench
-      if(PokemonToDiscard === 1 || PokemonToDiscard === 2) {
-        
+      if (PokemonToDiscard === 1) {
+
         return store.prompt(state, new ChoosePokemonPrompt(
           opponent.id,
           GameMessage.CHOOSE_POKEMON_TO_DISCARD,
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH],
-          {allowCancel: false, min: PokemonToDiscard, max: PokemonToDiscard}
+          { allowCancel: false, min: 1, max: 1 }
         ), results => {
           targets = results || [];
-          
+
+          targets.forEach(target => {
+            target.moveTo(opponent.discard);
+          });
+        });
+      }
+
+      // Prompt opponent to discard Pokemon from bench
+      if (PokemonToDiscard === 2) {
+
+        return store.prompt(state, new ChoosePokemonPrompt(
+          opponent.id,
+          GameMessage.CHOOSE_POKEMON_TO_DISCARD,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false, min: 2, max: 2 }
+        ), results => {
+          targets = results || [];
+
           targets.forEach(target => {
             target.moveTo(opponent.discard);
           });
 
         });
-        
+
       }
-      
+
       return state;
     }
-    
+
     return state;
   }
-
-
 }

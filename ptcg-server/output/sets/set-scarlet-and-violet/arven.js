@@ -16,12 +16,16 @@ function* playCard(next, store, state, self, effect) {
     // Count tools and items separately
     let tools = 0;
     let items = 0;
+    const blocked = [];
     player.deck.cards.forEach((c, index) => {
         if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL) {
             tools += 1;
         }
         else if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.ITEM) {
             items += 1;
+        }
+        else {
+            blocked.push(index);
         }
     });
     // Limit max for each type to 1
@@ -30,13 +34,7 @@ function* playCard(next, store, state, self, effect) {
     // Total max is sum of max for each 
     const count = maxTools + maxItems;
     // Pass max counts to prompt options
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, {
-        min: 0,
-        max: count,
-        allowCancel: false,
-        maxTools,
-        maxItems
-    }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked, maxTools, maxItems }), selected => {
         cards = selected || [];
         next();
     });

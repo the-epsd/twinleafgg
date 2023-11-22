@@ -20,12 +20,14 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // Count tools and items separately
   let tools = 0; 
   let items = 0;
-
+  const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
     if (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL) {
       tools += 1; 
     } else if (c instanceof TrainerCard && c.trainerType === TrainerType.ITEM) {
       items += 1;
+    } else {
+      blocked.push(index);
     }
   });
 
@@ -38,17 +40,11 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // Pass max counts to prompt options
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id, 
+    player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck, 
+    player.deck,
     { },
-    {
-      min: 0, 
-      max: count,  
-      allowCancel: false,
-      maxTools,
-      maxItems
-    }
+    { min: 0, max: count, allowCancel: false, blocked, maxTools, maxItems }
   ), selected => {
     cards = selected || [];
     next();

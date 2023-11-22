@@ -10,6 +10,7 @@ class Luxray extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.stage = card_types_1.Stage.STAGE_2;
+        this.evolvesFrom = 'Luxio';
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 150;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
@@ -20,10 +21,10 @@ class Luxray extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.attacks = [{
-                name: 'Tail Snap',
-                cost: [card_types_1.CardType.COLORLESS],
-                damage: 20,
-                text: ''
+                name: 'Wild Charge',
+                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                damage: 180,
+                text: 'This Pokémon also does 20 damage to itself.'
             }];
         this.set = 'PAL';
         this.set2 = 'paldeaevolved';

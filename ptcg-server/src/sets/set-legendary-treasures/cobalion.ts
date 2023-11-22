@@ -44,7 +44,7 @@ export class Cobalion extends PokemonCard {
 
   public fullName: string = 'Cobalion LT';
 
-  public readonly METAL_LINKS_MAREKER = 'IRON_BREAKER_MAREKER';
+  public readonly IRON_BREAKER_MARKER = 'IRON_BREAKER_MAREKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -63,15 +63,15 @@ export class Cobalion extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.METAL_LINKS_MAREKER, this);
+      opponent.active.marker.addMarker(this.IRON_BREAKER_MARKER, this);
     }
 
-    if (effect instanceof UseAttackEffect && effect.player.active.marker.hasMarker(this.METAL_LINKS_MAREKER, this)) {
+    if (effect instanceof UseAttackEffect && effect.player.active.marker.hasMarker(this.IRON_BREAKER_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.METAL_LINKS_MAREKER, this);
+      effect.player.active.marker.removeMarker(this.IRON_BREAKER_MARKER, this);
     }
 
     return state;

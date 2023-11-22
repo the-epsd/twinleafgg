@@ -11,6 +11,8 @@ export class Luxray extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 
+  public evolvesFrom = 'Luxio';
+
   public cardType: CardType = CardType.LIGHTNING;
 
   public hp: number = 150;
@@ -27,10 +29,10 @@ export class Luxray extends PokemonCard {
 
   public attacks = [{
 
-    name: 'Tail Snap',
-    cost: [ CardType.COLORLESS ],
-    damage: 20,
-    text: ''
+    name: 'Wild Charge',
+    cost: [ CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS ],
+    damage: 180,
+    text: 'This Pokémon also does 20 damage to itself.'
   }];
 
   public set: string = 'PAL';

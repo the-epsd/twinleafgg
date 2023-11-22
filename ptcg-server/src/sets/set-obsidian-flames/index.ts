@@ -12,6 +12,7 @@ import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
+import { TownStore } from './town-store';
 import { VengefulPunch } from './vengeful-punch';
 
 export const setObsidianFlames: Card[] = [
@@ -29,5 +30,6 @@ export const setObsidianFlames: Card[] = [
   new Pidgey(),
   new PokemonLeagueHeadquarters(),
   new Poppy(),  
+  new TownStore(),
   new VengefulPunch(),
 ];

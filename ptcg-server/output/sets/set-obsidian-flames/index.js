@@ -14,6 +14,7 @@ const pidgeotto_1 = require("./pidgeotto");
 const pidgey_1 = require("./pidgey");
 const pokemon_league_headquarters_1 = require("./pokemon-league-headquarters");
 const poppy_1 = require("./poppy");
+const town_store_1 = require("./town-store");
 const vengeful_punch_1 = require("./vengeful-punch");
 exports.setObsidianFlames = [
     new charizard_ex_1.Charizardex(),
@@ -29,5 +30,6 @@ exports.setObsidianFlames = [
     new pidgey_1.Pidgey(),
     new pokemon_league_headquarters_1.PokemonLeagueHeadquarters(),
     new poppy_1.Poppy(),
+    new town_store_1.TownStore(),
     new vengeful_punch_1.VengefulPunch(),
 ];

@@ -63,7 +63,7 @@ const cardManager = CardManager.getInstance();
 
 // cardManager.defineSet(sets.setUnbrokenBonds);
 
-// cardManager.defineSet(sets.setHiddenFates);
+//cardManager.defineSet(sets.setHiddenFates);
 // cardManager.defineSet(sets.setCosmicEclipse);
 
 

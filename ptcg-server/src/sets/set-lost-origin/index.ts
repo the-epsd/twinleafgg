@@ -7,8 +7,11 @@ import { DrapionV } from './drapion-v';
 import { GiftEnergy } from './gift-energy';
 import { GiratinaV } from './giratina-v';
 import { GiratinaVSTAR } from './giratina-vstar';
+import { HisuianGoodraV } from './hisuian-goodra-v';
+import { HisuianGoodraVSTAR } from './hisuian-goodra-vstar';
 import { Lady } from './lady';
 import { LostCity } from './lost-city';
+import { Mawile } from './mawile';
 import { MirageGate } from './mirage-gate';
 import { PidgeotV } from './pidgeot-v';
 import { RadiantGardevoir } from './radiant-gardevoir';
@@ -26,8 +29,11 @@ export const setLostOrigin: Card[] = [
   new GiftEnergy(),
   new GiratinaV(),
   new GiratinaVSTAR(),
+  new HisuianGoodraV(),
+  new HisuianGoodraVSTAR(),
   new Lady(),
   new LostCity(),
+  new Mawile(),
   new MirageGate(),
   new PidgeotV(),
   new RadiantGardevoir(),

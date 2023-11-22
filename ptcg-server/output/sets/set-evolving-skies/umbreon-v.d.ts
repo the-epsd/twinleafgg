@@ -23,6 +23,6 @@ export declare class UmbreonV extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly METAL_LINKS_MAREKER = "IRON_BREAKER_MAREKER";
+    readonly MEAN_LOOK_MARKER = "MEAN_LOOK_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

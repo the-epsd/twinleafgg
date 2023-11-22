@@ -24,6 +24,6 @@ export declare class Cobalion extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
-    readonly METAL_LINKS_MAREKER = "IRON_BREAKER_MAREKER";
+    readonly IRON_BREAKER_MARKER = "IRON_BREAKER_MAREKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

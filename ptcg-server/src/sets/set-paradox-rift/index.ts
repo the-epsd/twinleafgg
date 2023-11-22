@@ -5,12 +5,14 @@ import { BruteBonnet } from './brute-bonnet';
 import { CounterCatcher } from './counter-catcher';
 import { Deoxys } from './deoxys';
 import { EarthenVessel } from './earthen-vessel';
+import { Elekid } from './elekid';
 import { Froslassex } from './froslass-ex';
 import { Gabite } from './gabite';
 import { Garchompex } from './garchomp-ex';
 import { Gholdengoex } from './gholdengo-ex';
 import { Gible } from './gible';
 import { Gimmighoul } from './gimmighoul';
+import { IronBundle } from './iron-bundle';
 import { IronHandsex } from './iron-hands-ex';
 import { IronValiantex } from './iron-valiant-ex';
 import { Jirachi } from './jirachi';
@@ -35,12 +37,14 @@ export const setParadoxRift: Card[] = [
   new CounterCatcher(),
   new Deoxys(),
   new EarthenVessel(),
+  new Elekid(),
   new Froslassex(),
   new Gabite(),
   new Garchompex(),
   new Gholdengoex(),
   new Gible(),
   new Gimmighoul(),
+  new IronBundle(),
   new IronHandsex(),
   new IronValiantex(),
   new Jirachi(),

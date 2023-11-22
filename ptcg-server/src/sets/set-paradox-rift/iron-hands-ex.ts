@@ -1,9 +1,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { State, StoreLike } from '../../game';
+import { GamePhase, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { TAKE_X_MORE_PRIZE_CARDS, WAS_ATTACK_USED, YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK } from '../../game/store/prefabs/prefabs';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 
 export class IronHandsex extends PokemonCard {
 
@@ -24,35 +24,57 @@ export class IronHandsex extends PokemonCard {
   public attacks = [
     {
       name: 'Arm Press',
-      cost: [CardType.COLORLESS],
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 160,
       text: ''
     },
     {
       name: 'Amp You Very Much',
-      cost: [CardType.COLORLESS],
-      damage: 220,
-      text: 'If your opponent\'s Pokemon is Knocked Out by damage from this attack, take I more Prize card.'
+      cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 120,
+      text: 'If your opponent\'s Pokemon is Knocked Out by damage from this attack, take 1 more Prize card.'
     },
   ];
 
   public set: string = 'PAR';
 
-  public set2: string = 'futureflash';
+  public set2: string = 'paradoxrift';
   
-  public setNumber: string = '27';
+  public setNumber: string = '70';
 
   public name: string = 'Iron Hands ex';
 
   public fullName: string = 'Iron Hands ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Delta Plus
+    if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
 
-    if(WAS_ATTACK_USED(effect, 1, this)){
-      if(YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK(effect, state)){
-        return TAKE_X_MORE_PRIZE_CARDS(effect, state);
+      const attack = effect.player.active.getPokemonCard()?.attacks[1];
+      if (attack) {
+        const player = effect.player;
+        const opponent = StateUtils.getOpponent(state, player);
+
+        // Do not activate between turns, or when it's not opponents turn.
+        if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+          return state;
+        }
+
+        // Articuno wasn't attacking
+        const pokemonCard = opponent.active.getPokemonCard();
+        if (pokemonCard !== this) {
+          return state;
+        }
+
+        effect.prizeCount += 1;
+        return state;
       }
+
+      return state;
     }
+
     return state;
+
   }
 }
+

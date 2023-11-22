@@ -1,0 +1,108 @@
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils, GameError, PokemonCardList } from '../../game';
+import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { GameMessage } from '../../game/game-message';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+
+export class IronBundle extends PokemonCard {
+
+  public stage: Stage = Stage.BASIC;
+
+  public cardTag = [ CardTag.FUTURE ];
+
+  public cardType: CardType = CardType.WATER;
+
+  public hp: number = 100;
+
+  public weakness = [{ type: CardType.LIGHTNING }];
+
+  public retreat = [ CardType.COLORLESS ];
+
+  public powers = [
+    {
+      name: 'Tachyon Bits',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, if this Pokémon is on your Bench, you may switch out your opponent\'s Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.) If you do, discard this Pokémon and all attached cards.'
+    }
+  ];
+
+  public attacks = [
+    {
+      name: 'Refrigerated Stream',
+      cost: [ CardType.WATER, CardType.COLORLESS, CardType.COLORLESS ],
+      damage: 80,
+      text: ''
+    }
+  ];
+
+  public set: string = 'PAR';
+
+  public set2: string = 'paradoxrift';
+
+  public setNumber: string = '56';
+
+  public name: string = 'Iron Bundle';
+
+  public fullName: string = 'Iron Bundle PAR';
+
+  public readonly REFRIGERATED_STREAM_MARKER = 'REFRIGERATED_STREAM_MARKER';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      const cardList = StateUtils.findCardList(state, this);
+
+      if (player.active.cards[0] == this) {
+        return state; // Not active
+      }
+
+      if (hasBench === false) {
+        return state;
+      }
+
+      const benchIndex = player.bench.indexOf(cardList as PokemonCardList);
+      if (benchIndex === -1) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      return store.prompt(state, new ChoosePokemonPrompt(
+        opponent.id,
+        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH],
+        { allowCancel: false }
+      ), targets => {
+        if (targets && targets.length > 0) {
+          opponent.active.clearEffects();
+          opponent.switchPokemon(targets[0]);
+          player.bench[benchIndex].moveTo(player.discard);
+          player.bench[benchIndex].clearEffects();
+          return state;
+        }
+      });
+    }
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      opponent.active.marker.addMarker(this.REFRIGERATED_STREAM_MARKER, this);
+    }
+      
+    if (effect instanceof UseAttackEffect && effect.player.active.marker.hasMarker(this.REFRIGERATED_STREAM_MARKER, this)) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
+      
+    if (effect instanceof EndTurnEffect) {
+      effect.player.active.marker.removeMarker(this.REFRIGERATED_STREAM_MARKER, this);
+    }
+      
+    return state;
+  }
+      
+}

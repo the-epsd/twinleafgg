@@ -2,7 +2,9 @@ import { Card } from '../../game/store/card/card';
 import { BattleVIPPass } from './battle-vip-pass';
 import { Creamomatic } from './cram-o-matic';
 import { CrossSwitcher } from './cross-switcher';
+import { Deoxys } from './deoxys';
 import { Dunsparce } from './dunsparce';
+import { ElesasSparkle } from './elesas-sparkle';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
 import { GenesectV } from './genesect-v';
 import { InteleonV } from './inteleon-v';
@@ -20,7 +22,9 @@ export const setFusionStrike: Card[] = [
   new BattleVIPPass(),
   new Creamomatic(),
   new CrossSwitcher(),
+  new Deoxys(),
   new Dunsparce(),
+  new ElesasSparkle(),
   new FusionStrikeEnergy(),
   new GenesectV(),
   new InteleonV(),

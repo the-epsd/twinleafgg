@@ -7,12 +7,14 @@ const brute_bonnet_1 = require("./brute-bonnet");
 const counter_catcher_1 = require("./counter-catcher");
 const deoxys_1 = require("./deoxys");
 const earthen_vessel_1 = require("./earthen-vessel");
+const elekid_1 = require("./elekid");
 const froslass_ex_1 = require("./froslass-ex");
 const gabite_1 = require("./gabite");
 const garchomp_ex_1 = require("./garchomp-ex");
 const gholdengo_ex_1 = require("./gholdengo-ex");
 const gible_1 = require("./gible");
 const gimmighoul_1 = require("./gimmighoul");
+const iron_bundle_1 = require("./iron-bundle");
 const iron_hands_ex_1 = require("./iron-hands-ex");
 const iron_valiant_ex_1 = require("./iron-valiant-ex");
 const jirachi_1 = require("./jirachi");
@@ -35,12 +37,14 @@ exports.setParadoxRift = [
     new counter_catcher_1.CounterCatcher(),
     new deoxys_1.Deoxys(),
     new earthen_vessel_1.EarthenVessel(),
+    new elekid_1.Elekid(),
     new froslass_ex_1.Froslassex(),
     new gabite_1.Gabite(),
     new garchomp_ex_1.Garchompex(),
     new gholdengo_ex_1.Gholdengoex(),
     new gible_1.Gible(),
     new gimmighoul_1.Gimmighoul(),
+    new iron_bundle_1.IronBundle(),
     new iron_hands_ex_1.IronHandsex(),
     new iron_valiant_ex_1.IronValiantex(),
     new jirachi_1.Jirachi(),

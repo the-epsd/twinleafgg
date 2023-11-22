@@ -58,13 +58,13 @@ export class LugiaEX extends PokemonCard {
   
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
-        if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL && energyCard.name !== 'Plasma Energy') {
+        if (energyCard instanceof EnergyCard && energyCard.name !== 'Plasma Energy') {
           effect.damage = 0;
           return state;
         }
 
 
-        if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL && energyCard.name == 'Plasma Energy')
+        if (energyCard instanceof EnergyCard && energyCard.name == 'Plasma Energy')
 
           return store.prompt(state, new ChooseCardsPrompt(
             player.id,

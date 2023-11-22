@@ -7,9 +7,10 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const game_message_1 = require("../../game/game-message");
-const game_1 = require("../../game");
+// import { GameError, PutDamagePrompt } from '../../game';
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const __1 = require("../..");
 function* useLostMine(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
@@ -22,20 +23,19 @@ function* useLostMine(next, store, state, effect) {
         maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
     });
     const damage = Math.min(120, damageLeft);
-    if (player.lostzone.cards.length <= 9) {
-        throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
-    }
-    if (player.lostzone.cards.length >= 10) {
-        return store.prompt(state, new game_1.PutDamagePrompt(effect.player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], damage, maxAllowedDamage, { allowCancel: false }), targets => {
-            const results = targets || [];
-            for (const result of results) {
-                const target = state_utils_1.StateUtils.getTarget(state, player, result.target);
-                const putCountersEffect = new attack_effects_1.PutCountersEffect(effect, result.damage);
-                putCountersEffect.target = target;
-                store.reduceEffect(state, putCountersEffect);
-            }
-        });
-    }
+    // if (player.lostzone.cards.length <= 9) {
+    //   throw new GameError (GameMessage.CANNOT_USE_POWER);  
+    // }
+    // if (player.lostzone.cards.length >= 10) {
+    return store.prompt(state, new __1.PutDamagePrompt(effect.player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], damage, maxAllowedDamage, { allowCancel: false }), targets => {
+        const results = targets || [];
+        for (const result of results) {
+            const target = state_utils_1.StateUtils.getTarget(state, player, result.target);
+            const putCountersEffect = new attack_effects_1.PutCountersEffect(effect, result.damage);
+            putCountersEffect.target = target;
+            store.reduceEffect(state, putCountersEffect);
+        }
+    });
 }
 class Sableye extends pokemon_card_1.PokemonCard {
     constructor() {

@@ -28,15 +28,6 @@ class Avery extends trainer_card_1.TrainerCard {
             // Get opponent's bench length
             const opponentBenchLength = opponent.bench.length;
             let PokemonToDiscard = 0;
-            if (opponentBenchLength === 1) {
-                PokemonToDiscard = 0;
-            }
-            if (opponentBenchLength === 2) {
-                PokemonToDiscard = 0;
-            }
-            if (opponentBenchLength === 3) {
-                PokemonToDiscard = 0;
-            }
             if (opponentBenchLength === 4) {
                 PokemonToDiscard = 1;
             }
@@ -44,9 +35,21 @@ class Avery extends trainer_card_1.TrainerCard {
                 PokemonToDiscard = 2;
             }
             let targets = [];
+            if (PokemonToDiscard === 0) {
+                return state;
+            }
             // Prompt opponent to discard Pokemon from bench
-            if (PokemonToDiscard === 1 || PokemonToDiscard === 2) {
-                return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, min: PokemonToDiscard, max: PokemonToDiscard }), results => {
+            if (PokemonToDiscard === 1) {
+                return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, min: 1, max: 1 }), results => {
+                    targets = results || [];
+                    targets.forEach(target => {
+                        target.moveTo(opponent.discard);
+                    });
+                });
+            }
+            // Prompt opponent to discard Pokemon from bench
+            if (PokemonToDiscard === 2) {
+                return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, min: 2, max: 2 }), results => {
                     targets = results || [];
                     targets.forEach(target => {
                         target.moveTo(opponent.discard);

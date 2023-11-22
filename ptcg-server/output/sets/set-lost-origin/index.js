@@ -9,8 +9,11 @@ const drapion_v_1 = require("./drapion-v");
 const gift_energy_1 = require("./gift-energy");
 const giratina_v_1 = require("./giratina-v");
 const giratina_vstar_1 = require("./giratina-vstar");
+const hisuian_goodra_v_1 = require("./hisuian-goodra-v");
+const hisuian_goodra_vstar_1 = require("./hisuian-goodra-vstar");
 const lady_1 = require("./lady");
 const lost_city_1 = require("./lost-city");
+const mawile_1 = require("./mawile");
 const mirage_gate_1 = require("./mirage-gate");
 const pidgeot_v_1 = require("./pidgeot-v");
 const radiant_gardevoir_1 = require("./radiant-gardevoir");
@@ -26,8 +29,11 @@ exports.setLostOrigin = [
     new gift_energy_1.GiftEnergy(),
     new giratina_v_1.GiratinaV(),
     new giratina_vstar_1.GiratinaVSTAR(),
+    new hisuian_goodra_v_1.HisuianGoodraV(),
+    new hisuian_goodra_vstar_1.HisuianGoodraVSTAR(),
     new lady_1.Lady(),
     new lost_city_1.LostCity(),
+    new mawile_1.Mawile(),
     new mirage_gate_1.MirageGate(),
     new pidgeot_v_1.PidgeotV(),
     new radiant_gardevoir_1.RadiantGardevoir(),

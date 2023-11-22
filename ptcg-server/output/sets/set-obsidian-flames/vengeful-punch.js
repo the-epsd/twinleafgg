@@ -3,10 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.VengefulPunch = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const state_1 = require("../../game/store/state/state");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const __1 = require("../..");
+const game_1 = require("../../game");
 class VengefulPunch extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -22,9 +21,11 @@ class VengefulPunch extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tool === this) {
             // eslint-disable-next-line indent
-            const targetPlayer = __1.StateUtils.findOwner(state, effect.target);
-            if (effect instanceof game_effects_1.KnockOutEffect && targetPlayer.active === effect.target && state.phase === state_1.GamePhase.ATTACK) {
-                effect.source.damage += 20;
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const targetPlayer = player.active;
+            if (effect instanceof game_effects_1.KnockOutEffect && targetPlayer === effect.target) {
+                opponent.active.damage += 40;
             }
         }
         return state;

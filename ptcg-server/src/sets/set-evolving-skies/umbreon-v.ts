@@ -49,7 +49,7 @@ export class UmbreonV extends PokemonCard {
 
   public fullName: string = 'Umbreon V EVS';
 
-  public readonly METAL_LINKS_MAREKER = 'IRON_BREAKER_MAREKER';
+  public readonly MEAN_LOOK_MARKER = 'MEAN_LOOK_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -57,15 +57,15 @@ export class UmbreonV extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.METAL_LINKS_MAREKER, this);
+      opponent.active.marker.addMarker(this.MEAN_LOOK_MARKER, this);
     }
   
-    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.METAL_LINKS_MAREKER, this)) {
+    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.MEAN_LOOK_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
   
     if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.METAL_LINKS_MAREKER, this);
+      effect.player.active.marker.removeMarker(this.MEAN_LOOK_MARKER, this);
     }
   
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

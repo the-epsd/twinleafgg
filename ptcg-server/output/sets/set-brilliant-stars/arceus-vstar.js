@@ -71,8 +71,8 @@ class ArceusVSTAR extends pokemon_card_1.PokemonCard {
                 }
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    if (!target.cards[0].tags.includes(card_types_1.CardTag.POKEMON_V) &&
-                        !target.cards[0].tags.includes(card_types_1.CardTag.POKEMON_VSTAR) &&
+                    if (!target.cards[0].tags.includes(card_types_1.CardTag.POKEMON_V) ||
+                        !target.cards[0].tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||
                         !target.cards[0].tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
                         throw new game_1.GameError(game_1.GameMessage.INVALID_TARGET);
                     }
