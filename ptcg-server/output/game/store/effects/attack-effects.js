@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HealTargetEffect = exports.RemoveSpecialConditionsEffect = exports.AddSpecialConditionsEffect = exports.AddMarkerEffect = exports.DiscardCardsEffect = exports.PutCountersEffect = exports.AfterDamageEffect = exports.PutDamageEffect = exports.DealDamageEffect = exports.ApplyWeaknessEffect = exports.AbstractAttackEffect = exports.AttackEffects = void 0;
+exports.HealTargetEffect = exports.RemoveSpecialConditionsEffect = exports.AddSpecialConditionsEffect = exports.AddMarkerEffect = exports.CardsToHandEffect = exports.DiscardCardsEffect = exports.PutCountersEffect = exports.AfterDamageEffect = exports.PutDamageEffect = exports.DealDamageEffect = exports.ApplyWeaknessEffect = exports.AbstractAttackEffect = exports.AttackEffects = void 0;
 const card_types_1 = require("../card/card-types");
 var AttackEffects;
 (function (AttackEffects) {
@@ -10,6 +10,7 @@ var AttackEffects;
     AttackEffects["AFTER_DAMAGE_EFFECT"] = "AFTER_DAMAGE_EFFECT";
     AttackEffects["PUT_COUNTERS_EFFECT"] = "PUT_COUNTERS_EFFECT";
     AttackEffects["DISCARD_CARD_EFFECT"] = "DISCARD_CARD_EFFECT";
+    AttackEffects["CARDS_TO_HAND_EFFECT"] = "CARDS_TO_HAND_EFFECT";
     AttackEffects["ADD_MARKER_EFFECT"] = "ADD_MARKER_EFFECT";
     AttackEffects["ADD_SPECIAL_CONDITIONS_EFFECT"] = "ADD_SPECIAL_CONDITIONS_EFFECT";
     AttackEffects["MOVED_TO_ACTIVE_BONUS_EFFECT"] = "MOVED_TO_ACTIVE_BONUS_EFFECT";
@@ -82,6 +83,15 @@ class DiscardCardsEffect extends AbstractAttackEffect {
     }
 }
 exports.DiscardCardsEffect = DiscardCardsEffect;
+class CardsToHandEffect extends AbstractAttackEffect {
+    constructor(base, energyCards) {
+        super(base);
+        this.type = AttackEffects.DISCARD_CARD_EFFECT;
+        this.preventDefault = false;
+        this.cards = energyCards;
+    }
+}
+exports.CardsToHandEffect = CardsToHandEffect;
 class AddMarkerEffect extends AbstractAttackEffect {
     constructor(base, markerName, markerSource) {
         super(base);

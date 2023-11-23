@@ -25,7 +25,7 @@ export class ForestSealStone extends TrainerCard {
   public readonly VSTAR_MARKER = 'VSTAR_MARKER';
 
   public powers = [{
-    name: 'Starbirth',
+    name: 'Forest Seal Stone',
     powerType: PowerType.ABILITY,
     useWhenInPlay: true,
     text: 'During your turn, you may search your deck for a card and put it into ' +
@@ -40,13 +40,14 @@ export class ForestSealStone extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-    
+    if (effect instanceof PowerEffect && effect.player.active.tool === this) {
+
+      
+      const player = effect.player;
       const attachedPokemon = effect.player.active;
-    
+
       if (attachedPokemon.tool === this) {
-          
-        const player = effect.player;
+        
         
         if (player.marker.hasMarker(this.VSTAR_MARKER)) {
           throw new GameError(GameMessage.POWER_ALREADY_USED);

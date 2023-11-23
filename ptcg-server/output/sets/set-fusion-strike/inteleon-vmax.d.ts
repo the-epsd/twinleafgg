@@ -29,6 +29,6 @@ export declare class InteleonVMAX extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly CONCEALED_CARDS_MARKER = "CONCEALED_CARDS_MARKER";
+    readonly DOUBLE_GUNNER_MARKER = "DOUBLE_GUNNER_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

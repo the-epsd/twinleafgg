@@ -73,26 +73,25 @@ export class RadiantCharizard extends PokemonCard {
 
         const prizesTaken = 6 - opponent.getPrizeLeft();
         
-        this.attacks[0].cost[index] -= prizesTaken;
-
-        const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
-        state = store.reduceEffect(state, checkCost);
-
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-          // Check marker
-          if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            console.log('attack blocked');
-            throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-          }
-          effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-          console.log('marker added');
+        if (index !== -1) {
+          effect.cost.splice(index, prizesTaken);
         }
         return state;
+      }
+
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+        // Check marker
+        if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+          console.log('attack blocked');
+          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+        }
+        effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+        console.log('marker added');
       }
       return state;
     }
     return state;
   }
-
 }
+

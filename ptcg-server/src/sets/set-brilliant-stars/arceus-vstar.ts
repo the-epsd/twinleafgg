@@ -63,13 +63,13 @@ export class ArceusVSTAR extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.VSTAR_MARKER, this);
     }
-    
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       if (player.marker.hasMarker(this.VSTAR_MARKER)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-  
+
       player.marker.addMarker(this.VSTAR_MARKER, this);
       state = store.prompt(state, new ChooseCardsPrompt(
         player.id,
@@ -87,7 +87,7 @@ export class ArceusVSTAR extends PokemonCard {
         return state;
       });
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       state = store.prompt(state, new AttachEnergyPrompt(
@@ -95,11 +95,11 @@ export class ArceusVSTAR extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.deck,
         PlayerType.BOTTOM_PLAYER,
-        
+            
         [ SlotType.BENCH, SlotType.ACTIVE ],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { allowCancel: true, min: 0, max: 3 },
-  
+      
       ), transfers => {
         transfers = transfers || [ ];
         // cancelled by user
@@ -107,30 +107,93 @@ export class ArceusVSTAR extends PokemonCard {
           return state;
         }
         for (const transfer of transfers) {
-
+    
           const target = StateUtils.getTarget(state, player, transfer.to);
-        
-          if (!target.cards[0].tags.includes(CardTag.POKEMON_V) || 
-          !target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
-          !target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
+            
+          if (!target.cards[0].tags.includes(CardTag.POKEMON_V) && 
+              !target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) &&
+              !target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
             throw new GameError(GameMessage.INVALID_TARGET);
           }
-
+    
           if (target.cards[0].tags.includes(CardTag.POKEMON_V) || 
-              target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
-              target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
-        
+                  target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
+                  target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
+            
             player.deck.moveCardTo(transfer.card, target); 
           }
-        
+            
         }
-        
+            
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
       });
     }
-
+    
     return state;
   }
 }
+
+//       const player = effect.player;
+
+//       const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+//       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+//         const isPokemonV = card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR);
+//         const blockedCards: Card[] = [];
+
+//         const blocked: number[] = [];
+//         blockedCards.forEach(bc => {
+//           const index = cardList.cards.indexOf(bc);
+//           if (index !== -1 && !blocked.includes(index)) {
+//             blocked.push(index);
+//           }
+//         });
+
+//         if (blocked.length !== 0) {
+//           blockedMap.push({ source: target, blocked });
+//         }
+
+//         if (isPokemonV) {
+
+//           state = store.prompt(state, new AttachEnergyPrompt(
+//             player.id,
+//             GameMessage.ATTACH_ENERGY_TO_BENCH,
+//             player.deck,
+//             PlayerType.BOTTOM_PLAYER,
+//             [SlotType.BENCH, SlotType.ACTIVE],
+//             { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+//             { allowCancel: true, blocked, min: 0, max: 3 }
+//           ), transfers => {
+//             transfers = transfers || [];
+//             // cancelled by user
+//             if (transfers.length === 0) {
+//               return state;
+//             }
+//             for (const transfer of transfers) {
+
+//               const target = StateUtils.getTarget(state, player, transfer.to);
+//               if (!target.getPokemons().some(p => p.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR))) {
+//                 continue;
+//               }
+
+//               player.deck.moveCardTo(transfer.card, target);
+
+//               return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+//                 player.deck.applyOrder(order);
+
+//                 return state;
+//               });
+//             }
+//             return state;
+//           });
+//           return state;
+//         }
+//         return state;
+//       });
+//       return state;
+//     }
+//     return state;
+//   }
+// }
+

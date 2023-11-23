@@ -49,6 +49,13 @@ function attackReducer(store, state, effect) {
         target.moveCardsTo(cards, owner.discard);
         return state;
     }
+    if (effect instanceof attack_effects_1.CardsToHandEffect) {
+        const target = effect.target;
+        const cards = effect.cards;
+        const owner = state_utils_1.StateUtils.findOwner(state, target);
+        target.moveCardsTo(cards, owner.hand);
+        return state;
+    }
     if (effect instanceof attack_effects_1.AddMarkerEffect) {
         const target = effect.target;
         target.marker.addMarker(effect.markerName, effect.markerSource);

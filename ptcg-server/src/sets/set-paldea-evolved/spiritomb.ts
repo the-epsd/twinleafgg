@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -50,38 +50,17 @@ export class Spiritomb extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect
-      && effect.power.powerType === PowerType.ABILITY
-      && effect.power.name !== 'Fettered in Misfortune') {
-      const player = effect.player;
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const pokemonCard = effect.card;
 
-
-      let isInPlay = false;
-  
-      if (player.active.cards[0] !== this || player.active.cards[0] == this) {
-        isInPlay = true; 
-      }
-
-      if (!isInPlay) {
-        return state;
-      } else {
-        
-        if (player === effect.player) {
-
-
-          // Try to reduce PowerEffect, to check if something is blocking our ability
-          try {
-            const powerEffect = new PowerEffect(player, this.powers[0], this);
-            store.reduceEffect(state, powerEffect);
-          } catch {
-            return state;
-          }}
-
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      if (pokemonCard.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
+        pokemonCard.powers = [];
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
       return state;
     }
     return state;
   }
-}
 
+
+}

@@ -21,6 +21,7 @@ const card_types_1 = require("../card/card-types");
 const game_phase_effects_1 = require("../effects/game-phase-effects");
 const check_effect_1 = require("../effect-reducers/check-effect");
 const game_phase_effect_1 = require("../effect-reducers/game-phase-effect");
+const select_prompt_1 = require("../prompts/select-prompt");
 function putStartingPokemonsAndPrizes(player, cards) {
     if (cards.length === 0) {
         return;
@@ -38,6 +39,27 @@ function* setupGame(next, store, state) {
     const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
     const player = state.players[0];
     const opponent = state.players[1];
+    const whoBeginsEffect = new game_phase_effects_1.WhoBeginsEffect();
+    store.reduceEffect(state, whoBeginsEffect);
+    if (whoBeginsEffect.player) {
+        state.activePlayer = state.players.indexOf(whoBeginsEffect.player);
+    }
+    else {
+        const coinFlipPrompt = new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.SETUP_WHO_BEGINS_FLIP);
+        store.prompt(state, coinFlipPrompt, whoBegins => {
+            const goFirstPrompt = new select_prompt_1.SelectPrompt(whoBegins ? player.id : opponent.id, game_message_1.GameMessage.GO_FIRST, [game_message_1.GameMessage.YES, game_message_1.GameMessage.NO]);
+            store.prompt(state, goFirstPrompt, choice => {
+                if (choice === 0) {
+                    state.activePlayer = whoBegins ? 0 : 1;
+                    next();
+                }
+                else {
+                    state.activePlayer = whoBegins ? 1 : 0;
+                    next();
+                }
+            });
+        });
+    }
     let playerCardsToDraw = 0;
     let opponentCardsToDraw = 0;
     let playerHasBasic = false;
@@ -96,17 +118,8 @@ function* setupGame(next, store, state) {
         opponent.deck.moveTo(opponent.hand, opponentCardsToDraw);
         next();
     });
-    const whoBeginsEffect = new game_phase_effects_1.WhoBeginsEffect();
-    store.reduceEffect(state, whoBeginsEffect);
-    if (whoBeginsEffect.player) {
-        state.activePlayer = state.players.indexOf(whoBeginsEffect.player);
-    }
-    else {
-        const coinFlipPrompt = new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.SETUP_WHO_BEGINS_FLIP);
-        yield store.prompt(state, coinFlipPrompt, whoBegins => {
-            state.activePlayer = whoBegins ? 0 : 1;
-            next();
-        });
+    if (store.hasPrompts()) {
+        yield store.waitPrompt(state, () => next());
     }
     // Set initial Pokemon Played Turn, so players can't evolve during first turn
     const first = state.players[state.activePlayer];

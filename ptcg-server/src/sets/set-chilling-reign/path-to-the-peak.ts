@@ -1,9 +1,7 @@
-import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
 import { StateUtils } from '../../game/store/state-utils';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
-import { PowerEffect, UseStadiumEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -23,15 +21,10 @@ export class PathToThePeak extends TrainerCard {
       const pokemonCard = effect.card;
       
       if (pokemonCard.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_GX || CardTag.POKEMON_VMAX || CardTag.POKEMON_EX || CardTag.POKEMON_VSTAR || CardTag.RADIANT || CardTag.POKEMON_ex)) {
-        pokemonCard.powers = [];
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+        pokemonCard.powers = [ ];
+        return state;
       }
 
-      return state;
-    }
-
-    if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
-      throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
 
     return state;

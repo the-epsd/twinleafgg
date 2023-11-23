@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { Copycat } from './copycat';
 import { DragoniteV } from './dragonite-v';
+import { DuraludonV } from './duraludon-v';
 import { DuraludonVMAX } from './duraludon-vmax';
 import { Flaaffy } from './flaaffy';
 import { GalarianMoltres } from './galarian-moltres';
@@ -18,6 +19,7 @@ export const setEvolvingSkies: Card[] = [
   
   new Copycat(),
   new DragoniteV(),
+  new DuraludonV(),
   new DuraludonVMAX(),
   new Flaaffy(),
   new GalarianMoltres(),

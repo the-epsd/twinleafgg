@@ -44,6 +44,10 @@ function playerTurnReducer(store, state, action) {
             if (attack === undefined) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.UNKNOWN_ATTACK);
             }
+            if (pokemonCard.name === 'Alakazam ex' && !player.active) {
+                const useAttackEffect = new game_effects_1.UseAttackEffect(player, attack);
+                state = store.reduceEffect(state, useAttackEffect);
+            }
             const useAttackEffect = new game_effects_1.UseAttackEffect(player, attack);
             state = store.reduceEffect(state, useAttackEffect);
             return state;

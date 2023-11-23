@@ -64,7 +64,8 @@ class DuraludonVMAX extends pokemon_card_1.PokemonCard {
                 const energyCard = em.card;
                 if (energyCard instanceof game_1.EnergyCard &&
                     energyCard.energyType === card_types_1.EnergyType.SPECIAL) {
-                    if (effect instanceof attack_effects_1.PutDamageEffect) {
+                    if (effect instanceof attack_effects_1.PutDamageEffect
+                        && opponent.active.cards.includes(energyCard)) {
                         effect.preventDefault = true;
                         return state;
                     }

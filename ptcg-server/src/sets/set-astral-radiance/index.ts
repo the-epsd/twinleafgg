@@ -16,6 +16,7 @@ import { RadiantGreninja } from './radiant-greninja';
 import { Ralts } from './ralts';
 import { Roxanne } from './roxanne';
 import { SwitchCart } from './switch-cart';
+import { TempleofSinnoh } from './temple-of-sinnoh';
 import { TrekkingShoes } from './trekking-shoes';
 
 
@@ -38,6 +39,7 @@ export const setAstralRadiance: Card[] = [
   new Ralts(),
   new Roxanne(),
   new SwitchCart(),
+  new TempleofSinnoh(),
   new TrekkingShoes(),
   
 ];

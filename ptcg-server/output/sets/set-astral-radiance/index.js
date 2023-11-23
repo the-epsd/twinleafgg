@@ -18,6 +18,7 @@ const radiant_greninja_1 = require("./radiant-greninja");
 const ralts_1 = require("./ralts");
 const roxanne_1 = require("./roxanne");
 const switch_cart_1 = require("./switch-cart");
+const temple_of_sinnoh_1 = require("./temple-of-sinnoh");
 const trekking_shoes_1 = require("./trekking-shoes");
 exports.setAstralRadiance = [
     new darkrai_v_1.DarkraiV(),
@@ -37,5 +38,6 @@ exports.setAstralRadiance = [
     new ralts_1.Ralts(),
     new roxanne_1.Roxanne(),
     new switch_cart_1.SwitchCart(),
+    new temple_of_sinnoh_1.TempleofSinnoh(),
     new trekking_shoes_1.TrekkingShoes(),
 ];

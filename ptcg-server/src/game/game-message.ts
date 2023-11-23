@@ -54,6 +54,12 @@ export enum GameStoreMessage {
 }
 
 export enum GameCardMessage {
+  HEADS = 'HEADS',
+  TAILS = 'TAILS',
+  FLIP_COIN = 'FLIP_COIN',
+  GO_FIRST = 'GO_FIRST',
+  YES = 'YES',
+  NO = 'NO',
   ALL_FIRE_ENERGIES = 'ALL_FIRE_ENERGIES',
   ALL_LIGHTNING_ENERGIES = 'ALL_LIGHTNING_ENERGIES',
   ALL_WATER_ENERGIES = 'ALL_WATER_ENERGIES',

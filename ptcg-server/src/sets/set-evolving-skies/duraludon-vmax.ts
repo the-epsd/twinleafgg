@@ -60,13 +60,13 @@ export class DuraludonVMAX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
-      const applyWeakness = new ApplyWeaknessEffect(effect,220);
+
+      const applyWeakness = new ApplyWeaknessEffect(effect, 220);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
-      
+
       effect.damage = 0;
-      
+
       if (damage > 0) {
         opponent.active.damage += damage;
         const afterDamage = new AfterDamageEffect(effect, damage);
@@ -78,18 +78,18 @@ export class DuraludonVMAX extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const opponentPokemon = opponent.active;
-    
+
       const checkEnergy = new CheckProvidedEnergyEffect(opponent, opponentPokemon);
       store.reduceEffect(state, checkEnergy);
-    
-    
+
+
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
-        if (energyCard instanceof EnergyCard && 
-            energyCard.energyType === EnergyType.SPECIAL) {
+        if (energyCard instanceof EnergyCard &&
+          energyCard.energyType === EnergyType.SPECIAL) {
 
-          if (effect instanceof PutDamageEffect) {
-
+          if (effect instanceof PutDamageEffect
+            && opponent.active.cards.includes(energyCard)) {
             effect.preventDefault = true;
             return state;
           }
@@ -99,4 +99,5 @@ export class DuraludonVMAX extends PokemonCard {
     }
     return state;
   }
+
 }

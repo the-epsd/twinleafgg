@@ -36,29 +36,11 @@ class Spiritomb extends pokemon_card_1.PokemonCard {
         this.fullName = 'Spiritomb PAL';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect
-            && effect.power.powerType === pokemon_types_1.PowerType.ABILITY
-            && effect.power.name !== 'Fettered in Misfortune') {
-            const player = effect.player;
-            let isInPlay = false;
-            if (player.active.cards[0] !== this || player.active.cards[0] == this) {
-                isInPlay = true;
-            }
-            if (!isInPlay) {
-                return state;
-            }
-            else {
-                if (player === effect.player) {
-                    // Try to reduce PowerEffect, to check if something is blocking our ability
-                    try {
-                        const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                        store.reduceEffect(state, powerEffect);
-                    }
-                    catch (_a) {
-                        return state;
-                    }
-                }
-                throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+            const pokemonCard = effect.card;
+            if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_VSTAR)) {
+                pokemonCard.powers = [];
+                throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_EFFECT);
             }
             return state;
         }

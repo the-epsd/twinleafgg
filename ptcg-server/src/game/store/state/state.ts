@@ -39,4 +39,6 @@ export class State {
 
   public players: Player[] = [];
 
+  public skipOpponentTurn = false;
+
 }
