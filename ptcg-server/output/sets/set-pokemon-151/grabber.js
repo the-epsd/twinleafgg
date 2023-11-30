@@ -12,7 +12,7 @@ class Grabber extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = '151';
         this.set2 = '151';
-        this.setNumber = '164';
+        this.setNumber = '162';
         this.name = 'Grabber';
         this.fullName = 'Grabber 151';
         this.text = 'Your opponent reveals their hand, and you put a Pokémon you find there on the bottom of their deck.';

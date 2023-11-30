@@ -90,3 +90,4 @@ __exportStar(require("./set-paldea-evolved"), exports);
 __exportStar(require("./set-obsidian-flames"), exports);
 __exportStar(require("./set-pokemon-151"), exports);
 __exportStar(require("./set-paradox-rift"), exports);
+__exportStar(require("./set-paldea-fates"), exports);

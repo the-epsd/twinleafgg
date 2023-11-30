@@ -28,7 +28,7 @@ class Katy extends trainer_card_1.TrainerCard {
         this.regulationMark = 'F';
         this.set = 'SVI';
         this.set2 = 'scarletviolet';
-        this.setNumber = '198';
+        this.setNumber = '177';
         this.name = 'Katy';
         this.fullName = 'Katy SVI';
         this.text = 'Shuffle your hand into your deck. Then, draw 8 cards. Your turn ends.';

@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckRetreatCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, EnergyCard } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Zapdosex extends PokemonCard {
@@ -69,58 +69,62 @@ export class Zapdosex extends PokemonCard {
         return state;
       }
 
-      // Check attached energy 
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
 
-      // Look for Lightning energy
-      const hasLightning = checkProvidedEnergy.energyMap.some(e => { 
-        if (e.provides.includes(CardType.LIGHTNING)) {
-          return true;
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+
+      if (checkProvidedEnergy.energyMap.some(c => {
+        return c instanceof EnergyCard
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.LIGHTNING);
+      })) {
+        if (this.name === 'Zapdos ex') {
+          effect.cost = [];
+        }
+      }
+
+
+
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+        const player = effect.player;
+        const opponent = StateUtils.getOpponent(state, player);
+        const source = opponent.bench;
+
+        const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+        if (!hasBenched) {
+          return state;
+        }
+        const damagedBenched = source.filter(b => b.damage > 0);
+
+        if (damagedBenched) {
+          // Opponent has damaged benched Pokemon
+
+          state = store.prompt(state, new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [SlotType.BENCH],
+            { max: 1, allowCancel: false }
+          ), targets => {
+            if (!targets || targets.length === 0) {
+              return;
+            }
+            const damageEffect = new PutDamageEffect(effect, 90);
+            damageEffect.target = targets[0];
+            store.reduceEffect(state, damageEffect);
+          });
+
+          return state;
         }
 
-        if (hasLightning) {
-        // Set retreat cost to empty if Lightning attached
-          effect.cost = [ ]; 
-        }});
-      return state;
-    }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const source = opponent.bench;
-  
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-      if (!hasBenched) {
         return state;
       }
-      const damagedBenched = source.filter(b => b.damage > 0);
-    
-      if (damagedBenched) {
-        // Opponent has damaged benched Pokemon
-  
-        state = store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [ SlotType.BENCH ],
-          { max: 1, allowCancel: false }
-        ), targets => {
-          if (!targets || targets.length === 0) {
-            return;
-          }
-          const damageEffect = new PutDamageEffect(effect, 90);
-          damageEffect.target = targets[0];
-          store.reduceEffect(state, damageEffect);
-        });
-  
-        return state;
-      }
-  
+
       return state;
+
     }
-  
+
     return state;
-  
   }
-  
+
 }

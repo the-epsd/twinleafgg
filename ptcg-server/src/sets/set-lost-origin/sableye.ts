@@ -11,7 +11,7 @@ import { GameMessage } from '../../game/game-message';
 // import { GameError, PutDamagePrompt } from '../../game';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import { PutDamagePrompt } from '../..';
+import { GameError, PutDamagePrompt } from '../..';
 
 
 function* useLostMine(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
@@ -29,29 +29,30 @@ function* useLostMine(next: Function, store: StoreLike, state: State, effect: At
   
   const damage = Math.min(120, damageLeft);
 
-  // if (player.lostzone.cards.length <= 9) {
-  //   throw new GameError (GameMessage.CANNOT_USE_POWER);  
-  // }
+  if (player.lostzone.cards.length <= 9) {
+    throw new GameError (GameMessage.CANNOT_USE_POWER);  
+  }
   
-  // if (player.lostzone.cards.length >= 10) {
+  if (player.lostzone.cards.length >= 10) {
 
-  return store.prompt(state, new PutDamagePrompt(
-    effect.player.id,
-    GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-    PlayerType.TOP_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
-    damage,
-    maxAllowedDamage,
-    { allowCancel: false }
-  ), targets => {
-    const results = targets || [];
-    for (const result of results) {
-      const target = StateUtils.getTarget(state, player, result.target);
-      const putCountersEffect = new PutCountersEffect(effect, result.damage);
-      putCountersEffect.target = target;
-      store.reduceEffect(state, putCountersEffect);
-    }
-  });
+    return store.prompt(state, new PutDamagePrompt(
+      effect.player.id,
+      GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+      PlayerType.TOP_PLAYER,
+      [ SlotType.ACTIVE, SlotType.BENCH ],
+      damage,
+      maxAllowedDamage,
+      { allowCancel: false }
+    ), targets => {
+      const results = targets || [];
+      for (const result of results) {
+        const target = StateUtils.getTarget(state, player, result.target);
+        const putCountersEffect = new PutCountersEffect(effect, result.damage);
+        putCountersEffect.target = target;
+        store.reduceEffect(state, putCountersEffect);
+      }
+    });
+  }
 }
 
 export class Sableye extends PokemonCard {

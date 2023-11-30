@@ -5,8 +5,6 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
 import { PokemonCardList, StateUtils } from '../../game';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
@@ -72,12 +70,14 @@ export class Klefki extends PokemonCard {
         return state;
       }
 
+      const pokemonCard = effect.card;
+
       // Try reducing ability for each player  
       try {
         const playerPowerEffect = new PowerEffect(player, this.powers[0], this);
         store.reduceEffect(state, playerPowerEffect);
       } catch {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+        pokemonCard.powers = [ ];
       }
       return state;
     }

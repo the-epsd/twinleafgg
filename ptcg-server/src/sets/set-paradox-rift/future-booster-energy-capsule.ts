@@ -15,6 +15,10 @@ export class FutureBoosterEnergyCapsule extends TrainerCard {
 
   public tags = [ CardTag.FUTURE ];
 
+  public set2: string = 'futureflash';
+
+  public setNumber: string = '62';
+
   public set: string = 'PAR';
 
   public name: string = 'Future Booster Energy Capsule';
@@ -27,11 +31,11 @@ export class FutureBoosterEnergyCapsule extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (this instanceof PokemonCard && this.tags.includes(CardTag.FUTURE)) {
-      if (effect instanceof CheckRetreatCostEffect) {
+      if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
         effect.cost = [];
       }
     
-      if (effect instanceof AttackEffect && effect.target.isActive()) {
+      if (effect instanceof AttackEffect && effect.player.active.tool === this) {
         effect.damage += 20; 
       }
     

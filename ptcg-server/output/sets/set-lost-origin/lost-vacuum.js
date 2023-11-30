@@ -14,6 +14,29 @@ class LostVacuum extends trainer_card_1.TrainerCard {
         this.name = 'Lost Vacuum';
         this.fullName = 'Lost Vacuum LOR';
         this.text = '';
+        // public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+        // if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+        //   const player = effect.player;
+        //   return store.prompt(state, new SelectPrompt(
+        //     player.id,
+        //     GameMessage.CHOOSE_CARD_TYPE_TO_DISCARD,
+        //     [GameMessage.ALL_STADIUM_CARDS, GameMessage.ALL_TOOL_CARDS],
+        //     { allowCancel: false }
+        //   ), choice => {
+        //     let cardType: CardType;
+        //     if (choice === 0) {
+        //       cardType = CardType.STADIUM;
+        //     } else {
+        //       cardType = CardType.TOOL;
+        //     }
+        //     const cardsToDiscard = player.car.findAllCards({ cardType });
+        //     if (cardsToDiscard.length > 0) {
+        //       player.inplay.moveCardsTo(cardsToDiscard, player.lostzone);
+        //     }
+        //     return state;
+        //   });
+        // }
+        // return state;
     }
 }
 exports.LostVacuum = LostVacuum;

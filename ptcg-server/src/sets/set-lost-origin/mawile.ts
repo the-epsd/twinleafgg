@@ -36,15 +36,15 @@ export class Mawile extends PokemonCard {
       }
     ];
 
-  public set: string = 'EVS';
+  public set: string = 'LOR';
 
-  public set2: string = 'evolvingskies';
+  public set2: string = 'lostorigin';
 
-  public setNumber: string = '94';
+  public setNumber: string = '71';
 
-  public name: string = 'Umbreon V';
+  public name: string = 'Mawile';
 
-  public fullName: string = 'Umbreon V EVS';
+  public fullName: string = 'Mawile LOR';
 
   public readonly TEMPTING_TRAP_MARKER = 'TEMPTING_TRAP_MARKER';
 

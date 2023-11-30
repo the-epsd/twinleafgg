@@ -25,7 +25,6 @@ export class IronValiantex extends PokemonCard {
   public powers = [
     {
       name: 'Tachyon Bits',
-      useWhenInPlay: true,
       powerType: PowerType.ABILITY,
       text: 'Once during your turn, when this Pokémon moves from your Bench to the Active Spot, you may put 2 damage counters on 1 of your opponent\'s Pokémon.'
     }
@@ -75,36 +74,39 @@ export class IronValiantex extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      if (!this.movedToActiveThisTurn) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
 
-      }
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
-        { max: 1, allowCancel: true },
-      ), selected => {
-        if (!selected || selected.length === 0) {
-          return state;
-        }
+      if (this.movedToActiveThisTurn == true) {
         effect.player.marker.addMarker(this.TACHYON_BITS_MARKER, this);
-        const target = selected[0];
-        target.damage += 20;
-      });
-
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+        console.log('marker added');
       }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
+      if (player.marker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
+        return store.prompt(state, new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [ SlotType.ACTIVE, SlotType.BENCH ],
+          { max: 1, allowCancel: true },
+        ), selected => {
+          if (!selected || selected.length === 0) {
+            return state;
+          }
+          const target = selected[0];
+          target.damage += 20;
+        });
+
+      }
+
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+        // Check marker
+        if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+          console.log('attack blocked');
+          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+        }
+        effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+        console.log('marker added');
+      }
+      return state;
     }
     return state;
   }

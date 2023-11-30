@@ -18,7 +18,7 @@ export class Grabber extends TrainerCard {
 
   public set2: string = '151';
 
-  public setNumber: string = '164';
+  public setNumber: string = '162';
 
   public name: string = 'Grabber';
 

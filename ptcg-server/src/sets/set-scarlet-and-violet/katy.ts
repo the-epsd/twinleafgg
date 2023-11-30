@@ -38,7 +38,7 @@ export class Katy extends TrainerCard {
 
   public set2: string = 'scarletviolet';
 
-  public setNumber: string = '198';
+  public setNumber: string = '177';
 
   public name: string = 'Katy';
 

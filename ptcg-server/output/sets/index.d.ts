@@ -55,3 +55,4 @@ export * from './set-paldea-evolved';
 export * from './set-obsidian-flames';
 export * from './set-pokemon-151';
 export * from './set-paradox-rift';
+export * from './set-paldea-fates';

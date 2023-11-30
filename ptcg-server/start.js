@@ -90,6 +90,7 @@ cardManager.defineSet(sets.setPaldeaEvolved);
 cardManager.defineSet(sets.setObsidianFlames);
 cardManager.defineSet(sets.setPokemon151);
 cardManager.defineSet(sets.setParadoxRift);
+cardManager.defineSet(sets.setPaldeaFates);
 
 StateSerializer.setKnownCards(cardManager.getAllCards());
 

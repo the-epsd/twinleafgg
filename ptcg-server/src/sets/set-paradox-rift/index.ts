@@ -7,6 +7,7 @@ import { Deoxys } from './deoxys';
 import { EarthenVessel } from './earthen-vessel';
 import { Elekid } from './elekid';
 import { Froslassex } from './froslass-ex';
+import { FutureBoosterEnergyCapsule } from './future-booster-energy-capsule';
 import { Gabite } from './gabite';
 import { Garchompex } from './garchomp-ex';
 import { Gholdengoex } from './gholdengo-ex';
@@ -39,6 +40,7 @@ export const setParadoxRift: Card[] = [
   new EarthenVessel(),
   new Elekid(),
   new Froslassex(),
+  new FutureBoosterEnergyCapsule(),
   new Gabite(),
   new Garchompex(),
   new Gholdengoex(),

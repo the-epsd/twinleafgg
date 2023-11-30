@@ -30,11 +30,11 @@ class Mawile extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'EVS';
-        this.set2 = 'evolvingskies';
-        this.setNumber = '94';
-        this.name = 'Umbreon V';
-        this.fullName = 'Umbreon V EVS';
+        this.set = 'LOR';
+        this.set2 = 'lostorigin';
+        this.setNumber = '71';
+        this.name = 'Mawile';
+        this.fullName = 'Mawile LOR';
         this.TEMPTING_TRAP_MARKER = 'TEMPTING_TRAP_MARKER';
         this.CLEAR_TEMPTING_TRAP_MARKER = 'CLEAR_TEMPTING_TRAP_MARKER';
         this.RETREAT_MARKER = 'RETREAT_MARKER';

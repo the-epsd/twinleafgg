@@ -25,35 +25,20 @@ class Avery extends trainer_card_1.TrainerCard {
             player.deck.moveTo(player.hand, 3);
             // Get opponent
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            // Get opponent's bench length
-            const opponentBenchLength = opponent.bench.length;
-            let PokemonToDiscard = 0;
-            if (opponentBenchLength === 4) {
-                PokemonToDiscard = 1;
-            }
-            if (opponentBenchLength === 5) {
-                PokemonToDiscard = 2;
-            }
-            let targets = [];
-            if (PokemonToDiscard === 0) {
-                return state;
-            }
-            // Prompt opponent to discard Pokemon from bench
-            if (PokemonToDiscard === 1) {
-                return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, min: 1, max: 1 }), results => {
-                    targets = results || [];
-                    targets.forEach(target => {
-                        target.moveTo(opponent.discard);
+            const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+            // Discard pokemon from opponent's bench until they have 3
+            while (opponentBenched > 3) {
+                // opponent.bench.pop();
+                const benchDifference = opponentBenched - 3;
+                return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], {
+                    allowCancel: false,
+                    min: benchDifference,
+                    max: benchDifference
+                }), (selected) => {
+                    selected.forEach(card => {
+                        card.moveTo(opponent.discard);
                     });
-                });
-            }
-            // Prompt opponent to discard Pokemon from bench
-            if (PokemonToDiscard === 2) {
-                return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, min: 2, max: 2 }), results => {
-                    targets = results || [];
-                    targets.forEach(target => {
-                        target.moveTo(opponent.discard);
-                    });
+                    return state;
                 });
             }
             return state;

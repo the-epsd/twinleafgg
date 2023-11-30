@@ -9,6 +9,7 @@ const deoxys_1 = require("./deoxys");
 const earthen_vessel_1 = require("./earthen-vessel");
 const elekid_1 = require("./elekid");
 const froslass_ex_1 = require("./froslass-ex");
+const future_booster_energy_capsule_1 = require("./future-booster-energy-capsule");
 const gabite_1 = require("./gabite");
 const garchomp_ex_1 = require("./garchomp-ex");
 const gholdengo_ex_1 = require("./gholdengo-ex");
@@ -39,6 +40,7 @@ exports.setParadoxRift = [
     new earthen_vessel_1.EarthenVessel(),
     new elekid_1.Elekid(),
     new froslass_ex_1.Froslassex(),
+    new future_booster_energy_capsule_1.FutureBoosterEnergyCapsule(),
     new gabite_1.Gabite(),
     new garchomp_ex_1.Garchompex(),
     new gholdengo_ex_1.Gholdengoex(),

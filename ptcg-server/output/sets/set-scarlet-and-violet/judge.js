@@ -11,9 +11,9 @@ class Judge extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'SVI';
-        this.set2 = 'fusionstrike';
+        this.set2 = 'scarletviolet';
         this.setNumber = '176';
-        this.regulationMark = 'F';
+        this.regulationMark = 'G';
         this.name = 'Judge';
         this.fullName = 'Judge SVI';
         this.text = 'Each player shuffles his or her hand into his or her deck. ' +

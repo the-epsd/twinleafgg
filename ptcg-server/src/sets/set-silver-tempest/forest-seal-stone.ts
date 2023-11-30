@@ -45,30 +45,33 @@ export class ForestSealStone extends TrainerCard {
       
       const player = effect.player;
       const attachedPokemon = effect.player.active;
+      
 
       if (attachedPokemon.tool === this) {
+        if (effect.player.bench[0].tool === this || effect.player.bench[1].tool === this || effect.player.bench[2].tool === this || effect.player.bench[3].tool === this || effect.player.bench[4].tool === this) {
         
-        
-        if (player.marker.hasMarker(this.VSTAR_MARKER)) {
-          throw new GameError(GameMessage.POWER_ALREADY_USED);
-        }
+          if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+            throw new GameError(GameMessage.POWER_ALREADY_USED);
+          }
   
-        player.marker.addMarker(this.VSTAR_MARKER, this);
-        state = store.prompt(state, new ChooseCardsPrompt(
-          player.id,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.deck,
-          {},
-          { min: 1, max: 2, allowCancel: false }
-        ), cards => {
-          player.deck.moveCardsTo(cards, player.hand);
+          player.marker.addMarker(this.VSTAR_MARKER, this);
+          state = store.prompt(state, new ChooseCardsPrompt(
+            player.id,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.deck,
+            {},
+            { min: 1, max: 2, allowCancel: false }
+          ), cards => {
+            player.deck.moveCardsTo(cards, player.hand);
 
-          state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
+            state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+            });
+
+            return state;
           });
-
-          return state;
-        });
+        }
+        return state;
       }
       return state;
     }

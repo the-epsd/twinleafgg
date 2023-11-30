@@ -12,6 +12,8 @@ class FutureBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.FUTURE];
+        this.set2 = 'futureflash';
+        this.setNumber = '62';
         this.set = 'PAR';
         this.name = 'Future Booster Energy Capsule';
         this.fullName = 'Future Booster Energy Capsule PAR';
@@ -19,10 +21,10 @@ class FutureBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (this instanceof game_1.PokemonCard && this.tags.includes(card_types_1.CardTag.FUTURE)) {
-            if (effect instanceof check_effects_1.CheckRetreatCostEffect) {
+            if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
                 effect.cost = [];
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.target.isActive()) {
+            if (effect instanceof game_effects_1.AttackEffect && effect.player.active.tool === this) {
                 effect.damage += 20;
             }
         }

@@ -27,9 +27,12 @@ class Zoroark extends pokemon_card_1.PokemonCard {
                 damage: 70,
                 text: ''
             }];
-        this.set = 'BW3';
+        this.regulationMark = 'E';
+        this.set = 'EVS';
+        this.set2 = 'evolvingskies';
+        this.setNumber = '103';
         this.name = 'Zoroark';
-        this.fullName = 'Zoroark BW';
+        this.fullName = 'Zoroark SVI';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

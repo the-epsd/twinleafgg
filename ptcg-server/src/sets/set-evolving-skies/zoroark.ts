@@ -35,12 +35,20 @@ export class Zoroark extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'BW3';
+  public regulationMark = 'E';
+
+  public set: string = 'EVS';
+
+  public set2: string = 'evolvingskies';
+
+  public setNumber: string = '103';
 
   public name: string = 'Zoroark';
 
-  public fullName: string = 'Zoroark BW';
+  public fullName: string = 'Zoroark SVI';
 
+
+  
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 

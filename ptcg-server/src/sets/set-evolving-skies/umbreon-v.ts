@@ -68,7 +68,7 @@ export class UmbreonV extends PokemonCard {
       effect.player.active.marker.removeMarker(this.MEAN_LOOK_MARKER, this);
     }
   
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       const player = effect.player;
       const source = player.active;
