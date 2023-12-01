@@ -4,7 +4,7 @@ import { DarkraiV } from './darkrai-v';
 import { DarkraiVSTAR } from './darkrai-vstar';
 import { FeatherBall } from './feather-ball';
 import { Gallade } from './gallade';
-//import { GapejawBog } from './gapejaw-bog';
+import { GapejawBog } from './gapejaw-bog';
 import { GardeniasVigor } from './gardenias-vigor';
 import { Irida } from './irida';
 import { LucarioV } from './lucario-v';
@@ -27,7 +27,7 @@ export const setAstralRadiance: Card[] = [
   new DarkPatch(),
   new FeatherBall(),
   new Gallade(),
-  //new GapejawBog(),
+  new GapejawBog(),
   new GardeniasVigor(),
   new Irida(),
   new LucarioV(),

@@ -49,27 +49,27 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
         //   this.name = changes.name;
         //   this.fullName = changes.fullName;
         // }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-            effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-            effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+            effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('marker cleared');
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker
-            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 console.log('attack blocked');
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
-            effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
             console.log('marker added');
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            if (player.marker.hasMarker(this.TANDEM_UNIT_MARKER, this)) {
+            if (player.abilityMarker.hasMarker(this.TANDEM_UNIT_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             const slots = player.bench.filter(b => b.cards.length === 0);
@@ -88,7 +88,7 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
                 cards.forEach((card, index) => {
                     player.deck.moveCardTo(card, slots[index]);
                     slots[index].pokemonPlayedTurn = state.turn;
-                    player.marker.addMarker(this.TANDEM_UNIT_MARKER, this);
+                    player.abilityMarker.addMarker(this.TANDEM_UNIT_MARKER, this);
                     return state;
                 });
                 return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
@@ -96,7 +96,7 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
                     if (effect instanceof game_phase_effects_1.EndTurnEffect) {
                         effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
                             if (player instanceof Miraidonex) {
-                                player.marker.removeMarker(this.TANDEM_UNIT_MARKER);
+                                player.abilityMarker.removeMarker(this.TANDEM_UNIT_MARKER);
                                 return state;
                             }
                         });

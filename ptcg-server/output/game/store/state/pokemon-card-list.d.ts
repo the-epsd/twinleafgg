@@ -9,6 +9,8 @@ export declare class PokemonCardList extends CardList {
     poisonDamage: number;
     burnDamage: number;
     marker: Marker;
+    attackMarker: Marker;
+    abilityMarker: Marker;
     pokemonPlayedTurn: number;
     tool: Card | undefined;
     getPokemons(): PokemonCard[];

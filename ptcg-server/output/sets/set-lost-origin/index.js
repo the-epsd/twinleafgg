@@ -6,11 +6,14 @@ const comfey_1 = require("./comfey");
 const cramorant_1 = require("./cramorant");
 const cresselia_1 = require("./cresselia");
 const drapion_v_1 = require("./drapion-v");
+const gengar_1 = require("./gengar");
 const gift_energy_1 = require("./gift-energy");
 const giratina_v_1 = require("./giratina-v");
 const giratina_vstar_1 = require("./giratina-vstar");
 const hisuian_goodra_v_1 = require("./hisuian-goodra-v");
 const hisuian_goodra_vstar_1 = require("./hisuian-goodra-vstar");
+const hisuian_zoroark_v_1 = require("./hisuian-zoroark-v");
+const hisuian_zoroark_vstar_1 = require("./hisuian-zoroark-vstar");
 const lady_1 = require("./lady");
 const lost_city_1 = require("./lost-city");
 const mawile_1 = require("./mawile");
@@ -26,11 +29,14 @@ exports.setLostOrigin = [
     new cramorant_1.Cramorant(),
     new cresselia_1.Cresselia(),
     new drapion_v_1.DrapionV(),
+    new gengar_1.Gengar(),
     new gift_energy_1.GiftEnergy(),
     new giratina_v_1.GiratinaV(),
     new giratina_vstar_1.GiratinaVSTAR(),
     new hisuian_goodra_v_1.HisuianGoodraV(),
     new hisuian_goodra_vstar_1.HisuianGoodraVSTAR(),
+    new hisuian_zoroark_v_1.HisuianZoroarkV(),
+    new hisuian_zoroark_vstar_1.HisuianZoroarkVSTAR(),
     new lady_1.Lady(),
     new lost_city_1.LostCity(),
     new mawile_1.Mawile(),

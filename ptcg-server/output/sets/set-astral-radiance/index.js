@@ -6,7 +6,7 @@ const darkrai_v_1 = require("./darkrai-v");
 const darkrai_vstar_1 = require("./darkrai-vstar");
 const feather_ball_1 = require("./feather-ball");
 const gallade_1 = require("./gallade");
-//import { GapejawBog } from './gapejaw-bog';
+const gapejaw_bog_1 = require("./gapejaw-bog");
 const gardenias_vigor_1 = require("./gardenias-vigor");
 const irida_1 = require("./irida");
 const lucario_v_1 = require("./lucario-v");
@@ -26,7 +26,7 @@ exports.setAstralRadiance = [
     new dark_patch_1.DarkPatch(),
     new feather_ball_1.FeatherBall(),
     new gallade_1.Gallade(),
-    //new GapejawBog(),
+    new gapejaw_bog_1.GapejawBog(),
     new gardenias_vigor_1.GardeniasVigor(),
     new irida_1.Irida(),
     new lucario_v_1.LucarioV(),

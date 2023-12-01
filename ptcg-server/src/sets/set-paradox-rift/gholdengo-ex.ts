@@ -30,7 +30,7 @@ export class Gholdengoex extends PokemonCard {
   public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
 
   public powers = [{
-    name: 'Bonus Coins',
+    name: 'Coin Bonus',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, you may draw 1 card. If this ' +

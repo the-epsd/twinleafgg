@@ -16,6 +16,10 @@ export class PokemonCardList extends CardList {
 
   public marker = new Marker();
 
+  public attackMarker = new Marker();
+
+  public abilityMarker = new Marker();
+
   public pokemonPlayedTurn: number = 0;
 
   // Some pokemon cards can be attached as a tool,

@@ -66,30 +66,30 @@ export class Miraidonex extends PokemonCard {
     //   this.fullName = changes.fullName;
     // }
   
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
       console.log('marker added');
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.TANDEM_UNIT_MARKER, this)) {
+      if (player.abilityMarker.hasMarker(this.TANDEM_UNIT_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
           
@@ -121,7 +121,7 @@ export class Miraidonex extends PokemonCard {
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, slots[index]);
           slots[index].pokemonPlayedTurn = state.turn;
-          player.marker.addMarker(this.TANDEM_UNIT_MARKER, this);
+          player.abilityMarker.addMarker(this.TANDEM_UNIT_MARKER, this);
           return state;
         });
       
@@ -131,7 +131,7 @@ export class Miraidonex extends PokemonCard {
           if (effect instanceof EndTurnEffect) {
             effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
               if (player instanceof Miraidonex) {
-                player.marker.removeMarker(this.TANDEM_UNIT_MARKER);
+                player.abilityMarker.removeMarker(this.TANDEM_UNIT_MARKER);
                 return state;
               }
             });

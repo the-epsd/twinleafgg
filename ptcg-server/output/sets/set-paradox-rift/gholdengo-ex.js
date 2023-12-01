@@ -22,7 +22,7 @@ class Gholdengoex extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Bonus Coins',
+                name: 'Coin Bonus',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'Once during your turn, you may draw 1 card. If this ' +

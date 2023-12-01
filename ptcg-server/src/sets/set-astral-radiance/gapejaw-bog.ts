@@ -22,7 +22,7 @@ export class GapejawBog extends TrainerCard {
 
   public fullName = 'Gapejaw Bog ASR';
 
-  public text = '';
+  public text = 'Whenever either player puts a Basic Pokémon from their hand onto their Bench, put 2 damage counters on that Pokémon.';
 
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
@@ -30,26 +30,13 @@ export class GapejawBog extends TrainerCard {
     }
 
     if (effect instanceof PlayPokemonEffect) {
-      const target = effect.target as unknown as AttackEffect;
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
-
-      if (player === targetPlayer) {
-        const damageEffect = new PutDamageEffect(target, 20);
-        damageEffect.player = player;
-        store.reduceEffect(state, damageEffect);
-      }
-
-      if (opponent === targetPlayer) {
-        const damageEffect = new PutDamageEffect(target, 20);
-        damageEffect.player = player;
-        store.reduceEffect(state, damageEffect);
-      }
+      const damageEffect = new PutDamageEffect(effect as unknown as AttackEffect, 20);
+      damageEffect.target = effect.target;
+      store.reduceEffect(state, damageEffect);
     }
+
 
     return state;
   }
-
 
 }
