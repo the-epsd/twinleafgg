@@ -35,7 +35,13 @@ function initNextTurn(store, state) {
         state.phase = state_1.GamePhase.PLAYER_TURN;
     }
     if (state.phase === state_1.GamePhase.BETWEEN_TURNS) {
-        state.activePlayer = state.activePlayer ? 0 : 1;
+        if (player.usedTurnSkip) {
+            // eslint-disable-next-line no-self-assign
+            state.activePlayer = state.activePlayer;
+        }
+        else {
+            state.activePlayer = state.activePlayer ? 0 : 1;
+        }
         state.phase = state_1.GamePhase.PLAYER_TURN;
         player = getActivePlayer(state);
     }

@@ -1,7 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, GamePhase } from '../../game';
+import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 
 export class Luxray extends PokemonCard {
@@ -46,10 +47,18 @@ export class Luxray extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (state.phase == GamePhase.SETUP) {
-      this.stage = Stage.BASIC;
+    if (effect instanceof PowerEffect && effect.power.useFromHand && effect.power === this.powers[0]) {
+
+      if (effect.power.useFromHand && function setupGame(){}) {
+        if (effect.player.hand.cards.includes(this)) {
+          this.stage = Stage.BASIC;
+          return state;
+        }
+        return state;
+      }
       return state;
     }
     return state;
   }
+
 }

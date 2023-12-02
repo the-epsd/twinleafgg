@@ -4,6 +4,7 @@ exports.Luxray = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class Luxray extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -32,8 +33,14 @@ class Luxray extends pokemon_card_1.PokemonCard {
         this.fullName = 'Luxray CRZ';
     }
     reduceEffect(store, state, effect) {
-        if (state.phase == game_1.GamePhase.SETUP) {
-            this.stage = card_types_1.Stage.BASIC;
+        if (effect instanceof game_effects_1.PowerEffect && effect.power.useFromHand && effect.power === this.powers[0]) {
+            if (effect.power.useFromHand && function setupGame() { }) {
+                if (effect.player.hand.cards.includes(this)) {
+                    this.stage = card_types_1.Stage.BASIC;
+                    return state;
+                }
+                return state;
+            }
             return state;
         }
         return state;

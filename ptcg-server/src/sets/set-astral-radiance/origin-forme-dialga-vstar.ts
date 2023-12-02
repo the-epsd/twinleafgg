@@ -3,11 +3,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, 
-  GamePhase, 
-  StateUtils} from '../../game';
+  GameError,
+  GameMessage} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class OriginFormeDialgaVSTAR extends PokemonCard {
 
@@ -15,9 +17,9 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VSTAR;
 
-  //public evolvesFrom = 'Palkia V';
+  public evolvesFrom = 'Origin Forme Dialga V';
 
   public cardType: CardType = CardType.METAL;
 
@@ -29,10 +31,16 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
 
   public attacks = [
     {
+      name: 'Metal Blast',
+      cost: [ CardType.COLORLESS ],
+      damage: 40,
+      text: 'This attack does 40 more damage for each [M] Energy attached to this Pokémon.'
+    },
+    {
       name: 'Star Chronos',
-      cost: [ ],
-      damage: 10,
-      text: ''
+      cost: [ CardType.METAL, CardType.METAL, CardType.METAL, CardType.METAL, CardType.COLORLESS ],
+      damage: 220,
+      text: 'Take another turn after this one. (Skip Pokémon Checkup.) (You can\'t use more than 1 VSTAR Power in a game.)'
     }
   ];
 
@@ -46,34 +54,55 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
 
   public fullName: string = 'Origin Forme Dialga VSTAR ASR';
 
-  CLEAR_WITHDRAW_MARKER = 'CLEAR_WITHDRAW_MARKER';
+  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
+
+  public readonly STAR_CHRONOS_MARKER = 'STAR_CHRONOS_MARKER';
+
+  public readonly STAR_CHRONOS_MARKER_2 = 'STAR_CHRONOS_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      if (state.phase === GamePhase.ATTACK) {
-
-        const player = effect.player;
-
-        const opponent = StateUtils.getOpponent(state, player);
-
-        opponent.marker.addMarker(this.CLEAR_WITHDRAW_MARKER, this);
-
-        if (opponent.marker.hasMarker(this.CLEAR_WITHDRAW_MARKER, this)) {
-          if (GamePhase.BETWEEN_TURNS) {
-            player.deck.moveTo(player.hand, 0);
-         
-            state.turn--;
-            const endTurnEffect = new EndTurnEffect(opponent);
-            store.reduceEffect(state, endTurnEffect);
-            return state;
-          }
-
-        }
-      }
-      return state;
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      effect.player.marker.removeMarker(this.VSTAR_MARKER, this);
     }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.STAR_CHRONOS_MARKER_2, this)) {
+      effect.player.marker.removeMarker(this.STAR_CHRONOS_MARKER, this);
+      effect.player.marker.removeMarker(this.STAR_CHRONOS_MARKER_2, this);
+      effect.player.usedTurnSkip = false;
+      console.log('marker cleared');
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.STAR_CHRONOS_MARKER, this)) {
+      effect.player.marker.addMarker(this.STAR_CHRONOS_MARKER_2, this);
+      console.log('marker added');
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
+      store.reduceEffect(state, checkProvidedEnergyEffect);
+
+      let energyCount = 0;
+      checkProvidedEnergyEffect.energyMap.forEach(em => {
+        energyCount += em.provides.filter(cardType => {
+          return cardType === CardType.METAL;
+        }).length;
+      });
+      effect.damage += energyCount * 40;
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+
+      if (effect.player.marker.hasMarker(this.VSTAR_MARKER)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+      effect.player.marker.addMarker(this.VSTAR_MARKER, this);
+      effect.player.marker.addMarker(this.STAR_CHRONOS_MARKER, this);
+      effect.player.usedTurnSkip = true;
+    }
+
     return state;
   }
 }

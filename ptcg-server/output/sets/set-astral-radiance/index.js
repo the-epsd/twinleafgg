@@ -11,6 +11,7 @@ const gardenias_vigor_1 = require("./gardenias-vigor");
 const irida_1 = require("./irida");
 const lucario_v_1 = require("./lucario-v");
 const miltank_1 = require("./miltank");
+const origin_forme_dialga_v_1 = require("./origin-forme-dialga-v");
 const origin_forme_dialga_vstar_1 = require("./origin-forme-dialga-vstar");
 const origin_forme_palkia_v_1 = require("./origin-forme-palkia-v");
 const origin_forme_palkia_vstar_1 = require("./origin-forme-palkia-vstar");
@@ -31,6 +32,7 @@ exports.setAstralRadiance = [
     new irida_1.Irida(),
     new lucario_v_1.LucarioV(),
     new miltank_1.Miltank(),
+    new origin_forme_dialga_v_1.OriginFormeDialgaV(),
     new origin_forme_dialga_vstar_1.OriginFormeDialgaVSTAR(),
     new origin_forme_palkia_v_1.OriginFormePalkiaV(),
     new origin_forme_palkia_vstar_1.OriginFormePalkiaVSTAR(),

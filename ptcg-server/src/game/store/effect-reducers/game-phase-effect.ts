@@ -42,10 +42,16 @@ export function initNextTurn(store: StoreLike, state: State): State {
   }
 
   if (state.phase === GamePhase.BETWEEN_TURNS) {
-    state.activePlayer = state.activePlayer ? 0 : 1;
+    if (player.usedTurnSkip) {
+      // eslint-disable-next-line no-self-assign
+      state.activePlayer = state.activePlayer;
+    } else {
+      state.activePlayer = state.activePlayer ? 0 : 1;
+    }
     state.phase = GamePhase.PLAYER_TURN;
     player = getActivePlayer(state);
   }
+
 
   state.turn++;
   store.log(state, GameLog.LOG_TURN, { turn: state.turn });
@@ -68,6 +74,7 @@ export function initNextTurn(store: StoreLike, state: State): State {
   player.deck.moveTo(player.hand, 1);
   return state;
 }
+
 
 function startNextTurn(store: StoreLike, state: State): State {
   const player = state.players[state.activePlayer];
