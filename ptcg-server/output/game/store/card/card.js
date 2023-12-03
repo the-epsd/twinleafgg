@@ -8,6 +8,7 @@ class Card {
         this.tags = [];
         this.setNumber = '';
         this.set2 = '';
+        this.retreat = [];
     }
     reduceEffect(store, state, effect) {
         return state;

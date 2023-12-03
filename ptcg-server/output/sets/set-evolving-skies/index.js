@@ -15,6 +15,7 @@ const rescue_carrier_1 = require("./rescue-carrier");
 const suicune_v_1 = require("./suicune-v");
 const umbreon_v_1 = require("./umbreon-v");
 const umbreon_vmax_1 = require("./umbreon-vmax");
+const zinnias_resolve_1 = require("./zinnias-resolve");
 const zoroark_1 = require("./zoroark");
 const zorua_1 = require("./zorua");
 exports.setEvolvingSkies = [
@@ -32,6 +33,7 @@ exports.setEvolvingSkies = [
     new suicune_v_1.SuicuneV(),
     new umbreon_v_1.UmbreonV(),
     new umbreon_vmax_1.UmbreonVMAX(),
+    new zinnias_resolve_1.ZinniasResolve(),
     new zorua_1.Zorua(),
     new zoroark_1.Zoroark(),
 ];

@@ -16,7 +16,7 @@ class Regice extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Regi Gate',
-                cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck.'
             },

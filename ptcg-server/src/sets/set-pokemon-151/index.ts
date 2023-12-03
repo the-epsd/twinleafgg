@@ -22,6 +22,7 @@ import { Wartortle } from './wartortle';
 import { Zapdosex } from './zapdos-ex';
 import { EreikasInvitation } from './erikas-invitation';
 import { GiovannisCharisma } from './giovannis-charisma';
+import { Scyther } from './scyther';
 
 export const setPokemon151: Card[] = [
   
@@ -42,6 +43,7 @@ export const setPokemon151: Card[] = [
   new Mewex(),
   new Pidgeotto(),
   new Pidgey(),
+  new Scyther(),
   new Squirtle(),
   new Venonat(),
   new Venomoth(),

@@ -1,4 +1,4 @@
-import { Format, SuperType } from './card-types';
+import { CardType, Format, SuperType } from './card-types';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
@@ -25,7 +25,7 @@ export abstract class Card {
 
   public set2: string = '';
 
-
+  public retreat: CardType[] = [];
   
   static tags: any;
 

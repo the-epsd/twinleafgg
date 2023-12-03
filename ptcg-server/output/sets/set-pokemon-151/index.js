@@ -24,6 +24,7 @@ const wartortle_1 = require("./wartortle");
 const zapdos_ex_1 = require("./zapdos-ex");
 const erikas_invitation_1 = require("./erikas-invitation");
 const giovannis_charisma_1 = require("./giovannis-charisma");
+const scyther_1 = require("./scyther");
 exports.setPokemon151 = [
     new alakazam_ex_1.Alakazamex(),
     new blastoise_ex_1.Blastoiseex(),
@@ -42,6 +43,7 @@ exports.setPokemon151 = [
     new mew_ex_1.Mewex(),
     new pidgeotto_1.Pidgeotto(),
     new pidgey_1.Pidgey(),
+    new scyther_1.Scyther(),
     new squirtle_1.Squirtle(),
     new venonat_1.Venonat(),
     new venomoth_1.Venomoth(),

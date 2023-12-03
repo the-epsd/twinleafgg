@@ -13,6 +13,7 @@ import { RescueCarrier } from './rescue-carrier';
 import { SuicuneV } from './suicune-v';
 import { UmbreonV } from './umbreon-v';
 import { UmbreonVMAX } from './umbreon-vmax';
+import { ZinniasResolve } from './zinnias-resolve';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 
@@ -32,6 +33,7 @@ export const setEvolvingSkies: Card[] = [
   new SuicuneV(),
   new UmbreonV(),
   new UmbreonVMAX(),
+  new ZinniasResolve(),
   new Zorua(),
   new Zoroark(),
   

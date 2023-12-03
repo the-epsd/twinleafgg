@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Registeel = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
+const game_1 = require("../../game");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class Registeel extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -21,7 +23,7 @@ class Registeel extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Heavy Slam',
-                cost: [card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
                 damage: 220,
                 text: 'This attack does 50 less damage for each [C] in your opponent\'s Active Pokémon\'s Retreat Cost.'
             }
@@ -32,21 +34,46 @@ class Registeel extends pokemon_card_1.PokemonCard {
         this.setNumber = '108';
         this.name = 'Registeel';
         this.fullName = 'Registeel ASR';
-        //   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-        //     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        //       const player = effect.player;
-        //       const opponent = state.getOpponent(player);
-        //       let retreatCost = 0;
-        //       if (opponent.active) {
-        //         retreatCost = opponent.active.getRetreatCost();
-        //       }
-        //       effect.damage -= retreatCost * 50;
-        //       if (effect.damage < 0) {
-        //         effect.damage = 0;
-        //       }
-        //     }
-        //     return state;
-        //   }
+    }
+    reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const slots = player.bench.filter(b => b.cards.length === 0);
+            const max = Math.min(slots.length, 1);
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            // Check if bench has open slots
+            const openSlots = player.bench.filter(b => b.cards.length === 0);
+            if (openSlots.length === 0) {
+                // No open slots, throw error
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            let cards = [];
+            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max, allowCancel: true }), selected => {
+                cards = selected || [];
+                cards.forEach((card, index) => {
+                    player.deck.moveCardTo(card, slots[index]);
+                    slots[index].pokemonPlayedTurn = state.turn;
+                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                        player.deck.applyOrder(order);
+                    });
+                });
+            });
+            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+                const player = effect.player;
+                const opponent = game_1.StateUtils.getOpponent(state, player);
+                const opponentActiveCard = opponent.active.getPokemonCard();
+                if (opponentActiveCard) {
+                    const retreatCost = opponentActiveCard.retreat.filter(c => c === card_types_1.CardType.COLORLESS).length;
+                    effect.damage -= retreatCost * 50;
+                    if (effect.damage < 0) {
+                        effect.damage = 0;
+                    }
+                }
+            }
+        }
+        return state;
     }
 }
 exports.Registeel = Registeel;
