@@ -26,5 +26,4 @@ export declare class State {
     activePlayer: number;
     winner: GameWinner;
     players: Player[];
-    skipOpponentTurn: boolean;
 }

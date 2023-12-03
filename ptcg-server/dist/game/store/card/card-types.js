@@ -69,13 +69,6 @@ export var CardType;
     CardType[CardType["DRAGON"] = 11] = "DRAGON";
     CardType[CardType["FAIRY"] = 12] = "FAIRY";
 })(CardType || (CardType = {}));
-export var Archetype;
-(function (Archetype) {
-    Archetype[Archetype["NONE"] = 0] = "NONE";
-    Archetype[Archetype["CHARIZARD"] = 1] = "CHARIZARD";
-    Archetype[Archetype["MEW"] = 2] = "MEW";
-    Archetype[Archetype["CHIENPAO"] = 3] = "CHIENPAO";
-})(Archetype || (Archetype = {}));
 export var SpecialCondition;
 (function (SpecialCondition) {
     SpecialCondition[SpecialCondition["PARALYZED"] = 0] = "PARALYZED";

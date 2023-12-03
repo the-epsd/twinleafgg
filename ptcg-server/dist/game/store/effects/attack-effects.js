@@ -7,7 +7,6 @@ export var AttackEffects;
     AttackEffects["AFTER_DAMAGE_EFFECT"] = "AFTER_DAMAGE_EFFECT";
     AttackEffects["PUT_COUNTERS_EFFECT"] = "PUT_COUNTERS_EFFECT";
     AttackEffects["DISCARD_CARD_EFFECT"] = "DISCARD_CARD_EFFECT";
-    AttackEffects["CARDS_TO_HAND_EFFECT"] = "CARDS_TO_HAND_EFFECT";
     AttackEffects["ADD_MARKER_EFFECT"] = "ADD_MARKER_EFFECT";
     AttackEffects["ADD_SPECIAL_CONDITIONS_EFFECT"] = "ADD_SPECIAL_CONDITIONS_EFFECT";
     AttackEffects["MOVED_TO_ACTIVE_BONUS_EFFECT"] = "MOVED_TO_ACTIVE_BONUS_EFFECT";
@@ -45,7 +44,6 @@ export class PutDamageEffect extends AbstractAttackEffect {
         super(base);
         this.type = AttackEffects.PUT_DAMAGE_EFFECT;
         this.preventDefault = false;
-        this.damageReduced = false;
         this.damage = damage;
     }
 }
@@ -66,14 +64,6 @@ export class PutCountersEffect extends AbstractAttackEffect {
     }
 }
 export class DiscardCardsEffect extends AbstractAttackEffect {
-    constructor(base, energyCards) {
-        super(base);
-        this.type = AttackEffects.DISCARD_CARD_EFFECT;
-        this.preventDefault = false;
-        this.cards = energyCards;
-    }
-}
-export class CardsToHandEffect extends AbstractAttackEffect {
     constructor(base, energyCards) {
         super(base);
         this.type = AttackEffects.DISCARD_CARD_EFFECT;

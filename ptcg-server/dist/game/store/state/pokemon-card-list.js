@@ -9,8 +9,6 @@ export class PokemonCardList extends CardList {
         this.poisonDamage = 10;
         this.burnDamage = 20;
         this.marker = new Marker();
-        this.attackMarker = new Marker();
-        this.abilityMarker = new Marker();
         this.pokemonPlayedTurn = 0;
     }
     getPokemons() {

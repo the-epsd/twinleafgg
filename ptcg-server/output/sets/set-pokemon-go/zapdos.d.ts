@@ -1,11 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Flaaffy extends PokemonCard {
+export declare class Zapdos extends PokemonCard {
     stage: Stage;
-    regulationMark: string;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
@@ -24,11 +22,11 @@ export declare class Flaaffy extends PokemonCard {
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
     set2: string;
     setNumber: string;
     name: string;
     fullName: string;
-    readonly DYNAMOTOR_MARKER = "DYNAMOTOR_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

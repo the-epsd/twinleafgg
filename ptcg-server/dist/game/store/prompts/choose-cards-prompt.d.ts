@@ -17,8 +17,6 @@ export interface ChooseCardsOptions {
     maxPokemons: number | undefined;
     maxEnergies: number | undefined;
     maxTrainers: number | undefined;
-    maxTools: number | undefined;
-    maxItems: number | undefined;
 }
 export declare type FilterType = Partial<PokemonCard | TrainerCard | EnergyCard>;
 export declare class ChooseCardsPrompt extends Prompt<Card[]> {

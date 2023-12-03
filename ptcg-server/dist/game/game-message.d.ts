@@ -52,12 +52,6 @@ export declare enum GameStoreMessage {
     UNKNOWN_POWER = "UNKNOWN_POWER"
 }
 export declare enum GameCardMessage {
-    HEADS = "HEADS",
-    TAILS = "TAILS",
-    FLIP_COIN = "FLIP_COIN",
-    GO_FIRST = "GO_FIRST",
-    YES = "YES",
-    NO = "NO",
     ALL_FIRE_ENERGIES = "ALL_FIRE_ENERGIES",
     ALL_LIGHTNING_ENERGIES = "ALL_LIGHTNING_ENERGIES",
     ALL_WATER_ENERGIES = "ALL_WATER_ENERGIES",
@@ -142,12 +136,6 @@ export declare enum GameLog {
     LOG_TURN = "LOG_TURN"
 }
 export declare const GameMessage: {
-    HEADS: GameCardMessage.HEADS;
-    TAILS: GameCardMessage.TAILS;
-    FLIP_COIN: GameCardMessage.FLIP_COIN;
-    GO_FIRST: GameCardMessage.GO_FIRST;
-    YES: GameCardMessage.YES;
-    NO: GameCardMessage.NO;
     ALL_FIRE_ENERGIES: GameCardMessage.ALL_FIRE_ENERGIES;
     ALL_LIGHTNING_ENERGIES: GameCardMessage.ALL_LIGHTNING_ENERGIES;
     ALL_WATER_ENERGIES: GameCardMessage.ALL_WATER_ENERGIES;

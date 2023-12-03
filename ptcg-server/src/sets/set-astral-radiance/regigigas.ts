@@ -3,6 +3,8 @@ import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-
 import { StoreLike, State, PowerType, PlayerType, EnergyCard, AttachEnergyPrompt, GameError, GameMessage, SlotType, StateUtils, ChoosePokemonPrompt } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Regigigas extends PokemonCard {
 
@@ -45,6 +47,12 @@ export class Regigigas extends PokemonCard {
   public readonly ANCIENT_WISDOM_MARKER = 'ANCIENT_WISDOM_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
+    }
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       // Check if player has Regirock, Regice, Registeel, Regieleki, and Regidrago in play
       const player = effect.player;
@@ -54,6 +62,12 @@ export class Regigigas extends PokemonCard {
       let hasRegieleki = false;
       let hasRegidrago = false;
       let hasRegis = false;
+
+      if (!hasRegis) {
+        GameMessage.CANNOT_USE_POWER;
+        return state;
+      }
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card.name === 'Regirock') {
           hasRegirock = true;
@@ -73,11 +87,6 @@ export class Regigigas extends PokemonCard {
 
         if (hasRegirock && hasRegice && hasRegisteel && hasRegieleki && hasRegidrago) {
           hasRegis = true;
-        }
-      
-        if (!hasRegis) {
-          GameMessage.CANNOT_USE_POWER;
-          return state;
         }
 
         if (hasRegis) {
@@ -131,19 +140,16 @@ export class Regigigas extends PokemonCard {
                   effect.damage += 150;
                   return state;
                 }
+                if (effect instanceof EndTurnEffect) {
+                  effect.player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
+                }
                 return state;
               }
-              return state;
-            }
-            );
-            return state;
+            });
           });
         }
-        return state;
       });
-      return state;
-    }    
+    }
     return state;
   }
-    
 }

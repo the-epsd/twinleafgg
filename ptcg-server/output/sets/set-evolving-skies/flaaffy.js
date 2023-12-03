@@ -38,12 +38,12 @@ class Flaaffy extends pokemon_card_1.PokemonCard {
         this.setNumber = '55';
         this.name = 'Flaaffy';
         this.fullName = 'Flaaffy EVS';
-        this.DYNAMOTOR_MAREKER = 'DYNAMOTOR_MAREKER';
+        this.DYNAMOTOR_MARKER = 'DYNAMOTOR_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            player.marker.removeMarker(this.DYNAMOTOR_MAREKER, this);
+            player.marker.removeMarker(this.DYNAMOTOR_MARKER, this);
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
@@ -59,7 +59,7 @@ class Flaaffy extends pokemon_card_1.PokemonCard {
             if (!hasEnergyInDiscard) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (player.marker.hasMarker(this.DYNAMOTOR_MAREKER, this)) {
+            if (player.marker.hasMarker(this.DYNAMOTOR_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Lightning Energy' }, { allowCancel: true, min: 1, max: 1 }), transfers => {
@@ -68,7 +68,7 @@ class Flaaffy extends pokemon_card_1.PokemonCard {
                 if (transfers.length === 0) {
                     return;
                 }
-                player.marker.addMarker(this.DYNAMOTOR_MAREKER, this);
+                player.marker.addMarker(this.DYNAMOTOR_MARKER, this);
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.discard.moveCardTo(transfer.card, target);
@@ -77,7 +77,7 @@ class Flaaffy extends pokemon_card_1.PokemonCard {
             return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.DYNAMOTOR_MAREKER, this);
+            effect.player.marker.removeMarker(this.DYNAMOTOR_MARKER, this);
         }
         return state;
     }
