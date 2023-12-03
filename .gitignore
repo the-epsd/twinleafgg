@@ -87,3 +87,4 @@ image_translation
 ptcg-server/package-lock.json
 ptcg-server/.nyc_output
 ptcg-server/node_modules
+ptcg-play/node_modules

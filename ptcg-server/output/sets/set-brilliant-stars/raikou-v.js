@@ -56,7 +56,7 @@ class RaikouV extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             if (player.active.cards[0] !== this) {
-                return state; // Not active
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             // Draw a card
             player.deck.moveTo(player.hand, 1);

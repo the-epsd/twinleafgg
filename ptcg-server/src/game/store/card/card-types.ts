@@ -71,6 +71,13 @@ export enum CardType {
   FAIRY,
 }
 
+export enum Archetype {
+NONE,
+CHARIZARD,
+MEW,
+CHIENPAO,
+}
+
 export enum SpecialCondition {
   PARALYZED,
   CONFUSED,

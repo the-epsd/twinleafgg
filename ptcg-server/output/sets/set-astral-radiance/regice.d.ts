@@ -1,29 +1,27 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, Archetype } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-export declare class Charizardex extends PokemonCard {
-    regulationMark: string;
-    tags: CardTag[];
-    archetype: Archetype;
-    stage: Stage;
-    evolvesFrom: string;
+import { Effect } from '../../game/store/effects/effect';
+export declare class Regice extends PokemonCard {
     cardType: CardType;
+    stage: Stage;
     hp: number;
     weakness: {
         type: CardType;
     }[];
+    resistance: never[];
     retreat: CardType[];
     attacks: {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-        effect: (store: StoreLike, state: State, effect: AttackEffect) => void;
     }[];
+    regulationMark: string;
     set: string;
     set2: string;
     setNumber: string;
     name: string;
     fullName: string;
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

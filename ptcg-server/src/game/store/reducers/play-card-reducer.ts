@@ -14,6 +14,7 @@ import { TrainerCard } from '../card/trainer-card';
 import { TrainerType } from '../card/card-types';
 import { Effect } from '../effects/effect';
 import { StateUtils } from '../state-utils';
+import { ChooseCardsPrompt } from '../prompts/choose-cards-prompt';
 
 function findCardList(state: State, target: CardTarget): CardList | undefined {
   const player = target.player === PlayerType.BOTTOM_PLAYER
@@ -54,6 +55,8 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
           // Allow multiple energy attachments per turn
           const effect = new AttachEnergyEffect(player, handCard, target);  
           return store.reduceEffect(state, effect);
+
+
       
         } else {
 
@@ -65,7 +68,30 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
           const effect = new AttachEnergyEffect(player, handCard, target);
           return store.reduceEffect(state, effect);
         }
+        
       }
+
+      if (state.rules.firstTurnUseSupporter) {
+      // Add keydown event listener
+        document.addEventListener('keydown', event => {
+          if (event.key === 'f') {
+          // Show prompt
+            // Create a ChooseCardsPrompt 
+            state = store.prompt(state, new ChooseCardsPrompt(
+              player.id,
+              GameMessage.CHOOSE_CARD_TO_HAND,
+              player.deck,
+              { },
+              { min: 1, max: 1, allowCancel: true }
+            ), cards => {
+              player.deck.moveCardsTo(cards, player.hand);
+              return state;
+            });
+          }
+          return state;
+        });
+      }
+
 
       if (handCard instanceof PokemonCard) {
         const target = findCardList(state, action.target);

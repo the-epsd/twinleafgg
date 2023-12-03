@@ -19,7 +19,9 @@ const iron_bundle_1 = require("./iron-bundle");
 const iron_hands_ex_1 = require("./iron-hands-ex");
 const iron_valiant_ex_1 = require("./iron-valiant-ex");
 const jirachi_1 = require("./jirachi");
+const klawf_1 = require("./klawf");
 const mewtwo_ex_1 = require("./mewtwo-ex");
+const minior_1 = require("./minior");
 const morpeko_1 = require("./morpeko");
 const natu_1 = require("./natu");
 const professor_sadas_vitality_1 = require("./professor-sadas-vitality");
@@ -50,7 +52,9 @@ exports.setParadoxRift = [
     new iron_hands_ex_1.IronHandsex(),
     new iron_valiant_ex_1.IronValiantex(),
     new jirachi_1.Jirachi(),
+    new klawf_1.Klawf(),
     new mewtwo_ex_1.Mewtwoex(),
+    new minior_1.Minior(),
     new morpeko_1.Morpeko(),
     new natu_1.Natu(),
     new professor_sadas_vitality_1.ProfessorSadasVitality(),

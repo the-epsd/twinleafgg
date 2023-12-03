@@ -17,6 +17,12 @@ const origin_forme_palkia_v_1 = require("./origin-forme-palkia-v");
 const origin_forme_palkia_vstar_1 = require("./origin-forme-palkia-vstar");
 const radiant_greninja_1 = require("./radiant-greninja");
 const ralts_1 = require("./ralts");
+const regice_1 = require("./regice");
+const regidrago_1 = require("./regidrago");
+const regieleki_1 = require("./regieleki");
+const regigigas_1 = require("./regigigas");
+const regirock_1 = require("./regirock");
+const registeel_1 = require("./registeel");
 const roxanne_1 = require("./roxanne");
 const switch_cart_1 = require("./switch-cart");
 const temple_of_sinnoh_1 = require("./temple-of-sinnoh");
@@ -38,6 +44,12 @@ exports.setAstralRadiance = [
     new origin_forme_palkia_vstar_1.OriginFormePalkiaVSTAR(),
     new radiant_greninja_1.RadiantGreninja(),
     new ralts_1.Ralts(),
+    new regice_1.Regice(),
+    new regidrago_1.Regidrago(),
+    new regieleki_1.Regieleki(),
+    new regigigas_1.Regigigas(),
+    new regirock_1.Regirock(),
+    new registeel_1.Registeel(),
     new roxanne_1.Roxanne(),
     new switch_cart_1.SwitchCart(),
     new temple_of_sinnoh_1.TempleofSinnoh(),

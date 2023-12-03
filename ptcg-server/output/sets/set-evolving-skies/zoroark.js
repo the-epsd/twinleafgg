@@ -9,7 +9,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Zoroark extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Zorua';
         this.cardType = card_types_1.CardType.DARK;
         this.hp = 120;
@@ -32,7 +32,7 @@ class Zoroark extends pokemon_card_1.PokemonCard {
         this.set2 = 'evolvingskies';
         this.setNumber = '103';
         this.name = 'Zoroark';
-        this.fullName = 'Zoroark SVI';
+        this.fullName = 'Zoroark EVS';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

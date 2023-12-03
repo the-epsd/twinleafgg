@@ -13,6 +13,7 @@ export declare class PokemonCardList extends CardList {
     abilityMarker: Marker;
     pokemonPlayedTurn: number;
     tool: Card | undefined;
+    stadium: Card | undefined;
     getPokemons(): PokemonCard[];
     getPokemonCard(): PokemonCard | undefined;
     isBasic(): boolean;

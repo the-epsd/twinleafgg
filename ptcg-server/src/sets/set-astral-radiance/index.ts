@@ -15,6 +15,12 @@ import { OriginFormePalkiaV } from './origin-forme-palkia-v';
 import { OriginFormePalkiaVSTAR } from './origin-forme-palkia-vstar';
 import { RadiantGreninja } from './radiant-greninja';
 import { Ralts } from './ralts';
+import { Regice } from './regice';
+import { Regidrago } from './regidrago';
+import { Regieleki } from './regieleki';
+import { Regigigas } from './regigigas';
+import { Regirock } from './regirock';
+import { Registeel } from './registeel';
 import { Roxanne } from './roxanne';
 import { SwitchCart } from './switch-cart';
 import { TempleofSinnoh } from './temple-of-sinnoh';
@@ -39,6 +45,12 @@ export const setAstralRadiance: Card[] = [
   new OriginFormePalkiaVSTAR(),
   new RadiantGreninja(),
   new Ralts(),
+  new Regice(),
+  new Regidrago(),
+  new Regieleki(),
+  new Regigigas(),
+  new Regirock(),
+  new Registeel(),
   new Roxanne(),
   new SwitchCart(),
   new TempleofSinnoh(),

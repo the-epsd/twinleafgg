@@ -17,7 +17,9 @@ import { IronBundle } from './iron-bundle';
 import { IronHandsex } from './iron-hands-ex';
 import { IronValiantex } from './iron-valiant-ex';
 import { Jirachi } from './jirachi';
+import { Klawf } from './klawf';
 import { Mewtwoex } from './mewtwo-ex';
+import { Minior } from './minior';
 import { Morpeko } from './morpeko';
 import { Natu } from './natu';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
@@ -50,7 +52,9 @@ export const setParadoxRift: Card[] = [
   new IronHandsex(),
   new IronValiantex(),
   new Jirachi(),
+  new Klawf(),
   new Mewtwoex(),
+  new Minior(),
   new Morpeko(),
   new Natu(),
   new ProfessorSadasVitality(),

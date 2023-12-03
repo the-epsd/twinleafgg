@@ -9,7 +9,7 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Zoroark extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom: string = 'Zorua';
 
@@ -45,7 +45,7 @@ export class Zoroark extends PokemonCard {
 
   public name: string = 'Zoroark';
 
-  public fullName: string = 'Zoroark SVI';
+  public fullName: string = 'Zoroark EVS';
 
 
   

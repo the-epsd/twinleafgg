@@ -3,7 +3,7 @@ import { AttackEffect, PowerEffect } from '../effects/game-effects';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { Card } from './card';
-import { SuperType, Stage, PokemonType, CardType, CardTag, Format } from './card-types';
+import { SuperType, Stage, PokemonType, CardType, CardTag, Format, Archetype } from './card-types';
 import { Attack, Weakness, Resistance, Power } from './pokemon-types';
 
 export abstract class PokemonCard extends Card {
@@ -33,6 +33,8 @@ export abstract class PokemonCard extends Card {
   public attacks: Attack[] = [];
 
   public format: Format = Format.NONE;
+
+  public archetype: Archetype = Archetype.NONE;
 
   public movedToActiveThisTurn = false;
 

@@ -14,6 +14,7 @@ import { SuicuneV } from './suicune-v';
 import { UmbreonV } from './umbreon-v';
 import { UmbreonVMAX } from './umbreon-vmax';
 import { Zoroark } from './zoroark';
+import { Zorua } from './zorua';
 
 export const setEvolvingSkies: Card[] = [
   
@@ -31,6 +32,7 @@ export const setEvolvingSkies: Card[] = [
   new SuicuneV(),
   new UmbreonV(),
   new UmbreonVMAX(),
+  new Zorua(),
   new Zoroark(),
   
 ];

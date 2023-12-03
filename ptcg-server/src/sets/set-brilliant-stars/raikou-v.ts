@@ -75,7 +75,7 @@ export class RaikouV extends PokemonCard {
       }
 
       if (player.active.cards[0] !== this) {
-        return state; // Not active
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
       // Draw a card
       player.deck.moveTo(player.hand, 1);

@@ -39,28 +39,34 @@ class DrapionV extends pokemon_card_1.PokemonCard {
     }
     // Implement ability
     reduceEffect(store, state, effect) {
-        var _a, _b;
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
-            if (effect instanceof check_effects_1.CheckAttackCostEffect) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
-                let wildStyleCount = 0;
-                if ((_b = (_a = opponent.active) === null || _a === void 0 ? void 0 : _a.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.tags.includes(card_types_2.CardTag.FUSION_STRIKE || card_types_2.CardTag.RAPID_STRIKE || card_types_2.CardTag.SINGLE_STRIKE)) {
-                    wildStyleCount++;
-                }
-                opponent.bench.forEach(benchSpot => {
-                    var _a;
-                    if ((_a = benchSpot.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_2.CardTag.FUSION_STRIKE || card_types_2.CardTag.RAPID_STRIKE || card_types_2.CardTag.SINGLE_STRIKE)) {
-                        wildStyleCount++;
-                    }
-                    const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(player.active);
-                    store.reduceEffect(state, checkPokemonTypeEffect);
-                    if (wildStyleCount > 0 && checkPokemonTypeEffect.cardTypes.includes(card_types_1.CardType.DARK) && index > 0) {
-                        effect.cost.splice(index, 1);
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const attack = this.attacks[0];
+            const player = effect.player;
+            new check_effects_1.CheckAttackCostEffect(player, attack);
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            let wildStyleCount = 0;
+            // Check opponent's active Pokemon
+            const opponentActive = opponent.active.getPokemonCard();
+            if (opponentActive && (opponentActive.tags.includes(card_types_2.CardTag.FUSION_STRIKE) ||
+                opponentActive.tags.includes(card_types_2.CardTag.RAPID_STRIKE) ||
+                opponentActive.tags.includes(card_types_2.CardTag.SINGLE_STRIKE))) {
+                wildStyleCount += 1;
+            }
+            // Check opponent's benched Pokemon
+            opponent.bench.forEach(cardList => {
+                cardList.cards.forEach(card => {
+                    if (card instanceof pokemon_card_1.PokemonCard &&
+                        (card.tags.includes(card_types_2.CardTag.FUSION_STRIKE) ||
+                            card.tags.includes(card_types_2.CardTag.RAPID_STRIKE) ||
+                            card.tags.includes(card_types_2.CardTag.SINGLE_STRIKE))) {
+                        wildStyleCount += 1;
                     }
                 });
-            }
+            });
+            // Reduce attack cost by removing 1 Colorless energy for each counted Pokemon
+            const attackCost = this.attacks[0].cost;
+            const colorlessToRemove = wildStyleCount;
+            this.attacks[0].cost = attackCost.filter(c => c !== card_types_1.CardType.COLORLESS).slice(0, -colorlessToRemove);
         }
         return state;
     }

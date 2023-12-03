@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Format = exports.SpecialCondition = exports.CardType = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
+exports.Format = exports.SpecialCondition = exports.Archetype = exports.CardType = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
 var CardTag;
 (function (CardTag) {
     CardTag["POKEMON_SP"] = "SP";
@@ -72,6 +72,13 @@ var CardType;
     CardType[CardType["DRAGON"] = 11] = "DRAGON";
     CardType[CardType["FAIRY"] = 12] = "FAIRY";
 })(CardType = exports.CardType || (exports.CardType = {}));
+var Archetype;
+(function (Archetype) {
+    Archetype[Archetype["NONE"] = 0] = "NONE";
+    Archetype[Archetype["CHARIZARD"] = 1] = "CHARIZARD";
+    Archetype[Archetype["MEW"] = 2] = "MEW";
+    Archetype[Archetype["CHIENPAO"] = 3] = "CHIENPAO";
+})(Archetype = exports.Archetype || (exports.Archetype = {}));
 var SpecialCondition;
 (function (SpecialCondition) {
     SpecialCondition[SpecialCondition["PARALYZED"] = 0] = "PARALYZED";
