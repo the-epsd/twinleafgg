@@ -1,11 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, Archetype } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 export declare class Charizardex extends PokemonCard {
     regulationMark: string;
     tags: CardTag[];
-    archetype: Archetype;
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;

@@ -12,7 +12,6 @@ const state_1 = require("../state/state");
 const trainer_card_1 = require("../card/trainer-card");
 const card_types_1 = require("../card/card-types");
 const state_utils_1 = require("../state-utils");
-const choose_cards_prompt_1 = require("../prompts/choose-cards-prompt");
 function findCardList(state, target) {
     const player = target.player === play_card_action_1.PlayerType.BOTTOM_PLAYER
         ? state.players[state.activePlayer]
@@ -53,20 +52,6 @@ function playCardReducer(store, state, action) {
                     const effect = new play_card_effects_1.AttachEnergyEffect(player, handCard, target);
                     return store.reduceEffect(state, effect);
                 }
-            }
-            if (state.rules.firstTurnUseSupporter) {
-                // Add keydown event listener
-                document.addEventListener('keydown', event => {
-                    if (event.key === 'f') {
-                        // Show prompt
-                        // Create a ChooseCardsPrompt 
-                        state = store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: true }), cards => {
-                            player.deck.moveCardsTo(cards, player.hand);
-                            return state;
-                        });
-                    }
-                    return state;
-                });
             }
             if (handCard instanceof pokemon_card_1.PokemonCard) {
                 const target = findCardList(state, action.target);

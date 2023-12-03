@@ -1,5 +1,7 @@
+import { StoreLike, State } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
 export declare class HisuianBasculin extends PokemonCard {
     regulationMark: string;
     stage: Stage;
@@ -20,4 +22,5 @@ export declare class HisuianBasculin extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

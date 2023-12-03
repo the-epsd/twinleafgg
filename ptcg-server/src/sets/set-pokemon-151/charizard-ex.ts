@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, Archetype } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State   } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON, THIS_ATTACK_DOES_X_MORE_DAMAGE, THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT } from '../../game/store/prefabs/prefabs';
@@ -10,8 +10,6 @@ export class Charizardex extends PokemonCard {
   public regulationMark = 'G';
 
   public tags = [ CardTag.POKEMON_ex ];
-
-  public archetype: Archetype = Archetype.CHARIZARD;
 
   public stage: Stage = Stage.STAGE_2;
 

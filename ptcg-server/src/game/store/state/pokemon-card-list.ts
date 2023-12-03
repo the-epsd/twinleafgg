@@ -25,7 +25,6 @@ export class PokemonCardList extends CardList {
   // Some pokemon cards can be attached as a tool and stadium,
   // we must remember, which card acts as a pokemon tool.
   public tool: Card | undefined;
-  public stadium: Card | undefined;
 
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];
