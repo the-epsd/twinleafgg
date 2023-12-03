@@ -6,6 +6,7 @@ import { FeatherBall } from './feather-ball';
 import { Gallade } from './gallade';
 import { GapejawBog } from './gapejaw-bog';
 import { GardeniasVigor } from './gardenias-vigor';
+import { HisuianBasculin } from './hisuian-basculin';
 import { Irida } from './irida';
 import { LucarioV } from './lucario-v';
 import { Miltank } from './miltank';
@@ -36,6 +37,7 @@ export const setAstralRadiance: Card[] = [
   new Gallade(),
   new GapejawBog(),
   new GardeniasVigor(),
+  new HisuianBasculin(),
   new Irida(),
   new LucarioV(),
   new Miltank(),
