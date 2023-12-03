@@ -26,5 +26,6 @@ export class State {
         this.activePlayer = 0;
         this.winner = GameWinner.NONE;
         this.players = [];
+        this.skipOpponentTurn = false;
     }
 }

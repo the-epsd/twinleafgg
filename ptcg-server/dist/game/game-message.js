@@ -55,6 +55,12 @@ export var GameStoreMessage;
 })(GameStoreMessage || (GameStoreMessage = {}));
 export var GameCardMessage;
 (function (GameCardMessage) {
+    GameCardMessage["HEADS"] = "HEADS";
+    GameCardMessage["TAILS"] = "TAILS";
+    GameCardMessage["FLIP_COIN"] = "FLIP_COIN";
+    GameCardMessage["GO_FIRST"] = "GO_FIRST";
+    GameCardMessage["YES"] = "YES";
+    GameCardMessage["NO"] = "NO";
     GameCardMessage["ALL_FIRE_ENERGIES"] = "ALL_FIRE_ENERGIES";
     GameCardMessage["ALL_LIGHTNING_ENERGIES"] = "ALL_LIGHTNING_ENERGIES";
     GameCardMessage["ALL_WATER_ENERGIES"] = "ALL_WATER_ENERGIES";

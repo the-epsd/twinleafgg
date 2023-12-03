@@ -64,9 +64,9 @@ export declare enum CardType {
 }
 export declare enum Archetype {
     NONE = 0,
-    CHARIZARD = 2,
-    MEW = 3,
-    CHIENPAO = 4,
+    CHARIZARD = 1,
+    MEW = 2,
+    CHIENPAO = 3
 }
 export declare enum SpecialCondition {
     PARALYZED = 0,

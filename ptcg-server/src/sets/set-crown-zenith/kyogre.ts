@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, ChoosePokemonPrompt, ChooseEnergyPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -10,17 +10,15 @@ import { GameMessage } from '../../game/game-message';
 
 export class Kyogre extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_EX ];
-
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType = CardType.WATER;
 
-  public hp: number = 170;
+  public hp: number = 140;
 
-  public weakness = [{ type: CardType.PSYCHIC }];
+  public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
 
   public attacks = [
     {

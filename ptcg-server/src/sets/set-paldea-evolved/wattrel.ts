@@ -52,6 +52,7 @@ export class Wattrel extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE(20, c => c.attacks.some(a => a.name === 'United Wings'), effect);
     }
-  return state;
+    
+    return state;
   }
 }

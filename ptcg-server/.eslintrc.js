@@ -17,7 +17,7 @@ module.exports = {
     ],
     'rules': {
         'indent': ['error', 2, { 'SwitchCase': 1 }],
-        'linebreak-style': ['error', 'unix'],
+        'linebreak-style': ['off', 'unix'],
         'prefer-rest-params': 'off',
         'require-yield': 'off',
         'quotes': ['error', 'single'],

@@ -9,6 +9,7 @@ import { GamePhase } from '../state/state';
 import { TrainerCard } from '../card/trainer-card';
 import { TrainerType } from '../card/card-types';
 import { StateUtils } from '../state-utils';
+import { ChooseCardsPrompt } from '../prompts/choose-cards-prompt';
 function findCardList(state, target) {
     const player = target.player === PlayerType.BOTTOM_PLAYER
         ? state.players[state.activePlayer]
@@ -49,6 +50,20 @@ export function playCardReducer(store, state, action) {
                     const effect = new AttachEnergyEffect(player, handCard, target);
                     return store.reduceEffect(state, effect);
                 }
+            }
+            if (state.rules.firstTurnUseSupporter) {
+                // Add keydown event listener
+                document.addEventListener('keydown', event => {
+                    if (event.key === 'f') {
+                        // Show prompt
+                        // Create a ChooseCardsPrompt 
+                        state = store.prompt(state, new ChooseCardsPrompt(player.id, GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: true }), cards => {
+                            player.deck.moveCardsTo(cards, player.hand);
+                            return state;
+                        });
+                    }
+                    return state;
+                });
             }
             if (handCard instanceof PokemonCard) {
                 const target = findCardList(state, action.target);

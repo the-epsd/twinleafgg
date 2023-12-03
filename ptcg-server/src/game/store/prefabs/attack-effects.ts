@@ -61,27 +61,27 @@ export function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(
 ) {
   const player = effect.player;
 
-      const cardCount = player.discard.cards.filter(filterFn).length;
+  const cardCount = player.discard.cards.filter(filterFn).length;
 
-      if (cardCount === 0) {
-        return state;
-      }
+  if (cardCount === 0) {
+    return state;
+  }
 
-      const max = Math.min(x, cardCount);
-      const min = max;
+  const max = Math.min(x, cardCount);
+  const min = max;
 
-      return store.prompt(state, [
-        new ChooseCardsPrompt(
-          player.id,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          // TODO: Make this work for more than just Items!
-          player.discard,
-          { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-          { min, max, allowCancel: false }
-        )], selected => {
-        const cards = selected || [];
-        player.discard.moveCardsTo(cards, player.hand);
-      });
+  return store.prompt(state, [
+    new ChooseCardsPrompt(
+      player.id,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      // TODO: Make this work for more than just Items!
+      player.discard,
+      { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
+      { min, max, allowCancel: false }
+    )], selected => {
+    const cards = selected || [];
+    player.discard.moveCardsTo(cards, player.hand);
+  });
 }
 
 export function PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(
