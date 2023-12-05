@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setChillingReign = void 0;
 const avery_1 = require("./avery");
+const blissey_v_1 = require("./blissey-v");
 const echoing_horn_1 = require("./echoing-horn");
 const fog_crystal_1 = require("./fog-crystal");
 const froslass_1 = require("./froslass");
@@ -15,9 +16,11 @@ const kirlia_1 = require("./kirlia");
 const melony_1 = require("./melony");
 //import { OldCemetery } from './old-cemetery';
 const path_to_the_peak_1 = require("./path-to-the-peak");
+const peony_1 = require("./peony");
 const snorunt_1 = require("./snorunt");
 exports.setChillingReign = [
     new avery_1.Avery(),
+    new blissey_v_1.BlisseyV(),
     new echoing_horn_1.EchoingHorn(),
     new fog_crystal_1.FogCrystal(),
     new froslass_1.Froslass(),
@@ -31,5 +34,6 @@ exports.setChillingReign = [
     new melony_1.Melony(),
     //new OldCemetery(),
     new path_to_the_peak_1.PathToThePeak(),
+    new peony_1.Peony(),
     new snorunt_1.Snorunt(),
 ];

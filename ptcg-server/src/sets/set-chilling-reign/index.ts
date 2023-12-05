@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Avery } from './avery';
+import { BlisseyV } from './blissey-v';
 import { EchoingHorn } from './echoing-horn';
 import { FogCrystal } from './fog-crystal';
 import { Froslass } from './froslass';
@@ -13,11 +14,13 @@ import { Kirlia } from './kirlia';
 import { Melony } from './melony';
 //import { OldCemetery } from './old-cemetery';
 import { PathToThePeak } from './path-to-the-peak';
+import { Peony } from './peony';
 import { Snorunt } from './snorunt';
 
 export const setChillingReign: Card[] = [
   
   new Avery(),
+  new BlisseyV(),
   new EchoingHorn(),
   new FogCrystal(),
   new Froslass(),
@@ -31,5 +34,6 @@ export const setChillingReign: Card[] = [
   new Melony(),
   //new OldCemetery(),
   new PathToThePeak(),
+  new Peony(),
   new Snorunt(),
 ];

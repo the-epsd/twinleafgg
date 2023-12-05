@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, State, StoreLike } from '../../game';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Jirachi extends PokemonCard {
 
@@ -47,21 +47,44 @@ export class Jirachi extends PokemonCard {
   public fullName: string = 'Jirachi PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+
+    if (effect instanceof PutCountersEffect) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-      // Override reduceEffect
-      store.reduceEffect = (state, effect) => {
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
 
-        // Check if effect is a damage effect
-        if (effect instanceof PutDamageEffect || effect instanceof AttackEffect && effect.target === player.bench) {
-          effect.damage = 0;
+      const targetPlayer = StateUtils.findOwner(state, effect.target);
+
+      if (opponent.active.isBasic()) {
+
+        let isJirachiInPlay = false;
+        targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+          if (card === this) {
+            isJirachiInPlay = true;
+          }
+        });
+
+        if (!isJirachiInPlay) {
+          return state;
         }
-        
-        // Call original reduceEffect 
-        return this.reduceEffect(store, state, effect);
-      };
+
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
+        } catch {
+          return state;
+        }
+
+        effect.preventDefault = true;
+      }
+
+      return state;
     }
     return state;
   }
+
 }

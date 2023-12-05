@@ -5,6 +5,7 @@ import { Bibarel } from './bibarel';
 import { CherensCare } from './cherens-care';
 import { CleansingGloves } from './cleansing-gloves';
 import { CollapsedStadium } from './collapsed-stadium';
+import { CynthiasAmbition } from './cynthias-ambition';
 import { DoubleTurboEnergy } from './double-turbo-energy';
 import { EnteiV } from './entei-v';
 import { LumineonV } from './lumineon-v';
@@ -20,6 +21,7 @@ export const setBrilliantStars: Card[] = [
   new CherensCare(),
   new CleansingGloves(),
   new CollapsedStadium(),
+  new CynthiasAmbition(),
   new DoubleTurboEnergy(),
   new EnteiV(),
   new LumineonV(),

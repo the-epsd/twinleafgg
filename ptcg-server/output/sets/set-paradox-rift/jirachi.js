@@ -36,17 +36,34 @@ class Jirachi extends pokemon_card_1.PokemonCard {
         this.fullName = 'Jirachi PAR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        if (effect instanceof attack_effects_1.PutCountersEffect) {
             const player = effect.player;
-            // Override reduceEffect
-            store.reduceEffect = (state, effect) => {
-                // Check if effect is a damage effect
-                if (effect instanceof attack_effects_1.PutDamageEffect || effect instanceof game_effects_1.AttackEffect && effect.target === player.bench) {
-                    effect.damage = 0;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (effect.target === player.active || effect.target === opponent.active) {
+                return state;
+            }
+            const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);
+            if (opponent.active.isBasic()) {
+                let isJirachiInPlay = false;
+                targetPlayer.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                    if (card === this) {
+                        isJirachiInPlay = true;
+                    }
+                });
+                if (!isJirachiInPlay) {
+                    return state;
                 }
-                // Call original reduceEffect 
-                return this.reduceEffect(store, state, effect);
-            };
+                // Try to reduce PowerEffect, to check if something is blocking our ability
+                try {
+                    const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                    store.reduceEffect(state, powerEffect);
+                }
+                catch (_a) {
+                    return state;
+                }
+                effect.preventDefault = true;
+            }
+            return state;
         }
         return state;
     }

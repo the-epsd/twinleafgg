@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class Minior extends PokemonCard {
     
@@ -55,9 +56,26 @@ export class Minior extends PokemonCard {
   
         return state;
       }
-  
-      return state;
+
+      if (effect instanceof AttachEnergyEffect && effect.target.cards.includes(this)) {
+        const player = effect.player;
+
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
+        } catch {
+          return state;
+        }
+
+        player.switchPokemon(player.active);
+
+        return state;
+      }
+
     }
     return state;
   }
+
 }
+

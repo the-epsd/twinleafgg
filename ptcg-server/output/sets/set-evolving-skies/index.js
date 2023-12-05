@@ -6,10 +6,16 @@ const dragonite_v_1 = require("./dragonite-v");
 const duraludon_v_1 = require("./duraludon-v");
 const duraludon_vmax_1 = require("./duraludon-vmax");
 const flaaffy_1 = require("./flaaffy");
+const galarian_articuno_1 = require("./galarian-articuno");
 const galarian_moltres_1 = require("./galarian-moltres");
+const gyarados_v_1 = require("./gyarados-v");
+const gyarados_vmax_1 = require("./gyarados-vmax");
+const leafeon_v_1 = require("./leafeon-v");
+const leafeon_vmax_1 = require("./leafeon-vmax");
 const mareep_1 = require("./mareep");
 const pumpkaboo_1 = require("./pumpkaboo");
 const raihan_1 = require("./raihan");
+const regidrago_1 = require("./regidrago");
 const regieleki_1 = require("./regieleki");
 const rescue_carrier_1 = require("./rescue-carrier");
 const suicune_v_1 = require("./suicune-v");
@@ -24,10 +30,16 @@ exports.setEvolvingSkies = [
     new duraludon_v_1.DuraludonV(),
     new duraludon_vmax_1.DuraludonVMAX(),
     new flaaffy_1.Flaaffy(),
+    new galarian_articuno_1.GalarianArticuno(),
     new galarian_moltres_1.GalarianMoltres(),
+    new gyarados_v_1.GyaradosV(),
+    new gyarados_vmax_1.GyaradosVMAX(),
+    new leafeon_v_1.LeafeonV(),
+    new leafeon_vmax_1.LeafeonVMAX(),
     new mareep_1.Mareep(),
     new pumpkaboo_1.Pumpkaboo(),
     new raihan_1.Raihan(),
+    new regidrago_1.Regidrago(),
     new regieleki_1.Regieleki(),
     new rescue_carrier_1.RescueCarrier(),
     new suicune_v_1.SuicuneV(),

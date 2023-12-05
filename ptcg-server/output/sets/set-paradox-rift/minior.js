@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Minior extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -41,7 +42,19 @@ class Minior extends pokemon_card_1.PokemonCard {
                 effect.damage = retreatCost * 20;
                 return state;
             }
-            return state;
+            if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.target.cards.includes(this)) {
+                const player = effect.player;
+                // Try to reduce PowerEffect, to check if something is blocking our ability
+                try {
+                    const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                    store.reduceEffect(state, powerEffect);
+                }
+                catch (_a) {
+                    return state;
+                }
+                player.switchPokemon(player.active);
+                return state;
+            }
         }
         return state;
     }

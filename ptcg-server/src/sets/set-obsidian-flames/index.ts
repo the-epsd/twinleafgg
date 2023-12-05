@@ -6,6 +6,7 @@ import { Cleffa } from './cleffa';
 import { Dragonair } from './dragonair';
 import { Dragoniteex } from './dragonite-ex';
 import { Dratini } from './dratini';
+import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Lunatone } from './lunatone';
 import { Pidgeotex } from './pidgeot-ex';
 import { Pidgeotto } from './pidgeotto';
@@ -24,6 +25,7 @@ export const setObsidianFlames: Card[] = [
   new Dragonair(),
   new Dragoniteex(),
   new Dratini(),
+  new LetterOfEncouragement(),
   new Lunatone(),
   new Pidgeotto(),
   new Pidgeotex(),

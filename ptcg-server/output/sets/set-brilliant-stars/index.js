@@ -7,6 +7,7 @@ const bibarel_1 = require("./bibarel");
 const cherens_care_1 = require("./cherens-care");
 const cleansing_gloves_1 = require("./cleansing-gloves");
 const collapsed_stadium_1 = require("./collapsed-stadium");
+const cynthias_ambition_1 = require("./cynthias-ambition");
 const double_turbo_energy_1 = require("./double-turbo-energy");
 const entei_v_1 = require("./entei-v");
 const lumineon_v_1 = require("./lumineon-v");
@@ -20,6 +21,7 @@ exports.setBrilliantStars = [
     new cherens_care_1.CherensCare(),
     new cleansing_gloves_1.CleansingGloves(),
     new collapsed_stadium_1.CollapsedStadium(),
+    new cynthias_ambition_1.CynthiasAmbition(),
     new double_turbo_energy_1.DoubleTurboEnergy(),
     new entei_v_1.EnteiV(),
     new lumineon_v_1.LumineonV(),

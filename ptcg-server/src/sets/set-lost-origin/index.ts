@@ -3,6 +3,7 @@ import { ColresssExperiment } from './colress\'s-experiment';
 import { Comfey } from './comfey';
 import { Cramorant } from './cramorant';
 import { Cresselia } from './cresselia';
+import { DelphoxV } from './delphox-v';
 import { DrapionV } from './drapion-v';
 import { Gengar } from './gengar';
 import { GiftEnergy } from './gift-energy';
@@ -28,6 +29,7 @@ export const setLostOrigin: Card[] = [
   new Comfey(),
   new Cramorant(),
   new Cresselia(),
+  new DelphoxV(),
   new DrapionV(),
   new Gengar(),
   new GiftEnergy(),

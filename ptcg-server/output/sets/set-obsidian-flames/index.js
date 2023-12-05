@@ -8,6 +8,7 @@ const cleffa_1 = require("./cleffa");
 const dragonair_1 = require("./dragonair");
 const dragonite_ex_1 = require("./dragonite-ex");
 const dratini_1 = require("./dratini");
+const letter_of_encouragement_1 = require("./letter-of-encouragement");
 const lunatone_1 = require("./lunatone");
 const pidgeot_ex_1 = require("./pidgeot-ex");
 const pidgeotto_1 = require("./pidgeotto");
@@ -24,6 +25,7 @@ exports.setObsidianFlames = [
     new dragonair_1.Dragonair(),
     new dragonite_ex_1.Dragoniteex(),
     new dratini_1.Dratini(),
+    new letter_of_encouragement_1.LetterOfEncouragement(),
     new lunatone_1.Lunatone(),
     new pidgeotto_1.Pidgeotto(),
     new pidgeot_ex_1.Pidgeotex(),

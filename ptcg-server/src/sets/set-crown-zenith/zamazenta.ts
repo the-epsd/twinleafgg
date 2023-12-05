@@ -111,7 +111,7 @@ export class Zamazenta extends PokemonCard {
 
       // Look for Lightning energy
       checkProvidedEnergy.energyMap.some(e => { 
-        if (e.provides.includes(CardType.METAL)) {
+        if (e.provides.includes(CardType.ANY)) {
           effect.damage = Math.max(0, effect.damage - 30);
         }});
       return state;

@@ -8,7 +8,12 @@ const feather_ball_1 = require("./feather-ball");
 const gallade_1 = require("./gallade");
 const gapejaw_bog_1 = require("./gapejaw-bog");
 const gardenias_vigor_1 = require("./gardenias-vigor");
+const grant_1 = require("./grant");
+const hisuian_arcanine_1 = require("./hisuian-arcanine");
 const hisuian_basculin_1 = require("./hisuian-basculin");
+const hisuian_heavy_ball_1 = require("./hisuian-heavy-ball");
+const hisuian_samurott_v_1 = require("./hisuian-samurott-v");
+const hisuian_samurott_vstar_1 = require("./hisuian-samurott-vstar");
 const irida_1 = require("./irida");
 const lucario_v_1 = require("./lucario-v");
 const miltank_1 = require("./miltank");
@@ -36,7 +41,12 @@ exports.setAstralRadiance = [
     new gallade_1.Gallade(),
     new gapejaw_bog_1.GapejawBog(),
     new gardenias_vigor_1.GardeniasVigor(),
+    new grant_1.Grant(),
+    new hisuian_arcanine_1.HisuianArcanine(),
     new hisuian_basculin_1.HisuianBasculin(),
+    new hisuian_heavy_ball_1.HisuianHeavyBall(),
+    new hisuian_samurott_v_1.HisuianSamurottV(),
+    new hisuian_samurott_vstar_1.HisuianSamurottVSTAR(),
     new irida_1.Irida(),
     new lucario_v_1.LucarioV(),
     new miltank_1.Miltank(),

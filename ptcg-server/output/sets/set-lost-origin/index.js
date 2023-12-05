@@ -5,6 +5,7 @@ const colress_s_experiment_1 = require("./colress's-experiment");
 const comfey_1 = require("./comfey");
 const cramorant_1 = require("./cramorant");
 const cresselia_1 = require("./cresselia");
+const delphox_v_1 = require("./delphox-v");
 const drapion_v_1 = require("./drapion-v");
 const gengar_1 = require("./gengar");
 const gift_energy_1 = require("./gift-energy");
@@ -28,6 +29,7 @@ exports.setLostOrigin = [
     new comfey_1.Comfey(),
     new cramorant_1.Cramorant(),
     new cresselia_1.Cresselia(),
+    new delphox_v_1.DelphoxV(),
     new drapion_v_1.DrapionV(),
     new gengar_1.Gengar(),
     new gift_energy_1.GiftEnergy(),

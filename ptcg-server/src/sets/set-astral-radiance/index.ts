@@ -6,7 +6,12 @@ import { FeatherBall } from './feather-ball';
 import { Gallade } from './gallade';
 import { GapejawBog } from './gapejaw-bog';
 import { GardeniasVigor } from './gardenias-vigor';
+import { Grant } from './grant';
+import { HisuianArcanine } from './hisuian-arcanine';
 import { HisuianBasculin } from './hisuian-basculin';
+import { HisuianHeavyBall } from './hisuian-heavy-ball';
+import { HisuianSamurottV } from './hisuian-samurott-v';
+import { HisuianSamurottVSTAR } from './hisuian-samurott-vstar';
 import { Irida } from './irida';
 import { LucarioV } from './lucario-v';
 import { Miltank } from './miltank';
@@ -37,7 +42,12 @@ export const setAstralRadiance: Card[] = [
   new Gallade(),
   new GapejawBog(),
   new GardeniasVigor(),
+  new Grant(),
+  new HisuianArcanine(),
   new HisuianBasculin(),
+  new HisuianHeavyBall(),
+  new HisuianSamurottV(),
+  new HisuianSamurottVSTAR(),
   new Irida(),
   new LucarioV(),
   new Miltank(),
