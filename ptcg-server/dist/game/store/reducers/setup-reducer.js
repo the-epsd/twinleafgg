@@ -18,6 +18,7 @@ import { SuperType, Stage } from '../card/card-types';
 import { WhoBeginsEffect } from '../effects/game-phase-effects';
 import { endGame } from '../effect-reducers/check-effect';
 import { initNextTurn } from '../effect-reducers/game-phase-effect';
+import { SelectPrompt } from '../prompts/select-prompt';
 function putStartingPokemonsAndPrizes(player, cards) {
     if (cards.length === 0) {
         return;
@@ -35,6 +36,29 @@ function* setupGame(next, store, state) {
     const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
     const player = state.players[0];
     const opponent = state.players[1];
+    const whoBeginsEffect = new WhoBeginsEffect();
+    store.reduceEffect(state, whoBeginsEffect);
+    if (whoBeginsEffect.player) {
+        state.activePlayer = state.players.indexOf(whoBeginsEffect.player);
+    }
+    else {
+        const coinFlipPrompt = new CoinFlipPrompt(player.id, GameMessage.SETUP_WHO_BEGINS_FLIP);
+        store.prompt(state, coinFlipPrompt, whoBegins => {
+            const goFirstPrompt = new SelectPrompt(whoBegins ? player.id : opponent.id, GameMessage.GO_FIRST, [GameMessage.YES, GameMessage.NO]);
+            store.prompt(state, goFirstPrompt, choice => {
+                if (choice === 0) {
+                    state.activePlayer = whoBegins ? 0 : 1;
+                    next();
+                }
+                else {
+                    state.activePlayer = whoBegins ? 1 : 0;
+                    next();
+                }
+            });
+        });
+    }
+    let playerCardsToDraw = 0;
+    let opponentCardsToDraw = 0;
     let playerHasBasic = false;
     let opponentHasBasic = false;
     while (!playerHasBasic || !opponentHasBasic) {
@@ -63,7 +87,7 @@ function* setupGame(next, store, state) {
                 new AlertPrompt(opponent.id, GameMessage.SETUP_PLAYER_NO_BASIC)
             ], results => {
                 if (results[0]) {
-                    player.deck.moveTo(player.hand, 1);
+                    playerCardsToDraw++;
                 }
                 next();
             });
@@ -75,7 +99,7 @@ function* setupGame(next, store, state) {
                 new AlertPrompt(player.id, GameMessage.SETUP_PLAYER_NO_BASIC)
             ], results => {
                 if (results[0]) {
-                    opponent.deck.moveTo(opponent.hand, 1);
+                    opponentCardsToDraw++;
                 }
                 next();
             });
@@ -87,19 +111,12 @@ function* setupGame(next, store, state) {
     ], choice => {
         putStartingPokemonsAndPrizes(player, choice[0]);
         putStartingPokemonsAndPrizes(opponent, choice[1]);
+        player.deck.moveTo(player.hand, playerCardsToDraw);
+        opponent.deck.moveTo(opponent.hand, opponentCardsToDraw);
         next();
     });
-    const whoBeginsEffect = new WhoBeginsEffect();
-    store.reduceEffect(state, whoBeginsEffect);
-    if (whoBeginsEffect.player) {
-        state.activePlayer = state.players.indexOf(whoBeginsEffect.player);
-    }
-    else {
-        const coinFlipPrompt = new CoinFlipPrompt(player.id, GameMessage.SETUP_WHO_BEGINS_FLIP);
-        yield store.prompt(state, coinFlipPrompt, whoBegins => {
-            state.activePlayer = whoBegins ? 0 : 1;
-            next();
-        });
+    if (store.hasPrompts()) {
+        yield store.waitPrompt(state, () => next());
     }
     // Set initial Pokemon Played Turn, so players can't evolve during first turn
     const first = state.players[state.activePlayer];

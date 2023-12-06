@@ -1,5 +1,5 @@
 import { Prompt } from './prompt';
-import { CardType, SuperType } from '../card/card-types';
+import { CardType, SuperType, TrainerType } from '../card/card-types';
 export const ChooseCardsPromptType = 'Choose cards';
 export class ChooseCardsPrompt extends Prompt {
     constructor(playerId, message, cards, filter, options) {
@@ -18,7 +18,9 @@ export class ChooseCardsPrompt extends Prompt {
             differentTypes: false,
             maxPokemons: undefined,
             maxEnergies: undefined,
-            maxTrainers: undefined
+            maxTrainers: undefined,
+            maxTools: undefined,
+            maxItems: undefined,
         }, options);
     }
     decode(result) {
@@ -54,10 +56,12 @@ export class ChooseCardsPrompt extends Prompt {
             const count = countMap[card.superType] || 0;
             countMap[card.superType] = count + 1;
         }
-        const { maxPokemons, maxEnergies, maxTrainers } = this.options;
+        const { maxPokemons, maxEnergies, maxTrainers, maxItems, maxTools } = this.options;
         if ((maxPokemons !== undefined && maxPokemons < countMap[SuperType.POKEMON])
             || (maxEnergies !== undefined && maxEnergies < countMap[SuperType.ENERGY])
-            || (maxTrainers !== undefined && maxTrainers < countMap[SuperType.TRAINER])) {
+            || (maxTrainers !== undefined && maxTrainers < countMap[SuperType.TRAINER])
+            || (maxItems !== undefined && maxItems < countMap[TrainerType.ITEM])
+            || (maxTools !== undefined && maxTools < countMap[TrainerType.TOOL])) {
             return false;
         }
         const blocked = this.options.blocked;
