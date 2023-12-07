@@ -10,7 +10,7 @@ class StudentsInPaldea extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'G';
-        this.set2 = 'shinytreasuresex';
+        this.set2 = 'shinytreasureex';
         this.setNumber = '178';
         this.set = 'SV4';
         this.name = 'Students In Paldea';

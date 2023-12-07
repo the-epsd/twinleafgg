@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Zapdos extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -35,18 +36,19 @@ class Zapdos extends pokemon_card_1.PokemonCard {
         this.fullName = 'Zapdos PGO';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        var _a, _b;
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            const damage = 10; // set base damage boost to 10
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (cardList.isBasic() && card.cardType === card_types_1.CardType.LIGHTNING) {
-                    // check if basic lightning pokemon
-                    if (card.name !== 'Zapdos') {
+            if (((_a = player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.stage) == card_types_1.Stage.BASIC && ((_b = player.active.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.cardType) == card_types_1.CardType.LIGHTNING) {
+                if (effect instanceof attack_effects_1.DealDamageEffect) {
+                    if (effect.card.name !== 'Zapdos') {
                         // exclude Zapdos
-                        effect.damage += damage;
+                        effect.damage += 10;
                     }
+                    return state;
                 }
-            });
+                return state;
+            }
             return state;
         }
         return state;

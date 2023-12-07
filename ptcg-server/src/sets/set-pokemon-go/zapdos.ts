@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, PowerType, State, StoreLike } from '../../game';
+import { PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Zapdos extends PokemonCard {
 
@@ -45,24 +46,21 @@ export class Zapdos extends PokemonCard {
   public fullName: string = 'Zapdos PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      const damage = 10; // set base damage boost to 10
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (cardList.isBasic() && card.cardType === CardType.LIGHTNING) {
-          // check if basic lightning pokemon
-
-          if (card.name !== 'Zapdos') {
+      
+      if (player.active.getPokemonCard()?.stage == Stage.BASIC && player.active.getPokemonCard()?.cardType == CardType.LIGHTNING) {
+        if (effect instanceof DealDamageEffect) {
+          if (effect.card.name !== 'Zapdos') {
             // exclude Zapdos
-            effect.damage += damage;
+            effect.damage += 10;
           }
+          return state;
         }
-      });
-
+        return state;
+      }
       return state;
     }
-
     return state;
   }
 }

@@ -20,6 +20,7 @@ const iron_hands_ex_1 = require("./iron-hands-ex");
 const iron_valiant_ex_1 = require("./iron-valiant-ex");
 const jirachi_1 = require("./jirachi");
 const klawf_1 = require("./klawf");
+const latios_1 = require("./latios");
 const mewtwo_ex_1 = require("./mewtwo-ex");
 const minior_1 = require("./minior");
 const morpeko_1 = require("./morpeko");
@@ -32,6 +33,7 @@ const snorunt_1 = require("./snorunt");
 const steenee_1 = require("./steenee");
 const techno_radar_1 = require("./techno-radar");
 const tsareena_ex_1 = require("./tsareena-ex");
+const tulip_1 = require("./tulip");
 const xatu_1 = require("./xatu");
 exports.setParadoxRift = [
     new ancient_booster_energy_capsule_1.AncientBoosterEnergyCapsule(),
@@ -53,6 +55,7 @@ exports.setParadoxRift = [
     new iron_valiant_ex_1.IronValiantex(),
     new jirachi_1.Jirachi(),
     new klawf_1.Klawf(),
+    new latios_1.Latios(),
     new mewtwo_ex_1.Mewtwoex(),
     new minior_1.Minior(),
     new morpeko_1.Morpeko(),
@@ -65,5 +68,6 @@ exports.setParadoxRift = [
     new steenee_1.Steenee(),
     new techno_radar_1.TechnoRadar(),
     new tsareena_ex_1.Tsareenaex(),
+    new tulip_1.Tulip(),
     new xatu_1.Xatu(),
 ];

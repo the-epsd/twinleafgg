@@ -17,6 +17,7 @@ const hisuian_zoroark_v_1 = require("./hisuian-zoroark-v");
 const hisuian_zoroark_vstar_1 = require("./hisuian-zoroark-vstar");
 const lady_1 = require("./lady");
 const lost_city_1 = require("./lost-city");
+const lost_vacuum_1 = require("./lost-vacuum");
 const mawile_1 = require("./mawile");
 const mirage_gate_1 = require("./mirage-gate");
 const pidgeot_v_1 = require("./pidgeot-v");
@@ -24,6 +25,7 @@ const radiant_gardevoir_1 = require("./radiant-gardevoir");
 const rotom_v_1 = require("./rotom-v");
 const sableye_1 = require("./sableye");
 const snorlax_1 = require("./snorlax");
+const volo_1 = require("./volo");
 exports.setLostOrigin = [
     new colress_s_experiment_1.ColresssExperiment(),
     new comfey_1.Comfey(),
@@ -41,6 +43,7 @@ exports.setLostOrigin = [
     new hisuian_zoroark_vstar_1.HisuianZoroarkVSTAR(),
     new lady_1.Lady(),
     new lost_city_1.LostCity(),
+    new lost_vacuum_1.LostVacuum(),
     new mawile_1.Mawile(),
     new mirage_gate_1.MirageGate(),
     new pidgeot_v_1.PidgeotV(),
@@ -48,4 +51,5 @@ exports.setLostOrigin = [
     new rotom_v_1.RotomV(),
     new sableye_1.Sableye(),
     new snorlax_1.Snorlax(),
+    new volo_1.Volo(),
 ];

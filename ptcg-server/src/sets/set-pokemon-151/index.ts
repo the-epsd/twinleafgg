@@ -23,6 +23,7 @@ import { Zapdosex } from './zapdos-ex';
 import { EreikasInvitation } from './erikas-invitation';
 import { GiovannisCharisma } from './giovannis-charisma';
 import { Scyther } from './scyther';
+import { Electabuzz } from './electabuzz';
 
 export const setPokemon151: Card[] = [
   
@@ -35,6 +36,7 @@ export const setPokemon151: Card[] = [
   new Dodrio(),
   new Doduo(),
   new Eevee(),
+  new Electabuzz(),
   new EreikasInvitation(),
   new GiovannisCharisma(),
   new Grabber(),

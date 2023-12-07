@@ -39,7 +39,7 @@ export class Charmeleon extends PokemonCard {
 
   public regulationMark = 'G';
   
-  public set2: string = 'shinytreasuresex';
+  public set2: string = 'shinytreasureex';
   
   public setNumber: string = '26';
   

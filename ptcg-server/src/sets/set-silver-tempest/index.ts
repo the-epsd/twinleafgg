@@ -1,4 +1,6 @@
 import { Card } from '../../game/store/card/card';
+import { AlolanVulpixV } from './alolan-vulpix-v';
+import { AlolanVulpixVSTAR } from './alolan-vulpix-vstar';
 import { Archeops } from './archeops';
 import { Articuno } from './articuno';
 import { Beheeyem } from './beheeyem';
@@ -22,6 +24,7 @@ import { Raichu } from './raichu';
 import { RegenerativeEnergy } from './regenerative-energy';
 import { RegidragoV } from './regidrago-v';
 import { RegidragoVSTAR } from './regidrago-vstar';
+import { RegielekiVMAX } from './regieleki-vmax';
 import { Rufflet } from './rufflet';
 import { Serena } from './serena';
 import { VGuardEnergy } from './v-guard-energy';
@@ -30,6 +33,8 @@ import { Zeraora } from './zeraora';
 
 export const setSilverTempest: Card[] = [
 
+  new AlolanVulpixV(),
+  new AlolanVulpixVSTAR(),
   new Archeops(),
   new Articuno(),
   new Beheeyem(),
@@ -53,6 +58,7 @@ export const setSilverTempest: Card[] = [
   new RegenerativeEnergy(),
   new RegidragoV(),
   new RegidragoVSTAR(),
+  new RegielekiVMAX(),
   new Rufflet(),
   new Serena(),
   new VGuardEnergy(),

@@ -2,6 +2,7 @@ import { CardType, Format, SuperType } from './card-types';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
+import { CardList } from '../state/card-list';
 export declare abstract class Card {
     abstract set: string;
     abstract superType: SuperType;
@@ -15,5 +16,6 @@ export declare abstract class Card {
     set2: string;
     retreat: CardType[];
     static tags: any;
+    cards: CardList;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

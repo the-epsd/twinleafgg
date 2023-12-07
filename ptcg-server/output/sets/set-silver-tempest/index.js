@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSilverTempest = void 0;
+const alolan_vulpix_v_1 = require("./alolan-vulpix-v");
+const alolan_vulpix_vstar_1 = require("./alolan-vulpix-vstar");
 const archeops_1 = require("./archeops");
 const articuno_1 = require("./articuno");
 const beheeyem_1 = require("./beheeyem");
@@ -24,12 +26,15 @@ const raichu_1 = require("./raichu");
 const regenerative_energy_1 = require("./regenerative-energy");
 const regidrago_v_1 = require("./regidrago-v");
 const regidrago_vstar_1 = require("./regidrago-vstar");
+const regieleki_vmax_1 = require("./regieleki-vmax");
 const rufflet_1 = require("./rufflet");
 const serena_1 = require("./serena");
 const v_guard_energy_1 = require("./v-guard-energy");
 const worker_1 = require("./worker");
 const zeraora_1 = require("./zeraora");
 exports.setSilverTempest = [
+    new alolan_vulpix_v_1.AlolanVulpixV(),
+    new alolan_vulpix_vstar_1.AlolanVulpixVSTAR(),
     new archeops_1.Archeops(),
     new articuno_1.Articuno(),
     new beheeyem_1.Beheeyem(),
@@ -53,6 +58,7 @@ exports.setSilverTempest = [
     new regenerative_energy_1.RegenerativeEnergy(),
     new regidrago_v_1.RegidragoV(),
     new regidrago_vstar_1.RegidragoVSTAR(),
+    new regieleki_vmax_1.RegielekiVMAX(),
     new rufflet_1.Rufflet(),
     new serena_1.Serena(),
     new v_guard_energy_1.VGuardEnergy(),

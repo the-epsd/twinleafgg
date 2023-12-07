@@ -2,6 +2,7 @@ import { CardType, Format, SuperType } from './card-types';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
+import { CardList } from '../state/card-list';
 
 export abstract class Card {
 
@@ -28,6 +29,8 @@ export abstract class Card {
   public retreat: CardType[] = [];
   
   static tags: any;
+  
+  public cards: CardList = new CardList;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;

@@ -25,6 +25,7 @@ const zapdos_ex_1 = require("./zapdos-ex");
 const erikas_invitation_1 = require("./erikas-invitation");
 const giovannis_charisma_1 = require("./giovannis-charisma");
 const scyther_1 = require("./scyther");
+const electabuzz_1 = require("./electabuzz");
 exports.setPokemon151 = [
     new alakazam_ex_1.Alakazamex(),
     new blastoise_ex_1.Blastoiseex(),
@@ -35,6 +36,7 @@ exports.setPokemon151 = [
     new dodrio_1.Dodrio(),
     new doduo_1.Doduo(),
     new eevee_1.Eevee(),
+    new electabuzz_1.Electabuzz(),
     new erikas_invitation_1.EreikasInvitation(),
     new giovannis_charisma_1.GiovannisCharisma(),
     new grabber_1.Grabber(),

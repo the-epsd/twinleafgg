@@ -18,6 +18,7 @@ import { IronHandsex } from './iron-hands-ex';
 import { IronValiantex } from './iron-valiant-ex';
 import { Jirachi } from './jirachi';
 import { Klawf } from './klawf';
+import { Latios } from './latios';
 import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
 import { Morpeko } from './morpeko';
@@ -30,6 +31,7 @@ import { Snorunt } from './snorunt';
 import { Steenee } from './steenee';
 import { TechnoRadar } from './techno-radar';
 import { Tsareenaex } from './tsareena-ex';
+import { Tulip } from './tulip';
 import { Xatu } from './xatu';
 
 export const setParadoxRift: Card[] = [
@@ -53,6 +55,7 @@ export const setParadoxRift: Card[] = [
   new IronValiantex(),
   new Jirachi(),
   new Klawf(),
+  new Latios(),
   new Mewtwoex(),
   new Minior(),
   new Morpeko(),
@@ -65,5 +68,6 @@ export const setParadoxRift: Card[] = [
   new Steenee(),
   new TechnoRadar(),
   new Tsareenaex(),
+  new Tulip(),
   new Xatu(),
 ];

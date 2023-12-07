@@ -13,6 +13,7 @@ import { LeafeonVMAX } from './leafeon-vmax';
 import { Mareep } from './mareep';
 import { Pumpkaboo } from './pumpkaboo';
 import { Raihan } from './raihan';
+import {  RayquazaV } from './rayquaza-v';
 import { Regidrago } from './regidrago';
 import { Regieleki } from './regieleki';
 import { RescueCarrier } from './rescue-carrier';
@@ -39,6 +40,7 @@ export const setEvolvingSkies: Card[] = [
   new Mareep(),
   new Pumpkaboo(),
   new Raihan(),
+  new RayquazaV(),
   new Regidrago(),
   new Regieleki(),
   new RescueCarrier(),
