@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HisuianBasculin = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class HisuianBasculin extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -18,10 +19,7 @@ class HisuianBasculin extends pokemon_card_1.PokemonCard {
                 name: 'Gather the Crew',
                 cost: [],
                 damage: 0,
-                text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.',
-                effect: function (store, state, effect) {
-                    prefabs_1.CHOOSE_CARDS_TO_PUT_ON_BENCH(store, state, effect, 0, 2, card_types_1.Stage.BASIC);
-                }
+                text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
             },
             {
                 name: 'Tackle',
@@ -35,6 +33,12 @@ class HisuianBasculin extends pokemon_card_1.PokemonCard {
         this.setNumber = '43';
         this.name = 'Hisuian Basculin';
         this.fullName = 'Hisuian Basculin ASR';
+    }
+    reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            return prefabs_1.SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store, state, effect, 0, 2, card_types_1.Stage.BASIC);
+        }
+        return state;
     }
 }
 exports.HisuianBasculin = HisuianBasculin;
