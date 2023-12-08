@@ -37,7 +37,6 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         var _a;
-        // Delta Plus
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target === effect.player.active) {
             const attack = (_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.attacks[1];
             if (attack) {
@@ -47,7 +46,7 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
                 if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
                     return state;
                 }
-                // Articuno wasn't attacking
+                // Iron Hands wasn't attacking
                 const pokemonCard = opponent.active.getPokemonCard();
                 if (pokemonCard !== this) {
                     return state;

@@ -15,6 +15,7 @@ const lapras_1 = require("./lapras");
 const lumineon_v_1 = require("./lumineon-v");
 const magmortar_1 = require("./magmortar");
 const manaphy_1 = require("./manaphy");
+const moltres_1 = require("./moltres");
 const raichu_v_1 = require("./raichu-v");
 const raikou_v_1 = require("./raikou-v");
 exports.setBrilliantStars = [
@@ -32,6 +33,7 @@ exports.setBrilliantStars = [
     new lumineon_v_1.LumineonV(),
     new magmortar_1.Magmortar(),
     new manaphy_1.Manaphy(),
+    new moltres_1.Moltres(),
     new raichu_v_1.RaichuV(),
     new raikou_v_1.RaikouV(),
 ];

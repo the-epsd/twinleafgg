@@ -8,6 +8,7 @@ const cherubi_1 = require("./cherubi");
 const cheryl_1 = require("./cheryl");
 const durant_1 = require("./durant");
 const empoleon_v_1 = require("./empoleon-v");
+const energy_recycler_1 = require("./energy-recycler");
 const escape_rope_1 = require("./escape-rope");
 const flapple_v_1 = require("./flapple-v");
 const flapple_vmax_1 = require("./flapple-vmax");
@@ -26,6 +27,7 @@ const single_strike_energy_1 = require("./single-strike-energy");
 const single_strike_urshifu_v_1 = require("./single-strike-urshifu-v");
 const single_strike_urshifu_vmax_1 = require("./single-strike-urshifu-vmax");
 const stonjourner_1 = require("./stonjourner");
+const stoutland_v_1 = require("./stoutland-v");
 const tapu_koko_v_1 = require("./tapu-koko-v");
 const tapu_koko_vmax_1 = require("./tapu-koko-vmax");
 const tyranitar_v_1 = require("./tyranitar-v");
@@ -41,6 +43,7 @@ exports.setBattleStyles = [
     new cherubi_1.Cherubi(),
     new cheryl_1.Cheryl(),
     new durant_1.Durant(),
+    new energy_recycler_1.EnergyRecycler(),
     new empoleon_v_1.EmpoleonV(),
     new escape_rope_1.EscapeRope(),
     new flapple_v_1.FlappleV(),
@@ -60,6 +63,7 @@ exports.setBattleStyles = [
     new single_strike_urshifu_v_1.SingleStrikeUrshifuV(),
     new single_strike_urshifu_vmax_1.SingleStrikeUrshifuVMAX(),
     new stonjourner_1.Stonjourner(),
+    new stoutland_v_1.StoutlandV(),
     new tapu_koko_v_1.TapuKokoV(),
     new tapu_koko_vmax_1.TapuKokoVMAX(),
     new tyranitar_v_1.TyranitarV(),

@@ -3,7 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { ChooseCardsPrompt, GameError, GameMessage, PowerType, ShuffleDeckPrompt } from '../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, PlayerType, PokemonCard, PowerType, ShuffleDeckPrompt } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class ForestSealStone extends TrainerCard {
@@ -33,15 +33,17 @@ export class ForestSealStone extends TrainerCard {
           'Power in a game.)'
   }];
 
-  public text: string =
-    'The Pokemon V this card is attached to can use the VSTAR Power ' +
-    'on this card.';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.player.active.tool === this) {
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
-      this.powers.push(this.powers[0]);
+      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (cardList.tool === this) {
+          const pokemon = card as PokemonCard;
+
+          pokemon.powers.push(this.powers[0]);
+        }});
+    
 
       const player = effect.player;
       if (player.marker.hasMarker(this.VSTAR_MARKER)) {
@@ -61,11 +63,11 @@ export class ForestSealStone extends TrainerCard {
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
-
         return state;
       });
+        
     }
     return state;
   }
 }
-
+  

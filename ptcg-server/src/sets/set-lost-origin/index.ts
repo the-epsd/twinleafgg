@@ -13,6 +13,8 @@ import { HisuianGoodraV } from './hisuian-goodra-v';
 import { HisuianGoodraVSTAR } from './hisuian-goodra-vstar';
 import { HisuianZoroarkV } from './hisuian-zoroark-v';
 import { HisuianZoroarkVSTAR } from './hisuian-zoroark-vstar';
+import { KyuremV } from './kyurem-v';
+import { KyuremVMAX } from './kyurem-vmax';
 import { Lady } from './lady';
 import { LostCity } from './lost-city';
 import { LostVacuum } from './lost-vacuum';
@@ -20,6 +22,7 @@ import { Mawile } from './mawile';
 import { MirageGate } from './mirage-gate';
 import { PidgeotV } from './pidgeot-v';
 import { RadiantGardevoir } from './radiant-gardevoir';
+import { RadiantHisuianSneasler } from './radiant-hisuian-sneasler';
 import { RotomV } from './rotom-v';
 import { Sableye } from './sableye';
 import { Snorlax } from './snorlax';
@@ -41,12 +44,15 @@ export const setLostOrigin: Card[] = [
   new HisuianGoodraVSTAR(),
   new HisuianZoroarkV(),
   new HisuianZoroarkVSTAR(),
+  new KyuremV(),
+  new KyuremVMAX(),
   new Lady(),
   new LostCity(),
   new LostVacuum(),
   new Mawile(),
   new MirageGate(),
   new PidgeotV(),
+  new RadiantHisuianSneasler(),
   new RadiantGardevoir(),
   new RotomV(),
   new Sableye(),  

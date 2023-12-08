@@ -11,9 +11,7 @@ class Magmar extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 50;
-        this.weakness = [{
-                type: card_types_1.CardType.LIGHTNING
-            }];
+        this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [{
                 name: 'Live Coal',

@@ -15,9 +15,7 @@ export class Magmar extends PokemonCard {
 
   public hp: number = 50;
 
-  public weakness = [{
-    type: CardType.LIGHTNING
-  }];
+  public weakness = [{type: CardType.LIGHTNING}];
 
   public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
 

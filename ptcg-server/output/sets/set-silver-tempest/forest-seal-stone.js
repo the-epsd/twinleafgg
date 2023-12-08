@@ -24,12 +24,15 @@ class ForestSealStone extends trainer_card_1.TrainerCard {
                     'your hand. Then, shuffle your deck. (You can\'t use more than 1 VSTAR' +
                     'Power in a game.)'
             }];
-        this.text = 'The Pokemon V this card is attached to can use the VSTAR Power ' +
-            'on this card.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.player.active.tool === this) {
-            this.powers.push(this.powers[0]);
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (cardList.tool === this) {
+                    const pokemon = card;
+                    pokemon.powers.push(this.powers[0]);
+                }
+            });
             const player = effect.player;
             if (player.marker.hasMarker(this.VSTAR_MARKER)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);

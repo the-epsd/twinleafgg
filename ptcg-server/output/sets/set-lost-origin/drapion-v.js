@@ -7,7 +7,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const card_types_2 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const game_effects_1 = require("../../game/store/effects/game-effects");
 class DrapionV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -39,10 +38,10 @@ class DrapionV extends pokemon_card_1.PokemonCard {
     }
     // Implement ability
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const attack = this.attacks[0];
+        if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[0]) {
+            const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(effect.player);
+            store.reduceEffect(state, checkEnergy);
             const player = effect.player;
-            new check_effects_1.CheckAttackCostEffect(player, attack);
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let wildStyleCount = 0;
             // Check opponent's active Pokemon

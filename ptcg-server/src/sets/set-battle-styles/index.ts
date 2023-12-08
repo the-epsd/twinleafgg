@@ -6,6 +6,7 @@ import { Cherubi } from './cherubi';
 import { Cheryl } from './cheryl';
 import { Durant } from './durant';
 import { EmpoleonV } from './empoleon-v';
+import { EnergyRecycler } from './energy-recycler';
 import { EscapeRope } from './escape-rope';
 import { FlappleV } from './flapple-v';
 import { FlappleVMAX } from './flapple-vmax';
@@ -24,6 +25,7 @@ import { SingleStrikeEnergy } from './single-strike-energy';
 import { SingleStrikeUrshifuV } from './single-strike-urshifu-v';
 import { SingleStrikeUrshifuVMAX } from './single-strike-urshifu-vmax';
 import { Stonjourner } from './stonjourner';
+import { StoutlandV } from './stoutland-v';
 import { TapuKokoV } from './tapu-koko-v';
 import { TapuKokoVMAX } from './tapu-koko-vmax';
 import { TyranitarV } from './tyranitar-v';
@@ -41,6 +43,7 @@ export const setBattleStyles: Card[] = [
   new Cherubi(),
   new Cheryl(),
   new Durant(),
+  new EnergyRecycler(),
   new EmpoleonV(),
   new EscapeRope(),
   new FlappleV(),
@@ -60,6 +63,7 @@ export const setBattleStyles: Card[] = [
   new SingleStrikeUrshifuV(),
   new SingleStrikeUrshifuVMAX(),
   new Stonjourner(),
+  new StoutlandV(),
   new TapuKokoV(),
   new TapuKokoVMAX(),
   new TyranitarV(),

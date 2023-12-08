@@ -47,7 +47,7 @@ class RayquazaV extends pokemon_card_1.PokemonCard {
             let pokemons = 0;
             let trainers = 0;
             const blocked = [];
-            player.deck.cards.forEach((c, index) => {
+            player.active.cards.forEach((c, index) => {
                 if (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Basic Fire Energy') {
                     trainers += 1;
                 }
@@ -67,17 +67,15 @@ class RayquazaV extends pokemon_card_1.PokemonCard {
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, player.active, // Card source is target Pokemon
             { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTrainers }), selected => {
                 const cards = selected || [];
-                if (cards.length > 0) {
-                    let totalDiscarded = 0;
-                    cards.forEach(target => {
-                        const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
-                        discardEnergy.target = player.active;
-                        totalDiscarded += discardEnergy.cards.length;
-                        effect.damage = 20 + totalDiscarded * 80;
-                        store.reduceEffect(state, discardEnergy);
-                    });
-                    return state;
-                }
+                let totalDiscarded = 0;
+                cards.forEach(target => {
+                    const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+                    discardEnergy.target = player.active;
+                    totalDiscarded = discardEnergy.cards.length;
+                    store.reduceEffect(state, discardEnergy);
+                    effect.damage = (totalDiscarded * 80) + this.attacks[0].damage;
+                });
+                return state;
             });
         }
         return state;

@@ -26,6 +26,9 @@ const erikas_invitation_1 = require("./erikas-invitation");
 const giovannis_charisma_1 = require("./giovannis-charisma");
 const scyther_1 = require("./scyther");
 const electabuzz_1 = require("./electabuzz");
+const gloom_1 = require("./gloom");
+const vileplume_1 = require("./vileplume");
+const oddish_1 = require("./oddish");
 exports.setPokemon151 = [
     new alakazam_ex_1.Alakazamex(),
     new blastoise_ex_1.Blastoiseex(),
@@ -39,10 +42,12 @@ exports.setPokemon151 = [
     new electabuzz_1.Electabuzz(),
     new erikas_invitation_1.EreikasInvitation(),
     new giovannis_charisma_1.GiovannisCharisma(),
+    new gloom_1.Gloom(),
     new grabber_1.Grabber(),
     new ivysaur_1.Ivysaur(),
     new kangaskhan_ex_1.Kangaskhanex(),
     new mew_ex_1.Mewex(),
+    new oddish_1.Oddish(),
     new pidgeotto_1.Pidgeotto(),
     new pidgey_1.Pidgey(),
     new scyther_1.Scyther(),
@@ -50,6 +55,7 @@ exports.setPokemon151 = [
     new venonat_1.Venonat(),
     new venomoth_1.Venomoth(),
     new venusaur_ex_1.Venusaurex(),
+    new vileplume_1.Vileplume(),
     new wartortle_1.Wartortle(),
     new zapdos_ex_1.Zapdosex(),
 ];

@@ -3,9 +3,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag } from '../../game/store/card/card-types';
-import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class DrapionV extends PokemonCard {
 
@@ -51,11 +50,12 @@ export class DrapionV extends PokemonCard {
   // Implement ability
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      const attack = this.attacks[0];
+    if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
+  
+      const checkEnergy = new CheckProvidedEnergyEffect(effect.player);
+      store.reduceEffect(state, checkEnergy);
+      
       const player = effect.player;
-      new CheckAttackCostEffect(player, attack);
       const opponent = StateUtils.getOpponent(state, player);
 
       let wildStyleCount = 0;

@@ -4,6 +4,8 @@ import { Charmeleon } from './charmeleon';
 import { Clive } from './clive';
 import { Espathraex } from './espathra-ex';
 import { Gengar } from './gengar';
+import { Kilowattrel } from './kilowattrel';
+import { MimeJr } from './mime-jr';
 import { MoonlightHill } from './moonlight-hill';
 import { Nemona } from './nemona';
 import { Scovillainex } from './scovillain-ex';
@@ -19,5 +21,7 @@ export const setPaldeaFates: Card[] = [
   new Scovillainex(),
   new StudentsInPaldea(),
   new Gengar(),
+  new Kilowattrel(),
+  new MimeJr(),
 
 ];

@@ -14,12 +14,14 @@ import { HisuianSamurottV } from './hisuian-samurott-v';
 import { HisuianSamurottVSTAR } from './hisuian-samurott-vstar';
 import { Irida } from './irida';
 import { LucarioV } from './lucario-v';
+import { Mightyena } from './mightyena';
 import { Miltank } from './miltank';
 import { OriginFormeDialgaV } from './origin-forme-dialga-v';
 import { OriginFormeDialgaVSTAR } from './origin-forme-dialga-vstar';
 import { OriginFormePalkiaV } from './origin-forme-palkia-v';
 import { OriginFormePalkiaVSTAR } from './origin-forme-palkia-vstar';
 import { RadiantGreninja } from './radiant-greninja';
+import { RadiantHawlucha } from './radiant-hawlucha';
 import { Ralts } from './ralts';
 import { Regice } from './regice';
 import { Regidrago } from './regidrago';
@@ -50,12 +52,14 @@ export const setAstralRadiance: Card[] = [
   new HisuianSamurottVSTAR(),
   new Irida(),
   new LucarioV(),
+  new Mightyena(),
   new Miltank(),
   new OriginFormeDialgaV(),
   new OriginFormeDialgaVSTAR(),
   new OriginFormePalkiaV(),
   new OriginFormePalkiaVSTAR(),
   new RadiantGreninja(),
+  new RadiantHawlucha(),
   new Ralts(),
   new Regice(),
   new Regidrago(),

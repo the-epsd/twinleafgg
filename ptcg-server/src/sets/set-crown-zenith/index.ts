@@ -1,6 +1,5 @@
 import { Card } from '../../game/store/card/card';
 import { Bidoof } from './bidoof';
-import { DusknoirLvX } from './dusknoir-lv-x';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
 import { RadiantCharizard } from './radiant-charizard';
@@ -12,6 +11,5 @@ export const setCrownZenith: Card[] = [
   new Kyogre(),
   new RadiantCharizard(),
   new Zamazenta(),
-  new DusknoirLvX(),
   new Luxray(),
 ];
