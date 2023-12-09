@@ -15,10 +15,7 @@ class BraveyCharm extends trainer_card_1.TrainerCard {
         this.setNumber = '173';
         this.name = 'Bravery Charm';
         this.fullName = 'Bravery Charm PAL';
-        this.text = 'The Pokemon this card is attached to gets +20 HP and that Pokemon\'s ' +
-            'attacks do 20 more damage to your opponent\'s Active Pokemon (before ' +
-            'applying Weakness and Resistance). When the Pokemon this card is ' +
-            'attached to is Knocked Out, your opponent takes 1 more Prize card.';
+        this.text = 'The Basic Pokémon this card is attached to gets +50 HP.';
     }
     reduceEffect(store, state, effect) {
         if (this instanceof game_1.PokemonCard && this.stage === card_types_1.Stage.BASIC) {

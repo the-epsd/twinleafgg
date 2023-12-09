@@ -1,6 +1,7 @@
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
-import { SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { PokemonCard } from '../card/pokemon-card';
 export class PokemonCardList extends CardList {
     constructor() {
         super(...arguments);
@@ -9,6 +10,8 @@ export class PokemonCardList extends CardList {
         this.poisonDamage = 10;
         this.burnDamage = 20;
         this.marker = new Marker();
+        this.attackMarker = new Marker();
+        this.abilityMarker = new Marker();
         this.pokemonPlayedTurn = 0;
     }
     getPokemons() {
@@ -75,5 +78,18 @@ export class PokemonCardList extends CardList {
             SpecialCondition.ASLEEP
         ].includes(s) === false);
         this.specialConditions.push(sp);
+    }
+    hasRuleBox() {
+        return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));
+    }
+    getToolEffect() {
+        if (!this.tool) {
+            return;
+        }
+        const toolCard = this.tool.cards;
+        if (toolCard instanceof PokemonCard) {
+            return toolCard.powers[0] || toolCard.attacks[0];
+        }
+        return;
     }
 }

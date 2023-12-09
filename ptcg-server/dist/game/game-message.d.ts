@@ -52,6 +52,18 @@ export declare enum GameStoreMessage {
     UNKNOWN_POWER = "UNKNOWN_POWER"
 }
 export declare enum GameCardMessage {
+    HEADS = "HEADS",
+    TAILS = "TAILS",
+    FLIP_COIN = "FLIP_COIN",
+    GO_FIRST = "GO_FIRST",
+    YES = "YES",
+    NO = "NO",
+    DISCARD_AND_DRAW = "DISCARD_AND_DRAW",
+    SWITCH_POKEMON = "SWITCH_POKEMON",
+    CHOOSE_OPTION = "CHOOSE_OPTION",
+    CHOOSE_POKEMON = "CHOOSE_POKEMON",
+    CHOOSE_TOOL = "CHOOSE_TOOL",
+    CHOOSE_STADIUM = "CHOOSE_STADIUM",
     ALL_FIRE_ENERGIES = "ALL_FIRE_ENERGIES",
     ALL_LIGHTNING_ENERGIES = "ALL_LIGHTNING_ENERGIES",
     ALL_WATER_ENERGIES = "ALL_WATER_ENERGIES",
@@ -136,6 +148,18 @@ export declare enum GameLog {
     LOG_TURN = "LOG_TURN"
 }
 export declare const GameMessage: {
+    HEADS: GameCardMessage.HEADS;
+    TAILS: GameCardMessage.TAILS;
+    FLIP_COIN: GameCardMessage.FLIP_COIN;
+    GO_FIRST: GameCardMessage.GO_FIRST;
+    YES: GameCardMessage.YES;
+    NO: GameCardMessage.NO;
+    DISCARD_AND_DRAW: GameCardMessage.DISCARD_AND_DRAW;
+    SWITCH_POKEMON: GameCardMessage.SWITCH_POKEMON;
+    CHOOSE_OPTION: GameCardMessage.CHOOSE_OPTION;
+    CHOOSE_POKEMON: GameCardMessage.CHOOSE_POKEMON;
+    CHOOSE_TOOL: GameCardMessage.CHOOSE_TOOL;
+    CHOOSE_STADIUM: GameCardMessage.CHOOSE_STADIUM;
     ALL_FIRE_ENERGIES: GameCardMessage.ALL_FIRE_ENERGIES;
     ALL_LIGHTNING_ENERGIES: GameCardMessage.ALL_LIGHTNING_ENERGIES;
     ALL_WATER_ENERGIES: GameCardMessage.ALL_WATER_ENERGIES;

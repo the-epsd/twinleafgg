@@ -1,6 +1,6 @@
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
-import { PutDamageEffect, DealDamageEffect, DiscardCardsEffect, AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect, RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect, PutCountersEffect } from '../effects/attack-effects';
+import { PutDamageEffect, DealDamageEffect, DiscardCardsEffect, AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect, RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect, PutCountersEffect, CardsToHandEffect } from '../effects/attack-effects';
 import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
 export function attackReducer(store, state, effect) {
@@ -44,6 +44,13 @@ export function attackReducer(store, state, effect) {
         const cards = effect.cards;
         const owner = StateUtils.findOwner(state, target);
         target.moveCardsTo(cards, owner.discard);
+        return state;
+    }
+    if (effect instanceof CardsToHandEffect) {
+        const target = effect.target;
+        const cards = effect.cards;
+        const owner = StateUtils.findOwner(state, target);
+        target.moveCardsTo(cards, owner.hand);
         return state;
     }
     if (effect instanceof AddMarkerEffect) {

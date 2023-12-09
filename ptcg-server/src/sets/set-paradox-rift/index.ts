@@ -19,6 +19,7 @@ import { IronValiantex } from './iron-valiant-ex';
 import { Jirachi } from './jirachi';
 import { Klawf } from './klawf';
 import { Latios } from './latios';
+import { LuxuriousCape } from './luxurious-cape';
 import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
 import { Morpeko } from './morpeko';
@@ -56,6 +57,7 @@ export const setParadoxRift: Card[] = [
   new Jirachi(),
   new Klawf(),
   new Latios(),
+  new LuxuriousCape(),
   new Mewtwoex(),
   new Minior(),
   new Morpeko(),

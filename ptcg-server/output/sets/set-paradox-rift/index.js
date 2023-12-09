@@ -21,6 +21,7 @@ const iron_valiant_ex_1 = require("./iron-valiant-ex");
 const jirachi_1 = require("./jirachi");
 const klawf_1 = require("./klawf");
 const latios_1 = require("./latios");
+const luxurious_cape_1 = require("./luxurious-cape");
 const mewtwo_ex_1 = require("./mewtwo-ex");
 const minior_1 = require("./minior");
 const morpeko_1 = require("./morpeko");
@@ -56,6 +57,7 @@ exports.setParadoxRift = [
     new jirachi_1.Jirachi(),
     new klawf_1.Klawf(),
     new latios_1.Latios(),
+    new luxurious_cape_1.LuxuriousCape(),
     new mewtwo_ex_1.Mewtwoex(),
     new minior_1.Minior(),
     new morpeko_1.Morpeko(),

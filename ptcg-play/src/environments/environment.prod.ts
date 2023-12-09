@@ -1,5 +1,5 @@
 export const environment = {
-  apiUrl: '',
+  apiUrl: 'https://twinleaf.vercel.app',
   timeout: 5000,
   production: true,
   apiVersion: 2,

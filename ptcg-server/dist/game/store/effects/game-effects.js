@@ -52,6 +52,14 @@ export class UseStadiumEffect {
         this.stadium = stadium;
     }
 }
+export class useToolEffect {
+    constructor(player, tool) {
+        this.type = GameEffects.USE_STADIUM_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.tool = tool;
+    }
+}
 export class AttackEffect {
     constructor(player, opponent, attack) {
         this.type = GameEffects.ATTACK_EFFECT;
