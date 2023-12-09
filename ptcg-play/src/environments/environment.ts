@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl: 'http://epsd.ca',
+  apiUrl: 'http://server.epsd.ca',
   timeout: 5000,
   production: false,
   apiVersion: 2,
