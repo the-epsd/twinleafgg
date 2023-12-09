@@ -3,12 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl: 'https://twinleaf.vercel.app',
+  apiUrl: 'http://epsd.ca',
   timeout: 5000,
   production: false,
   apiVersion: 2,
   defaultPageSize: 50,
-  allowServerChange: true,
+  allowServerChange: false,
   refreshTokenInterval: 60 * 60 * 1000,
   enableImageCache: false,
   defaultLanguage: 'en',

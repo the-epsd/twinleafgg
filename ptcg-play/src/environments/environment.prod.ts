@@ -1,10 +1,10 @@
 export const environment = {
-  apiUrl: 'https://twinleaf.vercel.app',
+  apiUrl: 'http://epsd.ca',
   timeout: 5000,
   production: true,
   apiVersion: 2,
   defaultPageSize: 50,
-  allowServerChange: true,
+  allowServerChange: false,
   refreshTokenInterval: 60 * 60 * 1000,
   enableImageCache: true,
   defaultLanguage: 'en',
