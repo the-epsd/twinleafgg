@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Bouffalant } from './bouffalant';
 import { ColresssExperiment } from './colress\'s-experiment';
 import { Comfey } from './comfey';
 import { Cramorant } from './cramorant';
@@ -13,6 +14,7 @@ import { HisuianGoodraV } from './hisuian-goodra-v';
 import { HisuianGoodraVSTAR } from './hisuian-goodra-vstar';
 import { HisuianZoroarkV } from './hisuian-zoroark-v';
 import { HisuianZoroarkVSTAR } from './hisuian-zoroark-vstar';
+import { Jynx } from './jynx';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
 import { Lady } from './lady';
@@ -30,6 +32,7 @@ import { Volo } from './volo';
 
 export const setLostOrigin: Card[] = [
   
+  new Bouffalant(),
   new ColresssExperiment(),
   new Comfey(),
   new Cramorant(),
@@ -44,6 +47,7 @@ export const setLostOrigin: Card[] = [
   new HisuianGoodraVSTAR(),
   new HisuianZoroarkV(),
   new HisuianZoroarkVSTAR(),
+  new Jynx(),
   new KyuremV(),
   new KyuremVMAX(),
   new Lady(),

@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Avery } from './avery';
+import { Banette } from './banette';
 import { BlisseyV } from './blissey-v';
 import { EchoingHorn } from './echoing-horn';
 import { FogCrystal } from './fog-crystal';
@@ -11,6 +12,7 @@ import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
 import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
 import { Inteleon } from './inteleon';
 import { JustifiedGloves } from './justified-gloves';
+import { KarensConviction } from './karens-conviction';
 import { Kirlia } from './kirlia';
 import { Klara } from './klara';
 import { Melony } from './melony';
@@ -23,6 +25,7 @@ import { Sobble } from './sobble';
 export const setChillingReign: Card[] = [
   
   new Avery(),
+  new Banette(),
   new BlisseyV(),
   new EchoingHorn(),
   new FogCrystal(),
@@ -34,6 +37,7 @@ export const setChillingReign: Card[] = [
   new IceRiderCalyrexVMAX(),
   new Inteleon(),
   new JustifiedGloves(),
+  new KarensConviction(),
   new Kirlia(),
   new Klara(),
   new Melony(),

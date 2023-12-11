@@ -7,6 +7,7 @@ import { CleansingGloves } from './cleansing-gloves';
 import { CollapsedStadium } from './collapsed-stadium';
 import { CynthiasAmbition } from './cynthias-ambition';
 import { DoubleTurboEnergy } from './double-turbo-energy';
+import { Druddigon } from './druddigon';
 import { Electivire } from './electivire';
 import { EnteiV } from './entei-v';
 import { Lapras } from './lapras';
@@ -26,6 +27,7 @@ export const setBrilliantStars: Card[] = [
   new CleansingGloves(),
   new CollapsedStadium(),
   new CynthiasAmbition(),
+  new Druddigon(),
   new DoubleTurboEnergy(),
   new Electivire(),
   new EnteiV(),

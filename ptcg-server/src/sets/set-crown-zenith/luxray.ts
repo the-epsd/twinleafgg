@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType } from '../../game';
+import { ConfirmPrompt, GameMessage, PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
@@ -22,9 +22,9 @@ export class Luxray extends PokemonCard {
   public retreat = [ ];
 
   public powers = [{
-    name: 'Explosiveness',
+    name: 'Swelling Flash',
     powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is in your hand when you are setting up to play, you may put it face down as your Active Pokémon.' 
+    text: '' 
   }];
 
   public attacks = [{
@@ -45,13 +45,25 @@ export class Luxray extends PokemonCard {
 
   public fullName: string = 'Luxray CRZ';
 
+
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power.useFromHand && effect.power === this.powers[0]) {
-
-      if (effect.power.useFromHand && function setupGame(){}) {
-        if (effect.player.hand.cards.includes(this)) {
-          this.stage = Stage.BASIC;
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+      if (player.hand.cards.includes(this)) {
+        if (player.active == undefined) {
+          state = store.prompt(state, new ConfirmPrompt(
+            effect.player.id,
+            GameMessage.WANT_TO_USE_ABILITY,
+          ), wantToUse => {
+            if (wantToUse) {
+              player.hand.cards.findIndex(card => card === this);
+              player.hand.moveCardTo(this, player.active);
+              return state;
+            }
+            return state;
+          });
           return state;
         }
         return state;
@@ -60,5 +72,4 @@ export class Luxray extends PokemonCard {
     }
     return state;
   }
-
 }

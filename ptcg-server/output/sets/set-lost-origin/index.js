@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setLostOrigin = void 0;
+const bouffalant_1 = require("./bouffalant");
 const colress_s_experiment_1 = require("./colress's-experiment");
 const comfey_1 = require("./comfey");
 const cramorant_1 = require("./cramorant");
@@ -15,6 +16,7 @@ const hisuian_goodra_v_1 = require("./hisuian-goodra-v");
 const hisuian_goodra_vstar_1 = require("./hisuian-goodra-vstar");
 const hisuian_zoroark_v_1 = require("./hisuian-zoroark-v");
 const hisuian_zoroark_vstar_1 = require("./hisuian-zoroark-vstar");
+const jynx_1 = require("./jynx");
 const kyurem_v_1 = require("./kyurem-v");
 const kyurem_vmax_1 = require("./kyurem-vmax");
 const lady_1 = require("./lady");
@@ -30,6 +32,7 @@ const sableye_1 = require("./sableye");
 const snorlax_1 = require("./snorlax");
 const volo_1 = require("./volo");
 exports.setLostOrigin = [
+    new bouffalant_1.Bouffalant(),
     new colress_s_experiment_1.ColresssExperiment(),
     new comfey_1.Comfey(),
     new cramorant_1.Cramorant(),
@@ -44,6 +47,7 @@ exports.setLostOrigin = [
     new hisuian_goodra_vstar_1.HisuianGoodraVSTAR(),
     new hisuian_zoroark_v_1.HisuianZoroarkV(),
     new hisuian_zoroark_vstar_1.HisuianZoroarkVSTAR(),
+    new jynx_1.Jynx(),
     new kyurem_v_1.KyuremV(),
     new kyurem_vmax_1.KyuremVMAX(),
     new lady_1.Lady(),

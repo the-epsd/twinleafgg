@@ -5,6 +5,7 @@ const atticus_1 = require("./atticus");
 const charmeleon_1 = require("./charmeleon");
 const clive_1 = require("./clive");
 const espathra_ex_1 = require("./espathra-ex");
+const frigibax_1 = require("./frigibax");
 const gengar_1 = require("./gengar");
 const kilowattrel_1 = require("./kilowattrel");
 const mime_jr_1 = require("./mime-jr");
@@ -24,4 +25,5 @@ exports.setPaldeaFates = [
     new gengar_1.Gengar(),
     new kilowattrel_1.Kilowattrel(),
     new mime_jr_1.MimeJr(),
+    new frigibax_1.Frigibax(),
 ];

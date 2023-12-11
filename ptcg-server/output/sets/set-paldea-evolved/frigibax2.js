@@ -30,7 +30,7 @@ class Frigibax2 extends pokemon_card_1.PokemonCard {
         this.set2 = 'paldeaevolved';
         this.setNumber = '58';
         this.name = 'Frigibax';
-        this.fullName = 'Frigibax PAL';
+        this.fullName = 'Frigibax PAL 58';
     }
 }
 exports.Frigibax2 = Frigibax2;

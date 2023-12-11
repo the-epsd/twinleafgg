@@ -4,7 +4,7 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-export class Frigibax2 extends PokemonCard {
+export class Frigibax extends PokemonCard {
 
   public regulationMark = 'G';
 

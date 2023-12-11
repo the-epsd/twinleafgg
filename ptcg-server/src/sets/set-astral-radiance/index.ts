@@ -30,6 +30,7 @@ import { Regigigas } from './regigigas';
 import { Regirock } from './regirock';
 import { Registeel } from './registeel';
 import { Roxanne } from './roxanne';
+import { SupereffectiveGlasses } from './supereffective-glasses';
 import { SwitchCart } from './switch-cart';
 import { TempleofSinnoh } from './temple-of-sinnoh';
 import { TrekkingShoes } from './trekking-shoes';
@@ -68,6 +69,7 @@ export const setAstralRadiance: Card[] = [
   new Regirock(),
   new Registeel(),
   new Roxanne(),
+  new SupereffectiveGlasses(),
   new SwitchCart(),
   new TempleofSinnoh(),
   new TrekkingShoes(),

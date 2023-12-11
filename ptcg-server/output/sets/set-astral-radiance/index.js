@@ -32,6 +32,7 @@ const regigigas_1 = require("./regigigas");
 const regirock_1 = require("./regirock");
 const registeel_1 = require("./registeel");
 const roxanne_1 = require("./roxanne");
+const supereffective_glasses_1 = require("./supereffective-glasses");
 const switch_cart_1 = require("./switch-cart");
 const temple_of_sinnoh_1 = require("./temple-of-sinnoh");
 const trekking_shoes_1 = require("./trekking-shoes");
@@ -67,6 +68,7 @@ exports.setAstralRadiance = [
     new regirock_1.Regirock(),
     new registeel_1.Registeel(),
     new roxanne_1.Roxanne(),
+    new supereffective_glasses_1.SupereffectiveGlasses(),
     new switch_cart_1.SwitchCart(),
     new temple_of_sinnoh_1.TempleofSinnoh(),
     new trekking_shoes_1.TrekkingShoes(),

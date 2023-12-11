@@ -1,8 +1,11 @@
 import { Card } from '../../game/store/card/card';
+import { Articuno } from './articuno';
 import { Charmander } from './charmander';
 import { Ditto } from './ditto';
 import { Lunatone } from './lunatone';
+import { Moltres } from './moltres';
 import { Pokestop } from './pokestop';
+import { RadiantVenusaur } from './radiant-venusaur';
 import { SlakingV } from './slaking-v';
 import { Snorlax } from './snorlax';
 import { Solrock } from './solrock';
@@ -18,4 +21,7 @@ export const setPokemonGO: Card[] = [
   new Snorlax(),
   new Solrock(),
   new Zapdos(),
+  new RadiantVenusaur(),
+  new Articuno(),
+  new Moltres(),
 ];

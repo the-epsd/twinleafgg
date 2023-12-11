@@ -8,7 +8,7 @@ export const environment = {
   production: false,
   apiVersion: 2,
   defaultPageSize: 50,
-  allowServerChange: false,
+  allowServerChange: true,
   refreshTokenInterval: 60 * 60 * 1000,
   enableImageCache: false,
   defaultLanguage: 'en',

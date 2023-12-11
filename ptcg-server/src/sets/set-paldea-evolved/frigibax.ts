@@ -32,6 +32,6 @@ export class Frigibax extends PokemonCard {
 
   public name: string = 'Frigibax';
 
-  public fullName: string = 'Frigibax PAL';
+  public fullName: string = 'Frigibax PAL 57';
 
 }

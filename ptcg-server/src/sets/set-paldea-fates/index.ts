@@ -3,6 +3,7 @@ import { Atticus } from './atticus';
 import { Charmeleon } from './charmeleon';
 import { Clive } from './clive';
 import { Espathraex } from './espathra-ex';
+import { Frigibax } from './frigibax';
 import { Gengar } from './gengar';
 import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
@@ -23,5 +24,6 @@ export const setPaldeaFates: Card[] = [
   new Gengar(),
   new Kilowattrel(),
   new MimeJr(),
+  new Frigibax(),
 
 ];

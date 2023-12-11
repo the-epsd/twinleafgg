@@ -1,10 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPokemonGO = void 0;
+const articuno_1 = require("./articuno");
 const charmander_1 = require("./charmander");
 const ditto_1 = require("./ditto");
 const lunatone_1 = require("./lunatone");
+const moltres_1 = require("./moltres");
 const pokestop_1 = require("./pokestop");
+const radiant_venusaur_1 = require("./radiant-venusaur");
 const slaking_v_1 = require("./slaking-v");
 const snorlax_1 = require("./snorlax");
 const solrock_1 = require("./solrock");
@@ -18,4 +21,7 @@ exports.setPokemonGO = [
     new snorlax_1.Snorlax(),
     new solrock_1.Solrock(),
     new zapdos_1.Zapdos(),
+    new radiant_venusaur_1.RadiantVenusaur(),
+    new articuno_1.Articuno(),
+    new moltres_1.Moltres(),
 ];

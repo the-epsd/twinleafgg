@@ -25,6 +25,7 @@ import { SuperRod } from './super-rod';
 import { Wattrel } from './wattrel';
 import { Luxray } from './luxray';
 import { WoChienex } from './wo-chien-ex';
+import { Shinx } from './shinx';
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [
@@ -57,4 +58,5 @@ export const setPaldeaEvolved: Card[] = [
   new SuperiorEnergyRetrieval(),
   new Wattrel(),
   new WoChienex(),
+  new Shinx(),
 ];
