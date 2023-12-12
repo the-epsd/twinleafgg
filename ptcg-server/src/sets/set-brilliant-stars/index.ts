@@ -7,12 +7,14 @@ import { CleansingGloves } from './cleansing-gloves';
 import { CollapsedStadium } from './collapsed-stadium';
 import { CynthiasAmbition } from './cynthias-ambition';
 import { DoubleTurboEnergy } from './double-turbo-energy';
+import { Druddigon } from './druddigon';
 import { Electivire } from './electivire';
 import { EnteiV } from './entei-v';
 import { Lapras } from './lapras';
 import { LumineonV } from './lumineon-v';
 import { Magmortar } from './magmortar';
 import { Manaphy } from './manaphy';
+import { Moltres } from './moltres';
 import { RaichuV } from './raichu-v';
 import { RaikouV } from './raikou-v';
 
@@ -25,6 +27,7 @@ export const setBrilliantStars: Card[] = [
   new CleansingGloves(),
   new CollapsedStadium(),
   new CynthiasAmbition(),
+  new Druddigon(),
   new DoubleTurboEnergy(),
   new Electivire(),
   new EnteiV(),
@@ -32,6 +35,7 @@ export const setBrilliantStars: Card[] = [
   new LumineonV(),
   new Magmortar(),
   new Manaphy(),
+  new Moltres(),
   new RaichuV(),
   new RaikouV(),
   

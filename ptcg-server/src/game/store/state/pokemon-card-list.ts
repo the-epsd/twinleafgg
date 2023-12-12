@@ -1,8 +1,9 @@
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
-import { SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Card } from '../card/card';
+import { Power, Attack } from '../card/pokemon-types';
 
 export class PokemonCardList extends CardList {
 
@@ -25,6 +26,8 @@ export class PokemonCardList extends CardList {
   // Some pokemon cards can be attached as a tool and stadium,
   // we must remember, which card acts as a pokemon tool.
   public tool: Card | undefined;
+  public stadium: Card | undefined;
+
 
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];
@@ -96,6 +99,24 @@ export class PokemonCardList extends CardList {
       SpecialCondition.ASLEEP
     ].includes(s) === false);
     this.specialConditions.push(sp);
+  }
+
+  hasRuleBox(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));
+  }
+
+  getToolEffect(): Power | Attack | undefined {
+    if (!this.tool) {
+      return;
+    }
+    
+    const toolCard = this.tool.cards;
+
+    if (toolCard instanceof PokemonCard) {
+      return toolCard.powers[0] || toolCard.attacks[0];
+    }
+
+    return;
   }
 
 }

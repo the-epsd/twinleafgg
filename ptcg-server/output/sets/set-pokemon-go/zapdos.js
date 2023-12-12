@@ -36,10 +36,10 @@ class Zapdos extends pokemon_card_1.PokemonCard {
         this.fullName = 'Zapdos PGO';
     }
     reduceEffect(store, state, effect) {
-        var _a, _b;
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            if (((_a = player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.stage) == card_types_1.Stage.BASIC && ((_b = player.active.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.cardType) == card_types_1.CardType.LIGHTNING) {
+            const legendaryBird = player.active.getPokemonCard();
+            if (legendaryBird && legendaryBird.stage == card_types_1.Stage.BASIC && legendaryBird.cardType == card_types_1.CardType.LIGHTNING) {
                 if (effect instanceof attack_effects_1.DealDamageEffect) {
                     if (effect.card.name !== 'Zapdos') {
                         // exclude Zapdos

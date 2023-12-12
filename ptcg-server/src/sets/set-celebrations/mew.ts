@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { CardList } from '../../game/store/state/card-list';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { GameMessage } from '../../game/game-message';
-import { GameError, PokemonCard, PowerType, ShuffleDeckPrompt } from '../../game';
+import { GameError, PokemonCard, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -78,6 +78,7 @@ export class Mew extends PokemonCard {
   
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 6);
+      const opponent = StateUtils.getOpponent(state, player);
   
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
@@ -89,14 +90,23 @@ export class Mew extends PokemonCard {
         player.marker.addMarker(this.MYSTERIOUS_TAIL_MARKER, this);
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.deck);
-    
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-          return state;
-        });
+
+        if (deckTop.cards.length > 0) {
+          return store.prompt(state, new ShowCardsPrompt(
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            deckTop.cards
+          ), () => {
+
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+              return state;
+            });
+          });
+        }
+        return state;
       });
     }
-    
     if (effect instanceof EndTurnEffect) {
       const player = (effect as EndTurnEffect).player;
       player.marker.removeMarker(this.MYSTERIOUS_TAIL_MARKER, this);

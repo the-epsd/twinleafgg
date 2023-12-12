@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.config = void 0;
 exports.config = {
     backend: {
-        address: 'localhost',
+        address: 'http://server.epsd.ca',
         port: 12021,
         serverPassword: '',
         registrationEnabled: true,

@@ -1,16 +1,20 @@
 import { Card } from '../../game/store/card/card';
 import { Bellsprout } from './bellsprout';
 import { Bronzong } from './bronzong';
+import { Bruno } from './bruno';
 import { Cherrim } from './cherrim';
 import { Cherubi } from './cherubi';
 import { Cheryl } from './cheryl';
 import { Durant } from './durant';
 import { EmpoleonV } from './empoleon-v';
+import { EnergyRecycler } from './energy-recycler';
 import { EscapeRope } from './escape-rope';
+import { FanOfWaves } from './fan-of-waves';
 import { FlappleV } from './flapple-v';
 import { FlappleVMAX } from './flapple-vmax';
 import { Houndoom } from './houndoom';
 import { Houndour } from './houndour';
+import { KorrinasFocus } from './korrinas-focus';
 import { KricketuneV } from './kricketune-v';
 import { LevelBall } from './level-ball';
 import { MimikyuV } from './mimikyu-v';
@@ -24,8 +28,12 @@ import { SingleStrikeEnergy } from './single-strike-energy';
 import { SingleStrikeUrshifuV } from './single-strike-urshifu-v';
 import { SingleStrikeUrshifuVMAX } from './single-strike-urshifu-vmax';
 import { Stonjourner } from './stonjourner';
+import { StoutlandV } from './stoutland-v';
 import { TapuKokoV } from './tapu-koko-v';
 import { TapuKokoVMAX } from './tapu-koko-vmax';
+import { ToolJammer } from './tool-jammer';
+import { TowerOfDarkness } from './tower-of-darkness';
+import { TowerOfWaters } from './tower-of-waters';
 import { TyranitarV } from './tyranitar-v';
 import { UrnOfVitality } from './urn-of-vitality';
 import { VictiniV } from './victini-v';
@@ -37,17 +45,21 @@ export const setBattleStyles: Card[] = [
 
   new Bellsprout(),
   new Bronzong(),
+  new Bruno(),
   new Cherrim(),
   new Cherubi(),
   new Cheryl(),
   new Durant(),
+  new EnergyRecycler(),
   new EmpoleonV(),
   new EscapeRope(),
+  new FanOfWaves(),
   new FlappleV(),
   new FlappleVMAX(),
   new Houndoom(),
   new Houndour(),
   new KricketuneV(),
+  new KorrinasFocus(),
   new LevelBall(),
   new MimikyuV(),
   new NecrozmaV(),
@@ -60,8 +72,12 @@ export const setBattleStyles: Card[] = [
   new SingleStrikeUrshifuV(),
   new SingleStrikeUrshifuVMAX(),
   new Stonjourner(),
+  new StoutlandV(),
   new TapuKokoV(),
   new TapuKokoVMAX(),
+  new ToolJammer(),
+  new TowerOfDarkness(),
+  new TowerOfWaters(),
   new TyranitarV(),
   new UrnOfVitality(),
   new VictiniV(),

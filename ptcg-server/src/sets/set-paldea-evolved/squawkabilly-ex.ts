@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { GameMessage } from '../../game/game-message';
-import { GameError, PowerType } from '../../game';
+import { AttachEnergyPrompt, EnergyCard, GameError, PlayerType, PowerType, SlotType, StateUtils } from '../../game';
 
 
 export class Squawkabillyex extends PokemonCard {
@@ -16,14 +16,15 @@ export class Squawkabillyex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = CardType.COLORLESS;
 
-  public hp: number = 60;
+  public hp: number = 160;
 
   public weakness = [{
-    type: CardType.LIGHTNING,
-    value: 10
+    type: CardType.LIGHTNING
   }];
+
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
   public retreat = [ CardType.COLORLESS ];
 
@@ -75,8 +76,37 @@ export class Squawkabillyex extends PokemonCard {
         // Mark power as used this turn
         player.usedSquawkAndSeizeThisTurn = true;
         // Return updated state
-        return state;
       }
+
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+        const player = effect.player;
+        const hasBench = player.bench.some(b => b.cards.length > 0);
+
+        const hasBasicEnergy = player.active.cards.some(c => { return c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.ANY); });
+      
+
+        if (hasBench === false || hasBasicEnergy === false) {
+          return state;
+        }
+  
+        return store.prompt(state, new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.active,
+          PlayerType.BOTTOM_PLAYER,
+          [ SlotType.BENCH ],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { allowCancel: false, min: 1, max: 2 }
+        ), transfers => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.active.moveCardTo(transfer.card, target);
+          } 
+          return state;
+        });
+      }
+      return state;
     }
     return state;
   }

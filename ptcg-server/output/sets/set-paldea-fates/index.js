@@ -5,7 +5,10 @@ const atticus_1 = require("./atticus");
 const charmeleon_1 = require("./charmeleon");
 const clive_1 = require("./clive");
 const espathra_ex_1 = require("./espathra-ex");
+const frigibax_1 = require("./frigibax");
 const gengar_1 = require("./gengar");
+const kilowattrel_1 = require("./kilowattrel");
+const mime_jr_1 = require("./mime-jr");
 const moonlight_hill_1 = require("./moonlight-hill");
 const nemona_1 = require("./nemona");
 const scovillain_ex_1 = require("./scovillain-ex");
@@ -20,4 +23,7 @@ exports.setPaldeaFates = [
     new scovillain_ex_1.Scovillainex(),
     new students_in_paldea_1.StudentsInPaldea(),
     new gengar_1.Gengar(),
+    new kilowattrel_1.Kilowattrel(),
+    new mime_jr_1.MimeJr(),
+    new frigibax_1.Frigibax(),
 ];

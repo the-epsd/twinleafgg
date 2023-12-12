@@ -33,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_CARD_TO_HAND,
     opponent.hand,
     { superType: SuperType.POKEMON, stage: Stage.BASIC },
-    { min: 1, max: 1, allowCancel: true }
+    { min: 0, max: 1, allowCancel: true }
   ), selected => {
     cards = selected || [];
     next();

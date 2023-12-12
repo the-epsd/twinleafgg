@@ -4,6 +4,7 @@ exports.PokemonCardList = void 0;
 const card_list_1 = require("./card-list");
 const card_marker_1 = require("./card-marker");
 const card_types_1 = require("../card/card-types");
+const pokemon_card_1 = require("../card/pokemon-card");
 class PokemonCardList extends card_list_1.CardList {
     constructor() {
         super(...arguments);
@@ -80,6 +81,19 @@ class PokemonCardList extends card_list_1.CardList {
             card_types_1.SpecialCondition.ASLEEP
         ].includes(s) === false);
         this.specialConditions.push(sp);
+    }
+    hasRuleBox() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_ex) || c.tags.includes(card_types_1.CardTag.POKEMON_V) || c.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || c.tags.includes(card_types_1.CardTag.POKEMON_VSTAR));
+    }
+    getToolEffect() {
+        if (!this.tool) {
+            return;
+        }
+        const toolCard = this.tool.cards;
+        if (toolCard instanceof pokemon_card_1.PokemonCard) {
+            return toolCard.powers[0] || toolCard.attacks[0];
+        }
+        return;
     }
 }
 exports.PokemonCardList = PokemonCardList;

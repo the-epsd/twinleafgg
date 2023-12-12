@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setChillingReign = void 0;
 const avery_1 = require("./avery");
+const banette_1 = require("./banette");
 const blissey_v_1 = require("./blissey-v");
 const echoing_horn_1 = require("./echoing-horn");
 const fog_crystal_1 = require("./fog-crystal");
@@ -13,6 +14,7 @@ const ice_rider_calyrex_v_1 = require("./ice-rider-calyrex-v");
 const ice_rider_calyrex_vmax_1 = require("./ice-rider-calyrex-vmax");
 const inteleon_1 = require("./inteleon");
 const justified_gloves_1 = require("./justified-gloves");
+const karens_conviction_1 = require("./karens-conviction");
 const kirlia_1 = require("./kirlia");
 const klara_1 = require("./klara");
 const melony_1 = require("./melony");
@@ -23,6 +25,7 @@ const snorunt_1 = require("./snorunt");
 const sobble_1 = require("./sobble");
 exports.setChillingReign = [
     new avery_1.Avery(),
+    new banette_1.Banette(),
     new blissey_v_1.BlisseyV(),
     new echoing_horn_1.EchoingHorn(),
     new fog_crystal_1.FogCrystal(),
@@ -34,6 +37,7 @@ exports.setChillingReign = [
     new ice_rider_calyrex_vmax_1.IceRiderCalyrexVMAX(),
     new inteleon_1.Inteleon(),
     new justified_gloves_1.JustifiedGloves(),
+    new karens_conviction_1.KarensConviction(),
     new kirlia_1.Kirlia(),
     new klara_1.Klara(),
     new melony_1.Melony(),

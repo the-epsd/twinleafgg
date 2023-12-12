@@ -48,10 +48,9 @@ class Regigigas extends pokemon_card_1.PokemonCard {
             let hasRegisteel = false;
             let hasRegieleki = false;
             let hasRegidrago = false;
-            let hasRegis = false;
-            if (!hasRegis) {
-                game_1.GameMessage.CANNOT_USE_POWER;
-                return state;
+            const hasRegis = false;
+            if (hasRegis === false) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 if (card.name === 'Regirock') {
@@ -70,9 +69,10 @@ class Regigigas extends pokemon_card_1.PokemonCard {
                     hasRegidrago = true;
                 }
                 if (hasRegirock && hasRegice && hasRegisteel && hasRegieleki && hasRegidrago) {
-                    hasRegis = true;
+                    hasRegis === true;
                 }
-                if (hasRegis) {
+                // eslint-disable-next-line no-cond-assign, no-constant-condition
+                if (hasRegis === true) {
                     // Check if player has energy cards in discard pile
                     const hasEnergy = player.discard.cards.some(c => c instanceof game_1.EnergyCard);
                     if (!hasEnergy) {
@@ -83,36 +83,37 @@ class Regigigas extends pokemon_card_1.PokemonCard {
                     }
                     return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 0, max: 1, allowCancel: true }), chosen => {
                         chosen.forEach(target => {
-                            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [chosen], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: 0, max: 3 }), transfers => {
+                            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [chosen], { superType: card_types_1.SuperType.POKEMON }, { allowCancel: true, min: 0, max: 3 }), transfers => {
                                 transfers = transfers || [];
                                 // cancelled by user
                                 if (transfers.length === 0) {
                                     return;
                                 }
-                                player.marker.addMarker(this.ANCIENT_WISDOM_MARKER, this);
                                 for (const transfer of transfers) {
                                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                                     player.discard.moveCardTo(transfer.card, target);
+                                    player.marker.addMarker(this.ANCIENT_WISDOM_MARKER, this);
                                 }
-                                return state;
                             });
-                            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                                const player = effect.player;
-                                const opponent = game_1.StateUtils.getOpponent(state, player);
-                                const activePokemon = opponent.active.cards[0];
-                                if (activePokemon && activePokemon.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
-                                    effect.damage += 150;
-                                    return state;
-                                }
-                                if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-                                    effect.player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
-                                }
-                                return state;
-                            }
                         });
+                        return state;
                     });
                 }
+                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+                    const player = effect.player;
+                    const opponent = game_1.StateUtils.getOpponent(state, player);
+                    const pokemonCard = opponent.active.getPokemonCard();
+                    if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
+                        effect.damage += 150;
+                    }
+                    if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+                        effect.player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
+                    }
+                    return state;
+                }
+                return state;
             });
+            return state;
         }
         return state;
     }

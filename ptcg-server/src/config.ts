@@ -1,7 +1,7 @@
 
 export const config = {
   backend: {
-    address: 'localhost',
+    address: 'http://server.epsd.ca',
     port: 12021,
     serverPassword: '', // Password required to create an account
     registrationEnabled: true,  // Completly disables/enables registration

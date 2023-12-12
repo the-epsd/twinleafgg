@@ -36,7 +36,7 @@ export class Latios extends PokemonCard {
 
   public set: string = 'PAR';
 
-  public set2: string = 'paradosrift';
+  public set2: string = 'paradoxrift';
   
   public setNumber: string = '73';
 

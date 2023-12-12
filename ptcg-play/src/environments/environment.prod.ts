@@ -1,5 +1,5 @@
 export const environment = {
-  apiUrl: '',
+  apiUrl: 'http://server.epsd.ca',
   timeout: 5000,
   production: true,
   apiVersion: 2,

@@ -24,6 +24,9 @@ import { EreikasInvitation } from './erikas-invitation';
 import { GiovannisCharisma } from './giovannis-charisma';
 import { Scyther } from './scyther';
 import { Electabuzz } from './electabuzz';
+import { Gloom } from './gloom';
+import { Vileplume } from './vileplume';
+import { Oddish } from './oddish';
 
 export const setPokemon151: Card[] = [
   
@@ -39,10 +42,12 @@ export const setPokemon151: Card[] = [
   new Electabuzz(),
   new EreikasInvitation(),
   new GiovannisCharisma(),
+  new Gloom(),
   new Grabber(),
   new Ivysaur(),
   new Kangaskhanex(),
   new Mewex(),
+  new Oddish(),
   new Pidgeotto(),
   new Pidgey(),
   new Scyther(),
@@ -50,6 +55,7 @@ export const setPokemon151: Card[] = [
   new Venonat(),
   new Venomoth(),
   new Venusaurex(),
+  new Vileplume(),
   new Wartortle(),
   new Zapdosex(),
 ];

@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { BattleVIPPass } from './battle-vip-pass';
+import { Cook } from './cook';
 import { Creamomatic } from './cram-o-matic';
 import { CrossSwitcher } from './cross-switcher';
 import { Deoxys } from './deoxys';
@@ -15,6 +16,8 @@ import { MewV } from './mew-v';
 import { MewVMAX } from './mew-vmax';
 import { Oricorio } from './oricorio';
 import { PowerTablet } from './power-tablet';
+import { Pyukumuku } from './pyukumuku';
+import { Shauna } from './shauna';
 import { Yveltal } from './yveltal';
 
 export const setFusionStrike: Card[] = [
@@ -22,6 +25,7 @@ export const setFusionStrike: Card[] = [
   new BattleVIPPass(),
   new Creamomatic(),
   new CrossSwitcher(),
+  new Cook(),
   new Deoxys(),
   new Dunsparce(),
   new ElesasSparkle(),
@@ -35,5 +39,7 @@ export const setFusionStrike: Card[] = [
   new MewVMAX(),
   new Oricorio(),
   new PowerTablet(),
+  new Pyukumuku(),
   new Yveltal(),
+  new Shauna(),
 ];

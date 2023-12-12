@@ -12,6 +12,9 @@ export declare class Squawkabillyex extends PokemonCard {
     hp: number;
     weakness: {
         type: CardType;
+    }[];
+    resistance: {
+        type: CardType;
         value: number;
     }[];
     retreat: CardType[];

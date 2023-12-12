@@ -8,6 +8,7 @@
     "rootDirs": ["./src"],
     "removeComments": false,
     "preserveConstEnums": true,
+    "resolveJsonModule": true,
     "noEmitOnError": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,

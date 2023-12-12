@@ -48,8 +48,9 @@ export class Zapdos extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+      const legendaryBird = player.active.getPokemonCard();
       
-      if (player.active.getPokemonCard()?.stage == Stage.BASIC && player.active.getPokemonCard()?.cardType == CardType.LIGHTNING) {
+      if (legendaryBird && legendaryBird.stage == Stage.BASIC && legendaryBird.cardType == CardType.LIGHTNING) {
         if (effect instanceof DealDamageEffect) {
           if (effect.card.name !== 'Zapdos') {
             // exclude Zapdos

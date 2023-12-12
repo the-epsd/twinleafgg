@@ -61,11 +61,10 @@ export class Regigigas extends PokemonCard {
       let hasRegisteel = false;
       let hasRegieleki = false;
       let hasRegidrago = false;
-      let hasRegis = false;
+      const hasRegis = false;
 
-      if (!hasRegis) {
-        GameMessage.CANNOT_USE_POWER;
-        return state;
+      if (hasRegis === false) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
@@ -86,10 +85,11 @@ export class Regigigas extends PokemonCard {
         }
 
         if (hasRegirock && hasRegice && hasRegisteel && hasRegieleki && hasRegidrago) {
-          hasRegis = true;
+          hasRegis === true;
         }
 
-        if (hasRegis) {
+        // eslint-disable-next-line no-cond-assign, no-constant-condition
+        if (hasRegis === true) {
 
           // Check if player has energy cards in discard pile
           const hasEnergy = player.discard.cards.some(c => c instanceof EnergyCard);
@@ -116,7 +116,7 @@ export class Regigigas extends PokemonCard {
                 player.discard,
                 PlayerType.BOTTOM_PLAYER,
                 [chosen as unknown as SlotType],
-                { superType: SuperType.ENERGY },
+                { superType: SuperType.POKEMON },
                 { allowCancel: true, min: 0, max: 3 }
               ), transfers => {
                 transfers = transfers || [];
@@ -124,31 +124,34 @@ export class Regigigas extends PokemonCard {
                 if (transfers.length === 0) {
                   return;
                 }
-                player.marker.addMarker(this.ANCIENT_WISDOM_MARKER, this);
                 for (const transfer of transfers) {
                   const target = StateUtils.getTarget(state, player, transfer.to);
                   player.discard.moveCardTo(transfer.card, target);
+                  player.marker.addMarker(this.ANCIENT_WISDOM_MARKER, this);
                 }
-                return state;
               });
-
-              if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-                const player = effect.player;
-                const opponent = StateUtils.getOpponent(state, player);
-                const activePokemon = opponent.active.cards[0];
-                if (activePokemon && activePokemon.tags.includes(CardTag.POKEMON_VMAX)) {
-                  effect.damage += 150;
-                  return state;
-                }
-                if (effect instanceof EndTurnEffect) {
-                  effect.player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
-                }
-                return state;
-              }
             });
+            return state;
           });
         }
+
+        if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+          const player = effect.player;
+          const opponent = StateUtils.getOpponent(state, player);
+    
+          const pokemonCard = opponent.active.getPokemonCard();
+          if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VMAX)) {
+            effect.damage += 150;
+          }
+
+          if (effect instanceof EndTurnEffect) {
+            effect.player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
+          }
+          return state;
+        }
+        return state;
       });
+      return state;
     }
     return state;
   }

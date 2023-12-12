@@ -1,10 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
-import { ChooseCardsPrompt, GameError, GameMessage, PowerType, ShuffleDeckPrompt } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class ForestSealStone extends TrainerCard {
 
@@ -24,48 +19,4 @@ export class ForestSealStone extends TrainerCard {
 
   public readonly VSTAR_MARKER = 'VSTAR_MARKER';
 
-  public powers = [{
-    name: 'Forest Seal Stone',
-    powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
-    text: 'During your turn, you may search your deck for a card and put it into ' +
-          'your hand. Then, shuffle your deck. (You can\'t use more than 1 VSTAR' +
-          'Power in a game.)'
-  }];
-
-  public text: string =
-    'The Pokemon V this card is attached to can use the VSTAR Power ' +
-    'on this card.';
-
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof PowerEffect && effect.player.active.tool === this) {
-
-      this.powers.push(this.powers[0]);
-
-      const player = effect.player;
-      if (player.marker.hasMarker(this.VSTAR_MARKER)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
-
-      player.marker.addMarker(this.VSTAR_MARKER, this);
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), cards => {
-        player.deck.moveCardsTo(cards, player.hand);
-
-        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-
-        return state;
-      });
-    }
-    return state;
-  }
 }
-
