@@ -55,6 +55,18 @@ export var GameStoreMessage;
 })(GameStoreMessage || (GameStoreMessage = {}));
 export var GameCardMessage;
 (function (GameCardMessage) {
+    GameCardMessage["HEADS"] = "HEADS";
+    GameCardMessage["TAILS"] = "TAILS";
+    GameCardMessage["FLIP_COIN"] = "FLIP_COIN";
+    GameCardMessage["GO_FIRST"] = "GO_FIRST";
+    GameCardMessage["YES"] = "YES";
+    GameCardMessage["NO"] = "NO";
+    GameCardMessage["DISCARD_AND_DRAW"] = "DISCARD_AND_DRAW";
+    GameCardMessage["SWITCH_POKEMON"] = "SWITCH_POKEMON";
+    GameCardMessage["CHOOSE_OPTION"] = "CHOOSE_OPTION";
+    GameCardMessage["CHOOSE_POKEMON"] = "CHOOSE_POKEMON";
+    GameCardMessage["CHOOSE_TOOL"] = "CHOOSE_TOOL";
+    GameCardMessage["CHOOSE_STADIUM"] = "CHOOSE_STADIUM";
     GameCardMessage["ALL_FIRE_ENERGIES"] = "ALL_FIRE_ENERGIES";
     GameCardMessage["ALL_LIGHTNING_ENERGIES"] = "ALL_LIGHTNING_ENERGIES";
     GameCardMessage["ALL_WATER_ENERGIES"] = "ALL_WATER_ENERGIES";

@@ -54,7 +54,7 @@ __exportStar(require("./set-fates-collide"), exports);
 __exportStar(require("./set-sun-and-moon"), exports);
 //export * from './set-guardians-rising';
 //export * from './set-burning-shadows';
-//export * from './set-shining-legends';
+__exportStar(require("./set-shining-legends"), exports);
 //export * from './set-crimson-invasion';
 __exportStar(require("./set-ultra-prism"), exports);
 //export * from './set-forbidden-light';

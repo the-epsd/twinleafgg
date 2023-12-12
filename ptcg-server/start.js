@@ -69,6 +69,7 @@ const cardManager = CardManager.getInstance();
 
 // cardManager.defineSet(sets.setSwordAndShield);
 cardManager.defineSet(sets.setSwordAndShieldPromos);
+cardManager.defineSet(sets.setShiningLegends);
 //cardManager.defineSet(sets.setVividVoltage);
 cardManager.defineSet(sets.setBattleStyles);
 cardManager.defineSet(sets.setChillingReign);
