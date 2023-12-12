@@ -24,7 +24,7 @@ export class PokemonCard extends Card {
             for (let i = 0; i < this.attacks.length; i++) {
                 const attackEffect = this.attacks[i].effect;
                 console.log(this.attacks[i].name);
-                if (effect.attack === this.attacks[i] && attackEffect !== undefined) {
+                if (effect.attack === this.attacks[i] && attackEffect !== undefined && typeof attackEffect === 'function') {
                     console.log(attackEffect);
                     console.log('we made it to handling!');
                     attackEffect(store, state, effect);

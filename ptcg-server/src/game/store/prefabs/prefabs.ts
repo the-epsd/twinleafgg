@@ -1,11 +1,10 @@
+import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../..';
+import { CardType, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { State, StateUtils } from '../..';
-import { Effect } from '../effects/effect';
-import { AttackEffect, PowerEffect, KnockOutEffect } from '../effects/game-effects';
-import { HealTargetEffect, PutDamageEffect, DiscardCardsEffect } from '../effects/attack-effects';
+import { DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../effects/check-effects';
-import { StoreLike, Card, ChooseEnergyPrompt, ChoosePokemonPrompt, PlayerType, SlotType, GameMessage } from '../..';
-import { CardType } from '../card/card-types';
+import { Effect } from '../effects/effect';
+import { AttackEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
 
 /**
  * 
@@ -49,6 +48,26 @@ export function DISCARD_A_STADIUM_CARD_IN_PLAY(state: State){
   }
 }
 
+export function SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store: StoreLike, state: State, effect: AttackEffect, min: number, max: number, stage: Stage) {
+  const player = effect.player;
+  const slots = player.bench.filter(b => b.cards.length === 0);
+
+  return store.prompt(state, new ChooseCardsPrompt(
+    player.id,
+    GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+    player.deck,
+    { superType: SuperType.POKEMON, stage },
+    { min, max: slots.length < max ? slots.length : max, allowCancel: true }
+  ), selected => {
+    const cards = selected || [];
+  
+    cards.forEach((card, index) => {
+      player.deck.moveCardTo(card, slots[index]);
+      slots[index].pokemonPlayedTurn = state.turn;
+    });
+  });
+}
+
 export function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackEffect, store: StoreLike, type: CardType, amount: number){
   const player = effect.player;
   const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
@@ -71,6 +90,7 @@ export function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackE
     discardEnergy.target = player.active;
     return store.reduceEffect(state, discardEnergy);
   });
+  
   return state;
 }
 

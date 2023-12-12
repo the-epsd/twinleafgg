@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.WAS_ABILITY_USED = exports.WAS_ATTACK_USED = void 0;
+exports.THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.WAS_ABILITY_USED = exports.WAS_ATTACK_USED = void 0;
 const __1 = require("../..");
-const game_effects_1 = require("../effects/game-effects");
+const card_types_1 = require("../card/card-types");
 const attack_effects_1 = require("../effects/attack-effects");
 const check_effects_1 = require("../effects/check-effects");
-const __2 = require("../..");
+const game_effects_1 = require("../effects/game-effects");
 /**
  *
  * A basic effect for checking the use of attacks.
@@ -47,6 +47,18 @@ function DISCARD_A_STADIUM_CARD_IN_PLAY(state) {
     }
 }
 exports.DISCARD_A_STADIUM_CARD_IN_PLAY = DISCARD_A_STADIUM_CARD_IN_PLAY;
+function SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store, state, effect, min, max, stage) {
+    const player = effect.player;
+    const slots = player.bench.filter(b => b.cards.length === 0);
+    return store.prompt(state, new __1.ChooseCardsPrompt(player.id, __1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage }, { min, max: slots.length < max ? slots.length : max, allowCancel: true }), selected => {
+        const cards = selected || [];
+        cards.forEach((card, index) => {
+            player.deck.moveCardTo(card, slots[index]);
+            slots[index].pokemonPlayedTurn = state.turn;
+        });
+    });
+}
+exports.SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH;
 function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, type, amount) {
     const player = effect.player;
     const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
@@ -55,7 +67,7 @@ function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, type, amount) 
     for (let i = 0; i < amount; i++) {
         energyList.push(type);
     }
-    state = store.prompt(state, new __2.ChooseEnergyPrompt(player.id, __2.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, energyList, { allowCancel: false }), energy => {
+    state = store.prompt(state, new __1.ChooseEnergyPrompt(player.id, __1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, energyList, { allowCancel: false }), energy => {
         const cards = (energy || []).map(e => e.card);
         const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
         discardEnergy.target = player.active;
@@ -107,7 +119,7 @@ function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage
     if (targets.length === 0) {
         return state;
     }
-    return store.prompt(state, new __2.ChoosePokemonPrompt(player.id, __2.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, __2.PlayerType.TOP_PLAYER, [__2.SlotType.BENCH]), selected => {
+    return store.prompt(state, new __1.ChoosePokemonPrompt(player.id, __1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, __1.PlayerType.TOP_PLAYER, [__1.SlotType.BENCH]), selected => {
         const target = selected[0];
         const damageEffect = new attack_effects_1.PutDamageEffect(effect, damage);
         damageEffect.target = target;

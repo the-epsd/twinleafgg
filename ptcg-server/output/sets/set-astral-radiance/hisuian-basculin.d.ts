@@ -1,4 +1,4 @@
-import { StoreLike, State } from '../../game';
+import { State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -13,14 +13,14 @@ export declare class HisuianBasculin extends PokemonCard {
     retreat: CardType[];
     attacks: {
         name: string;
-        cost: never[];
+        cost: CardType[];
         damage: number;
         text: string;
     }[];
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
     set: string;
     set2: string;
     setNumber: string;
     name: string;
     fullName: string;
-    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
