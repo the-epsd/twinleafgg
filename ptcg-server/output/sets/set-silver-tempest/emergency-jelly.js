@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SilverTempest = void 0;
+exports.EmergencyJelly = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-class SilverTempest extends trainer_card_1.TrainerCard {
+class EmergencyJelly extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'F';
@@ -33,4 +33,4 @@ class SilverTempest extends trainer_card_1.TrainerCard {
         return state;
     }
 }
-exports.SilverTempest = SilverTempest;
+exports.EmergencyJelly = EmergencyJelly;

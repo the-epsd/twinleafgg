@@ -55,7 +55,7 @@ class IronBundle extends pokemon_card_1.PokemonCard {
             if (benchIndex === -1) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
                 if (targets && targets.length > 0) {
                     opponent.active.clearEffects();
                     opponent.switchPokemon(targets[0]);

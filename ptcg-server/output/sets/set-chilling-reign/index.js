@@ -3,7 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setChillingReign = void 0;
 const avery_1 = require("./avery");
 const banette_1 = require("./banette");
+const beedril_1 = require("./beedril");
 const blissey_v_1 = require("./blissey-v");
+const drizzile_1 = require("./drizzile");
 const echoing_horn_1 = require("./echoing-horn");
 const fog_crystal_1 = require("./fog-crystal");
 const froslass_1 = require("./froslass");
@@ -26,7 +28,9 @@ const sobble_1 = require("./sobble");
 exports.setChillingReign = [
     new avery_1.Avery(),
     new banette_1.Banette(),
+    new beedril_1.Beedrill(),
     new blissey_v_1.BlisseyV(),
+    new drizzile_1.Drizzile(),
     new echoing_horn_1.EchoingHorn(),
     new fog_crystal_1.FogCrystal(),
     new froslass_1.Froslass(),

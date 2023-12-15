@@ -102,7 +102,10 @@ export class AlolanVulpixVSTAR extends PokemonCard {
         player.marker.addMarker(this.VSTAR_MARKER, this);
 
         const vPokemons = opponent.bench.filter(card => card instanceof PokemonCard && card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX));
-        const damage = 70 * vPokemons.length;
+        const vPokemons2 = opponent.active.getPokemons().filter(card => card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX));
+
+        const vPokes = vPokemons.length + vPokemons2.length;
+        const damage = 70 * vPokes;
 
         effect.damage = damage;
 

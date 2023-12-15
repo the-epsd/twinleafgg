@@ -12,6 +12,7 @@ const capturing_aroma_1 = require("./capturing-aroma");
 const cobalion_1 = require("./cobalion");
 const dragonite_1 = require("./dragonite");
 const elgyem_1 = require("./elgyem");
+const emergency_jelly_1 = require("./emergency-jelly");
 const forest_seal_stone_1 = require("./forest-seal-stone");
 const furisode_girl_1 = require("./furisode-girl");
 const hisuian_braviary_1 = require("./hisuian-braviary");
@@ -29,6 +30,7 @@ const regidrago_vstar_1 = require("./regidrago-vstar");
 const regieleki_vmax_1 = require("./regieleki-vmax");
 const rufflet_1 = require("./rufflet");
 const serena_1 = require("./serena");
+const ursaluna_v_1 = require("./ursaluna-v");
 const v_guard_energy_1 = require("./v-guard-energy");
 const worker_1 = require("./worker");
 const zeraora_1 = require("./zeraora");
@@ -43,6 +45,7 @@ exports.setSilverTempest = [
     new capturing_aroma_1.CapturingAroma(),
     new cobalion_1.Cobalion(),
     new dragonite_1.Dragonite(),
+    new emergency_jelly_1.EmergencyJelly(),
     new elgyem_1.Elgyem(),
     new forest_seal_stone_1.ForestSealStone(),
     new furisode_girl_1.FurisodeGirl(),
@@ -64,4 +67,5 @@ exports.setSilverTempest = [
     new v_guard_energy_1.VGuardEnergy(),
     new worker_1.Worker(),
     new zeraora_1.Zeraora(),
+    new ursaluna_v_1.UrsalunaV(),
 ];

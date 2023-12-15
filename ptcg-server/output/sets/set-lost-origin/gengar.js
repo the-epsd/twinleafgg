@@ -19,17 +19,16 @@ class Gengar extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Propagation',
+                name: 'Netherworld Gate',
                 useFromDiscard: true,
                 powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'Once during your turn (before your attack), if this Pokemon is in '
-                    + 'your discard pile, you may put this Pokemon into your hand.'
+                text: 'Once during your turn, if this Pokémon is in your discard pile, you may put it onto your Bench. If you do, put 3 damage counters on this Pokémon.'
             }];
         this.attacks = [{
-                name: 'Seed Bomb',
-                cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS],
-                damage: 20,
-                text: ''
+                name: 'Screaming Circle',
+                cost: [card_types_1.CardType.PSYCHIC],
+                damage: 0,
+                text: 'Put 2 damage counters on your opponent\'s Active Pokémon for each of your opponent\'s Benched Pokémon.'
             }];
         this.regulationMark = 'G';
         this.set = 'LOR';
@@ -37,34 +36,33 @@ class Gengar extends pokemon_card_1.PokemonCard {
         this.setNumber = '66';
         this.name = 'Gengar';
         this.fullName = 'Gengar LOR';
-        this.PROPAGATION_MAREKER = 'PROPAGATION_MAREKER';
+        this.NETHERWORLD_GATE_MARKER = 'NETHERWORLD_GATE_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const slots = player.bench.filter(b => b.cards.length === 0);
             // Check if card is in the discard
-            if (player.discard.cards.includes(this) === false) {
+            if (!player.discard.cards.includes(this)) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
             // Power already used
-            if (player.marker.hasMarker(this.PROPAGATION_MAREKER, this)) {
+            if (player.marker.hasMarker(this.NETHERWORLD_GATE_MARKER, this)) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
-            // Check if bench has open slots
-            const openSlots = player.bench.filter(b => b.cards.length === 0);
-            if (openSlots.length === 0) {
-                // No open slots, throw error
+            // No open slots, throw error
+            if (slots.length === 0) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            player.marker.addMarker(this.PROPAGATION_MAREKER, this);
-            const cards = player.discard.cards.filter(c => c instanceof pokemon_card_1.PokemonCard && c.name == 'Gengar');
-            cards.forEach((card, index) => {
-                player.deck.moveCardTo(card, slots[index]);
-                slots[index].pokemonPlayedTurn = state.turn;
+            // Add Marker
+            player.marker.addMarker(this.NETHERWORLD_GATE_MARKER, this);
+            const cards = player.discard.cards.filter(c => c === this);
+            cards.forEach(card => {
+                player.discard.moveCardTo(card, slots[0]); // Move to Bench
+                slots[0].damage += 30; // Add 30 damage
             });
             if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-                effect.player.marker.removeMarker(this.PROPAGATION_MAREKER, this);
+                effect.player.marker.removeMarker(this.NETHERWORLD_GATE_MARKER, this);
             }
             return state;
         }

@@ -18,6 +18,7 @@ import { Regidrago } from './regidrago';
 import { Regieleki } from './regieleki';
 import { RescueCarrier } from './rescue-carrier';
 import { SuicuneV } from './suicune-v';
+import { Swablu } from './swablu';
 import { UmbreonV } from './umbreon-v';
 import { UmbreonVMAX } from './umbreon-vmax';
 import { ZinniasResolve } from './zinnias-resolve';
@@ -50,5 +51,6 @@ export const setEvolvingSkies: Card[] = [
   new ZinniasResolve(),
   new Zorua(),
   new Zoroark(),
+  new Swablu(),
   
 ];

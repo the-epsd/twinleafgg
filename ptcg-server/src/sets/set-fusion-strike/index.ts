@@ -8,6 +8,8 @@ import { Dunsparce } from './dunsparce';
 import { ElesasSparkle } from './elesas-sparkle';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
 import { GenesectV } from './genesect-v';
+import { GengarV } from './gengar-v';
+import { GengarVMAX } from './gengar-vmax';
 import { InteleonV } from './inteleon-v';
 import { InteleonVMAX } from './inteleon-vmax';
 import { Judge } from './judge';
@@ -31,6 +33,8 @@ export const setFusionStrike: Card[] = [
   new ElesasSparkle(),
   new FusionStrikeEnergy(),
   new GenesectV(),
+  new GengarV(),
+  new GengarVMAX(),
   new InteleonV(),
   new InteleonVMAX(),
   new Judge(),

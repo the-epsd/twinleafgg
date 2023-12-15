@@ -8,7 +8,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PokemonCard, PokemonCardList } from '../../game';
 
-export class SilverTempest extends TrainerCard {
+export class EmergencyJelly extends TrainerCard {
 
   public regulationMark = 'F';
 

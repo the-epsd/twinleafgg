@@ -9,6 +9,7 @@ import { Durant } from './durant';
 import { EmpoleonV } from './empoleon-v';
 import { EnergyRecycler } from './energy-recycler';
 import { EscapeRope } from './escape-rope';
+import { Falinks } from './falinks';
 import { FanOfWaves } from './fan-of-waves';
 import { FlappleV } from './flapple-v';
 import { FlappleVMAX } from './flapple-vmax';
@@ -84,5 +85,5 @@ export const setBattleStyles: Card[] = [
   new VictiniVMAX(),
   new Victreebel(),
   new Weepinbell(),
-  
+  new Falinks(),
 ];

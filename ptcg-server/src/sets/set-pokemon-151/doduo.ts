@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, PokemonCardList, StateUtils } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -46,10 +46,14 @@ export class Doduo extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
   
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
+      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+
+      if (cardList === undefined) {
+        return state;
+      }
 
       const dealDamage = new DealDamageEffect(effect, 10);
-      dealDamage.target = player.active;
+      dealDamage.target = cardList;
       return store.reduceEffect(state, dealDamage);
     }
     return state;

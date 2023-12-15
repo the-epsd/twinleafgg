@@ -1,7 +1,9 @@
 import { Card } from '../../game/store/card/card';
 import { Avery } from './avery';
 import { Banette } from './banette';
+import { Beedrill } from './beedril';
 import { BlisseyV } from './blissey-v';
+import { Drizzile } from './drizzile';
 import { EchoingHorn } from './echoing-horn';
 import { FogCrystal } from './fog-crystal';
 import { Froslass } from './froslass';
@@ -26,7 +28,9 @@ export const setChillingReign: Card[] = [
   
   new Avery(),
   new Banette(),
+  new Beedrill(),
   new BlisseyV(),
+  new Drizzile(),
   new EchoingHorn(),
   new FogCrystal(),
   new Froslass(),

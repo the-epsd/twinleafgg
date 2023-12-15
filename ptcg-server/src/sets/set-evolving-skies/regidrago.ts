@@ -8,13 +8,11 @@ export class Regidrago extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = CardType.DRAGON;
 
-  public hp: number = 120;
+  public hp: number = 130;
 
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
 
   public attacks = [
     {

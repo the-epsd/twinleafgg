@@ -3,7 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-export declare class SilverTempest extends TrainerCard {
+export declare class EmergencyJelly extends TrainerCard {
     regulationMark: string;
     trainerType: TrainerType;
     set: string;

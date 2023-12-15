@@ -15,6 +15,7 @@ const hisuian_heavy_ball_1 = require("./hisuian-heavy-ball");
 const hisuian_samurott_v_1 = require("./hisuian-samurott-v");
 const hisuian_samurott_vstar_1 = require("./hisuian-samurott-vstar");
 const irida_1 = require("./irida");
+const kleavor_1 = require("./kleavor");
 const lucario_v_1 = require("./lucario-v");
 const mightyena_1 = require("./mightyena");
 const miltank_1 = require("./miltank");
@@ -36,6 +37,7 @@ const supereffective_glasses_1 = require("./supereffective-glasses");
 const switch_cart_1 = require("./switch-cart");
 const temple_of_sinnoh_1 = require("./temple-of-sinnoh");
 const trekking_shoes_1 = require("./trekking-shoes");
+const wyrdeer_v_1 = require("./wyrdeer-v");
 exports.setAstralRadiance = [
     new darkrai_v_1.DarkraiV(),
     new darkrai_vstar_1.DarkraiVSTAR(),
@@ -70,6 +72,8 @@ exports.setAstralRadiance = [
     new roxanne_1.Roxanne(),
     new supereffective_glasses_1.SupereffectiveGlasses(),
     new switch_cart_1.SwitchCart(),
+    new wyrdeer_v_1.WyrdeerV(),
     new temple_of_sinnoh_1.TempleofSinnoh(),
     new trekking_shoes_1.TrekkingShoes(),
+    new kleavor_1.Kleavor(),
 ];

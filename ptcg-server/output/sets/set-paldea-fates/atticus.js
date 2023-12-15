@@ -11,7 +11,7 @@ class Atticus extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'G';
-        this.set2 = 'svpromos';
+        this.set2 = 'svpromo';
         this.setNumber = '56';
         this.set = 'SV4';
         this.name = 'Atticus';

@@ -8,10 +8,9 @@ class Regidrago extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.LIGHTNING;
-        this.hp = 120;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.cardType = card_types_1.CardType.DRAGON;
+        this.hp = 130;
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
                 name: 'Hammer In',

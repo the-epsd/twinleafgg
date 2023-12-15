@@ -41,26 +41,21 @@ class Dodrio extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
-            const player = effect.player;
-            effect.damage = 10;
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card !== this) {
-                    return state;
-                }
-                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 10);
-                damageEffect.target = cardList;
-                store.reduceEffect(state, damageEffect);
-                // Draw 1 card
-                player.deck.moveTo(player.hand, 1);
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            if (cardList === undefined) {
                 return state;
-            });
+            }
+            const damageEffect = new attack_effects_1.PutDamageEffect(effect, 10);
+            damageEffect.target = cardList;
+            store.reduceEffect(state, damageEffect);
+            const player = effect.player;
+            player.deck.moveTo(player.hand, 1);
             if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
                 // Get damage counters
                 const damageCounters = effect.player.active.damage;
-                // Calculate bonus damage
-                const bonusDamage = 30 * damageCounters;
-                // Add bonus to base damage  
-                effect.damage += bonusDamage;
+                const damageOutput = 10 + (damageCounters * 2);
+                const damageEffect = new attack_effects_1.PutDamageEffect(effect, damageOutput);
+                store.reduceEffect(state, damageEffect);
             }
             return state;
         }

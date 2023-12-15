@@ -10,6 +10,7 @@ import { CapturingAroma } from './capturing-aroma';
 import { Cobalion } from './cobalion';
 import { Dragonite } from './dragonite';
 import { Elgyem } from './elgyem';
+import { EmergencyJelly } from './emergency-jelly';
 import { ForestSealStone } from './forest-seal-stone';
 import { FurisodeGirl } from './furisode-girl';
 import { HisuianBraviary } from './hisuian-braviary';
@@ -27,6 +28,7 @@ import { RegidragoVSTAR } from './regidrago-vstar';
 import { RegielekiVMAX } from './regieleki-vmax';
 import { Rufflet } from './rufflet';
 import { Serena } from './serena';
+import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
 import { Worker } from './worker';
 import { Zeraora } from './zeraora';
@@ -43,6 +45,7 @@ export const setSilverTempest: Card[] = [
   new CapturingAroma(),
   new Cobalion(),
   new Dragonite(),
+  new EmergencyJelly(),
   new Elgyem(),
   new ForestSealStone(),
   new FurisodeGirl(),
@@ -64,4 +67,5 @@ export const setSilverTempest: Card[] = [
   new VGuardEnergy(),
   new Worker(),
   new Zeraora(),
+  new UrsalunaV(),
 ];

@@ -13,10 +13,12 @@ const druddigon_1 = require("./druddigon");
 const electivire_1 = require("./electivire");
 const entei_v_1 = require("./entei-v");
 const lapras_1 = require("./lapras");
+const liepard_1 = require("./liepard");
 const lumineon_v_1 = require("./lumineon-v");
 const magmortar_1 = require("./magmortar");
 const manaphy_1 = require("./manaphy");
 const moltres_1 = require("./moltres");
+const purrloin_1 = require("./purrloin");
 const raichu_v_1 = require("./raichu-v");
 const raikou_v_1 = require("./raikou-v");
 exports.setBrilliantStars = [
@@ -38,4 +40,6 @@ exports.setBrilliantStars = [
     new moltres_1.Moltres(),
     new raichu_v_1.RaichuV(),
     new raikou_v_1.RaikouV(),
+    new purrloin_1.Purrloin(),
+    new liepard_1.Liepard(),
 ];

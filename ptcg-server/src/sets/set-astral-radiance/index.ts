@@ -13,6 +13,7 @@ import { HisuianHeavyBall } from './hisuian-heavy-ball';
 import { HisuianSamurottV } from './hisuian-samurott-v';
 import { HisuianSamurottVSTAR } from './hisuian-samurott-vstar';
 import { Irida } from './irida';
+import { Kleavor } from './kleavor';
 import { LucarioV } from './lucario-v';
 import { Mightyena } from './mightyena';
 import { Miltank } from './miltank';
@@ -34,6 +35,7 @@ import { SupereffectiveGlasses } from './supereffective-glasses';
 import { SwitchCart } from './switch-cart';
 import { TempleofSinnoh } from './temple-of-sinnoh';
 import { TrekkingShoes } from './trekking-shoes';
+import { WyrdeerV } from './wyrdeer-v';
 
 
 export const setAstralRadiance: Card[] = [
@@ -71,7 +73,9 @@ export const setAstralRadiance: Card[] = [
   new Roxanne(),
   new SupereffectiveGlasses(),
   new SwitchCart(),
+  new WyrdeerV(),
   new TempleofSinnoh(),
   new TrekkingShoes(),
+  new Kleavor(),
   
 ];

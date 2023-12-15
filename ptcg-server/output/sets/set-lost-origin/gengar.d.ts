@@ -35,6 +35,6 @@ export declare class Gengar extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly PROPAGATION_MAREKER = "PROPAGATION_MAREKER";
+    readonly NETHERWORLD_GATE_MARKER = "NETHERWORLD_GATE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

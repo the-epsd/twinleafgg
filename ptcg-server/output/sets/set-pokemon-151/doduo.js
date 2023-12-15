@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Doduo = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
+const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 class Doduo extends pokemon_card_1.PokemonCard {
@@ -32,9 +33,12 @@ class Doduo extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            if (cardList === undefined) {
+                return state;
+            }
             const dealDamage = new attack_effects_1.DealDamageEffect(effect, 10);
-            dealDamage.target = player.active;
+            dealDamage.target = cardList;
             return store.reduceEffect(state, dealDamage);
         }
         return state;

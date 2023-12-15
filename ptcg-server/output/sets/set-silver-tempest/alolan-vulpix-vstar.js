@@ -78,7 +78,9 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
                 }
                 player.marker.addMarker(this.VSTAR_MARKER, this);
                 const vPokemons = opponent.bench.filter(card => card instanceof pokemon_card_1.PokemonCard && card.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX));
-                const damage = 70 * vPokemons.length;
+                const vPokemons2 = opponent.active.getPokemons().filter(card => card.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX));
+                const vPokes = vPokemons.length + vPokemons2.length;
+                const damage = 70 * vPokes;
                 effect.damage = damage;
             }
             return state;

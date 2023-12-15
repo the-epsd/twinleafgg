@@ -11,6 +11,7 @@ const durant_1 = require("./durant");
 const empoleon_v_1 = require("./empoleon-v");
 const energy_recycler_1 = require("./energy-recycler");
 const escape_rope_1 = require("./escape-rope");
+const falinks_1 = require("./falinks");
 const fan_of_waves_1 = require("./fan-of-waves");
 const flapple_v_1 = require("./flapple-v");
 const flapple_vmax_1 = require("./flapple-vmax");
@@ -84,4 +85,5 @@ exports.setBattleStyles = [
     new victini_vmax_1.VictiniVMAX(),
     new victreebel_1.Victreebel(),
     new weepinbell_1.Weepinbell(),
+    new falinks_1.Falinks(),
 ];

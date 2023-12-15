@@ -10,6 +10,8 @@ const dunsparce_1 = require("./dunsparce");
 const elesas_sparkle_1 = require("./elesas-sparkle");
 const fusion_strike_energy_1 = require("./fusion-strike-energy");
 const genesect_v_1 = require("./genesect-v");
+const gengar_v_1 = require("./gengar-v");
+const gengar_vmax_1 = require("./gengar-vmax");
 const inteleon_v_1 = require("./inteleon-v");
 const inteleon_vmax_1 = require("./inteleon-vmax");
 const judge_1 = require("./judge");
@@ -31,6 +33,8 @@ exports.setFusionStrike = [
     new elesas_sparkle_1.ElesasSparkle(),
     new fusion_strike_energy_1.FusionStrikeEnergy(),
     new genesect_v_1.GenesectV(),
+    new gengar_v_1.GengarV(),
+    new gengar_vmax_1.GengarVMAX(),
     new inteleon_v_1.InteleonV(),
     new inteleon_vmax_1.InteleonVMAX(),
     new judge_1.Judge(),

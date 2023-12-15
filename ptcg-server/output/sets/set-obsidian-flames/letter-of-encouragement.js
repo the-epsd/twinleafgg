@@ -35,7 +35,7 @@ function* playCard(next, store, state, self, effect) {
 class LetterOfEncouragement extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
-        this.trainerType = card_types_1.TrainerType.SUPPORTER;
+        this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'OBF';
         this.set2 = 'evolvingskies';
         this.setNumber = '152';

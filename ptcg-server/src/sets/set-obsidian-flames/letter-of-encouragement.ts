@@ -51,7 +51,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
 export class LetterOfEncouragement extends TrainerCard {
 
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'OBF';
 

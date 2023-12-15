@@ -11,10 +11,12 @@ import { Druddigon } from './druddigon';
 import { Electivire } from './electivire';
 import { EnteiV } from './entei-v';
 import { Lapras } from './lapras';
+import { Liepard } from './liepard';
 import { LumineonV } from './lumineon-v';
 import { Magmortar } from './magmortar';
 import { Manaphy } from './manaphy';
 import { Moltres } from './moltres';
+import { Purrloin } from './purrloin';
 import { RaichuV } from './raichu-v';
 import { RaikouV } from './raikou-v';
 
@@ -38,5 +40,7 @@ export const setBrilliantStars: Card[] = [
   new Moltres(),
   new RaichuV(),
   new RaikouV(),
+  new Purrloin(),
+  new Liepard(),
   
 ];
