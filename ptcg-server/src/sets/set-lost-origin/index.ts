@@ -20,6 +20,8 @@ import { KyuremVMAX } from './kyurem-vmax';
 import { Lady } from './lady';
 import { LostCity } from './lost-city';
 import { LostVacuum } from './lost-vacuum';
+import { MagnezoneV } from './magnezone-v';
+import { MagnezoneVSTAR } from './magnezone-vstar';
 import { Mawile } from './mawile';
 import { MirageGate } from './mirage-gate';
 import { PidgeotV } from './pidgeot-v';
@@ -62,4 +64,6 @@ export const setLostOrigin: Card[] = [
   new Sableye(),  
   new Snorlax(),
   new Volo(),
+  new MagnezoneV(),
+  new MagnezoneVSTAR(),
 ];

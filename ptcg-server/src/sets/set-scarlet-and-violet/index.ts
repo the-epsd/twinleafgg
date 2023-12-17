@@ -28,6 +28,7 @@ import { Miriam } from './miriam';
 import { NestBall } from './nest-ball';
 import { PalPad } from './pal-pad';
 import { Penny } from './penny';
+import { PicnicBasket } from './picnic-basket';
 import { Pokeball } from './pokeball';
 import { Pokegear30 } from './pokegear-30';
 import { PokemonCatcher } from './pokemon-catcher';
@@ -75,6 +76,7 @@ export const setScarletAndViolet: Card[] = [
   new NestBall(),
   new PalPad(),
   new Penny(),
+  new PicnicBasket(),
   new Pokeball(),
   new Pokegear30(),
   new PokemonCatcher(),

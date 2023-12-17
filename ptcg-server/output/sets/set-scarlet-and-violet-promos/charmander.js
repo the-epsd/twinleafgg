@@ -27,7 +27,7 @@ class Charmander extends pokemon_card_1.PokemonCard {
         this.set2 = 'svpromos';
         this.setNumber = '47';
         this.name = 'Charmander';
-        this.fullName = 'Charmander PAR';
+        this.fullName = 'Charmander SVP';
     }
 }
 exports.Charmander = Charmander;

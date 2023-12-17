@@ -7,6 +7,7 @@ import { Gallade } from './gallade';
 import { GapejawBog } from './gapejaw-bog';
 import { GardeniasVigor } from './gardenias-vigor';
 import { Grant } from './grant';
+import { GutsyPickaxe } from './gutsy-pickaxe';
 import { HisuianArcanine } from './hisuian-arcanine';
 import { HisuianBasculin } from './hisuian-basculin';
 import { HisuianHeavyBall } from './hisuian-heavy-ball';
@@ -77,5 +78,6 @@ export const setAstralRadiance: Card[] = [
   new TempleofSinnoh(),
   new TrekkingShoes(),
   new Kleavor(),
+  new GutsyPickaxe(),
   
 ];

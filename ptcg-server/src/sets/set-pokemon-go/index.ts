@@ -7,6 +7,7 @@ import { Moltres } from './moltres';
 import { Pokestop } from './pokestop';
 import { RadiantVenusaur } from './radiant-venusaur';
 import { SlakingV } from './slaking-v';
+import { Slowbro } from './slowbro';
 import { Snorlax } from './snorlax';
 import { Solrock } from './solrock';
 import { Zapdos } from './zapdos';
@@ -24,4 +25,5 @@ export const setPokemonGO: Card[] = [
   new RadiantVenusaur(),
   new Articuno(),
   new Moltres(),
+  new Slowbro(),
 ];

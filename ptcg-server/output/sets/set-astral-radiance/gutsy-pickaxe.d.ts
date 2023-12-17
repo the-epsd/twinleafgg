@@ -1,8 +1,8 @@
-import { TrainerCard, TrainerType, StoreLike, State } from '../../game';
+import { State, StoreLike, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class PicnicBasket extends TrainerCard {
-    regulationMark: string;
+export declare class GutsyPickaxe extends TrainerCard {
     trainerType: TrainerType;
+    regulationMark: string;
     set: string;
     set2: string;
     setNumber: string;

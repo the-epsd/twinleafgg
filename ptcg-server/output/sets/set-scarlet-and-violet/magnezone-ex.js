@@ -22,7 +22,7 @@ class Magnezoneex extends pokemon_card_1.PokemonCard {
                 name: 'Energy Crush',
                 cost: [card_types_1.CardType.LIGHTNING],
                 damage: 50,
-                text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
+                text: 'This attack does 50 damage for each Energy attached to all of your opponent\'s Pokémon.'
             },
             {
                 name: 'Pulse Launcher',
@@ -34,8 +34,8 @@ class Magnezoneex extends pokemon_card_1.PokemonCard {
         this.set = 'SVI';
         this.set2 = 'scarletviolet';
         this.setNumber = '65';
-        this.name = 'Magnezone';
-        this.fullName = 'Magnezone SVI';
+        this.name = 'Magnezone ex';
+        this.fullName = 'Magnezone ex SVI';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

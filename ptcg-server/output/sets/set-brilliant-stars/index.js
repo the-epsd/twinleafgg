@@ -18,9 +18,12 @@ const lumineon_v_1 = require("./lumineon-v");
 const magmortar_1 = require("./magmortar");
 const manaphy_1 = require("./manaphy");
 const moltres_1 = require("./moltres");
+const pot_helmet_1 = require("./pot-helmet");
 const purrloin_1 = require("./purrloin");
 const raichu_v_1 = require("./raichu-v");
 const raikou_v_1 = require("./raikou-v");
+const shaymin_v_1 = require("./shaymin-v");
+const shaymin_vstar_1 = require("./shaymin-vstar");
 exports.setBrilliantStars = [
     new arceus_v_1.ArceusV(),
     new arceus_vstar_1.ArceusVSTAR(),
@@ -42,4 +45,7 @@ exports.setBrilliantStars = [
     new raikou_v_1.RaikouV(),
     new purrloin_1.Purrloin(),
     new liepard_1.Liepard(),
+    new shaymin_v_1.ShayminV(),
+    new shaymin_vstar_1.ShayminVSTAR(),
+    new pot_helmet_1.PotHelmet(),
 ];

@@ -76,11 +76,6 @@ export class TingLuex extends PokemonCard {
           store.reduceEffect(state, checkPokemonType);
         }
 
-        // We are not blocking the Abilities from Non-Basic Pokemon
-        if (effect.card.stage !== Stage.BASIC) {
-          return state;
-        }
-
         const pokemonCard = effect.card;
 
         // Try reducing ability for each player  

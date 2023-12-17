@@ -22,6 +22,8 @@ const kyurem_vmax_1 = require("./kyurem-vmax");
 const lady_1 = require("./lady");
 const lost_city_1 = require("./lost-city");
 const lost_vacuum_1 = require("./lost-vacuum");
+const magnezone_v_1 = require("./magnezone-v");
+const magnezone_vstar_1 = require("./magnezone-vstar");
 const mawile_1 = require("./mawile");
 const mirage_gate_1 = require("./mirage-gate");
 const pidgeot_v_1 = require("./pidgeot-v");
@@ -62,4 +64,6 @@ exports.setLostOrigin = [
     new sableye_1.Sableye(),
     new snorlax_1.Snorlax(),
     new volo_1.Volo(),
+    new magnezone_v_1.MagnezoneV(),
+    new magnezone_vstar_1.MagnezoneVSTAR(),
 ];

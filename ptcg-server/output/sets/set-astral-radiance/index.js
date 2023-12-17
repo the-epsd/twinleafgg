@@ -9,6 +9,7 @@ const gallade_1 = require("./gallade");
 const gapejaw_bog_1 = require("./gapejaw-bog");
 const gardenias_vigor_1 = require("./gardenias-vigor");
 const grant_1 = require("./grant");
+const gutsy_pickaxe_1 = require("./gutsy-pickaxe");
 const hisuian_arcanine_1 = require("./hisuian-arcanine");
 const hisuian_basculin_1 = require("./hisuian-basculin");
 const hisuian_heavy_ball_1 = require("./hisuian-heavy-ball");
@@ -76,4 +77,5 @@ exports.setAstralRadiance = [
     new temple_of_sinnoh_1.TempleofSinnoh(),
     new trekking_shoes_1.TrekkingShoes(),
     new kleavor_1.Kleavor(),
+    new gutsy_pickaxe_1.GutsyPickaxe(),
 ];

@@ -27,7 +27,7 @@ export class Magnezoneex extends PokemonCard {
       name: 'Energy Crush',
       cost: [ CardType.LIGHTNING ],
       damage: 50,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
+      text: 'This attack does 50 damage for each Energy attached to all of your opponent\'s Pokémon.'
     },
     {
       name: 'Pulse Launcher',
@@ -43,9 +43,9 @@ export class Magnezoneex extends PokemonCard {
 
   public setNumber: string = '65';
 
-  public name: string = 'Magnezone';
+  public name: string = 'Magnezone ex';
 
-  public fullName: string = 'Magnezone SVI';
+  public fullName: string = 'Magnezone ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

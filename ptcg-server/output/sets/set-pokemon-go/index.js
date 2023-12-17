@@ -9,6 +9,7 @@ const moltres_1 = require("./moltres");
 const pokestop_1 = require("./pokestop");
 const radiant_venusaur_1 = require("./radiant-venusaur");
 const slaking_v_1 = require("./slaking-v");
+const slowbro_1 = require("./slowbro");
 const snorlax_1 = require("./snorlax");
 const solrock_1 = require("./solrock");
 const zapdos_1 = require("./zapdos");
@@ -24,4 +25,5 @@ exports.setPokemonGO = [
     new radiant_venusaur_1.RadiantVenusaur(),
     new articuno_1.Articuno(),
     new moltres_1.Moltres(),
+    new slowbro_1.Slowbro(),
 ];

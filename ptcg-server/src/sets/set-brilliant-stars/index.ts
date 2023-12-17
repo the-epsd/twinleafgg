@@ -16,9 +16,12 @@ import { LumineonV } from './lumineon-v';
 import { Magmortar } from './magmortar';
 import { Manaphy } from './manaphy';
 import { Moltres } from './moltres';
+import { PotHelmet } from './pot-helmet';
 import { Purrloin } from './purrloin';
 import { RaichuV } from './raichu-v';
 import { RaikouV } from './raikou-v';
+import { ShayminV } from './shaymin-v';
+import { ShayminVSTAR } from './shaymin-vstar';
 
 export const setBrilliantStars: Card[] = [
   
@@ -42,5 +45,8 @@ export const setBrilliantStars: Card[] = [
   new RaikouV(),
   new Purrloin(),
   new Liepard(),
+  new ShayminV(),
+  new ShayminVSTAR(),
+  new PotHelmet(),
   
 ];

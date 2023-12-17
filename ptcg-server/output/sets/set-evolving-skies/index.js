@@ -21,6 +21,7 @@ const regieleki_1 = require("./regieleki");
 const rescue_carrier_1 = require("./rescue-carrier");
 const suicune_v_1 = require("./suicune-v");
 const swablu_1 = require("./swablu");
+const tropius_1 = require("./tropius");
 const umbreon_v_1 = require("./umbreon-v");
 const umbreon_vmax_1 = require("./umbreon-vmax");
 const zinnias_resolve_1 = require("./zinnias-resolve");
@@ -52,4 +53,5 @@ exports.setEvolvingSkies = [
     new zorua_1.Zorua(),
     new zoroark_1.Zoroark(),
     new swablu_1.Swablu(),
+    new tropius_1.Tropius(),
 ];

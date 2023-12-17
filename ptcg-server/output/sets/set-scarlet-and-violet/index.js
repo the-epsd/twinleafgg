@@ -30,6 +30,7 @@ const miriam_1 = require("./miriam");
 const nest_ball_1 = require("./nest-ball");
 const pal_pad_1 = require("./pal-pad");
 const penny_1 = require("./penny");
+const picnic_basket_1 = require("./picnic-basket");
 const pokeball_1 = require("./pokeball");
 const pokegear_30_1 = require("./pokegear-30");
 const pokemon_catcher_1 = require("./pokemon-catcher");
@@ -75,6 +76,7 @@ exports.setScarletAndViolet = [
     new nest_ball_1.NestBall(),
     new pal_pad_1.PalPad(),
     new penny_1.Penny(),
+    new picnic_basket_1.PicnicBasket(),
     new pokeball_1.Pokeball(),
     new pokegear_30_1.Pokegear30(),
     new pokemon_catcher_1.PokemonCatcher(),
