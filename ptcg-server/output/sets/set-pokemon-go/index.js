@@ -5,6 +5,7 @@ const articuno_1 = require("./articuno");
 const charmander_1 = require("./charmander");
 const ditto_1 = require("./ditto");
 const lunatone_1 = require("./lunatone");
+const lure_module_1 = require("./lure-module");
 const moltres_1 = require("./moltres");
 const pokestop_1 = require("./pokestop");
 const radiant_venusaur_1 = require("./radiant-venusaur");
@@ -26,4 +27,5 @@ exports.setPokemonGO = [
     new articuno_1.Articuno(),
     new moltres_1.Moltres(),
     new slowbro_1.Slowbro(),
+    new lure_module_1.LureModule(),
 ];

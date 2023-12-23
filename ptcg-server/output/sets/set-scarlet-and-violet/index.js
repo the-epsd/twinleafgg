@@ -40,6 +40,7 @@ const professors_research2_1 = require("./professors-research2");
 const ralts_1 = require("./ralts");
 const rare_candy_1 = require("./rare-candy");
 const rock_chestplate_1 = require("./rock-chestplate");
+const scovillain_1 = require("./scovillain");
 const skwovet_1 = require("./skwovet");
 const switch_1 = require("./switch");
 const team_star_grunt_1 = require("./team-star-grunt");
@@ -92,4 +93,5 @@ exports.setScarletAndViolet = [
     new ultra_ball_1.UltraBall(),
     new vitality_band_1.VitalityBand(),
     new youngster_1.Youngster(),
+    new scovillain_1.Scovillain(),
 ];

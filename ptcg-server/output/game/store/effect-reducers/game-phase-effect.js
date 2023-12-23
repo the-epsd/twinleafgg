@@ -51,6 +51,10 @@ function initNextTurn(store, state) {
     //if (state.turn === 1 && !state.rules.firstTurnDrawCard) {
     //  return state;
     //}
+    //Skip draw card on first turn
+    if (state.turn === 1 && !state.rules.firstTurnAttack) {
+        return state;
+    }
     // Draw card at the beginning
     store.log(state, game_message_1.GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
     if (player.deck.cards.length === 0) {

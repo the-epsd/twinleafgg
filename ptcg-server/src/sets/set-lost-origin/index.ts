@@ -1,11 +1,15 @@
 import { Card } from '../../game/store/card/card';
+import { Arezu } from './arezu';
 import { Bouffalant } from './bouffalant';
+import { BoxOfDisaster } from './box-of-disaster';
 import { ColresssExperiment } from './colress\'s-experiment';
 import { Comfey } from './comfey';
 import { Cramorant } from './cramorant';
 import { Cresselia } from './cresselia';
+import { DamagePump } from './damage-pump';
 import { DelphoxV } from './delphox-v';
 import { DrapionV } from './drapion-v';
+import { EnergyLotto } from './energy-lotto';
 import { Gengar } from './gengar';
 import { GiftEnergy } from './gift-energy';
 import { GiratinaV } from './giratina-v';
@@ -24,6 +28,7 @@ import { MagnezoneV } from './magnezone-v';
 import { MagnezoneVSTAR } from './magnezone-vstar';
 import { Mawile } from './mawile';
 import { MirageGate } from './mirage-gate';
+import { PanicMask } from './panic-mask';
 import { PidgeotV } from './pidgeot-v';
 import { RadiantGardevoir } from './radiant-gardevoir';
 import { RadiantHisuianSneasler } from './radiant-hisuian-sneasler';
@@ -66,4 +71,9 @@ export const setLostOrigin: Card[] = [
   new Volo(),
   new MagnezoneV(),
   new MagnezoneVSTAR(),
+  new DamagePump(),
+  new BoxOfDisaster(),
+  new EnergyLotto(),
+  new PanicMask(),
+  new Arezu(),
 ];

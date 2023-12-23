@@ -26,6 +26,8 @@ class Player {
         this.attackMarker = new card_marker_1.Marker();
         this.abilityMarker = new card_marker_1.Marker();
         this.avatarName = '';
+        this.usedVSTAR = false;
+        this.usedGX = false;
     }
     prompt(state, arg1) {
         throw new Error('Method not implemented.');

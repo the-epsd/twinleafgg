@@ -22,6 +22,7 @@ import { Swablu } from './swablu';
 import { Tropius } from './tropius';
 import { UmbreonV } from './umbreon-v';
 import { UmbreonVMAX } from './umbreon-vmax';
+import { Wishiwashi } from './wishiwashi';
 import { ZinniasResolve } from './zinnias-resolve';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
@@ -54,5 +55,6 @@ export const setEvolvingSkies: Card[] = [
   new Zoroark(),
   new Swablu(),
   new Tropius(),
+  new Wishiwashi(),
   
 ];

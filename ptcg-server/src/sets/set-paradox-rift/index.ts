@@ -13,6 +13,7 @@ import { Garchompex } from './garchomp-ex';
 import { Gholdengoex } from './gholdengo-ex';
 import { Gible } from './gible';
 import { Gimmighoul } from './gimmighoul';
+import { Groudon } from './groudon';
 import { IronBundle } from './iron-bundle';
 import { IronHandsex } from './iron-hands-ex';
 import { IronValiantex } from './iron-valiant-ex';
@@ -72,4 +73,5 @@ export const setParadoxRift: Card[] = [
   new Tsareenaex(),
   new Tulip(),
   new Xatu(),
+  new Groudon(),
 ];

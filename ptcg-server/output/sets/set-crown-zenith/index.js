@@ -6,6 +6,8 @@ const kyogre_1 = require("./kyogre");
 const luxray_1 = require("./luxray");
 const radiant_charizard_1 = require("./radiant-charizard");
 const radiant_eternatus_1 = require("./radiant-eternatus");
+const regigigas_v_1 = require("./regigigas-v");
+const regigigas_vstar_1 = require("./regigigas-vstar");
 const zamazenta_1 = require("./zamazenta");
 const zamazenta_v_1 = require("./zamazenta-v");
 exports.setCrownZenith = [
@@ -16,4 +18,6 @@ exports.setCrownZenith = [
     new luxray_1.Luxray(),
     new zamazenta_v_1.ZamazentaV(),
     new radiant_eternatus_1.RadiantEternatus(),
+    new regigigas_v_1.RegigigasV(),
+    new regigigas_vstar_1.RegigigasVSTAR(),
 ];

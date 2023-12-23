@@ -5,6 +5,7 @@ import { Beedrill } from './beedril';
 import { BlisseyV } from './blissey-v';
 import { Drizzile } from './drizzile';
 import { EchoingHorn } from './echoing-horn';
+import { ExpeditionUniform } from './expedition-uniform';
 import { FogCrystal } from './fog-crystal';
 import { Froslass } from './froslass';
 import { GalarianArticunoV } from './galarian-articuno-v';
@@ -21,6 +22,7 @@ import { Melony } from './melony';
 //import { OldCemetery } from './old-cemetery';
 import { PathToThePeak } from './path-to-the-peak';
 import { Peony } from './peony';
+import { Sneasel } from './sneasel';
 import { Snorunt } from './snorunt';
 import { Sobble } from './sobble';
 
@@ -50,4 +52,6 @@ export const setChillingReign: Card[] = [
   new Peony(),
   new Snorunt(),
   new Sobble(),
+  new ExpeditionUniform(),
+  new Sneasel(),
 ];

@@ -1,6 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card'; 
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, GameError, GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 
 export class Ditto extends PokemonCard {
 
@@ -38,4 +41,46 @@ export class Ditto extends PokemonCard {
 
   public fullName: string = 'Ditto MEW';
 
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+      // Get current turn
+      const turn = state.turn;
+      
+      // Check if it is player's first turn
+      if (turn > 2) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      } else {
+
+        let cards: Card[] = [];
+        return store.prompt(state, new ChooseCardsPrompt(
+          player.id,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.deck,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { min: 0, max: 1, allowCancel: true }
+        ), selectedCards => {
+          cards = selectedCards || [];
+      
+  
+          cards.forEach((card, index) => {
+            player.active.moveCardTo(card, player.discard);
+            player.deck.moveCardTo(card, player.active);
+            player.active.pokemonPlayedTurn = state.turn;
+          });
+      
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+            
+            return state;
+          });
+        }
+        );
+
+      }
+
+    }
+    return state;
+  }
 }

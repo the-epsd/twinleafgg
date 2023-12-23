@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { DarkPatch } from './dark-patch';
 import { DarkraiV } from './darkrai-v';
 import { DarkraiVSTAR } from './darkrai-vstar';
+import { Diancie } from './diancie';
 import { FeatherBall } from './feather-ball';
 import { Gallade } from './gallade';
 import { GapejawBog } from './gapejaw-bog';
@@ -32,6 +33,7 @@ import { Regigigas } from './regigigas';
 import { Regirock } from './regirock';
 import { Registeel } from './registeel';
 import { Roxanne } from './roxanne';
+import { StarmieV } from './starmie-v';
 import { SupereffectiveGlasses } from './supereffective-glasses';
 import { SwitchCart } from './switch-cart';
 import { TempleofSinnoh } from './temple-of-sinnoh';
@@ -79,5 +81,7 @@ export const setAstralRadiance: Card[] = [
   new TrekkingShoes(),
   new Kleavor(),
   new GutsyPickaxe(),
+  new Diancie(),
+  new StarmieV(),
   
 ];

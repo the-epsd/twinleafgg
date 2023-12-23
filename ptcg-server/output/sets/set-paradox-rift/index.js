@@ -15,6 +15,7 @@ const garchomp_ex_1 = require("./garchomp-ex");
 const gholdengo_ex_1 = require("./gholdengo-ex");
 const gible_1 = require("./gible");
 const gimmighoul_1 = require("./gimmighoul");
+const groudon_1 = require("./groudon");
 const iron_bundle_1 = require("./iron-bundle");
 const iron_hands_ex_1 = require("./iron-hands-ex");
 const iron_valiant_ex_1 = require("./iron-valiant-ex");
@@ -72,4 +73,5 @@ exports.setParadoxRift = [
     new tsareena_ex_1.Tsareenaex(),
     new tulip_1.Tulip(),
     new xatu_1.Xatu(),
+    new groudon_1.Groudon(),
 ];

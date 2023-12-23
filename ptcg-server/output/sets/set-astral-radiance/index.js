@@ -4,6 +4,7 @@ exports.setAstralRadiance = void 0;
 const dark_patch_1 = require("./dark-patch");
 const darkrai_v_1 = require("./darkrai-v");
 const darkrai_vstar_1 = require("./darkrai-vstar");
+const diancie_1 = require("./diancie");
 const feather_ball_1 = require("./feather-ball");
 const gallade_1 = require("./gallade");
 const gapejaw_bog_1 = require("./gapejaw-bog");
@@ -34,6 +35,7 @@ const regigigas_1 = require("./regigigas");
 const regirock_1 = require("./regirock");
 const registeel_1 = require("./registeel");
 const roxanne_1 = require("./roxanne");
+const starmie_v_1 = require("./starmie-v");
 const supereffective_glasses_1 = require("./supereffective-glasses");
 const switch_cart_1 = require("./switch-cart");
 const temple_of_sinnoh_1 = require("./temple-of-sinnoh");
@@ -78,4 +80,6 @@ exports.setAstralRadiance = [
     new trekking_shoes_1.TrekkingShoes(),
     new kleavor_1.Kleavor(),
     new gutsy_pickaxe_1.GutsyPickaxe(),
+    new diancie_1.Diancie(),
+    new starmie_v_1.StarmieV(),
 ];

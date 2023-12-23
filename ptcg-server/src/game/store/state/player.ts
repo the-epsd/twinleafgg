@@ -47,6 +47,10 @@ export class Player {
   abilityMarker = new Marker();
 
   avatarName: string = '';
+
+  usedVSTAR: boolean = false;
+
+  usedGX: boolean = false;
   
   usedRapidStrikeSearchThisTurn: any;
   usedExcitingStageThisTurn: any;

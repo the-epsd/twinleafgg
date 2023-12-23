@@ -28,6 +28,7 @@ const wattrel_1 = require("./wattrel");
 const luxray_1 = require("./luxray");
 const wo_chien_ex_1 = require("./wo-chien-ex");
 const shinx_1 = require("./shinx");
+const tadbulb_1 = require("./tadbulb");
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 exports.setPaldeaEvolved = [
     new artazon_1.Artazon(),
@@ -59,4 +60,5 @@ exports.setPaldeaEvolved = [
     new wattrel_1.Wattrel(),
     new wo_chien_ex_1.WoChienex(),
     new shinx_1.Shinx(),
+    new tadbulb_1.Tadbulb(),
 ];

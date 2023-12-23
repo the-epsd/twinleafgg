@@ -1,13 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setLostOrigin = void 0;
+const arezu_1 = require("./arezu");
 const bouffalant_1 = require("./bouffalant");
+const box_of_disaster_1 = require("./box-of-disaster");
 const colress_s_experiment_1 = require("./colress's-experiment");
 const comfey_1 = require("./comfey");
 const cramorant_1 = require("./cramorant");
 const cresselia_1 = require("./cresselia");
+const damage_pump_1 = require("./damage-pump");
 const delphox_v_1 = require("./delphox-v");
 const drapion_v_1 = require("./drapion-v");
+const energy_lotto_1 = require("./energy-lotto");
 const gengar_1 = require("./gengar");
 const gift_energy_1 = require("./gift-energy");
 const giratina_v_1 = require("./giratina-v");
@@ -26,6 +30,7 @@ const magnezone_v_1 = require("./magnezone-v");
 const magnezone_vstar_1 = require("./magnezone-vstar");
 const mawile_1 = require("./mawile");
 const mirage_gate_1 = require("./mirage-gate");
+const panic_mask_1 = require("./panic-mask");
 const pidgeot_v_1 = require("./pidgeot-v");
 const radiant_gardevoir_1 = require("./radiant-gardevoir");
 const radiant_hisuian_sneasler_1 = require("./radiant-hisuian-sneasler");
@@ -66,4 +71,9 @@ exports.setLostOrigin = [
     new volo_1.Volo(),
     new magnezone_v_1.MagnezoneV(),
     new magnezone_vstar_1.MagnezoneVSTAR(),
+    new damage_pump_1.DamagePump(),
+    new box_of_disaster_1.BoxOfDisaster(),
+    new energy_lotto_1.EnergyLotto(),
+    new panic_mask_1.PanicMask(),
+    new arezu_1.Arezu(),
 ];

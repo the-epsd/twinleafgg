@@ -30,8 +30,8 @@ export declare class LeafeonVSTAR extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    LEAF_GUARD_MARKER: string;
-    CLEAR_LEAF_GUARD_MARKER: string;
+    readonly LEAF_GUARD_MARKER = "LEAF_GUARD_MARKER";
+    readonly CLEAR_LEAF_GUARD_MARKER = "CLEAR_LEAF_GUARD_MARKER";
     readonly VSTAR_MARKER = "VSTAR_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

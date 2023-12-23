@@ -34,6 +34,10 @@ function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
 function* useAttack(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+    //Skip draw card on first turn
+    if (state.turn === 1) {
+        return state;
+    }
     const sp = player.active.specialConditions;
     if (sp.includes(card_types_1.SpecialCondition.PARALYZED) || sp.includes(card_types_1.SpecialCondition.ASLEEP)) {
         throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_SPECIAL_CONDITION);

@@ -38,6 +38,7 @@ import { ProfessorsResearch2 } from './professors-research2';
 import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
 import { RockChestplate } from './rock-chestplate';
+import { Scovillain } from './scovillain';
 import { Skwovet } from './skwovet';
 import { Switch } from './switch';
 import { TeamStarGrunt } from './team-star-grunt';
@@ -92,5 +93,6 @@ export const setScarletAndViolet: Card[] = [
   new UltraBall(),
   new VitalityBand(),
   new Youngster(),
+  new Scovillain(),
   
 ];

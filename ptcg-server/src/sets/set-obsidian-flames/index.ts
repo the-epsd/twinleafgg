@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Bellibolt } from './bellibolt';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
@@ -34,4 +35,5 @@ export const setObsidianFlames: Card[] = [
   new Poppy(),  
   new TownStore(),
   new VengefulPunch(),
+  new Bellibolt(),
 ];

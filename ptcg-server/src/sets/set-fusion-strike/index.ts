@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { AdventurersDiscovery } from './adventurers-discovery';
 import { BattleVIPPass } from './battle-vip-pass';
 import { Cook } from './cook';
 import { Creamomatic } from './cram-o-matic';
@@ -19,6 +20,8 @@ import { MewVMAX } from './mew-vmax';
 import { Oricorio } from './oricorio';
 import { PowerTablet } from './power-tablet';
 import { Pyukumuku } from './pyukumuku';
+import { Schoolboy } from './schoolboy';
+import { Schoolgirl } from './schoolgirl';
 import { Shauna } from './shauna';
 import { Yveltal } from './yveltal';
 
@@ -46,4 +49,7 @@ export const setFusionStrike: Card[] = [
   new Pyukumuku(),
   new Yveltal(),
   new Shauna(),
+  new AdventurersDiscovery(),
+  new Schoolboy(),
+  new Schoolgirl(),
 ];

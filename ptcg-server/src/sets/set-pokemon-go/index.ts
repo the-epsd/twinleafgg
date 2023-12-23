@@ -3,6 +3,7 @@ import { Articuno } from './articuno';
 import { Charmander } from './charmander';
 import { Ditto } from './ditto';
 import { Lunatone } from './lunatone';
+import { LureModule } from './lure-module';
 import { Moltres } from './moltres';
 import { Pokestop } from './pokestop';
 import { RadiantVenusaur } from './radiant-venusaur';
@@ -26,4 +27,5 @@ export const setPokemonGO: Card[] = [
   new Articuno(),
   new Moltres(),
   new Slowbro(),
+  new LureModule(),
 ];

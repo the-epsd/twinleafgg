@@ -29,6 +29,8 @@ const electabuzz_1 = require("./electabuzz");
 const gloom_1 = require("./gloom");
 const vileplume_1 = require("./vileplume");
 const oddish_1 = require("./oddish");
+const ditto_1 = require("./ditto");
+const cycling_road_1 = require("./cycling-road");
 exports.setPokemon151 = [
     new alakazam_ex_1.Alakazamex(),
     new blastoise_ex_1.Blastoiseex(),
@@ -36,6 +38,7 @@ exports.setPokemon151 = [
     new charizard_ex_1.Charizardex(),
     new charmeleon_1.Charmeleon(),
     new charmander_1.Charmander(),
+    new ditto_1.Ditto(),
     new dodrio_1.Dodrio(),
     new doduo_1.Doduo(),
     new eevee_1.Eevee(),
@@ -58,4 +61,5 @@ exports.setPokemon151 = [
     new vileplume_1.Vileplume(),
     new wartortle_1.Wartortle(),
     new zapdos_ex_1.Zapdosex(),
+    new cycling_road_1.CyclingRoad(),
 ];

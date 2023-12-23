@@ -7,6 +7,7 @@ const beedril_1 = require("./beedril");
 const blissey_v_1 = require("./blissey-v");
 const drizzile_1 = require("./drizzile");
 const echoing_horn_1 = require("./echoing-horn");
+const expedition_uniform_1 = require("./expedition-uniform");
 const fog_crystal_1 = require("./fog-crystal");
 const froslass_1 = require("./froslass");
 const galarian_articuno_v_1 = require("./galarian-articuno-v");
@@ -23,6 +24,7 @@ const melony_1 = require("./melony");
 //import { OldCemetery } from './old-cemetery';
 const path_to_the_peak_1 = require("./path-to-the-peak");
 const peony_1 = require("./peony");
+const sneasel_1 = require("./sneasel");
 const snorunt_1 = require("./snorunt");
 const sobble_1 = require("./sobble");
 exports.setChillingReign = [
@@ -50,4 +52,6 @@ exports.setChillingReign = [
     new peony_1.Peony(),
     new snorunt_1.Snorunt(),
     new sobble_1.Sobble(),
+    new expedition_uniform_1.ExpeditionUniform(),
+    new sneasel_1.Sneasel(),
 ];

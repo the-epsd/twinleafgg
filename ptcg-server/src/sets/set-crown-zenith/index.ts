@@ -4,6 +4,8 @@ import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
 import { RadiantCharizard } from './radiant-charizard';
 import { RadiantEternatus } from './radiant-eternatus';
+import { RegigigasV } from './regigigas-v';
+import { RegigigasVSTAR } from './regigigas-vstar';
 import { Zamazenta } from './zamazenta';
 import { ZamazentaV } from './zamazenta-v';
 
@@ -16,4 +18,6 @@ export const setCrownZenith: Card[] = [
   new Luxray(),
   new ZamazentaV(),
   new RadiantEternatus(),
+  new RegigigasV(),
+  new RegigigasVSTAR(),
 ];

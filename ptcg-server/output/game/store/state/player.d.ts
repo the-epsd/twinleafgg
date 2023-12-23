@@ -26,6 +26,8 @@ export declare class Player {
     attackMarker: Marker;
     abilityMarker: Marker;
     avatarName: string;
+    usedVSTAR: boolean;
+    usedGX: boolean;
     usedRapidStrikeSearchThisTurn: any;
     usedExcitingStageThisTurn: any;
     usedSquawkAndSeizeThisTurn: any;

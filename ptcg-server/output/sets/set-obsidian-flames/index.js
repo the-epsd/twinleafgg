@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setObsidianFlames = void 0;
+const bellibolt_1 = require("./bellibolt");
 const charizard_ex_1 = require("./charizard-ex");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
@@ -34,4 +35,5 @@ exports.setObsidianFlames = [
     new poppy_1.Poppy(),
     new town_store_1.TownStore(),
     new vengeful_punch_1.VengefulPunch(),
+    new bellibolt_1.Bellibolt(),
 ];

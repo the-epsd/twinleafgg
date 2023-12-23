@@ -24,6 +24,7 @@ const swablu_1 = require("./swablu");
 const tropius_1 = require("./tropius");
 const umbreon_v_1 = require("./umbreon-v");
 const umbreon_vmax_1 = require("./umbreon-vmax");
+const wishiwashi_1 = require("./wishiwashi");
 const zinnias_resolve_1 = require("./zinnias-resolve");
 const zoroark_1 = require("./zoroark");
 const zorua_1 = require("./zorua");
@@ -54,4 +55,5 @@ exports.setEvolvingSkies = [
     new zoroark_1.Zoroark(),
     new swablu_1.Swablu(),
     new tropius_1.Tropius(),
+    new wishiwashi_1.Wishiwashi(),
 ];

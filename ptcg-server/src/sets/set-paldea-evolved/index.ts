@@ -26,6 +26,7 @@ import { Wattrel } from './wattrel';
 import { Luxray } from './luxray';
 import { WoChienex } from './wo-chien-ex';
 import { Shinx } from './shinx';
+import { Tadbulb } from './tadbulb';
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [
@@ -59,4 +60,5 @@ export const setPaldeaEvolved: Card[] = [
   new Wattrel(),
   new WoChienex(),
   new Shinx(),
+  new Tadbulb(),
 ];

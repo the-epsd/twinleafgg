@@ -27,6 +27,8 @@ import { Electabuzz } from './electabuzz';
 import { Gloom } from './gloom';
 import { Vileplume } from './vileplume';
 import { Oddish } from './oddish';
+import { Ditto } from './ditto';
+import { CyclingRoad } from './cycling-road';
 
 export const setPokemon151: Card[] = [
   
@@ -36,6 +38,7 @@ export const setPokemon151: Card[] = [
   new Charizardex(),
   new Charmeleon(),
   new Charmander(),
+  new Ditto(),
   new Dodrio(),
   new Doduo(),
   new Eevee(),
@@ -58,4 +61,5 @@ export const setPokemon151: Card[] = [
   new Vileplume(),
   new Wartortle(),
   new Zapdosex(),
+  new CyclingRoad(),
 ];
