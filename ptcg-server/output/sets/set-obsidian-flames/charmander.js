@@ -18,7 +18,7 @@ class Charmander extends pokemon_card_1.PokemonCard {
             { name: 'Heat Tackle', cost: [card_types_1.CardType.FIRE], damage: 30, text: 'This Pokémon does 10 damage to itself.' },
         ];
         this.set = 'OBF';
-        this.set2 = 'obsidianflames';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '26';
         this.name = 'Charmander';
         this.fullName = 'Charmander OBF';

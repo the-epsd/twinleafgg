@@ -14,7 +14,7 @@ export class CapturingAroma extends TrainerCard {
 
   public set: string = 'SIT';
 
-  public set2: string = 'silvertempest';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '153';
 

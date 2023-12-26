@@ -32,7 +32,7 @@ class Gengar extends pokemon_card_1.PokemonCard {
             }];
         this.regulationMark = 'G';
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '66';
         this.name = 'Gengar';
         this.fullName = 'Gengar LOR';

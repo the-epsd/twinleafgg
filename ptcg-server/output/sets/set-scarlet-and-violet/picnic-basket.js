@@ -10,7 +10,7 @@ class PicnicBasket extends game_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = game_1.TrainerType.ITEM;
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '184';
         this.name = 'Picnic Basket';
         this.fullName = 'Picnic Basket SVI';

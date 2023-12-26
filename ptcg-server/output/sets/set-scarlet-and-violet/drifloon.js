@@ -29,7 +29,7 @@ class Drifloon extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '89';
         this.name = 'Drifloon';
         this.fullName = 'Drifloon SVI';

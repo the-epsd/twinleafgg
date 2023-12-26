@@ -14,7 +14,7 @@ class TowerOfDarkness extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.regulationMark = 'E';
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '137';
         this.name = 'Tower of Darkness';
         this.fullName = 'Tower of Darkness BST';

@@ -27,7 +27,7 @@ class RadiantHawlucha extends pokemon_card_1.PokemonCard {
             }];
         this.regulationMark = 'F';
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '81';
         this.name = 'Radiant Hawlucha';
         this.fullName = 'Radiant Hawlucha ASR';

@@ -14,7 +14,7 @@ class TrekkingShoes extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'ASR';
         this.regulationMark = 'F';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '156';
         this.name = 'Trekking Shoes';
         this.fullName = 'Trekking Shoes ASR';

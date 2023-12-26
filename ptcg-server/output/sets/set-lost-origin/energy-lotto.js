@@ -11,7 +11,7 @@ class EnergyLotto extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'F';
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '140';
         this.name = 'Energy Lotto';
         this.fullName = 'Energy Lotto LOR';

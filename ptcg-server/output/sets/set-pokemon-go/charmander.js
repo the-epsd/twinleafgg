@@ -23,7 +23,7 @@ class Charmander extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'F';
         this.set = 'PGO';
-        this.set2 = 'pokemongo';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '8';
         this.name = 'Charmander';
         this.fullName = 'Charmander PGO';

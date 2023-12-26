@@ -29,7 +29,7 @@ class Mimikyuex extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 30 damage for each Energy attached to both Active Pokémon.'
             }];
         this.set = 'SVP';
-        this.set2 = 'svpromos';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '4';
         this.name = 'Mimikyu ex';
         this.fullName = 'Mimikyu ex SVP';

@@ -50,7 +50,7 @@ class Pidgey extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '16';
         this.name = 'Pidgey';
         this.fullName = 'Pidgey MEW';

@@ -31,7 +31,7 @@ class LucarioV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '78';
         this.name = 'Lucario V';
         this.fullName = 'Lucario V ASR';

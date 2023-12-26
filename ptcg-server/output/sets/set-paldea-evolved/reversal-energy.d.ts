@@ -8,7 +8,7 @@ export declare class ReversalEnergy extends EnergyCard {
     energyType: EnergyType;
     set: string;
     regulationMark: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;

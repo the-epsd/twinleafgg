@@ -33,7 +33,7 @@ class UmbreonV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '94';
         this.name = 'Umbreon V';
         this.fullName = 'Umbreon V EVS';

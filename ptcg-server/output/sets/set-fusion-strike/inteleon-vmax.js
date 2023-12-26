@@ -35,7 +35,7 @@ class InteleonVMAX extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'FST';
-        this.set2 = 'fusionstrike';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '79';
         this.name = 'Inteleon VMAX';
         this.fullName = 'Inteleon VMAX FST';

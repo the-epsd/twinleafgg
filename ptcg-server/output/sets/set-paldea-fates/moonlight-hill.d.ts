@@ -3,7 +3,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 export declare class MoonlightHill extends TrainerCard {
     regulationMark: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     trainerType: TrainerType;
     set: string;

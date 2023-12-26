@@ -13,7 +13,7 @@ class Schoolgirl extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'E';
         this.set = 'FST';
-        this.set2 = 'fusionstrike';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '239';
         this.name = 'Schoolgirl';
         this.fullName = 'Schoolgirl FST';

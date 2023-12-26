@@ -47,7 +47,7 @@ class Potion extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'F';
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '188';
         this.name = 'Potion';
         this.fullName = 'Potion SVI';

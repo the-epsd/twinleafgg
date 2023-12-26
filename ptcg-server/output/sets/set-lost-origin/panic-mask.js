@@ -12,7 +12,7 @@ class PanicMask extends trainer_card_1.TrainerCard {
         this.regulationMark = 'F';
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '165';
         this.name = 'Panic Mask';
         this.fullName = 'Panic Mask LOR';

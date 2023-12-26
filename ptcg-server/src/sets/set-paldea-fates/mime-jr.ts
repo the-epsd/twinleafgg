@@ -83,7 +83,7 @@ export class MimeJr extends PokemonCard {
 
   public set: string = 'SV4';
 
-  public set2: string = 'shinytreasureex';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '85';
 

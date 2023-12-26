@@ -31,7 +31,7 @@ class HisuianZoroarkVSTAR extends game_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '147';
         this.name = 'Hisuian Zoroark VSTAR';
         this.fullName = 'Hisuian Zoroark VSTAR LOR';

@@ -37,7 +37,7 @@ class LetterOfEncouragement extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'OBF';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '152';
         this.regulationMark = 'E';
         this.name = 'Letter of Encouragement';

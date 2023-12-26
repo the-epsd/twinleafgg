@@ -58,7 +58,7 @@ class Flamigo extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '170';
         this.name = 'Flamigo';
         this.fullName = 'Flamigo PAL';

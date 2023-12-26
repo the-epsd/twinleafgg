@@ -27,7 +27,7 @@ class GyaradosV extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '28';
         this.name = 'Gyarados V';
         this.fullName = 'Gyarados V EVS';

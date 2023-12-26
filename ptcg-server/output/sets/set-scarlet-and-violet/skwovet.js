@@ -32,7 +32,7 @@ class Skwovet extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '151';
         this.name = 'Skwovet';
         this.fullName = 'Skwovet SVI';

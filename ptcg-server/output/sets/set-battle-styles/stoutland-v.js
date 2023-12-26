@@ -30,7 +30,7 @@ class StoutlandV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '117';
         this.name = 'Stoutland V';
         this.fullName = 'Stoutland V BST 050';

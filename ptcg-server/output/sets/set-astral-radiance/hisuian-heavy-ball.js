@@ -10,7 +10,7 @@ class HisuianHeavyBall extends game_1.TrainerCard {
         this.regulationMark = 'F';
         this.set = 'ASR';
         this.name = 'Hisuian Heavy Ball';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '146';
         this.fullName = 'Hisuian Heavy Ball ASR';
         this.text = 'Attach a basic D Energy card from your discard pile to 1 of your ' +

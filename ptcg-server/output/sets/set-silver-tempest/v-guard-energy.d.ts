@@ -8,7 +8,7 @@ export declare class VGuardEnergy extends EnergyCard {
     energyType: EnergyType;
     regulationMark: string;
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;

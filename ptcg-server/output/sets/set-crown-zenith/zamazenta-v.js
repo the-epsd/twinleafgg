@@ -31,7 +31,7 @@ class ZamazentaV extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'CRZ';
-        this.set2 = 'crownzenith';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '98';
         this.name = 'Zamazenta V';
         this.fullName = 'Zamazenta V CRZ';

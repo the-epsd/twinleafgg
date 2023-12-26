@@ -36,7 +36,7 @@ class ArceusVSTAR extends pokemon_card_1.PokemonCard {
                     'deck. (You can\'t use more than 1 VSTAR Power in a game.)'
             }];
         this.set = 'BRS';
-        this.set2 = 'brilliantstars';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '123';
         this.name = 'Arceus VSTAR';
         this.fullName = 'Arceus VSTAR BRS';

@@ -41,13 +41,13 @@ export class IceRiderCalyrexVMAX extends PokemonCard {
 
   public set: string = 'CRE';
 
-  public set2: string = 'chillingreign';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '46';
 
-  public name: string = 'Ice Rider Calyrex V';
+  public name: string = 'Ice Rider Calyrex VMAX';
 
-  public fullName: string = 'Ice Rider Calyrex V CRE';
+  public fullName: string = 'Ice Rider Calyrex VMAX CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

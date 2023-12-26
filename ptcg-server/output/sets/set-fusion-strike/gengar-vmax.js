@@ -31,7 +31,7 @@ class GengarVMAX extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'FST';
-        this.set2 = 'fusionstrike';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '157';
         this.name = 'Gengar VMAX';
         this.fullName = 'Gengar VMAX FST';

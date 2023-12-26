@@ -12,7 +12,7 @@ export class HisuianHeavyBall extends TrainerCard {
   
   public name: string = 'Hisuian Heavy Ball';
   
-  public set2: string = 'astralradiance';
+  public cardImage: string = 'assets/cardback.png';
     
   public setNumber: string = '146';
   

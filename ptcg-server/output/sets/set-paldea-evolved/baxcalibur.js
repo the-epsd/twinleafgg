@@ -33,7 +33,7 @@ class Baxcalibur extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '60';
         this.name = 'Baxcalibur';
         this.fullName = 'Baxcalibur PAL';

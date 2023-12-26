@@ -41,7 +41,7 @@ export class IronValiantex extends PokemonCard {
 
   public set: string = 'PAR';
 
-  public set2: string = 'futureflash';
+  public cardImage: string = 'assets/cardback.png';
   
   public setNumber: string = '38';
 

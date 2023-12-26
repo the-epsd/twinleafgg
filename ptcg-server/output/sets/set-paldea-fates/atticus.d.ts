@@ -6,7 +6,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 export declare class Atticus extends TrainerCard {
     trainerType: TrainerType;
     regulationMark: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     set: string;
     name: string;

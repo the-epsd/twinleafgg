@@ -33,7 +33,7 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '5';
         this.name = 'Charmeleon';
         this.fullName = 'Charmeleon MEW';

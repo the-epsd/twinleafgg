@@ -27,7 +27,7 @@ class Luxray extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'CRZ';
-        this.set2 = 'crownzenith';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '44';
         this.name = 'Luxray';
         this.fullName = 'Luxray CRZ';

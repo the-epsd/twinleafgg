@@ -9,7 +9,7 @@ class Volo extends game_1.TrainerCard {
         this.trainerType = game_1.TrainerType.SUPPORTER;
         this.regulationMark = 'F';
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '169';
         this.name = 'Volo';
         this.fullName = 'Volo LOR';

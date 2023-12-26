@@ -32,7 +32,7 @@ class Magnezoneex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '65';
         this.name = 'Magnezone ex';
         this.fullName = 'Magnezone ex SVI';

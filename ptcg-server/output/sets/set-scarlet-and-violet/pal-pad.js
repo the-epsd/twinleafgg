@@ -37,7 +37,7 @@ class PalPad extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '182';
         this.name = 'Pal Pad';
         this.fullName = 'Pal Pad SVI';

@@ -25,7 +25,7 @@ class Electabuzz extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '125';
         this.name = 'Electabuzz';
         this.fullName = 'Electabuzz MEW';

@@ -13,7 +13,7 @@ class ReversalEnergy extends energy_card_1.EnergyCard {
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'PAL';
         this.regulationMark = 'G';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '192';
         this.name = 'Reversal Energy';
         this.fullName = 'Reversal Energy PAL';

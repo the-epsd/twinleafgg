@@ -11,7 +11,7 @@ class JustifiedGloves extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.regulationMark = 'F';
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '143';
         this.name = 'Justified Gloves';
         this.fullName = 'Justified Gloves CRE';

@@ -28,7 +28,7 @@ class Scyther extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '123';
         this.name = 'Scyther';
         this.fullName = 'Scyther MEW';

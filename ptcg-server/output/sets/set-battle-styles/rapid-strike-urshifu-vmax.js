@@ -37,7 +37,7 @@ class RapidStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '88';
         this.name = 'Rapid Strike Urshifu VMAX';
         this.fullName = 'Rapid Strike Urshifu VMAX BST 088';

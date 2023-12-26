@@ -31,7 +31,7 @@ class WoChienex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '27';
         this.name = 'Wo-Chien ex';
         this.fullName = 'Wo-Chien ex PAL';

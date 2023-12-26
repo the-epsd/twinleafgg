@@ -17,7 +17,7 @@ export class TowerOfWaters extends TrainerCard {
 
   public set: string = 'BST';
 
-  public set2: string = 'battlestyles';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '138';
 

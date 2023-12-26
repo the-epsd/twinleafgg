@@ -38,7 +38,7 @@ class UrnOfVitality extends trainer_card_1.TrainerCard {
         this.tags = [card_types_1.CardTag.SINGLE_STRIKE];
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '139';
         this.name = 'Urn of Vitality';
         this.fullName = 'Urn of Vitality BST';

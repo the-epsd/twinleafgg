@@ -19,7 +19,7 @@ export declare class Charmander extends PokemonCard {
         effect: (store: StoreLike, state: State, effect: AttackEffect) => void;
     }[];
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;

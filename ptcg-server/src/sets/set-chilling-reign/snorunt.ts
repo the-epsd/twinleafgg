@@ -26,7 +26,7 @@ export class Snorunt extends PokemonCard {
 
   public set: string = 'CRE';
 
-  public set2: string = 'chillingreign';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '35';
 

@@ -11,7 +11,7 @@ class OldCemetery extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'E';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '147';
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'CRE';

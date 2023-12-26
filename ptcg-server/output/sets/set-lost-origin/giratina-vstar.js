@@ -31,7 +31,7 @@ class GiratinaVSTAR extends game_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '131';
         this.name = 'Giratina VSTAR';
         this.fullName = 'Giratina VSTAR LOR';

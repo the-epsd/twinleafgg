@@ -46,7 +46,7 @@ class Miriam extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '179';
         this.name = 'Miriam';
         this.fullName = 'Miriam SVI';

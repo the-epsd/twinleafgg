@@ -52,7 +52,7 @@ class FogCrystal extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '140';
         this.regulationMark = 'E';
         this.name = 'Fog Crystal';

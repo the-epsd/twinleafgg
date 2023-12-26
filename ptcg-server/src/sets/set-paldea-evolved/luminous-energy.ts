@@ -15,7 +15,7 @@ export class LuminousEnergy extends EnergyCard {
 
   public regulationMark = 'G';
 
-  public set2: string = 'paldeaevolved';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '191';
 

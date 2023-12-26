@@ -21,7 +21,7 @@ class Snorunt extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '35';
         this.name = 'Snorunt';
         this.fullName = 'Snorunt CRE';

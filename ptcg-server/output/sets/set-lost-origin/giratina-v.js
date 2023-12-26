@@ -32,7 +32,7 @@ class GiratinaV extends game_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '130';
         this.name = 'Giratina V';
         this.fullName = 'Giratina V LOR';

@@ -29,7 +29,7 @@ class FlyingPikachuVMAX extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'CEL';
-        this.set2 = 'celebrations';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '7';
         this.name = 'Flying Pikachu VMAX';
         this.fullName = 'Flying Pikachu VMAX CEL';

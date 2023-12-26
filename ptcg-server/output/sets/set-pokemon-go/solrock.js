@@ -31,7 +31,7 @@ class Solrock extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PGO';
-        this.set2 = 'pokemongo';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '39';
         this.name = 'Solrock';
         this.fullName = 'Solrock PGO';

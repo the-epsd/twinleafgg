@@ -8,7 +8,7 @@ class SupereffectiveGlasses extends game_1.TrainerCard {
         super(...arguments);
         this.trainerType = game_1.TrainerType.TOOL;
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '152';
         this.regulationMark = 'F';
         this.name = 'Supereffective Glasses';

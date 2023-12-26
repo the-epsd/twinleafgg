@@ -25,7 +25,7 @@ class FlappleVMAX extends pokemon_card_1.PokemonCard {
                     'on this Pokémon.'
             }];
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '19';
         this.name = 'Flapple VMAX';
         this.fullName = 'Flapple VMAX BST 019';

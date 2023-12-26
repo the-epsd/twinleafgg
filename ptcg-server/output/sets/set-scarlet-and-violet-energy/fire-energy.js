@@ -8,7 +8,7 @@ class FireEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.FIRE];
         this.set = 'SVE';
-        this.set2 = 'fusionstrike';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '284';
         this.name = 'Basic Fire Energy';
         this.fullName = 'Basic Fire Energy SVE';

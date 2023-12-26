@@ -34,7 +34,7 @@ class OriginFormeDialgaVSTAR extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '114';
         this.name = 'Origin Forme Dialga VSTAR';
         this.fullName = 'Origin Forme Dialga VSTAR ASR';

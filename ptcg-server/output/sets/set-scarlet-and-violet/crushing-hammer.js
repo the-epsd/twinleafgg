@@ -53,7 +53,7 @@ class CrushingHammer extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '168';
         this.name = 'Crushing Hammer';
         this.fullName = 'Crushing Hammer SVI';

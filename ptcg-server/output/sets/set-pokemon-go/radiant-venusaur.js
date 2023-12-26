@@ -28,7 +28,7 @@ class RadiantVenusaur extends game_1.PokemonCard {
             }];
         this.regulationMark = 'F';
         this.set = 'PGO';
-        this.set2 = 'pokemongo';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '4';
         this.name = 'Radiant Venusaur';
         this.fullName = 'Radiant Venusaur PGO';

@@ -25,7 +25,7 @@ class Lapras extends pokemon_card_1.PokemonCard {
                 text: 'If any of your Pokémon were Knocked Out by damage from an attack from your opponent\'s Pokémon during their last turn, your opponent\'s Active Pokémon is now Paralyzed.'
             }];
         this.set = 'BRS';
-        this.set2 = 'brilliantstars';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '31';
         this.name = 'Lapras';
         this.fullName = 'Lapras BRS';

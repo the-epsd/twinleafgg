@@ -23,7 +23,7 @@ class Cleffa extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'OBF';
-        this.set2 = 'obsidianflames';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '80';
         this.name = 'Cleffa';
         this.fullName = 'Cleffa OBF';

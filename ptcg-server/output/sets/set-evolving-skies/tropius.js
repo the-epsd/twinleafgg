@@ -28,7 +28,7 @@ class Tropius extends game_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '6';
         this.name = 'Tropius';
         this.fullName = 'Tropius EVS';

@@ -29,7 +29,7 @@ class HisuianSamurottV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '101';
         this.name = 'Hisuian Samurott V';
         this.fullName = 'Hisuian Samurott V ASR';

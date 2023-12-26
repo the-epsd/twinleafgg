@@ -19,7 +19,7 @@ class Dratini extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'OBF';
-        this.set2 = 'obsidianflames';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '157';
         this.name = 'Dratini';
         this.fullName = 'Dratini OBF';

@@ -31,7 +31,7 @@ class MewV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'FST';
-        this.set2 = 'fusionstrike';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '113';
         this.name = 'Mew V';
         this.fullName = 'Mew V FST 113';

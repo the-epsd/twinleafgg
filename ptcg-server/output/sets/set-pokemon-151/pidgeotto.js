@@ -21,7 +21,7 @@ class Pidgeotto extends pokemon_card_1.PokemonCard {
                 text: '' },
         ];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '17';
         this.name = 'Pidgeotto';
         this.fullName = 'Pidgeotto MEW';

@@ -22,7 +22,7 @@ class Houndour extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '95';
         this.name = 'Houndour';
         this.fullName = 'Houndour BST';

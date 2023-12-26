@@ -28,7 +28,7 @@ class Magmortar extends pokemon_card_1.PokemonCard {
                 text: 'If Electivire is on your Bench, this attack does 120 more damage.'
             }];
         this.set = 'BRS';
-        this.set2 = 'brilliantstars';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '20';
         this.name = 'Magmortar';
         this.fullName = 'Magmortar BRS';

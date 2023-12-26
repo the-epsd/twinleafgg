@@ -33,7 +33,7 @@ class Comfey extends game_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '79';
         this.name = 'Comfey';
         this.fullName = 'Comfey LOR';

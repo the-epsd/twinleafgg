@@ -7,7 +7,7 @@ export declare class FusionStrikeEnergy extends EnergyCard {
     tags: CardTag[];
     energyType: EnergyType;
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     regulationMark: string;
     name: string;

@@ -29,7 +29,7 @@ class Braixen extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'F';
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '26';
         this.name = 'Braixen';
         this.fullName = 'Braixen SIT';

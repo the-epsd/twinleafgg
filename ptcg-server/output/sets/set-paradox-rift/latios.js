@@ -30,7 +30,7 @@ class Latios extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
-        this.set2 = 'paradoxrift';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '73';
         this.name = 'Latios';
         this.fullName = 'Latios PAR';

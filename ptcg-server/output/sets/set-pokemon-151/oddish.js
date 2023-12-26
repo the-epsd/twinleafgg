@@ -17,7 +17,7 @@ class Oddish extends game_1.PokemonCard {
                 text: ''
             }];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '43';
         this.name = 'Oddish';
         this.fullName = 'Oddish MEW';

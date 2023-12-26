@@ -8,7 +8,7 @@ class TempleofSinnoh extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'F';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '155';
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'ASR';

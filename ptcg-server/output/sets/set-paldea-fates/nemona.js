@@ -12,7 +12,7 @@ class Nemona extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'F';
         this.set = 'SV4';
-        this.set2 = 'startersetfuecocoandampharosex';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '20';
         this.name = 'Nemona';
         this.fullName = 'Nemona SV4';

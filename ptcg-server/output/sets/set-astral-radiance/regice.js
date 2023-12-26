@@ -51,7 +51,7 @@ class Regice extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'F';
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '37';
         this.name = 'Regice';
         this.fullName = 'Regice ASR';

@@ -45,7 +45,7 @@ class EnergyRecycler extends trainer_card_1.TrainerCard {
         this.regulationMark = 'E';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '124';
         this.name = 'Energy Recycler';
         this.fullName = 'Energy Recycler BST';

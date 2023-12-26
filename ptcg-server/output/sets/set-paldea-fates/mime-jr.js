@@ -56,7 +56,7 @@ class MimeJr extends pokemon_card_1.PokemonCard {
                 text: 'Your opponent chooses 1 of their Pokémon\'s attacks. Use that attack as this attack.'
             }];
         this.set = 'SV4';
-        this.set2 = 'shinytreasureex';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '85';
         this.name = 'Mime Jr.';
         this.fullName = 'Mime Jr.';

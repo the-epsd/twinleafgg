@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class GalarianMoltesV extends PokemonCard {
+export declare class GalarianMoltresV extends PokemonCard {
     stage: Stage;
     regulationMark: string;
     cardType: CardType;
@@ -25,7 +25,7 @@ export declare class GalarianMoltesV extends PokemonCard {
         text: string;
     }[];
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;

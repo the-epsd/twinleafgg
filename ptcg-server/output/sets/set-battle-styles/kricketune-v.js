@@ -41,7 +41,7 @@ class KricketuneV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '6';
         this.name = 'Kricketune V';
         this.fullName = 'Kricketune V BST 006';

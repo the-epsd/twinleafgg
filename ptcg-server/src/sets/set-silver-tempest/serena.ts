@@ -13,7 +13,7 @@ export class Serena extends TrainerCard {
 
   public set: string = 'SIT';
 
-  public set2: string = 'silvertempest';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '164';
 

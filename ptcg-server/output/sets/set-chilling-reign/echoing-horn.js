@@ -41,7 +41,7 @@ class EchoingHorn extends trainer_card_1.TrainerCard {
         this.regulationMark = 'E';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '136';
         this.name = 'Echoing Horn';
         this.fullName = 'Echoing Horn CRE';

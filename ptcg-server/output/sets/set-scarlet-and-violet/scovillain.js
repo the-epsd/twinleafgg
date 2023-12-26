@@ -33,7 +33,7 @@ class Scovillain extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '29';
         this.name = 'Scovillain';
         this.fullName = 'Scovillain SVI';

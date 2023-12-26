@@ -27,7 +27,7 @@ class Copycat extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'EVS';
         this.regulationMark = 'E';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '143';
         this.name = 'Copycat';
         this.fullName = 'Copycat EVS';

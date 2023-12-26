@@ -70,7 +70,7 @@ export class EnergySwitch extends TrainerCard {
 
   public regulationMark = 'F';
 
-  public set2: string = 'scarletviolet';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '173';
 

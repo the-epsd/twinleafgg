@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Zorua = void 0;
+exports.Feebas = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
@@ -27,7 +27,7 @@ function* useAscension(next, store, state, effect) {
         player.deck.applyOrder(order);
     });
 }
-class Zorua extends pokemon_card_1.PokemonCard {
+class Feebas extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
@@ -47,7 +47,7 @@ class Zorua extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '39';
         this.name = 'Feebas';
         this.fullName = 'Feebas SIT';
@@ -60,4 +60,4 @@ class Zorua extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.Zorua = Zorua;
+exports.Feebas = Feebas;

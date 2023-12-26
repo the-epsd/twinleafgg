@@ -30,7 +30,7 @@ class Wartortle extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '8';
         this.name = 'Wartortle';
         this.fullName = 'Wartortle MEW';

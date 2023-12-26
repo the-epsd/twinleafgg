@@ -29,7 +29,7 @@ class Snorlax extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon is now Asleep. During Pokémon Checkup, flip 2 coins instead of 1. If either of them is tails, this Pokémon is still Asleep.'
             }];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '143';
         this.name = 'Snorlax';
         this.fullName = 'Snorlax LOR';

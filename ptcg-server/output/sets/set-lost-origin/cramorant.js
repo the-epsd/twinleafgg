@@ -28,7 +28,7 @@ class Cramorant extends game_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '50';
         this.name = 'Cramorant';
         this.fullName = 'Cramorant LOR';

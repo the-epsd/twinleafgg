@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Artazon extends TrainerCard {
     regulationMark: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     trainerType: TrainerType;
     set: string;

@@ -38,7 +38,7 @@ class RescueCarrier extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'EVS';
         this.regulationMark = 'E';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '154';
         this.name = 'Rescue Carrier';
         this.fullName = 'Rescue Carrier EVS';

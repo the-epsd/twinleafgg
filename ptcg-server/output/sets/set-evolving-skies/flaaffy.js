@@ -34,7 +34,7 @@ class Flaaffy extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '55';
         this.name = 'Flaaffy';
         this.fullName = 'Flaaffy EVS';

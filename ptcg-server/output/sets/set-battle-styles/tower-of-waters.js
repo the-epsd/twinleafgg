@@ -14,7 +14,7 @@ class TowerOfWaters extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.regulationMark = 'E';
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '138';
         this.name = 'Tower of Waters';
         this.fullName = 'Tower of Waters BST';

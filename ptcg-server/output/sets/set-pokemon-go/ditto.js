@@ -63,7 +63,7 @@ class Ditto extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon can use the attacks of any Basic Pokémon in your discard pile, except for Pokémon with a Rule Box (Pokémon V, Pokémon-GX, etc. have Rule Boxes). (You still need the necessary Energy to use each attack.)'
             }];
         this.set = 'PGO';
-        this.set2 = 'pokemongo';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '53';
         this.name = 'Ditto';
         this.fullName = 'Ditto PGO';

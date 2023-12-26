@@ -29,7 +29,7 @@ class LeafeonVMAX extends game_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '8';
         this.name = 'Leafeon VMAX';
         this.fullName = 'Leafeon VMAX EVS';

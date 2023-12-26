@@ -29,7 +29,7 @@ class Zoroark extends pokemon_card_1.PokemonCard {
             }];
         this.regulationMark = 'E';
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '103';
         this.name = 'Zoroark';
         this.fullName = 'Zoroark EVS';

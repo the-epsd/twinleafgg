@@ -36,7 +36,7 @@ class GalarianArticunoV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '58';
         this.name = 'Galarian Articuno V';
         this.fullName = 'Galarian Articuno V CRE';

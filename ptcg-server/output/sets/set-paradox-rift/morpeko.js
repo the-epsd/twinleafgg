@@ -29,7 +29,7 @@ class Morpeko extends pokemon_card_1.PokemonCard {
             }];
         this.regulationMark = 'G';
         this.set = 'PAR';
-        this.set2 = 'paradoxrift';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '121';
         this.name = 'Morpeko';
         this.fullName = 'Morpeko PAR';

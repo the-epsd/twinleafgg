@@ -29,7 +29,7 @@ class Eiscue extends game_1.PokemonCard {
             }
         ];
         this.set = 'BRS';
-        this.set2 = 'brilliantstars';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '44';
         this.name = 'Eiscue';
         this.fullName = 'Eiscue BRS';

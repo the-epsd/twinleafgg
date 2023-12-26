@@ -28,7 +28,7 @@ class HisuianArcanine extends game_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '71';
         this.name = 'Hisuian Arcanine';
         this.fullName = 'Hisuian Arcanine ASR';

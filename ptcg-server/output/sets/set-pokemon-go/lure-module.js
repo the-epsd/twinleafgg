@@ -11,7 +11,7 @@ class LureModule extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'F';
         this.set = 'PGO';
-        this.set2 = 'pokemongo';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '67';
         this.name = 'Lure Module';
         this.fullName = 'Lure Module PGO';

@@ -28,7 +28,7 @@ class RegigigasVSTAR extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'CRZ';
-        this.set2 = 'crownzenith';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '114';
         this.name = 'Regigigas VSTAR';
         this.fullName = 'Regigigas VSTAR CRZ';

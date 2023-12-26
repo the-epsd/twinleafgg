@@ -32,7 +32,7 @@ class Venomoth extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '49';
         this.name = 'Venomoth';
         this.fullName = 'Venomoth MEW 001';

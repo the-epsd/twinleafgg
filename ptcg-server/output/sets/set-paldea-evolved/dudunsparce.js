@@ -27,7 +27,7 @@ class Dudunsparce extends pokemon_card_1.PokemonCard {
             }];
         this.regulationMark = 'G';
         this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '157';
         this.name = 'Dudunsparce';
         this.fullName = 'Dudunsparce PAL';

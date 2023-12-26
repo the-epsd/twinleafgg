@@ -22,7 +22,7 @@ class Cherubi extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '7';
         this.name = 'Cherubi';
         this.fullName = 'Cherubi BST';

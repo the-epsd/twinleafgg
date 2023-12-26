@@ -46,7 +46,7 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
 
   public set: string = 'ASR';
 
-  public set2: string = 'astralradiance';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '114';
 

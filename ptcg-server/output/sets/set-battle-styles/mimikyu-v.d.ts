@@ -26,7 +26,7 @@ export declare class MimikyuV extends PokemonCard {
         text: string;
     }[];
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     regulationMark: string;
     name: string;

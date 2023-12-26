@@ -31,7 +31,7 @@ class Manaphy extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SWSH';
-        this.set2 = 'swshpromos';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '275';
         this.name = 'Manaphy';
         this.fullName = 'Manaphy SWSH';

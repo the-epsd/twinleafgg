@@ -17,32 +17,15 @@ import { GameMessage, GameLog } from '../../game-message';
 import { PlayerType } from '../actions/play-card-action';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { StoreLike } from '../store-like';
-import { SuperType, Stage } from '../card/card-types';
+import { SuperType, Stage, CardTag } from '../card/card-types';
 import { WhoBeginsEffect } from '../effects/game-phase-effects';
 import { endGame } from '../effect-reducers/check-effect';
 import { initNextTurn } from '../effect-reducers/game-phase-effect';
 import { SelectPrompt } from '../prompts/select-prompt';
 
-
-function putStartingPokemonsAndPrizes(player: Player, cards: Card[]): void {
-  if (cards.length === 0) {
-    return;
-  }
-  player.hand.moveCardTo(cards[0], player.active);
-  for (let i = 1; i < cards.length; i++) {
-    player.hand.moveCardTo(cards[i], player.bench[i - 1]);
-  }
-  for (let i = 0; i < 6; i++) {
-    player.deck.moveTo(player.prizes[i], 1);
-  }
-}
-
 function* setupGame(next: Function, store: StoreLike, state: State): IterableIterator<State> {
-  const basicPokemon = {superType: SuperType.POKEMON, stage: Stage.BASIC};
-  const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
   const player = state.players[0];
   const opponent = state.players[1];
-
 
   const whoBeginsEffect = new WhoBeginsEffect();
   store.reduceEffect(state, whoBeginsEffect);
@@ -65,13 +48,12 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
           state.activePlayer = whoBegins ? 1 : 0;
           next();
         }
-      }
-      );
-    }
-    );
+      });
+    });
   }
 
-
+  const basicPokemon = {superType: SuperType.POKEMON, stage: Stage.BASIC || CardTag.RAPID_STRIKE};
+  const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
 
   let playerCardsToDraw = 0;
   let opponentCardsToDraw = 0;
@@ -127,6 +109,19 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
         }
         next();
       });
+    }
+  }
+
+  function putStartingPokemonsAndPrizes(player: Player, cards: Card[]): void {
+    if (cards.length === 0) {
+      return;
+    }
+    player.hand.moveCardTo(cards[0], player.active);
+    for (let i = 1; i < cards.length; i++) {
+      player.hand.moveCardTo(cards[i], player.bench[i - 1]);
+    }
+    for (let i = 0; i < 6; i++) {
+      player.deck.moveTo(player.prizes[i], 1);
     }
   }
 

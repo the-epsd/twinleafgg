@@ -26,7 +26,7 @@ class WyrdeerV extends game_1.PokemonCard {
             }];
         this.regulationMark = 'F';
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '134';
         this.name = 'Wyrdeer V';
         this.fullName = 'Wyrdeer V ASR';

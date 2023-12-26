@@ -12,7 +12,7 @@ export class JetEnergy extends EnergyCard {
 
   public set: string = 'PAL';
 
-  public set2: string = 'paldeaevolved';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '190';
 

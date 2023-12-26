@@ -4,41 +4,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt,
-  ShuffleDeckPrompt } from '../../game';
-
-
-function* useLuminousSign(next: Function, store: StoreLike, state: State,
-  self: LumineonV, effect: PlayPokemonEffect): IterableIterator<State> {
-  const player = effect.player;
-
-  if (player.deck.cards.length === 0) {
-    return state;
-  }
-
-  // Try to reduce PowerEffect, to check if something is blocking our ability
-  try {
-    const powerEffect = new PowerEffect(player, self.powers[0], self);
-    store.reduceEffect(state, powerEffect);
-  } catch {
-    return state;
-  }
-
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-    { min: 1, max: 1, allowCancel: true }
-  ), selected => {
-    const cards = selected || [];
-    player.deck.moveCardsTo(cards, player.hand);
-    next();
-  });
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
-}
+  ShuffleDeckPrompt, 
+  ConfirmPrompt} from '../../game';
 
 export class LumineonV extends PokemonCard {
 
@@ -76,7 +43,7 @@ export class LumineonV extends PokemonCard {
 
   public set: string = 'BRS';
 
-  public set2: string = 'brilliantstars';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '40';
 
@@ -87,8 +54,41 @@ export class LumineonV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const generator = useLuminousSign(() => generator.next(), store, state, this, effect);
-      return generator.next().value;
+      const player = effect.player;
+
+      if (player.deck.cards.length === 0) {
+        return state;
+      }
+    
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
+      }
+      state = store.prompt(state, new ConfirmPrompt(
+        effect.player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (wantToUse) {
+    
+          state = store.prompt(state, new ChooseCardsPrompt(
+            player.id,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.deck,
+            { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+            { min: 1, max: 1, allowCancel: true }
+          ), selected => {
+            const cards = selected || [];
+            player.deck.moveCardsTo(cards, player.hand);
+          });
+    
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+          });
+        }
+      });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

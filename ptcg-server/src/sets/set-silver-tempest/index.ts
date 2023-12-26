@@ -1,71 +1,41 @@
 import { Card } from '../../game/store/card/card';
-import { AlolanVulpixV } from './alolan-vulpix-v';
-import { AlolanVulpixVSTAR } from './alolan-vulpix-vstar';
-import { Archeops } from './archeops';
-import { Articuno } from './articuno';
-import { Beheeyem } from './beheeyem';
-import { Braixen } from './braixen';
-import { Candice } from './candice';
-import { CapturingAroma } from './capturing-aroma';
-import { Cobalion } from './cobalion';
-import { Dragonite } from './dragonite';
-import { Elgyem } from './elgyem';
-import { EmergencyJelly } from './emergency-jelly';
-import { ForestSealStone } from './forest-seal-stone';
-import { FurisodeGirl } from './furisode-girl';
-import { HisuianBraviary } from './hisuian-braviary';
-import { Kirlia } from './kirlia';
-import { LugiaV } from './lugia-v';
-import { LugiaVSTAR } from './lugia-vstar';
-import { Metagross } from './metagross';
-import { PrimordialAltar } from './primordial-altar';
-import { RadiantAlakazam } from './radiant-alakazam';
-import { RadiantTsareena } from './radiant-tsareena';
-import { Raichu } from './raichu';
-import { RegenerativeEnergy } from './regenerative-energy';
-import { RegidragoV } from './regidrago-v';
-import { RegidragoVSTAR } from './regidrago-vstar';
-import { RegielekiVMAX } from './regieleki-vmax';
-import { Rufflet } from './rufflet';
-import { Serena } from './serena';
-import { UrsalunaV } from './ursaluna-v';
-import { VGuardEnergy } from './v-guard-energy';
-import { Worker } from './worker';
-import { Zeraora } from './zeraora';
+import { AlolanVulpixVArt, AlolanVulpixVSTARArt, ArcheopsArt, ArticunoArt, BeheeyemArt, BraixenArt, CandiceArt, CapturingAromaArt, CobalionArt, DragoniteArt, ElgyemArt, EmergencyJellyArt, FeebasArt, ForestSealStoneArt, FurisodeGirlArt, HisuianBraviaryArt, KirliaArt, LugiaVArt, LugiaVSTARArt, MetagrossArt, PrimordialAltarArt, RadiantAlakazamArt, RadiantJirachiArt, RadiantTsareenaArt, RaichuArt, RegenerativeEnergyArt, RegidragoVArt, RegidragoVSTARArt, RegielekiVArt, RegielekiVMAXArt, RuffletArt, SerenaArt, UrsalunaVArt, VGuardEnergyArt, WorkerArt, ZeraoraArt } from './card-images';
 
 export const setSilverTempest: Card[] = [
-
-  new AlolanVulpixV(),
-  new AlolanVulpixVSTAR(),
-  new Archeops(),
-  new Articuno(),
-  new Beheeyem(),
-  new Braixen(),
-  new Candice(),
-  new CapturingAroma(),
-  new Cobalion(),
-  new Dragonite(),
-  new EmergencyJelly(),
-  new Elgyem(),
-  new ForestSealStone(),
-  new FurisodeGirl(),
-  new HisuianBraviary(),
-  new Kirlia(),
-  new LugiaV(),
-  new LugiaVSTAR(),
-  new Metagross(),
-  new PrimordialAltar(),
-  new RadiantAlakazam(),
-  new RadiantTsareena(),
-  new Raichu(),
-  new RegenerativeEnergy(),
-  new RegidragoV(),
-  new RegidragoVSTAR(),
-  new RegielekiVMAX(),
-  new Rufflet(),
-  new Serena(),
-  new VGuardEnergy(),
-  new Worker(),
-  new Zeraora(),
-  new UrsalunaV(),
+  new AlolanVulpixVArt(),
+  new AlolanVulpixVSTARArt(),
+  new ArcheopsArt(),
+  new ArticunoArt(),
+  new BeheeyemArt(),
+  new BraixenArt(),
+  new CandiceArt(),
+  new CapturingAromaArt(),
+  new CobalionArt(),
+  new DragoniteArt(),
+  new ElgyemArt(),
+  new EmergencyJellyArt(),
+  new FeebasArt(),
+  new ForestSealStoneArt(),
+  new FurisodeGirlArt(),
+  new HisuianBraviaryArt(),
+  new KirliaArt(),
+  new LugiaVArt(),
+  new LugiaVSTARArt(),
+  new MetagrossArt(),
+  new PrimordialAltarArt(),
+  new RadiantAlakazamArt(),
+  new RadiantJirachiArt(),
+  new RadiantTsareenaArt(),
+  new RaichuArt(),
+  new RegenerativeEnergyArt(),
+  new RegidragoVArt(),
+  new RegidragoVSTARArt(),
+  new RegielekiVArt(),
+  new RegielekiVMAXArt(),
+  new RuffletArt(),
+  new SerenaArt(),
+  new UrsalunaVArt(),
+  new VGuardEnergyArt(),
+  new WorkerArt(),
+  new ZeraoraArt(),
 ];

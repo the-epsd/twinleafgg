@@ -12,7 +12,7 @@ class RockChestplate extends energy_card_1.EnergyCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '192';
         this.name = 'Rock Chestplate';
         this.fullName = 'Rock Chestplate SVI';

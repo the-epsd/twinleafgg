@@ -11,7 +11,7 @@ class LuminousEnergy extends energy_card_1.EnergyCard {
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'PAL';
         this.regulationMark = 'G';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '191';
         this.name = 'Luminous Energy';
         this.fullName = 'Luminous Energy PAL';

@@ -1,64 +1,67 @@
 import { Card } from '../../game/store/card/card';
-import { Artazon } from './artazon';
-import { Baxcalibur } from './baxcalibur';
-import { BossOrders } from './boss-orders';
-import { BraveyCharm } from './bravery-charm';
-import { ChienPaoex } from './chien-pao-ex';
-import { ChoiceBelt } from './choice-belt';
-import { DeliveryDrone } from './delivery-drone';
-import { Dudunsparce } from './dudunsparce';
-import { FightingAuLait } from './fighting-au-lait';
-import { Flamigo } from './flamigo';
-import { Frigibax } from './frigibax';
-import { Frigibax2 } from './frigibax2';
-import { GreatBall } from './great-ball';
-import { Iono } from './iono';
-import { JetEnergy } from './jet-energy';
-import { LuminousEnergy } from './luminous-energy';
-import { Mimikyu } from './mimikyu';
-import { Murkrow } from './murkrow';
-import { ReversalEnergy } from './reversal-energy';
-import { Spiritomb } from './spiritomb';
-import { Squawkabillyex } from './squawkabilly-ex';
-import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
-import { SuperRod } from './super-rod';
-import { Wattrel } from './wattrel';
-import { Luxray } from './luxray';
-import { WoChienex } from './wo-chien-ex';
-import { Shinx } from './shinx';
-import { Tadbulb } from './tadbulb';
+import { ArctibaxArt, ArtazonArt } from './card-images';
+import { BaxcaliburArt } from './card-images';
+import { BossOrdersArt } from './card-images';
+import { BraveyCharmArt } from './card-images';
+import { ChienPaoexArt } from './card-images';
+import { ChoiceBeltArt } from './card-images';
+import { DeliveryDroneArt } from './card-images';
+import { DudunsparceArt } from './card-images';
+import { FightingAuLaitArt } from './card-images';
+import { FlamigoArt } from './card-images';
+import { FrigibaxArt } from './card-images';
+import { Frigibax2Art } from './card-images';
+import { GreatBallArt } from './card-images';
+import { IonoArt } from './card-images';
+import { JetEnergyArt } from './card-images';
+import { LuminousEnergyArt } from './card-images';
+import { MimikyuArt } from './card-images';
+import { MurkrowArt } from './card-images';
+import { ReversalEnergyArt } from './card-images';
+import { SpiritombArt } from './card-images';
+import { SquawkabillyexArt } from './card-images';
+import { SuperiorEnergyRetrievalArt } from './card-images';
+import { SuperRodArt } from './card-images';
+import { WattrelArt } from './card-images';
+import { LuxrayArt } from './card-images';
+import { WoChienexArt } from './card-images';
+import { ShinxArt } from './card-images';
+import { TadbulbArt } from './card-images';
+import { TingLuexArt } from './card-images';
+
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [
 
-  new Artazon(),
-  //new CalamitousSnowyMountain(),
-  new DeliveryDrone(),
-  new Iono(),
-  new Baxcalibur(),
-  new ChienPaoex(),
-  new Flamigo(),
-  new Spiritomb(),
-  new BossOrders(),
-  new BraveyCharm(),
-  new JetEnergy(),
-  new ChoiceBelt(),
-  new Frigibax(),
-  new Frigibax2(),
-  new GreatBall(),
-  new LuminousEnergy(),
-  new Luxray(),
-  new Mimikyu(),
-  new Murkrow(),
-  new FightingAuLait(),
-  new Dudunsparce(),
-  new ReversalEnergy(),
-  new Spiritomb(),
-  new Squawkabillyex(),
-  new SuperRod(),
-  new SuperiorEnergyRetrieval(),
-  new Wattrel(),
-  new WoChienex(),
-  new Shinx(),
-  new Tadbulb(),
+  new ArctibaxArt(),
+  new ArtazonArt(),
+  new BaxcaliburArt(),
+  new BossOrdersArt(),
+  new BraveyCharmArt(),
+  new ChienPaoexArt(),
+  new ChoiceBeltArt(),
+  new DeliveryDroneArt(),
+  new DudunsparceArt(),
+  new FightingAuLaitArt(),
+  new FlamigoArt(),
+  new FrigibaxArt(),
+  new Frigibax2Art(),
+  new GreatBallArt(),
+  new IonoArt(),
+  new JetEnergyArt(),
+  new LuminousEnergyArt(),
+  new LuxrayArt(),
+  new MimikyuArt(),
+  new MurkrowArt(),
+  new ReversalEnergyArt(),
+  new ShinxArt(),
+  new SpiritombArt(),
+  new SquawkabillyexArt(),
+  new SuperRodArt(),
+  new SuperiorEnergyRetrievalArt(),
+  new TadbulbArt(),
+  new TingLuexArt(),
+  new WattrelArt(),
+  new WoChienexArt()  
+  
 ];

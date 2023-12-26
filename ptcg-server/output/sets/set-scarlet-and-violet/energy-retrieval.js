@@ -39,7 +39,7 @@ class EnergyRetrieval extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
         this.regulationMark = 'G';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '171';
         this.name = 'Energy Retrieval';
         this.fullName = 'Energy Retrieval SVI';

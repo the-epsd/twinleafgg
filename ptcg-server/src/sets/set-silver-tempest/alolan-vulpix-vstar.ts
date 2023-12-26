@@ -40,7 +40,7 @@ export class AlolanVulpixVSTAR extends PokemonCard {
 
   public set = 'SIT';
 
-  public set2 = 'silvertempest';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber = '34';
 

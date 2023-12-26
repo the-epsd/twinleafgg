@@ -11,7 +11,7 @@ class ToolJammer extends trainer_card_1.TrainerCard {
         this.regulationMark = 'E';
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '136';
         this.name = 'Tool Jammer';
         this.fullName = 'Tool Jammer BST';

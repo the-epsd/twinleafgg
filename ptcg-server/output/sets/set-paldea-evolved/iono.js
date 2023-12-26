@@ -12,7 +12,7 @@ class Iono extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '185';
         this.name = 'Iono';
         this.fullName = 'Iono PAL';

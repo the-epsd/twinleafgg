@@ -33,7 +33,7 @@ class IronBundle extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
-        this.set2 = 'paradoxrift';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '56';
         this.name = 'Iron Bundle';
         this.fullName = 'Iron Bundle PAR';

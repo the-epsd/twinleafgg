@@ -30,7 +30,7 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'PAR';
-        this.set2 = 'paradoxrift';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '70';
         this.name = 'Iron Hands ex';
         this.fullName = 'Iron Hands ex PAR';

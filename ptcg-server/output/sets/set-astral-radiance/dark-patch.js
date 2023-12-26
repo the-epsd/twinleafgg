@@ -18,7 +18,7 @@ class DarkPatch extends trainer_card_1.TrainerCard {
         this.regulationMark = 'F';
         this.set = 'ASR';
         this.name = 'Dark Patch';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '139';
         this.fullName = 'Dark Patch ASR';
         this.text = 'Attach a basic D Energy card from your discard pile to 1 of your ' +

@@ -24,7 +24,7 @@ export declare class ZacianV extends PokemonCard {
         text: string;
     }[];
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     regulationMark: string;
     name: string;

@@ -11,7 +11,7 @@ class GreatBall extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'G';
         this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '183';
         this.name = 'Great Ball';
         this.fullName = 'Great Ball PAL';

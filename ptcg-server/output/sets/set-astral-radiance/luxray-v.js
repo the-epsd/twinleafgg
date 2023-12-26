@@ -33,7 +33,7 @@ class LuxrayV extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'F';
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '50';
         this.name = 'Luxray V';
         this.fullName = 'Luxray V ASR';

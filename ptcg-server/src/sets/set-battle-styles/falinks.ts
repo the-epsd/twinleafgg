@@ -27,7 +27,7 @@ export class Falinks extends PokemonCard {
 
   public set = 'BST';
 
-  public set2 = 'battlestyles';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber = '83';
 

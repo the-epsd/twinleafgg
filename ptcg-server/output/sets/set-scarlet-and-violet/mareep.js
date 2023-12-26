@@ -27,7 +27,7 @@ class Mareep extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '66';
         this.name = 'Mareep';
         this.fullName = 'Mareep SVI';

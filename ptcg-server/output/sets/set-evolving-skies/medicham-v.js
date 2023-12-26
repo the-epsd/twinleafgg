@@ -28,7 +28,7 @@ class MedichamV extends game_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '83';
         this.name = 'Medicham V';
         this.fullName = 'Medicham V EVS';

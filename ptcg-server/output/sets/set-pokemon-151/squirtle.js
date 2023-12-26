@@ -34,7 +34,7 @@ class Squirtle extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '7';
         this.name = 'Squirtle';
         this.fullName = 'Squirtle MEW';

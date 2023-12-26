@@ -18,7 +18,7 @@ export class RapidStrikeEnergy extends EnergyCard {
 
   public set: string = 'BST';
 
-  public set2: string = 'battlestyles';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '140';
 

@@ -29,7 +29,7 @@ class Snorlax extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'F';
         this.set = 'PGO';
-        this.set2 = 'pokemongo';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '55';
         this.name = 'Snorlax';
         this.fullName = 'Snorlax PGO';

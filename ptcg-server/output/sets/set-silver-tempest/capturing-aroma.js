@@ -12,7 +12,7 @@ class CapturingAroma extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '153';
         this.regulationMark = 'F';
         this.name = 'Capturing Aroma';

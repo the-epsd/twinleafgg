@@ -21,7 +21,7 @@ class DusknoirLvX extends pokemon_card_1.PokemonCard {
                 text: 'If Dusknoir is your Active Pokémon and would be Knocked Out by damage from your opponent\'s attack, you may discard all cards attached to Dusknoir LV.X and put Dusknoir LV.X as a Stadium card into play instead of discarding it. This counts as Dusknoir being Knocked Out and your opponent takes a Prize card. As long as you have Dusknoir LV.X as a Stadium card in play, put 1 damage counter on each of your opponent\'s Pokémon between turns. If another Stadium card comes into play or Dusknoir LV.X is discarded by the effects of any attacks, Poké-Powers, Poké-Bodies, Trainer, or Supporter cards, return Dusknoir LV.X to your hand.'
             }];
         this.set = 'SF';
-        this.set2 = 'stormfront';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '96';
         this.name = 'Dusknoir Lv.X';
         this.fullName = 'DusknLv.X SF';

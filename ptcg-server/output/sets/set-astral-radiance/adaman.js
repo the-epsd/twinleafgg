@@ -52,8 +52,8 @@ class Adaman extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
         this.setNumber = '135';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Adaman';
         this.fullName = 'Adaman ASR';
         this.text = 'You can use this card only if you discard 2 [M] Energy cards from your hand.' +

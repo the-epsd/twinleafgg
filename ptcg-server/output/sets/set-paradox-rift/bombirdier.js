@@ -27,7 +27,7 @@ class BombirdierEx extends game_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
-        this.set2 = 'paradoxrift';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '156';
         this.name = 'Bombirdier ex';
         this.fullName = 'Bombirdier ex PAR';

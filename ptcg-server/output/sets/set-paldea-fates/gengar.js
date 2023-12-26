@@ -28,7 +28,7 @@ class Gengar extends pokemon_card_1.PokemonCard {
                 text: 'Your opponent’s Active Pokémon is now Asleep.'
             }];
         this.regulationMark = 'G';
-        this.set2 = 'ragingsurf';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '35';
         this.set = 'SV4';
         this.name = 'Gengar';

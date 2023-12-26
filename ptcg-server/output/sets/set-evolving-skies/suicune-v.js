@@ -34,7 +34,7 @@ class SuicuneV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '31';
         this.name = 'Suicune V';
         this.fullName = 'Suicune V EVS';

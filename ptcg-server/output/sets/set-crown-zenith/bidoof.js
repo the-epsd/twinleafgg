@@ -32,7 +32,7 @@ class Bidoof extends pokemon_card_1.PokemonCard {
                 text: 'Flip a coin. If tails, this attack does nothing.'
             }];
         this.set = 'CRZ';
-        this.set2 = 'crownzenith';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '111';
         this.name = 'Bidoof';
         this.fullName = 'Bidoof CRZ';

@@ -29,7 +29,7 @@ class RegigigasV extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'CRZ';
-        this.set2 = 'crownzenith';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '113';
         this.name = 'Regigigas V';
         this.fullName = 'Regigigas V CRZ';

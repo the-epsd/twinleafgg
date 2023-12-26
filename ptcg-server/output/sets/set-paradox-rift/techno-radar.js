@@ -55,7 +55,7 @@ class TechnoRadar extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'G';
         this.set = 'PAR';
-        this.set2 = 'futureflash';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '60';
         this.name = 'Techno Radar';
         this.fullName = 'Techno Radar PAR';

@@ -46,7 +46,7 @@ export class MewtwoVUnion1 extends PokemonCard {
 
   public set: string = 'SWSH';
 
-  public set2: string = 'scarletviolet';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '181';
 

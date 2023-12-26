@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class LostVacuum extends TrainerCard {
     trainerType: TrainerType;
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     regulationMark: string;
     name: string;

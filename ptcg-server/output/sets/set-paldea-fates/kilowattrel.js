@@ -33,7 +33,7 @@ class Kilowattrel extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SV4';
-        this.set2 = 'shinytreasureex';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '70';
         this.name = 'Kilowattrel';
         this.fullName = 'Kilowattrel SV4';

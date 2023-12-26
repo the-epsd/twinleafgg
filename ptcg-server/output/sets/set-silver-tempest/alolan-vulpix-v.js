@@ -29,7 +29,7 @@ class AlolanVulpixV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '33';
         this.name = 'Alolan Vulpix V';
         this.fullName = 'Alolan Vulpix V SIT';

@@ -29,7 +29,7 @@ class Lunatone extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'OBF';
-        this.set2 = 'obsidianflames';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '92';
         this.name = 'Lunatone';
         this.fullName = 'Lunatone OBF';

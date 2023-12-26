@@ -31,7 +31,7 @@ class OriginFormePalkiaV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '39';
         this.name = 'Origin Forme Palkia V';
         this.fullName = 'Origin Forme Palkia V ASR';

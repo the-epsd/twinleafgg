@@ -27,7 +27,7 @@ class Luxray extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon also does 20 damage to itself.'
             }];
         this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '71';
         this.name = 'Luxray';
         this.fullName = 'Luxray PAL';

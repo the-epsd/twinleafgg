@@ -12,7 +12,7 @@ class RockyHelmet extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '193';
         this.name = 'Rocky Helmet';
         this.fullName = 'Rocky Helmet SVI';

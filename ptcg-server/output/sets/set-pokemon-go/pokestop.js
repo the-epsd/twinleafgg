@@ -10,7 +10,7 @@ class Pokestop extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'F';
-        this.set2 = 'pokemongo';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '68';
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'PGO';

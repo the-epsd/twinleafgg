@@ -8,7 +8,7 @@ export declare class DarkPatch extends TrainerCard {
     regulationMark: string;
     set: string;
     name: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     fullName: string;
     text: string;

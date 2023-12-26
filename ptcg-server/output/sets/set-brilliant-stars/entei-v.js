@@ -34,7 +34,7 @@ class EnteiV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BRS';
-        this.set2 = 'brilliantstars';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '22';
         this.name = 'Entei V';
         this.fullName = 'Entei V BRS';

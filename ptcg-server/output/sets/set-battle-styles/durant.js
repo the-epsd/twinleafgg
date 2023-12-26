@@ -31,7 +31,7 @@ class Durant extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '10';
         this.name = 'Durant';
         this.fullName = 'Durant BST 010';

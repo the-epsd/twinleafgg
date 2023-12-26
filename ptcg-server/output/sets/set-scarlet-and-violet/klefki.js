@@ -30,7 +30,7 @@ class Klefki extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '96';
         this.name = 'Klefki';
         this.fullName = 'Klefki SVI';

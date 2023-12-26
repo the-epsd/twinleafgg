@@ -31,7 +31,7 @@ class Eevee extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '133';
         this.name = 'Eevee';
         this.fullName = 'Eevee MEW';

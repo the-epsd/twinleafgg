@@ -33,7 +33,7 @@ class SingleStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '86';
         this.name = 'Single Strike Urshifu VMAX';
         this.fullName = 'Single Strike Urshifu VMAX BST';

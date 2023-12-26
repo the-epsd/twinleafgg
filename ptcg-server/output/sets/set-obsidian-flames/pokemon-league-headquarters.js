@@ -11,7 +11,7 @@ class PokemonLeagueHeadquarters extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.regulationMark = 'G';
         this.set = 'OBF';
-        this.set2 = 'obsidianflames';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '192';
         this.name = 'Pokémon League Headquarters';
         this.fullName = 'Pokémon League Headquarters OBF';

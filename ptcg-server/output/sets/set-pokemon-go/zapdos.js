@@ -30,7 +30,7 @@ class Zapdos extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'F';
         this.set = 'PGO';
-        this.set2 = 'pokemongo';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '29';
         this.name = 'Zapdos';
         this.fullName = 'Zapdos PGO';

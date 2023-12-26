@@ -12,7 +12,7 @@ class FusionStrikeEnergy extends energy_card_1.EnergyCard {
         this.tags = [card_types_1.CardTag.FUSION_STRIKE];
         this.energyType = card_types_1.EnergyType.BASIC;
         this.set = 'FST';
-        this.set2 = 'fusionstrike';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '244';
         this.regulationMark = 'E';
         this.name = 'Fusion Strike Energy';

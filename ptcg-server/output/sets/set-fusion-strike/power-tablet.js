@@ -11,7 +11,7 @@ class PowerTablet extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'FST';
         this.tags = [card_types_1.CardTag.FUSION_STRIKE];
-        this.set2 = 'fusionstrike';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '236';
         this.regulationMark = 'E';
         this.name = 'Power Tablet';

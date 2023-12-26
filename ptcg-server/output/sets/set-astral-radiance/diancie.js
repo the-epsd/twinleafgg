@@ -24,7 +24,7 @@ class Diancie extends pokemon_card_1.PokemonCard {
                 text: 'Draw 2 cards.'
             }];
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '68';
         this.name = 'Diancie';
         this.fullName = 'Diancie ASR';

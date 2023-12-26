@@ -22,7 +22,7 @@ class Swablu extends pokemon_card_1.PokemonCard {
                 text: 'Flip a coin. If tails, this attack does nothing.'
             }];
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '132';
         this.name = 'Swablu';
         this.fullName = 'Swablu EVS';

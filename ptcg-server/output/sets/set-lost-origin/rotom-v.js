@@ -33,7 +33,7 @@ class RotomV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '58';
         this.name = 'Rotom V';
         this.fullName = 'Rotom V LOR';

@@ -32,7 +32,7 @@ class LeafeonVSTAR extends pokemon_card_1.PokemonCard {
             }];
         this.regulationMark = 'G';
         this.set = 'SWSH';
-        this.set2 = 'swshpromos';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '195';
         this.name = 'Leafeon VSTAR';
         this.fullName = 'Leafeon VSTAR SWSH';

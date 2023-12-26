@@ -23,7 +23,7 @@ class AlolanVulpix extends game_1.PokemonCard {
                 text: ''
             }];
         this.set = 'HF';
-        this.set2 = 'hiddenfates';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = 'h8';
         this.name = 'Alolan Vulpix';
         this.fullName = 'Alolan Vulpix HF';

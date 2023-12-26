@@ -28,7 +28,7 @@ class Mareep extends game_1.PokemonCard {
             }
         ];
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '47';
         this.name = 'Mareep';
         this.fullName = 'Mareep CRE';

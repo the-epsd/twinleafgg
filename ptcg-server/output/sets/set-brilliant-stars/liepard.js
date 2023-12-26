@@ -32,7 +32,7 @@ class Liepard extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BRS';
-        this.set2 = 'brilliantstars';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '91';
         this.name = 'Liepard';
         this.fullName = 'Liepard BRS';

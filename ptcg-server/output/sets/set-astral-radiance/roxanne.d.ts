@@ -6,7 +6,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 export declare class Roxanne extends TrainerCard {
     trainerType: TrainerType;
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     regulationMark: string;
     name: string;

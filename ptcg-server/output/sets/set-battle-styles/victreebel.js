@@ -35,7 +35,7 @@ class Victreebel extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '3';
         this.name = 'Victreebel';
         this.fullName = 'Victreebel BST 003';

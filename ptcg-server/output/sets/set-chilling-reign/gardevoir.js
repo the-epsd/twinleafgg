@@ -36,7 +36,7 @@ class Gardevoir extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '61';
         this.regulationMark = 'E';
         this.name = 'Gardevoir';

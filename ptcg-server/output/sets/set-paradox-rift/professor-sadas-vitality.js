@@ -14,7 +14,7 @@ class ProfessorSadasVitality extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'G';
         this.set = 'PAR';
-        this.set2 = 'paradoxrift';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '170';
         this.name = 'Professor Sada\'s Vitality';
         this.fullName = 'Professor Sada\'s Vitality PAR';

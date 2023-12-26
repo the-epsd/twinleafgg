@@ -7,7 +7,7 @@ export declare class GiftEnergy extends EnergyCard {
     provides: CardType[];
     energyType: EnergyType;
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     regulationMark: string;
     name: string;

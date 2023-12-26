@@ -36,7 +36,7 @@ class MewtwoVUnion1 extends pokemon_card_1.PokemonCard {
                 text: 'Attach up to 2 [P] Energy cards from your discard pile to this Pokémon.'
             }];
         this.set = 'SWSH';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '181';
         this.name = 'MewtwoVUnion1';
         this.fullName = 'MewtwoVUnion1 PLF';

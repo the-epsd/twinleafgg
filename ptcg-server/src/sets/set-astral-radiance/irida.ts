@@ -74,7 +74,7 @@ export class Irida extends TrainerCard {
 
   public set: string = 'ASR';
 
-  public set2: string = 'astralradiance';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '147';
 

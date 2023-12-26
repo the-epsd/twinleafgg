@@ -31,7 +31,7 @@ class Scovillainex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'G';
-        this.set2 = 'svpromo';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '89';
         this.set = 'SV4';
         this.name = 'Scovillain ex';

@@ -11,7 +11,7 @@ class DamagePump extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '156';
         this.regulationMark = 'F';
         this.name = 'Damage Pump';

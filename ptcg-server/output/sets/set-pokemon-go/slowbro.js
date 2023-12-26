@@ -28,7 +28,7 @@ class Slowbro extends game_1.PokemonCard {
             }
         ];
         this.set = 'PGO';
-        this.set2 = 'pokemongo';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '20';
         this.name = 'Slowbro';
         this.fullName = 'Slowbro LOR';

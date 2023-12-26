@@ -41,7 +41,7 @@ export class LeafeonVSTAR extends PokemonCard {
 
   public set = 'SWSH';
 
-  public set2: string = 'swshpromos';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '195';
 

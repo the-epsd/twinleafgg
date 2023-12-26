@@ -15,7 +15,7 @@ class SingleStrikeEnergy extends energy_card_1.EnergyCard {
         this.provides = [card_types_1.CardType.COLORLESS];
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '141';
         this.name = 'Single Strike Energy';
         this.fullName = 'Single Strike Energy BST';

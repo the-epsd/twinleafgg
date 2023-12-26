@@ -14,7 +14,7 @@ class PrimordialAltar extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.regulationMark = 'F';
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '161';
         this.name = 'Primordial Altar';
         this.fullName = 'Primordial Altar SIT';

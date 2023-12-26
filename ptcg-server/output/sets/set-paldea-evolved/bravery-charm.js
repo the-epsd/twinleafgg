@@ -11,7 +11,7 @@ class BraveyCharm extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.regulationMark = 'G';
         this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '173';
         this.name = 'Bravery Charm';
         this.fullName = 'Bravery Charm PAL';

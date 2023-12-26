@@ -32,7 +32,7 @@ class Froslassex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
-        this.set2 = 'ragingsurf';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '1';
         this.name = 'Froslass ex';
         this.fullName = 'Froslass ex PAR';

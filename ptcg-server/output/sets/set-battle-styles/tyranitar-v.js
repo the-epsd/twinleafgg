@@ -30,7 +30,7 @@ class TyranitarV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '97';
         this.name = 'Tyranitar V';
         this.fullName = 'Tyranitar V BST 097';

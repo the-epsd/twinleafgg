@@ -28,7 +28,7 @@ class Arctibax extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '59';
         this.name = 'Arctibax';
         this.fullName = 'Arctibax PAL';

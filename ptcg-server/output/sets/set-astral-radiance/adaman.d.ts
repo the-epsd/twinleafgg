@@ -7,8 +7,8 @@ export declare class Adaman extends TrainerCard {
     regulationMark: string;
     trainerType: TrainerType;
     set: string;
-    set2: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     text: string;

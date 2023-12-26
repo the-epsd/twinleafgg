@@ -61,10 +61,10 @@ export function initNextTurn(store: StoreLike, state: State): State {
   //  return state;
   //}
 
-  //Skip draw card on first turn
-  if (state.turn === 1 && !state.rules.firstTurnAttack) {
-    return state;
-  }
+  //Skip attack on first turn
+  // if (state.turn === 1 && !state.rules.firstTurnAttack) {
+  //   return state;
+  // }
 
   // Draw card at the beginning
   store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });

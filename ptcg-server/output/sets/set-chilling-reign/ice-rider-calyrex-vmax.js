@@ -33,10 +33,10 @@ class IceRiderCalyrexVMAX extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '46';
-        this.name = 'Ice Rider Calyrex V';
-        this.fullName = 'Ice Rider Calyrex V CRE';
+        this.name = 'Ice Rider Calyrex VMAX';
+        this.fullName = 'Ice Rider Calyrex VMAX CRE';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

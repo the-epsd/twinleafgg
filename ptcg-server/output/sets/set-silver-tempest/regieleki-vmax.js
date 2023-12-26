@@ -33,7 +33,7 @@ class RegielekiVMAX extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '58';
         this.name = 'Regieleki VMAX';
         this.fullName = 'Regieleki VMAX SIT';

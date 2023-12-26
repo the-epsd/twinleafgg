@@ -13,7 +13,7 @@ class VGuardEnergy extends energy_card_1.EnergyCard {
         this.energyType = card_types_1.EnergyType.BASIC;
         this.regulationMark = 'F';
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '169';
         this.name = 'V Guard Energy';
         this.fullName = 'V Guard Energy SIT';

@@ -11,7 +11,7 @@ class DoubleTurboEnergy extends energy_card_1.EnergyCard {
         this.provides = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'BRS';
-        this.set2 = 'brilliantstars';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '151';
         this.regulationMark = 'F';
         this.name = 'Double Turbo Energy';

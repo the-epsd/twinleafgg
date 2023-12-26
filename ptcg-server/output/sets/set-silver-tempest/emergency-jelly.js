@@ -11,7 +11,7 @@ class EmergencyJelly extends trainer_card_1.TrainerCard {
         this.regulationMark = 'F';
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '155';
         this.name = 'Emergency Jelly';
         this.fullName = 'Emergency Jelly SIT';

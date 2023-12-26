@@ -69,7 +69,7 @@ class Armarouge extends pokemon_card_1.PokemonCard {
                 text: 'Your opponent\'s Active Pokémon is now Burned.'
             }];
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '41';
         this.name = 'Armarouge';
         this.fullName = 'Armarouge SVI';

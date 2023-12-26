@@ -37,7 +37,7 @@ export class GyaradosVMAX extends PokemonCard {
 
   public set: string = 'EVS';
 
-  public set2: string = 'evolvingskies';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '29';
 

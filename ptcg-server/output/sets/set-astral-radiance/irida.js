@@ -53,7 +53,7 @@ class Irida extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'F';
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '147';
         this.name = 'Irida';
         this.fullName = 'Irida ASR';

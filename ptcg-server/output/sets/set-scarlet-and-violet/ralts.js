@@ -22,7 +22,7 @@ class Ralts extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '84';
         this.name = 'Ralts';
         this.fullName = 'Ralts SVI';

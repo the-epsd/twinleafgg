@@ -18,7 +18,7 @@ export declare class Scovillainex extends PokemonCard {
         text: string;
     }[];
     regulationMark: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     set: string;
     name: string;

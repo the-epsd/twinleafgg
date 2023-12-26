@@ -27,7 +27,7 @@ class Ditto extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '132';
         this.name = 'Ditto';
         this.fullName = 'Ditto MEW';

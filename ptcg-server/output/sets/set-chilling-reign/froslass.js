@@ -57,7 +57,7 @@ class Froslass extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '36';
         this.name = 'Froslass';
         this.fullName = 'Froslass CRE';

@@ -15,7 +15,7 @@ class ElesasSparkle extends trainer_card_1.TrainerCard {
         this.regulationMark = 'E';
         this.tags = [card_types_1.CardTag.FUSION_STRIKE];
         this.set = 'FST';
-        this.set2 = 'fusionstrike';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '233';
         this.name = 'Elesa\'s Sparkle';
         this.fullName = 'Elesa\'s Sparkle FST';

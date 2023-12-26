@@ -50,7 +50,7 @@ class Banette extends game_1.PokemonCard {
                 text: 'Your opponent\'s Active Pokémon is now Confused.'
             }];
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '63';
         this.name = 'Banette';
         this.fullName = 'Banette CRE';

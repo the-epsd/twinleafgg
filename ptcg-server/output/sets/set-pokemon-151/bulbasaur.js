@@ -25,7 +25,7 @@ class Bulbasaur extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '1';
         this.name = 'Bulbasaur';
         this.fullName = 'Bulbasaur MEW 001';

@@ -32,7 +32,7 @@ class FlappleV extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '18';
         this.name = 'Flapple V';
         this.fullName = 'Flapple V BST 018';

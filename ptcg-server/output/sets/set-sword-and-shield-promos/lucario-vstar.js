@@ -33,7 +33,7 @@ class LucarioVSTAR extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SWSH';
-        this.set2 = 'swshpromos';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '214';
         this.name = 'Lucario VSTAR';
         this.fullName = 'Lucario VSTAR SWSH';

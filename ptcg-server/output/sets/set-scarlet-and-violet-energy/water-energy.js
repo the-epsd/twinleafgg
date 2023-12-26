@@ -8,7 +8,7 @@ class WaterEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.WATER];
         this.set = 'SVE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '231';
         this.name = 'Basic Water Energy';
         this.fullName = 'Basic Water Energy SVE';

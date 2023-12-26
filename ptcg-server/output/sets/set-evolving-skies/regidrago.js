@@ -26,7 +26,7 @@ class Regidrago extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '124';
         this.name = 'Regidrago';
         this.fullName = 'Regidrago EVS';

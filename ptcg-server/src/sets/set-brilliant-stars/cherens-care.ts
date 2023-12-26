@@ -57,7 +57,7 @@ export class CherensCare extends TrainerCard {
 
   public set: string = 'BRS';
 
-  public set2: string = 'brilliantstars';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '134';
 

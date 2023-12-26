@@ -11,7 +11,7 @@ class Cheryl extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '123';
         this.regulationMark = 'E';
         this.name = 'Cheryl';

@@ -30,7 +30,7 @@ class KyuremVMAX extends pokemon_card_1.PokemonCard {
                 text: 'You may discard any amount of [W] Energy from this Pokémon. This attack does 50 more damage for each card you discarded in this way.'
             }];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '48';
         this.name = 'Kyurem V';
         this.fullName = 'Kyurem V LOR';

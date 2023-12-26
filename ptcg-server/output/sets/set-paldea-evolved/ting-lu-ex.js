@@ -30,7 +30,7 @@ class TingLuex extends pokemon_card_1.PokemonCard {
                 text: 'Put 2 damage counters on 1 of your opponent\'s Benched Pokémon.'
             }];
         this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '127';
         this.name = 'Ting-Lu ex';
         this.fullName = 'Ting-Lu ex PAL';

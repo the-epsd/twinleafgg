@@ -28,7 +28,7 @@ export class AlolanVulpix extends PokemonCard {
   
   public set: string = 'HF';
 
-  public set2: string = 'hiddenfates';
+  public cardImage: string = 'assets/cardback.png';
   
   public setNumber: string = 'h8';
   

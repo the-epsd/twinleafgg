@@ -4,7 +4,8 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class GapejawBog extends TrainerCard {
     regulationMark: string;
-    set2: string;
+    cardImage: string;
+    string: string;
     setNumber: string;
     trainerType: TrainerType;
     set: string;

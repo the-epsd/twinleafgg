@@ -33,7 +33,7 @@ class PidgeotV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '137';
         this.name = 'Pidgeot V';
         this.fullName = 'Pidgeot V LOR';

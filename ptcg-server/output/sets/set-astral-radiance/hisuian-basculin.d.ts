@@ -19,7 +19,7 @@ export declare class HisuianBasculin extends PokemonCard {
     }[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;

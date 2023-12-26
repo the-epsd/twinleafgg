@@ -7,7 +7,7 @@ export declare class PowerTablet extends TrainerCard {
     trainerType: TrainerType;
     set: string;
     tags: CardTag[];
-    set2: string;
+    cardImage: string;
     setNumber: string;
     regulationMark: string;
     name: string;

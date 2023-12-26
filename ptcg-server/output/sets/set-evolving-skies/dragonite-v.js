@@ -28,7 +28,7 @@ class DragoniteV extends pokemon_card_1.PokemonCard {
                 text: 'This attack also does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }];
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '191';
         this.name = 'Dragonite V';
         this.fullName = 'Dragonite V EVS';

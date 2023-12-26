@@ -42,7 +42,7 @@ class EreikasInvitation extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '160';
         this.name = 'Erika\'s Invitation';
         this.fullName = 'Erika\'s Invitation 151';

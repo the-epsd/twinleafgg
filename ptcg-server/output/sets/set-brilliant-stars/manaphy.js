@@ -30,7 +30,7 @@ class Manaphy extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'BRS';
-        this.set2 = 'brilliantstars';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '41';
         this.name = 'Manaphy';
         this.fullName = 'Manaphy BRS';

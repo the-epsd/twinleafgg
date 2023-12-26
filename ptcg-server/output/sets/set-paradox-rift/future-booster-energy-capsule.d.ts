@@ -7,7 +7,7 @@ export declare class FutureBoosterEnergyCapsule extends TrainerCard {
     trainerType: TrainerType;
     regulationMark: string;
     tags: CardTag[];
-    set2: string;
+    cardImage: string;
     setNumber: string;
     set: string;
     name: string;

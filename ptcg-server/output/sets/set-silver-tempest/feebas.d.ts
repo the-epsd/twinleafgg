@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Zorua extends PokemonCard {
+export declare class Feebas extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
@@ -18,7 +18,7 @@ export declare class Zorua extends PokemonCard {
         text: string;
     }[];
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;

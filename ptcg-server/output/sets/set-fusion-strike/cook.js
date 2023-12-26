@@ -9,7 +9,7 @@ class Cook extends game_1.TrainerCard {
         super(...arguments);
         this.trainerType = game_1.TrainerType.SUPPORTER;
         this.set = 'FST';
-        this.set2 = 'fusionstrike';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '228';
         this.regulationMark = 'E';
         this.name = 'Cook';

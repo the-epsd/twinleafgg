@@ -28,7 +28,7 @@ class Marshadow extends pokemon_card_1.PokemonCard {
                 text: 'This attack\'s damage isn\'t affected by Resistance.'
             }];
         this.set = 'SHL';
-        this.set2 = 'shininglegends';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '45';
         this.name = 'Marshadow';
         this.fullName = 'Marshadow SHL';

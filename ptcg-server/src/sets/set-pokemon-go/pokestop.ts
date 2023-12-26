@@ -11,7 +11,7 @@ export class Pokestop extends TrainerCard {
 
   public regulationMark = 'F';
 
-  public set2: string = 'pokemongo';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '68';
   

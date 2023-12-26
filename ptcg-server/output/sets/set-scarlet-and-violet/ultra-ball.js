@@ -55,7 +55,7 @@ class UltraBall extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '196';
         this.name = 'Ultra Ball';
         this.fullName = 'Ultra Ball SVI';

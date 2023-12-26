@@ -15,7 +15,7 @@ export class ColresssExperiment extends TrainerCard {
 
   public regulationMark = 'F';
 
-  public set2: string = 'lostorigin';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '155';
 

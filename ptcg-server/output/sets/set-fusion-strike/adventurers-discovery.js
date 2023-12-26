@@ -42,7 +42,7 @@ class AdventurersDiscovery extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'E';
         this.set = 'FST';
-        this.set2 = 'fusionstrike';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '224';
         this.name = 'Adventurer\'s Discovery';
         this.fullName = 'Adventurer\'s Discovery FST';

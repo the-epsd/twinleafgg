@@ -22,21 +22,7 @@ const game_phase_effects_1 = require("../effects/game-phase-effects");
 const check_effect_1 = require("../effect-reducers/check-effect");
 const game_phase_effect_1 = require("../effect-reducers/game-phase-effect");
 const select_prompt_1 = require("../prompts/select-prompt");
-function putStartingPokemonsAndPrizes(player, cards) {
-    if (cards.length === 0) {
-        return;
-    }
-    player.hand.moveCardTo(cards[0], player.active);
-    for (let i = 1; i < cards.length; i++) {
-        player.hand.moveCardTo(cards[i], player.bench[i - 1]);
-    }
-    for (let i = 0; i < 6; i++) {
-        player.deck.moveTo(player.prizes[i], 1);
-    }
-}
 function* setupGame(next, store, state) {
-    const basicPokemon = { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC };
-    const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
     const player = state.players[0];
     const opponent = state.players[1];
     const whoBeginsEffect = new game_phase_effects_1.WhoBeginsEffect();
@@ -60,6 +46,8 @@ function* setupGame(next, store, state) {
             });
         });
     }
+    const basicPokemon = { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC || card_types_1.CardTag.RAPID_STRIKE };
+    const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
     let playerCardsToDraw = 0;
     let opponentCardsToDraw = 0;
     let playerHasBasic = false;
@@ -106,6 +94,18 @@ function* setupGame(next, store, state) {
                 }
                 next();
             });
+        }
+    }
+    function putStartingPokemonsAndPrizes(player, cards) {
+        if (cards.length === 0) {
+            return;
+        }
+        player.hand.moveCardTo(cards[0], player.active);
+        for (let i = 1; i < cards.length; i++) {
+            player.hand.moveCardTo(cards[i], player.bench[i - 1]);
+        }
+        for (let i = 0; i < 6; i++) {
+            player.deck.moveTo(player.prizes[i], 1);
         }
     }
     yield store.prompt(state, [

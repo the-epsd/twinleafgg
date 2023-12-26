@@ -32,7 +32,7 @@ class TapuKokoV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '50';
         this.name = 'Tapu Koko V';
         this.fullName = 'Tapu Koko V BST 050';

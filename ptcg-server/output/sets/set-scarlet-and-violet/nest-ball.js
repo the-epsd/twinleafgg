@@ -43,7 +43,7 @@ class NestBall extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '181';
         this.name = 'Nest Ball';
         this.fullName = 'Nest Ball SVI';

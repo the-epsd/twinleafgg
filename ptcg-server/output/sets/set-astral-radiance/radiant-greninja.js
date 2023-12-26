@@ -41,7 +41,7 @@ class RadiantGreninja extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '46';
         this.name = 'Radiant Greninja';
         this.fullName = 'Radiant Greninja ASR';

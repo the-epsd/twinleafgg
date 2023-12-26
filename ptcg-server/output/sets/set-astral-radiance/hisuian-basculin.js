@@ -29,7 +29,7 @@ class HisuianBasculin extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '43';
         this.name = 'Hisuian Basculin';
         this.fullName = 'Hisuian Basculin ASR';

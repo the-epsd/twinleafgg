@@ -31,7 +31,7 @@ class KyuremV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '48';
         this.name = 'Kyurem V';
         this.fullName = 'Kyurem V LOR';

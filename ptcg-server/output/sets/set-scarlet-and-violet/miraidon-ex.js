@@ -34,7 +34,7 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '81';
         this.name = 'Miraidon ex';
         this.fullName = 'Miraidon ex SVI';

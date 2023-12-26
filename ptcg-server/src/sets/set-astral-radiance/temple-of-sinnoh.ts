@@ -7,7 +7,7 @@ export class TempleofSinnoh extends TrainerCard {
 
   public regulationMark = 'F';
 
-  public set2: string = 'astralradiance';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '155';
   

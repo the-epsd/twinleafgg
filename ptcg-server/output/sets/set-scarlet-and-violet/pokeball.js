@@ -33,7 +33,7 @@ class Pokeball extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '185';
         this.name = 'Pokéball';
         this.fullName = 'Pokéball SVI 185';

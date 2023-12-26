@@ -22,7 +22,7 @@ export declare class WyrdeerV extends PokemonCard {
     }[];
     regulationMark: string;
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;

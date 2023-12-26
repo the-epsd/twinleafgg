@@ -51,7 +51,7 @@ class Gimmighoul extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
-        this.set2 = 'ragingsurf';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '20';
         this.name = 'Gimmighoul';
         this.fullName = 'Gimmighoul PAR';

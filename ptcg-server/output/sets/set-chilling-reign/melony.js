@@ -38,7 +38,7 @@ class Melony extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '146';
         this.regulationMark = 'E';
         this.name = 'Melony';

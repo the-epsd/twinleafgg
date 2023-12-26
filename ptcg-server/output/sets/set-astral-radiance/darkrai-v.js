@@ -30,7 +30,7 @@ class DarkraiV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '98';
         this.name = 'Darkrai V';
         this.fullName = 'Darkrai V ASR';

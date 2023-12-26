@@ -9,7 +9,7 @@ class GutsyPickaxe extends game_1.TrainerCard {
         this.trainerType = game_1.TrainerType.ITEM;
         this.regulationMark = 'F';
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '145';
         this.name = 'Gutsy Pickaxe';
         this.fullName = 'Gutsy Pickaxe ASR';

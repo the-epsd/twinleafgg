@@ -25,7 +25,7 @@ class HisuianGoodraVSTAR extends game_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '136';
         this.name = 'Hisuian Goodra VSTAR';
         this.fullName = 'Hisuian Goodra VSTAR LOR';

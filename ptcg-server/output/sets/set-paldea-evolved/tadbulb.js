@@ -23,7 +23,7 @@ class Tadbulb extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '77';
         this.name = 'Tadbulb';
         this.fullName = 'Tadbulb PAL';

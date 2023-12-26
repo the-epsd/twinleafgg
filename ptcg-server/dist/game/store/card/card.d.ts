@@ -13,7 +13,7 @@ export declare abstract class Card {
     regulationMark: string;
     tags: string[];
     setNumber: string;
-    set2: string;
+    cardImage: string;
     retreat: CardType[];
     static tags: any;
     cards: CardList;

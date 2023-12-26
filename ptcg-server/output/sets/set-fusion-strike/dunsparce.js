@@ -31,7 +31,7 @@ class Dunsparce extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'E';
         this.set = 'FST';
-        this.set2 = 'fusionstrike';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '207';
         this.name = 'Dunsparce';
         this.fullName = 'Dunsparce FST';

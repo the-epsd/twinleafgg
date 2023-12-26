@@ -28,7 +28,7 @@ class GyaradosVMAX extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '29';
         this.name = 'Gyarados VMAX';
         this.fullName = 'Gyarados VMAX EVS';

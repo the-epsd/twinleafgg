@@ -12,7 +12,7 @@ export class LostVacuum extends TrainerCard {
 
   public set: string = 'LOR';
 
-  public set2: string = 'lostorigin';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '162';
 

@@ -12,7 +12,7 @@ class VengefulPunch extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'OBF';
-        this.set2 = 'obsidianflames';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '197';
         this.name = 'Vengeful Punch';
         this.fullName = 'Vengeful Punch OBF';

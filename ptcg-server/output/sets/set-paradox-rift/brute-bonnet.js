@@ -24,7 +24,7 @@ class BruteBonnet extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
-        this.set2 = 'ancientroar';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '53';
         this.name = 'Brute Bonnet';
         this.fullName = 'Brute Bonnet PAR';

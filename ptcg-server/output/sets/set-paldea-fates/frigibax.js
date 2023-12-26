@@ -28,7 +28,7 @@ class Frigibax extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SV4';
-        this.set2 = 'shinytreasureex';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '51';
         this.name = 'Frigibax';
         this.fullName = 'Frigibax SV4';

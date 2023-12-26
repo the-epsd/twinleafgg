@@ -49,7 +49,7 @@ export class TownStore extends TrainerCard {
 
   public regulationMark = 'G';
 
-  public set2: string = 'obsidianflames';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '196';
   

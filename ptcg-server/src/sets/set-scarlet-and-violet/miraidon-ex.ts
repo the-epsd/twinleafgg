@@ -45,7 +45,7 @@ export class Miraidonex extends PokemonCard {
 
   public set: string = 'SVI';
 
-  public set2: string = 'scarletviolet';
+  public cardImage: string = 'assets/cardback.png';
   
   public setNumber: string = '81';
 

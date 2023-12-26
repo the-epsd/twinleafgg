@@ -8,7 +8,7 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
-export class GalarianMoltesV extends PokemonCard {
+export class GalarianMoltresV extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
@@ -44,7 +44,7 @@ export class GalarianMoltesV extends PokemonCard {
 
   public set: string = 'CRE';
 
-  public set2: string = 'chillingreign';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '97';
 

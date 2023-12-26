@@ -30,7 +30,7 @@ class Moltres extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'F';
         this.set = 'PGO';
-        this.set2 = 'pokemongo';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '12';
         this.name = 'Moltres';
         this.fullName = 'Moltres PGO';

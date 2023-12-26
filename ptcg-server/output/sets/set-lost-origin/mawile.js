@@ -31,7 +31,7 @@ class Mawile extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '71';
         this.name = 'Mawile';
         this.fullName = 'Mawile LOR';

@@ -27,7 +27,7 @@ class Minior extends pokemon_card_1.PokemonCard {
             }];
         this.regulationMark = 'G';
         this.set = 'PAR';
-        this.set2 = 'paradoxrift';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '99';
         this.name = 'Minior';
         this.fullName = 'Minior PAR';

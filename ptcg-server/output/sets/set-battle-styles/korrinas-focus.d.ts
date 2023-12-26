@@ -8,7 +8,7 @@ export declare class KorrinasFocus extends TrainerCard {
     tags: CardTag[];
     trainerType: TrainerType;
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;

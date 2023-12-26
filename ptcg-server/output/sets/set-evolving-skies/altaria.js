@@ -32,7 +32,7 @@ class Altaria extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '106';
         this.name = 'Altaria';
         this.fullName = 'Altaria EVS';

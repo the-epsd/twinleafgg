@@ -6,7 +6,7 @@ import { State } from '../../game/store/state/state';
 export declare class Clive extends TrainerCard {
     trainerType: TrainerType;
     regulationMark: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     set: string;
     name: string;

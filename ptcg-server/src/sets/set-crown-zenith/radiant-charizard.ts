@@ -38,7 +38,7 @@ export class RadiantCharizard extends PokemonCard {
 
   public set: string = 'CRZ';
 
-  public set2: string = 'crownzenith';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '20';
 

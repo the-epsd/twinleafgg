@@ -4,7 +4,7 @@ import { StoreLike, State, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class TempleofSinnoh extends TrainerCard {
     regulationMark: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     trainerType: TrainerType;
     set: string;

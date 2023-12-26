@@ -32,7 +32,7 @@ class ShayminVSTAR extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BRS';
-        this.set2 = 'brilliantstars';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '14';
         this.name = 'Shaymin VSTAR';
         this.fullName = 'Shaymin VSTAR BRS';

@@ -46,7 +46,7 @@ class FurisodeGirl extends trainer_card_1.TrainerCard {
         this.regulationMark = 'F';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '157';
         this.name = 'Furisode Girl';
         this.fullName = 'Furisode Girl SIT';

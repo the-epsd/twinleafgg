@@ -30,7 +30,7 @@ class RadiantTsareena extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon recovers from all Special Conditions.'
             }];
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '16';
         this.name = 'Radiant Tsareena';
         this.fullName = 'Radiant Tsareena SIT';

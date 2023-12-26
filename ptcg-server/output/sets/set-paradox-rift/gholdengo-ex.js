@@ -39,7 +39,7 @@ class Gholdengoex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
-        this.set2 = 'ragingsurf';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '50';
         this.name = 'Gholdengo ex';
         this.fullName = 'Gholdengo ex PAR';

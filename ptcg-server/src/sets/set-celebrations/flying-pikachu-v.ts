@@ -44,7 +44,7 @@ export class FlyingPikachuV extends PokemonCard {
 
   public set: string = 'CEL';
 
-  public set2: string = 'celebrations';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '6';
 

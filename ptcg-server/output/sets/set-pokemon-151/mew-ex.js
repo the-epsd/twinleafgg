@@ -67,7 +67,7 @@ class Mewex extends pokemon_card_1.PokemonCard {
                     'as this attack.'
             }];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '151';
         this.name = 'Mew ex';
         this.fullName = 'Mew ex';

@@ -33,7 +33,7 @@ class Kirlia extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '68';
         this.name = 'Kirlia';
         this.fullName = 'Kirlia SIT';

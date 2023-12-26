@@ -41,7 +41,7 @@ function* useAscension(next: Function, store: StoreLike, state: State,
   });
 }
 
-export class Zorua extends PokemonCard {
+export class Feebas extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
@@ -67,7 +67,7 @@ export class Zorua extends PokemonCard {
 
   public set: string = 'SIT';
 
-  public set2: string = 'silvertempest';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '39';
 

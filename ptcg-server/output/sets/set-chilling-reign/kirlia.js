@@ -44,7 +44,7 @@ class Kirlia extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '60';
         this.name = 'Kirlia';
         this.fullName = 'Kirlia CRE';

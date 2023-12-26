@@ -77,6 +77,7 @@ export class DeckEditComponent implements OnInit {
           deckItems.push(itemMap[name]);
           deckItems.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
           deckItems.sort((a, b) => a.card.superType - b.card.superType);
+          
         }
       }
     }

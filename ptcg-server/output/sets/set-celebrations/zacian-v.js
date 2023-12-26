@@ -34,7 +34,7 @@ class ZacianV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'CEL';
-        this.set2 = 'celebrations';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '16';
         this.regulationMark = 'E';
         this.name = 'Zacian V';

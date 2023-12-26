@@ -42,7 +42,7 @@ export class Garchompex extends PokemonCard {
   ];
 
   public set: string = 'PAR';
-  public set2: string = 'ragingsurf';
+  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
   public name: string = 'Garchomp ex';
   public fullName: string = 'Garchomp ex PAR';

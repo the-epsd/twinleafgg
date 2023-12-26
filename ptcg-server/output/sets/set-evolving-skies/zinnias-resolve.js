@@ -40,7 +40,7 @@ class ZinniasResolve extends trainer_card_1.TrainerCard {
         this.regulationMark = 'E';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '164';
         this.name = 'Zinnia\'s Resolve';
         this.fullName = 'Zinnia\'s Resolve EVS';

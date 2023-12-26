@@ -45,7 +45,7 @@ export class Cherrim extends PokemonCard {
 
   public set: string = 'BST';
 
-  public set2: string = 'battlestyles';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '8';
 

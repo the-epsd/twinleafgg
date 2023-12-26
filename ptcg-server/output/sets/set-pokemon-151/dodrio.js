@@ -33,7 +33,7 @@ class Dodrio extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '85';
         this.name = 'Dodrio';
         this.fullName = 'Dodrio MEW';

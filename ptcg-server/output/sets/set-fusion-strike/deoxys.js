@@ -26,7 +26,7 @@ class Deoxys extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'FST';
-        this.set2 = 'fusionstrike';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '120';
         this.name = 'Deoxys';
         this.fullName = 'Deoxys FST';

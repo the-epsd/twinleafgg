@@ -30,7 +30,7 @@ class Bouffalant extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '148';
         this.name = 'Bouffalant';
         this.fullName = 'Bouffalant LOR';

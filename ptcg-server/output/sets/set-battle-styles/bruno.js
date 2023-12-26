@@ -15,7 +15,7 @@ class Bruno extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'E';
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '121';
         this.name = 'Bruno';
         this.fullName = 'Bruno BST';

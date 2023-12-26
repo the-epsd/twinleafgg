@@ -32,7 +32,7 @@ class IceRiderCalyrexV extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '45';
         this.name = 'Ice Rider Calyrex V';
         this.fullName = 'Ice Rider Calyrex V CRE';

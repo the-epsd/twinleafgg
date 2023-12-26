@@ -52,7 +52,7 @@ export class EnergyRetrieval extends TrainerCard {
 
   public regulationMark = 'G';
 
-  public set2: string = 'scarletviolet';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '171';
 

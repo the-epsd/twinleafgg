@@ -29,7 +29,7 @@ class Articuno extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'F';
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '36';
         this.name = 'Articuno';
         this.fullName = 'Articuno SIT';

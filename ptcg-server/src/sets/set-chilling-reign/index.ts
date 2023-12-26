@@ -1,57 +1,32 @@
 import { Card } from '../../game/store/card/card';
-import { Avery } from './avery';
-import { Banette } from './banette';
-import { Beedrill } from './beedril';
-import { BlisseyV } from './blissey-v';
-import { Drizzile } from './drizzile';
-import { EchoingHorn } from './echoing-horn';
-import { ExpeditionUniform } from './expedition-uniform';
-import { FogCrystal } from './fog-crystal';
-import { Froslass } from './froslass';
-import { GalarianArticunoV } from './galarian-articuno-v';
-import { GalarianMoltesV } from './galarian-moltres-v';
-import { Gardevoir } from './gardevoir';
-import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
-import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
-import { Inteleon } from './inteleon';
-import { JustifiedGloves } from './justified-gloves';
-import { KarensConviction } from './karens-conviction';
-import { Kirlia } from './kirlia';
-import { Klara } from './klara';
-import { Melony } from './melony';
-//import { OldCemetery } from './old-cemetery';
-import { PathToThePeak } from './path-to-the-peak';
-import { Peony } from './peony';
-import { Sneasel } from './sneasel';
-import { Snorunt } from './snorunt';
-import { Sobble } from './sobble';
+import { AveryArt, BanetteArt, BeedrillArt, BlisseyVArt, DrizzileArt, EchoingHornArt, ExpeditionUniformArt, FogCrystalArt, FroslassArt, GalarianArticunoVArt, GalarianMoltresVArt, GardevoirArt, IceRiderCalyrexVArt, IceRiderCalyrexVMAXArt, InteleonArt, JustifiedGlovesArt, KarensConvictionArt, KirliaArt, KlaraArt, MelonyArt, PathToThePeakArt, PeonyArt, SneaselArt, SnoruntArt, SobbleArt } from './card-images';
 
 export const setChillingReign: Card[] = [
   
-  new Avery(),
-  new Banette(),
-  new Beedrill(),
-  new BlisseyV(),
-  new Drizzile(),
-  new EchoingHorn(),
-  new FogCrystal(),
-  new Froslass(),
-  new GalarianArticunoV(),
-  new GalarianMoltesV(),
-  new Gardevoir(),
-  new IceRiderCalyrexV(),
-  new IceRiderCalyrexVMAX(),
-  new Inteleon(),
-  new JustifiedGloves(),
-  new KarensConviction(),
-  new Kirlia(),
-  new Klara(),
-  new Melony(),
+  new AveryArt(),
+  new BanetteArt(),
+  new BeedrillArt(),
+  new BlisseyVArt(),
+  new DrizzileArt(),
+  new EchoingHornArt(),
+  new FogCrystalArt(),
+  new FroslassArt(),
+  new GalarianArticunoVArt(),
+  new GalarianMoltresVArt(),
+  new GardevoirArt(),
+  new IceRiderCalyrexVArt(),
+  new IceRiderCalyrexVMAXArt(),
+  new InteleonArt(),
+  new JustifiedGlovesArt(),
+  new KarensConvictionArt(),
+  new KirliaArt(),
+  new KlaraArt(),
+  new MelonyArt(),
   //new OldCemetery(),
-  new PathToThePeak(),
-  new Peony(),
-  new Snorunt(),
-  new Sobble(),
-  new ExpeditionUniform(),
-  new Sneasel(),
+  new PathToThePeakArt(),
+  new PeonyArt(),
+  new SnoruntArt(),
+  new SobbleArt(),
+  new ExpeditionUniformArt(),
+  new SneaselArt(),
 ];

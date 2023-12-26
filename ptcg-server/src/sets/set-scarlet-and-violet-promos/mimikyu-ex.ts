@@ -38,7 +38,7 @@ export class Mimikyuex extends PokemonCard {
 
   public set: string = 'SVP';
 
-  public set2: string = 'svpromos';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '4';
 

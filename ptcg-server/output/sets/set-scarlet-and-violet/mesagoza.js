@@ -13,7 +13,7 @@ class Mesagoza extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.regulationMark = 'G';
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '178';
         this.name = 'Mesagoza';
         this.fullName = 'Mesagoza SVI';

@@ -24,7 +24,7 @@ class Pyukumuku extends game_1.PokemonCard {
                 text: ''
             }];
         this.set = 'FST';
-        this.set2 = 'fusionstrike';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '77';
         this.name = 'Pyukumuku';
         this.fullName = 'Pyukumuku FST';

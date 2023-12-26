@@ -32,7 +32,7 @@ class Lunatone extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PGO';
-        this.set2 = 'pokemongo';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '34';
         this.name = 'Lunatone';
         this.fullName = 'Lunatone PGO';

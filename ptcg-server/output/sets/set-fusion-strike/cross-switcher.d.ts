@@ -7,7 +7,7 @@ export declare class CrossSwitcher extends TrainerCard {
     trainerType: TrainerType;
     tags: CardTag[];
     regulationMark: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     set: string;
     name: string;

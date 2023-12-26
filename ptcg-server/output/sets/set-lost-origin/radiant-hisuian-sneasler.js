@@ -28,7 +28,7 @@ class RadiantHisuianSneasler extends pokemon_card_1.PokemonCard {
                 text: 'Your opponent\'s Active Pokémon is now Poisoned.'
             }];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '123';
         this.name = 'Radiant Hisuian Sneasler';
         this.fullName = 'Radiant Hisuian Sneasler LOR';

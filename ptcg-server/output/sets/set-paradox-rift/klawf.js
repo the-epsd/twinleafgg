@@ -29,7 +29,7 @@ class Klawf extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'G';
         this.set = 'PAR';
-        this.set2 = 'paradoxrift';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '105';
         this.name = 'Klawf';
         this.fullName = 'Klawf PAR';

@@ -1,31 +1,19 @@
 import { Card } from '../../game/store/card/card';
-import { Articuno } from './articuno';
-import { Charmander } from './charmander';
-import { Ditto } from './ditto';
-import { Lunatone } from './lunatone';
-import { LureModule } from './lure-module';
-import { Moltres } from './moltres';
-import { Pokestop } from './pokestop';
-import { RadiantVenusaur } from './radiant-venusaur';
-import { SlakingV } from './slaking-v';
-import { Slowbro } from './slowbro';
-import { Snorlax } from './snorlax';
-import { Solrock } from './solrock';
-import { Zapdos } from './zapdos';
+import { ArticunoArt, CharmanderArt, DittoArt, LunatoneArt, LureModuleArt, MoltresArt, PokestopArt, RadiantVenusaurArt, SlakingVArt, SlowbroArt, SnorlaxArt, SolrockArt, ZapdosArt } from './card-images';
 
 export const setPokemonGO: Card[] = [
   
-  new Charmander(),
-  new Ditto(),
-  new Lunatone(),
-  new Pokestop(),
-  new SlakingV(),
-  new Snorlax(),
-  new Solrock(),
-  new Zapdos(),
-  new RadiantVenusaur(),
-  new Articuno(),
-  new Moltres(),
-  new Slowbro(),
-  new LureModule(),
+  new CharmanderArt(),
+  new DittoArt(),
+  new LunatoneArt(),
+  new PokestopArt(),
+  new SlakingVArt(),
+  new SnorlaxArt(),
+  new SolrockArt(),
+  new ZapdosArt(),
+  new RadiantVenusaurArt(),
+  new ArticunoArt(),
+  new MoltresArt(),
+  new SlowbroArt(),
+  new LureModuleArt(),
 ];

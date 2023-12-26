@@ -49,7 +49,7 @@ class FightingAuLait extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'G';
         this.set = 'PAL';
-        this.set2 = 'paldeaevolved';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '181';
         this.name = 'Fighting Au Lait';
         this.fullName = 'Fighting Au Lait PAL';

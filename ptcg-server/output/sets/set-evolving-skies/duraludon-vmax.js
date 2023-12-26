@@ -35,7 +35,7 @@ class DuraludonVMAX extends pokemon_card_1.PokemonCard {
                     'opponent\'s Active Pokémon.'
             }];
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '123';
         this.name = 'Duraludon VMAX';
         this.fullName = 'Duraludon VMAX EVS';

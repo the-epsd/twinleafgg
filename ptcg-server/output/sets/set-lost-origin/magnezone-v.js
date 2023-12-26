@@ -28,7 +28,7 @@ class MagnezoneV extends game_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '56';
         this.name = 'Magnezone V';
         this.fullName = 'Magnezone V LOR';

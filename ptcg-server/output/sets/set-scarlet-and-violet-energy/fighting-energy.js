@@ -8,7 +8,7 @@ class FightingEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.FIGHTING];
         this.set = 'SVE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '233';
         this.name = 'Basic Fighting Energy';
         this.fullName = 'Basic Fighting Energy SVE';

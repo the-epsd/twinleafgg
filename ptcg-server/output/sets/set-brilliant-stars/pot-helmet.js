@@ -12,7 +12,7 @@ class PotHelmet extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.regulationMark = 'F';
         this.set = 'BRS';
-        this.set2 = 'brilliantstars';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '146';
         this.name = 'Pot Helmet';
         this.fullName = 'Pot Helmet BRS';

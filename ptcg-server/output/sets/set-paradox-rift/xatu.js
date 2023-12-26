@@ -32,7 +32,7 @@ class Xatu extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
-        this.set2 = 'startersetterastalmewtwoex';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '5';
         this.name = 'Xatu';
         this.fullName = 'Xatu PAR';

@@ -29,7 +29,7 @@ class RadiantJirachi extends pokemon_card_1.PokemonCard {
                 text: 'Flip 2 coins. If both of them are heads, your opponent\'s Active Pokémon is Knocked Out.'
             }];
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '120';
         this.name = 'Radiant Jirachi';
         this.fullName = 'Radiant Jirachi SIT';

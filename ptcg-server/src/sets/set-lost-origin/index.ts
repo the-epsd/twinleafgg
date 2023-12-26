@@ -1,79 +1,44 @@
 import { Card } from '../../game/store/card/card';
-import { Arezu } from './arezu';
-import { Bouffalant } from './bouffalant';
-import { BoxOfDisaster } from './box-of-disaster';
-import { ColresssExperiment } from './colress\'s-experiment';
-import { Comfey } from './comfey';
-import { Cramorant } from './cramorant';
-import { Cresselia } from './cresselia';
-import { DamagePump } from './damage-pump';
-import { DelphoxV } from './delphox-v';
-import { DrapionV } from './drapion-v';
-import { EnergyLotto } from './energy-lotto';
-import { Gengar } from './gengar';
-import { GiftEnergy } from './gift-energy';
-import { GiratinaV } from './giratina-v';
-import { GiratinaVSTAR } from './giratina-vstar';
-import { HisuianGoodraV } from './hisuian-goodra-v';
-import { HisuianGoodraVSTAR } from './hisuian-goodra-vstar';
-import { HisuianZoroarkV } from './hisuian-zoroark-v';
-import { HisuianZoroarkVSTAR } from './hisuian-zoroark-vstar';
-import { Jynx } from './jynx';
-import { KyuremV } from './kyurem-v';
-import { KyuremVMAX } from './kyurem-vmax';
-import { Lady } from './lady';
-import { LostCity } from './lost-city';
-import { LostVacuum } from './lost-vacuum';
-import { MagnezoneV } from './magnezone-v';
-import { MagnezoneVSTAR } from './magnezone-vstar';
-import { Mawile } from './mawile';
-import { MirageGate } from './mirage-gate';
-import { PanicMask } from './panic-mask';
-import { PidgeotV } from './pidgeot-v';
-import { RadiantGardevoir } from './radiant-gardevoir';
-import { RadiantHisuianSneasler } from './radiant-hisuian-sneasler';
-import { RotomV } from './rotom-v';
-import { Sableye } from './sableye';
-import { Snorlax } from './snorlax';
-import { Volo } from './volo';
+import { ArezuArt, BouffalantArt, BoxOfDisasterArt, ColresssExperimentArt, ComfeyArt, CramorantArt, CresseliaArt, DamagePumpArt, DelphoxVArt, DrapionVArt, EnergyLottoArt, GengarArt, GiftEnergyArt, GiratinaVArt, GiratinaVSTARArt, HisuianGoodraVArt, HisuianGoodraVSTARArt, HisuianZoroarkVArt, HisuianZoroarkVSTARArt, JynxArt, KyuremVArt, KyuremVMAXArt, LadyArt, LostCityArt, LostVacuumArt, MagnezoneVArt, MagnezoneVSTARArt, MawileArt, MirageGateArt, PanicMaskArt, PidgeotVArt, RadiantGardevoirArt, RadiantHisuianSneaslerArt, RotomVArt, SableyeArt, SnorlaxArt, VoloArt } from './card-images';
+
 
 export const setLostOrigin: Card[] = [
   
-  new Bouffalant(),
-  new ColresssExperiment(),
-  new Comfey(),
-  new Cramorant(),
-  new Cresselia(),
-  new DelphoxV(),
-  new DrapionV(),
-  new Gengar(),
-  new GiftEnergy(),
-  new GiratinaV(),
-  new GiratinaVSTAR(),
-  new HisuianGoodraV(),
-  new HisuianGoodraVSTAR(),
-  new HisuianZoroarkV(),
-  new HisuianZoroarkVSTAR(),
-  new Jynx(),
-  new KyuremV(),
-  new KyuremVMAX(),
-  new Lady(),
-  new LostCity(),
-  new LostVacuum(),
-  new Mawile(),
-  new MirageGate(),
-  new PidgeotV(),
-  new RadiantHisuianSneasler(),
-  new RadiantGardevoir(),
-  new RotomV(),
-  new Sableye(),  
-  new Snorlax(),
-  new Volo(),
-  new MagnezoneV(),
-  new MagnezoneVSTAR(),
-  new DamagePump(),
-  new BoxOfDisaster(),
-  new EnergyLotto(),
-  new PanicMask(),
-  new Arezu(),
+  new BouffalantArt(),
+  new ColresssExperimentArt(),
+  new ComfeyArt(),
+  new CramorantArt(),
+  new CresseliaArt(),
+  new DelphoxVArt(),
+  new DrapionVArt(),
+  new GengarArt(),
+  new GiftEnergyArt(),
+  new GiratinaVArt(),
+  new GiratinaVSTARArt(),
+  new HisuianGoodraVArt(),
+  new HisuianGoodraVSTARArt(),
+  new HisuianZoroarkVArt(),
+  new HisuianZoroarkVSTARArt(),
+  new JynxArt(),
+  new KyuremVArt(),
+  new KyuremVMAXArt(),
+  new LadyArt(),
+  new LostCityArt(),
+  new LostVacuumArt(),
+  new MawileArt(),
+  new MirageGateArt(),
+  new PidgeotVArt(),
+  new RadiantHisuianSneaslerArt(),
+  new RadiantGardevoirArt(),
+  new RotomVArt(),
+  new SableyeArt(),  
+  new SnorlaxArt(),
+  new VoloArt(),
+  new MagnezoneVArt(),
+  new MagnezoneVSTARArt(),
+  new DamagePumpArt(),
+  new BoxOfDisasterArt(),
+  new EnergyLottoArt(),
+  new PanicMaskArt(),
+  new ArezuArt(),
 ];

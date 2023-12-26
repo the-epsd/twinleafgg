@@ -38,7 +38,7 @@ class Pidgeotex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'OBF';
-        this.set2 = 'obsidianflames';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '164';
         this.name = 'Pidgeot ex';
         this.fullName = 'Pidgeot ex OBF';

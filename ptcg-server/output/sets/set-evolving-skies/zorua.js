@@ -19,7 +19,7 @@ class Zorua extends pokemon_card_1.PokemonCard {
             }];
         this.regulationMark = 'E';
         this.set = 'EVS';
-        this.set2 = 'evolvingskies';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '102';
         this.name = 'Zorua';
         this.fullName = 'Zorua EVS';

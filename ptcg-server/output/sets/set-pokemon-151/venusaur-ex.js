@@ -33,7 +33,7 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '3';
         this.name = 'Venusaur ex';
         this.fullName = 'Venusaur ex MEW 003';

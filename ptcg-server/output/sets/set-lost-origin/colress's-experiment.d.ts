@@ -7,7 +7,7 @@ export declare class ColresssExperiment extends TrainerCard {
     trainerType: TrainerType;
     set: string;
     regulationMark: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;

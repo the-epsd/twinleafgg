@@ -85,7 +85,7 @@ export class Bronzong extends PokemonCard {
     text: ''
   }];
   public set = 'BST';
-  public set2: string = 'battlestyles';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '102';
   public name = 'Bronzong';

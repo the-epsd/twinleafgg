@@ -9,7 +9,7 @@ export declare class RapidStrikeEnergy extends EnergyCard {
     provides: CardType[];
     energyType: EnergyType;
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;

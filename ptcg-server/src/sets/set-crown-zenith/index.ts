@@ -1,23 +1,16 @@
 import { Card } from '../../game/store/card/card';
-import { Bidoof } from './bidoof';
-import { Kyogre } from './kyogre';
-import { Luxray } from './luxray';
-import { RadiantCharizard } from './radiant-charizard';
-import { RadiantEternatus } from './radiant-eternatus';
-import { RegigigasV } from './regigigas-v';
-import { RegigigasVSTAR } from './regigigas-vstar';
-import { Zamazenta } from './zamazenta';
-import { ZamazentaV } from './zamazenta-v';
+import { BidoofArt, KyogreArt, LuxrayArt, RadiantCharizardArt, RadiantEternatusArt, RegigigasVArt, RegigigasVSTARArt, ZamazentaArt, ZamazentaVArt } from './card-images';
 
 export const setCrownZenith: Card[] = [
   
-  new Bidoof(),
-  new Kyogre(),
-  new RadiantCharizard(),
-  new Zamazenta(),
-  new Luxray(),
-  new ZamazentaV(),
-  new RadiantEternatus(),
-  new RegigigasV(),
-  new RegigigasVSTAR(),
+  new BidoofArt(),
+  new KyogreArt(),
+  new RadiantCharizardArt(),
+  new ZamazentaArt(),
+  new LuxrayArt(),
+  new ZamazentaVArt(),
+  new RadiantEternatusArt(),
+  new RegigigasVArt(),
+  new RegigigasVSTARArt(),
+  new ZamazentaVArt
 ];

@@ -11,7 +11,7 @@ class Grabber extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '162';
         this.name = 'Grabber';
         this.fullName = 'Grabber 151';

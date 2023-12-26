@@ -28,7 +28,7 @@ class Mightyena extends pokemon_card_1.PokemonCard {
             }];
         this.regulationMark = 'F';
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '96';
         this.name = 'Mightyena';
         this.fullName = 'Mightyena ASR';

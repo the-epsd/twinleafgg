@@ -4,7 +4,7 @@ export declare class Volo extends TrainerCard {
     trainerType: TrainerType;
     regulationMark: string;
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;

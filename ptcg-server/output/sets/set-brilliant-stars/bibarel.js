@@ -33,7 +33,7 @@ class Bibarel extends pokemon_card_1.PokemonCard {
                 text: 'Flip a coin. If tails, this attack does nothing.'
             }];
         this.set = 'BRS';
-        this.set2 = 'brilliantstars';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '121';
         this.name = 'Bibarel';
         this.fullName = 'Bibarel BRS';

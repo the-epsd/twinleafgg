@@ -11,7 +11,7 @@ import { PlayerType } from '../../game/store/actions/play-card-action';
 export class ChampionsFestival extends TrainerCard {
   trainerType = TrainerType.STADIUM;
   set = 'SWSH';
-  public set2: string = 'swshpromos';
+  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '296';
   name = 'Champion\'s Festival';
   fullName = 'Champion\'s Festival SWSH296';

@@ -49,7 +49,7 @@ class Arezu extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'F';
         this.set = 'LOR';
-        this.set2 = 'lostorigin';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '153';
         this.name = 'Arezu';
         this.fullName = 'Arezu LOR';

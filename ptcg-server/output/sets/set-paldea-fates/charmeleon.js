@@ -30,7 +30,7 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'G';
-        this.set2 = 'shinytreasureex';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '26';
         this.set = 'SV4';
         this.name = 'Charmeleon';

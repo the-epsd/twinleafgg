@@ -23,7 +23,7 @@ class Drizzile extends game_1.PokemonCard {
             }
         ];
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '42';
         this.name = 'Drizzile';
         this.fullName = 'Drizzile CRE';

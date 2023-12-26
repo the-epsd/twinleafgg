@@ -1,0 +1,125 @@
+import { AdventurersDiscovery } from './adventurers-discovery';
+import { BattleVIPPass } from './battle-vip-pass';
+import { Cook } from './cook';
+import { Creamomatic } from './cram-o-matic';
+import { CrossSwitcher } from './cross-switcher';
+import { Deoxys } from './deoxys';
+import { Dunsparce } from './dunsparce';
+import { ElesasSparkle } from './elesas-sparkle';
+import { FusionStrikeEnergy } from './fusion-strike-energy';
+import { GenesectV } from './genesect-v';
+import { GengarV } from './gengar-v';
+import { GengarVMAX } from './gengar-vmax';
+import { InteleonV } from './inteleon-v';
+import { InteleonVMAX } from './inteleon-vmax';
+import { Judge } from './judge';
+import { Meloetta } from './meloetta';
+import { MewV } from './mew-v';
+import { MewVMAX } from './mew-vmax';
+import { Oricorio } from './oricorio';
+import { PowerTablet } from './power-tablet';
+import { Pyukumuku } from './pyukumuku';
+import { Schoolboy } from './schoolboy';
+import { Schoolgirl } from './schoolgirl';
+import { Shauna } from './shauna';
+import { Yveltal } from './yveltal';
+
+export class AdventurersDiscoveryArt extends AdventurersDiscovery {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_224_R_EN_LG.png';
+}
+
+export class BattleVIPPassArt extends BattleVIPPass {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_225_R_EN_LG.png';
+}
+
+export class CookArt extends Cook {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_228_R_EN_LG.png';
+}
+
+export class CreamomaticArt extends Creamomatic {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_229_R_EN_LG.png';
+}
+
+export class CrossSwitcherArt extends CrossSwitcher {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_230_R_EN_LG.png';
+}
+
+export class DeoxysArt extends Deoxys {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_120_R_EN_LG.png';
+}
+
+export class DunsparceArt extends Dunsparce {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_207_R_EN_LG.png';
+}
+
+export class ElesasSparkleArt extends ElesasSparkle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_233_R_EN_LG.png';
+}
+
+export class FusionStrikeEnergyArt extends FusionStrikeEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_244_R_EN_LG.png';
+}
+
+export class GenesectVArt extends GenesectV {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_185_R_EN_LG.png';
+}
+
+export class GengarVArt extends GengarV {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_156_R_EN_LG.png';
+}
+
+export class GengarVMAXArt extends GengarVMAX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_157_R_EN_LG.png';
+}
+
+export class InteleonVArt extends InteleonV {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_078_R_EN_LG.png';
+}
+
+export class InteleonVMAXArt extends InteleonVMAX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_079_R_EN_LG.png';
+}
+
+export class JudgeArt extends Judge {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_235_R_EN_LG.png';
+}
+
+export class MeloettaArt extends Meloetta {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_124_R_EN_LG.png';
+}
+
+export class MewVArt extends MewV {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_113_R_EN_LG.png';
+}
+
+export class MewVMAXArt extends MewVMAX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_114_R_EN_LG.png';
+}
+
+export class OricorioArt extends Oricorio {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_042_R_EN_LG.png';
+}
+
+export class PowerTabletArt extends PowerTablet {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_236_R_EN_LG.png';
+}
+
+export class PyukumukuArt extends Pyukumuku {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_077_R_EN_LG.png';
+}
+
+export class SchoolboyArt extends Schoolboy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_238_R_EN_LG.png';
+}
+
+export class SchoolgirlArt extends Schoolgirl {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_239_R_EN_LG.png';
+}
+
+export class ShaunaArt extends Shauna {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_263_R_EN_LG.png';
+}
+
+export class YveltalArt extends Yveltal {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_175_R_EN_LG.png';
+}

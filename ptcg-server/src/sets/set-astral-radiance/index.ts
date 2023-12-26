@@ -1,87 +1,53 @@
 import { Card } from '../../game/store/card/card';
-import { DarkPatch } from './dark-patch';
-import { DarkraiV } from './darkrai-v';
-import { DarkraiVSTAR } from './darkrai-vstar';
-import { Diancie } from './diancie';
-import { FeatherBall } from './feather-ball';
-import { Gallade } from './gallade';
-import { GapejawBog } from './gapejaw-bog';
-import { GardeniasVigor } from './gardenias-vigor';
-import { Grant } from './grant';
-import { GutsyPickaxe } from './gutsy-pickaxe';
-import { HisuianArcanine } from './hisuian-arcanine';
-import { HisuianBasculin } from './hisuian-basculin';
-import { HisuianHeavyBall } from './hisuian-heavy-ball';
-import { HisuianSamurottV } from './hisuian-samurott-v';
-import { HisuianSamurottVSTAR } from './hisuian-samurott-vstar';
-import { Irida } from './irida';
-import { Kleavor } from './kleavor';
-import { LucarioV } from './lucario-v';
-import { Mightyena } from './mightyena';
-import { Miltank } from './miltank';
-import { OriginFormeDialgaV } from './origin-forme-dialga-v';
-import { OriginFormeDialgaVSTAR } from './origin-forme-dialga-vstar';
-import { OriginFormePalkiaV } from './origin-forme-palkia-v';
-import { OriginFormePalkiaVSTAR } from './origin-forme-palkia-vstar';
-import { RadiantGreninja } from './radiant-greninja';
-import { RadiantHawlucha } from './radiant-hawlucha';
-import { Ralts } from './ralts';
-import { Regice } from './regice';
-import { Regidrago } from './regidrago';
-import { Regieleki } from './regieleki';
-import { Regigigas } from './regigigas';
-import { Regirock } from './regirock';
-import { Registeel } from './registeel';
-import { Roxanne } from './roxanne';
-import { StarmieV } from './starmie-v';
-import { SupereffectiveGlasses } from './supereffective-glasses';
-import { SwitchCart } from './switch-cart';
-import { TempleofSinnoh } from './temple-of-sinnoh';
-import { TrekkingShoes } from './trekking-shoes';
-import { WyrdeerV } from './wyrdeer-v';
+import { AdamanArt, DarkPatchArt, DarkraiVArt, DarkraiVSTARArt, DiancieArt, FeatherBallArt, GalladeArt, GapejawBogArt, GardeniasVigorArt, GrantArt, GutsyPickaxeArt, HisuianArcanineArt, HisuianBasculinArt, HisuianHeavyBallArt, HisuianSamurottVArt, HisuianSamurottVSTARArt, IridaArt, KleavorArt, LucarioVArt, LuxrayVArt, MightyenaArt, MiltankArt, OriginFormeDialgaVArt, OriginFormeDialgaVSTARArt, OriginFormePalkiaVArt, OriginFormePalkiaVSTARArt, RadiantGreninjaArt, RadiantHawluchaArt, RaltsArt, RegiceArt, RegidragoArt, RegielekiArt, RegigigasArt, RegirockArt, RegisteelArt, RoxanneArt, StarmieVArt, SupereffectiveGlassesArt, SwitchCartArt, TempleofSinnohArt, TrekkingShoesArt, WyrdeerVArt } from './card-images';
+import { SpicySeasonedCurry } from './spicy-seasoned-curry';
+
 
 
 export const setAstralRadiance: Card[] = [
   
-  new DarkraiV(),
-  new DarkraiVSTAR(),
-  new DarkPatch(),
-  new FeatherBall(),
-  new Gallade(),
-  new GapejawBog(),
-  new GardeniasVigor(),
-  new Grant(),
-  new HisuianArcanine(),
-  new HisuianBasculin(),
-  new HisuianHeavyBall(),
-  new HisuianSamurottV(),
-  new HisuianSamurottVSTAR(),
-  new Irida(),
-  new LucarioV(),
-  new Mightyena(),
-  new Miltank(),
-  new OriginFormeDialgaV(),
-  new OriginFormeDialgaVSTAR(),
-  new OriginFormePalkiaV(),
-  new OriginFormePalkiaVSTAR(),
-  new RadiantGreninja(),
-  new RadiantHawlucha(),
-  new Ralts(),
-  new Regice(),
-  new Regidrago(),
-  new Regieleki(),
-  new Regigigas(),
-  new Regirock(),
-  new Registeel(),
-  new Roxanne(),
-  new SupereffectiveGlasses(),
-  new SwitchCart(),
-  new WyrdeerV(),
-  new TempleofSinnoh(),
-  new TrekkingShoes(),
-  new Kleavor(),
-  new GutsyPickaxe(),
-  new Diancie(),
-  new StarmieV(),
+  new AdamanArt(),
+  new DarkPatchArt(),
+  new DarkraiVArt(),
+  new DarkraiVSTARArt(),
+  new DiancieArt(),
+  new FeatherBallArt(),
+  new GalladeArt(),
+  new GapejawBogArt(),
+  new GardeniasVigorArt(),
+  new GrantArt(),
+  new GutsyPickaxeArt(),
+  new HisuianArcanineArt(),
+  new HisuianBasculinArt(),
+  new HisuianHeavyBallArt(),
+  new HisuianSamurottVArt(),
+  new HisuianSamurottVSTARArt(),
+  new IridaArt(),
+  new KleavorArt(),
+  new LucarioVArt(),
+  new LuxrayVArt(),
+  new MightyenaArt(),
+  new MiltankArt(),
+  new OriginFormeDialgaVArt(),
+  new OriginFormeDialgaVSTARArt(),
+  new OriginFormePalkiaVArt(),
+  new OriginFormePalkiaVSTARArt(),
+  new RadiantGreninjaArt(),
+  new RadiantHawluchaArt(),
+  new RaltsArt(),
+  new RegiceArt(),
+  new RegidragoArt(),
+  new RegielekiArt(),
+  new RegigigasArt(),
+  new RegirockArt(),
+  new RegisteelArt(),
+  new RoxanneArt(),
+  new SpicySeasonedCurry(),
+  new StarmieVArt(),
+  new SupereffectiveGlassesArt(),
+  new SwitchCartArt(),
+  new TempleofSinnohArt(),
+  new TrekkingShoesArt(),
+  new WyrdeerVArt(),
   
 ];

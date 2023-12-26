@@ -24,7 +24,7 @@ class Vileplume extends game_1.PokemonCard {
                 text: ''
             }];
         this.set = '151';
-        this.set2 = '151';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '45';
         this.name = 'Vileplume';
         this.fullName = 'Vileplume MEW';

@@ -1,0 +1,203 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.YveltalArt = exports.ShaunaArt = exports.SchoolgirlArt = exports.SchoolboyArt = exports.PyukumukuArt = exports.PowerTabletArt = exports.OricorioArt = exports.MewVMAXArt = exports.MewVArt = exports.MeloettaArt = exports.JudgeArt = exports.InteleonVMAXArt = exports.InteleonVArt = exports.GengarVMAXArt = exports.GengarVArt = exports.GenesectVArt = exports.FusionStrikeEnergyArt = exports.ElesasSparkleArt = exports.DunsparceArt = exports.DeoxysArt = exports.CrossSwitcherArt = exports.CreamomaticArt = exports.CookArt = exports.BattleVIPPassArt = exports.AdventurersDiscoveryArt = void 0;
+const adventurers_discovery_1 = require("./adventurers-discovery");
+const battle_vip_pass_1 = require("./battle-vip-pass");
+const cook_1 = require("./cook");
+const cram_o_matic_1 = require("./cram-o-matic");
+const cross_switcher_1 = require("./cross-switcher");
+const deoxys_1 = require("./deoxys");
+const dunsparce_1 = require("./dunsparce");
+const elesas_sparkle_1 = require("./elesas-sparkle");
+const fusion_strike_energy_1 = require("./fusion-strike-energy");
+const genesect_v_1 = require("./genesect-v");
+const gengar_v_1 = require("./gengar-v");
+const gengar_vmax_1 = require("./gengar-vmax");
+const inteleon_v_1 = require("./inteleon-v");
+const inteleon_vmax_1 = require("./inteleon-vmax");
+const judge_1 = require("./judge");
+const meloetta_1 = require("./meloetta");
+const mew_v_1 = require("./mew-v");
+const mew_vmax_1 = require("./mew-vmax");
+const oricorio_1 = require("./oricorio");
+const power_tablet_1 = require("./power-tablet");
+const pyukumuku_1 = require("./pyukumuku");
+const schoolboy_1 = require("./schoolboy");
+const schoolgirl_1 = require("./schoolgirl");
+const shauna_1 = require("./shauna");
+const yveltal_1 = require("./yveltal");
+class AdventurersDiscoveryArt extends adventurers_discovery_1.AdventurersDiscovery {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_224_R_EN_LG.png';
+    }
+}
+exports.AdventurersDiscoveryArt = AdventurersDiscoveryArt;
+class BattleVIPPassArt extends battle_vip_pass_1.BattleVIPPass {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_225_R_EN_LG.png';
+    }
+}
+exports.BattleVIPPassArt = BattleVIPPassArt;
+class CookArt extends cook_1.Cook {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_228_R_EN_LG.png';
+    }
+}
+exports.CookArt = CookArt;
+class CreamomaticArt extends cram_o_matic_1.Creamomatic {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_229_R_EN_LG.png';
+    }
+}
+exports.CreamomaticArt = CreamomaticArt;
+class CrossSwitcherArt extends cross_switcher_1.CrossSwitcher {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_230_R_EN_LG.png';
+    }
+}
+exports.CrossSwitcherArt = CrossSwitcherArt;
+class DeoxysArt extends deoxys_1.Deoxys {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_120_R_EN_LG.png';
+    }
+}
+exports.DeoxysArt = DeoxysArt;
+class DunsparceArt extends dunsparce_1.Dunsparce {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_207_R_EN_LG.png';
+    }
+}
+exports.DunsparceArt = DunsparceArt;
+class ElesasSparkleArt extends elesas_sparkle_1.ElesasSparkle {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_233_R_EN_LG.png';
+    }
+}
+exports.ElesasSparkleArt = ElesasSparkleArt;
+class FusionStrikeEnergyArt extends fusion_strike_energy_1.FusionStrikeEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_244_R_EN_LG.png';
+    }
+}
+exports.FusionStrikeEnergyArt = FusionStrikeEnergyArt;
+class GenesectVArt extends genesect_v_1.GenesectV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_185_R_EN_LG.png';
+    }
+}
+exports.GenesectVArt = GenesectVArt;
+class GengarVArt extends gengar_v_1.GengarV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_156_R_EN_LG.png';
+    }
+}
+exports.GengarVArt = GengarVArt;
+class GengarVMAXArt extends gengar_vmax_1.GengarVMAX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_157_R_EN_LG.png';
+    }
+}
+exports.GengarVMAXArt = GengarVMAXArt;
+class InteleonVArt extends inteleon_v_1.InteleonV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_078_R_EN_LG.png';
+    }
+}
+exports.InteleonVArt = InteleonVArt;
+class InteleonVMAXArt extends inteleon_vmax_1.InteleonVMAX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_079_R_EN_LG.png';
+    }
+}
+exports.InteleonVMAXArt = InteleonVMAXArt;
+class JudgeArt extends judge_1.Judge {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_235_R_EN_LG.png';
+    }
+}
+exports.JudgeArt = JudgeArt;
+class MeloettaArt extends meloetta_1.Meloetta {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_124_R_EN_LG.png';
+    }
+}
+exports.MeloettaArt = MeloettaArt;
+class MewVArt extends mew_v_1.MewV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_113_R_EN_LG.png';
+    }
+}
+exports.MewVArt = MewVArt;
+class MewVMAXArt extends mew_vmax_1.MewVMAX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_114_R_EN_LG.png';
+    }
+}
+exports.MewVMAXArt = MewVMAXArt;
+class OricorioArt extends oricorio_1.Oricorio {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_042_R_EN_LG.png';
+    }
+}
+exports.OricorioArt = OricorioArt;
+class PowerTabletArt extends power_tablet_1.PowerTablet {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_236_R_EN_LG.png';
+    }
+}
+exports.PowerTabletArt = PowerTabletArt;
+class PyukumukuArt extends pyukumuku_1.Pyukumuku {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_077_R_EN_LG.png';
+    }
+}
+exports.PyukumukuArt = PyukumukuArt;
+class SchoolboyArt extends schoolboy_1.Schoolboy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_238_R_EN_LG.png';
+    }
+}
+exports.SchoolboyArt = SchoolboyArt;
+class SchoolgirlArt extends schoolgirl_1.Schoolgirl {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_239_R_EN_LG.png';
+    }
+}
+exports.SchoolgirlArt = SchoolgirlArt;
+class ShaunaArt extends shauna_1.Shauna {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_263_R_EN_LG.png';
+    }
+}
+exports.ShaunaArt = ShaunaArt;
+class YveltalArt extends yveltal_1.Yveltal {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_175_R_EN_LG.png';
+    }
+}
+exports.YveltalArt = YveltalArt;

@@ -36,7 +36,7 @@ export class Copycat extends TrainerCard {
 
   public regulationMark = 'E';
 
-  public set2: string = 'evolvingskies';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '143';
 

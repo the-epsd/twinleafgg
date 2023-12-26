@@ -22,7 +22,7 @@ class Magneton extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '64';
         this.name = 'Magneton';
         this.fullName = 'Magneton SVI';

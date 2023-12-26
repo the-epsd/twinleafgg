@@ -37,7 +37,7 @@ export class Zapdos extends PokemonCard {
 
   public set: string = 'PGO';
   
-  public set2: string = 'pokemongo';
+  public cardImage: string = 'assets/cardback.png';
   
   public setNumber: string = '29';
   

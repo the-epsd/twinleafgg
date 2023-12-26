@@ -40,7 +40,7 @@ export class DeliveryDrone extends TrainerCard {
   
   public trainerType = TrainerType.ITEM;
   public set = 'PAL';
-  public set2: string = 'paldeaevolved';
+  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '178';
   public name = 'Delivery Drone';
   public fullName: string = 'Delivery Drone PAL 178';

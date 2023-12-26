@@ -27,7 +27,7 @@ class TapuKokoVMAX extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
-        this.set2 = 'battlestyles';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '51';
         this.name = 'Tapu Koko VMAX';
         this.fullName = 'Tapu Koko VMAX BST 051';

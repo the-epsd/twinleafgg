@@ -28,7 +28,7 @@ class Cyclizar extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SVI';
-        this.set2 = 'scarletviolet';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '164';
         this.name = 'Cyclizar';
         this.fullName = 'Cyclizar SVI';

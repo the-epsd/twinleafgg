@@ -33,7 +33,7 @@ class Beedrill extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '3';
         this.name = 'Beedril';
         this.fullName = 'Beedril CRE';

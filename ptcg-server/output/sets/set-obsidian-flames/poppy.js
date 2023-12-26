@@ -12,7 +12,7 @@ class Poppy extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'OBF';
-        this.set2 = 'obsidianflames';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '193';
         this.name = 'Poppy';
         this.fullName = 'Poppy OBF';

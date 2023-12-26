@@ -31,7 +31,7 @@ class OriginFormeDialgaV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
-        this.set2 = 'astralradiance';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '113';
         this.name = 'Origin Forme Dialga V';
         this.fullName = 'Origin Forme Dialga V ASR';

@@ -59,7 +59,7 @@ exports.config = {
     },
     sets: {
         scansDir: '',
-        scansUrl: '/{set2}/{setNumber}.jpg'
+        scansUrl: '{cardImage}'
     },
     email: {
         transporter: {

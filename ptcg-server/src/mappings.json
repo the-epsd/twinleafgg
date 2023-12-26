@@ -1,0 +1,14 @@
+{
+  "CharizardexFA": {
+    "extends": "./sets/set-obsidian-flames/charizard-ex",
+    "cardImage": "https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV3/SV3_125_R_JP_LG.png",
+    "setNumber": "215",
+    "fullName": "Charizard ex OBF 215"
+  },
+  "PidgeotexFA": {
+    "extends": "./sets/set-obsidian-flames/pidgeot-ex",
+    "cardImage": "https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV3/SV3_128_R_JP_LG.png",
+    "setNumber": "217",
+    "fullName": "Pidgeot ex OBF 217"
+  }
+}

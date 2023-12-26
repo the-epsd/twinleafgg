@@ -36,7 +36,7 @@ export class GengarV extends PokemonCard {
 
   public set: string = 'FST';
 
-  public set2: string = 'fusionstrike';
+  public cardImage: string = 'assets/cardback.png';
   
   public setNumber: string = '156';
   

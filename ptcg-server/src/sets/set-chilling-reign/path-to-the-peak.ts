@@ -7,13 +7,21 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 
 export class PathToThePeak extends TrainerCard {
+
   public trainerType = TrainerType.STADIUM;
+
   public set = 'CRE';
-  public set2: string = 'chillingreign';
+
+  public cardImage: string = 'assets/cardback.png';
+
   public setNumber: string = '148';
+
   public regulationMark = 'E';
+
   public name = 'Path to the Peak';
+
   public fullName = 'Path to the Peak CRE';
+  
   public text = 'Pokémon with a Rule Box in play (both yours and your opponent\'s) have no Abilities. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';
     
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

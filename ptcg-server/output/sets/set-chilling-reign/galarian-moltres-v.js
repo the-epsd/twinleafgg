@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GalarianMoltesV = void 0;
+exports.GalarianMoltresV = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
@@ -9,7 +9,7 @@ const game_message_1 = require("../../game/game-message");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-class GalarianMoltesV extends pokemon_card_1.PokemonCard {
+class GalarianMoltresV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
@@ -36,7 +36,7 @@ class GalarianMoltesV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'CRE';
-        this.set2 = 'chillingreign';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '97';
         this.name = 'Galarian Moltres V';
         this.fullName = 'Galarian Moltres V CRE';
@@ -84,4 +84,4 @@ class GalarianMoltesV extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.GalarianMoltesV = GalarianMoltesV;
+exports.GalarianMoltresV = GalarianMoltresV;

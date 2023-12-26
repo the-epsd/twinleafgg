@@ -18,7 +18,7 @@ export declare class Magmar extends PokemonCard {
         text: string;
     }[];
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;

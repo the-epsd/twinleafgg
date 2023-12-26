@@ -12,7 +12,7 @@ class FutureBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.FUTURE];
-        this.set2 = 'futureflash';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '62';
         this.set = 'PAR';
         this.name = 'Future Booster Energy Capsule';

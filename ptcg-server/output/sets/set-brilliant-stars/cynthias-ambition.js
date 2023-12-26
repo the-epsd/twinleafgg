@@ -14,7 +14,7 @@ class CynthiasAmbition extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'F';
         this.set = 'BRS';
-        this.set2 = 'brilliantstars';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '138';
         this.name = 'Cynthia\'s Ambition';
         this.fullName = 'Cynthia\'s Ambition BRS';

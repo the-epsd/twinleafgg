@@ -32,7 +32,7 @@ class Groudon extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'PAR';
-        this.set2 = 'paradoxrift';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '93';
         this.name = 'Groudon';
         this.fullName = 'Groudon PAR';

@@ -24,7 +24,7 @@ export abstract class Card {
   
   public setNumber: string = '';
 
-  public set2: string = '';
+  public cardImage: string = '';
 
   public retreat: CardType[] = [];
   

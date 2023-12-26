@@ -7,7 +7,7 @@ class MoonlightHill extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'G';
-        this.set2 = 'svpromo';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '95';
         this.trainerType = game_1.TrainerType.STADIUM;
         this.set = 'SV4';

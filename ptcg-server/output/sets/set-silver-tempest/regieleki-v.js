@@ -31,7 +31,7 @@ class RegielekiV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SIT';
-        this.set2 = 'silvertempest';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '57';
         this.name = 'Regieleki V';
         this.fullName = 'Regieleki V SIT';

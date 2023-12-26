@@ -30,7 +30,7 @@ class RadiantCharizard extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'CRZ';
-        this.set2 = 'crownzenith';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '20';
         this.name = 'Radiant Charizard';
         this.fullName = 'Radiant Charizard CRZ';

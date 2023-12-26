@@ -6,7 +6,7 @@ export declare class JetEnergy extends EnergyCard {
     provides: CardType[];
     energyType: EnergyType;
     set: string;
-    set2: string;
+    cardImage: string;
     setNumber: string;
     regulationMark: string;
     name: string;

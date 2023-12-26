@@ -28,7 +28,7 @@ class CounterCatcher extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'PAR';
-        this.set2 = 'paradoxrift';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '160';
         this.regulationMark = 'G';
         this.name = 'Counter Catcher';

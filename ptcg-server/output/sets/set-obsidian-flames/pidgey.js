@@ -20,7 +20,7 @@ class Pidgey extends pokemon_card_1.PokemonCard {
                 text: '' },
         ];
         this.set = 'OBF';
-        this.set2 = 'obsidianflames';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '162';
         this.name = 'Pidgey';
         this.fullName = 'Pidgey OBF';
