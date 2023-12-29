@@ -31,11 +31,14 @@ export class FanOfWaves extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
       
       let hasPokemonWithEnergy = false;
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
+        if (cardList.cards.some(c => c.superType === SuperType.ENERGY && EnergyType.SPECIAL)) {
           hasPokemonWithEnergy = true;
         } else {
           blocked.push(target);
@@ -75,6 +78,8 @@ export class FanOfWaves extends TrainerCard {
 
         cards.forEach(card => {
           opponentDeckBottom.moveCardTo(card, opponent.deck);
+
+          player.supporter.moveCardTo(this, player.discard);
         });
 
         return state;

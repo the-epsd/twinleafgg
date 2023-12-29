@@ -28,7 +28,7 @@ function* playCard(next, store, state, effect) {
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
     let transfers = [];
-    yield store.prompt(state, new move_energy_prompt_1.MoveEnergyPrompt(player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, max: 1, allowCancel: true }), result => {
+    yield store.prompt(state, new move_energy_prompt_1.MoveEnergyPrompt(player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, max: 1, allowCancel: false }), result => {
         transfers = result || [];
         next();
     });
@@ -36,13 +36,12 @@ function* playCard(next, store, state, effect) {
     if (transfers.length === 0) {
         return state;
     }
-    // Discard trainer only when user selected a Pokemon
-    player.hand.moveCardTo(effect.trainerCard, player.discard);
     transfers.forEach(transfer => {
         const source = state_utils_1.StateUtils.getTarget(state, player, transfer.from);
         const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
         source.moveCardTo(transfer.card, target);
     });
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class EnergySwitch extends trainer_card_1.TrainerCard {

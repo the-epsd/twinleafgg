@@ -26,6 +26,8 @@ class TrekkingShoes extends trainer_card_1.TrainerCard {
             if (player.deck.cards.length === 0) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             const deckTop = new card_list_1.CardList();
             player.deck.moveTo(deckTop, 1);
             return store.prompt(state, new __1.ShowCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop.cards // Fix error by changing toArray() to cards
@@ -40,6 +42,7 @@ class TrekkingShoes extends trainer_card_1.TrainerCard {
                         deckTop.moveTo(player.discard);
                         // Draw a card
                         player.deck.moveTo(player.hand, 1);
+                        player.supporter.moveCardTo(this, player.discard);
                     }
                     return state;
                 });

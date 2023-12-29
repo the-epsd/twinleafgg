@@ -21,6 +21,8 @@ function* playCard(next, store, state, effect) {
         // No open slots, throw error
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     let cards = [];
     yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, opponent.discard, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 1, max: 1, allowCancel: true }), selected => {
         cards = selected || [];
@@ -33,6 +35,7 @@ function* playCard(next, store, state, effect) {
     cards.forEach((card, index) => {
         opponent.discard.moveCardTo(card, slots[index]);
         slots[index].pokemonPlayedTurn = state.turn;
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
 }
 class EchoingHorn extends trainer_card_1.TrainerCard {
@@ -45,8 +48,7 @@ class EchoingHorn extends trainer_card_1.TrainerCard {
         this.setNumber = '136';
         this.name = 'Echoing Horn';
         this.fullName = 'Echoing Horn CRE';
-        this.text = 'Search your deck for a Basic Pokémon and put it onto your ' +
-            'Bench. Then, shuffle your deck.';
+        this.text = 'Put a Basic Pokémon from your opponent\'s discard pile onto their Bench.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

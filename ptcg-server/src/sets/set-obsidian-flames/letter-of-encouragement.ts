@@ -25,6 +25,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
+
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
   
   let cards: Card[] = [];
   return store.prompt(state, new ChooseCardsPrompt(
@@ -36,18 +39,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
   ), selected => {
     cards = selected || [];
     next();
-      
-  
-    player.hand.moveCardTo(self, player.supporter);
+
     player.deck.moveCardsTo(cards, player.hand);
   
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);
     });
   });
 }
-
 
 export class LetterOfEncouragement extends TrainerCard {
 

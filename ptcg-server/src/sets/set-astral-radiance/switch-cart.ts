@@ -35,7 +35,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       GameMessage.CHOOSE_POKEMON_TO_SWITCH,
       PlayerType.BOTTOM_PLAYER,
       [ SlotType.BENCH ],
-      { allowCancel: true }
+      { allowCancel: false }
     ), results => {
       targets = results || [];
       next();
@@ -46,11 +46,11 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     }
 
     // Discard trainer only when user selected a Pokemon
-    player.hand.moveCardTo(effect.trainerCard, player.discard);
     const healEffect = new HealEffect(player, player.active, 30);
     store.reduceEffect(state, healEffect);
     player.active.clearEffects();
     player.switchPokemon(targets[0]);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
   }
 }

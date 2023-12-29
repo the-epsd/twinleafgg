@@ -22,7 +22,7 @@ export class DarkPatch extends TrainerCard {
 
   public name: string = 'Dark Patch';
 
-public cardImage: string = 'assets/cardback.png';
+  public cardImage: string = 'assets/cardback.png';
   
   public setNumber: string = '139';
 
@@ -80,7 +80,7 @@ public cardImage: string = 'assets/cardback.png';
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Darkness Energy' },
-        { allowCancel: true, min: 1, max: 1, blockedTo }
+        { allowCancel: false, min: 1, max: 1, blockedTo }
       ), transfers => {
         transfers = transfers || [];
 
@@ -93,7 +93,7 @@ public cardImage: string = 'assets/cardback.png';
           player.discard.moveCardTo(transfer.card, target);
         }
 
-        player.hand.moveCardTo(this, player.discard);
+        player.supporter.moveCardTo(this, player.discard);
       });
     }
 

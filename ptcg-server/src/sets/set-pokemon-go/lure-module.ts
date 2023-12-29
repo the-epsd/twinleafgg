@@ -31,6 +31,9 @@ export class LureModule extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
       const temp = new CardList();
 
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       player.deck.moveTo(temp, 3);
 
       // Check if any cards drawn are basic energy
@@ -50,6 +53,8 @@ export class LureModule extends TrainerCard {
           temp.cards.forEach(card => {
             temp.moveCardTo(card, player.deck);
           });
+
+          player.supporter.moveCardTo(this, player.discard);
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);

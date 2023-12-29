@@ -14,7 +14,7 @@ class GougingFireex extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 230;
         this.weakness = [{ type: card_types_1.CardType.WATER }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.retreat = [];
         this.attacks = [
             {
                 name: 'Heat Blast',
@@ -24,7 +24,7 @@ class GougingFireex extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Explosive Flare',
-                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
+                cost: [],
                 damage: 260,
                 text: 'This Pokémon can’t use Exploding Flare again until it leaves the Active Spot.'
             }
@@ -39,17 +39,27 @@ class GougingFireex extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
+            let canAttack = 0;
+            // if (player.active.cards[0] !== this) {
+            //   player.marker.removeMarker(this.EXPLODING_FLARE_MARKER, this);
+            //   console.log('gouging fire ex marker removed - no longer in active spot');
+            // }
+            // if (player.marker.hasMarker(this.EXPLODING_FLARE_MARKER, this)) {
+            //   console.log('gouging fire ex attack blocked');
+            //   throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+            // }
+            //   player.marker.addMarker(this.EXPLODING_FLARE_MARKER, this);
+            //   console.log('gouging fire ex marker added');
+            //   return state;
+            // }
             if (player.active.cards[0] !== this) {
-                player.marker.removeMarker(this.EXPLODING_FLARE_MARKER, this);
-                console.log('gouging fire ex marker removed - no longer in active spot');
+                canAttack = 0;
             }
-            if (player.marker.hasMarker(this.EXPLODING_FLARE_MARKER, this)) {
+            if (canAttack == 1) {
                 console.log('gouging fire ex attack blocked');
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
-            player.marker.addMarker(this.EXPLODING_FLARE_MARKER, this);
-            console.log('gouging fire ex marker added');
-            return state;
+            canAttack = 1;
         }
         return state;
     }

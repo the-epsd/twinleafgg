@@ -32,6 +32,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const blocked: CardTarget[] = [];
   let hasBasicPokemon: boolean = false;
 
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
   const stage2 = player.hand.cards.filter(c => {
     return c instanceof PokemonCard && c.stage === Stage.STAGE_2;
   }) as PokemonCard[];
@@ -65,13 +68,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+
   let targets: PokemonCardList[] = [];
   yield store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
     PlayerType.BOTTOM_PLAYER,
     [ SlotType.ACTIVE, SlotType.BENCH ],
-    { allowCancel: true, blocked }
+    { allowCancel: false, blocked }
   ), selection => {
     targets = selection || [];
     next();
@@ -110,7 +115,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       store.reduceEffect(state, evolveEffect);
 
       // Discard trainer only when user selected a Pokemon
-      player.hand.moveCardTo(effect.trainerCard, player.discard);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
   });
 }

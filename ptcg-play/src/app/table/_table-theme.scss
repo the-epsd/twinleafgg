@@ -10,14 +10,14 @@
 
   //Board + Card Slot Border
   $table-border: solid 1px mat.get-color-from-palette($primary, A100);
-  $active-player-background-color: mat.get-color-from-palette($primary, A400);
+  $active-player-background-color: mat.get-color-from-palette($primary, A100);
   $hand-background-color: mat.get-color-from-palette($primary, A700);
-  $table-sidebar-header-background-color: mat.get-color-from-palette($primary, A400);
-  $table-sidebar-logs-background-color: mat.get-color-from-palette($primary, A400);
+  $table-sidebar-header-background-color: mat.get-color-from-palette($primary, A200);
+  $table-sidebar-logs-background-color: mat.get-color-from-palette($primary, A200);
   $table-sidebar-time-empty-progress: mat.get-color-from-palette($primary, A200);
   $table-sidebar-time-disabled-progress: mat.get-color-from-palette($primary, A100);
-  $table-sidebar-time-running-progress: mat.get-color-from-palette($primary, A700);
-  $choose-avatar-background-color: mat.get-color-from-palette($background, hover);
+  $table-sidebar-time-running-progress: mat.get-color-from-palette($primary, A400);
+  $choose-avatar-background-color: mat.get-color-from-palette($primary, A00);
 
   ptcg-hand {
     background-color: $hand-background-color;

@@ -21,7 +21,7 @@ function* playCard(next, store, state, effect) {
     }
     if (pokemonCard && pokemonCard.stage === card_types_1.Stage.BASIC) {
         let targets = [];
-        yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: true }), results => {
+        yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), results => {
             targets = results || [];
             next();
         });
@@ -29,11 +29,11 @@ function* playCard(next, store, state, effect) {
             return state;
         }
         // Discard trainer only when user selected a Pokemon
-        player.hand.moveCardTo(effect.trainerCard, player.discard);
         const healEffect = new game_effects_1.HealEffect(player, player.active, 30);
         store.reduceEffect(state, healEffect);
         player.active.clearEffects();
         player.switchPokemon(targets[0]);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
     }
 }

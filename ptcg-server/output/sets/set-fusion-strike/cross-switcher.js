@@ -34,6 +34,8 @@ function* playCard(next, store, state, effect) {
         if (hasBench === false) {
             throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
         }
+        // We will discard this card after prompt confirmation
+        effect.preventDefault = true;
         return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.BENCH], { allowCancel: false }), targets => {
             if (!targets || targets.length === 0) {
                 return;
@@ -44,16 +46,16 @@ function* playCard(next, store, state, effect) {
             // Do not discard the card yet
             effect.preventDefault = true;
             let target = [];
-            return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { allowCancel: true }), results => {
+            return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { allowCancel: false }), results => {
                 target = results || [];
                 next();
                 if (target.length === 0) {
                     return state;
                 }
                 // Discard trainer only when user selected a Pokemon
-                player.hand.moveCardTo(effect.trainerCard, player.discard);
                 player.active.clearEffects();
                 player.switchPokemon(target[0]);
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 return state;
             });
         });

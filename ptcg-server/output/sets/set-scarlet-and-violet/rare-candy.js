@@ -26,6 +26,8 @@ function* playCard(next, store, state, effect) {
     // Create list of non - Pokemon SP slots
     const blocked = [];
     let hasBasicPokemon = false;
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     const stage2 = player.hand.cards.filter(c => {
         return c instanceof pokemon_card_1.PokemonCard && c.stage === card_types_1.Stage.STAGE_2;
     });
@@ -53,8 +55,9 @@ function* playCard(next, store, state, effect) {
     }
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     let targets = [];
-    yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_EVOLVE, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], { allowCancel: true, blocked }), selection => {
+    yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_EVOLVE, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], { allowCancel: false, blocked }), selection => {
         targets = selection || [];
         next();
     });
@@ -81,7 +84,7 @@ function* playCard(next, store, state, effect) {
             const evolveEffect = new game_effects_1.EvolveEffect(player, targets[0], pokemonCard);
             store.reduceEffect(state, evolveEffect);
             // Discard trainer only when user selected a Pokemon
-            player.hand.moveCardTo(effect.trainerCard, player.discard);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
     });
 }

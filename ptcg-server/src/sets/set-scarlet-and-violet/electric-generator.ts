@@ -30,6 +30,9 @@ export class ElectricGenerator extends TrainerCard {
       const player = effect.player;
       const temp = new CardList();
   
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       player.deck.moveTo(temp, 5);
   
       // Check if any cards drawn are basic energy
@@ -49,6 +52,8 @@ export class ElectricGenerator extends TrainerCard {
           temp.cards.forEach(card => {
             temp.moveCardTo(card, player.deck);
           });
+
+          player.supporter.moveCardTo(this, player.discard);
           
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
@@ -67,7 +72,7 @@ export class ElectricGenerator extends TrainerCard {
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH],
           {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Lightning Energy'},
-          {min: 0, max: 2}
+          {min: 0, max: 2, allowCancel: false}
         ), transfers => {
   
           // Attach energy based on prompt selection

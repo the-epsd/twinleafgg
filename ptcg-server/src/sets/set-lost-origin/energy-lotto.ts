@@ -38,6 +38,9 @@ export class EnergyLotto extends TrainerCard {
       const pokemonDrawn = temp.cards.filter(card => {
         return card instanceof PokemonCard && card.superType === SuperType.ENERGY;
       });
+
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
       
       // If no energy cards were drawn, move all cards to hand
       if (pokemonDrawn.length == 0) {
@@ -65,7 +68,7 @@ export class EnergyLotto extends TrainerCard {
           GameMessage.CHOOSE_CARD_TO_HAND,
           temp,
           { superType: SuperType.POKEMON },
-          { allowCancel: true, min: 0, max: 1 }
+          { allowCancel: false, min: 0, max: 1 }
         ), chosenCards => {
     
           if (chosenCards.length > 0) {
@@ -78,6 +81,8 @@ export class EnergyLotto extends TrainerCard {
               temp.moveCardTo(card, player.deck);
             });  
           }
+
+          player.supporter.moveCardTo(this, player.discard);
     
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);

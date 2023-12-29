@@ -31,7 +31,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   // We will discard this card after prompt confirmation
-  // This will prevent unblocked supporter to appear in the discard pile
   effect.preventDefault = true;
 
   const maxPokemons = Math.min(pokemons, 1);
@@ -49,7 +48,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  player.hand.moveCardTo(effect.trainerCard, player.discard);
   player.deck.moveCardsTo(cards, player.hand);
 
   if (cards.length > 0) {
@@ -59,6 +57,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       cards
     ), () => next());
   }
+
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

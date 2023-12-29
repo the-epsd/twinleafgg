@@ -52,13 +52,11 @@ class LostVacuum extends trainer_card_1.TrainerCard {
                         effect.preventDefault = true;
                         const max = Math.min(1, pokemonsWithTool);
                         let targets = [];
-                        return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: true, blocked }), results => {
+                        return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: false, blocked }), results => {
                             targets = results || [];
                             if (targets.length === 0) {
                                 return state;
                             }
-                            // Discard trainer only when user selected a Pokemon
-                            player.hand.moveCardTo(effect.trainerCard, player.discard);
                             targets.forEach(target => {
                                 const owner = game_1.StateUtils.findOwner(state, target);
                                 if (target.tool !== undefined) {
@@ -91,6 +89,7 @@ class LostVacuum extends trainer_card_1.TrainerCard {
                 if (option.action) {
                     option.action();
                 }
+                player.supporter.moveCardTo(this, player.discard);
                 return state;
             });
         }

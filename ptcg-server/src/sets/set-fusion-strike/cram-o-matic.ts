@@ -37,7 +37,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
     {},
-    { min: 1, max: 1, allowCancel: true }
+    { min: 0, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
@@ -60,11 +60,13 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       GameMessage.CHOOSE_CARD_TO_HAND,
       player.deck,
       {},
-      { min: 1, max: 1, allowCancel: false }), (selected: any[]) => {
+      { min: 0, max: 1, allowCancel: false }), (selected: any[]) => {
       cards = selected || [];
       next();
     });
     player.deck.moveCardsTo(cards, player.hand);
+
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   }
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
     player.deck.applyOrder(order);

@@ -1,13 +1,10 @@
 import { Card } from '../../game/store/card/card';
-import { FlyingPikachuV } from './flying-pikachu-v';
-import { FlyingPikachuVMAX } from './flying-pikachu-vmax';
-import { Mew } from './mew';
-import { ZacianV } from './zacian-v';
+import { FlyingPikachuVArt, FlyingPikachuVMAXArt, MewArt, ZacianVArt } from './card-images';
 
 export const setCelebrations: Card[] = [
   
-  new FlyingPikachuV(),
-  new FlyingPikachuVMAX(),
-  new Mew(),
-  new ZacianV(),
+  new FlyingPikachuVArt(),
+  new FlyingPikachuVMAXArt(),
+  new MewArt(),
+  new ZacianVArt(),
 ];

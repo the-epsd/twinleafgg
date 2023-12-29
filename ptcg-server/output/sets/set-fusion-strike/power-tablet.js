@@ -22,6 +22,8 @@ class PowerTablet extends trainer_card_1.TrainerCard {
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             if (effect.target !== player.active && effect.target !== opponent.active) {
                 return state;
             }
@@ -29,6 +31,7 @@ class PowerTablet extends trainer_card_1.TrainerCard {
             if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.FUSION_STRIKE)) {
                 effect.damage += 30;
             }
+            player.supporter.moveCardTo(this, player.discard);
         }
         return state;
     }

@@ -18,6 +18,7 @@ class Player {
         this.active = new pokemon_card_list_1.PokemonCardList();
         this.bench = [];
         this.prizes = [];
+        this.supporterTurn = 0;
         this.retreatedTurn = 0;
         this.energyPlayedTurn = 0;
         this.stadiumPlayedTurn = 0;

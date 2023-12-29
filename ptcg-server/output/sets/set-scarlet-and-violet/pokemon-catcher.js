@@ -13,6 +13,8 @@ function* playCard(next, store, state, effect) {
     if (!hasBench) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     let coinResult = false;
     yield store.prompt(state, new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP), result => {
         coinResult = result;
@@ -24,6 +26,7 @@ function* playCard(next, store, state, effect) {
     return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
         const cardList = result[0];
         opponent.switchPokemon(cardList);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
 }
 class PokemonCatcher extends trainer_card_1.TrainerCard {

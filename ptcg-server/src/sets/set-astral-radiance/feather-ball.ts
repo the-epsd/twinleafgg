@@ -15,7 +15,7 @@ export class FeatherBall extends TrainerCard {
 
   public set: string = 'ASR';
 
-public cardImage: string = 'assets/cardback.png';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '141';
 
@@ -33,6 +33,9 @@ public cardImage: string = 'assets/cardback.png';
       
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
       
       return store.prompt(state, new ChooseCardsPrompt(
         player.id, 
@@ -41,7 +44,7 @@ public cardImage: string = 'assets/cardback.png';
         {
           
         },
-        { min: 0, max: 1, allowCancel: true }  
+        { min: 0, max: 1, allowCancel: false }  
       ), (cards) => {
       
         if (!cards || cards.length === 0) {
@@ -51,6 +54,7 @@ public cardImage: string = 'assets/cardback.png';
         const pokemon = cards[0];
       
         player.deck.moveCardTo(pokemon, player.hand);
+        player.supporter.moveCardTo(this, player.discard);
       
         return store.prompt(state, [
           new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, [pokemon]),

@@ -27,8 +27,13 @@ export class SpicySeasonedCurry extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const playerActive = player.active;
+
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       playerActive.specialConditions.push(SpecialCondition.BURNED);
       store.reduceEffect(state, new HealEffect(player, playerActive, 40));
+      player.supporter.moveCardTo(this, player.discard);
     }
     return state;
   }

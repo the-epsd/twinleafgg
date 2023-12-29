@@ -12,6 +12,8 @@ function* playCard(next, store, state, effect) {
     const player = effect.player;
     let coin1Result = false;
     let coin2Result = false;
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     yield store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.COIN_FLIP), (result) => {
         coin1Result = result;
         next();
@@ -22,12 +24,13 @@ function* playCard(next, store, state, effect) {
     });
     if (coin1Result && coin2Result) {
         let cards = [];
-        yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: false }), (selected) => {
+        yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 1, allowCancel: false }), (selected) => {
             cards = selected || [];
             next();
         });
         player.deck.moveCardsTo(cards, player.hand);
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), (order) => {
         player.deck.applyOrder(order);
     });

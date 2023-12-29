@@ -27,12 +27,15 @@ export class PicnicBasket extends TrainerCard {
 
       const player = effect.player;
 
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       // Heal each Pokemon by 30 damage
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER && PlayerType.TOP_PLAYER, (cardList) => {
         const healEffect = new HealEffect(player, cardList, 30);
         state = store.reduceEffect(state, healEffect); 
       });
-    
+      player.supporter.moveCardTo(this, player.discard);
       return state;
     
     }

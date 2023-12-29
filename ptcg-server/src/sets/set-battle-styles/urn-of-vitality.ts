@@ -37,8 +37,8 @@ function* playCard(next: Function, store: StoreLike, state: State, self: UrnOfVi
   });
 
   if (cards.length > 0) {
-    player.hand.moveCardTo(self, player.discard);
     player.discard.moveCardsTo(cards, player.deck);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   }
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

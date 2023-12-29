@@ -22,9 +22,8 @@ function* playCard(next, store, state, effect) {
     if (targets.length === 0) {
         return state;
     }
-    // Discard trainer only when user selected a Pokemon
-    player.hand.moveCardTo(effect.trainerCard, player.discard);
     player.switchPokemon(targets[0]);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class Switch extends trainer_card_1.TrainerCard {

@@ -21,6 +21,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
   const deckTop = new CardList();
   player.deck.moveTo(deckTop, 7);
 
@@ -30,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_CARD_TO_HAND,
     deckTop,
     { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-    { min: 1, max: 1, allowCancel: true }
+    { min: 0, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
@@ -46,7 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       cards
     ), () => next());
   }
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

@@ -51,10 +51,6 @@ function initNextTurn(store, state) {
     //if (state.turn === 1 && !state.rules.firstTurnDrawCard) {
     //  return state;
     //}
-    //Skip attack on first turn
-    // if (state.turn === 1 && !state.rules.firstTurnAttack) {
-    //   return state;
-    // }
     // Draw card at the beginning
     store.log(state, game_message_1.GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
     if (player.deck.cards.length === 0) {
@@ -122,6 +118,8 @@ function handleSpecialConditions(store, state, effect) {
 function gamePhaseReducer(store, state, effect) {
     if (effect instanceof game_phase_effects_1.EndTurnEffect) {
         const player = state.players[state.activePlayer];
+        player.supporterTurn = 0;
+        console.log('player.supporterTurn', player.supporterTurn);
         if (player === undefined) {
             throw new game_error_1.GameError(game_message_1.GameMessage.NOT_YOUR_TURN);
         }

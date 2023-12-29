@@ -1,29 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPaldeaFates = void 0;
-const atticus_1 = require("./atticus");
-const charmeleon_1 = require("./charmeleon");
-const clive_1 = require("./clive");
-const espathra_ex_1 = require("./espathra-ex");
-const frigibax_1 = require("./frigibax");
-const gengar_1 = require("./gengar");
-const kilowattrel_1 = require("./kilowattrel");
-const mime_jr_1 = require("./mime-jr");
-const moonlight_hill_1 = require("./moonlight-hill");
-const nemona_1 = require("./nemona");
-const scovillain_ex_1 = require("./scovillain-ex");
-const students_in_paldea_1 = require("./students-in-paldea");
+const card_images_1 = require("./card-images");
 exports.setPaldeaFates = [
-    new charmeleon_1.Charmeleon(),
-    new atticus_1.Atticus(),
-    new clive_1.Clive(),
-    new espathra_ex_1.Espathraex(),
-    new moonlight_hill_1.MoonlightHill(),
-    new nemona_1.Nemona(),
-    new scovillain_ex_1.Scovillainex(),
-    new students_in_paldea_1.StudentsInPaldea(),
-    new gengar_1.Gengar(),
-    new kilowattrel_1.Kilowattrel(),
-    new mime_jr_1.MimeJr(),
-    new frigibax_1.Frigibax(),
+    new card_images_1.CharmeleonArt(),
+    new card_images_1.AtticusArt(),
+    new card_images_1.CliveArt(),
+    new card_images_1.EspathraexArt(),
+    new card_images_1.MoonlightHillArt(),
+    new card_images_1.NemonaArt(),
+    new card_images_1.ScovillainexArt(),
+    new card_images_1.StudentsInPaldeaArt(),
+    new card_images_1.GengarArt(),
+    new card_images_1.KilowattrelArt(),
+    new card_images_1.MimeJrArt(),
+    new card_images_1.FrigibaxArt(),
 ];

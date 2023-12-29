@@ -68,16 +68,13 @@ export class LostVacuum extends TrainerCard {
               GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
               PlayerType.ANY,
               [SlotType.ACTIVE, SlotType.BENCH],
-              { min: 1, max: max, allowCancel: true, blocked }
+              { min: 1, max: max, allowCancel: false, blocked }
             ), results => {
               targets = results || [];
 
               if (targets.length === 0) {
                 return state;
               }
-
-              // Discard trainer only when user selected a Pokemon
-              player.hand.moveCardTo(effect.trainerCard, player.discard);
 
               targets.forEach(target => {
                 const owner = StateUtils.findOwner(state, target);
@@ -109,9 +106,6 @@ export class LostVacuum extends TrainerCard {
         }
       ];
     
-
-
-
       return store.prompt(state, new SelectPrompt(
         player.id,
         GameMessage.CHOOSE_SPECIAL_CONDITION,
@@ -124,6 +118,7 @@ export class LostVacuum extends TrainerCard {
           option.action();
 
         }
+        player.supporter.moveCardTo(this, player.discard);
         return state;
       });
     }

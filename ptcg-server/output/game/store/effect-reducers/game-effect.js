@@ -11,6 +11,7 @@ const card_types_1 = require("../card/card-types");
 const game_effects_1 = require("../effects/game-effects");
 const coin_flip_prompt_1 = require("../prompts/coin-flip-prompt");
 const attack_effects_1 = require("../effects/attack-effects");
+const play_card_effects_1 = require("../effects/play-card-effects");
 function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
     let multiply = 1;
     let modifier = 0;
@@ -34,9 +35,9 @@ function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
 function* useAttack(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-    //Skip draw card on first turn
+    //Skip attack on first turn
     if (state.turn === 1) {
-        return state;
+        throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
     }
     const sp = player.active.specialConditions;
     if (sp.includes(card_types_1.SpecialCondition.PARALYZED) || sp.includes(card_types_1.SpecialCondition.ASLEEP)) {
@@ -123,6 +124,11 @@ function gameReducer(store, state, effect) {
         const player = effect.player;
         store.log(state, game_message_1.GameLog.LOG_PLAYER_USES_STADIUM, { name: player.name, stadium: effect.stadium.name });
         player.stadiumUsedTurn = state.turn;
+    }
+    if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard.trainerType === card_types_1.TrainerType.SUPPORTER) {
+        const player = effect.player;
+        store.log(state, game_message_1.GameLog.LOG_PLAYER_PLAYS_SUPPORTER, { name: player.name, stadium: effect.trainerCard.name });
+        player.supporterTurn = state.turn;
     }
     if (effect instanceof game_effects_1.HealEffect) {
         effect.target.damage = Math.max(0, effect.target.damage - effect.damage);

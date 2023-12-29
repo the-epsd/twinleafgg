@@ -30,16 +30,16 @@ function* playCard(next: Function, store: StoreLike, state: State, self: PalPad,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
     { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-    { min: 0, max: 2, allowCancel: true }
+    { min: 0, max: 2, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
   });
 
   if (cards.length > 0) {
-    player.hand.moveCardTo(self, player.discard);
     player.discard.moveCardsTo(cards, player.deck);
   }
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

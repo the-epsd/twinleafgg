@@ -41,7 +41,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
     { },
-    { min: 2, max: 2, allowCancel: true }
+    { min: 2, max: 2, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
@@ -52,7 +52,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-  player.hand.moveCardTo(self, player.discard);
   player.hand.moveCardsTo(cards, player.discard);
 
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -60,7 +59,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { superType: SuperType.POKEMON },
-    { min: 1, max: 1, allowCancel: true }
+    { min: 0, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
@@ -75,6 +74,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   player.deck.moveCardsTo(cards, player.hand);
+
+  player.supporter.moveCardTo(self, player.discard);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

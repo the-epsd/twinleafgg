@@ -39,7 +39,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     PlayerType.BOTTOM_PLAYER,
     [ SlotType.ACTIVE, SlotType.BENCH ],
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min: 1, max: 1, allowCancel: true }
+    { min: 1, max: 1, allowCancel: false }
   ), result => {
     transfers = result || [];
     next();
@@ -50,15 +50,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
-  // Discard trainer only when user selected a Pokemon
-  player.hand.moveCardTo(effect.trainerCard, player.discard);
-
   transfers.forEach(transfer => {
     const source = StateUtils.getTarget(state, player, transfer.from);
     const target = StateUtils.getTarget(state, player, transfer.to);
     source.moveCardTo(transfer.card, target);
   });
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return state;
 }
 

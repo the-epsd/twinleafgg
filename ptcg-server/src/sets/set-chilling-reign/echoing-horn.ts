@@ -26,6 +26,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -48,6 +50,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   cards.forEach((card, index) => {
     opponent.discard.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
+
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   });
 
 }
@@ -68,8 +72,7 @@ export class EchoingHorn extends TrainerCard {
   public fullName: string = 'Echoing Horn CRE';
 
   public text: string =
-    'Search your deck for a Basic Pokémon and put it onto your ' +
-    'Bench. Then, shuffle your deck.';
+    'Put a Basic Pokémon from your opponent\'s discard pile onto their Bench.';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

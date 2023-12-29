@@ -11,6 +11,8 @@ function* playCard(next, store, state, effect) {
     const opponent = game_1.StateUtils.getOpponent(state, player);
     const playerHasBench = player.bench.some(b => b.cards.length > 0);
     const opponentHasBench = opponent.bench.some(b => b.cards.length > 0);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     if (!playerHasBench && !opponentHasBench) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
@@ -32,6 +34,7 @@ function* playCard(next, store, state, effect) {
         if (targets.length > 0) {
             player.switchPokemon(targets[0]);
         }
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
     return state;
 }

@@ -52,23 +52,26 @@ export class BattleVIPPass extends TrainerCard {
             // No open slots, throw error
             throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
           }
+
+          // We will discard this card after prompt confirmation
+          effect.preventDefault = true;
            
-        
           let cards: Card[] = [];
           return store.prompt(state, new ChooseCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
             player.deck,
             { superType: SuperType.POKEMON, stage: Stage.BASIC },
-            { min: 0, max: 2, allowCancel: true }
+            { min: 0, max: 2, allowCancel: false }
           ), selectedCards => {
             cards = selectedCards || [];
         
-    
             cards.forEach((card, index) => {
               player.deck.moveCardTo(card, slots[index]);
               slots[index].pokemonPlayedTurn = state.turn;
             });
+
+            player.supporter.moveCardTo(this, player.discard);
         
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
               player.deck.applyOrder(order);

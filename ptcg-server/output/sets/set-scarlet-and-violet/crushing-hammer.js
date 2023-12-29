@@ -22,6 +22,8 @@ function* playCard(next, store, state, effect) {
     if (!hasPokemonWithEnergy) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     let coinResult = false;
     yield store.prompt(state, new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP), result => {
         coinResult = result;
@@ -45,6 +47,7 @@ function* playCard(next, store, state, effect) {
         next();
     });
     target.moveCardsTo(cards, opponent.discard);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class CrushingHammer extends trainer_card_1.TrainerCard {

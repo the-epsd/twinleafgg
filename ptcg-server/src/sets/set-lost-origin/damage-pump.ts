@@ -37,6 +37,9 @@ export class DamagePump extends TrainerCard {
         store.reduceEffect(state, checkHpEffect);
         maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
       });
+
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
         
       return store.prompt(state, new MoveDamagePrompt(
         effect.player.id,
@@ -57,6 +60,7 @@ export class DamagePump extends TrainerCard {
             source.damage -= 20;
             target.damage += 20;
           }
+          player.supporter.moveCardTo(this, player.discard);
           return state;
         }
         return state;

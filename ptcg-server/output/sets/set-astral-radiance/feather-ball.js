@@ -27,12 +27,15 @@ class FeatherBall extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 1, allowCancel: true }), (cards) => {
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 1, allowCancel: false }), (cards) => {
                 if (!cards || cards.length === 0) {
                     return state;
                 }
                 const pokemon = cards[0];
                 player.deck.moveCardTo(pokemon, player.hand);
+                player.supporter.moveCardTo(this, player.discard);
                 return store.prompt(state, [
                     new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, [pokemon]),
                     new shuffle_prompt_1.ShuffleDeckPrompt(player.id)

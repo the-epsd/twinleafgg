@@ -28,6 +28,8 @@ class DamagePump extends trainer_card_1.TrainerCard {
                 store.reduceEffect(state, checkHpEffect);
                 maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
             });
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             return store.prompt(state, new game_1.MoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 2, allowCancel: true }), transfers => {
                 if (transfers === null) {
                     return;
@@ -39,6 +41,7 @@ class DamagePump extends trainer_card_1.TrainerCard {
                         source.damage -= 20;
                         target.damage += 20;
                     }
+                    player.supporter.moveCardTo(this, player.discard);
                     return state;
                 }
                 return state;

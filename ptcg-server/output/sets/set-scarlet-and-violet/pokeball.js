@@ -11,18 +11,21 @@ const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     let coinResult = false;
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     yield store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.COIN_FLIP), (result) => {
         coinResult = result;
         next();
     });
     if (coinResult) {
         let cards = [];
-        yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: false }), (selected) => {
+        yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 1, allowCancel: false }), (selected) => {
             cards = selected || [];
             next();
         });
         player.deck.moveCardsTo(cards, player.hand);
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), (order) => {
         player.deck.applyOrder(order);
     });

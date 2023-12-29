@@ -21,12 +21,14 @@ function* playCard(next, store, state, self, effect) {
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     let cards = [];
     return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: 3, allowCancel: false }), selected => {
         cards = selected || [];
         next();
-        player.hand.moveCardTo(self, player.supporter);
         player.deck.moveCardsTo(cards, player.hand);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
         });

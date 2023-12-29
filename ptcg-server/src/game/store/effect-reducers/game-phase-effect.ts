@@ -61,11 +61,6 @@ export function initNextTurn(store: StoreLike, state: State): State {
   //  return state;
   //}
 
-  //Skip attack on first turn
-  // if (state.turn === 1 && !state.rules.firstTurnAttack) {
-  //   return state;
-  // }
-
   // Draw card at the beginning
   store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
   if (player.deck.cards.length === 0) {
@@ -148,6 +143,9 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
 
   if (effect instanceof EndTurnEffect) {
     const player = state.players[state.activePlayer];
+
+    player.supporterTurn = 0;
+    console.log('player.supporterTurn', player.supporterTurn);
 
     if (player === undefined) {
       throw new GameError(GameMessage.NOT_YOUR_TURN);

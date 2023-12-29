@@ -25,20 +25,19 @@ function* playCard(next, store, state, effect) {
     // Do not discard the card yet
     effect.preventDefault = true;
     let targets = [];
-    yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_HEAL, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: true, blocked }), results => {
+    yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_HEAL, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false, blocked }), results => {
         targets = results || [];
         next();
     });
     if (targets.length === 0) {
         return state;
     }
-    // Discard trainer only when user selected a Pokemon
-    player.hand.moveCardTo(effect.trainerCard, player.discard);
     targets.forEach(target => {
         // Heal Pokemon
         const healEffect = new game_effects_1.HealEffect(player, target, 30);
         store.reduceEffect(state, healEffect);
     });
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class Potion extends trainer_card_1.TrainerCard {

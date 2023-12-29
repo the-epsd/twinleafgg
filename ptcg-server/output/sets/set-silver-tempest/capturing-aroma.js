@@ -25,6 +25,8 @@ class CapturingAroma extends trainer_card_1.TrainerCard {
             if (player.deck.cards.length === 0) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             return store.prompt(state, new game_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.COIN_FLIP), flipResult => {
                 if (flipResult) {
                     let cards = [];
@@ -44,7 +46,7 @@ class CapturingAroma extends trainer_card_1.TrainerCard {
                 }
                 if (!flipResult) {
                     let cards = [];
-                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: true }), selectedCards => {
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false }), selectedCards => {
                         cards = selectedCards || [];
                         // Operation canceled by the user
                         if (cards.length === 0) {
@@ -53,6 +55,7 @@ class CapturingAroma extends trainer_card_1.TrainerCard {
                         cards.forEach(card => {
                             player.deck.moveCardTo(card, player.hand);
                         });
+                        player.supporter.moveCardTo(this, player.discard);
                         return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                             player.deck.applyOrder(order);
                         });

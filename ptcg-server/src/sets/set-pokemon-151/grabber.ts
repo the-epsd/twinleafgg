@@ -32,13 +32,16 @@ export class Grabber extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const deckBottom = StateUtils.findCardList(state, this) as PokemonCardList;
+
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
     
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_DECK,
         opponent.hand,
         { superType: SuperType.POKEMON },
-        { allowCancel: true , min: 0, max: 1}
+        { allowCancel: false , min: 0, max: 1}
       ), cards => {
         if (cards === null || cards.length === 0) {
           return;
@@ -47,6 +50,9 @@ export class Grabber extends TrainerCard {
         
         opponent.hand.moveCardTo(trainerCard, deckBottom);
         deckBottom.moveTo(opponent.deck);
+
+        player.supporter.moveCardTo(this, player.discard);
+
       });
     }
     return state;

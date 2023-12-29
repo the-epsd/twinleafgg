@@ -9,12 +9,14 @@ const card_types_1 = require("../card/card-types");
 function playTrainerReducer(store, state, effect) {
     /* Play supporter card */
     if (effect instanceof play_card_effects_1.PlaySupporterEffect) {
+        const player = effect.player;
         const playTrainer = new play_card_effects_1.TrainerEffect(effect.player, effect.trainerCard, effect.target);
         state = store.reduceEffect(state, playTrainer);
         store.log(state, game_message_1.GameLog.LOG_PLAYER_PLAYS_SUPPORTER, {
             name: effect.player.name,
             card: effect.trainerCard.name
         });
+        player.supporterTurn = 1;
         return state;
     }
     /* Play stadium card */
@@ -59,6 +61,7 @@ function playTrainerReducer(store, state, effect) {
     if (effect instanceof play_card_effects_1.PlayItemEffect) {
         const playTrainer = new play_card_effects_1.TrainerEffect(effect.player, effect.trainerCard, effect.target);
         state = store.reduceEffect(state, playTrainer);
+        effect.player.hand.moveCardTo(effect.trainerCard, effect.player.supporter);
         store.log(state, game_message_1.GameLog.LOG_PLAYER_PLAYS_ITEM, {
             name: effect.player.name,
             card: effect.trainerCard.name
@@ -72,7 +75,8 @@ function playTrainerReducer(store, state, effect) {
             const isSupporter = effect.trainerCard.trainerType === card_types_1.TrainerType.SUPPORTER;
             const target = isSupporter ? effect.player.supporter : effect.player.discard;
             effect.player.hand.moveCardTo(effect.trainerCard, target);
-            //effect.player.hand.moveCardTo(effect.trainerCard, effect.player.discard);
+            effect.player.supporterTurn = 1;
+            // effect.player.supporter.moveCardTo(effect.trainerCard, effect.player.discard);
         }
         return state;
     }

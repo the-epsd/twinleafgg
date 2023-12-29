@@ -9,7 +9,7 @@
 
   $ptcg-card-placeholder-background: mat.get-color-from-palette($background, dialog);
   $ptcg-card-placeholder-border-color: mat.get-color-from-palette($foreground, divider);
-  $cards-drop-highlight-shadow: 0 0 map-get($padding, normal) mat.get-color-from-palette($primary, text);
+  $cards-drop-highlight-shadow: 0 0 map-get($padding, normal) mat.get-color-from-palette($primary, A100);
 
   $ptcg-card-info-title-background: mat.get-color-from-palette($background, app-bar);
   $ptcg-card-info-subtitle-background: mat.get-color-from-palette($background, focused-button);

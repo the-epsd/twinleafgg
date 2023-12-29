@@ -33,6 +33,9 @@ export class MirageGate extends TrainerCard {
       if (player.lostzone.cards.length <= 6) {
         throw new GameError (GameMessage.CANNOT_PLAY_THIS_CARD);  
       }
+
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
             
       if (player.lostzone.cards.length >= 7) {
         state = store.prompt(state, new AttachEnergyPrompt(
@@ -42,7 +45,7 @@ export class MirageGate extends TrainerCard {
           PlayerType.BOTTOM_PLAYER,
           [ SlotType.BENCH, SlotType.ACTIVE ],
           { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { allowCancel: true, min: 1, max: 2 }
+          { allowCancel: false, min: 1, max: 2 }
         ), transfers => {
           transfers = transfers || [];
           // cancelled by user
@@ -52,6 +55,7 @@ export class MirageGate extends TrainerCard {
           for (const transfer of transfers) {
             const target = StateUtils.getTarget(state, player, transfer.to);
             player.deck.moveCardTo(transfer.card, target);
+            player.supporter.moveCardTo(this, player.discard);
             return state;
           }});
       }

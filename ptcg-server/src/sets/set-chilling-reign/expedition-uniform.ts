@@ -16,6 +16,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
   const deckBottom = new CardList();
   player.deck.moveTo(deckBottom, 3);
 
@@ -27,6 +30,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     { min: 3, max: 3, allowCancel: false }
   ), selected => {
     deckBottom.moveCardsTo(selected, player.deck);
+
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   });
 }
 

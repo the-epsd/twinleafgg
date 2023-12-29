@@ -18,6 +18,7 @@ export declare class Player {
     active: PokemonCardList;
     bench: PokemonCardList[];
     prizes: CardList[];
+    supporterTurn: number;
     retreatedTurn: number;
     energyPlayedTurn: number;
     stadiumPlayedTurn: number;

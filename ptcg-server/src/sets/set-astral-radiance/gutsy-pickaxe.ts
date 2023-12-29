@@ -28,6 +28,9 @@ export class GutsyPickaxe extends TrainerCard {
 
       player.deck.moveTo(temp, 1);
 
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
         return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Basic Fighting Energy';
@@ -50,7 +53,7 @@ export class GutsyPickaxe extends TrainerCard {
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH, SlotType.ACTIVE],
           {superType: SuperType.ENERGY, energyType: EnergyType.BASIC},
-          {min: 0, max: energyCardsDrawn.length}
+          {min: 0, allowCancel: false, max: energyCardsDrawn.length}
         ), transfers => {
     
           // Attach energy based on prompt selection
@@ -61,7 +64,7 @@ export class GutsyPickaxe extends TrainerCard {
             }
             temp.cards.forEach(card => {
               temp.moveCardTo(card, player.hand); // Move card to hand
-            
+              player.supporter.moveCardTo(this, player.discard);
             });
             return state;
           }

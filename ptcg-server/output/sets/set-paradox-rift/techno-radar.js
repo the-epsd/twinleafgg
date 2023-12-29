@@ -27,7 +27,7 @@ function* playCard(next, store, state, self, effect) {
     // prepare card list without Junk Arm
     const handTemp = new card_list_1.CardList();
     handTemp.cards = player.hand.cards.filter(c => c !== self);
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 1, max: 1, allowCancel: true }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 1, max: 1, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });
@@ -35,9 +35,8 @@ function* playCard(next, store, state, self, effect) {
     if (cards.length === 0) {
         return state;
     }
-    player.hand.moveCardTo(self, player.discard);
     player.hand.moveCardsTo(cards, player.discard);
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC, cardTag: [card_types_1.CardTag.FUTURE] }, { min: 1, max: 2, allowCancel: true }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC, cardTag: [card_types_1.CardTag.FUTURE] }, { min: 0, max: 2, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });
@@ -45,6 +44,7 @@ function* playCard(next, store, state, self, effect) {
     if (cards.length > 0) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
     });

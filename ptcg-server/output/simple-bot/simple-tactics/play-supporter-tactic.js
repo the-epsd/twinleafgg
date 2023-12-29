@@ -8,6 +8,9 @@ class PlaySupporterTactic extends simple_tactics_1.SimpleTactic {
         if (player.supporter.cards.length > 0) {
             return;
         }
+        if (player.supporterTurn >= state.turn) {
+            return;
+        }
         const supporters = player.hand.cards.filter(c => {
             return c instanceof game_1.TrainerCard && c.trainerType === game_1.TrainerType.SUPPORTER;
         });

@@ -24,12 +24,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     }
   });
 
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
     { superType: SuperType.POKEMON },
-    { min: 1, max: 2, allowCancel: true, blocked }
+    { min: 1, max: 2, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();
@@ -44,6 +47,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       cards
     ), () => next());
   }
+
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

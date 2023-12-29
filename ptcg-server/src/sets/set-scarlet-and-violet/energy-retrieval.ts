@@ -32,14 +32,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min, max: min, allowCancel: true }
+    { min: 1, max: min, allowCancel: false }
   ), cards => {
     cards = cards || [];
     if (cards.length > 0) {
-      // Discard trainer only when user selected a Pokemon
-      player.hand.moveCardTo(effect.trainerCard, player.discard);
       // Recover discarded Pokemon
       player.discard.moveCardsTo(cards, player.hand);
+      // Discard item card
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
   });
 }

@@ -32,6 +32,9 @@ export class PowerTablet extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       if (effect.target !== player.active && effect.target !== opponent.active) {
         return state;
       }
@@ -40,6 +43,7 @@ export class PowerTablet extends TrainerCard {
       if (pokemonCard && pokemonCard.tags.includes(CardTag.FUSION_STRIKE)) {
         effect.damage += 30;
       }
+      player.supporter.moveCardTo(this, player.discard);
     }
 
     return state;

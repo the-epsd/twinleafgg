@@ -8,11 +8,12 @@ import { StateUtils } from '../state-utils';
 import { CheckPokemonTypeEffect, CheckPokemonStatsEffect,
   CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../effects/check-effects';
 import { Weakness, Resistance } from '../card/pokemon-types';
-import { CardType, SpecialCondition, CardTag } from '../card/card-types';
+import { CardType, SpecialCondition, CardTag, TrainerType } from '../card/card-types';
 import { AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect,
   UsePowerEffect, PowerEffect, UseStadiumEffect, EvolveEffect } from '../effects/game-effects';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { DealDamageEffect, ApplyWeaknessEffect } from '../effects/attack-effects';
+import { TrainerEffect } from '../effects/play-card-effects';
 
 function applyWeaknessAndResistance(
   damage: number,
@@ -46,9 +47,9 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  //Skip draw card on first turn
+  //Skip attack on first turn
   if (state.turn === 1) {
-    return state;
+    throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
   }
 
   const sp = player.active.specialConditions;
@@ -160,6 +161,12 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     const player = effect.player;
     store.log(state, GameLog.LOG_PLAYER_USES_STADIUM, { name: player.name, stadium: effect.stadium.name });
     player.stadiumUsedTurn = state.turn;
+  }
+
+  if (effect instanceof TrainerEffect && effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
+    const player = effect.player;
+    store.log(state, GameLog.LOG_PLAYER_PLAYS_SUPPORTER, { name: player.name, stadium: effect.trainerCard.name });
+    player.supporterTurn = state.turn;
   }
 
   if (effect instanceof HealEffect) {

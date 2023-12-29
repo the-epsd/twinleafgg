@@ -35,7 +35,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_POKEMON_TO_HEAL,
     PlayerType.BOTTOM_PLAYER,
     [ SlotType.ACTIVE, SlotType.BENCH ],
-    { allowCancel: true, blocked }
+    { allowCancel: false, blocked }
   ), results => {
     targets = results || [];
     next();
@@ -45,15 +45,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
-  // Discard trainer only when user selected a Pokemon
-  player.hand.moveCardTo(effect.trainerCard, player.discard);
-
   targets.forEach(target => {
     // Heal Pokemon
     const healEffect = new HealEffect(player, target, 30);
     store.reduceEffect(state, healEffect);
   });
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return state;
 }
 

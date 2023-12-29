@@ -36,6 +36,9 @@ export class TrekkingShoes extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 1);
 
@@ -60,6 +63,8 @@ export class TrekkingShoes extends TrainerCard {
             // Draw a card
 
             player.deck.moveTo(player.hand, 1);
+
+            player.supporter.moveCardTo(this, player.discard);
           }
           return state;
         });

@@ -32,6 +32,8 @@ export class Player {
 
   prizes: CardList[] = [];
 
+  supporterTurn: number = 0;
+
   retreatedTurn: number = 0;
 
   energyPlayedTurn: number = 0;

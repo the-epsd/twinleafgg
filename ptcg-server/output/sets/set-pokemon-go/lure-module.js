@@ -22,6 +22,8 @@ class LureModule extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const temp = new game_1.CardList();
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             player.deck.moveTo(temp, 3);
             // Check if any cards drawn are basic energy
             const pokemonDrawn = temp.cards.filter(card => {
@@ -33,6 +35,7 @@ class LureModule extends trainer_card_1.TrainerCard {
                     temp.cards.forEach(card => {
                         temp.moveCardTo(card, player.deck);
                     });
+                    player.supporter.moveCardTo(this, player.discard);
                     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                         player.deck.applyOrder(order);
                         return state;

@@ -32,6 +32,9 @@ export class GreatBall extends TrainerCard {
       const player = effect.player;
       const temp = new CardList();
     
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       player.deck.moveTo(temp, 7); 
 
       // Check if any cards drawn are basic energy
@@ -50,6 +53,8 @@ export class GreatBall extends TrainerCard {
           temp.cards.forEach(card => {
             temp.moveCardTo(card, player.deck);
           });
+
+          player.supporter.moveCardTo(this, player.discard);
           
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
@@ -65,7 +70,7 @@ export class GreatBall extends TrainerCard {
           GameMessage.CHOOSE_CARD_TO_HAND,
           temp,
           { superType: SuperType.POKEMON },
-          { allowCancel: true, min: 0, max: 1 }
+          { allowCancel: false, min: 0, max: 1 }
         ), chosenCards => {
     
           if (chosenCards.length > 0) {

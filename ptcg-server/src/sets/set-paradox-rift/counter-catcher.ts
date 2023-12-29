@@ -22,6 +22,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
   return store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_SWITCH,
@@ -31,6 +34,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   ), result => {
     const cardList = result[0];
     opponent.switchPokemon(cardList);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   });
 }
   

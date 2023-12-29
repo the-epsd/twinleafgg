@@ -11,22 +11,34 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   const hasBench = opponent.bench.some(b => b.cards.length > 0);
+  const supporterTurn = player.supporterTurn;
 
   if (!hasBench) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
   return store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_SWITCH,
     PlayerType.TOP_PLAYER,
-    [ SlotType.BENCH ],
+    [SlotType.BENCH],
     { allowCancel: false }
   ), result => {
     const cardList = result[0];
     opponent.switchPokemon(cardList);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
   });
 }
+
 
 export class BossOrders extends TrainerCard {
 

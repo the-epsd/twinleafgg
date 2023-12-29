@@ -21,13 +21,16 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min: 1, max: 1, allowCancel: true }
+    { min: 1, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
@@ -42,6 +45,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       cards
     ), () => next());
   }
+
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

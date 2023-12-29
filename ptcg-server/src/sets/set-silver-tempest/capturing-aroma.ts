@@ -35,6 +35,9 @@ export class CapturingAroma extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), flipResult => {
         if (flipResult) {
           let cards: Card[] = [];
@@ -67,7 +70,7 @@ export class CapturingAroma extends TrainerCard {
             GameMessage.CHOOSE_CARD_TO_HAND,
             player.deck,
             { superType: SuperType.POKEMON, stage: Stage.BASIC },
-            { min: 0, max: 1, allowCancel: true }
+            { min: 0, max: 1, allowCancel: false }
           ), selectedCards => {
             cards = selectedCards || [];
 
@@ -79,6 +82,7 @@ export class CapturingAroma extends TrainerCard {
             cards.forEach(card => {
               player.deck.moveCardTo(card, player.hand);
             });
+            player.supporter.moveCardTo(this, player.discard);
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
               player.deck.applyOrder(order);
             });
