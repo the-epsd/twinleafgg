@@ -76,12 +76,19 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
                 if (player.marker.hasMarker(this.VSTAR_MARKER)) {
                     throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
                 }
-                player.marker.addMarker(this.VSTAR_MARKER, this);
-                const vPokemons = opponent.bench.filter(card => card instanceof pokemon_card_1.PokemonCard && card.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX));
-                const vPokemons2 = opponent.active.getPokemons().filter(card => card.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX));
-                const vPokes = vPokemons.length + vPokemons2.length;
-                const damage = 70 * vPokes;
-                effect.damage = damage;
+                const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
+                const vPokemons = benchPokemon.filter(card => card.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX));
+                const opponentActive = opponent.active.getPokemonCard();
+                if (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_ex)) {
+                    vPokemons.push(opponentActive);
+                }
+                let vPokes = vPokemons.length;
+                if (opponentActive) {
+                    vPokes++;
+                }
+                effect.ignoreResistance = true;
+                effect.ignoreWeakness = true;
+                effect.damage *= vPokes;
             }
             return state;
         }

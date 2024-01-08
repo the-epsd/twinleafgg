@@ -9,6 +9,7 @@ import { FogCrystal } from './fog-crystal';
 import { Froslass } from './froslass';
 import { GalarianArticunoV } from './galarian-articuno-v';
 import { GalarianMoltresV } from './galarian-moltres-v';
+import { Gallade } from './gallade';
 import { Gardevoir } from './gardevoir';
 import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
 import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
@@ -71,6 +72,10 @@ export class GalarianMoltresVArt extends GalarianMoltresV {
 
 export class GardevoirArt extends Gardevoir {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_061_R_EN_LG.png';
+}
+
+export class GalladeArt extends Gallade {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_081_R_EN.png';
 }
 
 export class IceRiderCalyrexVArt extends IceRiderCalyrexV {

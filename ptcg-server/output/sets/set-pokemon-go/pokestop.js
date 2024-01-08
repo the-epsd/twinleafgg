@@ -28,13 +28,13 @@ class Pokestop extends trainer_card_1.TrainerCard {
         const player = effect.player;
         const deckTop = new card_list_1.CardList();
         player.deck.moveTo(deckTop, 3);
-        // Move all cards to discard
-        deckTop.moveTo(player.discard, deckTop.cards.length);
         // Filter for item cards
         const itemCards = deckTop.cards.filter(c => c instanceof trainer_card_1.TrainerCard &&
             c.trainerType === card_types_1.TrainerType.ITEM);
+        // Move all cards to discard
+        deckTop.moveTo(player.discard, deckTop.cards.length);
         // Move item cards to hand
-        deckTop.moveCardsTo(itemCards, player.hand);
+        player.discard.moveCardsTo(itemCards, player.hand);
         return state;
     }
 }

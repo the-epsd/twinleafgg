@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SwabluArt = exports.SuicuneVArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FlaaffyArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DragoniteVArt = exports.CopycatArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SwitchingCupsArt = exports.SwabluArt = exports.SuicuneVArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FlaaffyArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DragoniteVArt = exports.CopycatArt = void 0;
 const copycat_1 = require("./copycat");
 const dragonite_v_1 = require("./dragonite-v");
 const duraludon_v_1 = require("./duraludon-v");
@@ -21,6 +21,7 @@ const regieleki_1 = require("./regieleki");
 const rescue_carrier_1 = require("./rescue-carrier");
 const suicune_v_1 = require("./suicune-v");
 const swablu_1 = require("./swablu");
+const switching_cups_1 = require("./switching-cups");
 const tropius_1 = require("./tropius");
 const umbreon_v_1 = require("./umbreon-v");
 const umbreon_vmax_1 = require("./umbreon-vmax");
@@ -168,6 +169,13 @@ class SwabluArt extends swablu_1.Swablu {
     }
 }
 exports.SwabluArt = SwabluArt;
+class SwitchingCupsArt extends switching_cups_1.SwitchingCups {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_102_R_EN_LG.png';
+    }
+}
+exports.SwitchingCupsArt = SwitchingCupsArt;
 class TropiusArt extends tropius_1.Tropius {
     constructor() {
         super(...arguments);

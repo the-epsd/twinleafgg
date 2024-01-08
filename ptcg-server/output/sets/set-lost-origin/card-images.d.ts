@@ -8,6 +8,7 @@ import { Cresselia } from './cresselia';
 import { DamagePump } from './damage-pump';
 import { DelphoxV } from './delphox-v';
 import { DrapionV } from './drapion-v';
+import { DrapionVSTAR } from './drapion-vstar';
 import { EnergyLotto } from './energy-lotto';
 import { Gengar } from './gengar';
 import { GiftEnergy } from './gift-energy';
@@ -63,6 +64,9 @@ export declare class DelphoxVArt extends DelphoxV {
     cardImage: string;
 }
 export declare class DrapionVArt extends DrapionV {
+    cardImage: string;
+}
+export declare class DrapionVSTARArt extends DrapionVSTAR {
     cardImage: string;
 }
 export declare class EnergyLottoArt extends EnergyLotto {

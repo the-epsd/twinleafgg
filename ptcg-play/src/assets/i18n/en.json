@@ -7,6 +7,7 @@
   "ALERT_SELECT_TITLE": "Select",
   "BUTTON_ACTIONS": "Actions",
   "BUTTON_CANCEL": "Cancel",
+  "BUTTON_NO": "No",
   "BUTTON_CHOOSE": "Choose",
   "BUTTON_CLEAR_FILTER": "Clear filter",
   "BUTTON_CLOSE": "Close",
@@ -305,6 +306,7 @@
     "BLOCKED_BY_SPECIAL_CONDITION": "Action blocked by the Special Condition",
     "CANNOT_PLAY_THIS_CARD": "You can't play this card right now.",
     "CANNOT_USE_POWER": "You can't use this Ability right now.",
+    "CANNOT_USE_ATTACK": "You can't use this Attack right now.",
     "CANNOT_ATTACK_ON_FIRST_TURN": "You cannot attack on your first turn when going first.",
     "CANNOT_USE_STADIUM": "You can't use this stadium card right now.",
     "CARDS_SHOWED_BY_EFFECT": "Cards showed as the result of the effect.",
@@ -377,7 +379,8 @@
     "WANT_TO_PLAY_BOTH_CARDS_AT_ONCE": "Do you want to play both cards at once?",
     "WANT_TO_SHUFFLE_POKEMON_INTO_DECK": "Do you want to shuffle the Pokémon into the deck?",
     "WANT_TO_SWITCH_POKEMON": "Do you want to switch Pokémon?",
-    "WANT_TO_USE_ABILITY": "Do you want to use Ability?"
+    "WANT_TO_USE_ABILITY": "Do you want to use Ability?",
+    "CALAMITY_STORM": "Do you want to discard the Stadium in play?"
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.'",
@@ -401,6 +404,7 @@
     "LOG_PLAYER_NO_CARDS_IN_DECK": "{{name}} has no more cards in the deck.",
     "LOG_PLAYER_NO_PRIZE_CARD": "{{name}} has no more Prize cards left.",
     "LOG_PLAYER_PLAYS_BASIC_POKEMON": "{{name}} puts {{card}} on the Bench.",
+    "LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD": "{{name}} returns {{card}} from their Discard Pile into their Deck.",
     "LOG_PLAYER_PLAYS_ITEM": "{{name}} plays {{card}}.",
     "LOG_PLAYER_PLAYS_STADIUM": "{{name}} puts {{card}} in play.",
     "LOG_PLAYER_PLAYS_SUPPORTER": "{{name}} plays {{card}}.",

@@ -18,36 +18,42 @@ class GutsyPickaxe extends game_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             const temp = new game_1.CardList();
+            // // We will discard this card after prompt confirmation
+            // effect.preventDefault = true;
             player.deck.moveTo(temp, 1);
-            // We will discard this card after prompt confirmation
-            effect.preventDefault = true;
             // Check if any cards drawn are basic energy
             const energyCardsDrawn = temp.cards.filter(card => {
                 return card instanceof game_1.EnergyCard && card.energyType === game_1.EnergyType.BASIC && card.name === 'Basic Fighting Energy';
             });
             // If no energy cards were drawn, move all cards to hand
-            if (energyCardsDrawn.length == 0) {
-                temp.cards.slice(0, 1).forEach(card => {
-                    temp.moveCardTo(card, player.hand);
-                });
-            }
-            else {
-                // Prompt to attach energy if any were drawn
-                return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, temp, // Only show drawn energies
-                game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC }, { min: 0, allowCancel: false, max: energyCardsDrawn.length }), transfers => {
-                    // Attach energy based on prompt selection
-                    if (transfers) {
-                        for (const transfer of transfers) {
-                            const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                            temp.moveCardTo(transfer.card, target); // Move card to target
-                        }
-                        temp.cards.forEach(card => {
-                            temp.moveCardTo(card, player.hand); // Move card to hand
-                            player.supporter.moveCardTo(this, player.discard);
+            if (temp.cards.length > 0) {
+                return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id && player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, temp.cards), () => {
+                    if (energyCardsDrawn.length == 0) {
+                        temp.cards.slice(0, 1).forEach(card => {
+                            temp.moveCardTo(card, player.hand);
                         });
-                        return state;
                     }
+                    else {
+                        // Prompt to attach energy if any were drawn
+                        return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, temp, // Only show drawn energies
+                        game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC }, { min: 0, allowCancel: false, max: energyCardsDrawn.length }), transfers => {
+                            // Attach energy based on prompt selection
+                            if (transfers) {
+                                for (const transfer of transfers) {
+                                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                                    temp.moveCardTo(transfer.card, target); // Move card to target
+                                }
+                                temp.cards.forEach(card => {
+                                    temp.moveCardTo(card, player.hand); // Move card to hand
+                                });
+                                return state;
+                            }
+                            return state;
+                        });
+                    }
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
                     return state;
                 });
             }

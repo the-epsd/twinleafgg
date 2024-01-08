@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GardevoirArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DrizzileArt = exports.BlisseyVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = void 0;
+exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DrizzileArt = exports.BlisseyVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = void 0;
 const avery_1 = require("./avery");
 const banette_1 = require("./banette");
 const beedril_1 = require("./beedril");
@@ -12,6 +12,7 @@ const fog_crystal_1 = require("./fog-crystal");
 const froslass_1 = require("./froslass");
 const galarian_articuno_v_1 = require("./galarian-articuno-v");
 const galarian_moltres_v_1 = require("./galarian-moltres-v");
+const gallade_1 = require("./gallade");
 const gardevoir_1 = require("./gardevoir");
 const ice_rider_calyrex_v_1 = require("./ice-rider-calyrex-v");
 const ice_rider_calyrex_vmax_1 = require("./ice-rider-calyrex-vmax");
@@ -111,6 +112,13 @@ class GardevoirArt extends gardevoir_1.Gardevoir {
     }
 }
 exports.GardevoirArt = GardevoirArt;
+class GalladeArt extends gallade_1.Gallade {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_081_R_EN.png';
+    }
+}
+exports.GalladeArt = GalladeArt;
 class IceRiderCalyrexVArt extends ice_rider_calyrex_v_1.IceRiderCalyrexV {
     constructor() {
         super(...arguments);

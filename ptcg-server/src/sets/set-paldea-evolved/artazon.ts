@@ -21,7 +21,6 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   } else {
     // handle no open slots
- 
 
     let cards: Card[] = [];
     return store.prompt(state, new ChooseCardsPrompt(
@@ -29,21 +28,19 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
       GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
       player.deck,
       { superType: SuperType.POKEMON, stage: Stage.BASIC },
-      { min: 0, max: 1, allowCancel: true }
+      { min: 0, max: 1, allowCancel: false }
     ), selectedCards => {
       cards = selectedCards || [];
-
 
       // Operation canceled by the user
       if (cards.length === 0) {
         return state;
       }
 
-
       if (cards[0].tags.includes(CardTag.POKEMON_V) || 
     cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
     cards[0].tags.includes(CardTag.POKEMON_VMAX)  ||
-    cards[0].tags.includes(CardTag.POKEMON_EX)    ||
+    cards[0].tags.includes(CardTag.POKEMON_ex)    ||
     cards[0].tags.includes(CardTag.RADIANT)) 
       {
         throw new GameError(GameMessage.INVALID_TARGET);

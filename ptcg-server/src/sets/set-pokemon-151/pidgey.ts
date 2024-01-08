@@ -8,7 +8,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
-  const max = Math.min(slots.length, 1);
+  const max = Math.min(slots.length, 2);
   
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -16,7 +16,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
     player.deck,
     { superType: SuperType.POKEMON, stage: Stage.BASIC },
-    { min: 0, max, allowCancel: true }
+    { min: 0, max, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();

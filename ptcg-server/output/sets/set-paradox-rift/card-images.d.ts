@@ -2,6 +2,7 @@ import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
 import { Bounsweet } from './bounsweet';
 import { BruteBonnet } from './brute-bonnet';
 import { CounterCatcher } from './counter-catcher';
+import { DefianceVest } from './defiance-vest';
 import { Deoxys } from './deoxys';
 import { EarthenVessel } from './earthen-vessel';
 import { Elekid } from './elekid';
@@ -15,6 +16,7 @@ import { Gimmighoul } from './gimmighoul';
 import { Groudon } from './groudon';
 import { IronBundle } from './iron-bundle';
 import { IronHandsex } from './iron-hands-ex';
+import { IronJugulis } from './iron-jugulis';
 import { IronValiantex } from './iron-valiant-ex';
 import { Jirachi } from './jirachi';
 import { Klawf } from './klawf';
@@ -44,6 +46,9 @@ export declare class BruteBonnetArt extends BruteBonnet {
     cardImage: string;
 }
 export declare class CounterCatcherArt extends CounterCatcher {
+    cardImage: string;
+}
+export declare class DefianceVestArt extends DefianceVest {
     cardImage: string;
 }
 export declare class DeoxysArt extends Deoxys {
@@ -83,6 +88,9 @@ export declare class IronBundleArt extends IronBundle {
     cardImage: string;
 }
 export declare class IronHandsexArt extends IronHandsex {
+    cardImage: string;
+}
+export declare class IronJugulisArt extends IronJugulis {
     cardImage: string;
 }
 export declare class IronValiantexArt extends IronValiantex {

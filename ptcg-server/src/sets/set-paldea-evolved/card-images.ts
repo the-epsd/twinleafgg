@@ -28,6 +28,7 @@ import { WoChienex } from './wo-chien-ex';
 import { Shinx } from './shinx';
 import { Tadbulb } from './tadbulb';
 import { TingLuex } from './ting-lu-ex';
+import { Cetitan } from './cetitan';
 
 export class ArctibaxArt extends Arctibax {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_059_R_EN_LG.png';
@@ -47,6 +48,10 @@ export class BossOrdersArt extends BossOrders {
 
 export class BraveyCharmArt extends BraveyCharm {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_173_R_EN_LG.png';
+}
+
+export class CetitanArt extends Cetitan {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_055_R_EN_LG.png';
 }
   
 export class ChienPaoexArt extends ChienPaoex {

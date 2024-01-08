@@ -57,34 +57,41 @@ class Zapdosex extends pokemon_card_1.PokemonCard {
             if (checkProvidedEnergy.energyMap.some(c => {
                 return c instanceof game_1.EnergyCard
                     && c.energyType === card_types_1.EnergyType.BASIC
-                    && c.provides.includes(card_types_1.CardType.LIGHTNING);
+                    && c.name === 'Basic Lightning Energy';
             })) {
-                if (this.name === 'Zapdos ex') {
-                    effect.cost = [];
-                }
+                effect.cost = [];
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                const source = opponent.bench;
-                const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-                if (!hasBenched) {
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const blocked = [];
+            const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+            if (!hasBenched) {
+                effect.damage = 120;
+            }
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
+                if (cardList.damage > 0) {
                     return state;
                 }
-                const damagedBenched = source.filter(b => b.damage > 0);
-                if (damagedBenched) {
-                    // Opponent has damaged benched Pokemon
-                    state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { max: 1, allowCancel: false }), targets => {
-                        if (!targets || targets.length === 0) {
-                            return;
-                        }
-                        const damageEffect = new attack_effects_1.PutDamageEffect(effect, 90);
-                        damageEffect.target = targets[0];
-                        store.reduceEffect(state, damageEffect);
-                    });
-                    return state;
+                else {
+                    blocked.push(target);
                 }
-                return state;
+            });
+            if (!blocked.length) {
+                effect.damage = 120;
+            }
+            if (blocked.length) {
+                // Opponent has damaged benched Pokemon
+                state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false, blocked: blocked }), target => {
+                    if (!target || target.length === 0) {
+                        return;
+                    }
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 90);
+                    damageEffect.target = target[0];
+                    effect.damage = 120;
+                    store.reduceEffect(state, damageEffect);
+                });
             }
             return state;
         }

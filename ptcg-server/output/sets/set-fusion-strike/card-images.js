@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.YveltalArt = exports.ShaunaArt = exports.SchoolgirlArt = exports.SchoolboyArt = exports.PyukumukuArt = exports.PowerTabletArt = exports.OricorioArt = exports.MewVMAXArt = exports.MewVArt = exports.MeloettaArt = exports.JudgeArt = exports.InteleonVMAXArt = exports.InteleonVArt = exports.GengarVMAXArt = exports.GengarVArt = exports.GenesectVArt = exports.FusionStrikeEnergyArt = exports.ElesasSparkleArt = exports.DunsparceArt = exports.DeoxysArt = exports.CrossSwitcherArt = exports.CreamomaticArt = exports.CookArt = exports.BattleVIPPassArt = exports.AdventurersDiscoveryArt = void 0;
+exports.YveltalArt = exports.ShelmetArt = exports.ShaunaArt = exports.SchoolgirlArt = exports.SchoolboyArt = exports.PyukumukuArt = exports.PowerTabletArt = exports.OricorioArt = exports.MewVMAXArt = exports.MewVArt = exports.MeloettaArt = exports.JudgeArt = exports.InteleonVMAXArt = exports.InteleonVArt = exports.GengarVMAXArt = exports.GengarVArt = exports.GenesectVArt = exports.FusionStrikeEnergyArt = exports.ElesasSparkleArt = exports.DunsparceArt = exports.DeoxysArt = exports.CrossSwitcherArt = exports.CreamomaticArt = exports.CookArt = exports.BattleVIPPassArt = exports.BasculinArt = exports.AdventurersDiscoveryArt = exports.AccelgorArt = void 0;
+const accelgor_1 = require("./accelgor");
 const adventurers_discovery_1 = require("./adventurers-discovery");
+const basculin_1 = require("./basculin");
 const battle_vip_pass_1 = require("./battle-vip-pass");
 const cook_1 = require("./cook");
 const cram_o_matic_1 = require("./cram-o-matic");
@@ -25,7 +27,15 @@ const pyukumuku_1 = require("./pyukumuku");
 const schoolboy_1 = require("./schoolboy");
 const schoolgirl_1 = require("./schoolgirl");
 const shauna_1 = require("./shauna");
+const shelmet_1 = require("./shelmet");
 const yveltal_1 = require("./yveltal");
+class AccelgorArt extends accelgor_1.Accelgor {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_014_R_EN_LG.png';
+    }
+}
+exports.AccelgorArt = AccelgorArt;
 class AdventurersDiscoveryArt extends adventurers_discovery_1.AdventurersDiscovery {
     constructor() {
         super(...arguments);
@@ -33,6 +43,13 @@ class AdventurersDiscoveryArt extends adventurers_discovery_1.AdventurersDiscove
     }
 }
 exports.AdventurersDiscoveryArt = AdventurersDiscoveryArt;
+class BasculinArt extends basculin_1.Basculin {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_070_R_EN_LG.png';
+    }
+}
+exports.BasculinArt = BasculinArt;
 class BattleVIPPassArt extends battle_vip_pass_1.BattleVIPPass {
     constructor() {
         super(...arguments);
@@ -194,6 +211,13 @@ class ShaunaArt extends shauna_1.Shauna {
     }
 }
 exports.ShaunaArt = ShaunaArt;
+class ShelmetArt extends shelmet_1.Shelmet {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_014_R_EN_LG.png';
+    }
+}
+exports.ShelmetArt = ShelmetArt;
 class YveltalArt extends yveltal_1.Yveltal {
     constructor() {
         super(...arguments);

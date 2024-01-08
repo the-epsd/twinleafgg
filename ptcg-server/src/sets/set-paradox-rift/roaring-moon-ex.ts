@@ -38,9 +38,13 @@ export class RoaringMoonex extends PokemonCard {
   ];
 
   public set: string = 'PAR';
+
   public cardImage: string = 'assets/cardback.png';
+
   public setNumber: string = '54';
+
   public name: string = 'Roaring Moon ex';
+
   public fullName: string = 'Roaring Moon ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -64,7 +68,7 @@ export class RoaringMoonex extends PokemonCard {
   
         state = store.prompt(state, new ConfirmPrompt(
           effect.player.id,
-          GameMessage.WANT_TO_USE_ABILITY,
+          GameMessage.CALAMITY_STORM,
         ), wantToUse => {
           if (wantToUse) {
       

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ShayminVSTARArt = exports.ShayminVArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.ManaphyArt = exports.MagmortarArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.ElectivireArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = void 0;
+exports.ShayminVSTARArt = exports.ShayminVArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.ManaphyArt = exports.MagmortarArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = void 0;
 const arceus_v_1 = require("./arceus-v");
 const arceus_vstar_1 = require("./arceus-vstar");
 const bibarel_1 = require("./bibarel");
@@ -11,6 +11,7 @@ const cynthias_ambition_1 = require("./cynthias-ambition");
 const double_turbo_energy_1 = require("./double-turbo-energy");
 const druddigon_1 = require("./druddigon");
 const electivire_1 = require("./electivire");
+const empoleon_1 = require("./empoleon");
 const entei_v_1 = require("./entei-v");
 const lapras_1 = require("./lapras");
 const liepard_1 = require("./liepard");
@@ -94,6 +95,13 @@ class ElectivireArt extends electivire_1.Electivire {
     }
 }
 exports.ElectivireArt = ElectivireArt;
+class EmpoleonArt extends empoleon_1.Empoleon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_037_R_EN_LG.png';
+    }
+}
+exports.EmpoleonArt = EmpoleonArt;
 class EnteiVArt extends entei_v_1.EnteiV {
     constructor() {
         super(...arguments);

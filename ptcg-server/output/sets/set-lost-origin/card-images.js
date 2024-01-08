@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VoloArt = exports.SnorlaxArt = exports.SableyeArt = exports.RotomVArt = exports.RadiantHisuianSneaslerArt = exports.RadiantGardevoirArt = exports.PidgeotVArt = exports.PanicMaskArt = exports.MirageGateArt = exports.MawileArt = exports.MagnezoneVSTARArt = exports.MagnezoneVArt = exports.LostVacuumArt = exports.LostCityArt = exports.LadyArt = exports.KyuremVMAXArt = exports.KyuremVArt = exports.JynxArt = exports.HisuianZoroarkVSTARArt = exports.HisuianZoroarkVArt = exports.HisuianGoodraVSTARArt = exports.HisuianGoodraVArt = exports.GiratinaVSTARArt = exports.GiratinaVArt = exports.GiftEnergyArt = exports.GengarArt = exports.EnergyLottoArt = exports.DrapionVArt = exports.DelphoxVArt = exports.DamagePumpArt = exports.CresseliaArt = exports.CramorantArt = exports.ComfeyArt = exports.ColresssExperimentArt = exports.BoxOfDisasterArt = exports.BouffalantArt = exports.ArezuArt = void 0;
+exports.VoloArt = exports.SnorlaxArt = exports.SableyeArt = exports.RotomVArt = exports.RadiantHisuianSneaslerArt = exports.RadiantGardevoirArt = exports.PidgeotVArt = exports.PanicMaskArt = exports.MirageGateArt = exports.MawileArt = exports.MagnezoneVSTARArt = exports.MagnezoneVArt = exports.LostVacuumArt = exports.LostCityArt = exports.LadyArt = exports.KyuremVMAXArt = exports.KyuremVArt = exports.JynxArt = exports.HisuianZoroarkVSTARArt = exports.HisuianZoroarkVArt = exports.HisuianGoodraVSTARArt = exports.HisuianGoodraVArt = exports.GiratinaVSTARArt = exports.GiratinaVArt = exports.GiftEnergyArt = exports.GengarArt = exports.EnergyLottoArt = exports.DrapionVSTARArt = exports.DrapionVArt = exports.DelphoxVArt = exports.DamagePumpArt = exports.CresseliaArt = exports.CramorantArt = exports.ComfeyArt = exports.ColresssExperimentArt = exports.BoxOfDisasterArt = exports.BouffalantArt = exports.ArezuArt = void 0;
 const arezu_1 = require("./arezu");
 const bouffalant_1 = require("./bouffalant");
 const box_of_disaster_1 = require("./box-of-disaster");
@@ -11,6 +11,7 @@ const cresselia_1 = require("./cresselia");
 const damage_pump_1 = require("./damage-pump");
 const delphox_v_1 = require("./delphox-v");
 const drapion_v_1 = require("./drapion-v");
+const drapion_vstar_1 = require("./drapion-vstar");
 const energy_lotto_1 = require("./energy-lotto");
 const gengar_1 = require("./gengar");
 const gift_energy_1 = require("./gift-energy");
@@ -108,6 +109,13 @@ class DrapionVArt extends drapion_v_1.DrapionV {
     }
 }
 exports.DrapionVArt = DrapionVArt;
+class DrapionVSTARArt extends drapion_vstar_1.DrapionVSTAR {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_119_R_EN_LG.png';
+    }
+}
+exports.DrapionVSTARArt = DrapionVSTARArt;
 class EnergyLottoArt extends energy_lotto_1.EnergyLotto {
     constructor() {
         super(...arguments);

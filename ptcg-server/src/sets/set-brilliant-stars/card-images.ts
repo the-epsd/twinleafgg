@@ -8,6 +8,7 @@ import { CynthiasAmbition } from './cynthias-ambition';
 import { DoubleTurboEnergy } from './double-turbo-energy';
 import { Druddigon } from './druddigon';
 import { Electivire } from './electivire';
+import { Empoleon } from './empoleon';
 import { EnteiV } from './entei-v';
 import { Lapras } from './lapras';
 import { Liepard } from './liepard';
@@ -60,6 +61,10 @@ export class DruddigonArt extends Druddigon {
 
 export class ElectivireArt extends Electivire {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_047_R_EN_LG.png';
+}
+
+export class EmpoleonArt extends Empoleon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_037_R_EN_LG.png';
 }
 
 export class EnteiVArt extends EnteiV {

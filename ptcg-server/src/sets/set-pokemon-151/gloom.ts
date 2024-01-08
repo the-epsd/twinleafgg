@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, PowerType, AttachEnergyPrompt, CardList, EnergyCard, EnergyType, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, AttachEnergyPrompt, CardList, EnergyCard, EnergyType, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
@@ -7,7 +7,7 @@ export class Gloom extends PokemonCard {
 
   public stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Gloom';
+  public evolvesFrom = 'Oddish';
 
   public cardType = CardType.GRASS;
   
@@ -65,10 +65,13 @@ export class Gloom extends PokemonCard {
         return card instanceof EnergyCard && card.energyType === EnergyType.BASIC;
       });
 
-      // If no energy cards were drawn, move all cards to hand
+      // If no energy cards were drawn, move all cards to deck
       if (energyCardsDrawn.length == 0) {
         temp.cards.slice(0, 3).forEach(card => {
-          temp.moveCardTo(card, player.hand); 
+          temp.moveCardTo(card, player.deck); 
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+          });
         });
       } else {
       
@@ -91,12 +94,15 @@ export class Gloom extends PokemonCard {
               temp.moveCardTo(transfer.card, target); // Move card to target
             }
             temp.cards.forEach(card => {
-              temp.moveCardTo(card, player.hand); // Move card to hand
-            
+              temp.moveCardTo(card, player.deck); // Move card to deck
+              return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+              });
             });
           }
           return state;
         });
+        return state;
       }
       return state;
     }

@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
+import { GameLog, GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCardList } from '../../game';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -49,6 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   cards.forEach((card, index) => {
     player.deck.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
+    store.log(state, GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: card.name });
   });
 
   player.supporter.moveCardTo(effect.trainerCard, player.discard);

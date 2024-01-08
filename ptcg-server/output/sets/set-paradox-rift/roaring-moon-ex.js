@@ -49,7 +49,7 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const stadiumCard = game_1.StateUtils.getStadiumCard(state);
             if (stadiumCard !== undefined) {
-                state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+                state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.CALAMITY_STORM), wantToUse => {
                     if (wantToUse) {
                         // Discard Stadium
                         const cardList = game_1.StateUtils.findCardList(state, stadiumCard);

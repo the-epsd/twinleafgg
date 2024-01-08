@@ -2,6 +2,7 @@ import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
 import { Bounsweet } from './bounsweet';
 import { BruteBonnet } from './brute-bonnet';
 import { CounterCatcher } from './counter-catcher';
+import { DefianceVest } from './defiance-vest';
 import { Deoxys } from './deoxys';
 import { EarthenVessel } from './earthen-vessel';
 import { Elekid } from './elekid';
@@ -15,6 +16,7 @@ import { Gimmighoul } from './gimmighoul';
 import { Groudon } from './groudon';
 import { IronBundle } from './iron-bundle';
 import { IronHandsex } from './iron-hands-ex';
+import { IronJugulis } from './iron-jugulis';
 import { IronValiantex } from './iron-valiant-ex';
 import { Jirachi } from './jirachi';
 import { Klawf } from './klawf';
@@ -49,6 +51,10 @@ export class BruteBonnetArt extends BruteBonnet {
 
 export class CounterCatcherArt extends CounterCatcher {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_160_R_EN_LG.png';
+}
+
+export class DefianceVestArt extends DefianceVest {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_074_R_EN_LG.png';
 }
 
 export class DeoxysArt extends Deoxys {
@@ -101,6 +107,10 @@ export class IronBundleArt extends IronBundle {
 
 export class IronHandsexArt extends IronHandsex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_070_R_EN_LG.png';
+}
+
+export class IronJugulisArt extends IronJugulis {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_158_R_EN_LG.png';
 }
 
 export class IronValiantexArt extends IronValiantex {

@@ -20,7 +20,7 @@ function* useStadium(next, store, state, effect) {
     else {
         // handle no open slots
         let cards = [];
-        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: true }), selectedCards => {
+        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false }), selectedCards => {
             cards = selectedCards || [];
             // Operation canceled by the user
             if (cards.length === 0) {
@@ -29,7 +29,7 @@ function* useStadium(next, store, state, effect) {
             if (cards[0].tags.includes(card_types_1.CardTag.POKEMON_V) ||
                 cards[0].tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||
                 cards[0].tags.includes(card_types_1.CardTag.POKEMON_VMAX) ||
-                cards[0].tags.includes(card_types_1.CardTag.POKEMON_EX) ||
+                cards[0].tags.includes(card_types_1.CardTag.POKEMON_ex) ||
                 cards[0].tags.includes(card_types_1.CardTag.RADIANT)) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
             }

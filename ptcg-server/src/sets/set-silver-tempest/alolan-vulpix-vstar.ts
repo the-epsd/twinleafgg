@@ -99,23 +99,29 @@ export class AlolanVulpixVSTAR extends PokemonCard {
           throw new GameError(GameMessage.POWER_ALREADY_USED);
         }
 
-        player.marker.addMarker(this.VSTAR_MARKER, this);
+        const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
+        const vPokemons = benchPokemon.filter(card => card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX));
+        const opponentActive = opponent.active.getPokemonCard();
+        if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.POKEMON_ex)) {
+          vPokemons.push(opponentActive);
+        }
+  
+        let vPokes = vPokemons.length;
+  
+        if (opponentActive) {
+          vPokes++;
+        }
 
-        const vPokemons = opponent.bench.filter(card => card instanceof PokemonCard && card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX));
-        const vPokemons2 = opponent.active.getPokemons().filter(card => card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX));
-
-        const vPokes = vPokemons.length + vPokemons2.length;
-        const damage = 70 * vPokes;
-
-        effect.damage = damage;
-
+        effect.ignoreResistance = true;
+        effect.ignoreWeakness = true;
+        effect.damage *= vPokes;
+  
       }
       return state;
     }
     if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.SNOW_MIRAGE_MARKER, this);
     }
-
     return state;
   }
 }

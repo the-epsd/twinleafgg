@@ -62,7 +62,6 @@ export class RadiantCharizard extends PokemonCard {
       console.log('second marker added');
     }
 
-
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
   
       const checkEnergy = new CheckProvidedEnergyEffect(effect.player);

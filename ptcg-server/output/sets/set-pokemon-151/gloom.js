@@ -7,7 +7,7 @@ class Gloom extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.STAGE_1;
-        this.evolvesFrom = 'Gloom';
+        this.evolvesFrom = 'Oddish';
         this.cardType = game_1.CardType.GRASS;
         this.hp = 70;
         this.weakness = [{ type: game_1.CardType.FIRE }];
@@ -46,10 +46,13 @@ class Gloom extends game_1.PokemonCard {
             const energyCardsDrawn = temp.cards.filter(card => {
                 return card instanceof game_1.EnergyCard && card.energyType === game_1.EnergyType.BASIC;
             });
-            // If no energy cards were drawn, move all cards to hand
+            // If no energy cards were drawn, move all cards to deck
             if (energyCardsDrawn.length == 0) {
                 temp.cards.slice(0, 3).forEach(card => {
-                    temp.moveCardTo(card, player.hand);
+                    temp.moveCardTo(card, player.deck);
+                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                        player.deck.applyOrder(order);
+                    });
                 });
             }
             else {
@@ -63,11 +66,15 @@ class Gloom extends game_1.PokemonCard {
                             temp.moveCardTo(transfer.card, target); // Move card to target
                         }
                         temp.cards.forEach(card => {
-                            temp.moveCardTo(card, player.hand); // Move card to hand
+                            temp.moveCardTo(card, player.deck); // Move card to deck
+                            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                                player.deck.applyOrder(order);
+                            });
                         });
                     }
                     return state;
                 });
+                return state;
             }
             return state;
         }

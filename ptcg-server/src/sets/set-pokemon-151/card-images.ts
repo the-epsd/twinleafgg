@@ -30,7 +30,11 @@ import { Zapdosex } from './zapdos-ex';
 import { Jolteon } from './jolteon';
 import { Magmar } from './magmar';
 import { Oddish } from './oddish';
+import { AntiqueHelixFossil } from './antique-helix-fossil';
 
+export class AntiqueHelixFossilArt extends AntiqueHelixFossil {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_153_R_EN.png';
+}
 
 export class AlakazamexArt extends Alakazamex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_065_R_EN_LG.png';

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPokemon151 = void 0;
 const card_images_1 = require("./card-images");
 exports.setPokemon151 = [
+    new card_images_1.AntiqueHelixFossilArt(),
     new card_images_1.AlakazamexArt(),
     new card_images_1.BlastoiseexArt(),
     new card_images_1.BulbasaurArt(),

@@ -28,6 +28,7 @@ import { WoChienex } from './wo-chien-ex';
 import { Shinx } from './shinx';
 import { Tadbulb } from './tadbulb';
 import { TingLuex } from './ting-lu-ex';
+import { Cetitan } from './cetitan';
 export declare class ArctibaxArt extends Arctibax {
     cardImage: string;
 }
@@ -41,6 +42,9 @@ export declare class BossOrdersArt extends BossOrders {
     cardImage: string;
 }
 export declare class BraveyCharmArt extends BraveyCharm {
+    cardImage: string;
+}
+export declare class CetitanArt extends Cetitan {
     cardImage: string;
 }
 export declare class ChienPaoexArt extends ChienPaoex {

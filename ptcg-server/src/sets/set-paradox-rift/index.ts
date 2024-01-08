@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AncientBoosterEnergyCapsuleArt, BounsweetArt, BruteBonnetArt, CounterCatcherArt, DeoxysArt, EarthenVesselArt, ElekidArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GholdengoexArt, GibleArt, GimmighoulArt, GroudonArt, IronBundleArt, IronHandsexArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MewtwoexArt, MiniorArt, MorpekoArt, NatuArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RoaringMoonexArt, ScreamTailArt, SnoruntArt, SteeneeArt, TechnoRadarArt, TsareenaexArt, TulipArt, XatuArt } from './card-images';
+import { AncientBoosterEnergyCapsuleArt, BounsweetArt, BruteBonnetArt, CounterCatcherArt, DefianceVestArt, DeoxysArt, EarthenVesselArt, ElekidArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GholdengoexArt, GibleArt, GimmighoulArt, GroudonArt, IronBundleArt, IronHandsexArt, IronJugulisArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MewtwoexArt, MiniorArt, MorpekoArt, NatuArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RoaringMoonexArt, ScreamTailArt, SnoruntArt, SteeneeArt, TechnoRadarArt, TsareenaexArt, TulipArt, XatuArt } from './card-images';
 
 export const setParadoxRift: Card[] = [
   
@@ -7,6 +7,7 @@ export const setParadoxRift: Card[] = [
   new BruteBonnetArt(),
   new BounsweetArt(),
   new CounterCatcherArt(),
+  new DefianceVestArt(),
   new DeoxysArt(),
   new EarthenVesselArt(),
   new ElekidArt(),
@@ -39,4 +40,5 @@ export const setParadoxRift: Card[] = [
   new TulipArt(),
   new XatuArt(),
   new GroudonArt(),
+  new IronJugulisArt(),
 ];

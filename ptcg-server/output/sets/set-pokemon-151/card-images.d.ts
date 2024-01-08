@@ -30,6 +30,10 @@ import { Zapdosex } from './zapdos-ex';
 import { Jolteon } from './jolteon';
 import { Magmar } from './magmar';
 import { Oddish } from './oddish';
+import { AntiqueHelixFossil } from './antique-helix-fossil';
+export declare class AntiqueHelixFossilArt extends AntiqueHelixFossil {
+    cardImage: string;
+}
 export declare class AlakazamexArt extends Alakazamex {
     cardImage: string;
 }

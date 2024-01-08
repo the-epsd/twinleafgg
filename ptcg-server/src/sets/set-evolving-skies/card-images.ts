@@ -18,6 +18,7 @@ import { Regieleki } from './regieleki';
 import { RescueCarrier } from './rescue-carrier';
 import { SuicuneV } from './suicune-v';
 import { Swablu } from './swablu';
+import { SwitchingCups } from './switching-cups';
 import { Tropius } from './tropius';
 import { UmbreonV } from './umbreon-v';
 import { UmbreonVMAX } from './umbreon-vmax';
@@ -104,6 +105,10 @@ export class SuicuneVArt extends SuicuneV {
 
 export class SwabluArt extends Swablu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_132_R_EN_LG.png';
+}
+
+export class SwitchingCupsArt extends SwitchingCups {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_102_R_EN_LG.png';
 }
 
 export class TropiusArt extends Tropius {

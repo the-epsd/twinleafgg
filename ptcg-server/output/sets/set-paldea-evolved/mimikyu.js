@@ -8,7 +8,6 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const state_utils_1 = require("../../game/store/state-utils");
-const attack_effects_2 = require("../../game/store/prefabs/attack-effects");
 class Mimikyu extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -66,8 +65,10 @@ class Mimikyu extends pokemon_card_1.PokemonCard {
                 effect.preventDefault = true;
             }
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            attack_effects_2.PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(7, store, state, effect);
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const attackEffect = effect;
+            const damageEffect = new attack_effects_1.PutDamageEffect(attackEffect, 70);
+            return store.reduceEffect(state, damageEffect);
         }
         return state;
     }

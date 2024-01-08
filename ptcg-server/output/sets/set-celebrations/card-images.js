@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZacianVArt = exports.MewArt = exports.FlyingPikachuVMAXArt = exports.FlyingPikachuVArt = void 0;
+exports.ZacianVArt = exports.MewArt = exports.KyogreArt = exports.FlyingPikachuVMAXArt = exports.FlyingPikachuVArt = void 0;
 const flying_pikachu_v_1 = require("./flying-pikachu-v");
 const flying_pikachu_vmax_1 = require("./flying-pikachu-vmax");
+const kyogre_1 = require("./kyogre");
 const mew_1 = require("./mew");
 const zacian_v_1 = require("./zacian-v");
 class FlyingPikachuVArt extends flying_pikachu_v_1.FlyingPikachuV {
@@ -19,6 +20,13 @@ class FlyingPikachuVMAXArt extends flying_pikachu_vmax_1.FlyingPikachuVMAX {
     }
 }
 exports.FlyingPikachuVMAXArt = FlyingPikachuVMAXArt;
+class KyogreArt extends kyogre_1.Kyogre {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEL/CEL_003_R_EN_LG.png';
+    }
+}
+exports.KyogreArt = KyogreArt;
 class MewArt extends mew_1.Mew {
     constructor() {
         super(...arguments);

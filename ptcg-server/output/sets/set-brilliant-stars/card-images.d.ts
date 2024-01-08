@@ -8,6 +8,7 @@ import { CynthiasAmbition } from './cynthias-ambition';
 import { DoubleTurboEnergy } from './double-turbo-energy';
 import { Druddigon } from './druddigon';
 import { Electivire } from './electivire';
+import { Empoleon } from './empoleon';
 import { EnteiV } from './entei-v';
 import { Lapras } from './lapras';
 import { Liepard } from './liepard';
@@ -49,6 +50,9 @@ export declare class DruddigonArt extends Druddigon {
     cardImage: string;
 }
 export declare class ElectivireArt extends Electivire {
+    cardImage: string;
+}
+export declare class EmpoleonArt extends Empoleon {
     cardImage: string;
 }
 export declare class EnteiVArt extends EnteiV {

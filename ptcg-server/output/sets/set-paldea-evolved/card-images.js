@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TingLuexArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.MurkrowArt = exports.MimikyuArt = exports.LuminousEnergyArt = exports.JetEnergyArt = exports.IonoArt = exports.GreatBallArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.BraveyCharmArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
+exports.TingLuexArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.MurkrowArt = exports.MimikyuArt = exports.LuminousEnergyArt = exports.JetEnergyArt = exports.IonoArt = exports.GreatBallArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
 const arctibax_1 = require("./arctibax");
 const artazon_1 = require("./artazon");
 const baxcalibur_1 = require("./baxcalibur");
@@ -31,6 +31,7 @@ const wo_chien_ex_1 = require("./wo-chien-ex");
 const shinx_1 = require("./shinx");
 const tadbulb_1 = require("./tadbulb");
 const ting_lu_ex_1 = require("./ting-lu-ex");
+const cetitan_1 = require("./cetitan");
 class ArctibaxArt extends arctibax_1.Arctibax {
     constructor() {
         super(...arguments);
@@ -66,6 +67,13 @@ class BraveyCharmArt extends bravery_charm_1.BraveyCharm {
     }
 }
 exports.BraveyCharmArt = BraveyCharmArt;
+class CetitanArt extends cetitan_1.Cetitan {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_055_R_EN_LG.png';
+    }
+}
+exports.CetitanArt = CetitanArt;
 class ChienPaoexArt extends chien_pao_ex_1.ChienPaoex {
     constructor() {
         super(...arguments);

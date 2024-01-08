@@ -7,7 +7,6 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
-import { PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Mimikyu extends PokemonCard {
 
@@ -84,9 +83,17 @@ export class Mimikyu extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(7, store, state, effect);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const attackEffect = effect as AttackEffect;
+      const damageEffect = new PutDamageEffect(attackEffect, 70);
+      return store.reduceEffect(state, damageEffect);
     }
+
     return state;
   }
+
+
+
+
+
 }

@@ -66,7 +66,7 @@ export class LevelBall extends TrainerCard {
 
   public set: string = 'BST';
 
-  public cardImage: string = 'assets/cardback.png';
+  public cardImage: string = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_129_R_EN.png';
 
   public setNumber: string = '129';
 

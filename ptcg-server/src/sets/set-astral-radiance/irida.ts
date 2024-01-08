@@ -31,10 +31,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     }
   });
 
-  // We will discard this card after prompt confirmation
-  // This will prevent unblocked supporter to appear in the discard pile
-  effect.preventDefault = true;
-
   const maxPokemons = Math.min(pokemons, 1);
   const maxTrainers = Math.min(trainers, 1);
   const count = maxPokemons + maxTrainers;
@@ -49,8 +45,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     cards = selected || [];
     next();
   });
-
-  player.hand.moveCardTo(self, player.supporter);
+  
   player.deck.moveCardsTo(cards, player.hand);
 
   if (cards.length > 0) {

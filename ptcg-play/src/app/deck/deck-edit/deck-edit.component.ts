@@ -122,9 +122,6 @@ export class DeckEditComponent implements OnInit {
     }
     const data = cardNames.join('\n') + '\n';
 
-    
-
-
     try {
       await navigator.clipboard.writeText(data);
       this.alertService.toast(this.translate.instant('DECK_EXPORTED_TO_CLIPBOARD'));

@@ -34,6 +34,7 @@ function* playCard(next, store, state, effect) {
     cards.forEach((card, index) => {
         player.deck.moveCardTo(card, slots[index]);
         slots[index].pokemonPlayedTurn = state.turn;
+        store.log(state, game_message_1.GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: card.name });
     });
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {

@@ -1,4 +1,6 @@
+import { Accelgor } from './accelgor';
 import { AdventurersDiscovery } from './adventurers-discovery';
+import { Basculin } from './basculin';
 import { BattleVIPPass } from './battle-vip-pass';
 import { Cook } from './cook';
 import { Creamomatic } from './cram-o-matic';
@@ -22,8 +24,15 @@ import { Pyukumuku } from './pyukumuku';
 import { Schoolboy } from './schoolboy';
 import { Schoolgirl } from './schoolgirl';
 import { Shauna } from './shauna';
+import { Shelmet } from './shelmet';
 import { Yveltal } from './yveltal';
+export declare class AccelgorArt extends Accelgor {
+    cardImage: string;
+}
 export declare class AdventurersDiscoveryArt extends AdventurersDiscovery {
+    cardImage: string;
+}
+export declare class BasculinArt extends Basculin {
     cardImage: string;
 }
 export declare class BattleVIPPassArt extends BattleVIPPass {
@@ -93,6 +102,9 @@ export declare class SchoolgirlArt extends Schoolgirl {
     cardImage: string;
 }
 export declare class ShaunaArt extends Shauna {
+    cardImage: string;
+}
+export declare class ShelmetArt extends Shelmet {
     cardImage: string;
 }
 export declare class YveltalArt extends Yveltal {

@@ -28,9 +28,6 @@ function* playCard(next, store, state, self, effect) {
             blocked.push(index);
         }
     });
-    // We will discard this card after prompt confirmation
-    // This will prevent unblocked supporter to appear in the discard pile
-    effect.preventDefault = true;
     const maxPokemons = Math.min(pokemons, 1);
     const maxTrainers = Math.min(trainers, 1);
     const count = maxPokemons + maxTrainers;
@@ -38,7 +35,6 @@ function* playCard(next, store, state, self, effect) {
         cards = selected || [];
         next();
     });
-    player.hand.moveCardTo(self, player.supporter);
     player.deck.moveCardsTo(cards, player.hand);
     if (cards.length > 0) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());

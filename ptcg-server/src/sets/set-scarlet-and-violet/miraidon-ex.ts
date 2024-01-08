@@ -106,6 +106,7 @@ export class Miraidonex extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
              
+      player.abilityMarker.addMarker(this.TANDEM_UNIT_MARKER, this);
           
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
@@ -113,7 +114,7 @@ export class Miraidonex extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
         player.deck,
         { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: CardType.LIGHTNING },
-        { min: 0, max: 2, allowCancel: true }
+        { min: 0, max: 2, allowCancel: false }
       ), selectedCards => {
         cards = selectedCards || [];
           
@@ -121,7 +122,7 @@ export class Miraidonex extends PokemonCard {
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, slots[index]);
           slots[index].pokemonPlayedTurn = state.turn;
-          player.abilityMarker.addMarker(this.TANDEM_UNIT_MARKER, this);
+
           return state;
         });
       

@@ -13,6 +13,7 @@ exports.setBrilliantStars = [
     new card_images_1.DruddigonArt(),
     new card_images_1.DoubleTurboEnergyArt(),
     new card_images_1.ElectivireArt(),
+    new card_images_1.EmpoleonArt(),
     new card_images_1.EnteiVArt(),
     new card_images_1.LaprasArt(),
     new card_images_1.LumineonVArt(),

@@ -30,4 +30,5 @@ exports.setEvolvingSkies = [
     new card_images_1.SwabluArt(),
     new card_images_1.TropiusArt(),
     new card_images_1.WishiwashiArt(),
+    new card_images_1.SwitchingCupsArt(),
 ];

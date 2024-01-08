@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TechnoRadarArt = exports.SteeneeArt = exports.SnoruntArt = exports.ScreamTailArt = exports.RoaringMoonexArt = exports.ProfessorTurosScenarioArt = exports.ProfessorSadasVitalityArt = exports.NatuArt = exports.MorpekoArt = exports.MiniorArt = exports.MewtwoexArt = exports.LuxuriousCapeArt = exports.LatiosArt = exports.KlawfArt = exports.JirachiArt = exports.IronValiantexArt = exports.IronHandsexArt = exports.IronBundleArt = exports.GroudonArt = exports.GimmighoulArt = exports.GibleArt = exports.GholdengoexArt = exports.GarchompexArt = exports.GabiteArt = exports.FutureBoosterEnergyCapsuleArt = exports.FroslassexArt = exports.ElekidArt = exports.EarthenVesselArt = exports.DeoxysArt = exports.CounterCatcherArt = exports.BruteBonnetArt = exports.BounsweetArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
+exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TechnoRadarArt = exports.SteeneeArt = exports.SnoruntArt = exports.ScreamTailArt = exports.RoaringMoonexArt = exports.ProfessorTurosScenarioArt = exports.ProfessorSadasVitalityArt = exports.NatuArt = exports.MorpekoArt = exports.MiniorArt = exports.MewtwoexArt = exports.LuxuriousCapeArt = exports.LatiosArt = exports.KlawfArt = exports.JirachiArt = exports.IronValiantexArt = exports.IronJugulisArt = exports.IronHandsexArt = exports.IronBundleArt = exports.GroudonArt = exports.GimmighoulArt = exports.GibleArt = exports.GholdengoexArt = exports.GarchompexArt = exports.GabiteArt = exports.FutureBoosterEnergyCapsuleArt = exports.FroslassexArt = exports.ElekidArt = exports.EarthenVesselArt = exports.DeoxysArt = exports.DefianceVestArt = exports.CounterCatcherArt = exports.BruteBonnetArt = exports.BounsweetArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
 const ancient_booster_energy_capsule_1 = require("./ancient-booster-energy-capsule");
 const bounsweet_1 = require("./bounsweet");
 const brute_bonnet_1 = require("./brute-bonnet");
 const counter_catcher_1 = require("./counter-catcher");
+const defiance_vest_1 = require("./defiance-vest");
 const deoxys_1 = require("./deoxys");
 const earthen_vessel_1 = require("./earthen-vessel");
 const elekid_1 = require("./elekid");
@@ -18,6 +19,7 @@ const gimmighoul_1 = require("./gimmighoul");
 const groudon_1 = require("./groudon");
 const iron_bundle_1 = require("./iron-bundle");
 const iron_hands_ex_1 = require("./iron-hands-ex");
+const iron_jugulis_1 = require("./iron-jugulis");
 const iron_valiant_ex_1 = require("./iron-valiant-ex");
 const jirachi_1 = require("./jirachi");
 const klawf_1 = require("./klawf");
@@ -65,6 +67,13 @@ class CounterCatcherArt extends counter_catcher_1.CounterCatcher {
     }
 }
 exports.CounterCatcherArt = CounterCatcherArt;
+class DefianceVestArt extends defiance_vest_1.DefianceVest {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_074_R_EN_LG.png';
+    }
+}
+exports.DefianceVestArt = DefianceVestArt;
 class DeoxysArt extends deoxys_1.Deoxys {
     constructor() {
         super(...arguments);
@@ -156,6 +165,13 @@ class IronHandsexArt extends iron_hands_ex_1.IronHandsex {
     }
 }
 exports.IronHandsexArt = IronHandsexArt;
+class IronJugulisArt extends iron_jugulis_1.IronJugulis {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_158_R_EN_LG.png';
+    }
+}
+exports.IronJugulisArt = IronJugulisArt;
 class IronValiantexArt extends iron_valiant_ex_1.IronValiantex {
     constructor() {
         super(...arguments);

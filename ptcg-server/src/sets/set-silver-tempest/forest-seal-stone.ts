@@ -1,34 +1,12 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardTag, CardType, TrainerType } from '../../game/store/card/card-types';
-import { State, StoreLike, Player, PokemonCard, PlayerType, EnergyMap, StateUtils, ChooseAttackPrompt, GameError, GameMessage, PowerType } from '../../game';
-import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/store/effects/check-effects';
-import { MewEx } from '../set-legendary-treasures/mew-ex';
+import { CardTag, CardType, Format, PokemonType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { StoreLike, State, PlayerType, PokemonCard, Attack, CardList, Power, Resistance, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class ForestSealStone extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
-
-
-  public powers = [{
-    name: 'Versatile',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'This Pokemon can use the attacks of any Pokemon in play ' +
-      '(both yours and your opponent\'s). (You still need the necessary ' +
-      'Energy to use each attack.)'
-  }];
-
-  public attacks = [
-    {
-      name: 'Replace',
-      cost: [ CardType.PSYCHIC ],
-      damage: 0,
-      text: 'Move as many Energy attached to your Pokemon to your other ' +
-        'Pokemon in any way you like.'
-    }
-  ];
 
   public set: string = 'SIT';
 
@@ -45,83 +23,58 @@ export class ForestSealStone extends TrainerCard {
   public readonly VSTAR_MARKER = 'VSTAR_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      const pokemonCard = player.active.getPokemonCard();
 
-      if (pokemonCard instanceof ForestSealStone) {
-        // Build cards and blocked for Choose Attack prompt  
-        const { pokemonCards, blocked } = this.buildAttackList(state, store, player);
-
-        // No attacks to copy
-        if (pokemonCards.length === 0) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (cardList === effect.target) {
+          return;
         }
 
-        return store.prompt(state, new ChooseAttackPrompt(
-          player.id,
-          GameMessage.CHOOSE_ATTACK_TO_COPY,
-          pokemonCards,
-          { allowCancel: true, blocked }
-        ), attack => {
-          if (attack !== null) {
-            const useAttackEffect = new UseAttackEffect(player, attack);
-            store.reduceEffect(state, useAttackEffect);
+        if (cardList.tool instanceof ForestSealStone) {
+          // Create a new class extending cardList
+          class ForestSealStone implements PokemonCard {
+            public superType!: SuperType;
+            public cardType!: CardType;
+            public cardTag!: CardTag[];
+            public pokemonType!: PokemonType;
+            public evolvesFrom!: string;
+            public stage!: Stage;
+            public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS,];
+            public hp!: number;
+            public weakness!: Weakness[];
+            public resistance!: Resistance[];
+            public powers!: Power[];
+            public attacks!: Attack[];
+            public format!: Format;
+            public movedToActiveThisTurn!: boolean;
+            public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+              throw new Error('Method not implemented.');
+            }
+            public fullName!: string;
+            public id!: number;
+            public regulationMark!: string;
+            public tags!: string[];
+            public setNumber!: string;
+            public cardImage!: string;
+            public cards!: CardList;
+            public set!: string;
+            public name!: string;
           }
-        });
-      }
-    }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      // Rest of method
+          // Instantiate the new class
+          const newCardList = new ForestSealStone();
+
+          // Copy the properties from the old cardList
+          newCardList.retreat = cardList.tool.retreat;
+
+          // Push the new cardList to the target
+          cardList.cards.push(newCardList);
+        }
+      });
     }
 
     return state;
   }
-
-
-  private buildAttackList(
-    state: State, store: StoreLike, player: Player
-  ): { pokemonCards: PokemonCard[], blocked: { index: number, attack: string }[] } {
-
-    const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
-    store.reduceEffect(state, checkProvidedEnergyEffect);
-    const energyMap = checkProvidedEnergyEffect.energyMap;
-
-    const pokemonCards: PokemonCard[] = [];
-    const blocked: { index: number, attack: string }[] = [];
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-      this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
-    });
-
-    return { pokemonCards, blocked };
-  }
-
-  private checkAttack(state: State, store: StoreLike, player: Player,
-    card: PokemonCard, energyMap: EnergyMap[], pokemonCards: PokemonCard[],
-    blocked: { index: number, attack: string }[]
-  ) {
-    {
-      // Only include Pokemon V cards
-      if (!card.tags.includes(CardTag.POKEMON_V)) {
-        return;
-      }
-      // No need to include Mew Ex to the list
-      if (card instanceof MewEx) {
-        return;
-      }
-      const attacks = card.attacks.filter(attack => {
-        const checkAttackCost = new CheckAttackCostEffect(player, attack);
-        state = store.reduceEffect(state, checkAttackCost);
-        return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost);
-      });
-      const index = pokemonCards.length;
-      pokemonCards.push(card);
-      card.attacks.forEach(attack => {
-        if (!attacks.includes(attack)) {
-          blocked.push({ index, attack: attack.name });
-        }
-      });
-    }
-  }
 }
+  

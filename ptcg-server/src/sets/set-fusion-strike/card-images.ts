@@ -1,4 +1,6 @@
+import { Accelgor } from './accelgor';
 import { AdventurersDiscovery } from './adventurers-discovery';
+import { Basculin } from './basculin';
 import { BattleVIPPass } from './battle-vip-pass';
 import { Cook } from './cook';
 import { Creamomatic } from './cram-o-matic';
@@ -22,10 +24,19 @@ import { Pyukumuku } from './pyukumuku';
 import { Schoolboy } from './schoolboy';
 import { Schoolgirl } from './schoolgirl';
 import { Shauna } from './shauna';
+import { Shelmet } from './shelmet';
 import { Yveltal } from './yveltal';
+
+export class AccelgorArt extends Accelgor {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_014_R_EN_LG.png';
+}
 
 export class AdventurersDiscoveryArt extends AdventurersDiscovery {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_224_R_EN_LG.png';
+}
+
+export class BasculinArt extends Basculin {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_070_R_EN_LG.png';
 }
 
 export class BattleVIPPassArt extends BattleVIPPass {
@@ -118,6 +129,10 @@ export class SchoolgirlArt extends Schoolgirl {
 
 export class ShaunaArt extends Shauna {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_263_R_EN_LG.png';
+}
+
+export class ShelmetArt extends Shelmet {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_014_R_EN_LG.png';
 }
 
 export class YveltalArt extends Yveltal {

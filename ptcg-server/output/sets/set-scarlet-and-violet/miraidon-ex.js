@@ -82,13 +82,13 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
                 // No open slots, throw error
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+            player.abilityMarker.addMarker(this.TANDEM_UNIT_MARKER, this);
             let cards = [];
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC, cardType: card_types_1.CardType.LIGHTNING }, { min: 0, max: 2, allowCancel: true }), selectedCards => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC, cardType: card_types_1.CardType.LIGHTNING }, { min: 0, max: 2, allowCancel: false }), selectedCards => {
                 cards = selectedCards || [];
                 cards.forEach((card, index) => {
                     player.deck.moveCardTo(card, slots[index]);
                     slots[index].pokemonPlayedTurn = state.turn;
-                    player.abilityMarker.addMarker(this.TANDEM_UNIT_MARKER, this);
                     return state;
                 });
                 return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {

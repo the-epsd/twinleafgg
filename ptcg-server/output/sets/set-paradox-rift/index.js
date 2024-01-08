@@ -7,6 +7,7 @@ exports.setParadoxRift = [
     new card_images_1.BruteBonnetArt(),
     new card_images_1.BounsweetArt(),
     new card_images_1.CounterCatcherArt(),
+    new card_images_1.DefianceVestArt(),
     new card_images_1.DeoxysArt(),
     new card_images_1.EarthenVesselArt(),
     new card_images_1.ElekidArt(),
@@ -39,4 +40,5 @@ exports.setParadoxRift = [
     new card_images_1.TulipArt(),
     new card_images_1.XatuArt(),
     new card_images_1.GroudonArt(),
+    new card_images_1.IronJugulisArt(),
 ];

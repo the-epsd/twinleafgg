@@ -9,6 +9,7 @@ import { FogCrystal } from './fog-crystal';
 import { Froslass } from './froslass';
 import { GalarianArticunoV } from './galarian-articuno-v';
 import { GalarianMoltresV } from './galarian-moltres-v';
+import { Gallade } from './gallade';
 import { Gardevoir } from './gardevoir';
 import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
 import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
@@ -57,6 +58,9 @@ export declare class GalarianMoltresVArt extends GalarianMoltresV {
     cardImage: string;
 }
 export declare class GardevoirArt extends Gardevoir {
+    cardImage: string;
+}
+export declare class GalladeArt extends Gallade {
     cardImage: string;
 }
 export declare class IceRiderCalyrexVArt extends IceRiderCalyrexV {
