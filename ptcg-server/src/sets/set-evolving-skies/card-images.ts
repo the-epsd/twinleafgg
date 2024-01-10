@@ -3,6 +3,7 @@ import { DragoniteV } from './dragonite-v';
 import { DuraludonV } from './duraludon-v';
 import { DuraludonVMAX } from './duraludon-vmax';
 import { Flaaffy } from './flaaffy';
+import { FullFaceGuard } from './full-face-guard';
 import { GalarianArticuno } from './galarian-articuno';
 import { GalarianMoltres } from './galarian-moltres';
 import { GyaradosV } from './gyarados-v';
@@ -45,6 +46,10 @@ export class DuraludonVMAXArt extends DuraludonVMAX {
 
 export class FlaaffyArt extends Flaaffy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_055_R_EN_LG.png';
+}
+
+export class FullFaceGuardArt extends FullFaceGuard {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_148_R_EN_LG.png';
 }
 
 export class GalarianArticunoArt extends GalarianArticuno {

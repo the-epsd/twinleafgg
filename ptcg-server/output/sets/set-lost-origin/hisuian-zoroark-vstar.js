@@ -4,7 +4,6 @@ exports.HisuianZoroarkVSTAR = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class HisuianZoroarkVSTAR extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -38,31 +37,9 @@ class HisuianZoroarkVSTAR extends game_1.PokemonCard {
         this.VSTAR_MARKER = 'VSTAR_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
-            const player = effect.player;
-            player.marker.removeMarker(this.VSTAR_MARKER, this);
-        }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const damage = 0;
-            state.players.forEach(player => {
-                player.active.cards.forEach(card => {
-                    if (damage > 0) {
-                        effect.damage += 50;
-                    }
-                });
-                player.bench.forEach(bench => {
-                    bench.cards.forEach(card => {
-                        if (damage > 0) {
-                            effect.damage += 50;
-                        }
-                    });
-                });
-            });
-            effect.damage = damage;
-        }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+            if (player.usedVSTAR === true) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             if (player.deck.cards.length === 0) {
@@ -71,7 +48,31 @@ class HisuianZoroarkVSTAR extends game_1.PokemonCard {
             const cards = player.hand.cards.filter(c => c !== this);
             player.hand.moveCardsTo(cards, player.discard);
             player.deck.moveTo(player.hand, 7);
-            player.marker.addMarker(this.VSTAR_MARKER, this);
+            player.usedVSTAR = true;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const blocked = [];
+            const hasBenched = player.bench.some(b => b.cards.length > 0);
+            if (!hasBenched) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
+            }
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                if (cardList.damage == 0) {
+                    return state;
+                }
+                else {
+                    blocked.push(target);
+                }
+            });
+            if (!blocked.length) {
+                effect.damage = 0;
+            }
+            if (blocked.length) {
+                // You have damaged benched Pokemon
+                effect.damage = blocked.length * 50;
+            }
+            return state;
         }
         return state;
     }

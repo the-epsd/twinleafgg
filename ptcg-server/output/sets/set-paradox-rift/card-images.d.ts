@@ -32,6 +32,7 @@ import { RoaringMoonex } from './roaring-moon-ex';
 import { ScreamTail } from './scream-tail';
 import { Snorunt } from './snorunt';
 import { Steenee } from './steenee';
+import { TapuKokoex } from './tapu-koko-ex';
 import { TechnoRadar } from './techno-radar';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
@@ -136,6 +137,9 @@ export declare class SnoruntArt extends Snorunt {
     cardImage: string;
 }
 export declare class SteeneeArt extends Steenee {
+    cardImage: string;
+}
+export declare class TapuKokoexArt extends TapuKokoex {
     cardImage: string;
 }
 export declare class TechnoRadarArt extends TechnoRadar {

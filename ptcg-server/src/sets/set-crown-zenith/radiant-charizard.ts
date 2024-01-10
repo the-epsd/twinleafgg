@@ -3,7 +3,8 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class RadiantCharizard extends PokemonCard {
 
@@ -62,32 +63,39 @@ export class RadiantCharizard extends PokemonCard {
       console.log('second marker added');
     }
 
-    if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
-  
-      const checkEnergy = new CheckProvidedEnergyEffect(effect.player);
-      store.reduceEffect(state, checkEnergy);
-
+    if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      try {
+        const powerEffect = new PowerEffect(opponent, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
+      }
+
       const prizesTaken = 6 - opponent.getPrizeLeft();
       const index = effect.attack.cost.findIndex(c => c === CardType.COLORLESS);
-      
+
       if (index !== -1) {
         effect.attack.cost.splice(index, prizesTaken);
       }
 
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+
+      if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
+  
+        // Check marker
+        if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+          console.log('attack blocked');
+          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+        }
+        effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+        console.log('marker added');
       }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
+      return state;
     }
     return state;
   }
-
 }
 
 

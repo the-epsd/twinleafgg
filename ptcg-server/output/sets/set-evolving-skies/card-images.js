@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SwitchingCupsArt = exports.SwabluArt = exports.SuicuneVArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FlaaffyArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DragoniteVArt = exports.CopycatArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SwitchingCupsArt = exports.SwabluArt = exports.SuicuneVArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FullFaceGuardArt = exports.FlaaffyArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DragoniteVArt = exports.CopycatArt = void 0;
 const copycat_1 = require("./copycat");
 const dragonite_v_1 = require("./dragonite-v");
 const duraludon_v_1 = require("./duraludon-v");
 const duraludon_vmax_1 = require("./duraludon-vmax");
 const flaaffy_1 = require("./flaaffy");
+const full_face_guard_1 = require("./full-face-guard");
 const galarian_articuno_1 = require("./galarian-articuno");
 const galarian_moltres_1 = require("./galarian-moltres");
 const gyarados_v_1 = require("./gyarados-v");
@@ -64,6 +65,13 @@ class FlaaffyArt extends flaaffy_1.Flaaffy {
     }
 }
 exports.FlaaffyArt = FlaaffyArt;
+class FullFaceGuardArt extends full_face_guard_1.FullFaceGuard {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_148_R_EN_LG.png';
+    }
+}
+exports.FullFaceGuardArt = FullFaceGuardArt;
 class GalarianArticunoArt extends galarian_articuno_1.GalarianArticuno {
     constructor() {
         super(...arguments);

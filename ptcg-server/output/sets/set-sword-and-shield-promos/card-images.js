@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProfessorBurnettArt = exports.ManaphyArt = exports.LucarioVSTARArt = exports.LeafeonVSTARArt = exports.ChampionsFestivalArt = void 0;
+exports.ProfessorBurnettArt = exports.ManaphyArt = exports.LucarioVSTARArt = exports.LeafeonVSTARArt = exports.HisuianElectrodeVArt = exports.ChampionsFestivalArt = void 0;
 const champions_festival_1 = require("./champions-festival");
+const hisuian_electrode_v_1 = require("./hisuian-electrode-v");
 const leafeon_vstar_1 = require("./leafeon-vstar");
 const lucario_vstar_1 = require("./lucario-vstar");
 const manaphy_1 = require("./manaphy");
@@ -13,6 +14,13 @@ class ChampionsFestivalArt extends champions_festival_1.ChampionsFestival {
     }
 }
 exports.ChampionsFestivalArt = ChampionsFestivalArt;
+class HisuianElectrodeVArt extends hisuian_electrode_v_1.HisuianElectrodeV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_296_R_EN_LG.png';
+    }
+}
+exports.HisuianElectrodeVArt = HisuianElectrodeVArt;
 class LeafeonVSTARArt extends leafeon_vstar_1.LeafeonVSTAR {
     constructor() {
         super(...arguments);

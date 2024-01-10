@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class RoaringMoonex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -36,7 +37,7 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Roaring Moon ex PAR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const activePokemon = opponent.active.getPokemonCard();

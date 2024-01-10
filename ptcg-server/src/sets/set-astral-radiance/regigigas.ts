@@ -56,101 +56,86 @@ export class Regigigas extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       // Check if player has Regirock, Regice, Registeel, Regieleki, and Regidrago in play
       const player = effect.player;
-      let hasRegirock = false;
-      let hasRegice = false;
-      let hasRegisteel = false;
-      let hasRegieleki = false;
-      let hasRegidrago = false;
-      const hasRegis = false;
+      let hasRegis = false;
 
-      if (hasRegis === false) {
+      let regis = ['Regirock', 'Regice', 'Registeel', 'Regieleki', 'Regidrago'];
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (regis.includes(card.name)) {
+          regis = regis.filter(r => r !== card.name);
+        }
+      });
+
+      if (regis.length === 0) {
+        hasRegis = true;
+      }
+
+      if (!hasRegis) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.name === 'Regirock') {
-          hasRegirock = true;
-        }
-        if (card.name === 'Regice') {
-          hasRegice = true;
-        }
-        if (card.name === 'Registeel') {
-          hasRegisteel = true;
-        }
-        if (card.name === 'Regieleki') {
-          hasRegieleki = true;
-        }
-        if (card.name === 'Regidrago') {
-          hasRegidrago = true;
-        }
+      if (hasRegis) {
 
-        if (hasRegirock && hasRegice && hasRegisteel && hasRegieleki && hasRegidrago) {
-          hasRegis === true;
-        }
 
-        // eslint-disable-next-line no-cond-assign, no-constant-condition
-        if (hasRegis === true) {
-
-          // Check if player has energy cards in discard pile
-          const hasEnergy = player.discard.cards.some(c => c instanceof EnergyCard);
-          if (!hasEnergy) {
-            return state;
-          }
-          if (player.marker.hasMarker(this.ANCIENT_WISDOM_MARKER, this)) {
-            throw new GameError(GameMessage.POWER_ALREADY_USED);
-          }
-
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.ATTACH_ENERGY_TO_BENCH,
-            PlayerType.BOTTOM_PLAYER,
-            [SlotType.BENCH, SlotType.ACTIVE],
-            { min: 0, max: 1, allowCancel: true }
-          ), chosen => {
-
-            chosen.forEach(target => {
-
-              state = store.prompt(state, new AttachEnergyPrompt(
-                player.id,
-                GameMessage.ATTACH_ENERGY_TO_BENCH,
-                player.discard,
-                PlayerType.BOTTOM_PLAYER,
-                [chosen as unknown as SlotType],
-                { superType: SuperType.POKEMON },
-                { allowCancel: true, min: 0, max: 3 }
-              ), transfers => {
-                transfers = transfers || [];
-                // cancelled by user
-                if (transfers.length === 0) {
-                  return;
-                }
-                for (const transfer of transfers) {
-                  const target = StateUtils.getTarget(state, player, transfer.to);
-                  player.discard.moveCardTo(transfer.card, target);
-                  player.marker.addMarker(this.ANCIENT_WISDOM_MARKER, this);
-                }
-              });
-            });
-            return state;
-          });
-        }
-
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-          const player = effect.player;
-          const opponent = StateUtils.getOpponent(state, player);
-    
-          const pokemonCard = opponent.active.getPokemonCard();
-          if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VMAX)) {
-            effect.damage += 150;
-          }
-
-          if (effect instanceof EndTurnEffect) {
-            effect.player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
-          }
+        // Check if player has energy cards in discard pile
+        const hasEnergy = player.discard.cards.some(c => c instanceof EnergyCard);
+        if (!hasEnergy) {
           return state;
         }
+        
+        if (player.marker.hasMarker(this.ANCIENT_WISDOM_MARKER, this)) {
+          throw new GameError(GameMessage.POWER_ALREADY_USED);
+        }
+
+        return store.prompt(state, new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { min: 0, max: 1, allowCancel: true }
+        ), chosen => {
+
+          chosen.forEach(target => {
+
+            state = store.prompt(state, new AttachEnergyPrompt(
+              player.id,
+              GameMessage.ATTACH_ENERGY_TO_BENCH,
+              player.discard,
+              PlayerType.BOTTOM_PLAYER,
+              [chosen as unknown as SlotType],
+              { superType: SuperType.POKEMON },
+              { allowCancel: true, min: 0, max: 3 }
+            ), transfers => {
+              transfers = transfers || [];
+              // cancelled by user
+              if (transfers.length === 0) {
+                return;
+              }
+              for (const transfer of transfers) {
+                const target = StateUtils.getTarget(state, player, transfer.to);
+                player.discard.moveCardTo(transfer.card, target);
+                player.marker.addMarker(this.ANCIENT_WISDOM_MARKER, this);
+              }
+            });
+          });
+          return state;
+        });
+      }
+
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+        const player = effect.player;
+        const opponent = StateUtils.getOpponent(state, player);
+
+        const pokemonCard = opponent.active.getPokemonCard();
+        if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VMAX)) {
+          effect.damage += 150;
+        }
+
+        if (effect instanceof EndTurnEffect) {
+          effect.player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
+        }
         return state;
-      });
+      }
       return state;
     }
     return state;

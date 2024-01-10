@@ -3,6 +3,7 @@ import { DragoniteV } from './dragonite-v';
 import { DuraludonV } from './duraludon-v';
 import { DuraludonVMAX } from './duraludon-vmax';
 import { Flaaffy } from './flaaffy';
+import { FullFaceGuard } from './full-face-guard';
 import { GalarianArticuno } from './galarian-articuno';
 import { GalarianMoltres } from './galarian-moltres';
 import { GyaradosV } from './gyarados-v';
@@ -39,6 +40,9 @@ export declare class DuraludonVMAXArt extends DuraludonVMAX {
     cardImage: string;
 }
 export declare class FlaaffyArt extends Flaaffy {
+    cardImage: string;
+}
+export declare class FullFaceGuardArt extends FullFaceGuard {
     cardImage: string;
 }
 export declare class GalarianArticunoArt extends GalarianArticuno {

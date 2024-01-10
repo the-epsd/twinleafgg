@@ -53,14 +53,14 @@ export class Gardevoir extends PokemonCard {
 
   public fullName: string = 'Gardevoir CRE';
 
-  public readonly FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';
+  public readonly SHINING_ARCANA_MARKER = 'SHINING_ARCANA_MARKER';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
+      player.marker.removeMarker(this.SHINING_ARCANA_MARKER, this);
     }
     
 
@@ -129,7 +129,7 @@ export class Gardevoir extends PokemonCard {
 
         effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
           if (player instanceof Gardevoir) {
-            player.marker.removeMarker(this.FLEET_FOOTED_MARKER);
+            player.marker.removeMarker(this.SHINING_ARCANA_MARKER);
           }
           return state;
         });

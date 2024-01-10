@@ -3,8 +3,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag } from '../../game/store/card/card-types';
-import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class DrapionV extends PokemonCard {
 
@@ -50,11 +51,7 @@ export class DrapionV extends PokemonCard {
   // Implement ability
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
-  
-      const checkEnergy = new CheckProvidedEnergyEffect(effect.player);
-      store.reduceEffect(state, checkEnergy);
-      
+    if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -68,26 +65,30 @@ export class DrapionV extends PokemonCard {
         wildStyleCount += 1;
       }
 
-      // Check opponent's benched Pokemon
-      opponent.bench.forEach(cardList => {
-        cardList.cards.forEach(card => {
-          if (card instanceof PokemonCard &&
-            (card.tags.includes(CardTag.FUSION_STRIKE) ||
-              card.tags.includes(CardTag.RAPID_STRIKE) ||
-              card.tags.includes(CardTag.SINGLE_STRIKE))) {
-            wildStyleCount += 1;
+      try {
+        const powerEffect = new PowerEffect(opponent, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
+      }
+
+            // Check opponent's benched Pokemon
+            opponent.bench.forEach(cardList => {
+              cardList.cards.forEach(card => {
+                if (card instanceof PokemonCard &&
+                  (card.tags.includes(CardTag.FUSION_STRIKE) ||
+                    card.tags.includes(CardTag.RAPID_STRIKE) ||
+                    card.tags.includes(CardTag.SINGLE_STRIKE))) {
+                  wildStyleCount += 1;
+                }
+              });
+            });
+      
+            // Reduce attack cost by removing 1 Colorless energy for each counted Pokemon
+            const attackCost = this.attacks[0].cost;
+            const colorlessToRemove = wildStyleCount;
+            this.attacks[0].cost = attackCost.filter(c => c !== CardType.COLORLESS).slice(0, -colorlessToRemove);
           }
-        });
-      });
-
-      // Reduce attack cost by removing 1 Colorless energy for each counted Pokemon
-      const attackCost = this.attacks[0].cost;
-      const colorlessToRemove = wildStyleCount;
-      this.attacks[0].cost = attackCost.filter(c => c !== CardType.COLORLESS).slice(0, -colorlessToRemove);
-
-    }
-    return state;
-
-
-  }
-}
+          return state;
+        }
+      }

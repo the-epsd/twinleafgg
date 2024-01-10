@@ -34,11 +34,17 @@ class Cramorant extends game_1.PokemonCard {
         this.fullName = 'Cramorant LOR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        if (effect instanceof check_effects_1.CheckAttackCostEffect) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             if (player.lostzone.cards.length >= 4) {
-                const checkCost = new check_effects_1.CheckAttackCostEffect(player, this.attacks[0]);
-                state = store.reduceEffect(state, checkCost);
+                try {
+                    const powerEffect = new game_effects_1.PowerEffect(opponent, this.powers[0], this);
+                    store.reduceEffect(state, powerEffect);
+                }
+                catch (_a) {
+                    return state;
+                }
                 this.attacks[0].cost = [];
             }
             if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

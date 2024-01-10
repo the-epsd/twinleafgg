@@ -8,6 +8,7 @@ exports.setEvolvingSkies = [
     new card_images_1.DuraludonVArt(),
     new card_images_1.DuraludonVMAXArt(),
     new card_images_1.FlaaffyArt(),
+    new card_images_1.FullFaceGuardArt(),
     new card_images_1.GalarianArticunoArt(),
     new card_images_1.GalarianMoltresArt(),
     new card_images_1.GyaradosVArt(),

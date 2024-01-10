@@ -4,6 +4,7 @@ exports.setTemporalForces = void 0;
 const card_images_1 = require("./card-images");
 exports.setTemporalForces = [
     new card_images_1.BuddyPoffinArt(),
+    new card_images_1.DudunsparceArt(),
     new card_images_1.GougingFireexArt(),
     new card_images_1.IronLeavesexArt(),
     new card_images_1.NeoUpperEnergyArt(),

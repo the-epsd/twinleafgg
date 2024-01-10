@@ -29,6 +29,6 @@ export declare class Gardevoir extends PokemonCard {
     regulationMark: string;
     name: string;
     fullName: string;
-    readonly FLEET_FOOTED_MARKER = "FLEET_FOOTED_MARKER";
+    readonly SHINING_ARCANA_MARKER = "SHINING_ARCANA_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

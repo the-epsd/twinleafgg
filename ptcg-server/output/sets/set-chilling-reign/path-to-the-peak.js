@@ -6,6 +6,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 class PathToThePeak extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -28,6 +29,8 @@ class PathToThePeak extends trainer_card_1.TrainerCard {
                 if (pokemonCard.powers.length > 0) {
                     pokemonCard.powers.length = 0;
                     pokemonCard.powers = [];
+                    const checkTable = new check_effects_1.CheckTableStateEffect();
+                    store.reduceEffect(state, checkTable);
                 }
                 if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
                     throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_STADIUM);

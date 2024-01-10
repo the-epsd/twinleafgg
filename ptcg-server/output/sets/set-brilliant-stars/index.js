@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setBrilliantStars = void 0;
 const card_images_1 = require("./card-images");
 exports.setBrilliantStars = [
+    new card_images_1.AggronVArt(),
+    new card_images_1.AggronVMAXArt(),
     new card_images_1.ArceusVArt(),
     new card_images_1.ArceusVSTARArt(),
     new card_images_1.BibarelArt(),

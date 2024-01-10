@@ -47,39 +47,36 @@ export class Snorlax extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
-      specialConditionEffect.target = effect.player.active;
-      store.reduceEffect(state, specialConditionEffect);
-      return state;
-    }
-
-    // Block retreat 
+    // Block retreat for opponent's poisoned Pokemon.
     if (effect instanceof RetreatEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       let isSnorlaxInPlay = false;
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this && player.active.cards[0] == this) {
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (opponent.active.cards[0] == this) {
           isSnorlaxInPlay = true;
         }
       });
-      
+
       if (isSnorlaxInPlay) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
-          const powerEffect = new PowerEffect(opponent, this.powers[0], this);
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
           store.reduceEffect(state, powerEffect);
         } catch {
           return state;
         }
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+        const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
+        specialConditionEffect.target = effect.player.active;
+        store.reduceEffect(state, specialConditionEffect);
+        return state;
       }
     }
-      
     return state;
+
   }
-      
 }
-      

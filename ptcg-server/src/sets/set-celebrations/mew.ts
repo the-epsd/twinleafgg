@@ -91,11 +91,11 @@ export class Mew extends PokemonCard {
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.deck);
 
-        if (deckTop.cards.length > 0) {
+        if (selected.length > 0) {
           return store.prompt(state, new ShowCardsPrompt(
             opponent.id,
             GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            deckTop.cards
+            selected
           ), () => {
 
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

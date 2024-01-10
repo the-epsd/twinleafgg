@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { AbstractAttackEffect, AddSpecialConditionsEffect, RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, AddSpecialConditionsEffect, PutDamageEffect, RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { CoinFlipPrompt, GameMessage } from '../../game';
@@ -75,12 +75,23 @@ export class Snorlax extends PokemonCard {
       }
     }
 
-    // Prevent damage effects
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
+      const pokemonCard = effect.target.getPokemonCard();
       const sourceCard = effect.source.getPokemonCard();
-
+  
+      // pokemon is evolved
+      if (pokemonCard !== this) {
+        return state;
+      }
+  
       if (sourceCard) {
 
+        // eslint-disable-next-line indent
+            // Allow damage
+        if (effect instanceof PutDamageEffect) {
+          return state; 
+        }
+  
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const player = StateUtils.findOwner(state, effect.target);
@@ -89,13 +100,11 @@ export class Snorlax extends PokemonCard {
         } catch {
           return state;
         }
-
+  
         effect.preventDefault = true;
       }
+      return state;
     }
-
     return state;
   }
-
-
 }

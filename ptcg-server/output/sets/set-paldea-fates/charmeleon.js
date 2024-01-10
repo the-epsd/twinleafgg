@@ -37,7 +37,7 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
         this.fullName = 'Charmeleon SV4';
     }
     reduceEffect(store, state, effect) {
-        // Prevent damage from Pokemon-EX
+        // Prevent effects of attacks
         if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this)) {
             const pokemonCard = effect.target.getPokemonCard();
             const sourceCard = effect.source.getPokemonCard();

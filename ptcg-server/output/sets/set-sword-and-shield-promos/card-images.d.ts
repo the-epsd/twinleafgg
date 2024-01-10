@@ -1,9 +1,13 @@
 import { ChampionsFestival } from './champions-festival';
+import { HisuianElectrodeV } from './hisuian-electrode-v';
 import { LeafeonVSTAR } from './leafeon-vstar';
 import { LucarioVSTAR } from './lucario-vstar';
 import { Manaphy } from './manaphy';
 import { ProfessorBurnet } from './professor-burnett';
 export declare class ChampionsFestivalArt extends ChampionsFestival {
+    cardImage: string;
+}
+export declare class HisuianElectrodeVArt extends HisuianElectrodeV {
     cardImage: string;
 }
 export declare class LeafeonVSTARArt extends LeafeonVSTAR {

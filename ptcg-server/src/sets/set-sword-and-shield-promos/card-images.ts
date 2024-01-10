@@ -1,10 +1,15 @@
 import { ChampionsFestival } from './champions-festival';
+import { HisuianElectrodeV } from './hisuian-electrode-v';
 import { LeafeonVSTAR } from './leafeon-vstar';
 import { LucarioVSTAR } from './lucario-vstar';
 import { Manaphy } from './manaphy';
 import { ProfessorBurnet } from './professor-burnett';
 
 export class ChampionsFestivalArt extends ChampionsFestival {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_296_R_EN_LG.png';
+}
+
+export class HisuianElectrodeVArt extends HisuianElectrodeV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_296_R_EN_LG.png';
 }
 

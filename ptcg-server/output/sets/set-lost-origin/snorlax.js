@@ -57,10 +57,19 @@ class Snorlax extends pokemon_card_1.PokemonCard {
                 return state;
             }
         }
-        // Prevent damage effects
         if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this)) {
+            const pokemonCard = effect.target.getPokemonCard();
             const sourceCard = effect.source.getPokemonCard();
+            // pokemon is evolved
+            if (pokemonCard !== this) {
+                return state;
+            }
             if (sourceCard) {
+                // eslint-disable-next-line indent
+                // Allow damage
+                if (effect instanceof attack_effects_1.PutDamageEffect) {
+                    return state;
+                }
                 // Try to reduce PowerEffect, to check if something is blocking our ability
                 try {
                     const player = state_utils_1.StateUtils.findOwner(state, effect.target);
@@ -72,6 +81,7 @@ class Snorlax extends pokemon_card_1.PokemonCard {
                 }
                 effect.preventDefault = true;
             }
+            return state;
         }
         return state;
     }

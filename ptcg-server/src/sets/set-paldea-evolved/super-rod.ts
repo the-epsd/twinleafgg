@@ -2,7 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { TrainerType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -35,14 +35,14 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
-    { superType: SuperType.POKEMON || SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min: 1, max: 3, allowCancel: false }
+    { },
+    { min: 1, max: 3, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();
@@ -55,6 +55,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.deck.applyOrder(order);
   });
 }
+
 
 export class SuperRod extends TrainerCard {
 

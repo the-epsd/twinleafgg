@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RagingBoltexArt = exports.IronCrownexArt = exports.PrimeCatcherArt = exports.MasterBallArt = exports.WalkingWakeexArt = exports.NeoUpperEnergyArt = exports.IronLeavesexArt = exports.GougingFireexArt = exports.BuddyPoffinArt = void 0;
+exports.RagingBoltexArt = exports.IronCrownexArt = exports.PrimeCatcherArt = exports.MasterBallArt = exports.WalkingWakeexArt = exports.NeoUpperEnergyArt = exports.IronLeavesexArt = exports.GougingFireexArt = exports.DudunsparceArt = exports.BuddyPoffinArt = void 0;
 const buddy_poffin_1 = require("./buddy-poffin");
+const dudunsparce_1 = require("./dudunsparce");
 const gouging_fire_ex_1 = require("./gouging-fire-ex");
 const iron_crown_ex_1 = require("./iron-crown-ex");
 const iron_leaves_ex_1 = require("./iron-leaves-ex");
@@ -17,6 +18,13 @@ class BuddyPoffinArt extends buddy_poffin_1.BuddyPoffin {
     }
 }
 exports.BuddyPoffinArt = BuddyPoffinArt;
+class DudunsparceArt extends dudunsparce_1.Dudunsparce {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GDUAoi2WcAAm15u?format=jpg&name=medium';
+    }
+}
+exports.DudunsparceArt = DudunsparceArt;
 class GougingFireexArt extends gouging_fire_ex_1.GougingFireex {
     constructor() {
         super(...arguments);

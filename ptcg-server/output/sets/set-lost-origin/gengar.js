@@ -8,6 +8,8 @@ const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_message_1 = require("../../game/game-message");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const game_error_1 = require("../../game/game-error");
+const __1 = require("../..");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Gengar extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -63,6 +65,13 @@ class Gengar extends pokemon_card_1.PokemonCard {
             });
             if (effect instanceof game_phase_effects_1.EndTurnEffect) {
                 effect.player.marker.removeMarker(this.NETHERWORLD_GATE_MARKER, this);
+            }
+            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+                const opponent = __1.StateUtils.getOpponent(state, player);
+                const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+                const attackEffect = effect;
+                const damageEffect = new attack_effects_1.PutDamageEffect(attackEffect, opponentBenched * 20);
+                return store.reduceEffect(state, damageEffect);
             }
             return state;
         }
