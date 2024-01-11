@@ -1,6 +1,6 @@
 export const config = {
     backend: {
-        address: 'localhost',
+        address: 'http://server.epsd.ca',
         port: 12021,
         serverPassword: '',
         registrationEnabled: true,
@@ -19,10 +19,10 @@ export const config = {
     },
     storage: {
         type: 'mysql',
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password: '',
+        host: 'twinleaf-database-do-user-15340438-0.c.db.ondigitalocean.com',
+        port: 25060,
+        username: 'doadmin',
+        password: 'AVNS_gV9gkMzg6MbbCdiSesR',
         database: 'ptcg'
     },
     core: {

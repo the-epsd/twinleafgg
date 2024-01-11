@@ -14,7 +14,6 @@
     "test": "nyc -e \".ts\" -x \"src/**/*.spec.ts\" jasmine-ts \"src/**/*.spec.ts\"",
     "coverage": "npm test && nyc report -r html"
   },
-  
   "author": "",
   "license": "MIT",
   "dependencies": {
@@ -23,7 +22,7 @@
     "build": "^0.1.4",
     "express": "^4.17.1",
     "jimp": "^0.16.1",
-    "mysql": "^2.18.1",
+    "mysql2": "^3.7.0",
     "nodemailer": "^6.6.5",
     "reflect-metadata": "^0.1.13",
     "socket.io": "^4.2.0",
