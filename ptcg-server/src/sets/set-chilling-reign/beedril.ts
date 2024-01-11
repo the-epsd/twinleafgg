@@ -13,6 +13,8 @@ export class Beedrill extends PokemonCard {
   public tags = [ CardTag.SINGLE_STRIKE ];
   
   public evolvesFrom = 'Kakuna';
+
+  public regulationMark = 'E';
   
   public cardType: CardType = CardType.GRASS;
   

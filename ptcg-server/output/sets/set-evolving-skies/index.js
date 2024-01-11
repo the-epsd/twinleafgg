@@ -22,6 +22,7 @@ exports.setEvolvingSkies = [
     new card_images_1.RegidragoArt(),
     new card_images_1.RegielekiArt(),
     new card_images_1.RescueCarrierArt(),
+    new card_images_1.StormyMountainsArt(),
     new card_images_1.SuicuneVArt(),
     new card_images_1.UmbreonVArt(),
     new card_images_1.UmbreonVMAXArt(),

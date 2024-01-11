@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SwitchingCupsArt = exports.SwabluArt = exports.SuicuneVArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FullFaceGuardArt = exports.FlaaffyArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DragoniteVArt = exports.CopycatArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SwitchingCupsArt = exports.SwabluArt = exports.SuicuneVArt = exports.StormyMountainsArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FullFaceGuardArt = exports.FlaaffyArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DragoniteVArt = exports.CopycatArt = void 0;
 const copycat_1 = require("./copycat");
 const dragonite_v_1 = require("./dragonite-v");
 const duraludon_v_1 = require("./duraludon-v");
@@ -20,6 +20,7 @@ const rayquaza_v_1 = require("./rayquaza-v");
 const regidrago_1 = require("./regidrago");
 const regieleki_1 = require("./regieleki");
 const rescue_carrier_1 = require("./rescue-carrier");
+const stormy_mountains_1 = require("./stormy-mountains");
 const suicune_v_1 = require("./suicune-v");
 const swablu_1 = require("./swablu");
 const switching_cups_1 = require("./switching-cups");
@@ -163,6 +164,13 @@ class RescueCarrierArt extends rescue_carrier_1.RescueCarrier {
     }
 }
 exports.RescueCarrierArt = RescueCarrierArt;
+class StormyMountainsArt extends stormy_mountains_1.StormyMountains {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_161_R_EN_LG.png';
+    }
+}
+exports.StormyMountainsArt = StormyMountainsArt;
 class SuicuneVArt extends suicune_v_1.SuicuneV {
     constructor() {
         super(...arguments);

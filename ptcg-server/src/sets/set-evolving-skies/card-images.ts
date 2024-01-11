@@ -17,6 +17,7 @@ import { RayquazaV } from './rayquaza-v';
 import { Regidrago } from './regidrago';
 import { Regieleki } from './regieleki';
 import { RescueCarrier } from './rescue-carrier';
+import { StormyMountains } from './stormy-mountains';
 import { SuicuneV } from './suicune-v';
 import { Swablu } from './swablu';
 import { SwitchingCups } from './switching-cups';
@@ -102,6 +103,10 @@ export class RegielekiArt extends Regieleki {
 
 export class RescueCarrierArt extends RescueCarrier {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_154_R_EN_LG.png';
+}
+
+export class StormyMountainsArt extends StormyMountains {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_161_R_EN_LG.png';
 }
 
 export class SuicuneVArt extends SuicuneV {

@@ -33,6 +33,7 @@ class GutsyPickaxe extends game_1.TrainerCard {
                     if (energyCardsDrawn.length == 0) {
                         temp.cards.slice(0, 1).forEach(card => {
                             temp.moveCardTo(card, player.hand);
+                            player.supporter.moveCardTo(effect.trainerCard, player.discard);
                         });
                     }
                     else {
@@ -44,16 +45,17 @@ class GutsyPickaxe extends game_1.TrainerCard {
                                 for (const transfer of transfers) {
                                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                                     temp.moveCardTo(transfer.card, target); // Move card to target
+                                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
                                 }
                                 temp.cards.forEach(card => {
                                     temp.moveCardTo(card, player.hand); // Move card to hand
+                                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
                                 });
                                 return state;
                             }
                             return state;
                         });
                     }
-                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
                     return state;
                 });
             }

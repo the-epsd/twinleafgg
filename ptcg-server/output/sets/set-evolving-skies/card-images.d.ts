@@ -17,6 +17,7 @@ import { RayquazaV } from './rayquaza-v';
 import { Regidrago } from './regidrago';
 import { Regieleki } from './regieleki';
 import { RescueCarrier } from './rescue-carrier';
+import { StormyMountains } from './stormy-mountains';
 import { SuicuneV } from './suicune-v';
 import { Swablu } from './swablu';
 import { SwitchingCups } from './switching-cups';
@@ -82,6 +83,9 @@ export declare class RegielekiArt extends Regieleki {
     cardImage: string;
 }
 export declare class RescueCarrierArt extends RescueCarrier {
+    cardImage: string;
+}
+export declare class StormyMountainsArt extends StormyMountains {
     cardImage: string;
 }
 export declare class SuicuneVArt extends SuicuneV {
