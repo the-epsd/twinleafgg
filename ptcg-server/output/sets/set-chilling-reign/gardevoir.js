@@ -41,12 +41,12 @@ class Gardevoir extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'E';
         this.name = 'Gardevoir';
         this.fullName = 'Gardevoir CRE';
-        this.FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';
+        this.SHINING_ARCANA_MARKER = 'SHINING_ARCANA_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
+            player.marker.removeMarker(this.SHINING_ARCANA_MARKER, this);
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
@@ -93,7 +93,7 @@ class Gardevoir extends pokemon_card_1.PokemonCard {
             if (effect instanceof game_phase_effects_1.EndTurnEffect) {
                 effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
                     if (player instanceof Gardevoir) {
-                        player.marker.removeMarker(this.FLEET_FOOTED_MARKER);
+                        player.marker.removeMarker(this.SHINING_ARCANA_MARKER);
                     }
                     return state;
                 });

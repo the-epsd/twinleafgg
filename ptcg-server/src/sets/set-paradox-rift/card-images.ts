@@ -32,6 +32,7 @@ import { RoaringMoonex } from './roaring-moon-ex';
 import { ScreamTail } from './scream-tail';
 import { Snorunt } from './snorunt';
 import { Steenee } from './steenee';
+import { TapuKokoex } from './tapu-koko-ex';
 import { TechnoRadar } from './techno-radar';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
@@ -171,6 +172,10 @@ export class SnoruntArt extends Snorunt {
 
 export class SteeneeArt extends Steenee {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_009_R_EN_LG.png';
+}
+
+export class TapuKokoexArt extends TapuKokoex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_068_R_EN_LG.png';
 }
 
 export class TechnoRadarArt extends TechnoRadar {

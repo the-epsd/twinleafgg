@@ -41,6 +41,8 @@ export class Banette extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public regulationMark = 'E';
+
   public tags = [CardTag.SINGLE_STRIKE];
   
   public evolvesFrom = 'Shuppet';

@@ -36,6 +36,7 @@ class TrekkingShoes extends trainer_card_1.TrainerCard {
                     if (yes) {
                         // Add card to hand
                         deckTop.moveCardsTo(deckTop.cards, player.hand);
+                        player.supporter.moveCardTo(this, player.discard);
                     }
                     else {
                         // Discard card

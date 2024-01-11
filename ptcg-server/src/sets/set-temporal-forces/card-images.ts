@@ -1,4 +1,5 @@
 import { BuddyPoffin } from './buddy-poffin';
+import { Dudunsparce } from './dudunsparce';
 import { GougingFireex } from './gouging-fire-ex';
 import { IronCrownex } from './iron-crown-ex';
 import { IronLeavesex } from './iron-leaves-ex';
@@ -10,6 +11,10 @@ import { WalkingWakeex } from './walking-wake-ex';
 
 export class BuddyPoffinArt extends BuddyPoffin {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1704512913547-DWUAR8R1CH1PWDP0FW6G/Buddy+Poffin.png?format=1500w';
+}
+
+export class DudunsparceArt extends Dudunsparce {
+  public cardImage = 'https://pbs.twimg.com/media/GDUAoi2WcAAm15u?format=jpg&name=medium';
 }
 
 export class GougingFireexArt extends GougingFireex {

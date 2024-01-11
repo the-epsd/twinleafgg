@@ -1,3 +1,5 @@
+import { AggronV } from './aggron-v';
+import { AggronVMAX } from './aggron-vmax';
 import { ArceusV } from './arceus-v';
 import { ArceusVSTAR } from './arceus-vstar';
 import { Bibarel } from './bibarel';
@@ -22,6 +24,14 @@ import { RaichuV } from './raichu-v';
 import { RaikouV } from './raikou-v';
 import { ShayminV } from './shaymin-v';
 import { ShayminVSTAR } from './shaymin-vstar';
+
+export class AggronVArt extends AggronV {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_096_R_EN_LG.png';
+}
+
+export class AggronVMAXArt extends AggronVMAX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_097_R_EN_LG.png';
+}
 
 export class ArceusVArt extends ArceusV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_122_R_EN_LG.png';

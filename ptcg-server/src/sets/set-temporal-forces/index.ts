@@ -1,9 +1,10 @@
 import { Card } from '../../game/store/card/card';
-import { BuddyPoffinArt, GougingFireexArt, IronCrownexArt, IronLeavesexArt, MasterBallArt, NeoUpperEnergyArt, PrimeCatcherArt, RagingBoltexArt, WalkingWakeexArt } from './card-images';
+import { BuddyPoffinArt, DudunsparceArt, GougingFireexArt, IronCrownexArt, IronLeavesexArt, MasterBallArt, NeoUpperEnergyArt, PrimeCatcherArt, RagingBoltexArt, WalkingWakeexArt } from './card-images';
 
 export const setTemporalForces: Card[] = [
   
   new BuddyPoffinArt(),
+  new DudunsparceArt(),
   new GougingFireexArt(),
   new IronLeavesexArt(),
   new NeoUpperEnergyArt(),

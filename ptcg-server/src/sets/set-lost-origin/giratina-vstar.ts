@@ -6,6 +6,7 @@ import { GameMessage } from '../../game/game-message';
 import { ChooseCardsPrompt, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SlotType, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
 
 export class GiratinaVSTAR extends PokemonCard {
   
@@ -87,7 +88,7 @@ export class GiratinaVSTAR extends PokemonCard {
         }});
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AbstractAttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       if (player.lostzone.cards.length <= 9) {
         throw new GameError (GameMessage.CANNOT_USE_POWER);  

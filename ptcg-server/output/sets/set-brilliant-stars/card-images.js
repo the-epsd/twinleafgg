@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ShayminVSTARArt = exports.ShayminVArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.ManaphyArt = exports.MagmortarArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = void 0;
+exports.ShayminVSTARArt = exports.ShayminVArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.ManaphyArt = exports.MagmortarArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = void 0;
+const aggron_v_1 = require("./aggron-v");
+const aggron_vmax_1 = require("./aggron-vmax");
 const arceus_v_1 = require("./arceus-v");
 const arceus_vstar_1 = require("./arceus-vstar");
 const bibarel_1 = require("./bibarel");
@@ -25,6 +27,20 @@ const raichu_v_1 = require("./raichu-v");
 const raikou_v_1 = require("./raikou-v");
 const shaymin_v_1 = require("./shaymin-v");
 const shaymin_vstar_1 = require("./shaymin-vstar");
+class AggronVArt extends aggron_v_1.AggronV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_096_R_EN_LG.png';
+    }
+}
+exports.AggronVArt = AggronVArt;
+class AggronVMAXArt extends aggron_vmax_1.AggronVMAX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_097_R_EN_LG.png';
+    }
+}
+exports.AggronVMAXArt = AggronVMAXArt;
 class ArceusVArt extends arceus_v_1.ArceusV {
     constructor() {
         super(...arguments);

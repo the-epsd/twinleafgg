@@ -7,6 +7,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const card_types_2 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class DrapionV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -38,9 +39,7 @@ class DrapionV extends pokemon_card_1.PokemonCard {
     }
     // Implement ability
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[0]) {
-            const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(effect.player);
-            store.reduceEffect(state, checkEnergy);
+        if (effect instanceof check_effects_1.CheckAttackCostEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let wildStyleCount = 0;
@@ -50,6 +49,13 @@ class DrapionV extends pokemon_card_1.PokemonCard {
                 opponentActive.tags.includes(card_types_2.CardTag.RAPID_STRIKE) ||
                 opponentActive.tags.includes(card_types_2.CardTag.SINGLE_STRIKE))) {
                 wildStyleCount += 1;
+            }
+            try {
+                const powerEffect = new game_effects_1.PowerEffect(opponent, this.powers[0], this);
+                store.reduceEffect(state, powerEffect);
+            }
+            catch (_a) {
+                return state;
             }
             // Check opponent's benched Pokemon
             opponent.bench.forEach(cardList => {

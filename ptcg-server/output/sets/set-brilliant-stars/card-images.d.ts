@@ -1,3 +1,5 @@
+import { AggronV } from './aggron-v';
+import { AggronVMAX } from './aggron-vmax';
 import { ArceusV } from './arceus-v';
 import { ArceusVSTAR } from './arceus-vstar';
 import { Bibarel } from './bibarel';
@@ -22,6 +24,12 @@ import { RaichuV } from './raichu-v';
 import { RaikouV } from './raikou-v';
 import { ShayminV } from './shaymin-v';
 import { ShayminVSTAR } from './shaymin-vstar';
+export declare class AggronVArt extends AggronV {
+    cardImage: string;
+}
+export declare class AggronVMAXArt extends AggronVMAX {
+    cardImage: string;
+}
 export declare class ArceusVArt extends ArceusV {
     cardImage: string;
 }

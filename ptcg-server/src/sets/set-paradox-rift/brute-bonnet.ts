@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, StateUtils, PowerType, PlayerType } from '../../game';
+import { StoreLike, State, GameError, StateUtils, PowerType } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class BruteBonnet extends PokemonCard {
 
@@ -17,6 +18,15 @@ export class BruteBonnet extends PokemonCard {
   public weakness = [{ type: CardType.GRASS }];
 
   public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+
+  public powers = [
+    {
+      name: 'Toxic Powder',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, if this Pokémon has an Ancient Booster Energy Capsule attached, you may make both Active Pokémon Poisoned.'
+    }
+  ];
 
   public attacks = [
     {
@@ -40,7 +50,14 @@ export class BruteBonnet extends PokemonCard {
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
+  public readonly TOXIC_POWDER_MARKER = 'TOXIC_POWDER_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.TOXIC_POWDER_MARKER, this);
+    }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
@@ -53,6 +70,22 @@ export class BruteBonnet extends PokemonCard {
       console.log('second marker added');
     }
 
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TOXIC_POWDER_MARKER, this)) {
+      effect.player.marker.removeMarker(this.TOXIC_POWDER_MARKER, this);
+      console.log('toxic powder marker cleared');
+    }
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const active = opponent.active;
+
+      active.addSpecialCondition(SpecialCondition.POISONED);
+      player.active.addSpecialCondition(SpecialCondition.POISONED);
+
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker
@@ -62,54 +95,6 @@ export class BruteBonnet extends PokemonCard {
       }
       effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
       console.log('marker added');
-    }
-
-    const cardList = StateUtils.findCardList(state, this);
-
-    if (!cardList) {
-      return state;
-    }
-
-    if (effect instanceof PowerEffect
-        && effect.power.powerType === PowerType.ABILITY
-        && effect.power.name !== 'Garbotoxin') {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-  
-      let bruteBonnetWithTool = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool !== undefined) {
-          bruteBonnetWithTool = true;
-        }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool !== undefined) {
-          bruteBonnetWithTool = true;
-        }
-      });
-
-      if (!bruteBonnetWithTool) {
-        return state;
-      }
-
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-
-      throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-    }
-
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      player.active.specialConditions.push(SpecialCondition.POISONED);
-      opponent.active.specialConditions.push(SpecialCondition.POISONED);
     }
     return state;
   }

@@ -28,7 +28,7 @@ export class Diancie extends PokemonCard {
 
   public set: string = 'ASR';
 
-public cardImage: string = 'assets/cardback.png';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '68';
 

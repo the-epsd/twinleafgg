@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, PokemonCardList } from '../../game';
+import { StoreLike, State } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 
 export class Dodrio extends PokemonCard {
@@ -55,33 +55,31 @@ export class Dodrio extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
-      if (cardList === undefined) {
+      const player = effect.player;
+
+      const dealDamage = new DealDamageEffect(effect, 50);
+      dealDamage.target = player.active;
+      store.reduceEffect(state, dealDamage);
+
+      player.deck.moveTo(player.hand, 1);
+
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+
+        // Get Dodrio's damage
+        const dodrioDamage = effect.player.active.damage;
+
+        // Calculate 30 damage per counter
+        const damagePerCounter = 30;
+        effect.damage = dodrioDamage * damagePerCounter;
+
         return state;
       }
 
-      const damageEffect = new PutDamageEffect(effect, 10);
-      damageEffect.target = cardList;
-      store.reduceEffect(state, damageEffect);
-
-      const player = effect.player;
-      player.deck.moveTo(player.hand, 1);
-
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-        // Get damage counters
-        const damageCounters = effect.player.active.damage;
-        const damageOutput = 10 + (damageCounters * 2);
-        const damageEffect = new PutDamageEffect(effect, damageOutput);
-        store.reduceEffect(state, damageEffect);
-
-      }
       return state;
     }
     return state;
+
   }
-
-
 
 }

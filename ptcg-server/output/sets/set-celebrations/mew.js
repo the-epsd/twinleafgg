@@ -64,8 +64,8 @@ class Mew extends game_1.PokemonCard {
                 player.marker.addMarker(this.MYSTERIOUS_TAIL_MARKER, this);
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.deck);
-                if (deckTop.cards.length > 0) {
-                    return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, deckTop.cards), () => {
+                if (selected.length > 0) {
+                    return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected), () => {
                         return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                             player.deck.applyOrder(order);
                             return state;

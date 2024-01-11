@@ -27,6 +27,8 @@ export class Drizzile extends PokemonCard {
       text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
     }
   ];
+  
+  public regulationMark = 'E';
 
   public set: string = 'CRE';
 

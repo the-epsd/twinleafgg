@@ -3,6 +3,7 @@ import { DragoniteV } from './dragonite-v';
 import { DuraludonV } from './duraludon-v';
 import { DuraludonVMAX } from './duraludon-vmax';
 import { Flaaffy } from './flaaffy';
+import { FullFaceGuard } from './full-face-guard';
 import { GalarianArticuno } from './galarian-articuno';
 import { GalarianMoltres } from './galarian-moltres';
 import { GyaradosV } from './gyarados-v';
@@ -16,6 +17,7 @@ import { RayquazaV } from './rayquaza-v';
 import { Regidrago } from './regidrago';
 import { Regieleki } from './regieleki';
 import { RescueCarrier } from './rescue-carrier';
+import { StormyMountains } from './stormy-mountains';
 import { SuicuneV } from './suicune-v';
 import { Swablu } from './swablu';
 import { SwitchingCups } from './switching-cups';
@@ -39,6 +41,9 @@ export declare class DuraludonVMAXArt extends DuraludonVMAX {
     cardImage: string;
 }
 export declare class FlaaffyArt extends Flaaffy {
+    cardImage: string;
+}
+export declare class FullFaceGuardArt extends FullFaceGuard {
     cardImage: string;
 }
 export declare class GalarianArticunoArt extends GalarianArticuno {
@@ -78,6 +83,9 @@ export declare class RegielekiArt extends Regieleki {
     cardImage: string;
 }
 export declare class RescueCarrierArt extends RescueCarrier {
+    cardImage: string;
+}
+export declare class StormyMountainsArt extends StormyMountains {
     cardImage: string;
 }
 export declare class SuicuneVArt extends SuicuneV {

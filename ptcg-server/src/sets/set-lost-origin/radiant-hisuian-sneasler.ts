@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardTag, CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
-import { PowerType, State, StoreLike } from '../../game';
+import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 
 export class RadiantHisuianSneasler extends PokemonCard {
 
@@ -45,15 +45,18 @@ export class RadiantHisuianSneasler extends PokemonCard {
 
   public reduceEffect (store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
-      if (effect instanceof BetweenTurnsEffect) {
-        effect.poisonDamage += 20;
-      }
-
-      return state;
-
+    if (effect instanceof BetweenTurnsEffect) {
+      const player = effect.player;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card.name === 'Radiant Hisuian Sneasler') {
+          const opponent = StateUtils.getOpponent(state, player);
+  
+          opponent.active.poisonDamage = 30;
+        }
+      });
     }
+    
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
@@ -66,3 +69,5 @@ export class RadiantHisuianSneasler extends PokemonCard {
     return state;
   }
 }
+
+

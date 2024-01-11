@@ -1,9 +1,10 @@
 import { Card } from '../../game/store/card/card';
-import { ChampionsFestivalArt, LeafeonVSTARArt, LucarioVSTARArt, ManaphyArt, ProfessorBurnettArt } from './card-images';
+import { ChampionsFestivalArt, HisuianElectrodeVArt, LeafeonVSTARArt, LucarioVSTARArt, ManaphyArt, ProfessorBurnettArt } from './card-images';
 
 export const setSwordAndShieldPromos: Card[] = [
   
   new ChampionsFestivalArt(),
+  new HisuianElectrodeVArt(),
   new LeafeonVSTARArt(),
   new LucarioVSTARArt(),
   // new LucarioVSTARArt2(),

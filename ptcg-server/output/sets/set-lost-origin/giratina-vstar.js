@@ -6,6 +6,7 @@ const game_message_1 = require("../../game/game-message");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class GiratinaVSTAR extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -57,7 +58,7 @@ class GiratinaVSTAR extends game_1.PokemonCard {
                 }
             });
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             if (player.lostzone.cards.length <= 9) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
