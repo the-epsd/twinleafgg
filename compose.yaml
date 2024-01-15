@@ -4,7 +4,7 @@ services:
       context: ./ptcg-server
       dockerfile: Dockerfile
     ports:
-      - 12021:12021
+      - 8080:8080
     volumes:
       - ./ptcg-server:/usr/src/app
     environment:

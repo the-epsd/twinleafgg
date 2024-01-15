@@ -4,7 +4,7 @@ exports.config = void 0;
 exports.config = {
     backend: {
         address: 'http://server.epsd.ca',
-        port: 12021,
+        port: 8080,
         serverPassword: '',
         registrationEnabled: true,
         allowCors: true,
