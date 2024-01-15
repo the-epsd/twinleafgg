@@ -9,7 +9,7 @@ export class WalkingWakeex extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_ex, CardTag.ANCIENT ];
 
-  public regulationMark = 'G';
+  public regulationMark = 'H';
 
   public stage: Stage = Stage.BASIC;
 

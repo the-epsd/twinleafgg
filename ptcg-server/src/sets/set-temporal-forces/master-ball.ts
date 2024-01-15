@@ -56,7 +56,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
 export class MasterBall extends TrainerCard {
 
-  public regulationMark = 'G';
+  public regulationMark = 'H';
 
   public tags = [ CardTag.ACE_SPEC ];
 

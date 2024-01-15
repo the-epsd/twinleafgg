@@ -97,7 +97,9 @@ cardManager.defineSet(sets.setTemporalForces);
 StateSerializer.setKnownCards(cardManager.getAllCards());
 
 const botManager = BotManager.getInstance();
-botManager.registerBot(new SimpleBot('Venusaur'));
+// botManager.registerBot(new SimpleBot('Venusaur'));
+botManager.registerBot(new SimpleBot('Gardevoir'));
+botManager.registerBot(new SimpleBot('Charizard'));
 
 const app = new App();
 

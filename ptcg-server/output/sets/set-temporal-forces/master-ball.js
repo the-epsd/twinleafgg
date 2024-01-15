@@ -35,7 +35,7 @@ function* playCard(next, store, state, self, effect) {
 class MasterBall extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'G';
+        this.regulationMark = 'H';
         this.tags = [card_types_1.CardTag.ACE_SPEC];
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVHM';
