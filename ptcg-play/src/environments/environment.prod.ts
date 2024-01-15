@@ -1,5 +1,5 @@
 export const environment = {
-  apiUrl: 'http://server.epsd.ca',
+  apiUrl: 'https://play-server.twinleaf.gg',
   timeout: 5000,
   production: true,
   apiVersion: 2,

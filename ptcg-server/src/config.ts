@@ -2,7 +2,7 @@
 export const config = {
   backend: {
     address: 'http://server.epsd.ca',
-    port: 12021,
+    port: 8080,
     serverPassword: '', // Password required to create an account
     registrationEnabled: true,  // Completly disables/enables registration
     allowCors: true,
@@ -74,6 +74,6 @@ export const config = {
     },
     sender: 'example@example.com',
     appName: 'AAAAA',
-    publicAddress: 'http://localhost' // Address inside the e-mail messages
+    publicAddress: 'http://0.0.0.0' // Address inside the e-mail messages
   }
 };

@@ -32,7 +32,7 @@ npm run build
 npm start
 ```
 
-The service should now listen on the specified address and port. It will be http://localhost:12021 by default. This can be changed by editing `config.js` as previously mentioned. This server uses Sqlite-3.
+The service should now listen on the specified address and port. It will be http://localhost:8080 by default. This can be changed by editing `config.js` as previously mentioned. This server uses Sqlite-3.
 
 ### Client launch
 

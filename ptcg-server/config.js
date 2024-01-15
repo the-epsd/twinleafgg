@@ -1,7 +1,7 @@
 const { config } = require('./output/config');
 
-config.backend.address = 'localhost';
-config.backend.port = 12021;
+config.backend.address = '0.0.0.0';
+config.backend.port = 8080;
 config.backend.avatarsDir = __dirname + '/avatars';
 
 // config.storage.type = 'sqlite';
