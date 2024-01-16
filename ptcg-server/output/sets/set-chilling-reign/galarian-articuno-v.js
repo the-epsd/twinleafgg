@@ -39,7 +39,7 @@ class GalarianArticunoV extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '58';
         this.name = 'Galarian Articuno V';
-        this.fullName = 'Galarian Articuno V CRE';
+        this.fullName = 'Galarian Articuno V CRE 58';
         this.CONCEALED_CARDS_MARKER = 'CONCEALED_CARDS_MARKER';
     }
     reduceEffect(store, state, effect) {

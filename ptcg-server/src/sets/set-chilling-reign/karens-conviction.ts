@@ -22,7 +22,7 @@ export class KarensConviction extends TrainerCard {
 
   public name: string = 'Karen\'s Conviction';
 
-  public fullName: string = 'Karen\'s Conviction CRE';
+  public fullName: string = 'Karen\'s Conviction CRE 144';
 
   public text: string =
     'During this turn, your Single Strike Pokémon\'s attacks do 20 more damage to your opponent\'s Active Pokémon for each Prize card your opponent has taken (before applying Weakness and Resistance).';

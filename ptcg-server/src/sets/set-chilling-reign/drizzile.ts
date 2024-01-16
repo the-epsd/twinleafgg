@@ -38,7 +38,7 @@ export class Drizzile extends PokemonCard {
   
   public name: string = 'Drizzile';
   
-  public fullName: string = 'Drizzile CRE';
+  public fullName: string = 'Drizzile CRE 42';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

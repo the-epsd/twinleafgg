@@ -79,7 +79,7 @@ export class FogCrystal extends TrainerCard {
 
   public name: string = 'Fog Crystal';
 
-  public fullName: string = 'Fog Crystal CRE';
+  public fullName: string = 'Fog Crystal CRE 140';
 
   public text: string =
     'Search your deck for a Pokemon with 90 HP or less, reveal it, ' +

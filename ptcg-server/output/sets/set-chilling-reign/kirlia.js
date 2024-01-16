@@ -47,7 +47,7 @@ class Kirlia extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '60';
         this.name = 'Kirlia';
-        this.fullName = 'Kirlia CRE';
+        this.fullName = 'Kirlia CRE 60';
         this.REFINEMENT_MARKER = 'REFINEMENT_MARKER';
     }
     reduceEffect(store, state, effect) {

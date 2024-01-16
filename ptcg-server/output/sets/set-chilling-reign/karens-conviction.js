@@ -16,7 +16,7 @@ class KarensConviction extends trainer_card_1.TrainerCard {
         this.setNumber = '144';
         this.regulationMark = 'E';
         this.name = 'Karen\'s Conviction';
-        this.fullName = 'Karen\'s Conviction CRE';
+        this.fullName = 'Karen\'s Conviction CRE 144';
         this.text = 'During this turn, your Single Strike Pokémon\'s attacks do 20 more damage to your opponent\'s Active Pokémon for each Prize card your opponent has taken (before applying Weakness and Resistance).';
         this.KARENS_CONVICTION_MARKER = 'KARENS_CONVICTION_MARKER';
     }

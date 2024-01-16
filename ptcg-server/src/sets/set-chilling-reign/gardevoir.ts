@@ -9,7 +9,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class Gardevoir extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Kirlia';
 
@@ -51,7 +51,7 @@ export class Gardevoir extends PokemonCard {
 
   public name: string = 'Gardevoir';
 
-  public fullName: string = 'Gardevoir CRE';
+  public fullName: string = 'Gardevoir CRE 61';
 
   public readonly SHINING_ARCANA_MARKER = 'SHINING_ARCANA_MARKER';
 
@@ -115,6 +115,12 @@ export class Gardevoir extends PokemonCard {
         ), transfers => {
 
           //if transfers = 0, put both in hand
+
+          if (transfers.length === 0) {
+            temp.cards.slice(0, 2).forEach(card => {
+              temp.moveCardTo(card, player.hand);
+            });
+          }
     
           // Attach energy based on prompt selection
           if (transfers) {

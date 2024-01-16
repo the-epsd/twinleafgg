@@ -49,7 +49,7 @@ export class ExpeditionUniform extends TrainerCard {
 
   public name: string = 'Expedition Uniform';
 
-  public fullName: string = 'Expedition Uniform CRE';
+  public fullName: string = 'Expedition Uniform CRE 137';
 
   public text: string =
     'Look at the bottom 3 cards of your deck and put them on top of your deck in any order.';

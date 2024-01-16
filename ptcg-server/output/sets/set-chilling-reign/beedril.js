@@ -37,7 +37,7 @@ class Beedrill extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '3';
         this.name = 'Beedril';
-        this.fullName = 'Beedril CRE';
+        this.fullName = 'Beedril CRE 3';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

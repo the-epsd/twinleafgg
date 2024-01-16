@@ -12,7 +12,7 @@ class Caitlin extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '132';
         this.name = 'Caitlin';
-        this.fullName = 'Caitlin EVS';
+        this.fullName = 'Caitlin EVS 132';
         this.text = 'Put as many cards from your hand as you like on the bottom of your deck in any order. Then, draw a card for each card you put on the bottom of your deck.';
     }
 }

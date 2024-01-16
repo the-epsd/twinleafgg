@@ -31,7 +31,7 @@ class ExpeditionUniform extends trainer_card_1.TrainerCard {
         this.setNumber = '137';
         this.regulationMark = 'E';
         this.name = 'Expedition Uniform';
-        this.fullName = 'Expedition Uniform CRE';
+        this.fullName = 'Expedition Uniform CRE 137';
         this.text = 'Look at the bottom 3 cards of your deck and put them on top of your deck in any order.';
     }
     reduceEffect(store, state, effect) {

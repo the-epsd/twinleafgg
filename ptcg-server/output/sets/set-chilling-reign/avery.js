@@ -15,7 +15,7 @@ class Avery extends trainer_card_1.TrainerCard {
         this.setNumber = '130';
         this.regulationMark = 'E';
         this.name = 'Avery';
-        this.fullName = 'Avery CRE';
+        this.fullName = 'Avery CRE 130';
         this.text = 'Draw 3 cards. If you drew any cards in this way, your opponent discards Pokémon from their Bench until they have 3.';
     }
     reduceEffect(store, state, effect) {

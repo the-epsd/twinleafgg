@@ -47,7 +47,7 @@ class EchoingHorn extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '136';
         this.name = 'Echoing Horn';
-        this.fullName = 'Echoing Horn CRE';
+        this.fullName = 'Echoing Horn CRE 136';
         this.text = 'Put a Basic Pokémon from your opponent\'s discard pile onto their Bench.';
     }
     reduceEffect(store, state, effect) {

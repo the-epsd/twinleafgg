@@ -11,7 +11,7 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 class Gardevoir extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Kirlia';
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 140;
@@ -40,7 +40,7 @@ class Gardevoir extends pokemon_card_1.PokemonCard {
         this.setNumber = '61';
         this.regulationMark = 'E';
         this.name = 'Gardevoir';
-        this.fullName = 'Gardevoir CRE';
+        this.fullName = 'Gardevoir CRE 61';
         this.SHINING_ARCANA_MARKER = 'SHINING_ARCANA_MARKER';
     }
     reduceEffect(store, state, effect) {
@@ -82,6 +82,11 @@ class Gardevoir extends pokemon_card_1.PokemonCard {
                 return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, temp, // Only show drawn energies
                 game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: energyCardsDrawn.length }), transfers => {
                     //if transfers = 0, put both in hand
+                    if (transfers.length === 0) {
+                        temp.cards.slice(0, 2).forEach(card => {
+                            temp.moveCardTo(card, player.hand);
+                        });
+                    }
                     // Attach energy based on prompt selection
                     if (transfers) {
                         for (const transfer of transfers) {

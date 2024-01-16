@@ -22,7 +22,7 @@ class Sneasel extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '30';
         this.name = 'Sneasel';
-        this.fullName = 'Sneasel CRE';
+        this.fullName = 'Sneasel CRE 30';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

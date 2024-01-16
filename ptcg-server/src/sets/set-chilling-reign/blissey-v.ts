@@ -41,7 +41,7 @@ export class BlisseyV extends PokemonCard {
 
   public name: string = 'Blissey V';
 
-  public fullName: string = 'Blissey V CRE';
+  public fullName: string = 'Blissey V CRE 119';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

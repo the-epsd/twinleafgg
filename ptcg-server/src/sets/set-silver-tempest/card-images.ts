@@ -30,6 +30,8 @@ import { RegielekiV } from './regieleki-v';
 import { RegielekiVMAX } from './regieleki-vmax';
 import { Rufflet } from './rufflet';
 import { Serena } from './serena';
+import { SerperiorV } from './serperior-v';
+import { SerperiorVSTAR } from './serperior-vstar';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
 import { Worker } from './worker';
@@ -161,6 +163,14 @@ export class RuffletArt extends Rufflet {
 
 export class SerenaArt extends Serena {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_164_R_EN_LG.png';
+}
+
+export class SerperiorVArt extends SerperiorV {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_007_R_EN_LG.png';
+}
+
+export class SerperiorVSTARArt extends SerperiorVSTAR {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_008_R_EN_LG.png';
 }
 
 export class UrsalunaVArt extends UrsalunaV {

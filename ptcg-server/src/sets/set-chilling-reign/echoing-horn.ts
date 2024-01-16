@@ -69,7 +69,7 @@ export class EchoingHorn extends TrainerCard {
 
   public name: string = 'Echoing Horn';
 
-  public fullName: string = 'Echoing Horn CRE';
+  public fullName: string = 'Echoing Horn CRE 136';
 
   public text: string =
     'Put a Basic Pokémon from your opponent\'s discard pile onto their Bench.';

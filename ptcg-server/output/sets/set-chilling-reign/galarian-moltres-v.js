@@ -39,7 +39,7 @@ class GalarianMoltresV extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '97';
         this.name = 'Galarian Moltres V';
-        this.fullName = 'Galarian Moltres V CRE';
+        this.fullName = 'Galarian Moltres V CRE 97';
         this.DIREFLAME_WINGS_MARKER = 'DIREFLAME_WINGS_MARKER';
     }
     reduceEffect(store, state, effect) {

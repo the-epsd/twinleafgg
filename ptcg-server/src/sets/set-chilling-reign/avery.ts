@@ -22,7 +22,7 @@ export class Avery extends TrainerCard {
 
   public name: string = 'Avery';
 
-  public fullName: string = 'Avery CRE';
+  public fullName: string = 'Avery CRE 130';
 
   public text: string =
     'Draw 3 cards. If you drew any cards in this way, your opponent discards Pokémon from their Bench until they have 3.';

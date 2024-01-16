@@ -37,7 +37,7 @@ class Inteleon extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '43';
         this.name = 'Inteleon';
-        this.fullName = 'Inteleon CRE';
+        this.fullName = 'Inteleon CRE 43';
         this.DOUBLE_GUNNER_MARKER = 'DOUBLE_GUNNER_MARKER';
     }
     reduceEffect(store, state, effect) {

@@ -31,7 +31,7 @@ export class Sneasel extends PokemonCard {
 
   public name: string = 'Sneasel';
 
-  public fullName: string = 'Sneasel CRE';
+  public fullName: string = 'Sneasel CRE 30';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

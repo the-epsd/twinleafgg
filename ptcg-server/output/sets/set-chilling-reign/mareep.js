@@ -31,7 +31,7 @@ class Mareep extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '47';
         this.name = 'Mareep';
-        this.fullName = 'Mareep CRE';
+        this.fullName = 'Mareep CRE 47';
         this.GROWL_MARKER = 'GROWL_MARKER';
     }
     reduceEffect(store, state, effect) {

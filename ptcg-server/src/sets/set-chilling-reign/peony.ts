@@ -22,7 +22,7 @@ export class Peony extends TrainerCard {
 
   public name: string = 'Peony';
 
-  public fullName: string = 'Peony CRE';
+  public fullName: string = 'Peony CRE 150';
 
   public text: string =
     'Discard your hand and search your deck for up to 2 Trainer cards, reveal them, and put them into your hand. Then, shuffle your deck.';

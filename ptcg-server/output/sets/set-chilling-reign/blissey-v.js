@@ -31,7 +31,7 @@ class BlisseyV extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '119';
         this.name = 'Blissey V';
-        this.fullName = 'Blissey V CRE';
+        this.fullName = 'Blissey V CRE 119';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.target.cards.includes(this)) {
