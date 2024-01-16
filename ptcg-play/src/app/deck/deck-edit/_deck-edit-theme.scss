@@ -7,7 +7,7 @@
   $primary: map-get($theme, primary);
 
   $deck-edit-border: solid 0px mat.get-color-from-palette($foreground, divider);
-  $deck-edit-background-color: mat.get-color-from-palette($background);
+  $deck-edit-background-color: mat.get-color-from-palette($primary, 800);
   $deck-edit-toolbar-background-color: mat.get-color-from-palette($background);
 
   ptcg-deck-edit-panes {
