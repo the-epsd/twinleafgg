@@ -8,7 +8,7 @@ class EmergencyBoard extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'H';
-        this.trainerType = card_types_1.TrainerType.ITEM;
+        this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'SV5K';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '64';

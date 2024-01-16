@@ -10,7 +10,7 @@ export class IronBundle extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardTag = [ CardTag.FUTURE ];
+  public tags = [ CardTag.FUTURE ];
 
   public cardType: CardType = CardType.WATER;
 

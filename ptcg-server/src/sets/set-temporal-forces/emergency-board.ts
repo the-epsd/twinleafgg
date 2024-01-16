@@ -9,7 +9,7 @@ export class EmergencyBoard extends TrainerCard {
 
   public regulationMark = 'H';
   
-  public trainerType: TrainerType = TrainerType.ITEM;
+  public trainerType: TrainerType = TrainerType.TOOL;
   
   public set: string = 'SV5K';
   

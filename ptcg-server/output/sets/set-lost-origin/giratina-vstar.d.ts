@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game';
 export declare class GiratinaVSTAR extends PokemonCard {
     stage: Stage;
-    cardTag: CardTag[];
+    tags: CardTag[];
     evolvesFrom: string;
     regulationMark: string;
     cardType: CardType;

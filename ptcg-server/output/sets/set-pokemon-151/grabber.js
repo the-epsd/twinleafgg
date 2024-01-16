@@ -21,15 +21,15 @@ class Grabber extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const deckBottom = game_1.StateUtils.findCardList(state, this);
+            const deckBottom = new game_1.CardList();
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DECK, opponent.hand, { superType: card_types_1.SuperType.POKEMON }, { allowCancel: false, min: 0, max: 1 }), cards => {
-                if (cards === null || cards.length === 0) {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DECK, opponent.hand, { superType: card_types_1.SuperType.POKEMON }, { allowCancel: false, min: 0, max: 1 }), selectedCard => {
+                const selected = selectedCard || [];
+                if (selectedCard === null || selected.length === 0) {
                     return;
                 }
-                const trainerCard = cards[0];
-                opponent.hand.moveCardTo(trainerCard, deckBottom);
+                opponent.hand.moveCardTo(selected[0], deckBottom);
                 deckBottom.moveTo(opponent.deck);
                 player.supporter.moveCardTo(this, player.discard);
             });
