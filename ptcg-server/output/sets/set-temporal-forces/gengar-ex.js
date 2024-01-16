@@ -54,7 +54,14 @@ class Gengarex extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof play_card_effects_1.AttachEnergyEffect) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
+            // const opponent = StateUtils.getOpponent(state, player);
+            let isGengarInPlay = false;
+            if (player.active.cards[0] === this || player.bench.some(b => b.cards[0] === this)) {
+                isGengarInPlay = true;
+            }
+            if (!isGengarInPlay) {
+                return state;
+            }
             try {
                 const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
                 store.reduceEffect(state, powerEffect);
@@ -67,11 +74,7 @@ class Gengarex extends pokemon_card_1.PokemonCard {
             //   return state;
             // }
             const target = effect.target;
-            const hasBench = opponent.bench.some(b => b.cards.length > 0);
-            if (target == player.active || hasBench) {
-                target.damage = 0;
-            }
-            target.damage = 20;
+            target.damage += 20;
         }
         return state;
     }

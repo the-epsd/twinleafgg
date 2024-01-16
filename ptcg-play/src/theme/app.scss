@@ -9,8 +9,8 @@
 
 @include mat.core();
 
-$ptcg-primary: mat.define-palette(mat.$pink-palette, A700);
-$ptcg-accent:  mat.define-palette(mat.$pink-palette, A200);
+$ptcg-primary: mat.define-palette(mat.$grey-palette, A700);
+$ptcg-accent:  mat.define-palette(mat.$grey-palette, A200);
 
 // The warn palette is optional (defaults to red).
 $ptcg-warn:    mat.define-palette(mat.$deep-orange-palette);

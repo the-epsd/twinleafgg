@@ -69,6 +69,6 @@ exports.config = {
         },
         sender: 'example@example.com',
         appName: 'AAAAA',
-        publicAddress: 'http://localhost' // Address inside the e-mail messages
+        publicAddress: 'http://0.0.0.0' // Address inside the e-mail messages
     }
 };

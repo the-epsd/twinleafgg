@@ -81,6 +81,8 @@ export class GreatBall extends TrainerCard {
           // No Pokemon chosen, shuffle all back
             temp.cards.forEach(card => {
               temp.moveCardTo(card, player.deck);
+
+              player.supporter.moveCardTo(this, player.discard);
             });  
           }
     
@@ -92,10 +94,11 @@ export class GreatBall extends TrainerCard {
         });
     
       }
-    
-      return state;
-    
+
     }
+
     return state;
+
   }
+  
 }

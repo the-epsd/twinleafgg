@@ -68,9 +68,9 @@ class Sableye extends game_1.PokemonCard {
                     for (const transfer of transfers) {
                         const source = game_1.StateUtils.getTarget(state, player, transfer.from);
                         const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                        if (source.damage >= 0) {
+                        if (source.damage >= 10) {
                             source.damage -= source.damage;
-                            target.damage += source.damage;
+                            target.damage += target.damage;
                         }
                     }
                     return state;

@@ -53,17 +53,17 @@ export class Gengarex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
-    
+
       if (hasBench === false) {
         return state;
       }
-    
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         opponent.active,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY },
         { allowCancel: false, min: 0, max: 1 }
       ), transfers => {
@@ -77,8 +77,19 @@ export class Gengarex extends PokemonCard {
 
 
     if (effect instanceof AttachEnergyEffect) {
+
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      // const opponent = StateUtils.getOpponent(state, player);
+
+      let isGengarInPlay = false;
+      if (player.active.cards[0] === this || player.bench.some(b => b.cards[0] === this)) {
+        isGengarInPlay = true;
+      }
+
+      if (!isGengarInPlay) {
+        return state;
+      }
+
 
       try {
         const powerEffect = new PowerEffect(player, this.powers[0], this);
@@ -87,21 +98,18 @@ export class Gengarex extends PokemonCard {
         return state;
       }
 
+
+
       // const cardList = [opponent.active, ...opponent.bench].filter(b => b.cards.length > 0);
       // if (cardList.length === 0) {
       //   return state;
       // }
 
+
       const target = effect.target;
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
-      if (target == player.active || hasBench) {
-        target.damage = 0;
-      }
 
-      target.damage = 20;
-
+      target.damage += 20;
     }
     return state;
   }
 }
-

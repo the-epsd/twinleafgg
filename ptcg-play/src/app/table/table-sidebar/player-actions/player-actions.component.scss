@@ -8,12 +8,6 @@ $avatar-size: map-get($ptcg-size, avatar);
   grid-area: actions;
   padding: 0 $ptcg-sidebar-tiny-padding;
 
-  .ptcg-button-colors {
-background-color: #1a202c;
-border-color: red;
-border-width: 0px;
-  }
-
   & > * {
     margin-top: $ptcg-sidebar-tiny-padding;
   }
