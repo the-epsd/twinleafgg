@@ -1,0 +1,37 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EmergencyBoard = void 0;
+const trainer_card_1 = require("../../game/store/card/trainer-card");
+const card_types_1 = require("../../game/store/card/card-types");
+const check_effects_1 = require("../../game/store/effects/check-effects");
+class EmergencyBoard extends trainer_card_1.TrainerCard {
+    constructor() {
+        super(...arguments);
+        this.regulationMark = 'H';
+        this.trainerType = card_types_1.TrainerType.TOOL;
+        this.set = 'SV5K';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '64';
+        this.name = 'Emergency Board';
+        this.fullName = 'Emergency Board SV5K';
+    }
+    reduceEffect(store, state, effect) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
+            const player = effect.player;
+            const pokemonCard = player.active.getPokemonCard();
+            if (pokemonCard && pokemonCard.hp <= 30) {
+                effect.cost = [];
+            }
+            else {
+                const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+                if (index !== -1) {
+                    effect.cost.splice(index, 1);
+                }
+                return state;
+            }
+            return state;
+        }
+        return state;
+    }
+}
+exports.EmergencyBoard = EmergencyBoard;

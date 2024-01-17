@@ -25,6 +25,8 @@ export class Sneasel extends PokemonCard {
 
   public set: string = 'CRE';
 
+  public regulationMark = 'E';
+
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '30';

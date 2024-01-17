@@ -25,9 +25,10 @@ export class FilterCardsPipe implements PipeTransform {
 
     return items.filter(item => {
       const card = item.card;
-      if (filter.searchValue !== '' && card.name.indexOf(filter.searchValue) === -1) {
+      if (filter.searchValue !== '' && !card.name.toLocaleLowerCase().includes(filter.searchValue.toLocaleLowerCase())) {
         return false;
-      }
+    }
+    
 
       if (filter.superTypes.length && !filter.superTypes.includes(card.superType)) {
         return false;
@@ -41,9 +42,9 @@ export class FilterCardsPipe implements PipeTransform {
         return false;
       }
 
-      
 
-      if (filter.formats.length && !filter.formats.includes(this.getFormat(card))) {
+
+      if (filter.formats.length && !filter.formats.some(f => this.getFormats(card).includes(f))) {
         return false;
       }
 
@@ -57,45 +58,34 @@ export class FilterCardsPipe implements PipeTransform {
     }
     if (card.tags.includes(CardTag.POKEMON_VSTAR)) {
       return CardTag.POKEMON_VSTAR;
+    }
+    if (card.tags.includes(CardTag.POKEMON_VMAX)) {
+      return CardTag.POKEMON_VMAX;
+    }
   }
-  if (card.tags.includes(CardTag.POKEMON_VMAX)) {
-    return CardTag.POKEMON_VMAX;
-}
-}
 
-    private getFormat(card: PokemonCard | TrainerCard | Card): Format {
-    if (card.regulationMark === 'E' || card.regulationMark === 'F' || card.regulationMark === 'G') {
-    return Format.STANDARD;
-    }
-    if (card.set === '151' || card.set === 'ASR' || card.set === 'BRS' || card.set === 'BST' || card.set === 'CEL' || card.set === 'CRE' || card.set === 'EVS' || card.set === 'FST' || card.set === 'LOR' || card.set === 'OBF' || card.set === 'PAL' || card.set === 'PAR' || card.set === 'PGO' || card.set === 'SIT' || card.set === 'SVE' || card.set === 'SVI' || card.set === 'BKP' || card.set === 'BLW' || card.set === 'BND' || card.set === 'BRC' || card.set === 'BRT' || card.set === 'BWP' || card.set === 'CL' || card.set === 'CLS' || card.set === 'COL' || card.set === 'CR' || card.set === 'DCR' || card.set === 'DEX' || card.set === 'DP' || card.set === 'DRX' || card.set === 'DS' || card.set === 'DSK' || card.set === 'EM' || card.set === 'EP' || card.set === 'EPO' || card.set === 'EX' || card.set === 'FCO' || card.set === 'FLF' || card.set === 'FUF' || card.set === 'GRI' || card.set === 'HGSS' || card.set === 'HS' || card.set === 'LT' || card.set === 'LTR' || card.set === 'MA' || card.set === 'MCD' || card.set === 'MD' || card.set === 'MMA' || card.set === 'NVI' || card.set === 'NXD' || card.set === 'PL' || card.set === 'PLB' || card.set === 'PLF' || card.set === 'PLS' || card.set === 'POP' || card.set === 'PR' || card.set === 'PS' || card.set === 'PV' || card.set === 'RR' || card.set === 'RS' || card.set === 'SM' || card.set === 'SS' || card.set === 'SV' || card.set === 'SW' || card.set === 'TM' || card.set === 'TR' || card.set === 'TRR' || card.set === 'UL' || card.set === 'UNB' || card.set === 'UPR') {
-    return Format.EXPANDED;
-    }
-    if (card.set === 'BS') {
-      return Format.RETRO;
-      }
+  private getFormats(card: PokemonCard | TrainerCard | Card): Format[] {
+    const formats: Format[] = [];
+
+    if (card.regulationMark === 'ENERGY' || card.regulationMark === 'E' || card.regulationMark === 'F' || card.regulationMark === 'G' || card.regulationMark === 'H') {
+      formats.push(Format.STANDARD);
     }
 
-/* private getFormat(card: PokemonCard | TrainerCard | Card): Format {
+    if (card.regulationMark === 'ENERGY') {
+      formats.push(Format.EXPANDED);
+    }
 
-  const standardSets = [ 'E', 'F', 'G' ];
+    if (card.regulationMark === 'ENERGY') {
+      formats.push(Format.UNLIMITED);
+    }
 
-  const expandedSets = ['151', 'PLS'];
+    if (card.regulationMark === 'ENERGY') {
+      formats.push(Format.RETRO);
+    }
 
-  const expandedSets2 = ['E', 'F'];
-
-  const retroSets = [ ];
-
-  if (standardSets.includes(card.regulationMark)) {
-    return Format.STANDARD;
+    return formats;
   }
-  if (!expandedSets.includes(card.regulationMark)) {
-      return Format.EXPANDED;
-  }
-  if (retroSets.includes(card.set)) {
-    return Format.RETRO;
-  }
-}
- */
+
 
   private getCardType(card: Card): CardType {
     if (card.superType === SuperType.POKEMON) {

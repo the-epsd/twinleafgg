@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game';
 export declare class HisuianGoodraVSTAR extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
-    cardTag: CardTag[];
+    tags: CardTag[];
     regulationMark: string;
     cardType: CardType;
     hp: number;

@@ -29,6 +29,7 @@ class Bellibolt extends pokemon_card_1.PokemonCard {
                 text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
             }];
         this.set = 'OBF';
+        this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '78';
         this.name = 'Bellibolt';

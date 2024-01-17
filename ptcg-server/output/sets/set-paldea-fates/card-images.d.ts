@@ -5,7 +5,9 @@ import { Charmeleon } from './charmeleon';
 import { Clive } from './clive';
 import { Espathraex } from './espathra-ex';
 import { Frigibax } from './frigibax';
+import { Gastly } from './gastly';
 import { Gengar } from './gengar';
+import { Haunter } from './haunter';
 import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { MoonlightHill } from './moonlight-hill';
@@ -27,7 +29,13 @@ export declare class EspathraexArt extends Espathraex {
 export declare class FrigibaxArt extends Frigibax {
     cardImage: string;
 }
+export declare class GastlyArt extends Gastly {
+    cardImage: string;
+}
 export declare class GengarArt extends Gengar {
+    cardImage: string;
+}
+export declare class HaunterArt extends Haunter {
     cardImage: string;
 }
 export declare class KilowattrelArt extends Kilowattrel {

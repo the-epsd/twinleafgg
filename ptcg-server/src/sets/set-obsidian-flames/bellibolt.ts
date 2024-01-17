@@ -37,6 +37,8 @@ export class Bellibolt extends PokemonCard {
 
   public set: string = 'OBF';
 
+  public regulationMark = 'G';
+
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '78';

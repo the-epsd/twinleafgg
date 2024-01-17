@@ -12,7 +12,7 @@ class IronLeavesex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.FUTURE];
-        this.regulationMark = 'G';
+        this.regulationMark = 'H';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 220;

@@ -40,7 +40,7 @@ class Houndoom extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '96';
         this.name = 'Houndoom';
-        this.fullName = 'Houndoom BST 096';
+        this.fullName = 'Houndoom BST';
         this.SINGLE_STRIKE_ROAR_MARKER = 'SINGLE_STRIKE_ROAR_MARKER';
     }
     reduceEffect(store, state, effect) {

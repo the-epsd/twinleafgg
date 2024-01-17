@@ -70,7 +70,7 @@ class Mewex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '151';
         this.name = 'Mew ex';
-        this.fullName = 'Mew ex';
+        this.fullName = 'Mew ex MEW';
         this.RESTART_MARKER = 'RESTART_MARKER';
     }
     reduceEffect(store, state, effect) {

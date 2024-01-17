@@ -22,6 +22,7 @@ class Drizzile extends game_1.PokemonCard {
                 text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
             }
         ];
+        this.regulationMark = 'E';
         this.set = 'CRE';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '42';

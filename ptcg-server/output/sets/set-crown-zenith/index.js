@@ -12,5 +12,4 @@ exports.setCrownZenith = [
     new card_images_1.RadiantEternatusArt(),
     new card_images_1.RegigigasVArt(),
     new card_images_1.RegigigasVSTARArt(),
-    new card_images_1.ZamazentaVArt
 ];

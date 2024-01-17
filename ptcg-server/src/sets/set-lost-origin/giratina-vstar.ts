@@ -12,7 +12,7 @@ export class GiratinaVSTAR extends PokemonCard {
   
   public stage: Stage = Stage.VSTAR;
 
-  public cardTag = [ CardTag.POKEMON_VSTAR ];
+  public tags = [ CardTag.POKEMON_VSTAR ];
 
   public evolvesFrom = 'Giratina V';
 

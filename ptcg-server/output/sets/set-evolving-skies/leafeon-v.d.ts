@@ -22,6 +22,7 @@ export declare class LeafeonV extends PokemonCard {
         text: string;
     }[];
     set: string;
+    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;

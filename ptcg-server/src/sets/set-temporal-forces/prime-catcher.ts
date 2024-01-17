@@ -78,7 +78,7 @@ export class PrimeCatcher extends TrainerCard {
 
   public tags = [ CardTag.ACE_SPEC ];
 
-  public regulationMark = 'G';
+  public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 

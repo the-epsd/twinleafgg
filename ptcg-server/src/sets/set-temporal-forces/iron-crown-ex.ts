@@ -9,7 +9,7 @@ export class IronCrownex extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_ex, CardTag.FUTURE ];
 
-  public regulationMark = 'G';
+  public regulationMark = 'H';
 
   public stage: Stage = Stage.BASIC;
 

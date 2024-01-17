@@ -30,6 +30,8 @@ import { RegielekiV } from './regieleki-v';
 import { RegielekiVMAX } from './regieleki-vmax';
 import { Rufflet } from './rufflet';
 import { Serena } from './serena';
+import { SerperiorV } from './serperior-v';
+import { SerperiorVSTAR } from './serperior-vstar';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
 import { Worker } from './worker';
@@ -128,6 +130,12 @@ export declare class RuffletArt extends Rufflet {
     cardImage: string;
 }
 export declare class SerenaArt extends Serena {
+    cardImage: string;
+}
+export declare class SerperiorVArt extends SerperiorV {
+    cardImage: string;
+}
+export declare class SerperiorVSTARArt extends SerperiorVSTAR {
     cardImage: string;
 }
 export declare class UrsalunaVArt extends UrsalunaV {

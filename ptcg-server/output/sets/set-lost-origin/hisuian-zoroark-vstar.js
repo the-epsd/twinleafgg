@@ -9,7 +9,7 @@ class HisuianZoroarkVSTAR extends game_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.VSTAR;
         this.evolvesFrom = 'Hisuian Zoroark V';
-        this.cardTag = [card_types_1.CardTag.POKEMON_VSTAR];
+        this.tags = [card_types_1.CardTag.POKEMON_VSTAR];
         this.regulationMark = 'F';
         this.cardType = card_types_1.CardType.COLORLESS;
         this.hp = 270;

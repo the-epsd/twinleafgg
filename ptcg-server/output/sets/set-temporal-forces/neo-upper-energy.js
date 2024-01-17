@@ -12,7 +12,7 @@ class NeoUpperEnergy extends energy_card_1.EnergyCard {
         this.tags = [card_types_1.CardTag.ACE_SPEC];
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'SV5K';
-        this.regulationMark = 'G';
+        this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '071';
         this.name = 'Neo Upper Energy';

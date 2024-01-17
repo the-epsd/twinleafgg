@@ -2,6 +2,7 @@ import { PokemonCard, Stage, CardTag, CardType, State, StoreLike } from '../../g
 import { Effect } from '../../game/store/effects/effect';
 export declare class Banette extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     tags: CardTag[];
     evolvesFrom: string;
     cardType: CardType;

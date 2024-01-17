@@ -4,7 +4,7 @@ import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class IronBundle extends PokemonCard {
     stage: Stage;
-    cardTag: CardTag[];
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
@@ -24,6 +24,7 @@ export declare class IronBundle extends PokemonCard {
         text: string;
     }[];
     set: string;
+    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;

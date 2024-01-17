@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, PokemonCardList } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 
 export class Dodrio extends PokemonCard {
@@ -57,14 +56,15 @@ export class Dodrio extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
       const player = effect.player;
+      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
-      const dealDamage = new DealDamageEffect(effect, 50);
-      dealDamage.target = player.active;
-      store.reduceEffect(state, dealDamage);
-
+      const cards = player.discard.cards.filter(c => c === this);
+      cards.forEach(card => {
+        slots[0].damage += 10; // Add 10 damage
+      });
       player.deck.moveTo(player.hand, 1);
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
         // Get Dodrio's damage
         const dodrioDamage = effect.player.active.damage;

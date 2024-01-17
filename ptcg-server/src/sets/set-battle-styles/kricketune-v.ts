@@ -57,7 +57,7 @@ export class KricketuneV extends PokemonCard {
 
   public name: string = 'Kricketune V';
 
-  public fullName: string = 'Kricketune V BST 006';
+  public fullName: string = 'Kricketune V BST';
 
   public readonly EXCITING_STAGE_MARKER = 'EXCITING_STAGE_MARKER';
 

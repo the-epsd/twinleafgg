@@ -34,7 +34,7 @@ class Durant extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '10';
         this.name = 'Durant';
-        this.fullName = 'Durant BST 010';
+        this.fullName = 'Durant BST';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

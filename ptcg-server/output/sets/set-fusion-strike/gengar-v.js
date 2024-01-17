@@ -29,6 +29,7 @@ class GengarV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'FST';
+        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '156';
         this.name = 'Gengar V';

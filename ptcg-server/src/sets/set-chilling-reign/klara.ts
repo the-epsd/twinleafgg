@@ -75,7 +75,7 @@ export class Klara extends TrainerCard {
 
   public name: string = 'Klara';
 
-  public fullName: string = 'Klara CRE';
+  public fullName: string = 'Klara CRE 145';
 
   public text: string =
     'Choose 1 or both:' +

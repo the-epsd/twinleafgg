@@ -40,7 +40,7 @@ class GenesectV extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '185';
         this.name = 'Genesect V';
-        this.fullName = 'Genesect V FST 185';
+        this.fullName = 'Genesect V FST';
         this.FUSION_STRIKE_SYSTEM_MARKER = 'FUSION_STRIKE_SYSTEM_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

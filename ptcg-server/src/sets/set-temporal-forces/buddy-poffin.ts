@@ -15,7 +15,7 @@ export class BuddyPoffin extends TrainerCard {
 
   public setNumber: string = '63';
 
-  public regulationMark = 'E';
+  public regulationMark = 'H';
 
   public name: string = 'Buddy Poffin';
 

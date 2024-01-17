@@ -24,6 +24,7 @@ class Jynx extends game_1.PokemonCard {
                 text: ''
             }];
         this.set = 'LOR';
+        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '68';
         this.name = 'Jynx';

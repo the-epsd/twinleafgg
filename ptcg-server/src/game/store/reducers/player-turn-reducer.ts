@@ -9,6 +9,7 @@ import { EndTurnEffect } from '../effects/game-phase-effects';
 import { StateUtils } from '../state-utils';
 import {SlotType} from '../actions/play-card-action';
 import {PokemonCard} from '../card/pokemon-card';
+import { CheckPokemonPowersEffect } from '../effects/check-effects';
 
 export function playerTurnReducer(store: StoreLike, state: State, action: Action): State {
 
@@ -55,11 +56,6 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       const attack = pokemonCard.attacks.find(a => a.name === action.name);
       if (attack === undefined) {
         throw new GameError(GameMessage.UNKNOWN_ATTACK);
-      }
-
-      if (pokemonCard.name === 'Alakazam ex' && !player.active) {
-        const useAttackEffect = new UseAttackEffect(player, attack);
-        state = store.reduceEffect(state, useAttackEffect);
       }
 
       const useAttackEffect = new UseAttackEffect(player, attack);
@@ -124,8 +120,12 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       }
 
       state = store.reduceEffect(state, new UsePowerEffect(player, power, pokemonCard));
+      const target = StateUtils.getTarget(state, player, action.target);
+      const checkEffect = new CheckPokemonPowersEffect(target);
+      state = store.reduceEffect(state, checkEffect);
       return state;
     }
+    
 
     if (action instanceof UseStadiumAction) {
       const player = state.players[state.activePlayer];

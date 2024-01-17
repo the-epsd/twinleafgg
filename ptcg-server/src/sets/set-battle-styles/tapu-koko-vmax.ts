@@ -41,7 +41,7 @@ export class TapuKokoVMAX extends PokemonCard {
 
   public name: string = 'Tapu Koko VMAX';
 
-  public fullName: string = 'Tapu Koko VMAX BST 051';
+  public fullName: string = 'Tapu Koko VMAX BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -18,6 +18,7 @@ class Purrloin extends game_1.PokemonCard {
                 text: 'Flip a coin. If tails, this attack does nothing.'
             }];
         this.set = 'BRS';
+        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '90';
         this.name = 'Purrloin';

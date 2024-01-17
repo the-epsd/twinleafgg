@@ -23,6 +23,7 @@ class Elekid extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
+        this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '59';
         this.name = 'Elekid';
