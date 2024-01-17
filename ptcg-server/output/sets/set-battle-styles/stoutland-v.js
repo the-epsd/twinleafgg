@@ -30,11 +30,10 @@ class StoutlandV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BST';
-        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '117';
         this.name = 'Stoutland V';
-        this.fullName = 'Stoutland V BST';
+        this.fullName = 'Stoutland V BST 050';
     }
     reduceEffect(store, state, effect) {
         var _a;

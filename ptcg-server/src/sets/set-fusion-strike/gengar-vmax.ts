@@ -32,8 +32,6 @@ export class GengarVMAX extends PokemonCard {
 
   public set: string = 'FST';
 
-  public regulationMark = 'E';
-
   public cardImage: string = 'assets/cardback.png';
   
   public setNumber: string = '157';

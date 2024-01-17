@@ -13,7 +13,7 @@ export class HisuianGoodraVSTAR extends PokemonCard {
 
   public evolvesFrom = 'Hisuian Goodra V';
 
-  public tags = [ CardTag.POKEMON_VSTAR ];
+  public cardTag = [ CardTag.POKEMON_VSTAR ];
 
   public regulationMark = 'F';
   

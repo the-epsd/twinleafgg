@@ -50,7 +50,7 @@ export class GalarianMoltresV extends PokemonCard {
 
   public name: string = 'Galarian Moltres V';
 
-  public fullName: string = 'Galarian Moltres V CRE 97';
+  public fullName: string = 'Galarian Moltres V CRE';
 
   public readonly DIREFLAME_WINGS_MARKER = 'DIREFLAME_WINGS_MARKER';
 

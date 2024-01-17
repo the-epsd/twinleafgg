@@ -30,8 +30,6 @@ export class Shinx extends PokemonCard {
 
   public set: string = 'PAL';
 
-  public regulationMark = 'G';
-
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '69';

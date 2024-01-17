@@ -36,7 +36,7 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '3';
         this.name = 'Venusaur ex';
-        this.fullName = 'Venusaur ex MEW';
+        this.fullName = 'Venusaur ex MEW 003';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

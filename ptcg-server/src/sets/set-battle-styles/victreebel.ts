@@ -50,7 +50,7 @@ export class Victreebel extends PokemonCard {
 
   public name: string = 'Victreebel';
 
-  public fullName: string = 'Victreebel BST';
+  public fullName: string = 'Victreebel BST 003';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

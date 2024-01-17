@@ -6,9 +6,9 @@
   $foreground: map-get($theme, foreground);
   $primary: map-get($theme, primary);
   $avatar-background-color: mat.get-color-from-palette($background, A400);
-  $logged-user-background-color: mat.get-color-from-palette($primary, 900); //mat-color($background, focused-button);
+  $logged-user-background-color: mat.get-color-from-palette($primary, A700); //mat-color($background, focused-button);
   $logged-user-text-color: mat.get-contrast-color-from-palette($primary, A200);
-  $sidenav-table-header-background-color: mat.get-color-from-palette($background);
+  $sidenav-table-header-background-color: mat.get-color-from-palette($primary, A200);
   $sidenav-deleted-text-color: mat.get-color-from-palette($foreground, secondary-text);
 
   ptcg-toolbar {

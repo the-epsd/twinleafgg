@@ -35,7 +35,7 @@ class TapuKokoV extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '50';
         this.name = 'Tapu Koko V';
-        this.fullName = 'Tapu Koko V BST';
+        this.fullName = 'Tapu Koko V BST 050';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -27,7 +27,6 @@ class UrsalunaV extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 10 less damage for each damage counter on this Pokémon.'
             }];
         this.set = 'SIT';
-        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '102';
         this.name = 'Ursaluna V';

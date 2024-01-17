@@ -37,13 +37,11 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
     {},
-    { min: 1, max: 1, allowCancel: false }
+    { min: 0, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
   });
-
-  player.hand.moveCardsTo(cards, player.discard);
 
   // Operation canceled by the user
   if (cards.length === 0) {

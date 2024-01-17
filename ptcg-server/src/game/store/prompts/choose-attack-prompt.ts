@@ -4,6 +4,7 @@ import { Prompt } from './prompt';
 import { State } from '../state/state';
 import { PokemonCard } from '../card/pokemon-card';
 import { Attack } from '../card/pokemon-types';
+import { ForestSealStone } from '../../../sets/set-silver-tempest/forest-seal-stone';
 
 export const ChooseAttackPromptType = 'Choose attack';
 
@@ -35,6 +36,26 @@ export class ChooseAttackPrompt extends Prompt<Attack> {
       blockedMessage: GameMessage.NOT_ENOUGH_ENERGY,
       blocked: []
     }, options);
+
+    if (this.cards[0] instanceof ForestSealStone) {
+
+      const poweredCard = this.cards[0];
+
+      // Fix type error by mapping power to attack shape
+      const powerAsAttack = {
+        name: poweredCard.powers[0].name,
+        cost: [],
+        damage: 0,
+        text: poweredCard.powers[0].text
+      };
+
+      poweredCard.attacks = poweredCard.attacks.concat(powerAsAttack);
+
+      poweredCard.reduceEffect = this.cards[0].reduceEffect;
+
+      this.cards[0] = poweredCard;
+
+    }
 
   }
 

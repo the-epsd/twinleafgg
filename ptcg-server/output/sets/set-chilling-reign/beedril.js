@@ -13,7 +13,6 @@ class Beedrill extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_2;
         this.tags = [card_types_1.CardTag.SINGLE_STRIKE];
         this.evolvesFrom = 'Kakuna';
-        this.regulationMark = 'E';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 130;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
@@ -37,7 +36,7 @@ class Beedrill extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '3';
         this.name = 'Beedril';
-        this.fullName = 'Beedril CRE 3';
+        this.fullName = 'Beedril CRE';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

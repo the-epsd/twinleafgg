@@ -188,7 +188,7 @@ exports.SwabluArt = SwabluArt;
 class SwitchingCupsArt extends switching_cups_1.SwitchingCups {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_162_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_102_R_EN_LG.png';
     }
 }
 exports.SwitchingCupsArt = SwitchingCupsArt;

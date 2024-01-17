@@ -105,10 +105,6 @@ export class PokemonCardList extends CardList {
     return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));
   }
 
-  vPokemon(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));
-  }
-
   getToolEffect(): Power | Attack | undefined {
     if (!this.tool) {
       return;

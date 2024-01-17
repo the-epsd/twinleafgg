@@ -28,11 +28,10 @@ class Slowbro extends game_1.PokemonCard {
             }
         ];
         this.set = 'PGO';
-        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '20';
         this.name = 'Slowbro';
-        this.fullName = 'Slowbro PGO';
+        this.fullName = 'Slowbro LOR';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

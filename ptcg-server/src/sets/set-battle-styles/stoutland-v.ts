@@ -36,15 +36,13 @@ export class StoutlandV extends PokemonCard {
 
   public set: string = 'BST';
 
-  public regulationMark = 'E';
-
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '117';
 
   public name: string = 'Stoutland V';
 
-  public fullName: string = 'Stoutland V BST';
+  public fullName: string = 'Stoutland V BST 050';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

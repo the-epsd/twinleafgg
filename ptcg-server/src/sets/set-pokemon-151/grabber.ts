@@ -4,10 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import {
-  StateUtils,
-  GameMessage, ChooseCardsPrompt, CardList
-} from '../../game';
+import { StateUtils, 
+  GameMessage, PokemonCardList, ChooseCardsPrompt } from '../../game';
 
 
 export class Grabber extends TrainerCard {
@@ -24,7 +22,7 @@ export class Grabber extends TrainerCard {
 
   public name: string = 'Grabber';
 
-  public fullName: string = 'Grabber MEW';
+  public fullName: string = 'Grabber 151';
 
   public text: string =
     'Your opponent reveals their hand, and you put a Pokémon you find there on the bottom of their deck.';
@@ -33,25 +31,24 @@ export class Grabber extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
-      const deckBottom = new CardList();
+      const deckBottom = StateUtils.findCardList(state, this) as PokemonCardList;
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-
+    
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_DECK,
         opponent.hand,
         { superType: SuperType.POKEMON },
-        { allowCancel: false, min: 0, max: 1 }
-      ), selectedCard => {
-        const selected = selectedCard || [];
-        if (selectedCard === null || selected.length === 0) {
+        { allowCancel: false , min: 0, max: 1}
+      ), cards => {
+        if (cards === null || cards.length === 0) {
           return;
         }
-
-        opponent.hand.moveCardTo(selected[0], deckBottom);
+        const trainerCard = cards[0] as TrainerCard;
+        
+        opponent.hand.moveCardTo(trainerCard, deckBottom);
         deckBottom.moveTo(opponent.deck);
 
         player.supporter.moveCardTo(this, player.discard);
@@ -60,6 +57,4 @@ export class Grabber extends TrainerCard {
     }
     return state;
   }
-
-
 }

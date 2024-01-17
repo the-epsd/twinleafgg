@@ -89,7 +89,7 @@ export class Bronzong extends PokemonCard {
 
   public setNumber: string = '102';
   public name = 'Bronzong';
-  public fullName: string = 'Bronzong BST';
+  public fullName: string = 'Bronzong BST 102';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

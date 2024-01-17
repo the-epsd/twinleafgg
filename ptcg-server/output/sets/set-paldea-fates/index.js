@@ -15,6 +15,4 @@ exports.setPaldeaFates = [
     new card_images_1.KilowattrelArt(),
     new card_images_1.MimeJrArt(),
     new card_images_1.FrigibaxArt(),
-    new card_images_1.GastlyArt(),
-    new card_images_1.HaunterArt(),
 ];

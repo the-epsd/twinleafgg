@@ -21,7 +21,7 @@ export class ProfessorsResearch extends TrainerCard {
 
   public name: string = 'Professor\'s Research';
 
-  public fullName: string = 'Professors Research SVI 189';
+  public fullName: string = 'Professors Research SVI';
 
   public text: string =
     'Discard your hand and draw 7 cards.';

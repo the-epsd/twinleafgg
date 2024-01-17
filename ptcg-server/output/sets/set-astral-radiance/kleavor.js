@@ -30,7 +30,6 @@ class Kleavor extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
-        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '85';
         this.name = 'Kleavor';

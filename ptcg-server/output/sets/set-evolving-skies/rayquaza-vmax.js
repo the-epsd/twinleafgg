@@ -31,7 +31,6 @@ class RayquazaV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
-        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '110';
         this.name = 'Rayquaza V';

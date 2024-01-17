@@ -1,9 +1,8 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, PlayerType } from '../../game';
+import { CardTag, CardType, Format, PokemonType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { StoreLike, State, PlayerType, PokemonCard, Attack, CardList, Power, Resistance, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class ForestSealStone extends TrainerCard {
 
@@ -21,52 +20,61 @@ export class ForestSealStone extends TrainerCard {
 
   public fullName: string = 'Forest Seal Stone SIT';
 
-  public powers = [{
-    name: 'Starpirth',
-    powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
-    text: 'During your turn, you may search your deck for up to ' +
-      '2 cards and put them into your hand. Then, shuffle your ' +
-      'deck. (You can\'t use more than 1 VSTAR Power in a game.)'
-  }];
-  
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.tool instanceof ForestSealStone) {
-
-          const target = cardList;
-          const forestSeal = new CheckPokemonPowersEffect(target);
-          forestSeal.target = cardList;
+        if (cardList === effect.target) {
+          return;
         }
 
-        state = store.prompt(state, new ChooseCardsPrompt(
-          player.id,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.deck,
-          {},
-          { min: 0, max: 2, allowCancel: false }
-        ), cards => {
-          player.deck.moveCardsTo(cards, player.hand);
+        if (cardList.tool instanceof ForestSealStone) {
+          // Create a new class extending cardList
+          class ForestSealStone implements PokemonCard {
+            public superType!: SuperType;
+            public cardType!: CardType;
+            public cardTag!: CardTag[];
+            public pokemonType!: PokemonType;
+            public evolvesFrom!: string;
+            public stage!: Stage;
+            public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS,];
+            public hp!: number;
+            public weakness!: Weakness[];
+            public resistance!: Resistance[];
+            public powers!: Power[];
+            public attacks!: Attack[];
+            public format!: Format;
+            public movedToActiveThisTurn!: boolean;
+            public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+              throw new Error('Method not implemented.');
+            }
+            public fullName!: string;
+            public id!: number;
+            public regulationMark!: string;
+            public tags!: string[];
+            public setNumber!: string;
+            public cardImage!: string;
+            public cards!: CardList;
+            public set!: string;
+            public name!: string;
+          }
 
-          state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
+          // Instantiate the new class
+          const newCardList = new ForestSealStone();
 
+          // Copy the properties from the old cardList
+          newCardList.retreat = cardList.tool.retreat;
 
-
-          });
-
-          return state;
-        });
+          // Push the new cardList to the target
+          cardList.cards.push(newCardList);
+        }
       });
-
-      return state;
     }
 
     return state;
   }
-
 }
+  

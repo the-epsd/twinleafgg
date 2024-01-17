@@ -19,52 +19,35 @@ class LostVacuum extends trainer_card_1.TrainerCard {
             '' +
             'Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put it in the Lost Zone.';
     }
-    // Add the need to select 1 card to lost zone from hand, then send to lost zone
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            let pokemonsWithTool = 0;
-            const blocked = [];
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                if (cardList.tool !== undefined) {
-                    pokemonsWithTool += 1;
-                }
-                else {
-                    blocked.push(target);
-                }
-            });
-            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                if (cardList.tool !== undefined) {
-                    pokemonsWithTool += 1;
-                }
-                else {
-                    blocked.push(target);
-                }
-            });
-            const stadiumCard = game_1.StateUtils.getStadiumCard(state);
-            if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-            }
-            let cards = [];
-            cards = player.hand.cards;
-            // We will discard this card after prompt confirmation
-            effect.preventDefault = true;
-            // prepare card list without Junk Arm
-            const handTemp = new game_1.CardList();
-            handTemp.cards = player.hand.cards;
-            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 1, max: 1, allowCancel: false }), selected => {
-                cards = selected || [];
-                // Operation canceled by the user
-                if (cards.length === 0) {
-                    return state;
-                }
-                player.hand.moveCardsTo(cards, player.lostzone);
-            });
             const options = [
                 {
                     message: game_1.GameMessage.CHOOSE_TOOL,
                     action: () => {
+                        let pokemonsWithTool = 0;
+                        const blocked = [];
+                        player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                            if (cardList.tool !== undefined) {
+                                pokemonsWithTool += 1;
+                            }
+                            else {
+                                blocked.push(target);
+                            }
+                        });
+                        opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
+                            if (cardList.tool !== undefined) {
+                                pokemonsWithTool += 1;
+                            }
+                            else {
+                                blocked.push(target);
+                            }
+                        });
+                        if (pokemonsWithTool === 0) {
+                            throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+                        }
                         // We will discard this card after prompt confirmation
                         effect.preventDefault = true;
                         const max = Math.min(1, pokemonsWithTool);
@@ -77,7 +60,7 @@ class LostVacuum extends trainer_card_1.TrainerCard {
                             targets.forEach(target => {
                                 const owner = game_1.StateUtils.findOwner(state, target);
                                 if (target.tool !== undefined) {
-                                    target.moveCardTo(target.tool, owner.lostzone);
+                                    target.moveCardTo(target.tool, owner.discard);
                                     target.tool = undefined;
                                 }
                                 return state;
@@ -90,13 +73,13 @@ class LostVacuum extends trainer_card_1.TrainerCard {
                     message: game_1.GameMessage.CHOOSE_STADIUM,
                     action: () => {
                         const stadiumCard = game_1.StateUtils.getStadiumCard(state);
-                        if (stadiumCard == undefined) {
-                            throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+                        if (stadiumCard !== undefined) {
+                            // Discard Stadium
+                            const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
+                            const player = game_1.StateUtils.findOwner(state, cardList);
+                            cardList.moveTo(player.discard);
+                            return state;
                         }
-                        // Discard Stadium
-                        const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-                        const player = game_1.StateUtils.findOwner(state, cardList);
-                        cardList.moveTo(player.lostzone);
                         return state;
                     }
                 }

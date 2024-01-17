@@ -36,7 +36,7 @@ class VictiniV extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '21';
         this.name = 'Victini V';
-        this.fullName = 'Victini V BST';
+        this.fullName = 'Victini V BST 021';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

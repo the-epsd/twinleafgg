@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { Card, CardList, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
+import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
 
 export class LostVacuum extends TrainerCard {
 
@@ -27,66 +27,36 @@ export class LostVacuum extends TrainerCard {
     '' +
     'Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put it in the Lost Zone.';
 
-  // Add the need to select 1 card to lost zone from hand, then send to lost zone
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let pokemonsWithTool = 0;
-      const blocked: CardTarget[] = [];
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.tool !== undefined) {
-          pokemonsWithTool += 1;
-        } else {
-          blocked.push(target);
-        }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.tool !== undefined) {
-          pokemonsWithTool += 1;
-        } else {
-          blocked.push(target);
-        }
-      });
-
-      const stadiumCard = StateUtils.getStadiumCard(state);
-
-      if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-
-      let cards: Card[] = [];
-
-      cards = player.hand.cards;
-
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
-
-      // prepare card list without Junk Arm
-      const handTemp = new CardList();
-      handTemp.cards = player.hand.cards;
-
-      store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        handTemp,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        cards = selected || [];
-        // Operation canceled by the user
-        if (cards.length === 0) {
-          return state;
-        }
-        player.hand.moveCardsTo(cards, player.lostzone);
-      });
-
       const options: { message: GameMessage, action: () => void }[] = [
         {
           message: GameMessage.CHOOSE_TOOL,
           action: () => {
+
+            let pokemonsWithTool = 0;
+            const blocked: CardTarget[] = [];
+            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+              if (cardList.tool !== undefined) {
+                pokemonsWithTool += 1;
+              } else {
+                blocked.push(target);
+              }
+            });
+            opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+              if (cardList.tool !== undefined) {
+                pokemonsWithTool += 1;
+              } else {
+                blocked.push(target);
+              }
+            });
+
+            if (pokemonsWithTool === 0) {
+              throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
 
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
@@ -109,7 +79,7 @@ export class LostVacuum extends TrainerCard {
               targets.forEach(target => {
                 const owner = StateUtils.findOwner(state, target);
                 if (target.tool !== undefined) {
-                  target.moveCardTo(target.tool, owner.lostzone);
+                  target.moveCardTo(target.tool, owner.discard);
                   target.tool = undefined;
                 }
                 return state;
@@ -121,18 +91,18 @@ export class LostVacuum extends TrainerCard {
         {
           message: GameMessage.CHOOSE_STADIUM,
           action: () => {
-            const stadiumCard = StateUtils.getStadiumCard(state);
-            if (stadiumCard == undefined) {
-              throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-            }
 
-            // Discard Stadium
-            const cardList = StateUtils.findCardList(state, stadiumCard);
-            const player = StateUtils.findOwner(state, cardList);
-            cardList.moveTo(player.lostzone);
+            const stadiumCard = StateUtils.getStadiumCard(state);
+            if (stadiumCard !== undefined) {
+
+              // Discard Stadium
+              const cardList = StateUtils.findCardList(state, stadiumCard);
+              const player = StateUtils.findOwner(state, cardList);
+              cardList.moveTo(player.discard);
+              return state;
+            }
             return state;
           }
-          
         }
       ];
     

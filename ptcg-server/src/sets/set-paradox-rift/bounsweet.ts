@@ -28,8 +28,6 @@ export class Bounsweet extends PokemonCard {
 
   public set: string = 'PAR';
 
-  public regulationMark = 'G';
-
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '6';

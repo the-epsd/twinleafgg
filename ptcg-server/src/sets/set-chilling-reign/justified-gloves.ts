@@ -20,7 +20,7 @@ export class JustifiedGloves extends TrainerCard {
 
   public name: string = 'Justified Gloves';
 
-  public fullName: string = 'Justified Gloves CRE 143';
+  public fullName: string = 'Justified Gloves CRE';
 
   public text: string =
     'The attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active P Pokémon (before applying Weakness and Resistance).';

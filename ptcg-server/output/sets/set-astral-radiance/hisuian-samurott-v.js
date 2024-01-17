@@ -29,7 +29,6 @@ class HisuianSamurottV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
-        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '101';
         this.name = 'Hisuian Samurott V';

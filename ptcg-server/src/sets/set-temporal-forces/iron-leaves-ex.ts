@@ -11,7 +11,7 @@ export class IronLeavesex extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_ex, CardTag.FUTURE ];
 
-  public regulationMark = 'H';
+  public regulationMark = 'G';
 
   public stage: Stage = Stage.BASIC;
 

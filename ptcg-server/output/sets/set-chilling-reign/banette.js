@@ -31,7 +31,6 @@ class Banette extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.BASIC;
-        this.regulationMark = 'E';
         this.tags = [game_1.CardTag.SINGLE_STRIKE];
         this.evolvesFrom = 'Shuppet';
         this.cardType = game_1.CardType.PSYCHIC;

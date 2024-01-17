@@ -46,7 +46,7 @@ export class DrapionVSTAR extends PokemonCard {
 
   public name: string = 'Drapion VSTAR';
 
-  public fullName: string = 'Drapion VSTAR LOR';
+  public fullName: string = 'Drapion VSTAR LOR 119';
 
   // Implement ability
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

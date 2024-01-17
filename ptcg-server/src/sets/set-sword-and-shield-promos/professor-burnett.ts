@@ -42,8 +42,6 @@ export class ProfessorBurnet extends TrainerCard {
 
   public set: string = 'SWSH';
 
-  public regulationMark = 'E';
-
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '167';

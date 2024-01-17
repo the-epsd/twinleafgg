@@ -3,7 +3,7 @@ import { PokemonCard, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class HisuianZoroarkV extends PokemonCard {
     stage: Stage;
-    tags: CardTag[];
+    cardTag: CardTag[];
     regulationMark: string;
     cardType: CardType;
     hp: number;

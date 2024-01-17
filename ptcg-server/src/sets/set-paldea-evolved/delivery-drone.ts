@@ -56,7 +56,7 @@ export class DeliveryDrone extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '178';
   public name = 'Delivery Drone';
-  public fullName: string = 'Delivery Drone PAL';
+  public fullName: string = 'Delivery Drone PAL 178';
   public text: string = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' + 
                             'you can\'t play this card.) Search your deck for a card and put it into ' + 
                             'your hand. Shuffle your deck afterward.';

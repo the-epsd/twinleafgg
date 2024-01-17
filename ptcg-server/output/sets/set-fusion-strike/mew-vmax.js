@@ -67,7 +67,7 @@ class MewVMAX extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '114';
         this.name = 'Mew VMAX';
-        this.fullName = 'Mew VMAX FST';
+        this.fullName = 'Mew VMAX FST 114';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

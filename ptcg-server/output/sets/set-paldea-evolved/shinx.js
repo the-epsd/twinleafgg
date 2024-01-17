@@ -25,7 +25,6 @@ class Shinx extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'PAL';
-        this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '69';
         this.name = 'Shinx';

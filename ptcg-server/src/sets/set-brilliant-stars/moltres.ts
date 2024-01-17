@@ -24,8 +24,6 @@ export class Moltres extends PokemonCard {
 
   public set: string = 'BRS';
 
-  public regulationMark = 'F';
-
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '21';

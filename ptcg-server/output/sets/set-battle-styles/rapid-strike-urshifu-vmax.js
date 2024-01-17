@@ -40,7 +40,7 @@ class RapidStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '88';
         this.name = 'Rapid Strike Urshifu VMAX';
-        this.fullName = 'Rapid Strike Urshifu VMAX BST';
+        this.fullName = 'Rapid Strike Urshifu VMAX BST 088';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {

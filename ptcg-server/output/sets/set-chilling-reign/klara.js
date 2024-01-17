@@ -52,7 +52,7 @@ class Klara extends trainer_card_1.TrainerCard {
         this.setNumber = '145';
         this.regulationMark = 'E';
         this.name = 'Klara';
-        this.fullName = 'Klara CRE 145';
+        this.fullName = 'Klara CRE';
         this.text = 'Choose 1 or both:' +
             '' +
             'Put up to 2 Pokémon from your discard pile into your hand.' +

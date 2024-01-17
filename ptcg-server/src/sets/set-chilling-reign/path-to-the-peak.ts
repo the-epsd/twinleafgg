@@ -22,7 +22,7 @@ export class PathToThePeak extends TrainerCard {
 
   public name = 'Path to the Peak';
 
-  public fullName = 'Path to the Peak CRE 148';
+  public fullName = 'Path to the Peak CRE';
   
   public text = 'Pokémon with a Rule Box in play (both yours and your opponent\'s) have no Abilities. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';
     

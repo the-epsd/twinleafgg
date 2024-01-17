@@ -15,7 +15,7 @@ class BelliboltIR extends bellibolt_1.Bellibolt {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_201_R_EN_LG.png';
         this.setNumber = '201';
-        this.fullName = 'Bellibolt OBF';
+        this.fullName = 'Bellibolt OBF 201';
     }
 }
 exports.BelliboltIR = BelliboltIR;
@@ -24,7 +24,7 @@ class CleffaIR extends cleffa_1.Cleffa {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_202_R_EN_LG.png';
         this.setNumber = '202';
-        this.fullName = 'Cleffa OBF';
+        this.fullName = 'Cleffa OBF 202';
     }
 }
 exports.CleffaIR = CleffaIR;
@@ -33,7 +33,7 @@ class PidgeyIR extends pidgey_1.Pidgey {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_207_R_EN_LG.png';
         this.setNumber = '207';
-        this.fullName = 'Pidgey OBF';
+        this.fullName = 'Pidgey OBF 207';
     }
 }
 exports.PidgeyIR = PidgeyIR;
@@ -42,7 +42,7 @@ class PidgeottoIR extends pidgeotto_1.Pidgeotto {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_208_R_EN_LG.png';
         this.setNumber = '208';
-        this.fullName = 'Pidgeotto OBF';
+        this.fullName = 'Pidgeotto OBF 208';
     }
 }
 exports.PidgeottoIR = PidgeottoIR;
@@ -51,7 +51,7 @@ class CharizardexFA extends charizard_ex_1.Charizardex {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_215_R_EN_LG.png';
         this.setNumber = '215';
-        this.fullName = 'Charizard ex OBF';
+        this.fullName = 'Charizard ex OBF 215';
     }
 }
 exports.CharizardexFA = CharizardexFA;
@@ -60,7 +60,7 @@ class PidgeotexFA extends pidgeot_ex_1.Pidgeotex {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_217_R_EN_LG.png';
         this.setNumber = '217';
-        this.fullName = 'Pidgeot ex OBF';
+        this.fullName = 'Pidgeot ex OBF 217';
     }
 }
 exports.PidgeotexFA = PidgeotexFA;
@@ -69,7 +69,7 @@ class PoppyFA extends poppy_1.Poppy {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_220_R_EN_LG.png';
         this.setNumber = '220';
-        this.fullName = 'Poppy OBF';
+        this.fullName = 'Poppy OBF 220';
     }
 }
 exports.PoppyFA = PoppyFA;
@@ -78,7 +78,7 @@ class CharizardexSIR extends charizard_ex_1.Charizardex {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_223_R_EN_LG.png';
         this.setNumber = '223';
-        this.fullName = 'Charizard ex OBF';
+        this.fullName = 'Charizard ex OBF 223';
     }
 }
 exports.CharizardexSIR = CharizardexSIR;
@@ -87,7 +87,7 @@ class PidgeotexSIR extends pidgeot_ex_1.Pidgeotex {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_225_R_EN_LG.png';
         this.setNumber = '225';
-        this.fullName = 'Pidgeot ex OBF';
+        this.fullName = 'Pidgeot ex OBF 225';
     }
 }
 exports.PidgeotexSIR = PidgeotexSIR;
@@ -96,7 +96,7 @@ class PoppySIR extends poppy_1.Poppy {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_227_R_EN_LG.png';
         this.setNumber = '227';
-        this.fullName = 'Poppy OBF';
+        this.fullName = 'Poppy OBF 227';
     }
 }
 exports.PoppySIR = PoppySIR;
@@ -105,7 +105,7 @@ class CharizardexHR extends charizard_ex_1.Charizardex {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_228_R_EN_LG.png';
         this.setNumber = '228';
-        this.fullName = 'Charizard ex OBF';
+        this.fullName = 'Charizard ex OBF 228';
     }
 }
 exports.CharizardexHR = CharizardexHR;
@@ -114,7 +114,7 @@ class ArtazonHR extends artazon_1.Artazon {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_229_R_EN_LG.png';
         this.setNumber = '229';
-        this.fullName = 'Artazon OBF';
+        this.fullName = 'Artazon OBF 229';
     }
 }
 exports.ArtazonHR = ArtazonHR;
@@ -123,7 +123,7 @@ class FireEnergyHR extends fire_energy_1.FireEnergy {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_230_R_EN_LG.png';
         this.setNumber = '230';
-        this.fullName = 'Basic Fire Energy OBF';
+        this.fullName = 'Basic Fire Energy OBF 230';
     }
 }
 exports.FireEnergyHR = FireEnergyHR;

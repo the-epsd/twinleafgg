@@ -26,7 +26,6 @@ class RadiantEternatus extends game_1.PokemonCard {
                 text: '',
             }];
         this.set = 'CRZ';
-        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '105';
         this.name = 'Radiant Eternatus';

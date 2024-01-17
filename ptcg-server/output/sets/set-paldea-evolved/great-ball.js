@@ -52,7 +52,6 @@ class GreatBall extends trainer_card_1.TrainerCard {
                         // No Pokemon chosen, shuffle all back
                         temp.cards.forEach(card => {
                             temp.moveCardTo(card, player.deck);
-                            player.supporter.moveCardTo(this, player.discard);
                         });
                     }
                     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
@@ -61,6 +60,7 @@ class GreatBall extends trainer_card_1.TrainerCard {
                     });
                 });
             }
+            return state;
         }
         return state;
     }

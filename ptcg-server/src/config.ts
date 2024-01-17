@@ -60,7 +60,7 @@ export const config = {
 
     // Simulate matches every X ticks of the scheduler
     // If set to 0, the bot matches are disabled
-    botGamesIntervalCount: 60
+    botGamesIntervalCount: 0
   },
   sets: {
     scansDir: '',

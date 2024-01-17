@@ -1,18 +1,12 @@
 import { BuddyPoffin } from './buddy-poffin';
 import { Dudunsparce } from './dudunsparce';
-import { EmergencyBoard } from './emergency-board';
-import { Eri } from './eri';
 import { GougingFireex } from './gouging-fire-ex';
-import { HandTrimmer } from './hand-trimmer';
 import { IronCrownex } from './iron-crown-ex';
 import { IronLeavesex } from './iron-leaves-ex';
 import { MasterBall } from './master-ball';
-import { Metang } from './metang';
 import { NeoUpperEnergy } from './neo-upper-energy';
-import { OrderBox } from './order-box';
 import { PrimeCatcher } from './prime-catcher';
 import { RagingBoltex } from './raging-bolt-ex';
-import { RoaringMoon } from './roaring-moon';
 import { WalkingWakeex } from './walking-wake-ex';
 
 export class BuddyPoffinArt extends BuddyPoffin {
@@ -53,28 +47,4 @@ export class IronCrownexArt extends IronCrownex {
 
 export class RagingBoltexArt extends RagingBoltex {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1703418814020-AHDP8YUS4QEO32HRL0OG/Raging+Bolt+ex.png?format=1500w';
-}
-
-export class EmergencyBoardArt extends EmergencyBoard {
-  public cardImage = 'https://pbs.twimg.com/media/GDns6baXQAAMpTh?format=jpg&name=large';
-}
-
-export class EriArt extends Eri {
-  public cardImage = 'https://pbs.twimg.com/media/GDnslZEXMAAYm3a?format=jpg&name=large';
-}
-
-export class MetangArt extends Metang {
-  public cardImage = 'https://pbs.twimg.com/media/GDnvc3lXQAIUrBf?format=jpg&name=large';
-}
-
-export class HandTrimmerArt extends HandTrimmer {
-  public cardImage = 'https://pbs.twimg.com/media/GDnvc3lXQAIUrBf?format=jpg&name=large';
-}
-
-export class OrderBoxArt extends OrderBox {
-  public cardImage = 'https://pbs.twimg.com/media/GDnuf_6WsAA-kZG?format=jpg&name=large';
-}
-
-export class RoaringMoonArt extends RoaringMoon {
-  public cardImage = 'https://pbs.twimg.com/media/GDnmi4HWIAAbl5n?format=jpg&name=large';
 }

@@ -16,7 +16,7 @@ export class NeoUpperEnergy extends EnergyCard {
 
   public set: string = 'SV5K';
 
-  public regulationMark = 'H';
+  public regulationMark = 'G';
 
   public cardImage: string = 'assets/cardback.png';
 

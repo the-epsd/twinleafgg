@@ -37,7 +37,7 @@ class VictiniVMAX extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '22';
         this.name = 'Victini VMAX';
-        this.fullName = 'Victini VMAX BST';
+        this.fullName = 'Victini VMAX BST 022';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

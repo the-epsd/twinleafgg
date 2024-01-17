@@ -22,14 +22,13 @@ class LeafeonVMAX extends game_1.PokemonCard {
                 text: 'This attack does 60 damage for each [C] in your opponent\'s Active Pokémon\'s Retreat Cost.'
             },
             {
-                name: 'Max Leaf',
+                name: 'Grass Knot',
                 cost: [game_1.CardType.GRASS, game_1.CardType.GRASS, game_1.CardType.COLORLESS],
                 damage: 170,
                 text: 'Heal 30 damage from this Pokémon.'
             }
         ];
         this.set = 'EVS';
-        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '8';
         this.name = 'Leafeon VMAX';
@@ -50,7 +49,6 @@ class LeafeonVMAX extends game_1.PokemonCard {
                 const healTargetEffect = new attack_effects_1.HealTargetEffect(effect, 30);
                 healTargetEffect.target = player.active;
                 state = store.reduceEffect(state, healTargetEffect);
-                return state;
             }
             return state;
         }

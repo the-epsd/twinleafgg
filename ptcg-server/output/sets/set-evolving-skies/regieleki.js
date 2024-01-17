@@ -29,7 +29,6 @@ class Regieleki extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
-        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '60';
         this.name = 'Regieleki';

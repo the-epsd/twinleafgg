@@ -39,8 +39,6 @@ export class ZamazentaV extends PokemonCard {
 
   public set: string = 'CRZ';
 
-  public regulationMark = 'F';
-
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '98';

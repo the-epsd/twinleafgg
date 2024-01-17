@@ -28,7 +28,7 @@ class FlappleVMAX extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '19';
         this.name = 'Flapple VMAX';
-        this.fullName = 'Flapple VMAX BST';
+        this.fullName = 'Flapple VMAX BST 019';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -118,7 +118,7 @@ export class SwabluArt extends Swablu {
 }
 
 export class SwitchingCupsArt extends SwitchingCups {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_162_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_102_R_EN_LG.png';
 }
 
 export class TropiusArt extends Tropius {

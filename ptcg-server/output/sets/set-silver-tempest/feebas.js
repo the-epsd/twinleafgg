@@ -47,7 +47,6 @@ class Feebas extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'SIT';
-        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '39';
         this.name = 'Feebas';

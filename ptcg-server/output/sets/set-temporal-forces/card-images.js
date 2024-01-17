@@ -1,21 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RoaringMoonArt = exports.OrderBoxArt = exports.HandTrimmerArt = exports.MetangArt = exports.EriArt = exports.EmergencyBoardArt = exports.RagingBoltexArt = exports.IronCrownexArt = exports.PrimeCatcherArt = exports.MasterBallArt = exports.WalkingWakeexArt = exports.NeoUpperEnergyArt = exports.IronLeavesexArt = exports.GougingFireexArt = exports.DudunsparceArt = exports.BuddyPoffinArt = void 0;
+exports.RagingBoltexArt = exports.IronCrownexArt = exports.PrimeCatcherArt = exports.MasterBallArt = exports.WalkingWakeexArt = exports.NeoUpperEnergyArt = exports.IronLeavesexArt = exports.GougingFireexArt = exports.DudunsparceArt = exports.BuddyPoffinArt = void 0;
 const buddy_poffin_1 = require("./buddy-poffin");
 const dudunsparce_1 = require("./dudunsparce");
-const emergency_board_1 = require("./emergency-board");
-const eri_1 = require("./eri");
 const gouging_fire_ex_1 = require("./gouging-fire-ex");
-const hand_trimmer_1 = require("./hand-trimmer");
 const iron_crown_ex_1 = require("./iron-crown-ex");
 const iron_leaves_ex_1 = require("./iron-leaves-ex");
 const master_ball_1 = require("./master-ball");
-const metang_1 = require("./metang");
 const neo_upper_energy_1 = require("./neo-upper-energy");
-const order_box_1 = require("./order-box");
 const prime_catcher_1 = require("./prime-catcher");
 const raging_bolt_ex_1 = require("./raging-bolt-ex");
-const roaring_moon_1 = require("./roaring-moon");
 const walking_wake_ex_1 = require("./walking-wake-ex");
 class BuddyPoffinArt extends buddy_poffin_1.BuddyPoffin {
     constructor() {
@@ -87,45 +81,3 @@ class RagingBoltexArt extends raging_bolt_ex_1.RagingBoltex {
     }
 }
 exports.RagingBoltexArt = RagingBoltexArt;
-class EmergencyBoardArt extends emergency_board_1.EmergencyBoard {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GDns6baXQAAMpTh?format=jpg&name=large';
-    }
-}
-exports.EmergencyBoardArt = EmergencyBoardArt;
-class EriArt extends eri_1.Eri {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GDnslZEXMAAYm3a?format=jpg&name=large';
-    }
-}
-exports.EriArt = EriArt;
-class MetangArt extends metang_1.Metang {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GDnvc3lXQAIUrBf?format=jpg&name=large';
-    }
-}
-exports.MetangArt = MetangArt;
-class HandTrimmerArt extends hand_trimmer_1.HandTrimmer {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GDnvc3lXQAIUrBf?format=jpg&name=large';
-    }
-}
-exports.HandTrimmerArt = HandTrimmerArt;
-class OrderBoxArt extends order_box_1.OrderBox {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GDnuf_6WsAA-kZG?format=jpg&name=large';
-    }
-}
-exports.OrderBoxArt = OrderBoxArt;
-class RoaringMoonArt extends roaring_moon_1.RoaringMoon {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GDnmi4HWIAAbl5n?format=jpg&name=large';
-    }
-}
-exports.RoaringMoonArt = RoaringMoonArt;

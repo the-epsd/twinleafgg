@@ -35,7 +35,7 @@ class FlappleV extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '18';
         this.name = 'Flapple V';
-        this.fullName = 'Flapple V BST';
+        this.fullName = 'Flapple V BST 018';
         this.FLAPPLE_V_MARKER = 'FLAPPLE_V_MARKER';
     }
     reduceEffect(store, state, effect) {

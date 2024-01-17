@@ -31,7 +31,6 @@ class Jolteon extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = '151';
-        this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '135';
         this.name = 'Jolteon';

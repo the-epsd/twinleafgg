@@ -5,9 +5,7 @@ import { Charmeleon } from './charmeleon';
 import { Clive } from './clive';
 import { Espathraex } from './espathra-ex';
 import { Frigibax } from './frigibax';
-import { Gastly } from './gastly';
 import { Gengar } from './gengar';
-import { Haunter } from './haunter';
 import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { MoonlightHill } from './moonlight-hill';
@@ -35,16 +33,8 @@ export class FrigibaxArt extends Frigibax {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1698998521983-01MNU4EJDW7MFPOZARN4/IMG_5981.png?format=750w';
 }
 
-export class GastlyArt extends Gastly {
-  public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/01b48441-4725-4c5a-b162-f1fea2369478/Gastly+PAR.png?format=2500w';
-}
-
 export class GengarArt extends Gengar {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/3fd0b443-db92-45fa-938d-0607aa8961de/Gengar+PAR.png?format=750w';
-}
-
-export class HaunterArt extends Haunter {
-  public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/e7584a81-a867-480d-aa48-140d5ab20efa/Haunter+PAR.png?format=2500w';
 }
 
 export class KilowattrelArt extends Kilowattrel {

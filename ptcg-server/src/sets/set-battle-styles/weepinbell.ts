@@ -48,7 +48,7 @@ export class Weepinbell extends PokemonCard {
 
   public name: string = 'Weepinbell';
 
-  public fullName: string = 'Weepinbell BST';
+  public fullName: string = 'Weepinbell BST 002';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

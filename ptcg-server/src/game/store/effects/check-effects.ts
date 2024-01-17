@@ -2,14 +2,13 @@ import { CardType } from '../card/card-types';
 import { Effect } from './effect';
 import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
-import { Resistance, Weakness, Attack, Power } from '../card/pokemon-types';
+import { Resistance, Weakness, Attack } from '../card/pokemon-types';
 import { EnergyMap } from '../prompts/choose-energy-prompt';
 
 export enum CheckEffects {
   CHECK_HP_EFFECT = 'CHECK_HP_EFFECT',
   CHECK_PRIZES_COUNT_EFFECT = 'CHECK_PRIZE_COUNT_EFFECT',
   CHECK_POKEMON_STATS_EFFECT = 'CHECK_POKEMON_STATS_EFFECT',
-  CHECK_POKEMON_POWERS_EFFECT = 'CHECK_POKEMON_POWERS_EFFECT',
   CHECK_POKEMON_TYPE_EFFECT = 'CHECK_POKEMON_TYPE_EFFECT',
   CHECK_RETREAT_COST_EFFECT = 'CHECK_RETREAT_COST_EFFECT',
   CHECK_ATTACK_COST_EFFECT = 'CHECK_ATTACK_COST_EFFECT',
@@ -59,32 +58,6 @@ export class CheckPokemonStatsEffect implements Effect {
     const pokemonCard = target.getPokemonCard();
     this.weakness = pokemonCard ? [ ...pokemonCard.weakness ] : [];
     this.resistance = pokemonCard ? [ ...pokemonCard.resistance ] : [];
-  }
-}
-
-export class CheckPokemonPowersEffect implements Effect {
-  readonly type: string = CheckEffects.CHECK_POKEMON_POWERS_EFFECT;
-  public preventDefault = false;
-  public target: PokemonCardList;
-  public powers: Power[];
-
-  constructor(target: PokemonCardList) {
-    this.target = target;
-    const pokemonCard = target.getPokemonCard();
-    this.powers = pokemonCard ? [ ...pokemonCard.powers ] : [];
-  }
-}
-
-export class CheckPokemonAttacksEffect implements Effect {
-  readonly type: string = CheckEffects.CHECK_POKEMON_STATS_EFFECT;
-  public preventDefault = false;
-  public target: PokemonCardList;
-  public attacks: Attack[];
-
-  constructor(target: PokemonCardList) {
-    this.target = target;
-    const pokemonCard = target.getPokemonCard();
-    this.attacks = pokemonCard ? [ ...pokemonCard.attacks ] : [];
   }
 }
 

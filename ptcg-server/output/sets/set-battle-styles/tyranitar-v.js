@@ -33,7 +33,7 @@ class TyranitarV extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '97';
         this.name = 'Tyranitar V';
-        this.fullName = 'Tyranitar V BST';
+        this.fullName = 'Tyranitar V BST 097';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -24,7 +24,6 @@ class Gloom extends game_1.PokemonCard {
                 text: ''
             }];
         this.set = '151';
-        this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '44';
         this.name = 'Gloom';

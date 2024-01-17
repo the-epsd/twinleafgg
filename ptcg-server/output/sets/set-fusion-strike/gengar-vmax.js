@@ -31,7 +31,6 @@ class GengarVMAX extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'FST';
-        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '157';
         this.name = 'Gengar VMAX';

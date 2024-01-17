@@ -32,7 +32,7 @@ class Remoraid extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '36';
         this.name = 'Remoraid';
-        this.fullName = 'Remoraid BST';
+        this.fullName = 'Remoraid BST 036';
     }
 }
 exports.Remoraid = Remoraid;

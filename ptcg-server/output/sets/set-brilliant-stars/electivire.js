@@ -31,7 +31,6 @@ class Electivire extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BRS';
-        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '47';
         this.name = 'Electivire';

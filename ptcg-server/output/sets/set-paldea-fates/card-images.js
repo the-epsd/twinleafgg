@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.XatuArt = exports.NatuArt = exports.StudentsInPaldeaArt2 = exports.StudentsInPaldeaArt = exports.ScovillainexArt = exports.NemonaArt = exports.MoonlightHillArt = exports.MimeJrArt = exports.KilowattrelArt = exports.HaunterArt = exports.GengarArt = exports.GastlyArt = exports.FrigibaxArt = exports.EspathraexArt = exports.CliveArt = exports.CharmeleonArt = exports.AtticusArt = void 0;
+exports.XatuArt = exports.NatuArt = exports.StudentsInPaldeaArt2 = exports.StudentsInPaldeaArt = exports.ScovillainexArt = exports.NemonaArt = exports.MoonlightHillArt = exports.MimeJrArt = exports.KilowattrelArt = exports.GengarArt = exports.FrigibaxArt = exports.EspathraexArt = exports.CliveArt = exports.CharmeleonArt = exports.AtticusArt = void 0;
 const natu_1 = require("../set-paradox-rift/natu");
 const xatu_1 = require("../set-paradox-rift/xatu");
 const atticus_1 = require("./atticus");
@@ -8,9 +8,7 @@ const charmeleon_1 = require("./charmeleon");
 const clive_1 = require("./clive");
 const espathra_ex_1 = require("./espathra-ex");
 const frigibax_1 = require("./frigibax");
-const gastly_1 = require("./gastly");
 const gengar_1 = require("./gengar");
-const haunter_1 = require("./haunter");
 const kilowattrel_1 = require("./kilowattrel");
 const mime_jr_1 = require("./mime-jr");
 const moonlight_hill_1 = require("./moonlight-hill");
@@ -52,13 +50,6 @@ class FrigibaxArt extends frigibax_1.Frigibax {
     }
 }
 exports.FrigibaxArt = FrigibaxArt;
-class GastlyArt extends gastly_1.Gastly {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/01b48441-4725-4c5a-b162-f1fea2369478/Gastly+PAR.png?format=2500w';
-    }
-}
-exports.GastlyArt = GastlyArt;
 class GengarArt extends gengar_1.Gengar {
     constructor() {
         super(...arguments);
@@ -66,13 +57,6 @@ class GengarArt extends gengar_1.Gengar {
     }
 }
 exports.GengarArt = GengarArt;
-class HaunterArt extends haunter_1.Haunter {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/e7584a81-a867-480d-aa48-140d5ab20efa/Haunter+PAR.png?format=2500w';
-    }
-}
-exports.HaunterArt = HaunterArt;
 class KilowattrelArt extends kilowattrel_1.Kilowattrel {
     constructor() {
         super(...arguments);

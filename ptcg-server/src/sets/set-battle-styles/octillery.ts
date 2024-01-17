@@ -102,7 +102,7 @@ export class Octillery extends PokemonCard {
 
   public name: string = 'Octillery';
 
-  public fullName: string = 'Octillery BST';
+  public fullName: string = 'Octillery BST 037';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     

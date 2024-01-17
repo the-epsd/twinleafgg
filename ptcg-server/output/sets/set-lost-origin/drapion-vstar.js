@@ -35,7 +35,7 @@ class DrapionVSTAR extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '119';
         this.name = 'Drapion VSTAR';
-        this.fullName = 'Drapion VSTAR LOR';
+        this.fullName = 'Drapion VSTAR LOR 119';
     }
     // Implement ability
     reduceEffect(store, state, effect) {

@@ -7,8 +7,6 @@ export class FireEnergy extends EnergyCard {
 
   public set: string = 'SVE';
 
-  public regulationMark = 'ENERGY';
-
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '284';

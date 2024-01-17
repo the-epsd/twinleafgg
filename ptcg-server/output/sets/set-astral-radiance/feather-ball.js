@@ -29,13 +29,7 @@ class FeatherBall extends trainer_card_1.TrainerCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
-            const blocked = [];
-            player.deck.cards.forEach((card, index) => {
-                if (card instanceof game_1.PokemonCard && card.retreat.length === 0) {
-                    blocked.push(); // Changed index to card
-                }
-            });
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 1, allowCancel: false }), (cards) => {
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 1, allowCancel: false }), (cards) => {
                 if (!cards || cards.length === 0) {
                     return state;
                 }

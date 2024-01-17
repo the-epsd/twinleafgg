@@ -17,7 +17,6 @@ export declare class Drizzile extends PokemonCard {
         damage: number;
         text: string;
     }[];
-    regulationMark: string;
     set: string;
     cardImage: string;
     setNumber: string;

@@ -10,7 +10,7 @@ export class IronBundle extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.FUTURE ];
+  public cardTag = [ CardTag.FUTURE ];
 
   public cardType: CardType = CardType.WATER;
 
@@ -39,8 +39,6 @@ export class IronBundle extends PokemonCard {
   ];
 
   public set: string = 'PAR';
-
-  public regulationMark = 'G';
 
   public cardImage: string = 'assets/cardback.png';
 

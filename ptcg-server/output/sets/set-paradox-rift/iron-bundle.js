@@ -11,7 +11,7 @@ class IronBundle extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.tags = [card_types_1.CardTag.FUTURE];
+        this.cardTag = [card_types_1.CardTag.FUTURE];
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 100;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
@@ -33,7 +33,6 @@ class IronBundle extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
-        this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '56';
         this.name = 'Iron Bundle';

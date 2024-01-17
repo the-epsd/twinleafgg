@@ -35,7 +35,7 @@ class Venomoth extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '49';
         this.name = 'Venomoth';
-        this.fullName = 'Venomoth MEW';
+        this.fullName = 'Venomoth MEW 001';
         this.PERPLEXING_POWDER_MARKER = 'PERPLEXING_POWDER_MARKER';
     }
     reduceEffect(store, state, effect) {

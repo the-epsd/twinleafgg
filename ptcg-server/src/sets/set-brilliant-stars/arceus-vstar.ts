@@ -1,57 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike, State, 
-  PlayerType, SlotType, GameMessage, ShuffleDeckPrompt, PowerType, ChooseCardsPrompt, GameError, AttachEnergyPrompt, StateUtils, CardTarget } from '../../game';
+  PlayerType, SlotType, GameMessage, ShuffleDeckPrompt, PowerType, AttachEnergyPrompt, StateUtils, ChooseCardsPrompt, GameError } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-
-function* useTrinityNova(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
-
-  const player = effect.player;
-
-
-
-  if (player.deck.cards.length === 0) {
-    return state;
-  }
-
-  const hasBenched = player.bench.some(b => b.cards.length > 0);
-  if (!hasBenched) {
-    return state;
-  }
-
-  const blocked: CardTarget[] = [];
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (!cardList.vPokemon()) {
-      blocked.push(target);
-    }
-  });
-
-
-  yield store.prompt(state, new AttachEnergyPrompt(
-    player.id,
-    GameMessage.ATTACH_ENERGY_TO_BENCH,
-    player.deck,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH, SlotType.ACTIVE],
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { allowCancel: false, min: 0, max: 3, blockedTo: blocked }
-  ), transfers => {
-    transfers = transfers || [];
-    for (const transfer of transfers) {
-      const target = StateUtils.getTarget(state, player, transfer.to);
-      player.deck.moveCardTo(transfer.card, target); 
-      next();
-    }
-  });
-  
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-
-  });
-}
 
 
 export class ArceusVSTAR extends PokemonCard {
@@ -135,57 +88,49 @@ export class ArceusVSTAR extends PokemonCard {
       });
     }
 
-    //     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-    //       const player = effect.player;
-    //       state = store.prompt(state, new AttachEnergyPrompt(
-    //         player.id,
-    //         GameMessage.ATTACH_ENERGY_TO_BENCH,
-    //         player.deck,
-    //         PlayerType.BOTTOM_PLAYER,
-        
-    //         [ SlotType.BENCH, SlotType.ACTIVE ],
-    //         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    //         { allowCancel: true, min: 0, max: 3 },
-  
-    //       ), transfers => {
-    //         transfers = transfers || [ ];
-    //         // cancelled by user
-    //         if (transfers.length === 0) {
-    //           return state;
-    //         }
-    //         for (const transfer of transfers) {
-
-    //           const target = StateUtils.getTarget(state, player, transfer.to);
-        
-    //           if (!target.cards[0].tags.includes(CardTag.POKEMON_V) ||
-    //           !target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
-    //           !target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
-    //             throw new GameError(GameMessage.INVALID_TARGET);
-    //           }
-
-    //           if (target.cards[0].tags.includes(CardTag.POKEMON_V) || 
-    //               target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
-    //               target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
-        
-    //             player.deck.moveCardTo(transfer.card, target); 
-    //           }
-        
-    //         }
-        
-    //         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    //           player.deck.applyOrder(order);
-    //         });
-    //       });
-    //     }
-
-    //     return state;
-    //   }
-    // }
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useTrinityNova(() => generator.next(), store, state, effect);
-      return generator.next().value;
+      const player = effect.player;
+      state = store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        player.deck,
+        PlayerType.BOTTOM_PLAYER,
+        
+        [ SlotType.BENCH, SlotType.ACTIVE ],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        { allowCancel: true, min: 0, max: 3 },
+  
+      ), transfers => {
+        transfers = transfers || [ ];
+        // cancelled by user
+        if (transfers.length === 0) {
+          return state;
+        }
+        for (const transfer of transfers) {
+
+          const target = StateUtils.getTarget(state, player, transfer.to);
+        
+          if (!target.cards[0].tags.includes(CardTag.POKEMON_V) && 
+          !target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) &&
+          !target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
+            throw new GameError(GameMessage.INVALID_TARGET);
+          }
+
+          if (target.cards[0].tags.includes(CardTag.POKEMON_V) || 
+              target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
+              target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
+        
+            player.deck.moveCardTo(transfer.card, target); 
+          }
+        
+        }
+        
+        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
+      });
     }
+
     return state;
   }
 }

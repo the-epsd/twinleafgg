@@ -55,7 +55,7 @@ exports.config = {
         actionDelay: 2500,
         // Simulate matches every X ticks of the scheduler
         // If set to 0, the bot matches are disabled
-        botGamesIntervalCount: 60
+        botGamesIntervalCount: 0
     },
     sets: {
         scansDir: '',
@@ -69,6 +69,6 @@ exports.config = {
         },
         sender: 'example@example.com',
         appName: 'AAAAA',
-        publicAddress: 'http://0.0.0.0' // Address inside the e-mail messages
+        publicAddress: 'http://localhost' // Address inside the e-mail messages
     }
 };

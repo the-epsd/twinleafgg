@@ -44,7 +44,7 @@ class KricketuneV extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '6';
         this.name = 'Kricketune V';
-        this.fullName = 'Kricketune V BST';
+        this.fullName = 'Kricketune V BST 006';
         this.EXCITING_STAGE_MARKER = 'EXCITING_STAGE_MARKER';
     }
     reduceEffect(store, state, effect) {

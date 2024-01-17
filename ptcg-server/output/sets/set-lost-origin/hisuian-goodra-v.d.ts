@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game';
 export declare class HisuianGoodraV extends PokemonCard {
     stage: Stage;
-    tags: CardTag[];
+    cardTag: CardTag[];
     regulationMark: string;
     cardType: CardType;
     hp: number;

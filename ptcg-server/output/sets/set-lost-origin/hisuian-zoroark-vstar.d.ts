@@ -6,7 +6,7 @@ import { PokemonCard, PowerType } from '../../game';
 export declare class HisuianZoroarkVSTAR extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
-    tags: CardTag[];
+    cardTag: CardTag[];
     regulationMark: string;
     cardType: CardType;
     hp: number;

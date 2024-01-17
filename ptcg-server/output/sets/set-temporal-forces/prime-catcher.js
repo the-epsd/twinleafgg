@@ -53,7 +53,7 @@ class PrimeCatcher extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.tags = [card_types_1.CardTag.ACE_SPEC];
-        this.regulationMark = 'H';
+        this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '062';
         this.set = 'SV5M';

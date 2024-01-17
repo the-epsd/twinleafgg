@@ -58,13 +58,16 @@ export class Gengar extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
   
+      // Do not discard the card yet
+      effect.preventDefault = true;
+  
       let targets: PokemonCardList[] = [];
       store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
-        { min: 1, max: 1, allowCancel: false }
+        { allowCancel: true }
       ), results => {
         targets = results || [];
       });
@@ -73,8 +76,9 @@ export class Gengar extends PokemonCard {
         return state;
       }
   
+      // Discard trainer only when user selected a Pokemon
       player.active.clearEffects();
-      player.switchPokemon(player.active);
+      player.switchPokemon(targets[0]);
       return state;
     }
 

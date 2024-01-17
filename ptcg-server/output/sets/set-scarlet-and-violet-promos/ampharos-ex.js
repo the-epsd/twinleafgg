@@ -32,7 +32,6 @@ class Ampharosex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SVP';
-        this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '16';
         this.name = 'Ampharos ex';

@@ -13,7 +13,7 @@ export class GiratinaV extends PokemonCard {
   
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_V ];
+  public cardTag = [ CardTag.POKEMON_V ];
 
   public regulationMark = 'F';
   

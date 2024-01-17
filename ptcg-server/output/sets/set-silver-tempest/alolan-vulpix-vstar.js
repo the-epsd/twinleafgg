@@ -33,7 +33,6 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SIT';
-        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '34';
         this.name = 'Alolan Vulpix VSTAR';

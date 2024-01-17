@@ -37,7 +37,7 @@ export class Cheryl extends TrainerCard {
           return state;
         }
 
-        const healEffect = new HealEffect(player, cardList, cardList.damage);
+        const healEffect = new HealEffect(player, cardList, 60);
         state = store.reduceEffect(state, healEffect);
         const cards = cardList.cards.filter(c => c instanceof EnergyCard);
         cardList.moveCardsTo(cards, player.discard);

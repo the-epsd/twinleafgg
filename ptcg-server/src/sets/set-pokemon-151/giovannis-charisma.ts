@@ -47,7 +47,7 @@ export class GiovannisCharisma extends TrainerCard {
 
   public name: string = 'Giovanni\'s Charisma';
 
-  public fullName: string = 'Giovanni\'s Charisma MEW';
+  public fullName: string = 'Giovanni\'s Charisma 151';
 
   public text: string =
     'Your opponent reveals their hand, and you put a Basic Pokémon you find there onto your opponent\'s Bench. If you put a Pokémon onto their Bench in this way, switch in that Pokémon to the Active Spot.';

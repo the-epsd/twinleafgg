@@ -16,7 +16,7 @@ class OldCemetery extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'CRE';
         this.name = 'Old Cemetery';
-        this.fullName = 'Old Cemetery CRE 147';
+        this.fullName = 'Old Cemetery CRE';
         this.text = '';
     }
     reduceEffect(store, state, effect) {
