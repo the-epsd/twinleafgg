@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" [ngClass]="{'is-logged-in': loggedUser}">
-  <img src="http://localhost:8080/avatars/tl-beta.png" width="8%" (click)="onLogoClick()">
+  <img src="{{ apiUrl }}/avatars/tl-beta.png" width="8%" (click)="onLogoClick()">
   <span class="epsd-spacer"></span>
 
   <!-- Language select -->

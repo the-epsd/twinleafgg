@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { LoginPopupService } from '../../login/login-popup/login-popup.service';
 import { LoginRememberService } from '../../login/login-remember.service';
 import { SessionService } from '../../shared/session/session.service';
+import { environment } from '../../../environments/environment';
 
 @UntilDestroy()
 @Component({
@@ -22,6 +23,8 @@ export class ToolbarComponent implements OnInit {
   private loggedUser$: Observable<UserInfo | undefined>;
   public loggedUser: UserInfo | undefined;
 
+  apiUrl = environment.apiUrl;
+  
   constructor(
     private loginPopupService: LoginPopupService,
     private loginRememberService: LoginRememberService,
