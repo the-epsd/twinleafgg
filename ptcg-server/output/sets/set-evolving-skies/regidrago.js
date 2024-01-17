@@ -26,6 +26,7 @@ class Regidrago extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
+        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '124';
         this.name = 'Regidrago';

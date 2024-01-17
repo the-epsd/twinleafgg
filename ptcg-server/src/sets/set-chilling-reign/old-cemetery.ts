@@ -20,7 +20,7 @@ export class OldCemetery extends TrainerCard {
 
   public name = 'Old Cemetery';
 
-  public fullName = 'Old Cemetery CRE';
+  public fullName = 'Old Cemetery CRE 147';
 
   public text = '';
 

@@ -64,7 +64,7 @@ class Octillery extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '37';
         this.name = 'Octillery';
-        this.fullName = 'Octillery BST 037';
+        this.fullName = 'Octillery BST';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

@@ -3,6 +3,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 export declare class MetalEnergy extends EnergyCard {
     provides: CardType[];
     set: string;
+    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;

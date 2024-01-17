@@ -28,6 +28,7 @@ class Wishiwashi extends game_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
+        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '46';
         this.name = 'Wishiwashi';

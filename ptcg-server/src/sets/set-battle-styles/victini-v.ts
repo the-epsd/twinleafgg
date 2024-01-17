@@ -47,7 +47,7 @@ export class VictiniV extends PokemonCard {
 
   public name: string = 'Victini V';
 
-  public fullName: string = 'Victini V BST 021';
+  public fullName: string = 'Victini V BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

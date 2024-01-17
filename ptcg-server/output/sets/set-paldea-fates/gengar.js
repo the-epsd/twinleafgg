@@ -41,18 +41,15 @@ class Gengar extends pokemon_card_1.PokemonCard {
             if (hasBench === false) {
                 throw new __1.GameError(__1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            // Do not discard the card yet
-            effect.preventDefault = true;
             let targets = [];
-            store.prompt(state, new __1.ChoosePokemonPrompt(player.id, __1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, __1.PlayerType.BOTTOM_PLAYER, [__1.SlotType.BENCH], { allowCancel: true }), results => {
+            store.prompt(state, new __1.ChoosePokemonPrompt(player.id, __1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, __1.PlayerType.BOTTOM_PLAYER, [__1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), results => {
                 targets = results || [];
             });
             if (targets.length === 0) {
                 return state;
             }
-            // Discard trainer only when user selected a Pokemon
             player.active.clearEffects();
-            player.switchPokemon(targets[0]);
+            player.switchPokemon(player.active);
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -9,7 +9,7 @@ import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class RagingBoltex extends PokemonCard {
 
-  public regulationMark = 'G';
+  public regulationMark = 'H';
 
   public tags = [ CardTag.POKEMON_ex, CardTag.ANCIENT ];
 

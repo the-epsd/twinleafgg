@@ -49,7 +49,7 @@ export class VictiniVMAX extends PokemonCard {
 
   public name: string = 'Victini VMAX';
 
-  public fullName: string = 'Victini VMAX BST 022';
+  public fullName: string = 'Victini VMAX BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     

@@ -30,7 +30,7 @@ class TapuKokoVMAX extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '51';
         this.name = 'Tapu Koko VMAX';
-        this.fullName = 'Tapu Koko VMAX BST 051';
+        this.fullName = 'Tapu Koko VMAX BST';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

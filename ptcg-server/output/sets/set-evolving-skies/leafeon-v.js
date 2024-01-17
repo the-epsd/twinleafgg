@@ -26,6 +26,7 @@ class LeafeonV extends game_1.PokemonCard {
                 text: 'Flip a coin. If heads, this attack does 60 more damage.'
             }];
         this.set = 'EVS';
+        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '7';
         this.name = 'Leafeon V';

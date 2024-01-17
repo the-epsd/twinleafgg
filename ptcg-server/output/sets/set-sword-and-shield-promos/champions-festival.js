@@ -12,10 +12,11 @@ class ChampionsFestival extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'SWSH';
+        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '296';
         this.name = 'Champion\'s Festival';
-        this.fullName = 'Champion\'s Festival SWSH296';
+        this.fullName = 'Champion\'s Festival SWSH';
         this.text = 'Once during each player\'s turn, if that player has ' +
             '6 Pokémon in play, they may heal 10 damage from ' +
             'each of their Pokémon. ';

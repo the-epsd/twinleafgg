@@ -5,7 +5,6 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Dodrio extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -41,11 +40,13 @@ class Dodrio extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 50);
-            dealDamage.target = player.active;
-            store.reduceEffect(state, dealDamage);
+            const slots = player.bench.filter(b => b.cards.length === 0);
+            const cards = player.discard.cards.filter(c => c === this);
+            cards.forEach(card => {
+                slots[0].damage += 10; // Add 10 damage
+            });
             player.deck.moveTo(player.hand, 1);
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
                 // Get Dodrio's damage
                 const dodrioDamage = effect.player.active.damage;
                 // Calculate 30 damage per counter

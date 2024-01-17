@@ -34,7 +34,7 @@ export class Venomoth extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '49';
   public name: string = 'Venomoth';
-  public fullName: string = 'Venomoth MEW 001';
+  public fullName: string = 'Venomoth MEW';
   
   public readonly PERPLEXING_POWDER_MARKER = 'PERPLEXING_POWDER_MARKER';
 

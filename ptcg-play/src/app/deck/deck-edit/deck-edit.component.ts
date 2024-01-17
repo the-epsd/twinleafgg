@@ -86,41 +86,52 @@ export class DeckEditComponent implements OnInit {
   }
 
   importFromClipboard() {
-
-    // Read clipboard text
     navigator.clipboard.readText()
-      .then(text => {
-      
-        // Parse text into card names
-        const cardNames = text.split('\n')
-          .map(line => line.trim())
-          .filter(line => !!line)
-          .flatMap(line => {
-            const parts = line.split(' ');
-            const count = parseInt(parts[0], 10);
-            const cardName = parts.slice(1).join(' ');
-            return new Array(count).fill(cardName);
-          });
-  
-        // Call import deck method  
-        this.importDeck(cardNames);
-  
-      });
-  
-  }
-  
-  public importDeck(cardNames: string[]) {
-    this.deckItems = this.loadDeckItems(cardNames); 
-  }
+        .then(text => {
+
+            const cardNames = text.split('\n')
+                .map(line => line.trim())
+                .filter(line => !!line)
+                .flatMap(line => {
+                    const parts = line.split(' ');
+
+                    // Check if the first part is a number
+                    const count = parseInt(parts[0], 10);
+                    if (isNaN(count)) {
+                        return []; // Ignore lines that don't start with a number
+                    }
+
+                    const cardDetails = parts.slice(1);
+                    const cardName = cardDetails.slice(0, -1).join(' ');
+                    const setNumber = cardDetails.slice(-1)[0];
+
+                    return new Array(count).fill({ cardName, setNumber });
+                });
+
+            // Call import deck method
+            this.importDeck(cardNames);
+
+        });
+}
+
+      public importDeck(cardDetails: { cardName: string, setNumber?: string }[]) {
+        this.deckItems = this.loadDeckItems(cardDetails.map(card => card.cardName));
+    }
+
 
   public async exportDeck() {
     const cardNames = [];
     for (const item of this.deckItems) {
-      if (!cardNames.includes(item.card.fullName)) {
-        cardNames.push(item.count + ' ' + item.card.fullName);
-      }
+        const fullNameWithSetNumber = item.card.fullName + (item.card.setNumber ? ` ${item.card.setNumber}` : '');
+        const fullCardName = `${item.count} ${fullNameWithSetNumber}`;
+
+        if (!cardNames.includes(fullCardName)) {
+            cardNames.push(fullCardName);
+        }
     }
     const data = cardNames.join('\n') + '\n';
+    // Rest of your code...
+
 
     try {
       await navigator.clipboard.writeText(data);

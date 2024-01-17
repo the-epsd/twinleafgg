@@ -28,6 +28,7 @@ class RegigigasVSTAR extends pokemon_card_1.PokemonCard {
             },
         ];
         this.set = 'CRZ';
+        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '114';
         this.name = 'Regigigas VSTAR';

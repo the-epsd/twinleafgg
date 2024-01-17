@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, PlayerType, GameMessage, AttachEnergyPrompt, EnergyCard, SlotType, StateUtils, CardList } from '../../game';
+import { StoreLike, State, PowerType, PlayerType, GameMessage, AttachEnergyPrompt, EnergyCard, SlotType, StateUtils, CardList, GameError } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -62,6 +62,21 @@ export class Gardevoir extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.SHINING_ARCANA_MARKER, this);
     }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
+      store.reduceEffect(state, checkProvidedEnergyEffect);
+
+      let energyCount = 0;
+      checkProvidedEnergyEffect.energyMap.forEach(em => {
+        energyCount += em.provides.filter(cardType => {
+          return cardType === CardType.PSYCHIC;
+        }).length;
+      });
+      effect.damage += energyCount * 30;
+    }
     
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
@@ -69,6 +84,9 @@ export class Gardevoir extends PokemonCard {
       const player = effect.player;
       const temp = new CardList();
 
+      if (player.marker.hasMarker(this.SHINING_ARCANA_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
 
       player.deck.moveTo(temp, 2);
 
@@ -95,6 +113,14 @@ export class Gardevoir extends PokemonCard {
           {superType: SuperType.ENERGY, energyType: EnergyType.BASIC},
           {min: 0, max: energyCardsDrawn.length}
         ), transfers => {
+
+          //if transfers = 0, put both in hand
+
+          if (transfers.length === 0) {
+            temp.cards.slice(0, 2).forEach(card => {
+              temp.moveCardTo(card, player.hand);
+            });
+          }
     
           // Attach energy based on prompt selection
           if (transfers) {
@@ -108,21 +134,6 @@ export class Gardevoir extends PokemonCard {
             });
           }
         });
-      }
-      
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const player = effect.player;
-  
-        const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
-        store.reduceEffect(state, checkProvidedEnergyEffect);
-  
-        let energyCount = 0;
-        checkProvidedEnergyEffect.energyMap.forEach(em => {
-          energyCount += em.provides.filter(cardType => {
-            return cardType === CardType.PSYCHIC;
-          }).length;
-        });
-        effect.damage += energyCount * 30;
       }
 
       if (effect instanceof EndTurnEffect) {

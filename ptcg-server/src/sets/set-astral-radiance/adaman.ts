@@ -87,7 +87,7 @@ export class Adaman extends TrainerCard {
 
   public setNumber: string = '135';
 
-public cardImage: string = 'assets/cardback.png';
+  public cardImage: string = 'assets/cardback.png';
 
   public name: string = 'Adaman';
 

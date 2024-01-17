@@ -41,6 +41,8 @@ export class Kilowattrel extends PokemonCard {
 
   public set: string = 'SV4';
 
+  public regulationMark = 'G';
+
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '70';

@@ -35,7 +35,7 @@ export class Venusaurex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Venusaur ex';
-  public fullName: string = 'Venusaur ex MEW 003';
+  public fullName: string = 'Venusaur ex MEW';
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

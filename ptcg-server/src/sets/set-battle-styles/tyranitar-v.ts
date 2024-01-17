@@ -44,7 +44,7 @@ export class TyranitarV extends PokemonCard {
 
   public name: string = 'Tyranitar V';
 
-  public fullName: string = 'Tyranitar V BST 097';
+  public fullName: string = 'Tyranitar V BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

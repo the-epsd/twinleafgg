@@ -18,6 +18,7 @@ class Moltres extends pokemon_card_1.PokemonCard {
                 text: 'If this Pokémon has any damage counters on it, this attack does 70 more damage. This attack\'s damage isn\'t affected by Weakness.'
             }];
         this.set = 'BRS';
+        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '21';
         this.name = 'Moltres';

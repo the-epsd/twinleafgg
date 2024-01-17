@@ -7,7 +7,7 @@ export class HisuianZoroarkV extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardTag = [CardTag.POKEMON_V];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 

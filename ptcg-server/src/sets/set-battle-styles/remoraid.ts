@@ -43,6 +43,6 @@ export class Remoraid extends PokemonCard {
 
   public name: string = 'Remoraid';
 
-  public fullName: string = 'Remoraid BST 036';
+  public fullName: string = 'Remoraid BST';
 
 }

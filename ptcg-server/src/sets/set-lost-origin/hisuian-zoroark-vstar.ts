@@ -11,7 +11,7 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
 
   public evolvesFrom = 'Hisuian Zoroark V';
 
-  public cardTag = [CardTag.POKEMON_VSTAR];
+  public tags = [CardTag.POKEMON_VSTAR];
 
   public regulationMark = 'F';
 

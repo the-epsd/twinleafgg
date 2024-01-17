@@ -35,7 +35,7 @@ class Weepinbell extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '2';
         this.name = 'Weepinbell';
-        this.fullName = 'Weepinbell BST 002';
+        this.fullName = 'Weepinbell BST';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

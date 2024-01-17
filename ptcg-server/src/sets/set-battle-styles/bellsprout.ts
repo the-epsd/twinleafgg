@@ -30,7 +30,7 @@ export class Bellsprout extends PokemonCard {
 
   public name: string = 'Bellsprout';
 
-  public fullName: string = 'Bellsprout BST 001';
+  public fullName: string = 'Bellsprout BST';
 
   reduceEffect(store: StoreLike, state: State, effect: Effect) {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

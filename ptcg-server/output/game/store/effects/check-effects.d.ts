@@ -2,12 +2,13 @@ import { CardType } from '../card/card-types';
 import { Effect } from './effect';
 import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
-import { Resistance, Weakness, Attack } from '../card/pokemon-types';
+import { Resistance, Weakness, Attack, Power } from '../card/pokemon-types';
 import { EnergyMap } from '../prompts/choose-energy-prompt';
 export declare enum CheckEffects {
     CHECK_HP_EFFECT = "CHECK_HP_EFFECT",
     CHECK_PRIZES_COUNT_EFFECT = "CHECK_PRIZE_COUNT_EFFECT",
     CHECK_POKEMON_STATS_EFFECT = "CHECK_POKEMON_STATS_EFFECT",
+    CHECK_POKEMON_POWERS_EFFECT = "CHECK_POKEMON_POWERS_EFFECT",
     CHECK_POKEMON_TYPE_EFFECT = "CHECK_POKEMON_TYPE_EFFECT",
     CHECK_RETREAT_COST_EFFECT = "CHECK_RETREAT_COST_EFFECT",
     CHECK_ATTACK_COST_EFFECT = "CHECK_ATTACK_COST_EFFECT",
@@ -37,6 +38,20 @@ export declare class CheckPokemonStatsEffect implements Effect {
     target: PokemonCardList;
     weakness: Weakness[];
     resistance: Resistance[];
+    constructor(target: PokemonCardList);
+}
+export declare class CheckPokemonPowersEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    target: PokemonCardList;
+    powers: Power[];
+    constructor(target: PokemonCardList);
+}
+export declare class CheckPokemonAttacksEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    target: PokemonCardList;
+    attacks: Attack[];
     constructor(target: PokemonCardList);
 }
 export declare class CheckPokemonTypeEffect implements Effect {

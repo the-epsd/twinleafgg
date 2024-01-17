@@ -18,6 +18,7 @@ export declare class Falinks extends PokemonCard {
         text: string;
     }[];
     set: string;
+    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;
