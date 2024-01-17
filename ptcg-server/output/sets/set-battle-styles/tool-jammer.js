@@ -15,8 +15,7 @@ class ToolJammer extends trainer_card_1.TrainerCard {
         this.setNumber = '136';
         this.name = 'Tool Jammer';
         this.fullName = 'Tool Jammer BST';
-        this.text = 'Shuffle up to 2 Single Strike Energy cards from your discard pile into' +
-            'your deck.';
+        this.text = 'As long as the Pokémon this card is attached to is in the Active Spot, Pokémon Tools attached to your opponent\'s Active Pokémon have no effect, except for Tool Jammer.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

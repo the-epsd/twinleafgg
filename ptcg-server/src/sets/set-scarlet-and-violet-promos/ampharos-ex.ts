@@ -39,6 +39,8 @@ export class Ampharosex extends PokemonCard {
 
   public set: string = 'SVP';
 
+  public regulationMark = 'G';
+
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '16';

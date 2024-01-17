@@ -27,7 +27,7 @@ class Drizzile extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '42';
         this.name = 'Drizzile';
-        this.fullName = 'Drizzile CRE 42';
+        this.fullName = 'Drizzile CRE';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

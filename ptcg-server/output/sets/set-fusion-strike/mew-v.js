@@ -33,7 +33,7 @@ class MewV extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '113';
         this.name = 'Mew V';
-        this.fullName = 'Mew V FST 113';
+        this.fullName = 'Mew V FST';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

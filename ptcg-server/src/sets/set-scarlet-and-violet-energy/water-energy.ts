@@ -7,6 +7,8 @@ export class WaterEnergy extends EnergyCard {
 
   public set: string = 'SVE';
 
+  public regulationMark = 'ENERGY';
+
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '231';

@@ -37,6 +37,8 @@ export class HisuianSamurottVSTAR extends PokemonCard {
 
   public set: string = 'ASR';
 
+  public regulationMark = 'F';
+
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '102';

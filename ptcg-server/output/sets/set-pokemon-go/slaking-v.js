@@ -28,6 +28,7 @@ class SlakingV extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PGO';
+        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '58';
         this.name = 'Slaking V';

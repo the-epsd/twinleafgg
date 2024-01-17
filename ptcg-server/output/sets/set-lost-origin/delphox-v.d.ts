@@ -19,6 +19,7 @@ export declare class DelphoxV extends PokemonCard {
         text: string;
     }[];
     set: string;
+    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;

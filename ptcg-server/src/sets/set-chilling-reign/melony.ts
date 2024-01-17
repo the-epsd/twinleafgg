@@ -71,7 +71,7 @@ export class Melony extends TrainerCard {
 
   public name: string = 'Melony';
 
-  public fullName: string = 'Melony CRE 146';
+  public fullName: string = 'Melony CRE';
 
   public text: string =
     'Draw 3 cards. If you drew any cards in this way, your opponent discards Pokémon from their Bench until they have 3.';

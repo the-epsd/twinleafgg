@@ -35,7 +35,7 @@ class IceRiderCalyrexV extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '45';
         this.name = 'Ice Rider Calyrex V';
-        this.fullName = 'Ice Rider Calyrex V CRE 45';
+        this.fullName = 'Ice Rider Calyrex V CRE';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

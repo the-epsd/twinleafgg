@@ -34,7 +34,7 @@ class RapidStrikeUrshifuV extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '87';
         this.name = 'Rapid Strike Urshifu V';
-        this.fullName = 'Rapid Strike Urshifu V BST 087';
+        this.fullName = 'Rapid Strike Urshifu V BST';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

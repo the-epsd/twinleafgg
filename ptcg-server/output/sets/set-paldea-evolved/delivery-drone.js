@@ -44,7 +44,7 @@ class DeliveryDrone extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '178';
         this.name = 'Delivery Drone';
-        this.fullName = 'Delivery Drone PAL 178';
+        this.fullName = 'Delivery Drone PAL';
         this.text = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' +
             'you can\'t play this card.) Search your deck for a card and put it into ' +
             'your hand. Shuffle your deck afterward.';

@@ -9,13 +9,21 @@ import { State } from '../../game/store/state/state';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 
 export class ChampionsFestival extends TrainerCard {
-  trainerType = TrainerType.STADIUM;
-  set = 'SWSH';
+  public trainerType = TrainerType.STADIUM;
+
+  public set = 'SWSH';
+
+  public regulationMark = 'F';
+
   public cardImage: string = 'assets/cardback.png';
+
   public setNumber: string = '296';
-  name = 'Champion\'s Festival';
-  fullName = 'Champion\'s Festival SWSH296';
-  text = 'Once during each player\'s turn, if that player has ' + 
+
+  public name = 'Champion\'s Festival';
+
+  public fullName = 'Champion\'s Festival SWSH';
+
+  public text = 'Once during each player\'s turn, if that player has ' + 
     '6 Pokémon in play, they may heal 10 damage from ' +
     'each of their Pokémon. ';
         

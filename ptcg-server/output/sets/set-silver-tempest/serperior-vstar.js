@@ -29,6 +29,7 @@ class SerperiorVSTAR extends game_1.PokemonCard {
             }
         ];
         this.set = 'SIT';
+        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '8';
         this.name = 'Serperior VSTAR';

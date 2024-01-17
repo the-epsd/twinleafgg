@@ -8,6 +8,7 @@ class PsychicEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.PSYCHIC];
         this.set = 'SVE';
+        this.regulationMark = 'ENERGY';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '232';
         this.name = 'Basic Psychic Energy';

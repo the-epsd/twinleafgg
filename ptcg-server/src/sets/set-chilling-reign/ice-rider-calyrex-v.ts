@@ -45,7 +45,7 @@ export class IceRiderCalyrexV extends PokemonCard {
 
   public name: string = 'Ice Rider Calyrex V';
 
-  public fullName: string = 'Ice Rider Calyrex V CRE 45';
+  public fullName: string = 'Ice Rider Calyrex V CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

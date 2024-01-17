@@ -47,7 +47,7 @@ export class SingleStrikeUrshifuV extends PokemonCard {
 
   public name: string = 'Single Strike Urshifu V';
 
-  public fullName: string = 'Single Strike Urshifu V BST 085';
+  public fullName: string = 'Single Strike Urshifu V BST';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

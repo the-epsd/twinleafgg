@@ -34,6 +34,8 @@ export class MagnezoneV extends PokemonCard {
 
   public set: string = 'LOR';
 
+  public regulationMark = 'F';
+
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '56';

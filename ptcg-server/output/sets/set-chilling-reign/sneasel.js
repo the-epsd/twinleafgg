@@ -19,10 +19,11 @@ class Sneasel extends game_1.PokemonCard {
                 text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
             }];
         this.set = 'CRE';
+        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '30';
         this.name = 'Sneasel';
-        this.fullName = 'Sneasel CRE 30';
+        this.fullName = 'Sneasel CRE';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

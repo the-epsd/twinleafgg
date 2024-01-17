@@ -11,7 +11,7 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class RegielekiVMAX extends PokemonCard {
 
-  public regulationMark = 'G';
+  public regulationMark = 'F';
 
   public tags = [ CardTag.POKEMON_VMAX ];
 

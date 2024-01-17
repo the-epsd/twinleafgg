@@ -30,7 +30,7 @@ class Venonat extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '48';
         this.name = 'Venonat';
-        this.fullName = 'Venonat MEW 001';
+        this.fullName = 'Venonat MEW';
     }
 }
 exports.Venonat = Venonat;

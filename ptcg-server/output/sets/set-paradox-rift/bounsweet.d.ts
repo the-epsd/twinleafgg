@@ -17,6 +17,7 @@ export declare class Bounsweet extends PokemonCard {
         text: string;
     }[];
     set: string;
+    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;

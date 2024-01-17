@@ -27,6 +27,7 @@ class SerperiorV extends game_1.PokemonCard {
             }
         ];
         this.set = 'SIT';
+        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '7';
         this.name = 'Serperior V';

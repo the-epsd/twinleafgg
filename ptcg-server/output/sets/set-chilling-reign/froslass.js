@@ -60,7 +60,7 @@ class Froslass extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '36';
         this.name = 'Froslass';
-        this.fullName = 'Froslass CRE 36';
+        this.fullName = 'Froslass CRE';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }

@@ -29,6 +29,7 @@ class LeafeonVMAX extends game_1.PokemonCard {
             }
         ];
         this.set = 'EVS';
+        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '8';
         this.name = 'Leafeon VMAX';

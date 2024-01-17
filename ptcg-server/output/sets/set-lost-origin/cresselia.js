@@ -30,6 +30,7 @@ class Cresselia extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
+        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '74';
         this.name = 'Cresselia';

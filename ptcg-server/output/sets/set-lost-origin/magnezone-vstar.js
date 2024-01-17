@@ -29,6 +29,7 @@ class MagnezoneVSTAR extends game_1.PokemonCard {
             }
         ];
         this.set = 'LOR';
+        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '57';
         this.name = 'Magnezone VSTAR';

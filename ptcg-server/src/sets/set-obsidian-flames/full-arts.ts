@@ -11,79 +11,79 @@ import { Poppy } from './poppy';
 class BelliboltIR extends Bellibolt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_201_R_EN_LG.png';
   public setNumber = '201';
-  public fullName: string = 'Bellibolt OBF 201';
+  public fullName: string = 'Bellibolt OBF';
 }
 
 class CleffaIR extends Cleffa {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_202_R_EN_LG.png';
   public setNumber = '202';
-  public fullName: string = 'Cleffa OBF 202';
+  public fullName: string = 'Cleffa OBF';
 }
 
 class PidgeyIR extends Pidgey {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_207_R_EN_LG.png';
   public setNumber = '207';
-  public fullName: string = 'Pidgey OBF 207';
+  public fullName: string = 'Pidgey OBF';
 }
 
 class PidgeottoIR extends Pidgeotto {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_208_R_EN_LG.png';
   public setNumber = '208';
-  public fullName: string = 'Pidgeotto OBF 208';
+  public fullName: string = 'Pidgeotto OBF';
 }
 
 class CharizardexFA extends Charizardex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_215_R_EN_LG.png';
   public setNumber = '215';
-  public fullName: string = 'Charizard ex OBF 215';
+  public fullName: string = 'Charizard ex OBF';
 }
 
 class PidgeotexFA extends Pidgeotex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_217_R_EN_LG.png';
   public setNumber = '217';
-  public fullName: string = 'Pidgeot ex OBF 217';
+  public fullName: string = 'Pidgeot ex OBF';
 }
 
 class PoppyFA extends Poppy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_220_R_EN_LG.png';
   public setNumber = '220';
-  public fullName: string = 'Poppy OBF 220';
+  public fullName: string = 'Poppy OBF';
 }
 
 class CharizardexSIR extends Charizardex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_223_R_EN_LG.png';
   public setNumber = '223';
-  public fullName: string = 'Charizard ex OBF 223';
+  public fullName: string = 'Charizard ex OBF';
 }
 
 class PidgeotexSIR extends Pidgeotex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_225_R_EN_LG.png';
   public setNumber = '225';
-  public fullName: string = 'Pidgeot ex OBF 225';
+  public fullName: string = 'Pidgeot ex OBF';
 }
 
 class PoppySIR extends Poppy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_227_R_EN_LG.png';
   public setNumber = '227';
-  public fullName: string = 'Poppy OBF 227';
+  public fullName: string = 'Poppy OBF';
 }
 
 class CharizardexHR extends Charizardex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_228_R_EN_LG.png';
   public setNumber = '228';
-  public fullName: string = 'Charizard ex OBF 228';
+  public fullName: string = 'Charizard ex OBF';
 }
 
 class ArtazonHR extends Artazon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_229_R_EN_LG.png';
   public setNumber = '229';
-  public fullName: string = 'Artazon OBF 229';
+  public fullName: string = 'Artazon OBF';
 }
 
 class FireEnergyHR extends FireEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_230_R_EN_LG.png';
   public setNumber = '230';
-  public fullName: string = 'Basic Fire Energy OBF 230';
+  public fullName: string = 'Basic Fire Energy OBF';
 }
 
 export { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, ArtazonHR, FireEnergyHR };

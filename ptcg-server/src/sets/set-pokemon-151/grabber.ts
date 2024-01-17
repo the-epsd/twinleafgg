@@ -24,7 +24,7 @@ export class Grabber extends TrainerCard {
 
   public name: string = 'Grabber';
 
-  public fullName: string = 'Grabber 151';
+  public fullName: string = 'Grabber MEW';
 
   public text: string =
     'Your opponent reveals their hand, and you put a Pokémon you find there on the bottom of their deck.';

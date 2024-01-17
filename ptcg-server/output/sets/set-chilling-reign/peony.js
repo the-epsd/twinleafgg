@@ -16,7 +16,7 @@ class Peony extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '150';
         this.name = 'Peony';
-        this.fullName = 'Peony CRE 150';
+        this.fullName = 'Peony CRE';
         this.text = 'Discard your hand and search your deck for up to 2 Trainer cards, reveal them, and put them into your hand. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {

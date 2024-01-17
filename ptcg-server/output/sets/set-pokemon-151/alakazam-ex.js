@@ -31,7 +31,7 @@ class Alakazamex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '65';
         this.name = 'Alakazam ex';
-        this.fullName = 'Alakazam ex MEW 065';
+        this.fullName = 'Alakazam ex MEW';
     }
 }
 exports.Alakazamex = Alakazamex;

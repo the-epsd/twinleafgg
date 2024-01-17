@@ -83,7 +83,7 @@ export class Froslass extends PokemonCard {
 
   public name: string = 'Froslass';
 
-  public fullName: string = 'Froslass CRE 36';
+  public fullName: string = 'Froslass CRE';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

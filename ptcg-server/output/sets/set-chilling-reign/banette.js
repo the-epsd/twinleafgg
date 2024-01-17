@@ -54,7 +54,7 @@ class Banette extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '63';
         this.name = 'Banette';
-        this.fullName = 'Banette CRE 63';
+        this.fullName = 'Banette CRE';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -54,7 +54,7 @@ export class MimikyuV extends PokemonCard {
 
   public name: string = 'Mimikyu V';
 
-  public fullName: string = 'Mimikyu V BST 062';
+  public fullName: string = 'Mimikyu V BST';
 
   public readonly TIME_CIRCLE_MARKER: string = 'TIME_CIRCLE_MARKER';
   public readonly CLEAR_TIME_CIRCLE_MARKER: string = 'CLEAR_TIME_CIRCLE_MARKER';

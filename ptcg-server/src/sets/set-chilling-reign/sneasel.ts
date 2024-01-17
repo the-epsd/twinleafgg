@@ -25,13 +25,15 @@ export class Sneasel extends PokemonCard {
 
   public set: string = 'CRE';
 
+  public regulationMark = 'E';
+
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '30';
 
   public name: string = 'Sneasel';
 
-  public fullName: string = 'Sneasel CRE 30';
+  public fullName: string = 'Sneasel CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

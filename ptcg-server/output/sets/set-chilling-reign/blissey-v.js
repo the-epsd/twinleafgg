@@ -28,10 +28,11 @@ class BlisseyV extends game_1.PokemonCard {
                 text: 'This attack does 30 more damage for each Energy attached to this Pokémon. If you did any damage with this attack, you may attach up to 3 Energy cards from your discard pile to this Pokémon.'
             }];
         this.set = 'CRE';
+        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '119';
         this.name = 'Blissey V';
-        this.fullName = 'Blissey V CRE 119';
+        this.fullName = 'Blissey V CRE';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.target.cards.includes(this)) {

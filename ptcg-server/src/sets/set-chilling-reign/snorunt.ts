@@ -32,6 +32,6 @@ export class Snorunt extends PokemonCard {
 
   public name: string = 'Snorunt';
 
-  public fullName: string = 'Snorunt CRE 35';
+  public fullName: string = 'Snorunt CRE';
 
 }

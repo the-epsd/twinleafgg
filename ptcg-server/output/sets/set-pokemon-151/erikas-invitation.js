@@ -45,7 +45,7 @@ class EreikasInvitation extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '160';
         this.name = 'Erika\'s Invitation';
-        this.fullName = 'Erika\'s Invitation 151';
+        this.fullName = 'Erika\'s Invitation MEW';
         this.text = 'Your opponent reveals their hand, and you put a Basic Pokémon you find there onto your opponent\'s Bench. If you put a Pokémon onto their Bench in this way, switch in that Pokémon to the Active Spot.';
     }
     reduceEffect(store, state, effect) {

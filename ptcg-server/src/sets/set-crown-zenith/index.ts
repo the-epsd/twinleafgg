@@ -12,5 +12,4 @@ export const setCrownZenith: Card[] = [
   new RadiantEternatusArt(),
   new RegigigasVArt(),
   new RegigigasVSTARArt(),
-  new ZamazentaVArt
 ];

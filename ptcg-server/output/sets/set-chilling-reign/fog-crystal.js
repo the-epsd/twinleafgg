@@ -55,7 +55,7 @@ class FogCrystal extends trainer_card_1.TrainerCard {
         this.setNumber = '140';
         this.regulationMark = 'E';
         this.name = 'Fog Crystal';
-        this.fullName = 'Fog Crystal CRE 140';
+        this.fullName = 'Fog Crystal CRE';
         this.text = 'Search your deck for a Pokemon with 90 HP or less, reveal it, ' +
             'and put it into your hand. Shuffle your deck afterward.';
     }

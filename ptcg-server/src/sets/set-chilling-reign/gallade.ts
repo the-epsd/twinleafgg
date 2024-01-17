@@ -43,7 +43,7 @@ export class Gallade extends PokemonCard {
   
   public name: string = 'Gallade';
   
-  public fullName: string = 'Gallade CRE 81';
+  public fullName: string = 'Gallade CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

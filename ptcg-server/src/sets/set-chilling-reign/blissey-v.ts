@@ -35,13 +35,15 @@ export class BlisseyV extends PokemonCard {
 
   public set: string = 'CRE';
 
+  public regulationMark = 'E';
+
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '119';
 
   public name: string = 'Blissey V';
 
-  public fullName: string = 'Blissey V CRE 119';
+  public fullName: string = 'Blissey V CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

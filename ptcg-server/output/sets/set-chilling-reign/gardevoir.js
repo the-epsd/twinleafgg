@@ -40,7 +40,7 @@ class Gardevoir extends pokemon_card_1.PokemonCard {
         this.setNumber = '61';
         this.regulationMark = 'E';
         this.name = 'Gardevoir';
-        this.fullName = 'Gardevoir CRE 61';
+        this.fullName = 'Gardevoir CRE';
         this.SHINING_ARCANA_MARKER = 'SHINING_ARCANA_MARKER';
     }
     reduceEffect(store, state, effect) {

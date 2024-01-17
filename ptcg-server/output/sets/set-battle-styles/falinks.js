@@ -20,6 +20,7 @@ class Falinks extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 20 damage for each of your Rapid Strike Pokémon in play.'
             }];
         this.set = 'BST';
+        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '83';
         this.name = 'Falinks BST';

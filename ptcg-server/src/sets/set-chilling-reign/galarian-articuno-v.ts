@@ -51,7 +51,7 @@ export class GalarianArticunoV extends PokemonCard {
 
   public name: string = 'Galarian Articuno V';
 
-  public fullName: string = 'Galarian Articuno V CRE 58';
+  public fullName: string = 'Galarian Articuno V CRE';
 
   public readonly CONCEALED_CARDS_MARKER = 'CONCEALED_CARDS_MARKER';
 

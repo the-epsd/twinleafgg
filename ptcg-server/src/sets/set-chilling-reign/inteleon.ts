@@ -49,7 +49,7 @@ export class Inteleon extends PokemonCard {
 
   public name: string = 'Inteleon';
 
-  public fullName: string = 'Inteleon CRE 43';
+  public fullName: string = 'Inteleon CRE';
 
   public readonly DOUBLE_GUNNER_MARKER = 'DOUBLE_GUNNER_MARKER';
 

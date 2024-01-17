@@ -34,13 +34,15 @@ export class Slowbro extends PokemonCard {
 
   public set: string = 'PGO';
 
+  public regulationMark = 'F';
+
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '20';
 
   public name: string = 'Slowbro';
 
-  public fullName: string = 'Slowbro LOR';
+  public fullName: string = 'Slowbro PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

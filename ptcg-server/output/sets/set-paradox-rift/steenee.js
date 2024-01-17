@@ -30,6 +30,7 @@ class Steenee extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PAR';
+        this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '7';
         this.name = 'Steenee';

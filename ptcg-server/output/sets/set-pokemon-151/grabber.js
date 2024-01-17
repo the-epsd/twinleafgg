@@ -14,7 +14,7 @@ class Grabber extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '162';
         this.name = 'Grabber';
-        this.fullName = 'Grabber 151';
+        this.fullName = 'Grabber MEW';
         this.text = 'Your opponent reveals their hand, and you put a Pokémon you find there on the bottom of their deck.';
     }
     reduceEffect(store, state, effect) {
