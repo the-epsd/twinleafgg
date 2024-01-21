@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, 
   PokemonCardList, EnergyCard, ChoosePokemonPrompt, GameMessage, SlotType } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import {HealTargetEffect} from '../../game/store/effects/attack-effects';
+import {HealTargetEffect, PutCountersEffect} from '../../game/store/effects/attack-effects';
 
 
 export class Cresselia extends PokemonCard {
@@ -31,8 +31,8 @@ export class Cresselia extends PokemonCard {
     {
       name: 'Lunar Blast',
       cost: [ CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS ],
-      damage: 0,
-      text: 'Move 2 damage counters from each of your Pokémon to 1 of your opponent\'s Pokémon.'
+      damage: 110,
+      text: ''
     }
   ];
 
@@ -79,7 +79,10 @@ export class Cresselia extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         targets.forEach(target => {
-          target.damage += totalHealed * 20;
+          target.damage = totalHealed * 20;
+          const putCountersEffect = new PutCountersEffect(effect, target.damage);
+          putCountersEffect.target = target;
+          store.reduceEffect(state, putCountersEffect);
         });
         return state;
       });

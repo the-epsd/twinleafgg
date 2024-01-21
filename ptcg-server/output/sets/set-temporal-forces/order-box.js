@@ -38,11 +38,11 @@ class OrderBox extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'H';
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '61';
         this.name = 'Order Box';
-        this.fullName = 'Order Box SV5K';
+        this.fullName = 'Order Box SV5';
         this.text = 'After you use this card, your turn ends.' +
             '' +
             'Search your deck for up to 2 Item cards, reveal them, and put them into your hand. Then shuffle your deck.';

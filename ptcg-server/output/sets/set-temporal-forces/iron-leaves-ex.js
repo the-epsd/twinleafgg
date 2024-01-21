@@ -31,7 +31,7 @@ class IronLeavesex extends pokemon_card_1.PokemonCard {
                 text: 'During your next turn, this Pokémon can\'t attack.'
             }
         ];
-        this.set = 'SV5M';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '016';
         this.name = 'Iron Leaves ex';

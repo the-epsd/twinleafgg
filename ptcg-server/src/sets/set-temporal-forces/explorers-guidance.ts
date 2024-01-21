@@ -11,7 +11,7 @@ export class ExplorersGuidance extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -21,7 +21,7 @@ export class ExplorersGuidance extends TrainerCard {
 
   public name: string = 'Explorer\'s Guidance';
 
-  public fullName: string = 'Explorer\'s Guidance SV5K';
+  public fullName: string = 'Explorer\'s Guidance SV5';
 
   public text: string = 'Heal all damage from 1 of your Pokémon that has 30 HP or less remaining.';
 

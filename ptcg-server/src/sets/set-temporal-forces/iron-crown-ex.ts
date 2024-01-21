@@ -38,7 +38,7 @@ export class IronCrownex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5M';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 

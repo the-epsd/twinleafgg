@@ -29,11 +29,11 @@ class Dudunsparce extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '57';
         this.name = 'Dudunsparce';
-        this.fullName = 'Dudunsparce SV5K';
+        this.fullName = 'Dudunsparce SV5';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

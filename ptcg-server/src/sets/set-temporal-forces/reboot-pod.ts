@@ -20,7 +20,7 @@ export class RebootPod extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV5M';
+  public set: string = 'SV5';
 
   public name: string = 'Reboot Pod';
 
@@ -28,7 +28,7 @@ export class RebootPod extends TrainerCard {
   
   public setNumber: string = '63';
 
-  public fullName: string = 'Reboot Pod SV5M';
+  public fullName: string = 'Reboot Pod SV5';
 
   public text: string =
     'Attach a Basic Energy card from your discard pile to each of your Future Pokémon in play.';

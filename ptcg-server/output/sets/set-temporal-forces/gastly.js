@@ -53,11 +53,11 @@ class Gastly extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '45';
         this.name = 'Gastly';
-        this.fullName = 'Gastly SV5K';
+        this.fullName = 'Gastly SV5';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

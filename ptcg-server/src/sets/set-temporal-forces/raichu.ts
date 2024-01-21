@@ -38,7 +38,7 @@ export class Raichu extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -46,7 +46,7 @@ export class Raichu extends PokemonCard {
 
   public name: string = 'Raichu';
 
-  public fullName: string = 'Raichu SV5K';
+  public fullName: string = 'Raichu SV5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

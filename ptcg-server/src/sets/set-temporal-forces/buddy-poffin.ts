@@ -9,7 +9,7 @@ export class BuddyPoffin extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -19,7 +19,7 @@ export class BuddyPoffin extends TrainerCard {
 
   public name: string = 'Buddy Poffin';
 
-  public fullName: string = 'Buddy Poffin SV5K';
+  public fullName: string = 'Buddy Poffin SV5';
 
   public text: string =
     'Search your deck for up to 2 Basic Pokémon with 70 HP or less and put them onto your Bench. Then, shuffle your deck.';

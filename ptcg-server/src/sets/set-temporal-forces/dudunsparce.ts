@@ -36,7 +36,7 @@ export class Dudunsparce extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -44,7 +44,7 @@ export class Dudunsparce extends PokemonCard {
 
   public name: string = 'Dudunsparce';
 
-  public fullName: string = 'Dudunsparce SV5K';
+  public fullName: string = 'Dudunsparce SV5';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

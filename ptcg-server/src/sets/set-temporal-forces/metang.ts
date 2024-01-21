@@ -36,7 +36,7 @@ export class Metang extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -44,7 +44,7 @@ export class Metang extends PokemonCard {
 
   public name: string = 'Metang';
 
-  public fullName: string = 'Metang SV5K';
+  public fullName: string = 'Metang SV5';
 
   public readonly MAGNET_MARKER = 'MAGNET_MARKER';
 

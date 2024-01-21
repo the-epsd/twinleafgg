@@ -59,7 +59,7 @@ class MimeJr extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '85';
         this.name = 'Mime Jr.';
-        this.fullName = 'Mime Jr.';
+        this.fullName = 'Mime Jr. SV4';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

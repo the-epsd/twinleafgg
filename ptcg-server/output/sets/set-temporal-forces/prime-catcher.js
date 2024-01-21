@@ -56,9 +56,9 @@ class PrimeCatcher extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '062';
-        this.set = 'SV5M';
+        this.set = 'SV5';
         this.name = 'Prime Catcher';
-        this.fullName = 'Prime Catcher SV5M';
+        this.fullName = 'Prime Catcher SV5';
         this.text = 'Switch in 1 of your opponent\'s Benched Pokémon to the Active Spot. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.';
     }
     reduceEffect(store, state, effect) {

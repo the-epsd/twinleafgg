@@ -64,7 +64,7 @@ export class CryptomaniacsDeciphering extends TrainerCard {
 
   public tags = [ CardTag.FUTURE ];
 
-  public set: string = 'SV5M';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -72,7 +72,7 @@ export class CryptomaniacsDeciphering extends TrainerCard {
 
   public name: string = 'Cryptomaniac\'s Deciphering';
 
-  public fullName: string = 'Cryptomaniac\'s Deciphering SV5M';
+  public fullName: string = 'Cryptomaniac\'s Deciphering SV5';
 
   public text: string =
     'Search your deck for 2 cards, shuffle your deck, then put those cards on top of it in any order.';

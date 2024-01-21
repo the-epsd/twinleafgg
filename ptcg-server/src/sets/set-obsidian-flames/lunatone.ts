@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 
@@ -49,10 +49,12 @@ export class Lunatone extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof UseStadiumEffect) {
+    
+      StateUtils.getStadiumCard(state);
       const target = effect.player;
       
       if (this.powers.some(a => a.name === 'New Moon') && target === effect.player) {
-        // Ignore stadium effect
+        effect.preventDefault = true;
         return state; 
       }
     }

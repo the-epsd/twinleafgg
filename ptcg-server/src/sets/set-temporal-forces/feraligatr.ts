@@ -38,7 +38,7 @@ export class Feraligatr extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -46,7 +46,7 @@ export class Feraligatr extends PokemonCard {
 
   public name: string = 'Feraligatr';
 
-  public fullName: string = 'Feraligatr SV5K';
+  public fullName: string = 'Feraligatr SV5';
 
   public readonly TORRENTIAL_HEART_MARKER = 'TORRENTIAL_HEART_MARKER';
 

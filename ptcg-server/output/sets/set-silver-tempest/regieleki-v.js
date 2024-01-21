@@ -46,39 +46,33 @@ class RegielekiV extends pokemon_card_1.PokemonCard {
             if (!hasBenched) {
                 return state;
             }
-            state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
-                if (wantToUse) {
-                    return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_NEW_ACTIVE_POKEMON, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: true }), selected => {
-                        if (!selected || selected.length === 0) {
-                            return state;
-                        }
-                        const target = selected[0];
-                        player.switchPokemon(target);
-                    });
-                }
-                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                    const player = effect.player;
-                    const opponent = game_1.StateUtils.getOpponent(state, player);
-                    player.active.marker.addMarker(this.LEAF_GUARD_MARKER, this);
-                    opponent.marker.addMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
-                    if (effect instanceof attack_effects_1.PutDamageEffect
-                        && effect.target.marker.hasMarker(this.LEAF_GUARD_MARKER)) {
-                        effect.damage -= 100;
-                        return state;
-                    }
-                    if (effect instanceof game_phase_effects_1.EndTurnEffect
-                        && effect.player.marker.hasMarker(this.CLEAR_LEAF_GUARD_MARKER, this)) {
-                        effect.player.marker.removeMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
-                        const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-                        opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                            cardList.marker.removeMarker(this.LEAF_GUARD_MARKER, this);
-                        });
-                        return state;
-                    }
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_NEW_ACTIVE_POKEMON, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: true }), selected => {
+                if (!selected || selected.length === 0) {
                     return state;
                 }
-                return state;
+                const target = selected[0];
+                player.switchPokemon(target);
             });
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            player.active.marker.addMarker(this.LEAF_GUARD_MARKER, this);
+            opponent.marker.addMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
+            if (effect instanceof attack_effects_1.PutDamageEffect
+                && effect.target.marker.hasMarker(this.LEAF_GUARD_MARKER)) {
+                effect.damage -= 100;
+                return state;
+            }
+            if (effect instanceof game_phase_effects_1.EndTurnEffect
+                && effect.player.marker.hasMarker(this.CLEAR_LEAF_GUARD_MARKER, this)) {
+                effect.player.marker.removeMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
+                const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                    cardList.marker.removeMarker(this.LEAF_GUARD_MARKER, this);
+                });
+                return state;
+            }
             return state;
         }
         return state;

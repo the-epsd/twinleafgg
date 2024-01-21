@@ -31,11 +31,11 @@ class Feraligatr extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon can\'t use Giant Wave during your next turn.'
             }
         ];
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '15';
         this.name = 'Feraligatr';
-        this.fullName = 'Feraligatr SV5K';
+        this.fullName = 'Feraligatr SV5';
         this.TORRENTIAL_HEART_MARKER = 'TORRENTIAL_HEART_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

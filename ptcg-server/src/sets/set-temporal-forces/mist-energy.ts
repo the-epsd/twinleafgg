@@ -11,7 +11,7 @@ export class MistEnergy extends EnergyCard {
 
   public energyType = EnergyType.SPECIAL;
 
-  public set: string = 'SV5M';
+  public set: string = 'SV5';
 
   public regulationMark = 'H';
 
@@ -21,7 +21,7 @@ export class MistEnergy extends EnergyCard {
 
   public name = 'Mist Energy';
 
-  public fullName = 'Mist Energy SV5M';
+  public fullName = 'Mist Energy SV5';
 
   public text =
     'As long as this card is attached to a Pokémon, it provides C Energy.' +

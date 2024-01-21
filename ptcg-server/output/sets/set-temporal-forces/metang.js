@@ -28,11 +28,11 @@ class Metang extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.regulationMark = 'H';
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '47';
         this.name = 'Metang';
-        this.fullName = 'Metang SV5K';
+        this.fullName = 'Metang SV5';
         this.MAGNET_MARKER = 'MAGNET_MARKER';
     }
     reduceEffect(store, state, effect) {

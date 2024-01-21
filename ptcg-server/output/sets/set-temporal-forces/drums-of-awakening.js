@@ -10,11 +10,11 @@ class DrumsOfAwakening extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.tags = [card_types_1.CardTag.ACE_SPEC];
         this.regulationMark = 'H';
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '62';
         this.name = 'Drums of Awakening';
-        this.fullName = 'Drums of Awakening SV5K';
+        this.fullName = 'Drums of Awakening SV5';
         this.text = 'Draw a card for each of your Ancient Pokémon in play.';
     }
     reduceEffect(store, state, effect) {

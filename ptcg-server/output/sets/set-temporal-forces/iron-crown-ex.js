@@ -30,7 +30,7 @@ class IronCrownex extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 50 damage to 2 of your opponent\'s Pokémon. This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on those Pokémon.'
             }
         ];
-        this.set = 'SV5M';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '036';
         this.name = 'Iron Crown ex';

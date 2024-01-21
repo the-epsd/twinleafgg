@@ -50,6 +50,9 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 
 .ptcg-board-player {
   display: grid;
+  // border-radius: 12px;
+  // background-image: url(https://i.imgur.com/3X7MTBl.png);
+  // padding: 6px; 
 
 
   grid-template-columns:
@@ -116,6 +119,9 @@ ptcg-board-deck {
 
 .ptcg-board-bench {
   grid-area: bench;
+  // border-radius: 12px;
+  // background: #575757;
+  // padding: 2px; 
 }
 
 .ptcg-board-stadium {
@@ -147,5 +153,5 @@ ptcg-board-deck {
 .ptcg-card-preview {
   border-radius: $card-border-radius;
   position: absolute;
-  width: 90px;
+  width: 92px;
 }

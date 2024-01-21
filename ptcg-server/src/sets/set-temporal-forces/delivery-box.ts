@@ -13,7 +13,7 @@ export class DeliveryBox extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -21,7 +21,7 @@ export class DeliveryBox extends TrainerCard {
 
   public name: string = 'Delivery Box';
 
-  public fullName: string = 'Delivery Box SV5K';
+  public fullName: string = 'Delivery Box SV5';
 
   public text: string =
     'Search your deck for up to 2 Item cards, reveal them, and put them into your hand. Then, shuffle your deck.' +

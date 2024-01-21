@@ -70,7 +70,7 @@ export class MasterBall extends TrainerCard {
 
   public name: string = 'Master Ball';
 
-  public fullName: string = 'Master Ball SV5M';
+  public fullName: string = 'Master Ball SV5';
 
   public text: string =
     'Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';

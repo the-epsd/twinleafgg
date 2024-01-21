@@ -37,7 +37,7 @@ export class RoaringMoon extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -45,7 +45,7 @@ export class RoaringMoon extends PokemonCard {
 
   public name: string = 'Roaring Moon';
 
-  public fullName: string = 'Roaring Moon SV5K';
+  public fullName: string = 'Roaring Moon SV5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

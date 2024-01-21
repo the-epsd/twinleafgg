@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, ConfirmPrompt, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils } from '../../game';
+import { StoreLike, State, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -61,53 +61,43 @@ export class RegielekiV extends PokemonCard {
         return state;
       }
   
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-      
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
-            PlayerType.BOTTOM_PLAYER,
-            [ SlotType.BENCH ],
-            { allowCancel: true },
-          ), selected => {
-            if (!selected || selected.length === 0) {
-              return state;
-            }
-            const target = selected[0];
-            player.switchPokemon(target);
-          });
-        }
-
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
-          const player = effect.player;
-          const opponent = StateUtils.getOpponent(state, player);
-      
-          player.active.marker.addMarker(this.LEAF_GUARD_MARKER, this);
-          opponent.marker.addMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
-      
-          if (effect instanceof PutDamageEffect
-                          && effect.target.marker.hasMarker(this.LEAF_GUARD_MARKER)) {
-            effect.damage -= 100;
-            return state;
-          }
-          if (effect instanceof EndTurnEffect
-                          && effect.player.marker.hasMarker(this.CLEAR_LEAF_GUARD_MARKER, this)) {
-            effect.player.marker.removeMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
-            const opponent = StateUtils.getOpponent(state, effect.player);
-            opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-              cardList.marker.removeMarker(this.LEAF_GUARD_MARKER, this);
-            });
-            return state;
-          }
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
+        PlayerType.BOTTOM_PLAYER,
+        [ SlotType.BENCH ],
+        { allowCancel: true },
+      ), selected => {
+        if (!selected || selected.length === 0) {
           return state;
         }
-        return state;
+        const target = selected[0];
+        player.switchPokemon(target);
       });
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      
+      player.active.marker.addMarker(this.LEAF_GUARD_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
+      
+      if (effect instanceof PutDamageEffect
+                          && effect.target.marker.hasMarker(this.LEAF_GUARD_MARKER)) {
+        effect.damage -= 100;
+        return state;
+      }
+      if (effect instanceof EndTurnEffect
+                          && effect.player.marker.hasMarker(this.CLEAR_LEAF_GUARD_MARKER, this)) {
+        effect.player.marker.removeMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
+        const opponent = StateUtils.getOpponent(state, effect.player);
+        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+          cardList.marker.removeMarker(this.LEAF_GUARD_MARKER, this);
+        });
+        return state;
+      }
       return state;
     }
     return state;

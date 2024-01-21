@@ -59,7 +59,7 @@ export class OrderBox extends TrainerCard {
 
   public regulationMark = 'H';
   
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
   
   public cardImage: string = 'assets/cardback.png';
   
@@ -67,7 +67,7 @@ export class OrderBox extends TrainerCard {
   
   public name: string = 'Order Box';
   
-  public fullName: string = 'Order Box SV5K';
+  public fullName: string = 'Order Box SV5';
 
   public text: string =
     'After you use this card, your turn ends.' +

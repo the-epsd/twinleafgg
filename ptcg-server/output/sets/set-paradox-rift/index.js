@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setParadoxRift = void 0;
 const card_images_1 = require("./card-images");
+const test_1 = require("./test");
 exports.setParadoxRift = [
     new card_images_1.AncientBoosterEnergyCapsuleArt(),
     new card_images_1.BruteBonnetArt(),
@@ -42,4 +43,5 @@ exports.setParadoxRift = [
     new card_images_1.GroudonArt(),
     new card_images_1.IronJugulisArt(),
     new card_images_1.TapuKokoexArt(),
+    new test_1.Test(),
 ];

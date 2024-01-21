@@ -62,32 +62,6 @@ export class CheckPokemonStatsEffect implements Effect {
   }
 }
 
-export class CheckPokemonPowersEffect implements Effect {
-  readonly type: string = CheckEffects.CHECK_POKEMON_POWERS_EFFECT;
-  public preventDefault = false;
-  public target: PokemonCardList;
-  public powers: Power[];
-
-  constructor(target: PokemonCardList) {
-    this.target = target;
-    const pokemonCard = target.getPokemonCard();
-    this.powers = pokemonCard ? [ ...pokemonCard.powers ] : [];
-  }
-}
-
-export class CheckPokemonAttacksEffect implements Effect {
-  readonly type: string = CheckEffects.CHECK_POKEMON_STATS_EFFECT;
-  public preventDefault = false;
-  public target: PokemonCardList;
-  public attacks: Attack[];
-
-  constructor(target: PokemonCardList) {
-    this.target = target;
-    const pokemonCard = target.getPokemonCard();
-    this.attacks = pokemonCard ? [ ...pokemonCard.attacks ] : [];
-  }
-}
-
 export class CheckPokemonTypeEffect implements Effect {
   readonly type: string = CheckEffects.CHECK_POKEMON_TYPE_EFFECT;
   public preventDefault = false;
@@ -100,6 +74,22 @@ export class CheckPokemonTypeEffect implements Effect {
     this.cardTypes = pokemonCard ? [ pokemonCard.cardType ] : [];
   }
 }
+
+export class CheckPokemonPowersEffect implements Effect {
+  readonly type: string = CheckEffects.CHECK_POKEMON_POWERS_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public target: PokemonCardList;
+  public powers: Power[];
+
+  constructor(player: Player, target: PokemonCardList) {
+    this.player = player;
+    this.target = target;
+    const pokemonCard = target.getPokemonCard();
+    this.powers = pokemonCard ? [...pokemonCard.powers] : [];
+  }
+}
+
 
 export class CheckRetreatCostEffect implements Effect {
   readonly type: string = CheckEffects.CHECK_RETREAT_COST_EFFECT;

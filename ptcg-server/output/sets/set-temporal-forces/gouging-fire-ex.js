@@ -29,7 +29,7 @@ class GougingFireex extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon can’t use Exploding Flare again until it leaves the Active Spot.'
             }
         ];
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '012';
         this.name = 'Gouging Fire ex';

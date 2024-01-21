@@ -11,7 +11,7 @@ export class BiancasSincerity extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'SV5M';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -21,7 +21,7 @@ export class BiancasSincerity extends TrainerCard {
 
   public name: string = 'Bianca\'s Sincerity';
 
-  public fullName: string = 'Bianca\'s Sincerity SV5M';
+  public fullName: string = 'Bianca\'s Sincerity SV5';
 
   public text: string = 'Heal all damage from 1 of your Pokémon that has 30 HP or less remaining.';
 

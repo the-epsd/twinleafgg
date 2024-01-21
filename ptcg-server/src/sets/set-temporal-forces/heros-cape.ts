@@ -14,7 +14,7 @@ export class HerosCape extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -22,7 +22,7 @@ export class HerosCape extends TrainerCard {
 
   public name: string = 'Hero\'s Cape';
 
-  public fullName: string = 'Hero\'s Cape SV5K';
+  public fullName: string = 'Hero\'s Cape SV5';
 
   public text: string =
     'The Pokémon this card is attached to gets +100 HP.';

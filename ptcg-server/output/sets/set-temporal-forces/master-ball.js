@@ -42,7 +42,7 @@ class MasterBall extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '032';
         this.name = 'Master Ball';
-        this.fullName = 'Master Ball SV5M';
+        this.fullName = 'Master Ball SV5';
         this.text = 'Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {

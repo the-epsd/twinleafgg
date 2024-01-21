@@ -10,12 +10,12 @@ class BiancasSincerity extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'SV5M';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '69';
         this.regulationMark = 'H';
         this.name = 'Bianca\'s Sincerity';
-        this.fullName = 'Bianca\'s Sincerity SV5M';
+        this.fullName = 'Bianca\'s Sincerity SV5';
         this.text = 'Heal all damage from 1 of your Pokémon that has 30 HP or less remaining.';
     }
     reduceEffect(store, state, effect) {

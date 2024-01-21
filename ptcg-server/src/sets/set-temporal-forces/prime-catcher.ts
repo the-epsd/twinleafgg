@@ -84,11 +84,11 @@ export class PrimeCatcher extends TrainerCard {
 
   public setNumber: string = '062';
 
-  public set: string = 'SV5M';
+  public set: string = 'SV5';
 
   public name: string = 'Prime Catcher';
 
-  public fullName: string = 'Prime Catcher SV5M';
+  public fullName: string = 'Prime Catcher SV5';
 
   public text: string =
     'Switch in 1 of your opponent\'s Benched Pokémon to the Active Spot. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.';

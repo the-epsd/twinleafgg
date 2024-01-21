@@ -10,11 +10,11 @@ class HandTrimmer extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'H';
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '64';
         this.name = 'Hand Trimmer';
-        this.fullName = 'Hand Trimmer SV5K';
+        this.fullName = 'Hand Trimmer SV5';
         this.text = 'Both players discard cards from their hand until they each have 5 cards in hand. (Your opponent discards first. Any player with 5 cards or less in their hands do not discard any cards.)';
     }
     reduceEffect(store, state, effect) {

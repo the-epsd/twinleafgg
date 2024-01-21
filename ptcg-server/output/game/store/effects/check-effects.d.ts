@@ -40,26 +40,20 @@ export declare class CheckPokemonStatsEffect implements Effect {
     resistance: Resistance[];
     constructor(target: PokemonCardList);
 }
-export declare class CheckPokemonPowersEffect implements Effect {
-    readonly type: string;
-    preventDefault: boolean;
-    target: PokemonCardList;
-    powers: Power[];
-    constructor(target: PokemonCardList);
-}
-export declare class CheckPokemonAttacksEffect implements Effect {
-    readonly type: string;
-    preventDefault: boolean;
-    target: PokemonCardList;
-    attacks: Attack[];
-    constructor(target: PokemonCardList);
-}
 export declare class CheckPokemonTypeEffect implements Effect {
     readonly type: string;
     preventDefault: boolean;
     target: PokemonCardList;
     cardTypes: CardType[];
     constructor(target: PokemonCardList);
+}
+export declare class CheckPokemonPowersEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    player: Player;
+    target: PokemonCardList;
+    powers: Power[];
+    constructor(player: Player, target: PokemonCardList);
 }
 export declare class CheckRetreatCostEffect implements Effect {
     readonly type: string;

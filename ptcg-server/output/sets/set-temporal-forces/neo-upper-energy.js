@@ -11,12 +11,12 @@ class NeoUpperEnergy extends energy_card_1.EnergyCard {
         this.provides = [card_types_1.CardType.COLORLESS];
         this.tags = [card_types_1.CardTag.ACE_SPEC];
         this.energyType = card_types_1.EnergyType.SPECIAL;
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '071';
         this.name = 'Neo Upper Energy';
-        this.fullName = 'Neo Upper Energy SV5K';
+        this.fullName = 'Neo Upper Energy SV5';
         this.text = 'As long as this card is attached to a Pokémon, it provides C Energy.' +
             '' +
             'If this card is attached to a Stage 2 Pokémon, this card provides every type of Energy but provides only 2 Energy at a time instead.';

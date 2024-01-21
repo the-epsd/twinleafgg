@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { AncientBoosterEnergyCapsuleArt, BounsweetArt, BruteBonnetArt, CounterCatcherArt, DefianceVestArt, DeoxysArt, EarthenVesselArt, ElekidArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GholdengoexArt, GibleArt, GimmighoulArt, GroudonArt, IronBundleArt, IronHandsexArt, IronJugulisArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MewtwoexArt, MiniorArt, MorpekoArt, NatuArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RoaringMoonexArt, ScreamTailArt, SnoruntArt, SteeneeArt, TapuKokoexArt, TechnoRadarArt, TsareenaexArt, TulipArt, XatuArt } from './card-images';
+import { Test } from './test';
 
 export const setParadoxRift: Card[] = [
   
@@ -42,4 +43,6 @@ export const setParadoxRift: Card[] = [
   new GroudonArt(),
   new IronJugulisArt(),
   new TapuKokoexArt(),
+
+  new Test(),
 ];

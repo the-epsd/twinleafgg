@@ -11,11 +11,11 @@ class DeliveryBox extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'H';
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '61';
         this.name = 'Delivery Box';
-        this.fullName = 'Delivery Box SV5K';
+        this.fullName = 'Delivery Box SV5';
         this.text = 'Search your deck for up to 2 Item cards, reveal them, and put them into your hand. Then, shuffle your deck.' +
             '' +
             'Your turn ends.';

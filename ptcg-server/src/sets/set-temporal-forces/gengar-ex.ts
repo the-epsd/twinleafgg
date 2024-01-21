@@ -37,7 +37,7 @@ export class Gengarex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -45,7 +45,7 @@ export class Gengarex extends PokemonCard {
 
   public name: string = 'Gengar ex';
 
-  public fullName: string = 'Gengar ex SV5K';
+  public fullName: string = 'Gengar ex SV5';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 

@@ -72,7 +72,7 @@ export class Gastly extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -80,7 +80,7 @@ export class Gastly extends PokemonCard {
 
   public name: string = 'Gastly';
 
-  public fullName: string = 'Gastly SV5K';
+  public fullName: string = 'Gastly SV5';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 

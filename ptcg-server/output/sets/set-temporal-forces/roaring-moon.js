@@ -28,11 +28,11 @@ class RoaringMoon extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '51';
         this.name = 'Roaring Moon';
-        this.fullName = 'Roaring Moon SV5K';
+        this.fullName = 'Roaring Moon SV5';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

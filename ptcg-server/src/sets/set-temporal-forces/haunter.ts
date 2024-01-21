@@ -29,7 +29,7 @@ export class Haunter extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -37,7 +37,7 @@ export class Haunter extends PokemonCard {
 
   public name: string = 'Haunter';
 
-  public fullName: string = 'Haunter SV5K';
+  public fullName: string = 'Haunter SV5';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 

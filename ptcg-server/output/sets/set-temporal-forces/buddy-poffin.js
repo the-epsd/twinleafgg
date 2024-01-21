@@ -9,12 +9,12 @@ class BuddyPoffin extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '63';
         this.regulationMark = 'H';
         this.name = 'Buddy Poffin';
-        this.fullName = 'Buddy Poffin SV5K';
+        this.fullName = 'Buddy Poffin SV5';
         this.text = 'Search your deck for up to 2 Basic Pokémon with 70 HP or less and put them onto your Bench. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {

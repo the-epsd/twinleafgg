@@ -32,7 +32,7 @@ export class Sableye extends PokemonCard {
     }
   ];
 
-  public set: string = 'PAR';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -40,7 +40,7 @@ export class Sableye extends PokemonCard {
 
   public name: string = 'Sableye';
 
-  public fullName: string = 'Sableye PAR';
+  public fullName: string = 'Sableye SV5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

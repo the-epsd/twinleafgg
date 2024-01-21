@@ -37,7 +37,7 @@ export class Miraidon extends PokemonCard {
       }
   ];
 
-    public set: string = 'SV5K';
+    public set: string = 'SV5';
 
     public cardImage: string = 'assets/cardback.png';
 
@@ -45,7 +45,7 @@ export class Miraidon extends PokemonCard {
 
     public name: string = 'Miraidon';
 
-    public fullName: string = 'Miraidon SV5K';
+    public fullName: string = 'Miraidon SV5';
 
     public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

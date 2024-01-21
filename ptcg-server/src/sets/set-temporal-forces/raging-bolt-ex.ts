@@ -38,7 +38,7 @@ export class RagingBoltex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -46,7 +46,7 @@ export class RagingBoltex extends PokemonCard {
 
   public name: string = 'Raging Bolt ex';
 
-  public fullName: string = 'Raging Bolt ex SV5K';
+  public fullName: string = 'Raging Bolt ex SV5';
 
   // Implement power
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

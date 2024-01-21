@@ -25,8 +25,8 @@ class Cresselia extends pokemon_card_1.PokemonCard {
             {
                 name: 'Lunar Blast',
                 cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
-                damage: 0,
-                text: 'Move 2 damage counters from each of your Pokémon to 1 of your opponent\'s Pokémon.'
+                damage: 110,
+                text: ''
             }
         ];
         this.set = 'LOR';
@@ -56,7 +56,10 @@ class Cresselia extends pokemon_card_1.PokemonCard {
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 1, allowCancel: false }), selected => {
                 const targets = selected || [];
                 targets.forEach(target => {
-                    target.damage += totalHealed * 20;
+                    target.damage = totalHealed * 20;
+                    const putCountersEffect = new attack_effects_1.PutCountersEffect(effect, target.damage);
+                    putCountersEffect.target = target;
+                    store.reduceEffect(state, putCountersEffect);
                 });
                 return state;
             });

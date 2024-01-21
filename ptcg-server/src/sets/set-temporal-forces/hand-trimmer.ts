@@ -12,7 +12,7 @@ export class HandTrimmer extends TrainerCard {
 
   public regulationMark = 'H';
   
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
   
   public cardImage: string = 'assets/cardback.png';
   
@@ -20,7 +20,7 @@ export class HandTrimmer extends TrainerCard {
   
   public name: string = 'Hand Trimmer';
   
-  public fullName: string = 'Hand Trimmer SV5K';
+  public fullName: string = 'Hand Trimmer SV5';
 
   public text: string =
     'Both players discard cards from their hand until they each have 5 cards in hand. (Your opponent discards first. Any player with 5 cards or less in their hands do not discard any cards.)';

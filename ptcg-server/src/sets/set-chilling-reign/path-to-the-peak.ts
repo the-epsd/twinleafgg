@@ -6,7 +6,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage } from '../../game';
-import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 
 export class PathToThePeak extends TrainerCard {
 
@@ -32,15 +31,12 @@ export class PathToThePeak extends TrainerCard {
 
       const pokemonCard = effect.card;
       if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
-      pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
-      pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
-      pokemonCard.tags.includes(CardTag.POKEMON_ex)) {
+        pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
+        pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
+        pokemonCard.tags.includes(CardTag.POKEMON_ex)) {
         if (pokemonCard.powers.length > 0) {
-          pokemonCard.powers.length = 0;
-          pokemonCard.powers = [];
-
-          const checkTable = new CheckTableStateEffect();
-          store.reduceEffect(state, checkTable);
+          // pokemonCard.powers.length = 0;
+          throw new GameError(GameMessage.CANNOT_USE_POWER);
         }
 
         if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
@@ -55,4 +51,6 @@ export class PathToThePeak extends TrainerCard {
     return state;
 
   }
+
+
 }

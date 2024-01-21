@@ -14,7 +14,7 @@ export class Eri extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -22,7 +22,7 @@ export class Eri extends TrainerCard {
 
   public name: string = 'Eri';
 
-  public fullName: string = 'Eri SV5K';
+  public fullName: string = 'Eri SV5';
 
   public text: string =
     'Your opponent reveals their hand. Discard up to 2 Item cards you find there.';

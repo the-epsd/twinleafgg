@@ -30,11 +30,11 @@ class Raichu extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '24';
         this.name = 'Raichu';
-        this.fullName = 'Raichu SV5K';
+        this.fullName = 'Raichu SV5';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

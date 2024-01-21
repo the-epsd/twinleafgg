@@ -13,7 +13,7 @@ export class DrumsOfAwakening extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV5K';
+  public set: string = 'SV5';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -21,7 +21,7 @@ export class DrumsOfAwakening extends TrainerCard {
 
   public name: string = 'Drums of Awakening';
 
-  public fullName: string = 'Drums of Awakening SV5K';
+  public fullName: string = 'Drums of Awakening SV5';
 
   public text: string =
     'Draw a card for each of your Ancient Pokémon in play.';

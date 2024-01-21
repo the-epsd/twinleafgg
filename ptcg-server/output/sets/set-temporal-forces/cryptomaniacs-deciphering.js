@@ -39,11 +39,11 @@ class CryptomaniacsDeciphering extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.tags = [card_types_1.CardTag.FUTURE];
-        this.set = 'SV5M';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '67';
         this.name = 'Cryptomaniac\'s Deciphering';
-        this.fullName = 'Cryptomaniac\'s Deciphering SV5M';
+        this.fullName = 'Cryptomaniac\'s Deciphering SV5';
         this.text = 'Search your deck for 2 cards, shuffle your deck, then put those cards on top of it in any order.';
     }
     reduceEffect(store, state, effect) {

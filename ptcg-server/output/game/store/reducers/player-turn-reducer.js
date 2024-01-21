@@ -10,7 +10,6 @@ const game_phase_effects_1 = require("../effects/game-phase-effects");
 const state_utils_1 = require("../state-utils");
 const play_card_action_1 = require("../actions/play-card-action");
 const pokemon_card_1 = require("../card/pokemon-card");
-const check_effects_1 = require("../effects/check-effects");
 function playerTurnReducer(store, state, action) {
     if (state.phase === state_1.GamePhase.PLAYER_TURN) {
         if (action instanceof game_actions_1.PassTurnAction) {
@@ -97,9 +96,6 @@ function playerTurnReducer(store, state, action) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
             state = store.reduceEffect(state, new game_effects_1.UsePowerEffect(player, power, pokemonCard));
-            const target = state_utils_1.StateUtils.getTarget(state, player, action.target);
-            const checkEffect = new check_effects_1.CheckPokemonPowersEffect(target);
-            state = store.reduceEffect(state, checkEffect);
             return state;
         }
         if (action instanceof game_actions_1.UseStadiumAction) {

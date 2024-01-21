@@ -29,7 +29,7 @@ class WalkingWakeex extends pokemon_card_1.PokemonCard {
                 text: 'During your next turn, this Pokémon can\'t attack.'
             }
         ];
-        this.set = 'SV5K';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '024';
         this.name = 'Walking Wake ex';

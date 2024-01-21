@@ -9,7 +9,6 @@ import { EndTurnEffect } from '../effects/game-phase-effects';
 import { StateUtils } from '../state-utils';
 import {SlotType} from '../actions/play-card-action';
 import {PokemonCard} from '../card/pokemon-card';
-import { CheckPokemonPowersEffect } from '../effects/check-effects';
 
 export function playerTurnReducer(store: StoreLike, state: State, action: Action): State {
 
@@ -120,9 +119,6 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       }
 
       state = store.reduceEffect(state, new UsePowerEffect(player, power, pokemonCard));
-      const target = StateUtils.getTarget(state, player, action.target);
-      const checkEffect = new CheckPokemonPowersEffect(target);
-      state = store.reduceEffect(state, checkEffect);
       return state;
     }
     
