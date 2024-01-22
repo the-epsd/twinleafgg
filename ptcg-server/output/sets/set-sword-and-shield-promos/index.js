@@ -10,4 +10,5 @@ exports.setSwordAndShieldPromos = [
     // new LucarioVSTARArt2(),
     new card_images_1.ProfessorBurnettArt(),
     new card_images_1.ManaphyArt(),
+    new card_images_1.EscapeRopeArt(),
 ];

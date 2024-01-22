@@ -5,6 +5,7 @@ import { RadiantCharizard } from './radiant-charizard';
 import { RadiantEternatus } from './radiant-eternatus';
 import { RegigigasV } from './regigigas-v';
 import { RegigigasVSTAR } from './regigigas-vstar';
+import { ZacianVSTAR } from './zacian-vstar';
 import { Zamazenta } from './zamazenta';
 import { ZamazentaV } from './zamazenta-v';
 
@@ -34,6 +35,10 @@ export class RegigigasVArt extends RegigigasV {
 
 export class RegigigasVSTARArt extends RegigigasVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_114_R_EN_LG.png';
+}
+
+export class ZacianVSTARArt extends ZacianVSTAR {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_036_R_EN_LG.png';
 }
 
 export class ZamazentaArt extends Zamazenta {

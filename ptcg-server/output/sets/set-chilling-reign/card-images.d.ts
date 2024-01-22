@@ -21,6 +21,8 @@ import { Klara } from './klara';
 import { Melony } from './melony';
 import { PathToThePeak } from './path-to-the-peak';
 import { Peony } from './peony';
+import { ShadowRiderCalyrexV } from './shadow-rider-calyrex-v';
+import { ShadowRiderCalyrexVMAX } from './shadow-rider-calyrex-vmax';
 import { Sneasel } from './sneasel';
 import { Snorunt } from './snorunt';
 import { Sobble } from './sobble';
@@ -91,6 +93,12 @@ export declare class PathToThePeakArt extends PathToThePeak {
     cardImage: string;
 }
 export declare class PeonyArt extends Peony {
+    cardImage: string;
+}
+export declare class ShadowRiderCalyrexVArt extends ShadowRiderCalyrexV {
+    cardImage: string;
+}
+export declare class ShadowRiderCalyrexVMAXArt extends ShadowRiderCalyrexVMAX {
     cardImage: string;
 }
 export declare class SneaselArt extends Sneasel {

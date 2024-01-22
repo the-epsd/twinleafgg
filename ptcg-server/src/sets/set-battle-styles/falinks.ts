@@ -33,7 +33,7 @@ export class Falinks extends PokemonCard {
 
   public setNumber = '83';
 
-  public name = 'Falinks BST';
+  public name = 'Falinks';
 
   public fullName = 'Falinks BST';
 

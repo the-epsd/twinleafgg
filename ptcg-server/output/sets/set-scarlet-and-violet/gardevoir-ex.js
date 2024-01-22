@@ -24,7 +24,7 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'As often as you like during your turn (before your attack), ' +
-                    'you may attach a P Energy card from your hand to 1 of your Pokemon.'
+                    'you may attach a P Energy card from your discard pile to 1 of your Pokemon.'
             }];
         this.attacks = [
             {
@@ -43,6 +43,17 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
+            const blocked = [];
+            player.bench.forEach((card, index) => {
+                if (card instanceof pokemon_card_1.PokemonCard && card.cardType === card_types_1.CardType.PSYCHIC) {
+                    blocked.push(index);
+                }
+            });
+            player.active.cards.forEach((card, index) => {
+                if (card instanceof pokemon_card_1.PokemonCard && card.cardType === card_types_1.CardType.PSYCHIC) {
+                    blocked.push(index);
+                }
+            });
             state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Psychic Energy' }, { allowCancel: true, min: 0 }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user

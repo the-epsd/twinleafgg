@@ -49,7 +49,7 @@ function* playCard(next, store, state, self, effect) {
 class Adaman extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'G';
+        this.regulationMark = 'F';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'ASR';
         this.setNumber = '135';

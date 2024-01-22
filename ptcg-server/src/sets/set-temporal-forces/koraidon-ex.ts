@@ -43,9 +43,9 @@ export class Koraidonex extends PokemonCard {
 
     public setNumber: string = '52';
 
-    public name: string = 'Koraidon';
+    public name: string = 'Koraidon ex';
 
-    public fullName: string = 'Koraidon SV5';
+    public fullName: string = 'Koraidon ex SV5';
 
     public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

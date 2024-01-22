@@ -49,8 +49,6 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
 
   public fullName: string = 'Hisuian Zoroark VSTAR LOR';
 
-  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

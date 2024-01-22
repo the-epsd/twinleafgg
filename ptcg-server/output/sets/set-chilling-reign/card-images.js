@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DrizzileArt = exports.BlisseyVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = void 0;
+exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DrizzileArt = exports.BlisseyVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = void 0;
 const avery_1 = require("./avery");
 const banette_1 = require("./banette");
 const beedril_1 = require("./beedril");
@@ -25,6 +25,8 @@ const melony_1 = require("./melony");
 //import { OldCemetery } from './old-cemetery';
 const path_to_the_peak_1 = require("./path-to-the-peak");
 const peony_1 = require("./peony");
+const shadow_rider_calyrex_v_1 = require("./shadow-rider-calyrex-v");
+const shadow_rider_calyrex_vmax_1 = require("./shadow-rider-calyrex-vmax");
 const sneasel_1 = require("./sneasel");
 const snorunt_1 = require("./snorunt");
 const sobble_1 = require("./sobble");
@@ -189,6 +191,20 @@ class PeonyArt extends peony_1.Peony {
     }
 }
 exports.PeonyArt = PeonyArt;
+class ShadowRiderCalyrexVArt extends shadow_rider_calyrex_v_1.ShadowRiderCalyrexV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_074_R_EN_LG.png';
+    }
+}
+exports.ShadowRiderCalyrexVArt = ShadowRiderCalyrexVArt;
+class ShadowRiderCalyrexVMAXArt extends shadow_rider_calyrex_vmax_1.ShadowRiderCalyrexVMAX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_075_R_EN_LG.png';
+    }
+}
+exports.ShadowRiderCalyrexVMAXArt = ShadowRiderCalyrexVMAXArt;
 class SneaselArt extends sneasel_1.Sneasel {
     constructor() {
         super(...arguments);

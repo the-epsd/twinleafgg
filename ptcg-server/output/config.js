@@ -36,17 +36,17 @@ exports.config = {
         schedulerStartNextHour: true,
         // Decrease players' ranking every day by 0.95
         // If you wish to disable this feature set IntervalCount to 0
-        rankingDecraseRate: 0.95,
+        rankingDecraseRate: 0,
         rankingDecraseTime: 24 * 60 * 60 * 1000,
         rankingDecreaseIntervalCount: 0,
         // Deletes matches older than `keepMatchTike` from the database, to keep it small.
         // If you wish to disable this feature set IntervalCount to 0
         keepMatchTime: 31 * 24 * 60 * 60 * 1000,
-        keepMatchIntervalCount: 4,
+        keepMatchIntervalCount: 0,
         // Deletes users that doesn't log in in the `keepUserTime` and their ranking is 0
         // If you wish to disable this feature set IntervalCount to 0
         keepUserTime: 7 * 24 * 60 * 60 * 1000,
-        keepUserIntervalCount: 4 // run every X scheduler ticks
+        keepUserIntervalCount: 0 // run every X scheduler ticks
     },
     bots: {
         // Default password for bot user
@@ -55,7 +55,7 @@ exports.config = {
         actionDelay: 2500,
         // Simulate matches every X ticks of the scheduler
         // If set to 0, the bot matches are disabled
-        botGamesIntervalCount: 60
+        botGamesIntervalCount: 600
     },
     sets: {
         scansDir: '',

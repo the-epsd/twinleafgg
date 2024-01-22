@@ -25,23 +25,27 @@ class HandTrimmer extends trainer_card_1.TrainerCard {
             const opponentHandLength = opponent.hand.cards.length;
             // Set discard amount to reach hand size of 5
             const discardAmount = opponentHandLength - 5;
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             // Opponent discards first
-            while (opponent.hand.cards.length > 5) {
+            if (opponent.hand.cards.length > 5) {
                 store.prompt(state, new __1.ChooseCardsPrompt(opponent.id, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: discardAmount, max: discardAmount, allowCancel: false }), selected => {
                     const cards = selected || [];
                     opponent.hand.moveCardsTo(cards, opponent.discard);
                 });
             }
-            // Get opponent's hand length
-            const playerHandLength = player.hand.cards.length;
+            const playerCards = player.hand.cards.filter(c => c !== this);
+            // Get player's hand length
+            const playerHandLength = playerCards.length;
             // Set discard amount to reach hand size of 5
             const playerDiscardAmount = playerHandLength - 5;
-            // Opponent discards first
-            while (opponent.hand.cards.length > 5) {
-                store.prompt(state, new __1.ChooseCardsPrompt(opponent.id, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: playerDiscardAmount, max: playerDiscardAmount, allowCancel: false }), selected => {
+            // Player discards next
+            if (player.hand.cards.length > 5) {
+                store.prompt(state, new __1.ChooseCardsPrompt(player.id, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { min: playerDiscardAmount, max: playerDiscardAmount, allowCancel: false }), selected => {
                     const cards = selected || [];
-                    opponent.hand.moveCardsTo(cards, opponent.discard);
+                    player.hand.moveCardsTo(cards, player.discard);
                 });
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
             }
             return state;
         }

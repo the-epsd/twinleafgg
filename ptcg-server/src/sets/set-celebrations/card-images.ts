@@ -2,6 +2,7 @@ import { FlyingPikachuV } from './flying-pikachu-v';
 import { FlyingPikachuVMAX } from './flying-pikachu-vmax';
 import { Kyogre } from './kyogre';
 import { Mew } from './mew';
+import { Yveltal } from './yveltal';
 import { ZacianV } from './zacian-v';
 
 export class FlyingPikachuVArt extends FlyingPikachuV {
@@ -18,6 +19,10 @@ export class KyogreArt extends Kyogre {
 
 export class MewArt extends Mew {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEL/CEL_011_R_EN_LG.png';
+}
+
+export class YVeltalArt extends Yveltal {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEL/CEL_019_R_EN_LG.png';
 }
 
 export class ZacianVArt extends ZacianV {

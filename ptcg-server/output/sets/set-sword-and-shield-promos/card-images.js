@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProfessorBurnettArt = exports.ManaphyArt = exports.LucarioVSTARArt = exports.LeafeonVSTARArt = exports.HisuianElectrodeVArt = exports.ChampionsFestivalArt = void 0;
+exports.EscapeRopeArt = exports.ProfessorBurnettArt = exports.ManaphyArt = exports.LucarioVSTARArt = exports.LeafeonVSTARArt = exports.HisuianElectrodeVArt = exports.ChampionsFestivalArt = void 0;
+const escape_rope_1 = require("../set-battle-styles/escape-rope");
 const champions_festival_1 = require("./champions-festival");
 const hisuian_electrode_v_1 = require("./hisuian-electrode-v");
 const leafeon_vstar_1 = require("./leafeon-vstar");
@@ -52,3 +53,10 @@ class ProfessorBurnettArt extends professor_burnett_1.ProfessorBurnet {
     }
 }
 exports.ProfessorBurnettArt = ProfessorBurnettArt;
+class EscapeRopeArt extends escape_rope_1.EscapeRope {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.serebii.net/card/ggend/51.jpg';
+    }
+}
+exports.EscapeRopeArt = EscapeRopeArt;

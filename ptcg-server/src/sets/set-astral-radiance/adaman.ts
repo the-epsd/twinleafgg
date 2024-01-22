@@ -79,7 +79,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
 export class Adaman extends TrainerCard {
 
-  public regulationMark = 'G';
+  public regulationMark = 'F';
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 

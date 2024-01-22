@@ -1,5 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, PlayerType } from '../../game';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 
 export class Scizor extends PokemonCard {
@@ -43,5 +47,29 @@ export class Scizor extends PokemonCard {
 
   public fullName: string = 'Scizor OBF';
 
-}
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let abilityPokemon = 0;
+
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        const pokemon = cardList.getPokemonCard();
+
+        if (pokemon && pokemon.powers && pokemon.powers.length > 0) {
+          const checkPokemonType = new CheckPokemonTypeEffect(cardList);
+          store.reduceEffect(state, checkPokemonType);
+          abilityPokemon++;
+        }
+
+        effect.damage += abilityPokemon * 50;
+
+      });
+      return state;
+    }
+    return state;
+  }
+}

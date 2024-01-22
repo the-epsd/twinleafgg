@@ -126,4 +126,5 @@ exports.setScarletAndViolet = [
     new full_arts_1.RareCandyHR(),
     new full_arts_1.SkwovetIR(),
     new full_arts_1.TeamStarGruntFA(),
+    new card_images_1.NestBallArt2(),
 ];

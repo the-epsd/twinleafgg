@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AveryArt, BanetteArt, BeedrillArt, BlisseyVArt, DrizzileArt, EchoingHornArt, ExpeditionUniformArt, FogCrystalArt, FroslassArt, GalarianArticunoVArt, GalarianMoltresVArt, GalladeArt, GardevoirArt, IceRiderCalyrexVArt, IceRiderCalyrexVMAXArt, InteleonArt, JustifiedGlovesArt, KarensConvictionArt, KirliaArt, KlaraArt, MelonyArt, PathToThePeakArt, PeonyArt, SneaselArt, SnoruntArt, SobbleArt } from './card-images';
+import { AveryArt, BanetteArt, BeedrillArt, BlisseyVArt, DrizzileArt, EchoingHornArt, ExpeditionUniformArt, FogCrystalArt, FroslassArt, GalarianArticunoVArt, GalarianMoltresVArt, GalladeArt, GardevoirArt, IceRiderCalyrexVArt, IceRiderCalyrexVMAXArt, InteleonArt, JustifiedGlovesArt, KarensConvictionArt, KirliaArt, KlaraArt, MelonyArt, PathToThePeakArt, PeonyArt, ShadowRiderCalyrexVArt, ShadowRiderCalyrexVMAXArt, SneaselArt, SnoruntArt, SobbleArt } from './card-images';
 
 export const setChillingReign: Card[] = [
   
@@ -26,6 +26,8 @@ export const setChillingReign: Card[] = [
   //new OldCemetery(),
   new PathToThePeakArt(),
   new PeonyArt(),
+  new ShadowRiderCalyrexVArt(),
+  new ShadowRiderCalyrexVMAXArt(),
   new SnoruntArt(),
   new SobbleArt(),
   new ExpeditionUniformArt(),

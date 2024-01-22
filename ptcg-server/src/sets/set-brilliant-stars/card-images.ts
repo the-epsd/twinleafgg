@@ -15,6 +15,7 @@ import { EnteiV } from './entei-v';
 import { Lapras } from './lapras';
 import { Liepard } from './liepard';
 import { LumineonV } from './lumineon-v';
+import { MagmaBasin } from './magma-basin';
 import { Magmortar } from './magmortar';
 import { Manaphy } from './manaphy';
 import { Moltres } from './moltres';
@@ -91,6 +92,10 @@ export class LiepardArt extends Liepard {
 
 export class LumineonVArt extends LumineonV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_040_R_EN_LG.png';
+}
+
+export class MagmaBasinArt extends MagmaBasin {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_144_R_EN_LG.png';
 }
 
 export class MagmortarArt extends Magmortar {

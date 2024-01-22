@@ -40,15 +40,15 @@ export class Dunsparce extends PokemonCard {
   
   public regulationMark = 'E';
   
-  public set: string = 'FST';
+  public set: string = 'SV5';
   
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '207';
+  public setNumber: string = '56';
   
   public name: string = 'Dunsparce';
   
-  public fullName: string = 'Dunsparce FST';
+  public fullName: string = 'Dunsparce SV5';
 
   public readonly CLEAR_DIG_MARKER = 'CLEAR_DIG_MARKER';
 

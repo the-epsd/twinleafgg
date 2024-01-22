@@ -1,47 +1,97 @@
+import { Beldum } from './beldum';
+import { BiancasSincerity } from './biancas-sincerity';
 import { BuddyPoffin } from './buddy-poffin';
+import { Charjabug } from './charjabug';
+import { Chatot } from './chatot';
+import { Croconaw } from './croconaw';
+import { CryptomaniacsDeciphering } from './cryptomaniacs-deciphering';
+import { DeliveryBox } from './delivery-box';
+import { Drilbur } from './drilbur';
+import { DrumsOfAwakening } from './drums-of-awakening';
 import { Dudunsparce } from './dudunsparce';
+import { Dunsparce } from './dunsparce';
+import { Duosion } from './duosion';
 import { EmergencyBoard } from './emergency-board';
 import { Eri } from './eri';
+import { ExplorersGuidance } from './explorers-guidance';
+import { Feraligatr } from './feraligatr';
+import { FlutterMane } from './flutter-mane';
+import { Gastly } from './gastly';
+import { Gengarex } from './gengar-ex';
 import { GougingFireex } from './gouging-fire-ex';
+import { Grotle } from './grotle';
 import { HandTrimmer } from './hand-trimmer';
+import { Haunter } from './haunter';
+import { HerosCape } from './heros-cape';
 import { IronCrownex } from './iron-crown-ex';
+import { IronHands } from './iron-hands';
 import { IronLeavesex } from './iron-leaves-ex';
+import { IronThorns } from './iron-thorns';
+import { Koraidon } from './koraidon';
+import { Koraidonex } from './koraidon-ex';
 import { MasterBall } from './master-ball';
 import { Metang } from './metang';
+import { Miraidon } from './miraidon';
+import { Miraidonex } from './miraidon-ex';
+import { MistEnergy } from './mist-energy';
+import { MortysConviction } from './mortys-conviction';
+import { MrMime } from './mr-mime';
 import { NeoUpperEnergy } from './neo-upper-energy';
-import { OrderBox } from './order-box';
+import { Pikachu } from './pikachu';
 import { PrimeCatcher } from './prime-catcher';
+import { Rabsca } from './rabsca';
 import { RagingBoltex } from './raging-bolt-ex';
+import { Raichu } from './raichu';
+import { RebootPod } from './reboot-pod';
+import { Rellor } from './rellor';
+import { Reuniclus } from './reuniclus';
 import { RoaringMoon } from './roaring-moon';
+import { Sableye } from './sableye';
+import { Salvatore } from './salvatore';
+import { Solosis } from './solosis';
+import { Torterraex } from './torterra-ex';
+import { Totodile } from './totodile';
+import { Turtwig } from './turtwig';
+import { Victini } from './victini';
+import { Vikavolt } from './vikavolt';
 import { WalkingWakeex } from './walking-wake-ex';
+export declare class BeldumArt extends Beldum {
+    cardImage: string;
+}
+export declare class BiancasSincerityArt extends BiancasSincerity {
+    cardImage: string;
+}
 export declare class BuddyPoffinArt extends BuddyPoffin {
+    cardImage: string;
+}
+export declare class CharjabugArt extends Charjabug {
+    cardImage: string;
+}
+export declare class ChatotArt extends Chatot {
+    cardImage: string;
+}
+export declare class CroconawArt extends Croconaw {
+    cardImage: string;
+}
+export declare class CryptomaniacsDecipheringArt extends CryptomaniacsDeciphering {
+    cardImage: string;
+}
+export declare class DeliveryBoxArt extends DeliveryBox {
+    cardImage: string;
+}
+export declare class DrilburArt extends Drilbur {
+    cardImage: string;
+}
+export declare class DrumsOfAwakeningArt extends DrumsOfAwakening {
     cardImage: string;
 }
 export declare class DudunsparceArt extends Dudunsparce {
     cardImage: string;
 }
-export declare class GougingFireexArt extends GougingFireex {
+export declare class DunsparceArt extends Dunsparce {
     cardImage: string;
 }
-export declare class IronLeavesexArt extends IronLeavesex {
-    cardImage: string;
-}
-export declare class NeoUpperEnergyArt extends NeoUpperEnergy {
-    cardImage: string;
-}
-export declare class WalkingWakeexArt extends WalkingWakeex {
-    cardImage: string;
-}
-export declare class MasterBallArt extends MasterBall {
-    cardImage: string;
-}
-export declare class PrimeCatcherArt extends PrimeCatcher {
-    cardImage: string;
-}
-export declare class IronCrownexArt extends IronCrownex {
-    cardImage: string;
-}
-export declare class RagingBoltexArt extends RagingBoltex {
+export declare class DuosionArt extends Duosion {
     cardImage: string;
 }
 export declare class EmergencyBoardArt extends EmergencyBoard {
@@ -50,15 +100,129 @@ export declare class EmergencyBoardArt extends EmergencyBoard {
 export declare class EriArt extends Eri {
     cardImage: string;
 }
-export declare class MetangArt extends Metang {
+export declare class ExplorersGuidanceArt extends ExplorersGuidance {
+    cardImage: string;
+}
+export declare class FeraligatrArt extends Feraligatr {
+    cardImage: string;
+}
+export declare class FlutterManeArt extends FlutterMane {
+    cardImage: string;
+}
+export declare class GastlyArt extends Gastly {
+    cardImage: string;
+}
+export declare class GengarexArt extends Gengarex {
+    cardImage: string;
+}
+export declare class GougingFireexArt extends GougingFireex {
+    cardImage: string;
+}
+export declare class GrotleArt extends Grotle {
     cardImage: string;
 }
 export declare class HandTrimmerArt extends HandTrimmer {
     cardImage: string;
 }
-export declare class OrderBoxArt extends OrderBox {
+export declare class HaunterArt extends Haunter {
+    cardImage: string;
+}
+export declare class HerosCapeArt extends HerosCape {
+    cardImage: string;
+}
+export declare class IronCrownexArt extends IronCrownex {
+    cardImage: string;
+}
+export declare class IronHandsArt extends IronHands {
+    cardImage: string;
+}
+export declare class IronLeavesexArt extends IronLeavesex {
+    cardImage: string;
+}
+export declare class IronThornsArt extends IronThorns {
+    cardImage: string;
+}
+export declare class KoraidonexArt extends Koraidonex {
+    cardImage: string;
+}
+export declare class KoraidonArt extends Koraidon {
+    cardImage: string;
+}
+export declare class MasterBallArt extends MasterBall {
+    cardImage: string;
+}
+export declare class MetangArt extends Metang {
+    cardImage: string;
+}
+export declare class MiraidonexArt extends Miraidonex {
+    cardImage: string;
+}
+export declare class MiraidonArt extends Miraidon {
+    cardImage: string;
+}
+export declare class MistEnergyArt extends MistEnergy {
+    cardImage: string;
+}
+export declare class MortysConvictionArt extends MortysConviction {
+    cardImage: string;
+}
+export declare class MrMimeArt extends MrMime {
+    cardImage: string;
+}
+export declare class NeoUpperEnergyArt extends NeoUpperEnergy {
+    cardImage: string;
+}
+export declare class PikachuArt extends Pikachu {
+    cardImage: string;
+}
+export declare class PrimeCatcherArt extends PrimeCatcher {
+    cardImage: string;
+}
+export declare class RabscaArt extends Rabsca {
+    cardImage: string;
+}
+export declare class RagingBoltexArt extends RagingBoltex {
+    cardImage: string;
+}
+export declare class RaichuArt extends Raichu {
+    cardImage: string;
+}
+export declare class RebootPodArt extends RebootPod {
+    cardImage: string;
+}
+export declare class RellorArt extends Rellor {
+    cardImage: string;
+}
+export declare class ReuniclusArt extends Reuniclus {
     cardImage: string;
 }
 export declare class RoaringMoonArt extends RoaringMoon {
+    cardImage: string;
+}
+export declare class SableyeArt extends Sableye {
+    cardImage: string;
+}
+export declare class SalvatoreArt extends Salvatore {
+    cardImage: string;
+}
+export declare class SolosisArt extends Solosis {
+    cardImage: string;
+}
+export declare class TorterraexArt extends Torterraex {
+    cardImage: string;
+}
+export declare class TotodileArt extends Totodile {
+    cardImage: string;
+}
+export declare class TurtwigArt extends Turtwig {
+    cardImage: string;
+}
+export declare class VictiniArt extends Victini {
+    cardImage: string;
+}
+export declare class VikavoltArt extends Vikavolt {
+    cardImage: string;
+}
+export declare class WalkingWakeexArt extends WalkingWakeex {
     cardImage: string;
 }

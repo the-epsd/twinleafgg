@@ -33,11 +33,11 @@ class Dunsparce extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'E';
-        this.set = 'FST';
+        this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '207';
+        this.setNumber = '56';
         this.name = 'Dunsparce';
-        this.fullName = 'Dunsparce FST';
+        this.fullName = 'Dunsparce SV5';
         this.CLEAR_DIG_MARKER = 'CLEAR_DIG_MARKER';
         this.DIG_MARKER = 'DIG_MARKER';
     }

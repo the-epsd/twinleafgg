@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ShayminVSTARArt = exports.ShayminVArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.ManaphyArt = exports.MagmortarArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = void 0;
+exports.ShayminVSTARArt = exports.ShayminVArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.ManaphyArt = exports.MagmortarArt = exports.MagmaBasinArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = void 0;
 const aggron_v_1 = require("./aggron-v");
 const aggron_vmax_1 = require("./aggron-vmax");
 const arceus_v_1 = require("./arceus-v");
@@ -18,6 +18,7 @@ const entei_v_1 = require("./entei-v");
 const lapras_1 = require("./lapras");
 const liepard_1 = require("./liepard");
 const lumineon_v_1 = require("./lumineon-v");
+const magma_basin_1 = require("./magma-basin");
 const magmortar_1 = require("./magmortar");
 const manaphy_1 = require("./manaphy");
 const moltres_1 = require("./moltres");
@@ -146,6 +147,13 @@ class LumineonVArt extends lumineon_v_1.LumineonV {
     }
 }
 exports.LumineonVArt = LumineonVArt;
+class MagmaBasinArt extends magma_basin_1.MagmaBasin {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_144_R_EN_LG.png';
+    }
+}
+exports.MagmaBasinArt = MagmaBasinArt;
 class MagmortarArt extends magmortar_1.Magmortar {
     constructor() {
         super(...arguments);

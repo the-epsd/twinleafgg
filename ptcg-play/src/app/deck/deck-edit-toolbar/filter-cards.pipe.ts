@@ -79,7 +79,7 @@ export class FilterCardsPipe implements PipeTransform {
       formats.push(Format.UNLIMITED);
     }
 
-    if (card.regulationMark === 'ENERGY') {
+    if (card.set === 'SV5') {
       formats.push(Format.RETRO);
     }
 

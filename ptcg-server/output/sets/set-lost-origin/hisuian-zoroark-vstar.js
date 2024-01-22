@@ -34,7 +34,6 @@ class HisuianZoroarkVSTAR extends game_1.PokemonCard {
         this.setNumber = '147';
         this.name = 'Hisuian Zoroark VSTAR';
         this.fullName = 'Hisuian Zoroark VSTAR LOR';
-        this.VSTAR_MARKER = 'VSTAR_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

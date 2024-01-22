@@ -33,8 +33,8 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
         this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '52';
-        this.name = 'Koraidon';
-        this.fullName = 'Koraidon SV5';
+        this.name = 'Koraidon ex';
+        this.fullName = 'Koraidon ex SV5';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

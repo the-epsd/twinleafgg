@@ -32,7 +32,7 @@ export class Gardevoirex extends PokemonCard {
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'As often as you like during your turn (before your attack), ' +
-      'you may attach a P Energy card from your hand to 1 of your Pokemon.'
+      'you may attach a P Energy card from your discard pile to 1 of your Pokemon.'
   }];
 
   public attacks = [
@@ -58,6 +58,20 @@ export class Gardevoirex extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+
+      const blocked: number[] = [];
+      player.bench.forEach((card, index) => {
+        if (card instanceof PokemonCard && card.cardType === CardType.PSYCHIC) {
+          blocked.push(index);
+        }
+      });
+
+      player.active.cards.forEach((card, index) => {
+        if (card instanceof PokemonCard && card.cardType === CardType.PSYCHIC) {
+          blocked.push(index);
+        }
+      });
+
 
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,

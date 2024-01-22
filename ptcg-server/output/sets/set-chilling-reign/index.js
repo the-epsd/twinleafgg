@@ -26,6 +26,8 @@ exports.setChillingReign = [
     //new OldCemetery(),
     new card_images_1.PathToThePeakArt(),
     new card_images_1.PeonyArt(),
+    new card_images_1.ShadowRiderCalyrexVArt(),
+    new card_images_1.ShadowRiderCalyrexVMAXArt(),
     new card_images_1.SnoruntArt(),
     new card_images_1.SobbleArt(),
     new card_images_1.ExpeditionUniformArt(),

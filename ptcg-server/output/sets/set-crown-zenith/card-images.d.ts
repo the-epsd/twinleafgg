@@ -5,6 +5,7 @@ import { RadiantCharizard } from './radiant-charizard';
 import { RadiantEternatus } from './radiant-eternatus';
 import { RegigigasV } from './regigigas-v';
 import { RegigigasVSTAR } from './regigigas-vstar';
+import { ZacianVSTAR } from './zacian-vstar';
 import { Zamazenta } from './zamazenta';
 import { ZamazentaV } from './zamazenta-v';
 export declare class BidoofArt extends Bidoof {
@@ -26,6 +27,9 @@ export declare class RegigigasVArt extends RegigigasV {
     cardImage: string;
 }
 export declare class RegigigasVSTARArt extends RegigigasVSTAR {
+    cardImage: string;
+}
+export declare class ZacianVSTARArt extends ZacianVSTAR {
     cardImage: string;
 }
 export declare class ZamazentaArt extends Zamazenta {

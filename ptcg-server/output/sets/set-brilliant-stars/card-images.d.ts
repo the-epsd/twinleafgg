@@ -15,6 +15,7 @@ import { EnteiV } from './entei-v';
 import { Lapras } from './lapras';
 import { Liepard } from './liepard';
 import { LumineonV } from './lumineon-v';
+import { MagmaBasin } from './magma-basin';
 import { Magmortar } from './magmortar';
 import { Manaphy } from './manaphy';
 import { Moltres } from './moltres';
@@ -73,6 +74,9 @@ export declare class LiepardArt extends Liepard {
     cardImage: string;
 }
 export declare class LumineonVArt extends LumineonV {
+    cardImage: string;
+}
+export declare class MagmaBasinArt extends MagmaBasin {
     cardImage: string;
 }
 export declare class MagmortarArt extends Magmortar {

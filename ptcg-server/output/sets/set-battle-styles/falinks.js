@@ -23,7 +23,7 @@ class Falinks extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '83';
-        this.name = 'Falinks BST';
+        this.name = 'Falinks';
         this.fullName = 'Falinks BST';
     }
     reduceEffect(store, state, effect) {

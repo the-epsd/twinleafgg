@@ -40,7 +40,7 @@ export class DeliveryBox extends TrainerCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-        { min: 0, max: 1, allowCancel: false }
+        { min: 1, max: 2, allowCancel: false }
       ), selected => {
         cards = selected || [];
       });

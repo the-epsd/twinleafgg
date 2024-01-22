@@ -88,7 +88,7 @@ export class Solrock extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH, SlotType.ACTIVE ],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Psychic Energy' },
-        { allowCancel: true, min: 1, max: 1 }
+        { allowCancel: true, min: 1, max: 1, blocked: blocked }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
@@ -97,9 +97,9 @@ export class Solrock extends PokemonCard {
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          if (target.getPokemonCard()?.name !== 'Lunatone') {
-            throw new GameError(GameMessage.INVALID_TARGET);
-          }
+          // if (target.getPokemonCard()?.name !== 'Lunatone') {
+          //   throw new GameError(GameMessage.INVALID_TARGET);
+          // }
           player.discard.moveCardTo(transfer.card, target);
           player.marker.addMarker(this.SUN_ENERGY_MARKER, this);
         }

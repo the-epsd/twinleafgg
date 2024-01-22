@@ -7,5 +7,6 @@ exports.setCelebrations = [
     new card_images_1.FlyingPikachuVMAXArt(),
     new card_images_1.KyogreArt(),
     new card_images_1.MewArt(),
+    new card_images_1.YVeltalArt(),
     new card_images_1.ZacianVArt(),
 ];

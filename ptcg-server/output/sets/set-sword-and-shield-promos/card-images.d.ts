@@ -1,3 +1,4 @@
+import { EscapeRope } from '../set-battle-styles/escape-rope';
 import { ChampionsFestival } from './champions-festival';
 import { HisuianElectrodeV } from './hisuian-electrode-v';
 import { LeafeonVSTAR } from './leafeon-vstar';
@@ -20,5 +21,8 @@ export declare class ManaphyArt extends Manaphy {
     cardImage: string;
 }
 export declare class ProfessorBurnettArt extends ProfessorBurnet {
+    cardImage: string;
+}
+export declare class EscapeRopeArt extends EscapeRope {
     cardImage: string;
 }
