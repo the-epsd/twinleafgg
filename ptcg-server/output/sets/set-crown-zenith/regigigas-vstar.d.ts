@@ -4,6 +4,7 @@ import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class RegigigasVSTAR extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     tags: CardTag[];
     cardType: CardType;
     hp: number;

@@ -7,7 +7,9 @@ import { Effect } from '../../game/store/effects/effect';
 
 export class RegigigasVSTAR extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VSTAR;
+
+  public evolvesFrom = 'Regigigas V';
 
   public tags = [ CardTag.POKEMON_VSTAR ];
 
