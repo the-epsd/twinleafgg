@@ -43,7 +43,7 @@ class LostVacuum extends trainer_card_1.TrainerCard {
                 }
             });
             const stadiumCard = game_1.StateUtils.getStadiumCard(state);
-            if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
+            if (pokemonsWithTool === 0 && stadiumCard == undefined) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             let cards = [];

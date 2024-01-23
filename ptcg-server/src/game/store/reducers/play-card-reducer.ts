@@ -50,25 +50,25 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
           throw new GameError(GameMessage.INVALID_TARGET);
         }
 
-        if (state.rules.firstTurnUseSupporter) {
-          // Allow multiple energy attachments per turn
-          const effect = new AttachEnergyEffect(player, handCard, target);  
-          return store.reduceEffect(state, effect);
+        // if (state.rules.firstTurnUseSupporter) {
+        //   // Allow multiple energy attachments per turn
+        //   const effect = new AttachEnergyEffect(player, handCard, target);  
+        //   return store.reduceEffect(state, effect);
 
 
       
-        } else {
+        // } else {
 
-          if (player.energyPlayedTurn === state.turn) {
-            throw new GameError(GameMessage.ENERGY_ALREADY_ATTACHED);
-          }
-          player.energyPlayedTurn = state.turn;
-
-          const effect = new AttachEnergyEffect(player, handCard, target);
-          return store.reduceEffect(state, effect);
+        if (player.energyPlayedTurn === state.turn) {
+          throw new GameError(GameMessage.ENERGY_ALREADY_ATTACHED);
         }
-        
+        player.energyPlayedTurn = state.turn;
+
+        const effect = new AttachEnergyEffect(player, handCard, target);
+        return store.reduceEffect(state, effect);
       }
+        
+      
 
       if (handCard instanceof PokemonCard) {
         const target = findCardList(state, action.target);
@@ -85,7 +85,7 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
         let effect: Effect;
         switch (handCard.trainerType) {
           case TrainerType.SUPPORTER:
-            if (state.turn === 1 && !state.rules.firstTurnUseSupporter) {
+            if (state.turn === 1) {
               throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             if (player.supporter.cards.length > 0) {

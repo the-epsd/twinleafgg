@@ -53,7 +53,7 @@ export class LostVacuum extends TrainerCard {
 
       const stadiumCard = StateUtils.getStadiumCard(state);
 
-      if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
+      if (pokemonsWithTool === 0 && stadiumCard == undefined) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
