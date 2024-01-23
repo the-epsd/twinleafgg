@@ -13,8 +13,8 @@ class OriginFormePalkiaVSTAR extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VSTAR];
         this.regulationMark = 'F';
-        this.stage = card_types_1.Stage.BASIC;
-        //public evolvesFrom = 'Palkia V';
+        this.stage = card_types_1.Stage.VSTAR;
+        this.evolvesFrom = 'Palkia V';
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 280;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];

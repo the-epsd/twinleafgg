@@ -35,19 +35,36 @@ class OriginFormePalkiaV extends pokemon_card_1.PokemonCard {
         this.setNumber = '39';
         this.name = 'Origin Forme Palkia V';
         this.fullName = 'Origin Forme Palkia V ASR';
-        this.HYDRO_BREAK_MARKER = 'HYDRO_BREAK_MARKER';
+        this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+        this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
-        // Hydro Break
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+            effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('marker cleared');
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('second marker added');
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            player.active.marker.addMarker(this.HYDRO_BREAK_MARKER, this);
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.STADIUM }, { min: 0, max: 1, allowCancel: false }), cards => {
+                player.deck.moveCardsTo(cards, player.hand);
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
+            });
         }
-        if (effect instanceof game_effects_1.UseAttackEffect && effect.player.active.marker.hasMarker(this.HYDRO_BREAK_MARKER, this)) {
-            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.active.marker.removeMarker(this.HYDRO_BREAK_MARKER, this);
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            // Check marker
+            if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+                console.log('attack blocked');
+                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+            }
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+            console.log('marker added');
         }
         return state;
     }

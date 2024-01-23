@@ -14,9 +14,9 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VSTAR;
 
-  //public evolvesFrom = 'Palkia V';
+  public evolvesFrom = 'Palkia V';
 
   public cardType: CardType = CardType.WATER;
 

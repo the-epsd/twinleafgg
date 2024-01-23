@@ -4,58 +4,7 @@ import { CardTag, EnergyType, SuperType, TrainerType } from '../../game/store/ca
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType } from '../../game';
-
-
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: Melony, effect: TrainerEffect): IterableIterator<State> {
-
-  const player = effect.player;
-
-  if (player.deck.cards.length === 0) {
-    return state;
-  }
-
-
-  let cards: Card[] = [];
-
-  
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.discard,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Water Energy' },
-    { min: 1, max: 1, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
-
-  if (cards.length > 0) {
-    yield store.prompt(state, new ChoosePokemonPrompt(
-      player.id,
-      GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
-      PlayerType.BOTTOM_PLAYER,
-      [SlotType.BENCH, SlotType.ACTIVE],
-      { allowCancel: true }
-    ), targets => {
-      if (!targets || targets.length === 0) {
-        return;
-      }
-      const target = targets[0];
-      if (!target.cards[0].tags.includes(CardTag.POKEMON_V) &&
-        !target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) &&
-        !target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
-        player.deck.moveCardsTo(cards, target);
-        next();
-      }
-      
-
-      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-      });
-    });
-  }}
+import { AttachEnergyPrompt, CardTarget, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 
 export class Melony extends TrainerCard {
 
@@ -79,11 +28,73 @@ export class Melony extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, this, effect);
-      return generator.next().value;
-    }
+      const player = effect.player;
+  
+      const hasEnergyInDiscard = player.discard.cards.some(c => {
+        return c instanceof EnergyCard
+            && c.energyType === EnergyType.BASIC && c.name === 'Basic Water Energy';});
+  
+      if (!hasEnergyInDiscard) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+        
+      let pokemonVInPlay = false;
+  
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
+        if (card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX)) {
+          pokemonVInPlay = true;
+        }
+      });
+  
+      if (!pokemonVInPlay) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      if (!hasEnergyInDiscard && !pokemonVInPlay) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+  
+      const blocked2: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        if (!card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX)) {
+          blocked2.push(target);
+        }
+      });
     
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE],
+        { min: 1, max: 1, blocked: blocked2 }
+      ), chosen => {
+    
+        chosen.forEach(target => {
+    
+          state = store.prompt(state, new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+            player.discard,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.BENCH, SlotType.ACTIVE],
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Water Energy' },
+            { allowCancel: false, min: 1, max: 1 }
+          ), transfers => {
+            transfers = transfers || [];
+    
+            if (transfers.length === 0) {
+              return;
+            }
+    
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              player.discard.moveCardTo(transfer.card, target);
+              player.deck.moveTo(player.hand, 3);
+            }
+          });
+        });
+      });
+    }
     return state;
   }
-    
 }
