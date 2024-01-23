@@ -28,19 +28,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
-
   return store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
     PlayerType.BOTTOM_PLAYER,
     [ SlotType.ACTIVE, SlotType.BENCH ],
-    { allowCancel: true, blocked }
+    { min: 1, max: 1, allowCancel: true, blocked }
   ), targets => {
     if (targets && targets.length > 0) {
-      // Discard trainer only when user selected a Pokemon
-      player.hand.moveCardTo(effect.trainerCard, player.discard);
 
       targets[0].moveTo(player.hand);
       targets[0].damage = 0;

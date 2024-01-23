@@ -31,7 +31,7 @@ exports.config = {
     core: {
         debug: false,
         // How often should we execute the background tasks
-        schedulerInterval: 1 * 60 * 1000,
+        schedulerInterval: 5 * 1000,
         // Wait till next hour before running tasks
         schedulerStartNextHour: false,
         // Decrease players' ranking every day by 0.95

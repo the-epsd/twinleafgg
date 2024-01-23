@@ -7,6 +7,7 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
+import { PlayerType, StateUtils } from '../../game';
 
 export class Spiritomb extends PokemonCard {
 
@@ -50,17 +51,48 @@ export class Spiritomb extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      const pokemonCard = effect.card;
+    if (effect instanceof PowerEffect
+      && effect.power.powerType === PowerType.ABILITY
+      && effect.power.name !== 'Fettered in Misfortune') {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-      if (pokemonCard.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
-        pokemonCard.powers = [];
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      let isSpiritombInPlay = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isSpiritombInPlay = true;
+        }
+      });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isSpiritombInPlay = true;
+        }
+      });
+
+      if (!isSpiritombInPlay) {
+        return state;
       }
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
+      }
+
+      const pokemonCard = effect.card;
+      
+      if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
+        pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
+        pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
+        pokemonCard.tags.includes(CardTag.POKEMON_ex)) {
+      
+        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      }
+
       return state;
     }
     return state;
   }
-
-
 }

@@ -30,7 +30,8 @@ export const config = {
     debug: false,
 
     // How often should we execute the background tasks
-    schedulerInterval: 1 * 60 * 1000, // 15 minutes
+    schedulerInterval: 5 * 1000,
+
 
     // Wait till next hour before running tasks
     schedulerStartNextHour: false,
