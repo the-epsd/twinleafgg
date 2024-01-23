@@ -28,7 +28,7 @@ export const config = {
     core: {
         debug: false,
         // How often should we execute the background tasks
-        schedulerInterval: 15 * 60 * 1000,
+        schedulerInterval: 60 * 1000, // 1 minute
         // Wait till next hour before running tasks
         schedulerStartNextHour: true,
         // Decrease players' ranking every day by 0.95
@@ -52,7 +52,7 @@ export const config = {
         actionDelay: 2500,
         // Simulate matches every X ticks of the scheduler
         // If set to 0, the bot matches are disabled
-        botGamesIntervalCount: 60
+        botGamesIntervalCount: 1
     },
     sets: {
         scansDir: '',

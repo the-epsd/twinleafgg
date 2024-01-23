@@ -30,7 +30,8 @@ export const config = {
     debug: false,
 
     // How often should we execute the background tasks
-    schedulerInterval: 15 * 60 * 1000, // 15 minutes
+    schedulerInterval: 60 * 1000, // 1 minute
+
 
     // Wait till next hour before running tasks
     schedulerStartNextHour: true,
@@ -60,7 +61,8 @@ export const config = {
 
     // Simulate matches every X ticks of the scheduler
     // If set to 0, the bot matches are disabled
-    botGamesIntervalCount: 600
+    botGamesIntervalCount: 1
+    
   },
   sets: {
     scansDir: '',
