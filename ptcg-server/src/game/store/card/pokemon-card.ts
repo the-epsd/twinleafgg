@@ -3,8 +3,9 @@ import { AttackEffect, PowerEffect } from '../effects/game-effects';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { Card } from './card';
-import { SuperType, Stage, PokemonType, CardType, CardTag, Format } from './card-types';
+import { SuperType, Stage, PokemonType, CardType, CardTag, Format, TrainerType } from './card-types';
 import { Attack, Weakness, Resistance, Power } from './pokemon-types';
+import { TrainerCard } from './trainer-card';
 
 export abstract class PokemonCard extends Card {
 
@@ -36,6 +37,8 @@ export abstract class PokemonCard extends Card {
 
   public movedToActiveThisTurn = false;
 
+  public tools: TrainerCard[] = [];
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect){
       for (let i = 0; i < this.attacks.length; i++) {
@@ -50,6 +53,12 @@ export abstract class PokemonCard extends Card {
     }
     else if (effect instanceof PowerEffect){
       for (let i = 0; i < this.powers.length; i++){
+        if (effect.power === this.powers[i] && effect.power.effect !== undefined){
+          return effect.power.effect(store, state, effect);
+        }
+      }
+
+      for (let i = 0; i < this.tools.length; i++) {
         if (effect.power === this.powers[i] && effect.power.effect !== undefined){
           return effect.power.effect(store, state, effect);
         }
