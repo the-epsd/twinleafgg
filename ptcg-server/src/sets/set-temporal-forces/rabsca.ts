@@ -103,7 +103,7 @@ export class Rabsca extends PokemonCard {
 
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
-      if (opponent.active.isBasic()) {
+      if (opponent.active) {
 
         let isRabsca2InPlay = false;
         targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
