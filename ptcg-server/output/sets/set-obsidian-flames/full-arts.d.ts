@@ -7,6 +7,7 @@ import { Pidgeotex } from './pidgeot-ex';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { Poppy } from './poppy';
+import { Scizor } from './scizor';
 declare class BelliboltIR extends Bellibolt {
     cardImage: string;
     setNumber: string;
@@ -23,6 +24,11 @@ declare class PidgeyIR extends Pidgey {
     fullName: string;
 }
 declare class PidgeottoIR extends Pidgeotto {
+    cardImage: string;
+    setNumber: string;
+    fullName: string;
+}
+declare class ScizorIR extends Scizor {
     cardImage: string;
     setNumber: string;
     fullName: string;
@@ -72,4 +78,4 @@ declare class FireEnergyHR extends FireEnergy {
     setNumber: string;
     fullName: string;
 }
-export { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, ArtazonHR, FireEnergyHR };
+export { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, ScizorIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, ArtazonHR, FireEnergyHR };

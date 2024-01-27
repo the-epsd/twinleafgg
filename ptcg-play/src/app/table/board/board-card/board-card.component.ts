@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PokemonCardList, Card, CardList, SuperType, SpecialCondition, Power } from 'ptcg-server';
+import { Marker } from 'ptcg-server/dist/game/store/state/card-marker';
 
 const MAX_ENERGY_CARDS = 4;
 
@@ -21,6 +22,7 @@ export class BoardCardComponent {
     this.cardCount = 0;
     this.damage = 0;
     this.specialConditions = [];
+    this.marker = [] as Marker[];
     this.isFaceDown = false;
 
     this.isEmpty = !value || !value.cards.length;
@@ -58,6 +60,7 @@ export class BoardCardComponent {
     this.cardCount = 0;
     this.damage = 0;
     this.specialConditions = [];
+    this.marker = [] as Marker[];
     this.isEmpty = !value;
   }
 
@@ -73,6 +76,7 @@ export class BoardCardComponent {
   public damage = 0;
   public specialConditions: SpecialCondition[] = [];
   public SpecialCondition = SpecialCondition;
+  public marker: Marker[] = [];
 
   private isSecret = false;
   private isPublic = false;
@@ -89,13 +93,13 @@ export class BoardCardComponent {
 
     for (const card of cardList.cards) {
       switch (card.superType) {
-      case SuperType.ENERGY:
-        if (this.energyCards.length < MAX_ENERGY_CARDS) {
-          this.energyCards.push(card);
-        } else {
-          this.moreEnergies++;
-        }
-        break;
+        case SuperType.ENERGY:
+          if (this.energyCards.length < MAX_ENERGY_CARDS) {
+            this.energyCards.push(card);
+          } else {
+            this.moreEnergies++;
+          }
+          break;
       }
     }
   }
@@ -105,3 +109,4 @@ export class BoardCardComponent {
   }
 
 }
+

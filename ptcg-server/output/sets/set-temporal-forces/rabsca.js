@@ -77,7 +77,7 @@ class Rabsca extends pokemon_card_1.PokemonCard {
                 return state;
             }
             const targetPlayer = __1.StateUtils.findOwner(state, effect.target);
-            if (opponent.active.isBasic()) {
+            if (opponent.active) {
                 let isRabsca2InPlay = false;
                 targetPlayer.forEachPokemon(__1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                     if (card === this) {

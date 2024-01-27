@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CheckTableStateEffect = exports.CheckProvidedEnergyEffect = exports.CheckAttackCostEffect = exports.CheckRetreatCostEffect = exports.CheckPokemonPowersEffect = exports.CheckPokemonTypeEffect = exports.CheckPokemonStatsEffect = exports.CheckPokemonPlayedTurnEffect = exports.CheckHpEffect = exports.CheckEffects = void 0;
+exports.CheckTableStateEffect = exports.CheckProvidedEnergyEffect = exports.CheckAttackCostEffect = exports.CheckRetreatCostEffect = exports.CheckPokemonTypeEffect = exports.CheckPokemonStatsEffect = exports.CheckPokemonPlayedTurnEffect = exports.CheckHpEffect = exports.CheckEffects = void 0;
 var CheckEffects;
 (function (CheckEffects) {
     CheckEffects["CHECK_HP_EFFECT"] = "CHECK_HP_EFFECT";
@@ -56,17 +56,6 @@ class CheckPokemonTypeEffect {
     }
 }
 exports.CheckPokemonTypeEffect = CheckPokemonTypeEffect;
-class CheckPokemonPowersEffect {
-    constructor(player, target) {
-        this.type = CheckEffects.CHECK_POKEMON_POWERS_EFFECT;
-        this.preventDefault = false;
-        this.player = player;
-        this.target = target;
-        const pokemonCard = target.getPokemonCard();
-        this.powers = pokemonCard ? [...pokemonCard.powers] : [];
-    }
-}
-exports.CheckPokemonPowersEffect = CheckPokemonPowersEffect;
 class CheckRetreatCostEffect {
     constructor(player) {
         this.type = CheckEffects.CHECK_RETREAT_COST_EFFECT;

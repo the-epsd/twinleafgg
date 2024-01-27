@@ -7,6 +7,7 @@ import { Pidgeotex } from './pidgeot-ex';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { Poppy } from './poppy';
+import { Scizor } from './scizor';
 
 class BelliboltIR extends Bellibolt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_201_R_EN_LG.png';
@@ -30,6 +31,12 @@ class PidgeottoIR extends Pidgeotto {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_208_R_EN_LG.png';
   public setNumber = '208';
   public fullName: string = 'Pidgeotto OBF';
+}
+
+class ScizorIR extends Scizor {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_205_R_EN.png';
+  public setNumber = '205';
+  public fullName: string = 'Scizor OBF';
 }
 
 class CharizardexFA extends Charizardex {
@@ -86,4 +93,4 @@ class FireEnergyHR extends FireEnergy {
   public fullName: string = 'Basic Fire Energy OBF';
 }
 
-export { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, ArtazonHR, FireEnergyHR };
+export { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, ScizorIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, ArtazonHR, FireEnergyHR };

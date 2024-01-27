@@ -1,7 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';
-import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -54,22 +53,23 @@ export class Scizor extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let abilityPokemon = 0;
+      const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
+      const vPokemons = benchPokemon.filter(card => card.powers.length);
+      const opponentActive = opponent.active.getPokemonCard();
+      if (opponentActive && opponentActive.powers.length !== undefined) {
+        vPokemons.push(opponentActive);
+      }
 
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        const pokemon = cardList.getPokemonCard();
+      let vPokes = vPokemons.length;
 
-        if (pokemon && pokemon.powers && pokemon.powers.length > 0) {
-          const checkPokemonType = new CheckPokemonTypeEffect(cardList);
-          store.reduceEffect(state, checkPokemonType);
-          abilityPokemon++;
-        }
+      if (opponentActive) {
+        vPokes++;
+      }
 
-        effect.damage += abilityPokemon * 50;
+      effect.damage += vPokes * 50;
 
-      });
-      return state;
     }
     return state;
   }
 }
+

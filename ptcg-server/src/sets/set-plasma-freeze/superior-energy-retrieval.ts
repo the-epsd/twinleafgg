@@ -74,9 +74,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-  player.hand.moveCardTo(self, player.discard);
   player.hand.moveCardsTo(cards, player.discard);
   player.discard.moveCardsTo(recovered, player.hand);
+
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return state;
 }
 

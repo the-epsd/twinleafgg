@@ -45,7 +45,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
     { },
-    { min: 2, max: 2, allowCancel: true }
+    { min: 2, max: 2, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
@@ -63,7 +63,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min: 1, max: 4, allowCancel: true }
+    { min: 1, max: 4, allowCancel: false }
   ), selected => {
     recovered = selected || [];
     next();
@@ -74,9 +74,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-  player.hand.moveCardTo(self, player.discard);
   player.hand.moveCardsTo(cards, player.discard);
   player.discard.moveCardsTo(recovered, player.hand);
+
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return state;
 }
 

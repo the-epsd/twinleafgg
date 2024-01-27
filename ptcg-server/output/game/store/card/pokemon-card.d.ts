@@ -4,6 +4,7 @@ import { StoreLike } from '../store-like';
 import { Card } from './card';
 import { SuperType, Stage, PokemonType, CardType, CardTag, Format } from './card-types';
 import { Attack, Weakness, Resistance, Power } from './pokemon-types';
+import { TrainerCard } from './trainer-card';
 export declare abstract class PokemonCard extends Card {
     superType: SuperType;
     cardType: CardType;
@@ -19,5 +20,6 @@ export declare abstract class PokemonCard extends Card {
     attacks: Attack[];
     format: Format;
     movedToActiveThisTurn: boolean;
+    tools: TrainerCard[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

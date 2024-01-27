@@ -24,15 +24,13 @@ class PathToThePeak extends trainer_card_1.TrainerCard {
             if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V) ||
                 pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX) ||
                 pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||
-                pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex)) {
-                if (pokemonCard.powers.length > 0) {
-                    // pokemonCard.powers.length = 0;
-                    throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-                }
-                if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
-                    throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_STADIUM);
-                }
-                return state;
+                pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex) ||
+                pokemonCard.tags.includes(card_types_1.CardTag.RADIANT)) {
+                // pokemonCard.powers.length = 0;
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
+            if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_STADIUM);
             }
             return state;
         }

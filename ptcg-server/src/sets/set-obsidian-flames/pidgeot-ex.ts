@@ -83,7 +83,7 @@ export class Pidgeotex extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         {},
-        { min: 0, max: 1, allowCancel: true }
+        { min: 1, max: 1, allowCancel: false }
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);
 

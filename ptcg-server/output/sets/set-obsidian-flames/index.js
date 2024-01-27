@@ -42,6 +42,7 @@ exports.setObsidianFlames = [
     new full_arts_1.CleffaIR(),
     new full_arts_1.PidgeyIR(),
     new full_arts_1.PidgeottoIR(),
+    new full_arts_1.ScizorIR(),
     new full_arts_1.CharizardexFA(),
     new full_arts_1.PidgeotexFA(),
     new full_arts_1.PoppyFA(),

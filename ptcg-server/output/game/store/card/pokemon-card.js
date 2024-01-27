@@ -21,6 +21,7 @@ class PokemonCard extends card_1.Card {
         this.attacks = [];
         this.format = card_types_1.Format.NONE;
         this.movedToActiveThisTurn = false;
+        this.tools = [];
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect) {
@@ -36,6 +37,11 @@ class PokemonCard extends card_1.Card {
         }
         else if (effect instanceof game_effects_1.PowerEffect) {
             for (let i = 0; i < this.powers.length; i++) {
+                if (effect.power === this.powers[i] && effect.power.effect !== undefined) {
+                    return effect.power.effect(store, state, effect);
+                }
+            }
+            for (let i = 0; i < this.tools.length; i++) {
                 if (effect.power === this.powers[i] && effect.power.effect !== undefined) {
                     return effect.power.effect(store, state, effect);
                 }

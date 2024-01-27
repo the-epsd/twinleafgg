@@ -33,24 +33,20 @@ export class PathToThePeak extends TrainerCard {
       if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
         pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
         pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
-        pokemonCard.tags.includes(CardTag.POKEMON_ex)) {
-        if (pokemonCard.powers.length > 0) {
-          // pokemonCard.powers.length = 0;
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
-        }
+        pokemonCard.tags.includes(CardTag.POKEMON_ex) ||
+        pokemonCard.tags.includes(CardTag.RADIANT)) {
+        // pokemonCard.powers.length = 0;
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
-        if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
-          throw new GameError(GameMessage.CANNOT_USE_STADIUM);
-        }
-
-        return state;
+      if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
+        throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
 
       return state;
     }
+
     return state;
-
   }
-
 
 }

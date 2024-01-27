@@ -47,9 +47,9 @@ function* playCard(next, store, state, self, effect) {
     if (recovered.length === 0) {
         return state;
     }
-    player.hand.moveCardTo(self, player.discard);
     player.hand.moveCardsTo(cards, player.discard);
     player.discard.moveCardsTo(recovered, player.hand);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class SuperiorEnergyRetrieval extends trainer_card_1.TrainerCard {

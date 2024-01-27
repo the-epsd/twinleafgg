@@ -17,7 +17,7 @@ import { PokemonLeagueHeadquartersArt } from './card-images';
 import { PoppyArt } from './card-images';
 import { TownStoreArt } from './card-images';
 import { VengefulPunchArt } from './card-images';
-import { ArtazonHR, BelliboltIR, CharizardexFA, CharizardexHR, CharizardexSIR, CleffaIR, FireEnergyHR, PidgeotexFA, PidgeotexSIR, PidgeottoIR, PidgeyIR, PoppyFA, PoppySIR } from './full-arts';
+import { ArtazonHR, BelliboltIR, CharizardexFA, CharizardexHR, CharizardexSIR, CleffaIR, FireEnergyHR, PidgeotexFA, PidgeotexSIR, PidgeottoIR, PidgeyIR, PoppyFA, PoppySIR, ScizorIR } from './full-arts';
 
 
 export const setObsidianFlames: Card[] = [
@@ -46,6 +46,7 @@ export const setObsidianFlames: Card[] = [
   new CleffaIR(),
   new PidgeyIR(),
   new PidgeottoIR(),
+  new ScizorIR(),
   new CharizardexFA(),
   new PidgeotexFA(),
   new PoppyFA(),

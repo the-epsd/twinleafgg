@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FireEnergyHR = exports.ArtazonHR = exports.CharizardexHR = exports.PoppySIR = exports.PidgeotexSIR = exports.CharizardexSIR = exports.PoppyFA = exports.PidgeotexFA = exports.CharizardexFA = exports.PidgeottoIR = exports.PidgeyIR = exports.CleffaIR = exports.BelliboltIR = void 0;
+exports.FireEnergyHR = exports.ArtazonHR = exports.CharizardexHR = exports.PoppySIR = exports.PidgeotexSIR = exports.CharizardexSIR = exports.PoppyFA = exports.PidgeotexFA = exports.CharizardexFA = exports.ScizorIR = exports.PidgeottoIR = exports.PidgeyIR = exports.CleffaIR = exports.BelliboltIR = void 0;
 const artazon_1 = require("../set-paldea-evolved/artazon");
 const fire_energy_1 = require("../set-scarlet-and-violet-energy/fire-energy");
 const bellibolt_1 = require("./bellibolt");
@@ -10,6 +10,7 @@ const pidgeot_ex_1 = require("./pidgeot-ex");
 const pidgeotto_1 = require("./pidgeotto");
 const pidgey_1 = require("./pidgey");
 const poppy_1 = require("./poppy");
+const scizor_1 = require("./scizor");
 class BelliboltIR extends bellibolt_1.Bellibolt {
     constructor() {
         super(...arguments);
@@ -46,6 +47,15 @@ class PidgeottoIR extends pidgeotto_1.Pidgeotto {
     }
 }
 exports.PidgeottoIR = PidgeottoIR;
+class ScizorIR extends scizor_1.Scizor {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_205_R_EN.png';
+        this.setNumber = '205';
+        this.fullName = 'Scizor OBF';
+    }
+}
+exports.ScizorIR = ScizorIR;
 class CharizardexFA extends charizard_ex_1.Charizardex {
     constructor() {
         super(...arguments);

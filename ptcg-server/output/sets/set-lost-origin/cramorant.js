@@ -37,6 +37,9 @@ class Cramorant extends game_1.PokemonCard {
         if (effect instanceof check_effects_1.CheckAttackCostEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (player.lostzone.cards.length <= 3) {
+                return state;
+            }
             if (player.lostzone.cards.length >= 4) {
                 try {
                     const powerEffect = new game_effects_1.PowerEffect(opponent, this.powers[0], this);

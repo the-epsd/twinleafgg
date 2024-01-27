@@ -3,7 +3,7 @@ import { AttackEffect, PowerEffect } from '../effects/game-effects';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { Card } from './card';
-import { SuperType, Stage, PokemonType, CardType, CardTag, Format, TrainerType } from './card-types';
+import { SuperType, Stage, PokemonType, CardType, CardTag, Format } from './card-types';
 import { Attack, Weakness, Resistance, Power } from './pokemon-types';
 import { TrainerCard } from './trainer-card';
 

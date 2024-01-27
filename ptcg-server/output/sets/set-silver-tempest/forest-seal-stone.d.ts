@@ -1,5 +1,6 @@
+import { PowerType, State, StoreLike, TrainerCard } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
-import { PowerType, TrainerCard } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class ForestSealStone extends TrainerCard {
     trainerType: TrainerType;
     set: string;
@@ -9,10 +10,17 @@ export declare class ForestSealStone extends TrainerCard {
     name: string;
     fullName: string;
     useWhenAttached: boolean;
-    powers: {
+    readonly VSTAR_MARKER = "VSTAR_MARKER";
+    powers: ({
+        name: string;
+        powerType: PowerType;
+        text: string;
+        useWhenInPlay?: undefined;
+    } | {
         name: string;
         powerType: PowerType;
         useWhenInPlay: boolean;
         text: string;
-    }[];
+    })[];
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -50,6 +50,10 @@ export class Cramorant extends PokemonCard {
     if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      if (player.lostzone.cards.length <= 3) {
+        return state;
+      }
   
       if (player.lostzone.cards.length >= 4) {
         try {
