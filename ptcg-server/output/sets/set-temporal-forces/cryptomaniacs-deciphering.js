@@ -29,7 +29,10 @@ function* playCard(next, store, state, self, effect) {
                 return state;
             }
             deckTop.applyOrder(order);
-            deckTop.moveTo(player.deck);
+            const topOfDeck = player.deck.top();
+            order.forEach(card => {
+                deckTop.moveCardsTo(topOfDeck, deckTop);
+            });
         });
     });
 }

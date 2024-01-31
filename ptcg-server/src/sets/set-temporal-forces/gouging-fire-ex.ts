@@ -45,45 +45,29 @@ export class GougingFireex extends PokemonCard {
 
   public fullName: string = 'Gouging Fire ex';
 
-  public readonly EXPLODING_FLARE_MARKER = 'EXPLODING_FLARE_MARKER';
+  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       const player = effect.player;
-
-      let canAttack = 0;
-
-      // if (player.active.cards[0] !== this) {
-      //   player.marker.removeMarker(this.EXPLODING_FLARE_MARKER, this);
-      //   console.log('gouging fire ex marker removed - no longer in active spot');
-      // }
-
-      // if (player.marker.hasMarker(this.EXPLODING_FLARE_MARKER, this)) {
-      //   console.log('gouging fire ex attack blocked');
-      //   throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      // }
-
-      //   player.marker.addMarker(this.EXPLODING_FLARE_MARKER, this);
-      //   console.log('gouging fire ex marker added');
-      //   return state;
-      // }
-
-      if (player.active.cards[0] !== this) {
-        canAttack = 0;
-      }
-
-      if (canAttack == 1) {
-        console.log('gouging fire ex attack blocked');
+      // Check marker
+      if (player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
-      canAttack = 1;
+      if (player.switchPokemon.name === this.name) {
+        player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      }
 
+      player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+      console.log('marker added');
     }
 
     return state;
   }
+
 
 }

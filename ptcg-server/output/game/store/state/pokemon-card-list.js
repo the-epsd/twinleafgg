@@ -16,6 +16,7 @@ class PokemonCardList extends card_list_1.CardList {
         this.attackMarker = new card_marker_1.Marker();
         this.abilityMarker = new card_marker_1.Marker();
         this.pokemonPlayedTurn = 0;
+        this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
     }
     getPokemons() {
         const result = [];
@@ -43,6 +44,7 @@ class PokemonCardList extends card_list_1.CardList {
         this.marker.markers = [];
     }
     clearEffects() {
+        this.marker.removeMarker(this.ATTACK_USED_MARKER);
         this.marker.markers = [];
         this.specialConditions = [];
         this.poisonDamage = 10;

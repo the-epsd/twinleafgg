@@ -19,8 +19,8 @@ function* playCard(next, store, state, self, effect) {
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    // We will discard this card after prompt confirmation
-    effect.preventDefault = true;
+    // // We will discard this card after prompt confirmation
+    // effect.preventDefault = true;
     // prepare card list without Junk Arm
     const handTemp = new card_list_1.CardList();
     handTemp.cards = player.hand.cards.filter(c => c !== self);

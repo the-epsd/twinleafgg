@@ -6,7 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 class OriginFormeDialgaVSTAR extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -38,14 +37,10 @@ class OriginFormeDialgaVSTAR extends pokemon_card_1.PokemonCard {
         this.setNumber = '114';
         this.name = 'Origin Forme Dialga VSTAR';
         this.fullName = 'Origin Forme Dialga VSTAR ASR';
-        this.VSTAR_MARKER = 'VSTAR_MARKER';
         this.STAR_CHRONOS_MARKER = 'STAR_CHRONOS_MARKER';
         this.STAR_CHRONOS_MARKER_2 = 'STAR_CHRONOS_MARKER_2';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
-            effect.player.marker.removeMarker(this.VSTAR_MARKER, this);
-        }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.STAR_CHRONOS_MARKER_2, this)) {
             effect.player.marker.removeMarker(this.STAR_CHRONOS_MARKER, this);
             effect.player.marker.removeMarker(this.STAR_CHRONOS_MARKER_2, this);
@@ -69,12 +64,13 @@ class OriginFormeDialgaVSTAR extends pokemon_card_1.PokemonCard {
             effect.damage += energyCount * 40;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            if (effect.player.marker.hasMarker(this.VSTAR_MARKER)) {
+            const player = effect.player;
+            if (player.usedVSTAR === true) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
-            effect.player.marker.addMarker(this.VSTAR_MARKER, this);
-            effect.player.marker.addMarker(this.STAR_CHRONOS_MARKER, this);
-            effect.player.usedTurnSkip = true;
+            player.usedVSTAR = true;
+            player.marker.addMarker(this.STAR_CHRONOS_MARKER, this);
+            player.usedTurnSkip = true;
         }
         return state;
     }

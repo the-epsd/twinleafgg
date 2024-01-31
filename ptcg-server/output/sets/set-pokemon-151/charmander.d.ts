@@ -23,7 +23,7 @@ export declare class Charmander extends PokemonCard {
         cost: CardType[];
         damage: number;
         text: string;
-        effect: undefined;
+        effect?: undefined;
     })[];
     set: string;
     cardImage: string;

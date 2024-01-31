@@ -5,7 +5,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class LeafeonVSTAR extends PokemonCard {
 
@@ -53,21 +52,14 @@ export class LeafeonVSTAR extends PokemonCard {
 
   public readonly CLEAR_LEAF_GUARD_MARKER = 'CLEAR_LEAF_GUARD_MARKER';
 
-  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.VSTAR_MARKER, this);
-    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
 
-      if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+      if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -84,6 +76,7 @@ export class LeafeonVSTAR extends PokemonCard {
       ), result => {
         const cardList = result[0];
         opponent.switchPokemon(cardList);
+        player.usedVSTAR = true;
       });
     }
 

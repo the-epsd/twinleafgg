@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PokemonCard = void 0;
 const game_effects_1 = require("../effects/game-effects");
+const card_marker_1 = require("../state/card-marker");
 const card_1 = require("./card");
 const card_types_1 = require("./card-types");
 class PokemonCard extends card_1.Card {
@@ -20,6 +21,7 @@ class PokemonCard extends card_1.Card {
         this.powers = [];
         this.attacks = [];
         this.format = card_types_1.Format.NONE;
+        this.marker = new card_marker_1.Marker();
         this.movedToActiveThisTurn = false;
         this.tools = [];
     }

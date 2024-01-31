@@ -28,7 +28,6 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
                 damage: 70,
                 text: 'Discard an Energy from this Pokémon.',
                 effect: (store, state, effect) => {
-                    prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.COLORLESS, 1);
                 }
             }
         ];
@@ -37,6 +36,12 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
         this.setNumber = '5';
         this.name = 'Charmeleon';
         this.fullName = 'Charmeleon MEW';
+    }
+    reduceEffect(store, state, effect) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
+            prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.COLORLESS, 1);
+        }
+        return state;
     }
 }
 exports.Charmeleon = Charmeleon;

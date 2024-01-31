@@ -94,6 +94,8 @@ cardManager.defineSet(sets.setParadoxRift);
 cardManager.defineSet(sets.setPaldeaFates);
 cardManager.defineSet(sets.setTemporalForces);
 
+cardManager.defineSet(sets.setTest);
+
 StateSerializer.setKnownCards(cardManager.getAllCards());
 
 const botManager = BotManager.getInstance();

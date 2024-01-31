@@ -24,7 +24,6 @@ export declare class OriginFormeDialgaVSTAR extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly VSTAR_MARKER = "VSTAR_MARKER";
     readonly STAR_CHRONOS_MARKER = "STAR_CHRONOS_MARKER";
     readonly STAR_CHRONOS_MARKER_2 = "STAR_CHRONOS_MARKER_2";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

@@ -95,10 +95,7 @@ export class RadiantGreninja extends PokemonCard {
         player.marker.addMarker(this.CONCEALED_CARDS_MARKER, this);
         player.hand.moveCardsTo(cards, player.discard);
         player.deck.moveTo(player.hand, 2);
-        
-
       });
-
       return state;
     }
   

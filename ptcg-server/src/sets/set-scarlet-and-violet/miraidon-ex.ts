@@ -59,13 +59,6 @@ export class Miraidonex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // const changes: any = mappings[this.setNumber];
-    // if(changes) {
-    //   this.set2 = changes.set2;
-    //   this.name = changes.name;
-    //   this.fullName = changes.fullName;
-    // }
-  
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);

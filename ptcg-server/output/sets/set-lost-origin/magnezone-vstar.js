@@ -4,7 +4,6 @@ exports.MagnezoneVSTAR = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class MagnezoneVSTAR extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -34,13 +33,8 @@ class MagnezoneVSTAR extends game_1.PokemonCard {
         this.setNumber = '57';
         this.name = 'Magnezone VSTAR';
         this.fullName = 'Magnezone VSTAR LOR';
-        this.VSTAR_MARKER = 'VSTAR_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
-            const player = effect.player;
-            player.marker.removeMarker(this.VSTAR_MARKER, this);
-        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: game_1.SuperType.TRAINER, trainerType: game_1.TrainerType.ITEM }, { min: 0, max: 2, allowCancel: true }), cards => {
@@ -57,10 +51,10 @@ class MagnezoneVSTAR extends game_1.PokemonCard {
             if (!hasBenched) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+            if (player.usedVSTAR === true) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
-            player.marker.addMarker(this.VSTAR_MARKER, this);
+            player.usedVSTAR = true;
             state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: false }), targets => {
                 if (!targets || targets.length === 0) {
                     return;

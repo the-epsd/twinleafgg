@@ -1,5 +1,6 @@
 import { Effect } from '../effects/effect';
 import { AttackEffect, PowerEffect } from '../effects/game-effects';
+import { Marker } from '../state/card-marker';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { Card } from './card';
@@ -34,6 +35,8 @@ export abstract class PokemonCard extends Card {
   public attacks: Attack[] = [];
 
   public format: Format = Format.NONE;
+
+  public marker = new Marker();
 
   public movedToActiveThisTurn = false;
 

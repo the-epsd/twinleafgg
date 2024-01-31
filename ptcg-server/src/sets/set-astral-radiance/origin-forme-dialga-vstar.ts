@@ -8,7 +8,6 @@ import { StoreLike, State,
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class OriginFormeDialgaVSTAR extends PokemonCard {
@@ -54,17 +53,11 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
 
   public fullName: string = 'Origin Forme Dialga VSTAR ASR';
 
-  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
-
   public readonly STAR_CHRONOS_MARKER = 'STAR_CHRONOS_MARKER';
 
   public readonly STAR_CHRONOS_MARKER_2 = 'STAR_CHRONOS_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      effect.player.marker.removeMarker(this.VSTAR_MARKER, this);
-    }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.STAR_CHRONOS_MARKER_2, this)) {
       effect.player.marker.removeMarker(this.STAR_CHRONOS_MARKER, this);
@@ -94,13 +87,14 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
 
-      if (effect.player.marker.hasMarker(this.VSTAR_MARKER)) {
+      if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      effect.player.marker.addMarker(this.VSTAR_MARKER, this);
-      effect.player.marker.addMarker(this.STAR_CHRONOS_MARKER, this);
-      effect.player.usedTurnSkip = true;
+      player.usedVSTAR = true;
+      player.marker.addMarker(this.STAR_CHRONOS_MARKER, this);
+      player.usedTurnSkip = true;
     }
 
     return state;

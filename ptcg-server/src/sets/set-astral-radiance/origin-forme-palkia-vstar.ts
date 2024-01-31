@@ -4,8 +4,6 @@ import { PowerType, StoreLike, State, StateUtils,
   GameError, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import {AttachEnergyPrompt} from '../../game/store/prompts/attach-energy-prompt';
 
 export class OriginFormePalkiaVSTAR extends PokemonCard {
@@ -53,13 +51,7 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
 
   public fullName: string = 'Origin Forme Palkia VSTAR ASR';
 
-  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.VSTAR_MARKER, this);
-    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
@@ -73,10 +65,12 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
           && c.energyType === EnergyType.BASIC
           && c.provides.includes(CardType.WATER);
       });
+
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      if (player.marker.hasMarker(this.VSTAR_MARKER, this)) {
+
+      if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -94,18 +88,14 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
         if (transfers.length === 0) {
           return;
         }
-        player.marker.addMarker(this.VSTAR_MARKER, this);
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
+          player.usedVSTAR = true;
         }
       });
 
       return state;
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.VSTAR_MARKER, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

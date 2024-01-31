@@ -38,14 +38,12 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
         this.setNumber = '34';
         this.name = 'Alolan Vulpix VSTAR';
         this.fullName = 'Alolan Vulpix VSTAR SIT';
-        this.VSTAR_MARKER = 'VSTAR_MARKER';
         this.SNOW_MIRAGE_MARKER = 'SNOW_MIRAGE_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
             player.marker.removeMarker(this.SNOW_MIRAGE_MARKER, this);
-            player.marker.removeMarker(this.VSTAR_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
@@ -74,7 +72,7 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
             if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
                 const player = effect.player;
                 const opponent = game_1.StateUtils.getOpponent(state, player);
-                if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+                if (player.usedVSTAR === true) {
                     throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
                 }
                 const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
@@ -90,6 +88,7 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
                 effect.ignoreResistance = true;
                 effect.ignoreWeakness = true;
                 effect.damage *= vPokes;
+                player.usedVSTAR = true;
             }
             return state;
         }

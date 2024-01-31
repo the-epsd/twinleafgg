@@ -1,5 +1,5 @@
-import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../..';
-import { CardType, Stage, SuperType } from '../card/card-types';
+import { AttachEnergyPrompt, Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../..';
+import { CardType, EnergyType, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../effects/check-effects';
@@ -99,7 +99,7 @@ export function FLIP_IF_HEADS(){
 }
 
 export function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: StoreLike, state: State, damage: number){
-  effect.damage += 100;
+  effect.damage += damage;
   return state;
 }
 
@@ -131,7 +131,7 @@ export function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State){
   return state;
 }
 
-export function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State){
+export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number){
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -145,10 +145,61 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON
     GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
     PlayerType.TOP_PLAYER,
     [SlotType.BENCH],
+    { min: min, max: max, allowCancel: false }
   ), selected => {
     const target = selected[0];
     const damageEffect = new PutDamageEffect(effect, damage);
     damageEffect.target = target;
     store.reduceEffect(state, damageEffect);
+  });
+}
+
+export function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON(effect: AttackEffect, store: StoreLike, state: State, amount: number) {
+
+  const player = effect.player;
+
+  state = store.prompt(state, new AttachEnergyPrompt(
+    player.id,
+    GameMessage.ATTACH_ENERGY_TO_BENCH,
+    player.discard,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.BENCH, SlotType.ACTIVE],
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+    { allowCancel: true, min: amount, max: amount },
+  ), transfers => {
+    transfers = transfers || [];
+    // cancelled by user
+    if (transfers.length === 0) {
+      return state;
+    }
+    for (const transfer of transfers) {
+      const target = StateUtils.getTarget(state, player, transfer.to);
+      player.discard.moveCardTo(transfer.card, target);
+    }
+  });
+}
+
+export function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number){
+
+  const player = effect.player;
+  const hasEnergyInHand = player.hand.cards.some(c => {
+    return c instanceof EnergyCard;
+  });
+  if (!hasEnergyInHand) {
+    throw new GameError(GameMessage.CANNOT_USE_POWER);
+  }
+
+  state = store.prompt(state, new ChooseCardsPrompt(
+    player.id,
+    GameMessage.CHOOSE_CARD_TO_DISCARD,
+    player.hand,
+    { superType: SuperType.ENERGY },
+    { allowCancel: true, min: minAmount, max: maxAmount }
+  ), cards => {
+    cards = cards || [];
+    if (cards.length === 0) {
+      return;
+    }
+    player.hand.moveCardsTo(cards, player.discard);
   });
 }

@@ -7,7 +7,6 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class LeafeonVSTAR extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -38,18 +37,13 @@ class LeafeonVSTAR extends pokemon_card_1.PokemonCard {
         this.fullName = 'Leafeon VSTAR SWSH';
         this.LEAF_GUARD_MARKER = 'LEAF_GUARD_MARKER';
         this.CLEAR_LEAF_GUARD_MARKER = 'CLEAR_LEAF_GUARD_MARKER';
-        this.VSTAR_MARKER = 'VSTAR_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
-            const player = effect.player;
-            player.marker.removeMarker(this.VSTAR_MARKER, this);
-        }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const hasBench = opponent.bench.some(b => b.cards.length > 0);
-            if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+            if (player.usedVSTAR === true) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             if (!hasBench) {
@@ -58,6 +52,7 @@ class LeafeonVSTAR extends pokemon_card_1.PokemonCard {
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
                 const cardList = result[0];
                 opponent.switchPokemon(cardList);
+                player.usedVSTAR = true;
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

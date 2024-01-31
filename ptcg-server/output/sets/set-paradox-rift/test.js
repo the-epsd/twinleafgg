@@ -11,8 +11,8 @@ class Test extends game_1.TrainerCard {
         this.set = 'TEST';
         this.setNumber = '135';
         this.cardImage = 'assets/cardback.png';
-        this.name = 'Test';
-        this.fullName = 'Test';
+        this.name = 'Blaines Quiz';
+        this.fullName = 'Blaines Quiz TEST';
         this.text = `
       Put a Pokémon from your hand face down in front of you and tell your opponent its HP. 
       They guess the name of that Pokémon, and then you reveal it. 

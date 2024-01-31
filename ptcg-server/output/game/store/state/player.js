@@ -29,9 +29,8 @@ class Player {
         this.avatarName = '';
         this.usedVSTAR = false;
         this.usedGX = false;
-    }
-    prompt(state, arg1) {
-        throw new Error('Method not implemented.');
+        this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+        this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     getPrizeLeft() {
         return this.prizes.reduce((left, p) => left + p.cards.length, 0);
@@ -56,6 +55,9 @@ class Player {
         if (benchIndex !== -1) {
             const temp = this.active;
             const tempCard = temp.getPokemonCard();
+            //breakdown of markers to be removed on switchPokemon()
+            this.marker.removeMarker(this.ATTACK_USED_MARKER);
+            this.marker.removeMarker(this.ATTACK_USED_2_MARKER);
             this.active.clearEffects();
             this.active = this.bench[benchIndex];
             this.bench[benchIndex] = temp;

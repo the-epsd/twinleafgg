@@ -4,7 +4,6 @@ import { StoreLike, State, PlayerType, Card, GameError, GameMessage, ChooseCards
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class DarkraiVSTAR extends PokemonCard {
 
@@ -52,17 +51,12 @@ export class DarkraiVSTAR extends PokemonCard {
 
   public fullName: string = 'Darkrai VSTAR ASR';
 
-  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.VSTAR_MARKER, this);
-    }
     
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+
+      if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
   
@@ -74,7 +68,7 @@ export class DarkraiVSTAR extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.marker.addMarker(this.VSTAR_MARKER, this);
+      player.usedVSTAR = true;
 
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(

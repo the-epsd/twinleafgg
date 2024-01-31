@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Metang extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -15,7 +16,7 @@ class Metang extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
-        this.abilities = [{
+        this.powers = [{
                 name: 'Metal Maker',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
@@ -33,14 +34,22 @@ class Metang extends pokemon_card_1.PokemonCard {
         this.setNumber = '47';
         this.name = 'Metang';
         this.fullName = 'Metang SV5';
-        this.MAGNET_MARKER = 'MAGNET_MARKER';
+        this.METAL_MAKER_MARKER = 'METAL_MAKER_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+            const player = effect.player;
+            player.marker.removeMarker(this.METAL_MAKER_MARKER, this);
+        }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const temp = new game_1.CardList();
             // Create deckBottom and move hand into it
             const deckBottom = new game_1.CardList();
+            if (player.marker.hasMarker(this.METAL_MAKER_MARKER, this)) {
+                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+            }
+            player.deck.moveTo(temp, 4);
             // Check if any cards drawn are basic energy
             const energyCardsDrawn = temp.cards.filter(card => {
                 return card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC && card.name === 'Basic Metal Energy';

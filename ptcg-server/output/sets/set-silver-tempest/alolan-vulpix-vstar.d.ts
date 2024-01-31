@@ -24,7 +24,6 @@ export declare class AlolanVulpixVSTAR extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly VSTAR_MARKER = "VSTAR_MARKER";
     readonly SNOW_MIRAGE_MARKER = "SNOW_MIRAGE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

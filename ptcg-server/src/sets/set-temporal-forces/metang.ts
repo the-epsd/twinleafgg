@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, AttachEnergyPrompt, CardList, EnergyCard, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt } from '../../game';
+import { PowerType, StoreLike, State, StateUtils, AttachEnergyPrompt, CardList, EnergyCard, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Metang extends PokemonCard {
 
@@ -20,7 +21,7 @@ export class Metang extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public abilities = [{
+  public powers = [{
     name: 'Metal Maker',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY, 
@@ -46,9 +47,14 @@ export class Metang extends PokemonCard {
 
   public fullName: string = 'Metang SV5';
 
-  public readonly MAGNET_MARKER = 'MAGNET_MARKER';
+  public readonly METAL_MAKER_MARKER = 'METAL_MAKER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.METAL_MAKER_MARKER, this);
+    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       
@@ -56,7 +62,13 @@ export class Metang extends PokemonCard {
       const temp = new CardList();
       // Create deckBottom and move hand into it
       const deckBottom = new CardList();
+
+      if (player.marker.hasMarker(this.METAL_MAKER_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
   
+      player.deck.moveTo(temp, 4);
+
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
         return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Basic Metal Energy';

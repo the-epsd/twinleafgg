@@ -51,7 +51,7 @@ export class Raichu extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const opponent = StateUtils.getOpponent(state, effect.player);
-      if (opponent.marker.hasMarker('VSTAR_MARKER')) {
+      if (opponent.usedVSTAR == true) {
         effect.damage += 100;
       }
       return state;

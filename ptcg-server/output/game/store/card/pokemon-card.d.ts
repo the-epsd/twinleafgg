@@ -1,4 +1,5 @@
 import { Effect } from '../effects/effect';
+import { Marker } from '../state/card-marker';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { Card } from './card';
@@ -19,6 +20,7 @@ export declare abstract class PokemonCard extends Card {
     powers: Power[];
     attacks: Attack[];
     format: Format;
+    marker: Marker;
     movedToActiveThisTurn: boolean;
     tools: TrainerCard[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

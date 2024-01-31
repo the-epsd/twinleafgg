@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { Effect } from '../../game/store/effects/effect';
 
 export class Gabite extends PokemonCard {
 
@@ -26,7 +27,6 @@ export class Gabite extends PokemonCard {
     damage: 50,
     text: 'Discard an Energy from this Pokémon.',
     effect: (store: StoreLike, state: State, effect: AttackEffect) => {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 1);
     }
   },
   ];
@@ -40,4 +40,12 @@ export class Gabite extends PokemonCard {
   public name: string = 'Gabite';
 
   public fullName: string = 'Gabite PAR';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 1);
+    }
+    return state;
+  }
+
 }

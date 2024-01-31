@@ -51,11 +51,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
       }
 
       deckTop.applyOrder(order);
-      deckTop.moveTo(player.deck);
+
+      const topOfDeck = player.deck.top(); 
+
+      order.forEach(card => {
+        deckTop.moveCardsTo(topOfDeck, deckTop);
+      });
     });
   });
 }
-
+      
 export class CryptomaniacsDeciphering extends TrainerCard {
 
   public regulationMark = 'H';

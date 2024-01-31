@@ -15,7 +15,7 @@ export declare class Metang extends PokemonCard {
         value: number;
     }[];
     retreat: CardType[];
-    abilities: {
+    powers: {
         name: string;
         useWhenInPlay: boolean;
         powerType: PowerType;
@@ -33,6 +33,6 @@ export declare class Metang extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly MAGNET_MARKER = "MAGNET_MARKER";
+    readonly METAL_MAKER_MARKER = "METAL_MAKER_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -6,7 +6,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType, EnergyCard, GameError, GameMessage } from '../../game';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class LucarioVSTAR extends PokemonCard {
@@ -52,13 +51,7 @@ export class LucarioVSTAR extends PokemonCard {
 
   public fullName: string = 'Lucario VSTAR SWSH';
 
-  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.VSTAR_MARKER, this);
-    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
@@ -74,7 +67,7 @@ export class LucarioVSTAR extends PokemonCard {
         const player = effect.player;
         const opponent = StateUtils.getOpponent(state, player);
 
-        if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+        if (player.usedVSTAR === true) {
           throw new GameError(GameMessage.POWER_ALREADY_USED);
         }
     
@@ -83,7 +76,7 @@ export class LucarioVSTAR extends PokemonCard {
           totalEnergy += cardList.cards.filter(c => c instanceof EnergyCard).length;
         });
         effect.damage += totalEnergy * 70;
-        player.marker.addMarker(this.VSTAR_MARKER, this);
+        player.usedVSTAR = true;
       }
       return state;
     }

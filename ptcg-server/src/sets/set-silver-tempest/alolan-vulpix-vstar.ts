@@ -50,15 +50,12 @@ export class AlolanVulpixVSTAR extends PokemonCard {
 
   public fullName = 'Alolan Vulpix VSTAR SIT';
 
-  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
-
   public readonly SNOW_MIRAGE_MARKER = 'SNOW_MIRAGE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.SNOW_MIRAGE_MARKER, this);
-      player.marker.removeMarker(this.VSTAR_MARKER, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -97,7 +94,7 @@ export class AlolanVulpixVSTAR extends PokemonCard {
         const player = effect.player;
         const opponent = StateUtils.getOpponent(state, player);
 
-        if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+        if (player.usedVSTAR === true) {
           throw new GameError(GameMessage.POWER_ALREADY_USED);
         }
 
@@ -117,6 +114,7 @@ export class AlolanVulpixVSTAR extends PokemonCard {
         effect.ignoreResistance = true;
         effect.ignoreWeakness = true;
         effect.damage *= vPokes;
+        player.usedVSTAR = true;
   
       }
       return state;

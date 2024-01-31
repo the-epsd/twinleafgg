@@ -5,7 +5,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_message_1 = require("../../game/game-message");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class GiratinaVSTAR extends game_1.PokemonCard {
     constructor() {
@@ -36,13 +35,8 @@ class GiratinaVSTAR extends game_1.PokemonCard {
         this.setNumber = '131';
         this.name = 'Giratina VSTAR';
         this.fullName = 'Giratina VSTAR LOR';
-        this.VSTAR_MARKER = 'VSTAR_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
-            const player = effect.player;
-            player.marker.removeMarker(this.VSTAR_MARKER, this);
-        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false }), targets => {
@@ -63,7 +57,7 @@ class GiratinaVSTAR extends game_1.PokemonCard {
             if (player.lostzone.cards.length <= 9) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+            if (player.usedVSTAR === true) {
                 throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
             if (player.lostzone.cards.length >= 10) {
@@ -71,7 +65,7 @@ class GiratinaVSTAR extends game_1.PokemonCard {
                 const activePokemon = opponent.active.getPokemonCard();
                 if (activePokemon) {
                     activePokemon.hp = 0;
-                    player.marker.addMarker(this.VSTAR_MARKER, this);
+                    player.usedVSTAR = true;
                 }
             }
         }

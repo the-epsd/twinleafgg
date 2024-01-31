@@ -35,7 +35,6 @@ class Charmander extends pokemon_card_1.PokemonCard {
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE],
                 damage: 30,
                 text: '',
-                effect: undefined
             }
         ];
         this.set = '151';

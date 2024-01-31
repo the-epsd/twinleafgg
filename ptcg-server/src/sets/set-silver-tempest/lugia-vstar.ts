@@ -4,7 +4,6 @@ import { StoreLike, State, ChooseCardsPrompt, PokemonCardList, Card,
   StateUtils, GameMessage, PowerType, GameError, ConfirmPrompt } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class LugiaVSTAR extends PokemonCard {
 
@@ -55,23 +54,18 @@ export class LugiaVSTAR extends PokemonCard {
 
   public fullName: string = 'Lugia VSTAR SIT';
 
-  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.VSTAR_MARKER, this);
-    }
-    
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
       const max = Math.min(slots.length, 2);
-      if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+
+      if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      player.marker.addMarker(this.VSTAR_MARKER, this);
+
+      player.usedVSTAR = true;
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,

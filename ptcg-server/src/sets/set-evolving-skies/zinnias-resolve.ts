@@ -24,8 +24,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
+  // // We will discard this card after prompt confirmation
+  // effect.preventDefault = true;
 
   // prepare card list without Junk Arm
   const handTemp = new CardList();

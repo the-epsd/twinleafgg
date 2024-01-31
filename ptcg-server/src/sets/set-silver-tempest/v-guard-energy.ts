@@ -10,7 +10,7 @@ export class VGuardEnergy extends EnergyCard {
 
   public provides: CardType[] = [ CardType.COLORLESS ];
 
-  public energyType = EnergyType.BASIC;
+  public energyType = EnergyType.SPECIAL;
 
   public regulationMark = 'F';
 

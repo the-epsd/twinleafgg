@@ -14,9 +14,9 @@ export class Test extends TrainerCard {
   
   public cardImage: string = 'assets/cardback.png';
   
-  public name: string = 'Test';
+  public name: string = 'Blaines Quiz';
   
-  public fullName: string = 'Test';
+  public fullName: string = 'Blaines Quiz TEST';
   
   public text = `
       Put a Pokémon from your hand face down in front of you and tell your opponent its HP. 

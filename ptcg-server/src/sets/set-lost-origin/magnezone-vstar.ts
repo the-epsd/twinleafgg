@@ -2,7 +2,6 @@ import { PokemonCard, Stage, CardType, CardTag, ChoosePokemonPrompt, GameMessage
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class MagnezoneVSTAR extends PokemonCard {
 
@@ -45,14 +44,7 @@ export class MagnezoneVSTAR extends PokemonCard {
 
   public fullName: string = 'Magnezone VSTAR LOR';
 
-  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.VSTAR_MARKER, this);
-    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
@@ -82,11 +74,11 @@ export class MagnezoneVSTAR extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+      if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
       
-      player.marker.addMarker(this.VSTAR_MARKER, this);
+      player.usedVSTAR = true;
   
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,

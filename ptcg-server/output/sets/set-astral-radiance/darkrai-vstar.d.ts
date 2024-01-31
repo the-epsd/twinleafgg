@@ -30,6 +30,5 @@ export declare class DarkraiVSTAR extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly VSTAR_MARKER = "VSTAR_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

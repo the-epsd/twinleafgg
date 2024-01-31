@@ -10,7 +10,7 @@ export class FusionStrikeEnergy extends EnergyCard {
 
   public tags = [ CardTag.FUSION_STRIKE ];
 
-  public energyType = EnergyType.BASIC;
+  public energyType = EnergyType.SPECIAL;
 
   public set: string = 'FST';
 

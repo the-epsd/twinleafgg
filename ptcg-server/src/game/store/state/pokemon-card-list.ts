@@ -23,6 +23,8 @@ export class PokemonCardList extends CardList {
 
   public pokemonPlayedTurn: number = 0;
 
+  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+
   // Some pokemon cards can be attached as a tool and stadium,
   // we must remember, which card acts as a pokemon tool.
   public tool: Card | undefined;
@@ -59,6 +61,7 @@ export class PokemonCardList extends CardList {
   }
 
   clearEffects(): void {
+    this.marker.removeMarker(this.ATTACK_USED_MARKER);
     this.marker.markers = [];
     this.specialConditions = [];
     this.poisonDamage = 10;

@@ -39,15 +39,17 @@ class Scizor extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            let abilityPokemon = 0;
-            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                const pokemon = cardList.getPokemonCard();
-                if ((pokemon === null || pokemon === void 0 ? void 0 : pokemon.powers) !== undefined) {
-                    abilityPokemon++;
-                }
-                effect.damage += abilityPokemon * 50;
-            });
-            return state;
+            const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
+            const vPokemons = benchPokemon.filter(card => card.powers.length);
+            const opponentActive = opponent.active.getPokemonCard();
+            if (opponentActive && opponentActive.powers.length !== undefined) {
+                vPokemons.push(opponentActive);
+            }
+            let vPokes = vPokemons.length;
+            if (opponentActive) {
+                vPokes++;
+            }
+            effect.damage += vPokes * 50;
         }
         return state;
     }

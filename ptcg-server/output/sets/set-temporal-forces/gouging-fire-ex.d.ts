@@ -23,6 +23,6 @@ export declare class GougingFireex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly EXPLODING_FLARE_MARKER = "EXPLODING_FLARE_MARKER";
+    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

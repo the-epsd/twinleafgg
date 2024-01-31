@@ -3,7 +3,6 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PowerType, GameError, GameMessage, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class ShayminVSTAR extends PokemonCard {
 
@@ -50,20 +49,13 @@ export class ShayminVSTAR extends PokemonCard {
 
   public fullName: string = 'Shaymin VSTAR BRS';
 
-  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.VSTAR_MARKER, this);
-    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
       const player = effect.player;
-      //Already used this turn
-      if (player.marker.hasMarker(this.VSTAR_MARKER, this)) {
+
+      if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -73,7 +65,7 @@ export class ShayminVSTAR extends PokemonCard {
         if (pokemonCard && pokemonCard.cardType === CardType.GRASS) {
           const healEffect = new HealEffect(player, cardList, 120);
           state = store.reduceEffect(state, healEffect);
-          player.marker.addMarker(this.VSTAR_MARKER, this);
+          player.usedVSTAR = true;
         }
       });
 

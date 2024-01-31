@@ -4,7 +4,6 @@ import { StoreLike, State,
   PlayerType, SlotType, GameMessage, ShuffleDeckPrompt, PowerType, ChooseCardsPrompt, GameError, AttachEnergyPrompt, StateUtils, CardTarget } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 function* useTrinityNova(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -103,21 +102,16 @@ export class ArceusVSTAR extends PokemonCard {
 
   public fullName: string = 'Arceus VSTAR BRS';
 
-  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.VSTAR_MARKER, this);
-    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.VSTAR_MARKER)) {
+
+      if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      player.marker.addMarker(this.VSTAR_MARKER, this);
+      player.usedVSTAR = true;
       state = store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,

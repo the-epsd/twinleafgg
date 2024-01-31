@@ -3,12 +3,7 @@ import { CardTarget, PlayerType, SlotType } from '../actions/play-card-action';
 import { PokemonCard } from '../card/pokemon-card';
 import { PokemonCardList } from './pokemon-card-list';
 import { Marker } from './card-marker';
-import { ChooseCardsPrompt } from '../prompts/choose-cards-prompt';
-import { State } from './state';
 export class Player {
-  prompt(state: State, arg1: ChooseCardsPrompt) {
-    throw new Error('Method not implemented.');
-  }
 
   id: number = 0;
 
@@ -53,6 +48,9 @@ export class Player {
   usedVSTAR: boolean = false;
 
   usedGX: boolean = false;
+
+  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
   
   usedRapidStrikeSearchThisTurn: any;
   usedExcitingStageThisTurn: any;
@@ -89,6 +87,11 @@ export class Player {
     if (benchIndex !== -1) {
       const temp = this.active;
       const tempCard = temp.getPokemonCard() as PokemonCard;
+
+      //breakdown of markers to be removed on switchPokemon()
+      this.marker.removeMarker(this.ATTACK_USED_MARKER);
+      this.marker.removeMarker(this.ATTACK_USED_2_MARKER);
+
       this.active.clearEffects();
       this.active = this.bench[benchIndex];
       this.bench[benchIndex] = temp;

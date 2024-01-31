@@ -41,7 +41,6 @@ export class Charmander extends PokemonCard {
       cost: [CardType.FIRE, CardType.FIRE],
       damage: 30,
       text: '',
-      effect: undefined
     }
   ];
 

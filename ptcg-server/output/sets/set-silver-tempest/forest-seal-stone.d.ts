@@ -11,16 +11,11 @@ export declare class ForestSealStone extends TrainerCard {
     fullName: string;
     useWhenAttached: boolean;
     readonly VSTAR_MARKER = "VSTAR_MARKER";
-    powers: ({
-        name: string;
-        powerType: PowerType;
-        text: string;
-        useWhenInPlay?: undefined;
-    } | {
+    powers: {
         name: string;
         powerType: PowerType;
         useWhenInPlay: boolean;
         text: string;
-    })[];
+    }[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

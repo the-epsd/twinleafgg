@@ -3,7 +3,6 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, GameError } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class HisuianSamurottVSTAR extends PokemonCard {
 
@@ -47,19 +46,12 @@ export class HisuianSamurottVSTAR extends PokemonCard {
 
   public fullName: string = 'Hisuian Samurott VSTAR ASR';
 
-  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.VSTAR_MARKER, this);
-    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(this.VSTAR_MARKER, this)) {
+      if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -73,7 +65,7 @@ export class HisuianSamurottVSTAR extends PokemonCard {
         const targets = selected || [];
         targets.forEach(target => {
           target.damage += 40;
-          player.marker.addMarker(this.VSTAR_MARKER, this);
+          player.usedVSTAR = true;
         });
 
         if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
