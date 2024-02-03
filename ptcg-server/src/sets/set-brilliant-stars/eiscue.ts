@@ -7,11 +7,15 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class Eiscue extends PokemonCard {
 
   public stage = Stage.BASIC;
-  public cardType = CardType.WATER;  
+
+  public cardType = CardType.WATER; 
+
   public hp = 110;
 
   public weakness = [{ type: CardType.METAL }];
+
   public resistance = [];
+
   public retreat = [CardType.COLORLESS];
 
   public attacks = [
@@ -28,6 +32,8 @@ export class Eiscue extends PokemonCard {
       text: ''
     }
   ];
+
+  public regulationMark = 'F';
 
   public set: string = 'BRS';
 

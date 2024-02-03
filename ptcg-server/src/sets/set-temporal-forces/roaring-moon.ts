@@ -10,7 +10,7 @@ export class RoaringMoon extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags: CardTag[] = [ CardTag.ANCIENT ];
+  public tags = [CardTag.ANCIENT];
 
   public cardType: CardType = CardType.DARK;
 

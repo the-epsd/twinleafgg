@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SwitchingCupsArt = exports.SwabluArt = exports.SuicuneVArt = exports.StormyMountainsArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FullFaceGuardArt = exports.FlaaffyArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DragoniteVArt = exports.CopycatArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SylveonVMAXArt = exports.SylveonVArt = exports.SwitchingCupsArt = exports.SwabluArt = exports.SuicuneVArt = exports.StormyMountainsArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FullFaceGuardArt = exports.FlaaffyArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DragoniteVArt = exports.CopycatArt = void 0;
 const copycat_1 = require("./copycat");
 const dragonite_v_1 = require("./dragonite-v");
 const duraludon_v_1 = require("./duraludon-v");
@@ -24,6 +24,8 @@ const stormy_mountains_1 = require("./stormy-mountains");
 const suicune_v_1 = require("./suicune-v");
 const swablu_1 = require("./swablu");
 const switching_cups_1 = require("./switching-cups");
+const sylveon_v_1 = require("./sylveon-v");
+const sylveon_vmax_1 = require("./sylveon-vmax");
 const tropius_1 = require("./tropius");
 const umbreon_v_1 = require("./umbreon-v");
 const umbreon_vmax_1 = require("./umbreon-vmax");
@@ -192,6 +194,20 @@ class SwitchingCupsArt extends switching_cups_1.SwitchingCups {
     }
 }
 exports.SwitchingCupsArt = SwitchingCupsArt;
+class SylveonVArt extends sylveon_v_1.SylveonV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_074_R_EN.png';
+    }
+}
+exports.SylveonVArt = SylveonVArt;
+class SylveonVMAXArt extends sylveon_vmax_1.SylveonVMAX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_075_R_EN.png';
+    }
+}
+exports.SylveonVMAXArt = SylveonVMAXArt;
 class TropiusArt extends tropius_1.Tropius {
     constructor() {
         super(...arguments);

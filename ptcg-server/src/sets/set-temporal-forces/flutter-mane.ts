@@ -108,12 +108,12 @@ export class FlutterMane extends PokemonCard {
         }
       });
 
-      // Try reducing ability for each player
+      // Try reducing ability for opponent
       try {
         const playerPowerEffect = new PowerEffect(player, this.powers[0], this);
         store.reduceEffect(state, playerPowerEffect);
       } catch {
-        throw new GameError(GameMessage.CANNOT_USE_STADIUM);
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
       return state;
     }

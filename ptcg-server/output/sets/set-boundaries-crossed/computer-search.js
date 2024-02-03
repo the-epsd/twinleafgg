@@ -45,7 +45,6 @@ class ComputerSearch extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.tags = [card_types_1.CardTag.ACE_SPEC];
-        this.format = card_types_1.Format.RETRO;
         this.set = 'BCR';
         this.name = 'Computer Search';
         this.fullName = 'Computer Search BCR';

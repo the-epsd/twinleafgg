@@ -42,7 +42,7 @@ export class GreatBall extends TrainerCard {
         return card instanceof PokemonCard && card.superType === SuperType.POKEMON;
       });
       
-      // If no energy cards were drawn, move all cards to hand
+      // If a Pokemon was taken, show the opponent
       if (pokemonDrawn.length == 0) {
         return store.prompt(state, new ShowCardsPrompt(
           player.id, 
@@ -52,9 +52,8 @@ export class GreatBall extends TrainerCard {
           
           temp.cards.forEach(card => {
             temp.moveCardTo(card, player.deck);
+            player.supporter.moveCardTo(this, player.discard);
           });
-
-          player.supporter.moveCardTo(this, player.discard);
           
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
@@ -81,7 +80,6 @@ export class GreatBall extends TrainerCard {
           // No Pokemon chosen, shuffle all back
             temp.cards.forEach(card => {
               temp.moveCardTo(card, player.deck);
-
               player.supporter.moveCardTo(this, player.discard);
             });  
           }

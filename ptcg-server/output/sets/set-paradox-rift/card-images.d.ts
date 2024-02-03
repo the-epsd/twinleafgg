@@ -29,7 +29,9 @@ import { Natu } from './natu';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
 import { RoaringMoonex } from './roaring-moon-ex';
+import { SandyShocksex } from './sandy-shocks-ex';
 import { ScreamTail } from './scream-tail';
+import { SlitherWing } from './slither-wing';
 import { Snorunt } from './snorunt';
 import { Steenee } from './steenee';
 import { TapuKokoex } from './tapu-koko-ex';
@@ -130,7 +132,13 @@ export declare class ProfessorTurosScenarioArt extends ProfessorTurosScenario {
 export declare class RoaringMoonexArt extends RoaringMoonex {
     cardImage: string;
 }
+export declare class SandyShocksexArt extends SandyShocksex {
+    cardImage: string;
+}
 export declare class ScreamTailArt extends ScreamTail {
+    cardImage: string;
+}
+export declare class SlitherWingArt extends SlitherWing {
     cardImage: string;
 }
 export declare class SnoruntArt extends Snorunt {

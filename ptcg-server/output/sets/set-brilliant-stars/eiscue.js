@@ -28,6 +28,7 @@ class Eiscue extends game_1.PokemonCard {
                 text: ''
             }
         ];
+        this.regulationMark = 'F';
         this.set = 'BRS';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '44';

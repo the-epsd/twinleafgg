@@ -11,7 +11,12 @@ const process = require('process');
 
 const cardManager = CardManager.getInstance();
 
-// cardManager.defineSet(sets.setBaseSet);
+cardManager.defineSet(sets.setBaseSet);
+cardManager.defineSet(sets.setJungle);
+cardManager.defineSet(sets.setFossil);
+cardManager.defineSet(sets.setWOTCPromos);
+
+cardManager.defineSet(sets.setBaseSetEnergy);
 
 // cardManager.defineSet(sets.setDiamondAndPearl);
 // cardManager.defineSet(sets.setOP9);

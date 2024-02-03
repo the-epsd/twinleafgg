@@ -12,6 +12,11 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 //Retro
 __exportStar(require("./set-base-set"), exports);
+__exportStar(require("./set-jungle"), exports);
+__exportStar(require("./set-fossil"), exports);
+__exportStar(require("./set-wotc-promos"), exports);
+//Retro Energy
+__exportStar(require("./set-base-set-energy"), exports);
 //DP Era
 __exportStar(require("./set-diamond-and-pearl"), exports);
 __exportStar(require("./set-op9"), exports);

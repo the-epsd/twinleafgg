@@ -78,13 +78,13 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
                     store.reduceEffect(state, checkPokemonType);
                 }
             });
-            // Try reducing ability for each player
+            // Try reducing ability for opponent
             try {
                 const playerPowerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
                 store.reduceEffect(state, playerPowerEffect);
             }
             catch (_a) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_STADIUM);
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             return state;
         }

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArmarougeArt, NemonaArt, NestBallArt2, RockyHelmetArt } from './card-images';
+import { ArmarougeArt, CharcadetArt, NemonaArt, NestBallArt2, RockyHelmetArt } from './card-images';
 import { ArvenArt } from './card-images';
 import { BeachCourtArt } from './card-images';
 import { CrushingHammerArt } from './card-images';
@@ -51,6 +51,7 @@ export const setScarletAndViolet: Card[] = [
   new ArmarougeArt(),
   new ArvenArt(),
   new BeachCourtArt(),
+  new CharcadetArt(),
   new CrushingHammerArt(),
   new CyclizarArt(),
   new DefianceBandArt(),

@@ -52,6 +52,7 @@ exports.setScarletAndViolet = [
     new card_images_1.ArmarougeArt(),
     new card_images_2.ArvenArt(),
     new card_images_3.BeachCourtArt(),
+    new card_images_1.CharcadetArt(),
     new card_images_4.CrushingHammerArt(),
     new card_images_5.CyclizarArt(),
     new card_images_6.DefianceBandArt(),

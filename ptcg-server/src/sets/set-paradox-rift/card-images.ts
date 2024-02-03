@@ -29,7 +29,9 @@ import { Natu } from './natu';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
 import { RoaringMoonex } from './roaring-moon-ex';
+import { SandyShocksex } from './sandy-shocks-ex';
 import { ScreamTail } from './scream-tail';
+import { SlitherWing } from './slither-wing';
 import { Snorunt } from './snorunt';
 import { Steenee } from './steenee';
 import { TapuKokoex } from './tapu-koko-ex';
@@ -162,8 +164,16 @@ export class RoaringMoonexArt extends RoaringMoonex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_124_R_EN_LG.png';
 }
 
+export class SandyShocksexArt extends SandyShocksex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_108_R_EN.png';
+}
+
 export class ScreamTailArt extends ScreamTail {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_086_R_EN_LG.png';
+}
+
+export class SlitherWingArt extends SlitherWing {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_107_R_EN_LG.png';
 }
 
 export class SnoruntArt extends Snorunt {

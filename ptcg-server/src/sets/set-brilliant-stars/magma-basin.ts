@@ -1,12 +1,11 @@
 import { Effect } from '../../game/store/effects/effect';
-import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
-import { PokemonCard, AttachEnergyPrompt, PlayerType, SlotType } from '../../game';
+import { PokemonCard, AttachEnergyPrompt, PlayerType, SlotType, EnergyCard, GameError } from '../../game';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 
 export class MagmaBasin extends TrainerCard {
@@ -41,6 +40,13 @@ export class MagmaBasin extends TrainerCard {
         }
       });
 
+      const hasEnergyInDiscard = player.discard.cards.some(c => {
+        return c instanceof EnergyCard && c.name == 'Basic Fire Energy';
+      });
+      if (!hasEnergyInDiscard) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -48,7 +54,7 @@ export class MagmaBasin extends TrainerCard {
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fire Energy' },
-        { allowCancel: false, min: 1, max: 1 },
+        { allowCancel: false, min: 1, max: 1, blocked: blocked },
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
@@ -57,10 +63,10 @@ export class MagmaBasin extends TrainerCard {
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          const pokemonCard = target.cards[0] as PokemonCard;
-          if (pokemonCard.cardType !== CardType.PSYCHIC) {
-            throw new GameError(GameMessage.INVALID_TARGET);
-          }
+          // const pokemonCard = target.cards[0] as PokemonCard;
+          // if (pokemonCard.cardType !== CardType.FIRE) {
+          //   throw new GameError(GameMessage.INVALID_TARGET);
+          // }
           player.discard.moveCardTo(transfer.card, target);
           target.damage += 20;
         }

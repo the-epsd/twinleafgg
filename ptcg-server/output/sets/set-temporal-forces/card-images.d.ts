@@ -48,6 +48,7 @@ import { Reuniclus } from './reuniclus';
 import { RoaringMoon } from './roaring-moon';
 import { Sableye } from './sableye';
 import { Salvatore } from './salvatore';
+import { SandyShocks } from './sandy-shocks';
 import { Solosis } from './solosis';
 import { Torterraex } from './torterra-ex';
 import { Totodile } from './totodile';
@@ -203,6 +204,9 @@ export declare class SableyeArt extends Sableye {
     cardImage: string;
 }
 export declare class SalvatoreArt extends Salvatore {
+    cardImage: string;
+}
+export declare class SandyShocksArt extends SandyShocks {
     cardImage: string;
 }
 export declare class SolosisArt extends Solosis {

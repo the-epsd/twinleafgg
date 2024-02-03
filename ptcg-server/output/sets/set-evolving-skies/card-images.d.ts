@@ -21,6 +21,8 @@ import { StormyMountains } from './stormy-mountains';
 import { SuicuneV } from './suicune-v';
 import { Swablu } from './swablu';
 import { SwitchingCups } from './switching-cups';
+import { SylveonV } from './sylveon-v';
+import { SylveonVMAX } from './sylveon-vmax';
 import { Tropius } from './tropius';
 import { UmbreonV } from './umbreon-v';
 import { UmbreonVMAX } from './umbreon-vmax';
@@ -95,6 +97,12 @@ export declare class SwabluArt extends Swablu {
     cardImage: string;
 }
 export declare class SwitchingCupsArt extends SwitchingCups {
+    cardImage: string;
+}
+export declare class SylveonVArt extends SylveonV {
+    cardImage: string;
+}
+export declare class SylveonVMAXArt extends SylveonVMAX {
     cardImage: string;
 }
 export declare class TropiusArt extends Tropius {

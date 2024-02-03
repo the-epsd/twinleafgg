@@ -42,8 +42,6 @@ export class FilterCardsPipe implements PipeTransform {
         return false;
       }
 
-
-
       if (filter.formats.length && !filter.formats.some(f => this.getFormats(card).includes(f))) {
         return false;
       }
@@ -79,7 +77,7 @@ export class FilterCardsPipe implements PipeTransform {
       formats.push(Format.UNLIMITED);
     }
 
-    if (card.set === 'SV5') {
+    if (card.regulationMark === 'ENERGY' || card.set === 'BS' || card.set === 'JU' || card.set === 'FO' || card.set ==='PR') {
       formats.push(Format.RETRO);
     }
 

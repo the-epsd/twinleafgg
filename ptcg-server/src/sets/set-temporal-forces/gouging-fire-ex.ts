@@ -18,7 +18,7 @@ export class GougingFireex extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [  ];
+  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
 
   public attacks = [
     {
@@ -29,7 +29,7 @@ export class GougingFireex extends PokemonCard {
     },
     {
       name: 'Explosive Flare',
-      cost: [  ],
+      cost: [ CardType.FIRE, CardType.FIRE, CardType.COLORLESS ],
       damage: 260,
       text: 'This Pokémon can’t use Exploding Flare again until it leaves the Active Spot.'
     }

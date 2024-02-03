@@ -1,6 +1,11 @@
 //Retro
 export * from './set-base-set';
+export * from './set-jungle';
+export * from './set-fossil';
+export * from './set-wotc-promos';
 
+//Retro Energy
+export * from './set-base-set-energy';
 
 //DP Era
 export * from './set-diamond-and-pearl';

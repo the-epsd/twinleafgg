@@ -1,5 +1,5 @@
 
-import { ChooseCardsPrompt, GameMessage, PlayerType, PokemonCard, PokemonCardList, PowerType, ShuffleDeckPrompt, State, StoreLike, TrainerCard } from '../../game';
+import { ChooseCardsPrompt, GameMessage, PowerType, ShuffleDeckPrompt, State, StoreLike, TrainerCard } from '../../game';
 
 import { TrainerType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
@@ -39,27 +39,24 @@ export class ForestSealStone extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {  
 
       const player = effect.player;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList, pokemonCard: PokemonCard) => {
-
-        if (cardList.tool instanceof ForestSealStone) {
+      // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList, pokemonCard: PokemonCard) => {
 
 
-          pokemonCard.powers = [this.powers[0]];
-          pokemonCard.powers = [{
-            name: 'Forest Seal Stone',
-            powerType: PowerType.ABILITY,
-            text: 'During your turn, you may search your deck for up to ' +
-              '2 cards and put them into your hand. Then, shuffle your ' +
-              'deck. (You can\'t use more than 1 VSTAR Power in a game.)'
-          },];
+      //   pokemonCard.powers = [this.powers[0]];
+      //   pokemonCard.powers = [{
+      //     name: 'Forest Seal Stone',
+      //     powerType: PowerType.ABILITY,
+      //     text: 'During your turn, you may search your deck for up to ' +
+      //         '2 cards and put them into your hand. Then, shuffle your ' +
+      //         'deck. (You can\'t use more than 1 VSTAR Power in a game.)'
+      //   },];
 
-        }
+      // });
 
-      });
 
 
       player.marker.addMarker(this.VSTAR_MARKER, this);

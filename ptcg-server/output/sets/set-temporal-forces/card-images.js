@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SalvatoreArt = exports.SableyeArt = exports.RoaringMoonArt = exports.ReuniclusArt = exports.RellorArt = exports.RebootPodArt = exports.RaichuArt = exports.RagingBoltexArt = exports.RabscaArt = exports.PrimeCatcherArt = exports.PikachuArt = exports.NeoUpperEnergyArt = exports.MrMimeArt = exports.MortysConvictionArt = exports.MistEnergyArt = exports.MiraidonArt = exports.MiraidonexArt = exports.MetangArt = exports.MasterBallArt = exports.KoraidonArt = exports.KoraidonexArt = exports.IronThornsArt = exports.IronLeavesexArt = exports.IronHandsArt = exports.IronCrownexArt = exports.HerosCapeArt = exports.HaunterArt = exports.HandTrimmerArt = exports.GrotleArt = exports.GougingFireexArt = exports.GengarexArt = exports.GastlyArt = exports.FlutterManeArt = exports.FeraligatrArt = exports.ExplorersGuidanceArt = exports.EriArt = exports.EmergencyBoardArt = exports.DuosionArt = exports.DunsparceArt = exports.DudunsparceArt = exports.DrumsOfAwakeningArt = exports.DrilburArt = exports.DeliveryBoxArt = exports.CryptomaniacsDecipheringArt = exports.CroconawArt = exports.ChatotArt = exports.CharjabugArt = exports.BuddyPoffinArt = exports.BiancasSincerityArt = exports.BeldumArt = void 0;
-exports.WalkingWakeexArt = exports.VikavoltArt = exports.VictiniArt = exports.TurtwigArt = exports.TotodileArt = exports.TorterraexArt = exports.SolosisArt = void 0;
+exports.WalkingWakeexArt = exports.VikavoltArt = exports.VictiniArt = exports.TurtwigArt = exports.TotodileArt = exports.TorterraexArt = exports.SolosisArt = exports.SandyShocksArt = void 0;
 const beldum_1 = require("./beldum");
 const biancas_sincerity_1 = require("./biancas-sincerity");
 const buddy_poffin_1 = require("./buddy-poffin");
@@ -52,6 +52,7 @@ const reuniclus_1 = require("./reuniclus");
 const roaring_moon_1 = require("./roaring-moon");
 const sableye_1 = require("./sableye");
 const salvatore_1 = require("./salvatore");
+const sandy_shocks_1 = require("./sandy-shocks");
 const solosis_1 = require("./solosis");
 const torterra_ex_1 = require("./torterra-ex");
 const totodile_1 = require("./totodile");
@@ -409,6 +410,13 @@ class SalvatoreArt extends salvatore_1.Salvatore {
     }
 }
 exports.SalvatoreArt = SalvatoreArt;
+class SandyShocksArt extends sandy_shocks_1.SandyShocks {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1703403447370-HD9NREQ3BT8ZMD7OWBR9/1529_011_0989SUNANOKEGAWA_ol.png?format=2500w';
+    }
+}
+exports.SandyShocksArt = SandyShocksArt;
 class SolosisArt extends solosis_1.Solosis {
     constructor() {
         super(...arguments);

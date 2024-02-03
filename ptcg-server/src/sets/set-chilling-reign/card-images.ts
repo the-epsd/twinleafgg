@@ -13,11 +13,13 @@ import { Gallade } from './gallade';
 import { Gardevoir } from './gardevoir';
 import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
 import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
+import { ImpactEnergy } from './impact-energy';
 import { Inteleon } from './inteleon';
 import { JustifiedGloves } from './justified-gloves';
 import { KarensConviction } from './karens-conviction';
 import { Kirlia } from './kirlia';
 import { Klara } from './klara';
+import { LuckyEnergy } from './lucky-energy';
 import { Melony } from './melony';
 //import { OldCemetery } from './old-cemetery';
 import { PathToThePeak } from './path-to-the-peak';
@@ -27,6 +29,7 @@ import { ShadowRiderCalyrexVMAX } from './shadow-rider-calyrex-vmax';
 import { Sneasel } from './sneasel';
 import { Snorunt } from './snorunt';
 import { Sobble } from './sobble';
+import { SpiralEnergy } from './spiral-energy';
 
 export class AveryArt extends Avery {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_130_R_EN_LG.png';
@@ -88,6 +91,10 @@ export class IceRiderCalyrexVMAXArt extends IceRiderCalyrexVMAX {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_046_R_EN_LG.png';
 }
 
+export class ImpactEnergyArt extends ImpactEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_157_R_EN.png';
+}
+
 export class InteleonArt extends Inteleon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_043_R_EN_LG.png';
 }
@@ -106,6 +113,10 @@ export class KirliaArt extends Kirlia {
 
 export class KlaraArt extends Klara {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_145_R_EN_LG.png';
+}
+
+export class LuckyEnergyArt extends LuckyEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_158_R_EN.png';
 }
 
 export class MelonyArt extends Melony {
@@ -138,4 +149,8 @@ export class SnoruntArt extends Snorunt {
 
 export class SobbleArt extends Sobble {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_041_R_EN_LG.png';
+}
+
+export class SpiralEnergyArt extends SpiralEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_159_R_EN.png';
 }

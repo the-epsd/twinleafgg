@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setParadoxRift = void 0;
 const card_images_1 = require("./card-images");
-const test_1 = require("./test");
 exports.setParadoxRift = [
     new card_images_1.AncientBoosterEnergyCapsuleArt(),
     new card_images_1.BruteBonnetArt(),
@@ -33,7 +32,9 @@ exports.setParadoxRift = [
     new card_images_1.ProfessorSadasVitalityArt(),
     new card_images_1.ProfessorTurosScenarioArt(),
     new card_images_1.RoaringMoonexArt(),
+    new card_images_1.SandyShocksexArt(),
     new card_images_1.ScreamTailArt(),
+    new card_images_1.SlitherWingArt(),
     new card_images_1.SnoruntArt(),
     new card_images_1.SteeneeArt(),
     new card_images_1.TechnoRadarArt(),
@@ -43,5 +44,4 @@ exports.setParadoxRift = [
     new card_images_1.GroudonArt(),
     new card_images_1.IronJugulisArt(),
     new card_images_1.TapuKokoexArt(),
-    new test_1.Test(),
 ];

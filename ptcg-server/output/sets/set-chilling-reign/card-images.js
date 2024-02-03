@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DrizzileArt = exports.BlisseyVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = void 0;
+exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DrizzileArt = exports.BlisseyVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = void 0;
 const avery_1 = require("./avery");
 const banette_1 = require("./banette");
 const beedril_1 = require("./beedril");
@@ -16,11 +16,13 @@ const gallade_1 = require("./gallade");
 const gardevoir_1 = require("./gardevoir");
 const ice_rider_calyrex_v_1 = require("./ice-rider-calyrex-v");
 const ice_rider_calyrex_vmax_1 = require("./ice-rider-calyrex-vmax");
+const impact_energy_1 = require("./impact-energy");
 const inteleon_1 = require("./inteleon");
 const justified_gloves_1 = require("./justified-gloves");
 const karens_conviction_1 = require("./karens-conviction");
 const kirlia_1 = require("./kirlia");
 const klara_1 = require("./klara");
+const lucky_energy_1 = require("./lucky-energy");
 const melony_1 = require("./melony");
 //import { OldCemetery } from './old-cemetery';
 const path_to_the_peak_1 = require("./path-to-the-peak");
@@ -30,6 +32,7 @@ const shadow_rider_calyrex_vmax_1 = require("./shadow-rider-calyrex-vmax");
 const sneasel_1 = require("./sneasel");
 const snorunt_1 = require("./snorunt");
 const sobble_1 = require("./sobble");
+const spiral_energy_1 = require("./spiral-energy");
 class AveryArt extends avery_1.Avery {
     constructor() {
         super(...arguments);
@@ -135,6 +138,13 @@ class IceRiderCalyrexVMAXArt extends ice_rider_calyrex_vmax_1.IceRiderCalyrexVMA
     }
 }
 exports.IceRiderCalyrexVMAXArt = IceRiderCalyrexVMAXArt;
+class ImpactEnergyArt extends impact_energy_1.ImpactEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_157_R_EN.png';
+    }
+}
+exports.ImpactEnergyArt = ImpactEnergyArt;
 class InteleonArt extends inteleon_1.Inteleon {
     constructor() {
         super(...arguments);
@@ -170,6 +180,13 @@ class KlaraArt extends klara_1.Klara {
     }
 }
 exports.KlaraArt = KlaraArt;
+class LuckyEnergyArt extends lucky_energy_1.LuckyEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_158_R_EN.png';
+    }
+}
+exports.LuckyEnergyArt = LuckyEnergyArt;
 class MelonyArt extends melony_1.Melony {
     constructor() {
         super(...arguments);
@@ -226,3 +243,10 @@ class SobbleArt extends sobble_1.Sobble {
     }
 }
 exports.SobbleArt = SobbleArt;
+class SpiralEnergyArt extends spiral_energy_1.SpiralEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_159_R_EN.png';
+    }
+}
+exports.SpiralEnergyArt = SpiralEnergyArt;

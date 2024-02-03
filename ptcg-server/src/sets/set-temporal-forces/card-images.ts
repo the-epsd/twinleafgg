@@ -48,6 +48,7 @@ import { Reuniclus } from './reuniclus';
 import { RoaringMoon } from './roaring-moon';
 import { Sableye } from './sableye';
 import { Salvatore } from './salvatore';
+import { SandyShocks } from './sandy-shocks';
 import { Solosis } from './solosis';
 import { Torterraex } from './torterra-ex';
 import { Totodile } from './totodile';
@@ -254,6 +255,10 @@ export class SableyeArt extends Sableye {
 
 export class SalvatoreArt extends Salvatore {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1705649999422-SEXE3WDR4033MFZIO2HA/045285_T_SEIJI.jpg?format=2500w';
+}
+
+export class SandyShocksArt extends SandyShocks {
+  public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1703403447370-HD9NREQ3BT8ZMD7OWBR9/1529_011_0989SUNANOKEGAWA_ol.png?format=2500w';
 }
 
 export class SolosisArt extends Solosis {

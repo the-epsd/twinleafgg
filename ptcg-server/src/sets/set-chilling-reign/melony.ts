@@ -49,10 +49,6 @@ export class Melony extends TrainerCard {
       if (!pokemonVInPlay) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-
-      if (!hasEnergyInDiscard && !pokemonVInPlay) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
   
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {

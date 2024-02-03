@@ -36,9 +36,6 @@ class Melony extends trainer_card_1.TrainerCard {
             if (!pokemonVInPlay) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            if (!hasEnergyInDiscard && !pokemonVInPlay) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-            }
             const blocked2 = [];
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
                 if (!card.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX)) {

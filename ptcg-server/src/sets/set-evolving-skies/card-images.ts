@@ -21,6 +21,8 @@ import { StormyMountains } from './stormy-mountains';
 import { SuicuneV } from './suicune-v';
 import { Swablu } from './swablu';
 import { SwitchingCups } from './switching-cups';
+import { SylveonV } from './sylveon-v';
+import { SylveonVMAX } from './sylveon-vmax';
 import { Tropius } from './tropius';
 import { UmbreonV } from './umbreon-v';
 import { UmbreonVMAX } from './umbreon-vmax';
@@ -119,6 +121,14 @@ export class SwabluArt extends Swablu {
 
 export class SwitchingCupsArt extends SwitchingCups {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_162_R_EN_LG.png';
+}
+
+export class SylveonVArt extends SylveonV {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_074_R_EN.png';
+}
+
+export class SylveonVMAXArt extends SylveonVMAX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_075_R_EN.png';
 }
 
 export class TropiusArt extends Tropius {

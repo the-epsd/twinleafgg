@@ -6,6 +6,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
+const check_effect_1 = require("../../game/store/effect-reducers/check-effect");
 class PathToThePeak extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -32,6 +33,7 @@ class PathToThePeak extends trainer_card_1.TrainerCard {
             if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_STADIUM);
             }
+            check_effect_1.checkState(store, state);
             return state;
         }
         return state;

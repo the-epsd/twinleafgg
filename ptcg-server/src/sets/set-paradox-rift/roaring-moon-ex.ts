@@ -5,7 +5,6 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { ConfirmPrompt, GameMessage, StateUtils } from '../../game';
-import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
 
 export class RoaringMoonex extends PokemonCard {
 
@@ -50,7 +49,7 @@ export class RoaringMoonex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     
-    if (effect instanceof AbstractAttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

@@ -11,7 +11,7 @@ export declare class GougingFireex extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    retreat: never[];
+    retreat: CardType[];
     attacks: {
         name: string;
         cost: CardType[];

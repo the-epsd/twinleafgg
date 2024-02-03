@@ -29,5 +29,11 @@ class Charmander extends pokemon_card_1.PokemonCard {
         this.name = 'Charmander';
         this.fullName = 'Charmander SVP';
     }
+    reduceEffect(store, state, effect) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
+            prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.COLORLESS, 1);
+        }
+        return state;
+    }
 }
 exports.Charmander = Charmander;

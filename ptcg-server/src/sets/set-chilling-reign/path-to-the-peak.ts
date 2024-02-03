@@ -6,6 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage } from '../../game';
+import { checkState } from '../../game/store/effect-reducers/check-effect';
 
 export class PathToThePeak extends TrainerCard {
 
@@ -43,10 +44,14 @@ export class PathToThePeak extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
 
+      checkState(store, state);
+
       return state;
     }
 
     return state;
   }
+
+
 
 }

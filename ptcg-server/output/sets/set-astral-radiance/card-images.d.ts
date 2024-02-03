@@ -1,4 +1,5 @@
 import { Adaman } from './adaman';
+import { CancelingCologne } from './canceling-cologne';
 import { DarkPatch } from './dark-patch';
 import { DarkraiV } from './darkrai-v';
 import { DarkraiVSTAR } from './darkrai-vstar';
@@ -42,6 +43,9 @@ import { TempleofSinnoh } from './temple-of-sinnoh';
 import { TrekkingShoes } from './trekking-shoes';
 import { WyrdeerV } from './wyrdeer-v';
 export declare class AdamanArt extends Adaman {
+    cardImage: string;
+}
+export declare class CancelingCologneArt extends CancelingCologne {
     cardImage: string;
 }
 export declare class DarkPatchArt extends DarkPatch {

@@ -34,7 +34,7 @@ class DragoniteV extends pokemon_card_1.PokemonCard {
         this.fullName = 'Dragonite V EVS';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 130);

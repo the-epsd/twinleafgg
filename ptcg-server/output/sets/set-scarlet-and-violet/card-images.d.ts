@@ -1,6 +1,7 @@
 import { Armarouge } from './armarouge';
 import { Arven } from './arven';
 import { BeachCourt } from './beach-court';
+import { Charcadet } from './charcadet';
 import { CrushingHammer } from './crushing-hammer';
 import { Cyclizar } from './cyclizar';
 import { DefianceBand } from './defiance-band';
@@ -52,6 +53,9 @@ export declare class ArvenArt extends Arven {
     cardImage: string;
 }
 export declare class BeachCourtArt extends BeachCourt {
+    cardImage: string;
+}
+export declare class CharcadetArt extends Charcadet {
     cardImage: string;
 }
 export declare class CrushingHammerArt extends CrushingHammer {

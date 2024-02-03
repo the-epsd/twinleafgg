@@ -14,8 +14,8 @@ const choose_energy_prompt_1 = require("../../game/store/prompts/choose-energy-p
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class RadiantGreninja extends pokemon_card_1.PokemonCard {
     constructor() {
+        // public tags = [ CardTag.RADIANT ];
         super(...arguments);
-        this.tags = [card_types_1.CardTag.RADIANT];
         this.regulationMark = 'F';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.WATER;
@@ -33,7 +33,8 @@ class RadiantGreninja extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Moonlight Shuriken',
-                cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
+                // cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+                cost: [],
                 damage: 0,
                 text: 'Discard 2 energy from this Pokémon. This attack does ' +
                     '90 damage to 2 of your opponent\'s Pokémon. (Don\'t apply ' +
@@ -82,7 +83,7 @@ class RadiantGreninja extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkProvidedEnergy);
-            state = store.prompt(state, new choose_energy_prompt_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
+            state = store.prompt(state, new choose_energy_prompt_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [], { allowCancel: false }), energy => {
                 const cards = (energy || []).map(e => e.card);
                 const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
                 discardEnergy.target = player.active;

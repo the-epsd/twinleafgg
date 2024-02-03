@@ -8,10 +8,13 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { AttachEnergyPrompt, EnergyCard, GameError, StateUtils } from '../../game';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class ProfessorSadasVitality extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
+
+  public tags = [CardTag.ANCIENT];
 
   public regulationMark = 'G';
 
@@ -26,9 +29,16 @@ export class ProfessorSadasVitality extends TrainerCard {
   public fullName: string = 'Professor Sada\'s Vitality PAR';
 
   public text: string =
-    '';
+    'Choose up to 2 of your Ancient Pokémon and attach a Basic Energy card from your discard pile to each of them. If you attached any Energy in this way, draw 3 cards.';
+
+  private readonly ANCIENT_SUPPORTER_MARKER = 'ANCIENT_SUPPORTER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ANCIENT_SUPPORTER_MARKER, this)) {
+      effect.player.marker.removeMarker(this.ANCIENT_SUPPORTER_MARKER, this);
+    }
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
@@ -86,6 +96,7 @@ export class ProfessorSadasVitality extends TrainerCard {
   
             for (const transfer of transfers) {
               const target = StateUtils.getTarget(state, player, transfer.to);
+              player.marker.addMarker(this.ANCIENT_SUPPORTER_MARKER, this);
               player.discard.moveCardTo(transfer.card, target);
               player.deck.moveTo(player.hand, 3);
             }

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TechnoRadarArt = exports.TapuKokoexArt = exports.SteeneeArt = exports.SnoruntArt = exports.ScreamTailArt = exports.RoaringMoonexArt = exports.ProfessorTurosScenarioArt = exports.ProfessorSadasVitalityArt = exports.NatuArt = exports.MorpekoArt = exports.MiniorArt = exports.MewtwoexArt = exports.LuxuriousCapeArt = exports.LatiosArt = exports.KlawfArt = exports.JirachiArt = exports.IronValiantexArt = exports.IronJugulisArt = exports.IronHandsexArt = exports.IronBundleArt = exports.GroudonArt = exports.GimmighoulArt = exports.GibleArt = exports.GholdengoexArt = exports.GarchompexArt = exports.GabiteArt = exports.FutureBoosterEnergyCapsuleArt = exports.FroslassexArt = exports.ElekidArt = exports.EarthenVesselArt = exports.DeoxysArt = exports.DefianceVestArt = exports.CounterCatcherArt = exports.BruteBonnetArt = exports.BounsweetArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
+exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TechnoRadarArt = exports.TapuKokoexArt = exports.SteeneeArt = exports.SnoruntArt = exports.SlitherWingArt = exports.ScreamTailArt = exports.SandyShocksexArt = exports.RoaringMoonexArt = exports.ProfessorTurosScenarioArt = exports.ProfessorSadasVitalityArt = exports.NatuArt = exports.MorpekoArt = exports.MiniorArt = exports.MewtwoexArt = exports.LuxuriousCapeArt = exports.LatiosArt = exports.KlawfArt = exports.JirachiArt = exports.IronValiantexArt = exports.IronJugulisArt = exports.IronHandsexArt = exports.IronBundleArt = exports.GroudonArt = exports.GimmighoulArt = exports.GibleArt = exports.GholdengoexArt = exports.GarchompexArt = exports.GabiteArt = exports.FutureBoosterEnergyCapsuleArt = exports.FroslassexArt = exports.ElekidArt = exports.EarthenVesselArt = exports.DeoxysArt = exports.DefianceVestArt = exports.CounterCatcherArt = exports.BruteBonnetArt = exports.BounsweetArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
 const ancient_booster_energy_capsule_1 = require("./ancient-booster-energy-capsule");
 const bounsweet_1 = require("./bounsweet");
 const brute_bonnet_1 = require("./brute-bonnet");
@@ -32,7 +32,9 @@ const natu_1 = require("./natu");
 const professor_sadas_vitality_1 = require("./professor-sadas-vitality");
 const professor_turos_scenario_1 = require("./professor-turos-scenario");
 const roaring_moon_ex_1 = require("./roaring-moon-ex");
+const sandy_shocks_ex_1 = require("./sandy-shocks-ex");
 const scream_tail_1 = require("./scream-tail");
+const slither_wing_1 = require("./slither-wing");
 const snorunt_1 = require("./snorunt");
 const steenee_1 = require("./steenee");
 const tapu_koko_ex_1 = require("./tapu-koko-ex");
@@ -257,6 +259,13 @@ class RoaringMoonexArt extends roaring_moon_ex_1.RoaringMoonex {
     }
 }
 exports.RoaringMoonexArt = RoaringMoonexArt;
+class SandyShocksexArt extends sandy_shocks_ex_1.SandyShocksex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_108_R_EN.png';
+    }
+}
+exports.SandyShocksexArt = SandyShocksexArt;
 class ScreamTailArt extends scream_tail_1.ScreamTail {
     constructor() {
         super(...arguments);
@@ -264,6 +273,13 @@ class ScreamTailArt extends scream_tail_1.ScreamTail {
     }
 }
 exports.ScreamTailArt = ScreamTailArt;
+class SlitherWingArt extends slither_wing_1.SlitherWing {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_107_R_EN_LG.png';
+    }
+}
+exports.SlitherWingArt = SlitherWingArt;
 class SnoruntArt extends snorunt_1.Snorunt {
     constructor() {
         super(...arguments);

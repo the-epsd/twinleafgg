@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SkwovetArt = exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RareCandyArt = exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GardevoirexArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.BeachCourtArt = exports.ArvenArt = exports.ArmarougeArt = void 0;
+exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SkwovetArt = exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RareCandyArt = exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GardevoirexArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CharcadetArt = exports.BeachCourtArt = exports.ArvenArt = exports.ArmarougeArt = void 0;
 const armarouge_1 = require("./armarouge");
 const arven_1 = require("./arven");
 const beach_court_1 = require("./beach-court");
+const charcadet_1 = require("./charcadet");
 const crushing_hammer_1 = require("./crushing-hammer");
 const cyclizar_1 = require("./cyclizar");
 const defiance_band_1 = require("./defiance-band");
@@ -69,6 +70,13 @@ class BeachCourtArt extends beach_court_1.BeachCourt {
     }
 }
 exports.BeachCourtArt = BeachCourtArt;
+class CharcadetArt extends charcadet_1.Charcadet {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1680198113791-1VWVMG23L04H9XYVG7S6/sv1_en_040.png?format=1500w';
+    }
+}
+exports.CharcadetArt = CharcadetArt;
 class CrushingHammerArt extends crushing_hammer_1.CrushingHammer {
     constructor() {
         super(...arguments);

@@ -13,11 +13,13 @@ import { Gallade } from './gallade';
 import { Gardevoir } from './gardevoir';
 import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
 import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
+import { ImpactEnergy } from './impact-energy';
 import { Inteleon } from './inteleon';
 import { JustifiedGloves } from './justified-gloves';
 import { KarensConviction } from './karens-conviction';
 import { Kirlia } from './kirlia';
 import { Klara } from './klara';
+import { LuckyEnergy } from './lucky-energy';
 import { Melony } from './melony';
 import { PathToThePeak } from './path-to-the-peak';
 import { Peony } from './peony';
@@ -26,6 +28,7 @@ import { ShadowRiderCalyrexVMAX } from './shadow-rider-calyrex-vmax';
 import { Sneasel } from './sneasel';
 import { Snorunt } from './snorunt';
 import { Sobble } from './sobble';
+import { SpiralEnergy } from './spiral-energy';
 export declare class AveryArt extends Avery {
     cardImage: string;
 }
@@ -71,6 +74,9 @@ export declare class IceRiderCalyrexVArt extends IceRiderCalyrexV {
 export declare class IceRiderCalyrexVMAXArt extends IceRiderCalyrexVMAX {
     cardImage: string;
 }
+export declare class ImpactEnergyArt extends ImpactEnergy {
+    cardImage: string;
+}
 export declare class InteleonArt extends Inteleon {
     cardImage: string;
 }
@@ -84,6 +90,9 @@ export declare class KirliaArt extends Kirlia {
     cardImage: string;
 }
 export declare class KlaraArt extends Klara {
+    cardImage: string;
+}
+export declare class LuckyEnergyArt extends LuckyEnergy {
     cardImage: string;
 }
 export declare class MelonyArt extends Melony {
@@ -108,5 +117,8 @@ export declare class SnoruntArt extends Snorunt {
     cardImage: string;
 }
 export declare class SobbleArt extends Sobble {
+    cardImage: string;
+}
+export declare class SpiralEnergyArt extends SpiralEnergy {
     cardImage: string;
 }

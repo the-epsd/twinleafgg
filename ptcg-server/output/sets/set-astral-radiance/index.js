@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 const spicy_seasoned_curry_1 = require("./spicy-seasoned-curry");
 exports.setAstralRadiance = [
     new card_images_1.AdamanArt(),
+    new card_images_1.CancelingCologneArt(),
     new card_images_1.DarkPatchArt(),
     new card_images_1.DarkraiVArt(),
     new card_images_1.DarkraiVSTARArt(),

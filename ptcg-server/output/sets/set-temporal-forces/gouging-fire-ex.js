@@ -14,7 +14,7 @@ class GougingFireex extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 230;
         this.weakness = [{ type: card_types_1.CardType.WATER }];
-        this.retreat = [];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
                 name: 'Heat Blast',
@@ -24,7 +24,7 @@ class GougingFireex extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Explosive Flare',
-                cost: [],
+                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
                 damage: 260,
                 text: 'This Pokémon can’t use Exploding Flare again until it leaves the Active Spot.'
             }

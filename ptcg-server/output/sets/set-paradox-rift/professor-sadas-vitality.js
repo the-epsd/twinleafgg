@@ -8,19 +8,25 @@ const card_types_1 = require("../../game/store/card/card-types");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon-prompt");
 const game_1 = require("../../game");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class ProfessorSadasVitality extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
+        this.tags = [card_types_1.CardTag.ANCIENT];
         this.regulationMark = 'G';
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '170';
         this.name = 'Professor Sada\'s Vitality';
         this.fullName = 'Professor Sada\'s Vitality PAR';
-        this.text = '';
+        this.text = 'Choose up to 2 of your Ancient Pokémon and attach a Basic Energy card from your discard pile to each of them. If you attached any Energy in this way, draw 3 cards.';
+        this.ANCIENT_SUPPORTER_MARKER = 'ANCIENT_SUPPORTER_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ANCIENT_SUPPORTER_MARKER, this)) {
+            effect.player.marker.removeMarker(this.ANCIENT_SUPPORTER_MARKER, this);
+        }
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const hasEnergyInDiscard = player.discard.cards.some(c => {
@@ -54,6 +60,7 @@ class ProfessorSadasVitality extends trainer_card_1.TrainerCard {
                         }
                         for (const transfer of transfers) {
                             const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                            player.marker.addMarker(this.ANCIENT_SUPPORTER_MARKER, this);
                             player.discard.moveCardTo(transfer.card, target);
                             player.deck.moveTo(player.hand, 3);
                         }

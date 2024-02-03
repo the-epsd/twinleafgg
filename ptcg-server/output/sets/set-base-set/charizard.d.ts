@@ -25,6 +25,7 @@ export declare class Charizard extends PokemonCard {
         text: string;
     }[];
     set: string;
+    setNumber: string;
     name: string;
     fullName: string;
     readonly ENERGY_BURN_MARKER = "ENERGY_BURN_MARKER";

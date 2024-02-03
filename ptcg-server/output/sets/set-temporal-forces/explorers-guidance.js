@@ -10,6 +10,7 @@ class ExplorersGuidance extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'SV5';
+        this.tags = [card_types_1.CardTag.ANCIENT];
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '67';
         this.regulationMark = 'H';

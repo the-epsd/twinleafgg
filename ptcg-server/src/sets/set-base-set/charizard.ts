@@ -41,6 +41,8 @@ export class Charizard extends PokemonCard {
 
   public set: string = 'BS';
 
+  public setNumber: string = '4';
+
   public name: string = 'Charizard';
 
   public fullName: string = 'Charizard BS';

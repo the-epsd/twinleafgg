@@ -4,7 +4,7 @@ import { StoreLike, State, GameMessage, AttachEnergyPrompt, PlayerType, SlotType
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
 
-export class SylveonV extends PokemonCard {
+export class SylveonVMAX extends PokemonCard {
 
   public tags = [ CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE ];
 
