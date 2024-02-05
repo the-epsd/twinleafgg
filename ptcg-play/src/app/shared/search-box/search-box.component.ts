@@ -1,5 +1,6 @@
-import { Component, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { MatInput } from '@angular/material/input';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ptcg-search-box',
@@ -10,11 +11,13 @@ export class SearchBoxComponent {
 
   @ViewChild(MatInput, {static: true}) searchInput: MatInput;
   @Output() search = new EventEmitter<string>();
+  @Input() showSearchButton = true;
+  @Input() label = this.translateService.instant('BUTTON_SEARCH');
 
   public isActivated = false;
   public searchValue = '';
 
-  constructor() { }
+  constructor(private translateService: TranslateService) { }
 
   public activateSearch() {
     this.isActivated = true;

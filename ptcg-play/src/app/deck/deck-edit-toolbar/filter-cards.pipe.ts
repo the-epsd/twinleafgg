@@ -64,6 +64,7 @@ export class FilterCardsPipe implements PipeTransform {
 
   private getFormats(card: PokemonCard | TrainerCard | Card): Format[] {
     const formats: Format[] = [];
+    formats.push(Format.UNLIMITED);
 
     if (card.regulationMark === 'ENERGY' || card.regulationMark === 'E' || card.regulationMark === 'F' || card.regulationMark === 'G' || card.regulationMark === 'H') {
       formats.push(Format.STANDARD);
@@ -71,10 +72,6 @@ export class FilterCardsPipe implements PipeTransform {
 
     if (card.regulationMark === 'ENERGY') {
       formats.push(Format.EXPANDED);
-    }
-
-    if (card.regulationMark === 'ENERGY') {
-      formats.push(Format.UNLIMITED);
     }
 
     if (card.regulationMark === 'ENERGY' || card.set === 'BS' || card.set === 'JU' || card.set === 'FO' || card.set ==='PR') {
