@@ -5,5 +5,5 @@ export interface DeckEditToolbarFilter {
   superTypes: SuperType[];
   cardTypes: CardType[];
   tags: CardTag[];
-  searchValue: string;
+  searchValue?: string;
 }

@@ -11,13 +11,15 @@ import { DeckEditPanesComponent } from './deck-edit-panes/deck-edit-panes.compon
 import { DeckEditInfoComponent } from './deck-edit-info/deck-edit-info.component';
 import { ImportDeckPopupComponent } from './import-deck-popup/import-deck-popup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TypeIconsModule } from '../shared/type-icons/type-icons.module';
 
 @NgModule({
   imports: [
     ScrollingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    TypeIconsModule
   ],
   entryComponents: [
     ImportDeckPopupComponent

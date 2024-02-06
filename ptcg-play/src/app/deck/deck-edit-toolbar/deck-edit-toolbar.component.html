@@ -17,7 +17,6 @@
       </button>
   
       <button mat-raised-button [disabled]="disabled" (click)="importFromClipboard()">
-  <!----      {{ 'BUTTON_IMPORT_FROM_FILE' | translate }} ---->
         {{ 'BUTTON_IMPORT' | translate }}
       </button>
   
@@ -27,19 +26,37 @@
     </mat-toolbar-row>
   
     <mat-toolbar-row class="search-toolbar">
-      
-      <mat-button-toggle-group formControlName="supertype" aria-label="Supertype" [multiple]="false">
-        <mat-button-toggle value="Pokémon">Pokémon</mat-button-toggle>
-        <mat-button-toggle value="Trainer">Trainer</mat-button-toggle>
-        <mat-button-toggle value="Energy">Energy</mat-button-toggle>
+      <mat-button-toggle-group formControlName="superTypes" aria-label="Supertype" [multiple]="true">
+        <mat-button-toggle *ngFor="let superType of superTypes" [value]="superType.value">
+          {{ superType.label | translate }}
+        </mat-button-toggle>
       </mat-button-toggle-group>      
+  
+      <mat-form-field floatLabel="never" appearance="legacy">
+        <mat-select multiple [placeholder]="'DECK_EDIT_ALL_TAGS' | translate" formControlName="tags">
+          <mat-option *ngFor="let cardTag of cardTags" [value]="cardTag.value">
+            {{ cardTag.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field floatLabel="never" appearance="legacy">
+        <mat-select multiple [placeholder]="'DECK_EDIT_ALL_FORMATS' | translate" formControlName="formats">
+          <mat-option *ngFor="let Format of formats" [value]="Format.value">
+            {{ Format.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       
       <span class="ptcg-u-spacer"></span>
   
       <ptcg-search-box (search)="onSearch($event)" 
-                        [showSearchButton]="false" 
-                        label="{{ 'BUTTON_SEARCH_TEXT' | translate }}">
+                       [showSearchButton]="false" 
+                       label="{{ 'BUTTON_SEARCH_TEXT' | translate }}">
       </ptcg-search-box>
+    </mat-toolbar-row>
+    <mat-toolbar-row>
+      <ptcg-type-icons (typeSelected)="onTypeSelected($event)"></ptcg-type-icons>
     </mat-toolbar-row>
   </mat-toolbar>
 </form>

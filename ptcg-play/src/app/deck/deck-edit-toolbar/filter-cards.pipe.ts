@@ -25,7 +25,7 @@ export class FilterCardsPipe implements PipeTransform {
 
     return items.filter(item => {
       const card = item.card;
-      if (filter.searchValue !== '' && !card.name.toLocaleLowerCase().includes(filter.searchValue.toLocaleLowerCase())) {
+      if (!!filter.searchValue && !card.name.toLocaleLowerCase().includes(filter.searchValue.toLocaleLowerCase())) {
         return false;
     }
     
@@ -34,7 +34,7 @@ export class FilterCardsPipe implements PipeTransform {
         return false;
       }
 
-      if (filter.cardTypes.length && !filter.cardTypes.includes(this.getCardType(card))) {
+      if (filter.cardTypes.length && (!filter.cardTypes.includes(this.getCardType(card)) && !filter.cardTypes.includes(CardType.ANY))) {
         return false;
       }
 
@@ -86,6 +86,7 @@ export class FilterCardsPipe implements PipeTransform {
     if (card.superType === SuperType.POKEMON) {
       return (card as PokemonCard).cardType;
     }
+    
     if (card.superType === SuperType.ENERGY) {
       const energyCard = card as EnergyCard;
       if (energyCard.provides.length > 0) {

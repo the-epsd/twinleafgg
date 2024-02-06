@@ -1,0 +1,36 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  place-content: start;
+  place-items: center;
+  
+  button.type {
+    display: inline-flex;
+    place-items: center;
+    padding-left: .75rem;
+    padding-right: .75rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border-width: 1px;
+    border: transparent;
+    border-radius: 9999px;
+    cursor: pointer;
+    height: 2rem;
+    width: 2rem;
+    overflow: hidden;
+    
+    &:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+  
+  .mr-2 {
+    margin-right: .25rem;
+  }
+  
+}
+
+.selected {
+  border-bottom: 4px solid rgb(59, 130, 246);
+}
