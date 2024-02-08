@@ -2,7 +2,7 @@
 <div class="mr-2" [ngClass]="selectedType.value === cardType.ANY ? 'selected' : ''"
       *ngIf="showAll">      
   <button type="button" 
-          mat-button
+          mat-raised-button
           (click)="typeSelected.emit(cardType.ANY); selectedType.next(cardType.ANY)">
     {{ 'BUTTON_ALL' | translate }}
   </button>

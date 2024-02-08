@@ -42,8 +42,8 @@
       
       <mat-form-field floatLabel="never" appearance="legacy">
         <mat-select multiple [placeholder]="'DECK_EDIT_ALL_FORMATS' | translate" formControlName="formats">
-          <mat-option *ngFor="let Format of formats" [value]="Format.value">
-            {{ Format.label | translate }}
+          <mat-option *ngFor="let format of formats" [value]="format.value">
+            {{ format.label | translate }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -52,11 +52,22 @@
   
       <ptcg-search-box (search)="onSearch($event)" 
                        [showSearchButton]="false" 
+                       [isActivated]="true"
                        label="{{ 'BUTTON_SEARCH_TEXT' | translate }}">
       </ptcg-search-box>
     </mat-toolbar-row>
     <mat-toolbar-row>
-      <ptcg-type-icons (typeSelected)="onTypeSelected($event)"></ptcg-type-icons>
+      <ng-container *ngIf="showPokemonSearchRow$ | async">
+        <ptcg-type-icons (typeSelected)="onTypeSelected($event)"></ptcg-type-icons>        
+        
+        <mat-form-field floatLabel="never" appearance="legacy">          
+          <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_STAGES' | translate" formControlName="stages">
+            <mat-option *ngFor="let stage of stages" [value]="stage.value">
+              {{ stage.label | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
     </mat-toolbar-row>
   </mat-toolbar>
 </form>

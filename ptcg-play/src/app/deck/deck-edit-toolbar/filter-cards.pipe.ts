@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 import { DeckEditToolbarFilter } from './deck-edit-toolbar-filter.interface';
-import { Card, CardType, SuperType, PokemonCard, EnergyCard, CardTag, Format, TrainerCard } from 'ptcg-server';
+import { Card, CardType, SuperType, PokemonCard, EnergyCard, CardTag, Format, TrainerCard, Stage } from 'ptcg-server';
 import { LibraryItem } from '../deck-card/deck-card.interface';
 
 @Pipe({
@@ -17,6 +17,7 @@ export class FilterCardsPipe implements PipeTransform {
 
     if (filter.searchValue === ''
       && filter.superTypes.length === 0
+      && filter.stages.length === 0
       && filter.cardTypes.length === 0
       && filter.tags.length === 0
       && filter.formats.length === 0) {
@@ -28,9 +29,12 @@ export class FilterCardsPipe implements PipeTransform {
       if (!!filter.searchValue && !card.name.toLocaleLowerCase().includes(filter.searchValue.toLocaleLowerCase())) {
         return false;
     }
-    
 
       if (filter.superTypes.length && !filter.superTypes.includes(card.superType)) {
+        return false;
+      }
+      
+      if (filter.stages.length && !filter.stages.includes((card as PokemonCard).stage)) {
         return false;
       }
 
@@ -49,7 +53,7 @@ export class FilterCardsPipe implements PipeTransform {
       return true;
     });
   }
-
+  
   private getTags(card: Card): CardTag {
     if (card.tags.includes(CardTag.POKEMON_V)) {
       return CardTag.POKEMON_V;

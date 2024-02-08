@@ -13,8 +13,8 @@ export class SearchBoxComponent {
   @Output() search = new EventEmitter<string>();
   @Input() showSearchButton = true;
   @Input() label = this.translateService.instant('BUTTON_SEARCH');
+  @Input() isActivated = false;
 
-  public isActivated = false;
   public searchValue = '';
 
   constructor(private translateService: TranslateService) { }
@@ -39,7 +39,7 @@ export class SearchBoxComponent {
   }
 
   public onChange() {
-    this.search.next(this.searchValue);
+    this.search.emit(this.searchValue);
   }
 
 }

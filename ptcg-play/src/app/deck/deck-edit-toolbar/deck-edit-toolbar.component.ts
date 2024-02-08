@@ -4,9 +4,9 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { Deck } from '../../api/interfaces/deck.interface';
 import { DeckEditToolbarFilter } from './deck-edit-toolbar-filter.interface';
 import { ControlContainer, FormBuilder, FormGroupDirective } from '@angular/forms';
-import { startWith, tap } from 'rxjs/operators';
+import { map, startWith, tap } from 'rxjs/operators';
 import { merge } from 'rxjs';
-import { CardTag, CardType, Format, SuperType } from 'ptcg-server';
+import { CardTag, CardType, Format, Stage, SuperType } from 'ptcg-server';
 
 @UntilDestroy()
 @Component({
@@ -54,6 +54,12 @@ export class DeckEditToolbarComponent implements OnDestroy {
     {value: SuperType.TRAINER, label: 'LABEL_TRAINER' },
     {value: SuperType.ENERGY, label: 'LABEL_ENERGY' },
   ];
+  
+  public stages = [
+    {value: Stage.BASIC, label: 'CARDS_BASIC' },
+    {value: Stage.STAGE_1, label: 'CARDS_STAGE_1' },
+    {value: Stage.STAGE_2, label: 'CARDS_STAGE_2' }
+  ];
 
   public formats = [
     {value: Format.STANDARD, label: 'LABEL_STANDARD' },
@@ -67,27 +73,41 @@ export class DeckEditToolbarComponent implements OnDestroy {
   );
   
   initialFormValue = {
-    formats: [0],
-    cardTypes: [0],
-    superTypes: [4],
-    tags: [],
-    searchText: null
+    formats: [[]],
+    cardTypes: [[0]],
+    superTypes: [[]],
+    tags: [[]],
+    stages: [[]],
+    searchValue: null
   };  
   
-  form = this.formBuilder.group(this.initialFormValue);
+  form = this.formBuilder.group({ ...this.initialFormValue });
   
-  onFormChange$ = this.form.valueChanges.pipe(
-    startWith(this.initialFormValue),
-    tap(value => this.filterChange.emit({ ...value, tags: value.tags ?? [] }))
+  formValue$ = this.form.valueChanges.pipe(
+    startWith(this.initialFormValue)
+  );
+  
+  showPokemonSearchRow$ = this.formValue$.pipe(
+    map(value => value.superTypes.includes(1))
+  );
+  
+  showTrainerSearchRow$ = this.formValue$.pipe(
+    map(value => value.superTypes.includes(2))
+  );
+  
+  showEnergySearchRow$ = this.formValue$.pipe(
+    map(value => value.superTypes.includes(3))
+  );
+  
+  onFormChange$ = this.formValue$.pipe(
+    tap(value => this.filterChange.emit({ ...value }))
   );
   
   subscription = merge(
     this.onFormChange$
   ).subscribe();
   
-  constructor(private formBuilder: FormBuilder) {
-    
-  }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -98,7 +118,7 @@ export class DeckEditToolbarComponent implements OnDestroy {
   }
   
   public onSearch(value: string) {
-    
+    this.form.patchValue({ searchValue: value });
   }
 
   public importFromClipboard() {
