@@ -4,9 +4,9 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { Deck } from '../../api/interfaces/deck.interface';
 import { DeckEditToolbarFilter } from './deck-edit-toolbar-filter.interface';
 import { ControlContainer, FormBuilder, FormGroupDirective } from '@angular/forms';
-import { map, startWith, tap } from 'rxjs/operators';
+import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators';
 import { merge } from 'rxjs';
-import { CardTag, CardType, Format, Stage, SuperType } from 'ptcg-server';
+import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType } from 'ptcg-server';
 
 @UntilDestroy()
 @Component({
@@ -67,50 +67,139 @@ export class DeckEditToolbarComponent implements OnDestroy {
     {value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
     {value: Format.RETRO, label: 'LABEL_RETRO' },
   ];
+  
+  public energyTypes = [
+    {value: EnergyType.BASIC, label: 'CARDS_BASIC_ENERGY' },
+    {value: EnergyType.SPECIAL, label: 'CARDS_SPECIAL_ENERGY' }
+  ];
+  
+  public trainerTypes = [
+    {value: TrainerType.ITEM, label: 'CARDS_ITEM' },
+    {value: TrainerType.STADIUM , label: 'CARDS_STADIUM' },
+    {value: TrainerType.SUPPORTER, label: 'CARDS_SUPPORTER' },
+    {value: TrainerType.TOOL , label: 'CARDS_POKEMON_TOOL' }
+  ];
+  
+  public attackCost = [
+    { value: 0, label: '0'},
+    { value: 1, label: '1'},
+    { value: 2, label: '2'},
+    { value: 3, label: '3'},
+    { value: 4, label: '4'},
+    { value: 5, label: '5'}
+  ];
+  
+  public retreatCost = [
+    { value: 0, label: '0'},
+    { value: 1, label: '1'},
+    { value: 2, label: '2'},
+    { value: 3, label: '3'},
+    { value: 4, label: '4'}
+  ];
 
   public cardTags = Object.keys(CardTag).map(key => 
     ({value: CardTag[key], label: `LABEL_${key}`})
   );
   
   initialFormValue = {
-    formats: [[]],
-    cardTypes: [[0]],
-    superTypes: [[]],
-    tags: [[]],
-    stages: [[]],
+    formats: [],
+    cardTypes: [],
+    superTypes: [],
+    attackCosts: [],
+    trainerTypes: [],
+    retreatCosts: [],
+    energyTypes: [],
+    tags: [],
+    stages: [],
+    hasAbility: false,
     searchValue: null
   };  
   
-  form = this.formBuilder.group({ ...this.initialFormValue });
+  form = this.formBuilder.group({ 
+    formats: [[]],
+    cardTypes: [[]],
+    energyTypes: [[]],
+    superTypes: [[]],
+    attackCosts: [[]],
+    retreatCosts: [[]],
+    trainerTypes: [[]],
+    tags: [[]],
+    stages: [[]],
+    hasAbility: false,
+    
+    searchValue: null
+   });
   
   formValue$ = this.form.valueChanges.pipe(
-    startWith(this.initialFormValue)
+    tap(console.log),
+    startWith(this.initialFormValue),
+    shareReplay(1)
   );
   
   showPokemonSearchRow$ = this.formValue$.pipe(
-    map(value => value.superTypes.includes(1))
+    map(value => value.superTypes.includes(1) || value.superTypes.length === 0),
   );
   
   showTrainerSearchRow$ = this.formValue$.pipe(
-    map(value => value.superTypes.includes(2))
+    map(value => value.superTypes.includes(2) || value.superTypes.length === 0)
   );
   
   showEnergySearchRow$ = this.formValue$.pipe(
-    map(value => value.superTypes.includes(3))
+    map(value => value.superTypes.includes(3) || value.superTypes.length === 0)
   );
   
   onFormChange$ = this.formValue$.pipe(
     tap(value => this.filterChange.emit({ ...value }))
   );
   
+  onPokemonSuperTypeRemoved$ = this.formValue$.pipe(
+    filter(value => !value.superTypes.includes(1) && value.superTypes.length > 0),
+    tap(_ => this.resetPokemonFilters())
+  );
+  
+  onTrainerSuperTypeRemoved$ = this.formValue$.pipe(
+    filter(value => !value.superTypes.includes(2) && value.superTypes.length > 0),
+    tap(_ => this.resetTrainerFilters())
+  );
+  
+  onEnergySuperTypeRemoved$ = this.formValue$.pipe(
+    filter(value => !value.superTypes.includes(3) && value.superTypes.length > 0),
+    tap(_ => this.resetEnergyFilters())
+  );
+  
   subscription = merge(
-    this.onFormChange$
+    this.onFormChange$,
+    this.onPokemonSuperTypeRemoved$,
+    this.onTrainerSuperTypeRemoved$,
+    this.onEnergySuperTypeRemoved$
   ).subscribe();
   
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+  
+  resetPokemonFilters() {
+    this.form.patchValue({
+      hasAbility: null,
+      cardTypes: [],
+      attackCosts: [],
+      retreatCosts: [],
+      stages: []
+    }, { emitEvent: false });
+  }
+  
+  resetTrainerFilters() {
+    this.form.patchValue({
+      trainerTypes: []
+    }, { emitEvent: false });
+  }
+  
+  resetEnergyFilters() {
+    this.form.patchValue({
+      energyTypes: []
+    }, { emitEvent: false });
   }
   
   public onSave() {

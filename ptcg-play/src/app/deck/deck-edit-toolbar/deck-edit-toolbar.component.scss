@@ -17,7 +17,14 @@
 }
 
 .mat-toolbar-row {
+  
+  place-items: center;
+  
   > mat-form-field, > ptcg-search-box {
+    margin-left: map-get($padding, normal);
+  }
+  
+  > mat-checkbox {
     margin-left: map-get($padding, normal);
   }
 
