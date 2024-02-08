@@ -1,19 +1,26 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { CardTag, CardType, Format, SuperType } from 'ptcg-server';
-import { MatSelectChange } from '@angular/material/select';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
 import { Deck } from '../../api/interfaces/deck.interface';
 import { DeckEditToolbarFilter } from './deck-edit-toolbar-filter.interface';
-import { ImportDeckPopupService } from '../import-deck-popup/import-deck-popup.service';
+import { ControlContainer, FormBuilder, FormGroupDirective } from '@angular/forms';
+import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators';
+import { merge } from 'rxjs';
+import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType } from 'ptcg-server';
 
 @UntilDestroy()
 @Component({
   selector: 'ptcg-deck-edit-toolbar',
   templateUrl: './deck-edit-toolbar.component.html',
-  styleUrls: ['./deck-edit-toolbar.component.scss']
+  styleUrls: ['./deck-edit-toolbar.component.scss'],
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useExisting: FormGroupDirective
+    }
+  ]
 })
-export class DeckEditToolbarComponent {
+export class DeckEditToolbarComponent implements OnDestroy {
 
   @Input() deck: Deck;
 
@@ -47,6 +54,12 @@ export class DeckEditToolbarComponent {
     {value: SuperType.TRAINER, label: 'LABEL_TRAINER' },
     {value: SuperType.ENERGY, label: 'LABEL_ENERGY' },
   ];
+  
+  public stages = [
+    {value: Stage.BASIC, label: 'CARDS_BASIC' },
+    {value: Stage.STAGE_1, label: 'CARDS_STAGE_1' },
+    {value: Stage.STAGE_2, label: 'CARDS_STAGE_2' }
+  ];
 
   public formats = [
     {value: Format.STANDARD, label: 'LABEL_STANDARD' },
@@ -54,54 +67,147 @@ export class DeckEditToolbarComponent {
     {value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
     {value: Format.RETRO, label: 'LABEL_RETRO' },
   ];
-
-  public cardTags = [
-    {value: CardTag.POKEMON_V, label: 'Pokemon V' },
-    {value: CardTag.POKEMON_VSTAR, label: 'Pokemon VSTAR' },
-    {value: CardTag.POKEMON_VMAX, label: 'Pokemon VMAX' },
+  
+  public energyTypes = [
+    {value: EnergyType.BASIC, label: 'CARDS_BASIC_ENERGY' },
+    {value: EnergyType.SPECIAL, label: 'CARDS_SPECIAL_ENERGY' }
+  ];
+  
+  public trainerTypes = [
+    {value: TrainerType.ITEM, label: 'CARDS_ITEM' },
+    {value: TrainerType.STADIUM , label: 'CARDS_STADIUM' },
+    {value: TrainerType.SUPPORTER, label: 'CARDS_SUPPORTER' },
+    {value: TrainerType.TOOL , label: 'CARDS_POKEMON_TOOL' }
+  ];
+  
+  public attackCost = [
+    { value: 0, label: '0'},
+    { value: 1, label: '1'},
+    { value: 2, label: '2'},
+    { value: 3, label: '3'},
+    { value: 4, label: '4'},
+    { value: 5, label: '5'}
+  ];
+  
+  public retreatCost = [
+    { value: 0, label: '0'},
+    { value: 1, label: '1'},
+    { value: 2, label: '2'},
+    { value: 3, label: '3'},
+    { value: 4, label: '4'}
   ];
 
-  public filterValue: DeckEditToolbarFilter;
+  public cardTags = Object.keys(CardTag).map(key => 
+    ({value: CardTag[key], label: `LABEL_${key}`})
+  );
+  
+  initialFormValue = {
+    formats: [],
+    cardTypes: [],
+    superTypes: [],
+    attackCosts: [],
+    trainerTypes: [],
+    retreatCosts: [],
+    energyTypes: [],
+    tags: [],
+    stages: [],
+    hasAbility: false,
+    searchValue: null
+  };  
+  
+  form = this.formBuilder.group({ 
+    formats: [[]],
+    cardTypes: [[]],
+    energyTypes: [[]],
+    superTypes: [[]],
+    attackCosts: [[]],
+    retreatCosts: [[]],
+    trainerTypes: [[]],
+    tags: [[]],
+    stages: [[]],
+    hasAbility: false,
+    
+    searchValue: null
+   });
+  
+  formValue$ = this.form.valueChanges.pipe(
+    tap(console.log),
+    startWith(this.initialFormValue),
+    shareReplay(1)
+  );
+  
+  showPokemonSearchRow$ = this.formValue$.pipe(
+    map(value => value.superTypes.includes(1) || value.superTypes.length === 0),
+  );
+  
+  showTrainerSearchRow$ = this.formValue$.pipe(
+    map(value => value.superTypes.includes(2) || value.superTypes.length === 0)
+  );
+  
+  showEnergySearchRow$ = this.formValue$.pipe(
+    map(value => value.superTypes.includes(3) || value.superTypes.length === 0)
+  );
+  
+  onFormChange$ = this.formValue$.pipe(
+    tap(value => this.filterChange.emit({ ...value }))
+  );
+  
+  onPokemonSuperTypeRemoved$ = this.formValue$.pipe(
+    filter(value => !value.superTypes.includes(1) && value.superTypes.length > 0),
+    tap(_ => this.resetPokemonFilters())
+  );
+  
+  onTrainerSuperTypeRemoved$ = this.formValue$.pipe(
+    filter(value => !value.superTypes.includes(2) && value.superTypes.length > 0),
+    tap(_ => this.resetTrainerFilters())
+  );
+  
+  onEnergySuperTypeRemoved$ = this.formValue$.pipe(
+    filter(value => !value.superTypes.includes(3) && value.superTypes.length > 0),
+    tap(_ => this.resetEnergyFilters())
+  );
+  
+  subscription = merge(
+    this.onFormChange$,
+    this.onPokemonSuperTypeRemoved$,
+    this.onTrainerSuperTypeRemoved$,
+    this.onEnergySuperTypeRemoved$
+  ).subscribe();
+  
+  constructor(private formBuilder: FormBuilder) { }
 
-  constructor(
-    private importDeckPopupService: ImportDeckPopupService
-  ) {
-    this.filterValue = {
-      searchValue: '',
-      superTypes: [],
-      cardTypes: [],
-      formats: [],
-      tags: [],
-    };
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
-
+  
+  resetPokemonFilters() {
+    this.form.patchValue({
+      hasAbility: null,
+      cardTypes: [],
+      attackCosts: [],
+      retreatCosts: [],
+      stages: []
+    }, { emitEvent: false });
+  }
+  
+  resetTrainerFilters() {
+    this.form.patchValue({
+      trainerTypes: []
+    }, { emitEvent: false });
+  }
+  
+  resetEnergyFilters() {
+    this.form.patchValue({
+      energyTypes: []
+    }, { emitEvent: false });
+  }
+  
   public onSave() {
     this.save.next();
   }
-
+  
   public onSearch(value: string) {
-    this.filterValue.searchValue = value;
-    this.filterChange.next({...this.filterValue});
-  }
-
-  public onSuperTypeChange(change: MatSelectChange) {
-    this.filterValue.superTypes = change.value;
-    this.filterChange.next({...this.filterValue});
-  }
-
-  public onCardTypeChange(change: MatSelectChange) {
-    this.filterValue.cardTypes = change.value;
-    this.filterChange.next({...this.filterValue});
-  }
-
-  public onFormatChange(change: MatSelectChange) {
-    this.filterValue.formats = change.value;
-    this.filterChange.next({...this.filterValue});
-  }
-
-  public onTagChange(change: MatSelectChange) {
-    this.filterValue.tags = change.value;
-    this.filterChange.next({...this.filterValue});
+    this.form.patchValue({ searchValue: value });
   }
 
   public importFromClipboard() {
@@ -121,8 +227,11 @@ export class DeckEditToolbarComponent {
       });
   
   }
-  
 
+  onTypeSelected(type: CardType) {
+    this.form.patchValue({ cardTypes: [type] });
+  }
+  
   public exportToFile() {
     this.export.next();
   }
