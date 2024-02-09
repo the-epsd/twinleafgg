@@ -13,6 +13,7 @@ import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-fi
 import { DeckItem, LibraryItem } from '../deck-card/deck-card.interface';
 import { DeckCardType } from '../deck-card/deck-card.component';
 import { DeckEditVirtualScrollStrategy } from './deck-edit-virtual-scroll-strategy';
+import { PokemonCard, SuperType } from 'ptcg-server';
 
 const DECK_CARD_ITEM_WIDTH = 148;
 const DECK_CARD_ITEM_HEIGHT = 173;
@@ -33,7 +34,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
   @Input() set deckItems(value: DeckItem[]) {
     this.list = value;
-    this.tempList = value;
+    this.tempList = this.sortByPokemonEvolution([...value]);
   }
 
   public deckTarget: DropTarget<DraggedItem<DeckItem>, any>;
@@ -77,12 +78,46 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         this.tempList = this.list;
         this.tempList.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
         this.tempList.sort((a, b) => a.card.superType - b.card.superType);
+        this.tempList = this.sortByPokemonEvolution([...this.tempList]);
       },
       isDragging: (ground: DeckItem, inFlight: DraggedItem<DeckItem>) => {
         return ground.card.fullName === inFlight.data.card.fullName;
       }
     };
   }
+  
+  sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {
+    const firstTrainerIndex = cards.findIndex((d) => d.card.superType === SuperType.TRAINER);
+    
+    for (let i = 0; i < firstTrainerIndex; i++) {
+      if ((<PokemonCard>cards[i].card).evolvesFrom) {
+        const indexOfPrevolution = this.findLastIndex(cards, c => c.card.name === (<PokemonCard>cards[i].card).evolvesFrom);
+        
+        if (cards[indexOfPrevolution]?.card.superType !== SuperType.POKEMON) {
+          continue;
+        }
+        
+        const currentPokemon = { ...cards.splice(i, 1)[0] };
+        
+        cards = [
+          ...cards.slice(0, indexOfPrevolution + 1),
+          { ...currentPokemon },
+          ...cards.slice(indexOfPrevolution + 1),
+        ];
+      }
+    }
+    
+    return cards;
+  }
+  
+  findLastIndex<T>(array: Array<T>, predicate: (value: T, index: number, obj: T[]) => boolean): number {
+    let l = array.length;
+    while (l--) {
+        if (predicate(array[l], l, array))
+            return l;
+    }
+    return -1;
+}
 
   private loadLibraryCards(): LibraryItem[] {
     return this.cardsBaseService.getCards().map((card, index) => {
@@ -179,6 +214,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     this.deckItemsChange.next(list);
     this.tempList.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
     this.tempList.sort((a, b) => a.card.superType - b.card.superType);
+    this.tempList = this.sortByPokemonEvolution([...this.tempList]);
   }
 
   public async removeCardFromDeck(item: DeckItem) {
@@ -199,6 +235,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     this.deckItemsChange.next(list);
     this.tempList.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
     this.tempList.sort((a, b) => a.card.superType - b.card.superType);
+    this.tempList = this.sortByPokemonEvolution([...this.tempList]);
   }
 
   public async setCardCount(item: DeckItem) {
@@ -249,12 +286,11 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
     // deck-edit-panes.component.ts
 
-    onDeckCardClick(card: DeckItem) {
-      this.removeCardFromDeck(card);
-}
+  onDeckCardClick(card: DeckItem) {
+    this.removeCardFromDeck(card);
+  }
 
-onLibraryCardClick(card: DeckItem) {
-  this.addCardToDeck(card);
-}
-
+  onLibraryCardClick(card: DeckItem) {
+    this.addCardToDeck(card);
+  }
 }

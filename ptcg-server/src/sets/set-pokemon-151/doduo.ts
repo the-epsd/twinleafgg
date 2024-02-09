@@ -12,8 +12,6 @@ export class Doduo extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public evolvesFrom = 'Doduo';
-
   public cardType: CardType = CardType.COLORLESS;
 
   public hp: number = 70;
