@@ -10,7 +10,6 @@ class Doduo extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.stage = card_types_1.Stage.BASIC;
-        this.evolvesFrom = 'Doduo';
         this.cardType = card_types_1.CardType.COLORLESS;
         this.hp = 70;
         // public weakness = [{ type: CardType.LIGHTNING }];

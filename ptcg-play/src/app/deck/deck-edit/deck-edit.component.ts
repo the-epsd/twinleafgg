@@ -13,6 +13,7 @@ import { DeckEditPane } from '../deck-edit-panes/deck-edit-pane.interface';
 import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-filter.interface';
 import { DeckService } from '../../api/services/deck.service';
 import { FileDownloadService } from '../../shared/file-download/file-download.service';
+import { Card, PokemonCard, SuperType } from 'ptcg-server';
 
 
 @UntilDestroy()
@@ -60,7 +61,7 @@ export class DeckEditComponent implements OnInit {
 
   private loadDeckItems(cardNames: string[]): DeckItem[] {
     const itemMap: { [name: string]: DeckItem } = {};
-    const deckItems: DeckItem[] = [];
+    let deckItems: DeckItem[] = [];
 
     for (const name of cardNames) {
       if (itemMap[name] !== undefined) {
@@ -77,62 +78,91 @@ export class DeckEditComponent implements OnInit {
           deckItems.push(itemMap[name]);
           deckItems.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
           deckItems.sort((a, b) => a.card.superType - b.card.superType);
-          
         }
       }
     }
+    
+    deckItems = this.sortByPokemonEvolution(deckItems);
 
     return deckItems;
+  }
+  
+  sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {
+    const firstTrainerIndex = cards.findIndex((d) => d.card.superType === SuperType.TRAINER);
+    
+    for (let i = 0; i < firstTrainerIndex; i++) {
+      if ((<PokemonCard>cards[i].card).evolvesFrom) {
+        const indexOfPrevolution = this.findLastIndex(cards, c => c.card.name === (<PokemonCard>cards[i].card).evolvesFrom);
+        
+        if (cards[indexOfPrevolution]?.card.superType !== SuperType.POKEMON) {
+          continue;
+        }
+        
+        const currentPokemon = { ...cards.splice(i, 1)[0] };
+        
+        cards = [
+          ...cards.slice(0, indexOfPrevolution + 1),
+          { ...currentPokemon },
+          ...cards.slice(indexOfPrevolution + 1),
+        ];
+      }
+    }
+    
+    return cards;
+  }
+  
+  findLastIndex<T>(array: Array<T>, predicate: (value: T, index: number, obj: T[]) => boolean): number {
+    let l = array.length;
+    while (l--) {
+        if (predicate(array[l], l, array))
+            return l;
+    }
+    return -1;
   }
 
   importFromClipboard() {
     navigator.clipboard.readText()
-        .then(text => {
+      .then(text => {
+        const cardNames = text.split('\n')
+            .map(line => line.trim())
+            .filter(line => !!line)
+            .flatMap(line => {
+                const parts = line.split(' ');
 
-            const cardNames = text.split('\n')
-                .map(line => line.trim())
-                .filter(line => !!line)
-                .flatMap(line => {
-                    const parts = line.split(' ');
+                // Check if the first part is a number
+                const count = parseInt(parts[0], 10);
+                if (isNaN(count)) {
+                    return []; // Ignore lines that don't start with a number
+                }
 
-                    // Check if the first part is a number
-                    const count = parseInt(parts[0], 10);
-                    if (isNaN(count)) {
-                        return []; // Ignore lines that don't start with a number
-                    }
+                const cardDetails = parts.slice(1);
+                const cardName = cardDetails.slice(0, -1).join(' ');
+                const setNumber = cardDetails.slice(-1)[0];
 
-                    const cardDetails = parts.slice(1);
-                    const cardName = cardDetails.slice(0, -1).join(' ');
-                    const setNumber = cardDetails.slice(-1)[0];
+                return new Array(count).fill({ cardName, setNumber });
+            });
 
-                    return new Array(count).fill({ cardName, setNumber });
-                });
+        // Call import deck method
+        this.importDeck(cardNames);
+    });
+  }
 
-            // Call import deck method
-            this.importDeck(cardNames);
-
-        });
-}
-
-      public importDeck(cardDetails: { cardName: string, setNumber?: string }[]) {
-        this.deckItems = this.loadDeckItems(cardDetails.map(card => card.cardName));
-    }
-
+  public importDeck(cardDetails: { cardName: string, setNumber?: string }[]) {
+    this.deckItems = this.loadDeckItems(cardDetails.map(card => card.cardName));
+  }
 
   public async exportDeck() {
     const cardNames = [];
     for (const item of this.deckItems) {
-        const fullNameWithSetNumber = item.card.fullName + (item.card.setNumber ? ` ${item.card.setNumber}` : '');
-        const fullCardName = `${item.count} ${fullNameWithSetNumber}`;
+      const fullNameWithSetNumber = item.card.fullName + (item.card.setNumber ? ` ${item.card.setNumber}` : '');
+      const fullCardName = `${item.count} ${fullNameWithSetNumber}`;
 
-        if (!cardNames.includes(fullCardName)) {
-            cardNames.push(fullCardName);
-        }
+      if (!cardNames.includes(fullCardName)) {
+          cardNames.push(fullCardName);
+      }
     }
     const data = cardNames.join('\n') + '\n';
-    // Rest of your code...
-
-
+    
     try {
       await navigator.clipboard.writeText(data);
       this.alertService.toast(this.translate.instant('DECK_EXPORTED_TO_CLIPBOARD'));
