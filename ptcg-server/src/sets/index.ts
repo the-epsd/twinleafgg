@@ -3,6 +3,7 @@ export * from './set-base-set';
 export * from './set-jungle';
 export * from './set-fossil';
 export * from './set-wotc-promos';
+export * from './set-vending-series';
 
 //Retro Energy
 export * from './set-base-set-energy';

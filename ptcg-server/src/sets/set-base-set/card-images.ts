@@ -1,3 +1,4 @@
+import { Alakazam } from './alakazam';
 import { Bill } from './bill';
 import { Blastoise } from './blastoise';
 import { Charizard } from './charizard';
@@ -27,6 +28,10 @@ import { SuperEnergyRemoval } from './super-energy-removal';
 import { SuperPotion } from './super-potion';
 import { Switch } from './switch';
 import { Wartortle } from './wartortle';
+
+export class AlakazamArt extends Alakazam {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/alakazam-base-set-bs-1.jpg?fit=600%2C825&ssl=1';
+}
 
 export class BillArt extends Bill {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/bill-base-set-bs-91.jpg?fit=600%2C825&ssl=1';

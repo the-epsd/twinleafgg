@@ -9,6 +9,7 @@ class PokemonCardList extends card_list_1.CardList {
     constructor() {
         super(...arguments);
         this.damage = 0;
+        this.hp = 0;
         this.specialConditions = [];
         this.poisonDamage = 10;
         this.burnDamage = 20;

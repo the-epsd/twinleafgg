@@ -37,3 +37,11 @@ ptcg-card {
   right: 0;
   top: 0;
 }
+
+.ptcg-deck-card-info {
+  display: flex;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 0;
+}

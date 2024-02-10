@@ -29,7 +29,6 @@ class Mew extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PR';
-        this.regulationMark = 'PR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '8';
         this.name = 'Mew';

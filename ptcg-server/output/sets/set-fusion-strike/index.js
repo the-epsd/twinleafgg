@@ -10,6 +10,7 @@ exports.setFusionStrike = [
     new card_images_1.CrossSwitcherArt(),
     new card_images_1.CookArt(),
     new card_images_1.DeoxysArt(),
+    new card_images_1.DreepyArt(),
     new card_images_1.DunsparceArt(),
     new card_images_1.ElesasSparkleArt(),
     new card_images_1.FusionStrikeEnergyArt(),

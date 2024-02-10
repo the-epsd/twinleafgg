@@ -35,8 +35,6 @@ export class Mew extends PokemonCard {
 
   public set: string = 'PR';
 
-  public regulationMark = 'PR';
-
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '8';

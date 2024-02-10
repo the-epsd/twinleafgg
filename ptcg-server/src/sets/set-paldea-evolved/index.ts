@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArctibaxArt, ArtazonArt, CetitanArt } from './card-images';
+import { ArctibaxArt, ArtazonArt, CetitanArt, GiacomoArt, GrushaArt } from './card-images';
 import { BaxcaliburArt } from './card-images';
 import { BossOrdersArt } from './card-images';
 import { BraveyCharmArt } from './card-images';
@@ -47,7 +47,9 @@ export const setPaldeaEvolved: Card[] = [
   new FlamigoArt(),
   new FrigibaxArt(),
   new Frigibax2Art(),
+  new GiacomoArt(),
   new GreatBallArt(),
+  new GrushaArt(),
   new IonoArt(),
   new JetEnergyArt(),
   new LuminousEnergyArt(),

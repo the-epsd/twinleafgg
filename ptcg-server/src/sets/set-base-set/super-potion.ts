@@ -30,24 +30,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
 
   let targets: PokemonCardList[] = [];
-  const target = targets[0];
-  let cards: Card[] = [];
-  
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    target,
-    { superType: SuperType.ENERGY },
-    { min: 1, max: 1, allowCancel: true }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
-
-  if (cards.length === 0) {
-    return state;
-  }
-
   yield store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_HEAL,
@@ -63,8 +45,25 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
+  const target = targets[0];
+  let cards: Card[] = [];
+  yield store.prompt(state, new ChooseCardsPrompt(
+    player.id,
+    GameMessage.CHOOSE_CARD_TO_DISCARD,
+    target,
+    { superType: SuperType.ENERGY },
+    { min: 1, max: 1, allowCancel: true }
+  ), selected => {
+    cards = selected || [];
+    next();
+  });
+
+  if (cards.length === 0) {
+    return state;
+  }
+
   // Discard trainer only when user selected a Pokemon
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  player.hand.moveCardTo(effect.trainerCard, player.discard);
   target.moveCardsTo(cards, player.discard);
 
   // Heal Pokemon
@@ -88,8 +87,7 @@ export class SuperPotion extends TrainerCard {
   public fullName: string = 'Super Potion BS';
 
   public text: string =
-    'Heal 60 damage from 1 of your Pokemon. If you do, discard an Energy ' +
-    'attached to that Pokemon.';
+    'Discard 1 Energy card attached to 1 of your own Pokémon in order to remove up to 4 damage counters from that Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -9,36 +9,36 @@ const game_1 = require("../../game");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
-    let playerHasPokemonWithEnergy = false;
+    let hasPokemonWithEnergy = false;
     const blocked = [];
     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         if (cardList.cards.some(c => c.superType === card_types_1.SuperType.ENERGY)) {
-            playerHasPokemonWithEnergy = true;
+            hasPokemonWithEnergy = true;
         }
         else {
             blocked.push(target);
         }
     });
-    if (!playerHasPokemonWithEnergy) {
+    if (!hasPokemonWithEnergy) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    let opponentHasPokemonWithEnergy = false;
+    let oppHasPokemonWithEnergy = false;
     const blocked2 = [];
     opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
         if (cardList.cards.some(c => c.superType === card_types_1.SuperType.ENERGY)) {
-            opponentHasPokemonWithEnergy = true;
+            oppHasPokemonWithEnergy = true;
         }
         else {
             blocked2.push(target);
         }
     });
-    if (!opponentHasPokemonWithEnergy) {
+    if (!oppHasPokemonWithEnergy) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
     let targets = [];
-    yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false, blocked: blocked2 }), results => {
+    yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false, blocked }), results => {
         targets = results || [];
         next();
     });
@@ -52,18 +52,21 @@ function* playCard(next, store, state, effect) {
         next();
     });
     target.moveCardsTo(cards, player.discard);
-    yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false, blocked: blocked }), results => {
-        targets = results || [];
+    let targets2 = [];
+    yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false, blocked: blocked2 }), results => {
+        targets2 = results || [];
         next();
     });
-    if (targets.length === 0) {
+    if (targets2.length === 0) {
         return state;
     }
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 2, allowCancel: false }), selected => {
-        cards = selected;
+    const target2 = targets2[0];
+    let cards2 = [];
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target2, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 2, allowCancel: false }), selected => {
+        cards2 = selected;
         next();
     });
-    target.moveCardsTo(cards, opponent.discard);
+    target2.moveCardsTo(cards2, opponent.discard);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }

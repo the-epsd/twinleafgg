@@ -1,6 +1,8 @@
 import { Avery } from './avery';
 import { Banette } from './banette';
 import { Beedrill } from './beedril';
+import { BlazikenV } from './blaziken-v';
+import { BlazikenVMAX } from './blaziken-vmax';
 import { BlisseyV } from './blissey-v';
 import { Drizzile } from './drizzile';
 import { EchoingHorn } from './echoing-horn';
@@ -36,6 +38,12 @@ export declare class BanetteArt extends Banette {
     cardImage: string;
 }
 export declare class BeedrillArt extends Beedrill {
+    cardImage: string;
+}
+export declare class BlazikenVArt extends BlazikenV {
+    cardImage: string;
+}
+export declare class BlazikenVMAXArt extends BlazikenVMAX {
     cardImage: string;
 }
 export declare class BlisseyVArt extends BlisseyV {

@@ -34,8 +34,6 @@ export class Mewtwo extends PokemonCard {
 
   public set: string = 'PR';
 
-  public regulationMark = 'PR';
-
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '3';

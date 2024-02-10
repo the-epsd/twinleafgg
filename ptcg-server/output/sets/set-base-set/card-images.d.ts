@@ -1,3 +1,4 @@
+import { Alakazam } from './alakazam';
 import { Bill } from './bill';
 import { Blastoise } from './blastoise';
 import { Charizard } from './charizard';
@@ -27,6 +28,9 @@ import { SuperEnergyRemoval } from './super-energy-removal';
 import { SuperPotion } from './super-potion';
 import { Switch } from './switch';
 import { Wartortle } from './wartortle';
+export declare class AlakazamArt extends Alakazam {
+    cardImage: string;
+}
 export declare class BillArt extends Bill {
     cardImage: string;
 }

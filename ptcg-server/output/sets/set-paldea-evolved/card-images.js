@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TingLuexArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.MurkrowArt = exports.MimikyuArt = exports.LuminousEnergyArt = exports.JetEnergyArt = exports.IonoArt = exports.GreatBallArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
+exports.TingLuexArt = exports.TheraputicEnergyArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.NoivernexArt = exports.NoibatArt = exports.MurkrowArt = exports.MimikyuArt = exports.LuminousEnergyArt = exports.JetEnergyArt = exports.IonoArt = exports.GrushaArt = exports.GreatBallArt = exports.GiacomoArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
 const arctibax_1 = require("./arctibax");
 const artazon_1 = require("./artazon");
 const baxcalibur_1 = require("./baxcalibur");
@@ -32,6 +32,11 @@ const shinx_1 = require("./shinx");
 const tadbulb_1 = require("./tadbulb");
 const ting_lu_ex_1 = require("./ting-lu-ex");
 const cetitan_1 = require("./cetitan");
+const grusha_1 = require("./grusha");
+const giacomo_1 = require("./giacomo");
+const theraputic_energy_1 = require("./theraputic-energy");
+const noibat_1 = require("./noibat");
+const noivern_ex_1 = require("./noivern-ex");
 class ArctibaxArt extends arctibax_1.Arctibax {
     constructor() {
         super(...arguments);
@@ -130,6 +135,13 @@ class Frigibax2Art extends frigibax2_1.Frigibax2 {
     }
 }
 exports.Frigibax2Art = Frigibax2Art;
+class GiacomoArt extends giacomo_1.Giacomo {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_182_R_EN_LG.png';
+    }
+}
+exports.GiacomoArt = GiacomoArt;
 class GreatBallArt extends great_ball_1.GreatBall {
     constructor() {
         super(...arguments);
@@ -137,6 +149,13 @@ class GreatBallArt extends great_ball_1.GreatBall {
     }
 }
 exports.GreatBallArt = GreatBallArt;
+class GrushaArt extends grusha_1.Grusha {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_184_R_EN_LG.png';
+    }
+}
+exports.GrushaArt = GrushaArt;
 class IonoArt extends iono_1.Iono {
     constructor() {
         super(...arguments);
@@ -172,6 +191,20 @@ class MurkrowArt extends murkrow_1.Murkrow {
     }
 }
 exports.MurkrowArt = MurkrowArt;
+class NoibatArt extends noibat_1.Noibat {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_152_R_EN_LG.png';
+    }
+}
+exports.NoibatArt = NoibatArt;
+class NoivernexArt extends noivern_ex_1.Noivernex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_152_R_EN_LG.png';
+    }
+}
+exports.NoivernexArt = NoivernexArt;
 class ReversalEnergyArt extends reversal_energy_1.ReversalEnergy {
     constructor() {
         super(...arguments);
@@ -242,6 +275,13 @@ class TadbulbArt extends tadbulb_1.Tadbulb {
     }
 }
 exports.TadbulbArt = TadbulbArt;
+class TheraputicEnergyArt extends theraputic_energy_1.TheraputicEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_057_R_EN_LG.png';
+    }
+}
+exports.TheraputicEnergyArt = TheraputicEnergyArt;
 class TingLuexArt extends ting_lu_ex_1.TingLuex {
     constructor() {
         super(...arguments);

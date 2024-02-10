@@ -28,7 +28,6 @@ class Mewtwo extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'PR';
-        this.regulationMark = 'PR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '3';
         this.name = 'Mewtwo';

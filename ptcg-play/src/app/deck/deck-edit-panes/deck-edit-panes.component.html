@@ -38,6 +38,7 @@
         [ptcgCardPlaceholder]="render.isDragging$"
         [source]="render.source"
         showCardCount="true"
+        (infoClick)="showCardInfo(render.data)"
         (cardClick)="onDeckCardClick(render.data)"
         (countClick)="setCardCount(render.data)"
         [card]="render.data">

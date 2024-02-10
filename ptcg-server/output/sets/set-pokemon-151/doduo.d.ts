@@ -5,7 +5,6 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class Doduo extends PokemonCard {
     regulationMark: string;
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     resistance: {

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WartortleArt = exports.SwitchArt = exports.SuperPotionArt = exports.SuperEnergyRemovalArt = exports.SquirtleArt = exports.ScoopUpArt = exports.RattataArt = exports.ProfessorOakArt = exports.PokemonTraderArt = exports.PokemonCenterArt = exports.PokemonBreederArt = exports.PlusPowerArt = exports.MaintenanceArt = exports.LassArt = exports.ItemFinderArt = exports.HitmonchanArt = exports.GustOfWindArt = exports.EnergyRetrievalArt = exports.EnergyRemovalArt = exports.ElectabuzzArt = exports.DoubleColorlessEnergyArt = exports.DoduoArt = exports.ComputerSearchArt = exports.ClefairyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = exports.BlastoiseArt = exports.BillArt = void 0;
+exports.WartortleArt = exports.SwitchArt = exports.SuperPotionArt = exports.SuperEnergyRemovalArt = exports.SquirtleArt = exports.ScoopUpArt = exports.RattataArt = exports.ProfessorOakArt = exports.PokemonTraderArt = exports.PokemonCenterArt = exports.PokemonBreederArt = exports.PlusPowerArt = exports.MaintenanceArt = exports.LassArt = exports.ItemFinderArt = exports.HitmonchanArt = exports.GustOfWindArt = exports.EnergyRetrievalArt = exports.EnergyRemovalArt = exports.ElectabuzzArt = exports.DoubleColorlessEnergyArt = exports.DoduoArt = exports.ComputerSearchArt = exports.ClefairyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = exports.BlastoiseArt = exports.BillArt = exports.AlakazamArt = void 0;
+const alakazam_1 = require("./alakazam");
 const bill_1 = require("./bill");
 const blastoise_1 = require("./blastoise");
 const charizard_1 = require("./charizard");
@@ -30,6 +31,13 @@ const super_energy_removal_1 = require("./super-energy-removal");
 const super_potion_1 = require("./super-potion");
 const switch_1 = require("./switch");
 const wartortle_1 = require("./wartortle");
+class AlakazamArt extends alakazam_1.Alakazam {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/alakazam-base-set-bs-1.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.AlakazamArt = AlakazamArt;
 class BillArt extends bill_1.Bill {
     constructor() {
         super(...arguments);

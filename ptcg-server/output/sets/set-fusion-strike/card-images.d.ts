@@ -6,6 +6,7 @@ import { Cook } from './cook';
 import { Creamomatic } from './cram-o-matic';
 import { CrossSwitcher } from './cross-switcher';
 import { Deoxys } from './deoxys';
+import { Dreepy } from './dreepy';
 import { Dunsparce } from './dunsparce';
 import { ElesasSparkle } from './elesas-sparkle';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
@@ -48,6 +49,9 @@ export declare class CrossSwitcherArt extends CrossSwitcher {
     cardImage: string;
 }
 export declare class DeoxysArt extends Deoxys {
+    cardImage: string;
+}
+export declare class DreepyArt extends Dreepy {
     cardImage: string;
 }
 export declare class DunsparceArt extends Dunsparce {

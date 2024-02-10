@@ -20,7 +20,11 @@ class MrFuji extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_PICK_UP, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH]), selected => {
+            const hasBenched = player.bench.some(b => b.cards.length > 0);
+            if (!hasBenched) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_PICK_UP, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH]), selected => {
                 const target = selected[0];
                 target.moveTo(player.deck);
                 target.clearEffects();

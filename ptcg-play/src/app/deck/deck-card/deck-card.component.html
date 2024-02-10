@@ -5,7 +5,7 @@
       *ngIf="showCardCount && card.count > 0"
       (click)="onCountClick($event)">
       {{ 'DECK_CARDS_X' | translate:{count: card.count } }}
-    </ptcg-badge>
+</ptcg-badge>
   </ptcg-card>
   <span class="ptcg-deck-card-label">
     {{ card.card.name }}

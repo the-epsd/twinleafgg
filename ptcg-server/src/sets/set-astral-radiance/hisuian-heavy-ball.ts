@@ -1,4 +1,4 @@
-import { TrainerCard, TrainerType, StoreLike, State, SuperType, ChoosePrizePrompt, GameMessage } from '../../game';
+import { TrainerCard, TrainerType, StoreLike, State, SuperType, ChoosePrizePrompt, GameMessage, Stage, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
@@ -19,14 +19,20 @@ export class HisuianHeavyBall extends TrainerCard {
   public fullName: string = 'Hisuian Heavy Ball ASR';
   
   public text: string =
-    'Attach a basic D Energy card from your discard pile to 1 of your ' +
-      'Benched D Pokemon.';
+    'Look at your face-down Prize cards. You may reveal a Basic Pokémon you find there, put it into your hand, and put this Hisuian Heavy Ball in its place as a face-down Prize card. (If you don\'t reveal a Basic Pokémon, put this card in the discard pile.) Then, shuffle your face-down Prize cards.';
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
-      const prizesWithPokemon = player.prizes.filter(p => p.cards[0].superType === SuperType.POKEMON);
+      const prizes = player.prizes.filter(p => p.isSecret);
+      const cards: Card[] = [];
+      prizes.forEach(p => { p.cards.forEach(c => cards.push(c)); });
+
+      // Make prizes no more secret, before displaying prompt
+      prizes.forEach(p => { p.isSecret = false; });
+
+      const prizesWithPokemon = player.prizes.filter(p => p.cards[0].superType === SuperType.POKEMON && Stage.BASIC);
 
       if (prizesWithPokemon.length === 0) {
         return state;
@@ -38,16 +44,23 @@ export class HisuianHeavyBall extends TrainerCard {
         { count: 1, allowCancel: false }
       ), chosenPrize => {
 
-        const prizePokemon = chosenPrize[0].cards[0];
+        // Prizes are secret once again.
+        prizes.forEach(p => { p.isSecret = true; });
 
-        chosenPrize[0].cards = [this];
-        player.discard.moveCardTo(prizePokemon, player.hand);
+        const prizePokemon = chosenPrize[0];
+
+        const hand = player.hand;
+        player.prizes.push(prizePokemon, hand);
+
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
       });
     }
 
     return state;
   }
+
 
 
 }

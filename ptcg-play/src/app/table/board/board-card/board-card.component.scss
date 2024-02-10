@@ -82,10 +82,10 @@ $ptcg-energy-card-offset: 10%;
   }
 }
 
-.ptcg-marker {
+.ptcg-card-marker {
   position: absolute;
-  top: 0%;
-  right: 0%;
+  top: 25%;
+  right: 25%;
 
   :host-context(.upside-down) & {
     transform: rotate(180deg);

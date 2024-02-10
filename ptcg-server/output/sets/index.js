@@ -15,6 +15,7 @@ __exportStar(require("./set-base-set"), exports);
 __exportStar(require("./set-jungle"), exports);
 __exportStar(require("./set-fossil"), exports);
 __exportStar(require("./set-wotc-promos"), exports);
+__exportStar(require("./set-vending-series"), exports);
 //Retro Energy
 __exportStar(require("./set-base-set-energy"), exports);
 //DP Era

@@ -24,8 +24,7 @@ class FlyingPikachuVMAX extends pokemon_card_1.PokemonCard {
                 name: 'Max Balloon',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 160,
-                text: 'During your opponent\'s next turn, prevent all damage done to ' +
-                    'Celebi by attacks from your opponent\'s Stage 1 or Stage 2 Pokemon.'
+                text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon.'
             }
         ];
         this.set = 'CEL';

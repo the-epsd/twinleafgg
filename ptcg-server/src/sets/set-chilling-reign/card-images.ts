@@ -1,6 +1,8 @@
 import { Avery } from './avery';
 import { Banette } from './banette';
 import { Beedrill } from './beedril';
+import { BlazikenV } from './blaziken-v';
+import { BlazikenVMAX } from './blaziken-vmax';
 import { BlisseyV } from './blissey-v';
 import { Drizzile } from './drizzile';
 import { EchoingHorn } from './echoing-horn';
@@ -41,6 +43,14 @@ export class BanetteArt extends Banette {
 
 export class BeedrillArt extends Beedrill {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_003_R_EN_LG.png';
+}
+
+export class BlazikenVArt extends BlazikenV {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_020_R_EN_LG.png';
+}
+
+export class BlazikenVMAXArt extends BlazikenVMAX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_021_R_EN_LG.png';
 }
 
 export class BlisseyVArt extends BlisseyV {

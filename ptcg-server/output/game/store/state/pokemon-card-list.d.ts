@@ -6,6 +6,7 @@ import { Card } from '../card/card';
 import { Power, Attack } from '../card/pokemon-types';
 export declare class PokemonCardList extends CardList {
     damage: number;
+    hp: number;
     specialConditions: SpecialCondition[];
     poisonDamage: number;
     burnDamage: number;

@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DrizzileArt = exports.BlisseyVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = void 0;
+exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DrizzileArt = exports.BlisseyVArt = exports.BlazikenVMAXArt = exports.BlazikenVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = void 0;
 const avery_1 = require("./avery");
 const banette_1 = require("./banette");
 const beedril_1 = require("./beedril");
+const blaziken_v_1 = require("./blaziken-v");
+const blaziken_vmax_1 = require("./blaziken-vmax");
 const blissey_v_1 = require("./blissey-v");
 const drizzile_1 = require("./drizzile");
 const echoing_horn_1 = require("./echoing-horn");
@@ -54,6 +56,20 @@ class BeedrillArt extends beedril_1.Beedrill {
     }
 }
 exports.BeedrillArt = BeedrillArt;
+class BlazikenVArt extends blaziken_v_1.BlazikenV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_020_R_EN_LG.png';
+    }
+}
+exports.BlazikenVArt = BlazikenVArt;
+class BlazikenVMAXArt extends blaziken_vmax_1.BlazikenVMAX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_021_R_EN_LG.png';
+    }
+}
+exports.BlazikenVMAXArt = BlazikenVMAXArt;
 class BlisseyVArt extends blissey_v_1.BlisseyV {
     constructor() {
         super(...arguments);

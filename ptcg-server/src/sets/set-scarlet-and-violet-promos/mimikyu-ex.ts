@@ -88,7 +88,7 @@ export class Mimikyuex extends PokemonCard {
           const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
           const energyCount2 = checkProvidedEnergyEffect2.energyMap.reduce((left, p) => left + p.provides.length, 0);
       
-          effect.damage += energyCount + energyCount2 * 20;
+          effect.damage += energyCount + energyCount2 * 30;
         }
         return state;
       });

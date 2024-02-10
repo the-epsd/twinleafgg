@@ -9,6 +9,8 @@ export class PokemonCardList extends CardList {
 
   public damage: number = 0;
 
+  public hp: number = 0;
+
   public specialConditions: SpecialCondition[] = [];
 
   public poisonDamage: number = 10;

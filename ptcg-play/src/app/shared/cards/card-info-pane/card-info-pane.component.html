@@ -106,6 +106,15 @@
       </div>
     </div>
 
+    <div class="power" *ngIf="card.text">
+      <div class="power-header">
+        <div class="power-name" translate>
+          CARDS_TEXT_ON_CARD
+        </div>
+      </div>
+      <div class="card-text">{{ card.text }}</div>
+    </div>
+
   </div>
 
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.ENERGY">

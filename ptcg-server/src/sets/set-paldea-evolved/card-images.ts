@@ -29,6 +29,11 @@ import { Shinx } from './shinx';
 import { Tadbulb } from './tadbulb';
 import { TingLuex } from './ting-lu-ex';
 import { Cetitan } from './cetitan';
+import { Grusha } from './grusha';
+import { Giacomo } from './giacomo';
+import { TheraputicEnergy } from './theraputic-energy';
+import { Noibat } from './noibat';
+import { Noivernex } from './noivern-ex';
 
 export class ArctibaxArt extends Arctibax {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_059_R_EN_LG.png';
@@ -85,9 +90,17 @@ export class FrigibaxArt extends Frigibax {
 export class Frigibax2Art extends Frigibax2 {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_058_R_EN_LG.png';
 }
+
+export class GiacomoArt extends Giacomo {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_182_R_EN_LG.png';
+}
   
 export class GreatBallArt extends GreatBall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_183_R_EN_LG.png';
+}
+
+export class GrushaArt extends Grusha {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_184_R_EN_LG.png';
 }
   
 export class IonoArt extends Iono {
@@ -108,6 +121,14 @@ export class MimikyuArt extends Mimikyu {
   
 export class MurkrowArt extends Murkrow {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_131_R_EN_LG.png';
+}
+
+export class NoibatArt extends Noibat {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_152_R_EN_LG.png';
+}
+
+export class NoivernexArt extends Noivernex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_152_R_EN_LG.png';
 }
   
 export class ReversalEnergyArt extends ReversalEnergy {
@@ -148,6 +169,10 @@ export class ShinxArt extends Shinx {
   
 export class TadbulbArt extends Tadbulb {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_077_R_EN_LG.png';
+}
+
+export class TheraputicEnergyArt extends TheraputicEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_057_R_EN_LG.png';
 }
   
 export class TingLuexArt extends TingLuex {

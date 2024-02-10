@@ -6,6 +6,7 @@ import { Cook } from './cook';
 import { Creamomatic } from './cram-o-matic';
 import { CrossSwitcher } from './cross-switcher';
 import { Deoxys } from './deoxys';
+import { Dreepy } from './dreepy';
 import { Dunsparce } from './dunsparce';
 import { ElesasSparkle } from './elesas-sparkle';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
@@ -57,6 +58,10 @@ export class CrossSwitcherArt extends CrossSwitcher {
 
 export class DeoxysArt extends Deoxys {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_120_R_EN_LG.png';
+}
+
+export class DreepyArt extends Dreepy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_128_R_EN_LG.png';
 }
 
 export class DunsparceArt extends Dunsparce {

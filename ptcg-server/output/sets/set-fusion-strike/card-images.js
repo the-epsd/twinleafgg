@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.YveltalArt = exports.ShelmetArt = exports.ShaunaArt = exports.SchoolgirlArt = exports.SchoolboyArt = exports.PyukumukuArt = exports.PowerTabletArt = exports.OricorioArt = exports.MewVMAXArt = exports.MewVArt = exports.MeloettaArt = exports.JudgeArt = exports.InteleonVMAXArt = exports.InteleonVArt = exports.GengarVMAXArt = exports.GengarVArt = exports.GenesectVArt = exports.FusionStrikeEnergyArt = exports.ElesasSparkleArt = exports.DunsparceArt = exports.DeoxysArt = exports.CrossSwitcherArt = exports.CreamomaticArt = exports.CookArt = exports.BattleVIPPassArt = exports.BasculinArt = exports.AdventurersDiscoveryArt = exports.AccelgorArt = void 0;
+exports.YveltalArt = exports.ShelmetArt = exports.ShaunaArt = exports.SchoolgirlArt = exports.SchoolboyArt = exports.PyukumukuArt = exports.PowerTabletArt = exports.OricorioArt = exports.MewVMAXArt = exports.MewVArt = exports.MeloettaArt = exports.JudgeArt = exports.InteleonVMAXArt = exports.InteleonVArt = exports.GengarVMAXArt = exports.GengarVArt = exports.GenesectVArt = exports.FusionStrikeEnergyArt = exports.ElesasSparkleArt = exports.DunsparceArt = exports.DreepyArt = exports.DeoxysArt = exports.CrossSwitcherArt = exports.CreamomaticArt = exports.CookArt = exports.BattleVIPPassArt = exports.BasculinArt = exports.AdventurersDiscoveryArt = exports.AccelgorArt = void 0;
 const accelgor_1 = require("./accelgor");
 const adventurers_discovery_1 = require("./adventurers-discovery");
 const basculin_1 = require("./basculin");
@@ -9,6 +9,7 @@ const cook_1 = require("./cook");
 const cram_o_matic_1 = require("./cram-o-matic");
 const cross_switcher_1 = require("./cross-switcher");
 const deoxys_1 = require("./deoxys");
+const dreepy_1 = require("./dreepy");
 const dunsparce_1 = require("./dunsparce");
 const elesas_sparkle_1 = require("./elesas-sparkle");
 const fusion_strike_energy_1 = require("./fusion-strike-energy");
@@ -85,6 +86,13 @@ class DeoxysArt extends deoxys_1.Deoxys {
     }
 }
 exports.DeoxysArt = DeoxysArt;
+class DreepyArt extends dreepy_1.Dreepy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_128_R_EN_LG.png';
+    }
+}
+exports.DreepyArt = DreepyArt;
 class DunsparceArt extends dunsparce_1.Dunsparce {
     constructor() {
         super(...arguments);

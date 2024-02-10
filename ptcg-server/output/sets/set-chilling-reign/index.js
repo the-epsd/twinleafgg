@@ -6,6 +6,8 @@ exports.setChillingReign = [
     new card_images_1.AveryArt(),
     new card_images_1.BanetteArt(),
     new card_images_1.BeedrillArt(),
+    new card_images_1.BlazikenVArt(),
+    new card_images_1.BlazikenVMAXArt(),
     new card_images_1.BlisseyVArt(),
     new card_images_1.DrizzileArt(),
     new card_images_1.EchoingHornArt(),

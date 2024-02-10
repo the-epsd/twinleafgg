@@ -2,6 +2,8 @@ import { Copycat } from './copycat';
 import { DragoniteV } from './dragonite-v';
 import { DuraludonV } from './duraludon-v';
 import { DuraludonVMAX } from './duraludon-vmax';
+import { EspeonV } from './espeon-v';
+import { EspeonVMAX } from './espeon-vmax';
 import { Flaaffy } from './flaaffy';
 import { FullFaceGuard } from './full-face-guard';
 import { GalarianArticuno } from './galarian-articuno';
@@ -40,6 +42,12 @@ export declare class DuraludonVArt extends DuraludonV {
     cardImage: string;
 }
 export declare class DuraludonVMAXArt extends DuraludonVMAX {
+    cardImage: string;
+}
+export declare class EspeonVArt extends EspeonV {
+    cardImage: string;
+}
+export declare class EspeonVMAXArt extends EspeonVMAX {
     cardImage: string;
 }
 export declare class FlaaffyArt extends Flaaffy {

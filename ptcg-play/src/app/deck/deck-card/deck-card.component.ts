@@ -18,6 +18,7 @@ export class DeckCardComponent {
 
   @Output() cardClick = new EventEmitter<void>();
   @Output() countClick = new EventEmitter<void>();
+  @Output() infoClick = new EventEmitter<void>();
 
   constructor() {}
 
@@ -27,6 +28,11 @@ export class DeckCardComponent {
   }
 
   onCardClick() {
+    this.cardClick.next();
+  }
+
+  onInfoClick() {
+    event.stopPropagation();
     this.cardClick.next();
   }
 

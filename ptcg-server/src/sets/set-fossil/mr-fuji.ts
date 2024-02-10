@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { ShuffleDeckPrompt, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
+import { ShuffleDeckPrompt, ChoosePokemonPrompt, PlayerType, SlotType, GameError } from '../../game';
 
 export class MrFuji extends TrainerCard {
 
@@ -29,10 +29,15 @@ export class MrFuji extends TrainerCard {
         
       const player = effect.player;
 
+      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      if (!hasBenched) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
-        PlayerType.TOP_PLAYER,
+        PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
       ), selected => {
         const target = selected[0];

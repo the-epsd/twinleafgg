@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VenusaurVMAXArt = exports.VenusaurVArt = exports.EscapeRopeArt = exports.ProfessorBurnettArt = exports.ManaphyArt = exports.LucarioVSTARArt = exports.LeafeonVSTARArt = exports.HisuianElectrodeVArt = exports.ChampionsFestivalArt = void 0;
+exports.VenusaurVMAXArt = exports.VenusaurVArt = exports.EscapeRopeArt = exports.ProfessorBurnettArt = exports.ManaphyArt = exports.LucarioVSTARArt = exports.LeafeonVSTARArt = exports.HisuianElectrodeVArt = exports.DeoxysVSTARArt = exports.DeoxysVArt = exports.ChampionsFestivalArt = void 0;
 const escape_rope_1 = require("../set-battle-styles/escape-rope");
 const champions_festival_1 = require("./champions-festival");
+const deoxys_v_1 = require("./deoxys-v");
+const deoxys_vstar_1 = require("./deoxys-vstar");
 const hisuian_electrode_v_1 = require("./hisuian-electrode-v");
 const leafeon_vstar_1 = require("./leafeon-vstar");
 const lucario_vstar_1 = require("./lucario-vstar");
@@ -17,6 +19,20 @@ class ChampionsFestivalArt extends champions_festival_1.ChampionsFestival {
     }
 }
 exports.ChampionsFestivalArt = ChampionsFestivalArt;
+class DeoxysVArt extends deoxys_v_1.DeoxysV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_266_R_EN.png';
+    }
+}
+exports.DeoxysVArt = DeoxysVArt;
+class DeoxysVSTARArt extends deoxys_vstar_1.DeoxysVSTAR {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_268_R_EN.png';
+    }
+}
+exports.DeoxysVSTARArt = DeoxysVSTARArt;
 class HisuianElectrodeVArt extends hisuian_electrode_v_1.HisuianElectrodeV {
     constructor() {
         super(...arguments);

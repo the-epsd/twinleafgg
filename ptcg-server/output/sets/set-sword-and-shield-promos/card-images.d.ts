@@ -1,5 +1,7 @@
 import { EscapeRope } from '../set-battle-styles/escape-rope';
 import { ChampionsFestival } from './champions-festival';
+import { DeoxysV } from './deoxys-v';
+import { DeoxysVSTAR } from './deoxys-vstar';
 import { HisuianElectrodeV } from './hisuian-electrode-v';
 import { LeafeonVSTAR } from './leafeon-vstar';
 import { LucarioVSTAR } from './lucario-vstar';
@@ -8,6 +10,12 @@ import { ProfessorBurnet } from './professor-burnett';
 import { VenusaurV } from './venusaur-v';
 import { VenusaurVMAX } from './venusaur-vmax';
 export declare class ChampionsFestivalArt extends ChampionsFestival {
+    cardImage: string;
+}
+export declare class DeoxysVArt extends DeoxysV {
+    cardImage: string;
+}
+export declare class DeoxysVSTARArt extends DeoxysVSTAR {
     cardImage: string;
 }
 export declare class HisuianElectrodeVArt extends HisuianElectrodeV {

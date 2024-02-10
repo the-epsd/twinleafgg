@@ -29,6 +29,11 @@ import { Shinx } from './shinx';
 import { Tadbulb } from './tadbulb';
 import { TingLuex } from './ting-lu-ex';
 import { Cetitan } from './cetitan';
+import { Grusha } from './grusha';
+import { Giacomo } from './giacomo';
+import { TheraputicEnergy } from './theraputic-energy';
+import { Noibat } from './noibat';
+import { Noivernex } from './noivern-ex';
 export declare class ArctibaxArt extends Arctibax {
     cardImage: string;
 }
@@ -71,7 +76,13 @@ export declare class FrigibaxArt extends Frigibax {
 export declare class Frigibax2Art extends Frigibax2 {
     cardImage: string;
 }
+export declare class GiacomoArt extends Giacomo {
+    cardImage: string;
+}
 export declare class GreatBallArt extends GreatBall {
+    cardImage: string;
+}
+export declare class GrushaArt extends Grusha {
     cardImage: string;
 }
 export declare class IonoArt extends Iono {
@@ -87,6 +98,12 @@ export declare class MimikyuArt extends Mimikyu {
     cardImage: string;
 }
 export declare class MurkrowArt extends Murkrow {
+    cardImage: string;
+}
+export declare class NoibatArt extends Noibat {
+    cardImage: string;
+}
+export declare class NoivernexArt extends Noivernex {
     cardImage: string;
 }
 export declare class ReversalEnergyArt extends ReversalEnergy {
@@ -117,6 +134,9 @@ export declare class ShinxArt extends Shinx {
     cardImage: string;
 }
 export declare class TadbulbArt extends Tadbulb {
+    cardImage: string;
+}
+export declare class TheraputicEnergyArt extends TheraputicEnergy {
     cardImage: string;
 }
 export declare class TingLuexArt extends TingLuex {

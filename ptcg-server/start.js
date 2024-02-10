@@ -15,6 +15,7 @@ cardManager.defineSet(sets.setBaseSet);
 cardManager.defineSet(sets.setJungle);
 cardManager.defineSet(sets.setFossil);
 cardManager.defineSet(sets.setWOTCPromos);
+cardManager.defineSet(sets.setVendingSeries);
 
 cardManager.defineSet(sets.setBaseSetEnergy);
 

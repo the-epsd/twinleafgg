@@ -25,6 +25,13 @@ function* playCard(next, store, state, effect) {
     // Do not discard the card yet
     effect.preventDefault = true;
     let targets = [];
+    yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_HEAL, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: true, blocked }), results => {
+        targets = results || [];
+        next();
+    });
+    if (targets.length === 0) {
+        return state;
+    }
     const target = targets[0];
     let cards = [];
     yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: true }), selected => {
@@ -34,15 +41,8 @@ function* playCard(next, store, state, effect) {
     if (cards.length === 0) {
         return state;
     }
-    yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_HEAL, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: true, blocked }), results => {
-        targets = results || [];
-        next();
-    });
-    if (targets.length === 0) {
-        return state;
-    }
     // Discard trainer only when user selected a Pokemon
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.hand.moveCardTo(effect.trainerCard, player.discard);
     target.moveCardsTo(cards, player.discard);
     // Heal Pokemon
     const healEffect = new game_effects_1.HealEffect(player, target, 40);
@@ -58,8 +58,7 @@ class SuperPotion extends trainer_card_1.TrainerCard {
         this.setNumber = '90';
         this.name = 'Super Potion';
         this.fullName = 'Super Potion BS';
-        this.text = 'Heal 60 damage from 1 of your Pokemon. If you do, discard an Energy ' +
-            'attached to that Pokemon.';
+        this.text = 'Discard 1 Energy card attached to 1 of your own Pokémon in order to remove up to 4 damage counters from that Pokémon.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

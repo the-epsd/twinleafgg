@@ -68,6 +68,9 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
                     }
                     player.discard.moveCardTo(transfer.card, target);
                     target.damage += 20;
+                    if (pokemonCard.hp <= 10) {
+                        throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                    }
                 }
                 return state;
             });
