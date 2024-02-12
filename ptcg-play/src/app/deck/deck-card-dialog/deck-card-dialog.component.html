@@ -1,8 +1,9 @@
 <h2 mat-dialog-title translate>{{ 'CARD_ALTERNATIVES_TITLE' | translate }}</h2>
 <mat-dialog-content>
   <div class="top-row">
-    <ptcg-card [card]="data.card">
-    </ptcg-card>
+    <div class="selected-card-container">
+      <ptcg-card [card]="data.card" id="selectedCard"></ptcg-card>
+    </div>
     <div class="alternate-printings">
       <ptcg-card *ngFor="let card of alternatePrintings$ | async" [card]="card">
         <button mat-mini-fab color="primary" 

@@ -1,6 +1,10 @@
 @import '../../../theme/variables.scss';
 
-$ptcg-deck-card-width: map-get($ptcg-size, card) + map-get($padding, large);
+$ptcg-deck-card-width: map-get($ptcg-size, card) + map-get($padding, large) + 50;
+
+#selectedCard {
+  width: 250px !important;
+}
 
 mat-dialog-content {
   .top-row {
@@ -8,27 +12,37 @@ mat-dialog-content {
     flex-wrap: wrap;
     gap: 1rem;
     
+    .selected-card-container {
+      flex: 1;
+    }  
+    
     .alternate-printings {
-      flex: 100%;      
       display: flex;
-      flex-wrap: row;
+      flex-wrap: wrap;
+      place-content: start;
       gap: 1rem;
       
       ptcg-card {
-        max-width: 200px;
+        width: $ptcg-deck-card-width;
       }
     }
     
-    ptcg-card {
-      flex: 100%;
-    }
-    
-    @media (min-width: 768px) {
+    @media (min-width: 640px) {
       .alternate-printings {
         flex: 1;
       }
       
-      ptcg-card {
+      .selected-card-container {
+        flex: 1;
+      }  
+    }
+    
+    @media (min-width: 900px) {
+      .alternate-printings {
+        flex: 1;
+      }
+      
+      .selected-card-container {
         flex: 1;
       }  
     }
@@ -38,7 +52,7 @@ mat-dialog-content {
         flex: 2;
       }
       
-      ptcg-card {
+      .selected-card-container {
         flex: 1;
       }  
     }
@@ -48,7 +62,7 @@ mat-dialog-content {
         flex: 3;
       }
       
-      ptcg-card {
+      .selected-card-container {
         flex: 1;
       }  
     }
@@ -70,6 +84,7 @@ mat-dialog-content {
       
       ptcg-card {
         width: $ptcg-deck-card-width;
+        min-width: $ptcg-deck-card-width;
       }
     }
   }
