@@ -43,6 +43,10 @@ export class Shuckle extends PokemonCard {
 
   public fullName: string = 'Shuckle HSP';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '15';
+
   public readonly SHELL_STUNNER_MAREKER = 'SHELL_STUNNER_MAREKER';
 
   public readonly CLEAR_SHELL_STUNNER_MAREKER = 'CLEAR_SHELL_STUNNER_MAREKER';

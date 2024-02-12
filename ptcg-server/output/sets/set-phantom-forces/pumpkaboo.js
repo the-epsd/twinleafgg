@@ -30,7 +30,9 @@ class Pumpkaboo extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PHF';
         this.name = 'Pumpkaboo';
-        this.fullName = 'Pumpkaboo PFO';
+        this.fullName = 'Pumpkaboo PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '44';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

@@ -30,9 +30,11 @@ class Pignite extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'BW';
+        this.set = 'BLW';
         this.name = 'Pignite';
-        this.fullName = 'Pignite BW';
+        this.fullName = 'Pignite BLW';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '17';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

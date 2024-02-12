@@ -58,7 +58,9 @@ class Dusknoir extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'BCR';
         this.name = 'Dusknoir';
-        this.fullName = 'Dusknoir BC';
+        this.fullName = 'Dusknoir BCR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '63';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

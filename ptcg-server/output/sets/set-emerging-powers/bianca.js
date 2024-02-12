@@ -13,6 +13,8 @@ class Bianca extends trainer_card_1.TrainerCard {
         this.set = 'EPO';
         this.name = 'Bianca';
         this.fullName = 'Bianca EPO';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '90';
         this.text = 'Draw cards until you have 6 cards in your hand.';
     }
     reduceEffect(store, state, effect) {

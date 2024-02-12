@@ -34,6 +34,8 @@ class Emboar extends pokemon_card_1.PokemonCard {
         this.set = 'LTR';
         this.name = 'Emboar';
         this.fullName = 'Emboar LTR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '27';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

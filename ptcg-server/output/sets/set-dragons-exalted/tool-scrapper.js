@@ -59,6 +59,8 @@ class ToolScrapper extends trainer_card_1.TrainerCard {
         this.set = 'DRX';
         this.name = 'Tool Scrapper';
         this.fullName = 'Tool Scrapper DRX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '116';
         this.text = 'Choose up to 2 Pokemon Tool cards attached to Pokemon in play (yours or ' +
             'your opponent\'s) and discard them.';
     }

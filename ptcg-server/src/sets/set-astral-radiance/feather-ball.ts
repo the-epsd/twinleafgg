@@ -5,8 +5,51 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameMessage } from '../../game/game-message';
-import { StoreLike, State, StateUtils, CardTarget, PokemonCard } from '../../game';
+import { StoreLike, State, StateUtils, PokemonCard, Card, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+  let cards: Card[] = [];
+
+  if (player.deck.cards.length === 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+
+  const blocked: number[] = [];
+  player.deck.cards.forEach((card, index) => {
+    if (card instanceof PokemonCard && card.retreat.length == 0) {
+      blocked.push(index);
+    }
+  });
+
+  yield store.prompt(state, new ChooseCardsPrompt(
+    player.id,
+    GameMessage.CHOOSE_CARD_TO_HAND,
+    player.deck,
+    { superType: SuperType.POKEMON },
+    { min: 1, max: 1, allowCancel: true, blocked }
+  ), selected => {
+    cards = selected || [];
+    next();
+  });
+
+  player.deck.moveCardsTo(cards, player.hand);
+
+  if (cards.length > 0) {
+    yield store.prompt(state, new ShowCardsPrompt(
+      opponent.id,
+      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+      cards
+    ), () => next());
+  }
+
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    player.deck.applyOrder(order);
+  });
+}
+
 export class FeatherBall extends TrainerCard {
   
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -29,53 +72,14 @@ export class FeatherBall extends TrainerCard {
       'Shuffle your deck afterward.';
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
-
-      const blocked: CardTarget[] = [];
-      player.deck.cards.forEach((card, index) => {
-        if (card instanceof PokemonCard && card.retreat.length === 0) {
-          blocked.push(); // Changed index to card
-        }
-      });
-
-      return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.POKEMON },
-        { min: 0, max: 1, allowCancel: false }
-      ), (cards) => {
-
-        if (!cards || cards.length === 0) {
-          return state;
-        }
-
-        const pokemon = cards[0];
-
-        player.deck.moveCardTo(pokemon, player.hand);
-        player.supporter.moveCardTo(this, player.discard);
-
-        return store.prompt(state, [
-          new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, [pokemon]),
-          new ShuffleDeckPrompt(player.id)
-        ], (results) => {
-          player.deck.applyOrder(results[1]);
-        });
-
-      });
-
+      const generator = playCard(() => generator.next(), store, state, effect);
+      return generator.next().value;
     }
-
+    
     return state;
   }
-
-
-      
+    
 }
-      
+    

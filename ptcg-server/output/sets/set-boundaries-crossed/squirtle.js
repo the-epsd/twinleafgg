@@ -31,7 +31,9 @@ class Squirtle extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'BCR';
         this.name = 'Squirtle';
-        this.fullName = 'Squirtle BC';
+        this.fullName = 'Squirtle BCR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '29';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -20,7 +20,11 @@ export class MysteryEnergy extends EnergyCard {
 
   public name = 'Mystery Energy';
 
-  public fullName = 'Mystery Energy PFO';
+  public fullName = 'Mystery Energy PHF';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '112';
 
   public readonly STRONG_ENERGY_MAREKER = 'STRONG_ENERGY_MAREKER';
 

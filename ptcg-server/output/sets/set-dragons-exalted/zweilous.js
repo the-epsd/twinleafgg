@@ -56,7 +56,9 @@ class Zweilous extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'DRX';
         this.name = 'Zweilous';
-        this.fullName = 'Zweilous DGE';
+        this.fullName = 'Zweilous DRX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '95';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

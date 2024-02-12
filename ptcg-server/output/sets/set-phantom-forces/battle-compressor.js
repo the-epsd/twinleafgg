@@ -29,7 +29,9 @@ class BattleCompressor extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'PHF';
         this.name = 'Battle Compressor';
-        this.fullName = 'Battle Compressor PFO';
+        this.fullName = 'Battle Compressor PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '92';
         this.text = 'Search your deck for up to 3 cards and discard them. Shuffle your ' +
             'deck afterward.';
     }

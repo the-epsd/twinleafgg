@@ -31,6 +31,8 @@ class Lillipup extends pokemon_card_1.PokemonCard {
         this.set = 'BLW';
         this.name = 'Lillipup';
         this.fullName = 'Lillipup BLW';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '80';
     }
     reduceEffect(store, state, effect) {
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {

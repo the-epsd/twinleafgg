@@ -73,7 +73,11 @@ export class Unown extends PokemonCard {
 
   public name: string = 'Unown';
 
-  public fullName: string = 'Unown HGSS';
+  public fullName: string = 'Unown HS';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '54';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

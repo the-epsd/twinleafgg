@@ -45,6 +45,10 @@ export class SeismitoadEx extends PokemonCard {
 
   public fullName: string = 'Seismitoad EX FFI';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '20';
+
   public readonly QUAKING_PUNCH_MAREKER = 'QUAKING_PUNCH_MAREKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

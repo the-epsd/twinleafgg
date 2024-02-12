@@ -44,7 +44,11 @@ export class Munna extends PokemonCard {
 
   public name: string = 'Munna';
 
-  public fullName: string = 'Munna BC';
+  public fullName: string = 'Munna BCR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '68';
 
   public readonly LONG_DISTANCE_HYPNOSIS_MARKER = 'LONG_DISTANCE_HYPNOSIS_MARKER';
 

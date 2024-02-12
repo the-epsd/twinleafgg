@@ -13,6 +13,8 @@ class Cheren extends trainer_card_1.TrainerCard {
         this.set = 'EPO';
         this.name = 'Cheren';
         this.fullName = 'Cheren EPO';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '91';
         this.text = 'Draw 3 cards.';
     }
     reduceEffect(store, state, effect) {

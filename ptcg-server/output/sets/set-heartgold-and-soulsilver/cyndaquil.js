@@ -17,7 +17,9 @@ class Cyndaquil extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'HS';
         this.name = 'Cyndaquil';
-        this.fullName = 'Cyndaquil HGSS';
+        this.fullName = 'Cyndaquil HS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '61';
     }
 }
 exports.Cyndaquil = Cyndaquil;

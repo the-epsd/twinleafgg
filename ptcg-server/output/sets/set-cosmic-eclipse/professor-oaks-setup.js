@@ -35,6 +35,8 @@ class ProfessorOaksSetup extends trainer_card_1.TrainerCard {
         this.set = 'CEC';
         this.name = 'Professor Oak\'s Setup';
         this.fullName = 'Professor Oak\'s Setup CEC';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '201';
         this.text = 'Search your deck for up to 3 Basic Pokemon of different types and ' +
             'put them onto your Bench. Then, shuffle your deck.';
     }

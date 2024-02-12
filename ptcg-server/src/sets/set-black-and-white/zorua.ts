@@ -29,11 +29,15 @@ export class Zorua extends PokemonCard {
     text: 'Flip a coin. If tails, this attack does nothing.'
   }];
 
-  public set: string = 'BW3';
+  public set: string = 'BLW';
 
   public name: string = 'Zorua';
 
-  public fullName: string = 'Zorua BW';
+  public fullName: string = 'Zorua BLW';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '70';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

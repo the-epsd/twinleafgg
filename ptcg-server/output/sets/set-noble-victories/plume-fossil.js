@@ -43,6 +43,8 @@ class PlumeFossil extends trainer_card_1.TrainerCard {
         this.set = 'NVI';
         this.name = 'Plume Fossil';
         this.fullName = 'Plume Fossil NVI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '93';
         this.text = 'Look at the bottom 7 cards of your deck. You may reveal an Archen ' +
             'you find there and put is onto your Bench. Shuffle the other cards back ' +
             'into your deck.';

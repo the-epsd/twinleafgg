@@ -31,7 +31,11 @@ export class Gothita extends PokemonCard {
 
   public name: string = 'Gothita';
 
-  public fullName: string = 'Gothita LT';
+  public fullName: string = 'Gothita LTR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '70';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -41,6 +41,10 @@ export class ToxicroakEx extends PokemonCard {
 
   public fullName: string = 'Toxicroak EX FLF';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '41';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

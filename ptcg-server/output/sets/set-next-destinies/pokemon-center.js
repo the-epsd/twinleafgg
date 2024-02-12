@@ -16,6 +16,8 @@ class PokemonCenter extends trainer_card_1.TrainerCard {
         this.set = 'NXD';
         this.name = 'Pokemon Center';
         this.fullName = 'Pokemon Center NXD';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '90';
         this.text = 'Once during each player\'s turn, that player may heal 20 damage ' +
             'from 1 of his or her Benched Pokemon.';
     }

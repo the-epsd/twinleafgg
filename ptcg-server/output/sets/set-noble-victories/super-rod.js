@@ -47,7 +47,9 @@ class SuperRod extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'NVI';
         this.name = 'Super Rod';
-        this.fullName = 'Super Rod NV';
+        this.fullName = 'Super Rod NVI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '95';
         this.text = 'Shuffle 3 in any combination of Pokemon and basic Energy cards from ' +
             'your discard pile back into your deck.';
     }

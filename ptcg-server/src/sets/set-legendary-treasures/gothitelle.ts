@@ -43,7 +43,11 @@ export class Gothitelle extends PokemonCard {
 
   public name: string = 'Gothitelle';
 
-  public fullName: string = 'Gothitelle LT';
+  public fullName: string = 'Gothitelle LTR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '72';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

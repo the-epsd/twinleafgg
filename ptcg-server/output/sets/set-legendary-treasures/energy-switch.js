@@ -51,7 +51,9 @@ class EnergySwitch extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'LTR';
         this.name = 'Energy Switch';
-        this.fullName = 'Energy Switch LT';
+        this.fullName = 'Energy Switch LTR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '112';
         this.text = 'Move a basic Energy from 1 of your Pokemon to another of your Pokemon.';
     }
     reduceEffect(store, state, effect) {

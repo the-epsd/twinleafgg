@@ -16,6 +16,10 @@ export class SilverBangle extends TrainerCard {
 
   public fullName: string = 'Silver Bangle PLB';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '88';
+
   public text: string =
     'The attacks of the Pokemon this card is attached to (excluding ' +
     'Pokemon-EX) do 30 more damage to Active Pokemon-EX (before applying ' +

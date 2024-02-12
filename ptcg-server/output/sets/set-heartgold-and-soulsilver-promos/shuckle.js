@@ -35,6 +35,8 @@ class Shuckle extends pokemon_card_1.PokemonCard {
         this.set = 'HSP';
         this.name = 'Shuckle';
         this.fullName = 'Shuckle HSP';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '15';
         this.SHELL_STUNNER_MAREKER = 'SHELL_STUNNER_MAREKER';
         this.CLEAR_SHELL_STUNNER_MAREKER = 'CLEAR_SHELL_STUNNER_MAREKER';
     }

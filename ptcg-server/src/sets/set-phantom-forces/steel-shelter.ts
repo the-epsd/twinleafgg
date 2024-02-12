@@ -19,6 +19,10 @@ export class SteelShelter extends TrainerCard {
 
   public fullName: string = 'Steel Shelter PFO';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '105';
+
   public text: string =
     'Each M Pokemon (both yours and your opponent\'s) can\'t be affected ' +
     'by any Special Conditions. (Remove any Special Conditions affecting ' +

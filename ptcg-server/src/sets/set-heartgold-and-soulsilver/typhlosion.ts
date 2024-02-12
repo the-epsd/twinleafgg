@@ -91,7 +91,11 @@ export class Typhlosion extends PokemonCard {
 
   public name: string = 'Typhlosion';
 
-  public fullName: string = 'Typhlosion HGSS';
+  public fullName: string = 'Typhlosion HS';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '110';
 
   public readonly AFTERBURNER_MAREKER = 'DYNAMOTOR_MAREKER';
 

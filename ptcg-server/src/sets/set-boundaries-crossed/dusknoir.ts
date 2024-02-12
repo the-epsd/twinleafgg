@@ -80,7 +80,11 @@ export class Dusknoir extends PokemonCard {
 
   public name: string = 'Dusknoir';
 
-  public fullName: string = 'Dusknoir BC';
+  public fullName: string = 'Dusknoir BCR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '63';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

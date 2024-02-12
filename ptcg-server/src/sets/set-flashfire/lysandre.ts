@@ -38,6 +38,10 @@ export class Lysandre extends TrainerCard {
 
   public fullName: string = 'Lysandre FLF';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '90';
+
   public text: string =
     'Switch 1 of your opponent\'s Benched Pokemon with his or her ' +
     'Active Pokemon.';

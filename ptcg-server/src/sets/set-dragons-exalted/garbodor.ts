@@ -43,7 +43,11 @@ export class Garbodor extends PokemonCard {
 
   public name: string = 'Garbodor';
 
-  public fullName: string = 'Garbodor DGE';
+  public fullName: string = 'Garbodor DRX';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '54';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

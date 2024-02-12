@@ -26,6 +26,8 @@ export declare class Eelektrik extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly DYNAMOTOR_MAREKER = "DYNAMOTOR_MAREKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

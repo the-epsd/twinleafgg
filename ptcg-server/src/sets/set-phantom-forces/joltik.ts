@@ -38,7 +38,11 @@ export class Joltik extends PokemonCard {
 
   public name: string = 'Joltik';
 
-  public fullName: string = 'Joltik PFO';
+  public fullName: string = 'Joltik PHF';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '26';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

@@ -20,6 +20,10 @@ export class FightingStadium extends TrainerCard {
 
   public fullName: string = 'Fighting Stadium FFI';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '90';
+
   public text: string =
     'The attacks of each F Pokemon in play (both yours and your opponent\'s) ' +
     'do 20 more damage to the Defending Pokemon-EX (before applying Weakness ' +

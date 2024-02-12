@@ -51,6 +51,8 @@ class MaxPotion extends trainer_card_1.TrainerCard {
         this.set = 'EPO';
         this.name = 'Max Potion';
         this.fullName = 'Max Potion EPO';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '94';
         this.text = 'Heal all damage from 1 of your Pokemon. Then, discard all Energy ' +
             'attached to that Pokemon.';
     }

@@ -28,6 +28,8 @@ class Archen extends pokemon_card_1.PokemonCard {
         this.set = 'NVI';
         this.name = 'Archen';
         this.fullName = 'Archen NVI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '66';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

@@ -20,6 +20,10 @@ export class PokemonCenter extends TrainerCard {
 
   public fullName: string = 'Pokemon Center NXD';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '90';
+
   public text: string =
     'Once during each player\'s turn, that player may heal 20 damage ' +
     'from 1 of his or her Benched Pokemon.';

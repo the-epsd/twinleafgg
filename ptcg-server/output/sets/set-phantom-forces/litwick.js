@@ -25,7 +25,9 @@ class Litwick extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PHF';
         this.name = 'Litwick';
-        this.fullName = 'Litwick PFO';
+        this.fullName = 'Litwick PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '41';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

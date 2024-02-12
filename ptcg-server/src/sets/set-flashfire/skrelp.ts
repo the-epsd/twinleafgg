@@ -35,6 +35,10 @@ export class Skrelp extends PokemonCard {
 
   public fullName: string = 'Skrelp FLF';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '44';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

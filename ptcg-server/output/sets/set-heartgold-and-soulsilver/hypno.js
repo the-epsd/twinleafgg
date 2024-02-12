@@ -37,7 +37,9 @@ class Hypno extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'HS';
         this.name = 'Hypno';
-        this.fullName = 'Hypno HGSS';
+        this.fullName = 'Hypno HS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '23';
         this.SLEEP_PENDULUM_MAREKER = 'SLEEP_PENDULUM_MAREKER';
     }
     reduceEffect(store, state, effect) {

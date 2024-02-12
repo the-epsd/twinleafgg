@@ -41,7 +41,11 @@ export class Quilava extends PokemonCard {
 
   public name: string = 'Quilava';
 
-  public fullName: string = 'Quilava HGSS';
+  public fullName: string = 'Quilava HS';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '49';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

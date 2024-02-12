@@ -8,6 +8,8 @@ export declare class RescueScarf extends TrainerCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     text: string;
     readonly RESCUE_SCARF_MAREKER = "RESCUE_SCARF_MAREKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

@@ -81,7 +81,11 @@ export class Zweilous extends PokemonCard {
 
   public name: string = 'Zweilous';
 
-  public fullName: string = 'Zweilous DGE';
+  public fullName: string = 'Zweilous DRX';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '95';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

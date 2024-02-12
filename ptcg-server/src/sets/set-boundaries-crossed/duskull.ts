@@ -30,7 +30,11 @@ export class Duskull extends PokemonCard {
 
   public name: string = 'Duskull';
 
-  public fullName: string = 'Duskull BC';
+  public fullName: string = 'Duskull BCR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '61';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

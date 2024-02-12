@@ -67,7 +67,9 @@ class Hydreigon extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'DRX';
         this.name = 'Hydreigon';
-        this.fullName = 'Hydreigon DGE';
+        this.fullName = 'Hydreigon DRX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '97';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

@@ -32,6 +32,8 @@ export declare class Bronzong extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly METAL_LINKS_MAREKER = "METAL_LINKS_MAREKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

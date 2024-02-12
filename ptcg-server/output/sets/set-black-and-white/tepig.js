@@ -17,9 +17,11 @@ class Tepig extends pokemon_card_1.PokemonCard {
             { name: 'Tackle', cost: [card_types_1.CardType.FIRE], damage: 10, text: '' },
             { name: 'Rollout', cost: [card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS], damage: 20, text: '' }
         ];
-        this.set = 'BW';
+        this.set = 'BLW';
         this.name = 'Tepig';
-        this.fullName = 'Tepig BW';
+        this.fullName = 'Tepig BLW';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '15';
     }
 }
 exports.Tepig = Tepig;

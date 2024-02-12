@@ -54,7 +54,9 @@ class Unown extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'HS';
         this.name = 'Unown';
-        this.fullName = 'Unown HGSS';
+        this.fullName = 'Unown HS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '54';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

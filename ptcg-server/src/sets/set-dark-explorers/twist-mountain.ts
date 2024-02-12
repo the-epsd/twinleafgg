@@ -70,6 +70,10 @@ export class TwistMountain extends TrainerCard {
 
   public fullName: string = 'Twist Mountain DEX';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '101';
+
   public text: string =
     'Once during each player\'s turn, that player may flip a coin. ' +
     'If heads, the player puts a Restored Pokemon from his or her hand ' +

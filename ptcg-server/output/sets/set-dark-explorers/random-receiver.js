@@ -44,6 +44,8 @@ class RandomReceiver extends trainer_card_1.TrainerCard {
         this.set = 'DEX';
         this.name = 'Random Receiver';
         this.fullName = 'Random Receiver DEX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '99';
         this.text = 'Reveal cards from the top of your deck until you reveal a Supporter ' +
             'card. Put it into your hand. Shuffle the other cards back into your deck.';
     }

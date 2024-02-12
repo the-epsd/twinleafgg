@@ -25,6 +25,8 @@ class Skrelp extends pokemon_card_1.PokemonCard {
         this.set = 'FLF';
         this.name = 'Skrelp';
         this.fullName = 'Skrelp FLF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '44';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

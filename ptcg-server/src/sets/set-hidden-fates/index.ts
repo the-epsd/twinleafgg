@@ -1,7 +1,11 @@
 import { Card } from '../../game/store/card/card';
-import { AlolanVulpix } from './alolan-vulpix';
-import { Charmander } from './charmander';
+import { CharmanderArt } from './card-images';
+import { AlolanVulpixArt } from './full-art';
+
 export const setHiddenFates: Card[] = [
-  new AlolanVulpix(),
-  new Charmander(),
+
+  new CharmanderArt(),
+
+  // Full Arts/Shiny Vault
+  new AlolanVulpixArt(),
 ];

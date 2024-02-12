@@ -21,6 +21,8 @@ __exportStar(require("./set-base-set-energy"), exports);
 //DP Era
 __exportStar(require("./set-diamond-and-pearl"), exports);
 __exportStar(require("./set-op9"), exports);
+__exportStar(require("./set-platinum"), exports);
+__exportStar(require("./set-great-encounters"), exports);
 //HGSS Era
 __exportStar(require("./set-heartgold-and-soulsilver"), exports);
 __exportStar(require("./set-heartgold-and-soulsilver-promos"), exports);

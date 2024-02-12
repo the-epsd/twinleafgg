@@ -32,6 +32,8 @@ class Rayquaza extends pokemon_card_1.PokemonCard {
         this.set = 'DRV';
         this.name = 'Rayquaza';
         this.fullName = 'Rayquaza DRV';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '11';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

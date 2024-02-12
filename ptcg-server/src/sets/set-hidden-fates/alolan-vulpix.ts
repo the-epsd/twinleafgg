@@ -26,15 +26,15 @@ export class AlolanVulpix extends PokemonCard {
     text: ''
   }];
   
-  public set: string = 'HF';
-
-  public cardImage: string = 'assets/cardback.png';
-  
-  public setNumber: string = 'h8';
+  public set: string = 'HIF';
   
   public name: string = 'Alolan Vulpix';
   
-  public fullName: string = 'Alolan Vulpix HF';
+  public fullName: string = 'Alolan Vulpix HIF';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = 'SV8';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

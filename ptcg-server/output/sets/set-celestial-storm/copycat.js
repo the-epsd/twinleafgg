@@ -28,6 +28,8 @@ class Copycat extends trainer_card_1.TrainerCard {
         this.set = 'CES';
         this.name = 'Copycat';
         this.fullName = 'Copycat CES';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '127';
         this.text = 'Shuffle your hand into your deck. Then, draw a card for each card in ' +
             'your opponent\'s hand.';
     }

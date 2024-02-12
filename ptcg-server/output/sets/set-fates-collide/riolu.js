@@ -23,6 +23,8 @@ class Riolu extends pokemon_card_1.PokemonCard {
         this.set = 'FCO';
         this.name = 'Riolu';
         this.fullName = 'Riolu FCO';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '45';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

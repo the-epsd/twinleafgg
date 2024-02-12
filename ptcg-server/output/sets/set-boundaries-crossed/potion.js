@@ -47,7 +47,9 @@ class Potion extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BCR';
         this.name = 'Potion';
-        this.fullName = 'Potion BC';
+        this.fullName = 'Potion BCR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '132';
         this.text = 'Heal 30 damage from 1 of your Pokemon.';
     }
     reduceEffect(store, state, effect) {

@@ -21,6 +21,10 @@ export class ScoopUpCyclone extends TrainerCard {
 
   public fullName: string = 'Scoop Up Cyclone PLB';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '95';
+
   public text: string =
     'Put 1 of your Pokemon and all cards attached to it into your hand.';
 

@@ -34,7 +34,9 @@ class Eelektrik extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'NVI';
         this.name = 'Eelektrik';
-        this.fullName = 'Eelektrik NV';
+        this.fullName = 'Eelektrik NVI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '40';
         this.DYNAMOTOR_MAREKER = 'DYNAMOTOR_MAREKER';
     }
     reduceEffect(store, state, effect) {

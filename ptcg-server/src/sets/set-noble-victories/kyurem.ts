@@ -38,7 +38,11 @@ export class Kyurem extends PokemonCard {
 
   public name: string = 'Kyurem';
 
-  public fullName: string = 'Kyurem NV';
+  public fullName: string = 'Kyurem NVI';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '34';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

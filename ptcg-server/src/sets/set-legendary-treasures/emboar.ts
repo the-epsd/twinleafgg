@@ -44,6 +44,10 @@ export class Emboar extends PokemonCard {
 
   public fullName: string = 'Emboar LTR';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '27';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

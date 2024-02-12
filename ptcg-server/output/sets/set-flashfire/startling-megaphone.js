@@ -12,6 +12,8 @@ class StartlingMegaphone extends trainer_card_1.TrainerCard {
         this.set = 'FLF';
         this.name = 'Startling Megaphone';
         this.fullName = 'Startling Megaphone FLF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '97';
         this.text = 'Discard all Pokemon Tool cards attached to each of your ' +
             'opponent\'s Pokemon.';
     }

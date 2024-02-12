@@ -41,7 +41,11 @@ export class Vanilluxe extends PokemonCard {
 
   public name: string = 'Vanilluxe';
 
-  public fullName: string = 'Vanilluxe NV';
+  public fullName: string = 'Vanilluxe NVI';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '29';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

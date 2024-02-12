@@ -56,6 +56,8 @@ class UltraBall extends trainer_card_1.TrainerCard {
         this.set = 'PLB';
         this.name = 'Ultra Ball';
         this.fullName = 'Ultra Ball PLB';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '90';
         this.text = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, you ' +
             'can\'t play this card.) Search your deck for a Pokemon, reveal it, and ' +
             'put it into your hand. Shuffle your deck afterward.';

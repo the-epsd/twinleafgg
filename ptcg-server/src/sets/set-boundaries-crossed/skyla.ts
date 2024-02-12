@@ -55,7 +55,11 @@ export class Skyla extends TrainerCard {
 
   public name: string = 'Skyla';
 
-  public fullName: string = 'Skyla BC';
+  public fullName: string = 'Skyla BCR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '134';
 
   public text: string =
     'Search your deck for a Trainer card, reveal it, and put it ' +

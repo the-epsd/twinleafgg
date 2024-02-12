@@ -36,6 +36,8 @@ class LucarioEx extends pokemon_card_1.PokemonCard {
         this.set = 'FFI';
         this.name = 'Lucario EX';
         this.fullName = 'Lucario EX FFI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '54';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

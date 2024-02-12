@@ -1,15 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setEmergingPowers = void 0;
-const bianca_1 = require("./bianca");
-const cheren_1 = require("./cheren");
-const crushing_hammer_1 = require("./crushing-hammer");
-const max_potion_1 = require("./max-potion");
-const tornadus_1 = require("./tornadus");
+const card_images_1 = require("./card-images");
 exports.setEmergingPowers = [
-    new bianca_1.Bianca(),
-    new cheren_1.Cheren(),
-    new crushing_hammer_1.CrushingHammer(),
-    new max_potion_1.MaxPotion(),
-    new tornadus_1.Tornadus(),
+    new card_images_1.BiancaArt(),
+    new card_images_1.CherenArt(),
+    new card_images_1.CrushingHammerArt(),
+    new card_images_1.MaxPotionArt(),
+    new card_images_1.TornadusArt(),
 ];

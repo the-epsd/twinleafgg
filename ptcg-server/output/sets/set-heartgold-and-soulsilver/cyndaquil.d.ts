@@ -17,4 +17,6 @@ export declare class Cyndaquil extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
 }

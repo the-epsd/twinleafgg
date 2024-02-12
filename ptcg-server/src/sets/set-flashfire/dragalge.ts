@@ -45,6 +45,10 @@ export class Dragalge extends PokemonCard {
   public name: string = 'Dragalge';
 
   public fullName: string = 'Dragalge FLF';
+  
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '71';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

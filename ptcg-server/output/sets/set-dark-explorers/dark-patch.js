@@ -18,6 +18,8 @@ class DarkPatch extends trainer_card_1.TrainerCard {
         this.set = 'DEX';
         this.name = 'Dark Patch';
         this.fullName = 'Dark Patch DEX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '93';
         this.text = 'Attach a basic D Energy card from your discard pile to 1 of your ' +
             'Benched D Pokemon.';
     }

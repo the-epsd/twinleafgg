@@ -1,6 +1,4 @@
 import { Card } from '../../game/store/card/card';
-import { Buizel } from './buizel';
-import { CrobatG } from './crobat-g';
 import { DarknessEnergy } from './darkness-energy';
 import { DoubleColorlessEnergy } from './double-colorless-energy';
 import { Eviolite } from './eviolite';
@@ -29,8 +27,6 @@ import { VictoryMedal } from './victory-medal';
 import { WaterEnergy } from './water-energy';
 
 export const setDiamondAndPearl: Card[] = [
-  new Buizel(),
-  new CrobatG(),
   new DarknessEnergy(),
   new DoubleColorlessEnergy(),
   new Eviolite(),

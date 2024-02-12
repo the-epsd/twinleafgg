@@ -11,11 +11,16 @@ export class PlusPower extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'BW';
+  public set: string = 'BLW';
 
   public name: string = 'PlusPower';
 
-  public fullName: string = 'PlusPower BW';
+  public fullName: string = 'PlusPower BLW';
+
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '96';
 
   public text: string =
     'During this turn, your Pokemon\'s attacks do 10 more damage to the ' +

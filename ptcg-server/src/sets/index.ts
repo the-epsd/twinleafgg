@@ -11,6 +11,8 @@ export * from './set-base-set-energy';
 //DP Era
 export * from './set-diamond-and-pearl';
 export * from './set-op9';
+export * from './set-platinum';
+export * from './set-great-encounters';
 
 //HGSS Era
 export * from './set-heartgold-and-soulsilver';

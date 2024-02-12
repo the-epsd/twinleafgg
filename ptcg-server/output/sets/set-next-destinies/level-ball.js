@@ -43,6 +43,8 @@ class LevelBall extends trainer_card_1.TrainerCard {
         this.set = 'NXD';
         this.name = 'Level Ball';
         this.fullName = 'Level Ball NXD';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '89';
         this.text = 'Search your deck for a Pokemon with 90 HP or less, reveal it, ' +
             'and put it into your hand. Shuffle your deck afterward.';
     }

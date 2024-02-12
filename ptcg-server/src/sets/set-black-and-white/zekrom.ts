@@ -33,11 +33,15 @@ export class Zekrom extends PokemonCard {
     }
   ];
 
-  public set: string = 'BW';
+  public set: string = 'BLW';
 
   public name: string = 'Zekrom';
 
-  public fullName: string = 'Zekrom BW';
+  public fullName: string = 'Zekrom BLW';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '47';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

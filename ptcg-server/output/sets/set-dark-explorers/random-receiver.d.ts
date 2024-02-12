@@ -8,6 +8,8 @@ export declare class RandomReceiver extends TrainerCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

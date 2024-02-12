@@ -78,6 +78,10 @@ export class EnhancedHammer extends TrainerCard {
 
   public fullName: string = 'Enhanced Hammer DEX';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '94';
+
   public text: string =
     'Discard a Special Energy attached to 1 of your opponent\'s Pokemon.';
 

@@ -12,6 +12,8 @@ class PrismEnergy extends energy_card_1.EnergyCard {
         this.set = 'NXD';
         this.name = 'Prism Energy';
         this.fullName = 'Prism Energy NXD';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '93';
         this.text = 'This card provides C Energy. If the Pokemon this card is attached to is ' +
             'a Basic Pokemon, this card provides every type of Energy but provides ' +
             'only 1 Energy at a time.';

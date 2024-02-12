@@ -48,6 +48,8 @@ class TwistMountain extends trainer_card_1.TrainerCard {
         this.set = 'DEX';
         this.name = 'Twist Mountain';
         this.fullName = 'Twist Mountain DEX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '101';
         this.text = 'Once during each player\'s turn, that player may flip a coin. ' +
             'If heads, the player puts a Restored Pokemon from his or her hand ' +
             'onto his or her Bench.';

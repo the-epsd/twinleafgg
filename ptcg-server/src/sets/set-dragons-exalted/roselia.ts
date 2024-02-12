@@ -42,7 +42,11 @@ export class Roselia extends PokemonCard {
 
   public name: string = 'Roselia';
 
-  public fullName: string = 'Roselia DGE';
+  public fullName: string = 'Roselia DRX';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '12';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

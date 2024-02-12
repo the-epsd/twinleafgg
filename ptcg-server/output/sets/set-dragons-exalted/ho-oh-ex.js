@@ -82,7 +82,9 @@ class HoOhEx extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'DRX';
         this.name = 'Ho-Oh EX';
-        this.fullName = 'Ho-Oh EX DGE';
+        this.fullName = 'Ho-Oh EX DRX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '22';
         this.REBIRTH_MAREKER = 'REBIRTH_MAREKER';
     }
     reduceEffect(store, state, effect) {

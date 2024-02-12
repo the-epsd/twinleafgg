@@ -12,7 +12,9 @@ class RockyHelmet extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'BCR';
         this.name = 'Rocky Helmet';
-        this.fullName = 'Rocky Helmet BC';
+        this.fullName = 'Rocky Helmet BCR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '133';
         this.text = 'If the Pokemon this card is attached to is your Active Pokemon and is ' +
             'damaged by an opponent\'s attack (even if that Pokemon is Knocked Out), ' +
             'put 2 damage counters on the Attacking Pokemon.';

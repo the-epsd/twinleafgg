@@ -78,6 +78,10 @@ export class ComputerSearch extends TrainerCard {
 
   public fullName: string = 'Computer Search BCR';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '137';
+
   public text: string =
     'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' +
     'you can\'t play this card.) Search your deck for a card and put it into ' +

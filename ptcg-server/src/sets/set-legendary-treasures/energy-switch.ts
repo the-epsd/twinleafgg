@@ -70,7 +70,11 @@ export class EnergySwitch extends TrainerCard {
 
   public name: string = 'Energy Switch';
 
-  public fullName: string = 'Energy Switch LT';
+  public fullName: string = 'Energy Switch LTR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '112';
 
   public text: string =
     'Move a basic Energy from 1 of your Pokemon to another of your Pokemon.';

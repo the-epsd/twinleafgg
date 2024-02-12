@@ -76,6 +76,10 @@ export class Korrina extends TrainerCard {
 
   public fullName: string = 'Korrina FFI';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '95';
+
   public text: string =
     'Search your deck for a F Pokemon and an Item card, reveal them, ' +
     'and put them into your hand. Shuffle your deck afterward.';

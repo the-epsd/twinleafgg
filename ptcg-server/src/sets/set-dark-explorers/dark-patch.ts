@@ -22,6 +22,10 @@ export class DarkPatch extends TrainerCard {
 
   public fullName: string = 'Dark Patch DEX';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '93';
+
   public text: string =
     'Attach a basic D Energy card from your discard pile to 1 of your ' +
     'Benched D Pokemon.';

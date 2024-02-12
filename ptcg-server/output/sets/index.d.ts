@@ -6,6 +6,8 @@ export * from './set-vending-series';
 export * from './set-base-set-energy';
 export * from './set-diamond-and-pearl';
 export * from './set-op9';
+export * from './set-platinum';
+export * from './set-great-encounters';
 export * from './set-heartgold-and-soulsilver';
 export * from './set-heartgold-and-soulsilver-promos';
 export * from './set-unleashed';

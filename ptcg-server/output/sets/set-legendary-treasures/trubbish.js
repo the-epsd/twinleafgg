@@ -26,7 +26,9 @@ class Trubbish extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'LTR';
         this.name = 'Trubbish';
-        this.fullName = 'Trubbish LT';
+        this.fullName = 'Trubbish LTR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '67';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

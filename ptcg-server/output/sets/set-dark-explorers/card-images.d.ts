@@ -1,0 +1,64 @@
+import { Accelgor } from './accelgor';
+import { DarkClaw } from './dark-claw';
+import { DarkPatch } from './dark-patch';
+import { DarkraiEx } from './darkrai-ex';
+import { Empoleon } from './empoleon';
+import { EnhancedHammer } from './enhanced-hammer';
+import { Piplup } from './piplup';
+import { Prinplup } from './prinplup';
+import { RaikouEx } from './raikou-ex';
+import { RandomReceiver } from './random-receiver';
+import { Sableye } from './sableye';
+import { Shelmet } from './shelmet';
+import { TornadusEx } from './tornadus-ex';
+import { TwistMountain } from './twist-mountain';
+import { Tynamo } from './tynamo';
+import { Zorua } from './zorua';
+export declare class AccelgorArt extends Accelgor {
+    cardImage: string;
+}
+export declare class DarkClawArt extends DarkClaw {
+    cardImage: string;
+}
+export declare class DarkPatchArt extends DarkPatch {
+    cardImage: string;
+}
+export declare class DarkraiExArt extends DarkraiEx {
+    cardImage: string;
+}
+export declare class EmpoleonArt extends Empoleon {
+    cardImage: string;
+}
+export declare class EnhancedHammerArt extends EnhancedHammer {
+    cardImage: string;
+}
+export declare class PiplupArt extends Piplup {
+    cardImage: string;
+}
+export declare class PrinplupArt extends Prinplup {
+    cardImage: string;
+}
+export declare class RaikouExArt extends RaikouEx {
+    cardImage: string;
+}
+export declare class RandomReceiverArt extends RandomReceiver {
+    cardImage: string;
+}
+export declare class SableyeArt extends Sableye {
+    cardImage: string;
+}
+export declare class ShelmetArt extends Shelmet {
+    cardImage: string;
+}
+export declare class TornadusExArt extends TornadusEx {
+    cardImage: string;
+}
+export declare class TwistMountainArt extends TwistMountain {
+    cardImage: string;
+}
+export declare class TynamoArt extends Tynamo {
+    cardImage: string;
+}
+export declare class ZoruaArt extends Zorua {
+    cardImage: string;
+}

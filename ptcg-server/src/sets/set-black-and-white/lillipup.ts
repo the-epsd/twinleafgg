@@ -38,6 +38,10 @@ export class Lillipup extends PokemonCard {
 
   public fullName: string = 'Lillipup BLW';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '80';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(

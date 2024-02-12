@@ -35,6 +35,8 @@ class Empoleon extends pokemon_card_1.PokemonCard {
         this.set = 'DEX';
         this.name = 'Empoleon';
         this.fullName = 'Empoleon DEX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '29';
         this.DIVING_DRAW_MAREKER = 'DIVING_DRAW_MAREKER';
     }
     reduceEffect(store, state, effect) {

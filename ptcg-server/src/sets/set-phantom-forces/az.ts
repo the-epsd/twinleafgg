@@ -16,7 +16,11 @@ export class AZ extends TrainerCard {
 
   public name: string = 'AZ';
 
-  public fullName: string = 'AZ PFO';
+  public fullName: string = 'AZ PHF';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '91';
 
   public text: string =
     'Put 1 of your Pokemon into your hand. (Discard all cards attached ' +

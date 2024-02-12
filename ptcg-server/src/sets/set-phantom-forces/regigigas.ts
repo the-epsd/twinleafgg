@@ -37,7 +37,11 @@ export class Regigigas extends PokemonCard {
 
   public name: string = 'Regigigas';
 
-  public fullName: string = 'Regigigas PFO';
+  public fullName: string = 'Regigigas PHF';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '86';
 
   public readonly DAUNT_MARKER = 'DAUNT_MARKER';
 

@@ -30,7 +30,9 @@ class Regigigas extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'PHF';
         this.name = 'Regigigas';
-        this.fullName = 'Regigigas PFO';
+        this.fullName = 'Regigigas PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '86';
         this.DAUNT_MARKER = 'DAUNT_MARKER';
     }
     reduceEffect(store, state, effect) {

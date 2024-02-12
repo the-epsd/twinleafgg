@@ -31,7 +31,9 @@ class Tornadus extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'EPO';
         this.name = 'Tornadus';
-        this.fullName = 'Tornadus EP';
+        this.fullName = 'Tornadus EPO';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '89';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

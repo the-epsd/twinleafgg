@@ -33,7 +33,9 @@ class Cobalion extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'LTR';
         this.name = 'Cobalion';
-        this.fullName = 'Cobalion LT';
+        this.fullName = 'Cobalion LTR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '91';
         this.IRON_BREAKER_MARKER = 'IRON_BREAKER_MAREKER';
     }
     reduceEffect(store, state, effect) {

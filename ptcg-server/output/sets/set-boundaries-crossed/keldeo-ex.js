@@ -34,7 +34,9 @@ class KeldeoEx extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'BCR';
         this.name = 'Keldeo EX';
-        this.fullName = 'Keldeo EX BC';
+        this.fullName = 'Keldeo EX BCR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '49';
         this.RUSH_IN_MARKER = 'RUSH_IN_MARKER';
     }
     reduceEffect(store, state, effect) {

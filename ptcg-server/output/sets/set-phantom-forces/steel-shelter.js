@@ -15,6 +15,8 @@ class SteelShelter extends trainer_card_1.TrainerCard {
         this.set = 'PHF';
         this.name = 'Steel Shelter';
         this.fullName = 'Steel Shelter PFO';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '105';
         this.text = 'Each M Pokemon (both yours and your opponent\'s) can\'t be affected ' +
             'by any Special Conditions. (Remove any Special Conditions affecting ' +
             'those Pokemon.)';

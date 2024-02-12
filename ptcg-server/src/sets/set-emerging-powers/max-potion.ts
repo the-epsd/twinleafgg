@@ -70,6 +70,10 @@ export class MaxPotion extends TrainerCard {
 
   public fullName: string = 'Max Potion EPO';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '94';
+
   public text: string =
     'Heal all damage from 1 of your Pokemon. Then, discard all Energy ' +
     'attached to that Pokemon.';

@@ -38,9 +38,13 @@ export class Unown extends PokemonCard {
 
   public set: string = 'AOR';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '030';
+
   public name: string = 'Unown';
 
-  public fullName: string = 'AOR_030_R_EN';
+  public fullName: string = 'Unown AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

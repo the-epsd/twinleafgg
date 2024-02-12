@@ -31,6 +31,8 @@ class Tyrogue extends pokemon_card_1.PokemonCard {
         this.set = 'HS';
         this.name = 'Tyrogue';
         this.fullName = 'Tyrogue HGSS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '33';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

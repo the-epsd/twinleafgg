@@ -38,7 +38,9 @@ class Bronzong extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'PHF';
         this.name = 'Bronzong';
-        this.fullName = 'Bronzong PFO';
+        this.fullName = 'Bronzong PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '61';
         this.METAL_LINKS_MAREKER = 'METAL_LINKS_MAREKER';
     }
     reduceEffect(store, state, effect) {

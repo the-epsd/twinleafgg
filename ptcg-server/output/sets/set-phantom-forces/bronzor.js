@@ -20,7 +20,9 @@ class Bronzor extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'PHF';
         this.name = 'Bronzor';
-        this.fullName = 'Bronzor PFO';
+        this.fullName = 'Bronzor PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '60';
     }
 }
 exports.Bronzor = Bronzor;

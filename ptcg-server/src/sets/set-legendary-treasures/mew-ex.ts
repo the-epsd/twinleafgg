@@ -43,7 +43,11 @@ export class MewEx extends PokemonCard {
 
   public name: string = 'Mew EX';
 
-  public fullName: string = 'Mew EX LT';
+  public fullName: string = 'Mew EX LTR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = 'RC24';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

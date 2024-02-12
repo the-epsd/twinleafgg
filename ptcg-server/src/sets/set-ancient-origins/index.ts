@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { Unown } from './unown';
+import { UnownArt } from './card-images';
 
 export const setAncientOrigins: Card[] = [
-  new Unown(),
+  new UnownArt(),
 ];

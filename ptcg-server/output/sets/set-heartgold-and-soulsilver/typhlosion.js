@@ -64,7 +64,9 @@ class Typhlosion extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'HS';
         this.name = 'Typhlosion';
-        this.fullName = 'Typhlosion HGSS';
+        this.fullName = 'Typhlosion HS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '110';
         this.AFTERBURNER_MAREKER = 'DYNAMOTOR_MAREKER';
     }
     reduceEffect(store, state, effect) {

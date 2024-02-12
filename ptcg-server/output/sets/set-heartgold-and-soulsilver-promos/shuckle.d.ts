@@ -24,6 +24,8 @@ export declare class Shuckle extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly SHELL_STUNNER_MAREKER = "SHELL_STUNNER_MAREKER";
     readonly CLEAR_SHELL_STUNNER_MAREKER = "CLEAR_SHELL_STUNNER_MAREKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

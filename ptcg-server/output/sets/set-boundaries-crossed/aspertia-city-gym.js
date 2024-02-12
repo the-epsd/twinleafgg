@@ -14,7 +14,9 @@ class AspertiaCityGym extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'BCR';
         this.name = 'Aspertia City Gym';
-        this.fullName = 'Aspertia City Gym BC';
+        this.fullName = 'Aspertia City Gym BCR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '127';
         this.text = 'Each C Pokemon in play (both yours and your opponent\'s) gets +20 HP.';
     }
     reduceEffect(store, state, effect) {

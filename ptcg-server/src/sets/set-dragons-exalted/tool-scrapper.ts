@@ -77,6 +77,10 @@ export class ToolScrapper extends TrainerCard {
 
   public fullName: string = 'Tool Scrapper DRX';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '116';
+
   public text: string =
     'Choose up to 2 Pokemon Tool cards attached to Pokemon in play (yours or ' +
     'your opponent\'s) and discard them.';

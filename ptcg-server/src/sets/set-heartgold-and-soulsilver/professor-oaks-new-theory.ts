@@ -33,7 +33,11 @@ export class ProfessorOaksNewTheory extends TrainerCard {
 
   public name: string = 'Professor Oak\'s New Theory';
 
-  public fullName: string = 'Professor Oaks New Theory HGSS';
+  public fullName: string = 'Professor Oaks New Theory HS';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '101';
 
   public text: string =
     'Shuffle your hand into your deck. Then, draw 6 cards.';

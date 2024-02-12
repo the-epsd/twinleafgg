@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setDragonVault = void 0;
-const rayquaza_1 = require("./rayquaza");
+const card_images_1 = require("./card-images");
 exports.setDragonVault = [
-    new rayquaza_1.Rayquaza(),
+    new card_images_1.RayquazaArt(),
 ];

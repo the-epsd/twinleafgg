@@ -34,9 +34,11 @@ class Revive extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'BW';
+        this.set = 'BLW';
         this.name = 'Revive';
-        this.fullName = 'Revive BW';
+        this.fullName = 'Revive BLW';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '102';
         this.text = 'Put a Basic Pokemon from your discard pile onto your Bench.';
     }
     reduceEffect(store, state, effect) {

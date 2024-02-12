@@ -26,6 +26,8 @@ export declare class Hypno extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly SLEEP_PENDULUM_MAREKER = "SLEEP_PENDULUM_MAREKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

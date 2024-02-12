@@ -54,6 +54,8 @@ class Dedenne extends pokemon_card_1.PokemonCard {
         this.set = 'FFI';
         this.name = 'Dedenne';
         this.fullName = 'Dedenne FFI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '34';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

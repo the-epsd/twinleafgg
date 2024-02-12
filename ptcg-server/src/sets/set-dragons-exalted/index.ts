@@ -1,30 +1,18 @@
 import { Card } from '../../game/store/card/card';
-import { Bouffalant } from './bouffalant';
-import { Deino } from './deino';
-import { Emolga } from './emolga';
-import { Garbodor } from './garbodor';
-import { HoOhEx } from './ho-oh-ex';
-import { Hydreigon } from './hydreigon';
-import { RayquazaEx } from './rayquaza-ex';
-import { RescueScarf } from './rescue-scarf';
-import { Roselia } from './roselia';
-import { Roserade } from './roserade';
-import { Sigilyph } from './sigilyph';
-import { ToolScrapper } from './tool-scrapper';
-import { Zweilous } from './zweilous';
+import { BouffalantArt, DeinoArt, EmolgaArt, GarbodorArt, HoOhExArt, HydreigonArt, RayquazaExArt, RescueScarfArt, RoseliaArt, RoseradeArt, SigilyphArt, ToolScrapperArt, ZweilousArt } from './card-images';
 
 export const setDragonsExalted: Card[] = [
-  new Bouffalant(),
-  new Deino(),
-  new Emolga(),
-  new Garbodor(),
-  new HoOhEx(),
-  new Hydreigon(),
-  new RayquazaEx(),
-  new RescueScarf(),
-  new Roselia(),
-  new Roserade(),
-  new Sigilyph(),
-  new ToolScrapper(),
-  new Zweilous(),
+  new BouffalantArt(),
+  new DeinoArt(),
+  new EmolgaArt(),
+  new GarbodorArt(),
+  new HoOhExArt(),
+  new HydreigonArt(),
+  new RayquazaExArt(),
+  new RescueScarfArt(),
+  new RoseliaArt(),
+  new RoseradeArt(),
+  new SigilyphArt(),
+  new ToolScrapperArt(),
+  new ZweilousArt(),
 ];

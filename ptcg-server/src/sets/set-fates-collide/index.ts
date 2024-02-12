@@ -1,8 +1,7 @@
 import { Card } from '../../game/store/card/card';
-import { Lucario } from './lucario';
-import { Riolu } from './riolu';
+import { LucarioArt, RioluArt } from './card-images';
 
 export const setFatesCollide: Card[] = [
-  new Lucario(),
-  new Riolu(),
+  new LucarioArt(),
+  new RioluArt(),
 ];

@@ -35,7 +35,9 @@ class Skyla extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'BCR';
         this.name = 'Skyla';
-        this.fullName = 'Skyla BC';
+        this.fullName = 'Skyla BCR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '134';
         this.text = 'Search your deck for a Trainer card, reveal it, and put it ' +
             'into your hand. Shuffle your deck afterward.';
     }

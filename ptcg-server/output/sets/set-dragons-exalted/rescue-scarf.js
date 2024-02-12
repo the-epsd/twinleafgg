@@ -12,7 +12,9 @@ class RescueScarf extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'DRX';
         this.name = 'Rescue Scarf';
-        this.fullName = 'Rescue Scarf DGE';
+        this.fullName = 'Rescue Scarf DRX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '115';
         this.text = 'If the Pokemon this card is attached to is Knocked Out by damage from ' +
             'an attack, put that Pokemon into your hand. (Discard all cards ' +
             'attached to that Pokemon.)';

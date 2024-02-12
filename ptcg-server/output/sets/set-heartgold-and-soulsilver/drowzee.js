@@ -32,7 +32,9 @@ class Drowzee extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'HS';
         this.name = 'Drowzee';
-        this.fullName = 'Drowzee HGSS';
+        this.fullName = 'Drowzee HS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '62';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

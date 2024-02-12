@@ -21,6 +21,8 @@ cardManager.defineSet(sets.setBaseSetEnergy);
 
 // cardManager.defineSet(sets.setDiamondAndPearl);
 // cardManager.defineSet(sets.setOP9);
+// cardManager.defineSet(sets.setGreatEncounters);
+// cardManager.defineSet(sets.setPlatinum);
 
 
 // cardManager.defineSet(sets.setHeartGoldAndSoulSilver);

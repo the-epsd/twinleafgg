@@ -18,6 +18,8 @@ class Charmander extends pokemon_card_1.PokemonCard {
         this.set = 'HIF';
         this.name = 'Charmander';
         this.fullName = 'Charmander HIF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '7';
     }
 }
 exports.Charmander = Charmander;

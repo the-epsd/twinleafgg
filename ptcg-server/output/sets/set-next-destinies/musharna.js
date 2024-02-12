@@ -38,6 +38,8 @@ class Musharna extends pokemon_card_1.PokemonCard {
         this.set = 'NXD';
         this.name = 'Musharna';
         this.fullName = 'Musharna NXD';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '59';
         this.FOREWARN_MARKER = 'FOREWARN_MARKER';
     }
     reduceEffect(store, state, effect) {

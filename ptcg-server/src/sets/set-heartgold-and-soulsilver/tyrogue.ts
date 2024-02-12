@@ -38,6 +38,10 @@ export class Tyrogue extends PokemonCard {
 
   public fullName: string = 'Tyrogue HGSS';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '33';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;

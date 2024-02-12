@@ -79,6 +79,10 @@ export class CrushingHammer extends TrainerCard {
 
   public fullName: string = 'Crushing Hammer EPO';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '92';
+
   public text: string =
     'Flip a coin. If heads, discard an Energy attached to 1 of your ' +
     'opponent\'s Pokemon.';

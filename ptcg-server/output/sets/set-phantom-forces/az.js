@@ -13,7 +13,9 @@ class AZ extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'PHF';
         this.name = 'AZ';
-        this.fullName = 'AZ PFO';
+        this.fullName = 'AZ PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '91';
         this.text = 'Put 1 of your Pokemon into your hand. (Discard all cards attached ' +
             'to that Pokemon.)';
     }

@@ -20,6 +20,8 @@ class Litleo extends pokemon_card_1.PokemonCard {
         this.set = 'FLF';
         this.name = 'Litleo';
         this.fullName = 'Litleo FLF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '18';
     }
 }
 exports.Litleo = Litleo;

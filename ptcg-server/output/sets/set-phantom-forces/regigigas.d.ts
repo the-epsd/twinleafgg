@@ -20,6 +20,8 @@ export declare class Regigigas extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly DAUNT_MARKER = "DAUNT_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

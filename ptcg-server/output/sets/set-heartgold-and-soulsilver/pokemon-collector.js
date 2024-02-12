@@ -34,9 +34,11 @@ class PokemonCollector extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'HS';
-        this.name = 'Pokemon Collector';
-        this.fullName = 'Pokemon Collector HGSS';
-        this.text = 'Search your deck for up to 3 Basic Pokemon, show them to your opponent, ' +
+        this.name = 'Pokémon Collector';
+        this.fullName = 'Pokémon Collector HS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '97';
+        this.text = 'Search your deck for up to 3 Basic Pokémon, show them to your opponent, ' +
             'and put them into your hand. Shuffle your deck afterward.';
     }
     reduceEffect(store, state, effect) {

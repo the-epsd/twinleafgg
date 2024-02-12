@@ -27,7 +27,9 @@ class LysandresTrumpCard extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'PHF';
         this.name = 'Lysandre\'s Trump Card';
-        this.fullName = 'Lysandres Trump Card PFO';
+        this.fullName = 'Lysandres Trump Card PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '99';
         this.text = 'Each player shuffles all cards in his or her discard pile into his or ' +
             'her deck (except for Lysandre\'s Trump Card).';
     }

@@ -39,7 +39,9 @@ class Chandelure extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'NVI';
         this.name = 'Chandelure';
-        this.fullName = 'Chandelure NV';
+        this.fullName = 'Chandelure NVI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '60';
         this.CURSED_SHADOW_MAREKER = 'CURSED_SHADOW_MAREKER';
     }
     reduceEffect(store, state, effect) {

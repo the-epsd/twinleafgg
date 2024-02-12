@@ -79,7 +79,11 @@ export class Roserade extends PokemonCard {
 
   public name: string = 'Roserade';
 
-  public fullName: string = 'Roserade DGE';
+  public fullName: string = 'Roserade DRX';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '15';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

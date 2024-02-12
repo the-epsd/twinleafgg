@@ -35,6 +35,8 @@ class SeismitoadEx extends pokemon_card_1.PokemonCard {
         this.set = 'FFI';
         this.name = 'Seismitoad EX';
         this.fullName = 'Seismitoad EX FFI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '20';
         this.QUAKING_PUNCH_MAREKER = 'QUAKING_PUNCH_MAREKER';
     }
     reduceEffect(store, state, effect) {

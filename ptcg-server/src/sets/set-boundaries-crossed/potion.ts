@@ -65,7 +65,11 @@ export class Potion extends TrainerCard {
 
   public name: string = 'Potion';
 
-  public fullName: string = 'Potion BC';
+  public fullName: string = 'Potion BCR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '132';
 
   public text: string =
     'Heal 30 damage from 1 of your Pokemon.';

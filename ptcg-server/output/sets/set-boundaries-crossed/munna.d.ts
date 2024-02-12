@@ -27,6 +27,8 @@ export declare class Munna extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly LONG_DISTANCE_HYPNOSIS_MARKER = "LONG_DISTANCE_HYPNOSIS_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

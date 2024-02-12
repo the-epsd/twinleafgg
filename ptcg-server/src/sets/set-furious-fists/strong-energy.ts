@@ -24,6 +24,10 @@ export class StrongEnergy extends EnergyCard {
 
   public fullName = 'Strong Energy FFI';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '104';
+
   public readonly STRONG_ENERGY_MAREKER = 'STRONG_ENERGY_MAREKER';
 
   public text =

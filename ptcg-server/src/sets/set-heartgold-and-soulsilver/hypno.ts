@@ -46,7 +46,11 @@ export class Hypno extends PokemonCard {
 
   public name: string = 'Hypno';
 
-  public fullName: string = 'Hypno HGSS';
+  public fullName: string = 'Hypno HS';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '23';
 
   public readonly SLEEP_PENDULUM_MAREKER = 'SLEEP_PENDULUM_MAREKER';
 

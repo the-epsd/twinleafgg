@@ -15,6 +15,10 @@ export class TownMap extends TrainerCard {
 
   public fullName: string = 'Town Map BKT';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '150';
+
   public text: string =
     'Turn all of your Prize cards face up. (Those Prize cards remain ' +
     'face up for the rest of the game.)';

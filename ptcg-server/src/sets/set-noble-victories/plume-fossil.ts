@@ -64,6 +64,10 @@ export class PlumeFossil extends TrainerCard {
 
   public fullName: string = 'Plume Fossil NVI';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '93';
+
   public text: string =
     'Look at the bottom 7 cards of your deck. You may reveal an Archen ' +
     'you find there and put is onto your Bench. Shuffle the other cards back ' +

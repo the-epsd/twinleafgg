@@ -56,6 +56,10 @@ export class RandomReceiver extends TrainerCard {
 
   public fullName: string = 'Random Receiver DEX';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '99';
+
   public text: string =
     'Reveal cards from the top of your deck until you reveal a Supporter ' +
     'card. Put it into your hand. Shuffle the other cards back into your deck.';

@@ -15,9 +15,9 @@ export declare class AlolanVulpix extends PokemonCard {
         text: string;
     }[];
     set: string;
-    cardImage: string;
-    setNumber: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

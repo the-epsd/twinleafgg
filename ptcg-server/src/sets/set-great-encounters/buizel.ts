@@ -21,10 +21,14 @@ export class Buizel extends PokemonCard {
     { name: 'Surf', cost: [CardType.WATER, CardType.WATER], damage: 30, text: '' }
   ];
 
-  public set: string = 'DP';
+  public set: string = 'GE';
 
   public name: string = 'Buizel';
 
   public fullName: string = 'Buizel GE';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '61';
 
 }

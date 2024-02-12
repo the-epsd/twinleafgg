@@ -34,6 +34,8 @@ class MewtwoEx extends pokemon_card_1.PokemonCard {
         this.set = 'NXD';
         this.name = 'Mewtwo EX';
         this.fullName = 'Mewtwo EX NXD';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '54';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

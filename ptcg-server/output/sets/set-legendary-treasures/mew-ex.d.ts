@@ -26,6 +26,8 @@ export declare class MewEx extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
     private buildAttackList;
     private checkAttack;

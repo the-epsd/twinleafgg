@@ -76,7 +76,9 @@ class Pichu extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'HS';
         this.name = 'Pichu';
-        this.fullName = 'Pichu HGSS';
+        this.fullName = 'Pichu HS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '28';
     }
     reduceEffect(store, state, effect) {
         // Playground

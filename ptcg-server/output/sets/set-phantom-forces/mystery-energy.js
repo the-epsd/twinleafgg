@@ -15,7 +15,9 @@ class MysteryEnergy extends energy_card_1.EnergyCard {
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'PHF';
         this.name = 'Mystery Energy';
-        this.fullName = 'Mystery Energy PFO';
+        this.fullName = 'Mystery Energy PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '112';
         this.STRONG_ENERGY_MAREKER = 'STRONG_ENERGY_MAREKER';
         this.text = 'This card can only be attached to P Pokemon. This card provides P ' +
             'Energy, but only while this card is attached to a P Pokemon. ' +

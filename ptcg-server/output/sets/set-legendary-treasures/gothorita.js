@@ -32,7 +32,9 @@ class Gothorita extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'LTR';
         this.name = 'Gothorita';
-        this.fullName = 'Gothorita LT';
+        this.fullName = 'Gothorita LTR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '71';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -9,6 +9,8 @@ export declare class StrongEnergy extends EnergyCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly STRONG_ENERGY_MAREKER = "STRONG_ENERGY_MAREKER";
     text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

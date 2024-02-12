@@ -17,6 +17,10 @@ export class Bianca extends TrainerCard {
 
   public fullName: string = 'Bianca EPO';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '90';
+
   public text: string =
     'Draw cards until you have 6 cards in your hand.';
 

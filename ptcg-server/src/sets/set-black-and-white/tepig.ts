@@ -20,10 +20,14 @@ export class Tepig extends PokemonCard {
     { name: 'Rollout', cost: [ CardType.FIRE, CardType.COLORLESS ], damage: 20, text: '' }
   ];
 
-  public set: string = 'BW';
+  public set: string = 'BLW';
 
   public name: string = 'Tepig';
 
-  public fullName: string = 'Tepig BW';
+  public fullName: string = 'Tepig BLW';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '15';
 
 }

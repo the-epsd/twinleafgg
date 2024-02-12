@@ -45,6 +45,10 @@ export class Empoleon extends PokemonCard {
 
   public fullName: string = 'Empoleon DEX';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '29';
+
   public readonly DIVING_DRAW_MAREKER = 'DIVING_DRAW_MAREKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

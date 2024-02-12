@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setDiamondAndPearl = void 0;
-const buizel_1 = require("./buizel");
-const crobat_g_1 = require("./crobat-g");
 const darkness_energy_1 = require("./darkness-energy");
 const double_colorless_energy_1 = require("./double-colorless-energy");
 const eviolite_1 = require("./eviolite");
@@ -30,8 +28,6 @@ const uxie_1 = require("./uxie");
 const victory_medal_1 = require("./victory-medal");
 const water_energy_1 = require("./water-energy");
 exports.setDiamondAndPearl = [
-    new buizel_1.Buizel(),
-    new crobat_g_1.CrobatG(),
     new darkness_energy_1.DarknessEnergy(),
     new double_colorless_energy_1.DoubleColorlessEnergy(),
     new eviolite_1.Eviolite(),

@@ -67,6 +67,10 @@ export class SacredAsh extends TrainerCard {
 
   public fullName: string = 'Sacred Ash FLF';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '96';
+
   public text: string =
     'Shuffle 5 Pokemon from your discard pile into your deck.';
 

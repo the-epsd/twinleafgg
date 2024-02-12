@@ -53,6 +53,10 @@ export class VsSeeker extends TrainerCard {
 
   public fullName: string = 'VS Seeker PHF';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '109';
+
   public text: string =
     'Put a Supporter card from your discard pile into your hand.';
 

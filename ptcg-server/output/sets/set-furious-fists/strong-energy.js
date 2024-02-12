@@ -18,6 +18,8 @@ class StrongEnergy extends energy_card_1.EnergyCard {
         this.set = 'FFI';
         this.name = 'Strong Energy';
         this.fullName = 'Strong Energy FFI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '104';
         this.STRONG_ENERGY_MAREKER = 'STRONG_ENERGY_MAREKER';
         this.text = 'This card can only be attached to F Pokemon. This card provides F ' +
             'Energy only while this card is attached to a F Pokemon. The attacks of ' +

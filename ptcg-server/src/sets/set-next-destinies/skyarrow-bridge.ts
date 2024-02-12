@@ -19,6 +19,10 @@ export class SkyarrowBridge extends TrainerCard {
 
   public fullName: string = 'Skyarrow Bridge NXD';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '91';
+
   public text: string =
     'The Retreat Cost of each Basic Pokemon in play is C less.';
 

@@ -28,6 +28,8 @@ export declare class Musharna extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly FOREWARN_MARKER = "FOREWARN_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

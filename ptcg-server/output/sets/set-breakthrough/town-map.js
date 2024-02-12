@@ -11,6 +11,8 @@ class TownMap extends trainer_card_1.TrainerCard {
         this.set = 'BKT';
         this.name = 'Town Map';
         this.fullName = 'Town Map BKT';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '150';
         this.text = 'Turn all of your Prize cards face up. (Those Prize cards remain ' +
             'face up for the rest of the game.)';
     }

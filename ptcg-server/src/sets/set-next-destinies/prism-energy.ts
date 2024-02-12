@@ -17,6 +17,10 @@ export class PrismEnergy extends EnergyCard {
 
   public fullName = 'Prism Energy NXD';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '93';
+
   public text =
     'This card provides C Energy. If the Pokemon this card is attached to is ' +
     'a Basic Pokemon, this card provides every type of Energy but provides ' +

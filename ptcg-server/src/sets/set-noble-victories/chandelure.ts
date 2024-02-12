@@ -51,7 +51,11 @@ export class Chandelure extends PokemonCard {
 
   public name: string = 'Chandelure';
 
-  public fullName: string = 'Chandelure NV';
+  public fullName: string = 'Chandelure NVI';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '60';
 
   public readonly CURSED_SHADOW_MAREKER = 'CURSED_SHADOW_MAREKER';
 

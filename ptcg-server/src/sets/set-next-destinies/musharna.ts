@@ -50,6 +50,10 @@ export class Musharna extends PokemonCard {
 
   public fullName: string = 'Musharna NXD';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '59';
+
   public readonly FOREWARN_MARKER = 'FOREWARN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

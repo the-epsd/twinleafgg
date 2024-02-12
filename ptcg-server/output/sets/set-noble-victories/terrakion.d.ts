@@ -20,6 +20,8 @@ export declare class Terrakion extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly RETALIATE_MARKER = "RETALIATE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

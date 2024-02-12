@@ -31,7 +31,9 @@ class Deino extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'DRX';
         this.name = 'Deino';
-        this.fullName = 'Deino DGE';
+        this.fullName = 'Deino DRX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '93';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

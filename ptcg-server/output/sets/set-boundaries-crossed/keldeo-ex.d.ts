@@ -26,6 +26,8 @@ export declare class KeldeoEx extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly RUSH_IN_MARKER = "RUSH_IN_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setHeartGoldAndSoulSilverPromos = void 0;
-const shuckle_1 = require("./shuckle");
+const card_images_1 = require("./card-images");
 exports.setHeartGoldAndSoulSilverPromos = [
-    new shuckle_1.Shuckle(),
+    new card_images_1.ShuckleArt(),
 ];

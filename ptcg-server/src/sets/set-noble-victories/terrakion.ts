@@ -39,7 +39,11 @@ export class Terrakion extends PokemonCard {
 
   public name: string = 'Terrakion';
 
-  public fullName: string = 'Terrakion NV';
+  public fullName: string = 'Terrakion NVI';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '73';
 
   public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
 

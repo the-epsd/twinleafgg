@@ -35,6 +35,8 @@ class VsSeeker extends trainer_card_1.TrainerCard {
         this.set = 'PHF';
         this.name = 'VS Seeker';
         this.fullName = 'VS Seeker PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '109';
         this.text = 'Put a Supporter card from your discard pile into your hand.';
     }
     reduceEffect(store, state, effect) {

@@ -12,6 +12,8 @@ class SilverBangle extends trainer_card_1.TrainerCard {
         this.set = 'PLB';
         this.name = 'Silver Bangle';
         this.fullName = 'Silver Bangle PLB';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '88';
         this.text = 'The attacks of the Pokemon this card is attached to (excluding ' +
             'Pokemon-EX) do 30 more damage to Active Pokemon-EX (before applying ' +
             'Weakness and Resistance).';

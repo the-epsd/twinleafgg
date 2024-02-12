@@ -21,6 +21,8 @@ export declare class Wartortle extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly CLEAR_WITHDRAW_MARKER = "CLEAR_WITHDRAW_MARKER";
     readonly WITHDRAW_MARKER = "WITHDRAW_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

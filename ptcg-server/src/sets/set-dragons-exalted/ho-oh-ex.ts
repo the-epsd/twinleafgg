@@ -111,7 +111,11 @@ export class HoOhEx extends PokemonCard {
 
   public name: string = 'Ho-Oh EX';
 
-  public fullName: string = 'Ho-Oh EX DGE';
+  public fullName: string = 'Ho-Oh EX DRX';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '22';
 
   public readonly REBIRTH_MAREKER = 'REBIRTH_MAREKER';
 

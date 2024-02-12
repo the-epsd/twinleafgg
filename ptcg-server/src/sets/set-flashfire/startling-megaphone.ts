@@ -17,6 +17,10 @@ export class StartlingMegaphone extends TrainerCard {
 
   public fullName: string = 'Startling Megaphone FLF';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '97';
+
   public text: string =
     'Discard all Pokemon Tool cards attached to each of your ' +
     'opponent\'s Pokemon.';

@@ -37,7 +37,11 @@ export class LysandresTrumpCard extends TrainerCard {
 
   public name: string = 'Lysandre\'s Trump Card';
 
-  public fullName: string = 'Lysandres Trump Card PFO';
+  public fullName: string = 'Lysandres Trump Card PHF';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '99';
 
   public text: string =
     'Each player shuffles all cards in his or her discard pile into his or ' +

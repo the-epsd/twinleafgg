@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setFatesCollide = void 0;
-const lucario_1 = require("./lucario");
-const riolu_1 = require("./riolu");
+const card_images_1 = require("./card-images");
 exports.setFatesCollide = [
-    new lucario_1.Lucario(),
-    new riolu_1.Riolu(),
+    new card_images_1.LucarioArt(),
+    new card_images_1.RioluArt(),
 ];

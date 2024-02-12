@@ -33,6 +33,8 @@ class ZekromEx extends pokemon_card_1.PokemonCard {
         this.set = 'NXD';
         this.name = 'Zekrom EX';
         this.fullName = 'Zekrom EX NXD';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '51';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

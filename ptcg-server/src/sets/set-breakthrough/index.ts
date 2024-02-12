@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { TownMap } from './town-map';
+import { TownMapArt } from './card-images';
 
 export const setBreakthrough: Card[] = [
-  new TownMap(),
+  new TownMapArt(),
 ];

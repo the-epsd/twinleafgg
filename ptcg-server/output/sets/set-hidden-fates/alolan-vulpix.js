@@ -22,11 +22,11 @@ class AlolanVulpix extends game_1.PokemonCard {
                 damage: 20,
                 text: ''
             }];
-        this.set = 'HF';
-        this.cardImage = 'assets/cardback.png';
-        this.setNumber = 'h8';
+        this.set = 'HIF';
         this.name = 'Alolan Vulpix';
-        this.fullName = 'Alolan Vulpix HF';
+        this.fullName = 'Alolan Vulpix HIF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = 'SV8';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

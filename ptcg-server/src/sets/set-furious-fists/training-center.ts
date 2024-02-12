@@ -19,6 +19,10 @@ export class TrainingCenter extends TrainerCard {
 
   public fullName: string = 'Training Center FFI';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '102';
+
   public text: string =
     'Each Stage 1 and Stage 2 Pokemon in play (both yours and your ' +
     'opponent\'s) gets +30 HP.';

@@ -15,6 +15,8 @@ class TrainingCenter extends trainer_card_1.TrainerCard {
         this.set = 'FFI';
         this.name = 'Training Center';
         this.fullName = 'Training Center FFI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '102';
         this.text = 'Each Stage 1 and Stage 2 Pokemon in play (both yours and your ' +
             'opponent\'s) gets +30 HP.';
     }

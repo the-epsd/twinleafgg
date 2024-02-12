@@ -10,9 +10,11 @@ class ProfessorJuniper extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'BW';
+        this.set = 'BLW';
         this.name = 'Professor Juniper';
-        this.fullName = 'Professor Juniper BW';
+        this.fullName = 'Professor Juniper BLW';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '101';
         this.text = 'Discard your hand and draw 7 cards.';
     }
     reduceEffect(store, state, effect) {

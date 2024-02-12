@@ -39,7 +39,11 @@ export class Tornadus extends PokemonCard {
 
   public name: string = 'Tornadus';
 
-  public fullName: string = 'Tornadus EP';
+  public fullName: string = 'Tornadus EPO';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '89';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

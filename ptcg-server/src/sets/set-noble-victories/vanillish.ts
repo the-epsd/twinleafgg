@@ -39,7 +39,11 @@ export class Vanillish extends PokemonCard {
 
   public name: string = 'Vanillish';
 
-  public fullName: string = 'Vanillish NV';
+  public fullName: string = 'Vanillish NVI';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '28';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

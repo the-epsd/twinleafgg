@@ -7,7 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { GameMessage } from '../../game/game-message';
 
-export class Riolu2 extends PokemonCard {
+export class Riolu extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
@@ -35,7 +35,11 @@ export class Riolu2 extends PokemonCard {
 
   public name: string = 'Riolu';
 
-  public fullName: string = 'Riolu LT';
+  public fullName: string = 'Riolu LTR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '79';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

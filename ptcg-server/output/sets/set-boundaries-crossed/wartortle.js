@@ -33,7 +33,9 @@ class Wartortle extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'BCR';
         this.name = 'Wartortle';
-        this.fullName = 'Wartortle BC';
+        this.fullName = 'Wartortle BCR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '30';
         this.CLEAR_WITHDRAW_MARKER = 'CLEAR_WITHDRAW_MARKER';
         this.WITHDRAW_MARKER = 'WITHDRAW_MARKER';
     }

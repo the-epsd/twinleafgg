@@ -22,6 +22,10 @@ export class Cyndaquil extends PokemonCard {
 
   public name: string = 'Cyndaquil';
 
-  public fullName: string = 'Cyndaquil HGSS';
+  public fullName: string = 'Cyndaquil HS';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '61';
 
 }

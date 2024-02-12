@@ -38,7 +38,11 @@ export class Drowzee extends PokemonCard {
 
   public name: string = 'Drowzee';
 
-  public fullName: string = 'Drowzee HGSS';
+  public fullName: string = 'Drowzee HS';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '62';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

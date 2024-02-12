@@ -48,6 +48,8 @@ class ComputerSearch extends trainer_card_1.TrainerCard {
         this.set = 'BCR';
         this.name = 'Computer Search';
         this.fullName = 'Computer Search BCR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '137';
         this.text = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' +
             'you can\'t play this card.) Search your deck for a card and put it into ' +
             'your hand. Shuffle your deck afterward.';

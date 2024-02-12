@@ -24,7 +24,9 @@ class ProfessorOaksNewTheory extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'HS';
         this.name = 'Professor Oak\'s New Theory';
-        this.fullName = 'Professor Oaks New Theory HGSS';
+        this.fullName = 'Professor Oaks New Theory HS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '101';
         this.text = 'Shuffle your hand into your deck. Then, draw 6 cards.';
     }
     reduceEffect(store, state, effect) {

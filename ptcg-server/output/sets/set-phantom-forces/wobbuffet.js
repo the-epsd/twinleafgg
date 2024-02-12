@@ -34,7 +34,9 @@ class Wobbuffet extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'PHF';
         this.name = 'Wobbuffet';
-        this.fullName = 'Wobbuffet PFO';
+        this.fullName = 'Wobbuffet PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '36';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

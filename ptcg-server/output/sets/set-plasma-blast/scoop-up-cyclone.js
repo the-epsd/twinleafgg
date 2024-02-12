@@ -15,6 +15,8 @@ class ScoopUpCyclone extends trainer_card_1.TrainerCard {
         this.set = 'PLB';
         this.name = 'Scoop Up Cyclone';
         this.fullName = 'Scoop Up Cyclone PLB';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '95';
         this.text = 'Put 1 of your Pokemon and all cards attached to it into your hand.';
     }
     reduceEffect(store, state, effect) {

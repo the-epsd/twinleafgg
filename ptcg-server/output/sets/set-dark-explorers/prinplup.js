@@ -32,6 +32,8 @@ class Prinplup extends pokemon_card_1.PokemonCard {
         this.set = 'DEX';
         this.name = 'Prinplup';
         this.fullName = 'Prinplup DEX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '28';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

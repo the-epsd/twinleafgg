@@ -47,11 +47,15 @@ export class Revive extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'BW';
+  public set: string = 'BLW';
 
   public name: string = 'Revive';
 
-  public fullName: string = 'Revive BW';
+  public fullName: string = 'Revive BLW';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '102';
 
   public text: string =
     'Put a Basic Pokemon from your discard pile onto your Bench.';

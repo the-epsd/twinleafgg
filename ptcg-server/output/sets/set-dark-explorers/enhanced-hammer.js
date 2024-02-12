@@ -53,6 +53,8 @@ class EnhancedHammer extends trainer_card_1.TrainerCard {
         this.set = 'DEX';
         this.name = 'Enhanced Hammer';
         this.fullName = 'Enhanced Hammer DEX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '94';
         this.text = 'Discard a Special Energy attached to 1 of your opponent\'s Pokemon.';
     }
     reduceEffect(store, state, effect) {

@@ -65,11 +65,15 @@ export class CrobatG extends PokemonCard {
     }
   ];
 
-  public set: string = 'DP';
+  public set: string = 'PL';
 
   public name: string = 'Crobat G';
 
   public fullName: string = 'Crobat G PL';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '47';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -91,7 +91,11 @@ export class Hydreigon extends PokemonCard {
 
   public name: string = 'Hydreigon';
 
-  public fullName: string = 'Hydreigon DGE';
+  public fullName: string = 'Hydreigon DRX';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '97';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

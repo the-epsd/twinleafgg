@@ -14,7 +14,9 @@ class DimensionValley extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'PHF';
         this.name = 'Dimension Valley';
-        this.fullName = 'Dimension Valley PFO';
+        this.fullName = 'Dimension Valley PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '93';
         this.text = 'Each P Pokemon\'s attacks (both yours and your opponent\'s) cost C less.';
     }
     reduceEffect(store, state, effect) {

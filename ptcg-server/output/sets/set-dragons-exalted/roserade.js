@@ -58,7 +58,9 @@ class Roserade extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'DRX';
         this.name = 'Roserade';
-        this.fullName = 'Roserade DGE';
+        this.fullName = 'Roserade DRX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '15';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

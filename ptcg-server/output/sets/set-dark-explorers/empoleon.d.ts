@@ -26,6 +26,8 @@ export declare class Empoleon extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly DIVING_DRAW_MAREKER = "DIVING_DRAW_MAREKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

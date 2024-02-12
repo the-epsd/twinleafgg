@@ -34,7 +34,9 @@ class MewEx extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'LTR';
         this.name = 'Mew EX';
-        this.fullName = 'Mew EX LT';
+        this.fullName = 'Mew EX LTR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = 'RC24';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

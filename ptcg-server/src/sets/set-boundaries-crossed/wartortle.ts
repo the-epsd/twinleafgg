@@ -44,7 +44,11 @@ export class Wartortle extends PokemonCard {
 
   public name: string = 'Wartortle';
 
-  public fullName: string = 'Wartortle BC';
+  public fullName: string = 'Wartortle BCR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '30';
 
   public readonly CLEAR_WITHDRAW_MARKER = 'CLEAR_WITHDRAW_MARKER';
 

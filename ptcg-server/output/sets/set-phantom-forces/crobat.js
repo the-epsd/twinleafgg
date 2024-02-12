@@ -35,7 +35,9 @@ class Crobat extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PHF';
         this.name = 'Crobat';
-        this.fullName = 'Crobat PFO';
+        this.fullName = 'Crobat PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '33';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

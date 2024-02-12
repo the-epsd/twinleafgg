@@ -10,9 +10,11 @@ class PlusPower extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'BW';
+        this.set = 'BLW';
         this.name = 'PlusPower';
-        this.fullName = 'PlusPower BW';
+        this.fullName = 'PlusPower BLW';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '96';
         this.text = 'During this turn, your Pokemon\'s attacks do 10 more damage to the ' +
             'Active Pokemon (before applying Weakness and Resistance).';
         this.PLUS_POWER_MARKER = 'PLUS_POWER_MARKER';

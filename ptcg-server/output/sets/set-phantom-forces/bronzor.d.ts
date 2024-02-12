@@ -21,4 +21,6 @@ export declare class Bronzor extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
 }

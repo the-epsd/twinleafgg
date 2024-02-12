@@ -54,6 +54,8 @@ class Korrina extends trainer_card_1.TrainerCard {
         this.set = 'FFI';
         this.name = 'Korrina';
         this.fullName = 'Korrina FFI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '95';
         this.text = 'Search your deck for a F Pokemon and an Item card, reveal them, ' +
             'and put them into your hand. Shuffle your deck afterward.';
     }

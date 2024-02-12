@@ -57,6 +57,8 @@ class JirachiEx extends pokemon_card_1.PokemonCard {
         this.set = 'PLB';
         this.name = 'Jirachi EX';
         this.fullName = 'Jirachi EX PLB';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '60';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

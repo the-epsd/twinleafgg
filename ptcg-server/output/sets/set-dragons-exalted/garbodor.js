@@ -33,7 +33,9 @@ class Garbodor extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'DRX';
         this.name = 'Garbodor';
-        this.fullName = 'Garbodor DGE';
+        this.fullName = 'Garbodor DRX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '54';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect

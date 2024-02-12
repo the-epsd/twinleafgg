@@ -14,7 +14,11 @@ export class RockyHelmet extends TrainerCard {
 
   public name: string = 'Rocky Helmet';
 
-  public fullName: string = 'Rocky Helmet BC';
+  public fullName: string = 'Rocky Helmet BCR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '133';
 
   public text: string =
     'If the Pokemon this card is attached to is your Active Pokemon and is ' +

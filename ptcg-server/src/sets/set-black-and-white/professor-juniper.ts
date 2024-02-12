@@ -11,11 +11,15 @@ export class ProfessorJuniper extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'BW';
+  public set: string = 'BLW';
 
   public name: string = 'Professor Juniper';
 
-  public fullName: string = 'Professor Juniper BW';
+  public fullName: string = 'Professor Juniper BLW';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '101';
 
   public text: string =
     'Discard your hand and draw 7 cards.';

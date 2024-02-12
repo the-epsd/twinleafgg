@@ -20,6 +20,8 @@ export declare class SeismitoadEx extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly QUAKING_PUNCH_MAREKER = "QUAKING_PUNCH_MAREKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

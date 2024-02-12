@@ -25,6 +25,8 @@ class Lysandre extends trainer_card_1.TrainerCard {
         this.set = 'FLF';
         this.name = 'Lysandre';
         this.fullName = 'Lysandre FLF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '90';
         this.text = 'Switch 1 of your opponent\'s Benched Pokemon with his or her ' +
             'Active Pokemon.';
     }

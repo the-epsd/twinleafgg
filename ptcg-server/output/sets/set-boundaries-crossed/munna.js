@@ -35,7 +35,9 @@ class Munna extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'BCR';
         this.name = 'Munna';
-        this.fullName = 'Munna BC';
+        this.fullName = 'Munna BCR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '68';
         this.LONG_DISTANCE_HYPNOSIS_MARKER = 'LONG_DISTANCE_HYPNOSIS_MARKER';
     }
     reduceEffect(store, state, effect) {

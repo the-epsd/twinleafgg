@@ -47,6 +47,8 @@ class SacredAsh extends trainer_card_1.TrainerCard {
         this.set = 'FLF';
         this.name = 'Sacred Ash';
         this.fullName = 'Sacred Ash FLF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '96';
         this.text = 'Shuffle 5 Pokemon from your discard pile into your deck.';
     }
     reduceEffect(store, state, effect) {

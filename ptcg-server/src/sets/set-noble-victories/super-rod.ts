@@ -63,7 +63,11 @@ export class SuperRod extends TrainerCard {
 
   public name: string = 'Super Rod';
 
-  public fullName: string = 'Super Rod NV';
+  public fullName: string = 'Super Rod NVI';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '95';
 
   public text: string =
     'Shuffle 3 in any combination of Pokemon and basic Energy cards from ' +

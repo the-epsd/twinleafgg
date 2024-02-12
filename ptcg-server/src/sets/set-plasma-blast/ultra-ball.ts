@@ -91,6 +91,10 @@ export class UltraBall extends TrainerCard {
 
   public fullName: string = 'Ultra Ball PLB';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '90';
+
   public text: string =
     'Discard 2 cards from your hand. (If you can\'t discard 2 cards, you ' +
     'can\'t play this card.) Search your deck for a Pokemon, reveal it, and ' +

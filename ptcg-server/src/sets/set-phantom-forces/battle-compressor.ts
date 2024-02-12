@@ -44,7 +44,11 @@ export class BattleCompressor extends TrainerCard {
 
   public name: string = 'Battle Compressor';
 
-  public fullName: string = 'Battle Compressor PFO';
+  public fullName: string = 'Battle Compressor PHF';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '92';
 
   public text: string =
     'Search your deck for up to 3 cards and discard them. Shuffle your ' +

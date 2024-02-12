@@ -43,7 +43,11 @@ export class Wobbuffet extends PokemonCard {
 
   public name: string = 'Wobbuffet';
 
-  public fullName: string = 'Wobbuffet PFO';
+  public fullName: string = 'Wobbuffet PHF';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '36';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

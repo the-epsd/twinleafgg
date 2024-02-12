@@ -8,6 +8,8 @@ export declare class PlusPower extends TrainerCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     text: string;
     private readonly PLUS_POWER_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

@@ -30,7 +30,9 @@ class Joltik extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PHF';
         this.name = 'Joltik';
-        this.fullName = 'Joltik PFO';
+        this.fullName = 'Joltik PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '26';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

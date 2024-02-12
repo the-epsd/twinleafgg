@@ -30,6 +30,8 @@ export declare class HoOhEx extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly REBIRTH_MAREKER = "REBIRTH_MAREKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

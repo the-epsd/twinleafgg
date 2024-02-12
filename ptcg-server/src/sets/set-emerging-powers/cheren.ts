@@ -17,6 +17,10 @@ export class Cheren extends TrainerCard {
 
   public fullName: string = 'Cheren EPO';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '91';
+
   public text: string =
     'Draw 3 cards.';
 

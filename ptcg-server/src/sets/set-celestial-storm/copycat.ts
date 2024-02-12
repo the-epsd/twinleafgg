@@ -38,6 +38,10 @@ export class Copycat extends TrainerCard {
 
   public fullName: string = 'Copycat CES';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '127';
+
   public text: string =
     'Shuffle your hand into your deck. Then, draw a card for each card in ' +
     'your opponent\'s hand.';

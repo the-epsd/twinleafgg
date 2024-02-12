@@ -35,7 +35,9 @@ class Golbat extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PHF';
         this.name = 'Golbat';
-        this.fullName = 'Golbat PFO';
+        this.fullName = 'Golbat PHF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '32';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

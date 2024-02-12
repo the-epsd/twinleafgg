@@ -27,9 +27,11 @@ class Zekrom extends pokemon_card_1.PokemonCard {
                 text: 'This Pokemon does 40 damage to itself.'
             }
         ];
-        this.set = 'BW';
+        this.set = 'BLW';
         this.name = 'Zekrom';
-        this.fullName = 'Zekrom BW';
+        this.fullName = 'Zekrom BLW';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '47';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -15,7 +15,11 @@ export class RescueScarf extends TrainerCard {
 
   public name: string = 'Rescue Scarf';
 
-  public fullName: string = 'Rescue Scarf DGE';
+  public fullName: string = 'Rescue Scarf DRX';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '115';
 
   public text: string =
     'If the Pokemon this card is attached to is Knocked Out by damage from ' +

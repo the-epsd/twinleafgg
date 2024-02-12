@@ -119,11 +119,15 @@ export class Zoroark extends PokemonCard {
       'as this attack.'
   }];
 
-  public set: string = 'BW3';
+  public set: string = 'BLW';
 
   public name: string = 'Zoroark';
 
   public fullName: string = 'Zoroark BW';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '71';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

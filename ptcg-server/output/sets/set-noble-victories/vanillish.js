@@ -32,7 +32,9 @@ class Vanillish extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'NVI';
         this.name = 'Vanillish';
-        this.fullName = 'Vanillish NV';
+        this.fullName = 'Vanillish NVI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '28';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

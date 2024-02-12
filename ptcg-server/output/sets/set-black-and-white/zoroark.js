@@ -80,9 +80,11 @@ class Zoroark extends pokemon_card_1.PokemonCard {
                 text: 'Choose 1 of the Defending Pokemon\'s attacks and use it ' +
                     'as this attack.'
             }];
-        this.set = 'BW3';
+        this.set = 'BLW';
         this.name = 'Zoroark';
         this.fullName = 'Zoroark BW';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '71';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

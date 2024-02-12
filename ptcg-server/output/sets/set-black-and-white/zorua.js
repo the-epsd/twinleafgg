@@ -21,9 +21,11 @@ class Zorua extends pokemon_card_1.PokemonCard {
                 damage: 30,
                 text: 'Flip a coin. If tails, this attack does nothing.'
             }];
-        this.set = 'BW3';
+        this.set = 'BLW';
         this.name = 'Zorua';
-        this.fullName = 'Zorua BW';
+        this.fullName = 'Zorua BLW';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '70';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -17,7 +17,11 @@ export class AspertiaCityGym extends TrainerCard {
 
   public name: string = 'Aspertia City Gym';
 
-  public fullName: string = 'Aspertia City Gym BC';
+  public fullName: string = 'Aspertia City Gym BCR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '127';
 
   public text: string =
     'Each C Pokemon in play (both yours and your opponent\'s) gets +20 HP.';

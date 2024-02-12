@@ -31,7 +31,9 @@ class Terrakion extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'NVI';
         this.name = 'Terrakion';
-        this.fullName = 'Terrakion NV';
+        this.fullName = 'Terrakion NVI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '73';
         this.RETALIATE_MARKER = 'RETALIATE_MARKER';
     }
     reduceEffect(store, state, effect) {

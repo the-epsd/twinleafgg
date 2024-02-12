@@ -24,7 +24,9 @@ class Gothita extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'LTR';
         this.name = 'Gothita';
-        this.fullName = 'Gothita LT';
+        this.fullName = 'Gothita LTR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '70';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -38,6 +38,8 @@ class RayquazaEx extends pokemon_card_1.PokemonCard {
         this.set = 'DRX';
         this.name = 'Rayquaza EX';
         this.fullName = 'Rayquaza EX DRX';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '85';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
