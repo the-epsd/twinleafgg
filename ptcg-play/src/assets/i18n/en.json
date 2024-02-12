@@ -154,6 +154,7 @@
   "LABEL_WATER": "Water",
   "LABEL_STANDARD": "Standard",
   "LABEL_EXPANDED": "Expanded",
+  "LABEL_GLC": "GLC",
   "LABEL_UNLIMITED": "Unlimited",
   "LABEL_RETRO": "Retro",
   "LOGIN_CHANGE_SERVER": "Change server address",
