@@ -12,6 +12,7 @@ import { DeckEditInfoComponent } from './deck-edit-info/deck-edit-info.component
 import { ImportDeckPopupComponent } from './import-deck-popup/import-deck-popup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TypeIconsModule } from '../shared/type-icons/type-icons.module';
+import { DeckCardDialogComponent } from './deck-card-dialog/deck-card-dialog.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { TypeIconsModule } from '../shared/type-icons/type-icons.module';
     FilterCardsPipe,
     DeckEditPanesComponent,
     DeckEditInfoComponent,
-    ImportDeckPopupComponent
+    ImportDeckPopupComponent,
+    DeckCardDialogComponent
   ]
 })
 export class DeckModule { }

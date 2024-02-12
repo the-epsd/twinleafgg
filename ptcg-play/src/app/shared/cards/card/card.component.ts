@@ -22,9 +22,8 @@ export class CardComponent {
     this.data = value;
     this.scanUrl = this.cardsBaseService.getScanUrl(this.data);
   }
-
+  
   constructor(
-    private cardsBaseService: CardsBaseService,
+    private cardsBaseService: CardsBaseService
   ) { }
-
 }

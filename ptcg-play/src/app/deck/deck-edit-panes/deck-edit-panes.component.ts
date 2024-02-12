@@ -13,7 +13,7 @@ import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-fi
 import { DeckItem, LibraryItem } from '../deck-card/deck-card.interface';
 import { DeckCardType } from '../deck-card/deck-card.component';
 import { DeckEditVirtualScrollStrategy } from './deck-edit-virtual-scroll-strategy';
-import { PokemonCard, SuperType } from 'ptcg-server';
+import { Card, PokemonCard, SuperType } from 'ptcg-server';
 
 const DECK_CARD_ITEM_WIDTH = 148;
 const DECK_CARD_ITEM_HEIGHT = 173;
@@ -292,5 +292,25 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
   onLibraryCardClick(card: DeckItem) {
     this.addCardToDeck(card);
+  }
+  
+  onCardSelectedOnDialog(currentCard: DeckItem, selectedCard: Card, action: 'add' | 'replace') {
+    const countToReplace = +currentCard.count;
+    if (action === 'replace') {
+      for (let i = 0; i < countToReplace; i++) {
+        this.removeCardFromDeck(currentCard);
+        this.addCardToDeck({
+          ...currentCard,
+          card: selectedCard
+        });        
+      }
+    } else {
+      this.addCardToDeck({
+        count: 1,
+        card: selectedCard,
+        pane: DeckEditPane.DECK,
+        scanUrl: this.cardsBaseService.getScanUrl(selectedCard)
+      })
+    }
   }
 }

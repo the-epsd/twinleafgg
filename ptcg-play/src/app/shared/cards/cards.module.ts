@@ -40,7 +40,7 @@ import { HoverHighlightComponent } from './hover-highlight/hover-highlight.compo
     DropHighlightDirective,
     TrainerTypeComponent,
     HoverHighlightComponent,
-    CardInfoListPopupComponent,
+    CardInfoListPopupComponent
   ],
   entryComponents: [
     CardImagePopupComponent,

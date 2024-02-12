@@ -1,0 +1,84 @@
+@import '../../../theme/variables.scss';
+
+$ptcg-deck-card-width: map-get($ptcg-size, card) + map-get($padding, large);
+
+mat-dialog-content {
+  .top-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+    .alternate-printings {
+      flex: 100%;      
+      display: flex;
+      flex-wrap: row;
+      gap: 1rem;
+      
+      ptcg-card {
+        max-width: 200px;
+      }
+    }
+    
+    ptcg-card {
+      flex: 100%;
+    }
+    
+    @media (min-width: 768px) {
+      .alternate-printings {
+        flex: 1;
+      }
+      
+      ptcg-card {
+        flex: 1;
+      }  
+    }
+    
+    @media (min-width: 1200px) {
+      .alternate-printings {
+        flex: 2;
+      }
+      
+      ptcg-card {
+        flex: 1;
+      }  
+    }
+    
+    @media (min-width: 1700px) {
+      .alternate-printings {
+        flex: 3;
+      }
+      
+      ptcg-card {
+        flex: 1;
+      }  
+    }
+  }
+  
+  .evo-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    
+    .evolves-to,
+    .evolves-from {
+      overflow-y: hidden;
+      overflow-x: auto;
+      margin-bottom: 2rem;
+      flex: 100%;      
+      display: flex;
+      gap: 1rem;
+      
+      ptcg-card {
+        width: $ptcg-deck-card-width;
+      }
+    }
+  }
+}
+
+.inspect-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  margin-right: -15px;
+}

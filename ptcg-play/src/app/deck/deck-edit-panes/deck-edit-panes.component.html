@@ -41,6 +41,8 @@
         (infoClick)="showCardInfo(render.data)"
         (cardClick)="onDeckCardClick(render.data)"
         (countClick)="setCardCount(render.data)"
+        [showDetailButtons]="true"
+        (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)"
         [card]="render.data">
       </ptcg-deck-card>
     </ng-template>
