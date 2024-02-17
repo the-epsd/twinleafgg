@@ -15,6 +15,7 @@ export class Player {
         this.active = new PokemonCardList();
         this.bench = [];
         this.prizes = [];
+        this.supporterTurn = 0;
         this.retreatedTurn = 0;
         this.energyPlayedTurn = 0;
         this.stadiumPlayedTurn = 0;
@@ -23,9 +24,10 @@ export class Player {
         this.attackMarker = new Marker();
         this.abilityMarker = new Marker();
         this.avatarName = '';
-    }
-    prompt(state, arg1) {
-        throw new Error('Method not implemented.');
+        this.usedVSTAR = false;
+        this.usedGX = false;
+        this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+        this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     getPrizeLeft() {
         return this.prizes.reduce((left, p) => left + p.cards.length, 0);
@@ -50,6 +52,9 @@ export class Player {
         if (benchIndex !== -1) {
             const temp = this.active;
             const tempCard = temp.getPokemonCard();
+            //breakdown of markers to be removed on switchPokemon()
+            this.marker.removeMarker(this.ATTACK_USED_MARKER);
+            this.marker.removeMarker(this.ATTACK_USED_2_MARKER);
             this.active.clearEffects();
             this.active = this.bench[benchIndex];
             this.bench[benchIndex] = temp;

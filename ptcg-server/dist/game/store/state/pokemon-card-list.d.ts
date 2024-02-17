@@ -6,6 +6,7 @@ import { Card } from '../card/card';
 import { Power, Attack } from '../card/pokemon-types';
 export declare class PokemonCardList extends CardList {
     damage: number;
+    hp: number;
     specialConditions: SpecialCondition[];
     poisonDamage: number;
     burnDamage: number;
@@ -13,6 +14,7 @@ export declare class PokemonCardList extends CardList {
     attackMarker: Marker;
     abilityMarker: Marker;
     pokemonPlayedTurn: number;
+    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     tool: Card | undefined;
     stadium: Card | undefined;
     getPokemons(): PokemonCard[];
@@ -23,5 +25,6 @@ export declare class PokemonCardList extends CardList {
     removeSpecialCondition(sp: SpecialCondition): void;
     addSpecialCondition(sp: SpecialCondition): void;
     hasRuleBox(): boolean;
+    vPokemon(): boolean;
     getToolEffect(): Power | Attack | undefined;
 }

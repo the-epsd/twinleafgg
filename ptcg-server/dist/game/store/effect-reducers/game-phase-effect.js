@@ -113,6 +113,8 @@ function handleSpecialConditions(store, state, effect) {
 export function gamePhaseReducer(store, state, effect) {
     if (effect instanceof EndTurnEffect) {
         const player = state.players[state.activePlayer];
+        player.supporterTurn = 0;
+        console.log('player.supporterTurn', player.supporterTurn);
         if (player === undefined) {
             throw new GameError(GameMessage.NOT_YOUR_TURN);
         }

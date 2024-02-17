@@ -14,26 +14,12 @@ import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { PlayerType } from '../actions/play-card-action';
 import { PokemonCardList } from '../state/pokemon-card-list';
-import { SuperType, Stage } from '../card/card-types';
+import { SuperType, Stage, CardTag } from '../card/card-types';
 import { WhoBeginsEffect } from '../effects/game-phase-effects';
 import { endGame } from '../effect-reducers/check-effect';
 import { initNextTurn } from '../effect-reducers/game-phase-effect';
 import { SelectPrompt } from '../prompts/select-prompt';
-function putStartingPokemonsAndPrizes(player, cards) {
-    if (cards.length === 0) {
-        return;
-    }
-    player.hand.moveCardTo(cards[0], player.active);
-    for (let i = 1; i < cards.length; i++) {
-        player.hand.moveCardTo(cards[i], player.bench[i - 1]);
-    }
-    for (let i = 0; i < 6; i++) {
-        player.deck.moveTo(player.prizes[i], 1);
-    }
-}
 function* setupGame(next, store, state) {
-    const basicPokemon = { superType: SuperType.POKEMON, stage: Stage.BASIC };
-    const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
     const player = state.players[0];
     const opponent = state.players[1];
     const whoBeginsEffect = new WhoBeginsEffect();
@@ -57,6 +43,8 @@ function* setupGame(next, store, state) {
             });
         });
     }
+    const basicPokemon = { superType: SuperType.POKEMON, stage: Stage.BASIC || CardTag.RAPID_STRIKE };
+    const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
     let playerCardsToDraw = 0;
     let opponentCardsToDraw = 0;
     let playerHasBasic = false;
@@ -103,6 +91,18 @@ function* setupGame(next, store, state) {
                 }
                 next();
             });
+        }
+    }
+    function putStartingPokemonsAndPrizes(player, cards) {
+        if (cards.length === 0) {
+            return;
+        }
+        player.hand.moveCardTo(cards[0], player.active);
+        for (let i = 1; i < cards.length; i++) {
+            player.hand.moveCardTo(cards[i], player.bench[i - 1]);
+        }
+        for (let i = 0; i < 6; i++) {
+            player.deck.moveTo(player.prizes[i], 1);
         }
     }
     yield store.prompt(state, [

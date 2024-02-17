@@ -28,11 +28,8 @@ export class TrainerCard extends Card {
                 if (effect.power === this.powers[i] && effect.power.effect !== undefined) {
                     return effect.power.effect(store, state, effect);
                 }
-                return state;
             }
-            return state;
         }
-        
         return state;
     }
 }

@@ -5,7 +5,7 @@ export class Card {
         this.regulationMark = '';
         this.tags = [];
         this.setNumber = '';
-        this.set2 = '';
+        this.cardImage = '';
         this.retreat = [];
         this.cards = new CardList;
     }

@@ -3,10 +3,7 @@ import { CardTarget, PlayerType } from '../actions/play-card-action';
 import { PokemonCard } from '../card/pokemon-card';
 import { PokemonCardList } from './pokemon-card-list';
 import { Marker } from './card-marker';
-import { ChooseCardsPrompt } from '../prompts/choose-cards-prompt';
-import { State } from './state';
 export declare class Player {
-    prompt(state: State, arg1: ChooseCardsPrompt): void;
     id: number;
     name: string;
     deck: CardList;
@@ -18,6 +15,7 @@ export declare class Player {
     active: PokemonCardList;
     bench: PokemonCardList[];
     prizes: CardList[];
+    supporterTurn: number;
     retreatedTurn: number;
     energyPlayedTurn: number;
     stadiumPlayedTurn: number;
@@ -26,6 +24,10 @@ export declare class Player {
     attackMarker: Marker;
     abilityMarker: Marker;
     avatarName: string;
+    usedVSTAR: boolean;
+    usedGX: boolean;
+    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
+    readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     usedRapidStrikeSearchThisTurn: any;
     usedExcitingStageThisTurn: any;
     usedSquawkAndSeizeThisTurn: any;

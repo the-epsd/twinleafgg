@@ -49,16 +49,6 @@ export class CheckPokemonTypeEffect {
         this.cardTypes = pokemonCard ? [pokemonCard.cardType] : [];
     }
 }
-export class CheckPokemonPowersEffect {
-    constructor(player, target) {
-        this.type = CheckEffects.CHECK_POKEMON_POWERS_EFFECT;
-        this.preventDefault = false;
-        this.player = player;
-        this.target = target;
-        const pokemonCard = target.getPokemonCard();
-        this.powers = pokemonCard ? [...pokemonCard.powers] : [];
-    }
-}
 export class CheckRetreatCostEffect {
     constructor(player) {
         this.type = CheckEffects.CHECK_RETREAT_COST_EFFECT;

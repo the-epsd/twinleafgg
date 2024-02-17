@@ -4,10 +4,11 @@ import { EndTurnEffect } from '../effects/game-phase-effects';
 import { GamePhase } from '../state/state';
 import { StateUtils } from '../state-utils';
 import { CheckPokemonTypeEffect, CheckPokemonStatsEffect, CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../effects/check-effects';
-import { SpecialCondition, CardTag } from '../card/card-types';
+import { SpecialCondition, CardTag, TrainerType } from '../card/card-types';
 import { AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect, UsePowerEffect, PowerEffect, UseStadiumEffect, EvolveEffect } from '../effects/game-effects';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { DealDamageEffect, ApplyWeaknessEffect } from '../effects/attack-effects';
+import { TrainerEffect } from '../effects/play-card-effects';
 function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
     let multiply = 1;
     let modifier = 0;
@@ -31,6 +32,10 @@ function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
 function* useAttack(next, store, state, effect) {
     const player = effect.player;
     const opponent = StateUtils.getOpponent(state, player);
+    //Skip attack on first turn
+    if (state.turn === 1) {
+        throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
+    }
     const sp = player.active.specialConditions;
     if (sp.includes(SpecialCondition.PARALYZED) || sp.includes(SpecialCondition.ASLEEP)) {
         throw new GameError(GameMessage.BLOCKED_BY_SPECIAL_CONDITION);
@@ -116,6 +121,11 @@ export function gameReducer(store, state, effect) {
         const player = effect.player;
         store.log(state, GameLog.LOG_PLAYER_USES_STADIUM, { name: player.name, stadium: effect.stadium.name });
         player.stadiumUsedTurn = state.turn;
+    }
+    if (effect instanceof TrainerEffect && effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
+        const player = effect.player;
+        store.log(state, GameLog.LOG_PLAYER_PLAYS_SUPPORTER, { name: player.name, stadium: effect.trainerCard.name });
+        player.supporterTurn = state.turn;
     }
     if (effect instanceof HealEffect) {
         effect.target.damage = Math.max(0, effect.target.damage - effect.damage);

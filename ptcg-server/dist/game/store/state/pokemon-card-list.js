@@ -6,6 +6,7 @@ export class PokemonCardList extends CardList {
     constructor() {
         super(...arguments);
         this.damage = 0;
+        this.hp = 0;
         this.specialConditions = [];
         this.poisonDamage = 10;
         this.burnDamage = 20;
@@ -13,6 +14,7 @@ export class PokemonCardList extends CardList {
         this.attackMarker = new Marker();
         this.abilityMarker = new Marker();
         this.pokemonPlayedTurn = 0;
+        this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
     }
     getPokemons() {
         const result = [];
@@ -40,6 +42,7 @@ export class PokemonCardList extends CardList {
         this.marker.markers = [];
     }
     clearEffects() {
+        this.marker.removeMarker(this.ATTACK_USED_MARKER);
         this.marker.markers = [];
         this.specialConditions = [];
         this.poisonDamage = 10;
@@ -81,6 +84,9 @@ export class PokemonCardList extends CardList {
     }
     hasRuleBox() {
         return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));
+    }
+    vPokemon() {
+        return this.cards.some(c => c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));
     }
     getToolEffect() {
         if (!this.tool) {
