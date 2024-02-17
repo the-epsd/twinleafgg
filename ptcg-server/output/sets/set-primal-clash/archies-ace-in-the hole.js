@@ -14,7 +14,9 @@ class ArchiesAceInTheHole extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'PRC';
         this.name = 'Archie\'s Ace in the Hole';
-        this.fullName = 'Archie\'s Ace in the Hole PCL';
+        this.fullName = 'Archie\'s Ace in the Hole PRC';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '124';
         this.text = 'You can play this card only when it is the last card in your hand. ' +
             'Put a W Pokemon from your discard pile onto your Bench. ' +
             'Then, draw 5 cards.';

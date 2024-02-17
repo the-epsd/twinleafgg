@@ -4,7 +4,7 @@ import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils } from 
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class RadiantCharizard extends PokemonCard {
 
@@ -82,7 +82,7 @@ export class RadiantCharizard extends PokemonCard {
       }
 
 
-      if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
   
         // Check marker
         if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {

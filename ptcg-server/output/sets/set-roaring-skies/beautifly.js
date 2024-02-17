@@ -62,6 +62,8 @@ class Beautifly extends pokemon_card_1.PokemonCard {
         this.set = 'ROS';
         this.name = 'Beautifly';
         this.fullName = 'Beautifly ROS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '5';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -3,7 +3,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { GamePhase, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 
 export class IronHandsex extends PokemonCard {
 
@@ -65,16 +65,18 @@ export class IronHandsex extends PokemonCard {
         if (pokemonCard !== this) {
           return state;
         }
+        if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+          effect.prizeCount += 1;
+          return state;
+        }
 
-        effect.prizeCount += 1;
         return state;
       }
 
       return state;
+
     }
-
     return state;
-
   }
 }
 

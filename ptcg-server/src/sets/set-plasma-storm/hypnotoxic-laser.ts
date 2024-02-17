@@ -47,7 +47,11 @@ export class HypnotoxicLaser extends TrainerCard {
 
   public name: string = 'Hypnotoxic Laser';
 
-  public fullName: string = 'Hypnotoxic Laser PS';
+  public fullName: string = 'Hypnotoxic Laser PLS';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '123';
 
   public text: string =
     'Your opponent\'s Active Pokemon is now Poisoned. Flip a coin. ' +

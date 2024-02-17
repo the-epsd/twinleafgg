@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ShayminVSTARArt = exports.ShayminVArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.ManaphyArt = exports.MagmortarArt = exports.MagmaBasinArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = void 0;
+exports.ShayminVSTARArt = exports.ShayminVArt = exports.RoseannesBackupArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.ManaphyArt = exports.MagmortarArt = exports.MagmaBasinArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = exports.AcerolasPremonitionArt = void 0;
+const acerolas_premonition_1 = require("./acerolas-premonition");
 const aggron_v_1 = require("./aggron-v");
 const aggron_vmax_1 = require("./aggron-vmax");
 const arceus_v_1 = require("./arceus-v");
@@ -26,8 +27,16 @@ const pot_helmet_1 = require("./pot-helmet");
 const purrloin_1 = require("./purrloin");
 const raichu_v_1 = require("./raichu-v");
 const raikou_v_1 = require("./raikou-v");
+const roseannes_backup_1 = require("./roseannes-backup");
 const shaymin_v_1 = require("./shaymin-v");
 const shaymin_vstar_1 = require("./shaymin-vstar");
+class AcerolasPremonitionArt extends acerolas_premonition_1.AcerolasPremonition {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_129_R_EN_LG.png';
+    }
+}
+exports.AcerolasPremonitionArt = AcerolasPremonitionArt;
 class AggronVArt extends aggron_v_1.AggronV {
     constructor() {
         super(...arguments);
@@ -203,6 +212,13 @@ class RaikouVArt extends raikou_v_1.RaikouV {
     }
 }
 exports.RaikouVArt = RaikouVArt;
+class RoseannesBackupArt extends roseannes_backup_1.RoseannesBackup {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_148_R_EN_LG.png';
+    }
+}
+exports.RoseannesBackupArt = RoseannesBackupArt;
 class ShayminVArt extends shaymin_v_1.ShayminV {
     constructor() {
         super(...arguments);

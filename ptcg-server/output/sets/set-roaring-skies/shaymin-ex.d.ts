@@ -29,5 +29,7 @@ export declare class ShayminEx extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

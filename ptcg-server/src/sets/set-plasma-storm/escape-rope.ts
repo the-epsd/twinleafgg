@@ -68,6 +68,10 @@ export class EscapeRope extends TrainerCard {
 
   public fullName: string = 'Escape Rope PLS';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '120';
+
   public text: string =
     'Each player switches his or her Active Pokemon with 1 of his or her ' +
     'Benched Pokemon. (Your opponent switches first. If a player does not ' +

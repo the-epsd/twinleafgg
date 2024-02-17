@@ -1,16 +1,21 @@
+import { Agatha } from './agatha';
 import { Avery } from './avery';
 import { Banette } from './banette';
 import { Beedrill } from './beedril';
 import { BlazikenV } from './blaziken-v';
 import { BlazikenVMAX } from './blaziken-vmax';
 import { BlisseyV } from './blissey-v';
+import { Caitlin } from './caitlin';
 import { Drizzile } from './drizzile';
+import { DynaTreeHill } from './dyna-tree-hill';
 import { EchoingHorn } from './echoing-horn';
 import { ExpeditionUniform } from './expedition-uniform';
+import { Flannery } from './flannery';
 import { FogCrystal } from './fog-crystal';
 import { Froslass } from './froslass';
 import { GalarianArticunoV } from './galarian-articuno-v';
 import { GalarianMoltresV } from './galarian-moltres-v';
+import { GalarianZapdosV } from './galarian-zapdos-v';
 import { Gallade } from './gallade';
 import { Gardevoir } from './gardevoir';
 import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
@@ -32,6 +37,10 @@ import { Sneasel } from './sneasel';
 import { Snorunt } from './snorunt';
 import { Sobble } from './sobble';
 import { SpiralEnergy } from './spiral-energy';
+
+export class AgathaArt extends Agatha {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_129_R_EN.png';
+}
 
 export class AveryArt extends Avery {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_130_R_EN_LG.png';
@@ -57,7 +66,15 @@ export class BlisseyVArt extends BlisseyV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_119_R_EN_LG.png';
 }
 
+export class CaitlinArt extends Caitlin {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_132_R_EN_LG.png';
+}
+
 export class DrizzileArt extends Drizzile {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_042_R_EN_LG.png';
+}
+
+export class DynaTreeHillArt extends DynaTreeHill {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_042_R_EN_LG.png';
 }
 
@@ -67,6 +84,10 @@ export class EchoingHornArt extends EchoingHorn {
 
 export class ExpeditionUniformArt extends ExpeditionUniform {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_137_R_EN_LG.png';
+}
+
+export class FlanneryArt extends Flannery {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_139_R_EN.png';
 }
 
 export class FogCrystalArt extends FogCrystal {
@@ -83,6 +104,10 @@ export class GalarianArticunoVArt extends GalarianArticunoV {
 
 export class GalarianMoltresVArt extends GalarianMoltresV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_097_R_EN_LG.png';
+}
+
+export class GalarianZapdosVArt extends GalarianZapdosV {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_080_R_EN_LG.png';
 }
 
 export class GardevoirArt extends Gardevoir {

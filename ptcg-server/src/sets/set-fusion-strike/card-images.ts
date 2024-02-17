@@ -137,7 +137,7 @@ export class ShaunaArt extends Shauna {
 }
 
 export class ShelmetArt extends Shelmet {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_014_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_013_R_EN_LG.png';
 }
 
 export class YveltalArt extends Yveltal {

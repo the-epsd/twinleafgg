@@ -4,6 +4,7 @@ import { DarkPatch } from './dark-patch';
 import { DarkraiV } from './darkrai-v';
 import { DarkraiVSTAR } from './darkrai-vstar';
 import { Diancie } from './diancie';
+import { EnergyLoto } from './energy-loto';
 import { FeatherBall } from './feather-ball';
 import { Gallade } from './gallade';
 import { GapejawBog } from './gapejaw-bog';
@@ -58,6 +59,9 @@ export declare class DarkraiVSTARArt extends DarkraiVSTAR {
     cardImage: string;
 }
 export declare class DiancieArt extends Diancie {
+    cardImage: string;
+}
+export declare class EnergyLotoArt extends EnergyLoto {
     cardImage: string;
 }
 export declare class FeatherBallArt extends FeatherBall {

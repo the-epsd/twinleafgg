@@ -1,6 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AdamanArt, CancelingCologneArt, DarkPatchArt, DarkraiVArt, DarkraiVSTARArt, DiancieArt, FeatherBallArt, GalladeArt, GapejawBogArt, GardeniasVigorArt, GrantArt, GutsyPickaxeArt, HisuianArcanineArt, HisuianBasculinArt, HisuianHeavyBallArt, HisuianSamurottVArt, HisuianSamurottVSTARArt, IridaArt, KleavorArt, LucarioVArt, LuxrayVArt, MightyenaArt, MiltankArt, OriginFormeDialgaVArt, OriginFormeDialgaVSTARArt, OriginFormePalkiaVArt, OriginFormePalkiaVSTARArt, RadiantGreninjaArt, RadiantHawluchaArt, RaltsArt, RegiceArt, RegidragoArt, RegielekiArt, RegigigasArt, RegirockArt, RegisteelArt, RoxanneArt, StarmieVArt, SupereffectiveGlassesArt, SwitchCartArt, TempleofSinnohArt, TrekkingShoesArt, WyrdeerVArt } from './card-images';
-import { SpicySeasonedCurry } from './spicy-seasoned-curry';
+import { AdamanArt, CancelingCologneArt, DarkPatchArt, DarkraiVArt, DarkraiVSTARArt, DiancieArt, EnergyLotoArt, FeatherBallArt, GalladeArt, GapejawBogArt, GardeniasVigorArt, GrantArt, GutsyPickaxeArt, HisuianArcanineArt, HisuianBasculinArt, HisuianHeavyBallArt, HisuianSamurottVArt, HisuianSamurottVSTARArt, IridaArt, KleavorArt, LucarioVArt, LuxrayVArt, MightyenaArt, MiltankArt, OriginFormeDialgaVArt, OriginFormeDialgaVSTARArt, OriginFormePalkiaVArt, OriginFormePalkiaVSTARArt, RadiantGreninjaArt, RadiantHawluchaArt, RaltsArt, RegiceArt, RegidragoArt, RegielekiArt, RegigigasArt, RegirockArt, RegisteelArt, RoxanneArt, SpicySeasonedCurryArt, StarmieVArt, SupereffectiveGlassesArt, SwitchCartArt, TempleofSinnohArt, TrekkingShoesArt, WyrdeerVArt } from './card-images';
 
 
 
@@ -12,6 +11,7 @@ export const setAstralRadiance: Card[] = [
   new DarkraiVArt(),
   new DarkraiVSTARArt(),
   new DiancieArt(),
+  new EnergyLotoArt(),
   new FeatherBallArt(),
   new GalladeArt(),
   new GapejawBogArt(),
@@ -43,7 +43,7 @@ export const setAstralRadiance: Card[] = [
   new RegirockArt(),
   new RegisteelArt(),
   new RoxanneArt(),
-  new SpicySeasonedCurry(),
+  new SpicySeasonedCurryArt(),
   new StarmieVArt(),
   new SupereffectiveGlassesArt(),
   new SwitchCartArt(),

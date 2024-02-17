@@ -38,7 +38,7 @@ export class RegigigasVSTARArt extends RegigigasVSTAR {
 }
 
 export class ZacianVSTARArt extends ZacianVSTAR {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_036_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_096_R_EN_LG.png';
 }
 
 export class ZamazentaArt extends Zamazenta {

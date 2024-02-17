@@ -42,7 +42,9 @@ class DualBall extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'UL';
         this.name = 'Dual Ball';
-        this.fullName = 'Dual Ball UNL';
+        this.fullName = 'Dual Ball UL';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '72';
         this.text = 'Flip 2 coins. For each heads, search your deck for a Basic Pokemon ' +
             'card, show it to your opponent, and put it into your hand. Shuffle your ' +
             'deck afterward.';

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setCelestialStorm = void 0;
-const copycat_1 = require("./copycat");
+const card_images_1 = require("./card-images");
 exports.setCelestialStorm = [
-    new copycat_1.Copycat(),
+    new card_images_1.CopycatArt(),
 ];

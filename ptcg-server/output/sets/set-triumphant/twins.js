@@ -36,7 +36,9 @@ class Twins extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'TM';
         this.name = 'Twins';
-        this.fullName = 'Twins TRM';
+        this.fullName = 'Twins TM';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '89';
         this.text = 'You may use this card only if you have more Prize cards left than your ' +
             'opponent. Search your deck for any 2 cards and put them into your hand. ' +
             'Shuffle your deck afterward.';

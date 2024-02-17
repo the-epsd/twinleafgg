@@ -37,7 +37,6 @@ exports.setLostOrigin = [
     new card_images_1.MagnezoneVSTARArt(),
     new card_images_1.DamagePumpArt(),
     new card_images_1.BoxOfDisasterArt(),
-    new card_images_1.EnergyLottoArt(),
     new card_images_1.PanicMaskArt(),
     new card_images_1.ArezuArt(),
     new card_images_1.DrapionVSTARArt(),

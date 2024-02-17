@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MrFujiArt = exports.LaprasArt = exports.EnergySearchArt = exports.ArticunoArt = void 0;
+exports.MysteriousFossilArt = exports.MrFujiArt = exports.LaprasArt = exports.EnergySearchArt = exports.ArticunoArt = void 0;
 const articuno_1 = require("./articuno");
 const energy_search_1 = require("./energy-search");
 const lapras_1 = require("./lapras");
 const mr_fuji_1 = require("./mr-fuji");
+const mysterious_fossil_1 = require("./mysterious-fossil");
 class ArticunoArt extends articuno_1.Articuno {
     constructor() {
         super(...arguments);
@@ -33,3 +34,10 @@ class MrFujiArt extends mr_fuji_1.MrFuji {
     }
 }
 exports.MrFujiArt = MrFujiArt;
+class MysteriousFossilArt extends mysterious_fossil_1.MysteriousFossil {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/mysterious-fossil-fossil-fo-62.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.MysteriousFossilArt = MysteriousFossilArt;

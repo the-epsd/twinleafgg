@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setUnbrokenBonds = void 0;
-const cleffa_1 = require("../set-obsidian-flames/cleffa");
-const pokegear_30_1 = require("./pokegear-30");
+const card_images_1 = require("./card-images");
 exports.setUnbrokenBonds = [
-    new cleffa_1.Cleffa(),
-    new pokegear_30_1.Pokegear30(),
+    new card_images_1.CleffaArt(),
+    new card_images_1.Pokegear30Art(),
 ];

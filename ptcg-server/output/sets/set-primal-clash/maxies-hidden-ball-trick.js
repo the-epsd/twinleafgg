@@ -14,7 +14,9 @@ class MaxiesHiddenBallTrick extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'PRC';
         this.name = 'Maxie\'s Hidden Ball Trick';
-        this.fullName = 'Maxie\'s Hidden Ball Trick PCL';
+        this.fullName = 'Maxie\'s Hidden Ball Trick PRC';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '133';
         this.text = 'You can play this card only when it is the last card in your hand. ' +
             'Put a F Pokemon from your discard pile onto your Bench. ' +
             'Then, draw 5 cards.';

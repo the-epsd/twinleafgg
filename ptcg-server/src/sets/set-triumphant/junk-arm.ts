@@ -96,7 +96,11 @@ export class JunkArm extends TrainerCard {
 
   public name: string = 'Junk Arm';
 
-  public fullName: string = 'Junk Arm TRM';
+  public fullName: string = 'Junk Arm TM';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '87';
 
   public text: string =
     'Discard 2 cards from your hand. Search your discard pile for a Trainer ' +

@@ -15,6 +15,8 @@ class Colress extends trainer_card_1.TrainerCard {
         this.set = 'PLS';
         this.name = 'Colress';
         this.fullName = 'Colress PLS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '118';
         this.text = 'Shuffle your hand into your deck. Then, draw a number of cards equal ' +
             'to the number of Benched Pokemon (both yours and your opponent\'s).';
     }

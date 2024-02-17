@@ -3,18 +3,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setChillingReign = void 0;
 const card_images_1 = require("./card-images");
 exports.setChillingReign = [
+    new card_images_1.AgathaArt(),
     new card_images_1.AveryArt(),
     new card_images_1.BanetteArt(),
     new card_images_1.BeedrillArt(),
     new card_images_1.BlazikenVArt(),
     new card_images_1.BlazikenVMAXArt(),
     new card_images_1.BlisseyVArt(),
+    new card_images_1.CaitlinArt(),
     new card_images_1.DrizzileArt(),
+    new card_images_1.DynaTreeHillArt(),
     new card_images_1.EchoingHornArt(),
+    new card_images_1.FlanneryArt(),
     new card_images_1.FogCrystalArt(),
     new card_images_1.FroslassArt(),
     new card_images_1.GalarianArticunoVArt(),
     new card_images_1.GalarianMoltresVArt(),
+    new card_images_1.GalarianZapdosVArt(),
     new card_images_1.GardevoirArt(),
     new card_images_1.GalladeArt(),
     new card_images_1.IceRiderCalyrexVArt(),

@@ -14,6 +14,8 @@ class RescueEnergy extends energy_card_1.EnergyCard {
         this.set = 'TM';
         this.name = 'Rescue Energy';
         this.fullName = 'Rescue Energy TM';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '90';
         this.RESCUE_ENERGY_MAREKER = 'RESCUE_ENERGY_MAREKER';
         this.text = 'Rescue Energy provides C Energy. If the Pokemon this card is attached ' +
             'to is Knocked Out by damage from an attack, put that Pokemon back into ' +

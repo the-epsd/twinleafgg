@@ -13,11 +13,15 @@ export class DarknessEnergySpecial extends EnergyCard {
 
   public energyType = EnergyType.SPECIAL;
 
-  public set: string = 'HS';
+  public set: string = 'UD';
 
-  public name = 'Darkness Energy (Special)';
+  public name = 'Darkness Energy';
 
-  public fullName = 'Darkness Energy (Special) HGSS';
+  public fullName = 'Darkness Energy UD';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '79';
 
   public text = 'If the Pokemon Darkness Energy is attached to attacks, ' +
     'the attack does 10 more damage to the Active Pokemon (before applying ' +

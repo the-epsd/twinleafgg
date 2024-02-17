@@ -63,7 +63,7 @@ class RadiantCharizard extends pokemon_card_1.PokemonCard {
             if (index !== -1) {
                 effect.attack.cost.splice(index, prizesTaken);
             }
-            if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[0]) {
+            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
                 // Check marker
                 if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                     console.log('attack blocked');

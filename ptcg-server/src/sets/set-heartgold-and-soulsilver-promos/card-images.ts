@@ -1,5 +1,5 @@
 import { Shuckle } from './shuckle';
 
 export class ShuckleArt extends Shuckle {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HS/HS_023_R_EN.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HSP/HSP_015_R_EN_LG.png';
 }

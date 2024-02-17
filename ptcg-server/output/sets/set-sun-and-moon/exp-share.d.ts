@@ -8,6 +8,8 @@ export declare class ExpShare extends TrainerCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     text: string;
     readonly EXP_SHARE_MARKER: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

@@ -64,7 +64,11 @@ export class DualBall extends TrainerCard {
 
   public name: string = 'Dual Ball';
 
-  public fullName: string = 'Dual Ball UNL';
+  public fullName: string = 'Dual Ball UL';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '72';
 
   public text: string =
     'Flip 2 coins. For each heads, search your deck for a Basic Pokemon ' +

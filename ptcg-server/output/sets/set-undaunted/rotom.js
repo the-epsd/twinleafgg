@@ -37,7 +37,9 @@ class Rotom extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'UD';
         this.name = 'Rotom';
-        this.fullName = 'Rotom UND';
+        this.fullName = 'Rotom UD';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '20';
         this.MISCHIEVOUS_TRICK_MAREKER = 'MISCHIEVOUS_TRICK_MAREKER';
     }
     reduceEffect(store, state, effect) {

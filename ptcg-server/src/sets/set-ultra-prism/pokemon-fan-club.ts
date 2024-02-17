@@ -53,12 +53,16 @@ export class PokemonFanClub extends TrainerCard {
 
   public set: string = 'UPR';
 
-  public name: string = 'Pokemon Fan Club';
+  public name: string = 'Pokémon Fan Club';
 
-  public fullName: string = 'Pokemon Fan Club UPR';
+  public fullName: string = 'Pokémon Fan Club UPR';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '133';
 
   public text: string =
-    'Search your deck for up to 2 Basic Pokemon, reveal them, ' +
+    'Search your deck for up to 2 Basic Pokémon, reveal them, ' +
     'and put them into your hand. Then, shuffle your deck.';
 
 

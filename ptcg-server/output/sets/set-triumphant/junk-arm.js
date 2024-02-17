@@ -69,7 +69,9 @@ class JunkArm extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'TM';
         this.name = 'Junk Arm';
-        this.fullName = 'Junk Arm TRM';
+        this.fullName = 'Junk Arm TM';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '87';
         this.text = 'Discard 2 cards from your hand. Search your discard pile for a Trainer ' +
             'card, show it to your opponent, and put it into your hand. You can\'t ' +
             'choose Junk Arm with the effect of this card.';

@@ -15,7 +15,9 @@ class BlackBelt extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'TM';
         this.name = 'Black Belt';
-        this.fullName = 'Black Belt TRM';
+        this.fullName = 'Black Belt TM';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '85';
         this.text = 'You may use this card only if you have more Prize cards left than your ' +
             'opponent. During this turn, each of your Active Pokemon\'s attacks does ' +
             '40 more damage to your opponent\'s Active Pokemon (before applying ' +

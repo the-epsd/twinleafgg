@@ -87,6 +87,10 @@ export class PokemonCommunication extends TrainerCard {
 
   public fullName: string = 'Pokemon Communication TEU';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '152';
+
   public text: string =
     'Reveal a Pokemon from your hand and put it into your deck. If you do, ' +
     'search your deck for a Pokemon, reveal it, and put it into your hand. ' +

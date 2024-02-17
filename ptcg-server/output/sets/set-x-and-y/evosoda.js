@@ -86,6 +86,8 @@ class Evosoda extends trainer_card_1.TrainerCard {
         this.set = 'XY';
         this.name = 'Evosoda';
         this.fullName = 'Evosoda XY';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '116';
         this.text = 'Search your deck for a card that evolves from 1 of your Pokemon and put ' +
             'it onto that Pokemon. (This counts as evolving that Pokemon). ' +
             'Shuffle your deck afterward. You can\'t use this card during your first ' +

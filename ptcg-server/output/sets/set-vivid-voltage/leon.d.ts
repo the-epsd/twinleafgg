@@ -8,6 +8,8 @@ export declare class Leon extends TrainerCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     text: string;
     private readonly LEON_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

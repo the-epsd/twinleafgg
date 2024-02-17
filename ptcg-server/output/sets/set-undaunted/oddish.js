@@ -48,7 +48,9 @@ class Oddish extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'UD';
         this.name = 'Oddish';
-        this.fullName = 'Oddish UND';
+        this.fullName = 'Oddish UD';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '60';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

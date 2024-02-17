@@ -40,6 +40,8 @@ class Seeker extends trainer_card_1.TrainerCard {
         this.set = 'TM';
         this.name = 'Seeker';
         this.fullName = 'Seeker TRM';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '88';
         this.text = 'Each player returns 1 of his or her Benched Pokemon and all cards ' +
             'attached to it to his or her hand. (You return your Pokemon first.)';
     }

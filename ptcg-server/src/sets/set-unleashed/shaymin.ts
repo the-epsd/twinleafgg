@@ -45,7 +45,11 @@ export class Shaymin extends PokemonCard {
 
   public name: string = 'Shaymin';
 
-  public fullName: string = 'Shaymin UNL';
+  public fullName: string = 'Shaymin UL';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '8';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

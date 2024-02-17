@@ -25,6 +25,8 @@ export declare class Celebi extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly FOREST_BREATH_MARKER: string;
     readonly TIME_CIRCLE_MARKER: string;
     readonly CLEAR_TIME_CIRCLE_MARKER: string;

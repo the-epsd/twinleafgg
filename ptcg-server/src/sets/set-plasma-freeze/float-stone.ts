@@ -15,6 +15,10 @@ export class FloatStone extends TrainerCard {
 
   public fullName: string = 'Float Stone PLF';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '99';
+
   public text: string =
     'The Pokemon this card is attached to has no Retreat Cost.';
 

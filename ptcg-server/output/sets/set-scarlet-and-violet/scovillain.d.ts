@@ -1,20 +1,15 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Scovillain extends PokemonCard {
     stage: Stage;
     regulationMark: string;
-    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
-    }[];
-    resistance: {
-        type: CardType;
-        value: number;
     }[];
     retreat: CardType[];
     attacks: {

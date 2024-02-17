@@ -19,6 +19,10 @@ export class Colress extends TrainerCard {
 
   public fullName: string = 'Colress PLS';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '118';
+
   public text: string =
     'Shuffle your hand into your deck. Then, draw a number of cards equal ' +
     'to the number of Benched Pokemon (both yours and your opponent\'s).';

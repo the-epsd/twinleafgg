@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTeamUp = void 0;
-const pokemon_communication_1 = require("./pokemon-communication");
-const viridian_forest_1 = require("./viridian-forest");
+const card_images_1 = require("./card-images");
 exports.setTeamUp = [
-    new pokemon_communication_1.PokemonCommunication(),
-    new viridian_forest_1.ViridianForest(),
+    new card_images_1.PokemonCommunicationArt(),
+    new card_images_1.ViridianForestArt(),
 ];

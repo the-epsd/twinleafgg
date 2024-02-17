@@ -35,7 +35,9 @@ class Shaymin extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'UL';
         this.name = 'Shaymin';
-        this.fullName = 'Shaymin UNL';
+        this.fullName = 'Shaymin UL';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '8';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

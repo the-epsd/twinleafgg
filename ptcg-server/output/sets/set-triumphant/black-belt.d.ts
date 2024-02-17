@@ -8,6 +8,8 @@ export declare class BlackBelt extends TrainerCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     text: string;
     private readonly BLACK_BELT_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

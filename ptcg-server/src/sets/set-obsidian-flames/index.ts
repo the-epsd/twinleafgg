@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 
-import { BelliboltArt } from './card-images';
+import { BelliboltArt, ScizorArt } from './card-images';
 import { CharizardexArt } from './card-images';
 import { CharmanderArt } from './card-images';
 import { CharmeleonArt } from './card-images';
@@ -36,6 +36,7 @@ export const setObsidianFlames: Card[] = [
   new PidgeyArt(),
   new PokemonLeagueHeadquartersArt(),
   new PoppyArt(),
+  new ScizorArt(),
   new TownStoreArt(),
   new VengefulPunchArt(),
   new BelliboltArt(),

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setUltraPrism = void 0;
-const pokemon_fan_club_1 = require("./pokemon-fan-club");
+const card_images_1 = require("./card-images");
 exports.setUltraPrism = [
-    new pokemon_fan_club_1.PokemonFanClub(),
+    new card_images_1.PokemonFanClubArt(),
 ];

@@ -50,7 +50,7 @@ export class CharmanderArt extends Charmander {
 }
 
 export class CharmeleonArt extends Charmeleon {
-  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/charmander-base-set-bs-46.jpg?fit=600%2C825&ssl=1';
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/charmeleon-base-set-bs-24.jpg?fit=600%2C825&ssl=1';
 }
 
 export class ClefairyArt extends Clefairy {

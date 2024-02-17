@@ -34,9 +34,11 @@ class PokemonFanClub extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'UPR';
-        this.name = 'Pokemon Fan Club';
-        this.fullName = 'Pokemon Fan Club UPR';
-        this.text = 'Search your deck for up to 2 Basic Pokemon, reveal them, ' +
+        this.name = 'Pokémon Fan Club';
+        this.fullName = 'Pokémon Fan Club UPR';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '133';
+        this.text = 'Search your deck for up to 2 Basic Pokémon, reveal them, ' +
             'and put them into your hand. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {

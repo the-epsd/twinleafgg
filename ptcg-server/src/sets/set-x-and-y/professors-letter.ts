@@ -22,6 +22,10 @@ export class ProfessorsLetter extends TrainerCard {
 
   public fullName: string = 'Professors Letter XY';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '123';
+
   public text: string =
     'Search your deck for up to 2 basic Energy cards, reveal them, ' +
     'and put them into your hand. Shuffle your deck afterward.';

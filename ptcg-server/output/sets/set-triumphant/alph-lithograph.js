@@ -29,7 +29,9 @@ class AlphLithograph extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'TM';
         this.name = 'Alph Lithograph';
-        this.fullName = 'Alph Lithograph TRM';
+        this.fullName = 'Alph Lithograph TM';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = 'FOUR';
         this.text = 'Look at all of your face down prize cards!';
     }
     reduceEffect(store, state, effect) {

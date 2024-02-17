@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArezuArt, BouffalantArt, BoxOfDisasterArt, ColresssExperimentArt, ComfeyArt, CramorantArt, CresseliaArt, DamagePumpArt, DelphoxVArt, DrapionVArt, DrapionVSTARArt, EnergyLottoArt, GengarArt, GiftEnergyArt, GiratinaVArt, GiratinaVSTARArt, HisuianGoodraVArt, HisuianGoodraVSTARArt, HisuianZoroarkVArt, HisuianZoroarkVSTARArt, JynxArt, KyuremVArt, KyuremVMAXArt, LadyArt, LostCityArt, LostVacuumArt, MagnezoneVArt, MagnezoneVSTARArt, MawileArt, MirageGateArt, PanicMaskArt, PidgeotVArt, RadiantGardevoirArt, RadiantHisuianSneaslerArt, RotomVArt, SableyeArt, SnorlaxArt, VoloArt } from './card-images';
+import { ArezuArt, BouffalantArt, BoxOfDisasterArt, ColresssExperimentArt, ComfeyArt, CramorantArt, CresseliaArt, DamagePumpArt, DelphoxVArt, DrapionVArt, DrapionVSTARArt, GengarArt, GiftEnergyArt, GiratinaVArt, GiratinaVSTARArt, HisuianGoodraVArt, HisuianGoodraVSTARArt, HisuianZoroarkVArt, HisuianZoroarkVSTARArt, JynxArt, KyuremVArt, KyuremVMAXArt, LadyArt, LostCityArt, LostVacuumArt, MagnezoneVArt, MagnezoneVSTARArt, MawileArt, MirageGateArt, PanicMaskArt, PidgeotVArt, RadiantGardevoirArt, RadiantHisuianSneaslerArt, RotomVArt, SableyeArt, SnorlaxArt, VoloArt } from './card-images';
 
 
 export const setLostOrigin: Card[] = [
@@ -38,7 +38,6 @@ export const setLostOrigin: Card[] = [
   new MagnezoneVSTARArt(),
   new DamagePumpArt(),
   new BoxOfDisasterArt(),
-  new EnergyLottoArt(),
   new PanicMaskArt(),
   new ArezuArt(),
   new DrapionVSTARArt(),

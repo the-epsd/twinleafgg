@@ -60,6 +60,8 @@ class DowsingMachine extends trainer_card_1.TrainerCard {
         this.set = 'PLS';
         this.name = 'Dowsing Machine';
         this.fullName = 'Dowsing Machine PLS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '128';
         this.text = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' +
             'you can\'t play this card.) Put a Trainer card from your discard ' +
             'pile into your hand.';

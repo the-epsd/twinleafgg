@@ -9,7 +9,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { GameMessage, Card, ChooseCardsPrompt, EnergyCard } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
-export class LugiaEX extends PokemonCard {
+export class LugiaEx extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
@@ -44,6 +44,10 @@ export class LugiaEX extends PokemonCard {
   public name: string = 'Lugia EX';
 
   public fullName: string = 'Lugia EX PLS';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '108';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

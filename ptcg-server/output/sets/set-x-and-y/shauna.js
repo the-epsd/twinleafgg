@@ -25,6 +25,8 @@ class Shauna extends trainer_card_1.TrainerCard {
         this.set = 'XY';
         this.name = 'Shauna';
         this.fullName = 'Shauna XY';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '127';
         this.text = 'Shuffle your hand into your deck. Then, draw 5 cards.';
     }
     reduceEffect(store, state, effect) {

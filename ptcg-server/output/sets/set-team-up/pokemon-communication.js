@@ -51,6 +51,8 @@ class PokemonCommunication extends trainer_card_1.TrainerCard {
         this.set = 'TEU';
         this.name = 'Pokemon Communication';
         this.fullName = 'Pokemon Communication TEU';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '152';
         this.text = 'Reveal a Pokemon from your hand and put it into your deck. If you do, ' +
             'search your deck for a Pokemon, reveal it, and put it into your hand. ' +
             'Then, shuffle your deck.';

@@ -54,9 +54,16 @@ export class Luxray extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
     
-      if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
+      if (player.getPrizeLeft() < opponent.getPrizeLeft()) {
 
-        this.stage = Stage.BASIC;
+        const canPlayLuxray = player.hand.cards.some(c => {
+          return c instanceof PokemonCard && c.cards.filter(this);
+        });
+
+        if (canPlayLuxray) {
+          this.stage = Stage.BASIC;
+        }
+        return state;
       }
       return state;
     }

@@ -19,6 +19,10 @@ export class RescueEnergy extends EnergyCard {
 
   public fullName = 'Rescue Energy TM';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '90';
+
   public readonly RESCUE_ENERGY_MAREKER = 'RESCUE_ENERGY_MAREKER';
 
   public text =

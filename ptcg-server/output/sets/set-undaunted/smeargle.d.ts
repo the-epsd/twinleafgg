@@ -25,6 +25,8 @@ export declare class Smeargle extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly PORTRAIT_MARKER: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

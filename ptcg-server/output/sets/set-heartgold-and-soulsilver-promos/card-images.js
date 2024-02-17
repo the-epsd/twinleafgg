@@ -5,7 +5,7 @@ const shuckle_1 = require("./shuckle");
 class ShuckleArt extends shuckle_1.Shuckle {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HS/HS_023_R_EN.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HSP/HSP_015_R_EN_LG.png';
     }
 }
 exports.ShuckleArt = ShuckleArt;

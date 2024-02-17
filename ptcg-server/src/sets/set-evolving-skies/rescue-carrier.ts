@@ -18,7 +18,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   let cards: Card[] = [];
 
   const blocked: number[] = [];
-  player.deck.cards.forEach((card, index) => {
+  player.discard.cards.forEach((card, index) => {
     if (card instanceof PokemonCard && card.hp > 90) {
       blocked.push(index);
     }

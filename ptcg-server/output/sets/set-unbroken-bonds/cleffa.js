@@ -48,6 +48,8 @@ class Cleffa extends pokemon_card_1.PokemonCard {
         this.set = 'UNB';
         this.name = 'Cleffa';
         this.fullName = 'Cleffa UNB';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '131';
     }
     reduceEffect(store, state, effect) {
         // Eeeeeeek

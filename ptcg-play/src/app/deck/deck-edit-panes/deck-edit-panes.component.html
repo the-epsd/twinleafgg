@@ -16,6 +16,8 @@
     *cdkVirtualFor="let card of (cards | filterCards: toolbarFilter)"
     [dndSortableExternal]="card.spec" #ext="dndSortableExternal" [source]="ext.source"
     (cardClick)="onLibraryCardClick(card)"
+    [showDetailButtons]="true"
+    (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)"
     [card]="card">
   </ptcg-deck-card>
 </cdk-virtual-scroll-viewport>
@@ -47,6 +49,5 @@
       </ptcg-deck-card>
     </ng-template>
   </dnd-sortable-list>
-
   
 </div>

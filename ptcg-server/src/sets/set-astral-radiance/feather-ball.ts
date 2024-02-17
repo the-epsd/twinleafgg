@@ -19,7 +19,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (card instanceof PokemonCard && card.retreat.length == 0) {
+    if (card instanceof PokemonCard && card.retreat.length !== 0) {
       blocked.push(index);
     }
   });

@@ -73,7 +73,7 @@ exports.CounterCatcherArt = CounterCatcherArt;
 class DefianceVestArt extends defiance_vest_1.DefianceVest {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_074_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_162_R_EN.png';
     }
 }
 exports.DefianceVestArt = DefianceVestArt;

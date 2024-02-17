@@ -36,7 +36,7 @@ exports.DeoxysVSTARArt = DeoxysVSTARArt;
 class HisuianElectrodeVArt extends hisuian_electrode_v_1.HisuianElectrodeV {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_296_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_294_R_EN.png';
     }
 }
 exports.HisuianElectrodeVArt = HisuianElectrodeVArt;

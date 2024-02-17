@@ -35,6 +35,10 @@ export class Shauna extends TrainerCard {
 
   public fullName: string = 'Shauna XY';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '127';
+
   public text: string =
     'Shuffle your hand into your deck. Then, draw 5 cards.';
 

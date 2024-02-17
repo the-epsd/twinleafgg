@@ -18,7 +18,7 @@ function* playCard(next, store, state, effect) {
     }
     const blocked = [];
     player.deck.cards.forEach((card, index) => {
-        if (card instanceof game_1.PokemonCard && card.retreat.length == 0) {
+        if (card instanceof game_1.PokemonCard && card.retreat.length !== 0) {
             blocked.push(index);
         }
     });

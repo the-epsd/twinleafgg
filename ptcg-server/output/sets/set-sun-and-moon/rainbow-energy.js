@@ -13,6 +13,8 @@ class RainbowEnergy extends energy_card_1.EnergyCard {
         this.set = 'SUM';
         this.name = 'Rainbow Energy';
         this.fullName = 'Rainbow Energy SUM';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '137';
         this.text = 'This card provides C Energy. While in play, this card provides every ' +
             'type of Energy but provides only 1 Energy at a time. When you attach ' +
             'this card from your hand to 1 of your Pokemon, put 1 damage counter ' +

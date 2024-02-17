@@ -34,6 +34,7 @@ exports.setObsidianFlames = [
     new card_images_13.PidgeyArt(),
     new card_images_14.PokemonLeagueHeadquartersArt(),
     new card_images_15.PoppyArt(),
+    new card_images_1.ScizorArt(),
     new card_images_16.TownStoreArt(),
     new card_images_17.VengefulPunchArt(),
     new card_images_1.BelliboltArt(),

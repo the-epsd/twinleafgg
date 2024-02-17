@@ -44,7 +44,7 @@ export class ZacianVSTAR extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '036';
+  public setNumber: string = '96';
 
   public name: string = 'Zacian VSTAR';
 

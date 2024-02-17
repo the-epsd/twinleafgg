@@ -64,6 +64,10 @@ export class TrainersMail extends TrainerCard {
 
   public fullName: string = 'Trainers\' Mail ROS';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '92';
+
   public text: string =
     'Look at the top 4 cards of your deck. You may reveal a Trainer card ' +
     'you find there (except for Trainers\' Mail) and put it into your hand. ' +

@@ -34,6 +34,8 @@ class Snorlax extends pokemon_card_1.PokemonCard {
         this.set = 'VIV';
         this.name = 'Snorlax';
         this.fullName = 'Snorlax VIV';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '131';
     }
     reduceEffect(store, state, effect) {
         // Gormandize

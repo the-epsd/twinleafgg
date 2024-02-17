@@ -11,6 +11,8 @@ class DoubleColorlessEnergy extends energy_card_1.EnergyCard {
         this.set = 'XY';
         this.name = 'Double Colorless Energy';
         this.fullName = 'Double Colorless Energy XY';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '130';
     }
 }
 exports.DoubleColorlessEnergy = DoubleColorlessEnergy;

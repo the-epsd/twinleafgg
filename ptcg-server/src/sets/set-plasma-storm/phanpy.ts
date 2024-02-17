@@ -33,4 +33,8 @@ export class Phanpy extends PokemonCard {
 
   public fullName: string = 'Phanpy PLS';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '71';
+
 }

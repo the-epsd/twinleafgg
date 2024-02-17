@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setEvolvingSkies = void 0;
 const card_images_1 = require("./card-images");
+const full_arts_1 = require("./full-arts");
 exports.setEvolvingSkies = [
     new card_images_1.CopycatArt(),
     new card_images_1.DragoniteVArt(),
@@ -21,6 +22,7 @@ exports.setEvolvingSkies = [
     new card_images_1.PumpkabooArt(),
     new card_images_1.RaihanArt(),
     new card_images_1.RayquazaVArt(),
+    new card_images_1.RayquazaVMAXArt(),
     new card_images_1.RegidragoArt(),
     new card_images_1.RegielekiArt(),
     new card_images_1.RescueCarrierArt(),
@@ -35,4 +37,7 @@ exports.setEvolvingSkies = [
     new card_images_1.TropiusArt(),
     new card_images_1.WishiwashiArt(),
     new card_images_1.SwitchingCupsArt(),
+    // Full Art & Alternate Art
+    new full_arts_1.RayquazaVAA(),
+    new full_arts_1.RayquazaVMAXAA(),
 ];

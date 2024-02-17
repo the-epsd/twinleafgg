@@ -80,7 +80,11 @@ export class FlowerShopLady extends TrainerCard {
 
   public name: string = 'Flower Shop Lady';
 
-  public fullName: string = 'Flower Shop Lady UND';
+  public fullName: string = 'Flower Shop Lady UD';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '74';
 
   public text: string =
     'Search your discard pile for 3 Pokemon and 3 basic Energy cards. ' +

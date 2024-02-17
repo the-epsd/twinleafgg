@@ -43,6 +43,10 @@ export class Snorlax extends PokemonCard {
 
   public fullName: string = 'Snorlax VIV';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '131';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Gormandize

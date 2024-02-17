@@ -54,6 +54,10 @@ export class EnergyRetrieval extends TrainerCard {
 
   public fullName: string = 'Energy Retrieval SUM';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '116';
+
   public text: string =
     'Put 2 basic Energy cards from your discard pile into your hand.';
 

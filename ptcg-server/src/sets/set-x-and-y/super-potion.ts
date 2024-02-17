@@ -82,6 +82,10 @@ export class SuperPotion extends TrainerCard {
 
   public fullName: string = 'Super Potion XY';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '128';
+
   public text: string =
     'Heal 60 damage from 1 of your Pokemon. If you do, discard an Energy ' +
     'attached to that Pokemon.';

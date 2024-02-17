@@ -44,6 +44,8 @@ class EscapeRope extends trainer_card_1.TrainerCard {
         this.set = 'PLS';
         this.name = 'Escape Rope';
         this.fullName = 'Escape Rope PLS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '120';
         this.text = 'Each player switches his or her Active Pokemon with 1 of his or her ' +
             'Benched Pokemon. (Your opponent switches first. If a player does not ' +
             'have a Benched Pokemon, he or she doesn\'t switch Pokemon.)';

@@ -34,6 +34,8 @@ class YveltalEx extends pokemon_card_1.PokemonCard {
         this.set = 'XY';
         this.name = 'Yveltal EX';
         this.fullName = 'Yveltal EX XY';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '79';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

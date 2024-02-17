@@ -26,6 +26,8 @@ export declare class Charizard extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly BATTLE_SENSE_MARKER = "BATTLE_SENSE";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

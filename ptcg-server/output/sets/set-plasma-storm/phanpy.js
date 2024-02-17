@@ -26,6 +26,8 @@ class Phanpy extends pokemon_card_1.PokemonCard {
         this.set = 'PLS';
         this.name = 'Phanpy';
         this.fullName = 'Phanpy PLS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '71';
     }
 }
 exports.Phanpy = Phanpy;

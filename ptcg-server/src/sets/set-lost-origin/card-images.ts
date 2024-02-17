@@ -9,7 +9,6 @@ import { DamagePump } from './damage-pump';
 import { DelphoxV } from './delphox-v';
 import { DrapionV } from './drapion-v';
 import { DrapionVSTAR } from './drapion-vstar';
-import { EnergyLotto } from './energy-lotto';
 import { Gengar } from './gengar';
 import { GiftEnergy } from './gift-energy';
 import { GiratinaV } from './giratina-v';
@@ -79,10 +78,6 @@ export class DrapionVArt extends DrapionV {
 
 export class DrapionVSTARArt extends DrapionVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_119_R_EN_LG.png';
-}
-
-export class EnergyLottoArt extends EnergyLotto {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_140_R_EN_LG.png';
 }
 
 export class GengarArt extends Gengar {

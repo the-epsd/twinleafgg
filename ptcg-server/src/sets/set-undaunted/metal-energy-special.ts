@@ -12,11 +12,15 @@ export class MetalEnergySpecial extends EnergyCard {
 
   public energyType = EnergyType.SPECIAL;
 
-  public set: string = 'HS';
+  public set: string = 'UD';
 
-  public name = 'Metal Energy (Special)';
+  public name = 'Metal Energy';
 
-  public fullName = 'Metal Energy (Special) HGSS';
+  public fullName = 'Metal Energy UD';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '80';
 
   public text = 'Damage done by attacks to the Pokemon that Metal Energy is ' +
     'attached to is reduced by 10 (after applying Weakness and Resistance). ' +

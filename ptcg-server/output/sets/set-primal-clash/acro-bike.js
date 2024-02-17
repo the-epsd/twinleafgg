@@ -14,7 +14,9 @@ class AcroBike extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'PRC';
         this.name = 'Acro Bike';
-        this.fullName = 'Acro Bike PCL';
+        this.fullName = 'Acro Bike PRC';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '122';
         this.text = 'Look at the top 2 cards of your deck and put 1 of them into your hand. ' +
             'Discard the other card.';
     }

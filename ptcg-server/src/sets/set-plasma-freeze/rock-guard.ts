@@ -18,6 +18,10 @@ export class RockGuard extends TrainerCard {
 
   public fullName: string = 'Rock Guard PLF';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '108';
+
   public text: string =
     'If the Pokemon this card is attached to is your Active Pokemon and is ' +
     'damaged by an opponent\'s attack (even if that Pokemon is Knocked Out), ' +

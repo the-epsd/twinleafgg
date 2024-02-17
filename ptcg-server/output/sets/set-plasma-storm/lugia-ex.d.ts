@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
-export declare class LugiaEX extends PokemonCard {
+export declare class LugiaEx extends PokemonCard {
     stage: Stage;
     tags: CardTag[];
     cardType: CardType;
@@ -31,5 +31,7 @@ export declare class LugiaEX extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

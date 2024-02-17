@@ -33,6 +33,8 @@ class Exeggcute extends pokemon_card_1.PokemonCard {
         this.set = 'PLF';
         this.name = 'Exeggcute';
         this.fullName = 'Exeggcute PLF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '4';
         this.PROPAGATION_MAREKER = 'PROPAGATION_MAREKER';
     }
     reduceEffect(store, state, effect) {

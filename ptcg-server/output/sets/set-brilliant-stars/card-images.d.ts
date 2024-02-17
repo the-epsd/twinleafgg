@@ -1,3 +1,4 @@
+import { AcerolasPremonition } from './acerolas-premonition';
 import { AggronV } from './aggron-v';
 import { AggronVMAX } from './aggron-vmax';
 import { ArceusV } from './arceus-v';
@@ -23,8 +24,12 @@ import { PotHelmet } from './pot-helmet';
 import { Purrloin } from './purrloin';
 import { RaichuV } from './raichu-v';
 import { RaikouV } from './raikou-v';
+import { RoseannesBackup } from './roseannes-backup';
 import { ShayminV } from './shaymin-v';
 import { ShayminVSTAR } from './shaymin-vstar';
+export declare class AcerolasPremonitionArt extends AcerolasPremonition {
+    cardImage: string;
+}
 export declare class AggronVArt extends AggronV {
     cardImage: string;
 }
@@ -98,6 +103,9 @@ export declare class RaichuVArt extends RaichuV {
     cardImage: string;
 }
 export declare class RaikouVArt extends RaikouV {
+    cardImage: string;
+}
+export declare class RoseannesBackupArt extends RoseannesBackup {
     cardImage: string;
 }
 export declare class ShayminVArt extends ShayminV {

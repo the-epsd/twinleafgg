@@ -1,9 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { PokemonCommunication } from './pokemon-communication';
-import { ViridianForest } from './viridian-forest';
+import { PokemonCommunicationArt, ViridianForestArt } from './card-images';
 
 export const setTeamUp: Card[] = [
-  new PokemonCommunication(),
-  new ViridianForest(),
+  new PokemonCommunicationArt(),
+  new ViridianForestArt(),
 
 ];

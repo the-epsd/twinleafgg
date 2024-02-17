@@ -58,9 +58,13 @@ export class Pokegear30 extends TrainerCard {
 
   public set: string = 'UNB';
 
-  public name: string = 'Pokegear 3.0';
+  public name: string = 'Pokégear 3.0';
 
-  public fullName: string = 'Pokegear 30 UNB';
+  public fullName: string = 'Pokégear 3.0 UNB';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '182';
 
   public text: string =
     'Look at the top 7 cards of your deck. You may reveal a Supporter card ' +

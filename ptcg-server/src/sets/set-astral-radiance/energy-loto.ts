@@ -6,7 +6,7 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, PokemonCard, ShowCardsPrompt } from '../../game';
 
-export class EnergyLotto extends TrainerCard {
+export class EnergyLoto extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
@@ -18,9 +18,9 @@ export class EnergyLotto extends TrainerCard {
 
   public setNumber: string = '140';
 
-  public name: string = 'Energy Lotto';
+  public name: string = 'Energy Loto';
 
-  public fullName: string = 'Energy Lotto LOR';
+  public fullName: string = 'Energy Loto LOR';
 
   public text: string =
     'Look at the top 7 cards of your deck. You may reveal an Energy card you find there and put it into your hand. Shuffle the other cards back into your deck.';

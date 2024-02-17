@@ -43,6 +43,10 @@ export class YveltalEx extends PokemonCard {
 
   public fullName: string = 'Yveltal EX XY';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '79';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -1,25 +1,16 @@
 import { Card } from '../../game/store/card/card';
-import { DoubleColorlessEnergy } from './double-colorless-energy';
-import { Evosoda } from './evosoda';
-import { MuscleBand } from './muscle-band';
-import { Pikachu } from './pikachu';
-import { ProfessorsLetter } from './professors-letter';
-import { Raichu } from './raichu';
-import { ShadowCircle } from './shadow-circle';
-import { Shauna } from './shauna';
-import { SuperPotion } from './super-potion';
-import { YveltalEx } from './yveltal-ex';
+import { DoubleColorlessEnergyArt, EvosodaArt, MuscleBandArt, PikachuArt, ProfessorsLetterArt, RaichuArt, ShadowCircleArt, ShaunaArt, SuperPotionArt, YveltalExArt } from './card-images';
 
 export const setXY: Card[] = [
-  new DoubleColorlessEnergy(),
-  new Evosoda(),
-  new MuscleBand(),
-  new Pikachu(),
-  new ProfessorsLetter(),
-  new Raichu(),
-  new ShadowCircle(),
-  new Shauna(),
-  new SuperPotion(),
-  new YveltalEx(),
+  new DoubleColorlessEnergyArt(),
+  new EvosodaArt(),
+  new MuscleBandArt(),
+  new PikachuArt(),
+  new ProfessorsLetterArt(),
+  new RaichuArt(),
+  new ShadowCircleArt(),
+  new ShaunaArt(),
+  new SuperPotionArt(),
+  new YveltalExArt(),
 
 ];

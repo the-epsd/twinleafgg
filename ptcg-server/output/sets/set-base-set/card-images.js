@@ -69,7 +69,7 @@ exports.CharmanderArt = CharmanderArt;
 class CharmeleonArt extends charmeleon_1.Charmeleon {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/charmander-base-set-bs-46.jpg?fit=600%2C825&ssl=1';
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/charmeleon-base-set-bs-24.jpg?fit=600%2C825&ssl=1';
     }
 }
 exports.CharmeleonArt = CharmeleonArt;

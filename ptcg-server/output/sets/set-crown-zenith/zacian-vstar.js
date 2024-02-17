@@ -34,7 +34,7 @@ class ZacianVSTAR extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '036';
+        this.setNumber = '96';
         this.name = 'Zacian VSTAR';
         this.fullName = 'Zacian VSTAR';
     }

@@ -30,6 +30,8 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
         this.set = 'VIV';
         this.name = 'Charmeleon';
         this.fullName = 'Charmeleon VIV';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '24';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

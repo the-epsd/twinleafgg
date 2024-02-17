@@ -44,7 +44,9 @@ class ScrambleSwitch extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'PLS';
         this.name = 'Scramble Switch';
-        this.fullName = 'Scramble Switch PS';
+        this.fullName = 'Scramble Switch PLS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '129';
         this.text = 'Switch your Active Pokemon with 1 of your Benched Pokemon. ' +
             'Then, you may move as many Energy attached to the old Active Pokemon ' +
             'to the new Active Pokemon as you like.';

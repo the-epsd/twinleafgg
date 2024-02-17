@@ -14,7 +14,9 @@ class SilentLab extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'PRC';
         this.name = 'Silent Lab';
-        this.fullName = 'Silent Lab PCL';
+        this.fullName = 'Silent Lab PRC';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '140';
         this.text = 'Each Basic Pokemon in play, in each player\'s hand, ' +
             'and in each player\'s discard pile has no Abilities.';
     }

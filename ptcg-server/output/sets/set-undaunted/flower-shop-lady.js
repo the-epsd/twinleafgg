@@ -58,7 +58,9 @@ class FlowerShopLady extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'UD';
         this.name = 'Flower Shop Lady';
-        this.fullName = 'Flower Shop Lady UND';
+        this.fullName = 'Flower Shop Lady UD';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '74';
         this.text = 'Search your discard pile for 3 Pokemon and 3 basic Energy cards. ' +
             'Show them to your opponent and shuffle them into your deck.';
     }

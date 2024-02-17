@@ -16,6 +16,7 @@ import { Mareep } from './mareep';
 import { Pumpkaboo } from './pumpkaboo';
 import { Raihan } from './raihan';
 import { RayquazaV } from './rayquaza-v';
+import { RayquazaVMAX } from './rayquaza-vmax';
 import { Regidrago } from './regidrago';
 import { Regieleki } from './regieleki';
 import { RescueCarrier } from './rescue-carrier';
@@ -74,11 +75,11 @@ export class GalarianMoltresArt extends GalarianMoltres {
 }
 
 export class GyaradosVArt extends GyaradosV {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_023_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_028_R_EN.png';
 }
 
 export class GyaradosVMAXArt extends GyaradosVMAX {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_024_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_029_R_EN.png';
 }
 
 export class LeafeonVArt extends LeafeonV {
@@ -103,6 +104,10 @@ export class RaihanArt extends Raihan {
 
 export class RayquazaVArt extends RayquazaV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_110_R_EN_LG.png';
+}
+
+export class RayquazaVMAXArt extends RayquazaVMAX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_111_R_EN_LG.png';
 }
 
 export class RegidragoArt extends Regidrago {

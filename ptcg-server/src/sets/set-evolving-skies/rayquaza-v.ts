@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, EnergyCard } from '../../game';
+import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
+import { StoreLike, State, ChooseCardsPrompt, SelectPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -58,50 +58,70 @@ export class RayquazaV extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
+  
+      const options: { message: GameMessage, action: () => void }[] = [
+        {
+          message: GameMessage.ALL_FIRE_ENERGIES,
+          action: () => {
 
-      let pokemons = 0;
-      let trainers = 0;
-      const blocked: number[] = [];
-      player.active.cards.forEach((c, index) => {
-        if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Basic Fire Energy') {
-          trainers += 1;
-        } else if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Basic Lightning Energy') {
-          pokemons += 1;
-        } else {
-          blocked.push(index);
+            store.prompt(state, new ChooseCardsPrompt(
+              player.id,
+              GameMessage.CHOOSE_CARD_TO_HAND,
+              player.active,
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fire Energy' },
+              { min: 1, max: 2, allowCancel: false }
+            ), selected => {
+              const cards = selected || [];
+              if (cards.length > 0) {
+    
+                let totalDiscarded = 0; 
+    
+                const discardEnergy = new DiscardCardsEffect(effect, cards);
+                discardEnergy.target = player.active;
+    
+                totalDiscarded += discardEnergy.cards.length;
+                effect.damage = (totalDiscarded * 80) + 20;
+                store.reduceEffect(state, discardEnergy);
+              }
+            });
+          }
+        },
+
+        { 
+          message: GameMessage.ALL_LIGHTNING_ENERGIES,
+          action: () => {
+
+            store.prompt(state, new ChooseCardsPrompt(
+              player.id,
+              GameMessage.CHOOSE_CARD_TO_HAND,
+              player.active,
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Lightning Energy' },
+              { min: 1, max: 2, allowCancel: false }
+            ), selected => {
+              const cards = selected || [];
+              if (cards.length > 0) {
+    
+                let totalDiscarded = 0; 
+    
+                const discardEnergy = new DiscardCardsEffect(effect, cards);
+                discardEnergy.target = player.active;
+    
+                totalDiscarded += discardEnergy.cards.length;
+                effect.damage = (totalDiscarded * 80) + 20;
+                store.reduceEffect(state, discardEnergy);
+              }
+            });
+          }
         }
-      });
-
-      // We will discard this card after prompt confirmation
-      // This will prevent unblocked supporter to appear in the discard pile
-      effect.preventDefault = true;
-
-      const maxPokemons = Math.min(pokemons, 2);
-      const maxTrainers = Math.min(trainers, 2);
-      const count = maxPokemons || maxTrainers;
-
-      return store.prompt(state, new ChooseCardsPrompt(
+      ];
+      return store.prompt(state, new SelectPrompt(
         player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        player.active, // Card source is target Pokemon
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC  },
-        { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTrainers }
-      ), selected => {
-        const cards = selected || [];
-
-        let totalDiscarded = 0;
-
-        cards.forEach(target => {
-
-          const discardEnergy = new DiscardCardsEffect(effect, cards);
-          discardEnergy.target = player.active;
-          totalDiscarded = discardEnergy.cards.length;
-          store.reduceEffect(state, discardEnergy);
-
-          effect.damage = (totalDiscarded * 80) + this.attacks[0].damage;
-
-        });
-        return state;
+        GameMessage.CHOOSE_OPTION,
+        options.map(opt => opt.message),
+        { allowCancel: false }
+      ), choice => {
+        const option = options[choice];
+        option.action();
       });
     }
     return state;

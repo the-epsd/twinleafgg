@@ -19,49 +19,49 @@ exports.DedenneArt = DedenneArt;
 class FightingStadiumArt extends fighting_stadium_1.FightingStadium {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_034_R_EN.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_090_R_EN.png';
     }
 }
 exports.FightingStadiumArt = FightingStadiumArt;
 class HawluchaArt extends hawlucha_1.Hawlucha {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_034_R_EN.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_063_R_EN.png';
     }
 }
 exports.HawluchaArt = HawluchaArt;
 class KorrinaArt extends korrina_1.Korrina {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_034_R_EN.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_095_R_EN.png';
     }
 }
 exports.KorrinaArt = KorrinaArt;
 class LucarioExArt extends lucario_ex_1.LucarioEx {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_034_R_EN.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_054_R_EN.png';
     }
 }
 exports.LucarioExArt = LucarioExArt;
 class SeismitoadExArt extends seismitoad_ex_1.SeismitoadEx {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_034_R_EN.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_020_R_EN.png';
     }
 }
 exports.SeismitoadExArt = SeismitoadExArt;
 class StrongEnergyArt extends strong_energy_1.StrongEnergy {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_034_R_EN.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_104_R_EN.png';
     }
 }
 exports.StrongEnergyArt = StrongEnergyArt;
 class TrainingCenterArt extends training_center_1.TrainingCenter {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_034_R_EN.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_102_R_EN.png';
     }
 }
 exports.TrainingCenterArt = TrainingCenterArt;

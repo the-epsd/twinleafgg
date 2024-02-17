@@ -118,6 +118,10 @@ export class Evosoda extends TrainerCard {
 
   public fullName: string = 'Evosoda XY';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '116';
+
   public text: string =
     'Search your deck for a card that evolves from 1 of your Pokemon and put ' +
     'it onto that Pokemon. (This counts as evolving that Pokemon). ' +

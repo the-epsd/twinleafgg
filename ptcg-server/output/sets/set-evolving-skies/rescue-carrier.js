@@ -15,7 +15,7 @@ function* playCard(next, store, state, effect) {
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     let cards = [];
     const blocked = [];
-    player.deck.cards.forEach((card, index) => {
+    player.discard.cards.forEach((card, index) => {
         if (card instanceof pokemon_card_1.PokemonCard && card.hp > 90) {
             blocked.push(index);
         }

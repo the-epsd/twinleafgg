@@ -72,6 +72,10 @@ export class Wurmple extends PokemonCard {
 
   public fullName: string = 'Wurmple ROS';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '3';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const generator = useFlock(() => generator.next(), store, state, effect);

@@ -37,7 +37,9 @@ class HypnotoxicLaser extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'PLS';
         this.name = 'Hypnotoxic Laser';
-        this.fullName = 'Hypnotoxic Laser PS';
+        this.fullName = 'Hypnotoxic Laser PLS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '123';
         this.text = 'Your opponent\'s Active Pokemon is now Poisoned. Flip a coin. ' +
             'If heads, your opponent\'s Active Pokemon is also Asleep.';
     }

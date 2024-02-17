@@ -17,7 +17,11 @@ export class ArchiesAceInTheHole extends TrainerCard {
 
   public name: string = 'Archie\'s Ace in the Hole';
 
-  public fullName: string = 'Archie\'s Ace in the Hole PCL';
+  public fullName: string = 'Archie\'s Ace in the Hole PRC';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '124';
 
   public text: string =
     'You can play this card only when it is the last card in your hand. ' +

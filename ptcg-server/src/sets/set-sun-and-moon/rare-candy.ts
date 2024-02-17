@@ -125,6 +125,10 @@ export class RareCandy extends TrainerCard {
 
   public fullName: string = 'Rare Candy SUM';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '129';
+
   public text: string =
     'Choose 1 of your Basic Pokemon in play. If you have a Stage 2 card in ' +
     'your hand that evolves from that Pokemon, put that card onto the Basic ' +

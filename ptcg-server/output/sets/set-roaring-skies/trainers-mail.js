@@ -42,6 +42,8 @@ class TrainersMail extends trainer_card_1.TrainerCard {
         this.set = 'ROS';
         this.name = 'Trainers\' Mail';
         this.fullName = 'Trainers\' Mail ROS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '92';
         this.text = 'Look at the top 4 cards of your deck. You may reveal a Trainer card ' +
             'you find there (except for Trainers\' Mail) and put it into your hand. ' +
             'Shuffle the other cards back into your deck.';

@@ -17,6 +17,8 @@ class ProfessorsLetter extends trainer_card_1.TrainerCard {
         this.set = 'XY';
         this.name = 'Professor\'s Letter';
         this.fullName = 'Professors Letter XY';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '123';
         this.text = 'Search your deck for up to 2 basic Energy cards, reveal them, ' +
             'and put them into your hand. Shuffle your deck afterward.';
     }

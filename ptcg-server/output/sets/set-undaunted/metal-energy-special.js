@@ -10,9 +10,11 @@ class MetalEnergySpecial extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.METAL];
         this.energyType = card_types_1.EnergyType.SPECIAL;
-        this.set = 'HS';
-        this.name = 'Metal Energy (Special)';
-        this.fullName = 'Metal Energy (Special) HGSS';
+        this.set = 'UD';
+        this.name = 'Metal Energy';
+        this.fullName = 'Metal Energy UD';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '80';
         this.text = 'Damage done by attacks to the Pokemon that Metal Energy is ' +
             'attached to is reduced by 10 (after applying Weakness and Resistance). ' +
             'Ignore this effect if the Pokemon that Metal Energy is attached to ' +

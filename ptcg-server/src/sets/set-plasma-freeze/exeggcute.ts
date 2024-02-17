@@ -44,6 +44,10 @@ export class Exeggcute extends PokemonCard {
 
   public fullName: string = 'Exeggcute PLF';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '4';
+
   public readonly PROPAGATION_MAREKER = 'PROPAGATION_MAREKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

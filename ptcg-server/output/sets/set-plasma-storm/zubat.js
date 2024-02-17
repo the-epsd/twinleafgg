@@ -30,6 +30,8 @@ class Zubat extends pokemon_card_1.PokemonCard {
         this.set = 'PLS';
         this.name = 'Zubat';
         this.fullName = 'Zubat PLS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '53';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.cards.includes(this)) {

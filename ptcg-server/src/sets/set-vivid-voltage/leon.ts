@@ -17,6 +17,10 @@ export class Leon extends TrainerCard {
 
   public fullName: string = 'Leon VIV';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '154';
+
   public text: string =
     'During this turn, your Pokemon\'s attacks do 30 more damage to your ' +
     'opponent\'s Active Pokemon (before applying Weakness and Resistance).';

@@ -14,6 +14,8 @@ class RockGuard extends trainer_card_1.TrainerCard {
         this.set = 'PLF';
         this.name = 'Rock Guard';
         this.fullName = 'Rock Guard PLF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '108';
         this.text = 'If the Pokemon this card is attached to is your Active Pokemon and is ' +
             'damaged by an opponent\'s attack (even if that Pokemon is Knocked Out), ' +
             'put 6 damage counters on the Attacking Pokemon.';

@@ -74,5 +74,6 @@ export declare enum Format {
     STANDARD = 1,
     EXPANDED = 2,
     UNLIMITED = 3,
-    RETRO = 4
+    RETRO = 4,
+    GLC = 5
 }

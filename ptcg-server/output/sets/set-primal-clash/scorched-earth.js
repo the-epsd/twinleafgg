@@ -15,7 +15,9 @@ class ScorchedEarth extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'PRC';
         this.name = 'Scorched Earth';
-        this.fullName = 'Scorched Earth PCL';
+        this.fullName = 'Scorched Earth PRC';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '138';
         this.text = 'Once during each player\'s turn, that player may discard ' +
             'a R or F Energy card from his or her hand. If that player does so, ' +
             'he or she draws 2 cards.';

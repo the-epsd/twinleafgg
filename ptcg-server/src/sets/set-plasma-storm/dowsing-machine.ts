@@ -90,6 +90,10 @@ export class DowsingMachine extends TrainerCard {
 
   public fullName: string = 'Dowsing Machine PLS';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '128';
+
   public text: string =
     'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' +
     'you can\'t play this card.) Put a Trainer card from your discard ' +

@@ -18,7 +18,11 @@ export class RoughSeas extends TrainerCard {
 
   public name: string = 'Rough Seas';
 
-  public fullName: string = 'Rough Seas PCL';
+  public fullName: string = 'Rough Seas PRC';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '137';
 
   public text: string =
     'Once during each player\'s turn, that player may heal 30 damage ' +

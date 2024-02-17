@@ -14,7 +14,9 @@ class RoughSeas extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'PRC';
         this.name = 'Rough Seas';
-        this.fullName = 'Rough Seas PCL';
+        this.fullName = 'Rough Seas PRC';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '137';
         this.text = 'Once during each player\'s turn, that player may heal 30 damage ' +
             'from each of his or her W Pokemon and L Pokemon.';
     }

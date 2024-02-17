@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VengefulPunchArt = exports.TownStoreArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = void 0;
+exports.VengefulPunchArt = exports.TownStoreArt = exports.ScizorArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = void 0;
 const bellibolt_1 = require("./bellibolt");
 const charizard_ex_1 = require("./charizard-ex");
 const charmander_1 = require("./charmander");
@@ -16,6 +16,7 @@ const pidgeotto_1 = require("./pidgeotto");
 const pidgey_1 = require("./pidgey");
 const pokemon_league_headquarters_1 = require("./pokemon-league-headquarters");
 const poppy_1 = require("./poppy");
+const scizor_1 = require("./scizor");
 const town_store_1 = require("./town-store");
 const vengeful_punch_1 = require("./vengeful-punch");
 class BelliboltArt extends bellibolt_1.Bellibolt {
@@ -123,6 +124,13 @@ class PoppyArt extends poppy_1.Poppy {
     }
 }
 exports.PoppyArt = PoppyArt;
+class ScizorArt extends scizor_1.Scizor {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_141_R_EN.png';
+    }
+}
+exports.ScizorArt = ScizorArt;
 class TownStoreArt extends town_store_1.TownStore {
     constructor() {
         super(...arguments);

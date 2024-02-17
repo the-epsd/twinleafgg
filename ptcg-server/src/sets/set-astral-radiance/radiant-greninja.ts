@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, Card, State, GameError, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
@@ -13,7 +13,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class RadiantGreninja extends PokemonCard {
 
-  // public tags = [ CardTag.RADIANT ];
+  public tags = [ CardTag.RADIANT ];
 
   public regulationMark = 'F';
 
@@ -39,8 +39,7 @@ export class RadiantGreninja extends PokemonCard {
   public attacks = [
     {
       name: 'Moonlight Shuriken',
-      // cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
-      cost: [ ],
+      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
       damage: 0,
       text: 'Discard 2 energy from this Pokémon. This attack does ' +
       '90 damage to 2 of your opponent\'s Pokémon. (Don\'t apply ' +

@@ -13,6 +13,8 @@ class Bicycle extends trainer_card_1.TrainerCard {
         this.set = 'PLS';
         this.name = 'Bicycle';
         this.fullName = 'Bicycle PLS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '117';
         this.text = 'Draw cards until you have 4 cards in your hand.';
     }
     reduceEffect(store, state, effect) {

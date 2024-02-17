@@ -17,7 +17,11 @@ export class MaxiesHiddenBallTrick extends TrainerCard {
 
   public name: string = 'Maxie\'s Hidden Ball Trick';
 
-  public fullName: string = 'Maxie\'s Hidden Ball Trick PCL';
+  public fullName: string = 'Maxie\'s Hidden Ball Trick PRC';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '133';
 
   public text: string =
     'You can play this card only when it is the last card in your hand. ' +

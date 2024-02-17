@@ -47,7 +47,11 @@ export class Rotom extends PokemonCard {
 
   public name: string = 'Rotom';
 
-  public fullName: string = 'Rotom UND';
+  public fullName: string = 'Rotom UD';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '20';
 
   public readonly MISCHIEVOUS_TRICK_MAREKER = 'MISCHIEVOUS_TRICK_MAREKER';
 

@@ -11,6 +11,8 @@ class FloatStone extends trainer_card_1.TrainerCard {
         this.set = 'PLF';
         this.name = 'Float Stone';
         this.fullName = 'Float Stone PLF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '99';
         this.text = 'The Pokemon this card is attached to has no Retreat Cost.';
     }
     reduceEffect(store, state, effect) {

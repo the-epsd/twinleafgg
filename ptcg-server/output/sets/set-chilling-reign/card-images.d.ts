@@ -1,16 +1,21 @@
+import { Agatha } from './agatha';
 import { Avery } from './avery';
 import { Banette } from './banette';
 import { Beedrill } from './beedril';
 import { BlazikenV } from './blaziken-v';
 import { BlazikenVMAX } from './blaziken-vmax';
 import { BlisseyV } from './blissey-v';
+import { Caitlin } from './caitlin';
 import { Drizzile } from './drizzile';
+import { DynaTreeHill } from './dyna-tree-hill';
 import { EchoingHorn } from './echoing-horn';
 import { ExpeditionUniform } from './expedition-uniform';
+import { Flannery } from './flannery';
 import { FogCrystal } from './fog-crystal';
 import { Froslass } from './froslass';
 import { GalarianArticunoV } from './galarian-articuno-v';
 import { GalarianMoltresV } from './galarian-moltres-v';
+import { GalarianZapdosV } from './galarian-zapdos-v';
 import { Gallade } from './gallade';
 import { Gardevoir } from './gardevoir';
 import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
@@ -31,6 +36,9 @@ import { Sneasel } from './sneasel';
 import { Snorunt } from './snorunt';
 import { Sobble } from './sobble';
 import { SpiralEnergy } from './spiral-energy';
+export declare class AgathaArt extends Agatha {
+    cardImage: string;
+}
 export declare class AveryArt extends Avery {
     cardImage: string;
 }
@@ -49,13 +57,22 @@ export declare class BlazikenVMAXArt extends BlazikenVMAX {
 export declare class BlisseyVArt extends BlisseyV {
     cardImage: string;
 }
+export declare class CaitlinArt extends Caitlin {
+    cardImage: string;
+}
 export declare class DrizzileArt extends Drizzile {
+    cardImage: string;
+}
+export declare class DynaTreeHillArt extends DynaTreeHill {
     cardImage: string;
 }
 export declare class EchoingHornArt extends EchoingHorn {
     cardImage: string;
 }
 export declare class ExpeditionUniformArt extends ExpeditionUniform {
+    cardImage: string;
+}
+export declare class FlanneryArt extends Flannery {
     cardImage: string;
 }
 export declare class FogCrystalArt extends FogCrystal {
@@ -68,6 +85,9 @@ export declare class GalarianArticunoVArt extends GalarianArticunoV {
     cardImage: string;
 }
 export declare class GalarianMoltresVArt extends GalarianMoltresV {
+    cardImage: string;
+}
+export declare class GalarianZapdosVArt extends GalarianZapdosV {
     cardImage: string;
 }
 export declare class GardevoirArt extends Gardevoir {

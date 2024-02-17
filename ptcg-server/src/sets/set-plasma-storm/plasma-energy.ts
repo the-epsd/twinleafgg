@@ -13,6 +13,10 @@ export class PlasmaEnergy extends EnergyCard {
 
   public fullName = 'Plasma Energy PLS';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '127';
+
   public text = 'This card provides C Energy.';
 
 }

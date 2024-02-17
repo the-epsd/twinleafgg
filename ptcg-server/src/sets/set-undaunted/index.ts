@@ -1,17 +1,14 @@
 import { Card } from '../../game/store/card/card';
-import { Rotom } from '../set-op9/rotom';
-import { FlowerShopLady } from './flower-shop-lady';
-import { Gloom } from './gloom';
-import { Oddish } from './oddish';
-import { Smeargle } from './smeargle';
-import { Vileplume } from './vileplume';
+import { DarknessEnergySpecialArt, FlowerShopLadyArt, GloomArt, MetalEnergySpecialArt, OddishArt, RotomArt, SmeargleArt, VileplumeArt } from './card-images';
 
 export const setUndaunted: Card[] = [
-  new FlowerShopLady(),
-  new Gloom(),
-  new Oddish(),
-  new Rotom(),
-  new Smeargle(),
-  new Vileplume(),
+  new DarknessEnergySpecialArt(),
+  new FlowerShopLadyArt(),
+  new GloomArt(),
+  new MetalEnergySpecialArt(),
+  new OddishArt(),
+  new RotomArt(),
+  new SmeargleArt(),
+  new VileplumeArt(),
 
 ];

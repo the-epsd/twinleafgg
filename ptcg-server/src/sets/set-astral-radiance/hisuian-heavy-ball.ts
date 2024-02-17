@@ -1,4 +1,4 @@
-import { TrainerCard, TrainerType, StoreLike, State, SuperType, ChoosePrizePrompt, GameMessage, Stage, Card } from '../../game';
+import { TrainerCard, TrainerType, StoreLike, State, SuperType, ChoosePrizePrompt, GameMessage, Stage, Card, CardTarget } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
@@ -32,7 +32,15 @@ export class HisuianHeavyBall extends TrainerCard {
       // Make prizes no more secret, before displaying prompt
       prizes.forEach(p => { p.isSecret = false; });
 
-      const prizesWithPokemon = player.prizes.filter(p => p.cards[0].superType === SuperType.POKEMON && Stage.BASIC);
+      const blocked: CardTarget[] = [];
+      const prizesWithPokemon = player.prizes.filter(p => {
+        if (p.cards[0].superType === SuperType.POKEMON && Stage.BASIC) {
+          return true;
+        } else {
+          blocked.push();
+        }
+      });
+
 
       if (prizesWithPokemon.length === 0) {
         return state;

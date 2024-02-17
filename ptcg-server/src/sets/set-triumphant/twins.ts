@@ -52,7 +52,11 @@ export class Twins extends TrainerCard {
 
   public name: string = 'Twins';
 
-  public fullName: string = 'Twins TRM';
+  public fullName: string = 'Twins TM';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '89';
 
   public text: string =
     'You may use this card only if you have more Prize cards left than your ' +

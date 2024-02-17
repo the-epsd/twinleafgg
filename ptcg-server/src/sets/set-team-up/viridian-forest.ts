@@ -75,6 +75,10 @@ export class ViridianForest extends TrainerCard {
   public name: string = 'Viridian Forest';
 
   public fullName: string = 'Viridian Forest TEU';
+  
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '156';
 
   public text: string =
     'Once during each player\'s turn, that player may discard a card from ' +

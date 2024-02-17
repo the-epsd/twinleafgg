@@ -42,6 +42,10 @@ export class Pikachu extends PokemonCard {
 
   public fullName: string = 'Pikachu XY';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '42';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;

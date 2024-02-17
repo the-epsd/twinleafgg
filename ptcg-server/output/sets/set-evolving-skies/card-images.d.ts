@@ -16,6 +16,7 @@ import { Mareep } from './mareep';
 import { Pumpkaboo } from './pumpkaboo';
 import { Raihan } from './raihan';
 import { RayquazaV } from './rayquaza-v';
+import { RayquazaVMAX } from './rayquaza-vmax';
 import { Regidrago } from './regidrago';
 import { Regieleki } from './regieleki';
 import { RescueCarrier } from './rescue-carrier';
@@ -84,6 +85,9 @@ export declare class RaihanArt extends Raihan {
     cardImage: string;
 }
 export declare class RayquazaVArt extends RayquazaV {
+    cardImage: string;
+}
+export declare class RayquazaVMAXArt extends RayquazaVMAX {
     cardImage: string;
 }
 export declare class RegidragoArt extends Regidrago {

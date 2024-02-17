@@ -29,6 +29,8 @@ export declare class Rotom extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     readonly MISCHIEVOUS_TRICK_MAREKER = "MISCHIEVOUS_TRICK_MAREKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

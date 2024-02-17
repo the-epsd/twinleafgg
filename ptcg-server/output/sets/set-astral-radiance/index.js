@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setAstralRadiance = void 0;
 const card_images_1 = require("./card-images");
-const spicy_seasoned_curry_1 = require("./spicy-seasoned-curry");
 exports.setAstralRadiance = [
     new card_images_1.AdamanArt(),
     new card_images_1.CancelingCologneArt(),
@@ -10,6 +9,7 @@ exports.setAstralRadiance = [
     new card_images_1.DarkraiVArt(),
     new card_images_1.DarkraiVSTARArt(),
     new card_images_1.DiancieArt(),
+    new card_images_1.EnergyLotoArt(),
     new card_images_1.FeatherBallArt(),
     new card_images_1.GalladeArt(),
     new card_images_1.GapejawBogArt(),
@@ -41,7 +41,7 @@ exports.setAstralRadiance = [
     new card_images_1.RegirockArt(),
     new card_images_1.RegisteelArt(),
     new card_images_1.RoxanneArt(),
-    new spicy_seasoned_curry_1.SpicySeasonedCurry(),
+    new card_images_1.SpicySeasonedCurryArt(),
     new card_images_1.StarmieVArt(),
     new card_images_1.SupereffectiveGlassesArt(),
     new card_images_1.SwitchCartArt(),

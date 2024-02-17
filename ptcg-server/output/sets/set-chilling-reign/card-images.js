@@ -1,19 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DrizzileArt = exports.BlisseyVArt = exports.BlazikenVMAXArt = exports.BlazikenVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = void 0;
+exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianZapdosVArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.FlanneryArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DynaTreeHillArt = exports.DrizzileArt = exports.CaitlinArt = exports.BlisseyVArt = exports.BlazikenVMAXArt = exports.BlazikenVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = exports.AgathaArt = void 0;
+const agatha_1 = require("./agatha");
 const avery_1 = require("./avery");
 const banette_1 = require("./banette");
 const beedril_1 = require("./beedril");
 const blaziken_v_1 = require("./blaziken-v");
 const blaziken_vmax_1 = require("./blaziken-vmax");
 const blissey_v_1 = require("./blissey-v");
+const caitlin_1 = require("./caitlin");
 const drizzile_1 = require("./drizzile");
+const dyna_tree_hill_1 = require("./dyna-tree-hill");
 const echoing_horn_1 = require("./echoing-horn");
 const expedition_uniform_1 = require("./expedition-uniform");
+const flannery_1 = require("./flannery");
 const fog_crystal_1 = require("./fog-crystal");
 const froslass_1 = require("./froslass");
 const galarian_articuno_v_1 = require("./galarian-articuno-v");
 const galarian_moltres_v_1 = require("./galarian-moltres-v");
+const galarian_zapdos_v_1 = require("./galarian-zapdos-v");
 const gallade_1 = require("./gallade");
 const gardevoir_1 = require("./gardevoir");
 const ice_rider_calyrex_v_1 = require("./ice-rider-calyrex-v");
@@ -35,6 +40,13 @@ const sneasel_1 = require("./sneasel");
 const snorunt_1 = require("./snorunt");
 const sobble_1 = require("./sobble");
 const spiral_energy_1 = require("./spiral-energy");
+class AgathaArt extends agatha_1.Agatha {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_129_R_EN.png';
+    }
+}
+exports.AgathaArt = AgathaArt;
 class AveryArt extends avery_1.Avery {
     constructor() {
         super(...arguments);
@@ -77,6 +89,13 @@ class BlisseyVArt extends blissey_v_1.BlisseyV {
     }
 }
 exports.BlisseyVArt = BlisseyVArt;
+class CaitlinArt extends caitlin_1.Caitlin {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_132_R_EN_LG.png';
+    }
+}
+exports.CaitlinArt = CaitlinArt;
 class DrizzileArt extends drizzile_1.Drizzile {
     constructor() {
         super(...arguments);
@@ -84,6 +103,13 @@ class DrizzileArt extends drizzile_1.Drizzile {
     }
 }
 exports.DrizzileArt = DrizzileArt;
+class DynaTreeHillArt extends dyna_tree_hill_1.DynaTreeHill {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_042_R_EN_LG.png';
+    }
+}
+exports.DynaTreeHillArt = DynaTreeHillArt;
 class EchoingHornArt extends echoing_horn_1.EchoingHorn {
     constructor() {
         super(...arguments);
@@ -98,6 +124,13 @@ class ExpeditionUniformArt extends expedition_uniform_1.ExpeditionUniform {
     }
 }
 exports.ExpeditionUniformArt = ExpeditionUniformArt;
+class FlanneryArt extends flannery_1.Flannery {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_139_R_EN.png';
+    }
+}
+exports.FlanneryArt = FlanneryArt;
 class FogCrystalArt extends fog_crystal_1.FogCrystal {
     constructor() {
         super(...arguments);
@@ -126,6 +159,13 @@ class GalarianMoltresVArt extends galarian_moltres_v_1.GalarianMoltresV {
     }
 }
 exports.GalarianMoltresVArt = GalarianMoltresVArt;
+class GalarianZapdosVArt extends galarian_zapdos_v_1.GalarianZapdosV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_080_R_EN_LG.png';
+    }
+}
+exports.GalarianZapdosVArt = GalarianZapdosVArt;
 class GardevoirArt extends gardevoir_1.Gardevoir {
     constructor() {
         super(...arguments);

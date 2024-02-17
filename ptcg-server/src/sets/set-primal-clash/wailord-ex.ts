@@ -41,7 +41,11 @@ export class WailordEx extends PokemonCard {
 
   public name: string = 'Wailord EX';
 
-  public fullName: string = 'Wailord EX PCL';
+  public fullName: string = 'Wailord EX PRC';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '38';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

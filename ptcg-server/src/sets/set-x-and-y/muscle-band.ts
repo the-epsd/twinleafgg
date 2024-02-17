@@ -16,6 +16,10 @@ export class MuscleBand extends TrainerCard {
 
   public fullName: string = 'Muscle Band XY';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '121';
+
   public text: string =
     'The attacks of the Pokemon this card is attached to do 20 more ' +
     'damage to our opponent\'s Active Pokemon (before aplying Weakness ' +

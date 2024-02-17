@@ -1,35 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPlasmaStorm = void 0;
-const bicycle_1 = require("./bicycle");
-const colress_1 = require("./colress");
-const donphan_1 = require("./donphan");
-const dowsing_machine_1 = require("./dowsing-machine");
-const escape_rope_1 = require("./escape-rope");
-const gallade_1 = require("./gallade");
-const hypnotoxic_laser_1 = require("./hypnotoxic-laser");
-const kirlia_1 = require("./kirlia");
-const lugia_ex_1 = require("./lugia-ex");
-const phanpy_1 = require("./phanpy");
-const plasma_energy_1 = require("./plasma-energy");
-const ralts_1 = require("./ralts");
-const scramble_switch_1 = require("./scramble-switch");
-const virbank_city_gym_1 = require("./virbank-city-gym");
-const zubat_1 = require("./zubat");
+const card_images_1 = require("./card-images");
 exports.setPlasmaStorm = [
-    new bicycle_1.Bicycle(),
-    new colress_1.Colress(),
-    new donphan_1.Donphan(),
-    new dowsing_machine_1.DowsingMachine(),
-    new escape_rope_1.EscapeRope(),
-    new gallade_1.Gallade(),
-    new hypnotoxic_laser_1.HypnotoxicLaser(),
-    new kirlia_1.Kirlia(),
-    new lugia_ex_1.LugiaEX(),
-    new phanpy_1.Phanpy(),
-    new plasma_energy_1.PlasmaEnergy(),
-    new ralts_1.Ralts(),
-    new scramble_switch_1.ScrambleSwitch(),
-    new virbank_city_gym_1.VirbankCityGym(),
-    new zubat_1.Zubat(),
+    new card_images_1.BicycleArt(),
+    new card_images_1.ColressArt(),
+    new card_images_1.DonphanArt(),
+    new card_images_1.DowsingMachineArt(),
+    new card_images_1.EscapeRopeArt(),
+    new card_images_1.GalladeArt(),
+    new card_images_1.HypnotoxicLaserArt(),
+    new card_images_1.KirliaArt(),
+    new card_images_1.LugiaExArt(),
+    new card_images_1.PhanpyArt(),
+    new card_images_1.PlasmaEnergyArt(),
+    new card_images_1.RaltsArt(),
+    new card_images_1.ScrambleSwitchArt(),
+    new card_images_1.VirbankCityGymArt(),
+    new card_images_1.ZubatArt(),
 ];

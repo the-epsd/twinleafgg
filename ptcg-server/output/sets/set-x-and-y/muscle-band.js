@@ -12,6 +12,8 @@ class MuscleBand extends trainer_card_1.TrainerCard {
         this.set = 'XY';
         this.name = 'Muscle Band';
         this.fullName = 'Muscle Band XY';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '121';
         this.text = 'The attacks of the Pokemon this card is attached to do 20 more ' +
             'damage to our opponent\'s Active Pokemon (before aplying Weakness ' +
             'and Resistance).';

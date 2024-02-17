@@ -63,7 +63,7 @@ exports.RegigigasVSTARArt = RegigigasVSTARArt;
 class ZacianVSTARArt extends zacian_vstar_1.ZacianVSTAR {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_036_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_096_R_EN_LG.png';
     }
 }
 exports.ZacianVSTARArt = ZacianVSTARArt;

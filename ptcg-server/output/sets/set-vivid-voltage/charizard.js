@@ -35,6 +35,8 @@ class Charizard extends pokemon_card_1.PokemonCard {
         this.set = 'VIV';
         this.name = 'Charizard';
         this.fullName = 'Charizard VIV';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '25';
         this.BATTLE_SENSE_MARKER = 'BATTLE_SENSE';
     }
     reduceEffect(store, state, effect) {

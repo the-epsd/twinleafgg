@@ -57,6 +57,10 @@ export class Seeker extends TrainerCard {
 
   public fullName: string = 'Seeker TRM';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '88';
+
   public text: string =
     'Each player returns 1 of his or her Benched Pokemon and all cards ' +
     'attached to it to his or her hand. (You return your Pokemon first.)';

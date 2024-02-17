@@ -41,6 +41,10 @@ export class Zubat extends PokemonCard {
 
   public fullName: string = 'Zubat PLS';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '53';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.cards.includes(this)) {

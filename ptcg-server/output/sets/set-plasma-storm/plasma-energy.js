@@ -11,6 +11,8 @@ class PlasmaEnergy extends energy_card_1.EnergyCard {
         this.set = 'PLS';
         this.name = 'Plasma Energy';
         this.fullName = 'Plasma Energy PLS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '127';
         this.text = 'This card provides C Energy.';
     }
 }

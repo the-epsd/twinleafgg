@@ -11,9 +11,11 @@ class DarknessEnergySpecial extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.DARK];
         this.energyType = card_types_1.EnergyType.SPECIAL;
-        this.set = 'HS';
-        this.name = 'Darkness Energy (Special)';
-        this.fullName = 'Darkness Energy (Special) HGSS';
+        this.set = 'UD';
+        this.name = 'Darkness Energy';
+        this.fullName = 'Darkness Energy UD';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '79';
         this.text = 'If the Pokemon Darkness Energy is attached to attacks, ' +
             'the attack does 10 more damage to the Active Pokemon (before applying ' +
             'Weakness and Resistance). Ignore this effect if the Pokemon that ' +

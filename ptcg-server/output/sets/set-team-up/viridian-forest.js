@@ -46,6 +46,8 @@ class ViridianForest extends trainer_card_1.TrainerCard {
         this.set = 'TEU';
         this.name = 'Viridian Forest';
         this.fullName = 'Viridian Forest TEU';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '156';
         this.text = 'Once during each player\'s turn, that player may discard a card from ' +
             'their hand. If they do, that player searches their deck for a basic ' +
             'Energy card, reveals it, and puts it into their hand. Then, that ' +

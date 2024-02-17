@@ -18,6 +18,10 @@ export class RainbowEnergy extends EnergyCard {
 
   public fullName = 'Rainbow Energy SUM';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '137';
+
   public text =
     'This card provides C Energy. While in play, this card provides every ' +
     'type of Energy but provides only 1 Energy at a time. When you attach ' +

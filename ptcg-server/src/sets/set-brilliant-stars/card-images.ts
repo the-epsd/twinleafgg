@@ -1,3 +1,4 @@
+import { AcerolasPremonition } from './acerolas-premonition';
 import { AggronV } from './aggron-v';
 import { AggronVMAX } from './aggron-vmax';
 import { ArceusV } from './arceus-v';
@@ -23,8 +24,13 @@ import { PotHelmet } from './pot-helmet';
 import { Purrloin } from './purrloin';
 import { RaichuV } from './raichu-v';
 import { RaikouV } from './raikou-v';
+import { RoseannesBackup } from './roseannes-backup';
 import { ShayminV } from './shaymin-v';
 import { ShayminVSTAR } from './shaymin-vstar';
+
+export class AcerolasPremonitionArt extends AcerolasPremonition {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_129_R_EN_LG.png';
+}
 
 export class AggronVArt extends AggronV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_096_R_EN_LG.png';
@@ -124,6 +130,10 @@ export class RaichuVArt extends RaichuV {
 
 export class RaikouVArt extends RaikouV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_048_R_EN_LG.png';
+}
+
+export class RoseannesBackupArt extends RoseannesBackup {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_148_R_EN_LG.png';
 }
 
 export class ShayminVArt extends ShayminV {

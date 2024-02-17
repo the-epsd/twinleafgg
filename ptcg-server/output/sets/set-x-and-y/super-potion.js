@@ -56,6 +56,8 @@ class SuperPotion extends trainer_card_1.TrainerCard {
         this.set = 'XY';
         this.name = 'Super Potion';
         this.fullName = 'Super Potion XY';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '128';
         this.text = 'Heal 60 damage from 1 of your Pokemon. If you do, discard an Energy ' +
             'attached to that Pokemon.';
     }

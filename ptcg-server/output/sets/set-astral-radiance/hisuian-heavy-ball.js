@@ -23,7 +23,15 @@ class HisuianHeavyBall extends game_1.TrainerCard {
             prizes.forEach(p => { p.cards.forEach(c => cards.push(c)); });
             // Make prizes no more secret, before displaying prompt
             prizes.forEach(p => { p.isSecret = false; });
-            const prizesWithPokemon = player.prizes.filter(p => p.cards[0].superType === game_1.SuperType.POKEMON && game_1.Stage.BASIC);
+            const blocked = [];
+            const prizesWithPokemon = player.prizes.filter(p => {
+                if (p.cards[0].superType === game_1.SuperType.POKEMON && game_1.Stage.BASIC) {
+                    return true;
+                }
+                else {
+                    blocked.push();
+                }
+            });
             if (prizesWithPokemon.length === 0) {
                 return state;
             }

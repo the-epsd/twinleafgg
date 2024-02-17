@@ -92,6 +92,8 @@ class RareCandy extends trainer_card_1.TrainerCard {
         this.set = 'SUM';
         this.name = 'Rare Candy';
         this.fullName = 'Rare Candy SUM';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '129';
         this.text = 'Choose 1 of your Basic Pokemon in play. If you have a Stage 2 card in ' +
             'your hand that evolves from that Pokemon, put that card onto the Basic ' +
             'Pokemon to evolve it. You can\'t use this card during your first turn ' +

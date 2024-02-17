@@ -35,6 +35,7 @@ export * from './set-ancient-origins';
 export * from './set-breakthrough';
 export * from './set-fates-collide';
 export * from './set-sun-and-moon';
+export * from './set-guardians-rising';
 export * from './set-shining-legends';
 export * from './set-ultra-prism';
 export * from './set-celestial-storm';

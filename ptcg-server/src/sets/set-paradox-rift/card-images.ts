@@ -57,7 +57,7 @@ export class CounterCatcherArt extends CounterCatcher {
 }
 
 export class DefianceVestArt extends DefianceVest {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_074_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_162_R_EN.png';
 }
 
 export class DeoxysArt extends Deoxys {

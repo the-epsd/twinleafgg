@@ -15,6 +15,8 @@ class SkyField extends trainer_card_1.TrainerCard {
         this.set = 'ROS';
         this.name = 'Sky Field';
         this.fullName = 'Sky Field ROS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '89';
         this.text = 'Each player can have 8 Pokemon on his or her Bench. (When this card ' +
             'leaves play, each player discards Benched Pokemon until he or she has ' +
             '5 Pokemon on the Bench. The owner of this card discard first.)';

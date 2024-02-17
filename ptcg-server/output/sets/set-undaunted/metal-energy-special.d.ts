@@ -9,6 +9,8 @@ export declare class MetalEnergySpecial extends EnergyCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

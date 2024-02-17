@@ -33,6 +33,8 @@ class ShayminEx extends pokemon_card_1.PokemonCard {
         this.set = 'ROS';
         this.name = 'Shaymin EX';
         this.fullName = 'Shaymin EX ROS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '77';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

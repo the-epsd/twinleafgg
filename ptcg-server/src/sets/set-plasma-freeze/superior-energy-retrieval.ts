@@ -91,6 +91,10 @@ export class SuperiorEnergyRetrieval extends TrainerCard {
 
   public fullName: string = 'Superior Energy Retrieval PLF';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '103';
+
   public text: string =
     'You can use this card only if you discard 2 other cards from ' +
   'your hand.'+

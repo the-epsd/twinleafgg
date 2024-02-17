@@ -15,6 +15,8 @@ class VirbankCityGym extends trainer_card_1.TrainerCard {
         this.set = 'PLS';
         this.name = 'Virbank City Gym';
         this.fullName = 'Virbank City Gym PLS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '126';
         this.text = 'Put 2 more damage counters on Poisoned Pokemon (both yours and your ' +
             'opponent\'s) between turns.';
     }

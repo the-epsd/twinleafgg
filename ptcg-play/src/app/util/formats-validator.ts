@@ -1,4 +1,4 @@
- import { Card, CardTag, Format, SuperType } from "ptcg-server"
+ import { Card, CardTag, EnergyType, Format, SuperType } from "ptcg-server"
 
 export class FormatValidator {
   
@@ -19,7 +19,7 @@ export class FormatValidator {
   
   static isValid(card: Card, format: Format): boolean {    
     
-    if (card.superType === SuperType.ENERGY) {
+    if (card.superType === SuperType.ENERGY && EnergyType.BASIC) {
       return true;
     }
     

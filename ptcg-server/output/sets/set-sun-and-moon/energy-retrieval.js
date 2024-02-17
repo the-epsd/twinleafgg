@@ -40,6 +40,8 @@ class EnergyRetrieval extends trainer_card_1.TrainerCard {
         this.set = 'SUM';
         this.name = 'Energy Retrieval';
         this.fullName = 'Energy Retrieval SUM';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '116';
         this.text = 'Put 2 basic Energy cards from your discard pile into your hand.';
     }
     reduceEffect(store, state, effect) {

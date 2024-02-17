@@ -151,14 +151,14 @@ export class PennySIR extends Penny {
 
 export class ProfessorsResearchFA1 extends ProfessorsResearch {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_240_R_EN_LG.png';
-  public setNumber = '240';
-  public fullName = 'Professor\'s Research SVI';
+  public setNumber = '';
+  public fullName = 'Professor\'s Research SVI 242';
 }
 
 export class ProfessorsResearchFA2 extends ProfessorsResearch {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_241_R_EN_LG.png';
-  public setNumber = '241';
-  public fullName = 'Professor\'s Research SVI';
+  public setNumber = '';
+  public fullName = 'Professor\'s Research SVI 241';
 }
 
 export class RaltsIR extends Ralts {

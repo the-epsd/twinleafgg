@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { State } from '../../game/store/state/state';
@@ -12,19 +12,15 @@ export class Scovillain extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public regulationMark = 'E';
+  public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_V ];
+  public cardType: CardType = CardType.GRASS;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public hp: number = 110;
 
-  public hp: number = 220;
+  public weakness = [{ type: CardType.FIRE }];
 
-  public weakness = [{ type: CardType.DARK }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [ CardType.COLORLESS ];
 
   public attacks = [
     {

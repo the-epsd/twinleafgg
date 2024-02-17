@@ -17,6 +17,10 @@ export class Bicycle extends TrainerCard {
 
   public fullName: string = 'Bicycle PLS';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '117';
+
   public text: string =
     'Draw cards until you have 4 cards in your hand.';
 

@@ -38,8 +38,14 @@ class Luxray extends pokemon_card_1.PokemonCard {
             && effect.power.name !== 'Swelling Flash') {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
-                this.stage = card_types_1.Stage.BASIC;
+            if (player.getPrizeLeft() < opponent.getPrizeLeft()) {
+                const canPlayLuxray = player.hand.cards.some(c => {
+                    return c instanceof pokemon_card_1.PokemonCard && c.cards.filter(this);
+                });
+                if (canPlayLuxray) {
+                    this.stage = card_types_1.Stage.BASIC;
+                }
+                return state;
             }
             return state;
         }

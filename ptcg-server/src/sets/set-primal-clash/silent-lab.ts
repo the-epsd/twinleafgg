@@ -17,7 +17,11 @@ export class SilentLab extends TrainerCard {
 
   public name: string = 'Silent Lab';
 
-  public fullName: string = 'Silent Lab PCL';
+  public fullName: string = 'Silent Lab PRC';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '140';
 
   public text: string =
     'Each Basic Pokemon in play, in each player\'s hand, ' +

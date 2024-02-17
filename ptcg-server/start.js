@@ -21,64 +21,64 @@ cardManager.defineSet(sets.setBaseSetEnergy);
 
 // cardManager.defineSet(sets.setDiamondAndPearl);
 // cardManager.defineSet(sets.setOP9);
-// cardManager.defineSet(sets.setGreatEncounters);
-// cardManager.defineSet(sets.setPlatinum);
+cardManager.defineSet(sets.setGreatEncounters);
+cardManager.defineSet(sets.setPlatinum);
 
 
-// cardManager.defineSet(sets.setHeartGoldAndSoulSilver);
-// cardManager.defineSet(sets.setHeartGoldAndSoulSilverPromos);
-// cardManager.defineSet(sets.setTriumphant);
-// cardManager.defineSet(sets.setUndaunted);
-// cardManager.defineSet(sets.setUnleashed);
+cardManager.defineSet(sets.setHeartGoldAndSoulSilver);
+cardManager.defineSet(sets.setHeartGoldAndSoulSilverPromos);
+cardManager.defineSet(sets.setTriumphant);
+cardManager.defineSet(sets.setUndaunted);
+cardManager.defineSet(sets.setUnleashed);
 
 
-// cardManager.defineSet(sets.setBlackAndWhite);
-// cardManager.defineSet(sets.setEmergingPowers);
-// cardManager.defineSet(sets.setNobleVictories);
-// cardManager.defineSet(sets.setNextDestinies);
-// cardManager.defineSet(sets.setDarkExplorers);
-// cardManager.defineSet(sets.setDragonsExalted);
-// cardManager.defineSet(sets.setDragonVault);
-// cardManager.defineSet(sets.setBoundariesCrossed);
-// cardManager.defineSet(sets.setPlasmaStorm);
-// cardManager.defineSet(sets.setPlasmaFreeze);
-// cardManager.defineSet(sets.setPlasmaBlast);
-// cardManager.defineSet(sets.setLegendaryTreasures);
+cardManager.defineSet(sets.setBlackAndWhite);
+cardManager.defineSet(sets.setEmergingPowers);
+cardManager.defineSet(sets.setNobleVictories);
+cardManager.defineSet(sets.setNextDestinies);
+cardManager.defineSet(sets.setDarkExplorers);
+cardManager.defineSet(sets.setDragonsExalted);
+cardManager.defineSet(sets.setDragonVault);
+cardManager.defineSet(sets.setBoundariesCrossed);
+cardManager.defineSet(sets.setPlasmaStorm);
+cardManager.defineSet(sets.setPlasmaFreeze);
+cardManager.defineSet(sets.setPlasmaBlast);
+cardManager.defineSet(sets.setLegendaryTreasures);
 
 
-// cardManager.defineSet(sets.setXY);
-// cardManager.defineSet(sets.setFlashfire);
-// cardManager.defineSet(sets.setFuriousFists);
-// cardManager.defineSet(sets.setPhantomForces);
-// cardManager.defineSet(sets.setPrimalClash);
+cardManager.defineSet(sets.setXY);
+cardManager.defineSet(sets.setFlashfire);
+cardManager.defineSet(sets.setFuriousFists);
+cardManager.defineSet(sets.setPhantomForces);
+cardManager.defineSet(sets.setPrimalClash);
 
-// cardManager.defineSet(sets.setRoaringSkies);
-// cardManager.defineSet(sets.setAncientOrigins);
-// cardManager.defineSet(sets.setBreakthrough);
+cardManager.defineSet(sets.setRoaringSkies);
+cardManager.defineSet(sets.setAncientOrigins);
+cardManager.defineSet(sets.setBreakthrough);
 
-// cardManager.defineSet(sets.setFatesCollide);
+cardManager.defineSet(sets.setFatesCollide);
 
-// cardManager.defineSet(sets.setSunAndMoon);
+cardManager.defineSet(sets.setSunAndMoon);
+cardManager.defineSet(sets.setGuardiansRising);
 
 
 
+cardManager.defineSet(sets.setUltraPrism);
 
-// cardManager.defineSet(sets.setUltraPrism);
+cardManager.defineSet(sets.setCelestialStorm);
 
-// cardManager.defineSet(sets.setCelestialStorm);
+cardManager.defineSet(sets.setTeamUp);
 
-// cardManager.defineSet(sets.setTeamUp);
+cardManager.defineSet(sets.setUnbrokenBonds);
 
-// cardManager.defineSet(sets.setUnbrokenBonds);
-
-//cardManager.defineSet(sets.setHiddenFates);
-// cardManager.defineSet(sets.setCosmicEclipse);
+cardManager.defineSet(sets.setHiddenFates);
+cardManager.defineSet(sets.setCosmicEclipse);
 
 
 // cardManager.defineSet(sets.setSwordAndShield);
 cardManager.defineSet(sets.setSwordAndShieldPromos);
 cardManager.defineSet(sets.setShiningLegends);
-//cardManager.defineSet(sets.setVividVoltage);
+cardManager.defineSet(sets.setVividVoltage);
 cardManager.defineSet(sets.setBattleStyles);
 cardManager.defineSet(sets.setChillingReign);
 cardManager.defineSet(sets.setEvolvingSkies);

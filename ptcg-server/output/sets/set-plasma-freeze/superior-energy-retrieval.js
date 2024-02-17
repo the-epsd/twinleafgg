@@ -59,6 +59,8 @@ class SuperiorEnergyRetrieval extends trainer_card_1.TrainerCard {
         this.set = 'PLF';
         this.name = 'Superior Energy Retrieval';
         this.fullName = 'Superior Energy Retrieval PLF';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '103';
         this.text = 'You can use this card only if you discard 2 other cards from ' +
             'your hand.' +
             '' +

@@ -87,4 +87,5 @@ var Format;
     Format[Format["EXPANDED"] = 2] = "EXPANDED";
     Format[Format["UNLIMITED"] = 3] = "UNLIMITED";
     Format[Format["RETRO"] = 4] = "RETRO";
+    Format[Format["GLC"] = 5] = "GLC";
 })(Format = exports.Format || (exports.Format = {}));

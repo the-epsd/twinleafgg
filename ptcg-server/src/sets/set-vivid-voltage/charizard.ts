@@ -46,6 +46,10 @@ export class Charizard extends PokemonCard {
 
   public fullName: string = 'Charizard VIV';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '25';
+
   public readonly BATTLE_SENSE_MARKER = 'BATTLE_SENSE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

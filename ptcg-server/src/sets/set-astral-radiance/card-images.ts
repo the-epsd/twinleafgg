@@ -4,6 +4,7 @@ import { DarkPatch } from './dark-patch';
 import { DarkraiV } from './darkrai-v';
 import { DarkraiVSTAR } from './darkrai-vstar';
 import { Diancie } from './diancie';
+import { EnergyLoto } from './energy-loto';
 import { FeatherBall } from './feather-ball';
 import { Gallade } from './gallade';
 import { GapejawBog } from './gapejaw-bog';
@@ -65,6 +66,10 @@ export class DarkraiVSTARArt extends DarkraiVSTAR {
 
 export class DiancieArt extends Diancie {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_068_R_EN_LG.png';
+}
+
+export class EnergyLotoArt extends EnergyLoto {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_140_R_EN.png';
 }
 
 export class FeatherBallArt extends FeatherBall {

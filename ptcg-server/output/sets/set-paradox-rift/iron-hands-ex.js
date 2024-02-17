@@ -51,7 +51,10 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
                 if (pokemonCard !== this) {
                     return state;
                 }
-                effect.prizeCount += 1;
+                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+                    effect.prizeCount += 1;
+                    return state;
+                }
                 return state;
             }
             return state;

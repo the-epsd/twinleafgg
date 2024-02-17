@@ -1,9 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { DualBall } from './dual-ball';
-import { Shaymin } from './shaymin';
+import { DualBallArt, ShayminArt } from './card-images';
 
 export const setUnleashed: Card[] = [
-  new DualBall(),
-  new Shaymin(),
+  new DualBallArt(),
+  new ShayminArt(),
 
 ];

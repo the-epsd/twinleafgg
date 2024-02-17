@@ -20,6 +20,10 @@ export class ExpShare extends TrainerCard {
 
   public fullName: string = 'Exp Share SUM';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '118';
+
   public text: string =
     'When your Active Pokemon is Knocked Out by damage from an opponent\'s ' +
     'attack, you may move 1 basic Energy card that was attached to that ' +

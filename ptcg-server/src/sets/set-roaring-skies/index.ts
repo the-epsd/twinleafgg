@@ -1,19 +1,13 @@
 import { Card } from '../../game/store/card/card';
-import { Articuno } from './articuno';
-import { Beautifly } from './beautifly';
-import { ShayminEx } from './shaymin-ex';
-import { Silcoon } from './silcoon';
-import { SkyField } from './sky-field';
-import { TrainersMail } from './trainers-mail';
-import { Wurmple } from './wurmple';
+import { ArticunoArt, BeautiflyArt, ShayminExArt, SilcoonArt, SkyFieldArt, TrainersMailArt, WurmpleArt } from './card-images';
 
 export const setRoaringSkies: Card[] = [
-  new Articuno(),
-  new Beautifly(),
-  new ShayminEx(),
-  new Silcoon(),
-  new SkyField(),
-  new TrainersMail(),
-  new Wurmple(),
+  new ArticunoArt(),
+  new BeautiflyArt(),
+  new ShayminExArt(),
+  new SilcoonArt(),
+  new SkyFieldArt(),
+  new TrainersMailArt(),
+  new WurmpleArt(),
 
 ];

@@ -13,6 +13,8 @@ class Leon extends trainer_card_1.TrainerCard {
         this.set = 'VIV';
         this.name = 'Leon';
         this.fullName = 'Leon VIV';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '154';
         this.text = 'During this turn, your Pokemon\'s attacks do 30 more damage to your ' +
             'opponent\'s Active Pokemon (before applying Weakness and Resistance).';
         this.LEON_MARKER = 'LEON_MARKER';

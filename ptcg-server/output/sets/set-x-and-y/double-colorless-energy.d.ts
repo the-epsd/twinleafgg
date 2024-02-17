@@ -6,4 +6,6 @@ export declare class DoubleColorlessEnergy extends EnergyCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
 }

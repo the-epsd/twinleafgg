@@ -37,7 +37,9 @@ class Celebi extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'TM';
         this.name = 'Celebi';
-        this.fullName = 'Celebi TRM';
+        this.fullName = 'Celebi TM';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '92';
         this.FOREST_BREATH_MARKER = 'FOREST_BREATH_MARKER';
         this.TIME_CIRCLE_MARKER = 'TIME_CIRCLE_MARKER';
         this.CLEAR_TIME_CIRCLE_MARKER = 'CLEAR_TIME_CIRCLE_MARKER';

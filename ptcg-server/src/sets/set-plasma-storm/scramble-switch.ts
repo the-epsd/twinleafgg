@@ -70,7 +70,11 @@ export class ScrambleSwitch extends TrainerCard {
 
   public name: string = 'Scramble Switch';
 
-  public fullName: string = 'Scramble Switch PS';
+  public fullName: string = 'Scramble Switch PLS';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '129';
 
   public text: string =
     'Switch your Active Pokemon with 1 of your Benched Pokemon. ' +

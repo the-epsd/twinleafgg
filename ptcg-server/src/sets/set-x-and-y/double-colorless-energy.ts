@@ -13,4 +13,8 @@ export class DoubleColorlessEnergy extends EnergyCard {
 
   public fullName = 'Double Colorless Energy XY';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '130';
+
 }

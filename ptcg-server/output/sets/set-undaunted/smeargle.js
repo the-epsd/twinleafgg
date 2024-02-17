@@ -35,7 +35,9 @@ class Smeargle extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'UD';
         this.name = 'Smeargle';
-        this.fullName = 'Smeargle UND';
+        this.fullName = 'Smeargle UD';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '8';
         this.PORTRAIT_MARKER = 'PORTRAIT_MARKER';
     }
     reduceEffect(store, state, effect) {

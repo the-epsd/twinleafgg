@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setShiningLegends = void 0;
-const marshadow_1 = require("./marshadow");
+const card_images_1 = require("./card-images");
 exports.setShiningLegends = [
-    new marshadow_1.Marshadow(),
+    new card_images_1.MarshadowArt(),
 ];

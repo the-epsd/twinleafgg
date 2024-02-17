@@ -23,7 +23,7 @@ export class DeoxysVSTARArt extends DeoxysVSTAR {
 }
 
 export class HisuianElectrodeVArt extends HisuianElectrodeV {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_296_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_294_R_EN.png';
 }
 
 export class LeafeonVSTARArt extends LeafeonVSTAR {

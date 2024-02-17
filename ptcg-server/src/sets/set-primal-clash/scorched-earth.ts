@@ -18,7 +18,11 @@ export class ScorchedEarth extends TrainerCard {
 
   public name: string = 'Scorched Earth';
 
-  public fullName: string = 'Scorched Earth PCL';
+  public fullName: string = 'Scorched Earth PRC';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '138';
 
   public text: string =
     'Once during each player\'s turn, that player may discard ' +

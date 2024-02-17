@@ -43,7 +43,11 @@ export class Smeargle extends PokemonCard {
 
   public name: string = 'Smeargle';
 
-  public fullName: string = 'Smeargle UND';
+  public fullName: string = 'Smeargle UD';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '8';
 
   public readonly PORTRAIT_MARKER: string = 'PORTRAIT_MARKER';
 

@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { Copycat } from './copycat';
+import { CopycatArt } from './card-images';
 
 export const setCelestialStorm: Card[] = [
-  new Copycat(),
+  new CopycatArt(),
 ];

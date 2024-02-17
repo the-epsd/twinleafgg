@@ -45,38 +45,43 @@ class RayquazaV extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            let pokemons = 0;
-            let trainers = 0;
-            const blocked = [];
-            player.active.cards.forEach((c, index) => {
-                if (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Basic Fire Energy') {
-                    trainers += 1;
+            const options = [
+                {
+                    message: game_message_1.GameMessage.ALL_FIRE_ENERGIES,
+                    action: () => {
+                        store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Fire Energy' }, { min: 1, max: 2, allowCancel: false }), selected => {
+                            const cards = selected || [];
+                            if (cards.length > 0) {
+                                let totalDiscarded = 0;
+                                const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+                                discardEnergy.target = player.active;
+                                totalDiscarded += discardEnergy.cards.length;
+                                effect.damage = (totalDiscarded * 80) + 20;
+                                store.reduceEffect(state, discardEnergy);
+                            }
+                        });
+                    }
+                },
+                {
+                    message: game_message_1.GameMessage.ALL_LIGHTNING_ENERGIES,
+                    action: () => {
+                        store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Lightning Energy' }, { min: 1, max: 2, allowCancel: false }), selected => {
+                            const cards = selected || [];
+                            if (cards.length > 0) {
+                                let totalDiscarded = 0;
+                                const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+                                discardEnergy.target = player.active;
+                                totalDiscarded += discardEnergy.cards.length;
+                                effect.damage = (totalDiscarded * 80) + 20;
+                                store.reduceEffect(state, discardEnergy);
+                            }
+                        });
+                    }
                 }
-                else if (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Basic Lightning Energy') {
-                    pokemons += 1;
-                }
-                else {
-                    blocked.push(index);
-                }
-            });
-            // We will discard this card after prompt confirmation
-            // This will prevent unblocked supporter to appear in the discard pile
-            effect.preventDefault = true;
-            const maxPokemons = Math.min(pokemons, 2);
-            const maxTrainers = Math.min(trainers, 2);
-            const count = maxPokemons || maxTrainers;
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, player.active, // Card source is target Pokemon
-            { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTrainers }), selected => {
-                const cards = selected || [];
-                let totalDiscarded = 0;
-                cards.forEach(target => {
-                    const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
-                    discardEnergy.target = player.active;
-                    totalDiscarded = discardEnergy.cards.length;
-                    store.reduceEffect(state, discardEnergy);
-                    effect.damage = (totalDiscarded * 80) + this.attacks[0].damage;
-                });
-                return state;
+            ];
+            return store.prompt(state, new game_1.SelectPrompt(player.id, game_message_1.GameMessage.CHOOSE_OPTION, options.map(opt => opt.message), { allowCancel: false }), choice => {
+                const option = options[choice];
+                option.action();
             });
         }
         return state;

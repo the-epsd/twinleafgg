@@ -1,7 +1,7 @@
 import { Card } from '../../game/store/card/card';
-import { PokemonFanClub } from './pokemon-fan-club';
+import { PokemonFanClubArt } from './card-images';
 
 export const setUltraPrism: Card[] = [
-  new PokemonFanClub(),
+  new PokemonFanClubArt(),
 
 ];

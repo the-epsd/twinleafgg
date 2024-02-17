@@ -221,8 +221,8 @@ class ProfessorsResearchFA1 extends professors_research_1.ProfessorsResearch {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_240_R_EN_LG.png';
-        this.setNumber = '240';
-        this.fullName = 'Professor\'s Research SVI';
+        this.setNumber = '';
+        this.fullName = 'Professor\'s Research SVI 242';
     }
 }
 exports.ProfessorsResearchFA1 = ProfessorsResearchFA1;
@@ -230,8 +230,8 @@ class ProfessorsResearchFA2 extends professors_research_1.ProfessorsResearch {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_241_R_EN_LG.png';
-        this.setNumber = '241';
-        this.fullName = 'Professor\'s Research SVI';
+        this.setNumber = '';
+        this.fullName = 'Professor\'s Research SVI 241';
     }
 }
 exports.ProfessorsResearchFA2 = ProfessorsResearchFA2;

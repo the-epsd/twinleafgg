@@ -25,7 +25,9 @@ class Ralts extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PLS';
         this.name = 'Ralts';
-        this.fullName = 'Ralts PS';
+        this.fullName = 'Ralts PLS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '59';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
