@@ -74,7 +74,7 @@ export class Morpeko extends PokemonCard {
     }
 
   
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
 

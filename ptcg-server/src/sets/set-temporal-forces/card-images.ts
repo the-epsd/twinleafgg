@@ -3,6 +3,7 @@ import { BiancasSincerity } from './biancas-sincerity';
 import { BuddyPoffin } from './buddy-poffin';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
+import { Cincinno } from './cincinno';
 import { Croconaw } from './croconaw';
 import { CryptomaniacsDeciphering } from './cryptomaniacs-deciphering';
 import { DeliveryBox } from './delivery-box';
@@ -75,6 +76,10 @@ export class CharjabugArt extends Charjabug {
 
 export class ChatotArt extends Chatot {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1705649762608-G14HI2IHXVAWCMB2AK99/045204_P_PERAPPU.jpg?format=2500w';
+}
+
+export class CincinnoArt extends Cincinno {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV5K/SV5K_60_R_JP.png';
 }
 
 export class CroconawArt extends Croconaw {

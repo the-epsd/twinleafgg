@@ -98,9 +98,9 @@ export class ProfessorSadasVitality extends TrainerCard {
               const target = StateUtils.getTarget(state, player, transfer.to);
               player.marker.addMarker(this.ANCIENT_SUPPORTER_MARKER, this);
               player.discard.moveCardTo(transfer.card, target);
-              player.deck.moveTo(player.hand, 3);
             }
           });
+          player.deck.moveTo(player.hand, 3);
         });
       });
     }

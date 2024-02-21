@@ -15,7 +15,7 @@ export class TestPokemon extends PokemonCard {
 
   public cardType: CardType = CardType.COLORLESS;
 
-  public hp: number = 70;
+  public hp: number = 1000;
 
   public weakness = [{ type: CardType.COLORLESS }];
 

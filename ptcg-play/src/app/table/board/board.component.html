@@ -17,7 +17,10 @@
 
 
 
-<div class="ptcg-board-container" [dropTarget]="boardTarget">
+
+<div id="bottom_div">
+
+<div class="ptcg-board-container" [dropTarget]="boardTarget" id="top_div">
   <div class="parent transform">
     <div class="child">
   <div class="ptcg-board-player upside-down">
@@ -68,8 +71,8 @@
     </ptcg-board-prizes>
   </div>
 
-  <div class="ptcg-board-player">
 
+  <div class="ptcg-board-player">
     <!-- Bottom Active -->
     <div class="ptcg-board-row ptcg-board-active">
       <div class="ptcg-board-drop-target"

@@ -128,7 +128,7 @@ export class NoibatArt extends Noibat {
 }
 
 export class NoivernexArt extends Noivernex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_152_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_153_R_EN_LG.png';
 }
   
 export class ReversalEnergyArt extends ReversalEnergy {

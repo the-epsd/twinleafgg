@@ -37,31 +37,35 @@ class IronCrownex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Iron Crown ex';
     }
     reduceEffect(store, state, effect) {
-        // if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-        //   const player = effect.player;
-        //   const futurePokemon = player.active.getPokemonCard();
-        //   if (futurePokemon && futurePokemon.tags.includes(CardTag.FUTURE)) {
-        //     if (effect instanceof DealDamageEffect) {
-        //       // exclude Iron Crown ex
-        //       if (effect.card.name !== 'Iron Crown ex') {
-        //         effect.damage += 10;
-        //       }
-        //     }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            const max = Math.min(2);
-            state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: false }), selected => {
-                const targets = selected || [];
-                targets.forEach(target => {
-                    effect.ignoreWeakness = true;
-                    effect.ignoreResistance = true;
-                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 50);
-                    damageEffect.preventDefault = false;
-                    damageEffect.target = target;
-                    state = store.reduceEffect(state, damageEffect);
-                });
+            const futurePokemon = player.active.getPokemonCard();
+            if (futurePokemon && futurePokemon.tags.includes(card_types_1.CardTag.FUTURE)) {
+                if (effect instanceof attack_effects_1.DealDamageEffect) {
+                    // exclude Iron Crown ex
+                    if (effect.card.name !== 'Iron Crown ex') {
+                        effect.damage += 10;
+                    }
+                }
+                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+                    const player = effect.player;
+                    const max = Math.min(2);
+                    state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: false }), selected => {
+                        const targets = selected || [];
+                        targets.forEach(target => {
+                            effect.ignoreWeakness = true;
+                            effect.ignoreResistance = true;
+                            const damageEffect = new attack_effects_1.PutDamageEffect(effect, 50);
+                            damageEffect.preventDefault = false;
+                            damageEffect.target = target;
+                            state = store.reduceEffect(state, damageEffect);
+                        });
+                        return state;
+                    });
+                }
                 return state;
-            });
+            }
+            return state;
         }
         return state;
     }

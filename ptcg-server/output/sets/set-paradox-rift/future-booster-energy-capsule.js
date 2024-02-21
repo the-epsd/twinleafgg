@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FutureBoosterEnergyCapsule = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const game_1 = require("../../game");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_1 = require("../../game");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class FutureBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,13 +20,23 @@ class FutureBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
         this.text = 'The Future Pokémon this card is attached to has no Retreat Cost, and the attacks it uses do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        if (this instanceof game_1.PokemonCard && this.tags.includes(card_types_1.CardTag.FUTURE)) {
-            if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
-                effect.cost = [];
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            if (effect.target !== player.active && effect.target !== opponent.active) {
+                return state;
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.player.active.tool === this) {
+            const pokemonCard = effect.source.getPokemonCard();
+            if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.FUTURE)) {
                 effect.damage += 20;
             }
+            if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.source.cards.includes(this)) {
+                const pokemonCard = effect.source.getPokemonCard();
+                if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.FUTURE)) {
+                    effect.cost = [];
+                }
+            }
+            return state;
         }
         return state;
     }

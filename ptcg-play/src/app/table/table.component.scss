@@ -2,6 +2,10 @@
   display: block;
   height: 100%;
   width: 100%;
+  z-index: -2;
+  overflow: hidden;
+  background-image: url(~src/assets/anime-star-sky.png);
+  background-size: 80%;
 }
 
 .ptcg-table {
@@ -13,14 +17,17 @@
 
 ptcg-board {
   flex: 1 1 auto;
+
   background-image: url(~src/assets/twinleaf-board-center.png);
   background-repeat: no-repeat;
   background-size: 12% 16%;
-  background-position-y: 277px;
+  background-position-y: 269px;
   background-position-x: center;
+
 }
 
 ptcg-hand {
+  // background-color: #1a202c00;
   flex: 0 0 auto;
   // margin-top: -8%;
 }

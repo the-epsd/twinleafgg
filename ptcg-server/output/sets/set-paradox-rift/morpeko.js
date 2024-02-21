@@ -55,7 +55,7 @@ class Morpeko extends pokemon_card_1.PokemonCard {
                 effect.cost = [];
             }
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const hasBench = player.bench.some(b => b.cards.length > 0);
             if (hasBench === false) {

@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, SpecialCondition, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike, State, Card, PowerType, StateUtils,
-  CardTarget, PlayerType, MoveEnergyPrompt, SlotType} from '../../game';
+  CardTarget, PlayerType, MoveEnergyPrompt, SlotType, EnergyCard} from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -36,13 +36,32 @@ function* useFireOff(next: Function, store: StoreLike, state: State, effect: Pow
     }
   });
 
+  let hasEnergyOnBench = false;
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+    if (cardList === player.active) {
+      blockedTo.push(target);
+      return;
+    }
+    blockedFrom.push(target);
+    if (cardList.cards.some(c => c instanceof EnergyCard)) {
+      hasEnergyOnBench = true;
+    }
+  });
+
+  if (hasEnergyOnBench === false) {
+    return state;
+  }
+
+  const blockedFrom: CardTarget[] = [];
+  const blockedTo: CardTarget[] = [];
+
   return store.prompt(state, new MoveEnergyPrompt(
     player.id, 
     GameMessage.MOVE_ENERGY_CARDS,
     PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH], // Only allow moving to active
+    [SlotType.BENCH, SlotType.ACTIVE], // Only allow moving to active
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fire Energy' }, 
-    { allowCancel: true, blockedMap }
+    { allowCancel: true, blockedFrom, blockedTo, blockedMap }
   ), transfers => {
 
     if (!transfers) {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ShayminVSTARArt = exports.ShayminVArt = exports.RoseannesBackupArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.ManaphyArt = exports.MagmortarArt = exports.MagmaBasinArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = exports.AcerolasPremonitionArt = void 0;
+exports.ShayminVSTARArt = exports.ShayminVArt = exports.RoseannesBackupArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.MinccinoArt = exports.ManaphyArt = exports.MagmortarArt = exports.MagmaBasinArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = exports.AcerolasPremonitionArt = void 0;
 const acerolas_premonition_1 = require("./acerolas-premonition");
 const aggron_v_1 = require("./aggron-v");
 const aggron_vmax_1 = require("./aggron-vmax");
@@ -22,6 +22,7 @@ const lumineon_v_1 = require("./lumineon-v");
 const magma_basin_1 = require("./magma-basin");
 const magmortar_1 = require("./magmortar");
 const manaphy_1 = require("./manaphy");
+const minccino_1 = require("./minccino");
 const moltres_1 = require("./moltres");
 const pot_helmet_1 = require("./pot-helmet");
 const purrloin_1 = require("./purrloin");
@@ -177,6 +178,13 @@ class ManaphyArt extends manaphy_1.Manaphy {
     }
 }
 exports.ManaphyArt = ManaphyArt;
+class MinccinoArt extends minccino_1.Minccino {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_124_R_EN.png';
+    }
+}
+exports.MinccinoArt = MinccinoArt;
 class MoltresArt extends moltres_1.Moltres {
     constructor() {
         super(...arguments);

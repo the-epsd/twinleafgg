@@ -101,5 +101,6 @@ __exportStar(require("./set-pokemon-151"), exports);
 __exportStar(require("./set-paradox-rift"), exports);
 __exportStar(require("./set-paldea-fates"), exports);
 __exportStar(require("./set-temporal-forces"), exports);
+__exportStar(require("./set-crimson-haze"), exports);
 //TEST
 __exportStar(require("./set-test"), exports);

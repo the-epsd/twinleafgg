@@ -201,7 +201,7 @@ exports.NoibatArt = NoibatArt;
 class NoivernexArt extends noivern_ex_1.Noivernex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_152_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_153_R_EN_LG.png';
     }
 }
 exports.NoivernexArt = NoivernexArt;

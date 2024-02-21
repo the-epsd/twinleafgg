@@ -31,8 +31,24 @@ function* useFireOff(next, store, state, effect) {
             blockedMap.push({ source: target, blocked });
         }
     });
-    return store.prompt(state, new game_1.MoveEnergyPrompt(player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], // Only allow moving to active
-    { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Fire Energy' }, { allowCancel: true, blockedMap }), transfers => {
+    let hasEnergyOnBench = false;
+    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (cardList === player.active) {
+            blockedTo.push(target);
+            return;
+        }
+        blockedFrom.push(target);
+        if (cardList.cards.some(c => c instanceof game_1.EnergyCard)) {
+            hasEnergyOnBench = true;
+        }
+    });
+    if (hasEnergyOnBench === false) {
+        return state;
+    }
+    const blockedFrom = [];
+    const blockedTo = [];
+    return store.prompt(state, new game_1.MoveEnergyPrompt(player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], // Only allow moving to active
+    { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Fire Energy' }, { allowCancel: true, blockedFrom, blockedTo, blockedMap }), transfers => {
         if (!transfers) {
             return;
         }

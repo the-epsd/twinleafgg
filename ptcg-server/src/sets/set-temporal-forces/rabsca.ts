@@ -59,7 +59,7 @@ export class Rabsca extends PokemonCard {
       const energyCount = checkProvidedEnergyEffect.energyMap
         .reduce((left, p) => left + p.provides.length, 0);
 
-      effect.damage += energyCount * 20;
+      effect.damage += energyCount * 30;
     }
 
     if (effect instanceof PutDamageEffect) {

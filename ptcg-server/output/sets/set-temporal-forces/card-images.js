@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SalvatoreArt = exports.SableyeArt = exports.RoaringMoonArt = exports.ReuniclusArt = exports.RellorArt = exports.RebootPodArt = exports.RaichuArt = exports.RagingBoltexArt = exports.RabscaArt = exports.PrimeCatcherArt = exports.PikachuArt = exports.NeoUpperEnergyArt = exports.MrMimeArt = exports.MortysConvictionArt = exports.MistEnergyArt = exports.MiraidonArt = exports.MiraidonexArt = exports.MetangArt = exports.MasterBallArt = exports.KoraidonArt = exports.KoraidonexArt = exports.IronThornsArt = exports.IronLeavesexArt = exports.IronHandsArt = exports.IronCrownexArt = exports.HerosCapeArt = exports.HaunterArt = exports.HandTrimmerArt = exports.GrotleArt = exports.GougingFireexArt = exports.GengarexArt = exports.GastlyArt = exports.FlutterManeArt = exports.FeraligatrArt = exports.ExplorersGuidanceArt = exports.EriArt = exports.EmergencyBoardArt = exports.DuosionArt = exports.DunsparceArt = exports.DudunsparceArt = exports.DrumsOfAwakeningArt = exports.DrilburArt = exports.DeliveryBoxArt = exports.CryptomaniacsDecipheringArt = exports.CroconawArt = exports.ChatotArt = exports.CharjabugArt = exports.BuddyPoffinArt = exports.BiancasSincerityArt = exports.BeldumArt = void 0;
-exports.WalkingWakeexArt = exports.VikavoltArt = exports.VictiniArt = exports.TurtwigArt = exports.TotodileArt = exports.TorterraexArt = exports.SolosisArt = exports.SandyShocksArt = void 0;
+exports.SableyeArt = exports.RoaringMoonArt = exports.ReuniclusArt = exports.RellorArt = exports.RebootPodArt = exports.RaichuArt = exports.RagingBoltexArt = exports.RabscaArt = exports.PrimeCatcherArt = exports.PikachuArt = exports.NeoUpperEnergyArt = exports.MrMimeArt = exports.MortysConvictionArt = exports.MistEnergyArt = exports.MiraidonArt = exports.MiraidonexArt = exports.MetangArt = exports.MasterBallArt = exports.KoraidonArt = exports.KoraidonexArt = exports.IronThornsArt = exports.IronLeavesexArt = exports.IronHandsArt = exports.IronCrownexArt = exports.HerosCapeArt = exports.HaunterArt = exports.HandTrimmerArt = exports.GrotleArt = exports.GougingFireexArt = exports.GengarexArt = exports.GastlyArt = exports.FlutterManeArt = exports.FeraligatrArt = exports.ExplorersGuidanceArt = exports.EriArt = exports.EmergencyBoardArt = exports.DuosionArt = exports.DunsparceArt = exports.DudunsparceArt = exports.DrumsOfAwakeningArt = exports.DrilburArt = exports.DeliveryBoxArt = exports.CryptomaniacsDecipheringArt = exports.CroconawArt = exports.CincinnoArt = exports.ChatotArt = exports.CharjabugArt = exports.BuddyPoffinArt = exports.BiancasSincerityArt = exports.BeldumArt = void 0;
+exports.WalkingWakeexArt = exports.VikavoltArt = exports.VictiniArt = exports.TurtwigArt = exports.TotodileArt = exports.TorterraexArt = exports.SolosisArt = exports.SandyShocksArt = exports.SalvatoreArt = void 0;
 const beldum_1 = require("./beldum");
 const biancas_sincerity_1 = require("./biancas-sincerity");
 const buddy_poffin_1 = require("./buddy-poffin");
 const charjabug_1 = require("./charjabug");
 const chatot_1 = require("./chatot");
+const cincinno_1 = require("./cincinno");
 const croconaw_1 = require("./croconaw");
 const cryptomaniacs_deciphering_1 = require("./cryptomaniacs-deciphering");
 const delivery_box_1 = require("./delivery-box");
@@ -95,6 +96,13 @@ class ChatotArt extends chatot_1.Chatot {
     }
 }
 exports.ChatotArt = ChatotArt;
+class CincinnoArt extends cincinno_1.Cincinno {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV5K/SV5K_60_R_JP.png';
+    }
+}
+exports.CincinnoArt = CincinnoArt;
 class CroconawArt extends croconaw_1.Croconaw {
     constructor() {
         super(...arguments);

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { BeldumArt, BiancasSincerityArt, BuddyPoffinArt, CharjabugArt, ChatotArt, CroconawArt, CryptomaniacsDecipheringArt, DeliveryBoxArt, DrilburArt, DrumsOfAwakeningArt, DudunsparceArt, DunsparceArt, DuosionArt, EmergencyBoardArt, EriArt, ExplorersGuidanceArt, FeraligatrArt, FlutterManeArt, GastlyArt, GengarexArt, GougingFireexArt, GrotleArt, HandTrimmerArt, HaunterArt, HerosCapeArt, IronCrownexArt, IronHandsArt, IronLeavesexArt, IronThornsArt, KoraidonArt, KoraidonexArt, MasterBallArt, MetangArt, MiraidonArt, MiraidonexArt, MistEnergyArt, MortysConvictionArt, MrMimeArt, NeoUpperEnergyArt, PikachuArt, PrimeCatcherArt, RabscaArt, RagingBoltexArt, RaichuArt, RebootPodArt, RellorArt, ReuniclusArt, RoaringMoonArt, SableyeArt, SalvatoreArt, SandyShocksArt, SolosisArt, TorterraexArt, TotodileArt, TurtwigArt, VictiniArt, VikavoltArt, WalkingWakeexArt } from './card-images';
+import { BeldumArt, BiancasSincerityArt, BuddyPoffinArt, CharjabugArt, ChatotArt, CincinnoArt, CroconawArt, CryptomaniacsDecipheringArt, DeliveryBoxArt, DrilburArt, DrumsOfAwakeningArt, DudunsparceArt, DunsparceArt, DuosionArt, EmergencyBoardArt, EriArt, ExplorersGuidanceArt, FeraligatrArt, FlutterManeArt, GastlyArt, GengarexArt, GougingFireexArt, GrotleArt, HandTrimmerArt, HaunterArt, HerosCapeArt, IronCrownexArt, IronHandsArt, IronLeavesexArt, IronThornsArt, KoraidonArt, KoraidonexArt, MasterBallArt, MetangArt, MiraidonArt, MiraidonexArt, MistEnergyArt, MortysConvictionArt, MrMimeArt, NeoUpperEnergyArt, PikachuArt, PrimeCatcherArt, RabscaArt, RagingBoltexArt, RaichuArt, RebootPodArt, RellorArt, ReuniclusArt, RoaringMoonArt, SableyeArt, SalvatoreArt, SandyShocksArt, SolosisArt, TorterraexArt, TotodileArt, TurtwigArt, VictiniArt, VikavoltArt, WalkingWakeexArt } from './card-images';
 
 export const setTemporalForces: Card[] = [
   
@@ -8,6 +8,7 @@ export const setTemporalForces: Card[] = [
   new BuddyPoffinArt(),
   new CharjabugArt(),
   new ChatotArt(),
+  new CincinnoArt(),
   new CroconawArt(),
   new CryptomaniacsDecipheringArt(),
   new DeliveryBoxArt(),

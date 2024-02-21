@@ -30,7 +30,7 @@ export class OriginFormePalkiaV extends PokemonCard {
     },
     {
       name: 'Hydro Break',
-      cost: [ CardType.WATER ],
+      cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
       damage: 60,
       text: 'During your next turn, this Pokémon can\'t attack.'
     }

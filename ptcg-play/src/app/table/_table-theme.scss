@@ -11,7 +11,7 @@
   //Board + Card Slot Border
   $table-border: solid 1px mat.get-color-from-palette($foreground, divider);
   $active-player-background-color: mat.get-color-from-palette($background, focused-button);
-  $hand-background-color: mat.get-color-from-palette($background, app-bar);
+  // $hand-background-color: mat.get-color-from-palette($background, app-bar);
   $table-sidebar-header-background-color: mat.get-color-from-palette($background, background);
   $table-sidebar-logs-background-color: mat.get-color-from-palette($background, focused-button);
   $table-sidebar-time-empty-progress: mat.get-color-from-palette($foreground, divider);
@@ -19,15 +19,16 @@
   $table-sidebar-time-running-progress: mat.get-color-from-palette($accent);
   $choose-avatar-background-color: mat.get-color-from-palette($background, hover);
 
-  ptcg-hand {
-    background-color: $hand-background-color;
-    border-top: $table-border;
-    color: mat.get-color-from-palette($foreground, text);
-  }
+  // ptcg-hand {
+  //   background-color: #00000000;
+  //   border-top: $table-border;
+  //   color: mat.get-color-from-palette($foreground, text);
+  // }
 
   ptcg-board-card,
   ptcg-board-card-list {
     .empty {
+      fill: $table-border;
       outline: $table-border;
     }
   }

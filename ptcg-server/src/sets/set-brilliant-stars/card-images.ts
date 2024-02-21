@@ -19,6 +19,7 @@ import { LumineonV } from './lumineon-v';
 import { MagmaBasin } from './magma-basin';
 import { Magmortar } from './magmortar';
 import { Manaphy } from './manaphy';
+import { Minccino } from './minccino';
 import { Moltres } from './moltres';
 import { PotHelmet } from './pot-helmet';
 import { Purrloin } from './purrloin';
@@ -110,6 +111,10 @@ export class MagmortarArt extends Magmortar {
 
 export class ManaphyArt extends Manaphy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_041_R_EN_LG.png';
+}
+
+export class MinccinoArt extends Minccino {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_124_R_EN.png';
 }
 
 export class MoltresArt extends Moltres {

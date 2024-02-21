@@ -2,8 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class IronCrownex extends PokemonCard {
 
@@ -50,41 +50,46 @@ export class IronCrownex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-    //   const player = effect.player;
-    //   const futurePokemon = player.active.getPokemonCard();
-      
-    //   if (futurePokemon && futurePokemon.tags.includes(CardTag.FUTURE)) {
-    //     if (effect instanceof DealDamageEffect) {
-    //       // exclude Iron Crown ex
-    //       if (effect.card.name !== 'Iron Crown ex') {
-    //         effect.damage += 10;
-    //       }
-    //     }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+      const futurePokemon = player.active.getPokemonCard();
       
-      const max = Math.min(2);
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
-        { min: 1, max: max, allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        targets.forEach(target => {
-          effect.ignoreWeakness = true;
-          effect.ignoreResistance =true;
-          const damageEffect = new PutDamageEffect(effect, 50);
-          damageEffect.preventDefault = false;
-          damageEffect.target = target;
-          state = store.reduceEffect(state, damageEffect);
+      if (futurePokemon && futurePokemon.tags.includes(CardTag.FUTURE)) {
+        if (effect instanceof DealDamageEffect) {
+          // exclude Iron Crown ex
+          if (effect.card.name !== 'Iron Crown ex') {
+            effect.damage += 10;
+          }
+        }
+        
+        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+          const player = effect.player;
+      
+          const max = Math.min(2);
+          state = store.prompt(state, new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [ SlotType.ACTIVE, SlotType.BENCH ],
+            { min: 1, max: max, allowCancel: false }
+          ), selected => {
+            const targets = selected || [];
+            targets.forEach(target => {
+              effect.ignoreWeakness = true;
+              effect.ignoreResistance =true;
+              const damageEffect = new PutDamageEffect(effect, 50);
+              damageEffect.preventDefault = false;
+              damageEffect.target = target;
+              state = store.reduceEffect(state, damageEffect);
             
-        });
+            });
+            return state; 
+          });
+        }
         return state; 
-      });
+      }
+      return state;
     }
-    return state; 
+    return state;
   }
 }

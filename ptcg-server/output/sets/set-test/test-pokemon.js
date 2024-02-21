@@ -11,7 +11,7 @@ class TestPokemon extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'G';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.COLORLESS;
-        this.hp = 70;
+        this.hp = 1000;
         this.weakness = [{ type: card_types_1.CardType.COLORLESS }];
         this.retreat = [];
         this.attacks = [

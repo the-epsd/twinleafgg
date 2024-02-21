@@ -4,9 +4,13 @@
 $board-min-width: calc((4 + #{$ptcg-bench-slots}) * (var(--card-size) + #{map-get($padding, small)}));
 $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map-get($padding, small)});
 
+
+
+
 :host {
   display: flex;
-  overflow: auto;
+  overflow: hidden;
+  z-index: 0;
 }
 
 * {
@@ -48,13 +52,64 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   height: calc(var(--card-size) * #{$ptcg-bench-slots} + #{($ptcg-bench-slots + 1) * map-get($padding, small)});
 }
 
+#bottom_div {
+
+  width: 100%;
+
+}
+
+#bottom_div {
+  &:after {
+    content: '';
+    position: absolute;
+    top: 62%;
+    left: -55%;
+    right: -55%;
+    height: 100%; //adjust this number to adjust curve  
+    background:linear-gradient(0deg, #1a202cb5, #0d1016af), url(https://i.redd.it/extended-card-art-wallpapers-part-2-v0-m9rryk6yk0nb1.jpg?width=3841&format=pjpg&auto=webp&s=bf36300668878c327c2bf2f736de1335ee92283a);
+    // background-image: url(https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-53.jpg);
+    background-size: 56%;
+    background-position: center, top;
+    border-top-left-radius:50% 100%;
+    border-top-right-radius:50% 100%;
+    margin-top: -135px;
+    z-index: -1;
+  }
+}
+
+#top_div {
+
+  width: 100%;
+
+}
+
+#top_div {
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0%;
+    left: -40%;
+    right: -40%;
+    height: 600px; //adjust this number to adjust curve  
+    background:linear-gradient(0deg, #1a202cb5, #0d1016af), url(https://wallpapers-clan.com/wp-content/uploads/2023/10/pokemon-eevee-aesthetic-night-desktop-wallpaper-preview.jpg);
+    background-size: 56%;
+    background-position: center;
+    transform: scaleY(-1);
+    border-top-left-radius:50% 100%;
+    border-top-right-radius:50% 100%;
+    margin-top: -350px;
+    z-index: -1;
+  }
+}
+
+
+
 .ptcg-board-player {
+  
   display: grid;
-  // border-radius: 12px;
-  // background-image: url(https://i.imgur.com/3X7MTBl.png);
-  // padding: 6px; 
-
-
+  border-radius: 12px;
+  padding: 6px; 
+  // background-image: url(https://www.chromethemer.com/download/hd-wallpapers/pokemon-1920x1080.jpg);
   grid-template-columns:
       2fr
       #{math.div($ptcg-bench-slots, 3)}fr
@@ -62,15 +117,16 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
       #{math.div($ptcg-bench-slots, 3)}fr
       2fr;
   grid-template-rows: auto;
-
   grid-template-areas:
     "prizes stadium active supporter deck"
     "prizes bench bench bench deck";
 
+    
   &.upside-down {
     transform: rotate(180deg);
   }
 }
+
 
 .ptcg-board-row {
   align-items: center;
@@ -92,7 +148,6 @@ width: 82px;
   > ptcg-board-card,
   > .ptcg-board-drop-target {
     width: 82px;
-
   }
 }
 

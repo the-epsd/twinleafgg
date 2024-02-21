@@ -19,6 +19,7 @@ import { LumineonV } from './lumineon-v';
 import { MagmaBasin } from './magma-basin';
 import { Magmortar } from './magmortar';
 import { Manaphy } from './manaphy';
+import { Minccino } from './minccino';
 import { Moltres } from './moltres';
 import { PotHelmet } from './pot-helmet';
 import { Purrloin } from './purrloin';
@@ -88,6 +89,9 @@ export declare class MagmortarArt extends Magmortar {
     cardImage: string;
 }
 export declare class ManaphyArt extends Manaphy {
+    cardImage: string;
+}
+export declare class MinccinoArt extends Minccino {
     cardImage: string;
 }
 export declare class MoltresArt extends Moltres {

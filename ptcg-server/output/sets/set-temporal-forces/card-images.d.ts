@@ -3,6 +3,7 @@ import { BiancasSincerity } from './biancas-sincerity';
 import { BuddyPoffin } from './buddy-poffin';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
+import { Cincinno } from './cincinno';
 import { Croconaw } from './croconaw';
 import { CryptomaniacsDeciphering } from './cryptomaniacs-deciphering';
 import { DeliveryBox } from './delivery-box';
@@ -69,6 +70,9 @@ export declare class CharjabugArt extends Charjabug {
     cardImage: string;
 }
 export declare class ChatotArt extends Chatot {
+    cardImage: string;
+}
+export declare class CincinnoArt extends Cincinno {
     cardImage: string;
 }
 export declare class CroconawArt extends Croconaw {
