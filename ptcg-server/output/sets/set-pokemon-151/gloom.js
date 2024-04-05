@@ -75,7 +75,6 @@ class Gloom extends game_1.PokemonCard {
                     }
                     return state;
                 });
-                return state;
             }
             return state;
         }

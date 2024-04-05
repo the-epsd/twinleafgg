@@ -23,7 +23,7 @@ export class Melony extends TrainerCard {
   public fullName: string = 'Melony CRE';
 
   public text: string =
-    'Draw 3 cards. If you drew any cards in this way, your opponent discards Pokémon from their Bench until they have 3.';
+    'Attach a [W] Energy card from your discard pile to 1 of your Pokémon V. If you do, draw 3 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -59,7 +59,7 @@ export class Melony extends TrainerCard {
     
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        GameMessage.ATTACH_ENERGY_CARDS,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { min: 1, max: 1, blocked: blocked2 }
@@ -69,7 +69,7 @@ export class Melony extends TrainerCard {
     
           state = store.prompt(state, new AttachEnergyPrompt(
             player.id,
-            GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+            GameMessage.ATTACH_ENERGY_CARDS,
             player.discard,
             PlayerType.BOTTOM_PLAYER,
             [SlotType.BENCH, SlotType.ACTIVE],

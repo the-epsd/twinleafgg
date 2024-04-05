@@ -74,7 +74,12 @@ class Gengarex extends pokemon_card_1.PokemonCard {
             //   return state;
             // }
             const target = effect.target;
-            target.damage += 20;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const opponentPokemon = [opponent.active, ...opponent.bench].filter(b => b.cards.length > 0);
+            if (target == opponentPokemon) {
+                target.damage += 20;
+            }
+            return state;
         }
         return state;
     }

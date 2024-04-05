@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosexArt = exports.WartortleArt = exports.VenusaurexArt = exports.VenomothArt = exports.VenonatArt = exports.VileplumeArt = exports.SquirtleArt = exports.ScytherArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OddishArt = exports.MewexArt = exports.MagmarArt = exports.KangaskhanexArt = exports.JolteonArt = exports.IvysaurArt = exports.GrabberArt = exports.GloomArt = exports.GiovannisCharismaArt = exports.EreikasInvitationArt = exports.EeveeArt = exports.ElectabuzzArt = exports.DoduoArt = exports.DodrioArt = exports.DittoArt = exports.CyclingRoadArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardexArt = exports.BulbasaurArt = exports.BlastoiseexArt = exports.AlakazamexArt = exports.AntiqueHelixFossilArt = void 0;
+exports.ZapdosexArt = exports.WartortleArt = exports.VenusaurexArt = exports.VenomothArt = exports.VenonatArt = exports.VileplumeArt = exports.SquirtleArt = exports.ScytherArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OddishArt = exports.MewexArt = exports.MagmarArt = exports.KangaskhanexArt = exports.JolteonArt = exports.IvysaurArt = exports.GrabberArt = exports.GloomArt = exports.GiovannisCharismaArt = exports.EreikasInvitationArt = exports.EnergyStickerArt = exports.EeveeArt = exports.ElectabuzzArt = exports.DoduoArt = exports.DodrioArt = exports.DittoArt = exports.CyclingRoadArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardexArt = exports.BulbasaurArt = exports.BlastoiseexArt = exports.AlakazamexArt = exports.AntiqueHelixFossilArt = void 0;
 const alakazam_ex_1 = require("./alakazam-ex");
 const blastoise_ex_1 = require("./blastoise-ex");
 const bulbasaur_1 = require("./bulbasaur");
@@ -34,6 +34,7 @@ const jolteon_1 = require("./jolteon");
 const magmar_1 = require("./magmar");
 const oddish_1 = require("./oddish");
 const antique_helix_fossil_1 = require("./antique-helix-fossil");
+const energy_sticker_1 = require("./energy-sticker");
 class AntiqueHelixFossilArt extends antique_helix_fossil_1.AntiqueHelixFossil {
     constructor() {
         super(...arguments);
@@ -125,6 +126,13 @@ class EeveeArt extends eevee_1.Eevee {
     }
 }
 exports.EeveeArt = EeveeArt;
+class EnergyStickerArt extends energy_sticker_1.EnergySticker {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_159_R_EN_LG.png';
+    }
+}
+exports.EnergyStickerArt = EnergyStickerArt;
 class EreikasInvitationArt extends erikas_invitation_1.EreikasInvitation {
     constructor() {
         super(...arguments);

@@ -5,7 +5,7 @@ import { StoreLike, State, StateUtils, PowerType,
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
-import { AbstractAttackEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class EspeonVMAX extends PokemonCard {
 
@@ -105,6 +105,10 @@ export class EspeonVMAX extends PokemonCard {
 
             // Allow damage
             if (effect instanceof PutDamageEffect) {
+              return state; 
+            }
+            // Allow damage
+            if (effect instanceof DealDamageEffect) {
               return state; 
             }
         

@@ -46,7 +46,6 @@ export class Gloom extends PokemonCard {
 
     if ((effect instanceof EvolveEffect) && effect.pokemonCard === this) {
 
-    
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
@@ -104,7 +103,6 @@ export class Gloom extends PokemonCard {
           }
           return state;
         });
-        return state;
       }
       return state;
     }

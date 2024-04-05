@@ -37,33 +37,37 @@ class IronCrownex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Iron Crown ex';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        if (effect instanceof attack_effects_1.DealDamageEffect) {
             const player = effect.player;
-            const futurePokemon = player.active.getPokemonCard();
-            if (futurePokemon && futurePokemon.tags.includes(card_types_1.CardTag.FUTURE)) {
-                if (effect instanceof attack_effects_1.DealDamageEffect) {
-                    // exclude Iron Crown ex
-                    if (effect.card.name !== 'Iron Crown ex') {
-                        effect.damage += 10;
+            const targetCard = player.active.getPokemonCard();
+            if (targetCard && targetCard.tags.includes(card_types_1.CardTag.FUTURE)) {
+                if (targetCard.name !== 'Iron Crown ex') {
+                    // Try to reduce PowerEffect, to check if something is blocking our ability
+                    try {
+                        const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                        store.reduceEffect(state, powerEffect);
                     }
-                }
-                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                    const player = effect.player;
-                    const max = Math.min(2);
-                    state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: false }), selected => {
-                        const targets = selected || [];
-                        targets.forEach(target => {
-                            effect.ignoreWeakness = true;
-                            effect.ignoreResistance = true;
-                            const damageEffect = new attack_effects_1.PutDamageEffect(effect, 50);
-                            damageEffect.preventDefault = false;
-                            damageEffect.target = target;
-                            state = store.reduceEffect(state, damageEffect);
-                        });
+                    catch (_a) {
                         return state;
-                    });
+                    }
+                    effect.damage += 20;
                 }
-                return state;
+            }
+            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+                const player = effect.player;
+                const max = Math.min(2);
+                state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: false }), selected => {
+                    const targets = selected || [];
+                    targets.forEach(target => {
+                        effect.ignoreWeakness = true;
+                        effect.ignoreResistance = true;
+                        const damageEffect = new attack_effects_1.PutDamageEffect(effect, 50);
+                        damageEffect.preventDefault = false;
+                        damageEffect.target = target;
+                        state = store.reduceEffect(state, damageEffect);
+                    });
+                    return state;
+                });
             }
             return state;
         }

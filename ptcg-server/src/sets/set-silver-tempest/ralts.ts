@@ -28,15 +28,15 @@ export class Ralts extends PokemonCard {
     text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. During your opponent\'s next turn, that Pokémon can\'t use that attack.'
   }];
 
-  public set: string = '151';
+  public set: string = 'SIT';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '151';
+  public setNumber: string = '67';
 
-  public name: string = 'Mew ex';
+  public name: string = 'Raltsx';
 
-  public fullName: string = 'Mew ex MEW';
+  public fullName: string = 'Ralts SIT';
 
   public readonly MEAN_LOOK_MARKER = 'MEAN_LOOK_MARKER';
 

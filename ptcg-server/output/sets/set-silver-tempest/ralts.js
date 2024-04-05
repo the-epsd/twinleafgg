@@ -20,11 +20,11 @@ class Ralts extends pokemon_card_1.PokemonCard {
                 damage: 10,
                 text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. During your opponent\'s next turn, that Pokémon can\'t use that attack.'
             }];
-        this.set = '151';
+        this.set = 'SIT';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '151';
-        this.name = 'Mew ex';
-        this.fullName = 'Mew ex MEW';
+        this.setNumber = '67';
+        this.name = 'Raltsx';
+        this.fullName = 'Ralts SIT';
         this.MEAN_LOOK_MARKER = 'MEAN_LOOK_MARKER';
     }
     reduceEffect(store, state, effect) {

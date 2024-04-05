@@ -31,6 +31,7 @@ import { Jolteon } from './jolteon';
 import { Magmar } from './magmar';
 import { Oddish } from './oddish';
 import { AntiqueHelixFossil } from './antique-helix-fossil';
+import { EnergySticker } from './energy-sticker';
 export declare class AntiqueHelixFossilArt extends AntiqueHelixFossil {
     cardImage: string;
 }
@@ -68,6 +69,9 @@ export declare class ElectabuzzArt extends Electabuzz {
     cardImage: string;
 }
 export declare class EeveeArt extends Eevee {
+    cardImage: string;
+}
+export declare class EnergyStickerArt extends EnergySticker {
     cardImage: string;
 }
 export declare class EreikasInvitationArt extends EreikasInvitation {

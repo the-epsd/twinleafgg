@@ -5,7 +5,7 @@ const prompt_1 = require("./prompt");
 class ShuffleHandPrompt extends prompt_1.Prompt {
     constructor(playerId) {
         super(playerId);
-        this.type = 'Shuffle hand';
+        this.type = 'Shuffle deck';
     }
     validate(result, state) {
         if (result === null) {
@@ -15,7 +15,7 @@ class ShuffleHandPrompt extends prompt_1.Prompt {
         if (player === undefined) {
             return false;
         }
-        if (result.length !== player.hand.cards.length) {
+        if (result.length !== player.prizes.length) {
             return false;
         }
         const s = result.slice();

@@ -30,7 +30,9 @@ import { IronLeavesex } from './iron-leaves-ex';
 import { IronThorns } from './iron-thorns';
 import { Koraidon } from './koraidon';
 import { Koraidonex } from './koraidon-ex';
+import { LoveBall } from './love-ball';
 import { MasterBall } from './master-ball';
+import { MaximumBelt } from './maximum-belt';
 import { Metang } from './metang';
 import { Miraidon } from './miraidon';
 import { Miraidonex } from './miraidon-ex';
@@ -184,6 +186,14 @@ export class KoraidonexArt extends Koraidonex {
 
 export class KoraidonArt extends Koraidon {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1705063961343-DYXO4W6108D0464WXJX2/IMG_6427.png?format=2500w';
+}
+
+export class LoveBallArt extends LoveBall {
+  public cardImage = 'https://pbs.twimg.com/media/GHQWktUXYAAmZVA?format=jpg&name=medium';
+}
+
+export class MaximumBeltArt extends MaximumBelt {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_154_R_EN_MD.png';
 }
 
 export class MasterBallArt extends MasterBall {

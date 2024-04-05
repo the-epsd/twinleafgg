@@ -107,8 +107,14 @@ export class Gengarex extends PokemonCard {
 
 
       const target = effect.target;
+      const opponent = StateUtils.getOpponent(state, player);
+      const opponentPokemon = [opponent.active, ...opponent.bench].filter(b => b.cards.length > 0);
 
-      target.damage += 20;
+      if (target == opponentPokemon) {
+
+        target.damage += 20;
+      }
+      return state;
     }
     return state;
   }

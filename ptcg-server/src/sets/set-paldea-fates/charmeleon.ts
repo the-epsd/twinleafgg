@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AbstractAttackEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 
@@ -62,28 +62,31 @@ export class Charmeleon extends PokemonCard {
       }
   
       if (sourceCard) {
+        if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
 
-        // eslint-disable-next-line indent
-            // Allow damage
-        if (effect instanceof PutDamageEffect) {
-          return state; 
+          // Allow damage
+          if (effect instanceof PutDamageEffect) {
+            return state; 
+          }
+          // Allow damage
+          if (effect instanceof DealDamageEffect) {
+            return state; 
+          }
+      
+          // Try to reduce PowerEffect, to check if something is blocking our ability
+          try {
+            const player = StateUtils.findOwner(state, effect.target);
+            const powerEffect = new PowerEffect(player, this.powers[0], this);
+            store.reduceEffect(state, powerEffect);
+          } catch {
+            return state;
+          }
+      
+          effect.preventDefault = true;
         }
-  
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const player = StateUtils.findOwner(state, effect.target);
-          const powerEffect = new PowerEffect(player, this.powers[0], this);
-          store.reduceEffect(state, powerEffect);
-        } catch {
-          return state;
-        }
-  
-        effect.preventDefault = true;
       }
+      return state;
     }
-  
     return state;
   }
-  
 }
-  

@@ -85,6 +85,7 @@ class Gardevoir extends pokemon_card_1.PokemonCard {
                     if (transfers.length === 0) {
                         temp.cards.slice(0, 2).forEach(card => {
                             temp.moveCardTo(card, player.hand);
+                            player.marker.addMarker(this.SHINING_ARCANA_MARKER, this);
                         });
                     }
                     // Attach energy based on prompt selection
@@ -95,6 +96,7 @@ class Gardevoir extends pokemon_card_1.PokemonCard {
                         }
                         temp.cards.forEach(card => {
                             temp.moveCardTo(card, player.hand); // Move card to hand
+                            player.marker.addMarker(this.SHINING_ARCANA_MARKER, this);
                         });
                     }
                 });

@@ -14,6 +14,7 @@ import { Pidgey } from './pidgey';
 import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
 import { Scizor } from './scizor';
+import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
 import { VengefulPunch } from './vengeful-punch';
 export declare class BelliboltArt extends Bellibolt {
@@ -62,6 +63,9 @@ export declare class PoppyArt extends Poppy {
     cardImage: string;
 }
 export declare class ScizorArt extends Scizor {
+    cardImage: string;
+}
+export declare class ThundurusArt extends Thundurus {
     cardImage: string;
 }
 export declare class TownStoreArt extends TownStore {

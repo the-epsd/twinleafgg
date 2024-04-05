@@ -13,9 +13,9 @@ export class MoonlightHill extends TrainerCard {
   
   public set = 'SV4';
   
-  public name = 'Moonlight Hill';
+  public name = 'Moonlit Hill';
   
-  public fullName = 'Moonlight Hill SV4';
+  public fullName = 'Moonlit Hill SV4';
   
   public text = 'Once during each player’s turn, that play may discard a Basic [P] Energy from their hand. If they do, they may heal 30 damage from each of their Pokémon.';
 

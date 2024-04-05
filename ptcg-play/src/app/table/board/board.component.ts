@@ -339,4 +339,28 @@ export class BoardComponent implements OnDestroy {
       });
   }
 
+public onLostZoneClick(card: Card, cardList: CardList) {
+  const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
+  const isDeleted = this.gameState.deleted;
+
+  if (isDeleted) {
+    return this.onCardListClick(card, cardList);
+  }
+
+  const player = PlayerType.BOTTOM_PLAYER;
+  const slot = SlotType.LOSTZONE;
+
+  const options = { enableAbility: { useFromDiscard: true }, enableAttack: false };
+  this.cardsBaseService.showCardInfoList({ card, cardList, options })
+  .then(result => {
+    if (!result) {
+      return;
+    }
+    const gameId = this.gameState.gameId;
+
+    const index = cardList.cards.indexOf(result.card);
+    const target: CardTarget = { player, slot, index };
+});
+
+}
 }

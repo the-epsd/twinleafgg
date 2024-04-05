@@ -35,6 +35,7 @@ exports.setTemporalForces = [
     new card_images_1.IronThornsArt(),
     new card_images_1.KoraidonexArt(),
     new card_images_1.KoraidonArt(),
+    new card_images_1.LoveBallArt(),
     new card_images_1.MasterBallArt(),
     new card_images_1.MetangArt(),
     new card_images_1.MiraidonexArt(),

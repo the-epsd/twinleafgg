@@ -15,8 +15,10 @@ import { GiratinaV } from './giratina-v';
 import { GiratinaVSTAR } from './giratina-vstar';
 import { HisuianGoodraV } from './hisuian-goodra-v';
 import { HisuianGoodraVSTAR } from './hisuian-goodra-vstar';
+import { HisuianZoroark } from './hisuian-zoroark';
 import { HisuianZoroarkV } from './hisuian-zoroark-v';
 import { HisuianZoroarkVSTAR } from './hisuian-zoroark-vstar';
+import { HisuianZorua } from './hisuian-zorua';
 import { Jynx } from './jynx';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
@@ -110,6 +112,14 @@ export class HisuianZoroarkVArt extends HisuianZoroarkV {
 
 export class HisuianZoroarkVSTARArt extends HisuianZoroarkVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_147_R_EN_LG.png';
+}
+
+export class HisuianZoruaArt extends HisuianZorua {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_075_R_EN_LG.png';
+}
+
+export class HisuianZoroarkArt extends HisuianZoroark {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_076_R_EN_LG.png';
 }
 
 export class JynxArt extends Jynx {

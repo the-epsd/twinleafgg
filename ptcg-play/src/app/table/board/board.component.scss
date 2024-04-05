@@ -66,7 +66,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
     left: -55%;
     right: -55%;
     height: 100%; //adjust this number to adjust curve  
-    background:linear-gradient(0deg, #1a202cb5, #0d1016af), url(https://i.redd.it/extended-card-art-wallpapers-part-2-v0-m9rryk6yk0nb1.jpg?width=3841&format=pjpg&auto=webp&s=bf36300668878c327c2bf2f736de1335ee92283a);
+    background:linear-gradient(0deg, #1a202cb5, #0d1016af), url(https://wallpapercave.com/wp/wp10135847.png);
     // background-image: url(https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-53.jpg);
     background-size: 56%;
     background-position: center, top;
@@ -91,7 +91,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
     left: -40%;
     right: -40%;
     height: 600px; //adjust this number to adjust curve  
-    background:linear-gradient(0deg, #1a202cb5, #0d1016af), url(https://wallpapers-clan.com/wp-content/uploads/2023/10/pokemon-eevee-aesthetic-night-desktop-wallpaper-preview.jpg);
+    background:linear-gradient(0deg, #1a202cb5, #0d1016af), url(https://i.pinimg.com/originals/09/0b/9e/090b9e8f08b744bef913c51faba37927.jpg);
     background-size: 56%;
     background-position: center;
     transform: scaleY(-1);
@@ -189,16 +189,16 @@ ptcg-board-deck {
 
 .stadium-card {
   align-self: flex-start;
-  transform: rotate(-90deg);
 
-  .upside-down & {
-    transform: rotate(90deg);
+  margin-top: -35%;
+
   }
-}
+
 
 .lost-zone {
   align-self: flex-start;
   transform: rotate(-90deg);
+    margin-top: 30%;
 
   .upside-down & {
     transform: rotate(90deg);

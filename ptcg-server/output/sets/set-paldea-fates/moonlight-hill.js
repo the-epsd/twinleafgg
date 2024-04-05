@@ -11,8 +11,8 @@ class MoonlightHill extends game_1.TrainerCard {
         this.setNumber = '95';
         this.trainerType = game_1.TrainerType.STADIUM;
         this.set = 'SV4';
-        this.name = 'Moonlight Hill';
-        this.fullName = 'Moonlight Hill SV4';
+        this.name = 'Moonlit Hill';
+        this.fullName = 'Moonlit Hill SV4';
         this.text = 'Once during each player’s turn, that play may discard a Basic [P] Energy from their hand. If they do, they may heal 30 damage from each of their Pokémon.';
     }
     reduceEffect(store, state, effect) {

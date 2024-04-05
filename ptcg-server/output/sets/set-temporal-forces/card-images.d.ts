@@ -30,7 +30,9 @@ import { IronLeavesex } from './iron-leaves-ex';
 import { IronThorns } from './iron-thorns';
 import { Koraidon } from './koraidon';
 import { Koraidonex } from './koraidon-ex';
+import { LoveBall } from './love-ball';
 import { MasterBall } from './master-ball';
+import { MaximumBelt } from './maximum-belt';
 import { Metang } from './metang';
 import { Miraidon } from './miraidon';
 import { Miraidonex } from './miraidon-ex';
@@ -151,6 +153,12 @@ export declare class KoraidonexArt extends Koraidonex {
     cardImage: string;
 }
 export declare class KoraidonArt extends Koraidon {
+    cardImage: string;
+}
+export declare class LoveBallArt extends LoveBall {
+    cardImage: string;
+}
+export declare class MaximumBeltArt extends MaximumBelt {
     cardImage: string;
 }
 export declare class MasterBallArt extends MasterBall {

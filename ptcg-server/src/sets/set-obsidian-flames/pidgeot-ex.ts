@@ -76,6 +76,10 @@ export class Pidgeotex extends PokemonCard {
       if (player.marker.hasMarker(this.QUICK_SEARCH_MARKER)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
   
       player.marker.addMarker(this.QUICK_SEARCH_MARKER, this);
       return store.prompt(state, new ChooseCardsPrompt(

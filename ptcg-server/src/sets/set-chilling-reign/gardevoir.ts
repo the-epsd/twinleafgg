@@ -119,6 +119,7 @@ export class Gardevoir extends PokemonCard {
           if (transfers.length === 0) {
             temp.cards.slice(0, 2).forEach(card => {
               temp.moveCardTo(card, player.hand);
+              player.marker.addMarker(this.SHINING_ARCANA_MARKER, this);
             });
           }
     
@@ -130,7 +131,7 @@ export class Gardevoir extends PokemonCard {
             }
             temp.cards.forEach(card => {
               temp.moveCardTo(card, player.hand); // Move card to hand
-            
+              player.marker.addMarker(this.SHINING_ARCANA_MARKER, this);
             });
           }
         });

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SableyeArt = exports.RoaringMoonArt = exports.ReuniclusArt = exports.RellorArt = exports.RebootPodArt = exports.RaichuArt = exports.RagingBoltexArt = exports.RabscaArt = exports.PrimeCatcherArt = exports.PikachuArt = exports.NeoUpperEnergyArt = exports.MrMimeArt = exports.MortysConvictionArt = exports.MistEnergyArt = exports.MiraidonArt = exports.MiraidonexArt = exports.MetangArt = exports.MasterBallArt = exports.KoraidonArt = exports.KoraidonexArt = exports.IronThornsArt = exports.IronLeavesexArt = exports.IronHandsArt = exports.IronCrownexArt = exports.HerosCapeArt = exports.HaunterArt = exports.HandTrimmerArt = exports.GrotleArt = exports.GougingFireexArt = exports.GengarexArt = exports.GastlyArt = exports.FlutterManeArt = exports.FeraligatrArt = exports.ExplorersGuidanceArt = exports.EriArt = exports.EmergencyBoardArt = exports.DuosionArt = exports.DunsparceArt = exports.DudunsparceArt = exports.DrumsOfAwakeningArt = exports.DrilburArt = exports.DeliveryBoxArt = exports.CryptomaniacsDecipheringArt = exports.CroconawArt = exports.CincinnoArt = exports.ChatotArt = exports.CharjabugArt = exports.BuddyPoffinArt = exports.BiancasSincerityArt = exports.BeldumArt = void 0;
-exports.WalkingWakeexArt = exports.VikavoltArt = exports.VictiniArt = exports.TurtwigArt = exports.TotodileArt = exports.TorterraexArt = exports.SolosisArt = exports.SandyShocksArt = exports.SalvatoreArt = void 0;
+exports.ReuniclusArt = exports.RellorArt = exports.RebootPodArt = exports.RaichuArt = exports.RagingBoltexArt = exports.RabscaArt = exports.PrimeCatcherArt = exports.PikachuArt = exports.NeoUpperEnergyArt = exports.MrMimeArt = exports.MortysConvictionArt = exports.MistEnergyArt = exports.MiraidonArt = exports.MiraidonexArt = exports.MetangArt = exports.MasterBallArt = exports.MaximumBeltArt = exports.LoveBallArt = exports.KoraidonArt = exports.KoraidonexArt = exports.IronThornsArt = exports.IronLeavesexArt = exports.IronHandsArt = exports.IronCrownexArt = exports.HerosCapeArt = exports.HaunterArt = exports.HandTrimmerArt = exports.GrotleArt = exports.GougingFireexArt = exports.GengarexArt = exports.GastlyArt = exports.FlutterManeArt = exports.FeraligatrArt = exports.ExplorersGuidanceArt = exports.EriArt = exports.EmergencyBoardArt = exports.DuosionArt = exports.DunsparceArt = exports.DudunsparceArt = exports.DrumsOfAwakeningArt = exports.DrilburArt = exports.DeliveryBoxArt = exports.CryptomaniacsDecipheringArt = exports.CroconawArt = exports.CincinnoArt = exports.ChatotArt = exports.CharjabugArt = exports.BuddyPoffinArt = exports.BiancasSincerityArt = exports.BeldumArt = void 0;
+exports.WalkingWakeexArt = exports.VikavoltArt = exports.VictiniArt = exports.TurtwigArt = exports.TotodileArt = exports.TorterraexArt = exports.SolosisArt = exports.SandyShocksArt = exports.SalvatoreArt = exports.SableyeArt = exports.RoaringMoonArt = void 0;
 const beldum_1 = require("./beldum");
 const biancas_sincerity_1 = require("./biancas-sincerity");
 const buddy_poffin_1 = require("./buddy-poffin");
@@ -34,7 +34,9 @@ const iron_leaves_ex_1 = require("./iron-leaves-ex");
 const iron_thorns_1 = require("./iron-thorns");
 const koraidon_1 = require("./koraidon");
 const koraidon_ex_1 = require("./koraidon-ex");
+const love_ball_1 = require("./love-ball");
 const master_ball_1 = require("./master-ball");
+const maximum_belt_1 = require("./maximum-belt");
 const metang_1 = require("./metang");
 const miraidon_1 = require("./miraidon");
 const miraidon_ex_1 = require("./miraidon-ex");
@@ -285,6 +287,20 @@ class KoraidonArt extends koraidon_1.Koraidon {
     }
 }
 exports.KoraidonArt = KoraidonArt;
+class LoveBallArt extends love_ball_1.LoveBall {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GHQWktUXYAAmZVA?format=jpg&name=medium';
+    }
+}
+exports.LoveBallArt = LoveBallArt;
+class MaximumBeltArt extends maximum_belt_1.MaximumBelt {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_154_R_EN_MD.png';
+    }
+}
+exports.MaximumBeltArt = MaximumBeltArt;
 class MasterBallArt extends master_ball_1.MasterBall {
     constructor() {
         super(...arguments);

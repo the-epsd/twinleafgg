@@ -3,7 +3,7 @@ import { State } from '../state/state';
 
 export class ShuffleHandPrompt extends Prompt<number[]> {
 
-  readonly type: string = 'Shuffle hand';
+  readonly type: string = 'Shuffle deck';
 
   constructor(playerId: number) {
     super(playerId);
@@ -17,7 +17,7 @@ export class ShuffleHandPrompt extends Prompt<number[]> {
     if (player === undefined) {
       return false;
     }
-    if (result.length !== player.hand.cards.length) {
+    if (result.length !== player.prizes.length) {
       return false;
     }
     const s = result.slice();

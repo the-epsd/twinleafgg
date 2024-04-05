@@ -28,8 +28,7 @@ export class FormatValidator {
         return true;
         
       case Format.STANDARD:
-        return card.regulationMark === 'E' || 
-               card.regulationMark === 'F' || 
+        return card.regulationMark === 'F' || 
                card.regulationMark === 'G' || 
                card.regulationMark === 'H';
                

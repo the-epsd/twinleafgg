@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VoloArt = exports.SnorlaxArt = exports.SableyeArt = exports.RotomVArt = exports.RadiantHisuianSneaslerArt = exports.RadiantGardevoirArt = exports.PidgeotVArt = exports.PanicMaskArt = exports.MirageGateArt = exports.MawileArt = exports.MagnezoneVSTARArt = exports.MagnezoneVArt = exports.LostVacuumArt = exports.LostCityArt = exports.LadyArt = exports.KyuremVMAXArt = exports.KyuremVArt = exports.JynxArt = exports.HisuianZoroarkVSTARArt = exports.HisuianZoroarkVArt = exports.HisuianGoodraVSTARArt = exports.HisuianGoodraVArt = exports.GiratinaVSTARArt = exports.GiratinaVArt = exports.GiftEnergyArt = exports.GengarArt = exports.DrapionVSTARArt = exports.DrapionVArt = exports.DelphoxVArt = exports.DamagePumpArt = exports.CresseliaArt = exports.CramorantArt = exports.ComfeyArt = exports.ColresssExperimentArt = exports.BoxOfDisasterArt = exports.BouffalantArt = exports.ArezuArt = void 0;
+exports.VoloArt = exports.SnorlaxArt = exports.SableyeArt = exports.RotomVArt = exports.RadiantHisuianSneaslerArt = exports.RadiantGardevoirArt = exports.PidgeotVArt = exports.PanicMaskArt = exports.MirageGateArt = exports.MawileArt = exports.MagnezoneVSTARArt = exports.MagnezoneVArt = exports.LostVacuumArt = exports.LostCityArt = exports.LadyArt = exports.KyuremVMAXArt = exports.KyuremVArt = exports.JynxArt = exports.HisuianZoroarkArt = exports.HisuianZoruaArt = exports.HisuianZoroarkVSTARArt = exports.HisuianZoroarkVArt = exports.HisuianGoodraVSTARArt = exports.HisuianGoodraVArt = exports.GiratinaVSTARArt = exports.GiratinaVArt = exports.GiftEnergyArt = exports.GengarArt = exports.DrapionVSTARArt = exports.DrapionVArt = exports.DelphoxVArt = exports.DamagePumpArt = exports.CresseliaArt = exports.CramorantArt = exports.ComfeyArt = exports.ColresssExperimentArt = exports.BoxOfDisasterArt = exports.BouffalantArt = exports.ArezuArt = void 0;
 const arezu_1 = require("./arezu");
 const bouffalant_1 = require("./bouffalant");
 const box_of_disaster_1 = require("./box-of-disaster");
@@ -18,8 +18,10 @@ const giratina_v_1 = require("./giratina-v");
 const giratina_vstar_1 = require("./giratina-vstar");
 const hisuian_goodra_v_1 = require("./hisuian-goodra-v");
 const hisuian_goodra_vstar_1 = require("./hisuian-goodra-vstar");
+const hisuian_zoroark_1 = require("./hisuian-zoroark");
 const hisuian_zoroark_v_1 = require("./hisuian-zoroark-v");
 const hisuian_zoroark_vstar_1 = require("./hisuian-zoroark-vstar");
+const hisuian_zorua_1 = require("./hisuian-zorua");
 const jynx_1 = require("./jynx");
 const kyurem_v_1 = require("./kyurem-v");
 const kyurem_vmax_1 = require("./kyurem-vmax");
@@ -171,6 +173,20 @@ class HisuianZoroarkVSTARArt extends hisuian_zoroark_vstar_1.HisuianZoroarkVSTAR
     }
 }
 exports.HisuianZoroarkVSTARArt = HisuianZoroarkVSTARArt;
+class HisuianZoruaArt extends hisuian_zorua_1.HisuianZorua {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_075_R_EN_LG.png';
+    }
+}
+exports.HisuianZoruaArt = HisuianZoruaArt;
+class HisuianZoroarkArt extends hisuian_zoroark_1.HisuianZoroark {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_076_R_EN_LG.png';
+    }
+}
+exports.HisuianZoroarkArt = HisuianZoroarkArt;
 class JynxArt extends jynx_1.Jynx {
     constructor() {
         super(...arguments);

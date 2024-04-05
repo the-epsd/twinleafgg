@@ -14,6 +14,7 @@ import { Pidgey } from './pidgey';
 import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
 import { Scizor } from './scizor';
+import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
 import { VengefulPunch } from './vengeful-punch';
 
@@ -80,6 +81,10 @@ export class PoppyArt extends Poppy {
 
 export class ScizorArt extends Scizor {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_141_R_EN.png';
+}
+
+export class ThundurusArt extends Thundurus {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_070_R_EN.png';
 }
   
 export class TownStoreArt extends TownStore {

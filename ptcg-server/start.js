@@ -110,24 +110,6 @@ StateSerializer.setKnownCards(cardManager.getAllCards());
 const botManager = BotManager.getInstance();
 botManager.registerBot(new SimpleBot('Gardevoir'));
 botManager.registerBot(new SimpleBot('Charizard'));
-botManager.registerBot(new SimpleBot('Bot1'));
-botManager.registerBot(new SimpleBot('Bot2'));
-botManager.registerBot(new SimpleBot('Bot3'));
-botManager.registerBot(new SimpleBot('Bot4'));
-botManager.registerBot(new SimpleBot('Bot5'));
-botManager.registerBot(new SimpleBot('Bot6'));
-botManager.registerBot(new SimpleBot('Bot7'));
-botManager.registerBot(new SimpleBot('Bot8'));
-botManager.registerBot(new SimpleBot('Bot9'));
-botManager.registerBot(new SimpleBot('Bot10'));
-botManager.registerBot(new SimpleBot('Bot11'));
-botManager.registerBot(new SimpleBot('Bot12'));
-botManager.registerBot(new SimpleBot('Bot13'));
-botManager.registerBot(new SimpleBot('Bot14'));
-botManager.registerBot(new SimpleBot('Bot15'));
-botManager.registerBot(new SimpleBot('Bot16'));
-botManager.registerBot(new SimpleBot('Bot17'));
-botManager.registerBot(new SimpleBot('Bot18'));
 
 const app = new App();
 

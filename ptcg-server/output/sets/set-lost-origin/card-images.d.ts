@@ -15,8 +15,10 @@ import { GiratinaV } from './giratina-v';
 import { GiratinaVSTAR } from './giratina-vstar';
 import { HisuianGoodraV } from './hisuian-goodra-v';
 import { HisuianGoodraVSTAR } from './hisuian-goodra-vstar';
+import { HisuianZoroark } from './hisuian-zoroark';
 import { HisuianZoroarkV } from './hisuian-zoroark-v';
 import { HisuianZoroarkVSTAR } from './hisuian-zoroark-vstar';
+import { HisuianZorua } from './hisuian-zorua';
 import { Jynx } from './jynx';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
@@ -90,6 +92,12 @@ export declare class HisuianZoroarkVArt extends HisuianZoroarkV {
     cardImage: string;
 }
 export declare class HisuianZoroarkVSTARArt extends HisuianZoroarkVSTAR {
+    cardImage: string;
+}
+export declare class HisuianZoruaArt extends HisuianZorua {
+    cardImage: string;
+}
+export declare class HisuianZoroarkArt extends HisuianZoroark {
     cardImage: string;
 }
 export declare class JynxArt extends Jynx {

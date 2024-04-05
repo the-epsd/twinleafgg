@@ -31,6 +31,7 @@ import { Jolteon } from './jolteon';
 import { Magmar } from './magmar';
 import { Oddish } from './oddish';
 import { AntiqueHelixFossil } from './antique-helix-fossil';
+import { EnergySticker } from './energy-sticker';
 
 export class AntiqueHelixFossilArt extends AntiqueHelixFossil {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_153_R_EN.png';
@@ -82,6 +83,10 @@ export class ElectabuzzArt extends Electabuzz {
 
 export class EeveeArt extends Eevee {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_133_R_EN_LG.png';
+}
+
+export class EnergyStickerArt extends EnergySticker {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_159_R_EN_LG.png';
 }
 
 export class EreikasInvitationArt extends EreikasInvitation {
