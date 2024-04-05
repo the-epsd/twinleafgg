@@ -1,6 +1,22 @@
- import { Card, CardTag, EnergyType, Format, SuperType } from "ptcg-server"
+ import { Card, CardTag, EnergyType, Format, SuperType } from "ptcg-server";
 
 export class FormatValidator {
+  
+  static getValidFormatsForCardList(cards: Card[]): Format[] {
+    
+    if (!cards || cards.length === 0) {
+      return [];
+    }
+    
+    let formats = [];
+    
+    cards.filter(c => c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC).forEach(card => {
+      formats.push(this.getValidFormats(card));
+      console.log(this.getValidFormats(card));
+    });
+    
+    return formats.reduce((a, b) => a.filter(c => b.includes(c)))
+  }
   
   static getValidFormats(card: Card): Format[] {
     const formats = [Format.UNLIMITED];
@@ -19,7 +35,7 @@ export class FormatValidator {
   
   static isValid(card: Card, format: Format): boolean {    
     
-    if (card.superType === SuperType.ENERGY && EnergyType.BASIC) {
+    if (card.superType === SuperType.ENERGY && (<any>card).energyType === EnergyType.BASIC) {
       return true;
     }
     
@@ -58,7 +74,7 @@ export class FormatValidator {
         return card.set === 'BS' || 
                card.set === 'JU' || 
                card.set === 'FO' || 
-               card.set ==='PR';
+               card.set === 'PR';
     }
     
     if (banList.includes(`${card.name} ${card.set} ${card.setNumber}`)) {
@@ -126,131 +142,130 @@ export const BanLists: { [key: number]: string[] } = {
 }
 
 export const SetReleaseDates: { [key: string]: Date } = {
-  // BASE-GYM
-  'BS': new Date('09-01-1999'),
-  'JU': new Date('16-06-1999'),
-  'FO': new Date('10-10-1999'),
-  'TR': new Date('24-04-2000'),
-  'G1': new Date('14-08-2000'),
-  'G2': new Date('16-10-2000'),
+  'BS': new Date('1999-01-09'),
+  'JU': new Date('1999-06-16'),
+  'FO': new Date('1999-10-10'),
+  'TR': new Date('2000-04-24'),
+  'G1': new Date('2000-08-14'),
+  'G2': new Date('2000-10-16'),
   // NEO
-  'N1': new Date('16-12-2000'),
-  'N2': new Date('01-06-2001'),
-  'N3': new Date('21-09-2001'),
-  'N4': new Date('28-02-2002'),
+  'N1': new Date('2000-12-16'),
+  'N2': new Date('2001-06-01'),
+  'N3': new Date('2001-09-21'),
+  'N4': new Date('2002-02-28'),
   // LEGENDARY COLLECTION
-  'LC': new Date('24-05-2002'),
+  'LC': new Date('2002-05-24'),
   // E-CARD
-  'EX': new Date('15-09-2002'),
-  'AQ': new Date('15-01-2003'),
-  'SK': new Date('12-05-2003'),
+  'EX': new Date('2002-09-15'),
+  'AQ': new Date('2003-01-15'),
+  'SK': new Date('2003-05-12'),
   // EX 
-  'RS': new Date('18-07-2003'),
-  'SS': new Date('18-09-2003'),
-  'DR': new Date('24-11-2003'),
-  'MA': new Date('15-03-2004'),
-  'HL': new Date('14-06-2004'),
-  'FL': new Date('30-08-2004'),
-  'TRR': new Date('08-11-2004'),
-  'DX': new Date('14-02-2005'),
-  'EM': new Date('09-05-2005'),
-  'UF': new Date('22-08-2005'),
-  'DS': new Date('31-10-2005'),
-  'LM': new Date('13-02-2006'),
-  'HP': new Date('03-05-2006'),
-  'CG': new Date('30-08-2006'),
-  'DF': new Date('08-11-2006'),
-  'PK': new Date('14-02-2007'),
+  'RS': new Date('2003-07-18'),
+  'SS': new Date('2003-09-18'),
+  'DR': new Date('2003-11-24'),
+  'MA': new Date('2004-03-15'),
+  'HL': new Date('2004-06-14'),
+  'FL': new Date('2004-08-30'),
+  'TRR': new Date('2004-11-08'),
+  'DX': new Date('2005-02-14'),
+  'EM': new Date('2005-05-09'),
+  'UF': new Date('2005-08-22'),
+  'DS': new Date('2005-10-31'),
+  'LM': new Date('2006-02-13'),
+  'HP': new Date('2006-05-03'),
+  'CG': new Date('2006-08-30'),
+  'DF': new Date('2006-11-08'),
+  'PK': new Date('2007-02-14'),
   // DIAMOND & PEARL
-  'DP': new Date('23-05-2007'),
-  'MT': new Date('22-08-2007'),
-  'SW': new Date('07-11-2007'),
-  'GE': new Date('13-02-2008'),
-  'MD': new Date('21-05-2008'),
-  'LA': new Date('20-08-2008'),
-  'SF': new Date('05-11-2008'),
+  'DP': new Date('2007-05-23'),
+  'MT': new Date('2007-08-22'),
+  'SW': new Date('2007-11-07'),
+  'GE': new Date('2008-02-13'),
+  'MD': new Date('2008-05-21'),
+  'LA': new Date('2008-08-20'),
+  'SF': new Date('2008-11-05'),
   //PLATINUM
-  'PL': new Date('11-02-2009'),
-  'RR': new Date('16-05-2009'),
-  'SV': new Date('19-08-2009'),
-  'AR': new Date('04-11-2009'),
+  'PL': new Date('2009-02-11'),
+  'RR': new Date('2009-05-16'),
+  'SV': new Date('2009-08-19'),
+  'AR': new Date('2009-11-04'),
   // HG & SS
-  'HS': new Date('10-02-2010'),
-  'UL': new Date('12-05-2010'),
-  'UD': new Date('18-08-2010'),
-  'TM': new Date('03-11-2010'),
+  'HS': new Date('2010-02-10'),
+  'UL': new Date('2010-05-12'),
+  'UD': new Date('2010-08-18'),
+  'TM': new Date('2010-11-03'),
   // CALL OF LEGENDS
-  'CL': new Date('09-02-2011'),
+  'CL': new Date('2011-02-09'),
   // BLACK & WHITE
-  'BLW': new Date('25-04-2011'),
-  'EPO': new Date('31-08-2011'),
-  'NVI': new Date('16-11-2011'),
-  'NXD': new Date('08-02-2012'),
-  'DEX': new Date('09-05-2012'),
-  'DRX': new Date('15-08-2012'),
-  'DRV': new Date('05-10-2012'),
-  'BCR': new Date('07-11-2012'),
-  'PLS': new Date('06-02-2013'),
-  'PLF': new Date('08-05-2013'),
-  'PLB': new Date('14-08-2013'),
-  'LTR': new Date('06-11-2013'),
+  'BLW': new Date('2011-04-25'),
+  'EPO': new Date('2011-08-31'),
+  'NVI': new Date('2011-11-16'),
+  'NXD': new Date('2012-02-08'),
+  'DEX': new Date('2012-05-09'),
+  'DRX': new Date('2012-08-15'),
+  'DRV': new Date('2012-10-05'),
+  'BCR': new Date('2012-11-07'),
+  'PLS': new Date('2013-02-06'),
+  'PLF': new Date('2013-05-08'),
+  'PLB': new Date('2013-08-14'),
+  'LTR': new Date('2013-11-06'),
   // X & Y
-  'KSS': new Date('08-11-2013'),
-  'XY': new Date('05-02-2014'),
-  'FLF': new Date('07-05-2014'),
-  'FFI': new Date('13-08-2014'),
-  'PHF': new Date('05-11-2014'),
-  'PRC': new Date('04-02-2015'),
-  'DCR': new Date('25-03-2015'),
-  'ROS': new Date('06-05-2015'),
-  'AOR': new Date('12-08-2015'),
-  'BKT': new Date('04-11-2015'),
-  'BKP': new Date('03-02-2016'),
-  'GEN': new Date('22-02-2016'),
-  'FCO': new Date('02-05-2016'),
-  'STS': new Date('03-08-2016'),
-  'EVO': new Date('02-11-2016'),
+  'KSS': new Date('2013-11-08'),
+  'XY': new Date('2014-02-05'),
+  'FLF': new Date('2014-05-07'),
+  'FFI': new Date('2014-08-13'),
+  'PHF': new Date('2014-11-05'),
+  'PRC': new Date('2015-02-04'),
+  'DCR': new Date('2015-03-25'),
+  'ROS': new Date('2015-05-06'),
+  'AOR': new Date('2015-08-12'),
+  'BKT': new Date('2015-11-04'),
+  'BKP': new Date('2016-02-03'),
+  'GEN': new Date('2016-02-22'),
+  'FCO': new Date('2016-05-02'),
+  'STS': new Date('2016-08-03'),
+  'EVO': new Date('2016-11-02'),
   // SUN & MOON
-  'SUM': new Date('03-02-2017'),
-  'GRI': new Date('05-05-2017'),
-  'BUS': new Date('04-08-2017'),
-  'SLG': new Date('06-10-2017'),
-  'CIN': new Date('03-11-2017'),
-  'UPR': new Date('02-02-2018'),
-  'FLI': new Date('05-04-2018'),
-  'CES': new Date('08-03-2018'),
-  'DRM': new Date('09-07-2018'),
-  'LOT': new Date('11-02-2018'),
-  'TEU': new Date('02-01-2019'),
-  'DET': new Date('29-03-2019'),
-  'UNB': new Date('05-03-2019'),
-  'UNM': new Date('08-02-2019'),
-  'HIF': new Date('23-08-2019'),
-  'CEC': new Date('11-01-2019'),
+  'SUM': new Date('2017-02-03'),
+  'GRI': new Date('2017-05-05'),
+  'BUS': new Date('2017-08-04'),
+  'SLG': new Date('2017-10-06'),
+  'CIN': new Date('2017-11-03'),
+  'UPR': new Date('2018-02-02'),
+  'FLI': new Date('2018-04-05'),
+  'CES': new Date('2018-03-08'),
+  'DRM': new Date('2018-07-09'),
+  'LOT': new Date('2018-11-02'),
+  'TEU': new Date('2019-01-02'),
+  'DET': new Date('2019-03-29'),
+  'UNB': new Date('2019-03-05'),
+  'UNM': new Date('2019-02-08'),
+  'HIF': new Date('2019-08-23'),
+  'CEC': new Date('2019-11-01'),
   // SWORD & SHIELD
-  'SSH': new Date('07-02-2020'),
-  'RCL': new Date('01-05-2020'),
-  'DAA': new Date('14-08-2020'),
-  'CPA': new Date('25-09-2020'),
-  'VIV': new Date('13-11-2020'),
-  'SHF': new Date('19-02-2021'),
-  'BST': new Date('19-03-2021'),
-  'CRE': new Date('18-06-2021'),
-  'EVS': new Date('27-08-2021'),
-  'CEL': new Date('08-10-2021'),
-  'FST': new Date('12-11-2021'),
-  'BRS': new Date('25-02-2022'),
-  'ASR': new Date('27-05-2022'),
-  'PGO': new Date('01-07-2022'),
-  'LOR': new Date('09-09-2022'),
-  'SIT': new Date('11-11-2022'),
-  'CRZ': new Date('20-01-2023'),
+  'SSH': new Date('2020-02-07'),
+  'RCL': new Date('2020-05-01'),
+  'DAA': new Date('2020-08-14'),
+  'CPA': new Date('2020-09-25'),
+  'VIV': new Date('2020-11-13'),
+  'SHF': new Date('2021-02-19'),
+  'BST': new Date('2021-03-19'),
+  'CRE': new Date('2021-06-18'),
+  'EVS': new Date('2021-08-27'),
+  'CEL': new Date('2021-10-08'),
+  'FST': new Date('2021-11-12'),
+  'BRS': new Date('2022-02-25'),
+  'ASR': new Date('2022-05-27'),
+  'PGO': new Date('2022-07-01'),
+  'LOR': new Date('2022-09-09'),
+  'SIT': new Date('2022-11-11'),
+  'CRZ': new Date('2023-01-20'),
   // SCARLET & VIOLET
-  'SVI': new Date('31-03-2023'),
-  'PAL': new Date('09-06-2023'),
-  'OBF': new Date('11-08-2023'),
-  'MEW': new Date('22-09-2023'),
-  'PAR': new Date('03-11-2023'),
-  'PAF': new Date('26-01-2024'),
-  'TEF': new Date('22-03-2024')
-} 
+  'SVI': new Date('2023-03-31'),
+  'PAL': new Date('2023-06-09'),
+  'OBF': new Date('2023-08-11'),
+  'MEW': new Date('2023-09-22'),
+  'PAR': new Date('2023-11-03'),
+  'PAF': new Date('2024-01-26'),
+  'TEF': new Date('2024-03-22')
+}

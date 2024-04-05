@@ -26,6 +26,9 @@
 <div class="ptcg-deck-edit-pane secondary"
   [dropTarget]="deckTarget"
   ptcgDropHighlight [ptcgDropHighlightVisible]="deckHighlight$ | async">
+  <div class="deck-validity">
+    <ptcg-deck-validity [deck]="tempList"></ptcg-deck-validity>    
+  </div>
 
   <dnd-sortable-list
     listId="CARD_LIBRARY_LIST"

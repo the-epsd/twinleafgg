@@ -1,0 +1,6 @@
+<mat-chip-list *ngIf="validFormats$ | async as validFormats">
+  <mat-chip *ngFor="let format of formats">
+    {{ format.label | translate }}
+    <mat-icon *ngIf="validFormats.includes(format.value)">checkmark</mat-icon>
+  </mat-chip>
+</mat-chip-list>

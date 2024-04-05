@@ -25,6 +25,14 @@ ptcg-deck-card.placeholder {
   overflow: auto;
 }
 
+.deck-validity {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  place-content: center;
+}
+
 .ptcg-deck-edit-pane.secondary {
   border-width: 0px;
   overflow: auto;
