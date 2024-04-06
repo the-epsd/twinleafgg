@@ -1,3 +1,4 @@
+import { Format } from '../store/card/card-types';
 import { Rules } from '../store/state/rules';
 
 export class GameSettings {
@@ -7,5 +8,7 @@ export class GameSettings {
   timeLimit: number = 900;
 
   recordingEnabled: boolean = true;
+
+  format: Format = Format.STANDARD;
 
 }

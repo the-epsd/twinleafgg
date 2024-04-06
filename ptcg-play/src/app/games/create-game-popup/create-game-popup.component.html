@@ -4,11 +4,21 @@
 
   <form #form="ngForm" autocomplete="off">
 
+  <!-- Format -->
+  <mat-form-field>
+    <mat-label translate>GAMES_FORMAT</mat-label>
+    <mat-select [(value)]="settings.format" (selectionChange)="onFormatSelected($event.value)">
+      <mat-option *ngFor="let option of formats" [value]="option.value">
+        {{option.label | translate }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
     <!-- Deck -->
     <mat-form-field>
       <mat-label translate>GAMES_YOUR_DECK</mat-label>
       <mat-select [(value)]="deckId">
-        <mat-option *ngFor="let option of decks" [value]="option.value">
+        <mat-option *ngFor="let option of formatValidDecks" [value]="option.value">
           {{option.viewValue}}
         </mat-option>
       </mat-select>

@@ -1,10 +1,13 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Card, Format, GameSettings } from 'ptcg-server';
+import { Deck, DeckListEntry } from 'src/app/api/interfaces/deck.interface';
+import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
+import { FormatValidator } from 'src/app/util/formats-validator';
 import { SelectPopupOption } from '../../shared/alert/select-popup/select-popup.component';
-import { GameSettings } from 'ptcg-server';
 
 export interface CreateGamePopupData {
-  decks: SelectPopupOption<number>[];
+  decks: SelectPopupOption<DeckListEntry>[];
 }
 
 export interface CreateGamePopupResult {
@@ -19,9 +22,19 @@ export interface CreateGamePopupResult {
 })
 export class CreateGamePopupComponent {
 
-  public decks: SelectPopupOption<number>[];
+  decks: SelectPopupOption<DeckListEntry>[];
   public deckId: number;
   public settings = new GameSettings();
+
+  public formats = [
+    {value: Format.STANDARD, label: 'LABEL_STANDARD' },
+    // {value: Format.GLC, label: 'LABEL_GLC' },
+    // {value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
+    {value: Format.RETRO, label: 'LABEL_RETRO' },
+    // {value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
+  ];
+
+  public formatValidDecks: SelectPopupOption<number>[];
 
   public timeLimits: SelectPopupOption<number>[] = [
     { value: 0, viewValue: 'GAMES_LIMIT_NO_LIMIT' },
@@ -31,10 +44,19 @@ export class CreateGamePopupComponent {
 
   constructor(
     private dialogRef: MatDialogRef<CreateGamePopupComponent>,
+    private cardsBaseService: CardsBaseService,
     @Inject(MAT_DIALOG_DATA) data: CreateGamePopupData,
   ) {
     this.decks = data.decks;
-    this.deckId = data.decks[0].value;
+    this.settings.format = Format.STANDARD;
+
+    data.decks.forEach(deck => {
+      const deckCards: Card[] = [];
+      deck.value.cards.forEach(card => deckCards.push(this.cardsBaseService.getCardByName(card)));
+      deck.value.format = FormatValidator.getValidFormatsForCardList(deckCards);
+    });
+
+    this.onFormatSelected(this.settings.format);
   }
 
   public confirm() {
@@ -48,4 +70,13 @@ export class CreateGamePopupComponent {
     this.dialogRef.close();
   }
 
+  onFormatSelected(format: Format) {
+    this.formatValidDecks = this.decks.filter(d => 
+      d.value.format.includes(format)
+    ).map(d => ({ value: d.value.id, viewValue: d.value.name }));
+
+    if (this.formatValidDecks.length > 0) {
+      this.deckId = this.formatValidDecks[0].value;
+    }
+  }
 }
