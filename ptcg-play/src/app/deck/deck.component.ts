@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 
-import { AlertService } from '../shared/alert/alert.service';
 import { ApiError } from '../api/api.error';
 import { DeckListEntry } from '../api/interfaces/deck.interface';
 import { DeckService } from '../api/services/deck.service';
+import { AlertService } from '../shared/alert/alert.service';
+import { CardsBaseService } from '../shared/cards/cards-base.service';
+import { DeckItem } from './deck-card/deck-card.interface';
 
 @UntilDestroy()
 
@@ -18,14 +20,14 @@ import { DeckService } from '../api/services/deck.service';
 })
 export class DeckComponent implements OnInit {
 
-
-  public displayedColumns: string[] = ['name', 'cardTypes', 'isValid', 'actions'];
+  public displayedColumns: string[] = ['name', 'formats', 'cardTypes', 'isValid', 'actions'];
   public decks: DeckListEntry[] = [];
   public loading = false;
 
   constructor(
     private alertService: AlertService,
     private deckService: DeckService,
+    private cardsBaseService: CardsBaseService,
     private translate: TranslateService
   ) { }
 
@@ -41,6 +43,20 @@ export class DeckComponent implements OnInit {
     )
       .subscribe(response => {
         this.decks = response.decks;
+
+        this.decks.forEach(deck => {
+          const deckCards: DeckItem[] = [];
+          deck.cards.forEach(card => {
+            deckCards.push({
+              card: this.cardsBaseService.getCardByName(card),
+              count: 0,
+              pane: null,
+              scanUrl: null
+            });
+          });
+
+          deck.deckItems = deckCards;
+        });
       }, (error: ApiError) => {
         this.handleError(error);
       });

@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl: 'https://play-server.twinleaf.gg',
+  apiUrl: 'http://localhost:8080',
   timeout: 30 * 1000,
   production: false,
   apiVersion: 2,

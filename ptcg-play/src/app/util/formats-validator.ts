@@ -10,7 +10,7 @@ export class FormatValidator {
     
     let formats = [];
     
-    cards.filter(c => c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC).forEach(card => {
+    cards.filter(c => !!c && c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC).forEach(card => {
       formats.push(this.getValidFormats(card));
       console.log(this.getValidFormats(card));
     });

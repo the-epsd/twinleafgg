@@ -27,6 +27,7 @@ class Decks extends controller_1.Controller {
             id: deck.id,
             name: deck.name,
             isValid: deck.isValid,
+            cards: JSON.parse(deck.cards),
             cardTypes: JSON.parse(deck.cardTypes)
         }));
         res.send({ ok: true, decks });

@@ -1,13 +1,16 @@
-import { Response } from './response.interface';
 import { CardTag, CardType, Format } from 'ptcg-server';
+import { Response } from './response.interface';
+import { DeckItem } from 'src/app/deck/deck-card/deck-card.interface';
 
 export interface DeckListEntry {
   id: number;
   name: string;
   cardType: CardType[];
   cardTag: CardTag[];
+  cards: string[];
   format: Format[];
   isValid: boolean;
+  deckItems: DeckItem[];
 }
 
 export interface DeckListResponse extends Response {

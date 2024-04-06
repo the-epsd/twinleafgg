@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Format } from 'ptcg-server';
 import { BehaviorSubject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { DeckItem } from 'src/app/deck/deck-card/deck-card.interface';
 import { FormatValidator } from 'src/app/util/formats-validator';
 
@@ -21,6 +21,8 @@ export class DeckValidityComponent {
     {value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
   ];
   
+  @Input() validOnly = false;
+
   @Input() 
   set deck(cards: DeckItem[]) {
     this._deck.next(cards);

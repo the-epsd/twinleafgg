@@ -37,15 +37,10 @@ class HisuianHeavyBall extends game_1.TrainerCard {
                 player.supporter.moveCardTo(heavyBall, player.prizes[chosenPrizeIndex]);
                 // const shuffledPrizes = player.prizes.slice().sort(() => Math.random() - 0.5);
                 // player.prizes = shuffledPrizes;
-                // store.prompt(state, [
-                //   new ShuffleHandPrompt(player.id),
-                // ], prizeOrder => {
-                //   prizes.forEach(p => { p.applyOrder([prizeOrder[0]]); });
-                // });
                 prizes.forEach(p => { p.isSecret = true; });
-                return store.prompt(state, new game_1.ShuffleHandPrompt(player.id), order => {
-                    prizes.forEach(p => { p.applyOrder([order[0]]); });
-                });
+                // return store.prompt(state, new ShuffleHandPrompt(player.id), order => {
+                //   prizes.forEach(p => { p.applyOrder([order[0]]); });
+                // });
             });
             return state;
         }

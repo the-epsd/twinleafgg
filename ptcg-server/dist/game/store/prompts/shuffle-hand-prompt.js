@@ -2,7 +2,7 @@ import { Prompt } from './prompt';
 export class ShuffleHandPrompt extends Prompt {
     constructor(playerId) {
         super(playerId);
-        this.type = 'Shuffle hand';
+        this.type = 'Shuffle deck';
     }
     validate(result, state) {
         if (result === null) {
@@ -12,7 +12,7 @@ export class ShuffleHandPrompt extends Prompt {
         if (player === undefined) {
             return false;
         }
-        if (result.length !== player.hand.cards.length) {
+        if (result.length !== player.prizes.length) {
             return false;
         }
         const s = result.slice();

@@ -20,6 +20,14 @@
       </ng-container>
 
       <!-- Card types -->
+      <ng-container matColumnDef="formats">
+        <th mat-header-cell *matHeaderCellDef translate>DECK_FORMATS</th>
+        <td mat-cell *matCellDef="let deck">
+          <ptcg-deck-validity [deck]="deck.deckItems" [validOnly]="true"></ptcg-deck-validity>
+        </td>
+      </ng-container>
+
+      <!-- Card types -->
       <ng-container matColumnDef="cardTypes">
         <th mat-header-cell *matHeaderCellDef translate>DECK_TYPE</th>
         <td mat-cell *matCellDef="let deck">
