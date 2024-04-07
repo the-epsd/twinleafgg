@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { InvitePlayerPrompt } from 'ptcg-server';
+import { Format, InvitePlayerPrompt } from 'ptcg-server';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { finalize } from 'rxjs/operators';
 
@@ -20,6 +20,14 @@ export class PromptInvitePlayerComponent implements OnInit {
 
   @Input() prompt: InvitePlayerPrompt;
   @Input() gameState: LocalGameState;
+
+  public formats = {
+    [Format.STANDARD]: 'LABEL_STANDARD',
+    [Format.GLC]: 'LABEL_GLC',
+    [Format.UNLIMITED]: 'LABEL_UNLIMITED',
+    [Format.EXPANDED]: 'LABEL_EXPANDED',
+    [Format.RETRO]: 'LABEL_RETRO'
+  };
 
   public loading = true;
   public decks: SelectPopupOption<number>[] = [];
@@ -61,14 +69,14 @@ export class PromptInvitePlayerComponent implements OnInit {
 
   private loadDecks() {
     this.loading = true;
-    this.deckService.getList()
+    this.deckService.getListByFormat(this.gameState.format)
       .pipe(
         finalize(() => { this.loading = false; }),
         untilDestroyed(this),
       ).
       subscribe({
         next: decks => {
-          this.decks = decks.decks
+          this.decks = decks
             .filter(deckEntry => deckEntry.isValid)
             .map(deckEntry => ({value: deckEntry.id, viewValue: deckEntry.name}));
           if (this.decks.length > 0) {

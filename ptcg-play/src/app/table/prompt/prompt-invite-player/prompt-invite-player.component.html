@@ -11,6 +11,7 @@
   </mat-progress-bar>
 
   <p [translate]="'GAME_MESSAGES.' + prompt.message"></p>
+  <p><span>{{ 'GAMES_FORMAT' | translate }}: </span><span>{{ formats[gameState.format] | translate }}</span></p>
 
   <form #form="ngForm" autocomplete="off" *ngIf="!loading && decks.length > 0">
     <mat-form-field>

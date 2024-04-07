@@ -80,23 +80,12 @@ export class TableComponent implements OnInit {
 
   public play() {
     this.loading = true;
-    this.deckService.getList()
+    this.deckService.getListByFormat(this.gameState.format)
       .pipe(
         finalize(() => { this.loading = false; }),
         untilDestroyed(this),
         switchMap(decks => {
-
-          const validDecks = decks.decks.filter(deck => {
-            const deckCards: Card[] = [];
-            deck.cards.forEach(card => {
-              deckCards.push(this.cardsBaseService.getCardByName(card));
-              deck.format = FormatValidator.getValidFormatsForCardList(deckCards);
-            });
-
-            return deck.format?.includes(this.gameState.format);
-          });
-
-          const options = validDecks
+          const options = decks
             .filter(deckEntry => deckEntry.isValid)
             .map(deckEntry => ({value: deckEntry.id, viewValue: deckEntry.name}));
 

@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
 import { DeckListResponse, DeckResponse } from '../interfaces/deck.interface';
 import { Response } from '../interfaces/response.interface';
+import { Card, Format } from 'ptcg-server';
+import { map } from 'rxjs/operators';
+import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
+import { FormatValidator } from 'src/app/util/formats-validator';
 
 
 @Injectable()
@@ -10,10 +14,33 @@ export class DeckService {
 
   constructor(
     private api: ApiService,
+    private cardsBaseService: CardsBaseService
   ) {}
 
   public getList() {
     return this.api.get<DeckListResponse>('/v1/decks/list');
+  }
+
+  public getListByFormat(format: Format) {
+
+    if (!format) {
+      return this.getList().pipe(map(decks => decks.decks));
+    }
+
+    return this.getList().pipe(
+      map(decks => {
+        return decks.decks.filter(deck => {
+          const deckCards: Card[] = [];
+          deck.cards.forEach(card => {
+            deckCards.push(this.cardsBaseService.getCardByName(card));
+          });
+
+          deck.format = FormatValidator.getValidFormatsForCardList(deckCards);
+
+          return deck.format.includes(format);
+        });
+      })
+    )
   }
 
   public getDeck(deckId: number) {
