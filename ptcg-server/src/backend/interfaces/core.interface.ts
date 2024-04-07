@@ -1,4 +1,4 @@
-import { GamePhase } from '../../game';
+import { Format, GamePhase } from '../../game';
 import { Rank } from './rank.enum';
 import { PlayerStats } from '../../game/core/player-stats';
 
@@ -36,6 +36,7 @@ export interface GameState {
   timeLimit: number;
   recordingEnabled: boolean;
   playerStats: PlayerStats[];
+  format?: Format;
 }
 
 export interface UserInfo {

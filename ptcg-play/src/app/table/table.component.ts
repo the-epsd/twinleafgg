@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Player, GamePhase } from 'ptcg-server';
+import { Player, GamePhase, Card, Format } from 'ptcg-server';
 import { Observable, from, EMPTY } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -12,6 +12,8 @@ import { DeckService } from '../api/services/deck.service';
 import { GameService } from '../api/services/game.service';
 import { LocalGameState } from '../shared/session/session.interface';
 import { SessionService } from '../shared/session/session.service';
+import { CardsBaseService } from '../shared/cards/cards-base.service';
+import { FormatValidator } from '../util/formats-validator';
 
 @UntilDestroy()
 @Component({
@@ -31,6 +33,14 @@ export class TableComponent implements OnInit {
   public waiting: boolean;
   private gameId: number;
 
+  public formats = {
+    [Format.STANDARD]: 'LABEL_STANDARD',
+    [Format.GLC]: 'LABEL_GLC',
+    [Format.UNLIMITED]: 'LABEL_UNLIMITED',
+    [Format.EXPANDED]: 'LABEL_EXPANDED',
+    [Format.RETRO]: 'LABEL_RETRO'
+  };
+
   constructor(
     private alertService: AlertService,
     private gameService: GameService,
@@ -38,7 +48,8 @@ export class TableComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sessionService: SessionService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private cardsBaseService: CardsBaseService
   ) {
     this.gameStates$ = this.sessionService.get(session => session.gameStates);
     this.clientId$ = this.sessionService.get(session => session.clientId);
@@ -74,7 +85,18 @@ export class TableComponent implements OnInit {
         finalize(() => { this.loading = false; }),
         untilDestroyed(this),
         switchMap(decks => {
-          const options = decks.decks
+
+          const validDecks = decks.decks.filter(deck => {
+            const deckCards: Card[] = [];
+            deck.cards.forEach(card => {
+              deckCards.push(this.cardsBaseService.getCardByName(card));
+              deck.format = FormatValidator.getValidFormatsForCardList(deckCards);
+            });
+
+            return deck.format?.includes(this.gameState.format);
+          });
+
+          const options = validDecks
             .filter(deckEntry => deckEntry.isValid)
             .map(deckEntry => ({value: deckEntry.id, viewValue: deckEntry.name}));
 
@@ -88,6 +110,7 @@ export class TableComponent implements OnInit {
 
           return from(this.alertService.select({
             title: this.translate.instant('GAMES_YOUR_DECK_TITLE'),
+            message: `${this.translate.instant('GAMES_FORMAT')}: ${this.translate.instant(this.formats[this.gameState.format])}`,
             placeholder: this.translate.instant('GAMES_YOUR_DECK'),
             options,
             value: options[0].value

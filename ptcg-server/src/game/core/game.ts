@@ -10,6 +10,7 @@ import { State, GamePhase } from '../store/state/state';
 import { Store } from '../store/store';
 import { StoreHandler } from '../store/store-handler';
 import { AbortGameAction, AbortGameReason } from '../store/actions/abort-game-action';
+import { Format } from '../store/card/card-types';
 
 export class Game implements StoreHandler {
 
@@ -22,12 +23,14 @@ export class Game implements StoreHandler {
   private store: Store;
   private matchRecorder: MatchRecorder;
   private timeoutRef: NodeJS.Timeout | undefined;
+  public format: Format = Format.STANDARD;
 
   constructor(private core: Core, id: number, public gameSettings: GameSettings) {
     this.id = id;
     this.store = new Store(this);
     this.store.state.rules = gameSettings.rules;
     this.matchRecorder = new MatchRecorder(core);
+    this.format = gameSettings.format;
   }
 
   public get state(): State {

@@ -5,6 +5,7 @@ import { GameSettings } from './game-settings';
 import { PlayerStats } from './player-stats';
 import { State } from '../store/state/state';
 import { StoreHandler } from '../store/store-handler';
+import { Format } from '../store/card/card-types';
 export declare class Game implements StoreHandler {
     private core;
     gameSettings: GameSettings;
@@ -16,6 +17,7 @@ export declare class Game implements StoreHandler {
     private store;
     private matchRecorder;
     private timeoutRef;
+    format: Format;
     constructor(core: Core, id: number, gameSettings: GameSettings);
     get state(): State;
     onStateChange(state: State): void;

@@ -6,6 +6,7 @@ const match_recorder_1 = require("./match-recorder");
 const state_1 = require("../store/state/state");
 const store_1 = require("../store/store");
 const abort_game_action_1 = require("../store/actions/abort-game-action");
+const card_types_1 = require("../store/card/card-types");
 class Game {
     constructor(core, id, gameSettings) {
         this.core = core;
@@ -14,10 +15,12 @@ class Game {
         this.clients = [];
         this.playerStats = [];
         this.arbiter = new arbiter_1.Arbiter();
+        this.format = card_types_1.Format.STANDARD;
         this.id = id;
         this.store = new store_1.Store(this);
         this.store.state.rules = gameSettings.rules;
         this.matchRecorder = new match_recorder_1.MatchRecorder(core);
+        this.format = gameSettings.format;
     }
     get state() {
         return this.store.state;

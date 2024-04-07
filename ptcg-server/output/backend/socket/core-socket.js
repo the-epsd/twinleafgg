@@ -115,7 +115,8 @@ class CoreSocket {
             clientIds: game.clients.map(client => client.id),
             recordingEnabled: game.gameSettings.recordingEnabled,
             timeLimit: game.gameSettings.timeLimit,
-            playerStats: game.playerStats
+            playerStats: game.playerStats,
+            format: game.format
         };
     }
 }
