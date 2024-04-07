@@ -28,10 +28,9 @@ function* playCard(next, store, state, self, effect) {
             if (order === null) {
                 return state;
             }
-            deckTop.applyOrder(order);
             const topOfDeck = player.deck.top();
             order.forEach(card => {
-                deckTop.moveCardsTo(topOfDeck, deckTop);
+                player.deck.moveCardsTo(topOfDeck, player.deck);
             });
         });
     });

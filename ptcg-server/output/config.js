@@ -11,7 +11,7 @@ exports.config = {
         secret: '!secret!',
         tokenExpire: 86400,
         defaultPageSize: 50,
-        avatarsDir: '',
+        avatarsDir: '/avatars/uploads',
         avatarsUrl: '/avatars/{name}',
         avatarFileSize: 256 * 1024,
         avatarMinSize: 64,

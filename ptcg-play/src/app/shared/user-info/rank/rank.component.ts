@@ -15,15 +15,19 @@ export class RankComponent {
         this.rankName = 'USERS_RANK_ADMIN';
         break;
       case Rank.MASTER:
-        this.rankColor = 'warn';
+        this.rankColor = 'red';
         this.rankName = 'USERS_RANK_MASTER';
         break;
+        case Rank.ULTRA:
+          this.rankColor = 'blue';
+          this.rankName = 'USERS_RANK_ULTRA';
+          break;
       case Rank.SENIOR:
-        this.rankColor = 'primary';
+        this.rankColor = 'orange';
         this.rankName = 'USERS_RANK_SENIOR';
         break;
       case Rank.JUNIOR:
-        this.rankColor = 'accent';
+        this.rankColor = 'green';
         this.rankName = 'USERS_RANK_JUNIOR';
         break;
       default:

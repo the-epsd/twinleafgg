@@ -36,27 +36,19 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Iron Hands ex PAR';
     }
     reduceEffect(store, state, effect) {
-        var _a;
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target === effect.player.active) {
-            const attack = (_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.attacks[1];
-            if (attack) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                // Do not activate between turns, or when it's not opponents turn.
-                if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-                    return state;
-                }
-                // Iron Hands wasn't attacking
-                const pokemonCard = opponent.active.getPokemonCard();
-                if (pokemonCard !== this) {
-                    return state;
-                }
-                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                    effect.prizeCount += 1;
-                    return state;
-                }
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Do not activate between turns, or when it's not opponents turn.
+            if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
                 return state;
             }
+            // Articuno wasn't attacking
+            const pokemonCard = opponent.active.getPokemonCard();
+            if (pokemonCard !== this) {
+                return state;
+            }
+            effect.prizeCount += 1;
             return state;
         }
         return state;

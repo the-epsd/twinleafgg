@@ -12,6 +12,7 @@ export interface AttachEnergyOptions {
     max: number;
     blocked: number[];
     blockedTo: CardTarget[];
+    differentTypes: boolean;
     sameTarget: boolean;
     differentTargets: boolean;
 }
@@ -34,4 +35,5 @@ export declare class AttachEnergyPrompt extends Prompt<CardAssign[]> {
     constructor(playerId: number, message: GameMessage, cardList: CardList, playerType: PlayerType, slots: SlotType[], filter: FilterType, options?: Partial<AttachEnergyOptions>);
     decode(result: AttachEnergyResultType | null, state: State): CardAssign[] | null;
     validate(result: CardAssign[] | null): boolean;
+    private getCardType;
 }

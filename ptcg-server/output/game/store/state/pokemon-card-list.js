@@ -81,7 +81,7 @@ class PokemonCardList extends card_list_1.CardList {
         this.specialConditions = this.specialConditions.filter(s => [
             card_types_1.SpecialCondition.PARALYZED,
             card_types_1.SpecialCondition.CONFUSED,
-            card_types_1.SpecialCondition.ASLEEP
+            card_types_1.SpecialCondition.ASLEEP,
         ].includes(s) === false);
         this.specialConditions.push(sp);
     }

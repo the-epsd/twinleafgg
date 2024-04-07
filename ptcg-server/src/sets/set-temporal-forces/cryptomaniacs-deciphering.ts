@@ -50,13 +50,12 @@ function* playCard(next: Function, store: StoreLike, state: State,
         return state;
       }
 
-      deckTop.applyOrder(order);
-
-      const topOfDeck = player.deck.top(); 
+      const topOfDeck = player.deck.top();
 
       order.forEach(card => {
-        deckTop.moveCardsTo(topOfDeck, deckTop);
+        player.deck.moveCardsTo(topOfDeck, player.deck);
       });
+
     });
   });
 }

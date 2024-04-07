@@ -102,6 +102,7 @@ cardManager.defineSet(sets.setParadoxRift);
 cardManager.defineSet(sets.setPaldeaFates);
 cardManager.defineSet(sets.setTemporalForces);
 cardManager.defineSet(sets.setCrimsonHaze);
+cardManager.defineSet(sets.setMaskOfChange);
 
 cardManager.defineSet(sets.setTest);
 

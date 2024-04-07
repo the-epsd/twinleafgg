@@ -101,6 +101,7 @@ export * from './set-paradox-rift';
 export * from './set-paldea-fates';
 export * from './set-temporal-forces';
 export * from './set-crimson-haze';
+export * from './set-mask-of-change';
 
 //TEST
 export * from './set-test';

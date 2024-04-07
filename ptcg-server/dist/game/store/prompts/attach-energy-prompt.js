@@ -1,6 +1,7 @@
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
 import { Prompt } from './prompt';
+import { SuperType, CardType } from '../card/card-types';
 export const AttachEnergyPromptType = 'Attach energy';
 export class AttachEnergyPrompt extends Prompt {
     constructor(playerId, message, cardList, playerType, slots, filter, options) {
@@ -18,6 +19,7 @@ export class AttachEnergyPrompt extends Prompt {
             max: cardList.cards.length,
             blocked: [],
             blockedTo: [],
+            differentTypes: false,
             sameTarget: false,
             differentTargets: false
         }, options);
@@ -57,6 +59,19 @@ export class AttachEnergyPrompt extends Prompt {
                 return false;
             }
         }
+        // Check if 'different types' restriction is valid
+        if (this.options.differentTypes) {
+            const typeMap = {};
+            for (const card of result) {
+                const cardType = this.getCardType(card.card);
+                if (typeMap[cardType] === true) {
+                    return false;
+                }
+                else {
+                    typeMap[cardType] = true;
+                }
+            }
+        }
         // Check if all selected targets are different
         if (this.options.differentTargets && result.length > 1) {
             for (let i = 0; i < result.length; i++) {
@@ -72,5 +87,16 @@ export class AttachEnergyPrompt extends Prompt {
             }
         }
         return result.every(r => r.card !== undefined);
+    }
+    getCardType(card) {
+        if (card.superType === SuperType.ENERGY) {
+            const energyCard = card;
+            return energyCard.provides.length > 0 ? energyCard.provides[0] : CardType.NONE;
+        }
+        if (card.superType === SuperType.POKEMON) {
+            const pokemonCard = card;
+            return pokemonCard.cardType;
+        }
+        return CardType.NONE;
     }
 }

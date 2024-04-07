@@ -23,7 +23,7 @@
 
 ptcg-board {
   flex: 1 1 auto;
-
+  margin-top: -3%;
   background-image: url(~src/assets/twinleaf-board-center.png);
   background-repeat: no-repeat;
   background-size: 12% 16%;
@@ -35,5 +35,6 @@ ptcg-board {
 ptcg-hand {
   // background-color: #1a202c00;
   flex: 0 0 auto;
-  // margin-top: -8%;
+  margin-top: -6%;
+  z-index: 5;
 }

@@ -4,7 +4,7 @@ import { EndTurnEffect } from '../effects/game-phase-effects';
 import { GamePhase } from '../state/state';
 import { StateUtils } from '../state-utils';
 import { CheckPokemonTypeEffect, CheckPokemonStatsEffect, CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../effects/check-effects';
-import { SpecialCondition, CardTag, TrainerType } from '../card/card-types';
+import { SpecialCondition, CardTag, TrainerType, Format } from '../card/card-types';
 import { AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect, UsePowerEffect, PowerEffect, UseStadiumEffect, EvolveEffect } from '../effects/game-effects';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { DealDamageEffect, ApplyWeaknessEffect } from '../effects/attack-effects';
@@ -32,9 +32,11 @@ function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
 function* useAttack(next, store, state, effect) {
     const player = effect.player;
     const opponent = StateUtils.getOpponent(state, player);
-    //Skip attack on first turn
-    if (state.turn === 1) {
-        throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
+    if (Format.STANDARD) {
+        //Skip attack on first turn
+        if (state.turn === 1) {
+            throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
+        }
     }
     const sp = player.active.specialConditions;
     if (sp.includes(SpecialCondition.PARALYZED) || sp.includes(SpecialCondition.ASLEEP)) {

@@ -21,7 +21,6 @@ class Eri extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const deckBottom = game_1.StateUtils.findCardList(state, this);
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DECK, opponent.hand, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { allowCancel: false, min: 0, max: 2 }), cards => {
@@ -30,7 +29,6 @@ class Eri extends trainer_card_1.TrainerCard {
                 }
                 const trainerCard = cards[0];
                 opponent.hand.moveCardTo(trainerCard, opponent.discard);
-                deckBottom.moveTo(opponent.deck);
                 player.supporter.moveCardTo(this, player.discard);
             });
         }

@@ -44,6 +44,7 @@ export class FormatValidator {
         return true;
         
       case Format.STANDARD:
+        var banList = BanLists[format];      
         return card.regulationMark === 'F' || 
                card.regulationMark === 'G' || 
                card.regulationMark === 'H';
@@ -138,7 +139,9 @@ export const BanLists: { [key: number]: string[] } = {
   ],
   [Format.RETRO]: [],
   [Format.UNLIMITED]: [],
-  [Format.STANDARD]: []
+  [Format.STANDARD]: [
+    'Forest Seal Stone SVI 156'
+  ]
 }
 
 export const SetReleaseDates: { [key: string]: Date } = {

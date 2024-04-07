@@ -48,6 +48,14 @@
     </div>
   </div>
 
+
+  <div class="ptcg-card-marker" *ngIf="marker.length > 0">
+    <ptcg-badge color="accent">
+      {{ 'LABEL_ABILITYUSED' }}
+    </ptcg-badge>
+  </div>
+
+
   <div class="ptcg-card-counts" *ngIf="showCardCount && cardCount > 0">
     <ptcg-badge>
       {{ 'TABLE_CARDS_COUNT' | translate: { count: cardCount } }}

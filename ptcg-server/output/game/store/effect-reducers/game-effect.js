@@ -35,9 +35,11 @@ function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
 function* useAttack(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-    //Skip attack on first turn
-    if (state.turn === 1) {
-        throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
+    if (card_types_1.Format.STANDARD) {
+        //Skip attack on first turn
+        if (state.turn === 1) {
+            throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
+        }
     }
     const sp = player.active.specialConditions;
     if (sp.includes(card_types_1.SpecialCondition.PARALYZED) || sp.includes(card_types_1.SpecialCondition.ASLEEP)) {

@@ -65,9 +65,11 @@ class RankingCalculator {
             case backend_1.Rank.JUNIOR:
                 return 2.0;
             case backend_1.Rank.SENIOR:
-                return 0.9;
+                return 1.0;
+            case backend_1.Rank.ULTRA:
+                return 0.75;
             case backend_1.Rank.MASTER:
-                return 0.8;
+                return 0.5;
         }
         return 1;
     }

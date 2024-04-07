@@ -4,6 +4,7 @@ exports.AttachEnergyPrompt = exports.AttachEnergyPromptType = void 0;
 const game_error_1 = require("../../game-error");
 const game_message_1 = require("../../game-message");
 const prompt_1 = require("./prompt");
+const card_types_1 = require("../card/card-types");
 exports.AttachEnergyPromptType = 'Attach energy';
 class AttachEnergyPrompt extends prompt_1.Prompt {
     constructor(playerId, message, cardList, playerType, slots, filter, options) {
@@ -21,6 +22,7 @@ class AttachEnergyPrompt extends prompt_1.Prompt {
             max: cardList.cards.length,
             blocked: [],
             blockedTo: [],
+            differentTypes: false,
             sameTarget: false,
             differentTargets: false
         }, options);
@@ -60,6 +62,19 @@ class AttachEnergyPrompt extends prompt_1.Prompt {
                 return false;
             }
         }
+        // Check if 'different types' restriction is valid
+        if (this.options.differentTypes) {
+            const typeMap = {};
+            for (const card of result) {
+                const cardType = this.getCardType(card.card);
+                if (typeMap[cardType] === true) {
+                    return false;
+                }
+                else {
+                    typeMap[cardType] = true;
+                }
+            }
+        }
         // Check if all selected targets are different
         if (this.options.differentTargets && result.length > 1) {
             for (let i = 0; i < result.length; i++) {
@@ -75,6 +90,17 @@ class AttachEnergyPrompt extends prompt_1.Prompt {
             }
         }
         return result.every(r => r.card !== undefined);
+    }
+    getCardType(card) {
+        if (card.superType === card_types_1.SuperType.ENERGY) {
+            const energyCard = card;
+            return energyCard.provides.length > 0 ? energyCard.provides[0] : card_types_1.CardType.NONE;
+        }
+        if (card.superType === card_types_1.SuperType.POKEMON) {
+            const pokemonCard = card;
+            return pokemonCard.cardType;
+        }
+        return card_types_1.CardType.NONE;
     }
 }
 exports.AttachEnergyPrompt = AttachEnergyPrompt;
