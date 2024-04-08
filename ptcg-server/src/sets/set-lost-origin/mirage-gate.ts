@@ -45,7 +45,7 @@ export class MirageGate extends TrainerCard {
           PlayerType.BOTTOM_PLAYER,
           [ SlotType.BENCH, SlotType.ACTIVE ],
           { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { allowCancel: false, min: 1, max: 2 }
+          { allowCancel: false, min: 1, max: 2, differentTypes: true }
         ), transfers => {
           transfers = transfers || [];
           // cancelled by user

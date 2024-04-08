@@ -6,6 +6,9 @@ import { PlayerType, SlotType, CardTarget } from '../actions/play-card-action';
 import { State } from '../state/state';
 import { CardList } from '../state/card-list';
 import { FilterType } from './choose-cards-prompt';
+import { SuperType, CardType } from '../card/card-types';
+import { EnergyCard } from '../card/energy-card';
+import { PokemonCard } from '../card/pokemon-card';
 
 export const AttachEnergyPromptType = 'Attach energy';
 
@@ -15,6 +18,7 @@ export interface AttachEnergyOptions {
   max: number;
   blocked: number[];
   blockedTo: CardTarget[];
+  differentTypes: boolean;
   sameTarget: boolean;
   differentTargets: boolean;
 }
@@ -50,6 +54,7 @@ export class AttachEnergyPrompt extends Prompt<CardAssign[]> {
       max: cardList.cards.length,
       blocked: [],
       blockedTo: [],
+      differentTypes: false,
       sameTarget: false,
       differentTargets: false
     }, options);
@@ -93,6 +98,19 @@ export class AttachEnergyPrompt extends Prompt<CardAssign[]> {
       }
     }
 
+    // Check if 'different types' restriction is valid
+    if (this.options.differentTypes) {
+      const typeMap: { [key: number]: boolean } = {};
+      for (const card of result) {
+        const cardType = this.getCardType(card.card);
+        if (typeMap[cardType] === true) {
+          return false;
+        } else {
+          typeMap[cardType] = true;
+        }
+      }
+    }
+
     // Check if all selected targets are different
     if (this.options.differentTargets && result.length > 1) {
       for (let i = 0; i < result.length; i++) {
@@ -109,6 +127,18 @@ export class AttachEnergyPrompt extends Prompt<CardAssign[]> {
     }
 
     return result.every(r => r.card !== undefined);
+  }
+
+  private getCardType(card: Card): CardType {
+    if (card.superType === SuperType.ENERGY) {
+      const energyCard = card as EnergyCard;
+      return energyCard.provides.length > 0 ? energyCard.provides[0] : CardType.NONE;
+    }
+    if (card.superType === SuperType.POKEMON) {
+      const pokemonCard = card as PokemonCard;
+      return pokemonCard.cardType;
+    }
+    return CardType.NONE;
   }
 
 }

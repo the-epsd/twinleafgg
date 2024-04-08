@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { StateUtils, 
-  GameMessage, PokemonCardList, ChooseCardsPrompt } from '../../game';
+  GameMessage, ChooseCardsPrompt } from '../../game';
 
 
 export class Eri extends TrainerCard {
@@ -31,7 +31,6 @@ export class Eri extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const deckBottom = StateUtils.findCardList(state, this) as PokemonCardList;
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
@@ -49,8 +48,6 @@ export class Eri extends TrainerCard {
         const trainerCard = cards[0] as TrainerCard;
         
         opponent.hand.moveCardTo(trainerCard, opponent.discard);
-        deckBottom.moveTo(opponent.deck);
-
         player.supporter.moveCardTo(this, player.discard);
 
       });

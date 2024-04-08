@@ -1,0 +1,130 @@
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { StoreLike } from '../../game/store/store-like';
+import { State } from '../../game/store/state/state';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { StateUtils } from '../../game/store/state-utils';
+import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
+import { DamageMap } from '../../game/store/prompts/move-damage-prompt';
+import { GameMessage } from '../../game/game-message';
+import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
+import { PutDamagePrompt } from '../..';
+
+
+function* usePhantomDive(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+  
+  const maxAllowedDamage: DamageMap[] = [];
+  let damageLeft = 0;
+  opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+    const checkHpEffect = new CheckHpEffect(opponent, cardList);
+    store.reduceEffect(state, checkHpEffect);
+    damageLeft += checkHpEffect.hp - cardList.damage;
+    maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+  });
+  
+  const damage = Math.min(60, damageLeft);
+
+  return store.prompt(state, new PutDamagePrompt(
+    effect.player.id,
+    GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+    PlayerType.TOP_PLAYER,
+    [ SlotType.BENCH ],
+    damage,
+    maxAllowedDamage,
+    { allowCancel: false }
+  ), targets => {
+    const results = targets || [];
+    for (const result of results) {
+      const target = StateUtils.getTarget(state, player, result.target);
+      const putCountersEffect = new PutCountersEffect(effect, result.damage);
+      putCountersEffect.target = target;
+      store.reduceEffect(state, putCountersEffect);
+    }
+  });
+}
+
+export class Dragapultex extends PokemonCard {
+
+  public stage: Stage = Stage.STAGE_2;
+
+  public tags = [ CardTag.POKEMON_ex ];
+
+  public evolvesFrom = 'Drakloak';
+
+  public regulationMark = 'H';
+
+  public cardType: CardType = CardType.DRAGON;
+
+  public hp: number = 320;
+
+  public weakness = [ ];
+
+  public resistance = [ ];
+
+  public retreat = [ CardType.COLORLESS ];
+
+  public attacks = [{
+    name: 'Jet Headbutt',
+    cost: [ CardType.COLORLESS ],
+    damage: 70,
+    text: ''
+  }, {
+    name: 'Phantom Dive',
+    cost: [ CardType.FIRE, CardType.PSYCHIC ],
+    damage: 200,
+    text: 'Put 6 damage counters on your opponent\'s Benched Pokemon in any way you like.'
+  }];
+
+  public set: string = 'SV6';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '81';
+
+  public name: string = 'Dragapult ex';
+
+  public fullName: string = 'Dragapult ex SV6';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const generator = usePhantomDive(() => generator.next(), store, state, effect);
+      return generator.next().value;
+    }
+
+    if (effect instanceof PutDamageEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+  
+      // Target is not Active
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+  
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[1], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
+      }
+  
+      // Target is this Charizard
+      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const powerEffect = new PowerEffect(player, this.powers[1], this);
+          store.reduceEffect(state, powerEffect);
+        } catch {
+          return state;
+        }
+  
+        effect.preventDefault = true;
+      }
+    }
+    return state;
+  }
+}

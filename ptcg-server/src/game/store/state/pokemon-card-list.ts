@@ -101,7 +101,7 @@ export class PokemonCardList extends CardList {
     this.specialConditions = this.specialConditions.filter(s => [
       SpecialCondition.PARALYZED,
       SpecialCondition.CONFUSED,
-      SpecialCondition.ASLEEP
+      SpecialCondition.ASLEEP,
     ].includes(s) === false);
     this.specialConditions.push(sp);
   }

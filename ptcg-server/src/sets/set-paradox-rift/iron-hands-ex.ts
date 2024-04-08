@@ -3,7 +3,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { GamePhase, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 
 export class IronHandsex extends PokemonCard {
 
@@ -49,34 +49,25 @@ export class IronHandsex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-      const attack = effect.player.active.getPokemonCard()?.attacks[1];
-      if (attack) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
-
-        // Do not activate between turns, or when it's not opponents turn.
-        if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-          return state;
-        }
-
-        // Iron Hands wasn't attacking
-        const pokemonCard = opponent.active.getPokemonCard();
-        if (pokemonCard !== this) {
-          return state;
-        }
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-          effect.prizeCount += 1;
-          return state;
-        }
-
+      // Do not activate between turns, or when it's not opponents turn.
+      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
         return state;
       }
 
-      return state;
+      // Articuno wasn't attacking
+      const pokemonCard = opponent.active.getPokemonCard();
+      if (pokemonCard !== this) {
+        return state;
+      }
 
+      effect.prizeCount += 1;
+      return state;
     }
+
     return state;
   }
-}
 
+}

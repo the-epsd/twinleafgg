@@ -8,7 +8,7 @@ import { StateUtils } from '../state-utils';
 import { CheckPokemonTypeEffect, CheckPokemonStatsEffect,
   CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../effects/check-effects';
 import { Weakness, Resistance } from '../card/pokemon-types';
-import { CardType, SpecialCondition, CardTag, TrainerType } from '../card/card-types';
+import { CardType, SpecialCondition, CardTag, TrainerType, Format } from '../card/card-types';
 import { AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect,
   UsePowerEffect, PowerEffect, UseStadiumEffect, EvolveEffect } from '../effects/game-effects';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
@@ -47,9 +47,11 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
+  if (Format.STANDARD) {
   //Skip attack on first turn
-  if (state.turn === 1) {
-    throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
+    if (state.turn === 1) {
+      throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
+    }
   }
 
   const sp = player.active.specialConditions;
