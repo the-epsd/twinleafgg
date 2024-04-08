@@ -45,7 +45,7 @@ class UnfairStamp extends trainer_card_1.TrainerCard {
         this.set = 'SV5a';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '152';
-        this.regulationMark = 'E';
+        this.regulationMark = 'H';
         this.name = 'Unfair Stamp';
         this.fullName = 'Unfair Stamp SV5a';
         this.text = 'You can play this card only if one of your Pokémon was Knocked Out during your opponent\'s last turn.' +

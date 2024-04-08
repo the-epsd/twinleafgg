@@ -57,7 +57,7 @@ export class UnfairStamp extends TrainerCard {
 
   public setNumber: string = '152';
 
-  public regulationMark = 'E';
+  public regulationMark = 'H';
 
   public name: string = 'Unfair Stamp';
 
