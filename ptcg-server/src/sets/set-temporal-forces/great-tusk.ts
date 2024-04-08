@@ -35,15 +35,15 @@ export class GreatTusk extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '45';
+  public setNumber: string = '97';
 
   public name: string = 'Great Tusk';
 
-  public fullName: string = 'Great Tusk SV5';
+  public fullName: string = 'Great Tusk TEF';
 
   private readonly ANCIENT_SUPPORTER_MARKER = 'ANCIENT_SUPPORTER_MARKER';
 

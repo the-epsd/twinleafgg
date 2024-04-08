@@ -37,15 +37,15 @@ export class Koraidonex extends PokemonCard {
       }
   ];
 
-    public set: string = 'SV5';
+    public set: string = 'TEF';
 
     public cardImage: string = 'assets/cardback.png';
 
-    public setNumber: string = '52';
+    public setNumber: string = '120';
 
     public name: string = 'Koraidon ex';
 
-    public fullName: string = 'Koraidon ex SV5';
+    public fullName: string = 'Koraidon ex TEF';
 
     public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

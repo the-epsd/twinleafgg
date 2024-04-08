@@ -24,16 +24,16 @@ export class Charjabug extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '27';
+  public setNumber: string = '55';
 
   public name: string = 'Charjabug';
 
-  public fullName: string = 'Charjabug SV5';
+  public fullName: string = 'Charjabug TEF';
 
 }

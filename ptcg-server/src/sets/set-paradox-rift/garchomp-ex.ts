@@ -95,7 +95,7 @@ export class Garchompex extends PokemonCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH, SlotType.ACTIVE ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fighting Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
         { allowCancel: true, min: 0, max: 3 },
       ), transfers => {
         transfers = transfers || [];

@@ -36,7 +36,7 @@ class EnergySticker extends game_1.TrainerCard {
                     if (!hasEnergyInDiscard) {
                         throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                     }
-                    state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Lightning Energy' }, { allowCancel: true, min: 1, max: 1 }), transfers => {
+                    state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { allowCancel: true, min: 1, max: 1 }), transfers => {
                         transfers = transfers || [];
                         // cancelled by user
                         if (transfers.length === 0) {

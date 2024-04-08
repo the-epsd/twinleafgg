@@ -34,17 +34,17 @@ export class IronHands extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '6';
+  public setNumber: string = '61';
 
   public name: string = 'Iron Hands';
 
-  public fullName: string = 'Iron Hands SV5';
+  public fullName: string = 'Iron Hands TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

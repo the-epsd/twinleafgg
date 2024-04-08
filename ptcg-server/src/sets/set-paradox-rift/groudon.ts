@@ -67,7 +67,7 @@ export class Groudon extends PokemonCard {
         player.hand,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH, SlotType.ACTIVE ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fighting Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
         { max: 1, allowCancel: true }
       ), transfers => {
         transfers = transfers || [];
@@ -90,7 +90,7 @@ export class Groudon extends PokemonCard {
           player.id,
           GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
           player.active,
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fighting Energy' },
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
           { min: 1, max: 4, allowCancel: false }
         ), selected => {
           const cards = selected || [];

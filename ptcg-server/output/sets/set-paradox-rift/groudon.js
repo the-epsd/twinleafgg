@@ -48,7 +48,7 @@ class Groudon extends pokemon_card_1.PokemonCard {
             if (!hasEnergyInHand) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Fighting Energy' }, { max: 1, allowCancel: true }), transfers => {
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { max: 1, allowCancel: true }), transfers => {
                 transfers = transfers || [];
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
@@ -61,7 +61,7 @@ class Groudon extends pokemon_card_1.PokemonCard {
                 const player = effect.player;
                 const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
                 state = store.reduceEffect(state, checkProvidedEnergy);
-                state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, player.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Fighting Energy' }, { min: 1, max: 4, allowCancel: false }), selected => {
+                state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, player.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { min: 1, max: 4, allowCancel: false }), selected => {
                     const cards = selected || [];
                     if (cards.length > 0) {
                         let totalDiscarded = 0;

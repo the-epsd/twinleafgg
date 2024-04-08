@@ -1,6 +1,8 @@
+import { AncientBoosterEnergyCapsule } from '../set-paradox-rift/ancient-booster-energy-capsule';
+import { FutureBoosterEnergyCapsule } from '../set-paradox-rift/future-booster-energy-capsule';
 import { Beldum } from './beldum';
-import { BiancasSincerity } from './biancas-sincerity';
-import { BuddyPoffin } from './buddy-poffin';
+import { BiancasDevotion } from './biancas-devotion';
+import { BuddyBuddyPoffin } from './buddy-buddy-poffin';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
 import { Cincinno } from './cincinno';
@@ -30,7 +32,6 @@ import { IronLeavesex } from './iron-leaves-ex';
 import { IronThorns } from './iron-thorns';
 import { Koraidon } from './koraidon';
 import { Koraidonex } from './koraidon-ex';
-import { LoveBall } from './love-ball';
 import { MasterBall } from './master-ball';
 import { MaximumBelt } from './maximum-belt';
 import { Metang } from './metang';
@@ -59,13 +60,19 @@ import { Turtwig } from './turtwig';
 import { Victini } from './victini';
 import { Vikavolt } from './vikavolt';
 import { WalkingWakeex } from './walking-wake-ex';
+export declare class AncientBoosterEnergyCapsuleArt extends AncientBoosterEnergyCapsule {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
+}
 export declare class BeldumArt extends Beldum {
     cardImage: string;
 }
-export declare class BiancasSincerityArt extends BiancasSincerity {
+export declare class BiancasDevotionArt extends BiancasDevotion {
     cardImage: string;
 }
-export declare class BuddyPoffinArt extends BuddyPoffin {
+export declare class BuddyBuddyPoffinArt extends BuddyBuddyPoffin {
     cardImage: string;
 }
 export declare class CharjabugArt extends Charjabug {
@@ -116,6 +123,12 @@ export declare class FeraligatrArt extends Feraligatr {
 export declare class FlutterManeArt extends FlutterMane {
     cardImage: string;
 }
+export declare class FutureBoosterEnergyCapsuleArt extends FutureBoosterEnergyCapsule {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
+}
 export declare class GastlyArt extends Gastly {
     cardImage: string;
 }
@@ -153,9 +166,6 @@ export declare class KoraidonexArt extends Koraidonex {
     cardImage: string;
 }
 export declare class KoraidonArt extends Koraidon {
-    cardImage: string;
-}
-export declare class LoveBallArt extends LoveBall {
     cardImage: string;
 }
 export declare class MaximumBeltArt extends MaximumBelt {

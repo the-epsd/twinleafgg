@@ -89,7 +89,7 @@ export class GalarianArticuno extends PokemonCard {
             player.id,
             GameMessage.CHOOSE_CARD_TO_ATTACH,
             player.hand,
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Psychic Energy' },
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
             { min: 0, max: 2, allowCancel: true }
           ), cards => {
             cards = cards || [];

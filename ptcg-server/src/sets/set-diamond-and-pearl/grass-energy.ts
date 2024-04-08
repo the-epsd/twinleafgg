@@ -7,8 +7,8 @@ export class GrassEnergy extends EnergyCard {
 
   public set: string = 'DP';
 
-  public name = 'Basic Grass Energy';
+  public name = 'Grass Energy';
 
-  public fullName = 'Basic Grass Energy EVO';
+  public fullName = 'Grass Energy EVO';
 
 }

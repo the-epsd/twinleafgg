@@ -11,8 +11,8 @@ class MetalEnergy extends energy_card_1.EnergyCard {
         this.regulationMark = 'ENERGY';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '237';
-        this.name = 'Basic Metal Energy';
-        this.fullName = 'Basic Metal Energy SVE';
+        this.name = 'Metal Energy';
+        this.fullName = 'Metal Energy SVE';
     }
 }
 exports.MetalEnergy = MetalEnergy;

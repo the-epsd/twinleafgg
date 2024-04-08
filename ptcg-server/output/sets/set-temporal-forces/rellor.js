@@ -19,12 +19,12 @@ class Rellor extends pokemon_card_1.PokemonCard {
                 damage: 30,
                 text: 'This Pokémon also does 10 damage to itself.'
             }];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '14';
+        this.setNumber = '23';
         this.name = 'Rellor';
-        this.fullName = 'Rellor SV5';
+        this.fullName = 'Rellor TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

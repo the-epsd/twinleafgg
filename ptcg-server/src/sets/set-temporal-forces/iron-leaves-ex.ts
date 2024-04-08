@@ -38,15 +38,15 @@ export class IronLeavesex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '016';
+  public setNumber: string = '25';
 
   public name: string = 'Iron Leaves ex';
 
-  public fullName: string = 'Iron Leaves ex';
+  public fullName: string = 'Iron Leaves ex TEF';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

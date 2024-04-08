@@ -27,11 +27,11 @@ class Sableye extends game_1.PokemonCard {
                 text: 'Move any number of damage counters from your opponent\'s Benched Pokémon to their Active Pokémon.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '158';
+        this.setNumber = '107';
         this.name = 'Sableye';
-        this.fullName = 'Sableye SV5';
+        this.fullName = 'Sableye TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

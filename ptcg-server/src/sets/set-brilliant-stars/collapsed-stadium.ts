@@ -23,7 +23,7 @@ export class CollapsedStadium extends TrainerCard {
 
   public name: string = 'Collapsed Stadium';
 
-  public fullName: string = 'Collapsed Stadium BRS 137';
+  public fullName: string = 'Collapsed Stadium BRS';
 
   public text: string =
     'Each player can’t have more than 4 Benched Pokémon. ' +

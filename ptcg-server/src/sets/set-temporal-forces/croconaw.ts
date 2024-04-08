@@ -27,17 +27,17 @@ export class Croconaw extends PokemonCard {
     text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
   }];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '14';
+  public setNumber: string = '40';
 
   public name: string = 'Croconaw';
 
-  public fullName: string = 'Croconaw SV5';
+  public fullName: string = 'Croconaw TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

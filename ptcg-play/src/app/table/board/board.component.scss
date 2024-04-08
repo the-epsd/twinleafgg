@@ -4,13 +4,10 @@
 $board-min-width: calc((4 + #{$ptcg-bench-slots}) * (var(--card-size) + #{map-get($padding, small)}));
 $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map-get($padding, small)});
 
-
-
-
 :host {
   display: flex;
   overflow: hidden;
-  z-index: 0;
+z-index: 0;
 }
 
 * {
@@ -62,7 +59,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   &:after {
     content: '';
     position: absolute;
-    top: 62%;
+    top: 66%;
     left: -55%;
     right: -55%;
     height: 100%; //adjust this number to adjust curve  

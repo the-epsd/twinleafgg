@@ -30,11 +30,11 @@ class Miraidon extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '52';
+        this.setNumber = '23';
         this.name = 'Miraidon';
-        this.fullName = 'Miraidon SV5';
+        this.fullName = 'Miraidon TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

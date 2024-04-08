@@ -29,24 +29,25 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
     'The Ancient Pokémon this card is attached to gets +60 HP, recovers from all Special Conditions, and can\'t be affected by any Special Conditions.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (this instanceof PokemonCard && this.tags.includes(CardTag.ANCIENT)) {
-
-      if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
-      // Add HP
-        effect.hp += 60;
-      
-        if (effect instanceof RemoveSpecialConditionsEffect && effect.target.cards.includes (this)) {
-          // Heal conditions
-          effect.target.specialConditions = [];
-
-          // Prevent future conditions
-          effect.preventDefault = true;
-
-          return state;
+    if (effect instanceof CheckHpEffect && effect.target instanceof PokemonCard && effect.target.cards.includes(this)) {
+      if (effect.target.tool instanceof AncientBoosterEnergyCapsule) {
+        if (effect.target.tags.includes(CardTag.ANCIENT)) {
+          effect.hp += 60;
         }
+      }
+
+      if (effect instanceof RemoveSpecialConditionsEffect && effect.target instanceof PokemonCard && effect.target.cards.includes(this)) {
+        if (effect.target.tool instanceof AncientBoosterEnergyCapsule) {
+          if (effect.target.tags.includes(CardTag.ANCIENT)) {
+            effect.target.specialConditions = [];
+            effect.preventDefault = true;
+            return state;
+          }
+        }
+
         return state;
       }
+      return state;
     }
     return state;
   }

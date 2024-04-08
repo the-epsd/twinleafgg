@@ -35,6 +35,9 @@
   }
 
   &[type="fire"] {
+    // height: 39px;
+    // width: 44px;
+    // background-image: url(~src/assets/charizard.png);
     background-position: 0 0;
   }
 
@@ -52,5 +55,11 @@
 
   &[type="energyless"] {
     background-position: -50px -50px;
+  }
+
+  &[type="charizard"] {
+    height: 39px;
+    width: 44px;
+    background-image: url(~src/assets/charizard.png);
   }
 }

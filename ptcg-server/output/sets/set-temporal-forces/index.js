@@ -3,9 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTemporalForces = void 0;
 const card_images_1 = require("./card-images");
 exports.setTemporalForces = [
+    new card_images_1.AncientBoosterEnergyCapsuleArt(),
     new card_images_1.BeldumArt(),
-    new card_images_1.BiancasSincerityArt(),
-    new card_images_1.BuddyPoffinArt(),
+    new card_images_1.BiancasDevotionArt(),
+    new card_images_1.BuddyBuddyPoffinArt(),
     new card_images_1.CharjabugArt(),
     new card_images_1.ChatotArt(),
     new card_images_1.CincinnoArt(),
@@ -22,6 +23,7 @@ exports.setTemporalForces = [
     new card_images_1.ExplorersGuidanceArt(),
     new card_images_1.FeraligatrArt(),
     new card_images_1.FlutterManeArt(),
+    new card_images_1.FutureBoosterEnergyCapsuleArt(),
     new card_images_1.GastlyArt(),
     new card_images_1.GengarexArt(),
     new card_images_1.GougingFireexArt(),
@@ -35,8 +37,8 @@ exports.setTemporalForces = [
     new card_images_1.IronThornsArt(),
     new card_images_1.KoraidonexArt(),
     new card_images_1.KoraidonArt(),
-    new card_images_1.LoveBallArt(),
     new card_images_1.MasterBallArt(),
+    new card_images_1.MaximumBeltArt(),
     new card_images_1.MetangArt(),
     new card_images_1.MiraidonexArt(),
     new card_images_1.MiraidonArt(),

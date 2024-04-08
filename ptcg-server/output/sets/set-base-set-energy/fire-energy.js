@@ -11,8 +11,8 @@ class FireEnergy extends energy_card_1.EnergyCard {
         this.regulationMark = 'ENERGY';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '98';
-        this.name = 'Basic Fire Energy';
-        this.fullName = 'Basic Fire Energy BS';
+        this.name = 'Fire Energy';
+        this.fullName = 'Fire Energy BS';
     }
 }
 exports.FireEnergy = FireEnergy;

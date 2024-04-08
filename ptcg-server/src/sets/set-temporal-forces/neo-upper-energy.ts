@@ -14,17 +14,17 @@ export class NeoUpperEnergy extends EnergyCard {
 
   public energyType = EnergyType.SPECIAL;
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '071';
+  public setNumber: string = '162';
 
   public name = 'Neo Upper Energy';
 
-  public fullName = 'Neo Upper Energy SV5';
+  public fullName = 'Neo Upper Energy TEF';
 
   public text =
     'As long as this card is attached to a Pokémon, it provides C Energy.' +

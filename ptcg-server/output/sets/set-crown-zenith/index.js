@@ -8,9 +8,11 @@ exports.setCrownZenith = [
     new card_images_1.RadiantCharizardArt(),
     new card_images_1.ZamazentaArt(),
     new card_images_1.LuxrayArt(),
+    new card_images_1.LostVacuumArt(),
     new card_images_1.ZamazentaVArt(),
     new card_images_1.RadiantEternatusArt(),
     new card_images_1.RegigigasVArt(),
     new card_images_1.RegigigasVSTARArt(),
+    new card_images_1.RotomVArt(),
     new card_images_1.ZacianVSTARArt(),
 ];

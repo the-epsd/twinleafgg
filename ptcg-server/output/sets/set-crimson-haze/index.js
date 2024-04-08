@@ -9,6 +9,7 @@ exports.setCrimsonHaze = [
     new card_images_1.EnhancedHammerArt(),
     new card_images_1.IronLeavesArt(),
     new card_images_1.IronThornsexArt(),
+    new card_images_1.LoveBallArt(),
     new card_images_1.LuckyHelmetArt(),
     new card_images_1.PerrinArt(),
     new card_images_1.PhioneArt(),

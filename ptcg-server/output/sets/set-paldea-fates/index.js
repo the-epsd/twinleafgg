@@ -17,4 +17,12 @@ exports.setPaldeaFates = [
     new card_images_1.FrigibaxArt(),
     new card_images_1.GastlyArt(),
     new card_images_1.HaunterArt(),
+    new card_images_1.RareCandyArt(),
+    new card_images_1.CharizardexArt(),
+    new card_images_1.ElectricGeneratorArt(),
+    new card_images_1.IonoArt(),
+    new card_images_1.NestBallArt(),
+    new card_images_1.ProfessorsResearchArt(),
+    new card_images_1.ProfessorsResearch2Art(),
+    new card_images_1.UltraBallArt(),
 ];

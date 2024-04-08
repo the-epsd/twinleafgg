@@ -85,7 +85,7 @@ export class TealMaskOgerponex extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
         player.hand,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Grass Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
         { min: 0, max: 1, allowCancel: false }
       ), cards => {
         cards = cards || [];

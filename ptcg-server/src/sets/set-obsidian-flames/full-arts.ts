@@ -90,7 +90,7 @@ class ArtazonHR extends Artazon {
 class FireEnergyHR extends FireEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_230_R_EN_LG.png';
   public setNumber = '230';
-  public fullName: string = 'Basic Fire Energy OBF';
+  public fullName: string = 'Fire Energy OBF';
 }
 
 export { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, ScizorIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, ArtazonHR, FireEnergyHR };

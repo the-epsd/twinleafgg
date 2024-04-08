@@ -21,7 +21,7 @@ class Cramorant extends game_1.PokemonCard {
             }];
         this.attacks = [
             {
-                name: 'Spinning Attack',
+                name: 'Spit Innocently',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
                 damage: 110,
                 text: 'This attack\'s damage isn\'t affected by Weakness.'

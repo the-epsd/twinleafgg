@@ -40,7 +40,7 @@ export class Candice extends TrainerCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
         { superType: SuperType.POKEMON, cardType: CardType.WATER } ||
-                { superType: SuperType.ENERGY, name : 'Basic Water Energy' },
+                { superType: SuperType.ENERGY, name : 'Water Energy' },
 
         { min: 0, max: 7, allowCancel: true }
       ), selected => {

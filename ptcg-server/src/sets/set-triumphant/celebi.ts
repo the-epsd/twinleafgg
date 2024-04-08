@@ -75,7 +75,7 @@ export class Celebi extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
       const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard && c.name === 'Basic Grass Energy';
+        return c instanceof EnergyCard && c.name === 'Grass Energy';
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -90,7 +90,7 @@ export class Celebi extends PokemonCard {
         player.hand,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.ACTIVE, SlotType.BENCH ],
-        { superType: SuperType.ENERGY, name: 'Basic Grass Energy' },
+        { superType: SuperType.ENERGY, name: 'Grass Energy' },
         { allowCancel: true, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];

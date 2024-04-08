@@ -11,8 +11,8 @@ class DarknessEnergy extends energy_card_1.EnergyCard {
         this.regulationMark = 'ENERGY';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '236';
-        this.name = 'Basic Darkness Energy';
-        this.fullName = 'Basic Darkness Energy SVE';
+        this.name = 'Darkness Energy';
+        this.fullName = 'Darkness Energy SVE';
     }
 }
 exports.DarknessEnergy = DarknessEnergy;

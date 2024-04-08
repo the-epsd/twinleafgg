@@ -37,17 +37,17 @@ export class Grotle extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '4';
+  public setNumber: string = '11';
 
   public name: string = 'Grotle';
 
-  public fullName: string = 'Grotle SV5';
+  public fullName: string = 'Grotle TEF';
 
 
   RAMMING_SHELL_MARKER = 'RAMMING_SHELL_MARKER';

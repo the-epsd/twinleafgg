@@ -11,8 +11,8 @@ class LightningEnergy extends energy_card_1.EnergyCard {
         this.regulationMark = 'ENERGY';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '100';
-        this.name = 'Basic Lightning Energy';
-        this.fullName = 'Basic Lightning Energy BS';
+        this.name = 'Lightning Energy';
+        this.fullName = 'Lightning Energy BS';
     }
 }
 exports.LightningEnergy = LightningEnergy;

@@ -1,8 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.XatuArt = exports.NatuArt = exports.StudentsInPaldeaArt2 = exports.StudentsInPaldeaArt = exports.ScovillainexArt = exports.NemonaArt = exports.MoonlightHillArt = exports.MimeJrArt = exports.KilowattrelArt = exports.HaunterArt = exports.GengarArt = exports.GastlyArt = exports.FrigibaxArt = exports.EspathraexArt = exports.CliveArt = exports.CharmeleonArt = exports.AtticusArt = void 0;
+exports.XatuArt = exports.UltraBallArt = exports.NatuArt = exports.StudentsInPaldeaArt2 = exports.StudentsInPaldeaArt = exports.ScovillainexArt = exports.RareCandyArt = exports.ProfessorsResearch2Art = exports.ProfessorsResearchArt = exports.NemonaArt = exports.NestBallArt = exports.MoonlightHillArt = exports.MimeJrArt = exports.KilowattrelArt = exports.IonoArt = exports.HaunterArt = exports.GengarArt = exports.GastlyArt = exports.FrigibaxArt = exports.EspathraexArt = exports.ElectricGeneratorArt = exports.CliveArt = exports.CharizardexArt = exports.CharmeleonArt = exports.AtticusArt = void 0;
+const charizard_ex_1 = require("../set-obsidian-flames/charizard-ex");
+const iono_1 = require("../set-paldea-evolved/iono");
 const natu_1 = require("../set-paradox-rift/natu");
 const xatu_1 = require("../set-paradox-rift/xatu");
+const electric_generator_1 = require("../set-scarlet-and-violet/electric-generator");
+const nest_ball_1 = require("../set-scarlet-and-violet/nest-ball");
+const professors_research_1 = require("../set-scarlet-and-violet/professors-research");
+const professors_research2_1 = require("../set-scarlet-and-violet/professors-research2");
+const rare_candy_1 = require("../set-scarlet-and-violet/rare-candy");
+const ultra_ball_1 = require("../set-scarlet-and-violet/ultra-ball");
 const atticus_1 = require("./atticus");
 const charmeleon_1 = require("./charmeleon");
 const clive_1 = require("./clive");
@@ -31,6 +39,16 @@ class CharmeleonArt extends charmeleon_1.Charmeleon {
     }
 }
 exports.CharmeleonArt = CharmeleonArt;
+class CharizardexArt extends charizard_ex_1.Charizardex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_054_R_EN.png';
+        this.fullName = 'Charizard ex PAF';
+        this.set = 'PAF';
+        this.setNumber = '54';
+    }
+}
+exports.CharizardexArt = CharizardexArt;
 class CliveArt extends clive_1.Clive {
     constructor() {
         super(...arguments);
@@ -38,6 +56,16 @@ class CliveArt extends clive_1.Clive {
     }
 }
 exports.CliveArt = CliveArt;
+class ElectricGeneratorArt extends electric_generator_1.ElectricGenerator {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_079_R_EN.png';
+        this.fullName = 'Electric Generator PAF';
+        this.set = 'PAF';
+        this.setNumber = '79';
+    }
+}
+exports.ElectricGeneratorArt = ElectricGeneratorArt;
 class EspathraexArt extends espathra_ex_1.Espathraex {
     constructor() {
         super(...arguments);
@@ -73,6 +101,16 @@ class HaunterArt extends haunter_1.Haunter {
     }
 }
 exports.HaunterArt = HaunterArt;
+class IonoArt extends iono_1.Iono {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_080_R_EN.png';
+        this.fullName = 'Iono PAF';
+        this.set = 'PAF';
+        this.setNumber = '80';
+    }
+}
+exports.IonoArt = IonoArt;
 class KilowattrelArt extends kilowattrel_1.Kilowattrel {
     constructor() {
         super(...arguments);
@@ -94,6 +132,16 @@ class MoonlightHillArt extends moonlight_hill_1.MoonlightHill {
     }
 }
 exports.MoonlightHillArt = MoonlightHillArt;
+class NestBallArt extends nest_ball_1.NestBall {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_084_R_EN.png';
+        this.fullName = 'Nest Ball PAF';
+        this.set = 'PAF';
+        this.setNumber = '84';
+    }
+}
+exports.NestBallArt = NestBallArt;
 class NemonaArt extends nemona_1.Nemona {
     constructor() {
         super(...arguments);
@@ -101,6 +149,36 @@ class NemonaArt extends nemona_1.Nemona {
     }
 }
 exports.NemonaArt = NemonaArt;
+class ProfessorsResearchArt extends professors_research_1.ProfessorsResearch {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_087_R_EN_LG.png';
+        this.fullName = 'Professor\'s Research PAF';
+        this.set = 'PAF';
+        this.setNumber = '87';
+    }
+}
+exports.ProfessorsResearchArt = ProfessorsResearchArt;
+class ProfessorsResearch2Art extends professors_research2_1.ProfessorsResearch2 {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_088_R_EN_LG.png';
+        this.fullName = 'Professor\'s Research PAF';
+        this.set = 'PAF';
+        this.setNumber = '88';
+    }
+}
+exports.ProfessorsResearch2Art = ProfessorsResearch2Art;
+class RareCandyArt extends rare_candy_1.RareCandy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_089_R_EN.png';
+        this.fullName = 'Rare Candy PAF';
+        this.set = 'PAF';
+        this.setNumber = '89';
+    }
+}
+exports.RareCandyArt = RareCandyArt;
 class ScovillainexArt extends scovillain_ex_1.Scovillainex {
     constructor() {
         super(...arguments);
@@ -129,6 +207,16 @@ class NatuArt extends natu_1.Natu {
     }
 }
 exports.NatuArt = NatuArt;
+class UltraBallArt extends ultra_ball_1.UltraBall {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_091_R_EN.png';
+        this.fullName = 'Ultra Ball PAF';
+        this.set = 'PAF';
+        this.setNumber = '91';
+    }
+}
+exports.UltraBallArt = UltraBallArt;
 class XatuArt extends xatu_1.Xatu {
     constructor() {
         super(...arguments);

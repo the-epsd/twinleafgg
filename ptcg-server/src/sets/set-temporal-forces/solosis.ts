@@ -27,17 +27,17 @@ export class Solosis extends PokemonCard {
     text: 'Flip a coin. If tails, this attack does nothing.'
   }];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '30';
+  public setNumber: string = '70';
 
   public name: string = 'Solosis';
 
-  public fullName: string = 'Solosis SV5';
+  public fullName: string = 'Solosis TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

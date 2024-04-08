@@ -27,12 +27,12 @@ class Rabsca extends pokemon_card_1.PokemonCard {
                 damage: 10,
                 text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
             }];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '14';
+        this.setNumber = '24';
         this.name = 'Rabsca';
-        this.fullName = 'Rabsca SV5';
+        this.fullName = 'Rabsca TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

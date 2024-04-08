@@ -22,12 +22,12 @@ class Pikachu extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 10 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '23';
+        this.setNumber = '51';
         this.name = 'Pikachu';
-        this.fullName = 'Pikachu SV5';
+        this.fullName = 'Pikachu TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

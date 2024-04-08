@@ -76,7 +76,7 @@ export class Zapdosex extends PokemonCard {
       if (checkProvidedEnergy.energyMap.some(c => {
         return c instanceof EnergyCard
           && c.energyType === EnergyType.BASIC
-          && c.name === 'Basic Lightning Energy';
+          && c.name === 'Lightning Energy';
       })) {
         effect.cost = [ ];
       }

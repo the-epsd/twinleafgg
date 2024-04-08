@@ -14,15 +14,15 @@ export class HerosCape extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '64';
+  public setNumber: string = '152';
 
   public name: string = 'Hero\'s Cape';
 
-  public fullName: string = 'Hero\'s Cape SV5';
+  public fullName: string = 'Hero\'s Cape TEF';
 
   public text: string =
     'The Pokémon this card is attached to gets +100 HP.';

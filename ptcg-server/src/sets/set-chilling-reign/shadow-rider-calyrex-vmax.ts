@@ -93,7 +93,7 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
         player.hand,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Psychic Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
         { allowCancel: true, min: 1, max: 1, blocked: blocked },
       ), transfers => {
         transfers = transfers || [];
@@ -124,7 +124,7 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
         player.discard,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Psychic Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
         { min: 0, max: 2, allowCancel: true }
       ), cards => {
         cards = cards || [];

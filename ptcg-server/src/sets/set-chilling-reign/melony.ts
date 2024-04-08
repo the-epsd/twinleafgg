@@ -32,7 +32,7 @@ export class Melony extends TrainerCard {
   
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
-            && c.energyType === EnergyType.BASIC && c.name === 'Basic Water Energy';});
+            && c.energyType === EnergyType.BASIC && c.name === 'Water Energy';});
   
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -73,7 +73,7 @@ export class Melony extends TrainerCard {
             player.discard,
             PlayerType.BOTTOM_PLAYER,
             [SlotType.BENCH, SlotType.ACTIVE],
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Water Energy' },
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
             { allowCancel: false, min: 1, max: 1 }
           ), transfers => {
             transfers = transfers || [];

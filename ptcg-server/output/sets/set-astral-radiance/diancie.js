@@ -32,6 +32,7 @@ class Diancie extends pokemon_card_1.PokemonCard {
         this.PRINCESS_CURTAIN_MARKER = 'PRINCESS_CURTAIN_MARKER';
     }
     reduceEffect(store, state, effect) {
+        var _a;
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
             player.marker.removeMarker(this.PRINCESS_CURTAIN_MARKER, this);
@@ -40,28 +41,17 @@ class Diancie extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             if (player.active.cards[0] !== this) {
                 console.log('BASICS UNPROTECTED');
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                    if (card.stage === card_types_1.Stage.BASIC) {
-                        cardList.marker.removeMarker(this.PRINCESS_CURTAIN_MARKER, this);
-                    }
-                    if (player.active.cards[0] == this) {
-                        console.log('BASICS PROTECTED');
-                        player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                            if (card.stage === card_types_1.Stage.BASIC) {
-                                cardList.marker.addMarker(this.PRINCESS_CURTAIN_MARKER, this);
-                            }
-                            if (effect instanceof game_1.ChoosePokemonPrompt) {
-                                if (cardList.marker.hasMarker(this.PRINCESS_CURTAIN_MARKER, this)) {
-                                    return state;
-                                }
-                            }
-                            return state;
-                        });
-                        return state;
-                    }
+                player.marker.removeMarker(this.PRINCESS_CURTAIN_MARKER, this);
+            }
+            if (player.active.cards[0] == this) {
+                console.log('BASICS PROTECTED');
+                player.marker.addMarker(this.PRINCESS_CURTAIN_MARKER, this);
+            }
+            if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard.trainerType == card_types_1.TrainerType.SUPPORTER && ((_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards.some((card) => card instanceof pokemon_card_1.PokemonCard && card.stage === card_types_1.Stage.BASIC))) {
+                if (player.marker.hasMarker(this.PRINCESS_CURTAIN_MARKER, this)) {
+                    effect.preventDefault = true;
                     return state;
-                });
-                return state;
+                }
             }
             return state;
         }

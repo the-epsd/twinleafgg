@@ -30,11 +30,11 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon does 60 damage to itself.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '52';
+        this.setNumber = '120';
         this.name = 'Koraidon ex';
-        this.fullName = 'Koraidon ex SV5';
+        this.fullName = 'Koraidon ex TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -87,7 +87,7 @@ export class Solrock extends PokemonCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH, SlotType.ACTIVE ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Psychic Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
         { allowCancel: true, min: 1, max: 1, blocked: blocked }
       ), transfers => {
         transfers = transfers || [];

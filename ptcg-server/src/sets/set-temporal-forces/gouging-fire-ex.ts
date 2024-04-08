@@ -35,15 +35,15 @@ export class GougingFireex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '012';
+  public setNumber: string = '38';
 
   public name: string = 'Gouging Fire ex';
 
-  public fullName: string = 'Gouging Fire ex';
+  public fullName: string = 'Gouging Fire ex TEF';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
 

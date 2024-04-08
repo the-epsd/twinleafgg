@@ -20,12 +20,12 @@ class Charjabug extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '27';
+        this.setNumber = '55';
         this.name = 'Charjabug';
-        this.fullName = 'Charjabug SV5';
+        this.fullName = 'Charjabug TEF';
     }
 }
 exports.Charjabug = Charjabug;

@@ -7,8 +7,8 @@ export class DarknessEnergy extends EnergyCard {
 
   public set: string = 'DP';
 
-  public name = 'Basic Darkness Energy';
+  public name = 'Darkness Energy';
 
-  public fullName = 'Basic Darkness Energy EVO';
+  public fullName = 'Darkness Energy EVO';
 
 }

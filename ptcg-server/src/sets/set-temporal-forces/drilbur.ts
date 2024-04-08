@@ -35,15 +35,15 @@ export class Drilbur extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '39';
+  public setNumber: string = '85';
 
   public name: string = 'Drilbur';
 
-  public fullName: string = 'Drilbur SV5';
+  public fullName: string = 'Drilbur TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -71,7 +71,7 @@ export class Drilbur extends PokemonCard {
             player.id,
             GameMessage.CHOOSE_CARD_TO_HAND,
             player.deck,
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fighting Energy' },
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
             { min: 1, max: 3, allowCancel: false }
           ), selected => {
             const cards = selected || [];

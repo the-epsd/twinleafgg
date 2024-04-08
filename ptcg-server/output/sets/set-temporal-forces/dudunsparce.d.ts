@@ -3,7 +3,6 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Dudunsparce extends PokemonCard {
-    regulationMark: string;
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;
@@ -24,6 +23,7 @@ export declare class Dudunsparce extends PokemonCard {
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
     cardImage: string;
     setNumber: string;

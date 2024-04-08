@@ -20,6 +20,17 @@ export class PromptShowCardsComponent {
     private gameService: GameService
   ) { }
 
+  ngOnInit() {
+    const gameId = this.gameState.gameId;
+    const id = this.prompt.id;
+
+    setTimeout(() => {
+      this.gameService.resolvePrompt(gameId, id, null);
+    }, 3000);
+
+  }
+
+
   public minimize() {
     this.gameService.setPromptMinimized(this.gameState.localId, true);
   }

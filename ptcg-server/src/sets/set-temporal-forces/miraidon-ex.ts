@@ -36,15 +36,15 @@ export class Miraidonex extends PokemonCard {
       }
   ];
 
-    public set: string = 'SV5';
+    public set: string = 'TEF';
 
     public cardImage: string = 'assets/cardback.png';
 
-    public setNumber: string = '11';
+    public setNumber: string = '122';
 
     public name: string = 'Miraidon ex';
 
-    public fullName: string = 'Miraidon ex SV5';
+    public fullName: string = 'Miraidon ex TEF';
 
     public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
     public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

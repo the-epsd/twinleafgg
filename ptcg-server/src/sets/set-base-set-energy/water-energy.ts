@@ -13,8 +13,8 @@ export class WaterEnergy extends EnergyCard {
 
   public setNumber: string = '102';
 
-  public name = 'Basic Water Energy';
+  public name = 'Water Energy';
 
-  public fullName = 'Basic Water Energy BS';
+  public fullName = 'Water Energy BS';
 
 }

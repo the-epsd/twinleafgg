@@ -78,11 +78,11 @@ class Salvatore extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '68';
+        this.setNumber = '160';
         this.name = 'Salvatore';
-        this.fullName = 'Salvatore SV5';
+        this.fullName = 'Salvatore TEF';
         this.text = 'Search your deck for a Pokémon, except any Pokémon with an Ability, that evolves from 1 of your Pokémon in play and put it on that Pokémon to evolve it. Then, shuffle your deck. (You can use this card on a Pokémon that was put into play when setting up to play or on the turn it was put into play.)';
     }
     reduceEffect(store, state, effect) {

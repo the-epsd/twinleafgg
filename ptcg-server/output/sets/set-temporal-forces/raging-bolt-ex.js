@@ -31,11 +31,11 @@ class RagingBoltex extends pokemon_card_1.PokemonCard {
                 text: 'You may discard any amount of Basic Energy from your Pokémon. This attack does 70 damage for each card you discarded in this way.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '053';
+        this.setNumber = '123';
         this.name = 'Raging Bolt ex';
-        this.fullName = 'Raging Bolt ex SV5';
+        this.fullName = 'Raging Bolt ex TEF';
     }
     // Implement power
     reduceEffect(store, state, effect) {

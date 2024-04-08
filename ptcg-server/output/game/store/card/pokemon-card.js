@@ -24,6 +24,7 @@ class PokemonCard extends card_1.Card {
         this.marker = new card_marker_1.Marker();
         this.movedToActiveThisTurn = false;
         this.tools = [];
+        this.archetype = card_types_1.Archetype.NONE;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect) {

@@ -63,7 +63,7 @@ export class Mewtwo extends PokemonCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.ACTIVE ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Psychic Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
         { allowCancel: false, min: 1, max: 2 },
       ), transfers => {
         transfers = transfers || [];

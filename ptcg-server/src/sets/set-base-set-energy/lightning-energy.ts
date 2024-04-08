@@ -13,8 +13,8 @@ export class LightningEnergy extends EnergyCard {
 
   public setNumber: string = '100';
 
-  public name = 'Basic Lightning Energy';
+  public name = 'Lightning Energy';
 
-  public fullName = 'Basic Lightning Energy BS';
+  public fullName = 'Lightning Energy BS';
 
 }

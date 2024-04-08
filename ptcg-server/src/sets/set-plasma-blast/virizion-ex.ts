@@ -26,7 +26,7 @@ function* useEmeraldSlash(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { superType: SuperType.ENERGY, name: 'Basic Grass Energy' },
+    { superType: SuperType.ENERGY, name: 'Grass Energy' },
     { min: 1, max: 2, allowCancel: true }
   ), selected => {
     cards = selected || [];

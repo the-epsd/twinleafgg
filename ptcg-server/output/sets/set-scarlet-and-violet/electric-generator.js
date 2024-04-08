@@ -15,7 +15,7 @@ class ElectricGenerator extends trainer_card_1.TrainerCard {
         this.setNumber = '170';
         this.name = 'Electric Generator';
         this.fullName = 'Electric Generator SVI';
-        this.text = 'Look at the top 5 cards of your deck and attach up to 2 Basic Lightning Energy cards you find there to your Benched Lightning Pokémon in any way you like. Shuffle the other cards back into your deck.';
+        this.text = 'Look at the top 5 cards of your deck and attach up to 2 Lightning Energy cards you find there to your Benched Lightning Pokémon in any way you like. Shuffle the other cards back into your deck.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
@@ -26,7 +26,7 @@ class ElectricGenerator extends trainer_card_1.TrainerCard {
             player.deck.moveTo(temp, 5);
             // Check if any cards drawn are basic energy
             const energyCardsDrawn = temp.cards.filter(card => {
-                return card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC && card.name === 'Basic Lightning Energy';
+                return card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC && card.name === 'Lightning Energy';
             });
             // If no energy cards were drawn, move all cards to deck
             if (energyCardsDrawn.length == 0) {
@@ -44,7 +44,7 @@ class ElectricGenerator extends trainer_card_1.TrainerCard {
             else {
                 // Attach energy if drawn
                 return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, temp, // Only show drawn energies
-                game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Lightning Energy' }, { min: 0, max: 2, allowCancel: false }), transfers => {
+                game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { min: 0, max: 2, allowCancel: false }), transfers => {
                     // Attach energy based on prompt selection
                     if (transfers) {
                         for (const transfer of transfers) {

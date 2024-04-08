@@ -31,10 +31,10 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '26';
-        this.set = 'SV4';
+        this.setNumber = '8';
+        this.set = 'PAF';
         this.name = 'Charmeleon';
-        this.fullName = 'Charmeleon SV4';
+        this.fullName = 'Charmeleon PAF';
     }
     reduceEffect(store, state, effect) {
         // Prevent effects of attacks

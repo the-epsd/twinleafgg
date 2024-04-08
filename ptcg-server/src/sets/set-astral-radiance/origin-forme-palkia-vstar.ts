@@ -80,7 +80,7 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Water Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
         { allowCancel: true, min: 0, max: 3 }
       ), transfers => {
         transfers = transfers || [];

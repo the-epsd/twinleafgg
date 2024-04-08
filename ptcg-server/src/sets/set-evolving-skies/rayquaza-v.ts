@@ -68,7 +68,7 @@ export class RayquazaV extends PokemonCard {
               player.id,
               GameMessage.CHOOSE_CARD_TO_HAND,
               player.active,
-              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fire Energy' },
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
               { min: 1, max: 2, allowCancel: false }
             ), selected => {
               const cards = selected || [];
@@ -95,7 +95,7 @@ export class RayquazaV extends PokemonCard {
               player.id,
               GameMessage.CHOOSE_CARD_TO_HAND,
               player.active,
-              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Lightning Energy' },
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
               { min: 1, max: 2, allowCancel: false }
             ), selected => {
               const cards = selected || [];

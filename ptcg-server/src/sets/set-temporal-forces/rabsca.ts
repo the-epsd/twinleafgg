@@ -35,17 +35,17 @@ export class Rabsca extends PokemonCard {
     text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
   }];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '14';
+  public setNumber: string = '24';
 
   public name: string = 'Rabsca';
 
-  public fullName: string = 'Rabsca SV5';
+  public fullName: string = 'Rabsca TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

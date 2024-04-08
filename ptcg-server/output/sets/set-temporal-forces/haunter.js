@@ -23,11 +23,11 @@ class Haunter extends pokemon_card_1.PokemonCard {
                 text: 'Your opponent’s Active Pokémon is now Poisoned.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '46';
+        this.setNumber = '103';
         this.name = 'Haunter';
-        this.fullName = 'Haunter SV5';
+        this.fullName = 'Haunter TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

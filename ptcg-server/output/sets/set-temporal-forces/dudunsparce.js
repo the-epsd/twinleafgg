@@ -8,7 +8,6 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Dudunsparce extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'H';
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Dunsparce';
         this.cardType = card_types_1.CardType.COLORLESS;
@@ -29,6 +28,7 @@ class Dudunsparce extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
+        this.regulationMark = 'H';
         this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '57';

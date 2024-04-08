@@ -30,11 +30,11 @@ class Gengarex extends pokemon_card_1.PokemonCard {
                 text: 'You may move an Energy from your opponent\'s Active Pokémon to 1 of their Benched Pokémon.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '47';
+        this.setNumber = '104';
         this.name = 'Gengar ex';
-        this.fullName = 'Gengar ex SV5';
+        this.fullName = 'Gengar ex TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

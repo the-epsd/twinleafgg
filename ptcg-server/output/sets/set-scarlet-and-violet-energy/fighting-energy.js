@@ -11,8 +11,8 @@ class FightingEnergy extends energy_card_1.EnergyCard {
         this.regulationMark = 'ENERGY';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '233';
-        this.name = 'Basic Fighting Energy';
-        this.fullName = 'Basic Fighting Energy SVE';
+        this.name = 'Fighting Energy';
+        this.fullName = 'Fighting Energy SVE';
     }
 }
 exports.FightingEnergy = FightingEnergy;

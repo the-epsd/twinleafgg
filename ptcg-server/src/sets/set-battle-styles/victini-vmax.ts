@@ -64,7 +64,7 @@ export class VictiniVMAX extends PokemonCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH, SlotType.ACTIVE ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fire Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
         { allowCancel: true, min: 0, max: 3 }  
       ), transfers => {
         transfers = transfers || [];

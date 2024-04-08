@@ -33,17 +33,17 @@ export class IronThorns extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '30';
+  public setNumber: string = '62';
 
   public name: string = 'Iron Thorns';
 
-  public fullName: string = 'Iron Thorns SV5';
+  public fullName: string = 'Iron Thorns TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

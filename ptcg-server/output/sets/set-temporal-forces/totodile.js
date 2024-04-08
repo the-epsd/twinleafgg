@@ -21,12 +21,12 @@ class Totodile extends pokemon_card_1.PokemonCard {
                 damage: 10,
                 text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
             }];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '13';
+        this.setNumber = '39';
         this.name = 'Totodile';
-        this.fullName = 'Totodile SV5';
+        this.fullName = 'Totodile TEF';
         this.MEAN_LOOK_MARKER = 'MEAN_LOOK_MARKER';
     }
     reduceEffect(store, state, effect) {

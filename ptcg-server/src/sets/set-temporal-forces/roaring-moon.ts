@@ -37,21 +37,21 @@ export class RoaringMoon extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '51';
+  public setNumber: string = '109';
 
   public name: string = 'Roaring Moon';
 
-  public fullName: string = 'Roaring Moon SV5';
+  public fullName: string = 'Roaring Moon TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const cards = effect.player.discard.cards.filter(c => c.tags.includes(CardTag.ANCIENT));
-      effect.damage += 10 * cards.length;
+      const cards = effect.player.discard.cards.filter(c => c.tags.includes(CardTag.ANCIENT)).length;
+      effect.damage += 10 * cards;
       return state;
     }
     return state;

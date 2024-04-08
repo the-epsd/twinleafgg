@@ -29,11 +29,11 @@ class Cincinno extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 70 damage for each Special Energy card attached to this Pokémon.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '60';
+        this.setNumber = '137';
         this.name = 'Cincinno';
-        this.fullName = 'Cincinno SV5';
+        this.fullName = 'Cincinno TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

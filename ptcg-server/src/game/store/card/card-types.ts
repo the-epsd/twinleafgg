@@ -68,7 +68,7 @@ export enum CardType {
   DARK,
   FIRE,
   DRAGON,
-  FAIRY,
+  FAIRY
 }
 
 export enum SpecialCondition {
@@ -86,4 +86,9 @@ export enum Format {
   UNLIMITED,
   RETRO,
   GLC
+}
+
+export enum Archetype {
+  NONE,
+  CHARIZARD
 }

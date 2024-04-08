@@ -29,11 +29,11 @@ class GreatTusk extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '45';
+        this.setNumber = '97';
         this.name = 'Great Tusk';
-        this.fullName = 'Great Tusk SV5';
+        this.fullName = 'Great Tusk TEF';
         this.ANCIENT_SUPPORTER_MARKER = 'ANCIENT_SUPPORTER_MARKER';
     }
     reduceEffect(store, state, effect) {

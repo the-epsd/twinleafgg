@@ -38,15 +38,15 @@ export class Raichu extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '24';
+  public setNumber: string = '52';
 
   public name: string = 'Raichu';
 
-  public fullName: string = 'Raichu SV5';
+  public fullName: string = 'Raichu TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

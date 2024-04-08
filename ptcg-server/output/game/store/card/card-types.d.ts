@@ -77,3 +77,7 @@ export declare enum Format {
     RETRO = 4,
     GLC = 5
 }
+export declare enum Archetype {
+    NONE = 0,
+    CHARIZARD = 1
+}

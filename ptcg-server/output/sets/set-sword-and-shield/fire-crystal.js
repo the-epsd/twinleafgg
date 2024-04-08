@@ -25,7 +25,7 @@ function* playCard(next, store, state, effect) {
     const max = Math.min(3, energyInDiscard);
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
-    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Fire Energy' }, { min: max, max, allowCancel: true }), selected => {
+    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { min: max, max, allowCancel: true }), selected => {
         if (selected && selected.length > 0) {
             // Discard trainer only when user selected some cards
             player.hand.moveCardTo(effect.trainerCard, player.discard);

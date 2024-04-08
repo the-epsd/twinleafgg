@@ -30,11 +30,11 @@ class Reuniclus extends pokemon_card_1.PokemonCard {
                 text: 'Your opponent\'s Active Pokémon is now Confused.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '32';
+        this.setNumber = '72';
         this.name = 'Duosion';
-        this.fullName = 'Duosion SV5';
+        this.fullName = 'Duosion TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

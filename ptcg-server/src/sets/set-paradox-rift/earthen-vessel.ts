@@ -1,7 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, SuperType, EnergyType } from '../../game/store/card/card-types';
+import { TrainerType, SuperType, EnergyType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
@@ -87,6 +87,8 @@ export class EarthenVessel extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public regulationMark = 'G';
+
+  public tags = [CardTag.ANCIENT];
 
   public set: string = 'PAR';
 

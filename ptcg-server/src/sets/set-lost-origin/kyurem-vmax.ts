@@ -60,7 +60,7 @@ export class KyuremVMAX extends PokemonCard {
   
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
-        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Basic Water Energy';
+        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Water Energy';
       });
   
       // If no energy cards were drawn, move all cards to hand
@@ -104,7 +104,7 @@ export class KyuremVMAX extends PokemonCard {
           player.id,
           GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
           player.active, // Card source is target Pokemon
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Water Energy' },
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
           { allowCancel: false }
         ), selected => {
           const cards = selected || [];

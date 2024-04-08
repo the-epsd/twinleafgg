@@ -13,8 +13,8 @@ export class DarknessEnergy extends EnergyCard {
 
   public setNumber: string = '236';
 
-  public name = 'Basic Darkness Energy';
+  public name = 'Darkness Energy';
 
-  public fullName = 'Basic Darkness Energy SVE';
+  public fullName = 'Darkness Energy SVE';
 
 }

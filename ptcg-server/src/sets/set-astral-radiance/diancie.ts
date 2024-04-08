@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { ChoosePokemonPrompt, PlayerType, PowerType, State, StoreLike } from '../../game';
+import { Stage, CardType, TrainerType } from '../../game/store/card/card-types';
+import { PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { PlayPokemonEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class Diancie extends PokemonCard {
 
@@ -53,30 +53,19 @@ export class Diancie extends PokemonCard {
 
       if (player.active.cards[0] !== this) {
         console.log('BASICS UNPROTECTED');
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (card.stage === Stage.BASIC) {
-            cardList.marker.removeMarker(this.PRINCESS_CURTAIN_MARKER, this);
-          }
+        player.marker.removeMarker(this.PRINCESS_CURTAIN_MARKER, this);
+      }
 
-          if (player.active.cards[0] == this) {
-            console.log('BASICS PROTECTED');
-            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-              if (card.stage === Stage.BASIC) {
-                cardList.marker.addMarker(this.PRINCESS_CURTAIN_MARKER, this);
-              }
+      if (player.active.cards[0] == this) {
+        console.log('BASICS PROTECTED');
+        player.marker.addMarker(this.PRINCESS_CURTAIN_MARKER, this);
+      }
 
-              if (effect instanceof ChoosePokemonPrompt) {
-                if (cardList.marker.hasMarker(this.PRINCESS_CURTAIN_MARKER, this)) {
-                  return state;
-                }
-              }
-              return state;
-            });
-            return state;
-          }
+      if (effect instanceof TrainerEffect && effect.trainerCard.trainerType == TrainerType.SUPPORTER && effect.target?.cards.some((card) => card instanceof PokemonCard && card.stage === Stage.BASIC)) {
+        if (player.marker.hasMarker(this.PRINCESS_CURTAIN_MARKER, this)) {
+          effect.preventDefault = true;
           return state;
-        });
-        return state;
+        }
       }
       return state;
     }

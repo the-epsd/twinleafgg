@@ -10,11 +10,11 @@ class Eri extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '68';
+        this.setNumber = '146';
         this.name = 'Eri';
-        this.fullName = 'Eri SV5';
+        this.fullName = 'Eri TEF';
         this.text = 'Your opponent reveals their hand. Discard up to 2 Item cards you find there.';
     }
     reduceEffect(store, state, effect) {

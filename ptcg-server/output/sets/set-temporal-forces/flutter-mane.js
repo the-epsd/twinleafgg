@@ -51,11 +51,11 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
                 damage: 90,
                 text: 'Put 2 damage counters on your opponent\'s Benched Pokémon in any way you like.'
             }];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '33';
+        this.setNumber = '71';
         this.name = 'Flutter Mane';
-        this.fullName = 'Flutter Mane SV5';
+        this.fullName = 'Flutter Mane TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY) {

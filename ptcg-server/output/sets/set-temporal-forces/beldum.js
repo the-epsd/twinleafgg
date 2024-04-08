@@ -29,11 +29,11 @@ class Beldum extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon also does 10 damage to itself.'
             },
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '39';
+        this.setNumber = '113';
         this.name = 'Beldum';
-        this.fullName = 'Beldum SV5';
+        this.fullName = 'Beldum TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

@@ -25,7 +25,7 @@ export class Metang extends PokemonCard {
     name: 'Metal Maker',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY, 
-    text: 'Once during your turn, you may look at the top 4 cards of your deck and attach any number of Basic Metal Energy you find there to your Pokémon in any way you like. Shuffle the other cards and put them at the bottom of your deck.'
+    text: 'Once during your turn, you may look at the top 4 cards of your deck and attach any number of Metal Energy you find there to your Pokémon in any way you like. Shuffle the other cards and put them at the bottom of your deck.'
   }];
 
   public attacks = [{
@@ -37,15 +37,15 @@ export class Metang extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '47';
+  public setNumber: string = '114';
 
   public name: string = 'Metang';
 
-  public fullName: string = 'Metang SV5';
+  public fullName: string = 'Metang TEF';
 
   public readonly METAL_MAKER_MARKER = 'METAL_MAKER_MARKER';
 
@@ -71,7 +71,7 @@ export class Metang extends PokemonCard {
 
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
-        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Basic Metal Energy';
+        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Metal Energy';
       });
   
       // If no energy cards were drawn, move all cards to deck & shuffle
@@ -93,7 +93,7 @@ export class Metang extends PokemonCard {
           temp, // Only show drawn energies
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH, SlotType.ACTIVE],
-          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Metal Energy'},
+          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy'},
           {min: 0, max: energyCardsDrawn.length}
         ), transfers => {
       

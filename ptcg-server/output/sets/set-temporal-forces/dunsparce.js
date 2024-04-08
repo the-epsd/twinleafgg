@@ -32,7 +32,7 @@ class Dunsparce extends pokemon_card_1.PokemonCard {
                 text: 'Flip a coin. If heads, during your opponent’s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
             }
         ];
-        this.regulationMark = 'E';
+        this.regulationMark = 'H';
         this.set = 'SV5';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '56';

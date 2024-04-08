@@ -27,12 +27,12 @@ class Turtwig extends pokemon_card_1.PokemonCard {
                 damage: 30,
                 text: ''
             }];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '3';
+        this.setNumber = '10';
         this.name = 'Turtwig';
-        this.fullName = 'Turtwig SV5';
+        this.fullName = 'Turtwig TEF';
     }
     reduceEffect(store, state, effect) {
         // Reduce damage by 20

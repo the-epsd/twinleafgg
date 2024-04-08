@@ -1,6 +1,8 @@
+import { AncientBoosterEnergyCapsule } from '../set-paradox-rift/ancient-booster-energy-capsule';
+import { FutureBoosterEnergyCapsule } from '../set-paradox-rift/future-booster-energy-capsule';
 import { Beldum } from './beldum';
-import { BiancasSincerity } from './biancas-sincerity';
-import { BuddyPoffin } from './buddy-poffin';
+import { BiancasDevotion } from './biancas-devotion';
+import { BuddyBuddyPoffin } from './buddy-buddy-poffin';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
 import { Cincinno } from './cincinno';
@@ -30,7 +32,6 @@ import { IronLeavesex } from './iron-leaves-ex';
 import { IronThorns } from './iron-thorns';
 import { Koraidon } from './koraidon';
 import { Koraidonex } from './koraidon-ex';
-import { LoveBall } from './love-ball';
 import { MasterBall } from './master-ball';
 import { MaximumBelt } from './maximum-belt';
 import { Metang } from './metang';
@@ -60,15 +61,22 @@ import { Victini } from './victini';
 import { Vikavolt } from './vikavolt';
 import { WalkingWakeex } from './walking-wake-ex';
 
+export class AncientBoosterEnergyCapsuleArt extends AncientBoosterEnergyCapsule {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_140_R_EN.png';
+  public fullName = 'Ancient Booster Energy Capsule TEF';
+  public set = 'TEF';
+  public setNumber = '140';
+}
+
 export class BeldumArt extends Beldum {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1705063903637-SICM6I1A3UDKEBSMMSNN/IMG_6445.png?format=2500w';
 }
 
-export class BiancasSincerityArt extends BiancasSincerity {
+export class BiancasDevotionArt extends BiancasDevotion {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1705064035529-P4ZJL53H4UA8IY68BAG7/IMG_6449.png?format=2500w';
 }
 
-export class BuddyPoffinArt extends BuddyPoffin {
+export class BuddyBuddyPoffinArt extends BuddyBuddyPoffin {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1704512913547-DWUAR8R1CH1PWDP0FW6G/Buddy+Poffin.png?format=1500w';
 }
 
@@ -136,6 +144,13 @@ export class FlutterManeArt extends FlutterMane {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1703403314261-PAT0PRAZBIV92W0ULH2P/SV5_12.png?format=2500w';
 }
 
+export class FutureBoosterEnergyCapsuleArt extends FutureBoosterEnergyCapsule {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_149_R_EN.png';
+  public fullName = 'Future Booster Energy Capsule TEF';
+  public set = 'TEF';
+  public setNumber = '149';
+}
+
 export class GastlyArt extends Gastly {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1705063848328-IOE61291Y7UUR299U7G2/IMG_6417.png?format=2500w';
 }
@@ -186,10 +201,6 @@ export class KoraidonexArt extends Koraidonex {
 
 export class KoraidonArt extends Koraidon {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1705063961343-DYXO4W6108D0464WXJX2/IMG_6427.png?format=2500w';
-}
-
-export class LoveBallArt extends LoveBall {
-  public cardImage = 'https://pbs.twimg.com/media/GHQWktUXYAAmZVA?format=jpg&name=medium';
 }
 
 export class MaximumBeltArt extends MaximumBelt {

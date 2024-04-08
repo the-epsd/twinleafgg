@@ -43,7 +43,7 @@ class KyuremVMAX extends pokemon_card_1.PokemonCard {
             player.deck.moveTo(temp, 1);
             // Check if any cards drawn are basic energy
             const energyCardsDrawn = temp.cards.filter(card => {
-                return card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC && card.name === 'Basic Water Energy';
+                return card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC && card.name === 'Water Energy';
             });
             // If no energy cards were drawn, move all cards to hand
             if (energyCardsDrawn.length == 0) {
@@ -70,7 +70,7 @@ class KyuremVMAX extends pokemon_card_1.PokemonCard {
             if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
                 const player = effect.player;
                 return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, player.active, // Card source is target Pokemon
-                { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Water Energy' }, { allowCancel: false }), selected => {
+                { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: false }), selected => {
                     const cards = selected || [];
                     if (cards.length > 0) {
                         let totalDiscarded = 0;

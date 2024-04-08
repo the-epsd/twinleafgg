@@ -8,8 +8,8 @@ class MetalEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.METAL];
         this.set = 'DP';
-        this.name = 'Basic Metal Energy';
-        this.fullName = 'Basic Metal Energy EVO';
+        this.name = 'Metal Energy';
+        this.fullName = 'Metal Energy EVO';
     }
 }
 exports.MetalEnergy = MetalEnergy;

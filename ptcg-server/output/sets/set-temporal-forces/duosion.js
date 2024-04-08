@@ -23,11 +23,11 @@ class Duosion extends pokemon_card_1.PokemonCard {
                 text: 'Flip 2 coins. This attack does 30 damage for each heads.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '31';
+        this.setNumber = '71';
         this.name = 'Duosion';
-        this.fullName = 'Duosion SV5';
+        this.fullName = 'Duosion TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

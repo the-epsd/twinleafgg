@@ -77,7 +77,7 @@ export class DarkPatch extends TrainerCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Darkness Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
         { allowCancel: true, min: 1, max: 1, blockedTo }
       ), transfers => {
         transfers = transfers || [];

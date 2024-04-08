@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { BidoofArt, KyogreArt, LuxrayArt, RadiantCharizardArt, RadiantEternatusArt, RegigigasVArt, RegigigasVSTARArt, ZacianVSTARArt, ZamazentaArt, ZamazentaVArt } from './card-images';
+import { BidoofArt, KyogreArt, LostVacuumArt, LuxrayArt, RadiantCharizardArt, RadiantEternatusArt, RegigigasVArt, RegigigasVSTARArt, RotomVArt, ZacianVSTARArt, ZamazentaArt, ZamazentaVArt } from './card-images';
 
 export const setCrownZenith: Card[] = [
   
@@ -8,9 +8,11 @@ export const setCrownZenith: Card[] = [
   new RadiantCharizardArt(),
   new ZamazentaArt(),
   new LuxrayArt(),
+  new LostVacuumArt(),
   new ZamazentaVArt(),
   new RadiantEternatusArt(),
   new RegigigasVArt(),
   new RegigigasVSTARArt(),
+  new RotomVArt(),
   new ZacianVSTARArt(),
 ];

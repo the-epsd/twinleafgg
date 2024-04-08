@@ -73,7 +73,7 @@ export class Cherrim extends PokemonCard {
         player.hand,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH, SlotType.ACTIVE ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Grass Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
         { allowCancel: true }
       ), transfers => {
         transfers = transfers || [];

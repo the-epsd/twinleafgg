@@ -25,7 +25,7 @@ export class Wartortle extends PokemonCard {
       name: 'Free Dive',
       cost: [CardType.WATER],
       damage: 0,
-      text: 'Put up to 3 basic Water Energy cards from your discard pile into your hand.'
+      text: 'Put up to 3 Water Energy cards from your discard pile into your hand.'
     },
     {
       name: 'Spinning Attack',

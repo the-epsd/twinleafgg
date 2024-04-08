@@ -13,8 +13,8 @@ export class MetalEnergy extends EnergyCard {
 
   public setNumber: string = '237';
 
-  public name = 'Basic Metal Energy';
+  public name = 'Metal Energy';
 
-  public fullName = 'Basic Metal Energy SVE';
+  public fullName = 'Metal Energy SVE';
 
 }

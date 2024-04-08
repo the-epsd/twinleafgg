@@ -28,6 +28,7 @@ import { RaikouV } from './raikou-v';
 import { RoseannesBackup } from './roseannes-backup';
 import { ShayminV } from './shaymin-v';
 import { ShayminVSTAR } from './shaymin-vstar';
+import { TeamYellsCheer } from './team-yells-cheer';
 
 export class AcerolasPremonitionArt extends AcerolasPremonition {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_129_R_EN_LG.png';
@@ -147,4 +148,8 @@ export class ShayminVArt extends ShayminV {
 
 export class ShayminVSTARArt extends ShayminVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_014_R_EN_LG.png';
+}
+
+export class TeamYellsCheerArt extends TeamYellsCheer {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_149_R_EN.png';
 }

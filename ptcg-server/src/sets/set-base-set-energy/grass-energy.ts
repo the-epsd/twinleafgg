@@ -13,8 +13,8 @@ export class GrassEnergy extends EnergyCard {
 
   public setNumber: string = '99';
 
-  public name = 'Basic Grass Energy';
+  public name = 'Grass Energy';
 
-  public fullName = 'Basic Grass Energy BS';
+  public fullName = 'Grass Energy BS';
 
 }

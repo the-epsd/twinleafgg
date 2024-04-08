@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { BloodmoonUrsalunaexArt, CaretakerArt, CommunityCenterArt, EnhancedHammerArt, FroakieArt, FrogadierArt, GreninjaexArt, IronLeavesArt, IronThornsexArt, LuckyHelmetArt, PerrinArt, PhioneArt, ScreamTailexArt, SurvivalCastArt, TealMaskOgerponexArt, UnfairStampArt } from './card-images';
+import { BloodmoonUrsalunaexArt, CaretakerArt, CommunityCenterArt, EnhancedHammerArt, FroakieArt, FrogadierArt, GreninjaexArt, IronLeavesArt, IronThornsexArt, LoveBallArt, LuckyHelmetArt, PerrinArt, PhioneArt, ScreamTailexArt, SurvivalCastArt, TealMaskOgerponexArt, UnfairStampArt } from './card-images';
 
 export const setCrimsonHaze: Card[] = [
   new BloodmoonUrsalunaexArt(),
@@ -8,6 +8,7 @@ export const setCrimsonHaze: Card[] = [
   new EnhancedHammerArt(),
   new IronLeavesArt(),
   new IronThornsexArt(),
+  new LoveBallArt(),
   new LuckyHelmetArt(),
   new PerrinArt(),
   new PhioneArt(),

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AtticusArt, CharmeleonArt, CliveArt, EspathraexArt, FrigibaxArt, GastlyArt, GengarArt, HaunterArt, KilowattrelArt, MimeJrArt, MoonlightHillArt, NemonaArt, ScovillainexArt, StudentsInPaldeaArt } from './card-images';
+import { AtticusArt, CharizardexArt, CharmeleonArt, CliveArt, ElectricGeneratorArt, EspathraexArt, FrigibaxArt, GastlyArt, GengarArt, HaunterArt, IonoArt, KilowattrelArt, MimeJrArt, MoonlightHillArt, NemonaArt, NestBallArt, ProfessorsResearch2Art, ProfessorsResearchArt, RareCandyArt, ScovillainexArt, StudentsInPaldeaArt, UltraBallArt } from './card-images';
 
 export const setPaldeaFates: Card[] = [
   new CharmeleonArt(),
@@ -16,5 +16,14 @@ export const setPaldeaFates: Card[] = [
   new FrigibaxArt(),
   new GastlyArt(),
   new HaunterArt(),
+
+  new RareCandyArt(),
+  new CharizardexArt(),
+  new ElectricGeneratorArt(),
+  new IonoArt(),
+  new NestBallArt(),
+  new ProfessorsResearchArt(),
+  new ProfessorsResearch2Art(),
+  new UltraBallArt(),
 
 ];

@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReuniclusArt = exports.RellorArt = exports.RebootPodArt = exports.RaichuArt = exports.RagingBoltexArt = exports.RabscaArt = exports.PrimeCatcherArt = exports.PikachuArt = exports.NeoUpperEnergyArt = exports.MrMimeArt = exports.MortysConvictionArt = exports.MistEnergyArt = exports.MiraidonArt = exports.MiraidonexArt = exports.MetangArt = exports.MasterBallArt = exports.MaximumBeltArt = exports.LoveBallArt = exports.KoraidonArt = exports.KoraidonexArt = exports.IronThornsArt = exports.IronLeavesexArt = exports.IronHandsArt = exports.IronCrownexArt = exports.HerosCapeArt = exports.HaunterArt = exports.HandTrimmerArt = exports.GrotleArt = exports.GougingFireexArt = exports.GengarexArt = exports.GastlyArt = exports.FlutterManeArt = exports.FeraligatrArt = exports.ExplorersGuidanceArt = exports.EriArt = exports.EmergencyBoardArt = exports.DuosionArt = exports.DunsparceArt = exports.DudunsparceArt = exports.DrumsOfAwakeningArt = exports.DrilburArt = exports.DeliveryBoxArt = exports.CryptomaniacsDecipheringArt = exports.CroconawArt = exports.CincinnoArt = exports.ChatotArt = exports.CharjabugArt = exports.BuddyPoffinArt = exports.BiancasSincerityArt = exports.BeldumArt = void 0;
-exports.WalkingWakeexArt = exports.VikavoltArt = exports.VictiniArt = exports.TurtwigArt = exports.TotodileArt = exports.TorterraexArt = exports.SolosisArt = exports.SandyShocksArt = exports.SalvatoreArt = exports.SableyeArt = exports.RoaringMoonArt = void 0;
+exports.RellorArt = exports.RebootPodArt = exports.RaichuArt = exports.RagingBoltexArt = exports.RabscaArt = exports.PrimeCatcherArt = exports.PikachuArt = exports.NeoUpperEnergyArt = exports.MrMimeArt = exports.MortysConvictionArt = exports.MistEnergyArt = exports.MiraidonArt = exports.MiraidonexArt = exports.MetangArt = exports.MasterBallArt = exports.MaximumBeltArt = exports.KoraidonArt = exports.KoraidonexArt = exports.IronThornsArt = exports.IronLeavesexArt = exports.IronHandsArt = exports.IronCrownexArt = exports.HerosCapeArt = exports.HaunterArt = exports.HandTrimmerArt = exports.GrotleArt = exports.GougingFireexArt = exports.GengarexArt = exports.GastlyArt = exports.FutureBoosterEnergyCapsuleArt = exports.FlutterManeArt = exports.FeraligatrArt = exports.ExplorersGuidanceArt = exports.EriArt = exports.EmergencyBoardArt = exports.DuosionArt = exports.DunsparceArt = exports.DudunsparceArt = exports.DrumsOfAwakeningArt = exports.DrilburArt = exports.DeliveryBoxArt = exports.CryptomaniacsDecipheringArt = exports.CroconawArt = exports.CincinnoArt = exports.ChatotArt = exports.CharjabugArt = exports.BuddyBuddyPoffinArt = exports.BiancasDevotionArt = exports.BeldumArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
+exports.WalkingWakeexArt = exports.VikavoltArt = exports.VictiniArt = exports.TurtwigArt = exports.TotodileArt = exports.TorterraexArt = exports.SolosisArt = exports.SandyShocksArt = exports.SalvatoreArt = exports.SableyeArt = exports.RoaringMoonArt = exports.ReuniclusArt = void 0;
+const ancient_booster_energy_capsule_1 = require("../set-paradox-rift/ancient-booster-energy-capsule");
+const future_booster_energy_capsule_1 = require("../set-paradox-rift/future-booster-energy-capsule");
 const beldum_1 = require("./beldum");
-const biancas_sincerity_1 = require("./biancas-sincerity");
-const buddy_poffin_1 = require("./buddy-poffin");
+const biancas_devotion_1 = require("./biancas-devotion");
+const buddy_buddy_poffin_1 = require("./buddy-buddy-poffin");
 const charjabug_1 = require("./charjabug");
 const chatot_1 = require("./chatot");
 const cincinno_1 = require("./cincinno");
@@ -34,7 +36,6 @@ const iron_leaves_ex_1 = require("./iron-leaves-ex");
 const iron_thorns_1 = require("./iron-thorns");
 const koraidon_1 = require("./koraidon");
 const koraidon_ex_1 = require("./koraidon-ex");
-const love_ball_1 = require("./love-ball");
 const master_ball_1 = require("./master-ball");
 const maximum_belt_1 = require("./maximum-belt");
 const metang_1 = require("./metang");
@@ -63,6 +64,16 @@ const turtwig_1 = require("./turtwig");
 const victini_1 = require("./victini");
 const vikavolt_1 = require("./vikavolt");
 const walking_wake_ex_1 = require("./walking-wake-ex");
+class AncientBoosterEnergyCapsuleArt extends ancient_booster_energy_capsule_1.AncientBoosterEnergyCapsule {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_140_R_EN.png';
+        this.fullName = 'Ancient Booster Energy Capsule TEF';
+        this.set = 'TEF';
+        this.setNumber = '140';
+    }
+}
+exports.AncientBoosterEnergyCapsuleArt = AncientBoosterEnergyCapsuleArt;
 class BeldumArt extends beldum_1.Beldum {
     constructor() {
         super(...arguments);
@@ -70,20 +81,20 @@ class BeldumArt extends beldum_1.Beldum {
     }
 }
 exports.BeldumArt = BeldumArt;
-class BiancasSincerityArt extends biancas_sincerity_1.BiancasSincerity {
+class BiancasDevotionArt extends biancas_devotion_1.BiancasDevotion {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1705064035529-P4ZJL53H4UA8IY68BAG7/IMG_6449.png?format=2500w';
     }
 }
-exports.BiancasSincerityArt = BiancasSincerityArt;
-class BuddyPoffinArt extends buddy_poffin_1.BuddyPoffin {
+exports.BiancasDevotionArt = BiancasDevotionArt;
+class BuddyBuddyPoffinArt extends buddy_buddy_poffin_1.BuddyBuddyPoffin {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1704512913547-DWUAR8R1CH1PWDP0FW6G/Buddy+Poffin.png?format=1500w';
     }
 }
-exports.BuddyPoffinArt = BuddyPoffinArt;
+exports.BuddyBuddyPoffinArt = BuddyBuddyPoffinArt;
 class CharjabugArt extends charjabug_1.Charjabug {
     constructor() {
         super(...arguments);
@@ -196,6 +207,16 @@ class FlutterManeArt extends flutter_mane_1.FlutterMane {
     }
 }
 exports.FlutterManeArt = FlutterManeArt;
+class FutureBoosterEnergyCapsuleArt extends future_booster_energy_capsule_1.FutureBoosterEnergyCapsule {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_149_R_EN.png';
+        this.fullName = 'Future Booster Energy Capsule TEF';
+        this.set = 'TEF';
+        this.setNumber = '149';
+    }
+}
+exports.FutureBoosterEnergyCapsuleArt = FutureBoosterEnergyCapsuleArt;
 class GastlyArt extends gastly_1.Gastly {
     constructor() {
         super(...arguments);
@@ -287,13 +308,6 @@ class KoraidonArt extends koraidon_1.Koraidon {
     }
 }
 exports.KoraidonArt = KoraidonArt;
-class LoveBallArt extends love_ball_1.LoveBall {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GHQWktUXYAAmZVA?format=jpg&name=medium';
-    }
-}
-exports.LoveBallArt = LoveBallArt;
 class MaximumBeltArt extends maximum_belt_1.MaximumBelt {
     constructor() {
         super(...arguments);

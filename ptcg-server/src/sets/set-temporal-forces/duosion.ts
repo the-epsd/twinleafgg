@@ -32,15 +32,15 @@ export class Duosion extends PokemonCard {
   }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '31';
+  public setNumber: string = '71';
 
   public name: string = 'Duosion';
 
-  public fullName: string = 'Duosion SV5';
+  public fullName: string = 'Duosion TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

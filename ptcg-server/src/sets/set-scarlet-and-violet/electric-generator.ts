@@ -23,7 +23,7 @@ export class ElectricGenerator extends TrainerCard {
   public fullName: string = 'Electric Generator SVI';
 
   public text: string =
-    'Look at the top 5 cards of your deck and attach up to 2 Basic Lightning Energy cards you find there to your Benched Lightning Pokémon in any way you like. Shuffle the other cards back into your deck.';
+    'Look at the top 5 cards of your deck and attach up to 2 Lightning Energy cards you find there to your Benched Lightning Pokémon in any way you like. Shuffle the other cards back into your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -37,7 +37,7 @@ export class ElectricGenerator extends TrainerCard {
   
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
-        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Basic Lightning Energy';
+        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Lightning Energy';
       });
   
       // If no energy cards were drawn, move all cards to deck
@@ -71,7 +71,7 @@ export class ElectricGenerator extends TrainerCard {
           temp, // Only show drawn energies
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH],
-          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Lightning Energy'},
+          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy'},
           {min: 0, max: 2, allowCancel: false}
         ), transfers => {
   

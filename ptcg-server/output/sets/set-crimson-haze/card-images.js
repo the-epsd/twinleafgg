@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UnfairStampArt = exports.TealMaskOgerponexArt = exports.SurvivalCastArt = exports.ScreamTailexArt = exports.PhioneArt = exports.PerrinArt = exports.LuckyHelmetArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.GreninjaexArt = exports.FrogadierArt = exports.FroakieArt = exports.EnhancedHammerArt = exports.CommunityCenterArt = exports.CaretakerArt = exports.BloodmoonUrsalunaexArt = void 0;
+exports.UnfairStampArt = exports.TealMaskOgerponexArt = exports.SurvivalCastArt = exports.ScreamTailexArt = exports.PhioneArt = exports.PerrinArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.GreninjaexArt = exports.FrogadierArt = exports.FroakieArt = exports.EnhancedHammerArt = exports.CommunityCenterArt = exports.CaretakerArt = exports.BloodmoonUrsalunaexArt = void 0;
 const bloodmoon_ursaluna_ex_1 = require("./bloodmoon-ursaluna-ex");
 const caretaker_1 = require("./caretaker");
 const community_center_1 = require("./community-center");
@@ -10,6 +10,7 @@ const frogadier_1 = require("./frogadier");
 const greninja_ex_1 = require("./greninja-ex");
 const iron_leaves_1 = require("./iron-leaves");
 const iron_thorns_ex_1 = require("./iron-thorns-ex");
+const love_ball_1 = require("./love-ball");
 const lucky_helmet_1 = require("./lucky-helmet");
 const perrin_1 = require("./perrin");
 const phione_1 = require("./phione");
@@ -80,6 +81,13 @@ class IronThornsexArt extends iron_thorns_ex_1.IronThornsex {
     }
 }
 exports.IronThornsexArt = IronThornsexArt;
+class LoveBallArt extends love_ball_1.LoveBall {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV5a/SV5a_58_R_JP.png';
+    }
+}
+exports.LoveBallArt = LoveBallArt;
 class LuckyHelmetArt extends lucky_helmet_1.LuckyHelmet {
     constructor() {
         super(...arguments);

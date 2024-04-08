@@ -29,7 +29,7 @@ function* useLeParfum(next: Function, store: StoreLike, state: State,
     player.discard,
     PlayerType.BOTTOM_PLAYER,
     [ SlotType.BENCH ],
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Water Energy' },
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
     { allowCancel: true, min: 0, max: 1 }
   ), transfers => {
     transfers = transfers || [];

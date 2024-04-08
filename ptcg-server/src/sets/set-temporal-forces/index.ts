@@ -1,11 +1,12 @@
 import { Card } from '../../game/store/card/card';
-import { BeldumArt, BiancasSincerityArt, BuddyPoffinArt, CharjabugArt, ChatotArt, CincinnoArt, CroconawArt, CryptomaniacsDecipheringArt, DeliveryBoxArt, DrilburArt, DrumsOfAwakeningArt, DudunsparceArt, DunsparceArt, DuosionArt, EmergencyBoardArt, EriArt, ExplorersGuidanceArt, FeraligatrArt, FlutterManeArt, GastlyArt, GengarexArt, GougingFireexArt, GrotleArt, HandTrimmerArt, HaunterArt, HerosCapeArt, IronCrownexArt, IronHandsArt, IronLeavesexArt, IronThornsArt, KoraidonArt, KoraidonexArt, LoveBallArt, MasterBallArt, MetangArt, MiraidonArt, MiraidonexArt, MistEnergyArt, MortysConvictionArt, MrMimeArt, NeoUpperEnergyArt, PikachuArt, PrimeCatcherArt, RabscaArt, RagingBoltexArt, RaichuArt, RebootPodArt, RellorArt, ReuniclusArt, RoaringMoonArt, SableyeArt, SalvatoreArt, SandyShocksArt, SolosisArt, TorterraexArt, TotodileArt, TurtwigArt, VictiniArt, VikavoltArt, WalkingWakeexArt } from './card-images';
+import { AncientBoosterEnergyCapsuleArt, BeldumArt, BiancasDevotionArt, BuddyBuddyPoffinArt, CharjabugArt, ChatotArt, CincinnoArt, CroconawArt, CryptomaniacsDecipheringArt, DeliveryBoxArt, DrilburArt, DrumsOfAwakeningArt, DudunsparceArt, DunsparceArt, DuosionArt, EmergencyBoardArt, EriArt, ExplorersGuidanceArt, FeraligatrArt, FlutterManeArt, FutureBoosterEnergyCapsuleArt, GastlyArt, GengarexArt, GougingFireexArt, GrotleArt, HandTrimmerArt, HaunterArt, HerosCapeArt, IronCrownexArt, IronHandsArt, IronLeavesexArt, IronThornsArt, KoraidonArt, KoraidonexArt, MasterBallArt, MaximumBeltArt, MetangArt, MiraidonArt, MiraidonexArt, MistEnergyArt, MortysConvictionArt, MrMimeArt, NeoUpperEnergyArt, PikachuArt, PrimeCatcherArt, RabscaArt, RagingBoltexArt, RaichuArt, RebootPodArt, RellorArt, ReuniclusArt, RoaringMoonArt, SableyeArt, SalvatoreArt, SandyShocksArt, SolosisArt, TorterraexArt, TotodileArt, TurtwigArt, VictiniArt, VikavoltArt, WalkingWakeexArt } from './card-images';
 
 export const setTemporalForces: Card[] = [
   
+  new AncientBoosterEnergyCapsuleArt(),
   new BeldumArt(),
-  new BiancasSincerityArt(),
-  new BuddyPoffinArt(),
+  new BiancasDevotionArt(),
+  new BuddyBuddyPoffinArt(),
   new CharjabugArt(),
   new ChatotArt(),
   new CincinnoArt(),
@@ -22,6 +23,7 @@ export const setTemporalForces: Card[] = [
   new ExplorersGuidanceArt(),
   new FeraligatrArt(),
   new FlutterManeArt(),
+  new FutureBoosterEnergyCapsuleArt(),
   new GastlyArt(),
   new GengarexArt(),
   new GougingFireexArt(),
@@ -35,8 +37,8 @@ export const setTemporalForces: Card[] = [
   new IronThornsArt(),
   new KoraidonexArt(),
   new KoraidonArt(),
-  new LoveBallArt(),
   new MasterBallArt(),
+  new MaximumBeltArt(),
   new MetangArt(),
   new MiraidonexArt(),
   new MiraidonArt(),

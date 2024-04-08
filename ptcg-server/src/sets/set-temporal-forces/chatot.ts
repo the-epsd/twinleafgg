@@ -67,15 +67,15 @@ export class Chatot extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '58';
+  public setNumber: string = '132';
 
   public name: string = 'Chatot';
 
-  public fullName: string = 'Chatot SV5';
+  public fullName: string = 'Chatot TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -59,7 +59,7 @@ export class Magnezone extends PokemonCard {
   
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
-        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Basic Metal Energy';
+        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Metal Energy';
       });
   
       // If no energy cards were drawn, move all cards to deck & shuffle
@@ -80,7 +80,7 @@ export class Magnezone extends PokemonCard {
           temp, // Only show drawn energies
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH, SlotType.ACTIVE],
-          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Metal Energy'},
+          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy'},
           {min: 0, max: energyCardsDrawn.length}
         ), transfers => {
       

@@ -37,7 +37,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name : 'Basic Metal Energy'},
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name : 'Metal Energy'},
     { min: 2, max: 2, allowCancel: true }
   ), selected => {
     cards = selected || [];

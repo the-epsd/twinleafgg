@@ -8,8 +8,8 @@ class FightingEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.FIGHTING];
         this.set = 'DP';
-        this.name = 'Basic Fighting Energy';
-        this.fullName = 'Basic Fighting Energy EVO';
+        this.name = 'Fighting Energy';
+        this.fullName = 'Fighting Energy EVO';
     }
 }
 exports.FightingEnergy = FightingEnergy;

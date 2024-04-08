@@ -28,12 +28,12 @@ class Victini extends pokemon_card_1.PokemonCard {
                 text: 'Discard a Special Energy from your opponent\'s Active Pokémon.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '19';
+        this.setNumber = '30';
         this.name = 'Victini';
-        this.fullName = 'Victini SV5';
+        this.fullName = 'Victini TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -30,12 +30,12 @@ class Grotle extends pokemon_card_1.PokemonCard {
                 text: 'During your opponent’s next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance).'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '4';
+        this.setNumber = '11';
         this.name = 'Grotle';
-        this.fullName = 'Grotle SV5';
+        this.fullName = 'Grotle TEF';
         this.RAMMING_SHELL_MARKER = 'RAMMING_SHELL_MARKER';
         this.CLEAR_RAMMING_SHELL_MARKER = 'CLEAR_RAMMING_SHELL_MARKER';
     }

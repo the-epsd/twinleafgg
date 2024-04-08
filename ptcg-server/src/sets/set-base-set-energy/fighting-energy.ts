@@ -13,8 +13,8 @@ export class FightingEnergy extends EnergyCard {
 
   public setNumber: string = '97';
 
-  public name = 'Basic Fighting Energy';
+  public name = 'Fighting Energy';
 
-  public fullName = 'Basic Fighting Energy BS';
+  public fullName = 'Fighting Energy BS';
 
 }

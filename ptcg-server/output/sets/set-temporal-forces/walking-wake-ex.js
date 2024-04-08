@@ -29,11 +29,11 @@ class WalkingWakeex extends pokemon_card_1.PokemonCard {
                 text: 'During your next turn, this Pokémon can\'t attack.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '024';
+        this.setNumber = '50';
         this.name = 'Walking Wake ex';
-        this.fullName = 'Walking Wake ex';
+        this.fullName = 'Walking Wake ex TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

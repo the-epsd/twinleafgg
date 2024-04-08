@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, CardTag, Archetype } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils,
   GameMessage, PlayerType, SlotType, ConfirmPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -56,6 +56,8 @@ export class Charizardex extends PokemonCard {
 
   public fullName: string = 'Charizard ex OBF';
 
+  public archetype: Archetype = Archetype.CHARIZARD;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if ((effect instanceof EvolveEffect) && effect.pokemonCard === this) {
@@ -83,7 +85,7 @@ export class Charizardex extends PokemonCard {
             player.deck,
             PlayerType.BOTTOM_PLAYER,
             [ SlotType.BENCH, SlotType.ACTIVE ],
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fire Energy' },
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
             { allowCancel: true, min: 0, max: 3 },
           ), transfers => {
             transfers = transfers || [];

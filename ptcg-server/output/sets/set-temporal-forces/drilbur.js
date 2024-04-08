@@ -29,11 +29,11 @@ class Drilbur extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '39';
+        this.setNumber = '85';
         this.name = 'Drilbur';
-        this.fullName = 'Drilbur SV5';
+        this.fullName = 'Drilbur TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
@@ -51,7 +51,7 @@ class Drilbur extends pokemon_card_1.PokemonCard {
             }
             state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
                 if (wantToUse) {
-                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Fighting Energy' }, { min: 1, max: 3, allowCancel: false }), selected => {
+                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { min: 1, max: 3, allowCancel: false }), selected => {
                         const cards = selected || [];
                         player.deck.moveCardsTo(cards, player.discard);
                     });

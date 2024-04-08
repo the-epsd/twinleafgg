@@ -34,7 +34,7 @@ export class GutsyPickaxe extends TrainerCard {
 
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
-        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Basic Fighting Energy';
+        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Fighting Energy';
       });
 
 

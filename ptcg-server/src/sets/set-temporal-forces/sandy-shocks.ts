@@ -37,15 +37,15 @@ export class SandyShocks extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '011';
+  public setNumber: string = '98';
 
   public name: string = 'Sandy Shocks';
 
-  public fullName: string = 'Sandy Shocks SV5';
+  public fullName: string = 'Sandy Shocks TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     

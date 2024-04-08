@@ -22,7 +22,7 @@ class Melony extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const hasEnergyInDiscard = player.discard.cards.some(c => {
                 return c instanceof game_1.EnergyCard
-                    && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Basic Water Energy';
+                    && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Water Energy';
             });
             if (!hasEnergyInDiscard) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -44,7 +44,7 @@ class Melony extends trainer_card_1.TrainerCard {
             });
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 1, blocked: blocked2 }), chosen => {
                 chosen.forEach(target => {
-                    state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Water Energy' }, { allowCancel: false, min: 1, max: 1 }), transfers => {
+                    state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: false, min: 1, max: 1 }), transfers => {
                         transfers = transfers || [];
                         if (transfers.length === 0) {
                             return;

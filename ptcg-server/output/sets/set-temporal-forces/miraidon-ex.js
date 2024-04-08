@@ -31,11 +31,11 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
                 text: 'During your next turn, this Pokémon can\'t use Cyber Drive.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '11';
+        this.setNumber = '122';
         this.name = 'Miraidon ex';
-        this.fullName = 'Miraidon ex SV5';
+        this.fullName = 'Miraidon ex TEF';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }

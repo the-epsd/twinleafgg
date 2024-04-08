@@ -72,15 +72,15 @@ export class FlutterMane extends PokemonCard {
     text: 'Put 2 damage counters on your opponent\'s Benched Pokémon in any way you like.'
   }];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '33';
+  public setNumber: string = '71';
 
   public name: string = 'Flutter Mane';
 
-  public fullName: string = 'Flutter Mane SV5';
+  public fullName: string = 'Flutter Mane TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

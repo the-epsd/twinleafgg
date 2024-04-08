@@ -44,7 +44,7 @@ class Lapras extends pokemon_card_1.PokemonCard {
             // Check attached energy
             const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkEnergy);
-            // Filter for only basic Water energy
+            // Filter for only Water Energy
             const waterEnergy = checkEnergy.energyMap.filter(e => e.provides.includes(card_types_1.CardType.WATER));
             // Get number of extra Water energy  
             const extraWaterEnergy = waterEnergy.length - checkCost.cost.length;

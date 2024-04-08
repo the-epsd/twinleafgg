@@ -1,3 +1,4 @@
+import { Arven } from '../set-scarlet-and-violet/arven';
 import { Bellibolt } from './bellibolt';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
@@ -17,6 +18,12 @@ import { Scizor } from './scizor';
 import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
 import { VengefulPunch } from './vengeful-punch';
+export declare class ArvenArt extends Arven {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
+}
 export declare class BelliboltArt extends Bellibolt {
     cardImage: string;
 }

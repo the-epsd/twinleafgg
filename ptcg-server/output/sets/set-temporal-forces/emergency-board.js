@@ -9,11 +9,11 @@ class EmergencyBoard extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.TOOL;
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '64';
-        this.name = 'Emergency Board';
-        this.fullName = 'Emergency Board SV5';
+        this.setNumber = '159';
+        this.name = 'Rescue Board';
+        this.fullName = 'Rescue Board TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {

@@ -20,15 +20,15 @@ export class RebootPod extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public name: string = 'Reboot Pod';
 
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '63';
+  public setNumber: string = '158';
 
-  public fullName: string = 'Reboot Pod SV5';
+  public fullName: string = 'Reboot Pod TEF';
 
   public text: string =
     'Attach a Basic Energy card from your discard pile to each of your Future Pokémon in play.';

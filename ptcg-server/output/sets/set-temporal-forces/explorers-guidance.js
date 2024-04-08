@@ -9,13 +9,13 @@ class ExplorersGuidance extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.tags = [card_types_1.CardTag.ANCIENT];
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '67';
+        this.setNumber = '147';
         this.regulationMark = 'H';
         this.name = 'Explorer\'s Guidance';
-        this.fullName = 'Explorer\'s Guidance SV5';
+        this.fullName = 'Explorer\'s Guidance TEF';
         this.text = 'Heal all damage from 1 of your Pokémon that has 30 HP or less remaining.';
     }
     reduceEffect(store, state, effect) {

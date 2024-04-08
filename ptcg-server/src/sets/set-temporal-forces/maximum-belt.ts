@@ -12,17 +12,17 @@ export class MaximumBelt extends TrainerCard {
 
   public tags = [ CardTag.ACE_SPEC ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '66';
+  public setNumber: string = '154';
 
   public regulationMark = 'H';
 
   public name: string = 'Maximum Belt';
 
-  public fullName: string = 'Maximum Belt SV5';
+  public fullName: string = 'Maximum Belt TEF';
 
   public text: string =
     'The attacks of the Pokémon this card is attached to do 50 more damage to your opponent\'s Active Pokémon ex.';

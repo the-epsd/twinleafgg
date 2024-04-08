@@ -19,7 +19,7 @@ class DefianceVest extends trainer_card_1.TrainerCard {
         this.text = 'If you have more Prize cards remaining than your opponent, the Pokémon this card is attached to takes 40 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        // Reduce damage by 30
+        // Reduce damage by 40
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);

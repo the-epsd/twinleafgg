@@ -1,3 +1,4 @@
+import { Arven } from '../set-scarlet-and-violet/arven';
 import { Bellibolt } from './bellibolt';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
@@ -17,6 +18,13 @@ import { Scizor } from './scizor';
 import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
 import { VengefulPunch } from './vengeful-punch';
+
+export class ArvenArt extends Arven {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_186_R_EN.png';
+  public fullName = 'Arven OBF';
+  public set = 'OBF';
+  public setNumber = '186';
+}
 
 export class BelliboltArt extends Bellibolt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_078_R_EN_LG.png';

@@ -7,8 +7,8 @@ export class FireEnergy extends EnergyCard {
 
   public set: string = 'DP';
 
-  public name = 'Basic Fire Energy';
+  public name = 'Fire Energy';
 
-  public fullName = 'Basic Fire Energy EVO';
+  public fullName = 'Fire Energy EVO';
 
 }

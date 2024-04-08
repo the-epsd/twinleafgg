@@ -11,15 +11,15 @@ export class EmergencyBoard extends TrainerCard {
   
   public trainerType: TrainerType = TrainerType.TOOL;
   
-  public set: string = 'SV5';
+  public set: string = 'TEF';
   
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '64';
+  public setNumber: string = '159';
   
-  public name: string = 'Emergency Board';
+  public name: string = 'Rescue Board';
   
-  public fullName: string = 'Emergency Board SV5';
+  public fullName: string = 'Rescue Board TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {

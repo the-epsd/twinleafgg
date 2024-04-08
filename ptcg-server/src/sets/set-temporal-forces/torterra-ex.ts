@@ -37,17 +37,17 @@ export class Torterraex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '5';
+  public setNumber: string = '12';
 
   public name: string = 'Torterra ex';
 
-  public fullName: string = 'Torterra ex SV5';
+  public fullName: string = 'Torterra ex TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -20,12 +20,12 @@ class Solosis extends pokemon_card_1.PokemonCard {
                 damage: 30,
                 text: 'Flip a coin. If tails, this attack does nothing.'
             }];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '30';
+        this.setNumber = '70';
         this.name = 'Solosis';
-        this.fullName = 'Solosis SV5';
+        this.fullName = 'Solosis TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

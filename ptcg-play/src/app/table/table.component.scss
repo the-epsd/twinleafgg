@@ -2,7 +2,6 @@
   display: block;
   height: 100%;
   width: 100%;
-  z-index: -2;
   overflow: hidden;
 
   #myVideo {
@@ -11,6 +10,7 @@
     bottom: 0;
     min-width: 80%; 
     min-height: 80%;
+    z-index: 0;
   }
 }
 
@@ -36,5 +36,5 @@ ptcg-hand {
   // background-color: #1a202c00;
   flex: 0 0 auto;
   margin-top: -6%;
-  z-index: 5;
+  z-index: 1;
 }

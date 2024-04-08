@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ShayminVSTARArt = exports.ShayminVArt = exports.RoseannesBackupArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.MinccinoArt = exports.ManaphyArt = exports.MagmortarArt = exports.MagmaBasinArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = exports.AcerolasPremonitionArt = void 0;
+exports.TeamYellsCheerArt = exports.ShayminVSTARArt = exports.ShayminVArt = exports.RoseannesBackupArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.MinccinoArt = exports.ManaphyArt = exports.MagmortarArt = exports.MagmaBasinArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = exports.AcerolasPremonitionArt = void 0;
 const acerolas_premonition_1 = require("./acerolas-premonition");
 const aggron_v_1 = require("./aggron-v");
 const aggron_vmax_1 = require("./aggron-vmax");
@@ -31,6 +31,7 @@ const raikou_v_1 = require("./raikou-v");
 const roseannes_backup_1 = require("./roseannes-backup");
 const shaymin_v_1 = require("./shaymin-v");
 const shaymin_vstar_1 = require("./shaymin-vstar");
+const team_yells_cheer_1 = require("./team-yells-cheer");
 class AcerolasPremonitionArt extends acerolas_premonition_1.AcerolasPremonition {
     constructor() {
         super(...arguments);
@@ -241,3 +242,10 @@ class ShayminVSTARArt extends shaymin_vstar_1.ShayminVSTAR {
     }
 }
 exports.ShayminVSTARArt = ShayminVSTARArt;
+class TeamYellsCheerArt extends team_yells_cheer_1.TeamYellsCheer {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_149_R_EN.png';
+    }
+}
+exports.TeamYellsCheerArt = TeamYellsCheerArt;

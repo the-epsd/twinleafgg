@@ -39,15 +39,15 @@ export class Reuniclus extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '32';
+  public setNumber: string = '72';
 
   public name: string = 'Duosion';
 
-  public fullName: string = 'Duosion SV5';
+  public fullName: string = 'Duosion TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

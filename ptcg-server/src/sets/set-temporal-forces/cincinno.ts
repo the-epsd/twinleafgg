@@ -35,15 +35,15 @@ export class Cincinno extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '60';
+  public setNumber: string = '137';
 
   public name: string = 'Cincinno';
 
-  public fullName: string = 'Cincinno SV5';
+  public fullName: string = 'Cincinno TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

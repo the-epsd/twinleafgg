@@ -73,7 +73,7 @@ export class Moltres extends PokemonCard {
               player.id,
               GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
               target, // Card source is target Pokemon
-              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Water Energy' },
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
               { min: 0, max: numFlips, allowCancel: false }
             ), selected => {
               const cards = selected || [];

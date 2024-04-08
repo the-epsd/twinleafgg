@@ -51,7 +51,7 @@ class FightingEnergyHR extends fighting_energy_1.FightingEnergy {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_258_R_EN_LG.png';
         this.setNumber = '258';
-        this.fullName = 'Basic Fighting Energy SVI';
+        this.fullName = 'Fighting Energy SVI';
     }
 }
 exports.FightingEnergyHR = FightingEnergyHR;
@@ -60,7 +60,7 @@ class LightningEnergyHR extends lightning_energy_1.LightningEnergy {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_257_R_EN_LG.png';
         this.setNumber = '257';
-        this.fullName = 'Basic Lightning Energy SVI';
+        this.fullName = 'Lightning Energy SVI';
     }
 }
 exports.LightningEnergyHR = LightningEnergyHR;

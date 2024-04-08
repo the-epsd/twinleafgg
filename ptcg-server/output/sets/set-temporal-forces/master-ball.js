@@ -38,11 +38,11 @@ class MasterBall extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.tags = [card_types_1.CardTag.ACE_SPEC];
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'SVHM';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '032';
+        this.setNumber = '153';
         this.name = 'Master Ball';
-        this.fullName = 'Master Ball SV5';
+        this.fullName = 'Master Ball TEF';
         this.text = 'Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {

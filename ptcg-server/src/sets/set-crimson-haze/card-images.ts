@@ -7,6 +7,7 @@ import { Frogadier } from './frogadier';
 import { Greninjaex } from './greninja-ex';
 import { IronLeaves } from './iron-leaves';
 import { IronThornsex } from './iron-thorns-ex';
+import { LoveBall } from './love-ball';
 import { LuckyHelmet } from './lucky-helmet';
 import { Perrin } from './perrin';
 import { Phione } from './phione';
@@ -49,6 +50,10 @@ export class IronLeavesArt extends IronLeaves {
 
 export class IronThornsexArt extends IronThornsex {
   public cardImage = 'https://www.pokebeach.com/news/2024/02/SV5a_5.png';
+}
+
+export class LoveBallArt extends LoveBall {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV5a/SV5a_58_R_JP.png';
 }
 
 export class LuckyHelmetArt extends LuckyHelmet {

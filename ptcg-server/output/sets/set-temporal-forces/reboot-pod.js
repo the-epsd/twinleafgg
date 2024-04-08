@@ -17,11 +17,11 @@ class RebootPod extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.tags = [card_types_1.CardTag.ACE_SPEC, card_types_1.CardTag.FUTURE];
         this.regulationMark = 'H';
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.name = 'Reboot Pod';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '63';
-        this.fullName = 'Reboot Pod SV5';
+        this.setNumber = '158';
+        this.fullName = 'Reboot Pod TEF';
         this.text = 'Attach a Basic Energy card from your discard pile to each of your Future Pokémon in play.';
     }
     reduceEffect(store, state, effect) {

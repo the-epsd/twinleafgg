@@ -36,15 +36,15 @@ export class Beldum extends PokemonCard {
     },
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '39';
+  public setNumber: string = '113';
 
   public name: string = 'Beldum';
 
-  public fullName: string = 'Beldum SV5';
+  public fullName: string = 'Beldum TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -73,7 +73,7 @@ export class OriginFormeDialgaV extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
         player.discard,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Metal Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
         { min: 0, max: 2, allowCancel: true }
       ), cards => {
         cards = cards || [];

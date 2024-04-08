@@ -7,8 +7,8 @@ export class MetalEnergy extends EnergyCard {
 
   public set: string = 'DP';
 
-  public name = 'Basic Metal Energy';
+  public name = 'Metal Energy';
 
-  public fullName = 'Basic Metal Energy EVO';
+  public fullName = 'Metal Energy EVO';
 
 }

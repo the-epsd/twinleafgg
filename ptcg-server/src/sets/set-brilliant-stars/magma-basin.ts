@@ -41,7 +41,7 @@ export class MagmaBasin extends TrainerCard {
       });
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard && c.name == 'Basic Fire Energy';
+        return c instanceof EnergyCard && c.name == 'Fire Energy';
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -53,7 +53,7 @@ export class MagmaBasin extends TrainerCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fire Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
         { allowCancel: false, min: 1, max: 1, blocked: blocked },
       ), transfers => {
         transfers = transfers || [];

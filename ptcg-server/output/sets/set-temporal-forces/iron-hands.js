@@ -29,12 +29,12 @@ class IronHands extends pokemon_card_1.PokemonCard {
                 text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 80 more damage.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '6';
+        this.setNumber = '61';
         this.name = 'Iron Hands';
-        this.fullName = 'Iron Hands SV5';
+        this.fullName = 'Iron Hands TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

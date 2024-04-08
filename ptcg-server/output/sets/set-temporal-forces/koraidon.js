@@ -31,11 +31,11 @@ class Koraidon extends pokemon_card_1.PokemonCard {
                 text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '52';
+        this.setNumber = '33';
         this.name = 'Koraidon';
-        this.fullName = 'Koraidon SV5';
+        this.fullName = 'Koraidon TEF';
     }
     reduceEffect(store, state, effect) {
         var _a, _b;

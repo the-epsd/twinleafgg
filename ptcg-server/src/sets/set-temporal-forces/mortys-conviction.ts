@@ -57,15 +57,15 @@ export class MortysConviction extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '69';
+  public setNumber: string = '155';
 
   public name: string = 'Morty\'s Conviction';
 
-  public fullName: string = 'Morty\'s Conviction SV5';
+  public fullName: string = 'Morty\'s Conviction TEF';
 
   public text: string =
     'You can use this card only if you discard another card from your hand.' +

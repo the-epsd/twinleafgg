@@ -36,15 +36,15 @@ export class WalkingWakeex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '024';
+  public setNumber: string = '50';
 
   public name: string = 'Walking Wake ex';
 
-  public fullName: string = 'Walking Wake ex';
+  public fullName: string = 'Walking Wake ex TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -135,7 +135,7 @@ export class Typhlosion extends PokemonCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.ACTIVE, SlotType.BENCH ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fire Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
         { allowCancel: true, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];

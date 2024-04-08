@@ -86,3 +86,8 @@ export var Format;
     Format[Format["RETRO"] = 4] = "RETRO";
     Format[Format["GLC"] = 5] = "GLC";
 })(Format || (Format = {}));
+export var Archetype;
+(function (Archetype) {
+    Archetype[Archetype["NONE"] = 0] = "NONE";
+    Archetype[Archetype["CHARIZARD"] = 1] = "CHARIZARD";
+})(Archetype || (Archetype = {}));

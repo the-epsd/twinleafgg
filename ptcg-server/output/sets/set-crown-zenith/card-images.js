@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZamazentaVArt = exports.ZamazentaArt = exports.ZacianVSTARArt = exports.RegigigasVSTARArt = exports.RegigigasVArt = exports.RadiantEternatusArt = exports.RadiantCharizardArt = exports.LuxrayArt = exports.KyogreArt = exports.BidoofArt = void 0;
+exports.ZamazentaVArt = exports.ZamazentaArt = exports.ZacianVSTARArt = exports.RotomVArt = exports.RegigigasVSTARArt = exports.RegigigasVArt = exports.RadiantEternatusArt = exports.RadiantCharizardArt = exports.LostVacuumArt = exports.LuxrayArt = exports.KyogreArt = exports.BidoofArt = void 0;
+const lost_vacuum_1 = require("../set-lost-origin/lost-vacuum");
+const rotom_v_1 = require("../set-lost-origin/rotom-v");
 const bidoof_1 = require("./bidoof");
 const kyogre_1 = require("./kyogre");
 const luxray_1 = require("./luxray");
@@ -32,6 +34,16 @@ class LuxrayArt extends luxray_1.Luxray {
     }
 }
 exports.LuxrayArt = LuxrayArt;
+class LostVacuumArt extends lost_vacuum_1.LostVacuum {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_135_R_EN.png';
+        this.fullName = 'Lost Vacuum CRZ';
+        this.set = 'CRZ';
+        this.setNumber = '135';
+    }
+}
+exports.LostVacuumArt = LostVacuumArt;
 class RadiantCharizardArt extends radiant_charizard_1.RadiantCharizard {
     constructor() {
         super(...arguments);
@@ -60,6 +72,16 @@ class RegigigasVSTARArt extends regigigas_vstar_1.RegigigasVSTAR {
     }
 }
 exports.RegigigasVSTARArt = RegigigasVSTARArt;
+class RotomVArt extends rotom_v_1.RotomV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_045_R_EN.png';
+        this.fullName = 'Rotom V CRZ';
+        this.set = 'CRZ';
+        this.setNumber = '45';
+    }
+}
+exports.RotomVArt = RotomVArt;
 class ZacianVSTARArt extends zacian_vstar_1.ZacianVSTAR {
     constructor() {
         super(...arguments);

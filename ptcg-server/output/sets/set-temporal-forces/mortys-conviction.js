@@ -39,11 +39,11 @@ class MortysConviction extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '69';
+        this.setNumber = '155';
         this.name = 'Morty\'s Conviction';
-        this.fullName = 'Morty\'s Conviction SV5';
+        this.fullName = 'Morty\'s Conviction TEF';
         this.text = 'You can use this card only if you discard another card from your hand.' +
             '' +
             'Draw a card for each of your opponent\'s Benched Pokémon..';

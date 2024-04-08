@@ -28,7 +28,7 @@ export class Cramorant extends PokemonCard {
   
   public attacks = [
     {
-      name: 'Spinning Attack',
+      name: 'Spit Innocently',
       cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
       damage: 110,
       text: 'This attack\'s damage isn\'t affected by Weakness.'

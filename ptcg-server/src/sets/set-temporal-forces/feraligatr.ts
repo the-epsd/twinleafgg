@@ -38,15 +38,15 @@ export class Feraligatr extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '15';
+  public setNumber: string = '41';
 
   public name: string = 'Feraligatr';
 
-  public fullName: string = 'Feraligatr SV5';
+  public fullName: string = 'Feraligatr TEF';
 
   public readonly TORRENTIAL_HEART_MARKER = 'TORRENTIAL_HEART_MARKER';
 

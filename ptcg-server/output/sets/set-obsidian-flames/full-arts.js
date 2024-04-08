@@ -133,7 +133,7 @@ class FireEnergyHR extends fire_energy_1.FireEnergy {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_230_R_EN_LG.png';
         this.setNumber = '230';
-        this.fullName = 'Basic Fire Energy OBF';
+        this.fullName = 'Fire Energy OBF';
     }
 }
 exports.FireEnergyHR = FireEnergyHR;

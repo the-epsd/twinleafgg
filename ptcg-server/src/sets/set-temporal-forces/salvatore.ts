@@ -107,15 +107,15 @@ export class Salvatore extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '68';
+  public setNumber: string = '160';
 
   public name: string = 'Salvatore';
 
-  public fullName: string = 'Salvatore SV5';
+  public fullName: string = 'Salvatore TEF';
 
   public text: string =
     'Search your deck for a Pokémon, except any Pokémon with an Ability, that evolves from 1 of your Pokémon in play and put it on that Pokémon to evolve it. Then, shuffle your deck. (You can use this card on a Pokémon that was put into play when setting up to play or on the turn it was put into play.)';

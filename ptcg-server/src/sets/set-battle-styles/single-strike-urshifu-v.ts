@@ -77,7 +77,7 @@ export class SingleStrikeUrshifuV extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
         player.deck,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fighting Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
         { min: 0, max: 2, allowCancel: true }
       ), cards => {
         cards = cards || [];

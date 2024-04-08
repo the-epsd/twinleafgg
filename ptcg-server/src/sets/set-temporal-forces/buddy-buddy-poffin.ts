@@ -5,21 +5,21 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 
-export class BuddyPoffin extends TrainerCard {
+export class BuddyBuddyPoffin extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '63';
+  public setNumber: string = '144';
 
   public regulationMark = 'H';
 
-  public name: string = 'Buddy Poffin';
+  public name: string = 'Buddy-Buddy Poffin';
 
-  public fullName: string = 'Buddy Poffin SV5';
+  public fullName: string = 'Buddy-Buddy Poffin TEF';
 
   public text: string =
     'Search your deck for up to 2 Basic Pokémon with 70 HP or less and put them onto your Bench. Then, shuffle your deck.';

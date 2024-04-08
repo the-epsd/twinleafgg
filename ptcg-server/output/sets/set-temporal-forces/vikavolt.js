@@ -28,12 +28,12 @@ class Vikavolt extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 80 more damage for each of your Benched Vikavolt.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '28';
+        this.setNumber = '56';
         this.name = 'Vikavolt';
-        this.fullName = 'Vikavolt SV5';
+        this.fullName = 'Vikavolt TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

@@ -33,17 +33,17 @@ export class Turtwig extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '3';
+  public setNumber: string = '10';
 
   public name: string = 'Turtwig';
 
-  public fullName: string = 'Turtwig SV5';
+  public fullName: string = 'Turtwig TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

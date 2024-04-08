@@ -1,3 +1,5 @@
+import { LostVacuum } from '../set-lost-origin/lost-vacuum';
+import { RotomV } from '../set-lost-origin/rotom-v';
 import { Bidoof } from './bidoof';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
@@ -17,6 +19,12 @@ export declare class KyogreArt extends Kyogre {
 export declare class LuxrayArt extends Luxray {
     cardImage: string;
 }
+export declare class LostVacuumArt extends LostVacuum {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
+}
 export declare class RadiantCharizardArt extends RadiantCharizard {
     cardImage: string;
 }
@@ -28,6 +36,12 @@ export declare class RegigigasVArt extends RegigigasV {
 }
 export declare class RegigigasVSTARArt extends RegigigasVSTAR {
     cardImage: string;
+}
+export declare class RotomVArt extends RotomV {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
 }
 export declare class ZacianVSTARArt extends ZacianVSTAR {
     cardImage: string;

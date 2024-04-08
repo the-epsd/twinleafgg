@@ -13,20 +13,18 @@ export class DeliveryBox extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '61';
+  public setNumber: string = '143';
 
-  public name: string = 'Delivery Box';
+  public name: string = 'Boxed Order';
 
-  public fullName: string = 'Delivery Box SV5';
+  public fullName: string = 'Boxed Order TEF';
 
   public text: string =
-    'Search your deck for up to 2 Item cards, reveal them, and put them into your hand. Then, shuffle your deck.' +
-'' +
-    'Your turn ends.';
+    'Search your deck for up to 2 Item cards, reveal them, and put them into your hand. Then, shuffle your deck. Your turn ends.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

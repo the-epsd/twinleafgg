@@ -7,21 +7,21 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { EnergyCard, PlayerType } from '../..';
 import { HealEffect } from '../../game/store/effects/game-effects';
 
-export class BiancasSincerity extends TrainerCard {
+export class BiancasDevotion extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '69';
+  public setNumber: string = '142';
 
   public regulationMark = 'H';
 
-  public name: string = 'Bianca\'s Sincerity';
+  public name: string = 'Bianca\'s Devotion';
 
-  public fullName: string = 'Bianca\'s Sincerity SV5';
+  public fullName: string = 'Bianca\'s Devotion TEF';
 
   public text: string = 'Heal all damage from 1 of your Pokémon that has 30 HP or less remaining.';
 

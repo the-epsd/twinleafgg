@@ -68,7 +68,7 @@ export class RaichuV extends PokemonCard {
             player.id,
             GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
             target, // Card source is target Pokemon
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Lightning Energy' },
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
             { min: 1, allowCancel: false }
           ), selected => {
             const cards = selected || [];

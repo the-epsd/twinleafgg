@@ -41,6 +41,7 @@ class Charizardex extends pokemon_card_1.PokemonCard {
         this.setNumber = '125';
         this.name = 'Charizard ex';
         this.fullName = 'Charizard ex OBF';
+        this.archetype = card_types_1.Archetype.CHARIZARD;
     }
     reduceEffect(store, state, effect) {
         if ((effect instanceof game_effects_1.EvolveEffect) && effect.pokemonCard === this) {
@@ -56,7 +57,7 @@ class Charizardex extends pokemon_card_1.PokemonCard {
             state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
                 if (wantToUse) {
                     const player = effect.player;
-                    return store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Basic Fire Energy' }, { allowCancel: true, min: 0, max: 3 }), transfers => {
+                    return store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: true, min: 0, max: 3 }), transfers => {
                         transfers = transfers || [];
                         // cancelled by user
                         if (transfers.length === 0) {

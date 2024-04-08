@@ -62,15 +62,15 @@ export class MasterBall extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SVHM';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '032';
+  public setNumber: string = '153';
 
   public name: string = 'Master Ball';
 
-  public fullName: string = 'Master Ball SV5';
+  public fullName: string = 'Master Ball TEF';
 
   public text: string =
     'Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';

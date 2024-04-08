@@ -1,3 +1,5 @@
+import { LostVacuum } from '../set-lost-origin/lost-vacuum';
+import { RotomV } from '../set-lost-origin/rotom-v';
 import { Bidoof } from './bidoof';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
@@ -21,6 +23,13 @@ export class LuxrayArt extends Luxray {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_044_R_EN_LG.png';
 }
 
+export class LostVacuumArt extends LostVacuum {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_135_R_EN.png';
+  public fullName = 'Lost Vacuum CRZ';
+  public set = 'CRZ';
+  public setNumber = '135';
+}
+
 export class RadiantCharizardArt extends RadiantCharizard {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_020_R_EN_LG.png';
 }
@@ -35,6 +44,13 @@ export class RegigigasVArt extends RegigigasV {
 
 export class RegigigasVSTARArt extends RegigigasVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_114_R_EN_LG.png';
+}
+
+export class RotomVArt extends RotomV {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_045_R_EN.png';
+  public fullName = 'Rotom V CRZ';
+  public set = 'CRZ';
+  public setNumber = '45';
 }
 
 export class ZacianVSTARArt extends ZacianVSTAR {

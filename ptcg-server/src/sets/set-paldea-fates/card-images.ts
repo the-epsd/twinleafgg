@@ -1,5 +1,13 @@
+import { Charizardex } from '../set-obsidian-flames/charizard-ex';
+import { Iono } from '../set-paldea-evolved/iono';
 import { Natu } from '../set-paradox-rift/natu';
 import { Xatu } from '../set-paradox-rift/xatu';
+import { ElectricGenerator } from '../set-scarlet-and-violet/electric-generator';
+import { NestBall } from '../set-scarlet-and-violet/nest-ball';
+import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
+import { ProfessorsResearch2 } from '../set-scarlet-and-violet/professors-research2';
+import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
+import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
 import { Atticus } from './atticus';
 import { Charmeleon } from './charmeleon';
 import { Clive } from './clive';
@@ -23,8 +31,22 @@ export class CharmeleonArt extends Charmeleon {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/5d6c243d-91da-47a7-b3f6-448861cfc0fb/card-026.png?format=750w';
 }
 
+export class CharizardexArt extends Charizardex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_054_R_EN.png';
+  public fullName = 'Charizard ex PAF';
+  public set = 'PAF';
+  public setNumber = '54';
+}
+
 export class CliveArt extends Clive {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/2330a69d-5d62-42d8-aca6-a23431fd1e34/Clive.png?format=750w';
+}
+
+export class ElectricGeneratorArt extends ElectricGenerator {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_079_R_EN.png';
+  public fullName = 'Electric Generator PAF';
+  public set = 'PAF';
+  public setNumber = '79';
 }
 
 export class EspathraexArt extends Espathraex {
@@ -47,6 +69,13 @@ export class HaunterArt extends Haunter {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/e7584a81-a867-480d-aa48-140d5ab20efa/Haunter+PAR.png?format=2500w';
 }
 
+export class IonoArt extends Iono {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_080_R_EN.png';
+  public fullName = 'Iono PAF';
+  public set = 'PAF';
+  public setNumber = '80';
+}
+
 export class KilowattrelArt extends Kilowattrel {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/89ec9a54-9c60-41c6-af5f-f10332d67186/card-070.png?format=750w';
 }
@@ -59,8 +88,36 @@ export class MoonlightHillArt extends MoonlightHill {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1694787120007-VECFY1CMUJM0XQ0C43ON/004047_3.jpg?format=750w';
 }
 
+export class NestBallArt extends NestBall {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_084_R_EN.png';
+  public fullName = 'Nest Ball PAF';
+  public set = 'PAF';
+  public setNumber = '84';
+}
+
 export class NemonaArt extends Nemona {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/36015f9b-1205-4644-8746-16f30be3a8ba/SVAL_20_R_JP.png?format=750w';
+}
+
+export class ProfessorsResearchArt extends ProfessorsResearch {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_087_R_EN_LG.png';
+  public fullName = 'Professor\'s Research PAF';
+  public set = 'PAF';
+  public setNumber = '87';
+}
+
+export class ProfessorsResearch2Art extends ProfessorsResearch2 {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_088_R_EN_LG.png';
+  public fullName = 'Professor\'s Research PAF';
+  public set = 'PAF';
+  public setNumber = '88';
+}
+
+export class RareCandyArt extends RareCandy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_089_R_EN.png';
+  public fullName = 'Rare Candy PAF';
+  public set = 'PAF';
+  public setNumber = '89';
 }
 
 export class ScovillainexArt extends Scovillainex {
@@ -77,6 +134,13 @@ export class StudentsInPaldeaArt2 extends StudentsInPaldea {
 
 export class NatuArt extends Natu {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1702495253224-UFUYS7TAEPF31C22KZ6W/Natu+EN.png?format=750w';
+}
+
+export class UltraBallArt extends UltraBall {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_091_R_EN.png';
+  public fullName = 'Ultra Ball PAF';
+  public set = 'PAF';
+  public setNumber = '91';
 }
 
 export class XatuArt extends Xatu {

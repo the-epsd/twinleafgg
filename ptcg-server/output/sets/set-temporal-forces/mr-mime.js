@@ -29,12 +29,12 @@ class MrMime extends pokemon_card_1.PokemonCard {
                 text: 'Your opponent\'s Active Pokémon is now Confused.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '28';
+        this.setNumber = '63';
         this.name = 'Mr. Mime';
-        this.fullName = 'Mr. Mime SV5';
+        this.fullName = 'Mr. Mime TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

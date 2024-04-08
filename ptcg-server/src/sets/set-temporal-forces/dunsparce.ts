@@ -38,7 +38,7 @@ export class Dunsparce extends PokemonCard {
     }
   ];
   
-  public regulationMark = 'E';
+  public regulationMark = 'H';
   
   public set: string = 'SV5';
   

@@ -27,17 +27,17 @@ export class Totodile extends PokemonCard {
     text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
   }];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '13';
+  public setNumber: string = '39';
 
   public name: string = 'Totodile';
 
-  public fullName: string = 'Totodile SV5';
+  public fullName: string = 'Totodile TEF';
 
   public readonly MEAN_LOOK_MARKER = 'MEAN_LOOK_MARKER';
 

@@ -101,7 +101,7 @@ export class SandyShocksex extends PokemonCard {
       }
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard && c.name == 'Basic Fighting Energy';
+        return c instanceof EnergyCard && c.name == 'Fighting Energy';
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -113,7 +113,7 @@ export class SandyShocksex extends PokemonCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Fighting Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
         { allowCancel: false, min: 1, max: 1 },
       ), transfers => {
         transfers = transfers || [];

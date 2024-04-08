@@ -29,11 +29,11 @@ class SandyShocks extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '011';
+        this.setNumber = '98';
         this.name = 'Sandy Shocks';
-        this.fullName = 'Sandy Shocks SV5';
+        this.fullName = 'Sandy Shocks TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

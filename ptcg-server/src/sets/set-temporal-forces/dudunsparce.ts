@@ -5,8 +5,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Dudunsparce extends PokemonCard {
-
-  public regulationMark = 'H';
   
   public stage: Stage = Stage.STAGE_1;
 
@@ -35,6 +33,8 @@ export class Dudunsparce extends PokemonCard {
       text: ''
     }
   ];
+
+  public regulationMark = 'H';
 
   public set: string = 'SV5';
 

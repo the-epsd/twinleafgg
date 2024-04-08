@@ -38,13 +38,13 @@ export class ArvenSIR extends Arven {
 export class FightingEnergyHR extends FightingEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_258_R_EN_LG.png';
   public setNumber = '258';
-  public fullName: string = 'Basic Fighting Energy SVI';
+  public fullName: string = 'Fighting Energy SVI';
 }
 
 export class LightningEnergyHR extends LightningEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_257_R_EN_LG.png';
   public setNumber = '257';
-  public fullName: string = 'Basic Lightning Energy SVI';
+  public fullName: string = 'Lightning Energy SVI';
 }
 
 export class GardevoirexFA extends Gardevoirex {

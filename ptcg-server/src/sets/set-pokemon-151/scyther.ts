@@ -62,7 +62,7 @@ export class Scyther extends PokemonCard {
         player.active,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Basic Grass Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
         { allowCancel: false, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];

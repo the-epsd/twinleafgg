@@ -10,12 +10,12 @@ class MaximumBelt extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.tags = [card_types_1.CardTag.ACE_SPEC];
-        this.set = 'SV5';
+        this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '66';
+        this.setNumber = '154';
         this.regulationMark = 'H';
         this.name = 'Maximum Belt';
-        this.fullName = 'Maximum Belt SV5';
+        this.fullName = 'Maximum Belt TEF';
         this.text = 'The attacks of the Pokémon this card is attached to do 50 more damage to your opponent\'s Active Pokémon ex.';
     }
     reduceEffect(store, state, effect) {

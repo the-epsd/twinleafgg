@@ -25,17 +25,17 @@ export class Rellor extends PokemonCard {
     text: 'This Pokémon also does 10 damage to itself.'
   }];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '14';
+  public setNumber: string = '23';
 
   public name: string = 'Rellor';
 
-  public fullName: string = 'Rellor SV5';
+  public fullName: string = 'Rellor TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -11,8 +11,8 @@ class PsychicEnergy extends energy_card_1.EnergyCard {
         this.regulationMark = 'ENERGY';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '101';
-        this.name = 'Basic Psychic Energy';
-        this.fullName = 'Basic Psychic Energy BS';
+        this.name = 'Psychic Energy';
+        this.fullName = 'Psychic Energy BS';
     }
 }
 exports.PsychicEnergy = PsychicEnergy;

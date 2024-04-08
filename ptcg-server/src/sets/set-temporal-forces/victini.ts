@@ -34,17 +34,17 @@ export class Victini extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '19';
+  public setNumber: string = '30';
 
   public name: string = 'Victini';
 
-  public fullName: string = 'Victini SV5';
+  public fullName: string = 'Victini TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

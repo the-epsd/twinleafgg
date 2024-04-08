@@ -32,17 +32,17 @@ export class Vikavolt extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '28';
+  public setNumber: string = '56';
 
   public name: string = 'Vikavolt';
 
-  public fullName: string = 'Vikavolt SV5';
+  public fullName: string = 'Vikavolt TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 

@@ -14,15 +14,15 @@ export class Eri extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '68';
+  public setNumber: string = '146';
 
   public name: string = 'Eri';
 
-  public fullName: string = 'Eri SV5';
+  public fullName: string = 'Eri TEF';
 
   public text: string =
     'Your opponent reveals their hand. Discard up to 2 Item cards you find there.';

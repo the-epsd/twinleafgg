@@ -26,17 +26,17 @@ export class Pikachu extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '23';
+  public setNumber: string = '51';
 
   public name: string = 'Pikachu';
 
-  public fullName: string = 'Pikachu SV5';
+  public fullName: string = 'Pikachu TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

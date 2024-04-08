@@ -38,15 +38,15 @@ export class IronCrownex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '036';
+  public setNumber: string = '81';
 
   public name: string = 'Iron Crown ex';
 
-  public fullName: string = 'Iron Crown ex';
+  public fullName: string = 'Iron Crown ex TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

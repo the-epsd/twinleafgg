@@ -24,7 +24,7 @@ class Candice extends trainer_card_1.TrainerCard {
             const deckTop = new game_1.CardList();
             player.deck.moveTo(deckTop, 7);
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.WATER } ||
-                { superType: card_types_1.SuperType.ENERGY, name: 'Basic Water Energy' }, { min: 0, max: 7, allowCancel: true }), selected => {
+                { superType: card_types_1.SuperType.ENERGY, name: 'Water Energy' }, { min: 0, max: 7, allowCancel: true }), selected => {
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.deck);
                 return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
