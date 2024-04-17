@@ -1,4 +1,4 @@
-import { CardType, Format, SuperType } from './card-types';
+import { CardType, EnergyType, Format, SuperType } from './card-types';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
@@ -15,6 +15,8 @@ export abstract class Card {
   public abstract fullName: string;
 
   public abstract name: string;
+
+  public energyType: EnergyType | undefined;
 
   public id: number = -1;
 

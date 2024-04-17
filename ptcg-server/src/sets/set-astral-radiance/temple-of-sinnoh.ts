@@ -1,7 +1,10 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, EnergyCard, Card } from '../../game';
+import { CardType, EnergyType, TrainerType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { CheckPokemonStatsEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { UseStadiumEffect } from '../../game/store/effects/game-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class TempleofSinnoh extends TrainerCard {
 
@@ -19,27 +22,53 @@ export class TempleofSinnoh extends TrainerCard {
 
   public fullName = 'All Special Energy attached to Pokémon (both yours and your opponent\'s) provide C Energy and have no other effect.';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect & EnergyCard): State {
-    if (effect instanceof EnergyCard && StateUtils.getStadiumCard(state) === this) {
+  // public reduceEffect(store: StoreLike, state: State, effect: Effect & EnergyCard): State {
+  //   if (effect instanceof EnergyCard && StateUtils.getStadiumCard(state) === this) {
 
-      (effect as any).energyMap.forEach(({ card, provides }: { card: Card, provides: CardType[] }) => {
-        if (card.superType === SuperType.ENERGY) {
-          if (EnergyType.SPECIAL)
-            provides = [CardType.COLORLESS];
+  //     (effect as any).energyMap.forEach(({ card, provides }: { card: Card, provides: CardType[] }) => {
+  //       if (card.superType === SuperType.ENERGY) {
+  //         if (EnergyType.SPECIAL)
+  //         provides = [CardType.COLORLESS];
+  //         effect.preventDefault = true;
+  //         return state;
+  //       }
+  //     });
+
+  //   }
+
+
+  //   return state;
+  // }
+
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof CheckPokemonStatsEffect || effect instanceof AttachEnergyEffect && StateUtils.getStadiumCard(state) === this) {
+
+      const target = effect.target;
+      const player = StateUtils.findOwner(state, target);
+
+      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, target);
+      store.reduceEffect(state, checkProvidedEnergyEffect);
+
+      const energyMap = checkProvidedEnergyEffect.energyMap;
+      const hasDarknessEnergy = energyMap.some(energyMap => energyMap.card.energyType === EnergyType.SPECIAL);
+
+      if (hasDarknessEnergy) {
+        energyMap.forEach(energyMap => {
+          energyMap.provides = [CardType.COLORLESS];
           effect.preventDefault = true;
-          return state;
-        }
-      });
+        });
+      }
 
+      return state;
     }
 
+    if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
+      throw new GameError(GameMessage.CANNOT_USE_STADIUM);
+    }
 
     return state;
   }
 
-
-
-
-
-
 }
+

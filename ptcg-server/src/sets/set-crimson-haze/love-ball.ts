@@ -17,23 +17,18 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  const deckPokemon = player.deck.cards.filter(c => c instanceof PokemonCard);
+  const opponentBenchName = opponent.bench.filter(card => card instanceof PokemonCard).map(card => (card as unknown as PokemonCard).name);
+  const opponentActiveName = opponent.active.cards[0].name;
 
-  const blocked: number[] = [];
-  opponent.bench.forEach((card) => {
-    if (card instanceof PokemonCard && card == deckPokemon[0]) {
-      blocked.push(card.id);
-    }
-  });
-  opponent.active && blocked.push(opponent.active.cards[0].id);
+  const loveBallFilter = opponentActiveName || opponentBenchName[0];
 
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { superType: SuperType.POKEMON },
-    { min: 1, max: 1, allowCancel: true, blocked }
+    { superType: SuperType.POKEMON, name: loveBallFilter },
+    { min: 1, max: 1, allowCancel: true }
   ), selected => {
     cards = selected || [];
     next();

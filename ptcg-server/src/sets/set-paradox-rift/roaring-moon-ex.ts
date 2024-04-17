@@ -49,9 +49,10 @@ export class RoaringMoonex extends PokemonCard {
   public fullName: string = 'Roaring Moon ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof AbstractAttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+
       const opponent = StateUtils.getOpponent(state, player);
 
       const activePokemon = opponent.active.getPokemonCard();
@@ -59,24 +60,25 @@ export class RoaringMoonex extends PokemonCard {
         activePokemon.hp = 0;
         this.hp -= 200;
       }
-      
-      return state;
     }
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const stadiumCard = StateUtils.getStadiumCard(state);
-      if (stadiumCard !== undefined) {
-  
+      if (stadiumCard) {
+
         state = store.prompt(state, new ConfirmPrompt(
           effect.player.id,
           GameMessage.CALAMITY_STORM,
         ), wantToUse => {
           if (wantToUse) {
-      
+
             // Discard Stadium
             const cardList = StateUtils.findCardList(state, stadiumCard);
-            const player = StateUtils.findOwner(state, cardList);
-            cardList.moveTo(player.discard);
+            if (cardList) {
+              const player = StateUtils.findOwner(state, cardList);
+              cardList.moveTo(player.discard);
+            }
             effect.damage += 120;
             return state;
           }
