@@ -35,6 +35,7 @@ import { SlitherWing } from './slither-wing';
 import { Snorunt } from './snorunt';
 import { Steenee } from './steenee';
 import { TapuKokoex } from './tapu-koko-ex';
+import { TechnicalMachineTurboEnergize } from './technical-machine-turbo-energize';
 import { TechnoRadar } from './techno-radar';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
@@ -186,6 +187,10 @@ export class SteeneeArt extends Steenee {
 
 export class TapuKokoexArt extends TapuKokoex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_068_R_EN_LG.png';
+}
+
+export class TechnicalMachineTurboEnergizeArt extends TechnicalMachineTurboEnergize {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_179_R_EN_LG.png';
 }
 
 export class TechnoRadarArt extends TechnoRadar {

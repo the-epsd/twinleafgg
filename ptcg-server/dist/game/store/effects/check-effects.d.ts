@@ -9,6 +9,7 @@ export declare enum CheckEffects {
     CHECK_PRIZES_COUNT_EFFECT = "CHECK_PRIZE_COUNT_EFFECT",
     CHECK_POKEMON_STATS_EFFECT = "CHECK_POKEMON_STATS_EFFECT",
     CHECK_POKEMON_POWERS_EFFECT = "CHECK_POKEMON_POWERS_EFFECT",
+    CHECK_POKEMON_ATTACKS_EFFECT = "CHECK_POKEMON_ATTACKS_EFFECT",
     CHECK_POKEMON_TYPE_EFFECT = "CHECK_POKEMON_TYPE_EFFECT",
     CHECK_RETREAT_COST_EFFECT = "CHECK_RETREAT_COST_EFFECT",
     CHECK_ATTACK_COST_EFFECT = "CHECK_ATTACK_COST_EFFECT",
@@ -24,19 +25,19 @@ export declare class CheckPokemonPowersEffect implements Effect {
     powers: Power[];
     constructor(player: Player, target: PokemonCardList);
 }
+export declare class CheckPokemonAttacksEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    player: Player;
+    attacks: Attack[];
+    constructor(player: Player);
+}
 export declare class CheckHpEffect implements Effect {
     readonly type: string;
     preventDefault: boolean;
     player: Player;
     target: PokemonCardList;
     hp: number;
-    constructor(player: Player, target: PokemonCardList);
-}
-export declare class CheckPokemonPowersEffect implements Effect {
-    readonly type: string;
-    preventDefault: boolean;
-    player: Player;
-    powers: Power[];
     constructor(player: Player, target: PokemonCardList);
 }
 export declare class CheckPokemonPlayedTurnEffect implements Effect {

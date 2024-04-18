@@ -4,6 +4,7 @@ export var CheckEffects;
     CheckEffects["CHECK_PRIZES_COUNT_EFFECT"] = "CHECK_PRIZE_COUNT_EFFECT";
     CheckEffects["CHECK_POKEMON_STATS_EFFECT"] = "CHECK_POKEMON_STATS_EFFECT";
     CheckEffects["CHECK_POKEMON_POWERS_EFFECT"] = "CHECK_POKEMON_POWERS_EFFECT";
+    CheckEffects["CHECK_POKEMON_ATTACKS_EFFECT"] = "CHECK_POKEMON_ATTACKS_EFFECT";
     CheckEffects["CHECK_POKEMON_TYPE_EFFECT"] = "CHECK_POKEMON_TYPE_EFFECT";
     CheckEffects["CHECK_RETREAT_COST_EFFECT"] = "CHECK_RETREAT_COST_EFFECT";
     CheckEffects["CHECK_ATTACK_COST_EFFECT"] = "CHECK_ATTACK_COST_EFFECT";
@@ -21,6 +22,16 @@ export class CheckPokemonPowersEffect {
         this.powers = pokemonCard ? pokemonCard.powers : [];
     }
 }
+export class CheckPokemonAttacksEffect {
+    constructor(player) {
+        this.type = CheckEffects.CHECK_POKEMON_ATTACKS_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        const pokemonCard = player.active.getPokemonCard();
+        ;
+        this.attacks = pokemonCard ? pokemonCard.attacks : [];
+    }
+}
 export class CheckHpEffect {
     constructor(player, target) {
         this.type = CheckEffects.CHECK_HP_EFFECT;
@@ -31,7 +42,6 @@ export class CheckHpEffect {
         this.hp = pokemonCard ? pokemonCard.hp : 0;
     }
 }
-
 export class CheckPokemonPlayedTurnEffect {
     constructor(player, target) {
         this.type = CheckEffects.CHECK_POKEMON_PLAYED_TURN_EFFECT;

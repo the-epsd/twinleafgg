@@ -37,6 +37,7 @@ exports.setParadoxRift = [
     new card_images_1.SlitherWingArt(),
     new card_images_1.SnoruntArt(),
     new card_images_1.SteeneeArt(),
+    new card_images_1.TechnicalMachineTurboEnergizeArt(),
     new card_images_1.TechnoRadarArt(),
     new card_images_1.TsareenaexArt(),
     new card_images_1.TulipArt(),

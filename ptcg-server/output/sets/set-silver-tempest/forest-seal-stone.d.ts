@@ -1,5 +1,6 @@
-import { PowerType, TrainerCard } from '../../game';
+import { PowerType, State, StoreLike, TrainerCard } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
+import { Effect } from '../../game/store/effects/effect';
 export declare class ForestSealStone extends TrainerCard {
     trainerType: TrainerType;
     set: string;
@@ -17,4 +18,5 @@ export declare class ForestSealStone extends TrainerCard {
         exemptFromAbilityLock: boolean;
         text: string;
     }[];
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

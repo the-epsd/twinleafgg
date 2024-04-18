@@ -41,7 +41,12 @@ function playerTurnReducer(store, state, action) {
             if (pokemonCard === undefined) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.UNKNOWN_ATTACK);
             }
-            const attack = pokemonCard.attacks.find(a => a.name === action.name);
+            const attackEffect = new check_effects_1.CheckPokemonAttacksEffect(player);
+            state = store.reduceEffect(state, attackEffect);
+            const attack = [
+                ...pokemonCard.attacks,
+                ...attackEffect.attacks
+            ].find(a => a.name === action.name);
             if (attack === undefined) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.UNKNOWN_ATTACK);
             }
