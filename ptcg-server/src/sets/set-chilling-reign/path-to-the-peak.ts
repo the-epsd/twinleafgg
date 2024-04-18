@@ -28,7 +28,8 @@ export class PathToThePeak extends TrainerCard {
     
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this) {
+    if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this &&
+        !effect.power.exemptFromAbilityLock) {
 
       const pokemonCard = effect.card;
       if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||

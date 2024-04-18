@@ -32,7 +32,6 @@ export class PokemonCardList extends CardList {
   public tool: Card | undefined;
   public stadium: Card | undefined;
 
-
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];
     for (const card of this.cards) {

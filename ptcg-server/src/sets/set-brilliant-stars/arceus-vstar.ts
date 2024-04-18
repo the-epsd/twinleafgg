@@ -107,7 +107,7 @@ export class ArceusVSTAR extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      if (player.usedVSTAR === true) {
+      if (player.usedVSTAR) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 

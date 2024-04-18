@@ -20,7 +20,8 @@ class PathToThePeak extends trainer_card_1.TrainerCard {
         this.text = 'Pokémon with a Rule Box in play (both yours and your opponent\'s) have no Abilities. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
+        if (effect instanceof game_effects_1.PowerEffect && state_utils_1.StateUtils.getStadiumCard(state) === this &&
+            !effect.power.exemptFromAbilityLock) {
             const pokemonCard = effect.card;
             if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V) ||
                 pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX) ||

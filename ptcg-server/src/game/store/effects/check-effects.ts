@@ -2,7 +2,7 @@ import { CardType } from '../card/card-types';
 import { Effect } from './effect';
 import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
-import { Resistance, Weakness, Attack } from '../card/pokemon-types';
+import { Resistance, Weakness, Attack, Power } from '../card/pokemon-types';
 import { EnergyMap } from '../prompts/choose-energy-prompt';
 
 export enum CheckEffects {
@@ -16,6 +16,21 @@ export enum CheckEffects {
   CHECK_ENOUGH_ENERGY_EFFECT = 'CHECK_ENOUGH_ENERGY_EFFECT',
   CHECK_POKEMON_PLAYED_TURN_EFFECT = 'CHECK_POKEMON_PLAYED_TURN_EFFECT',
   CHECK_TABLE_STATE_EFFECT = 'CHECK_TABLE_STATE_EFFECT'
+}
+
+export class CheckPokemonPowersEffect implements Effect {
+  readonly type: string = CheckEffects.CHECK_POKEMON_POWERS_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public target: PokemonCardList;
+  public powers: Power[];
+
+  constructor(player: Player, target: PokemonCardList) {
+    this.player = player;
+    this.target = target;
+    const pokemonCard = target.getPokemonCard();
+    this.powers = pokemonCard ? pokemonCard.powers : [];
+  }
 }
 
 export class CheckHpEffect implements Effect {

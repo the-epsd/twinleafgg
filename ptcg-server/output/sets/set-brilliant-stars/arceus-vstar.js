@@ -70,7 +70,7 @@ class ArceusVSTAR extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            if (player.usedVSTAR === true) {
+            if (player.usedVSTAR) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             player.usedVSTAR = true;

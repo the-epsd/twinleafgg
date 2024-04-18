@@ -15,6 +15,7 @@ export declare class ForestSealStone extends TrainerCard {
         name: string;
         powerType: PowerType;
         useWhenInPlay: boolean;
+        exemptFromAbilityLock: boolean;
         text: string;
     }[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
