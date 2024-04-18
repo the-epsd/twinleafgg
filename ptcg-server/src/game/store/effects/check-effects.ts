@@ -10,6 +10,7 @@ export enum CheckEffects {
   CHECK_PRIZES_COUNT_EFFECT = 'CHECK_PRIZE_COUNT_EFFECT',
   CHECK_POKEMON_STATS_EFFECT = 'CHECK_POKEMON_STATS_EFFECT',
   CHECK_POKEMON_POWERS_EFFECT = 'CHECK_POKEMON_POWERS_EFFECT',
+  CHECK_POKEMON_ATTACKS_EFFECT = 'CHECK_POKEMON_ATTACKS_EFFECT',
   CHECK_POKEMON_TYPE_EFFECT = 'CHECK_POKEMON_TYPE_EFFECT',
   CHECK_RETREAT_COST_EFFECT = 'CHECK_RETREAT_COST_EFFECT',
   CHECK_ATTACK_COST_EFFECT = 'CHECK_ATTACK_COST_EFFECT',
@@ -33,6 +34,19 @@ export class CheckPokemonPowersEffect implements Effect {
   }
 }
 
+export class CheckPokemonAttacksEffect implements Effect {
+  readonly type: string = CheckEffects.CHECK_POKEMON_ATTACKS_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public attacks: Attack[];
+
+  constructor(player: Player) {
+    this.player = player;
+    const pokemonCard = player.active.getPokemonCard();;
+    this.attacks = pokemonCard ? pokemonCard.attacks : [];
+  }
+}
+
 export class CheckHpEffect implements Effect {
   readonly type: string = CheckEffects.CHECK_HP_EFFECT;
   public preventDefault = false;
@@ -45,19 +59,6 @@ export class CheckHpEffect implements Effect {
     this.target = target;
     const pokemonCard = target.getPokemonCard();
     this.hp = pokemonCard ? pokemonCard.hp : 0;
-  }
-}
-
-export class CheckPokemonPowersEffect implements Effect {
-  readonly type: string = CheckEffects.CHECK_POKEMON_POWERS_EFFECT;
-  public preventDefault = false;
-  public player: Player;
-  public powers: Power[];
-
-  constructor(player: Player, target: PokemonCardList) {
-    this.player = player;
-    const pokemonCard = target.getPokemonCard();
-    this.powers = pokemonCard ? [ ...pokemonCard.powers ] : [];
   }
 }
 

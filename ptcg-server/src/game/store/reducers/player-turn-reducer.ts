@@ -9,7 +9,7 @@ import { EndTurnEffect } from '../effects/game-phase-effects';
 import { StateUtils } from '../state-utils';
 import {SlotType} from '../actions/play-card-action';
 import {PokemonCard} from '../card/pokemon-card';
-import { CheckPokemonPowersEffect } from '../effects/check-effects';
+import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect } from '../effects/check-effects';
 
 export function playerTurnReducer(store: StoreLike, state: State, action: Action): State {
 
@@ -46,14 +46,22 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
 
       if (player === undefined || player.id !== action.clientId) {
         throw new GameError(GameMessage.NOT_YOUR_TURN);
-      }
-
+      }    
+      
       const pokemonCard = player.active.getPokemonCard();
+      
       if (pokemonCard === undefined) {
         throw new GameError(GameMessage.UNKNOWN_ATTACK);
       }
+      
+      const attackEffect = new CheckPokemonAttacksEffect(player);
+      state = store.reduceEffect(state, attackEffect);
 
-      const attack = pokemonCard.attacks.find(a => a.name === action.name);
+      const attack = [
+        ...pokemonCard.attacks,
+        ...attackEffect.attacks
+      ].find(a => a.name === action.name);
+      
       if (attack === undefined) {
         throw new GameError(GameMessage.UNKNOWN_ATTACK);
       }
