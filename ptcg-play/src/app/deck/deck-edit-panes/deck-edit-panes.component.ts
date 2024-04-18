@@ -13,7 +13,7 @@ import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-fi
 import { DeckItem, LibraryItem } from '../deck-card/deck-card.interface';
 import { DeckCardType } from '../deck-card/deck-card.component';
 import { DeckEditVirtualScrollStrategy } from './deck-edit-virtual-scroll-strategy';
-import { Card, PokemonCard, SuperType } from 'ptcg-server';
+import { Card, EnergyType, PokemonCard, SuperType } from 'ptcg-server';
 
 const DECK_CARD_ITEM_WIDTH = 148;
 const DECK_CARD_ITEM_HEIGHT = 173;
@@ -207,7 +207,15 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     if (index === -1) {
       list.push({ ...item, pane: DeckEditPane.DECK, count });
     } else {
-      list[index].count += count;
+      if (list[index].count < 4) {
+        list[index].count += count;
+      }
+      else {
+        if (list[index].count < 99 && list[index].card.energyType === EnergyType.BASIC) {
+
+          list[index].count += count;
+        }
+      }
     }
 
     this.tempList = this.list = list;

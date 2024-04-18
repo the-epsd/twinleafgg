@@ -45,17 +45,18 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
                 activePokemon.hp = 0;
                 this.hp -= 200;
             }
-            return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const stadiumCard = game_1.StateUtils.getStadiumCard(state);
-            if (stadiumCard !== undefined) {
+            if (stadiumCard) {
                 state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.CALAMITY_STORM), wantToUse => {
                     if (wantToUse) {
                         // Discard Stadium
                         const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-                        const player = game_1.StateUtils.findOwner(state, cardList);
-                        cardList.moveTo(player.discard);
+                        if (cardList) {
+                            const player = game_1.StateUtils.findOwner(state, cardList);
+                            cardList.moveTo(player.discard);
+                        }
                         effect.damage += 120;
                         return state;
                     }

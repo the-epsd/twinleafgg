@@ -128,7 +128,7 @@ export class IronLeavesex extends PokemonCard {
             PlayerType.BOTTOM_PLAYER,
             [SlotType.BENCH], // Only allow moving to active
             { superType: SuperType.ENERGY }, 
-            { allowCancel: true, blockedMap }
+            { allowCancel: true }
           ), transfers => {
 
             if (!transfers) {

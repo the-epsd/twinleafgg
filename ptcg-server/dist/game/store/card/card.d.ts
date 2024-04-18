@@ -1,4 +1,4 @@
-import { CardType, Format, SuperType } from './card-types';
+import { CardType, EnergyType, Format, SuperType } from './card-types';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
@@ -9,6 +9,7 @@ export declare abstract class Card {
     abstract format: Format;
     abstract fullName: string;
     abstract name: string;
+    energyType: EnergyType | undefined;
     id: number;
     regulationMark: string;
     tags: string[];

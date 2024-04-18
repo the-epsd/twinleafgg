@@ -36,6 +36,16 @@ class CheckHpEffect {
     }
 }
 exports.CheckHpEffect = CheckHpEffect;
+class CheckPokemonPowersEffect {
+    constructor(player, target) {
+        this.type = CheckEffects.CHECK_POKEMON_POWERS_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        const pokemonCard = target.getPokemonCard();
+        this.powers = pokemonCard ? [...pokemonCard.powers] : [];
+    }
+}
+exports.CheckPokemonPowersEffect = CheckPokemonPowersEffect;
 class CheckPokemonPlayedTurnEffect {
     constructor(player, target) {
         this.type = CheckEffects.CHECK_POKEMON_PLAYED_TURN_EFFECT;

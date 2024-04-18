@@ -66,18 +66,12 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
                 && opponent.active.getPokemonCard() !== this) {
                 return state;
             }
-            const cardList = game_1.StateUtils.findCardList(state, effect.card);
-            if (cardList instanceof game_1.PokemonCardList) {
-                const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(cardList);
+            const pokemon = opponent.active.getPokemonCard();
+            if (pokemon && pokemon.powers && pokemon.powers.length > 0) {
+                const pokemonCardList = new game_1.PokemonCardList();
+                const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(pokemonCardList);
                 store.reduceEffect(state, checkPokemonType);
             }
-            opponent.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
-                const pokemon = cardList.getPokemonCard();
-                if (pokemon && pokemon.powers && pokemon.powers.length > 0) {
-                    const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(cardList);
-                    store.reduceEffect(state, checkPokemonType);
-                }
-            });
             // Try reducing ability for opponent
             try {
                 const playerPowerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);

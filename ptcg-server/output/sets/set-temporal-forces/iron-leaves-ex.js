@@ -95,7 +95,7 @@ class IronLeavesex extends pokemon_card_1.PokemonCard {
                         }
                     });
                     return store.prompt(state, new game_1.MoveEnergyPrompt(player.id, game_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], // Only allow moving to active
-                    { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, blockedMap }), transfers => {
+                    { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true }), transfers => {
                         if (!transfers) {
                             return;
                         }

@@ -48,6 +48,19 @@ export class CheckHpEffect implements Effect {
   }
 }
 
+export class CheckPokemonPowersEffect implements Effect {
+  readonly type: string = CheckEffects.CHECK_POKEMON_POWERS_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public powers: Power[];
+
+  constructor(player: Player, target: PokemonCardList) {
+    this.player = player;
+    const pokemonCard = target.getPokemonCard();
+    this.powers = pokemonCard ? [ ...pokemonCard.powers ] : [];
+  }
+}
+
 export class CheckPokemonPlayedTurnEffect implements Effect {
   readonly type: string = CheckEffects.CHECK_POKEMON_PLAYED_TURN_EFFECT;
   public preventDefault = false;

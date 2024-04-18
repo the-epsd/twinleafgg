@@ -32,6 +32,13 @@ export declare class CheckHpEffect implements Effect {
     hp: number;
     constructor(player: Player, target: PokemonCardList);
 }
+export declare class CheckPokemonPowersEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    player: Player;
+    powers: Power[];
+    constructor(player: Player, target: PokemonCardList);
+}
 export declare class CheckPokemonPlayedTurnEffect implements Effect {
     readonly type: string;
     preventDefault: boolean;
