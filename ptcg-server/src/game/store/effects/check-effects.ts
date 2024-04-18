@@ -4,6 +4,7 @@ import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { Resistance, Weakness, Attack, Power } from '../card/pokemon-types';
 import { EnergyMap } from '../prompts/choose-energy-prompt';
+import { TrainerCard } from '../card/trainer-card';
 
 export enum CheckEffects {
   CHECK_HP_EFFECT = 'CHECK_HP_EFFECT',
@@ -42,8 +43,13 @@ export class CheckPokemonAttacksEffect implements Effect {
 
   constructor(player: Player) {
     this.player = player;
-    const pokemonCard = player.active.getPokemonCard();;
-    this.attacks = pokemonCard ? pokemonCard.attacks : [];
+    const tool = player.active.tool;
+    
+    if (!!tool && (tool as TrainerCard).attacks.length > 0) {
+      this.attacks = [...(tool as TrainerCard).attacks];
+    } else {
+      this.attacks = [];
+    }
   }
 }
 

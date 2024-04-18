@@ -1,9 +1,10 @@
-import { AttachEnergyPrompt, Attack, EnergyCard, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { AttachEnergyPrompt, Attack, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
+import { CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -36,6 +37,11 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
     'The Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) If this card is attached to 1 of your Pokémon, discard it at the end of your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+        
+    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
+        !effect.attacks.includes(this.attacks[0])) {
+      effect.attacks.push(this.attacks[0]);
+    }
     
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
@@ -44,20 +50,28 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
+        player.deck,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { max: 2, allowCancel: true }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          const energyCard = transfer.card as EnergyCard;
-          const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
-          store.reduceEffect(state, attachEnergyEffect);
+          player.deck.moveCardTo(transfer.card, target);
         }
+        
+        return state;
       });
+      
+      return state;
+    }
+    
+    if (effect instanceof EndTurnEffect && effect.player.active.tool?.name === this.name) {
+      const player = effect.player;
+      player.active.moveCardTo(player.active.tool!, player.discard);
+      player.active.tool = undefined;
       
       return state;
     }
