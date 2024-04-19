@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AncientBoosterEnergyCapsuleArt, BounsweetArt, BruteBonnetArt, CounterCatcherArt, DefianceVestArt, DeoxysArt, EarthenVesselArt, ElekidArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GholdengoexArt, GibleArt, GimmighoulArt, GroudonArt, IronBundleArt, IronHandsexArt, IronJugulisArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MewtwoexArt, MiniorArt, MorpekoArt, NatuArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RoaringMoonexArt, SandyShocksexArt, ScreamTailArt, SlitherWingArt, SnoruntArt, SteeneeArt, TapuKokoexArt, TechnicalMachineTurboEnergizeArt, TechnoRadarArt, TsareenaexArt, TulipArt, XatuArt } from './card-images';
+import { AncientBoosterEnergyCapsuleArt, BounsweetArt, BruteBonnetArt, CounterCatcherArt, DefianceVestArt, DeoxysArt, EarthenVesselArt, ElekidArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GholdengoexArt, GibleArt, GimmighoulArt, GroudonArt, IronBundleArt, IronHandsexArt, IronJugulisArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MewtwoexArt, MiniorArt, MorpekoArt, NatuArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RoaringMoonexArt, SandyShocksexArt, ScreamTailArt, SlitherWingArt, SnoruntArt, SteeneeArt, TapuKokoexArt, TechnicalMachineBlindsideArt, TechnicalMachineDevolutionArt, TechnicalMachineEvolutionArt, TechnicalMachineTurboEnergizeArt, TechnoRadarArt, TsareenaexArt, TulipArt, XatuArt } from './card-images';
 
 export const setParadoxRift: Card[] = [
   
@@ -37,6 +37,9 @@ export const setParadoxRift: Card[] = [
   new SlitherWingArt(),
   new SnoruntArt(),
   new SteeneeArt(),
+  new TechnicalMachineBlindsideArt(),
+  new TechnicalMachineDevolutionArt(),
+  new TechnicalMachineEvolutionArt(),
   new TechnicalMachineTurboEnergizeArt(),
   new TechnoRadarArt(),
   new TsareenaexArt(),

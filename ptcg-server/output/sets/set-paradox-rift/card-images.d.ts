@@ -35,6 +35,9 @@ import { SlitherWing } from './slither-wing';
 import { Snorunt } from './snorunt';
 import { Steenee } from './steenee';
 import { TapuKokoex } from './tapu-koko-ex';
+import { TechnicalMachineBlindside } from './technical-machine-blindside';
+import { TechnicalMachineDevolution } from './technical-machine-devolution';
+import { TechnicalMachineEvolution } from './technical-machine-evolution';
 import { TechnicalMachineTurboEnergize } from './technical-machine-turbo-energize';
 import { TechnoRadar } from './techno-radar';
 import { Tsareenaex } from './tsareena-ex';
@@ -149,6 +152,15 @@ export declare class SteeneeArt extends Steenee {
     cardImage: string;
 }
 export declare class TapuKokoexArt extends TapuKokoex {
+    cardImage: string;
+}
+export declare class TechnicalMachineBlindsideArt extends TechnicalMachineBlindside {
+    cardImage: string;
+}
+export declare class TechnicalMachineDevolutionArt extends TechnicalMachineDevolution {
+    cardImage: string;
+}
+export declare class TechnicalMachineEvolutionArt extends TechnicalMachineEvolution {
     cardImage: string;
 }
 export declare class TechnicalMachineTurboEnergizeArt extends TechnicalMachineTurboEnergize {

@@ -1,13 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TechnicalMachineTurboEnergize = void 0;
+exports.TechnicalMachineBlindside = void 0;
 const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-class TechnicalMachineTurboEnergize extends trainer_card_1.TrainerCard {
+class TechnicalMachineBlindside extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.TOOL;
@@ -15,14 +16,14 @@ class TechnicalMachineTurboEnergize extends trainer_card_1.TrainerCard {
         this.tags = [];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '179';
-        this.name = 'Technical Machine: Turbo Energize';
-        this.fullName = 'Technical Machine: Turbo Energize PAR';
+        this.setNumber = '176';
+        this.name = 'Technical Machine: Blindside';
+        this.fullName = 'Technical Machine: Blindside PAR';
         this.attacks = [{
-                name: 'Turbo Energize',
-                cost: [card_types_1.CardType.COLORLESS],
+                name: 'Blindside',
+                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 0,
-                text: 'Search your deck for up to 2 Basic Energy cards and attach them to your Benched Pokémon in any way you like. Then, shuffle your deck.'
+                text: 'You can use this attack only when your opponent has exactly 1 Prize card remaining.'
             }];
         this.text = 'The Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) If this card is attached to 1 of your Pokémon, discard it at the end of your turn.';
     }
@@ -34,15 +35,31 @@ class TechnicalMachineTurboEnergize extends trainer_card_1.TrainerCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { max: 2, allowCancel: true }), transfers => {
-                transfers = transfers || [];
-                for (const transfer of transfers) {
-                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    player.deck.moveCardTo(transfer.card, target);
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const blocked = [];
+            const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+            if (!hasBenched) {
+                effect.damage = 120;
+            }
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
+                if (cardList.damage == 0) {
+                    throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                 }
-                return state;
+                if (cardList.damage > 0) {
+                    return state;
+                }
+                else {
+                    blocked.push(target);
+                }
             });
-            return state;
+            state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 1, allowCancel: false, blocked: blocked }), target => {
+                if (!target || target.length === 0) {
+                    return;
+                }
+                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 100);
+                damageEffect.target = target[0];
+                store.reduceEffect(state, damageEffect);
+            });
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
             const player = effect.player;
@@ -56,4 +73,4 @@ class TechnicalMachineTurboEnergize extends trainer_card_1.TrainerCard {
         return state;
     }
 }
-exports.TechnicalMachineTurboEnergize = TechnicalMachineTurboEnergize;
+exports.TechnicalMachineBlindside = TechnicalMachineBlindside;

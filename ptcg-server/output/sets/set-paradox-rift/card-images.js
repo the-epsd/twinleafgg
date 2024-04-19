@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TechnoRadarArt = exports.TechnicalMachineTurboEnergizeArt = exports.TapuKokoexArt = exports.SteeneeArt = exports.SnoruntArt = exports.SlitherWingArt = exports.ScreamTailArt = exports.SandyShocksexArt = exports.RoaringMoonexArt = exports.ProfessorTurosScenarioArt = exports.ProfessorSadasVitalityArt = exports.NatuArt = exports.MorpekoArt = exports.MiniorArt = exports.MewtwoexArt = exports.LuxuriousCapeArt = exports.LatiosArt = exports.KlawfArt = exports.JirachiArt = exports.IronValiantexArt = exports.IronJugulisArt = exports.IronHandsexArt = exports.IronBundleArt = exports.GroudonArt = exports.GimmighoulArt = exports.GibleArt = exports.GholdengoexArt = exports.GarchompexArt = exports.GabiteArt = exports.FutureBoosterEnergyCapsuleArt = exports.FroslassexArt = exports.ElekidArt = exports.EarthenVesselArt = exports.DeoxysArt = exports.DefianceVestArt = exports.CounterCatcherArt = exports.BruteBonnetArt = exports.BounsweetArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
+exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TechnoRadarArt = exports.TechnicalMachineTurboEnergizeArt = exports.TechnicalMachineEvolutionArt = exports.TechnicalMachineDevolutionArt = exports.TechnicalMachineBlindsideArt = exports.TapuKokoexArt = exports.SteeneeArt = exports.SnoruntArt = exports.SlitherWingArt = exports.ScreamTailArt = exports.SandyShocksexArt = exports.RoaringMoonexArt = exports.ProfessorTurosScenarioArt = exports.ProfessorSadasVitalityArt = exports.NatuArt = exports.MorpekoArt = exports.MiniorArt = exports.MewtwoexArt = exports.LuxuriousCapeArt = exports.LatiosArt = exports.KlawfArt = exports.JirachiArt = exports.IronValiantexArt = exports.IronJugulisArt = exports.IronHandsexArt = exports.IronBundleArt = exports.GroudonArt = exports.GimmighoulArt = exports.GibleArt = exports.GholdengoexArt = exports.GarchompexArt = exports.GabiteArt = exports.FutureBoosterEnergyCapsuleArt = exports.FroslassexArt = exports.ElekidArt = exports.EarthenVesselArt = exports.DeoxysArt = exports.DefianceVestArt = exports.CounterCatcherArt = exports.BruteBonnetArt = exports.BounsweetArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
 const ancient_booster_energy_capsule_1 = require("./ancient-booster-energy-capsule");
 const bounsweet_1 = require("./bounsweet");
 const brute_bonnet_1 = require("./brute-bonnet");
@@ -38,6 +38,9 @@ const slither_wing_1 = require("./slither-wing");
 const snorunt_1 = require("./snorunt");
 const steenee_1 = require("./steenee");
 const tapu_koko_ex_1 = require("./tapu-koko-ex");
+const technical_machine_blindside_1 = require("./technical-machine-blindside");
+const technical_machine_devolution_1 = require("./technical-machine-devolution");
+const technical_machine_evolution_1 = require("./technical-machine-evolution");
 const technical_machine_turbo_energize_1 = require("./technical-machine-turbo-energize");
 const techno_radar_1 = require("./techno-radar");
 const tsareena_ex_1 = require("./tsareena-ex");
@@ -302,6 +305,27 @@ class TapuKokoexArt extends tapu_koko_ex_1.TapuKokoex {
     }
 }
 exports.TapuKokoexArt = TapuKokoexArt;
+class TechnicalMachineBlindsideArt extends technical_machine_blindside_1.TechnicalMachineBlindside {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_176_R_EN_LG.png';
+    }
+}
+exports.TechnicalMachineBlindsideArt = TechnicalMachineBlindsideArt;
+class TechnicalMachineDevolutionArt extends technical_machine_devolution_1.TechnicalMachineDevolution {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_177_R_EN_LG.png';
+    }
+}
+exports.TechnicalMachineDevolutionArt = TechnicalMachineDevolutionArt;
+class TechnicalMachineEvolutionArt extends technical_machine_evolution_1.TechnicalMachineEvolution {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_178_R_EN_LG.png';
+    }
+}
+exports.TechnicalMachineEvolutionArt = TechnicalMachineEvolutionArt;
 class TechnicalMachineTurboEnergizeArt extends technical_machine_turbo_energize_1.TechnicalMachineTurboEnergize {
     constructor() {
         super(...arguments);
