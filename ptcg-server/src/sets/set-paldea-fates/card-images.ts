@@ -22,6 +22,7 @@ import { MoonlightHill } from './moonlight-hill';
 import { Nemona } from './nemona';
 import { Scovillainex } from './scovillain-ex';
 import { StudentsInPaldea } from './students-in-paldea';
+import { TechnicalMachineCrisisPunch } from './technical-machine-crisis-punch';
 
 export class AtticusArt extends Atticus {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1689927802561-4UM1G0I6CI085Z9MSMDJ/AtticusSVPromo56.jpg?format=750w';
@@ -134,6 +135,10 @@ export class StudentsInPaldeaArt2 extends StudentsInPaldea {
 
 export class NatuArt extends Natu {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1702495253224-UFUYS7TAEPF31C22KZ6W/Natu+EN.png?format=750w';
+}
+
+export class TechnicalMachineCrisisPunchArt extends TechnicalMachineCrisisPunch {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_090_R_EN.png';
 }
 
 export class UltraBallArt extends UltraBall {

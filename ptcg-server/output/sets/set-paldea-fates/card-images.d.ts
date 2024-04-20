@@ -22,6 +22,7 @@ import { MoonlightHill } from './moonlight-hill';
 import { Nemona } from './nemona';
 import { Scovillainex } from './scovillain-ex';
 import { StudentsInPaldea } from './students-in-paldea';
+import { TechnicalMachineCrisisPunch } from './technical-machine-crisis-punch';
 export declare class AtticusArt extends Atticus {
     cardImage: string;
 }
@@ -110,6 +111,9 @@ export declare class StudentsInPaldeaArt2 extends StudentsInPaldea {
     cardImage: string;
 }
 export declare class NatuArt extends Natu {
+    cardImage: string;
+}
+export declare class TechnicalMachineCrisisPunchArt extends TechnicalMachineCrisisPunch {
     cardImage: string;
 }
 export declare class UltraBallArt extends UltraBall {
