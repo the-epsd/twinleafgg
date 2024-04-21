@@ -4,7 +4,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard, PowerType, StateUtils } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 
 export class Cramorant extends PokemonCard {
   
@@ -51,6 +51,8 @@ export class Cramorant extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      new CheckPokemonAttacksEffect(player);
+
       if (player.lostzone.cards.length <= 3) {
         return state;
       }
@@ -62,7 +64,11 @@ export class Cramorant extends PokemonCard {
         } catch {
           return state;
         }
-        this.attacks[0].cost = [ ];
+        this.attacks.forEach(attack => {
+          attack.cost = [];
+        });
+
+
       }
 
       if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VoloArt = exports.SnorlaxArt = exports.SableyeArt = exports.RotomVArt = exports.RadiantHisuianSneaslerArt = exports.RadiantGardevoirArt = exports.PidgeotVArt = exports.PanicMaskArt = exports.MirageGateArt = exports.MawileArt = exports.MagnezoneVSTARArt = exports.MagnezoneVArt = exports.LostVacuumArt = exports.LostCityArt = exports.LadyArt = exports.KyuremVMAXArt = exports.KyuremVArt = exports.JynxArt = exports.HisuianZoroarkArt = exports.HisuianZoruaArt = exports.HisuianZoroarkVSTARArt = exports.HisuianZoroarkVArt = exports.HisuianGoodraVSTARArt = exports.HisuianGoodraVArt = exports.GiratinaVSTARArt = exports.GiratinaVArt = exports.GiftEnergyArt = exports.GengarArt = exports.DrapionVSTARArt = exports.DrapionVArt = exports.DelphoxVArt = exports.DamagePumpArt = exports.CresseliaArt = exports.CramorantArt = exports.ComfeyArt = exports.ColresssExperimentArt = exports.BoxOfDisasterArt = exports.BouffalantArt = exports.ArezuArt = void 0;
+exports.VoloArt = exports.ThortonArt = exports.SnorlaxArt = exports.SableyeArt = exports.RotomVArt = exports.RadiantHisuianSneaslerArt = exports.RadiantGardevoirArt = exports.PidgeotVArt = exports.PanicMaskArt = exports.MirageGateArt = exports.MawileArt = exports.MagnezoneVSTARArt = exports.MagnezoneVArt = exports.LostVacuumArt = exports.LostCityArt = exports.LadyArt = exports.KyuremVMAXArt = exports.KyuremVArt = exports.JynxArt = exports.HisuianZoroarkArt = exports.HisuianZoruaArt = exports.HisuianZoroarkVSTARArt = exports.HisuianZoroarkVArt = exports.HisuianGoodraVSTARArt = exports.HisuianGoodraVArt = exports.GiratinaVSTARArt = exports.GiratinaVArt = exports.GiftEnergyArt = exports.GengarArt = exports.DrapionVSTARArt = exports.DrapionVArt = exports.DelphoxVArt = exports.DamagePumpArt = exports.CresseliaArt = exports.CramorantArt = exports.ComfeyArt = exports.ColresssExperimentArt = exports.BoxOfDisasterArt = exports.BouffalantArt = exports.ArezuArt = void 0;
 const arezu_1 = require("./arezu");
 const bouffalant_1 = require("./bouffalant");
 const box_of_disaster_1 = require("./box-of-disaster");
@@ -39,6 +39,7 @@ const radiant_hisuian_sneasler_1 = require("./radiant-hisuian-sneasler");
 const rotom_v_1 = require("./rotom-v");
 const sableye_1 = require("./sableye");
 const snorlax_1 = require("./snorlax");
+const thorton_1 = require("./thorton");
 const volo_1 = require("./volo");
 class ArezuArt extends arezu_1.Arezu {
     constructor() {
@@ -306,6 +307,13 @@ class SnorlaxArt extends snorlax_1.Snorlax {
     }
 }
 exports.SnorlaxArt = SnorlaxArt;
+class ThortonArt extends thorton_1.Thorton {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_167_R_EN.png';
+    }
+}
+exports.ThortonArt = ThortonArt;
 class VoloArt extends volo_1.Volo {
     constructor() {
         super(...arguments);

@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class RadiantCharizard extends PokemonCard {
@@ -66,6 +66,8 @@ export class RadiantCharizard extends PokemonCard {
     if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      new CheckPokemonAttacksEffect(player);
 
       try {
         const powerEffect = new PowerEffect(opponent, this.powers[0], this);

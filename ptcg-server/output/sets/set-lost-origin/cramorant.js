@@ -37,6 +37,7 @@ class Cramorant extends game_1.PokemonCard {
         if (effect instanceof check_effects_1.CheckAttackCostEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            new check_effects_1.CheckPokemonAttacksEffect(player);
             if (player.lostzone.cards.length <= 3) {
                 return state;
             }
@@ -48,7 +49,9 @@ class Cramorant extends game_1.PokemonCard {
                 catch (_a) {
                     return state;
                 }
-                this.attacks[0].cost = [];
+                this.attacks.forEach(attack => {
+                    attack.cost = [];
+                });
             }
             if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
                 effect.ignoreWeakness = true;

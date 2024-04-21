@@ -5,6 +5,7 @@ import { EnhancedHammer } from './enhanced-hammer';
 import { Froakie } from './froakie';
 import { Frogadier } from './frogadier';
 import { Greninjaex } from './greninja-ex';
+import { HyperAroma } from './hyper-aroma';
 import { IronLeaves } from './iron-leaves';
 import { IronThornsex } from './iron-thorns-ex';
 import { LoveBall } from './love-ball';
@@ -42,6 +43,10 @@ export class FrogadierArt extends Frogadier {
 
 export class GreninjaexArt extends Greninjaex {
   public cardImage = 'https://pokemonproxies.com/static/media/Greninja_ex-045-6a.3786fd21c98a5bbb4620.png';
+}
+
+export class HyperAromaArt extends HyperAroma {
+  public cardImage = 'https://pokemonproxies.com/static/media/Hyper_Aroma-055-6a.9a1209a4170d0e7c160d.png';
 }
 
 export class IronLeavesArt extends IronLeaves {

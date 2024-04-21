@@ -30,13 +30,13 @@ class TechnicalMachineCrisisPunch extends trainer_card_1.TrainerCard {
         var _a;
         if (effect instanceof check_effects_1.CheckPokemonAttacksEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tools.includes(this)) &&
             !effect.attacks.includes(this.attacks[0])) {
-            effect.attacks.push(this.attacks[0]);
+            effect.attacks.includes(this.attacks[0]);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const prizesTaken = opponent.getPrizeLeft();
-            if (prizesTaken !== 1) {
+            const prizes = opponent.getPrizeLeft();
+            if (prizes !== 1) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {

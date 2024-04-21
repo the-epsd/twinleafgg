@@ -5,6 +5,7 @@ import { EnhancedHammer } from './enhanced-hammer';
 import { Froakie } from './froakie';
 import { Frogadier } from './frogadier';
 import { Greninjaex } from './greninja-ex';
+import { HyperAroma } from './hyper-aroma';
 import { IronLeaves } from './iron-leaves';
 import { IronThornsex } from './iron-thorns-ex';
 import { LoveBall } from './love-ball';
@@ -34,6 +35,9 @@ export declare class FrogadierArt extends Frogadier {
     cardImage: string;
 }
 export declare class GreninjaexArt extends Greninjaex {
+    cardImage: string;
+}
+export declare class HyperAromaArt extends HyperAroma {
     cardImage: string;
 }
 export declare class IronLeavesArt extends IronLeaves {

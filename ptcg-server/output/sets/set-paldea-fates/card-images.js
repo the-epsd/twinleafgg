@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.XatuArt = exports.UltraBallArt = exports.NatuArt = exports.StudentsInPaldeaArt2 = exports.StudentsInPaldeaArt = exports.ScovillainexArt = exports.RareCandyArt = exports.ProfessorsResearch2Art = exports.ProfessorsResearchArt = exports.NemonaArt = exports.NestBallArt = exports.MoonlightHillArt = exports.MimeJrArt = exports.KilowattrelArt = exports.IonoArt = exports.HaunterArt = exports.GengarArt = exports.GastlyArt = exports.FrigibaxArt = exports.EspathraexArt = exports.ElectricGeneratorArt = exports.CliveArt = exports.CharizardexArt = exports.CharmeleonArt = exports.AtticusArt = void 0;
+exports.XatuArt = exports.UltraBallArt = exports.TechnicalMachineCrisisPunchArt = exports.NatuArt = exports.StudentsInPaldeaArt2 = exports.StudentsInPaldeaArt = exports.ScovillainexArt = exports.RareCandyArt = exports.ProfessorsResearch2Art = exports.ProfessorsResearchArt = exports.NemonaArt = exports.NestBallArt = exports.MoonlightHillArt = exports.MimeJrArt = exports.KilowattrelArt = exports.IonoArt = exports.HaunterArt = exports.GengarArt = exports.GastlyArt = exports.FrigibaxArt = exports.EspathraexArt = exports.ElectricGeneratorArt = exports.CliveArt = exports.CharizardexArt = exports.CharmeleonArt = exports.AtticusArt = void 0;
 const charizard_ex_1 = require("../set-obsidian-flames/charizard-ex");
 const iono_1 = require("../set-paldea-evolved/iono");
 const natu_1 = require("../set-paradox-rift/natu");
@@ -25,6 +25,7 @@ const moonlight_hill_1 = require("./moonlight-hill");
 const nemona_1 = require("./nemona");
 const scovillain_ex_1 = require("./scovillain-ex");
 const students_in_paldea_1 = require("./students-in-paldea");
+const technical_machine_crisis_punch_1 = require("./technical-machine-crisis-punch");
 class AtticusArt extends atticus_1.Atticus {
     constructor() {
         super(...arguments);
@@ -207,6 +208,13 @@ class NatuArt extends natu_1.Natu {
     }
 }
 exports.NatuArt = NatuArt;
+class TechnicalMachineCrisisPunchArt extends technical_machine_crisis_punch_1.TechnicalMachineCrisisPunch {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_090_R_EN.png';
+    }
+}
+exports.TechnicalMachineCrisisPunchArt = TechnicalMachineCrisisPunchArt;
 class UltraBallArt extends ultra_ball_1.UltraBall {
     constructor() {
         super(...arguments);

@@ -40,7 +40,7 @@ export class TechnicalMachineCrisisPunch extends TrainerCard {
 
     if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
 !effect.attacks.includes(this.attacks[0])) {
-      effect.attacks.push(this.attacks[0]);
+      effect.attacks.includes(this.attacks[0]);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -48,9 +48,9 @@ export class TechnicalMachineCrisisPunch extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const prizesTaken = opponent.getPrizeLeft();
+      const prizes = opponent.getPrizeLeft();
 
-      if (prizesTaken !== 1) {
+      if (prizes !== 1) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 

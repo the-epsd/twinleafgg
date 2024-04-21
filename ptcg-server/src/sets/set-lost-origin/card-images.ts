@@ -36,6 +36,7 @@ import { RadiantHisuianSneasler } from './radiant-hisuian-sneasler';
 import { RotomV } from './rotom-v';
 import { Sableye } from './sableye';
 import { Snorlax } from './snorlax';
+import { Thorton } from './thorton';
 import { Volo } from './volo';
 
 export class ArezuArt extends Arezu {
@@ -188,6 +189,10 @@ export class SableyeArt extends Sableye {
 
 export class SnorlaxArt extends Snorlax {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_143_R_EN_LG.png';
+}
+
+export class ThortonArt extends Thorton {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_167_R_EN.png';
 }
 
 export class VoloArt extends Volo {

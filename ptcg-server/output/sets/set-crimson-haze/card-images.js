@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UnfairStampArt = exports.TealMaskOgerponexArt = exports.SurvivalCastArt = exports.ScreamTailexArt = exports.PhioneArt = exports.PerrinArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.GreninjaexArt = exports.FrogadierArt = exports.FroakieArt = exports.EnhancedHammerArt = exports.CommunityCenterArt = exports.CaretakerArt = exports.BloodmoonUrsalunaexArt = void 0;
+exports.UnfairStampArt = exports.TealMaskOgerponexArt = exports.SurvivalCastArt = exports.ScreamTailexArt = exports.PhioneArt = exports.PerrinArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.HyperAromaArt = exports.GreninjaexArt = exports.FrogadierArt = exports.FroakieArt = exports.EnhancedHammerArt = exports.CommunityCenterArt = exports.CaretakerArt = exports.BloodmoonUrsalunaexArt = void 0;
 const bloodmoon_ursaluna_ex_1 = require("./bloodmoon-ursaluna-ex");
 const caretaker_1 = require("./caretaker");
 const community_center_1 = require("./community-center");
@@ -8,6 +8,7 @@ const enhanced_hammer_1 = require("./enhanced-hammer");
 const froakie_1 = require("./froakie");
 const frogadier_1 = require("./frogadier");
 const greninja_ex_1 = require("./greninja-ex");
+const hyper_aroma_1 = require("./hyper-aroma");
 const iron_leaves_1 = require("./iron-leaves");
 const iron_thorns_ex_1 = require("./iron-thorns-ex");
 const love_ball_1 = require("./love-ball");
@@ -67,6 +68,13 @@ class GreninjaexArt extends greninja_ex_1.Greninjaex {
     }
 }
 exports.GreninjaexArt = GreninjaexArt;
+class HyperAromaArt extends hyper_aroma_1.HyperAroma {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Hyper_Aroma-055-6a.9a1209a4170d0e7c160d.png';
+    }
+}
+exports.HyperAromaArt = HyperAromaArt;
 class IronLeavesArt extends iron_leaves_1.IronLeaves {
     constructor() {
         super(...arguments);

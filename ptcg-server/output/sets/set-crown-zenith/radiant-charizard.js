@@ -51,6 +51,7 @@ class RadiantCharizard extends pokemon_card_1.PokemonCard {
         if (effect instanceof check_effects_1.CheckAttackCostEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            new check_effects_1.CheckPokemonAttacksEffect(player);
             try {
                 const powerEffect = new game_effects_1.PowerEffect(opponent, this.powers[0], this);
                 store.reduceEffect(state, powerEffect);

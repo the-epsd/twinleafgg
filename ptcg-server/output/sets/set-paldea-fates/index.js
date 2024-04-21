@@ -17,6 +17,7 @@ exports.setPaldeaFates = [
     new card_images_1.FrigibaxArt(),
     new card_images_1.GastlyArt(),
     new card_images_1.HaunterArt(),
+    new card_images_1.TechnicalMachineCrisisPunchArt(),
     new card_images_1.RareCandyArt(),
     new card_images_1.CharizardexArt(),
     new card_images_1.ElectricGeneratorArt(),
