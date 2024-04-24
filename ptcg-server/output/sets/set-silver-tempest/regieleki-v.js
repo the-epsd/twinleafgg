@@ -36,8 +36,8 @@ class RegielekiV extends pokemon_card_1.PokemonCard {
         this.setNumber = '57';
         this.name = 'Regieleki V';
         this.fullName = 'Regieleki V SIT';
-        this.LEAF_GUARD_MARKER = 'LEAF_GUARD_MARKER';
-        this.CLEAR_LEAF_GUARD_MARKER = 'CLEAR_LEAF_GUARD_MARKER';
+        this.LIGHTNING_WALL_MARKER = 'LIGHTNING_WALL_MARKER';
+        this.CLEAR_LIGHTNING_WALL_MARKER = 'CLEAR_LIGHTNING_WALL_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -57,19 +57,19 @@ class RegielekiV extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            player.active.marker.addMarker(this.LEAF_GUARD_MARKER, this);
-            opponent.marker.addMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
+            player.active.marker.addMarker(this.LIGHTNING_WALL_MARKER, this);
+            opponent.marker.addMarker(this.CLEAR_LIGHTNING_WALL_MARKER, this);
             if (effect instanceof attack_effects_1.PutDamageEffect
-                && effect.target.marker.hasMarker(this.LEAF_GUARD_MARKER)) {
+                && effect.target.marker.hasMarker(this.LIGHTNING_WALL_MARKER)) {
                 effect.damage -= 100;
                 return state;
             }
             if (effect instanceof game_phase_effects_1.EndTurnEffect
-                && effect.player.marker.hasMarker(this.CLEAR_LEAF_GUARD_MARKER, this)) {
-                effect.player.marker.removeMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
+                && effect.player.marker.hasMarker(this.CLEAR_LIGHTNING_WALL_MARKER, this)) {
+                effect.player.marker.removeMarker(this.CLEAR_LIGHTNING_WALL_MARKER, this);
                 const opponent = game_1.StateUtils.getOpponent(state, effect.player);
                 opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                    cardList.marker.removeMarker(this.LEAF_GUARD_MARKER, this);
+                    cardList.marker.removeMarker(this.LIGHTNING_WALL_MARKER, this);
                 });
                 return state;
             }

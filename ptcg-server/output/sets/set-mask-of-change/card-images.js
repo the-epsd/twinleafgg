@@ -1,13 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.PoochyenaArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LegacyEnergyArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.BlisseyexArt = void 0;
+exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.PoochyenaArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LegacyEnergyArt = exports.LaironArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.FarfetchdArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.BlisseyexArt = exports.AronArt = exports.AlakazamArt = exports.AggronArt = void 0;
+const aggron_1 = require("./aggron");
+const alakazam_1 = require("./alakazam");
+const aron_1 = require("./aron");
 const blissey_ex_1 = require("./blissey-ex");
 const dragapult_ex_1 = require("./dragapult-ex");
 const drakloak_1 = require("./drakloak");
 const dreepy_1 = require("./dreepy");
+const farfetchd_1 = require("./farfetchd");
 const froslass_1 = require("./froslass");
 const handy_fan_1 = require("./handy-fan");
 const hassel_1 = require("./hassel");
+const lairon_1 = require("./lairon");
 const legacy_energy_1 = require("./legacy-energy");
 const luxray_ex_1 = require("./luxray-ex");
 const mightyena_1 = require("./mightyena");
@@ -15,6 +20,27 @@ const poochyena_1 = require("./poochyena");
 const roto_stick_1 = require("./roto-stick");
 const scoop_up_cyclone_1 = require("./scoop-up-cyclone");
 const tatsugiri_1 = require("./tatsugiri");
+class AggronArt extends aggron_1.Aggron {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Aggron-075-6b.7ac10503aca6d6db414f.png';
+    }
+}
+exports.AggronArt = AggronArt;
+class AlakazamArt extends alakazam_1.Alakazam {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Alakazam-049-6b.1b54b9774ef9a69d4629.png';
+    }
+}
+exports.AlakazamArt = AlakazamArt;
+class AronArt extends aron_1.Aron {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Aron-073-6b.31ee23eb6881e62ddb10.png';
+    }
+}
+exports.AronArt = AronArt;
 class BlisseyexArt extends blissey_ex_1.Blisseyex {
     constructor() {
         super(...arguments);
@@ -43,6 +69,13 @@ class DragapultexArt extends dragapult_ex_1.Dragapultex {
     }
 }
 exports.DragapultexArt = DragapultexArt;
+class FarfetchdArt extends farfetchd_1.Farfetchd {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Farfetch_d-083-6b.e1124bde5fffcea0a822.png';
+    }
+}
+exports.FarfetchdArt = FarfetchdArt;
 class FroslassArt extends froslass_1.Froslass {
     constructor() {
         super(...arguments);
@@ -64,6 +97,13 @@ class HasselArt extends hassel_1.Hassel {
     }
 }
 exports.HasselArt = HasselArt;
+class LaironArt extends lairon_1.Lairon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Lairon-074-6b.1c78261fc13db3e8c011.png';
+    }
+}
+exports.LaironArt = LaironArt;
 class LegacyEnergyArt extends legacy_energy_1.LegacyEnergy {
     constructor() {
         super(...arguments);

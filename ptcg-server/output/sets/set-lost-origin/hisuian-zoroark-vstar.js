@@ -14,7 +14,7 @@ class HisuianZoroarkVSTAR extends game_1.PokemonCard {
         this.cardType = card_types_1.CardType.COLORLESS;
         this.hp = 270;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Phantom Star',
                 useWhenInPlay: true,
@@ -51,27 +51,17 @@ class HisuianZoroarkVSTAR extends game_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            const blocked = [];
             const hasBenched = player.bench.some(b => b.cards.length > 0);
             if (!hasBenched) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
             }
+            let benchPokemonWithDamage = 0;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                if (cardList.damage == 0) {
-                    return state;
-                }
-                else {
-                    blocked.push(target);
+                if (cardList.damage !== 0) {
+                    benchPokemonWithDamage++;
                 }
             });
-            if (!blocked.length) {
-                effect.damage = 0;
-            }
-            if (blocked.length) {
-                // You have damaged benched Pokemon
-                effect.damage = blocked.length * 50;
-            }
-            return state;
+            effect.damage = benchPokemonWithDamage * 50;
         }
         return state;
     }

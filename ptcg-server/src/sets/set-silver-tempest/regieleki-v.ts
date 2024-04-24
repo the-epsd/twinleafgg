@@ -47,9 +47,9 @@ export class RegielekiV extends PokemonCard {
 
   public fullName: string = 'Regieleki V SIT';
 
-  public readonly LEAF_GUARD_MARKER = 'LEAF_GUARD_MARKER';
+  public readonly LIGHTNING_WALL_MARKER = 'LIGHTNING_WALL_MARKER';
 
-  public readonly CLEAR_LEAF_GUARD_MARKER = 'CLEAR_LEAF_GUARD_MARKER';
+  public readonly CLEAR_LIGHTNING_WALL_MARKER = 'CLEAR_LIGHTNING_WALL_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -81,20 +81,20 @@ export class RegielekiV extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       
-      player.active.marker.addMarker(this.LEAF_GUARD_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
+      player.active.marker.addMarker(this.LIGHTNING_WALL_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_LIGHTNING_WALL_MARKER, this);
       
       if (effect instanceof PutDamageEffect
-                          && effect.target.marker.hasMarker(this.LEAF_GUARD_MARKER)) {
+                          && effect.target.marker.hasMarker(this.LIGHTNING_WALL_MARKER)) {
         effect.damage -= 100;
         return state;
       }
       if (effect instanceof EndTurnEffect
-                          && effect.player.marker.hasMarker(this.CLEAR_LEAF_GUARD_MARKER, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
+                          && effect.player.marker.hasMarker(this.CLEAR_LIGHTNING_WALL_MARKER, this)) {
+        effect.player.marker.removeMarker(this.CLEAR_LIGHTNING_WALL_MARKER, this);
         const opponent = StateUtils.getOpponent(state, effect.player);
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.marker.removeMarker(this.LEAF_GUARD_MARKER, this);
+          cardList.marker.removeMarker(this.LIGHTNING_WALL_MARKER, this);
         });
         return state;
       }

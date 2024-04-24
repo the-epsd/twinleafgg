@@ -2,82 +2,10 @@ import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../game/stor
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { Card, CardTarget, ConfirmPrompt, EnergyCard, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, StateUtils } from '../../game';
+import { ConfirmPrompt, EnergyCard, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, StateUtils } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-
-function* useBlissfulSwap(this: any, next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
-  const player = effect.player;
-  
-  const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
-    store.reduceEffect(state, checkProvidedEnergy);
-    const blockedCards: Card[] = [];
-  
-    checkProvidedEnergy.energyMap.forEach(em => {
-      if (!em.provides.includes(CardType.ANY)) {
-        blockedCards.push(em.card);
-      }
-    });
-  
-    const blocked: number[] = [];
-    blockedCards.forEach(bc => {
-      const index = cardList.cards.indexOf(bc);
-      if (index !== -1 && !blocked.includes(index)) {
-        blocked.push(index);
-      }
-    });
-  
-    if (blocked.length !== 0) {
-      blockedMap.push({ source: target, blocked });
-    }
-  });
-  
-  let hasEnergyOnBench = false;
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (cardList === player.active) {
-      blockedTo.push(target);
-      return;
-    }
-    blockedFrom.push(target);
-    if (cardList.cards.some(c => c instanceof EnergyCard)) {
-      hasEnergyOnBench = true;
-    }
-  });
-  
-  if (hasEnergyOnBench === false) {
-    return state;
-  }
-  
-  const blockedFrom: CardTarget[] = [];
-  const blockedTo: CardTarget[] = [];
-  
-  return store.prompt(state, new MoveEnergyPrompt(
-    player.id, 
-    GameMessage.MOVE_ENERGY_CARDS,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH, SlotType.ACTIVE], // Only allow moving to active
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC }, 
-    { allowCancel: true, blockedFrom, blockedTo, blockedMap, min: 1, max: 1 }
-  ), transfers => {
-  
-    if (!transfers) {
-      return;
-    }
-  
-    for (const transfer of transfers) {
-        
-      // Can only move energy to the active Pokemon
-      const target = player.active;  
-      const source = StateUtils.getTarget(state, player, transfer.from);
-      source.moveCardTo(transfer.card, target);
-  
-    }
-  
-  });
-  
-}
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Blisseyex extends PokemonCard {
   
@@ -107,7 +35,7 @@ export class Blisseyex extends PokemonCard {
   public attacks = [
     {
       name: 'Return',
-      cost: [ ],
+      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
       damage: 120,
       text: 'You may draw until you have 6 cards in hand.'
     }
@@ -123,11 +51,63 @@ export class Blisseyex extends PokemonCard {
   
   public fullName: string = 'Blissey ex SV6';
 
+  public readonly BLISSFUL_SWAP_MARKER = 'BLISSFUL_SWAP_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.BLISSFUL_SWAP_MARKER, this);
+      return state;
+    }
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      const generator = useBlissfulSwap(() => generator.next(), store, state, effect);
-      return generator.next().value;
+      const player = effect.player;
+
+      if (player.marker.hasMarker(this.BLISSFUL_SWAP_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      let hasBasicEnergy = false;
+      let pokemonCount = 0;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        pokemonCount += 1;
+        const basicEnergyAttached = cardList.cards.some(c => {
+          return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+        });
+        hasBasicEnergy = hasBasicEnergy || basicEnergyAttached;
+      });
+    
+      if (!hasBasicEnergy || pokemonCount <= 1) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+    
+      return store.prompt(state, new MoveEnergyPrompt(
+        effect.player.id,
+        GameMessage.MOVE_ENERGY_CARDS,
+        PlayerType.BOTTOM_PLAYER,
+        [ SlotType.ACTIVE, SlotType.BENCH ],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        { min: 1, max: 1, allowCancel: false }
+      ), transfers => {
+        if (transfers === null) {
+          return;
+        }
+    
+        for (const transfer of transfers) {
+          player.marker.addMarker(this.BLISSFUL_SWAP_MARKER, this);
+          const source = StateUtils.getTarget(state, player, transfer.from);
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          source.moveCardTo(transfer.card, target);
+        }
+    
+        return state;
+      });
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      const player = (effect as EndTurnEffect).player;
+      player.marker.removeMarker(this.BLISSFUL_SWAP_MARKER, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -144,8 +124,9 @@ export class Blisseyex extends PokemonCard {
             player.deck.moveTo(player.hand, 1);
           }
         }
+
       });
-    
+
     }
     return state;
   }

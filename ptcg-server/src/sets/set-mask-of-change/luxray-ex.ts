@@ -28,13 +28,13 @@ export class Luxrayex extends PokemonCard {
   public attacks = [
     {
       name: 'Piercing Glint',
-      cost: [ ],
+      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
       damage: 120,
       text: 'Look at your opponent\'s hand and discard 1 card your find there.'
     },
     {
       name: 'Volt Strike',
-      cost: [ ],
+      cost: [ CardType.LIGHTNING, CardType.LIGHTNING ],
       damage: 250,
       text: 'Discard all Energy from this Pokémon.'
     }

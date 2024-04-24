@@ -22,7 +22,7 @@ export declare class Blisseyex extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: never[];
+        cost: CardType[];
         damage: number;
         text: string;
     }[];
@@ -31,5 +31,6 @@ export declare class Blisseyex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly BLISSFUL_SWAP_MARKER = "BLISSFUL_SWAP_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

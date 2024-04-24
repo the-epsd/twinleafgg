@@ -1,12 +1,7 @@
-import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game';
-export declare class Luxrayex extends PokemonCard {
+export declare class Clefairy extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
-    tags: CardTag[];
     regulationMark: string;
     cardType: CardType;
     weakness: {
@@ -25,5 +20,4 @@ export declare class Luxrayex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

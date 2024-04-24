@@ -2,7 +2,7 @@ import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CardTarget, GameError, GameMessage, PlayerType, PokemonCard, PowerType } from '../../game';
+import { GameError, GameMessage, PlayerType, PokemonCard, PowerType } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class HisuianZoroarkVSTAR extends PokemonCard {
@@ -21,7 +21,7 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Phantom Star',
@@ -71,35 +71,26 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      const blocked: CardTarget[] = [];
-
       const hasBenched = player.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 
+      let benchPokemonWithDamage = 0;
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.damage == 0) {
-          return state;
-        } else {
-          blocked.push(target);
+        if (cardList.damage !== 0) {
+          benchPokemonWithDamage++;
         }
       });
 
-      if (!blocked.length) {
-        effect.damage = 0;
-      }
+      effect.damage = benchPokemonWithDamage * 50;
 
-      if (blocked.length) {
-        // You have damaged benched Pokemon
-        effect.damage = blocked.length * 50;
-
-      }
-
-      return state;
     }
+
     return state;
   }
 }
+
 
 

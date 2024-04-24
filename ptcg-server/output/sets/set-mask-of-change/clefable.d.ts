@@ -1,15 +1,15 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { PokemonCard, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class RegielekiV extends PokemonCard {
+export declare class Clefable extends PokemonCard {
     stage: Stage;
-    tags: CardTag[];
+    evolvesFrom: string;
+    regulationMark: string;
     cardType: CardType;
-    hp: number;
     weakness: {
         type: CardType;
     }[];
+    hp: number;
     retreat: CardType[];
     attacks: {
         name: string;
@@ -18,12 +18,9 @@ export declare class RegielekiV extends PokemonCard {
         text: string;
     }[];
     set: string;
-    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;
-    readonly LIGHTNING_WALL_MARKER = "LIGHTNING_WALL_MARKER";
-    readonly CLEAR_LIGHTNING_WALL_MARKER = "CLEAR_LIGHTNING_WALL_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

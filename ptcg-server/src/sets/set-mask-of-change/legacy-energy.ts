@@ -1,7 +1,7 @@
 import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { EnergyCard, CardType, EnergyType } from '../../game';
+import { EnergyCard, CardType, EnergyType, CardTag } from '../../game';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 
 export class LegacyEnergy extends EnergyCard {
@@ -9,6 +9,8 @@ export class LegacyEnergy extends EnergyCard {
   public provides: CardType[] = [ CardType.COLORLESS ];
   
   public energyType = EnergyType.SPECIAL;
+
+  public tags = [ CardTag.ACE_SPEC ];
   
   public set: string = 'PAL';
   

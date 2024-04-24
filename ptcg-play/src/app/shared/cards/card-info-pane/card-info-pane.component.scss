@@ -3,6 +3,7 @@
 
 .ptcg-card-info-pane {
   display: flex;
+  background-image: map-get($ptcg-size, card);
 }
 
 .ptcg-card-info-image {

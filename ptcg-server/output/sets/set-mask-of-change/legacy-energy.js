@@ -9,6 +9,7 @@ class LegacyEnergy extends game_1.EnergyCard {
         super(...arguments);
         this.provides = [game_1.CardType.COLORLESS];
         this.energyType = game_1.EnergyType.SPECIAL;
+        this.tags = [game_1.CardTag.ACE_SPEC];
         this.set = 'PAL';
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';

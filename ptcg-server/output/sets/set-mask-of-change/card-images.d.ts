@@ -1,10 +1,15 @@
+import { Aggron } from './aggron';
+import { Alakazam } from './alakazam';
+import { Aron } from './aron';
 import { Blisseyex } from './blissey-ex';
 import { Dragapultex } from './dragapult-ex';
 import { Drakloak } from './drakloak';
 import { Dreepy } from './dreepy';
+import { Farfetchd } from './farfetchd';
 import { Froslass } from './froslass';
 import { HandyFan } from './handy-fan';
 import { Hassel } from './hassel';
+import { Lairon } from './lairon';
 import { LegacyEnergy } from './legacy-energy';
 import { Luxrayex } from './luxray-ex';
 import { Mightyena } from './mightyena';
@@ -12,6 +17,15 @@ import { Poochyena } from './poochyena';
 import { RotoStick } from './roto-stick';
 import { ScoopUpCyclone } from './scoop-up-cyclone';
 import { Tatsugiri } from './tatsugiri';
+export declare class AggronArt extends Aggron {
+    cardImage: string;
+}
+export declare class AlakazamArt extends Alakazam {
+    cardImage: string;
+}
+export declare class AronArt extends Aron {
+    cardImage: string;
+}
 export declare class BlisseyexArt extends Blisseyex {
     cardImage: string;
 }
@@ -24,6 +38,9 @@ export declare class DrakloakArt extends Drakloak {
 export declare class DragapultexArt extends Dragapultex {
     cardImage: string;
 }
+export declare class FarfetchdArt extends Farfetchd {
+    cardImage: string;
+}
 export declare class FroslassArt extends Froslass {
     cardImage: string;
 }
@@ -31,6 +48,9 @@ export declare class HandyFanArt extends HandyFan {
     cardImage: string;
 }
 export declare class HasselArt extends Hassel {
+    cardImage: string;
+}
+export declare class LaironArt extends Lairon {
     cardImage: string;
 }
 export declare class LegacyEnergyArt extends LegacyEnergy {

@@ -1,16 +1,16 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class RegielekiV extends PokemonCard {
+export declare class Emolga extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
-    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
-    retreat: CardType[];
+    retreat: never[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -18,12 +18,9 @@ export declare class RegielekiV extends PokemonCard {
         text: string;
     }[];
     set: string;
-    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;
-    readonly LIGHTNING_WALL_MARKER = "LIGHTNING_WALL_MARKER";
-    readonly CLEAR_LIGHTNING_WALL_MARKER = "CLEAR_LIGHTNING_WALL_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

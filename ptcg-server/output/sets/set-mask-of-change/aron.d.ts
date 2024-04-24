@@ -1,22 +1,24 @@
-import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game';
-export declare class Luxrayex extends PokemonCard {
+export declare class Aron extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
-    tags: CardTag[];
     regulationMark: string;
     cardType: CardType;
     weakness: {
         type: CardType;
     }[];
+    resistance: {
+        type: CardType;
+        value: number;
+    }[];
     hp: number;
     retreat: CardType[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: never[];
         damage: number;
         text: string;
     }[];

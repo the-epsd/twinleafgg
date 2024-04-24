@@ -1,16 +1,25 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class RegielekiV extends PokemonCard {
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { PowerType, StoreLike, State } from '../../game';
+import { Stage, CardType } from '../../game/store/card/card-types';
+export declare class Farfetchd extends PokemonCard {
     stage: Stage;
-    tags: CardTag[];
+    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
+    resistance: {
+        type: CardType;
+        value: number;
+    }[];
     retreat: CardType[];
+    powers: {
+        name: string;
+        powerType: PowerType;
+        text: string;
+    }[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -18,12 +27,9 @@ export declare class RegielekiV extends PokemonCard {
         text: string;
     }[];
     set: string;
-    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;
-    readonly LIGHTNING_WALL_MARKER = "LIGHTNING_WALL_MARKER";
-    readonly CLEAR_LIGHTNING_WALL_MARKER = "CLEAR_LIGHTNING_WALL_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

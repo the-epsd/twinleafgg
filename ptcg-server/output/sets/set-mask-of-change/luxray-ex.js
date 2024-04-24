@@ -20,13 +20,13 @@ class Luxrayex extends game_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Piercing Glint',
-                cost: [],
+                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 120,
                 text: 'Look at your opponent\'s hand and discard 1 card your find there.'
             },
             {
                 name: 'Volt Strike',
-                cost: [],
+                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING],
                 damage: 250,
                 text: 'Discard all Energy from this Pokémon.'
             }
