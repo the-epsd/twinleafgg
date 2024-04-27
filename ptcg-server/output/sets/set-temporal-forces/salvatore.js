@@ -10,6 +10,13 @@ const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-pro
 const game_1 = require("../../game");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
@@ -71,6 +78,8 @@ function* playCard(next, store, state, effect) {
     player.deck.moveCardTo(evolution, targets[0]);
     targets[0].clearEffects();
     targets[0].pokemonPlayedTurn = state.turn;
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
     return state;
 }
 class Salvatore extends trainer_card_1.TrainerCard {

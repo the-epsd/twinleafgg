@@ -37,11 +37,24 @@ export class Grant extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
         
       const player = effect.player;
+
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       player.marker.addMarker(this.GRANT_MARKER, this);
       if (effect instanceof DealDamageEffect) {
         const marker = effect.player.marker;
         if (marker.hasMarker(this.GRANT_MARKER, this) && effect.damage > 0) {
           effect.damage += 30;
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          player.supporterTurn = 1;
         }
 
         // Check if card is in the discard
@@ -71,8 +84,6 @@ export class Grant extends TrainerCard {
           }
           player.marker.addMarker(this.RETURN_TO_HAND_MARKER, this);
           player.hand.moveCardsTo(cards, player.discard);
-    
-        
           player.discard.moveCardTo(this, player.hand);
 
         });

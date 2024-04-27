@@ -14,6 +14,13 @@ function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     let cards = [];
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     let pokemons = 0;
     let energies = 0;
     const blocked = [];
@@ -36,6 +43,8 @@ function* playCard(next, store, state, self, effect) {
         next();
     });
     player.discard.moveCardsTo(cards, player.hand);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
     if (cards.length > 0) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
     }

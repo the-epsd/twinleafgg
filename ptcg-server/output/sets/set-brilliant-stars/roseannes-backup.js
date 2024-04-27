@@ -15,6 +15,13 @@ function* playCard(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     let cards = [];
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     const blocked1 = [];
     player.discard.cards.forEach((card, index) => {
         if (card instanceof pokemon_card_1.PokemonCard) {
@@ -39,8 +46,6 @@ function* playCard(next, store, state, effect) {
             blocked4.push(index);
         }
     });
-    // We will discard this card after prompt confirmation
-    effect.preventDefault = true;
     yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 1, allowCancel: false, blocked: blocked1 }), selected => {
         cards = selected || [];
         next();
@@ -62,6 +67,7 @@ function* playCard(next, store, state, effect) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
     }
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
     });

@@ -17,6 +17,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
   self: CryptomaniacsDeciphering, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
+
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
   
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -55,7 +65,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
       order.forEach(card => {
         player.deck.moveCardsTo(topOfDeck, player.deck);
       });
-
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      player.supporterTurn = 1;
     });
   });
 }

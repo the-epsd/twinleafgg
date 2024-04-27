@@ -21,7 +21,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // Do not discard the card yet
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+  
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
   let cards: Card[] = [];
@@ -62,6 +69,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   player.deck.moveCardsTo(cards, player.hand);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  player.supporterTurn = 1;
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

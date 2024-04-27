@@ -21,6 +21,13 @@ class BiancasDevotion extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new __1.GameError(__1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             player.forEachPokemon(__1.PlayerType.BOTTOM_PLAYER, (cardList) => {
                 const pokemon = cardList.getPokemonCard();
                 if (pokemon && pokemon.hp <= 30) {
@@ -30,6 +37,8 @@ class BiancasDevotion extends trainer_card_1.TrainerCard {
                 state = store.reduceEffect(state, healEffect);
                 const cards = cardList.cards.filter(c => c instanceof __1.EnergyCard);
                 cardList.moveCardsTo(cards, player.discard);
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                player.supporterTurn = 1;
             });
             return state;
         }

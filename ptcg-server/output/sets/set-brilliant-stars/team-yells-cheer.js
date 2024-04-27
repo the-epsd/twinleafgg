@@ -10,6 +10,13 @@ const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-pro
 const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     let pokemonOrSupporterInDiscard = 0;
     const blocked = [];
     player.discard.cards.forEach((c, index) => {
@@ -30,14 +37,14 @@ function* playCard(next, store, state, self, effect) {
     if (pokemonOrSupporterInDiscard === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    // We will discard this card after prompt confirmation
-    effect.preventDefault = true;
     let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, { superType: card_types_1.SuperType.POKEMON || card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 1, max: 3, allowCancel: false, blocked }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: 1, max: 3, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });
     player.discard.moveCardsTo(cards, player.deck);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
     return state;
 }
 class TeamYellsCheer extends trainer_card_1.TrainerCard {

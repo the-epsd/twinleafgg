@@ -16,12 +16,21 @@ function* playCard(next, store, state, effect) {
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     let cards = [];
     yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, max: 4, allowCancel: true }), selected => {
         cards = selected || [];
         next();
     });
     player.deck.moveCardsTo(cards, player.hand);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
     if (cards.length > 0) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
     }

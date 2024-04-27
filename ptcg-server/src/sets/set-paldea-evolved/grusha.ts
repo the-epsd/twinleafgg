@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { GameError, GameMessage } from '../../game';
 
 export class Grusha extends TrainerCard {
 
@@ -30,6 +31,16 @@ export class Grusha extends TrainerCard {
 
       const player = effect.player;
 
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergyEffect);
       const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
@@ -38,12 +49,16 @@ export class Grusha extends TrainerCard {
 
         while (player.hand.cards.length < 7) {
           player.deck.moveTo(player.hand, 1);
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          player.supporterTurn = 1;
         }
       }
       else {
 
         while (player.hand.cards.length < 5) {
           player.deck.moveTo(player.hand, 1);
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          player.supporterTurn = 1;
         }
         return state;
       }

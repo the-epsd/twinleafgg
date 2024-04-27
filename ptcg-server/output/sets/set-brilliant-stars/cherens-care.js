@@ -10,6 +10,13 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon-prompt");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     // Create list of non - Pokemon SP slots
     const blocked = [];
     let hasColorlessPokemon = false;
@@ -28,6 +35,8 @@ function* playCard(next, store, state, effect) {
             targets[0].moveTo(player.hand);
             targets[0].damage = 0;
             targets[0].clearEffects();
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            player.supporterTurn = 1;
         }
     });
 }

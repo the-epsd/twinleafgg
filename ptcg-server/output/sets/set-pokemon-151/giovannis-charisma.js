@@ -10,6 +10,13 @@ const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-pro
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     // Defending Pokemon has no energy cards attached
     if (!opponent.active.cards.some(c => c instanceof game_1.EnergyCard)) {
         return state;
@@ -18,6 +25,8 @@ function* playCard(next, store, state, effect) {
     yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.active, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
         card = selected[0];
         opponent.active.moveCardTo(card, opponent.hand);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        player.supporterTurn = 1;
         return state;
     });
 }

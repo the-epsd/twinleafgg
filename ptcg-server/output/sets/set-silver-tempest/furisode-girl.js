@@ -11,6 +11,13 @@ const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     const slots = player.bench.filter(b => b.cards.length === 0);
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
@@ -35,6 +42,8 @@ function* playCard(next, store, state, effect) {
         player.active.clearEffects();
         player.switchPokemon(slots[index]);
     });
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
         return state;

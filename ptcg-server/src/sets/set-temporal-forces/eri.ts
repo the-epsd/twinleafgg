@@ -5,7 +5,8 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { StateUtils, 
-  GameMessage, ChooseCardsPrompt } from '../../game';
+  GameMessage, ChooseCardsPrompt, 
+  GameError} from '../../game';
 
 
 export class Eri extends TrainerCard {
@@ -32,6 +33,13 @@ export class Eri extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+      
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
     
@@ -48,7 +56,8 @@ export class Eri extends TrainerCard {
         const trainerCard = cards[0] as TrainerCard;
         
         opponent.hand.moveCardTo(trainerCard, opponent.discard);
-        player.supporter.moveCardTo(this, player.discard);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        player.supporterTurn = 1;
 
       });
     }

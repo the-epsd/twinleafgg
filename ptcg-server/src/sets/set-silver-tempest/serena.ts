@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, PokemonCard, SelectPrompt, SlotType, StateUtils } from '../../game';
+import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SelectPrompt, SlotType, StateUtils } from '../../game';
 
 export class Serena extends TrainerCard {
 
@@ -35,6 +35,16 @@ export class Serena extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       const options: { message: GameMessage, action: () => void }[] = [
         {
           message: GameMessage.DISCARD_AND_DRAW,
@@ -55,6 +65,8 @@ export class Serena extends TrainerCard {
 
               while (player.hand.cards.length < 5) {
                 player.deck.moveTo(player.hand, 1);
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                player.supporterTurn = 1;
               }
               return state;
             });
@@ -80,6 +92,8 @@ export class Serena extends TrainerCard {
             ), result => {
               const cardList = result[0];
               opponent.switchPokemon(cardList);
+              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+              player.supporterTurn = 1;
             });
           }
         }

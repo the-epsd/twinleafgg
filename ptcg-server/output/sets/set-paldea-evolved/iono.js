@@ -23,6 +23,13 @@ class Iono extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             const cards = player.hand.cards.filter(c => c !== this);
             const deckBottom = new game_1.CardList();
             const opponentDeckBottom = new game_1.CardList();
@@ -38,6 +45,8 @@ class Iono extends trainer_card_1.TrainerCard {
             opponentDeckBottom.moveTo(opponent.deck);
             player.deck.moveTo(player.hand, player.getPrizeLeft());
             opponent.deck.moveTo(opponent.hand, opponent.getPrizeLeft());
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            player.supporterTurn = 1;
         }
         return state;
     }

@@ -22,7 +22,27 @@ class Poppy extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
-            return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { min: 0, max: 2, allowCancel: true }), transfers => {
+            // Player has no Basic Energy in the discard pile
+            let hasEnergy = false;
+            let pokemonCount = 0;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                pokemonCount += 1;
+                const energyAttached = cardList.cards.some(c => {
+                    return c instanceof game_1.EnergyCard;
+                });
+                hasEnergy = hasEnergy || energyAttached;
+            });
+            if (!hasEnergy || pokemonCount <= 1) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
+            return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { min: 0, max: 2, allowCancel: false }), transfers => {
                 if (transfers === null) {
                     return;
                 }
@@ -30,6 +50,8 @@ class Poppy extends trainer_card_1.TrainerCard {
                     const source = game_1.StateUtils.getTarget(state, player, transfer.from);
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     source.moveCardTo(transfer.card, target);
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                    player.supporterTurn = 1;
                 }
             });
         }

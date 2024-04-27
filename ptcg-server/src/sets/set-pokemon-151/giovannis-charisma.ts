@@ -1,7 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
-import { EnergyCard, StateUtils } from '../../game';
+import { EnergyCard, GameError, StateUtils } from '../../game';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
@@ -12,6 +12,16 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
+
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
 
   // Defending Pokemon has no energy cards attached
   if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
@@ -29,6 +39,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     card = selected[0];
 
     opponent.active.moveCardTo(card, opponent.hand);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
     return state;
   });
 }

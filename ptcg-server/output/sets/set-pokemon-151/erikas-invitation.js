@@ -12,6 +12,13 @@ function* playCard(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
     const slots = opponent.bench.filter(b => b.cards.length === 0);
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     if (opponent.hand.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
@@ -35,6 +42,8 @@ function* playCard(next, store, state, effect) {
         slots[index].pokemonPlayedTurn = state.turn;
         opponent.switchPokemon(slots[index]);
     });
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
 }
 class EreikasInvitation extends trainer_card_1.TrainerCard {
     constructor() {

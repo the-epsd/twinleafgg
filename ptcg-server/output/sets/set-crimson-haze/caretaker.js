@@ -25,6 +25,13 @@ class Caretaker extends trainer_card_1.TrainerCard {
             if (player.deck.cards.length === 0) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             player.deck.moveTo(player.hand, 2);
             const stadiumCard = game_1.StateUtils.getStadiumCard(state);
             if (stadiumCard !== undefined && stadiumCard.name === 'Community Center') {
@@ -33,6 +40,8 @@ class Caretaker extends trainer_card_1.TrainerCard {
             else {
                 player.supporter.moveTo(player.discard);
             }
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            player.supporterTurn = 1;
             return state;
         }
         return state;

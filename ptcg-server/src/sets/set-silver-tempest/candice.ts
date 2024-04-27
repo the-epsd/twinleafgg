@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { CardList, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
+import { CardList, ChooseCardsPrompt, GameError, ShuffleDeckPrompt } from '../../game';
 
 export class Candice extends TrainerCard {
 
@@ -32,6 +32,20 @@ export class Candice extends TrainerCard {
 
       const player = effect.player;
 
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 7);
 
@@ -44,8 +58,15 @@ export class Candice extends TrainerCard {
 
         { min: 0, max: 7, allowCancel: true }
       ), selected => {
-        deckTop.moveCardsTo(selected, player.hand);
-        deckTop.moveTo(player.deck);
+
+        if (selected.length > 0) {
+
+          deckTop.moveCardsTo(selected, player.hand);
+          deckTop.moveTo(player.deck);
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          player.supporterTurn = 1;
+
+        }
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

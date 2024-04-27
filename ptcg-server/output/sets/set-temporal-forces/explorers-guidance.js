@@ -21,6 +21,13 @@ class ExplorersGuidance extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
@@ -29,6 +36,8 @@ class ExplorersGuidance extends trainer_card_1.TrainerCard {
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 2, max: 2, allowCancel: false }), selected => {
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.discard);
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                player.supporterTurn = 1;
             });
         }
         return state;

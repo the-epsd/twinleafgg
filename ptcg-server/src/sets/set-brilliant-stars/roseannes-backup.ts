@@ -11,12 +11,22 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { EnergyCard } from '../../game';
+import { EnergyCard, GameError } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
+
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
 
   const blocked1: number[] = [];
   player.discard.cards.forEach((card, index) => {
@@ -45,9 +55,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       blocked4.push(index);
     }
   });
-
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
@@ -104,6 +111,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  player.supporterTurn = 1;
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

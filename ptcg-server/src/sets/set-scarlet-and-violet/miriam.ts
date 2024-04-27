@@ -14,6 +14,16 @@ import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Miriam, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
+  
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
 
   let pokemonsInDiscard: number = 0;
   const blocked: number[] = [];
@@ -50,6 +60,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
     player.deck.moveTo(player.hand, 3);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
   });
 }
 

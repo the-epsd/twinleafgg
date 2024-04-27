@@ -75,6 +75,13 @@ export class Charizard extends PokemonCard {
         });
         if (effect instanceof EndTurnEffect) {
           effect.player.marker.removeMarker(this.ENERGY_BURN_MARKER, this);
+          checkProvidedEnergy.energyMap.forEach(attachedEnergy => {
+            if (attachedEnergy.card.energyType) {
+              attachedEnergy.provides = [attachedEnergy.card.id];
+            }
+          });
+
+
         }
         return state;
       }

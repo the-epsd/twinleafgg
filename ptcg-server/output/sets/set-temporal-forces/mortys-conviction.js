@@ -12,6 +12,13 @@ const state_utils_1 = require("../../game/store/state-utils");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     let cards = [];
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     cards = player.hand.cards.filter(c => c !== self);
     if (cards.length < 2) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -32,6 +39,8 @@ function* playCard(next, store, state, self, effect) {
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     const cardsToDraw = opponent.bench.length;
     player.deck.moveTo(player.hand, cardsToDraw);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
     return state;
 }
 class MortysConviction extends trainer_card_1.TrainerCard {

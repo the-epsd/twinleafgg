@@ -48,6 +48,13 @@ export class Giacomo extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
       
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+      
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
       
@@ -86,6 +93,7 @@ export class Giacomo extends TrainerCard {
       }
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      player.supporterTurn = 1;
       
       return state;
     }

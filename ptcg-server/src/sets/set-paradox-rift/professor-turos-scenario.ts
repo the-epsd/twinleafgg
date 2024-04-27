@@ -7,6 +7,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
+import { GameError } from '../../game';
 
 export class ProfessorTurosScenario extends TrainerCard {
 
@@ -30,6 +31,16 @@ export class ProfessorTurosScenario extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
+
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
   
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
@@ -44,6 +55,8 @@ export class ProfessorTurosScenario extends TrainerCard {
           cardList.moveCardsTo(pokemons, player.hand);
           cardList.moveTo(player.discard);
           cardList.clearEffects();
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          player.supporterTurn = 1;
         }
       });
     }

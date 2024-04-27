@@ -10,21 +10,21 @@ function* playCard(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
     const hasBench = opponent.bench.some(b => b.cards.length > 0);
-    // const supporterTurn = player.supporterTurn;
+    const supporterTurn = player.supporterTurn;
     if (!hasBench) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    // if (supporterTurn > 0) {
-    //   throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
-    // }
-    // player.hand.moveCardTo(effect.trainerCard, player.supporter);
-    // // We will discard this card after prompt confirmation
-    // effect.preventDefault = true;
+    if (supporterTurn > 0) {
+        throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
         const cardList = result[0];
         opponent.switchPokemon(cardList);
-        // player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        // player.supporterTurn = 1;
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        player.supporterTurn = 1;
     });
 }
 class BossOrders extends trainer_card_1.TrainerCard {

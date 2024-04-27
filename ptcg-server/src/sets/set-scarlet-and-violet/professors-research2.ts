@@ -29,17 +29,30 @@ export class ProfessorsResearch2 extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-
+  
+      const supporterTurn = player.supporterTurn;
+  
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+  
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+  
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-
+  
       const cards = player.hand.cards.filter(c => c !== this);
       player.hand.moveCardsTo(cards, player.discard);
       player.deck.moveTo(player.hand, 7);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      player.supporterTurn = 1;
     }
-
+  
     return state;
   }
-
+  
 }
+  

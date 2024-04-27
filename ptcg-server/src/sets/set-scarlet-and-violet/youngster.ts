@@ -5,12 +5,23 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { GameError, GameMessage } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Youngster, effect: TrainerEffect): IterableIterator<State> {
 
   const player = effect.player;
   const cards = player.hand.cards.filter(c => c !== self);
+
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
 
   if (cards.length > 0) {
     player.hand.moveCardsTo(cards, player.deck);
@@ -22,6 +33,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   player.deck.moveTo(player.hand, 5);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  player.supporterTurn = 1;
   return state;
 }
 

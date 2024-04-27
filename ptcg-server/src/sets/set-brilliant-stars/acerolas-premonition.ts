@@ -7,6 +7,7 @@ import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
+import { GameError } from '../../game';
 
 export class AcerolasPremonition extends TrainerCard {
 
@@ -32,6 +33,16 @@ export class AcerolasPremonition extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
     
       const cardsInOpponentHand = opponent.hand.cards.filter(card => card instanceof TrainerCard);
     
@@ -43,6 +54,8 @@ export class AcerolasPremonition extends TrainerCard {
     
         const cardsToMove = opponent.hand.cards.slice(0, cardsInOpponentHand.length * 1);
         player.deck.moveCardsTo(cardsToMove, player.hand);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        player.supporterTurn = 1;
     
       });
     }

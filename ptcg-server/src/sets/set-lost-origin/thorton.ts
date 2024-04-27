@@ -29,6 +29,16 @@ export class Thorton extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
+
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
   
       const hasBasicInDiscard = player.discard.cards.some(c => {
         return c instanceof PokemonCard && Stage.BASIC;
@@ -53,6 +63,8 @@ export class Thorton extends TrainerCard {
           player.discard.moveCardTo(card, player.active);
 
         });
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        player.supporterTurn = 1;
       }
       );
   

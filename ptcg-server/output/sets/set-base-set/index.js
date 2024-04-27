@@ -31,5 +31,5 @@ exports.setBaseSet = [
     new card_images_1.SuperEnergyRemovalArt(),
     new card_images_1.SuperPotionArt(),
     new card_images_1.SwitchArt(),
-    new card_images_1.WartortleArt()
+    new card_images_1.WartortleArt(),
 ];

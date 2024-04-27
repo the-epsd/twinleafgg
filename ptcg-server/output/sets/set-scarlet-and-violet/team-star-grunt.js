@@ -24,6 +24,13 @@ class TeamStarGrunt extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             if (!opponent.active.cards.some(c => c instanceof game_1.EnergyCard)) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
@@ -36,6 +43,8 @@ class TeamStarGrunt extends trainer_card_1.TrainerCard {
                 cards.forEach(card => {
                     deckTop.moveCardTo(card, opponent.deck);
                 });
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                player.supporterTurn = 1;
             });
             return state;
         }

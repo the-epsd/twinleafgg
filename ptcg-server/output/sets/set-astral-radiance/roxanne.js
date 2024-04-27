@@ -26,6 +26,13 @@ class Roxanne extends trainer_card_1.TrainerCard {
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             const cards = player.hand.cards.filter(c => c !== this);
             const oppPrizes = opponent.getPrizeLeft();
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             if (oppPrizes > 3) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
@@ -39,6 +46,8 @@ class Roxanne extends trainer_card_1.TrainerCard {
                 opponent.deck.applyOrder(deckOrder[1]);
                 player.deck.moveTo(player.hand, 6);
                 opponent.deck.moveTo(opponent.hand, 2);
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                player.supporterTurn = 1;
             });
         }
         return state;

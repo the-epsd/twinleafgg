@@ -34,6 +34,16 @@ export class TeamStarGrunt extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -56,7 +66,8 @@ export class TeamStarGrunt extends TrainerCard {
         cards.forEach(card => {
           deckTop.moveCardTo(card, opponent.deck);
         });
-
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        player.supporterTurn = 1;
       });
 
       return state;

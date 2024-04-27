@@ -25,6 +25,13 @@ class Cylene extends trainer_card_1.TrainerCard {
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             let heads = 0;
             store.prompt(state, [
                 new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP),
@@ -46,6 +53,8 @@ class Cylene extends trainer_card_1.TrainerCard {
                 }
                 deckTop.applyOrder(order);
                 deckTop.moveTo(player.deck);
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                player.supporterTurn = 1;
                 if (cards.length > 0) {
                     return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => {
                         return state;

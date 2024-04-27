@@ -24,6 +24,13 @@ class Serena extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             const options = [
                 {
                     message: game_message_1.GameMessage.DISCARD_AND_DRAW,
@@ -34,6 +41,8 @@ class Serena extends trainer_card_1.TrainerCard {
                             player.hand.moveCardsTo(cards, player.discard);
                             while (player.hand.cards.length < 5) {
                                 player.deck.moveTo(player.hand, 1);
+                                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                                player.supporterTurn = 1;
                             }
                             return state;
                         });
@@ -51,6 +60,8 @@ class Serena extends trainer_card_1.TrainerCard {
                         return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
                             const cardList = result[0];
                             opponent.switchPokemon(cardList);
+                            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                            player.supporterTurn = 1;
                         });
                     }
                 }

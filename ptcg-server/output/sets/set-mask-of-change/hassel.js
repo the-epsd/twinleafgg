@@ -14,6 +14,13 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     // No Pokemon KO last turn
     if (!player.marker.hasMarker(self.HASSEL_MARKER)) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -24,9 +31,6 @@ function* playCard(next, store, state, self, effect) {
     if (player.supporterTurn > 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
     }
-    player.hand.moveCardTo(effect.trainerCard, player.supporter);
-    // We will discard this card after prompt confirmation
-    effect.preventDefault = true;
     const deckTop = new game_1.CardList();
     player.deck.moveTo(deckTop, 8);
     return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 0, max: 3, allowCancel: false }), selected => {

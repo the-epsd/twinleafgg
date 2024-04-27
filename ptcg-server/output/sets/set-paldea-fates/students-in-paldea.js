@@ -21,6 +21,13 @@ class StudentsInPaldea extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             const cardsInDiscard = effect.player.discard.cards.filter(c => c.name === 'Students In Paldea');
             const cardsToTake = 1 + cardsInDiscard.length;
             const blocked = [];
@@ -32,11 +39,14 @@ class StudentsInPaldea extends trainer_card_1.TrainerCard {
             let cards = [];
             state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: cardsToTake, allowCancel: true, blocked }), selected => {
                 cards = selected || [];
+                player.deck.moveCardsTo(cards, player.hand);
                 state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => {
                     state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                         player.deck.applyOrder(order);
                         return state;
                     });
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                    player.supporterTurn = 1;
                 });
                 return state;
             });

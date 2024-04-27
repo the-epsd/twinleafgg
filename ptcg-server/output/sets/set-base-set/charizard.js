@@ -57,6 +57,11 @@ class Charizard extends pokemon_card_1.PokemonCard {
                 });
                 if (effect instanceof game_phase_effects_1.EndTurnEffect) {
                     effect.player.marker.removeMarker(this.ENERGY_BURN_MARKER, this);
+                    checkProvidedEnergy.energyMap.forEach(attachedEnergy => {
+                        if (attachedEnergy.card.energyType) {
+                            attachedEnergy.provides = [attachedEnergy.card.id];
+                        }
+                    });
                 }
                 return state;
             }

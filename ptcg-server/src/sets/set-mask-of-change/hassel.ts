@@ -15,6 +15,16 @@ import { CardList, ChooseCardsPrompt } from '../../game';
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Hassel, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
+
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
   
   // No Pokemon KO last turn
   if (!player.marker.hasMarker(self.HASSEL_MARKER)) {
@@ -28,10 +38,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   if (player.supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
-
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
       
   const deckTop = new CardList();
   player.deck.moveTo(deckTop, 8);

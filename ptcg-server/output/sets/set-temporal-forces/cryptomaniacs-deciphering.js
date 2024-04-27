@@ -13,6 +13,13 @@ const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     let cards = [];
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
@@ -32,6 +39,8 @@ function* playCard(next, store, state, self, effect) {
             order.forEach(card => {
                 player.deck.moveCardsTo(topOfDeck, player.deck);
             });
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            player.supporterTurn = 1;
         });
     });
 }

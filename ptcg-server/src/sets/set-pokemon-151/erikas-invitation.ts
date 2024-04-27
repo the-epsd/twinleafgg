@@ -15,6 +15,16 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const opponent = StateUtils.getOpponent(state, player);
   const slots: PokemonCardList[] = opponent.bench.filter(b => b.cards.length === 0);
 
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+  
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
   if (opponent.hand.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
@@ -50,6 +60,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     slots[index].pokemonPlayedTurn = state.turn;
     opponent.switchPokemon(slots[index]); 
   });
+
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  player.supporterTurn = 1;
 
 }
 export class EreikasInvitation extends TrainerCard {

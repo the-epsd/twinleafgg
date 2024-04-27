@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
-import { CardList, ChooseCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
+import { CardList, ChooseCardsPrompt, GameError, ShuffleDeckPrompt, StateUtils } from '../../game';
 
 export class MissFortuneSisters extends TrainerCard {
 
@@ -31,6 +31,16 @@ export class MissFortuneSisters extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       const deckTop = new CardList();
       opponent.deck.moveTo(deckTop, 5);
     
@@ -43,6 +53,8 @@ export class MissFortuneSisters extends TrainerCard {
       ), selected => {
         deckTop.moveCardsTo(selected, opponent.discard);
         deckTop.moveTo(opponent.deck);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        player.supporterTurn = 1;
 
         store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
           opponent.deck.applyOrder(order);

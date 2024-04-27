@@ -4,7 +4,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { EnergyCard, PlayerType } from '../..';
+import { EnergyCard, GameError, GameMessage, PlayerType } from '../..';
 import { HealEffect } from '../../game/store/effects/game-effects';
 
 export class BiancasDevotion extends TrainerCard {
@@ -29,6 +29,16 @@ export class BiancasDevotion extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
 
         const pokemon = cardList.getPokemonCard();
@@ -41,6 +51,8 @@ export class BiancasDevotion extends TrainerCard {
         state = store.reduceEffect(state, healEffect);
         const cards = cardList.cards.filter(c => c instanceof EnergyCard);
         cardList.moveCardsTo(cards, player.discard);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        player.supporterTurn = 1;
       });
       return state;
     }

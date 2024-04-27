@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { CardList, ChooseCardsPrompt } from '../../game';
+import { CardList, ChooseCardsPrompt, GameError } from '../../game';
 
 export class ColresssExperiment extends TrainerCard {
 
@@ -30,6 +30,20 @@ export class ColresssExperiment extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 5);
     
@@ -42,6 +56,8 @@ export class ColresssExperiment extends TrainerCard {
       ), selected => {
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.lostzone);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        player.supporterTurn = 1;
         return state;
 
       });

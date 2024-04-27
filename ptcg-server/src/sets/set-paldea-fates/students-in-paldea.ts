@@ -4,7 +4,7 @@ import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/ca
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { Card, ChooseCardsPrompt, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
+import { Card, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
 
 export class StudentsInPaldea extends TrainerCard {
 
@@ -30,6 +30,16 @@ export class StudentsInPaldea extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       const cardsInDiscard = effect.player.discard.cards.filter(c => c.name === 'Students In Paldea');
       const cardsToTake = 1 + cardsInDiscard.length;
       
@@ -51,6 +61,8 @@ export class StudentsInPaldea extends TrainerCard {
       ), selected => {
         cards = selected || [];
 
+        player.deck.moveCardsTo(cards, player.hand);
+
         state = store.prompt(state, new ShowCardsPrompt(
           opponent.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
@@ -61,6 +73,8 @@ export class StudentsInPaldea extends TrainerCard {
             player.deck.applyOrder(order);
             return state;
           });
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          player.supporterTurn = 1;
         });
         return state;
       });

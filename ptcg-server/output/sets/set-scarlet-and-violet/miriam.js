@@ -11,6 +11,13 @@ const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-pro
 const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     let pokemonsInDiscard = 0;
     const blocked = [];
     player.discard.cards.forEach((c, index) => {
@@ -38,6 +45,8 @@ function* playCard(next, store, state, self, effect) {
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
         player.deck.moveTo(player.hand, 3);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        player.supporterTurn = 1;
     });
 }
 class Miriam extends trainer_card_1.TrainerCard {

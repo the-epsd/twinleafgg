@@ -9,6 +9,13 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     let pokemonsOrEnergyInDiscard = 0;
     const blocked = [];
     player.discard.cards.forEach((c, index) => {
@@ -25,8 +32,6 @@ function* playCard(next, store, state, self, effect) {
     if (pokemonsOrEnergyInDiscard === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    // We will discard this card after prompt confirmation
-    effect.preventDefault = true;
     let cards = [];
     yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: 1, max: 3, allowCancel: false, blocked }), selected => {
         cards = selected || [];
@@ -34,6 +39,7 @@ function* playCard(next, store, state, self, effect) {
     });
     player.discard.moveCardsTo(cards, player.hand);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
 }
 class LanasAssistance extends trainer_card_1.TrainerCard {
     constructor() {

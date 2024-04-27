@@ -24,7 +24,7 @@ export class Atticus extends TrainerCard {
   public fullName = 'Atticus SV4';
 
   public text: string =
-    'You can use this card only if your opponent’s Active Pokémon is Poisoned.' +
+    'You can use this card only if your opponent\'s Active Pokémon is Poisoned.' +
 ''+
     'Shuffle your hand into your deck, then draw 7 cards.';
 
@@ -41,6 +41,16 @@ export class Atticus extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       if (cards.length > 0) {
         player.hand.moveCardsTo(cards, player.deck);
 
@@ -50,6 +60,8 @@ export class Atticus extends TrainerCard {
       }
 
       player.deck.moveTo(player.hand, 7);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      player.supporterTurn = 1;
       return state;
     }
     return state;

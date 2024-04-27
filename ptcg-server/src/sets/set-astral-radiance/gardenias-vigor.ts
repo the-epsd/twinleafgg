@@ -9,6 +9,7 @@ import { GameMessage } from '../../game/game-message';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { StateUtils } from '../../game/store/state-utils';
+import { GameError } from '../../game';
 
 export class GardeniasVigor extends TrainerCard {
 
@@ -33,6 +34,20 @@ export class GardeniasVigor extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       player.deck.moveTo(player.hand, 2);
 
       return store.prompt(state, new AttachEnergyPrompt(
@@ -50,6 +65,8 @@ export class GardeniasVigor extends TrainerCard {
           const energyCard = transfer.card as EnergyCard;
           const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
           store.reduceEffect(state, attachEnergyEffect);
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          player.supporterTurn = 1;
         }
       });
     }

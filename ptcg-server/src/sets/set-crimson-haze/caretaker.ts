@@ -35,6 +35,16 @@ export class Caretaker extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       player.deck.moveTo(player.hand, 2);
 
       const stadiumCard = StateUtils.getStadiumCard(state);
@@ -45,6 +55,9 @@ export class Caretaker extends TrainerCard {
         player.supporter.moveTo(player.discard);
 
       }
+
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      player.supporterTurn = 1;
 
       return state;
     }

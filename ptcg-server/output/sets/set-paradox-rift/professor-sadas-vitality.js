@@ -29,6 +29,13 @@ class ProfessorSadasVitality extends trainer_card_1.TrainerCard {
         }
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             const hasEnergyInDiscard = player.discard.cards.some(c => {
                 return c instanceof game_1.EnergyCard
                     && c.energyType === card_types_1.EnergyType.BASIC;
@@ -65,6 +72,8 @@ class ProfessorSadasVitality extends trainer_card_1.TrainerCard {
                         }
                     });
                     player.deck.moveTo(player.hand, 3);
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                    player.supporterTurn = 1;
                 });
             });
         }

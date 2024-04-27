@@ -30,5 +30,5 @@ export const setBaseSet: Card[] = [
   new SuperEnergyRemovalArt(),
   new SuperPotionArt(),
   new SwitchArt(),
-  new WartortleArt()
+  new WartortleArt(),
 ];

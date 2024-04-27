@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
-import { MoveEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../game';
+import { EnergyCard, GameError, MoveEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 
 export class Poppy extends TrainerCard {
 
@@ -30,6 +30,31 @@ export class Poppy extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
+
+      // Player has no Basic Energy in the discard pile
+      let hasEnergy = false;
+      let pokemonCount = 0;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        pokemonCount += 1;
+        const energyAttached = cardList.cards.some(c => {
+          return c instanceof EnergyCard;
+        });
+        hasEnergy = hasEnergy || energyAttached;
+      });
+
+      if (!hasEnergy || pokemonCount <= 1) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
   
       return store.prompt(state, new MoveEnergyPrompt(
         effect.player.id,
@@ -37,7 +62,7 @@ export class Poppy extends TrainerCard {
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.ACTIVE, SlotType.BENCH ],
         { superType: SuperType.ENERGY },
-        { min: 0, max: 2, allowCancel: true }
+        { min: 0, max: 2, allowCancel: false }
       ), transfers => {
         if (transfers === null) {
           return;
@@ -47,6 +72,8 @@ export class Poppy extends TrainerCard {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
           source.moveCardTo(transfer.card, target);
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          player.supporterTurn = 1;
         }
       });
     }

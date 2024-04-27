@@ -21,10 +21,25 @@ class Volo extends game_1.TrainerCard {
             const player = players[0];
             const bench = player.bench;
             if (bench.length > 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            if (bench.length > 0) {
                 const pokemonToDiscard = bench[0];
+                if (!pokemonToDiscard.cards[0].tags.includes(game_1.CardTag.POKEMON_V)) {
+                    throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+                }
                 if (pokemonToDiscard.cards[0].tags.includes(game_1.CardTag.POKEMON_V)) {
+                    const supporterTurn = player.supporterTurn;
+                    if (supporterTurn > 0) {
+                        throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+                    }
+                    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+                    // We will discard this card after prompt confirmation
+                    effect.preventDefault = true;
                     const cardsToDiscard = pokemonToDiscard.cards;
                     pokemonToDiscard.moveCardsTo(cardsToDiscard, player.discard);
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                    player.supporterTurn = 1;
                 }
             }
         }

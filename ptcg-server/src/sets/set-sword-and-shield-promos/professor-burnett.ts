@@ -14,6 +14,16 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const player = effect.player;
   let cards: Card[] = [];
 
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
@@ -30,6 +40,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   player.deck.moveCardsTo(cards, player.discard);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  player.supporterTurn = 1;
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

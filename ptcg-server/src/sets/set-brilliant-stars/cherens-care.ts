@@ -12,6 +12,16 @@ import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-pro
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
 
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
   // Create list of non - Pokemon SP slots
   const blocked: CardTarget[] = [];
   let hasColorlessPokemon = false;
@@ -40,6 +50,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       targets[0].moveTo(player.hand);
       targets[0].damage = 0;
       targets[0].clearEffects();
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      player.supporterTurn = 1;
     }
   });
 }

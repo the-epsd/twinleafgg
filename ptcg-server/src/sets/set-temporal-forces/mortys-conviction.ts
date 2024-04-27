@@ -15,6 +15,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
   self: MortysConviction, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
+
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
   
   cards = player.hand.cards.filter(c => c !== self);
   if (cards.length < 2) {
@@ -49,6 +59,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const cardsToDraw = opponent.bench.length;
 
   player.deck.moveTo(player.hand, cardsToDraw);
+
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  player.supporterTurn = 1;
+
   return state;
 }
 export class MortysConviction extends TrainerCard {

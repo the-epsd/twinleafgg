@@ -28,6 +28,13 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+  
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -42,9 +49,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  player.deck.moveCardsTo(cards, player.hand);
-  player.hand.moveCardTo(self, player.discard);
-
   if (cards.length > 0) {
 
     if (cards[0].tags.includes(CardTag.POKEMON_ex)    ||
@@ -54,6 +58,11 @@ function* playCard(next: Function, store: StoreLike, state: State,
       throw new GameError(GameMessage.INVALID_TARGET);
     }
     else {
+
+      player.deck.moveCardsTo(cards, player.hand);
+      player.hand.moveCardTo(self, player.discard);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      player.supporterTurn = 1;
 
       yield store.prompt(state, new ShowCardsPrompt(
         opponent.id,

@@ -35,6 +35,17 @@ export class Iono extends TrainerCard {
     
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+      
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       const cards = player.hand.cards.filter(c => c !== this);
       const deckBottom = new CardList();
       const opponentDeckBottom = new CardList();
@@ -55,6 +66,10 @@ export class Iono extends TrainerCard {
     
       player.deck.moveTo(player.hand, player.getPrizeLeft());
       opponent.deck.moveTo(opponent.hand, opponent.getPrizeLeft());
+
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      player.supporterTurn = 1;
+
     }
     
     return state;
