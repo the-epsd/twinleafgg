@@ -64,6 +64,15 @@ export class Charizard extends PokemonCard {
       if (player.marker.hasMarker(this.ENERGY_BURN_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
+      
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
+      }
+  
 
       if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
         player.marker.addMarker(this.ENERGY_BURN_MARKER, this);

@@ -1,9 +1,10 @@
 import { Card } from '../../game/store/card/card';
-import { BillArt, BlastoiseArt, CharizardArt, CharmanderArt, CharmeleonArt, ClefairyArt, ComputerSearchArt, DoduoArt, DoubleColorlessEnergyArt, ElectabuzzArt, EnergyRemovalArt, EnergyRetrievalArt, GustOfWindArt, HitmonchanArt, ItemFinderArt, LassArt, MaintenanceArt, PlusPowerArt, PokemonBreederArt, PokemonCenterArt, PokemonTraderArt, ProfessorOakArt, RattataArt, ScoopUpArt, SquirtleArt, SuperEnergyRemovalArt, SuperPotionArt, SwitchArt, WartortleArt } from './card-images';
+import { BillArt, BlastoiseArt, ChanseyArt, CharizardArt, CharmanderArt, CharmeleonArt, ClefairyArt, ComputerSearchArt, DoduoArt, DoubleColorlessEnergyArt, DugtrioArt, ElectabuzzArt, EnergyRemovalArt, EnergyRetrievalArt, GustOfWindArt, GyaradosArt, HitmonchanArt, ItemFinderArt, LassArt, MachampArt, MagnetonArt, MaintenanceArt, MewtwoArt, NidokingArt, PlusPowerArt, PokemonBreederArt, PokemonCenterArt, PokemonTraderArt, PoliwrathArt, ProfessorOakArt, RaichuArt, RattataArt, ScoopUpArt, SquirtleArt, SuperEnergyRemovalArt, SuperPotionArt, SwitchArt, VenusaurArt, WartortleArt, ZapdosArt } from './card-images';
 
 export const setBaseSet: Card[] = [
   new BillArt(),
   new BlastoiseArt(),
+  new ChanseyArt(),
   new CharizardArt(),
   new CharmanderArt(),
   new CharmeleonArt(),
@@ -11,24 +12,34 @@ export const setBaseSet: Card[] = [
   new ComputerSearchArt(),
   new DoduoArt(),
   new DoubleColorlessEnergyArt(),
+  new DugtrioArt(),
   new ElectabuzzArt(),
   new EnergyRemovalArt(),
   new EnergyRetrievalArt(),
+  new GyaradosArt(),
   new GustOfWindArt(),
   new HitmonchanArt(),
   new ItemFinderArt(),
   new LassArt(),
+  new MachampArt(),
+  new MagnetonArt(),
   new MaintenanceArt(),
+  new MewtwoArt(),
+  new NidokingArt(),
+  new PoliwrathArt(),
   new PlusPowerArt(),
   new PokemonBreederArt(),
   new PokemonCenterArt(),
   new PokemonTraderArt(),
   new ProfessorOakArt(),
+  new RaichuArt(),
   new RattataArt(),
   new ScoopUpArt(),
   new SquirtleArt(),
   new SuperEnergyRemovalArt(),
   new SuperPotionArt(),
   new SwitchArt(),
+  new VenusaurArt(),
   new WartortleArt(),
+  new ZapdosArt()
 ];

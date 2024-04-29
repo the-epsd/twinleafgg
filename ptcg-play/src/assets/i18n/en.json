@@ -365,6 +365,7 @@
     "MAX_PLAYERS_REACHED": "The match already has the maximum number of players.",
     "MOVE_DAMAGE": "Move damage counters.",
     "MOVE_ENERGY_CARDS": "Move energy cards.",
+    "MOVE_GRASS_ENERGY": "Move a Grass Energy card.",
     "MOVE_ENERGY_TO_ACTIVE": "Move energy cards to the Active Pokémon.",
     "MOVE_ENERGY_TO_BENCH": "Move energy cards to the Benched Pokémon.",
     "NOT_ENOUGH_ENERGY": "Not enough energy.",
