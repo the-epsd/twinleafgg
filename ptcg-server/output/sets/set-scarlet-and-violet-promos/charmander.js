@@ -14,7 +14,7 @@ class Charmander extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.WATER }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [{
-                name: 'Power Blast',
+                name: 'Ember',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE],
                 damage: 40,
                 text: 'Discard an Energy from this Pokémon.',

@@ -59,12 +59,13 @@ export class LuxrayV extends PokemonCard {
       if (cards.length === 0) {
         return state;
       }
+      
       store.prompt(state, new ChooseCardsPrompt(
         effect.player.id,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         opponent.hand,
         { superType: SuperType.TRAINER },
-        { min: 1, max: 1, allowCancel: false }
+        { min: 0, max: 1, allowCancel: false }
       ), selected => {
         selected = cards || [];
     

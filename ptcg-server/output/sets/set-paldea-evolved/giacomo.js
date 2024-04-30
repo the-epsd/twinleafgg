@@ -56,8 +56,6 @@ class Giacomo extends trainer_card_1.TrainerCard {
                 cards = selected || [];
             });
             if (cards.length > 0) {
-                // Discard trainer only when user selected a Pokemon
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 // Discard selected special energy card
                 target.moveCardsTo(cards, opponent.discard);
             }

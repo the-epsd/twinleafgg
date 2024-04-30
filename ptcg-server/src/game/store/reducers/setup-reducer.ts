@@ -17,7 +17,7 @@ import { GameMessage, GameLog } from '../../game-message';
 import { PlayerType } from '../actions/play-card-action';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { StoreLike } from '../store-like';
-import { SuperType, Stage, CardTag } from '../card/card-types';
+import { SuperType, Stage } from '../card/card-types';
 import { WhoBeginsEffect } from '../effects/game-phase-effects';
 import { endGame } from '../effect-reducers/check-effect';
 import { initNextTurn } from '../effect-reducers/game-phase-effect';
@@ -52,7 +52,7 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
     });
   }
 
-  const basicPokemon = {superType: SuperType.POKEMON, stage: Stage.BASIC || CardTag.RAPID_STRIKE};
+  const basicPokemon = {superType: SuperType.POKEMON, stage: Stage.BASIC};
   const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
 
   let playerCardsToDraw = 0;
@@ -137,10 +137,6 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
     opponent.deck.moveTo(opponent.hand, opponentCardsToDraw);
     next();
   });
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
 
   // Set initial Pokemon Played Turn, so players can't evolve during first turn
   const first = state.players[state.activePlayer];

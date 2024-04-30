@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
 import { Attack, Power, PowerType } from '../../game/store/card/pokemon-types';
 import { MoveEnergyPrompt, CardTransfer } from '../../game/store/prompts/move-energy-prompt';
 import { Effect } from '../../game/store/effects/effect';

@@ -103,6 +103,7 @@ var GameCardMessage;
     GameCardMessage["COIN_FLIP"] = "COIN_FLIP";
     GameCardMessage["MOVE_DAMAGE"] = "MOVE_DAMAGE";
     GameCardMessage["MOVE_ENERGY_CARDS"] = "MOVE_ENERGY_CARDS";
+    GameCardMessage["MOVE_GRASS_ENERGY"] = "MOVE_GRASS_ENERGY";
     GameCardMessage["MOVE_ENERGY_TO_ACTIVE"] = "MOVE_ENERGY_CARDS_TO_ACTIVE";
     GameCardMessage["MOVE_ENERGY_TO_BENCH"] = "MOVE_ENERGY_CARDS_TO_BENCH";
     GameCardMessage["SPECIAL_CONDITION_ASLEEP"] = "ASLEEP";

@@ -28,45 +28,45 @@
   ptcg-board-card,
   ptcg-board-card-list {
     .empty {
-      fill: $table-border;
+      fill: red;
       outline: $table-border;
     }
   }
 
-  ptcg-table-sidebar {
-    .ptcg-table-sidebar-header {
-      background-color: $table-sidebar-header-background-color;
-    }
-  }
+  // ptcg-table-sidebar {
+  //   .ptcg-table-sidebar-header {
+  //     background-color: $table-sidebar-header-background-color;
+  //   }
+  // }
 
   ptcg-player-bar {
     .ptcg-player-bar.active {
-      background-color: $active-player-background-color;
+      background-color: #2D3748;
       &:before {
-        background-color: mat.get-color-from-palette($primary);
+        background-color: #2D3748;
       }
     }
   }
 
   ptcg-game-logs {
     .ptcg-system {
-      color: red;
+      color: green;
     }
     .ptcg-player1 {
-      color: mat.get-color-from-palette($primary);
+      color: blue;
     }
     .ptcg-player2 {
-      color: mat.get-color-from-palette($warn);
+      color: red;
     }
     .ptcg-spectator {
       color: mat.get-color-from-palette($foreground, hint-text);
     }
-    .ptcg-game-logs-header {
-      background-color: $table-sidebar-header-background-color;
-    }
-    .ptcg-game-logs-content {
-      background-color: $table-sidebar-logs-background-color;
-    }
+    // .ptcg-game-logs-header {
+    //   background-color: $table-sidebar-header-background-color;
+    // }
+    // .ptcg-game-logs-content {
+    //   background-color: $table-sidebar-logs-background-color;
+    // }
     .ptcg-game-logs-content li {
       border-bottom: $table-border;
     }
@@ -90,7 +90,8 @@
 
   ptcg-replay-controls {
     .ptcg-replay-controls-header {
-      background-color: $table-sidebar-header-background-color;
+      backdrop-filter: blur( 20px );
+      -webkit-backdrop-filter: blur( 20px );
     }
   }
 

@@ -10,12 +10,23 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { GameError } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Arven, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
+
+  const supporterTurn = player.supporterTurn;
+  
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
 
   // Count tools and items separately
   let tools = 0; 
@@ -51,6 +62,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
   
   player.deck.moveCardsTo(cards, player.hand);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  player.supporterTurn = 1;
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -59,6 +72,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
+
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

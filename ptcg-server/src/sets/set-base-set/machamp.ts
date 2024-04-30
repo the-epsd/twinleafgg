@@ -21,7 +21,7 @@ export class Machamp extends PokemonCard {
   
   public hp: number = 100;
   
-  public CardType: CardType = CardType.FIGHTING;
+  public cardType: CardType = CardType.FIGHTING;
   
   public weakness: Weakness[] = [{ type: CardType.PSYCHIC }];
   
@@ -47,7 +47,7 @@ export class Machamp extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AfterDamageEffect) {
 
-      const player = effect.player
+      const player = effect.player;
       
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
       

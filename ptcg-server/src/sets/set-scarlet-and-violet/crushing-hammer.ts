@@ -52,6 +52,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   if (targets.length === 0) {
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
   }
 

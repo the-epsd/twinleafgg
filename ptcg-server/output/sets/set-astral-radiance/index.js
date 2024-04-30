@@ -26,6 +26,7 @@ exports.setAstralRadiance = [
     new card_images_1.LucarioVArt(),
     new card_images_1.LuxrayVArt(),
     new card_images_1.MightyenaArt(),
+    new card_images_1.MantineArt(),
     new card_images_1.MiltankArt(),
     new card_images_1.OriginFormeDialgaVArt(),
     new card_images_1.OriginFormeDialgaVSTARArt(),

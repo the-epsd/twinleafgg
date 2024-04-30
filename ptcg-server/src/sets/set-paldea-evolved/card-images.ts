@@ -34,6 +34,7 @@ import { Giacomo } from './giacomo';
 import { TheraputicEnergy } from './theraputic-energy';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
+import { ChiYuex } from './chi-yu-ex';
 
 export class ArctibaxArt extends Arctibax {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_059_R_EN_LG.png';
@@ -59,6 +60,10 @@ export class CetitanArt extends Cetitan {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_055_R_EN_LG.png';
 }
   
+export class ChiYuexArt extends ChiYuex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_040_R_EN_LG.png';
+}
+
 export class ChienPaoexArt extends ChienPaoex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_061_R_EN_LG.png';
 }

@@ -29,6 +29,7 @@ import { MagnezoneV } from './magnezone-v';
 import { MagnezoneVSTAR } from './magnezone-vstar';
 import { Mawile } from './mawile';
 import { MirageGate } from './mirage-gate';
+import { MissFortuneSisters } from './miss-fortune-sisters';
 import { PanicMask } from './panic-mask';
 import { PidgeotV } from './pidgeot-v';
 import { RadiantGardevoir } from './radiant-gardevoir';
@@ -161,6 +162,10 @@ export class MawileArt extends Mawile {
 
 export class MirageGateArt extends MirageGate {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_163_R_EN_LG.png';
+}
+
+export class MissFortuneSistersArt extends MissFortuneSisters {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_164_R_EN_LG.png';
 }
 
 export class PanicMaskArt extends PanicMask {

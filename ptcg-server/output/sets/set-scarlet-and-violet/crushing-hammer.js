@@ -38,6 +38,7 @@ function* playCard(next, store, state, effect) {
         next();
     });
     if (targets.length === 0) {
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
     }
     const target = targets[0];

@@ -20,6 +20,7 @@ import { Irida } from './irida';
 import { Kleavor } from './kleavor';
 import { LucarioV } from './lucario-v';
 import { LuxrayV } from './luxray-v';
+import { Mantine } from './mantine';
 import { Mightyena } from './mightyena';
 import { Miltank } from './miltank';
 import { OriginFormeDialgaV } from './origin-forme-dialga-v';
@@ -130,6 +131,10 @@ export class LucarioVArt extends LucarioV {
 
 export class LuxrayVArt extends LuxrayV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_050_R_EN_LG.png';
+}
+
+export class MantineArt extends Mantine {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_034_R_EN_LG.png';
 }
 
 export class MightyenaArt extends Mightyena {

@@ -66,7 +66,7 @@ class Raichu extends pokemon_card_1.PokemonCard {
                 }
                 if (blocked.length) {
                     // Opponent has damaged benched Pokemon
-                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 10);
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 50);
                     damageEffect.target = cardList;
                     store.reduceEffect(state, damageEffect);
                 }

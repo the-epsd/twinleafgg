@@ -34,6 +34,7 @@ import { Giacomo } from './giacomo';
 import { TheraputicEnergy } from './theraputic-energy';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
+import { ChiYuex } from './chi-yu-ex';
 export declare class ArctibaxArt extends Arctibax {
     cardImage: string;
 }
@@ -50,6 +51,9 @@ export declare class BraveyCharmArt extends BraveyCharm {
     cardImage: string;
 }
 export declare class CetitanArt extends Cetitan {
+    cardImage: string;
+}
+export declare class ChiYuexArt extends ChiYuex {
     cardImage: string;
 }
 export declare class ChienPaoexArt extends ChienPaoex {

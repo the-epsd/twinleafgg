@@ -46,7 +46,7 @@ function* setupGame(next, store, state) {
             });
         });
     }
-    const basicPokemon = { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC || card_types_1.CardTag.RAPID_STRIKE };
+    const basicPokemon = { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC };
     const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
     let playerCardsToDraw = 0;
     let opponentCardsToDraw = 0;
@@ -118,9 +118,6 @@ function* setupGame(next, store, state) {
         opponent.deck.moveTo(opponent.hand, opponentCardsToDraw);
         next();
     });
-    if (store.hasPrompts()) {
-        yield store.waitPrompt(state, () => next());
-    }
     // Set initial Pokemon Played Turn, so players can't evolve during first turn
     const first = state.players[state.activePlayer];
     const second = state.players[state.activePlayer ? 0 : 1];

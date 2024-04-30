@@ -59,12 +59,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   if (cards.length > 0) {
-    // Discard trainer only when user selected a Pokemon
-    player.hand.moveCardTo(effect.trainerCard, player.discard);
     // Discard selected special energy card
     target.moveCardsTo(cards, opponent.discard);
   }
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return state;
 }
 

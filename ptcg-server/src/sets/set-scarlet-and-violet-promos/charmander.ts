@@ -20,7 +20,7 @@ export class Charmander extends PokemonCard {
   public retreat = [ CardType.COLORLESS ];
 
   public attacks = [{
-    name: 'Power Blast',
+    name: 'Ember',
     cost: [ CardType.FIRE, CardType.FIRE ],
     damage: 40,
     text: 'Discard an Energy from this Pokémon.',

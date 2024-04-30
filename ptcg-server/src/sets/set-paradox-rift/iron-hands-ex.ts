@@ -58,16 +58,15 @@ export class IronHandsex extends PokemonCard {
       }
 
       // Articuno wasn't attacking
-      const pokemonCard = opponent.active.getPokemonCard();
-      if (pokemonCard !== this) {
+      const pokemonCard = player.active?.getPokemonCard();
+      if (pokemonCard && pokemonCard.attacks.find(attack => attack.name === 'Amp You Very Much')) {
+        effect.prizeCount += 1;
         return state;
       }
 
-      effect.prizeCount += 1;
       return state;
     }
 
     return state;
   }
-
 }

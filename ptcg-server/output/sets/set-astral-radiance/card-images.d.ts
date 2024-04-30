@@ -20,6 +20,7 @@ import { Irida } from './irida';
 import { Kleavor } from './kleavor';
 import { LucarioV } from './lucario-v';
 import { LuxrayV } from './luxray-v';
+import { Mantine } from './mantine';
 import { Mightyena } from './mightyena';
 import { Miltank } from './miltank';
 import { OriginFormeDialgaV } from './origin-forme-dialga-v';
@@ -107,6 +108,9 @@ export declare class LucarioVArt extends LucarioV {
     cardImage: string;
 }
 export declare class LuxrayVArt extends LuxrayV {
+    cardImage: string;
+}
+export declare class MantineArt extends Mantine {
     cardImage: string;
 }
 export declare class MightyenaArt extends Mightyena {

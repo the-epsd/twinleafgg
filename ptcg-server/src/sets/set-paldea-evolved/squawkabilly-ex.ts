@@ -77,36 +77,35 @@ export class Squawkabillyex extends PokemonCard {
         player.usedSquawkAndSeizeThisTurn = true;
         // Return updated state
       }
+    }
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const player = effect.player;
-        const hasBench = player.bench.some(b => b.cards.length > 0);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const hasBench = player.bench.some(b => b.cards.length > 0);
 
-        const hasBasicEnergy = player.active.cards.some(c => { return c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.ANY); });
+      const hasBasicEnergy = player.active.cards.some(c => { return c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.ANY); });
       
 
-        if (hasBench === false || hasBasicEnergy === false) {
-          return state;
-        }
-  
-        return store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          player.active,
-          PlayerType.BOTTOM_PLAYER,
-          [ SlotType.BENCH ],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { allowCancel: false, min: 1, max: 2 }
-        ), transfers => {
-          transfers = transfers || [];
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.active.moveCardTo(transfer.card, target);
-          } 
-          return state;
-        });
+      if (hasBench === false || hasBasicEnergy === false) {
+        return state;
       }
-      return state;
+  
+      return store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        player.active,
+        PlayerType.BOTTOM_PLAYER,
+        [ SlotType.BENCH ],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        { allowCancel: false, min: 1, max: 2 }
+      ), transfers => {
+        transfers = transfers || [];
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.active.moveCardTo(transfer.card, target);
+        } 
+        return state;
+      });
     }
     return state;
   }

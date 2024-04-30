@@ -47,7 +47,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
 export class UnfairStamp extends TrainerCard {
 
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  public trainerType: TrainerType = TrainerType.ITEM;
 
   public tags = [ CardTag.ACE_SPEC ];
 

@@ -29,6 +29,7 @@ import { MagnezoneV } from './magnezone-v';
 import { MagnezoneVSTAR } from './magnezone-vstar';
 import { Mawile } from './mawile';
 import { MirageGate } from './mirage-gate';
+import { MissFortuneSisters } from './miss-fortune-sisters';
 import { PanicMask } from './panic-mask';
 import { PidgeotV } from './pidgeot-v';
 import { RadiantGardevoir } from './radiant-gardevoir';
@@ -129,6 +130,9 @@ export declare class MawileArt extends Mawile {
     cardImage: string;
 }
 export declare class MirageGateArt extends MirageGate {
+    cardImage: string;
+}
+export declare class MissFortuneSistersArt extends MissFortuneSisters {
     cardImage: string;
 }
 export declare class PanicMaskArt extends PanicMask {

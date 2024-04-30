@@ -36,6 +36,7 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Iron Hands ex PAR';
     }
     reduceEffect(store, state, effect) {
+        var _a;
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target === effect.player.active) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
@@ -44,11 +45,11 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
                 return state;
             }
             // Articuno wasn't attacking
-            const pokemonCard = opponent.active.getPokemonCard();
-            if (pokemonCard !== this) {
+            const pokemonCard = (_a = player.active) === null || _a === void 0 ? void 0 : _a.getPokemonCard();
+            if (pokemonCard && pokemonCard.attacks.find(attack => attack.name === 'Amp You Very Much')) {
+                effect.prizeCount += 1;
                 return state;
             }
-            effect.prizeCount += 1;
             return state;
         }
         return state;

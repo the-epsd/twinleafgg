@@ -14,7 +14,7 @@ class SurvivalCast extends trainer_card_1.TrainerCard {
         this.setNumber = '59';
         this.name = 'Survival Cast';
         this.fullName = 'Survival Cast SV5';
-        this.text = 'If the Pokémon this card is attached to has full HP and would be KOd by damage from an attack, it is not KOd and its remaining HP becomes 10 instead. Then, discard this card.';
+        this.text = 'If the Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent\'s attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.';
     }
     reduceEffect(store, state, effect) {
         var _a;

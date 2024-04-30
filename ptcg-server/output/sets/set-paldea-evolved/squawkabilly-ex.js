@@ -58,23 +58,22 @@ class Squawkabillyex extends pokemon_card_1.PokemonCard {
                 player.usedSquawkAndSeizeThisTurn = true;
                 // Return updated state
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                const player = effect.player;
-                const hasBench = player.bench.some(b => b.cards.length > 0);
-                const hasBasicEnergy = player.active.cards.some(c => { return c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.provides.includes(card_types_1.CardType.ANY); });
-                if (hasBench === false || hasBasicEnergy === false) {
-                    return state;
-                }
-                return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.active, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 1, max: 2 }), transfers => {
-                    transfers = transfers || [];
-                    for (const transfer of transfers) {
-                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                        player.active.moveCardTo(transfer.card, target);
-                    }
-                    return state;
-                });
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const hasBench = player.bench.some(b => b.cards.length > 0);
+            const hasBasicEnergy = player.active.cards.some(c => { return c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.provides.includes(card_types_1.CardType.ANY); });
+            if (hasBench === false || hasBasicEnergy === false) {
+                return state;
             }
-            return state;
+            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.active, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 1, max: 2 }), transfers => {
+                transfers = transfers || [];
+                for (const transfer of transfers) {
+                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                    player.active.moveCardTo(transfer.card, target);
+                }
+                return state;
+            });
         }
         return state;
     }

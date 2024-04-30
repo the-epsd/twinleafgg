@@ -1,10 +1,10 @@
 // ptcg-server\src\sets\set-base-set\mewtwo.ts
 
-import { StoreLike, State, EnergyCard, StateUtils, ChooseEnergyPrompt, GameMessage, Card, PlayerType } from '../../game';
+import { StoreLike, State, StateUtils, ChooseEnergyPrompt, GameMessage, Card, PlayerType } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack, Power } from '../../game/store/card/pokemon-types';
-import { AbstractAttackEffect, AddSpecialConditionsEffect, DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';

@@ -63,7 +63,7 @@ z-index: 0;
     left: -55%;
     right: -55%;
     height: 100%; //adjust this number to adjust curve  
-    background:linear-gradient(0deg, #1a202cb5, #0d1016af), blue;
+    background:linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(0, 90, 207, 0.75);
     // background-image: url(https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-53.jpg);
     background-size: 56%;
     background-position: center, top;
@@ -88,7 +88,7 @@ z-index: 0;
     left: -40%;
     right: -40%;
     height: 600px; //adjust this number to adjust curve  
-    background:linear-gradient(0deg, #1a202cb5, #0d1016af), red;
+    background:linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(255, 0, 0, 0.75);
     background-size: 56%;
     background-position: center;
     transform: scaleY(-1);

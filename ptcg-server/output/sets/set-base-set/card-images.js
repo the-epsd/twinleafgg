@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WartortleArt = exports.SwitchArt = exports.SuperPotionArt = exports.SuperEnergyRemovalArt = exports.SquirtleArt = exports.ScoopUpArt = exports.RattataArt = exports.ProfessorOakArt = exports.PokemonTraderArt = exports.PokemonCenterArt = exports.PokemonBreederArt = exports.PlusPowerArt = exports.MaintenanceArt = exports.LassArt = exports.ItemFinderArt = exports.HitmonchanArt = exports.GustOfWindArt = exports.EnergyRetrievalArt = exports.EnergyRemovalArt = exports.ElectabuzzArt = exports.DoubleColorlessEnergyArt = exports.DoduoArt = exports.ComputerSearchArt = exports.ClefairyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = exports.BlastoiseArt = exports.BillArt = exports.AlakazamArt = void 0;
+exports.ZapdosArt = exports.WartortleArt = exports.VenusaurArt = exports.SwitchArt = exports.SuperPotionArt = exports.SuperEnergyRemovalArt = exports.SquirtleArt = exports.ScoopUpArt = exports.RattataArt = exports.RaichuArt = exports.ProfessorOakArt = exports.PokemonTraderArt = exports.PokemonCenterArt = exports.PokemonBreederArt = exports.PlusPowerArt = exports.PoliwrathArt = exports.NinetalesArt = exports.NidokingArt = exports.MewtwoArt = exports.MaintenanceArt = exports.MagnetonArt = exports.MachampArt = exports.LassArt = exports.ItemFinderArt = exports.HitmonchanArt = exports.GyaradosArt = exports.GustOfWindArt = exports.EnergyRetrievalArt = exports.EnergyRemovalArt = exports.ElectabuzzArt = exports.DugtrioArt = exports.DragonairEnergyArt = exports.DoubleColorlessEnergyArt = exports.DoduoArt = exports.ComputerSearchArt = exports.ClefairyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = exports.ChanseyArt = exports.BlastoiseArt = exports.BillArt = exports.BeedrillArt = exports.AlakazamArt = void 0;
 const alakazam_1 = require("./alakazam");
+const beedrill_1 = require("./beedrill");
 const bill_1 = require("./bill");
 const blastoise_1 = require("./blastoise");
+const chansey_1 = require("./chansey");
 const charizard_1 = require("./charizard");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
@@ -11,26 +13,38 @@ const clefairy_1 = require("./clefairy");
 const computer_search_1 = require("./computer-search");
 const doduo_1 = require("./doduo");
 const double_colorless_energy_1 = require("./double-colorless-energy");
+const dragonair_1 = require("./dragonair");
+const dugtrio_1 = require("./dugtrio");
 const electabuzz_1 = require("./electabuzz");
 const energy_removal_1 = require("./energy-removal");
 const energy_retrieval_1 = require("./energy-retrieval");
 const gust_of_wind_1 = require("./gust-of-wind");
+const gyarados_1 = require("./gyarados");
 const hitmonchan_1 = require("./hitmonchan");
 const item_finder_1 = require("./item-finder");
 const lass_1 = require("./lass");
+const machamp_1 = require("./machamp");
+const magneton_1 = require("./magneton");
 const maintenance_1 = require("./maintenance");
+const mewtwo_1 = require("./mewtwo");
+const nidoking_1 = require("./nidoking");
+const ninetales_1 = require("./ninetales");
 const pluspower_1 = require("./pluspower");
 const pokemon_breeder_1 = require("./pokemon-breeder");
 const pokemon_center_1 = require("./pokemon-center");
 const pokemon_trader_1 = require("./pokemon-trader");
+const poliwrath_1 = require("./poliwrath");
 const professor_oak_1 = require("./professor-oak");
+const raichu_1 = require("./raichu");
 const rattata_1 = require("./rattata");
 const scoop_up_1 = require("./scoop-up");
 const squirtle_1 = require("./squirtle");
 const super_energy_removal_1 = require("./super-energy-removal");
 const super_potion_1 = require("./super-potion");
 const switch_1 = require("./switch");
+const venusaur_1 = require("./venusaur");
 const wartortle_1 = require("./wartortle");
+const zapdos_1 = require("./zapdos");
 class AlakazamArt extends alakazam_1.Alakazam {
     constructor() {
         super(...arguments);
@@ -38,6 +52,13 @@ class AlakazamArt extends alakazam_1.Alakazam {
     }
 }
 exports.AlakazamArt = AlakazamArt;
+class BeedrillArt extends beedrill_1.Beedrill {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/beedrill-base-set-bs-17.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.BeedrillArt = BeedrillArt;
 class BillArt extends bill_1.Bill {
     constructor() {
         super(...arguments);
@@ -52,6 +73,13 @@ class BlastoiseArt extends blastoise_1.Blastoise {
     }
 }
 exports.BlastoiseArt = BlastoiseArt;
+class ChanseyArt extends chansey_1.Chansey {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/chansey-base-set-bs-3.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.ChanseyArt = ChanseyArt;
 class CharizardArt extends charizard_1.Charizard {
     constructor() {
         super(...arguments);
@@ -101,6 +129,20 @@ class DoubleColorlessEnergyArt extends double_colorless_energy_1.DoubleColorless
     }
 }
 exports.DoubleColorlessEnergyArt = DoubleColorlessEnergyArt;
+class DragonairEnergyArt extends dragonair_1.Dragonair {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/dragonair-base-set-bs-18.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.DragonairEnergyArt = DragonairEnergyArt;
+class DugtrioArt extends dugtrio_1.Dugtrio {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/dugtrio-base-set-bs-19.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.DugtrioArt = DugtrioArt;
 class ElectabuzzArt extends electabuzz_1.Electabuzz {
     constructor() {
         super(...arguments);
@@ -125,10 +167,17 @@ exports.EnergyRetrievalArt = EnergyRetrievalArt;
 class GustOfWindArt extends gust_of_wind_1.GustOfWind {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/gust-of-wind-base-set-bs-93.jpg?fit=600%2C825&ssl=1';
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/gust-of-wind-base-set-bs-93.jpg?fit=600%2C825&ssl=01';
     }
 }
 exports.GustOfWindArt = GustOfWindArt;
+class GyaradosArt extends gyarados_1.Gyarados {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/gyarados-base-set-bs-6.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.GyaradosArt = GyaradosArt;
 class HitmonchanArt extends hitmonchan_1.Hitmonchan {
     constructor() {
         super(...arguments);
@@ -150,6 +199,20 @@ class LassArt extends lass_1.Lass {
     }
 }
 exports.LassArt = LassArt;
+class MachampArt extends machamp_1.Machamp {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/magneton-base-set-bs-8.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.MachampArt = MachampArt;
+class MagnetonArt extends magneton_1.Magneton {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/magneton-base-set-bs-9.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.MagnetonArt = MagnetonArt;
 class MaintenanceArt extends maintenance_1.Maintenance {
     constructor() {
         super(...arguments);
@@ -157,6 +220,34 @@ class MaintenanceArt extends maintenance_1.Maintenance {
     }
 }
 exports.MaintenanceArt = MaintenanceArt;
+class MewtwoArt extends mewtwo_1.Mewtwo {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/mewtwo-base-set-bs-10.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.MewtwoArt = MewtwoArt;
+class NidokingArt extends nidoking_1.Nidoking {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/Nidoking-base-set-bs-11.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.NidokingArt = NidokingArt;
+class NinetalesArt extends ninetales_1.Ninetales {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/ninetales-base-set-bs-12.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.NinetalesArt = NinetalesArt;
+class PoliwrathArt extends poliwrath_1.Poliwrath {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/poliwrath-base-set-bs-13.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.PoliwrathArt = PoliwrathArt;
 class PlusPowerArt extends pluspower_1.PlusPower {
     constructor() {
         super(...arguments);
@@ -192,6 +283,13 @@ class ProfessorOakArt extends professor_oak_1.ProfessorOak {
     }
 }
 exports.ProfessorOakArt = ProfessorOakArt;
+class RaichuArt extends raichu_1.Raichu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/Raichu-base-set-bs-14.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.RaichuArt = RaichuArt;
 class RattataArt extends rattata_1.Rattata {
     constructor() {
         super(...arguments);
@@ -234,6 +332,13 @@ class SwitchArt extends switch_1.Switch {
     }
 }
 exports.SwitchArt = SwitchArt;
+class VenusaurArt extends venusaur_1.Venusaur {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/venusaur-base-set-bs-15.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.VenusaurArt = VenusaurArt;
 class WartortleArt extends wartortle_1.Wartortle {
     constructor() {
         super(...arguments);
@@ -241,3 +346,10 @@ class WartortleArt extends wartortle_1.Wartortle {
     }
 }
 exports.WartortleArt = WartortleArt;
+class ZapdosArt extends zapdos_1.Zapdos {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/Zapdos-base-set-bs-16.jpg?fit=600%2C825&ssl=1';
+    }
+}
+exports.ZapdosArt = ZapdosArt;

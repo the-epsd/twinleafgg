@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 
 export class Mightyena extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Poochyena';
 
