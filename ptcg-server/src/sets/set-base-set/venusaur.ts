@@ -75,6 +75,7 @@ export class Venusaur extends PokemonCard {
 
   public powers: Power[] = [{
     name: 'Energy Trans',
+    useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
     text: 'As often as you like during your turn (before your attack), you may take 1 {G} Energy card attached to 1 of your Pokémon and attach it to a different one. This power can’t be used if Venusaur is Asleep, Confused, or Paralyzed.'
   }];

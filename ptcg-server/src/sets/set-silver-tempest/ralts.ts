@@ -78,19 +78,6 @@ export class Ralts extends PokemonCard {
       
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
         }
-        
-        //   // Perform attack
-        //   const attackEffect = new AttackEffect(player, opponent, attack);
-        //   store.reduceEffect(state, attackEffect);
-        
-        //   if (store.hasPrompts()) {
-        //     yield store.waitPrompt(state, () => next());
-        //   }
-        
-        //   if (attackEffect.damage > 0) {
-        //     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-        //     state = store.reduceEffect(state, dealDamage);
-        //   }
       }
       return state;
     }
