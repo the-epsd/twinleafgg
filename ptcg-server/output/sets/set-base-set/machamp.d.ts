@@ -8,6 +8,7 @@ export declare class Machamp extends PokemonCard {
     set: string;
     fullName: string;
     name: string;
+    cardImage: string;
     stage: Stage;
     evolvesFrom: string;
     hp: number;

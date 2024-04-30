@@ -21,16 +21,15 @@ class DamagePump extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
             const maxAllowedDamage = [];
-            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                const checkHpEffect = new check_effects_1.CheckHpEffect(opponent, cardList);
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                const checkHpEffect = new check_effects_1.CheckHpEffect(player, cardList);
                 store.reduceEffect(state, checkHpEffect);
                 maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
             });
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
-            return store.prompt(state, new game_1.MoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 2, allowCancel: true }), transfers => {
+            return store.prompt(state, new game_1.MoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 2, allowCancel: false }), transfers => {
                 if (transfers === null) {
                     return;
                 }

@@ -8,6 +8,7 @@ export declare class Nidoking extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
     stage: Stage;
     cardType: CardType;
     hp: number;

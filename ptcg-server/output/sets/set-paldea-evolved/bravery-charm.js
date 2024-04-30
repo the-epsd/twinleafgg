@@ -4,7 +4,6 @@ exports.BraveyCharm = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const game_1 = require("../../game");
 class BraveyCharm extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -18,11 +17,14 @@ class BraveyCharm extends trainer_card_1.TrainerCard {
         this.text = 'The Basic Pokémon this card is attached to gets +50 HP.';
     }
     reduceEffect(store, state, effect) {
-        if (this instanceof game_1.PokemonCard && this.stage === card_types_1.Stage.BASIC) {
-            if (effect instanceof check_effects_1.CheckHpEffect && effect.target.cards.includes(this)) {
+        if (effect instanceof check_effects_1.CheckHpEffect && effect.target.cards.includes(this)) {
+            const card = effect.target.getPokemonCard();
+            if (card === undefined) {
+                return state;
+            }
+            if (card.stage === card_types_1.Stage.BASIC) {
                 effect.hp += 50;
             }
-            return state;
         }
         return state;
     }

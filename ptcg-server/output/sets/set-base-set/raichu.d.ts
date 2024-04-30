@@ -8,6 +8,7 @@ export declare class Raichu extends PokemonCard {
     name: string;
     set: string;
     fullName: string;
+    cardImage: string;
     stage: Stage;
     cardType: CardType;
     hp: number;

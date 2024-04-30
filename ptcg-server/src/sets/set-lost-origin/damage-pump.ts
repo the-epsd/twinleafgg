@@ -29,11 +29,10 @@ export class DamagePump extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
         
       const maxAllowedDamage: DamageMap[] = [];
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        const checkHpEffect = new CheckHpEffect(opponent, cardList);
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        const checkHpEffect = new CheckHpEffect(player, cardList);
         store.reduceEffect(state, checkHpEffect);
         maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
       });
@@ -44,10 +43,10 @@ export class DamagePump extends TrainerCard {
       return store.prompt(state, new MoveDamagePrompt(
         effect.player.id,
         GameMessage.MOVE_DAMAGE,
-        PlayerType.TOP_PLAYER,
+        PlayerType.BOTTOM_PLAYER,
         [ SlotType.ACTIVE, SlotType.BENCH ],
         maxAllowedDamage,
-        { min: 1, max: 2, allowCancel: true }
+        { min: 1, max: 2, allowCancel: false }
       ), transfers => {
         if (transfers === null) {
           return;

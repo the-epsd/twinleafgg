@@ -1,7 +1,9 @@
 import { Card } from '../../game/store/card/card';
-import { BillArt, BlastoiseArt, ChanseyArt, CharizardArt, CharmanderArt, CharmeleonArt, ClefairyArt, ComputerSearchArt, DoduoArt, DoubleColorlessEnergyArt, DugtrioArt, ElectabuzzArt, EnergyRemovalArt, EnergyRetrievalArt, GustOfWindArt, GyaradosArt, HitmonchanArt, ItemFinderArt, LassArt, MachampArt, MagnetonArt, MaintenanceArt, MewtwoArt, NidokingArt, PlusPowerArt, PokemonBreederArt, PokemonCenterArt, PokemonTraderArt, PoliwrathArt, ProfessorOakArt, RaichuArt, RattataArt, ScoopUpArt, SquirtleArt, SuperEnergyRemovalArt, SuperPotionArt, SwitchArt, VenusaurArt, WartortleArt, ZapdosArt } from './card-images';
+import { AlakazamArt, BeedrillArt, BillArt, BlastoiseArt, ChanseyArt, CharizardArt, CharmanderArt, CharmeleonArt, ClefairyArt, ComputerSearchArt, DoduoArt, DoubleColorlessEnergyArt, DragonairArt, DugtrioArt, ElectabuzzArt, EnergyRemovalArt, EnergyRetrievalArt, GustOfWindArt, GyaradosArt, HitmonchanArt, ItemFinderArt, LassArt, MachampArt, MagnetonArt, MaintenanceArt, MewtwoArt, NidokingArt, NinetalesArt, PlusPowerArt, PokemonBreederArt, PokemonCenterArt, PokemonTraderArt, PoliwrathArt, ProfessorOakArt, RaichuArt, RattataArt, ScoopUpArt, SquirtleArt, SuperEnergyRemovalArt, SuperPotionArt, SwitchArt, VenusaurArt, WartortleArt, ZapdosArt } from './card-images';
 
 export const setBaseSet: Card[] = [
+  new AlakazamArt(),
+  new BeedrillArt(),
   new BillArt(),
   new BlastoiseArt(),
   new ChanseyArt(),
@@ -12,6 +14,7 @@ export const setBaseSet: Card[] = [
   new ComputerSearchArt(),
   new DoduoArt(),
   new DoubleColorlessEnergyArt(),
+  new DragonairArt(),
   new DugtrioArt(),
   new ElectabuzzArt(),
   new EnergyRemovalArt(),
@@ -26,6 +29,7 @@ export const setBaseSet: Card[] = [
   new MaintenanceArt(),
   new MewtwoArt(),
   new NidokingArt(),
+  new NinetalesArt(),
   new PoliwrathArt(),
   new PlusPowerArt(),
   new PokemonBreederArt(),

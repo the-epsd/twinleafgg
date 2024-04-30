@@ -78,7 +78,7 @@ export declare class DoduoArt extends Doduo {
 export declare class DoubleColorlessEnergyArt extends DoubleColorlessEnergy {
     cardImage: string;
 }
-export declare class DragonairEnergyArt extends Dragonair {
+export declare class DragonairArt extends Dragonair {
     cardImage: string;
 }
 export declare class DugtrioArt extends Dugtrio {

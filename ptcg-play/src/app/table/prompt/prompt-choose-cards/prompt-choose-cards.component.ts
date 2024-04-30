@@ -68,6 +68,8 @@ export class PromptChooseCardsComponent {
     const isInvalid = !this.promptValue.validate(cards);
     this.result = result;
     this.isInvalid = isInvalid;
+
+    
   }
 
 }

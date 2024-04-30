@@ -8,6 +8,7 @@ export declare class Zapdos extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
     stage: Stage;
     cardType: CardType;
     hp: number;

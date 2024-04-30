@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setBaseSet = void 0;
 const card_images_1 = require("./card-images");
 exports.setBaseSet = [
+    new card_images_1.AlakazamArt(),
+    new card_images_1.BeedrillArt(),
     new card_images_1.BillArt(),
     new card_images_1.BlastoiseArt(),
     new card_images_1.ChanseyArt(),
@@ -13,6 +15,7 @@ exports.setBaseSet = [
     new card_images_1.ComputerSearchArt(),
     new card_images_1.DoduoArt(),
     new card_images_1.DoubleColorlessEnergyArt(),
+    new card_images_1.DragonairArt(),
     new card_images_1.DugtrioArt(),
     new card_images_1.ElectabuzzArt(),
     new card_images_1.EnergyRemovalArt(),
@@ -27,6 +30,7 @@ exports.setBaseSet = [
     new card_images_1.MaintenanceArt(),
     new card_images_1.MewtwoArt(),
     new card_images_1.NidokingArt(),
+    new card_images_1.NinetalesArt(),
     new card_images_1.PoliwrathArt(),
     new card_images_1.PlusPowerArt(),
     new card_images_1.PokemonBreederArt(),

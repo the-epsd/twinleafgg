@@ -3,7 +3,7 @@
 .ptcg-board-deck {
   display: flex;
   flex-direction: column;
-  height: 330px;
+  height: 337px;
   justify-content: space-around;
   margin: 0 auto;
   width: 50%;
@@ -11,4 +11,5 @@
 
 ptcg-board-card {
   width: 82px;
+  margin-top: 30%;
 }

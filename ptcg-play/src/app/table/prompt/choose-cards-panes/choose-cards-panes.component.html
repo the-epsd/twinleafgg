@@ -30,6 +30,7 @@
 
     <ng-template dndSortableTemplate let-context>
       <ptcg-card
+      showCardCount="true"
         [ngClass]="{cardback: cardbackMap[context.data.index]}"
         [dndSortableRender]="context"
         #render="dndSortableRender"

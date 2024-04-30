@@ -10,7 +10,7 @@ $avatar-size: map-get($ptcg-size, avatar);
   position: relative;
 
   &.marked .ptcg-user-name {
-    text-decoration: underline;
+    text-decoration: none;
   }
   
   &.clickable ptcg-avatar,

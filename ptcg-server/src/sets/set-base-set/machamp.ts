@@ -15,6 +15,8 @@ export class Machamp extends PokemonCard {
   
   public name = 'Machamp';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public stage: Stage = Stage.STAGE_2;
   
   public evolvesFrom: string = 'Machoke';

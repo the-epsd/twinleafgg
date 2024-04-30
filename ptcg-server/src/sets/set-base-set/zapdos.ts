@@ -19,6 +19,8 @@ export class Zapdos extends PokemonCard {
   public name = 'Zapdos';
   
   public fullName = 'Zapdos BS';
+
+  public cardImage: string = 'assets/cardback.png';
   
   public stage: Stage = Stage.BASIC;
   

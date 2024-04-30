@@ -16,6 +16,7 @@ class Zapdos extends pokemon_card_1.PokemonCard {
         this.set = 'BS';
         this.name = 'Zapdos';
         this.fullName = 'Zapdos BS';
+        this.cardImage = 'assets/cardback.png';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 90;

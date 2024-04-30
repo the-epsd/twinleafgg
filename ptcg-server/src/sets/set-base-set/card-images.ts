@@ -91,7 +91,7 @@ export class DoubleColorlessEnergyArt extends DoubleColorlessEnergy {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/double-colorless-energy-base-set-bs-96.jpg?fit=600%2C825&ssl=1';
 }
 
-export class DragonairEnergyArt extends Dragonair {
+export class DragonairArt extends Dragonair {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/dragonair-base-set-bs-18.jpg?fit=600%2C825&ssl=1';
 }
 
@@ -132,7 +132,7 @@ export class LassArt extends Lass {
 }
 
 export class MachampArt extends Machamp {
-  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/magneton-base-set-bs-8.jpg?fit=600%2C825&ssl=1';
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/machamp-base-set-bs-8.jpg';
 }
 
 export class MagnetonArt extends Magneton {
@@ -148,7 +148,7 @@ export class MewtwoArt extends Mewtwo {
 }
 
 export class NidokingArt extends Nidoking {
-  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/Nidoking-base-set-bs-11.jpg?fit=600%2C825&ssl=1';
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/nidoking-base-set-bs-11.jpg';
 }
 
 export class NinetalesArt extends Ninetales {
@@ -180,7 +180,7 @@ export class ProfessorOakArt extends ProfessorOak {
 }
 
 export class RaichuArt extends Raichu {
-  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/Raichu-base-set-bs-14.jpg?fit=600%2C825&ssl=1';
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/raichu-base-set-bs-14.jpg';
 }
 
 export class RattataArt extends Rattata {
@@ -216,5 +216,5 @@ export class WartortleArt extends Wartortle {
 }
 
 export class ZapdosArt extends Zapdos {
-  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/Zapdos-base-set-bs-16.jpg?fit=600%2C825&ssl=1';
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/zapdos-base-set-bs-16.jpg';
 }

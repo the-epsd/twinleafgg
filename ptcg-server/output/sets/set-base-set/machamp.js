@@ -14,6 +14,7 @@ class Machamp extends pokemon_card_1.PokemonCard {
         this.set = 'BS';
         this.fullName = 'Machamp BS';
         this.name = 'Machamp';
+        this.cardImage = 'assets/cardback.png';
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Machoke';
         this.hp = 100;

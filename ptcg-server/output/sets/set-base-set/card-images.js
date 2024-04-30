@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.WartortleArt = exports.VenusaurArt = exports.SwitchArt = exports.SuperPotionArt = exports.SuperEnergyRemovalArt = exports.SquirtleArt = exports.ScoopUpArt = exports.RattataArt = exports.RaichuArt = exports.ProfessorOakArt = exports.PokemonTraderArt = exports.PokemonCenterArt = exports.PokemonBreederArt = exports.PlusPowerArt = exports.PoliwrathArt = exports.NinetalesArt = exports.NidokingArt = exports.MewtwoArt = exports.MaintenanceArt = exports.MagnetonArt = exports.MachampArt = exports.LassArt = exports.ItemFinderArt = exports.HitmonchanArt = exports.GyaradosArt = exports.GustOfWindArt = exports.EnergyRetrievalArt = exports.EnergyRemovalArt = exports.ElectabuzzArt = exports.DugtrioArt = exports.DragonairEnergyArt = exports.DoubleColorlessEnergyArt = exports.DoduoArt = exports.ComputerSearchArt = exports.ClefairyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = exports.ChanseyArt = exports.BlastoiseArt = exports.BillArt = exports.BeedrillArt = exports.AlakazamArt = void 0;
+exports.ZapdosArt = exports.WartortleArt = exports.VenusaurArt = exports.SwitchArt = exports.SuperPotionArt = exports.SuperEnergyRemovalArt = exports.SquirtleArt = exports.ScoopUpArt = exports.RattataArt = exports.RaichuArt = exports.ProfessorOakArt = exports.PokemonTraderArt = exports.PokemonCenterArt = exports.PokemonBreederArt = exports.PlusPowerArt = exports.PoliwrathArt = exports.NinetalesArt = exports.NidokingArt = exports.MewtwoArt = exports.MaintenanceArt = exports.MagnetonArt = exports.MachampArt = exports.LassArt = exports.ItemFinderArt = exports.HitmonchanArt = exports.GyaradosArt = exports.GustOfWindArt = exports.EnergyRetrievalArt = exports.EnergyRemovalArt = exports.ElectabuzzArt = exports.DugtrioArt = exports.DragonairArt = exports.DoubleColorlessEnergyArt = exports.DoduoArt = exports.ComputerSearchArt = exports.ClefairyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = exports.ChanseyArt = exports.BlastoiseArt = exports.BillArt = exports.BeedrillArt = exports.AlakazamArt = void 0;
 const alakazam_1 = require("./alakazam");
 const beedrill_1 = require("./beedrill");
 const bill_1 = require("./bill");
@@ -129,13 +129,13 @@ class DoubleColorlessEnergyArt extends double_colorless_energy_1.DoubleColorless
     }
 }
 exports.DoubleColorlessEnergyArt = DoubleColorlessEnergyArt;
-class DragonairEnergyArt extends dragonair_1.Dragonair {
+class DragonairArt extends dragonair_1.Dragonair {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/dragonair-base-set-bs-18.jpg?fit=600%2C825&ssl=1';
     }
 }
-exports.DragonairEnergyArt = DragonairEnergyArt;
+exports.DragonairArt = DragonairArt;
 class DugtrioArt extends dugtrio_1.Dugtrio {
     constructor() {
         super(...arguments);
@@ -202,7 +202,7 @@ exports.LassArt = LassArt;
 class MachampArt extends machamp_1.Machamp {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/magneton-base-set-bs-8.jpg?fit=600%2C825&ssl=1';
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/machamp-base-set-bs-8.jpg';
     }
 }
 exports.MachampArt = MachampArt;
@@ -230,7 +230,7 @@ exports.MewtwoArt = MewtwoArt;
 class NidokingArt extends nidoking_1.Nidoking {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/Nidoking-base-set-bs-11.jpg?fit=600%2C825&ssl=1';
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/nidoking-base-set-bs-11.jpg';
     }
 }
 exports.NidokingArt = NidokingArt;
@@ -286,7 +286,7 @@ exports.ProfessorOakArt = ProfessorOakArt;
 class RaichuArt extends raichu_1.Raichu {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/Raichu-base-set-bs-14.jpg?fit=600%2C825&ssl=1';
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/raichu-base-set-bs-14.jpg';
     }
 }
 exports.RaichuArt = RaichuArt;
@@ -349,7 +349,7 @@ exports.WartortleArt = WartortleArt;
 class ZapdosArt extends zapdos_1.Zapdos {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/Zapdos-base-set-bs-16.jpg?fit=600%2C825&ssl=1';
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/zapdos-base-set-bs-16.jpg';
     }
 }
 exports.ZapdosArt = ZapdosArt;
