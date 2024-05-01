@@ -29,7 +29,7 @@ class Haunter extends pokemon_card_1.PokemonCard {
                 name: 'Dream Eater',
                 cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC],
                 damage: 50,
-                text: "You can't use this attack unless the Defending Pokémon is Asleep."
+                text: 'You can\'t use this attack unless the Defending Pokémon is Asleep.'
             }
         ];
     }

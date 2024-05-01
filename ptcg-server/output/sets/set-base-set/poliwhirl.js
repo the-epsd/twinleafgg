@@ -56,6 +56,7 @@ class Poliwhirl extends pokemon_card_1.PokemonCard {
                 this.forgottenAttack = selected;
                 store.log(state, game_1.GameLog.LOG_PLAYER_DISABLES_ATTACK, {
                     name: player.name,
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     attack: this.forgottenAttack.name
                 });
                 return state;
@@ -71,6 +72,7 @@ class Poliwhirl extends pokemon_card_1.PokemonCard {
             effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
                 cardList.marker.removeMarker(this.AMNESIA_MARKER, this);
             });
+            this.forgottenAttack = null;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             return store.prompt(state, [

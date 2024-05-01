@@ -88,10 +88,11 @@ export class Pidgeotto extends PokemonCard {
         effect.opponent;
         effect.player = player;
         effect.source = player.active;
+        // eslint-disable-next-line no-self-assign
         effect.attackEffect = effect.attackEffect;
         
         store.reduceEffect(state, effect.attackEffect);
-      })
+      });
     }
     
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {

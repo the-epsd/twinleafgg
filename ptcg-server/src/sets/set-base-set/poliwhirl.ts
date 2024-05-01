@@ -80,6 +80,7 @@ export class Poliwhirl extends PokemonCard {
           
         store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
           name: player.name,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           attack: this.forgottenAttack!.name
         });
         

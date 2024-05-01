@@ -56,7 +56,7 @@ export class Kakuna extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), (heads) => {
         if (heads) {
-          const player = effect.player
+          const player = effect.player;
           player.marker.addMarker(this.STIFFEN_MARKER, this);
         }
       });

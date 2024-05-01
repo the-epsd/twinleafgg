@@ -26,7 +26,7 @@ class Electrode extends pokemon_card_1.PokemonCard {
                 useWhenInPlay: true,
                 powerType: pokemon_types_1.PowerType.POKEPOWER,
                 name: 'Buzzap',
-                text: `At any time during your turn (before your attack), you may Knock Out Electrode and attach it to 1 of your other Pokémon. If you do, choose a type of Energy. Electrode is now an Energy card (instead of a Pokémon) that provides 2 energy of that type. You can’t use this power if Electrode is Asleep, Confused, or Paralyzed.`,
+                text: 'At any time during your turn (before your attack), you may Knock Out Electrode and attach it to 1 of your other Pokémon. If you do, choose a type of Energy. Electrode is now an Energy card (instead of a Pokémon) that provides 2 energy of that type. You can’t use this power if Electrode is Asleep, Confused, or Paralyzed.',
             }
         ];
         this.attacks = [
