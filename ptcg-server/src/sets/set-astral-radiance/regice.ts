@@ -77,7 +77,7 @@ export class Regice extends PokemonCard {
 
   public fullName: string = 'Regice ASR';
 
-  public readonly IRON_BREAKER_MARKER = 'IRON_BREAKER_MAREKER';
+  public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     
@@ -89,16 +89,16 @@ export class Regice extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.IRON_BREAKER_MARKER, this);
+      opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
     
-      if (effect instanceof UseAttackEffect && effect.player.active.marker.hasMarker(this.IRON_BREAKER_MARKER, this)) {
+      if (effect instanceof UseAttackEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
         const pokemonCard = effect.opponent.active.getPokemonCard();
         if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_V || pokemonCard.tags.includes(CardTag.POKEMON_VMAX || pokemonCard.tags.includes(CardTag.POKEMON_VSTAR)))) {
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
         }
 
         if (effect instanceof EndTurnEffect) {
-          effect.player.active.marker.removeMarker(this.IRON_BREAKER_MARKER, this);
+          effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
         }
 
         return state;

@@ -23,6 +23,6 @@ export declare class Regice extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly IRON_BREAKER_MARKER = "IRON_BREAKER_MAREKER";
+    readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = "DEFENDING_POKEMON_CANNOT_ATTACK_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

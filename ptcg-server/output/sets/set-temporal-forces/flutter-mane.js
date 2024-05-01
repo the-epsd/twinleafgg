@@ -11,6 +11,10 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 function* useLostMine(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
+    const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+    if (!hasBenched) {
+        return state;
+    }
     const maxAllowedDamage = [];
     let damageLeft = 0;
     opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {

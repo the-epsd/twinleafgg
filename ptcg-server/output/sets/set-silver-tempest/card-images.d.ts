@@ -23,6 +23,7 @@ import { RadiantAlakazam } from './radiant-alakazam';
 import { RadiantJirachi } from './radiant-jirachi';
 import { RadiantTsareena } from './radiant-tsareena';
 import { Raichu } from './raichu';
+import { Ralts } from './ralts';
 import { RegenerativeEnergy } from './regenerative-energy';
 import { RegidragoV } from './regidrago-v';
 import { RegidragoVSTAR } from './regidrago-vstar';
@@ -109,6 +110,9 @@ export declare class RadiantTsareenaArt extends RadiantTsareena {
     cardImage: string;
 }
 export declare class RaichuArt extends Raichu {
+    cardImage: string;
+}
+export declare class RaltsArt extends Ralts {
     cardImage: string;
 }
 export declare class RegenerativeEnergyArt extends RegenerativeEnergy {

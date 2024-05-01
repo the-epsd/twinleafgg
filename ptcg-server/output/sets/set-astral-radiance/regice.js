@@ -55,7 +55,7 @@ class Regice extends pokemon_card_1.PokemonCard {
         this.setNumber = '37';
         this.name = 'Regice';
         this.fullName = 'Regice ASR';
-        this.IRON_BREAKER_MARKER = 'IRON_BREAKER_MAREKER';
+        this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -65,14 +65,14 @@ class Regice extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.active.marker.addMarker(this.IRON_BREAKER_MARKER, this);
-            if (effect instanceof game_effects_1.UseAttackEffect && effect.player.active.marker.hasMarker(this.IRON_BREAKER_MARKER, this)) {
+            opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
+            if (effect instanceof game_effects_1.UseAttackEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
                 const pokemonCard = effect.opponent.active.getPokemonCard();
                 if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V || pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX || pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR)))) {
                     throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
                 }
                 if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-                    effect.player.active.marker.removeMarker(this.IRON_BREAKER_MARKER, this);
+                    effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
                 }
                 return state;
             }

@@ -13,6 +13,10 @@ const __1 = require("../..");
 function* usePhantomDive(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+    const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+    if (!hasBenched) {
+        return state;
+    }
     const maxAllowedDamage = [];
     let damageLeft = 0;
     opponent.forEachPokemon(play_card_action_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
@@ -35,7 +39,7 @@ function* usePhantomDive(next, store, state, effect) {
 class Dragapultex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.STAGE_2;
+        this.stage = card_types_1.Stage.BASIC;
         this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.evolvesFrom = 'Drakloak';
         this.regulationMark = 'H';

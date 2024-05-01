@@ -36,7 +36,7 @@ class Cobalion extends pokemon_card_1.PokemonCard {
         this.fullName = 'Cobalion LTR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '91';
-        this.IRON_BREAKER_MARKER = 'IRON_BREAKER_MAREKER';
+        this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
     }
     reduceEffect(store, state, effect) {
         // Energy Press
@@ -52,13 +52,13 @@ class Cobalion extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            opponent.active.marker.addMarker(this.IRON_BREAKER_MARKER, this);
+            opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
         }
-        if (effect instanceof game_effects_1.UseAttackEffect && effect.player.active.marker.hasMarker(this.IRON_BREAKER_MARKER, this)) {
+        if (effect instanceof game_effects_1.UseAttackEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
             throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_EFFECT);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.active.marker.removeMarker(this.IRON_BREAKER_MARKER, this);
+            effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
         }
         return state;
     }

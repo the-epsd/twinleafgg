@@ -28,6 +28,7 @@ exports.setSilverTempest = [
     new card_images_1.RadiantJirachiArt(),
     new card_images_1.RadiantTsareenaArt(),
     new card_images_1.RaichuArt(),
+    new card_images_1.RaltsArt(),
     new card_images_1.RegenerativeEnergyArt(),
     new card_images_1.RegidragoVArt(),
     new card_images_1.RegidragoVSTARArt(),

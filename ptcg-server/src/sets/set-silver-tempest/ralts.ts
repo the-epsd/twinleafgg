@@ -4,7 +4,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { Attack } from '../../game/store/card/pokemon-types';
 import { ChooseAttackPrompt, GameError, GameLog, GameMessage, StateUtils } from '../../game';
 
 export class Ralts extends PokemonCard {
@@ -62,19 +61,18 @@ export class Ralts extends PokemonCard {
       });
       
       opponent.active.marker.addMarker(this.MEAN_LOOK_MARKER, this);
-      const attack: Attack | null = selected;
         
-      if (attack === null) {
+      if (selected === null) {
         return state;
       }
         
       store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
         name: player.name,
-        attack: attack.name
+        attack: selected.name
       });
       
-      if (effect instanceof AttackEffect && effect.attack === attack) {
-        if (effect.player.active.marker.hasMarker(this.MEAN_LOOK_MARKER, this)) {
+      if (effect instanceof AttackEffect && effect.attack === selected) {
+        if (effect.opponent.active.marker.hasMarker(this.MEAN_LOOK_MARKER, this)) {
       
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
         }

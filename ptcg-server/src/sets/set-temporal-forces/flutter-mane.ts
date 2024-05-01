@@ -13,6 +13,11 @@ function* useLostMine(next: Function, store: StoreLike, state: State, effect: At
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
     
+  const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+  if (!hasBenched) {
+    return state;
+  }
+
   const maxAllowedDamage: DamageMap[] = [];
   let damageLeft = 0;
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {

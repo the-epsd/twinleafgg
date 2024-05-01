@@ -23,6 +23,7 @@ import { RadiantAlakazam } from './radiant-alakazam';
 import { RadiantJirachi } from './radiant-jirachi';
 import { RadiantTsareena } from './radiant-tsareena';
 import { Raichu } from './raichu';
+import { Ralts } from './ralts';
 import { RegenerativeEnergy } from './regenerative-energy';
 import { RegidragoV } from './regidrago-v';
 import { RegidragoVSTAR } from './regidrago-vstar';
@@ -135,6 +136,10 @@ export class RadiantTsareenaArt extends RadiantTsareena {
 
 export class RaichuArt extends Raichu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_050_R_EN_LG.png';
+}
+
+export class RaltsArt extends Ralts {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_067_R_EN.png';
 }
 
 export class RegenerativeEnergyArt extends RegenerativeEnergy {

@@ -40,16 +40,15 @@ class Ralts extends pokemon_card_1.PokemonCard {
                 selected = result;
             });
             opponent.active.marker.addMarker(this.MEAN_LOOK_MARKER, this);
-            const attack = selected;
-            if (attack === null) {
+            if (selected === null) {
                 return state;
             }
             store.log(state, game_1.GameLog.LOG_PLAYER_COPIES_ATTACK, {
                 name: player.name,
-                attack: attack.name
+                attack: selected.name
             });
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === attack) {
-                if (effect.player.active.marker.hasMarker(this.MEAN_LOOK_MARKER, this)) {
+            if (effect instanceof game_effects_1.AttackEffect && effect.attack === selected) {
+                if (effect.opponent.active.marker.hasMarker(this.MEAN_LOOK_MARKER, this)) {
                     throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
                 }
                 //   // Perform attack
