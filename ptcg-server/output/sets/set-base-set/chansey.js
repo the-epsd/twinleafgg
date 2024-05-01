@@ -53,8 +53,8 @@ class Chansey extends pokemon_card_1.PokemonCard {
             effect.preventDefault = true;
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect
-            && effect.player.marker.hasMarker(this.CLEAR_SCRUNCH_MARKER, this)) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect &&
+            effect.player.marker.hasMarker(this.CLEAR_SCRUNCH_MARKER, this)) {
             effect.player.marker.removeMarker(this.CLEAR_SCRUNCH_MARKER, this);
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {

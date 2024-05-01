@@ -1,4 +1,5 @@
 import { Alakazam } from './alakazam';
+import { Arcanine } from './arcanine';
 import { Beedrill } from './beedrill';
 import { Bill } from './bill';
 import { Blastoise } from './blastoise';
@@ -8,28 +9,45 @@ import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
 import { Clefairy } from './clefairy';
 import { ComputerSearch } from './computer-search';
+import { Dewgong } from './dewgong';
 import { Doduo } from './doduo';
 import { DoubleColorlessEnergy } from './double-colorless-energy';
 import { Dragonair } from './dragonair';
+import { Dratini } from './dratini';
 import { Dugtrio } from './dugtrio';
 import { Electabuzz } from './electabuzz';
+import { Electrode } from './electrode';
 import { EnergyRemoval } from './energy-removal';
 import { EnergyRetrieval } from './energy-retrieval';
+import { Farfetchd } from './farfetchd';
+import { Growlithe } from './growlithe';
 import { GustOfWind } from './gust-of-wind';
 import { Gyarados } from './gyarados';
+import { Haunter } from './haunter';
 import { Hitmonchan } from './hitmonchan';
 import { ItemFinder } from './item-finder';
+import { Ivysaur } from './ivysaur';
+import { Jynx } from './jynx';
+import { Kadabra } from './kadabra';
+import { Kakuna } from './kakuna';
 import { Lass } from './lass';
 import { Machamp } from './machamp';
+import { Machoke } from './machoke';
+import { Magikarp } from './magikarp';
+import { Magmar } from './magmar';
 import { Magneton } from './magneton';
 import { Maintenance } from './maintenance';
 import { Mewtwo } from './mewtwo';
 import { Nidoking } from './nidoking';
+import { Nidorino } from './nidorino';
 import { Ninetales } from './ninetales';
+import { Pidgeotto } from './pidgeotto';
 import { PlusPower } from './pluspower';
 import { PokemonBreeder } from './pokemon-breeder';
 import { PokemonCenter } from './pokemon-center';
 import { PokemonTrader } from './pokemon-trader';
+import { Poliwag } from './poliwag';
+import { Poliwhirl } from './poliwhirl';
 import { Poliwrath } from './poliwrath';
 import { ProfessorOak } from './professor-oak';
 import { Raichu } from './raichu';
@@ -45,6 +63,10 @@ import { Zapdos } from './zapdos';
 
 export class AlakazamArt extends Alakazam {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/alakazam-base-set-bs-1.jpg?fit=600%2C825&ssl=1';
+}
+
+export class ArcanineArt extends Arcanine {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/arcanine-base-set-bs-23.jpg?fit=600%2C825&ssl=1';
 }
 
 export class BeedrillArt extends Beedrill {
@@ -83,6 +105,10 @@ export class ComputerSearchArt extends ComputerSearch {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/computer-search-base-set-bs-71.jpg?fit=600%2C825&ssl=1';
 }
 
+export class DewgongArt extends Dewgong {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/dewgong-base-set-bs-25.jpg?fit=600%2C825&ssl=1';
+}
+
 export class DoduoArt extends Doduo {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/doduo-base-set-bs-48.jpg?fit=600%2C825&ssl=1';
 }
@@ -95,12 +121,20 @@ export class DragonairArt extends Dragonair {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/dragonair-base-set-bs-18.jpg?fit=600%2C825&ssl=1';
 }
 
+export class DratiniArt extends Dratini {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/dratini-base-set-bs-26.jpg?fit=600%2C825&ssl=1';
+}
+
 export class DugtrioArt extends Dugtrio {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/dugtrio-base-set-bs-19.jpg?fit=600%2C825&ssl=1';
 }
 
 export class ElectabuzzArt extends Electabuzz {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/electabuzz-base-set-bs-20.jpg?fit=600%2C825&ssl=1';
+}
+
+export class ElectrodeArt extends Electrode {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/electrode-base-set-bs-21.jpg?fit=600%2C825&ssl=1';
 }
 
 export class EnergyRemovalArt extends EnergyRemoval {
@@ -111,12 +145,24 @@ export class EnergyRetrievalArt extends EnergyRetrieval {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/energy-retrieval-base-set-bs-81.jpg?fit=600%2C825&ssl=1';
 }
 
+export class FarfetchdArt extends Farfetchd {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/farfetchd-base-set-bs-27.jpg?fit=600%2C825&ssl=01';
+}
+
+export class GrowlitheArt extends Growlithe {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/growlithe-base-set-bs-28.jpg?fit=600%2C825&ssl=01';
+}
+
 export class GustOfWindArt extends GustOfWind {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/gust-of-wind-base-set-bs-93.jpg?fit=600%2C825&ssl=01';
 }
 
 export class GyaradosArt extends Gyarados {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/gyarados-base-set-bs-6.jpg?fit=600%2C825&ssl=1';
+}
+
+export class HaunterArt extends Haunter {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/haunter-base-set-bs-29.jpg?fit=600%2C825&ssl=1';
 }
 
 export class HitmonchanArt extends Hitmonchan {
@@ -127,12 +173,40 @@ export class ItemFinderArt extends ItemFinder {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/item-finder-base-set-bs-74.jpg?fit=600%2C825&ssl=1';
 }
 
+export class IvysaurArt extends Ivysaur {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/ivysaur-base-set-bs-30.jpg?fit=600%2C825&ssl=1';
+}
+
+export class JynxArt extends Jynx {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/jynx-base-set-bs-31.jpg?fit=600%2C825&ssl=1';
+}
+
+export class KadabraArt extends Kadabra {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/kadabra-base-set-bs-32.jpg?fit=600%2C825&ssl=1';
+}
+
+export class KakunaArt extends Kakuna {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/kakuna-base-set-bs-33.jpg?fit=600%2C825&ssl=1';
+}
+
 export class LassArt extends Lass {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/lass-base-set-bs-75.jpg?fit=600%2C825&ssl=1';
 }
 
 export class MachampArt extends Machamp {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/machamp-base-set-bs-8.jpg';
+}
+
+export class MachokeArt extends Machoke {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/machoke-base-set-bs-34.jpg';
+}
+
+export class MagikarpArt extends Magikarp {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/magikarp-base-set-bs-35.jpg';
+}
+
+export class MagmarpArt extends Magmar {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/magmar-base-set-bs-36.jpg';
 }
 
 export class MagnetonArt extends Magneton {
@@ -151,12 +225,16 @@ export class NidokingArt extends Nidoking {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/nidoking-base-set-bs-11.jpg';
 }
 
+export class NidorinoArt extends Nidorino {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/nidorino-base-set-bs-37.jpg';
+}
+
 export class NinetalesArt extends Ninetales {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/ninetales-base-set-bs-12.jpg?fit=600%2C825&ssl=1';
 }
 
-export class PoliwrathArt extends Poliwrath {
-  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/poliwrath-base-set-bs-13.jpg?fit=600%2C825&ssl=1';
+export class PidgeottoArt extends Pidgeotto {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/pidgeotto-base-set-bs-22.jpg?fit=600%2C825&ssl=1';
 }
 
 export class PlusPowerArt extends PlusPower {
@@ -173,6 +251,18 @@ export class PokemonCenterArt extends PokemonCenter {
 
 export class PokemonTraderArt extends PokemonTrader {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/pokemon-trader-base-set-bs-77.jpg?fit=600%2C825&ssl=1';
+}
+
+export class PoliwagArt extends Poliwag {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/poliwag-base-set-bs-59.jpg?fit=600%2C825&ssl=1';
+}
+
+export class PoliwhirlArt extends Poliwhirl {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/poliwhirl-base-set-bs-38.jpg?fit=600%2C825&ssl=1';
+}
+
+export class PoliwrathArt extends Poliwrath {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/poliwrath-base-set-bs-13.jpg?fit=600%2C825&ssl=1';
 }
 
 export class ProfessorOakArt extends ProfessorOak {
