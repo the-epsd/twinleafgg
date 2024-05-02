@@ -44,4 +44,3 @@ export class Alakazamex extends PokemonCard {
   public fullName: string = 'Alakazam ex MEW';
 
 }
-    

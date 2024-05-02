@@ -56,7 +56,6 @@ export class Charmeleon extends PokemonCard {
       const pokemonCard = effect.target.getPokemonCard();
       const sourceCard = effect.source.getPokemonCard();
   
-      // pokemon is evolved
       if (pokemonCard !== this) {
         return state;
       }

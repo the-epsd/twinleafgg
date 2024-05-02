@@ -13,6 +13,7 @@ import { Lairon } from './lairon';
 import { LegacyEnergy } from './legacy-energy';
 import { Luxrayex } from './luxray-ex';
 import { Mightyena } from './mightyena';
+import { PerformanceFlute } from './performance-flute';
 import { Poochyena } from './poochyena';
 import { RotoStick } from './roto-stick';
 import { ScoopUpCyclone } from './scoop-up-cyclone';
@@ -60,6 +61,9 @@ export declare class LuxrayexArt extends Luxrayex {
     cardImage: string;
 }
 export declare class MightyenaArt extends Mightyena {
+    cardImage: string;
+}
+export declare class PerformanceFluteArt extends PerformanceFlute {
     cardImage: string;
 }
 export declare class PoochyenaArt extends Poochyena {

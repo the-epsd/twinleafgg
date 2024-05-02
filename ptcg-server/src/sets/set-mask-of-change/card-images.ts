@@ -13,6 +13,7 @@ import { Lairon } from './lairon';
 import { LegacyEnergy } from './legacy-energy';
 import { Luxrayex } from './luxray-ex';
 import { Mightyena } from './mightyena';
+import { PerformanceFlute } from './performance-flute';
 import { Poochyena } from './poochyena';
 import { RotoStick } from './roto-stick';
 import { ScoopUpCyclone } from './scoop-up-cyclone';
@@ -76,6 +77,10 @@ export class LuxrayexArt extends Luxrayex {
 
 export class MightyenaArt extends Mightyena {
   public cardImage = 'https://pokemonproxies.com/static/media/Mightyena-067-6b.c0ccbda4c99375cbd61e.png';
+}
+
+export class PerformanceFluteArt extends PerformanceFlute {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_91_R_JP.png';
 }
 
 export class PoochyenaArt extends Poochyena {

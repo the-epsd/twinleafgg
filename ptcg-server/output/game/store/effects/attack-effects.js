@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HealTargetEffect = exports.RemoveSpecialConditionsEffect = exports.AddSpecialConditionsEffect = exports.AddMarkerEffect = exports.CardsToHandEffect = exports.DiscardCardsEffect = exports.PutCountersEffect = exports.AfterDamageEffect = exports.PutDamageEffect = exports.DealDamageEffect = exports.ApplyWeaknessEffect = exports.AbstractAttackEffect = exports.AttackEffects = void 0;
+exports.HealTargetEffect = exports.RemoveSpecialConditionsEffect = exports.AddSpecialConditionsEffect = exports.AddMarkerEffect = exports.CardsToHandEffect = exports.DiscardCardsEffect = exports.KnockOutOpponentEffect = exports.PutCountersEffect = exports.AfterDamageEffect = exports.PutDamageEffect = exports.DealDamageEffect = exports.ApplyWeaknessEffect = exports.AbstractAttackEffect = exports.AttackEffects = void 0;
 const card_types_1 = require("../card/card-types");
 var AttackEffects;
 (function (AttackEffects) {
     AttackEffects["APPLY_WEAKNESS_EFFECT"] = "APPLY_WEAKNESS_EFFECT";
     AttackEffects["DEAL_DAMAGE_EFFECT"] = "DEAL_DAMAGE_EFFECT";
     AttackEffects["PUT_DAMAGE_EFFECT"] = "PUT_DAMAGE_EFFECT";
+    AttackEffects["KNOCK_OUT_OPPONENT_EFFECT"] = "KNOCK_OUT_OPPONENT_EFFECT";
     AttackEffects["AFTER_DAMAGE_EFFECT"] = "AFTER_DAMAGE_EFFECT";
     AttackEffects["PUT_COUNTERS_EFFECT"] = "PUT_COUNTERS_EFFECT";
     AttackEffects["DISCARD_CARD_EFFECT"] = "DISCARD_CARD_EFFECT";
@@ -74,6 +75,15 @@ class PutCountersEffect extends AbstractAttackEffect {
     }
 }
 exports.PutCountersEffect = PutCountersEffect;
+class KnockOutOpponentEffect extends AbstractAttackEffect {
+    constructor(base, damage) {
+        super(base);
+        this.type = AttackEffects.KNOCK_OUT_OPPONENT_EFFECT;
+        this.preventDefault = false;
+        this.damage = damage;
+    }
+}
+exports.KnockOutOpponentEffect = KnockOutOpponentEffect;
 class DiscardCardsEffect extends AbstractAttackEffect {
     constructor(base, energyCards) {
         super(base);

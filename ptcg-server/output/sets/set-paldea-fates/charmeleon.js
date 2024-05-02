@@ -41,7 +41,6 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
         if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this)) {
             const pokemonCard = effect.target.getPokemonCard();
             const sourceCard = effect.source.getPokemonCard();
-            // pokemon is evolved
             if (pokemonCard !== this) {
                 return state;
             }

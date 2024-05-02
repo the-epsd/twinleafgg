@@ -19,7 +19,7 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Frenzied Gouging',
-                cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
+                cost: [],
                 damage: 0,
                 text: 'Knock Out your opponent\'s Active Pokémon. If your opponent\'s Active Pokémon is Knocked Out in this way, this Pokémon does 200 damage to itself.'
             },
@@ -37,14 +37,18 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Roaring Moon ex PAR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const activePokemon = opponent.active.getPokemonCard();
             if (activePokemon) {
-                activePokemon.hp = 0;
-                this.hp -= 200;
+                const dealDamage = new attack_effects_1.KnockOutOpponentEffect(effect, 999);
+                dealDamage.target = opponent.active;
+                store.reduceEffect(state, dealDamage);
             }
+            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 200);
+            dealDamage.target = player.active;
+            store.reduceEffect(state, dealDamage);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const stadiumCard = game_1.StateUtils.getStadiumCard(state);

@@ -5,7 +5,8 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { ConfirmPrompt, GameMessage, StateUtils } from '../../game';
-import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect, KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+
 
 export class RoaringMoonex extends PokemonCard {
 
@@ -26,7 +27,7 @@ export class RoaringMoonex extends PokemonCard {
   public attacks = [
     {
       name: 'Frenzied Gouging',
-      cost: [ CardType.DARK, CardType.DARK, CardType.COLORLESS ],
+      cost: [ ],
       damage: 0,
       text: 'Knock Out your opponent\'s Active Pokémon. If your opponent\'s Active Pokémon is Knocked Out in this way, this Pokémon does 200 damage to itself.'
     },
@@ -50,29 +51,32 @@ export class RoaringMoonex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AbstractAttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-
       const opponent = StateUtils.getOpponent(state, player);
 
       const activePokemon = opponent.active.getPokemonCard();
+      
       if (activePokemon) {
-        activePokemon.hp = 0;
-        this.hp -= 200;
+        const dealDamage = new KnockOutOpponentEffect(effect, 999);
+        dealDamage.target = opponent.active;
+        store.reduceEffect(state, dealDamage);
       }
+
+      const dealDamage = new DealDamageEffect(effect, 200);
+      dealDamage.target = player.active;
+      store.reduceEffect(state, dealDamage);
+
     }
-
-
+  
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard) {
-
         state = store.prompt(state, new ConfirmPrompt(
           effect.player.id,
           GameMessage.CALAMITY_STORM,
         ), wantToUse => {
           if (wantToUse) {
-
             // Discard Stadium
             const cardList = StateUtils.findCardList(state, stadiumCard);
             if (cardList) {
