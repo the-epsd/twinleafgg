@@ -105,7 +105,7 @@ export class Player {
       this.marker.removeMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER);
       this.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER);
       this.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER);
-
+    
       this.active.clearEffects();
       this.active = this.bench[benchIndex];
       this.bench[benchIndex] = temp;

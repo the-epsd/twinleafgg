@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { State } from '../../game/store/state/state';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { ConfirmPrompt, GameMessage, StateUtils } from '../../game';
@@ -27,7 +27,7 @@ export class RoaringMoonex extends PokemonCard {
   public attacks = [
     {
       name: 'Frenzied Gouging',
-      cost: [ ],
+      cost: [ CardType.DARK, CardType.DARK, CardType.COLORLESS ],
       damage: 0,
       text: 'Knock Out your opponent\'s Active Pokémon. If your opponent\'s Active Pokémon is Knocked Out in this way, this Pokémon does 200 damage to itself.'
     },
@@ -63,31 +63,34 @@ export class RoaringMoonex extends PokemonCard {
         store.reduceEffect(state, dealDamage);
       }
 
-      const dealDamage = new DealDamageEffect(effect, 200);
-      dealDamage.target = player.active;
-      store.reduceEffect(state, dealDamage);
+      if (effect instanceof KnockOutEffect && effect.target == activePokemon) {
+        const dealDamage = new DealDamageEffect(effect, 200);
+        dealDamage.target = player.active;
+        store.reduceEffect(state, dealDamage);
 
-    }
+      }
   
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const stadiumCard = StateUtils.getStadiumCard(state);
-      if (stadiumCard) {
-        state = store.prompt(state, new ConfirmPrompt(
-          effect.player.id,
-          GameMessage.CALAMITY_STORM,
-        ), wantToUse => {
-          if (wantToUse) {
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+        const stadiumCard = StateUtils.getStadiumCard(state);
+        if (stadiumCard) {
+          state = store.prompt(state, new ConfirmPrompt(
+            effect.player.id,
+            GameMessage.CALAMITY_STORM,
+          ), wantToUse => {
+            if (wantToUse) {
             // Discard Stadium
-            const cardList = StateUtils.findCardList(state, stadiumCard);
-            if (cardList) {
-              const player = StateUtils.findOwner(state, cardList);
-              cardList.moveTo(player.discard);
+              const cardList = StateUtils.findCardList(state, stadiumCard);
+              if (cardList) {
+                const player = StateUtils.findOwner(state, cardList);
+                cardList.moveTo(player.discard);
+              }
+              effect.damage += 120;
+              return state;
             }
-            effect.damage += 120;
             return state;
-          }
+          });
           return state;
-        });
+        }
         return state;
       }
       return state;

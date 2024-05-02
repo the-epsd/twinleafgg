@@ -83,13 +83,19 @@ $ptcg-energy-card-offset: 10%;
 }
 
 .ptcg-card-marker {
+  z-index: 5;
+  left: 0;
+  padding: map-get($padding, small);
   position: absolute;
-  top: 0%;
-  right: 0%;
-  z-index: 1;
+  top: 0;
+  transform: translateX(-100%);
+
+  & > div {
+    padding-bottom: $ptcg-board-tiny-padding;
+  }
 
   :host-context(.upside-down) & {
-    transform: rotate(180deg);
+    transform: translateX(-100%) rotate(180deg);
   }
 }
 
