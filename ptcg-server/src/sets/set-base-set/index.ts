@@ -1,6 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { MagmarArt } from '../set-pokemon-151/card-images';
-import { AlakazamArt, ArcanineArt, BeedrillArt, BillArt, BlastoiseArt, ChanseyArt, CharizardArt, CharmanderArt, CharmeleonArt, ClefairyArt, ComputerSearchArt, DewgongArt, DoduoArt, DoubleColorlessEnergyArt, DragonairArt, DratiniArt, DugtrioArt, ElectabuzzArt, ElectrodeArt, EnergyRemovalArt, EnergyRetrievalArt, FarfetchdArt, GrowlitheArt, GustOfWindArt, GyaradosArt, HaunterArt, HitmonchanArt, ItemFinderArt, IvysaurArt, JynxArt, KadabraArt, KakunaArt, LassArt, MachampArt, MachokeArt, MagikarpArt, MagnetonArt, MaintenanceArt, MewtwoArt, NidokingArt, NidorinoArt, NinetalesArt, PidgeottoArt, PlusPowerArt, PokemonBreederArt, PokemonCenterArt, PokemonTraderArt, PoliwagArt, PoliwhirlArt, PoliwrathArt, ProfessorOakArt, RaichuArt, RattataArt, ScoopUpArt, SquirtleArt, SuperEnergyRemovalArt, SuperPotionArt, SwitchArt, VenusaurArt, WartortleArt, ZapdosArt } from './card-images';
+import { AlakazamArt, ArcanineArt, BeedrillArt, BillArt, BlastoiseArt, ChanseyArt, CharizardArt, CharmanderArt, CharmeleonArt, ClefairyArt, ComputerSearchArt, DewgongArt, DoduoArt, DoubleColorlessEnergyArt, DragonairArt, DratiniArt, DugtrioArt, ElectabuzzArt, ElectrodeArt, EnergyRemovalArt, EnergyRetrievalArt, FarfetchdArt, GrowlitheArt, GustOfWindArt, GyaradosArt, HaunterArt, HitmonchanArt, ItemFinderArt, IvysaurArt, JynxArt, KadabraArt, KakunaArt, LassArt, MachampArt, MachokeArt, MagikarpArt, MagmarArt, MagnetonArt, MaintenanceArt, MewtwoArt, NidokingArt, NidorinoArt, NinetalesArt, PidgeottoArt, PlusPowerArt, PokemonBreederArt, PokemonCenterArt, PokemonTraderArt, PoliwagArt, PoliwhirlArt, PoliwrathArt, ProfessorOakArt, RaichuArt, RattataArt, ScoopUpArt, SquirtleArt, SuperEnergyRemovalArt, SuperPotionArt, SwitchArt, VenusaurArt, WartortleArt, ZapdosArt } from './card-images';
 
 export const setBaseSet: Card[] = [
   new AlakazamArt(),
@@ -26,8 +25,8 @@ export const setBaseSet: Card[] = [
   new EnergyRetrievalArt(),
   new FarfetchdArt(),
   new GrowlitheArt(),
-  new GyaradosArt(),
   new GustOfWindArt(),
+  new GyaradosArt(),
   new HaunterArt(),
   new HitmonchanArt(),
   new ItemFinderArt(),

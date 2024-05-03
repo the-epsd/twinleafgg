@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PoliwhirlArt = exports.PoliwagArt = exports.PokemonTraderArt = exports.PokemonCenterArt = exports.PokemonBreederArt = exports.PlusPowerArt = exports.PidgeottoArt = exports.NinetalesArt = exports.NidorinoArt = exports.NidokingArt = exports.MewtwoArt = exports.MaintenanceArt = exports.MagnetonArt = exports.MagmarpArt = exports.MagikarpArt = exports.MachokeArt = exports.MachampArt = exports.LassArt = exports.KakunaArt = exports.KadabraArt = exports.JynxArt = exports.IvysaurArt = exports.ItemFinderArt = exports.HitmonchanArt = exports.HaunterArt = exports.GyaradosArt = exports.GustOfWindArt = exports.GrowlitheArt = exports.FarfetchdArt = exports.EnergyRetrievalArt = exports.EnergyRemovalArt = exports.ElectrodeArt = exports.ElectabuzzArt = exports.DugtrioArt = exports.DratiniArt = exports.DragonairArt = exports.DoubleColorlessEnergyArt = exports.DoduoArt = exports.DewgongArt = exports.ComputerSearchArt = exports.ClefairyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = exports.ChanseyArt = exports.BlastoiseArt = exports.BillArt = exports.BeedrillArt = exports.ArcanineArt = exports.AlakazamArt = void 0;
+exports.PoliwhirlArt = exports.PoliwagArt = exports.PokemonTraderArt = exports.PokemonCenterArt = exports.PokemonBreederArt = exports.PlusPowerArt = exports.PidgeottoArt = exports.NinetalesArt = exports.NidorinoArt = exports.NidokingArt = exports.MewtwoArt = exports.MaintenanceArt = exports.MagnetonArt = exports.MagmarArt = exports.MagikarpArt = exports.MachokeArt = exports.MachampArt = exports.LassArt = exports.KakunaArt = exports.KadabraArt = exports.JynxArt = exports.IvysaurArt = exports.ItemFinderArt = exports.HitmonchanArt = exports.HaunterArt = exports.GyaradosArt = exports.GustOfWindArt = exports.GrowlitheArt = exports.FarfetchdArt = exports.EnergyRetrievalArt = exports.EnergyRemovalArt = exports.ElectrodeArt = exports.ElectabuzzArt = exports.DugtrioArt = exports.DratiniArt = exports.DragonairArt = exports.DoubleColorlessEnergyArt = exports.DoduoArt = exports.DewgongArt = exports.ComputerSearchArt = exports.ClefairyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = exports.ChanseyArt = exports.BlastoiseArt = exports.BillArt = exports.BeedrillArt = exports.ArcanineArt = exports.AlakazamArt = void 0;
 exports.ZapdosArt = exports.WartortleArt = exports.VenusaurArt = exports.SwitchArt = exports.SuperPotionArt = exports.SuperEnergyRemovalArt = exports.SquirtleArt = exports.ScoopUpArt = exports.RattataArt = exports.RaichuArt = exports.ProfessorOakArt = exports.PoliwrathArt = void 0;
 const alakazam_1 = require("./alakazam");
 const arcanine_1 = require("./arcanine");
@@ -316,13 +316,13 @@ class MagikarpArt extends magikarp_1.Magikarp {
     }
 }
 exports.MagikarpArt = MagikarpArt;
-class MagmarpArt extends magmar_1.Magmar {
+class MagmarArt extends magmar_1.Magmar {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://pkmncards.com/wp-content/uploads/magmar-base-set-bs-36.jpg';
     }
 }
-exports.MagmarpArt = MagmarpArt;
+exports.MagmarArt = MagmarArt;
 class MagnetonArt extends magneton_1.Magneton {
     constructor() {
         super(...arguments);

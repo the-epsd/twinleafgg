@@ -205,7 +205,7 @@ export class MagikarpArt extends Magikarp {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/magikarp-base-set-bs-35.jpg';
 }
 
-export class MagmarpArt extends Magmar {
+export class MagmarArt extends Magmar {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/magmar-base-set-bs-36.jpg';
 }
 

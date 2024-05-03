@@ -168,7 +168,7 @@ export declare class MachokeArt extends Machoke {
 export declare class MagikarpArt extends Magikarp {
     cardImage: string;
 }
-export declare class MagmarpArt extends Magmar {
+export declare class MagmarArt extends Magmar {
     cardImage: string;
 }
 export declare class MagnetonArt extends Magneton {
