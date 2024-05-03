@@ -35,27 +35,26 @@ class Metagross extends pokemon_card_1.PokemonCard {
         this.setNumber = '119';
         this.name = 'Metagross';
         this.fullName = 'Metagross SIT';
-        this.TANDEM_UNIT_MARKER = 'TANDEM_UNIT_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-            effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-            effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+            effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('marker cleared');
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker
-            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 console.log('attack added damage');
                 effect.damage += 100;
             }
-            effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
             console.log('marker added');
         }
         return state;

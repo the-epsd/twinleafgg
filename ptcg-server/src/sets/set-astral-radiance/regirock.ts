@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, PokemonCardList, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, PokemonCardList, ShuffleDeckPrompt, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 function* useRegiGate(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -75,13 +76,42 @@ export class Regirock extends PokemonCard {
   public name: string = 'Regirock';
 
   public fullName: string = 'Regirock ASR';
+
+  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof AttackEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER || this.ATTACK_USED_2_MARKER)) {
+      // Check marker
+      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        console.log('attack blocked');
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('marker cleared');
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('second marker added');
+    }
     
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const generator = useRegiGate(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+      console.log('marker added');
+    }
+
     return state;
+    
   }
 }

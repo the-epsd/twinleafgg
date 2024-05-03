@@ -11,6 +11,7 @@ import { HandyFan } from './handy-fan';
 import { Hassel } from './hassel';
 import { Lairon } from './lairon';
 import { LegacyEnergy } from './legacy-energy';
+import { Luxio } from './luxio';
 import { Luxrayex } from './luxray-ex';
 import { Mightyena } from './mightyena';
 import { PerformanceFlute } from './performance-flute';
@@ -55,6 +56,9 @@ export declare class LaironArt extends Lairon {
     cardImage: string;
 }
 export declare class LegacyEnergyArt extends LegacyEnergy {
+    cardImage: string;
+}
+export declare class LuxioArt extends Luxio {
     cardImage: string;
 }
 export declare class LuxrayexArt extends Luxrayex {

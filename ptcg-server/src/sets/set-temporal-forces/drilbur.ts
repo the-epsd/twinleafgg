@@ -20,10 +20,10 @@ export class Drilbur extends PokemonCard {
   public retreat = [ CardType.COLORLESS ];
 
   public powers = [{
-    name: 'Dig About',
+    name: 'Dig Dig Dig',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may draw 3 cards. If you do, shuffle this Pokémon and all cards attached to it back into your deck.'
+    text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may search your deck for up to 3 Basic [F] Energy cards and discard them. Then, shuffle your deck.'
   }];
 
   public attacks = [

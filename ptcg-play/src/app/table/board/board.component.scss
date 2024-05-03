@@ -208,3 +208,9 @@ ptcg-board-deck {
   position: absolute;
   width: 92px;
 }
+
+.ptcg-card-marker {
+  border-radius: $card-border-radius;
+  position: absolute;
+  width: 92px;
+}

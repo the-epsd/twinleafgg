@@ -37,20 +37,20 @@ class HisuianZoroark extends pokemon_card_1.PokemonCard {
         this.setNumber = '76';
         this.name = 'Hisuian Zoroark';
         this.fullName = 'Hisuian Zoroark LOR';
-        this.CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
         this.KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
+        this.CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.active.marker.addMarker(this.KNOCKOUT_MARKER, this);
+            opponent.active.attackMarker.addMarker(this.KNOCKOUT_MARKER, this);
             if (effect instanceof game_phase_effects_1.EndTurnEffect
-                && opponent.active.marker.hasMarker(this.KNOCKOUT_MARKER, this)) {
-                opponent.active.marker.addMarker(this.CLEAR_KNOCKOUT_MARKER, this);
+                && opponent.active.attackMarker.hasMarker(this.KNOCKOUT_MARKER, this)) {
+                opponent.active.attackMarker.addMarker(this.CLEAR_KNOCKOUT_MARKER, this);
             }
             if (effect instanceof game_phase_effects_1.EndTurnEffect
-                && opponent.active.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
+                && opponent.active.attackMarker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
                 opponent.active.hp = 0;
             }
         }

@@ -61,7 +61,12 @@ class Solrock extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             const blocked = [];
-            player.deck.cards.forEach((card, index) => {
+            player.bench.forEach((card, index) => {
+                if (!(card instanceof pokemon_card_1.PokemonCard && card.name === 'Lunatone')) {
+                    blocked.push(index);
+                }
+            });
+            player.active.cards.forEach((card, index) => {
                 if (!(card instanceof pokemon_card_1.PokemonCard && card.name === 'Lunatone')) {
                     blocked.push(index);
                 }

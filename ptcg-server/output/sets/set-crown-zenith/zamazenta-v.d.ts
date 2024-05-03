@@ -32,6 +32,5 @@ export declare class ZamazentaV extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly REGAL_STANCE_MARKER = "REGAL_STANCE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

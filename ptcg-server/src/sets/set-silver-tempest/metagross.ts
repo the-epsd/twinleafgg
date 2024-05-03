@@ -48,30 +48,29 @@ export class Metagross extends PokemonCard {
 
   public fullName: string = 'Metagross SIT';
 
-  public readonly TANDEM_UNIT_MARKER = 'TANDEM_UNIT_MARKER';
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
   
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack added damage');
         effect.damage += 100;
       }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
       console.log('marker added');
     }
     return state;

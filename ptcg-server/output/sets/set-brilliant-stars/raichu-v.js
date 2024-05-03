@@ -39,6 +39,19 @@ class RaichuV extends pokemon_card_1.PokemonCard {
     }
     // Implement power
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            if (cardList === undefined) {
+                return state;
+            }
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { min: 0, max: 1, allowCancel: false }), cards => {
+                cards = cards || [];
+                if (cards.length > 0) {
+                    player.deck.moveCardsTo(cards, cardList);
+                }
+            });
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 6, allowCancel: false }), targets => {

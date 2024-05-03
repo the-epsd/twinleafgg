@@ -57,14 +57,13 @@ class TingLuex extends pokemon_card_1.PokemonCard {
                     const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(cardList);
                     store.reduceEffect(state, checkPokemonType);
                 }
-                const pokemonCard = effect.card;
                 // Try reducing ability for each player  
                 try {
                     const playerPowerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
                     store.reduceEffect(state, playerPowerEffect);
                 }
                 catch (_a) {
-                    pokemonCard.powers = [];
+                    throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                 }
                 return state;
             }

@@ -114,6 +114,9 @@
     .ptcg-card-damage {
       @include mat.typography-level($config, headline);
     }
+    .ptcg-card-marker {
+      @include mat.typography-level($config, headline);
+    }
   }
 
   ptcg-game-logs {

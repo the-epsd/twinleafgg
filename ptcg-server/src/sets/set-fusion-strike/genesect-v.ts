@@ -62,35 +62,35 @@ export class GenesectV extends PokemonCard {
 
     public reduceEffect(_store: StoreLike, state: State, effect: Effect): State {
 
-      if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-        effect.player.active.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-        effect.player.active.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+      if (effect instanceof EndTurnEffect && effect.player.active.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+        effect.player.active.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+        effect.player.active.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
         console.log('marker cleared');
       }
   
-      if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        effect.player.active.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+      if (effect instanceof EndTurnEffect && effect.player.active.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        effect.player.active.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
         console.log('second marker added');
       }
       if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
   
         // Check marker
-        if (effect.player.active.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        if (effect.player.active.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
           console.log('attack blocked');
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
         }
-        effect.player.active.marker.addMarker(this.ATTACK_USED_MARKER, this);
+        effect.player.active.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
         console.log('marker added');
       }
 
       if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
         const player = effect.player;
-        player.marker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
+        player.attackMarker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
       }
       
       if (effect instanceof EndTurnEffect) {
         const player = effect.player;
-        player.marker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
+        player.attackMarker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
       }
 
       if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
@@ -98,7 +98,7 @@ export class GenesectV extends PokemonCard {
         const player = effect.player;
 
             
-            if (player.marker.hasMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this)) {
+            if (player.attackMarker.hasMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this)) {
               throw new GameError(GameMessage.POWER_ALREADY_USED);
             }
 
@@ -120,14 +120,14 @@ export class GenesectV extends PokemonCard {
               player.deck.moveTo(player.hand, 1);
           }
 
-          player.marker.addMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
+          player.attackMarker.addMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
       }
     
         if (effect instanceof EndTurnEffect) {
 
           effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
             if (player instanceof GenesectV) {
-              player.marker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER);
+              player.attackMarker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER);
             }
           });
       

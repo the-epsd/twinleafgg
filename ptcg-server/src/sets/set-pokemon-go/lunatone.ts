@@ -21,8 +21,6 @@ export class Lunatone extends PokemonCard {
 
   public retreat = [ CardType.COLORLESS ];
 
-
-
   public attacks = [
     {
       name: 'Cycle Draw',
@@ -59,7 +57,7 @@ export class Lunatone extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
         { },
-        { allowCancel: true, min: 1, max: 1 }
+        { allowCancel: false, min: 1, max: 1 }
       ), cards => {
         cards = cards || [];
         if (cards.length === 0) {

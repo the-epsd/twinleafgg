@@ -33,7 +33,7 @@ export class Grotle extends PokemonCard {
       name: 'Ramming Shell',
       cost: [ CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS ],
       damage: 50,
-      text: 'During your opponent’s next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance).'
+      text: 'During your opponent\'s next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance).'
     }
   ];
 
@@ -50,9 +50,8 @@ export class Grotle extends PokemonCard {
   public fullName: string = 'Grotle TEF';
 
 
-  RAMMING_SHELL_MARKER = 'RAMMING_SHELL_MARKER';
-
-  CLEAR_RAMMING_SHELL_MARKER = 'CLEAR_RAMMING_SHELL_MARKER';
+  public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
+  public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -60,20 +59,20 @@ export class Grotle extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      player.active.marker.addMarker(this.RAMMING_SHELL_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_RAMMING_SHELL_MARKER, this);
+      player.active.attackMarker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      opponent.attackMarker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
 
       if (effect instanceof PutDamageEffect
-                    && effect.target.marker.hasMarker(this.RAMMING_SHELL_MARKER)) {
+                    && effect.target.attackMarker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
         effect.damage -= 20;
         return state;
       }
       if (effect instanceof EndTurnEffect
-                    && effect.player.marker.hasMarker(this.CLEAR_RAMMING_SHELL_MARKER, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_RAMMING_SHELL_MARKER, this);
+                    && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+        effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
         const opponent = StateUtils.getOpponent(state, effect.player);
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.marker.removeMarker(this.RAMMING_SHELL_MARKER, this);
+          cardList.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
         });
       }
       return state;

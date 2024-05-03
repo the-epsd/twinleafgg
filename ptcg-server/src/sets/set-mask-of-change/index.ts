@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { DreepyArt, DrakloakArt, DragapultexArt, FroslassArt, BlisseyexArt, HandyFanArt, RotoStickArt, HasselArt, LegacyEnergyArt, LuxrayexArt, ScoopUpCycloneArt, TatsugiriArt, MightyenaArt, PoochyenaArt, AggronArt, AronArt, LaironArt, FarfetchdArt, AlakazamArt, PerformanceFluteArt } from './card-images';
+import { DreepyArt, DrakloakArt, DragapultexArt, FroslassArt, BlisseyexArt, HandyFanArt, RotoStickArt, HasselArt, LegacyEnergyArt, LuxrayexArt, ScoopUpCycloneArt, TatsugiriArt, MightyenaArt, PoochyenaArt, AggronArt, AronArt, LaironArt, FarfetchdArt, AlakazamArt, PerformanceFluteArt, LuxioArt } from './card-images';
 
 export const setMaskOfChange: Card[] = [
 
@@ -16,6 +16,7 @@ export const setMaskOfChange: Card[] = [
   new HasselArt(),
   new LaironArt(),
   new LegacyEnergyArt(),
+  new LuxioArt(),
   new LuxrayexArt(),
   new MightyenaArt(),
   new PerformanceFluteArt(),

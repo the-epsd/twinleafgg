@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ShowCardsPrompt, Card } from 'ptcg-server';
+import { ShowCardsPrompt, Card, GamePhase } from 'ptcg-server';
 
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { GameService } from '../../../api/services/game.service';
@@ -20,16 +20,20 @@ export class PromptShowCardsComponent {
     private gameService: GameService
   ) { }
 
-  ngOnInit() {
-    const gameId = this.gameState.gameId;
-    const id = this.prompt.id;
+  // ngOnInit() {
+  //   const gameId = this.gameState.gameId;
+  //   const id = this.prompt.id;
 
-    setTimeout(() => {
-      this.gameService.resolvePrompt(gameId, id, null);
-    }, 3000);
-
-  }
-
+  //   if (GamePhase.SETUP || GamePhase.WAITING_FOR_PLAYERS) {
+  //   setTimeout(() => {
+  //     this.gameService.resolvePrompt(gameId, id, null);
+  //   }, 5000);
+  //   } else {
+  //     setTimeout(() => {
+  //       this.gameService.resolvePrompt(gameId, id, null);
+  //     }, 3000);
+  // }
+  // }
 
   public minimize() {
     this.gameService.setPromptMinimized(this.gameState.localId, true);

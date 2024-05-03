@@ -1,4 +1,5 @@
-import { PokemonCard, Stage, CardType, PowerType } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class Revavroomex extends PokemonCard {
     regulationMark: string;
     stage: Stage;
@@ -28,4 +29,7 @@ export declare class Revavroomex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = "DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER";
+    readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = "CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER";
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

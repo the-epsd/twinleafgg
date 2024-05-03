@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SurvivalCast = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
+const state_1 = require("../../game/store/state/state");
+const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class SurvivalCast extends trainer_card_1.TrainerCard {
     constructor() {
@@ -17,13 +19,21 @@ class SurvivalCast extends trainer_card_1.TrainerCard {
         this.text = 'If the Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent\'s attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.';
     }
     reduceEffect(store, state, effect) {
-        var _a;
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.tool === this) {
+        if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tool === this) {
             const player = effect.player;
-            if (player.active.damage == 0 && effect.damage >= player.active.hp) {
-                effect.damage = player.active.hp - 10;
-                player.active.hp = 10;
-                (_a = player.active.tool) === null || _a === void 0 ? void 0 : _a.cards.moveTo(player.discard);
+            const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);
+            if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
+                return state;
+            }
+            const activePokemon = player.active;
+            const maxHp = activePokemon.hp;
+            if (state.phase === state_1.GamePhase.ATTACK) {
+                if (player.active.damage === 0) {
+                    if (effect.source.damage >= maxHp) {
+                        effect.preventDefault;
+                        effect.damage = maxHp - 10;
+                    }
+                }
             }
             return state;
         }

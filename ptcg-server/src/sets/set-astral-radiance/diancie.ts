@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, TrainerType } from '../../game/store/card/card-types';
-import { PowerType, State, StoreLike } from '../../game';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { PokemonCardList, PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class Diancie extends PokemonCard {
 
@@ -38,36 +38,22 @@ export class Diancie extends PokemonCard {
 
   public fullName: string = 'Diancie ASR';
 
-  PRINCESS_CURTAIN_MARKER = 'PRINCESS_CURTAIN_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.PRINCESS_CURTAIN_MARKER, this);
-    }
+    if (effect instanceof PlaySupporterEffect && effect.target instanceof PokemonCardList && effect.target !== effect.player.bench[0]) {
+      const opponentBench = effect.target;
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-
-      const player = effect.player;
-
-      if (player.active.cards[0] !== this) {
-        console.log('BASICS UNPROTECTED');
-        player.marker.removeMarker(this.PRINCESS_CURTAIN_MARKER, this);
+      if (opponentBench.getPokemonCard() !== this) {
+        return state;
       }
 
-      if (player.active.cards[0] == this) {
-        console.log('BASICS PROTECTED');
-        player.marker.addMarker(this.PRINCESS_CURTAIN_MARKER, this);
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const powerEffect = new PowerEffect(effect.player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        effect.preventDefault = true;
       }
-
-      if (effect instanceof TrainerEffect && effect.trainerCard.trainerType == TrainerType.SUPPORTER && effect.target?.cards.some((card) => card instanceof PokemonCard && card.stage === Stage.BASIC)) {
-        if (player.marker.hasMarker(this.PRINCESS_CURTAIN_MARKER, this)) {
-          effect.preventDefault = true;
-          return state;
-        }
-      }
-      return state;
     }
     return state;
   }

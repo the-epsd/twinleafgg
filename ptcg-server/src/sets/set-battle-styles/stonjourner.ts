@@ -49,16 +49,16 @@ export class Stonjourner extends PokemonCard {
       effect: (store: StoreLike, state: State, effect: AttackEffect) => {
         const player = effect.player;
         if (player.active.cards[0] !== this) {
-          player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-          player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+          player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+          player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
           console.log('removed markers because not active');
         }
         // Check marker
-        if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
           console.log('attack blocked');
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
         }
-        effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+        effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
         console.log('marker added');
         return state;
       }
@@ -82,18 +82,18 @@ export class Stonjourner extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+      player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+      player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
 

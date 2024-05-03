@@ -442,6 +442,7 @@
     "LOG_STARTS_BECAUSE_OF_ABILITY": "{{name}} starts the game because of {{ability}} ability.",
     "LOG_TEXT": "{{text}}",
     "LOG_TIME_ELAPSED": "Time elapsed for {{name}}.",
-    "LOG_TURN": "Turn {{turn}}."
+    "LOG_TURN": "Turn {{turn}}.",
+    "LOG_PLAYER_PUTS_CARD_IN_HAND": "{{name}} puts {{card}} in their hand."
   }
 }

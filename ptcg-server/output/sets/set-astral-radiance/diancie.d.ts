@@ -23,6 +23,5 @@ export declare class Diancie extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    PRINCESS_CURTAIN_MARKER: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

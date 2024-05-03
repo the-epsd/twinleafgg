@@ -60,11 +60,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
         return state;
       }
 
-      const topOfDeck = player.deck.top();
+      deckTop.applyOrder(order);
+      deckTop.moveTo(player.deck);
 
-      order.forEach(card => {
-        player.deck.moveCardsTo(topOfDeck, player.deck);
-      });
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
       player.supporterTurn = 1;
     });

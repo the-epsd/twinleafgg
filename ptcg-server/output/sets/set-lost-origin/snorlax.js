@@ -70,6 +70,9 @@ class Snorlax extends pokemon_card_1.PokemonCard {
                 if (effect instanceof attack_effects_1.PutDamageEffect) {
                     return state;
                 }
+                if (effect instanceof attack_effects_1.DealDamageEffect) {
+                    return state;
+                }
                 // Try to reduce PowerEffect, to check if something is blocking our ability
                 try {
                     const player = state_utils_1.StateUtils.findOwner(state, effect.target);

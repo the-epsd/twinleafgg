@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCardList, SlotType, StateUtils } from '../../game';
+import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SlotType, StateUtils } from '../../game';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
@@ -76,14 +76,12 @@ export class TingLuex extends PokemonCard {
           store.reduceEffect(state, checkPokemonType);
         }
 
-        const pokemonCard = effect.card;
-
         // Try reducing ability for each player  
         try {
           const playerPowerEffect = new PowerEffect(player, this.powers[0], this);
           store.reduceEffect(state, playerPowerEffect);
         } catch {
-          pokemonCard.powers = [ ];
+          throw new GameError(GameMessage.CANNOT_USE_POWER);
         }
         return state;
       }

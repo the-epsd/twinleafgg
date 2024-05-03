@@ -49,8 +49,8 @@ export class HisuianZoroark extends PokemonCard {
 
   public fullName: string = 'Hisuian Zoroark LOR';
 
-  public CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
-  public KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
+  public readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
+  public readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -58,15 +58,15 @@ export class HisuianZoroark extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       
-      opponent.active.marker.addMarker(this.KNOCKOUT_MARKER, this);
+      opponent.active.attackMarker.addMarker(this.KNOCKOUT_MARKER, this);
 
       if (effect instanceof EndTurnEffect 
-              && opponent.active.marker.hasMarker(this.KNOCKOUT_MARKER, this)) {
-        opponent.active.marker.addMarker(this.CLEAR_KNOCKOUT_MARKER, this);
+              && opponent.active.attackMarker.hasMarker(this.KNOCKOUT_MARKER, this)) {
+        opponent.active.attackMarker.addMarker(this.CLEAR_KNOCKOUT_MARKER, this);
       }
 
       if (effect instanceof EndTurnEffect 
-        && opponent.active.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
+        && opponent.active.attackMarker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
         opponent.active.hp = 0;
       } 
     }

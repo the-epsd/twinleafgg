@@ -19,9 +19,7 @@ export class Venusaurex extends PokemonCard {
     name: 'Tranquil Flower',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may move up to 2 damage ' +
-      'counters from 1 of your opponent\'s Pokémon to another of ' +
-      'their Pokémon.'
+    text: 'Once during your turn, if this Pokémon is in the Active Spot, you may heal 60 damage from 1 of your Pokémon.'
   }];
   public attacks = [
     {

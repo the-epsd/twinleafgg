@@ -46,11 +46,9 @@ export class Mawile extends PokemonCard {
 
   public fullName: string = 'Mawile LOR';
 
-  public readonly TEMPTING_TRAP_MARKER = 'TEMPTING_TRAP_MARKER';
-
-  public readonly CLEAR_TEMPTING_TRAP_MARKER = 'CLEAR_TEMPTING_TRAP_MARKER';
-
-  public readonly RETREAT_MARKER = 'RETREAT_MARKER';
+  public readonly DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';
+  public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';
+  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -58,26 +56,26 @@ export class Mawile extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      player.active.marker.addMarker(this.TEMPTING_TRAP_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_TEMPTING_TRAP_MARKER, this);
-      opponent.active.marker.addMarker(this.RETREAT_MARKER, this);
+      player.active.attackMarker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
+      opponent.attackMarker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
+      opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
-      if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.RETREAT_MARKER, this)) {
+      if (effect instanceof RetreatEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
       if (effect instanceof PutDamageEffect
-                && effect.target.marker.hasMarker(this.CLEAR_TEMPTING_TRAP_MARKER)) {
+                && effect.target.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER)) {
         effect.damage += 90;
         return state;
       }
       if (effect instanceof EndTurnEffect
-                && effect.player.marker.hasMarker(this.CLEAR_TEMPTING_TRAP_MARKER, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_TEMPTING_TRAP_MARKER, this);
+                && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this)) {
+        effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
         const opponent = StateUtils.getOpponent(state, effect.player);
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.marker.removeMarker(this.TEMPTING_TRAP_MARKER, this);
-          opponent.active.marker.addMarker(this.RETREAT_MARKER, this);
+          cardList.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
+          opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
         });
       }
       return state;

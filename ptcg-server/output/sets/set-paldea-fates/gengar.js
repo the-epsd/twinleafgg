@@ -25,7 +25,7 @@ class Gengar extends pokemon_card_1.PokemonCard {
                 name: 'Nightmare',
                 cost: [card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
                 damage: 100,
-                text: 'Your opponent’s Active Pokémon is now Asleep.'
+                text: 'Your opponent\'s Active Pokémon is now Asleep.'
             }];
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';

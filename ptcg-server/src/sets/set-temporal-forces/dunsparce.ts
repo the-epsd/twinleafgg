@@ -34,7 +34,7 @@ export class Dunsparce extends PokemonCard {
       name: 'Dig',
       cost: [ CardType.COLORLESS ],
       damage: 30,
-      text: 'Flip a coin. If heads, during your opponent’s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
+      text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
     }
   ];
   
@@ -50,9 +50,8 @@ export class Dunsparce extends PokemonCard {
   
   public fullName: string = 'Dunsparce SV5';
 
-  public readonly CLEAR_DIG_MARKER = 'CLEAR_DIG_MARKER';
-
-  public readonly DIG_MARKER = 'DIG_MARKER';
+  public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
+  public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -63,8 +62,8 @@ export class Dunsparce extends PokemonCard {
         player.id, GameMessage.COIN_FLIP
       ), flipResult => {
         if (flipResult) {
-          player.active.marker.addMarker(this.DIG_MARKER, this);
-          opponent.marker.addMarker(this.CLEAR_DIG_MARKER, this);
+          player.active.attackMarker.addMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+          opponent.attackMarker.addMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
         }
       });
 
@@ -72,19 +71,19 @@ export class Dunsparce extends PokemonCard {
     }
 
     if (effect instanceof AbstractAttackEffect
-      && effect.target.marker.hasMarker(this.DIG_MARKER)) {
+      && effect.target.attackMarker.hasMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
       effect.preventDefault = true;
       return state;
     }
 
     if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_DIG_MARKER, this)) {
+      && effect.player.attackMarker.hasMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this)) {
 
-      effect.player.marker.removeMarker(this.CLEAR_DIG_MARKER, this);
+      effect.player.attackMarker.removeMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
 
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.DIG_MARKER, this);
+        cardList.attackMarker.removeMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
       });
     }
 

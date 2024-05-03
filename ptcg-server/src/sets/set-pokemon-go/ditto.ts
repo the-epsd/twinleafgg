@@ -18,7 +18,6 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
 
   if (basicPokemon.length === 0) {
     throw new GameError(GameMessage.CANNOT_USE_POWER);
-    return state;
   }
 
   let selected: any;

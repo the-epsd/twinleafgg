@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.PoochyenaArt = exports.PerformanceFluteArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LegacyEnergyArt = exports.LaironArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.FarfetchdArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.BlisseyexArt = exports.AronArt = exports.AlakazamArt = exports.AggronArt = void 0;
+exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.PoochyenaArt = exports.PerformanceFluteArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LegacyEnergyArt = exports.LaironArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.FarfetchdArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.BlisseyexArt = exports.AronArt = exports.AlakazamArt = exports.AggronArt = void 0;
 const aggron_1 = require("./aggron");
 const alakazam_1 = require("./alakazam");
 const aron_1 = require("./aron");
@@ -14,6 +14,7 @@ const handy_fan_1 = require("./handy-fan");
 const hassel_1 = require("./hassel");
 const lairon_1 = require("./lairon");
 const legacy_energy_1 = require("./legacy-energy");
+const luxio_1 = require("./luxio");
 const luxray_ex_1 = require("./luxray-ex");
 const mightyena_1 = require("./mightyena");
 const performance_flute_1 = require("./performance-flute");
@@ -112,6 +113,13 @@ class LegacyEnergyArt extends legacy_energy_1.LegacyEnergy {
     }
 }
 exports.LegacyEnergyArt = LegacyEnergyArt;
+class LuxioArt extends luxio_1.Luxio {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_40_R_JP.png';
+    }
+}
+exports.LuxioArt = LuxioArt;
 class LuxrayexArt extends luxray_ex_1.Luxrayex {
     constructor() {
         super(...arguments);

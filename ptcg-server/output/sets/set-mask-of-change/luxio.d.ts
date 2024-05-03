@@ -15,7 +15,7 @@ export declare class Luxio extends PokemonCard {
     retreat: CardType[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: never[];
         damage: number;
         text: string;
     }[];
@@ -24,6 +24,6 @@ export declare class Luxio extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly MEAN_LOOK_MARKER = "MEAN_LOOK_MARKER";
+    readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = "DEFENDING_POKEMON_CANNOT_RETREAT_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

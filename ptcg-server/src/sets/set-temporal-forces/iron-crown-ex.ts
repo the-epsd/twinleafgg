@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class IronCrownex extends PokemonCard {
 
@@ -50,13 +50,51 @@ export class IronCrownex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect) {
-
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+    
+      const max = Math.min(2);
+      state = store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [ SlotType.ACTIVE, SlotType.BENCH ],
+        { min: 1, max: max, allowCancel: false }
+      ), selected => {
+        const targets = selected || [];
 
-      const targetCard = player.active.getPokemonCard();
-      if (targetCard && targetCard.tags.includes(CardTag.FUTURE)) {
-        if (targetCard.name !== 'Iron Crown ex') {
+        if (targets == null) {
+          return state;
+        }
+
+        targets.forEach(target => {
+          effect.ignoreWeakness = true;
+          effect.ignoreResistance = true;
+          const applyWeakness = new ApplyWeaknessEffect(effect, 50);
+          store.reduceEffect(state, applyWeakness);
+          const damage = applyWeakness.damage;
+          
+          effect.damage = 0;
+                    
+          if (damage > 0) {
+            targets.forEach(target => { 
+              target.damage = damage;
+              const afterDamage = new AfterDamageEffect(effect, damage);
+              state = store.reduceEffect(state, afterDamage);
+            });
+          }
+        });
+      });
+    
+      if (effect instanceof DealDamageEffect) {
+
+        const player = effect.player;
+
+        const targetCard = player.active.getPokemonCard();
+        if (targetCard && targetCard.tags.includes(CardTag.FUTURE)) {
+          if (targetCard.name == 'Iron Crown ex') {
+            return state;
+          }
 
           // Try to reduce PowerEffect, to check if something is blocking our ability
           try {
@@ -68,33 +106,9 @@ export class IronCrownex extends PokemonCard {
           effect.damage += 20;
         }
       }         
-        
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const player = effect.player;
-      
-        const max = Math.min(2);
-        state = store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [ SlotType.ACTIVE, SlotType.BENCH ],
-          { min: 1, max: max, allowCancel: false }
-        ), selected => {
-          const targets = selected || [];
-          targets.forEach(target => {
-            effect.ignoreWeakness = true;
-            effect.ignoreResistance =true;
-            const damageEffect = new PutDamageEffect(effect, 50);
-            damageEffect.preventDefault = false;
-            damageEffect.target = target;
-            state = store.reduceEffect(state, damageEffect);
-            
-          });
-          return state; 
-        });
-      }
       return state; 
     }
     return state;
   }
 }
+

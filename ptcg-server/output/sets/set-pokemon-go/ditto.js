@@ -14,7 +14,6 @@ function* useApexDragon(next, store, state, effect) {
     const basicPokemon = discardPokemon.filter(card => card.stage === card_types_1.Stage.BASIC && card.tags === undefined);
     if (basicPokemon.length === 0) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-        return state;
     }
     let selected;
     yield store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, basicPokemon, { allowCancel: false }), result => {

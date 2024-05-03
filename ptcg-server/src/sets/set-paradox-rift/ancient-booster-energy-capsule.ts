@@ -3,7 +3,6 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PokemonCard } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
@@ -29,26 +28,34 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
     'The Ancient Pokémon this card is attached to gets +60 HP, recovers from all Special Conditions, and can\'t be affected by any Special Conditions.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof CheckHpEffect && effect.target instanceof PokemonCard && effect.target.cards.includes(this)) {
-      if (effect.target.tool instanceof AncientBoosterEnergyCapsule) {
-        if (effect.target.tags.includes(CardTag.ANCIENT)) {
-          effect.hp += 60;
-        }
-      }
 
-      if (effect instanceof RemoveSpecialConditionsEffect && effect.target instanceof PokemonCard && effect.target.cards.includes(this)) {
-        if (effect.target.tool instanceof AncientBoosterEnergyCapsule) {
-          if (effect.target.tags.includes(CardTag.ANCIENT)) {
-            effect.target.specialConditions = [];
-            effect.preventDefault = true;
-            return state;
-          }
-        }
+    if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
 
+      const card = effect.target.getPokemonCard();
+
+      if (card === undefined) {
         return state;
       }
-      return state;
+
+      if (card.tags.includes(CardTag.ANCIENT)) {
+        effect.hp += 60;
+      }
     }
+
+    if (effect instanceof RemoveSpecialConditionsEffect && effect.target.cards.includes(this)) {
+      const card = effect.target.getPokemonCard();
+
+      if (card === undefined) {
+        return state;
+      }
+
+      if (card.tags.includes(CardTag.ANCIENT)) {
+        effect.target.specialConditions = [];
+        effect.preventDefault = true;
+        return state;
+      }
+    }
+
     return state;
   }
 }

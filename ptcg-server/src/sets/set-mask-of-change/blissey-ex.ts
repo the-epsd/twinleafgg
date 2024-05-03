@@ -9,7 +9,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Blisseyex extends PokemonCard {
   
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom: string = 'Chansey';
 
@@ -36,7 +36,7 @@ export class Blisseyex extends PokemonCard {
     {
       name: 'Return',
       cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
-      damage: 120,
+      damage: 180,
       text: 'You may draw until you have 6 cards in hand.'
     }
   ];

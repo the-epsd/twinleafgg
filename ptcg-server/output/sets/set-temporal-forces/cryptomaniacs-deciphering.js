@@ -35,10 +35,8 @@ function* playCard(next, store, state, self, effect) {
             if (order === null) {
                 return state;
             }
-            const topOfDeck = player.deck.top();
-            order.forEach(card => {
-                player.deck.moveCardsTo(topOfDeck, player.deck);
-            });
+            deckTop.applyOrder(order);
+            deckTop.moveTo(player.deck);
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
             player.supporterTurn = 1;
         });

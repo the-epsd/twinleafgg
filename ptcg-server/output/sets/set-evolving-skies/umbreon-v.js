@@ -37,20 +37,19 @@ class UmbreonV extends pokemon_card_1.PokemonCard {
         this.setNumber = '94';
         this.name = 'Umbreon V';
         this.fullName = 'Umbreon V EVS';
-        this.MEAN_LOOK_MARKER = 'MEAN_LOOK_MARKER';
+        this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
     }
     reduceEffect(store, state, effect) {
-        // Mean Look
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.active.marker.addMarker(this.MEAN_LOOK_MARKER, this);
+            opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
         }
-        if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.marker.hasMarker(this.MEAN_LOOK_MARKER, this)) {
+        if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
             throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.active.marker.removeMarker(this.MEAN_LOOK_MARKER, this);
+            effect.player.active.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;

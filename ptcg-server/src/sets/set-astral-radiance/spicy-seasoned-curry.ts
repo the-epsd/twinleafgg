@@ -13,7 +13,7 @@ export class SpicySeasonedCurry extends TrainerCard {
 
   public setNumber: string = '151';
 
-  public regulationMark = 'F';
+  public regulationMark = 'E';
 
   public name: string = 'Spicy Seasoned Curry';
 

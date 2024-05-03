@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, PowerType } from '../../game';
+import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, PowerType, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class IronValiantex extends PokemonCard {
@@ -36,7 +36,7 @@ export class IronValiantex extends PokemonCard {
       name: 'Laser Blade',
       cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
       damage: 200,
-      text: 'During your next turn, this Pokémon can’t attack.'
+      text: 'During your next turn, this Pokémon can\'t attack.'
     }
   ];
 
@@ -61,8 +61,8 @@ export class IronValiantex extends PokemonCard {
   //       console.log('movedToActiveThisTurn = false');
   //     }
 
-  //     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
-  //       effect.player.marker.removeMarker(this.TACHYON_BITS_MARKER, this);
+  //     if (effect instanceof EndTurnEffect && effect.player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
+  //       effect.player.abilityMarker.removeMarker(this.TACHYON_BITS_MARKER, this);
   //       console.log('marker cleared');
   //     }
   //     if (this.movedToActiveThisTurn == true) {
@@ -81,7 +81,7 @@ export class IronValiantex extends PokemonCard {
   //         return state;
   //       }
 
-  //       if (player.marker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
+  //       if (player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
   //         console.log('attack blocked');
   //         return state;
   //       }
@@ -97,7 +97,7 @@ export class IronValiantex extends PokemonCard {
   //         targets.forEach(target => {
   //           target.damage += 20;
   //           this.movedToActiveThisTurn = false;
-  //           player.marker.addMarker(this.TACHYON_BITS_MARKER, this);
+  //           player.abilityMarker.addMarker(this.TACHYON_BITS_MARKER, this);
   //           console.log('marker added');
   //           return
   //         });
@@ -122,20 +122,42 @@ export class IronValiantex extends PokemonCard {
       console.log('movedToActiveThisTurn = false');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
-      effect.player.marker.removeMarker(this.TACHYON_BITS_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
+      effect.player.abilityMarker.removeMarker(this.TACHYON_BITS_MARKER, this);
       console.log('marker cleared');
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('marker cleared');
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('second marker added');
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      // Check marker
+      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        console.log('attack blocked');
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+      console.log('marker added');
     }
 
     const player = state.players[state.activePlayer];
 
-    if (this.movedToActiveThisTurn == true && player.marker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
+    if (this.movedToActiveThisTurn == true && player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
       return state;
     }
 
     if (this.movedToActiveThisTurn == true) {
 
-      if (player.marker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
+      if (player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
         effect.preventDefault = true;
         return state;
       }
@@ -158,12 +180,11 @@ export class IronValiantex extends PokemonCard {
         const targets = selected || [];
         targets.forEach(target => {
           target.damage += 20;
-          player.marker.addMarker(this.TACHYON_BITS_MARKER, this);
+          player.abilityMarker.addMarker(this.TACHYON_BITS_MARKER, this);
           return state;
         });
         return state;
       });
-      return state;
     }
     return state;
   }

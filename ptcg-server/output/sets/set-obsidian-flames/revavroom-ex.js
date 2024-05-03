@@ -2,6 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Revavroomex = void 0;
 const game_1 = require("../../game");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Revavroomex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -32,6 +35,31 @@ class Revavroomex extends game_1.PokemonCard {
         this.setNumber = '156';
         this.name = 'Revavroom ex';
         this.fullName = 'Revavroom ex OBF';
+        this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
+        this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
+    }
+    reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            player.active.attackMarker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            opponent.attackMarker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            if (effect instanceof attack_effects_1.PutDamageEffect
+                && effect.target.attackMarker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
+                effect.damage -= 30;
+                return state;
+            }
+            if (effect instanceof game_phase_effects_1.EndTurnEffect
+                && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+                effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+                const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                    cardList.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+                });
+            }
+            return state;
+        }
+        return state;
     }
 }
 exports.Revavroomex = Revavroomex;

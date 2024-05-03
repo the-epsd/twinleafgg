@@ -16,6 +16,7 @@ exports.setMaskOfChange = [
     new card_images_1.HasselArt(),
     new card_images_1.LaironArt(),
     new card_images_1.LegacyEnergyArt(),
+    new card_images_1.LuxioArt(),
     new card_images_1.LuxrayexArt(),
     new card_images_1.MightyenaArt(),
     new card_images_1.PerformanceFluteArt(),

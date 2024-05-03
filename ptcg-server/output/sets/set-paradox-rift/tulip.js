@@ -59,7 +59,7 @@ class Tulip extends trainer_card_1.TrainerCard {
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '181';
-        this.regulationMark = 'E';
+        this.regulationMark = 'G';
         this.name = 'Tulip';
         this.fullName = 'Tulip PAR';
         this.text = 'Put up to 4 in any combination of [P] Pokémon and Basic [P] Energy cards from your discard pile into your hand.';

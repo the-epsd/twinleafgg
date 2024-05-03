@@ -38,16 +38,27 @@ export class FutureBoosterEnergyCapsule extends TrainerCard {
         return state;
       }
 
-      const pokemonCard = effect.source.getPokemonCard();
-      if (pokemonCard && pokemonCard.tags.includes(CardTag.FUTURE)) {
+      const card = effect.target.getPokemonCard();
+
+      if (card === undefined) {
+        return state;
+      }
+
+      if (card && card.tags.includes(CardTag.FUTURE)) {
         effect.damage += 20;
       }
 
-      if (effect instanceof CheckRetreatCostEffect && effect.source.cards.includes(this)) {
-        const pokemonCard = effect.source.getPokemonCard();
-        if (pokemonCard && pokemonCard.tags.includes(CardTag.FUTURE)) {
-          effect.cost = [ ];
+      if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+        const card = effect.target.getPokemonCard();
+
+        if (card === undefined) {
+          return state;
         }
+
+        if (card && card.tags.includes(CardTag.FUTURE)) {
+          effect.cost = [];
+        }
+        return state;
       }
       return state;
     }

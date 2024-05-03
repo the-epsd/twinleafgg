@@ -38,7 +38,7 @@ class SlakingV extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const prizes = effect.player.getPrizeLeft();
             if (prizes === 2 || prizes === 4 || prizes === 6) {
-                effect.preventDefault = true;
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
             }
             return state;
         }

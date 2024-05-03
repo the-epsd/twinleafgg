@@ -63,39 +63,29 @@ export class IronLeavesex extends PokemonCard {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-  
-      // Check marker
-      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
-    }
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard == this) {
 
       const player = effect.player;
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
 
-          const player = effect.player;
+          // Try to reduce PowerEffect, to check if something is blocking our ability
+          try {
+            const powerEffect = new PowerEffect(player, this.powers[0], this);
+            store.reduceEffect(state, powerEffect);
+          } catch {
+            return state;
+          }
+
           const target = effect.target;
-    
+
           player.switchPokemon(target);
-    
+
 
           const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
@@ -123,11 +113,11 @@ export class IronLeavesex extends PokemonCard {
           });
 
           return store.prompt(state, new MoveEnergyPrompt(
-            player.id, 
+            player.id,
             GameMessage.MOVE_ENERGY_CARDS,
             PlayerType.BOTTOM_PLAYER,
-            [SlotType.BENCH], // Only allow moving to active
-            { superType: SuperType.ENERGY }, 
+            [SlotType.BENCH, SlotType.ACTIVE], // Only allow moving to active
+            { superType: SuperType.ENERGY },
             { allowCancel: true }
           ), transfers => {
 
@@ -136,14 +126,27 @@ export class IronLeavesex extends PokemonCard {
             }
 
             for (const transfer of transfers) {
-    
+
               // Can only move energy to the active Pokemon
-              const target = player.active;  
+              const target = player.active;
               const source = StateUtils.getTarget(state, player, transfer.from);
 
               source.moveCardTo(transfer.card, target);
               return state;
             }
+
+            if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+              // Check marker
+              if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+                console.log('attack blocked');
+                throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+              }
+              effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+              console.log('marker added');
+            }
+
+
             return state;
           });
         }

@@ -4,7 +4,7 @@ import { State } from '../../game/store/state/state';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerType } from '../../game';
+import { GameError, GameMessage, PowerType } from '../../game';
 
 export class SlakingV extends PokemonCard {
 
@@ -54,7 +54,7 @@ export class SlakingV extends PokemonCard {
       const prizes = effect.player.getPrizeLeft();
 
       if (prizes === 2 || prizes === 4 || prizes === 6) {
-        effect.preventDefault = true;
+        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
       return state;
     }

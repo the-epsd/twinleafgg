@@ -9,7 +9,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class Blisseyex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Chansey';
         this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.regulationMark = 'H';
@@ -27,7 +27,7 @@ class Blisseyex extends game_1.PokemonCard {
             {
                 name: 'Return',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 120,
+                damage: 180,
                 text: 'You may draw until you have 6 cards in hand.'
             }
         ];

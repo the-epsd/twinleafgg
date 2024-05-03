@@ -83,7 +83,7 @@ export class Tulip extends TrainerCard {
 
   public setNumber: string = '181';
 
-  public regulationMark = 'E';
+  public regulationMark = 'G';
 
   public name: string = 'Tulip';
 

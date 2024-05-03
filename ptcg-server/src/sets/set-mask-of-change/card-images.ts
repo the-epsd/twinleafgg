@@ -11,6 +11,7 @@ import { HandyFan } from './handy-fan';
 import { Hassel } from './hassel';
 import { Lairon } from './lairon';
 import { LegacyEnergy } from './legacy-energy';
+import { Luxio } from './luxio';
 import { Luxrayex } from './luxray-ex';
 import { Mightyena } from './mightyena';
 import { PerformanceFlute } from './performance-flute';
@@ -69,6 +70,10 @@ export class LaironArt extends Lairon {
 
 export class LegacyEnergyArt extends LegacyEnergy {
   public cardImage = 'https://pokemonproxies.com/static/media/Legacy_Energy-101-6b.1fb81a2426158cabc977.png';
+}
+
+export class LuxioArt extends Luxio {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_40_R_JP.png';
 }
 
 export class LuxrayexArt extends Luxrayex {

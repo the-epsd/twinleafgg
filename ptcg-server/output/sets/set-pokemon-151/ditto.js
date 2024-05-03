@@ -40,7 +40,7 @@ class Ditto extends pokemon_card_1.PokemonCard {
             const turn = state.turn;
             // Check if it is player's first turn
             if (turn > 2) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             else {
                 let cards = [];

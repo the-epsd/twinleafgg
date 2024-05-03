@@ -28,6 +28,14 @@ ptcg-card-damage {
   // z-index: 1;
 }
 
+ptcg-card-marker {
+  position: absolute;
+  width: 80%;
+  padding: 5px;
+  font-size: smaller;
+  // z-index: 1;
+}
+
 
 ptcg-badge {
   position: absolute;
@@ -56,6 +64,11 @@ ptcg-card:last-child {
 }
 
 .ptcg-card-preview {
+  position: absolute;
+  width: var(--card-size);
+}
+
+.ptcg-card-marker {
   position: absolute;
   width: var(--card-size);
 }

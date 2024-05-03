@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { AbstractAttackEffect, AddSpecialConditionsEffect, PutDamageEffect, RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, AddSpecialConditionsEffect, DealDamageEffect, PutDamageEffect, RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { CoinFlipPrompt, GameMessage } from '../../game';
@@ -89,6 +89,9 @@ export class Snorlax extends PokemonCard {
         // eslint-disable-next-line indent
             // Allow damage
         if (effect instanceof PutDamageEffect) {
+          return state; 
+        }
+        if (effect instanceof DealDamageEffect) {
           return state; 
         }
   

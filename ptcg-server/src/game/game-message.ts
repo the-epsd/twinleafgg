@@ -156,7 +156,8 @@ export enum GameLog {
   LOG_STARTS_BECAUSE_OF_ABILITY = 'LOG_STARTS_BECAUSE_OF_ABILITY', // { name, ability }
   LOG_TEXT = 'LOG_TEXT', // { text }
   LOG_TIME_ELAPSED = 'LOG_TIME_ELAPSED', // { name }
-  LOG_TURN = 'LOG_TURN' // { turn }
+  LOG_TURN = 'LOG_TURN', // { turn }
+  LOG_PLAYER_PUTS_CARD_IN_HAND = 'LOG_PLAYER_PUTS_CARD_IN_HAND', // { name, card, pokemon }
 }
 
 // tslint:disable-next-line

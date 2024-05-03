@@ -40,10 +40,10 @@ class Dodrio extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            const slots = player.bench.filter(b => b.cards.length === 0);
-            const cards = player.discard.cards.filter(c => c === this);
-            cards.forEach(card => {
-                slots[0].damage += 10; // Add 10 damage
+            player.bench.forEach((card, index) => {
+                if (card instanceof pokemon_card_1.PokemonCard && card === this.cards) {
+                    card.damage += 10;
+                }
             });
             player.deck.moveTo(player.hand, 1);
             if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

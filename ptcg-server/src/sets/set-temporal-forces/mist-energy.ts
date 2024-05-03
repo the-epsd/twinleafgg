@@ -3,7 +3,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AbstractAttackEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class MistEnergy extends EnergyCard {
 
@@ -38,6 +38,9 @@ export class MistEnergy extends EnergyCard {
     
         // Allow damage
         if (effect instanceof PutDamageEffect) {
+          return state; 
+        }
+        if (effect instanceof DealDamageEffect) {
           return state; 
         }
         effect.preventDefault = true;

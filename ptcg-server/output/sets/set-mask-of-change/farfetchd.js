@@ -49,7 +49,7 @@ class Farfetchd extends pokemon_card_1.PokemonCard {
             }
             state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.TOOL }, { min: 0, max: 1, allowCancel: false }), cards => {
                 if (cards[0] instanceof game_1.TrainerCard) {
-                    state = store.reduceEffect(state, new play_card_effects_1.AttachPokemonToolEffect(player, cards[0], player.active));
+                    state = store.reduceEffect(state, new play_card_effects_1.AttachPokemonToolEffect(player, cards[0], player.bench[0]));
                 }
                 state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);

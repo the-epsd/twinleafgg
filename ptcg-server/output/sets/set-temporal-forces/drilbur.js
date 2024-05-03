@@ -16,10 +16,10 @@ class Drilbur extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Dig About',
+                name: 'Dig Dig Dig',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your turn, you may draw 3 cards. If you do, shuffle this Pokémon and all cards attached to it back into your deck.'
+                text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may search your deck for up to 3 Basic [F] Energy cards and discard them. Then, shuffle your deck.'
             }];
         this.attacks = [
             {

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { PokemonCardList, Card, CardList, SuperType, SpecialCondition, Power } from 'ptcg-server';
+import { PokemonCardList, Card, CardList, SuperType, SpecialCondition, Power, Player } from 'ptcg-server';
 import { Marker } from 'ptcg-server/dist/game/store/state/card-marker';
 
 const MAX_ENERGY_CARDS = 4;
@@ -14,37 +14,37 @@ export class BoardCardComponent {
   @Input() showCardCount = false;
   @Output() cardClick = new EventEmitter<Card>();
 
-  @Input() set cardList(value: CardList | PokemonCardList) {
-    this.mainCard = undefined;
-    this.energyCards = [];
-    this.trainerCard = undefined;
-    this.moreEnergies = 0;
-    this.cardCount = 0;
-    this.damage = 0;
-    this.specialConditions = [];
-    this.marker = [] as Marker[];
-    this.isFaceDown = false;
+@Input() set cardList(value: CardList | PokemonCardList) {
+this.mainCard = undefined;
+this.energyCards = [];
+this.trainerCard = undefined;
+this.moreEnergies = 0;
+this.cardCount = 0;
+this.damage = 0;
+this.specialConditions = [];
+this.marker = [] as Marker[];
+this.isFaceDown = false;
 
-    this.isEmpty = !value || !value.cards.length;
-    if (this.isEmpty) {
-      return;
-    }
+this.isEmpty = !value || !value.cards.length;
+if (this.isEmpty) {
+return;
+}
 
-    const cards: Card[] = value.cards;
-    this.cardCount = cards.length;
-    this.isSecret = value.isSecret;
-    this.isPublic = value.isPublic;
-    this.isFaceDown = value.isSecret || (!value.isPublic && !this.isOwner);
+const cards: Card[] = value.cards;
+this.cardCount = cards.length;
+this.isSecret = value.isSecret;
+this.isPublic = value.isPublic;
+this.isFaceDown = value.isSecret || (!value.isPublic && !this.isOwner);
 
-    // Pokemon slot, init energies, tool, special conditions, etc.
-    if (value instanceof PokemonCardList) {
-      this.initPokemonCardList(value);
-      return;
-    }
+// Pokemon slot, init energies, tool, special conditions, etc.
+if (value instanceof PokemonCardList) {
+this.initPokemonCardList(value);
+return;
+}
 
-    // Normal card list, display top-card only
-    this.mainCard = value.cards[value.cards.length - 1];
-  }
+// Normal card list, display top-card only
+this.mainCard = value.cards[value.cards.length - 1];
+}
 
   @Input() set owner(value: boolean) {
     this.isOwner = value;
@@ -52,17 +52,17 @@ export class BoardCardComponent {
     this.isFaceDown = !this.isEmpty && isFaceDown;
   }
 
-  @Input() set card(value: Card) {
-    this.mainCard = value;
-    this.energyCards = [];
-    this.trainerCard = undefined;
-    this.moreEnergies = 0;
-    this.cardCount = 0;
-    this.damage = 0;
-    this.specialConditions = [];
-    this.marker = [] as Marker[];
-    this.isEmpty = !value;
-  }
+@Input() set card(value: Card) {
+this.mainCard = value;
+this.energyCards = [];
+this.trainerCard = undefined;
+this.moreEnergies = 0;
+this.cardCount = 0;
+this.damage = 0;
+this.specialConditions = [];
+this.marker = [] as Marker[];
+this.isEmpty = !value;
+}
 
   @Input() isFaceDown = false;
 

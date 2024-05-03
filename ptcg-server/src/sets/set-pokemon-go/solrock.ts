@@ -75,7 +75,12 @@ export class Solrock extends PokemonCard {
       }
     
       const blocked: number[] = [];
-      player.deck.cards.forEach((card, index) => {
+      player.bench.forEach((card, index) => {
+        if (!(card instanceof PokemonCard && card.name === 'Lunatone')) {
+          blocked.push(index);
+        }
+      });
+      player.active.cards.forEach((card, index) => {
         if (!(card instanceof PokemonCard && card.name === 'Lunatone')) {
           blocked.push(index);
         } 

@@ -47,9 +47,8 @@ export class HisuianGoodraV extends PokemonCard {
   
   public fullName: string = 'Hisuian Goodra V LOR';
 
-  ROLLING_SHELL_MARKER = 'ROLLING_SHELL_MARKER';
-
-  CLEAR_ROLLING_SHELL_MARKER = 'CLEAR_ROLLING_SHELL_MARKER';
+  public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
+  public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -79,20 +78,20 @@ export class HisuianGoodraV extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      player.active.marker.addMarker(this.ROLLING_SHELL_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_ROLLING_SHELL_MARKER, this);
+      player.active.attackMarker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      opponent.attackMarker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
 
       if (effect instanceof PutDamageEffect 
-        && effect.target.marker.hasMarker(this.ROLLING_SHELL_MARKER)) {
+        && effect.target.attackMarker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
         effect.damage -= 30;
         return state;
       }
       if (effect instanceof EndTurnEffect 
-        && effect.player.marker.hasMarker(this.CLEAR_ROLLING_SHELL_MARKER, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_ROLLING_SHELL_MARKER, this);
+        && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+        effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
         const opponent = StateUtils.getOpponent(state, effect.player);
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.marker.removeMarker(this.ROLLING_SHELL_MARKER, this);
+          cardList.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
         });
       }
       return state;

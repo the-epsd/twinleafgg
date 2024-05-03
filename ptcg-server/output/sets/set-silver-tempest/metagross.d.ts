@@ -31,7 +31,6 @@ export declare class Metagross extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly TANDEM_UNIT_MARKER = "TANDEM_UNIT_MARKER";
     readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

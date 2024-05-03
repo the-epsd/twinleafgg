@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, 
-  StateUtils, GameMessage, ConfirmPrompt } from '../../game';
+  StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -49,21 +49,12 @@ export class LugiaVSTAR extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard !== undefined) {
-
-        state = store.prompt(state, new ConfirmPrompt(
-          effect.player.id,
-          GameMessage.WANT_TO_USE_ABILITY,
-        ), wantToUse => {
-          if (wantToUse) {
     
-            // Discard Stadium
-            const cardList = StateUtils.findCardList(state, stadiumCard);
-            const player = StateUtils.findOwner(state, cardList);
-            cardList.moveTo(player.discard);
-            return state;
-          }
-          return state;
-        });
+        // Discard Stadium
+        const cardList = StateUtils.findCardList(state, stadiumCard);
+        const player = StateUtils.findOwner(state, cardList);
+        cardList.moveTo(player.discard);
+        return state;
       }
       return state;
     }

@@ -93,7 +93,8 @@ export class ScreamTailex extends PokemonCard {
 
       if (effect instanceof PlaySupporterEffect) {
         const player = effect.player;
-        if (player.marker.hasMarker(this.SUDDEN_SHRIEK_MARKER, this)) {
+        const opponent = StateUtils.getOpponent(state, player);
+        if (opponent.marker.hasMarker(this.SUDDEN_SHRIEK_MARKER, this)) {
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
         }
       }

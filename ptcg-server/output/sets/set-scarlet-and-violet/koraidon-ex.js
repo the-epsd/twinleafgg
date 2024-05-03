@@ -35,27 +35,27 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
         this.setNumber = '125';
         this.name = 'Koraidon ex';
         this.fullName = 'Koraidon ex SVI';
+        this.DINO_CRY_MARKER = 'DINO_CRY_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-        this.DINO_CRY_MARKER = 'DINO_CRY_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-            effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-            effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+            effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('marker cleared');
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker
-            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 console.log('attack blocked');
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
-            effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
             console.log('marker added');
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
@@ -72,7 +72,7 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
             if (!hasEnergyInDiscard) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (player.marker.hasMarker(this.DINO_CRY_MARKER, this)) {
+            if (player.attackMarker.hasMarker(this.DINO_CRY_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { allowCancel: false, min: 1, max: 2 }), transfers => {
@@ -81,7 +81,7 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
                 if (transfers.length === 0) {
                     return;
                 }
-                player.marker.addMarker(this.DINO_CRY_MARKER, this);
+                player.attackMarker.addMarker(this.DINO_CRY_MARKER, this);
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.discard.moveCardTo(transfer.card, target);

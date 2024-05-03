@@ -20,7 +20,7 @@ class Haunter extends pokemon_card_1.PokemonCard {
                 name: 'Super Poison Breath',
                 cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK],
                 damage: 30,
-                text: 'Your opponent’s Active Pokémon is now Poisoned.'
+                text: 'Your opponent\'s Active Pokémon is now Poisoned.'
             }
         ];
         this.set = 'TEF';

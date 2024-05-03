@@ -40,14 +40,14 @@ class GougingFireex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             // Check marker
-            if (player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            if (player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 console.log('attack blocked');
-                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
             }
             if (player.switchPokemon.name === this.name) {
-                player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+                player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
             }
-            player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+            player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
             console.log('marker added');
         }
         return state;

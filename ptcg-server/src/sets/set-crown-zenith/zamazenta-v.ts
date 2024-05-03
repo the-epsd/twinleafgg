@@ -4,7 +4,6 @@ import { StoreLike, State, StateUtils, PowerType, GameError, GameMessage } from 
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class ZamazentaV extends PokemonCard {
@@ -25,7 +24,7 @@ export class ZamazentaV extends PokemonCard {
     name: 'Regal Stance',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'If this Pokémon has any Energy attached, it takes 30 less damage from attacks (after applying Weakness and Resistance).'
+    text: 'Once during your turn, you may discard your hand and draw 5 cards. If you use this Ability, your turn ends.'
   }];
 
   public attacks = [
@@ -49,39 +48,20 @@ export class ZamazentaV extends PokemonCard {
 
   public fullName: string = 'Zamazenta V CRZ';
 
-  public readonly REGAL_STANCE_MARKER = 'REGAL_STANCE_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.REGAL_STANCE_MARKER, this);
-    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
         
       const player = effect.player;
 
-      if (player.marker.hasMarker(this.REGAL_STANCE_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
-
       if (player.deck.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      const cards = player.hand.cards.filter(c => c !== this);
-      player.hand.moveCardsTo(cards, player.discard);
       player.deck.moveTo(player.hand, 5);
-      player.marker.addMarker(this.REGAL_STANCE_MARKER, this);
       const endTurnEffect = new EndTurnEffect(player);
       store.reduceEffect(state, endTurnEffect);
       return state;
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      player.marker.removeMarker(this.REGAL_STANCE_MARKER, this);
     }
 
 
@@ -94,7 +74,7 @@ export class ZamazentaV extends PokemonCard {
       
       const damagePerPrize = 30;
       
-      effect.damage = this.attacks[0].damage + (prizesTaken * damagePerPrize);
+      effect.damage = prizesTaken * damagePerPrize;
     }
     return state;
   }

@@ -1,9 +1,10 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { StateUtils, PokemonCard } from '../../game';
+import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class SurvivalCast extends TrainerCard {
 
@@ -25,18 +26,29 @@ export class SurvivalCast extends TrainerCard {
     'If the Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent\'s attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof DealDamageEffect && effect.target.tool === this) {
+
+    if (effect instanceof AfterDamageEffect && effect.target.tool === this) {
       const player = effect.player;
+      const targetPlayer = StateUtils.findOwner(state, effect.target);
 
-      if (player.active.damage == 0 && effect.damage >= player.active.hp) {
-        effect.damage = player.active.hp - 10;
-        player.active.hp = 10;
-
-        player.active.tool?.cards.moveTo(player.discard);
+      if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
+        return state;
       }
+
+      const activePokemon = player.active as unknown as PokemonCard;
+      const maxHp = activePokemon.hp;
+
+      if (state.phase === GamePhase.ATTACK) {
+        if (player.active.damage === 0) {
+          if (effect.source.damage >= maxHp) {
+            effect.preventDefault;
+            effect.damage = maxHp - 10;
+          }
+        }
+      }
+
       return state;
     }
     return state;
-
   }
 }

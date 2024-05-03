@@ -23,7 +23,7 @@ export declare class Dunsparce extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly CLEAR_DIG_MARKER = "CLEAR_DIG_MARKER";
-    readonly DIG_MARKER = "DIG_MARKER";
+    readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = "PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER";
+    readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = "CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

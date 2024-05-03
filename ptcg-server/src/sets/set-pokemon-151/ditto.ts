@@ -52,7 +52,7 @@ export class Ditto extends PokemonCard {
       
       // Check if it is player's first turn
       if (turn > 2) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       } else {
 
         let cards: Card[] = [];

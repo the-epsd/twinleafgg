@@ -56,8 +56,8 @@ export class Noivernex extends PokemonCard {
 
   public fullName: string = 'Noivern ex PAL';
 
-  public readonly COVERT_FLIGHT_MARKER: string = 'COVERT_FLIGHT_MARKER';
-  public readonly CLEAR_COVERT_FLIGHT_MARKER: string = 'CLEAR_COVERT_FLIGHT_MARKER';
+  public readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
+  public readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
 
   public readonly DOMINATING_ECHO_MARKER = 'DOMINATING_ECHO_MARKER';
 
@@ -66,13 +66,13 @@ export class Noivernex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.COVERT_FLIGHT_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_COVERT_FLIGHT_MARKER, this);
+      player.active.attackMarker.addMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
+      opponent.attackMarker.addMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
       return state;
     }
 
     if (effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(this.COVERT_FLIGHT_MARKER)) {
+      && effect.target.attackMarker.hasMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER)) {
       const card = effect.source.getPokemonCard();
       const stage = card !== undefined ? card.stage : undefined;
 
@@ -86,30 +86,30 @@ export class Noivernex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.marker.addMarker(this.DOMINATING_ECHO_MARKER, this);
+      opponent.attackMarker.addMarker(this.DOMINATING_ECHO_MARKER, this);
     }
 
     if (effect instanceof PlayStadiumEffect) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
+      if (player.attackMarker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
 
     if (effect instanceof AttachEnergyEffect && EnergyType.SPECIAL) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
+      if (player.attackMarker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
 
     if (effect instanceof EndTurnEffect) {
 
-      if (effect.player.marker.hasMarker(this.CLEAR_COVERT_FLIGHT_MARKER, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_COVERT_FLIGHT_MARKER, this);
+      if (effect.player.attackMarker.hasMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this)) {
+        effect.player.attackMarker.removeMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
         const opponent = StateUtils.getOpponent(state, effect.player);
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.marker.removeMarker(this.COVERT_FLIGHT_MARKER, this);
+          cardList.attackMarker.removeMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
         });
       }
     }

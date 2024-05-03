@@ -36,6 +36,8 @@ export class BombirdierEx extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
+  public regulationMark = 'G';
+
   public setNumber: string = '156';
 
   public name: string = 'Bombirdier ex';

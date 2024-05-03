@@ -32,7 +32,7 @@ export class Gengar extends PokemonCard {
     name: 'Nightmare',
     cost: [ CardType.DARK, CardType.COLORLESS ],
     damage: 100,
-    text: 'Your opponent’s Active Pokémon is now Asleep.'
+    text: 'Your opponent\'s Active Pokémon is now Asleep.'
   }];
 
   public regulationMark = 'G';

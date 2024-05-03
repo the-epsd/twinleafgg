@@ -20,6 +20,7 @@ export declare class BombirdierEx extends PokemonCard {
     }[];
     set: string;
     cardImage: string;
+    regulationMark: string;
     setNumber: string;
     name: string;
     fullName: string;

@@ -11,7 +11,7 @@ class SpicySeasonedCurry extends game_1.TrainerCard {
         this.set = 'ASR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '151';
-        this.regulationMark = 'F';
+        this.regulationMark = 'E';
         this.name = 'Spicy Seasoned Curry';
         this.fullName = 'Spicy Seasoned Curry ASR';
         this.text = 'Your Active Pokémon is now Burned. Heal 40 damage from it.';

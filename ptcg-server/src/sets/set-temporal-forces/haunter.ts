@@ -25,7 +25,7 @@ export class Haunter extends PokemonCard {
       name: 'Super Poison Breath',
       cost: [CardType.DARK, CardType.DARK],
       damage: 30,
-      text: 'Your opponent’s Active Pokémon is now Poisoned.'
+      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
     }
   ];
 

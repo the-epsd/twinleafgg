@@ -22,7 +22,7 @@ class Tsareenaex extends pokemon_card_1.PokemonCard {
                 name: 'Icicle Sole',
                 cost: [card_types_1.CardType.GRASS],
                 damage: 0,
-                text: 'Put damage counters on 1 of your opponent’s Pokémon until its remaining HP is 30.'
+                text: 'Put damage counters on 1 of your opponent\'s Pokémon until its remaining HP is 30.'
             },
             {
                 name: 'Trop Kick',

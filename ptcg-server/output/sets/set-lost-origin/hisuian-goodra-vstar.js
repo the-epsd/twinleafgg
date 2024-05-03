@@ -29,8 +29,8 @@ class HisuianGoodraVSTAR extends game_1.PokemonCard {
         this.setNumber = '136';
         this.name = 'Hisuian Goodra VSTAR';
         this.fullName = 'Hisuian Goodra VSTAR LOR';
-        this.ROLLING_IRON_MARKER = 'ROLLING_IRON_MARKER';
-        this.CLEAR_ROLLING_IRON_MARKER = 'CLEAR_ROLLING_IRON_MARKER';
+        this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
+        this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
@@ -42,19 +42,19 @@ class HisuianGoodraVSTAR extends game_1.PokemonCard {
             if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
                 const player = effect.player;
                 const opponent = game_1.StateUtils.getOpponent(state, player);
-                player.active.marker.addMarker(this.ROLLING_IRON_MARKER, this);
-                opponent.marker.addMarker(this.CLEAR_ROLLING_IRON_MARKER, this);
+                player.active.attackMarker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+                opponent.attackMarker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
                 if (effect instanceof attack_effects_1.PutDamageEffect
-                    && effect.target.marker.hasMarker(this.ROLLING_IRON_MARKER)) {
+                    && effect.target.attackMarker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
                     effect.damage -= 80;
                     return state;
                 }
                 if (effect instanceof game_phase_effects_1.EndTurnEffect
-                    && effect.player.marker.hasMarker(this.CLEAR_ROLLING_IRON_MARKER, this)) {
-                    effect.player.marker.removeMarker(this.CLEAR_ROLLING_IRON_MARKER, this);
+                    && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+                    effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
                     const opponent = game_1.StateUtils.getOpponent(state, effect.player);
                     opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                        cardList.marker.removeMarker(this.ROLLING_IRON_MARKER, this);
+                        cardList.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
                     });
                 }
                 return state;

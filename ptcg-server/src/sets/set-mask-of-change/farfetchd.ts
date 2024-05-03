@@ -73,7 +73,7 @@ export class Farfetchd extends PokemonCard {
         { min: 0, max: 1, allowCancel: false }
       ), cards => {
         if (cards[0] instanceof TrainerCard) {
-          state = store.reduceEffect(state, new AttachPokemonToolEffect(player, cards[0] as TrainerCard, player.active));
+          state = store.reduceEffect(state, new AttachPokemonToolEffect(player, cards[0] as TrainerCard, player.bench[0]));
         }
 
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

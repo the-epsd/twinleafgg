@@ -38,16 +38,11 @@ class LugiaVSTAR extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const stadiumCard = game_1.StateUtils.getStadiumCard(state);
             if (stadiumCard !== undefined) {
-                state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
-                    if (wantToUse) {
-                        // Discard Stadium
-                        const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-                        const player = game_1.StateUtils.findOwner(state, cardList);
-                        cardList.moveTo(player.discard);
-                        return state;
-                    }
-                    return state;
-                });
+                // Discard Stadium
+                const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
+                const player = game_1.StateUtils.findOwner(state, cardList);
+                cardList.moveTo(player.discard);
+                return state;
             }
             return state;
         }

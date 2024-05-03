@@ -38,8 +38,8 @@ class Squirtle extends pokemon_card_1.PokemonCard {
         this.setNumber = '7';
         this.name = 'Squirtle';
         this.fullName = 'Squirtle MEW';
-        this.CLEAR_WITHDRAW_MARKER = 'CLEAR_WITHDRAW_MARKER';
-        this.WITHDRAW_MARKER = 'WITHDRAW_MARKER';
+        this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
+        this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -47,22 +47,22 @@ class Squirtle extends pokemon_card_1.PokemonCard {
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             return store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.COIN_FLIP), flipResult => {
                 if (flipResult) {
-                    player.active.marker.addMarker(this.WITHDRAW_MARKER, this);
-                    opponent.marker.addMarker(this.CLEAR_WITHDRAW_MARKER, this);
+                    player.active.attackMarker.addMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+                    opponent.attackMarker.addMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
                 }
             });
         }
         if (effect instanceof attack_effects_1.PutDamageEffect
-            && effect.target.marker.hasMarker(this.WITHDRAW_MARKER)) {
+            && effect.target.attackMarker.hasMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
             effect.preventDefault = true;
             return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect
-            && effect.player.marker.hasMarker(this.CLEAR_WITHDRAW_MARKER, this)) {
-            effect.player.marker.removeMarker(this.CLEAR_WITHDRAW_MARKER, this);
+            && effect.player.attackMarker.hasMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this)) {
+            effect.player.attackMarker.removeMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
             opponent.forEachPokemon(play_card_action_1.PlayerType.TOP_PLAYER, (cardList) => {
-                cardList.marker.removeMarker(this.WITHDRAW_MARKER, this);
+                cardList.attackMarker.removeMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
             });
         }
         return state;

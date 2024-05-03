@@ -36,8 +36,8 @@ class Aggron extends game_1.PokemonCard {
         this.setNumber = '75';
         this.name = 'Aggron';
         this.fullName = 'Aggron SV6';
-        this.GUARD_CLAW_MARKER = 'GUARD_CLAW_MARKER';
-        this.CLEAR_GUARD_CLAW_MARKER = 'CLEAR_GUARD_CLAW_MARKER';
+        this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
+        this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -57,19 +57,19 @@ class Aggron extends game_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            player.active.marker.addMarker(this.GUARD_CLAW_MARKER, this);
-            opponent.marker.addMarker(this.CLEAR_GUARD_CLAW_MARKER, this);
+            player.active.attackMarker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            opponent.attackMarker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
             if (effect instanceof attack_effects_1.PutDamageEffect
-                && effect.target.marker.hasMarker(this.GUARD_CLAW_MARKER)) {
+                && effect.target.attackMarker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
                 effect.damage -= 50;
                 return state;
             }
             if (effect instanceof game_phase_effects_1.EndTurnEffect
-                && effect.player.marker.hasMarker(this.CLEAR_GUARD_CLAW_MARKER, this)) {
-                effect.player.marker.removeMarker(this.CLEAR_GUARD_CLAW_MARKER, this);
+                && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+                effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
                 const opponent = game_1.StateUtils.getOpponent(state, effect.player);
                 opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                    cardList.marker.removeMarker(this.GUARD_CLAW_MARKER, this);
+                    cardList.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
                 });
                 return state;
             }

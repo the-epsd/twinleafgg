@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -50,6 +50,28 @@ export class RaichuV extends PokemonCard {
 
   // Implement power
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      const cardList = StateUtils.findCardList(state, this);
+      if (cardList === undefined) {
+        return state;
+      }
+
+      return store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_ATTACH,
+        player.deck,
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
+        { min: 0, max: 1, allowCancel: false }
+      ), cards => {
+        cards = cards || [];
+        if (cards.length > 0) {
+          player.deck.moveCardsTo(cards, cardList);
+        }
+      });
+    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 

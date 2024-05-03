@@ -117,11 +117,14 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
       return;
     }
     player.hand.moveCardTo(cards[0], player.active);
+    next();
     for (let i = 1; i < cards.length; i++) {
       player.hand.moveCardTo(cards[i], player.bench[i - 1]);
+      next();
     }
     for (let i = 0; i < 6; i++) {
       player.deck.moveTo(player.prizes[i], 1);
+      next();
     }
   }
 
@@ -133,9 +136,9 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
   ], choice => {
     putStartingPokemonsAndPrizes(player, choice[0]);
     putStartingPokemonsAndPrizes(opponent, choice[1]);
+    next();
     player.deck.moveTo(player.hand, playerCardsToDraw);
     opponent.deck.moveTo(opponent.hand, opponentCardsToDraw);
-    next();
   });
 
   // Set initial Pokemon Played Turn, so players can't evolve during first turn

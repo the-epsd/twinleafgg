@@ -22,7 +22,7 @@ export class Snorunt extends PokemonCard {
     name: 'Bite',
     cost: [ CardType.WATER ],
     damage: 10,
-    text: 'If your opponent’s Active Pokémon is a F Pokémon, this attack does 30 more damage.'
+    text: 'If your opponent\'s Active Pokémon is a F Pokémon, this attack does 30 more damage.'
   }
   ];
 

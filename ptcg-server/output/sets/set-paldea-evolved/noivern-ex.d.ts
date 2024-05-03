@@ -23,8 +23,8 @@ export declare class Noivernex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly COVERT_FLIGHT_MARKER: string;
-    readonly CLEAR_COVERT_FLIGHT_MARKER: string;
+    readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string;
+    readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string;
     readonly DOMINATING_ECHO_MARKER = "DOMINATING_ECHO_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
