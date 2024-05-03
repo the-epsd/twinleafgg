@@ -21,7 +21,9 @@ export class Kadabra extends PokemonCard {
   
   public evolvesFrom = 'Abra';
   
-  public evolvesInto = ['Alakazam', 'Alakazam ex'];
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '32';
 
   public hp = 60;
 

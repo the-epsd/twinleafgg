@@ -13,8 +13,9 @@ class Nidorino extends pokemon_card_1.PokemonCard {
         this.set = 'BS';
         this.fullName = 'Nidorino BS';
         this.stage = card_types_1.Stage.STAGE_1;
-        this.evolvesFrom = 'Nidoran Male';
-        this.evolvesInto = ['Nidoking'];
+        this.evolvesFrom = 'Nidoran ♂';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '37';
         this.hp = 60;
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [card_types_1.CardType.COLORLESS];

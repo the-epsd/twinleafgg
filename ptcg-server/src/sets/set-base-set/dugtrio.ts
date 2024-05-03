@@ -19,15 +19,19 @@ export class Dugtrio extends PokemonCard {
   
   public cardType: CardType = CardType.FIGHTING;
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '19';
+
   public hp: number = 70;
 
   public weakness = [{
     type: CardType.GRASS
   }];
 
-  public resistances = [{
+  public resistance = [{
     type: CardType.LIGHTNING,
-    value: 30
+    value: -30
   }];
 
   public retreat: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];

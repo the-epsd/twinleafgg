@@ -16,6 +16,10 @@ export class Poliwrath extends PokemonCard {
   public set = 'BS';
   
   public fullName = 'Poliwrath BS';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '13';
   
   public stage: Stage = Stage.STAGE_2;
   

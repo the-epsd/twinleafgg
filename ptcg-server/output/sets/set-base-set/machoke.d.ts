@@ -11,7 +11,8 @@ export declare class Machoke extends PokemonCard {
     cardType: CardType;
     stage: Stage;
     evolvesFrom: string;
-    evolvesInto: string[];
+    cardImage: string;
+    setNumber: string;
     hp: number;
     weakness: {
         type: CardType;

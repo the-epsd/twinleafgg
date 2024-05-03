@@ -10,11 +10,11 @@ export declare class Poliwag extends PokemonCard {
     fullName: string;
     cardType: CardType;
     stage: Stage;
-    evolvesInto: string[];
+    cardImage: string;
+    setNumber: string;
     hp: number;
     weakness: {
         type: CardType;
-        value: number;
     }[];
     retreat: CardType[];
     attacks: Attack[];

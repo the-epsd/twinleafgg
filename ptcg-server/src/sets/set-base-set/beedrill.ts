@@ -16,6 +16,10 @@ export class Beedrill extends PokemonCard {
   public name = 'Beedrill';
   
   public fullName = 'Beedrill BS';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '17';
   
   public stage: Stage = Stage.STAGE_2;
   
@@ -27,9 +31,9 @@ export class Beedrill extends PokemonCard {
     type: CardType.FIRE
   }];
 
-  public resistances = [{
+  public resistance = [{
     type: CardType.FIGHTING,
-    value: 30
+    value: -30
   }];
 
   public attacks: Attack[] = [

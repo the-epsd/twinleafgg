@@ -41,6 +41,7 @@ export class Charizardex extends PokemonCard {
       name: 'Burning Darkness',
       cost: [ CardType.FIRE, CardType.FIRE ],
       damage: 180,
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each Prize card your ' +
       'opponent has taken.'
     }

@@ -16,6 +16,8 @@ class Magneton extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Magnemite';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '9';
         this.hp = 60;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS];

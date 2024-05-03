@@ -22,7 +22,9 @@ export class Kakuna extends PokemonCard {
 
   public evolvesFrom = 'Weedle';
 
-  public evolvesInto = 'Beedrill';
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '33';
   
   public cardType = CardType.GRASS;
 

@@ -21,6 +21,10 @@ export class Farfetchd extends PokemonCard {
 
   public hp = 50;
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '27';
+
   public cardType = CardType.COLORLESS;
   
   public weakness = [{ type: CardType.LIGHTNING }];

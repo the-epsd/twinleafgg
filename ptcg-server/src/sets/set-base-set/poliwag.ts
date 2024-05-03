@@ -19,11 +19,13 @@ export class Poliwag extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public evolvesInto = ['Poliwhirl'];
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '59';
 
   public hp = 40;
 
-  public weakness = [{ type: CardType.GRASS, value: 2 }];
+  public weakness = [{ type: CardType.GRASS }];
 
   public retreat = [CardType.COLORLESS];
 

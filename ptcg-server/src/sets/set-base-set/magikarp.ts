@@ -17,7 +17,9 @@ export class Magikarp extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public evolvesInto = ['Gyarados', 'Gyarados-GX', 'Dark Gyarados', 'Gyarados ex'];
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '35';
   
   public hp = 30;
 

@@ -9,6 +9,8 @@ export declare class Magneton extends PokemonCard {
     cardType: CardType;
     stage: Stage;
     evolvesFrom: string;
+    cardImage: string;
+    setNumber: string;
     hp: number;
     weakness: {
         type: CardType;

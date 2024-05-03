@@ -20,6 +20,10 @@ export class Jynx extends PokemonCard {
 
   public cardType = CardType.PSYCHIC;
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '31';
+
   public hp = 70;
 
   public weakness = [{ type: CardType.PSYCHIC }];

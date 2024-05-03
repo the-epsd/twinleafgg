@@ -10,7 +10,8 @@ class Dratini extends pokemon_card_1.PokemonCard {
         this.set = 'BS';
         this.fullName = 'Dratini BS';
         this.stage = card_types_1.Stage.BASIC;
-        this.evolvesInto = ['Dragonair', 'Dark Dragonair', 'Light Dragonair'];
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '26';
         this.hp = 40;
         this.cardType = card_types_1.CardType.COLORLESS;
         this.resistance = [{ type: card_types_1.CardType.PSYCHIC, value: -30 }];

@@ -13,15 +13,17 @@ class Beedrill extends pokemon_card_1.PokemonCard {
         this.set = 'BS';
         this.name = 'Beedrill';
         this.fullName = 'Beedrill BS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '17';
         this.stage = card_types_1.Stage.STAGE_2;
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 80;
         this.weakness = [{
                 type: card_types_1.CardType.FIRE
             }];
-        this.resistances = [{
+        this.resistance = [{
                 type: card_types_1.CardType.FIGHTING,
-                value: 30
+                value: -30
             }];
         this.attacks = [
             {

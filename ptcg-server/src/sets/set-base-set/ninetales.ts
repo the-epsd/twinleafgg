@@ -21,6 +21,10 @@ export class Ninetales extends PokemonCard {
   
   public cardType: CardType = CardType.FIRE;
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '12';
+
   public hp: number = 80;
 
   public weakness = [{ type: CardType.WATER }];

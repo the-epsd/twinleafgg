@@ -10,6 +10,8 @@ export declare class Arcanine extends PokemonCard {
     fullName: string;
     stage: Stage;
     evolvesFrom: string;
+    cardImage: string;
+    setNumber: string;
     cardType: CardType;
     hp: number;
     weakness: {

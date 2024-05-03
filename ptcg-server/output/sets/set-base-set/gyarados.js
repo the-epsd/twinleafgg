@@ -16,6 +16,8 @@ class Gyarados extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.WATER;
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Magikarp';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '6';
         this.hp = 100;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

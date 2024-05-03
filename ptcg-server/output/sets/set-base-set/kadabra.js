@@ -14,7 +14,8 @@ class Kadabra extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Abra';
-        this.evolvesInto = ['Alakazam', 'Alakazam ex'];
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '32';
         this.hp = 60;
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

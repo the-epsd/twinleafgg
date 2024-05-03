@@ -14,6 +14,8 @@ class Arcanine extends pokemon_card_1.PokemonCard {
         this.fullName = 'Arcanine BS';
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Growlithe';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '23';
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 100;
         this.weakness = [{ type: card_types_1.CardType.WATER }];

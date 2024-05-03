@@ -10,6 +10,8 @@ export declare class Dewgong extends PokemonCard {
     fullName: string;
     stage: Stage;
     evolvesFrom: string;
+    cardImage: string;
+    setNumber: string;
     hp: number;
     weakness: {
         type: CardType;

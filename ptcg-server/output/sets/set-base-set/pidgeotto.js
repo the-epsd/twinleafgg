@@ -16,6 +16,8 @@ class Pidgeotto extends pokemon_card_1.PokemonCard {
         this.name = 'Pidgeotto';
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Pidgey';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '22';
         this.hp = 60;
         this.cardType = card_types_1.CardType.COLORLESS;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];

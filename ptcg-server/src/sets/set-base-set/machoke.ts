@@ -15,13 +15,15 @@ export class Machoke extends PokemonCard {
   
   public fullName = 'Machoke BS';
   
-  public cardType = CardType.PSYCHIC;
+  public cardType = CardType.FIGHTING;
   
   public stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Machop';
 
-  public evolvesInto = ['Machamp', 'Machamp-GX'];
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '34';
 
   public hp = 80;
 

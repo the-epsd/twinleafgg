@@ -10,7 +10,9 @@ export declare class Haunter extends PokemonCard {
     fullName: string;
     stage: Stage;
     evolvesFrom: string;
-    evolvesInto: string[];
+    cardImage: string;
+    setNumber: string;
+    cardType: CardType;
     hp: number;
     resistance: {
         type: CardType;

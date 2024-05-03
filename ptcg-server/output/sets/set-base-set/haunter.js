@@ -14,7 +14,9 @@ class Haunter extends pokemon_card_1.PokemonCard {
         this.fullName = 'Haunter BS';
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Gastly';
-        this.evolvesInto = ['Gengar', 'Gengar ex'];
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '29';
+        this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 60;
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS];

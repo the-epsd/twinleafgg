@@ -10,6 +10,8 @@ export declare class Pidgeotto extends PokemonCard {
     name: string;
     stage: Stage;
     evolvesFrom: string;
+    cardImage: string;
+    setNumber: string;
     hp: number;
     cardType: CardType;
     weakness: {

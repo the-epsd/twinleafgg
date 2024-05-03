@@ -20,6 +20,10 @@ export class Arcanine extends PokemonCard {
   
   public evolvesFrom = 'Growlithe';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '23';
+
   public cardType = CardType.FIRE;
   
   public hp = 100;

@@ -18,6 +18,8 @@ class Electrode extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Voltorb';
         this.cardType = card_types_1.CardType.LIGHTNING;
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '21';
         this.hp = 80;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS];

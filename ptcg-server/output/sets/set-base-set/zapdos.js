@@ -17,12 +17,13 @@ class Zapdos extends pokemon_card_1.PokemonCard {
         this.name = 'Zapdos';
         this.fullName = 'Zapdos BS';
         this.cardImage = 'assets/cardback.png';
+        this.setNumber = '16';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 90;
-        this.resistances = [{
+        this.resistance = [{
                 type: card_types_1.CardType.FIGHTING,
-                value: 30
+                value: -30
             }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [

@@ -5,7 +5,9 @@ export declare class Growlithe extends PokemonCard {
     fullName: string;
     name: string;
     stage: Stage;
-    evolvesInto: string[];
+    cardType: CardType;
+    cardImage: string;
+    setNumber: string;
     hp: number;
     weakness: {
         type: CardType;

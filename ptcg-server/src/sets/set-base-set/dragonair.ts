@@ -22,9 +22,13 @@ export class Dragonair extends PokemonCard {
 
   public hp: number = 80;
 
-  public resistances = [{
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '18';
+
+  public resistance = [{
     type: CardType.PSYCHIC,
-    value: 30
+    value: -30
   }];
 
   public retreat: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];

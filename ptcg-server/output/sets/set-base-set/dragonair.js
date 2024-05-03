@@ -15,9 +15,11 @@ class Dragonair extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_1;
         this.cardType = card_types_1.CardType.COLORLESS;
         this.hp = 80;
-        this.resistances = [{
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '18';
+        this.resistance = [{
                 type: card_types_1.CardType.PSYCHIC,
-                value: 30
+                value: -30
             }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [

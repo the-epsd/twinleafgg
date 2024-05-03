@@ -9,7 +9,8 @@ export declare class Magikarp extends PokemonCard {
     fullName: string;
     cardType: CardType;
     stage: Stage;
-    evolvesInto: string[];
+    cardImage: string;
+    setNumber: string;
     hp: number;
     weakness: {
         type: CardType;

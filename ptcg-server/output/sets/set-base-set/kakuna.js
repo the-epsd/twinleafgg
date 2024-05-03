@@ -16,7 +16,8 @@ class Kakuna extends pokemon_card_1.PokemonCard {
         this.fullName = 'Kakuna BS';
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Weedle';
-        this.evolvesInto = 'Beedrill';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '33';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 80;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];

@@ -11,7 +11,9 @@ export declare class Dragonair extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
-    resistances: {
+    cardImage: string;
+    setNumber: string;
+    resistance: {
         type: CardType;
         value: number;
     }[];

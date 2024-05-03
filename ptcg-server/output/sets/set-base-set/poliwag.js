@@ -13,9 +13,10 @@ class Poliwag extends pokemon_card_1.PokemonCard {
         this.fullName = 'Poliwag BS';
         this.cardType = card_types_1.CardType.WATER;
         this.stage = card_types_1.Stage.BASIC;
-        this.evolvesInto = ['Poliwhirl'];
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '59';
         this.hp = 40;
-        this.weakness = [{ type: card_types_1.CardType.GRASS, value: 2 }];
+        this.weakness = [{ type: card_types_1.CardType.GRASS }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {

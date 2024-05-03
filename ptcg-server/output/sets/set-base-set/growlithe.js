@@ -10,7 +10,9 @@ class Growlithe extends pokemon_card_1.PokemonCard {
         this.fullName = 'Growlithe BS';
         this.name = 'Growlithe';
         this.stage = card_types_1.Stage.BASIC;
-        this.evolvesInto = ['Arcanine', 'Arcanine ex', 'Light Arcanine'];
+        this.cardType = card_types_1.CardType.FIRE;
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '28';
         this.hp = 60;
         this.weakness = [{ type: card_types_1.CardType.WATER }];
         this.retreat = [card_types_1.CardType.COLORLESS];

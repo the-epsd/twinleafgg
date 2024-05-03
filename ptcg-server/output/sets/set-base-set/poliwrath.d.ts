@@ -8,6 +8,8 @@ export declare class Poliwrath extends PokemonCard {
     name: string;
     set: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     stage: Stage;
     cardType: CardType;
     hp: number;

@@ -19,7 +19,9 @@ export class Magmar extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public evolvesInto = ['Magmortar'];
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '36';
 
   public hp = 50;
 

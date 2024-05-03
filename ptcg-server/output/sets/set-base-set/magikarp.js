@@ -12,7 +12,8 @@ class Magikarp extends pokemon_card_1.PokemonCard {
         this.fullName = 'Magikarp BS';
         this.cardType = card_types_1.CardType.WATER;
         this.stage = card_types_1.Stage.BASIC;
-        this.evolvesInto = ['Gyarados', 'Gyarados-GX', 'Dark Gyarados', 'Gyarados ex'];
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '35';
         this.hp = 30;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.retreat = [card_types_1.CardType.COLORLESS];

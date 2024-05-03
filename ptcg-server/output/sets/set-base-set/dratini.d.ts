@@ -5,7 +5,8 @@ export declare class Dratini extends PokemonCard {
     set: string;
     fullName: string;
     stage: Stage;
-    evolvesInto: string[];
+    cardImage: string;
+    setNumber: string;
     hp: number;
     cardType: CardType;
     resistance: {

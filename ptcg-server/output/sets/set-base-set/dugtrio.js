@@ -13,13 +13,15 @@ class Dugtrio extends pokemon_card_1.PokemonCard {
         this.fullName = 'Dugtrio BS';
         this.stage = card_types_1.Stage.STAGE_1;
         this.cardType = card_types_1.CardType.FIGHTING;
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '19';
         this.hp = 70;
         this.weakness = [{
                 type: card_types_1.CardType.GRASS
             }];
-        this.resistances = [{
+        this.resistance = [{
                 type: card_types_1.CardType.LIGHTNING,
-                value: 30
+                value: -30
             }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [

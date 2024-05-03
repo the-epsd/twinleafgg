@@ -16,7 +16,8 @@ class Poliwhirl extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.WATER;
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Poliwag';
-        this.evolvesInto = ['Poliwrath', 'Politoed', 'Politoed ex'];
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '38';
         this.hp = 60;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
         this.retreat = [card_types_1.CardType.COLORLESS];

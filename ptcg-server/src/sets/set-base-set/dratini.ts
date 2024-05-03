@@ -10,8 +10,10 @@ export class Dratini extends PokemonCard {
   public fullName = 'Dratini BS';
 
   public stage = Stage.BASIC;
-  
-  public evolvesInto = ['Dragonair', 'Dark Dragonair', 'Light Dragonair'];
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '26';
 
   public hp = 40;
   

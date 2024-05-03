@@ -23,7 +23,9 @@ export class Poliwhirl extends PokemonCard {
 
   public evolvesFrom = 'Poliwag';
 
-  public evolvesInto = ['Poliwrath', 'Politoed', 'Politoed ex'];
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '38';
 
   public hp = 60;
 

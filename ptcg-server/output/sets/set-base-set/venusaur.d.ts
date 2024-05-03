@@ -10,6 +10,8 @@ export declare class Venusaur extends PokemonCard {
     fullName: string;
     stage: Stage;
     cardType: CardType;
+    cardImage: string;
+    setNumber: string;
     hp: number;
     weakness: {
         type: CardType;

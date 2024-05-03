@@ -10,7 +10,8 @@ export declare class Kakuna extends PokemonCard {
     fullName: string;
     stage: Stage;
     evolvesFrom: string;
-    evolvesInto: string;
+    cardImage: string;
+    setNumber: string;
     cardType: CardType;
     hp: number;
     weakness: {

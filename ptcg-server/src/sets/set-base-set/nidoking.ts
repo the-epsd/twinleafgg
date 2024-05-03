@@ -19,6 +19,8 @@ export class Nidoking extends PokemonCard {
   public fullName = 'Nidoking BS';
 
   public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '11';
   
   public stage: Stage = Stage.STAGE_2;
   

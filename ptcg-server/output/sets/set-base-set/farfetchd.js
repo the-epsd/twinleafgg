@@ -15,6 +15,8 @@ class Farfetchd extends pokemon_card_1.PokemonCard {
         this.fullName = 'Farfetch\'d BS';
         this.stage = card_types_1.Stage.BASIC;
         this.hp = 50;
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '27';
         this.cardType = card_types_1.CardType.COLORLESS;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];

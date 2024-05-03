@@ -18,12 +18,16 @@ export class Chansey extends PokemonCard {
   public cardType: CardType = CardType.COLORLESS;  
 
   public stage: Stage = Stage.BASIC;
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '3';
   
   public hp: number = 120;
 
   public weakness = [{ type: CardType.LIGHTNING }];
   
-  public resistance = [{ type: CardType.PSYCHIC, value: 30 }];
+  public resistance = [{ type: CardType.PSYCHIC, value: -30 }];
 
   public retreat = [CardType.COLORLESS];
   

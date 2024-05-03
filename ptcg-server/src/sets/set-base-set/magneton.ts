@@ -20,6 +20,10 @@ export class Magneton extends PokemonCard {
 
   public evolvesFrom: string = 'Magnemite';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '9';
+
   public hp: number = 60;
 
   public weakness = [{ type: CardType.FIGHTING }];

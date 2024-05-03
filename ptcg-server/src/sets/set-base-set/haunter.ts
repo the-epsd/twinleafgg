@@ -19,8 +19,12 @@ export class Haunter extends PokemonCard {
   public stage = Stage.STAGE_1;
   
   public evolvesFrom = 'Gastly';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '29';
   
-  public evolvesInto = ['Gengar', 'Gengar ex'];
+  public cardType: CardType = CardType.PSYCHIC;  
 
   public hp = 60;
 

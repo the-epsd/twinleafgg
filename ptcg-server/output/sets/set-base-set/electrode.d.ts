@@ -11,6 +11,8 @@ export declare class Electrode extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;
+    cardImage: string;
+    setNumber: string;
     hp: number;
     weakness: {
         type: CardType;

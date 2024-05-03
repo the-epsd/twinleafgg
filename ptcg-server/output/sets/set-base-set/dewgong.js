@@ -15,6 +15,8 @@ class Dewgong extends pokemon_card_1.PokemonCard {
         this.fullName = 'Dewgong BS';
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Seel';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '25';
         this.hp = 80;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

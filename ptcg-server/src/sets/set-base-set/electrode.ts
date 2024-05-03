@@ -23,6 +23,10 @@ export class Electrode extends PokemonCard {
   public evolvesFrom = 'Voltorb';
 
   public cardType = CardType.LIGHTNING;
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '21';
   
   public hp = 80;
 

@@ -10,6 +10,8 @@ export declare class Farfetchd extends PokemonCard {
     fullName: string;
     stage: Stage;
     hp: number;
+    cardImage: string;
+    setNumber: string;
     cardType: CardType;
     weakness: {
         type: CardType;

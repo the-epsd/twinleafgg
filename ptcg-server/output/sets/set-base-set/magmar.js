@@ -13,7 +13,8 @@ class Magmar extends pokemon_card_1.PokemonCard {
         this.fullName = 'Magmar BS';
         this.cardType = card_types_1.CardType.FIRE;
         this.stage = card_types_1.Stage.BASIC;
-        this.evolvesInto = ['Magmortar'];
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '36';
         this.hp = 50;
         this.weakness = [{ type: card_types_1.CardType.WATER }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

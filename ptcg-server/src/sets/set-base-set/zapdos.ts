@@ -21,6 +21,8 @@ export class Zapdos extends PokemonCard {
   public fullName = 'Zapdos BS';
 
   public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '16';
   
   public stage: Stage = Stage.BASIC;
   
@@ -28,9 +30,9 @@ export class Zapdos extends PokemonCard {
 
   public hp: number = 90;
 
-  public resistances = [{
+  public resistance = [{
     type: CardType.FIGHTING,
-    value: 30
+    value: -30
   }];
 
   public retreat: CardType[] = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

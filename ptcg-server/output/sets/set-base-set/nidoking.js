@@ -15,6 +15,7 @@ class Nidoking extends pokemon_card_1.PokemonCard {
         this.name = 'Nidoking';
         this.fullName = 'Nidoking BS';
         this.cardImage = 'assets/cardback.png';
+        this.setNumber = '11';
         this.stage = card_types_1.Stage.STAGE_2;
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 90;

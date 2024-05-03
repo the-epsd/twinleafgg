@@ -15,6 +15,7 @@ class Raichu extends pokemon_card_1.PokemonCard {
         this.set = 'BS';
         this.fullName = 'Raichu BS';
         this.cardImage = 'assets/cardback.png';
+        this.setNumber = '14';
         this.stage = card_types_1.Stage.STAGE_1;
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 80;

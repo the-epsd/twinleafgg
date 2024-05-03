@@ -13,6 +13,7 @@ export interface Resistance {
 export interface Attack {
     cost: CardType[];
     damage: number;
+    damageCalculation?: string;
     name: string;
     text: string;
     effect?: (store: StoreLike, state: State, effect: AttackEffect) => void;

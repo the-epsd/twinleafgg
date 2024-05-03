@@ -8,13 +8,15 @@ export declare class Beedrill extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
-    resistances: {
+    resistance: {
         type: CardType;
         value: number;
     }[];

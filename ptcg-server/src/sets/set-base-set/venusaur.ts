@@ -67,6 +67,10 @@ export class Venusaur extends PokemonCard {
 
   public cardType: CardType = CardType.GRASS;
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '15';
+
   public hp: number = 100;
 
   public weakness = [{ type: CardType.FIRE }];

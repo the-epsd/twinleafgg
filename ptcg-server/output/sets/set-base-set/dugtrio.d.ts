@@ -10,11 +10,13 @@ export declare class Dugtrio extends PokemonCard {
     fullName: string;
     stage: Stage;
     cardType: CardType;
+    cardImage: string;
+    setNumber: string;
     hp: number;
     weakness: {
         type: CardType;
     }[];
-    resistances: {
+    resistance: {
         type: CardType;
         value: number;
     }[];

@@ -21,6 +21,10 @@ export class Dewgong extends PokemonCard {
   
   public evolvesFrom = 'Seel';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '25';
+
   public hp = 80;
 
   public weakness = [{ type: CardType.LIGHTNING }];

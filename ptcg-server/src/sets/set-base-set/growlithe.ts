@@ -11,7 +11,11 @@ export class Growlithe extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public evolvesInto = ['Arcanine', 'Arcanine ex', 'Light Arcanine'];
+  public cardType: CardType = CardType.FIRE;  
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '28';
 
   public hp = 60;
 

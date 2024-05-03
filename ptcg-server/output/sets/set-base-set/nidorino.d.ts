@@ -10,7 +10,8 @@ export declare class Nidorino extends PokemonCard {
     fullName: string;
     stage: Stage;
     evolvesFrom: string;
-    evolvesInto: string[];
+    cardImage: string;
+    setNumber: string;
     hp: number;
     weakness: {
         type: CardType;

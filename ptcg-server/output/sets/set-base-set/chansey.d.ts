@@ -8,6 +8,8 @@ export declare class Chansey extends PokemonCard {
     name: string;
     cardType: CardType;
     stage: Stage;
+    cardImage: string;
+    setNumber: string;
     hp: number;
     weakness: {
         type: CardType;

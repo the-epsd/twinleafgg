@@ -9,10 +9,11 @@ export declare class Zapdos extends PokemonCard {
     name: string;
     fullName: string;
     cardImage: string;
+    setNumber: string;
     stage: Stage;
     cardType: CardType;
     hp: number;
-    resistances: {
+    resistance: {
         type: CardType;
         value: number;
     }[];

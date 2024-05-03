@@ -20,6 +20,8 @@ export class Machamp extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   
   public evolvesFrom: string = 'Machoke';
+
+  public setNumber: string = '8';
   
   public hp: number = 100;
   

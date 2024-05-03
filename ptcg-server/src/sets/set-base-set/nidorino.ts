@@ -18,9 +18,11 @@ export class Nidorino extends PokemonCard {
 
   public stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Nidoran Male';
+  public evolvesFrom = 'Nidoran ♂';
 
-  public evolvesInto = ['Nidoking'];
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '37';
 
   public hp = 60;
 

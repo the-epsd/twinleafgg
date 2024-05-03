@@ -19,6 +19,10 @@ export class Gyarados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   
   public evolvesFrom: string = 'Magikarp';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '6';
   
   public hp: number = 100;
 

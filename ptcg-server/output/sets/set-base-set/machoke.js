@@ -11,10 +11,11 @@ class Machoke extends pokemon_card_1.PokemonCard {
         this.name = 'Machoke';
         this.set = 'BS';
         this.fullName = 'Machoke BS';
-        this.cardType = card_types_1.CardType.PSYCHIC;
+        this.cardType = card_types_1.CardType.FIGHTING;
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Machop';
-        this.evolvesInto = ['Machamp', 'Machamp-GX'];
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '34';
         this.hp = 80;
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

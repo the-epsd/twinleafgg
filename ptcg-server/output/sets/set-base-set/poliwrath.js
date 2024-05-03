@@ -13,6 +13,8 @@ class Poliwrath extends pokemon_card_1.PokemonCard {
         this.name = 'Poliwrath';
         this.set = 'BS';
         this.fullName = 'Poliwrath BS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '13';
         this.stage = card_types_1.Stage.STAGE_2;
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 90;

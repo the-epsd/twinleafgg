@@ -62,7 +62,7 @@
           </div>
           <div class="ptcg-u-spacer"></div>
           <div class="attack-damage" *ngIf="attack.damage > 0">
-            {{ attack.damage }}
+            {{ attack.damage }}{{attack.damageCalculation ? ' ' + attack.damageCalculation : ''}}
           </div>
         </div>
         <div class="card-text" *ngIf="attack.text">

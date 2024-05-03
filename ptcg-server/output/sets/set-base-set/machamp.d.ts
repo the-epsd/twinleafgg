@@ -11,6 +11,7 @@ export declare class Machamp extends PokemonCard {
     cardImage: string;
     stage: Stage;
     evolvesFrom: string;
+    setNumber: string;
     hp: number;
     cardType: CardType;
     weakness: Weakness[];
