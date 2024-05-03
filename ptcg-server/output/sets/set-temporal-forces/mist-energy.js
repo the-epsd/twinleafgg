@@ -28,6 +28,9 @@ class MistEnergy extends energy_card_1.EnergyCard {
                 if (effect instanceof attack_effects_1.PutDamageEffect) {
                     return state;
                 }
+                if (effect instanceof attack_effects_1.DealDamageEffect) {
+                    return state;
+                }
                 effect.preventDefault = true;
             }
         }

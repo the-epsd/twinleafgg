@@ -6,7 +6,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { ChooseAttackPrompt, GameError, GameLog, GameMessage, PlayerType, StateUtils } from '../../game';
+import { ChooseAttackPrompt, GameError, GameLog, GameMessage, PlayerType, PokemonCardList, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Poliwhirl extends PokemonCard {
@@ -31,9 +31,6 @@ export class Poliwhirl extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public readonly AMNESIA_MARKER = 'AMNESIA_MARKER';
-  public readonly CLEAR_AMNESIA_MARKER = 'CLEAR_AMNESIA_MARKER';
-  
   public forgottenAttack: Attack | null = null;
   
   public attacks: Attack[] = [
@@ -74,7 +71,7 @@ export class Poliwhirl extends PokemonCard {
           return state;
         }
         
-        opponent.active.marker.addMarker(this.AMNESIA_MARKER, this);
+        opponent.active.marker.addMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
         this.forgottenAttack = selected;
         
           
@@ -89,17 +86,17 @@ export class Poliwhirl extends PokemonCard {
     }
     
     if (effect instanceof AttackEffect && effect.attack === this.forgottenAttack &&
-        effect.player.active.marker.hasMarker(this.AMNESIA_MARKER, this)) {
+        effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
     
     if (effect instanceof EndTurnEffect && 
-        effect.player.active.marker.hasMarker(this.AMNESIA_MARKER, this)) {
+        effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
 
-      effect.player.active.marker.removeMarker(this.AMNESIA_MARKER, this);
+      effect.player.active.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
 
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.AMNESIA_MARKER, this);
+        cardList.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
       });
       
       this.forgottenAttack = null;

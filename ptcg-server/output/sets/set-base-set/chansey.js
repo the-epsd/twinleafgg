@@ -20,8 +20,6 @@ class Chansey extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.resistance = [{ type: card_types_1.CardType.PSYCHIC, value: 30 }];
         this.retreat = [card_types_1.CardType.COLORLESS];
-        this.CLEAR_SCRUNCH_MARKER = 'CLEAR_SCRUNCH_MARKER';
-        this.SCRUNCH_MARKER = 'SCRUNCH_MARKER';
         this.attacks = [
             {
                 name: 'Scrunch',
@@ -43,22 +41,22 @@ class Chansey extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             return store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP), flipResult => {
                 if (flipResult) {
-                    player.active.marker.addMarker(this.SCRUNCH_MARKER, this);
-                    opponent.marker.addMarker(this.CLEAR_SCRUNCH_MARKER, this);
+                    player.active.marker.addMarker(game_1.PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+                    opponent.marker.addMarker(game_1.PokemonCardList.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
                 }
             });
         }
         if (effect instanceof attack_effects_1.PutDamageEffect
-            && effect.target.marker.hasMarker(this.SCRUNCH_MARKER)) {
+            && effect.target.marker.hasMarker(game_1.PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
             effect.preventDefault = true;
             return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect &&
-            effect.player.marker.hasMarker(this.CLEAR_SCRUNCH_MARKER, this)) {
-            effect.player.marker.removeMarker(this.CLEAR_SCRUNCH_MARKER, this);
+            effect.player.marker.hasMarker(game_1.PokemonCardList.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this)) {
+            effect.player.marker.removeMarker(game_1.PokemonCardList.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                cardList.marker.removeMarker(this.SCRUNCH_MARKER, this);
+                cardList.marker.removeMarker(game_1.PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

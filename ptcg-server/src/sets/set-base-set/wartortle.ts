@@ -1,7 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils,
-  GameMessage, PlayerType, CoinFlipPrompt } from '../../game';
+  GameMessage, PlayerType, CoinFlipPrompt, 
+  PokemonCardList} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -39,10 +40,6 @@ export class Wartortle extends PokemonCard {
 
   public fullName: string = 'Wartortle BS';
 
-  public readonly CLEAR_DEFENSE_CURL_MARKER = 'CLEAR_DEFENSE_CURL_MARKER';
-
-  public readonly DEFENSE_CURL_MARKER = 'DEFENSE_CURL_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -52,26 +49,26 @@ export class Wartortle extends PokemonCard {
         player.id, GameMessage.COIN_FLIP
       ), flipResult => {
         if (flipResult) {
-          player.active.marker.addMarker(this.DEFENSE_CURL_MARKER, this);
-          opponent.marker.addMarker(this.CLEAR_DEFENSE_CURL_MARKER, this);
+          player.active.marker.addMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+          opponent.marker.addMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
         }
       });
     }
 
     if (effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(this.DEFENSE_CURL_MARKER)) {
+      && effect.target.marker.hasMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
       effect.preventDefault = true;
       return state;
     }
 
     if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_DEFENSE_CURL_MARKER, this)) {
+      && effect.player.marker.hasMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
 
-      effect.player.marker.removeMarker(this.CLEAR_DEFENSE_CURL_MARKER, this);
+      effect.player.marker.removeMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
 
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.DEFENSE_CURL_MARKER, this);
+        cardList.marker.removeMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       });
     }
 

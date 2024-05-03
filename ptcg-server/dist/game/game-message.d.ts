@@ -153,7 +153,8 @@ export declare enum GameLog {
     LOG_STARTS_BECAUSE_OF_ABILITY = "LOG_STARTS_BECAUSE_OF_ABILITY",
     LOG_TEXT = "LOG_TEXT",
     LOG_TIME_ELAPSED = "LOG_TIME_ELAPSED",
-    LOG_TURN = "LOG_TURN"
+    LOG_TURN = "LOG_TURN",
+    LOG_PLAYER_PUTS_CARD_IN_HAND = "LOG_PLAYER_PUTS_CARD_IN_HAND"
 }
 export declare const GameMessage: {
     HEADS: GameCardMessage.HEADS;

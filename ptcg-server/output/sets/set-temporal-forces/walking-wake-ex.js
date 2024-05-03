@@ -19,7 +19,7 @@ class WalkingWakeex extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Azure Wave',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Damage from attacks used by this Pokémon isn’t affected by any effects on your opponent\'s Active Pokémon.'
+                text: 'Damage from attacks used by this Pokémon isn\'t affected by any effects on your opponent\'s Active Pokémon.'
             }];
         this.attacks = [
             {
@@ -36,20 +36,40 @@ class WalkingWakeex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Walking Wake ex TEF';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof attack_effects_1.DealDamageEffect) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 120);
-            store.reduceEffect(state, applyWeakness);
-            const damage = applyWeakness.damage;
-            effect.damage = 0;
-            if (damage > 0) {
-                opponent.active.damage += damage;
-                const afterDamage = new attack_effects_1.AfterDamageEffect(effect, damage);
-                state = store.reduceEffect(state, afterDamage);
+            const targetCard = player.active.getPokemonCard();
+            if (targetCard && targetCard.name == 'Walking Wake ex') {
+                // Try to reduce PowerEffect, to check if something is blocking our ability
+                try {
+                    const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                    store.reduceEffect(state, powerEffect);
+                }
+                catch (_a) {
+                    return state;
+                }
+                const opponent = game_1.StateUtils.getOpponent(state, player);
+                if (effect instanceof game_effects_1.AttackEffect && effect.target === opponent.active) {
+                    const damage = this.attacks[0].damage;
+                    const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, damage);
+                    store.reduceEffect(state, applyWeakness);
+                    const newDamage = applyWeakness.damage;
+                    effect.damage = 0;
+                    if (newDamage > 0) {
+                        opponent.active.damage += newDamage;
+                        const afterDamage = new attack_effects_1.AfterDamageEffect(effect, newDamage);
+                        state = store.reduceEffect(state, afterDamage);
+                    }
+                }
             }
-            if (opponent.active.specialConditions.length > 0) {
-                effect.damage += 120;
+            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+                const player = effect.player;
+                const opponent = game_1.StateUtils.getOpponent(state, player);
+                if (opponent.active.specialConditions.length > 0) {
+                    const attackEffect = effect;
+                    attackEffect.damage += 120;
+                }
+                return state;
             }
             return state;
         }

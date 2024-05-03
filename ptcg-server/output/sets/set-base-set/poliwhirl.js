@@ -20,8 +20,6 @@ class Poliwhirl extends pokemon_card_1.PokemonCard {
         this.hp = 60;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
         this.retreat = [card_types_1.CardType.COLORLESS];
-        this.AMNESIA_MARKER = 'AMNESIA_MARKER';
-        this.CLEAR_AMNESIA_MARKER = 'CLEAR_AMNESIA_MARKER';
         this.forgottenAttack = null;
         this.attacks = [
             {
@@ -52,7 +50,7 @@ class Poliwhirl extends pokemon_card_1.PokemonCard {
                 if (selected === null) {
                     return state;
                 }
-                opponent.active.marker.addMarker(this.AMNESIA_MARKER, this);
+                opponent.active.marker.addMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
                 this.forgottenAttack = selected;
                 store.log(state, game_1.GameLog.LOG_PLAYER_DISABLES_ATTACK, {
                     name: player.name,
@@ -63,14 +61,14 @@ class Poliwhirl extends pokemon_card_1.PokemonCard {
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.forgottenAttack &&
-            effect.player.active.marker.hasMarker(this.AMNESIA_MARKER, this)) {
+            effect.player.active.marker.hasMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
             throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect &&
-            effect.player.active.marker.hasMarker(this.AMNESIA_MARKER, this)) {
-            effect.player.active.marker.removeMarker(this.AMNESIA_MARKER, this);
+            effect.player.active.marker.hasMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
+            effect.player.active.marker.removeMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
             effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
-                cardList.marker.removeMarker(this.AMNESIA_MARKER, this);
+                cardList.marker.removeMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
             });
             this.forgottenAttack = null;
         }

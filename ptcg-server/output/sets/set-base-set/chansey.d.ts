@@ -17,8 +17,6 @@ export declare class Chansey extends PokemonCard {
         value: number;
     }[];
     retreat: CardType[];
-    readonly CLEAR_SCRUNCH_MARKER = "CLEAR_SCRUNCH_MARKER";
-    readonly SCRUNCH_MARKER = "SCRUNCH_MARKER";
     attacks: {
         name: string;
         cost: CardType[];

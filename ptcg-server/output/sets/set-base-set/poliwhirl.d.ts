@@ -17,8 +17,6 @@ export declare class Poliwhirl extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    readonly AMNESIA_MARKER = "AMNESIA_MARKER";
-    readonly CLEAR_AMNESIA_MARKER = "CLEAR_AMNESIA_MARKER";
     forgottenAttack: Attack | null;
     attacks: Attack[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

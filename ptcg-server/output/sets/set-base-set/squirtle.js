@@ -10,6 +10,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const game_1 = require("../../game");
 class Squirtle extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -34,8 +35,6 @@ class Squirtle extends pokemon_card_1.PokemonCard {
         this.set = 'BS';
         this.name = 'Squirtle';
         this.fullName = 'Squirtle BS';
-        this.CLEAR_DEFENSE_CURL_MARKER = 'CLEAR_DEFENSE_CURL_MARKER';
-        this.DEFENSE_CURL_MARKER = 'DEFENSE_CURL_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -54,22 +53,22 @@ class Squirtle extends pokemon_card_1.PokemonCard {
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             return store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.COIN_FLIP), flipResult => {
                 if (flipResult) {
-                    player.active.marker.addMarker(this.DEFENSE_CURL_MARKER, this);
-                    opponent.marker.addMarker(this.CLEAR_DEFENSE_CURL_MARKER, this);
+                    player.active.marker.addMarker(game_1.PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+                    opponent.marker.addMarker(game_1.PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
                 }
             });
         }
         if (effect instanceof attack_effects_1.PutDamageEffect
-            && effect.target.marker.hasMarker(this.DEFENSE_CURL_MARKER)) {
+            && effect.target.marker.hasMarker(game_1.PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
             effect.preventDefault = true;
             return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect
-            && effect.player.marker.hasMarker(this.CLEAR_DEFENSE_CURL_MARKER, this)) {
-            effect.player.marker.removeMarker(this.CLEAR_DEFENSE_CURL_MARKER, this);
+            && effect.player.marker.hasMarker(game_1.PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+            effect.player.marker.removeMarker(game_1.PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
             opponent.forEachPokemon(play_card_action_1.PlayerType.TOP_PLAYER, (cardList) => {
-                cardList.marker.removeMarker(this.DEFENSE_CURL_MARKER, this);
+                cardList.marker.removeMarker(game_1.PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
             });
         }
         return state;

@@ -21,8 +21,6 @@ class Kakuna extends pokemon_card_1.PokemonCard {
         this.hp = 80;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
-        this.STIFFEN_MARKER = 'STIFFEN_MARKER';
-        this.CLEAR_STIFFEN_MARKER = 'CLEAR_STIFFEN_MARKER';
         this.attacks = [
             {
                 name: 'Stiffen',
@@ -43,20 +41,20 @@ class Kakuna extends pokemon_card_1.PokemonCard {
             return store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(effect.player.id, game_1.GameMessage.COIN_FLIP), (heads) => {
                 if (heads) {
                     const player = effect.player;
-                    player.marker.addMarker(this.STIFFEN_MARKER, this);
+                    player.marker.addMarker(game_1.PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
                 }
             });
         }
         if (effect instanceof attack_effects_1.PutDamageEffect &&
-            effect.target.marker.hasMarker(this.STIFFEN_MARKER)) {
+            effect.target.marker.hasMarker(game_1.PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
             effect.preventDefault = true;
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_STIFFEN_MARKER, this)) {
-            effect.player.marker.removeMarker(this.CLEAR_STIFFEN_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(game_1.PokemonCardList.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this)) {
+            effect.player.marker.removeMarker(game_1.PokemonCardList.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                cardList.marker.removeMarker(this.STIFFEN_MARKER, this);
+                cardList.marker.removeMarker(game_1.PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

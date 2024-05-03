@@ -17,8 +17,6 @@ export declare class Kakuna extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    readonly STIFFEN_MARKER = "STIFFEN_MARKER";
-    readonly CLEAR_STIFFEN_MARKER = "CLEAR_STIFFEN_MARKER";
     attacks: Attack[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -20,7 +20,5 @@ export declare class Wartortle extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
-    readonly CLEAR_DEFENSE_CURL_MARKER = "CLEAR_DEFENSE_CURL_MARKER";
-    readonly DEFENSE_CURL_MARKER = "DEFENSE_CURL_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

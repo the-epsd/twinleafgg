@@ -7,7 +7,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { GameMessage, PlayerType, StateUtils } from '../../game';
+import { GameMessage, PlayerType, PokemonCardList, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Kakuna extends PokemonCard {
@@ -32,10 +32,6 @@ export class Kakuna extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
   
-  public readonly STIFFEN_MARKER = 'STIFFEN_MARKER';
-  
-  public readonly CLEAR_STIFFEN_MARKER = 'CLEAR_STIFFEN_MARKER';
-
   public attacks: Attack[] = [
     {
       name: 'Stiffen',
@@ -57,23 +53,23 @@ export class Kakuna extends PokemonCard {
       return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), (heads) => {
         if (heads) {
           const player = effect.player;
-          player.marker.addMarker(this.STIFFEN_MARKER, this);
+          player.marker.addMarker(PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
         }
       });
     }
     
     if (effect instanceof PutDamageEffect && 
-        effect.target.marker.hasMarker(this.STIFFEN_MARKER)) {
+        effect.target.marker.hasMarker(PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
       effect.preventDefault = true;
       return state;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_STIFFEN_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_STIFFEN_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(PokemonCardList.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this)) {
+      effect.player.marker.removeMarker(PokemonCardList.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
 
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.STIFFEN_MARKER, this);
+        cardList.marker.removeMarker(PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
       });
     }
 

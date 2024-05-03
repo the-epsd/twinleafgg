@@ -9,6 +9,7 @@ export declare enum AttackEffects {
     APPLY_WEAKNESS_EFFECT = "APPLY_WEAKNESS_EFFECT",
     DEAL_DAMAGE_EFFECT = "DEAL_DAMAGE_EFFECT",
     PUT_DAMAGE_EFFECT = "PUT_DAMAGE_EFFECT",
+    KNOCK_OUT_OPPONENT_EFFECT = "KNOCK_OUT_OPPONENT_EFFECT",
     AFTER_DAMAGE_EFFECT = "AFTER_DAMAGE_EFFECT",
     PUT_COUNTERS_EFFECT = "PUT_COUNTERS_EFFECT",
     DISCARD_CARD_EFFECT = "DISCARD_CARD_EFFECT",
@@ -54,6 +55,12 @@ export declare class AfterDamageEffect extends AbstractAttackEffect implements E
     constructor(base: AttackEffect, damage: number);
 }
 export declare class PutCountersEffect extends AbstractAttackEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    damage: number;
+    constructor(base: AttackEffect, damage: number);
+}
+export declare class KnockOutOpponentEffect extends AbstractAttackEffect implements Effect {
     readonly type: string;
     preventDefault: boolean;
     damage: number;

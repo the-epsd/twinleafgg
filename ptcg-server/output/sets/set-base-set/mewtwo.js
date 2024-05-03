@@ -34,8 +34,6 @@ class Mewtwo extends pokemon_card_1.PokemonCard {
                 damage: 0
             }];
         this.powers = [];
-        this.CLEAR_BARRIER_MARKER = 'CLEAR_BARRIER_MARKER';
-        this.BARRIER_MARKER = 'BARRIER_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -56,20 +54,20 @@ class Mewtwo extends pokemon_card_1.PokemonCard {
                 const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
                 discardEnergy.target = player.active;
                 store.reduceEffect(state, discardEnergy);
-                player.active.marker.addMarker(this.BARRIER_MARKER, this);
-                opponent.marker.addMarker(this.CLEAR_BARRIER_MARKER, this);
+                player.active.marker.addMarker(game_1.PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
+                opponent.marker.addMarker(game_1.PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
             });
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect &&
-            effect.player.marker.hasMarker(this.CLEAR_BARRIER_MARKER, this)) {
-            effect.player.marker.removeMarker(this.CLEAR_BARRIER_MARKER, this);
+            effect.player.marker.hasMarker(game_1.PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this)) {
+            effect.player.marker.removeMarker(game_1.PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                cardList.marker.removeMarker(this.BARRIER_MARKER, this);
+                cardList.marker.removeMarker(game_1.PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
             });
         }
         if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this) &&
-            effect.target.marker.hasMarker(this.BARRIER_MARKER, this)) {
+            effect.target.marker.hasMarker(game_1.PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this)) {
             const pokemonCard = effect.target.getPokemonCard();
             const sourceCard = effect.source.getPokemonCard();
             if (pokemonCard !== this) {

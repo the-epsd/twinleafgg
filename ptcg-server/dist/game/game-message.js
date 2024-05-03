@@ -157,7 +157,8 @@ export var GameLog;
     GameLog["LOG_STARTS_BECAUSE_OF_ABILITY"] = "LOG_STARTS_BECAUSE_OF_ABILITY";
     GameLog["LOG_TEXT"] = "LOG_TEXT";
     GameLog["LOG_TIME_ELAPSED"] = "LOG_TIME_ELAPSED";
-    GameLog["LOG_TURN"] = "LOG_TURN"; // { turn }
+    GameLog["LOG_TURN"] = "LOG_TURN";
+    GameLog["LOG_PLAYER_PUTS_CARD_IN_HAND"] = "LOG_PLAYER_PUTS_CARD_IN_HAND";
 })(GameLog || (GameLog = {}));
 // tslint:disable-next-line
 export const GameMessage = Object.assign(Object.assign(Object.assign({}, GameCoreError), GameStoreMessage), GameCardMessage);

@@ -16,7 +16,5 @@ export declare class Mewtwo extends PokemonCard {
     retreat: CardType[];
     attacks: Attack[];
     powers: Power[];
-    readonly CLEAR_BARRIER_MARKER = "CLEAR_BARRIER_MARKER";
-    readonly BARRIER_MARKER = "BARRIER_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

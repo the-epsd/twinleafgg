@@ -4,6 +4,7 @@ export var AttackEffects;
     AttackEffects["APPLY_WEAKNESS_EFFECT"] = "APPLY_WEAKNESS_EFFECT";
     AttackEffects["DEAL_DAMAGE_EFFECT"] = "DEAL_DAMAGE_EFFECT";
     AttackEffects["PUT_DAMAGE_EFFECT"] = "PUT_DAMAGE_EFFECT";
+    AttackEffects["KNOCK_OUT_OPPONENT_EFFECT"] = "KNOCK_OUT_OPPONENT_EFFECT";
     AttackEffects["AFTER_DAMAGE_EFFECT"] = "AFTER_DAMAGE_EFFECT";
     AttackEffects["PUT_COUNTERS_EFFECT"] = "PUT_COUNTERS_EFFECT";
     AttackEffects["DISCARD_CARD_EFFECT"] = "DISCARD_CARD_EFFECT";
@@ -61,6 +62,14 @@ export class PutCountersEffect extends AbstractAttackEffect {
     constructor(base, damage) {
         super(base);
         this.type = AttackEffects.PUT_COUNTERS_EFFECT;
+        this.preventDefault = false;
+        this.damage = damage;
+    }
+}
+export class KnockOutOpponentEffect extends AbstractAttackEffect {
+    constructor(base, damage) {
+        super(base);
+        this.type = AttackEffects.KNOCK_OUT_OPPONENT_EFFECT;
         this.preventDefault = false;
         this.damage = damage;
     }
