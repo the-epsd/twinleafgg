@@ -69,7 +69,7 @@ export class Mewtwo extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.PSYCHIC, CardType.PSYCHIC ],
+        [ CardType.PSYCHIC ],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);

@@ -1,11 +1,10 @@
-import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, SlotType, StateUtils } from '../../game';
-import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack, Power, PowerType } from '../../game/store/card/pokemon-types';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -63,22 +62,83 @@ export class Electrode extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER); 
       }
       
-      return store.prompt(state, new AttachEnergyPrompt(
+      const options = [
+        { value: CardType.COLORLESS, message: 'Colorless' },
+        { value: CardType.DARK, message: 'Dark' },
+        { value: CardType.DRAGON, message: 'Dragon' },
+        { value: CardType.FAIRY, message: 'Fairy' },
+        { value: CardType.FIGHTING, message: 'Fighting' },
+        { value: CardType.FIRE, message: 'Fire' },
+        { value: CardType.GRASS, message: 'Grass' },
+        { value: CardType.LIGHTNING, message: 'Lightning' },
+        { value: CardType.METAL, message: 'Metal' },
+        { value: CardType.PSYCHIC, message: 'Psychic' },
+        { value: CardType.WATER, message: 'Water' }
+      ];
+      
+      return store.prompt(state, new SelectPrompt(
         player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { allowCancel: true }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          const energyCard = transfer.card as EnergyCard;
-          const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
-          store.reduceEffect(state, attachEnergyEffect);
+        GameMessage.CHOOSE_ENERGY_TYPE,
+        options.map(c => c.message),
+        { allowCancel: false }
+      ), choice => {
+        const option = options[choice];
+    
+        if (!option) {
+          return state;
         }
+        
+        const blocked: CardTarget[] = [];
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+          if (card === this) {
+            blocked.push(target);
+          }
+        });
+        
+        return store.prompt(state, new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [ SlotType.ACTIVE, SlotType.BENCH ],
+          { allowCancel: true, blocked }
+        ), targets => {
+          if (targets && targets.length > 0) {
+            
+            const cardList = StateUtils.findCardList(state, this);
+            const benchIndex = player.bench.indexOf(cardList as PokemonCardList);
+            
+            if (benchIndex !== -1) {
+              
+              const pokemonCard = player.bench[benchIndex].getPokemonCard()!;              
+              (<any>pokemonCard)['provides'] = [option.value, option.value];
+              
+              player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
+        
+              // Discard other cards
+              player.bench[benchIndex].moveTo(player.discard);
+              player.bench[benchIndex].clearEffects();              
+              
+              const opponent = StateUtils.getOpponent(state, player);
+              const knockOutEffect = new KnockOutEffect(opponent, player.bench[benchIndex]);
+              
+              store.reduceEffect(state, knockOutEffect);
+            } else {
+              const pokemonCard = player.active.getPokemonCard()!;        
+              (<any>pokemonCard)['provides'] = [option.value, option.value];      
+              
+              player.active.moveCardTo(pokemonCard, targets[0]);
+        
+              // Discard other cards
+              player.active.moveTo(player.discard);
+              player.active.clearEffects();             
+              
+              const opponent = StateUtils.getOpponent(state, player);
+              const knockOutEffect = new KnockOutEffect(opponent, player.active);
+              
+              store.reduceEffect(state, knockOutEffect); 
+            }            
+          }
+        });
       });
     }
     

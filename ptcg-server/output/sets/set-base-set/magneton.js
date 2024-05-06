@@ -53,18 +53,18 @@ class Magneton extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // Damage opponent's bench
             opponent.bench.forEach(benchPokemon => {
-                const dealDamage = new attack_effects_1.PutDamageEffect(effect, 20);
+                const dealDamage = new attack_effects_1.DealDamageEffect(effect, 20);
                 dealDamage.target = benchPokemon;
                 store.reduceEffect(state, dealDamage);
             });
             // Damage player's bench
             player.bench.forEach(benchPokemon => {
-                const dealDamage = new attack_effects_1.PutDamageEffect(effect, 20);
+                const dealDamage = new attack_effects_1.DealDamageEffect(effect, 20);
                 dealDamage.target = benchPokemon;
                 store.reduceEffect(state, dealDamage);
             });
             // Damage self
-            const dealDamage = new attack_effects_1.PutDamageEffect(effect, 80);
+            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 80);
             dealDamage.target = player.active;
             store.reduceEffect(state, dealDamage);
         }

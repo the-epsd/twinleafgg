@@ -7,7 +7,6 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
 class Electrode extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -47,20 +46,64 @@ class Electrode extends pokemon_card_1.PokemonCard {
             if (cardList.specialConditions.length > 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: true }), transfers => {
-                transfers = transfers || [];
-                for (const transfer of transfers) {
-                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    const energyCard = transfer.card;
-                    const attachEnergyEffect = new play_card_effects_1.AttachEnergyEffect(player, energyCard, target);
-                    store.reduceEffect(state, attachEnergyEffect);
+            const options = [
+                { value: card_types_1.CardType.COLORLESS, message: 'Colorless' },
+                { value: card_types_1.CardType.DARK, message: 'Dark' },
+                { value: card_types_1.CardType.DRAGON, message: 'Dragon' },
+                { value: card_types_1.CardType.FAIRY, message: 'Fairy' },
+                { value: card_types_1.CardType.FIGHTING, message: 'Fighting' },
+                { value: card_types_1.CardType.FIRE, message: 'Fire' },
+                { value: card_types_1.CardType.GRASS, message: 'Grass' },
+                { value: card_types_1.CardType.LIGHTNING, message: 'Lightning' },
+                { value: card_types_1.CardType.METAL, message: 'Metal' },
+                { value: card_types_1.CardType.PSYCHIC, message: 'Psychic' },
+                { value: card_types_1.CardType.WATER, message: 'Water' }
+            ];
+            return store.prompt(state, new game_1.SelectPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGY_TYPE, options.map(c => c.message), { allowCancel: false }), choice => {
+                const option = options[choice];
+                if (!option) {
+                    return state;
                 }
+                const blocked = [];
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                    if (card === this) {
+                        blocked.push(target);
+                    }
+                });
+                return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: true, blocked }), targets => {
+                    if (targets && targets.length > 0) {
+                        const cardList = game_1.StateUtils.findCardList(state, this);
+                        const benchIndex = player.bench.indexOf(cardList);
+                        if (benchIndex !== -1) {
+                            const pokemonCard = player.bench[benchIndex].getPokemonCard();
+                            pokemonCard['provides'] = [option.value, option.value];
+                            player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
+                            // Discard other cards
+                            player.bench[benchIndex].moveTo(player.discard);
+                            player.bench[benchIndex].clearEffects();
+                            const opponent = game_1.StateUtils.getOpponent(state, player);
+                            const knockOutEffect = new game_effects_1.KnockOutEffect(opponent, player.bench[benchIndex]);
+                            store.reduceEffect(state, knockOutEffect);
+                        }
+                        else {
+                            const pokemonCard = player.active.getPokemonCard();
+                            pokemonCard['provides'] = [option.value, option.value];
+                            player.active.moveCardTo(pokemonCard, targets[0]);
+                            // Discard other cards
+                            player.active.moveTo(player.discard);
+                            player.active.clearEffects();
+                            const opponent = game_1.StateUtils.getOpponent(state, player);
+                            const knockOutEffect = new game_effects_1.KnockOutEffect(opponent, player.active);
+                            store.reduceEffect(state, knockOutEffect);
+                        }
+                    }
+                });
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             return store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(effect.player.id, game_1.GameMessage.FLIP_COIN), (result) => {
                 if (!result) {
-                    const selfDamage = new attack_effects_1.PutDamageEffect(effect, 10);
+                    const selfDamage = new attack_effects_1.DealDamageEffect(effect, 10);
                     selfDamage.target = effect.player.active;
                     store.reduceEffect(state, selfDamage);
                 }

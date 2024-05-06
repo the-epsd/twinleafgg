@@ -42,7 +42,7 @@ class Dugtrio extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             effect.player.bench.forEach(b => {
-                const benchDamage = new attack_effects_1.PutDamageEffect(effect, 10);
+                const benchDamage = new attack_effects_1.DealDamageEffect(effect, 10);
                 benchDamage.target = b;
                 store.reduceEffect(state, benchDamage);
             });

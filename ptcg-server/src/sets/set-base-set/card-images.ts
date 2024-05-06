@@ -146,7 +146,7 @@ export class ClefairyArt extends Clefairy {
 }
 
 export class ClefairyDollArt extends ClefairyDoll {
-  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/clefairy-doll-set-bs-70.jpg?fit=600%2C825&ssl=1';
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/clefairy-doll-base-set-bs-70.jpg?fit=600%2C825&ssl=1';
 }
 
 export class ComputerSearchArt extends ComputerSearch {
@@ -154,7 +154,7 @@ export class ComputerSearchArt extends ComputerSearch {
 }
 
 export class DefenderArt extends Defender {
-  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/defender-spray-base-set-bs-80.jpg?fit=600%2C825&ssl=1';
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/defender-base-set-bs-80.jpg?fit=600%2C825&ssl=1';
 }
 
 export class DevolutionSprayArt extends DevolutionSpray {
@@ -358,7 +358,7 @@ export class PokemonCenterArt extends PokemonCenter {
 }
 
 export class PokemonFluteArt extends PokemonFlute {
-  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/pokemon-flute-set-bs-86.jpg?fit=600%2C825&ssl=1';
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/pokemon-flute-base-set-bs-86.jpg?fit=600%2C825&ssl=1';
 }
 
 export class PokemonTraderArt extends PokemonTrader {
@@ -402,7 +402,7 @@ export class RattataArt extends Rattata {
 }
 
 export class ReviveArt extends Revive {
-  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/rattata-base-set-bs-94.jpg?fit=600%2C825&ssl=1';
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/revive-base-set-bs-94.jpg?fit=600%2C825&ssl=1';
 }
 
 export class SandshrewArt extends Sandshrew {

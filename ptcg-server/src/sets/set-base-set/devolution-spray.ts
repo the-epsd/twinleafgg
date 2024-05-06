@@ -1,4 +1,4 @@
-import { ChoosePokemonPrompt, GameError, GameMessage, GameStoreMessage, PlayerType, SlotType, StateUtils, TrainerCard } from '../../game';
+import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, GameStoreMessage, PlayerType, SlotType, TrainerCard } from '../../game';
 import { CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -21,9 +21,12 @@ export class DevolutionSpray extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       let canDevolve = false;
 
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
+      const blocked: CardTarget[] = [];
+      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
         if (list.getPokemons().length > 1) {
           canDevolve = true;
+        } else {
+          blocked.push(target);
         }
       });
 
@@ -38,7 +41,7 @@ export class DevolutionSpray extends TrainerCard {
           GameMessage.CHOOSE_POKEMON,
           PlayerType.BOTTOM_PLAYER,
           [SlotType.ACTIVE, SlotType.BENCH],
-          { allowCancel: false, min: 1, max: 1 }
+          { allowCancel: false, min: 1, max: 1, blocked }
         ),
         (results) => {
           if (results && results.length > 0) {

@@ -1,13 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Nidoking = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
-const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const attack_effects_2 = require("../../game/store/effects/attack-effects");
-const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
+const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
 class Nidoking extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -43,14 +42,14 @@ class Nidoking extends pokemon_card_1.PokemonCard {
                     effect.damage += 10;
                 }
                 else {
-                    const selfDamage = new attack_effects_1.PutDamageEffect(effect, 10);
+                    const selfDamage = new attack_effects_1.DealDamageEffect(effect, 10);
                     selfDamage.target = effect.player.active;
                     store.reduceEffect(state, selfDamage);
                 }
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            const addCondition = new attack_effects_2.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.POISONED]);
+            const addCondition = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.POISONED]);
             addCondition.poisonDamage = 20;
             return store.reduceEffect(state, addCondition);
         }
