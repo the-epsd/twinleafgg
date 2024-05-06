@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AlakazamArt, ArcanineArt, BeedrillArt, BillArt, BlastoiseArt, BulbasaurArt, ChanseyArt, CharizardArt, CharmanderArt, CharmeleonArt, ClefairyArt, ClefairyDollArt, ComputerSearchArt, DefenderArt, DevolutionSprayArt, DewgongArt, DiglettArt, DoduoArt, DoubleColorlessEnergyArt, DragonairArt, DratiniArt, DrowzeeArt, DugtrioArt, ElectabuzzArt, ElectrodeArt, EnergyRemovalArt, EnergyRetrievalArt, FarfetchdArt, FullHealArt, GrowlitheArt, GustOfWindArt, GyaradosArt, HaunterArt, HitmonchanArt, ItemFinderArt, IvysaurArt, JynxArt, KadabraArt, KakunaArt, KoffingArt, LassArt, MachampArt, MachokeArt, MachopArt, MagikarpArt, MagmarArt, MagnemiteArt, MagnetonArt, MaintenanceArt, MewtwoArt, NidokingArt, NidorinoArt, NinetalesArt, OnixArt, PidgeottoArt, PidgeyArt, PikachuArt, PlusPowerArt, PokemonBreederArt, PokemonCenterArt, PokemonTraderArt, PoliwagArt, PoliwhirlArt, PoliwrathArt, PonytaArt, ProfessorOakArt, RaichuArt, RaticateArt, RattataArt, SandshrewArt, ScoopUpArt, SeelArt, SquirtleArt, StarmieArt, StaryuArt, SuperEnergyRemovalArt, SuperPotionArt, SwitchArt, TangelaArt, VenusaurArt, VoltorbArt, VulpixArt, WartortleArt, WeedleArt, ZapdosArt } from './card-images';
+import { AlakazamArt, ArcanineArt, BeedrillArt, BillArt, BlastoiseArt, BulbasaurArt, ChanseyArt, CharizardArt, CharmanderArt, CharmeleonArt, ClefairyArt, ClefairyDollArt, ComputerSearchArt, DefenderArt, DevolutionSprayArt, DewgongArt, DiglettArt, DoduoArt, DoubleColorlessEnergyArt, DragonairArt, DratiniArt, DrowzeeArt, DugtrioArt, ElectabuzzArt, ElectrodeArt, EnergyRemovalArt, EnergyRetrievalArt, FarfetchdArt, FullHealArt, GrowlitheArt, GustOfWindArt, GyaradosArt, HaunterArt, HitmonchanArt, ItemFinderArt, IvysaurArt, JynxArt, KadabraArt, KakunaArt, KoffingArt, LassArt, MachampArt, MachokeArt, MachopArt, MagikarpArt, MagmarArt, MagnemiteArt, MagnetonArt, MaintenanceArt, MewtwoArt, NidokingArt, NidorinoArt, NinetalesArt, OnixArt, PidgeottoArt, PidgeyArt, PikachuArt, PlusPowerArt, PokedexArt, PokemonBreederArt, PokemonCenterArt, PokemonFluteArt, PokemonTraderArt, PoliwagArt, PoliwhirlArt, PoliwrathArt, PonytaArt, PotionArt, ProfessorOakArt, RaichuArt, RaticateArt, RattataArt, ReviveArt, SandshrewArt, ScoopUpArt, SeelArt, SquirtleArt, StarmieArt, StaryuArt, SuperEnergyRemovalArt, SuperPotionArt, SwitchArt, TangelaArt, VenusaurArt, VoltorbArt, VulpixArt, WartortleArt, WeedleArt, ZapdosArt } from './card-images';
 
 export const setBaseSet: Card[] = [
   new AlakazamArt(),
@@ -60,17 +60,21 @@ export const setBaseSet: Card[] = [
   new PidgeyArt(),
   new PikachuArt(),
   new PlusPowerArt(),
+  new PokedexArt(),
   new PokemonBreederArt(),
   new PokemonCenterArt(),
+  new PokemonFluteArt(),
   new PokemonTraderArt(),
   new PoliwagArt(),
   new PoliwhirlArt(),
   new PoliwrathArt(),
   new PonytaArt(),
+  new PotionArt(),
   new ProfessorOakArt(),
   new RaichuArt(),
   new RaticateArt(),
   new RattataArt(),
+  new ReviveArt(),
   new SandshrewArt(),
   new ScoopUpArt(),
   new SeelArt(),

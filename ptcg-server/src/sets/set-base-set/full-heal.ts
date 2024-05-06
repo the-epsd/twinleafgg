@@ -1,3 +1,4 @@
+import { GameError, GameStoreMessage } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -21,8 +22,15 @@ export class FullHeal extends TrainerCard {
   public text: string = 'Your Active Pokémon is no longer Asleep, Confused, Paralyzed, or Poisoned.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+      
       const player = effect.player;
+      
+      if (player.active.specialConditions.length === 0) {
+        throw new GameError(GameStoreMessage.CANNOT_PLAY_THIS_CARD);
+      }
+      
       player.active.specialConditions = [];
       player.hand.moveCardTo(effect.trainerCard, player.discard);
     }

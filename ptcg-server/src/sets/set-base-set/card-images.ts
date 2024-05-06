@@ -88,6 +88,10 @@ import { DevolutionSpray } from './devolution-spray';
 import { ImpostorProfessorOak } from './impostor-professor-oak';
 import { Defender } from './defender';
 import { FullHeal } from './full-heal';
+import { Pokedex } from './pokedex';
+import { PokemonFlute } from './pokemon-flute';
+import { Potion } from './potion';
+import { Revive } from './revive';
 
 export class AbraArt extends Abra {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/abra-base-set-bs-43.jpg?fit=600%2C825&ssl=1';
@@ -341,12 +345,20 @@ export class PlusPowerArt extends PlusPower {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/pluspower-base-set-bs-84.jpg?fit=600%2C825&ssl=1';
 }
 
+export class PokedexArt extends Pokedex {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/pokedex-base-set-bs-87.jpg?fit=600%2C825&ssl=1';
+}
+
 export class PokemonBreederArt extends PokemonBreeder {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/pokemon-breeder-base-set-bs-76.jpg?fit=600%2C825&ssl=1';
 }
 
 export class PokemonCenterArt extends PokemonCenter {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/pokemon-center-base-set-bs-85.jpg?fit=600%2C825&ssl=1';
+}
+
+export class PokemonFluteArt extends PokemonFlute {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/pokemon-flute-set-bs-86.jpg?fit=600%2C825&ssl=1';
 }
 
 export class PokemonTraderArt extends PokemonTrader {
@@ -369,6 +381,10 @@ export class PonytaArt extends Ponyta {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/ponyta-base-set-bs-60.jpg?fit=600%2C825&ssl=1';
 }
 
+export class PotionArt extends Potion {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/potion-base-set-bs-94.jpg?fit=600%2C825&ssl=1';
+}
+
 export class ProfessorOakArt extends ProfessorOak {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/professor-oak-base-set-bs-88.jpg?fit=600%2C825&ssl=1';
 }
@@ -383,6 +399,10 @@ export class RaticateArt extends Raticate {
 
 export class RattataArt extends Rattata {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/rattata-base-set-bs-61.jpg?fit=600%2C825&ssl=1';
+}
+
+export class ReviveArt extends Revive {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/rattata-base-set-bs-94.jpg?fit=600%2C825&ssl=1';
 }
 
 export class SandshrewArt extends Sandshrew {

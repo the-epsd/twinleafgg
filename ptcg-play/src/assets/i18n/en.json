@@ -333,6 +333,8 @@
     "CHOOSE_ATTACK_TO_DISABLE": "Choose attack to disable during your opponent's next turn.",
     "CHOOSE_CARDS_ORDER": "Order cards in any way you like.",
     "CHOOSE_CARD_TO_ATTACH": "Choose card, that will be attached to the Pokémon.",
+    "CHOOSE_BASIC_POKEMON_TO_BENCH": "Choose a Basic Pokémon to place on your bench.",
+    "CHOOSE_OPPONENTS_BASIC_POKEMON_TO_BENCH": "Choose a Basic Pokémon to place on your opponent's bench.",
     "CHOOSE_CARD_TO_COPY_EFFECT": "Choose card, that you want to play.",
     "CHOOSE_CARD_TO_DECK": "Choose cards, that will be shuffled into deck.",
     "CHOOSE_CARD_TO_DISCARD": "Choose cards, that will be discarded.",
