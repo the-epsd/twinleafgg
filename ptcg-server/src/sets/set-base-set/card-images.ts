@@ -73,6 +73,21 @@ import { Zapdos } from './zapdos';
 import { Metapod } from './metapod';
 import { NidoranMale } from './nidoran-male';
 import { Onix } from './onix';
+import { Pidgey } from './pidgey';
+import { Pikachu } from './pikachu';
+import { Ponyta } from './ponyta';
+import { Staryu } from './staryu';
+import { Sandshrew } from './sandshrew';
+import { Tangela } from './tangela';
+import { Starmie } from './starmie';
+import { Voltorb } from './voltorb';
+import { Vulpix } from './vuplix';
+import { Weedle } from './weedle';
+import { ClefairyDoll } from './clefairy-doll';
+import { DevolutionSpray } from './devolution-spray';
+import { ImpostorProfessorOak } from './impostor-professor-oak';
+import { Defender } from './defender';
+import { FullHeal } from './full-heal';
 
 export class AbraArt extends Abra {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/abra-base-set-bs-43.jpg?fit=600%2C825&ssl=1';
@@ -126,8 +141,20 @@ export class ClefairyArt extends Clefairy {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/clefairy-base-set-bs-5.jpg?fit=600%2C825&ssl=1';
 }
 
+export class ClefairyDollArt extends ClefairyDoll {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/clefairy-doll-set-bs-70.jpg?fit=600%2C825&ssl=1';
+}
+
 export class ComputerSearchArt extends ComputerSearch {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/computer-search-base-set-bs-71.jpg?fit=600%2C825&ssl=1';
+}
+
+export class DefenderArt extends Defender {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/defender-spray-base-set-bs-80.jpg?fit=600%2C825&ssl=1';
+}
+
+export class DevolutionSprayArt extends DevolutionSpray {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/devolution-spray-base-set-bs-72.jpg?fit=600%2C825&ssl=1';
 }
 
 export class DewgongArt extends Dewgong {
@@ -182,6 +209,10 @@ export class FarfetchdArt extends Farfetchd {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/farfetchd-base-set-bs-27.jpg?fit=600%2C825&ssl=01';
 }
 
+export class FullHealArt extends FullHeal {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/full-heal-base-set-bs-82.jpg?fit=600%2C825&ssl=01';
+}
+
 export class GrowlitheArt extends Growlithe {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/growlithe-base-set-bs-28.jpg?fit=600%2C825&ssl=01';
 }
@@ -200,6 +231,10 @@ export class HaunterArt extends Haunter {
 
 export class HitmonchanArt extends Hitmonchan {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/hitmonchan-base-set-bs-7.jpg?fit=600%2C825&ssl=1';
+}
+
+export class ImpostorProfessorOakArt extends ImpostorProfessorOak {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/impostor-professor-oak-base-set-bs-73.jpg?fit=600%2C825&ssl=1';
 }
 
 export class ItemFinderArt extends ItemFinder {
@@ -294,6 +329,14 @@ export class PidgeottoArt extends Pidgeotto {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/pidgeotto-base-set-bs-22.jpg?fit=600%2C825&ssl=1';
 }
 
+export class PidgeyArt extends Pidgey {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/pidgey-base-set-bs-57.jpg?fit=600%2C825&ssl=1';
+}
+
+export class PikachuArt extends Pikachu {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/pikachu-base-set-bs-58.jpg?fit=600%2C825&ssl=1';
+}
+
 export class PlusPowerArt extends PlusPower {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/pluspower-base-set-bs-84.jpg?fit=600%2C825&ssl=1';
 }
@@ -322,6 +365,10 @@ export class PoliwrathArt extends Poliwrath {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/poliwrath-base-set-bs-13.jpg?fit=600%2C825&ssl=1';
 }
 
+export class PonytaArt extends Ponyta {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/ponyta-base-set-bs-60.jpg?fit=600%2C825&ssl=1';
+}
+
 export class ProfessorOakArt extends ProfessorOak {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/professor-oak-base-set-bs-88.jpg?fit=600%2C825&ssl=1';
 }
@@ -338,12 +385,24 @@ export class RattataArt extends Rattata {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/rattata-base-set-bs-61.jpg?fit=600%2C825&ssl=1';
 }
 
+export class SandshrewArt extends Sandshrew {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/sandshrew-base-set-bs-62.jpg?fit=600%2C825&ssl=1';
+}
+
 export class ScoopUpArt extends ScoopUp {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/scoop-up-base-set-bs-78.jpg?fit=600%2C825&ssl=1';
 }
 
 export class SeelArt extends Seel {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/seel-base-set-bs-41.jpg?fit=600%2C825&ssl=1';
+}
+
+export class StarmieArt extends Starmie {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/starmie-base-set-bs-64.jpg?fit=600%2C825&ssl=1';
+}
+
+export class StaryuArt extends Staryu {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/staryu-base-set-bs-65.jpg?fit=600%2C825&ssl=1';
 }
 
 export class SquirtleArt extends Squirtle {
@@ -362,12 +421,28 @@ export class SwitchArt extends Switch {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/switch-base-set-bs-95.jpg?fit=600%2C825&ssl=1';
 }
 
+export class TangelaArt extends Tangela {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/tangela-base-set-bs-66.jpg?fit=600%2C825&ssl=1';
+}
+
 export class VenusaurArt extends Venusaur {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/venusaur-base-set-bs-15.jpg?fit=600%2C825&ssl=1';
 }
 
+export class VoltorbArt extends Voltorb {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/voltorb-base-set-bs-67.jpg?fit=600%2C825&ssl=1';
+}
+
+export class VulpixArt extends Vulpix {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/vulpix-base-set-bs-68.jpg?fit=600%2C825&ssl=1';
+}
+
 export class WartortleArt extends Wartortle {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/wartortle-base-set-bs-42.jpg?fit=600%2C825&ssl=1';
+}
+
+export class WeedleArt extends Weedle {
+  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/weedle-base-set-bs-69.jpg?fit=600%2C825&ssl=1';
 }
 
 export class ZapdosArt extends Zapdos {

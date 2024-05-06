@@ -1,7 +1,7 @@
 import { GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AddSpecialConditionsEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
@@ -66,20 +66,20 @@ export class Magnemite extends PokemonCard {
 
       // Damage opponent's bench
       opponent.bench.forEach(benchPokemon => {
-        const dealDamage = new PutDamageEffect(effect, 10);
+        const dealDamage = new DealDamageEffect(effect, 10);
         dealDamage.target = benchPokemon;
         store.reduceEffect(state, dealDamage);
       });
 
       // Damage player's bench
       player.bench.forEach(benchPokemon => {
-        const dealDamage = new PutDamageEffect(effect, 10);
+        const dealDamage = new DealDamageEffect(effect, 10);
         dealDamage.target = benchPokemon;
         store.reduceEffect(state, dealDamage);
       });
 
       // Damage self
-      const dealDamage = new PutDamageEffect(effect, 40);
+      const dealDamage = new DealDamageEffect(effect, 40);
       dealDamage.target = player.active;
       store.reduceEffect(state, dealDamage);
     }

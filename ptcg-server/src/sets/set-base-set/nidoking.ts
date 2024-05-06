@@ -1,14 +1,13 @@
+import { GameMessage } from '../../game';
+import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AddSpecialConditionsEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { GameMessage } from '../../game';
 
 export class Nidoking extends PokemonCard {
 
@@ -57,7 +56,7 @@ export class Nidoking extends PokemonCard {
         if (heads) {
           effect.damage += 10; 
         } else {
-          const selfDamage = new PutDamageEffect(effect, 10);
+          const selfDamage = new DealDamageEffect(effect, 10);
           selfDamage.target = effect.player.active;
           store.reduceEffect(state, selfDamage);
         }

@@ -322,6 +322,7 @@
     "BLOCKED_BY_EFFECT": "Action blocked by the effect",
     "BLOCKED_BY_SPECIAL_CONDITION": "Action blocked by the Special Condition",
     "CANNOT_PLAY_THIS_CARD": "You can't play this card right now.",
+    "CANNOT_RETREAT": "This Pokémon cannot retreat.",
     "CANNOT_USE_POWER": "You can't use this Ability right now.",
     "CANNOT_USE_ATTACK": "You can't use this Attack right now.",
     "CANNOT_ATTACK_ON_FIRST_TURN": "You cannot attack on your first turn when going first.",

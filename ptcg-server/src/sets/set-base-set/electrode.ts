@@ -2,7 +2,7 @@ import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, Pok
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack, Power, PowerType } from '../../game/store/card/pokemon-types';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
@@ -88,7 +88,7 @@ export class Electrode extends PokemonCard {
         effect.player.id, GameMessage.FLIP_COIN
       ), (result) => {
         if (!result) {
-          const selfDamage = new PutDamageEffect(effect, 10);
+          const selfDamage = new DealDamageEffect(effect, 10);
           selfDamage.target = effect.player.active;
           store.reduceEffect(state, selfDamage);
         }

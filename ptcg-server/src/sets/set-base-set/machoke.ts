@@ -1,9 +1,9 @@
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -54,7 +54,7 @@ export class Machoke extends PokemonCard {
     }
     
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const damage = new PutDamageEffect(effect, 20);
+      const damage = new DealDamageEffect(effect, 20);
       damage.target = effect.player.active;
       store.reduceEffect(state, damage);
     }
