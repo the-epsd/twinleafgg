@@ -1,3 +1,4 @@
+import { CardList, GameMessage, OrderCardsPrompt } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -25,29 +26,31 @@ export class Pokedex extends TrainerCard {
       const player = effect.player;
       const deck = player.deck;
 
+      const deckTop = new CardList();
+      
+      
       // Get up to 5 cards from the top of the deck
       const cards = deck.cards.slice(0, 5);
-
+      player.deck.moveCardsTo(cards, deckTop);
+      
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      // return store.prompt(state, new RearrangeCardsPrompt(
-      //   player.id,
-      //   GameMessage.REARRANGE_CARDS,
-      //   cards
-      // ), (rearrangedCards) => {
-      //   // Discard the played Trainer card
-      //   player.hand.moveCardTo(effect.trainerCard, player.discard);
-
-      //   // Clear the deck
-      //   deck.cards = [];
-
-      //   // Add the rearranged cards to the deck
-      //   deck.cards.push(...rearrangedCards);
-
-      //   // Add the remaining cards to the deck
-      //   deck.cards.push(...deck.cards.slice(5));
-      // });
+      return store.prompt(state, new OrderCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARDS_ORDER,
+        deckTop,
+        { allowCancel: false }
+      ), (rearrangedCards) => {
+        if (rearrangedCards === null) {
+          return state;
+        }
+  
+        deckTop.applyOrder(rearrangedCards);
+        deckTop.moveTo(player.deck);
+  
+        player.hand.moveCardTo(effect.trainerCard, player.discard);
+      });
     }
 
     return state;
