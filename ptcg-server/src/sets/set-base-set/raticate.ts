@@ -24,8 +24,6 @@ export class Raticate extends PokemonCard {
   
   public evolvesFrom = 'Rattata';
   
-  public evolvesInto = ['Raticate BREAK'];
-
   public hp = 60;
 
   public weakness = [{ type: CardType.FIGHTING }];

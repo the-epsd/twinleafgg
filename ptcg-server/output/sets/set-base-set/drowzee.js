@@ -16,7 +16,6 @@ class Drowzee extends pokemon_card_1.PokemonCard {
         this.setNumber = '49';
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.stage = card_types_1.Stage.BASIC;
-        this.evolvesInto = ['Hypno', 'Dark Hypno'];
         this.hp = 50;
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [card_types_1.CardType.COLORLESS];

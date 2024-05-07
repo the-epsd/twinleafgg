@@ -16,7 +16,6 @@ class Koffing extends pokemon_card_1.PokemonCard {
         this.fullName = 'Koffing BS';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.GRASS;
-        this.evolvesInto = ['Weezing', 'Galarian Weezing', 'Dark Weezing'];
         this.hp = 50;
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [card_types_1.CardType.COLORLESS];

@@ -103,5 +103,6 @@ __exportStar(require("./set-paldea-fates"), exports);
 __exportStar(require("./set-temporal-forces"), exports);
 __exportStar(require("./set-crimson-haze"), exports);
 __exportStar(require("./set-mask-of-change"), exports);
+__exportStar(require("./set-night-wanderer"), exports);
 //TEST
 __exportStar(require("./set-test"), exports);

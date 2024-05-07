@@ -37,9 +37,7 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
       name: 'G-Max Rapid Flow',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
-      text: 'Discard 2 energy from this Pokémon. This attack does ' +
-      '90 damage to 2 of your opponent\'s Pokémon. (Don\'t apply ' +
-      'Weakness and Resistance for Benched Pokémon.)'
+      text: 'Discard all Energy from this Pokémon. This attack does 120 damage to 2 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 

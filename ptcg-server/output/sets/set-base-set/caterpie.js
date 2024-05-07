@@ -16,7 +16,6 @@ class Caterpie extends pokemon_card_1.PokemonCard {
         this.fullName = 'Caterpie BS';
         this.cardType = card_types_1.CardType.GRASS;
         this.stage = card_types_1.Stage.BASIC;
-        this.evolvesInto = ['Metapod'];
         this.hp = 40;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.retreat = [card_types_1.CardType.COLORLESS];

@@ -23,8 +23,6 @@ export class Onix extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public evolvesInto = ['Steelix', 'Dark Steelix', 'Steelix ex'];
-
   public hp = 90;
 
   public weakness = [{ type: CardType.GRASS, value: 2 }];

@@ -17,13 +17,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // if (supporterTurn > 0) {
-  //   throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
-  // }
-
-  // player.hand.moveCardTo(effect.trainerCard, player.supporter);
-  // // We will discard this card after prompt confirmation
-  // effect.preventDefault = true;
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
 
   return store.prompt(state, new ChoosePokemonPrompt(
     player.id,
@@ -34,8 +29,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   ), result => {
     const cardList = result[0];
     opponent.switchPokemon(cardList);
-    // player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    // player.supporterTurn = 1;
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   });
 }
 

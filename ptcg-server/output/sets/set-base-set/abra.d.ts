@@ -11,7 +11,6 @@ export declare class Abra extends PokemonCard {
     cardType: CardType;
     setNumber: string;
     stage: Stage;
-    evolvesInto: string[];
     hp: number;
     weakness: {
         type: CardType;

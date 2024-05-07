@@ -13,6 +13,7 @@ class Dewgong extends pokemon_card_1.PokemonCard {
         this.name = 'Dewgong';
         this.set = 'BS';
         this.fullName = 'Dewgong BS';
+        this.cardType = card_types_1.CardType.WATER;
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Seel';
         this.cardImage = 'assets/cardback.png';

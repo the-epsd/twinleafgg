@@ -11,7 +11,6 @@ export declare class Bulbasaur extends PokemonCard {
     setNumber: string;
     cardType: CardType;
     stage: Stage;
-    evolvesInto: string[];
     hp: number;
     weakness: {
         type: CardType;

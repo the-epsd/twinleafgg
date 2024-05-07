@@ -21,8 +21,6 @@ export class Ivysaur extends PokemonCard {
   
   public evolvesFrom = 'Bulbasaur';
   
-  public evolvesInto = ['Venusaur', 'Venusaur ex'];
-
   public hp = 60;
 
   public weakness = [{ type: CardType.FIRE }];

@@ -13,7 +13,6 @@ export declare class Raticate extends PokemonCard {
     cardImage: string;
     stage: Stage;
     evolvesFrom: string;
-    evolvesInto: string[];
     hp: number;
     weakness: {
         type: CardType;

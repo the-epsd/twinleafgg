@@ -22,8 +22,6 @@ export class Bulbasaur extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public evolvesInto = ['Ivysaur', 'Dark Ivysaur'];
-
   public hp = 40;
 
   public weakness = [{ type: CardType.FIRE }];

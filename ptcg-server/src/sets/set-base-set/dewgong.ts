@@ -16,6 +16,8 @@ export class Dewgong extends PokemonCard {
   public set = 'BS';
   
   public fullName = 'Dewgong BS';
+
+  public cardType: CardType = CardType.WATER;
   
   public stage = Stage.STAGE_1;
   

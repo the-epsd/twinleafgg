@@ -12,7 +12,6 @@ export declare class Metapod extends PokemonCard {
     cardType: CardType;
     stage: Stage;
     evolvesFrom: string;
-    evolvesInto: string;
     hp: number;
     weakness: {
         type: CardType;

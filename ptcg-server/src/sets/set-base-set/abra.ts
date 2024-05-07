@@ -23,8 +23,6 @@ export class Abra extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public evolvesInto = ['Kadabra', 'Dark Kadabra'];
-
   public hp = 30;
 
   public weakness = [{ type: CardType.PSYCHIC }];

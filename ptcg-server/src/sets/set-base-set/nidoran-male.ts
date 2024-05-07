@@ -22,8 +22,6 @@ export class NidoranMale extends PokemonCard {
   
   public stage = Stage.BASIC;
 
-  public evolvesInto = 'Nidorino';
-
   public hp = 40;
 
   public weakness = [{ type: CardType.PSYCHIC }];

@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.IronHandsex = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class IronHandsex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -18,13 +18,13 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Arm Press',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
+                cost: [],
                 damage: 160,
                 text: ''
             },
             {
                 name: 'Amp You Very Much',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [],
                 damage: 120,
                 text: 'If your opponent\'s Pokemon is Knocked Out by damage from this attack, take 1 more Prize card.'
             },
@@ -36,19 +36,27 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Iron Hands ex PAR';
     }
     reduceEffect(store, state, effect) {
-        var _a;
-        if (effect instanceof game_effects_1.KnockOutEffect && effect.target === effect.player.active) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            // Do not activate between turns, or when it's not opponents turn.
-            if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-                return state;
-            }
-            // Articuno wasn't attacking
-            const pokemonCard = (_a = player.active) === null || _a === void 0 ? void 0 : _a.getPokemonCard();
-            if (pokemonCard && pokemonCard.attacks.find(attack => attack.name === 'Amp You Very Much')) {
+        //     if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
+        //       const player = effect.player;
+        //       const opponent = StateUtils.getOpponent(state, player);
+        //       // Do not activate between turns, or when it's not opponents turn.
+        //       if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+        //         return state;
+        //       }
+        //       // Articuno wasn't attacking
+        //       const pokemonCard = player.active.getPokemonCard();
+        //       if (pokemonCard && pokemonCard.attacks.find(attack => attack.name === 'Amp You Very Much')) {
+        //         effect.prizeCount += 1;
+        //         return state;
+        //       }
+        //       return state;
+        //     }
+        //     return state;
+        //   }
+        // }
+        if (effect instanceof attack_effects_1.AfterDamageEffect && effect.attack === this.attacks[1]) {
+            if (effect instanceof game_effects_1.KnockOutEffect && effect.attack === this.attacks[1]) {
                 effect.prizeCount += 1;
-                return state;
             }
             return state;
         }

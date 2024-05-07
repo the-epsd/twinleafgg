@@ -16,8 +16,6 @@ export class Seel extends PokemonCard {
   
   public stage = Stage.BASIC;
 
-  public evolvesInto = ['Dewgong', 'Light Dewgong'];
-
   public hp = 60;
 
   public weakness = [{ type: CardType.LIGHTNING }];

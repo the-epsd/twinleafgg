@@ -8,7 +8,6 @@ export declare class Seel extends PokemonCard {
     fullName: string;
     cardType: CardType;
     stage: Stage;
-    evolvesInto: string[];
     hp: number;
     weakness: {
         type: CardType;

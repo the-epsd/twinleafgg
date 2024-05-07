@@ -23,8 +23,6 @@ export class Koffing extends PokemonCard {
   
   public cardType = CardType.GRASS;
 
-  public evolvesInto = ['Weezing', 'Galarian Weezing', 'Dark Weezing'];
-
   public hp = 50;
 
   public weakness = [{ type: CardType.PSYCHIC }];

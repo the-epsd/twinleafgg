@@ -12,7 +12,6 @@ class Diglett extends pokemon_card_1.PokemonCard {
         this.fullName = 'Diglett BS';
         this.cardType = card_types_1.CardType.FIGHTING;
         this.stage = card_types_1.Stage.BASIC;
-        this.evolvesInto = ['Dugtrio', 'Dark Dugtrio'];
         this.hp = 30;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
         this.resistance = [{ type: card_types_1.CardType.LIGHTNING, value: -30 }];

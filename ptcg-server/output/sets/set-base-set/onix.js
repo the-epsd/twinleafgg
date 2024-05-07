@@ -16,7 +16,6 @@ class Onix extends pokemon_card_1.PokemonCard {
         this.setNumber = '56';
         this.fullName = 'Onix BS';
         this.stage = card_types_1.Stage.BASIC;
-        this.evolvesInto = ['Steelix', 'Dark Steelix', 'Steelix ex'];
         this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.GRASS, value: 2 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

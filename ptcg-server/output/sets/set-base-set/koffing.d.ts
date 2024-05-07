@@ -11,7 +11,6 @@ export declare class Koffing extends PokemonCard {
     fullName: string;
     stage: Stage;
     cardType: CardType;
-    evolvesInto: string[];
     hp: number;
     weakness: {
         type: CardType;

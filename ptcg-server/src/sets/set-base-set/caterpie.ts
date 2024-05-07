@@ -19,11 +19,9 @@ export class Caterpie extends PokemonCard {
   
   public fullName = 'Caterpie BS';
   
-  public cardType = CardType.GRASS
+  public cardType = CardType.GRASS;
 
   public stage = Stage.BASIC;
-
-  public evolvesInto = ['Metapod'];
 
   public hp = 40;
 

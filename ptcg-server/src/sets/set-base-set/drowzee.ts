@@ -23,8 +23,6 @@ export class Drowzee extends PokemonCard {
   
   public stage = Stage.BASIC;
 
-  public evolvesInto = ['Hypno', 'Dark Hypno'];
-
   public hp = 50;
 
   public weakness = [{ type: CardType.PSYCHIC }];

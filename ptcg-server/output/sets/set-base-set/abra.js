@@ -16,7 +16,6 @@ class Abra extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.setNumber = '43';
         this.stage = card_types_1.Stage.BASIC;
-        this.evolvesInto = ['Kadabra', 'Dark Kadabra'];
         this.hp = 30;
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [];

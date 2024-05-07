@@ -69,6 +69,7 @@ export class Player {
   usedExcitingStageThisTurn: any;
   usedSquawkAndSeizeThisTurn: any;
   usedTurnSkip: any;
+  usedTableTurner: any;
 
   getPrizeLeft(): number {
     return this.prizes.reduce((left, p) => left + p.cards.length, 0);

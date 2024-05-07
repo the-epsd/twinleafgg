@@ -12,7 +12,6 @@ class Seel extends pokemon_card_1.PokemonCard {
         this.fullName = 'Seel BS';
         this.cardType = card_types_1.CardType.WATER;
         this.stage = card_types_1.Stage.BASIC;
-        this.evolvesInto = ['Dewgong', 'Light Dewgong'];
         this.hp = 60;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.retreat = [card_types_1.CardType.COLORLESS];

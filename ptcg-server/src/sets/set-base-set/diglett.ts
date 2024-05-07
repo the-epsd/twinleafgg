@@ -16,8 +16,6 @@ export class Diglett extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public evolvesInto = ['Dugtrio', 'Dark Dugtrio'];
-
   public hp = 30;
 
   public weakness = [{ type: CardType.GRASS }];

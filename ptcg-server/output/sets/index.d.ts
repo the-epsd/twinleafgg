@@ -69,4 +69,5 @@ export * from './set-paldea-fates';
 export * from './set-temporal-forces';
 export * from './set-crimson-haze';
 export * from './set-mask-of-change';
+export * from './set-night-wanderer';
 export * from './set-test';

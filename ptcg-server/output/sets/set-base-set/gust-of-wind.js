@@ -14,17 +14,12 @@ function* playCard(next, store, state, effect) {
     if (!hasBench) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    // if (supporterTurn > 0) {
-    //   throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
-    // }
-    // player.hand.moveCardTo(effect.trainerCard, player.supporter);
-    // // We will discard this card after prompt confirmation
-    // effect.preventDefault = true;
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
     return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
         const cardList = result[0];
         opponent.switchPokemon(cardList);
-        // player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        // player.supporterTurn = 1;
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
 }
 class GustOfWind extends trainer_card_1.TrainerCard {

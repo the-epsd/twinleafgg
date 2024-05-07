@@ -11,7 +11,6 @@ export declare class Onix extends PokemonCard {
     setNumber: string;
     fullName: string;
     stage: Stage;
-    evolvesInto: string[];
     hp: number;
     weakness: {
         type: CardType;

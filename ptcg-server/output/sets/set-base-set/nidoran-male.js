@@ -15,7 +15,6 @@ class NidoranMale extends pokemon_card_1.PokemonCard {
         this.fullName = 'Nidoran ♂ BS';
         this.cardType = card_types_1.CardType.GRASS;
         this.stage = card_types_1.Stage.BASIC;
-        this.evolvesInto = 'Nidorino';
         this.hp = 40;
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [card_types_1.CardType.COLORLESS];

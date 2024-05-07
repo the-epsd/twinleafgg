@@ -26,8 +26,6 @@ export class Metapod extends PokemonCard {
 
   public evolvesFrom = 'Caterpie';
 
-  public evolvesInto = 'Butterfree';
-
   public hp = 70;
 
   public weakness = [{ type: CardType.FIRE }];
