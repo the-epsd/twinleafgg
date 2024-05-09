@@ -45,6 +45,8 @@ export declare class Player {
     usedExcitingStageThisTurn: any;
     usedSquawkAndSeizeThisTurn: any;
     usedTurnSkip: any;
+    usedTableTurner: any;
+    chainsOfControlUsed: any;
     getPrizeLeft(): number;
     forEachPokemon(player: PlayerType, handler: (cardList: PokemonCardList, pokemonCard: PokemonCard, target: CardTarget) => void): void;
     switchPokemon(target: PokemonCardList): void;
