@@ -54,7 +54,7 @@ function* usePhantomDive(next: Function, store: StoreLike, state: State, effect:
 
 export class Dragapultex extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
 
   public tags = [ CardTag.POKEMON_ex ];
 

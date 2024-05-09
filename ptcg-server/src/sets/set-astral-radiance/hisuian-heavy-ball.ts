@@ -1,4 +1,4 @@
-import { TrainerCard, TrainerType, StoreLike, State, ChoosePrizePrompt, GameMessage, Card, Stage, PokemonCard, GameError } from '../../game';
+import { TrainerCard, TrainerType, StoreLike, State, ChoosePrizePrompt, GameMessage, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
@@ -45,9 +45,9 @@ export class HisuianHeavyBall extends TrainerCard {
           return state;
         }
 
-        if (!(chosenPrize[0] instanceof PokemonCard) || !(chosenPrize[0].stage === Stage.BASIC)) {
-          throw new GameError(GameMessage.INVALID_TARGET);
-        }
+        // if (!(chosenPrize[0] instanceof PokemonCard) || !(chosenPrize[0].stage === Stage.BASIC)) {
+        //   throw new GameError(GameMessage.INVALID_TARGET);
+        // }
 
         const prizePokemon = chosenPrize[0];
         const hand = player.hand;
@@ -63,7 +63,7 @@ export class HisuianHeavyBall extends TrainerCard {
 
 
         prizes.forEach(p => { p.isSecret = true; });
-        prizes.forEach(p => { p.applyOrder([chosenPrize[0].cards[0].id]); });
+        // prizes.forEach(p => { p.applyOrder([chosenPrize[0].cards[0].id]); });
 
         // return store.prompt(state, new ShuffleHandPrompt(player.id), order => {
         //   prizes.forEach(p => { p.applyOrder([order[0]]); });
