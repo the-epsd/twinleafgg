@@ -4,7 +4,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
-import { Card, ChooseCardsPrompt, PokemonCardList, ShuffleDeckPrompt } from '../../game';
+import { Card, ChooseCardsPrompt, PokemonCard, PokemonCardList, ShuffleDeckPrompt } from '../../game';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -22,13 +22,20 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   } else {
     // handle no open slots
 
+    const blocked: number[] = [];
+    player.deck.cards.forEach((card, index) => {
+      if (card instanceof PokemonCard && card.tags.length > 0) {
+        blocked.push(index);
+      }
+    });
+
     let cards: Card[] = [];
     return store.prompt(state, new ChooseCardsPrompt(
       player.id,
       GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
       player.deck,
       { superType: SuperType.POKEMON, stage: Stage.BASIC },
-      { min: 0, max: 1, allowCancel: false }
+      { min: 0, max: 1, allowCancel: false, blocked }
     ), selectedCards => {
       cards = selectedCards || [];
 

@@ -25,9 +25,12 @@ class HisuianHeavyBall extends game_1.TrainerCard {
             prizes.forEach(p => { p.isSecret = false; });
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
-            state = store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON, { count: 1, allowCancel: false }), chosenPrize => {
+            state = store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON, { count: 1, allowCancel: true }), chosenPrize => {
                 if (chosenPrize === null) {
                     return state;
+                }
+                if (!(chosenPrize[0] instanceof game_1.PokemonCard) || !(chosenPrize[0].stage === game_1.Stage.BASIC)) {
+                    throw new game_1.GameError(game_1.GameMessage.INVALID_TARGET);
                 }
                 const prizePokemon = chosenPrize[0];
                 const hand = player.hand;
@@ -38,6 +41,7 @@ class HisuianHeavyBall extends game_1.TrainerCard {
                 // const shuffledPrizes = player.prizes.slice().sort(() => Math.random() - 0.5);
                 // player.prizes = shuffledPrizes;
                 prizes.forEach(p => { p.isSecret = true; });
+                prizes.forEach(p => { p.applyOrder([chosenPrize[0].cards[0].id]); });
                 // return store.prompt(state, new ShuffleHandPrompt(player.id), order => {
                 //   prizes.forEach(p => { p.applyOrder([order[0]]); });
                 // });

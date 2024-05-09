@@ -19,8 +19,14 @@ function* useStadium(next, store, state, effect) {
     }
     else {
         // handle no open slots
+        const blocked = [];
+        player.deck.cards.forEach((card, index) => {
+            if (card instanceof game_1.PokemonCard && card.tags.length > 0) {
+                blocked.push(index);
+            }
+        });
         let cards = [];
-        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false }), selectedCards => {
+        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false, blocked }), selectedCards => {
             cards = selectedCards || [];
             // Operation canceled by the user
             if (cards.length === 0) {
