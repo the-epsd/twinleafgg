@@ -65,6 +65,9 @@ class CardList {
         count = Math.min(count, this.cards.length);
         return this.cards.slice(0, count);
     }
+    moveToTop(cards) {
+        this.cards = [...cards, ...this.cards];
+    }
     filter(query) {
         return this.cards.filter(c => {
             for (const key in query) {

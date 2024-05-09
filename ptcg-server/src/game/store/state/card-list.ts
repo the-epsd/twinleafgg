@@ -73,6 +73,10 @@ export class CardList {
     return this.cards.slice(0, count);
   }
 
+  public moveToTop(cards: Card[]): void {
+    this.cards = [...cards, ...this.cards];
+  }
+
   public filter(query: Partial<Card>): Card[] {
     return this.cards.filter(c => {
       for (const key in query) {

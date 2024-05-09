@@ -3,6 +3,7 @@ import { AlolanVulpixVSTAR } from './alolan-vulpix-vstar';
 import { Archeops } from './archeops';
 import { Articuno } from './articuno';
 import { Beheeyem } from './beheeyem';
+import { Beldum } from './beldum';
 import { Braixen } from './braixen';
 import { Candice } from './candice';
 import { CapturingAroma } from './capturing-aroma';
@@ -56,6 +57,10 @@ export class ArticunoArt extends Articuno {
 
 export class BeheeyemArt extends Beheeyem {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_080_R_EN_LG.png';
+}
+
+export class BeldumArt extends Beldum {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_117_R_EN_LG.png';
 }
 
 export class BraixenArt extends Braixen {

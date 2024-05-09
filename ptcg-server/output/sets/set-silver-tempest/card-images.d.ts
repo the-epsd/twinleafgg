@@ -3,6 +3,7 @@ import { AlolanVulpixVSTAR } from './alolan-vulpix-vstar';
 import { Archeops } from './archeops';
 import { Articuno } from './articuno';
 import { Beheeyem } from './beheeyem';
+import { Beldum } from './beldum';
 import { Braixen } from './braixen';
 import { Candice } from './candice';
 import { CapturingAroma } from './capturing-aroma';
@@ -50,6 +51,9 @@ export declare class ArticunoArt extends Articuno {
     cardImage: string;
 }
 export declare class BeheeyemArt extends Beheeyem {
+    cardImage: string;
+}
+export declare class BeldumArt extends Beldum {
     cardImage: string;
 }
 export declare class BraixenArt extends Braixen {
