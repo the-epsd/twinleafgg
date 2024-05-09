@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -35,16 +35,21 @@ export class BoxOfDisaster extends TrainerCard {
         return state;
       }
 
+      const vPoke = player.active.getPokemonCard();
       const activePokemon = player.active as unknown as PokemonCard;
       const maxHp = activePokemon.hp;
 
       if (state.phase === GamePhase.ATTACK) {
-        if (maxHp === maxHp && player.active.damage === maxHp) {
-          effect.source.damage += 80;
+        if (vPoke && vPoke.tags.includes(CardTag.POKEMON_ex) || vPoke && vPoke.tags.includes(CardTag.POKEMON_V) || vPoke && vPoke.tags.includes(CardTag.POKEMON_VMAX) || vPoke && vPoke.tags.includes(CardTag.POKEMON_VSTAR)) {
+          if (maxHp === maxHp && player.active.damage >= maxHp) {
+            effect.source.damage += 80;
+          }
+          return state;
         }
       }
-    }
 
+      return state;
+    }
     return state;
   }
 }

@@ -1,9 +1,51 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../game';
+import { StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+  const player = effect.player;
+
+  if (player.deck.cards.length === 0) {
+    return state;
+  }
+  
+  if (player.lostzone.cards.length <= 6) {
+    throw new GameError (GameMessage.CANNOT_PLAY_THIS_CARD);  
+  }
+
+  if (player.lostzone.cards.length >= 7) {
+
+    yield store.prompt(state, new AttachEnergyPrompt(
+      player.id,
+      GameMessage.ATTACH_ENERGY_TO_BENCH,
+      player.deck,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH, SlotType.ACTIVE],
+      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+      { allowCancel: false, min: 0, max: 2 }
+    ), transfers => {
+      transfers = transfers || [];
+      for (const transfer of transfers) {
+
+        if (transfers[0].card.name === transfers[1].card.name) {
+          throw new GameError (GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);  
+        }
+
+        const target = StateUtils.getTarget(state, player, transfer.to);
+        player.deck.moveCardTo(transfer.card, target); 
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        next();
+      }
+    });
+
+    return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+      player.deck.applyOrder(order);
+
+    });
+  }
+}
 
 export class MirageGate extends TrainerCard {
 
@@ -28,40 +70,11 @@ export class MirageGate extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
-      const player = effect.player;
-      if (player.lostzone.cards.length <= 6) {
-        throw new GameError (GameMessage.CANNOT_PLAY_THIS_CARD);  
-      }
-
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
-            
-      if (player.lostzone.cards.length >= 7) {
-        state = store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          player.deck,
-          PlayerType.BOTTOM_PLAYER,
-          [ SlotType.BENCH, SlotType.ACTIVE ],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { allowCancel: false, min: 1, max: 2, differentTypes: true }
-        ), transfers => {
-          transfers = transfers || [];
-          // cancelled by user
-          if (transfers.length === 0) {
-            return;
-          }
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.deck.moveCardTo(transfer.card, target);
-            player.supporter.moveCardTo(this, player.discard);
-            return state;
-          }});
-      }
-      return state;
+      const generator = playCard(() => generator.next(), store, state, effect);
+      return generator.next().value;
     }
     return state;
   }
-
+  
 }
+  

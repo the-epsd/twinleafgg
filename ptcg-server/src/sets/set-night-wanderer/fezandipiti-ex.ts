@@ -48,6 +48,7 @@ export class Fezandipitiex extends PokemonCard {
   public powers = [{
     name: 'Table Turner',
     powerType: PowerType.ABILITY,
+    useWhenInPlay: true,
     text: 'Once during your turn, if any of your Pokémon were Knocked Out during your opponent\'s last turn, you may draw 3 cards. You can\'t use more than 1 Table Turner Ability each turn.'
   }];
 

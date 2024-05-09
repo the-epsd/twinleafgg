@@ -54,9 +54,10 @@ class Okidogiex extends pokemon_card_1.PokemonCard {
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            const poisonedCondition = effect.target.specialConditions.includes(card_types_1.SpecialCondition.POISONED);
-            if (poisonedCondition) {
-                effect.damage += 130;
+            const player = effect.player;
+            if (player.active.specialConditions.length > 0) {
+                const attackEffect = effect;
+                attackEffect.damage += 130;
             }
             return state;
         }

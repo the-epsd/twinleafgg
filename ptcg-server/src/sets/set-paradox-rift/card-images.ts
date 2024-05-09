@@ -14,6 +14,7 @@ import { Gholdengoex } from './gholdengo-ex';
 import { Gible } from './gible';
 import { Gimmighoul } from './gimmighoul';
 import { Groudon } from './groudon';
+import { Hoopaex } from './hoopa-ex';
 import { IronBundle } from './iron-bundle';
 import { IronHandsex } from './iron-hands-ex';
 import { IronJugulis } from './iron-jugulis';
@@ -106,6 +107,10 @@ export class GimmighoulArt extends Gimmighoul {
 
 export class GroudonArt extends Groudon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_093_R_EN_LG.png';
+}
+
+export class HoopaexArt extends Hoopaex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_098_R_EN.png';
 }
 
 export class IronBundleArt extends IronBundle {

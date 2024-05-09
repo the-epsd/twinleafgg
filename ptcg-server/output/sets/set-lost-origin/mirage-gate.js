@@ -5,6 +5,32 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+function* playCard(next, store, state, effect) {
+    const player = effect.player;
+    if (player.deck.cards.length === 0) {
+        return state;
+    }
+    if (player.lostzone.cards.length <= 6) {
+        throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
+    if (player.lostzone.cards.length >= 7) {
+        yield store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 2 }), transfers => {
+            transfers = transfers || [];
+            for (const transfer of transfers) {
+                if (transfers[0].card.name === transfers[1].card.name) {
+                    throw new game_1.GameError(game_1.GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
+                }
+                const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                player.deck.moveCardTo(transfer.card, target);
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                next();
+            }
+        });
+        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+        });
+    }
+}
 class MirageGate extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -21,28 +47,8 @@ class MirageGate extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
-            const player = effect.player;
-            if (player.lostzone.cards.length <= 6) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-            }
-            // We will discard this card after prompt confirmation
-            effect.preventDefault = true;
-            if (player.lostzone.cards.length >= 7) {
-                state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 1, max: 2, differentTypes: true }), transfers => {
-                    transfers = transfers || [];
-                    // cancelled by user
-                    if (transfers.length === 0) {
-                        return;
-                    }
-                    for (const transfer of transfers) {
-                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                        player.deck.moveCardTo(transfer.card, target);
-                        player.supporter.moveCardTo(this, player.discard);
-                        return state;
-                    }
-                });
-            }
-            return state;
+            const generator = playCard(() => generator.next(), store, state, effect);
+            return generator.next().value;
         }
         return state;
     }

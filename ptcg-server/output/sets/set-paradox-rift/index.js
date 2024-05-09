@@ -18,6 +18,7 @@ exports.setParadoxRift = [
     new card_images_1.GholdengoexArt(),
     new card_images_1.GibleArt(),
     new card_images_1.GimmighoulArt(),
+    new card_images_1.HoopaexArt(),
     new card_images_1.IronBundleArt(),
     new card_images_1.IronHandsexArt(),
     new card_images_1.IronValiantexArt(),

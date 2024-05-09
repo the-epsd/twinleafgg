@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { GameError, GameMessage, PlayerType, StateUtils } from '../..';
+import { StateUtils } from '../..';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class CancelingCologne extends TrainerCard {
@@ -35,22 +35,22 @@ export class CancelingCologne extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (list, card) => {
-        if (opponent.active) {
-          if (effect instanceof PowerEffect && StateUtils.getOpponent(state, player)) {
-            throw new GameError(GameMessage.CANNOT_USE_POWER);
-          }
-          return state;
-        }
-      });
+      if (opponent.active) {
+        opponent.active.getPokemons().forEach(pokemon => {
+          pokemon.powers.forEach(power => {
+            pokemon.powers.slice(pokemon.powers.indexOf(power), 1);
+          });
+        });
+      }
+      if (effect instanceof PowerEffect) {
+        effect.preventDefault;
+      }
       return state;
     }
     return state;
   }
+        
 }
-
-
-  
 
 
 //       const player = effect.player;

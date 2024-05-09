@@ -14,6 +14,7 @@ import { Gholdengoex } from './gholdengo-ex';
 import { Gible } from './gible';
 import { Gimmighoul } from './gimmighoul';
 import { Groudon } from './groudon';
+import { Hoopaex } from './hoopa-ex';
 import { IronBundle } from './iron-bundle';
 import { IronHandsex } from './iron-hands-ex';
 import { IronJugulis } from './iron-jugulis';
@@ -89,6 +90,9 @@ export declare class GimmighoulArt extends Gimmighoul {
     cardImage: string;
 }
 export declare class GroudonArt extends Groudon {
+    cardImage: string;
+}
+export declare class HoopaexArt extends Hoopaex {
     cardImage: string;
 }
 export declare class IronBundleArt extends IronBundle {

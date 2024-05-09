@@ -23,14 +23,16 @@ class CancelingCologne extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const opponent = __1.StateUtils.getOpponent(state, player);
-            opponent.forEachPokemon(__1.PlayerType.TOP_PLAYER, (list, card) => {
-                if (opponent.active) {
-                    if (effect instanceof game_effects_1.PowerEffect && __1.StateUtils.getOpponent(state, player)) {
-                        throw new __1.GameError(__1.GameMessage.CANNOT_USE_POWER);
-                    }
-                    return state;
-                }
-            });
+            if (opponent.active) {
+                opponent.active.getPokemons().forEach(pokemon => {
+                    pokemon.powers.forEach(power => {
+                        pokemon.powers.slice(pokemon.powers.indexOf(power), 1);
+                    });
+                });
+            }
+            if (effect instanceof game_effects_1.PowerEffect) {
+                effect.preventDefault;
+            }
             return state;
         }
         return state;

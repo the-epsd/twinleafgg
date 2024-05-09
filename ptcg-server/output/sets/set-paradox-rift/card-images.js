@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TechnoRadarArt = exports.TechnicalMachineTurboEnergizeArt = exports.TechnicalMachineEvolutionArt = exports.TechnicalMachineDevolutionArt = exports.TechnicalMachineBlindsideArt = exports.TapuKokoexArt = exports.SteeneeArt = exports.SnoruntArt = exports.SlitherWingArt = exports.ScreamTailArt = exports.SandyShocksexArt = exports.RoaringMoonexArt = exports.ProfessorTurosScenarioArt = exports.ProfessorSadasVitalityArt = exports.NatuArt = exports.MorpekoArt = exports.MiniorArt = exports.MewtwoexArt = exports.LuxuriousCapeArt = exports.LatiosArt = exports.KlawfArt = exports.JirachiArt = exports.IronValiantexArt = exports.IronJugulisArt = exports.IronHandsexArt = exports.IronBundleArt = exports.GroudonArt = exports.GimmighoulArt = exports.GibleArt = exports.GholdengoexArt = exports.GarchompexArt = exports.GabiteArt = exports.FutureBoosterEnergyCapsuleArt = exports.FroslassexArt = exports.ElekidArt = exports.EarthenVesselArt = exports.DeoxysArt = exports.DefianceVestArt = exports.CounterCatcherArt = exports.BruteBonnetArt = exports.BounsweetArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
+exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TechnoRadarArt = exports.TechnicalMachineTurboEnergizeArt = exports.TechnicalMachineEvolutionArt = exports.TechnicalMachineDevolutionArt = exports.TechnicalMachineBlindsideArt = exports.TapuKokoexArt = exports.SteeneeArt = exports.SnoruntArt = exports.SlitherWingArt = exports.ScreamTailArt = exports.SandyShocksexArt = exports.RoaringMoonexArt = exports.ProfessorTurosScenarioArt = exports.ProfessorSadasVitalityArt = exports.NatuArt = exports.MorpekoArt = exports.MiniorArt = exports.MewtwoexArt = exports.LuxuriousCapeArt = exports.LatiosArt = exports.KlawfArt = exports.JirachiArt = exports.IronValiantexArt = exports.IronJugulisArt = exports.IronHandsexArt = exports.IronBundleArt = exports.HoopaexArt = exports.GroudonArt = exports.GimmighoulArt = exports.GibleArt = exports.GholdengoexArt = exports.GarchompexArt = exports.GabiteArt = exports.FutureBoosterEnergyCapsuleArt = exports.FroslassexArt = exports.ElekidArt = exports.EarthenVesselArt = exports.DeoxysArt = exports.DefianceVestArt = exports.CounterCatcherArt = exports.BruteBonnetArt = exports.BounsweetArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
 const ancient_booster_energy_capsule_1 = require("./ancient-booster-energy-capsule");
 const bounsweet_1 = require("./bounsweet");
 const brute_bonnet_1 = require("./brute-bonnet");
@@ -17,6 +17,7 @@ const gholdengo_ex_1 = require("./gholdengo-ex");
 const gible_1 = require("./gible");
 const gimmighoul_1 = require("./gimmighoul");
 const groudon_1 = require("./groudon");
+const hoopa_ex_1 = require("./hoopa-ex");
 const iron_bundle_1 = require("./iron-bundle");
 const iron_hands_ex_1 = require("./iron-hands-ex");
 const iron_jugulis_1 = require("./iron-jugulis");
@@ -158,6 +159,13 @@ class GroudonArt extends groudon_1.Groudon {
     }
 }
 exports.GroudonArt = GroudonArt;
+class HoopaexArt extends hoopa_ex_1.Hoopaex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_098_R_EN.png';
+    }
+}
+exports.HoopaexArt = HoopaexArt;
 class IronBundleArt extends iron_bundle_1.IronBundle {
     constructor() {
         super(...arguments);

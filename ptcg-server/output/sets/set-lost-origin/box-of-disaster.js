@@ -25,13 +25,18 @@ class BoxOfDisaster extends trainer_card_1.TrainerCard {
             if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
                 return state;
             }
+            const vPoke = player.active.getPokemonCard();
             const activePokemon = player.active;
             const maxHp = activePokemon.hp;
             if (state.phase === state_1.GamePhase.ATTACK) {
-                if (maxHp === maxHp && player.active.damage === maxHp) {
-                    effect.source.damage += 80;
+                if (vPoke && vPoke.tags.includes(card_types_1.CardTag.POKEMON_ex) || vPoke && vPoke.tags.includes(card_types_1.CardTag.POKEMON_V) || vPoke && vPoke.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || vPoke && vPoke.tags.includes(card_types_1.CardTag.POKEMON_VSTAR)) {
+                    if (maxHp === maxHp && player.active.damage >= maxHp) {
+                        effect.source.damage += 80;
+                    }
+                    return state;
                 }
             }
+            return state;
         }
         return state;
     }

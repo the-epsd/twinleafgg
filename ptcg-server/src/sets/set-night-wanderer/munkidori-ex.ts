@@ -4,7 +4,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage, PowerType, StateUtils } from '../../game';
-import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
@@ -64,11 +63,11 @@ export class Munkidoriex extends PokemonCard {
       console.log('second marker added');
     }
 
-    if (effect instanceof AfterDamageEffect && effect.target === this.cards) {
+    if (effect instanceof KnockOutEffect) {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
-      if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
+      if (player === targetPlayer || targetPlayer.active !== effect.target) {
         return state;
       }
 
@@ -78,15 +77,16 @@ export class Munkidoriex extends PokemonCard {
       } catch {
         return state;
       }
-
+      const munkidoriActive = player.active;
       const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
       const pecharuntexInPlay = benchPokemon.filter(card => card.name == 'Pecharunt ex');
       if (pecharuntexInPlay) {
         if (state.phase === GamePhase.ATTACK) {
-          if (effect instanceof KnockOutEffect && effect.target === this.cards) {
+          if (effect.target === munkidoriActive) {
             effect.prizeCount -= 1;
           }
         }
+      
 
         if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
   

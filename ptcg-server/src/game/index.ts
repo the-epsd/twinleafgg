@@ -45,7 +45,7 @@ export * from './store/prompts/put-damage-prompt';
 export * from './store/prompts/select-prompt';
 export * from './store/prompts/show-cards-prompt';
 export * from './store/prompts/shuffle-prompt';
-export * from './store/prompts/shuffle-hand-prompt';
+// export * from './store/prompts/shuffle-prizes-prompt';
 
 export * from './store/state/card-list';
 export * from './store/state/player';

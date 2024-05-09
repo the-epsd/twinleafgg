@@ -100,10 +100,7 @@ export class IronJugulis extends PokemonCard {
             return;
           }
           if (card === this && cardList.tool instanceof FutureBoosterEnergyCapsule) {
-            const baryonBeam = 2;
-            const attackCost = this.attacks[1].cost;
-            const colorlessToRemove = baryonBeam;
-            this.attacks[1].cost = attackCost.filter(c => c !== CardType.COLORLESS).slice(0, -colorlessToRemove);
+            this.attacks[1].cost = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
           }
         });
       }

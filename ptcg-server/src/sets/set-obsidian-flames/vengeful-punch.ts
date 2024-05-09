@@ -29,23 +29,21 @@ export class VengefulPunch extends TrainerCard {
     if (effect instanceof AfterDamageEffect && effect.target.tool === this) {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
-      const targetPokemon = effect.target as unknown as PokemonCard;
-
+  
       if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
         return state;
       }
-
-      if (targetPokemon.hp === 0) {
-
-        if (state.phase === GamePhase.ATTACK) {
+  
+      const activePokemon = player.active as unknown as PokemonCard;
+      const maxHp = activePokemon.hp;
+  
+      if (state.phase === GamePhase.ATTACK) {
+        if (player.active.damage >= maxHp) {
           effect.source.damage += 40;
         }
       }
-
-      return state;
     }
-
+  
     return state;
   }
 }
-  

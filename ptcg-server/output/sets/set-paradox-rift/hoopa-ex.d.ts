@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerType } from '../..';
-export declare class Gengar extends PokemonCard {
+export declare class Hoopaex extends PokemonCard {
+    regulationMark: string;
+    tags: CardTag[];
     stage: Stage;
     cardType: CardType;
     hp: number;
@@ -12,24 +12,25 @@ export declare class Gengar extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    powers: {
+    attacks: ({
         name: string;
-        powerType: PowerType;
-        useWhenInPlay: boolean;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
         text: string;
-    }[];
-    attacks: {
+    } | {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
-    regulationMark: string;
+        damageCalculation?: undefined;
+    })[];
+    set: string;
     cardImage: string;
     setNumber: string;
-    set: string;
     name: string;
     fullName: string;
-    readonly NIGHT_GATE_MARKER = "NIGHT_GATE_MARKER";
+    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
+    readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

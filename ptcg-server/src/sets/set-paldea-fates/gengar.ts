@@ -6,6 +6,36 @@ import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType } from '../..';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+
+function* useNightGate(next: Function, store: StoreLike, state: State,
+  effect: PowerEffect): IterableIterator<State> {
+  const player = effect.player;
+  const hasBench = player.bench.some(b => b.cards.length > 0);
+  
+  if (hasBench === false) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+  
+  let targets: PokemonCardList[] = [];
+  yield store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+    PlayerType.BOTTOM_PLAYER,
+    [ SlotType.BENCH ],
+    { allowCancel: false }
+  ), results => {
+    targets = results || [];
+    next();
+  });
+  
+  if (targets.length > 0) {
+    player.active.clearEffects();
+    player.switchPokemon(targets[0]);
+    
+  }
+}
 
 export class Gengar extends PokemonCard {
 
@@ -41,41 +71,30 @@ export class Gengar extends PokemonCard {
   
   public setNumber: string = '35';
   
-  public set = 'SV4';
+  public set = 'PAF';
 
   public name: string = 'Gengar';
 
-  public fullName: string = 'Gengar SV4';
+  public fullName: string = 'Gengar PAF';
+
+  public readonly NIGHT_GATE_MARKER = 'NIGHT_GATE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      const hasBench = player.bench.some(b => b.cards.length > 0);
-  
-      if (hasBench === false) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-  
-      let targets: PokemonCardList[] = [];
-      store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
-        { min: 1, max: 1, allowCancel: false }
-      ), results => {
-        targets = results || [];
-      });
-  
-      if (targets.length === 0) {
-        return state;
-      }
-  
-      player.active.clearEffects();
-      player.switchPokemon(player.active);
-      return state;
+      player.marker.removeMarker(this.NIGHT_GATE_MARKER, this);
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.NIGHT_GATE_MARKER, this);
+    }
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const generator = useNightGate(() => generator.next(), store, state, effect);
+      effect.player.marker.addMarker(this.NIGHT_GATE_MARKER, this);
+      return generator.next().value;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

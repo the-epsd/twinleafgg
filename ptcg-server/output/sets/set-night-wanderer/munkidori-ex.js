@@ -5,7 +5,6 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Munkidoriex extends pokemon_card_1.PokemonCard {
@@ -47,10 +46,10 @@ class Munkidoriex extends pokemon_card_1.PokemonCard {
             effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
         }
-        if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target === this.cards) {
+        if (effect instanceof game_effects_1.KnockOutEffect) {
             const player = effect.player;
             const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);
-            if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
+            if (player === targetPlayer || targetPlayer.active !== effect.target) {
                 return state;
             }
             try {
@@ -60,11 +59,12 @@ class Munkidoriex extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
+            const munkidoriActive = player.active;
             const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
             const pecharuntexInPlay = benchPokemon.filter(card => card.name == 'Pecharunt ex');
             if (pecharuntexInPlay) {
                 if (state.phase === state_1.GamePhase.ATTACK) {
-                    if (effect instanceof game_effects_1.KnockOutEffect && effect.target === this.cards) {
+                    if (effect.target === munkidoriActive) {
                         effect.prizeCount -= 1;
                     }
                 }

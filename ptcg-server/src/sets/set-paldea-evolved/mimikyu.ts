@@ -69,7 +69,7 @@ export class Mimikyu extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_ex || CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
+      if (sourceCard.tags.includes(CardTag.POKEMON_ex) || sourceCard.tags.includes(CardTag.POKEMON_V) || sourceCard.tags.includes(CardTag.POKEMON_VMAX) || sourceCard.tags.includes(CardTag.POKEMON_VSTAR)) {
 
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
@@ -78,7 +78,6 @@ export class Mimikyu extends PokemonCard {
         } catch {
           return state;
         }
-
         effect.preventDefault = true;
       }
     }

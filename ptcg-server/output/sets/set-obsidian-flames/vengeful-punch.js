@@ -22,16 +22,16 @@ class VengefulPunch extends trainer_card_1.TrainerCard {
         if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tool === this) {
             const player = effect.player;
             const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);
-            const targetPokemon = effect.target;
             if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
                 return state;
             }
-            if (targetPokemon.hp === 0) {
-                if (state.phase === state_1.GamePhase.ATTACK) {
+            const activePokemon = player.active;
+            const maxHp = activePokemon.hp;
+            if (state.phase === state_1.GamePhase.ATTACK) {
+                if (player.active.damage >= maxHp) {
                     effect.source.damage += 40;
                 }
             }
-            return state;
         }
         return state;
     }

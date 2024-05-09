@@ -74,10 +74,7 @@ class IronJugulis extends game_1.PokemonCard {
                         return;
                     }
                     if (card === this && cardList.tool instanceof future_booster_energy_capsule_1.FutureBoosterEnergyCapsule) {
-                        const baryonBeam = 2;
-                        const attackCost = this.attacks[1].cost;
-                        const colorlessToRemove = baryonBeam;
-                        this.attacks[1].cost = attackCost.filter(c => c !== game_1.CardType.COLORLESS).slice(0, -colorlessToRemove);
+                        this.attacks[1].cost = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
                     }
                 });
             }
