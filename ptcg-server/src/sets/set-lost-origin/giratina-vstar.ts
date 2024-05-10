@@ -5,11 +5,11 @@ import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { ChooseCardsPrompt, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SlotType, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
+import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
 
 export class GiratinaVSTAR extends PokemonCard {
   
-  public stage: Stage = Stage.VSTAR;
+  public stage: Stage = Stage.BASIC;
 
   public tags = [ CardTag.POKEMON_VSTAR ];
 
@@ -50,39 +50,10 @@ export class GiratinaVSTAR extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-    
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH], 
-        { allowCancel: false }
-      ), targets => {
-        if (targets && targets.length > 0) {
-  
-          const target = targets[0];
-  
-          return store.prompt(state, new ChooseCardsPrompt(
-            player.id,
-            GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-            target, // Card source is target Pokemon
-            { superType: SuperType.ENERGY },
-            { min: 2, max:2, allowCancel: false }
-          ), selected => {
-            const cards = selected || [];
-            if (cards.length > 0) {
-      
-              target.moveCardsTo(cards, player.lostzone);
+      const opponent = StateUtils.getOpponent(state, player);
 
-            }});
-        }});
-    }
-
-    if (effect instanceof AbstractAttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
       if (player.lostzone.cards.length <= 9) {
         throw new GameError (GameMessage.CANNOT_USE_POWER);  
       }
@@ -93,16 +64,50 @@ export class GiratinaVSTAR extends PokemonCard {
           
       if (player.lostzone.cards.length >= 10) {
 
-        const opponent = StateUtils.getOpponent(state, player);
-
         const activePokemon = opponent.active.getPokemonCard();
+      
         if (activePokemon) {
-          activePokemon.hp = 0;
-          player.usedVSTAR = true;
+          const dealDamage = new KnockOutOpponentEffect(effect, 999);
+          dealDamage.target = opponent.active;
+          store.reduceEffect(state, dealDamage);
         }
+        player.usedVSTAR = true;
       }
-    }
+    
 
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+        const player = effect.player;
+    
+        return store.prompt(state, new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH], 
+          { allowCancel: false }
+        ), targets => {
+          if (targets && targets.length > 0) {
+  
+            const target = targets[0];
+  
+            return store.prompt(state, new ChooseCardsPrompt(
+              player.id,
+              GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+              target, // Card source is target Pokemon
+              { superType: SuperType.ENERGY },
+              { min: 2, max:2, allowCancel: false }
+            ), selected => {
+              const cards = selected || [];
+              if (cards.length > 0) {
+      
+                target.moveCardsTo(cards, player.lostzone);
+
+              }});
+          }});
+      }
+
+    }
     return state;
   }
 }
+

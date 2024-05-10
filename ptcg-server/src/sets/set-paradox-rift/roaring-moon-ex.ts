@@ -64,9 +64,9 @@ export class RoaringMoonex extends PokemonCard {
       }
 
       if (effect instanceof KnockOutEffect && effect.target == activePokemon) {
-        const dealDamage = new DealDamageEffect(effect, 200);
-        dealDamage.target = player.active;
-        store.reduceEffect(state, dealDamage);
+        const dealSelfDamage = new DealDamageEffect(effect, 200);
+        dealSelfDamage.target = player.active;
+        store.reduceEffect(state, dealSelfDamage);
 
       }
   

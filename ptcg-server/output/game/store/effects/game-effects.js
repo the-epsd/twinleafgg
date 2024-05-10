@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EvolveEffect = exports.HealEffect = exports.KnockOutEffect = exports.AttackEffect = exports.useToolEffect = exports.UseStadiumEffect = exports.UseAttackEffect = exports.PowerEffect = exports.UsePowerEffect = exports.RetreatEffect = exports.GameEffects = void 0;
+exports.EvolveEffect = exports.HealEffect = exports.KnockOutAttackEffect = exports.KnockOutEffect = exports.AttackEffect = exports.useToolEffect = exports.UseStadiumEffect = exports.UseAttackEffect = exports.PowerEffect = exports.UsePowerEffect = exports.RetreatEffect = exports.GameEffects = void 0;
 var GameEffects;
 (function (GameEffects) {
     GameEffects["RETREAT_EFFECT"] = "RETREAT_EFFECT";
@@ -93,6 +93,18 @@ class KnockOutEffect {
     }
 }
 exports.KnockOutEffect = KnockOutEffect;
+// how many prizes when target Pokemon is KO
+class KnockOutAttackEffect {
+    constructor(player, target, attack) {
+        this.type = GameEffects.KNOCK_OUT_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.target = target;
+        this.attack = attack;
+        this.prizeCount = 1;
+    }
+}
+exports.KnockOutAttackEffect = KnockOutAttackEffect;
 class HealEffect {
     constructor(player, target, damage) {
         this.type = GameEffects.HEAL_EFFECT;

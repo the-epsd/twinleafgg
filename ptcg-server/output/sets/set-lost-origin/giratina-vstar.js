@@ -9,7 +9,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class GiratinaVSTAR extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.VSTAR;
+        this.stage = card_types_1.Stage.BASIC;
         this.tags = [card_types_1.CardTag.POKEMON_VSTAR];
         this.evolvesFrom = 'Giratina V';
         this.regulationMark = 'F';
@@ -37,23 +37,9 @@ class GiratinaVSTAR extends game_1.PokemonCard {
         this.fullName = 'Giratina VSTAR LOR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false }), targets => {
-                if (targets && targets.length > 0) {
-                    const target = targets[0];
-                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, target, // Card source is target Pokemon
-                    { superType: card_types_1.SuperType.ENERGY }, { min: 2, max: 2, allowCancel: false }), selected => {
-                        const cards = selected || [];
-                        if (cards.length > 0) {
-                            target.moveCardsTo(cards, player.lostzone);
-                        }
-                    });
-                }
-            });
-        }
-        if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.attack === this.attacks[1]) {
-            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             if (player.lostzone.cards.length <= 9) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
@@ -61,12 +47,28 @@ class GiratinaVSTAR extends game_1.PokemonCard {
                 throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
             if (player.lostzone.cards.length >= 10) {
-                const opponent = game_1.StateUtils.getOpponent(state, player);
                 const activePokemon = opponent.active.getPokemonCard();
                 if (activePokemon) {
-                    activePokemon.hp = 0;
-                    player.usedVSTAR = true;
+                    const dealDamage = new attack_effects_1.KnockOutOpponentEffect(effect, 999);
+                    dealDamage.target = opponent.active;
+                    store.reduceEffect(state, dealDamage);
                 }
+                player.usedVSTAR = true;
+            }
+            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+                const player = effect.player;
+                return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false }), targets => {
+                    if (targets && targets.length > 0) {
+                        const target = targets[0];
+                        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, target, // Card source is target Pokemon
+                        { superType: card_types_1.SuperType.ENERGY }, { min: 2, max: 2, allowCancel: false }), selected => {
+                            const cards = selected || [];
+                            if (cards.length > 0) {
+                                target.moveCardsTo(cards, player.lostzone);
+                            }
+                        });
+                    }
+                });
             }
         }
         return state;
