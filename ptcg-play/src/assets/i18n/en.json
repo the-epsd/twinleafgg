@@ -408,7 +408,8 @@
     "CALAMITY_STORM": "Do you want to discard the Stadium in play?",
     "YES": "Yes",
     "NO": "No",
-    "GO_FIRST": "Would you like to go first?"
+    "GO_FIRST": "Would you like to go first?",
+    "INCREASE_DAMAGE_BY_30_AGAINST_OPPONENTS_EX_AND_V_POKEMON": "Increase damage by 30 against your opponent's ex and V Pokémon."
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.'",

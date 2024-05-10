@@ -9,7 +9,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class GiratinaVSTAR extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.VSTAR;
         this.tags = [card_types_1.CardTag.POKEMON_VSTAR];
         this.evolvesFrom = 'Giratina V';
         this.regulationMark = 'F';

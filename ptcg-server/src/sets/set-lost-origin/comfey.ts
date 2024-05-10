@@ -82,7 +82,7 @@ export class Comfey extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
         { },
-        { min: 1, max: 1, allowCancel: true }
+        { min: 1, max: 1, allowCancel: false }
       ), selected => {
         player.marker.addMarker(this.FLOWER_SELECTING_MARKER, this);
         deckTop.moveCardsTo(selected, player.hand);

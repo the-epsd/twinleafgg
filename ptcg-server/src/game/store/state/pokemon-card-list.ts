@@ -155,6 +155,10 @@ export class PokemonCardList extends CardList {
     return this.cards.some(c => c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));
   }
 
+  exPokemon(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_V));
+  }
+
   getToolEffect(): Power | Attack | undefined {
     if (!this.tool) {
       return;

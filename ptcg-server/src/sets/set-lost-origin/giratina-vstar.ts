@@ -9,7 +9,7 @@ import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects'
 
 export class GiratinaVSTAR extends PokemonCard {
   
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VSTAR;
 
   public tags = [ CardTag.POKEMON_VSTAR ];
 
