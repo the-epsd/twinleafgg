@@ -75,6 +75,7 @@ class Electrode extends pokemon_card_1.PokemonCard {
                         const cardList = game_1.StateUtils.findCardList(state, this);
                         const benchIndex = player.bench.indexOf(cardList);
                         if (benchIndex !== -1) {
+                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             const pokemonCard = player.bench[benchIndex].getPokemonCard();
                             pokemonCard['provides'] = [option.value, option.value];
                             player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
@@ -86,6 +87,7 @@ class Electrode extends pokemon_card_1.PokemonCard {
                             store.reduceEffect(state, knockOutEffect);
                         }
                         else {
+                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             const pokemonCard = player.active.getPokemonCard();
                             pokemonCard['provides'] = [option.value, option.value];
                             player.active.moveCardTo(pokemonCard, targets[0]);
