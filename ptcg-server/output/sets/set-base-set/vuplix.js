@@ -14,7 +14,7 @@ class Vulpix extends pokemon_card_1.PokemonCard {
         this.setNumber = '68';
         this.set = 'BS';
         this.fullName = 'Vulpix BS';
-        this.carddType = card_types_1.CardType.FIRE;
+        this.cardType = card_types_1.CardType.FIRE;
         this.stage = card_types_1.Stage.BASIC;
         this.evolvesInto = ['Ninetales', 'Ninetales ex', 'Light Ninetales'];
         this.hp = 50;

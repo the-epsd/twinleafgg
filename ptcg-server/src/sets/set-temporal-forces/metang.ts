@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, AttachEnergyPrompt, CardList, EnergyCard, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt, GameError } from '../../game';
+import { PowerType, StoreLike, State, StateUtils, AttachEnergyPrompt, CardList, EnergyCard, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt, GameError, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Metang extends PokemonCard {
 
@@ -56,6 +57,11 @@ export class Metang extends PokemonCard {
       player.marker.removeMarker(this.METAL_MAKER_MARKER, this);
     }
 
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.METAL_MAKER_MARKER, this);
+    }
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       
       const player = effect.player;
@@ -68,7 +74,6 @@ export class Metang extends PokemonCard {
       }
   
       player.deck.moveTo(temp, 4);
-
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
         return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Metal Energy';
@@ -76,16 +81,28 @@ export class Metang extends PokemonCard {
   
       // If no energy cards were drawn, move all cards to deck & shuffle
       if (energyCardsDrawn.length == 0) {
-        temp.cards.slice(0, 4).forEach(card => {
 
-          store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.hand.applyOrder(order);
-
-            temp.moveCardTo(card, deckBottom); 
+        store.prompt(state, [new ShowCardsPrompt(
+          player.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          temp.cards
+        )], () => {
+          temp.cards.forEach(card => {
+            store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              temp.applyOrder(order);
+              temp.moveCardTo(card, deckBottom);
+              deckBottom.applyOrder(order);
+              deckBottom.moveTo(player.deck);
+              player.marker.addMarker(this.METAL_MAKER_MARKER, this);
+            });
+            return state;
           });
+          return state;
         });
-      } else {
-        
+      }
+    
+      if (energyCardsDrawn.length >= 1) {
+
         // Prompt to attach energy if any were drawn
         return store.prompt(state, new AttachEnergyPrompt(
           player.id,
@@ -105,14 +122,15 @@ export class Metang extends PokemonCard {
             }
             temp.cards.forEach(card => {
               store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-                player.hand.applyOrder(order);
-        
+                temp.applyOrder(order);
                 temp.moveCardTo(card, deckBottom); 
+                deckBottom.applyOrder(order);
+                deckBottom.moveTo(player.deck);
+                player.marker.addMarker(this.METAL_MAKER_MARKER, this);
               });
+              return state;
             });
-            return state;
           }
-          return state;
         });
       }
       return state;
@@ -120,3 +138,4 @@ export class Metang extends PokemonCard {
     return state;
   }
 }
+    

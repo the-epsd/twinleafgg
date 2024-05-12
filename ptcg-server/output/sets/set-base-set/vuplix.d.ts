@@ -9,7 +9,7 @@ export declare class Vulpix extends PokemonCard {
     setNumber: string;
     set: string;
     fullName: string;
-    carddType: CardType;
+    cardType: CardType;
     stage: Stage;
     evolvesInto: string[];
     hp: number;

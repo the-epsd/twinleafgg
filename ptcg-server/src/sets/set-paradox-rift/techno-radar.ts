@@ -1,7 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, SuperType, Stage, CardTag } from '../../game/store/card/card-types';
+import { TrainerType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
@@ -12,6 +12,7 @@ import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { CardList } from '../../game/store/state/card-list';
+import { PokemonCard } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: TechnoRadar, effect: TrainerEffect): IterableIterator<State> {
@@ -19,6 +20,13 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
+
+  const blocked: number[] = [];
+  player.deck.cards.forEach((card, index) => {
+    if (card instanceof PokemonCard && !card.tags.includes(CardTag.FUTURE)) {
+      blocked.push(index);
+    }
+  });
 
   cards = player.hand.cards.filter(c => c !== self);
   if (cards.length < 1) {
@@ -58,8 +66,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.BASIC, cardTag: [CardTag.FUTURE] },
-    { min: 0, max: 2, allowCancel: false }
+    { superType: SuperType.POKEMON},
+    { min: 0, max: 2, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();
