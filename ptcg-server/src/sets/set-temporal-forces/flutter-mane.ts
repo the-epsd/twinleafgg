@@ -6,7 +6,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { DamageMap, GameError, GameMessage, PlayerType, PutDamagePrompt, SlotType, StateUtils } from '../../game';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 
 function* useHexHurl(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
@@ -19,15 +18,11 @@ function* useHexHurl(next: Function, store: StoreLike, state: State, effect: Att
   }
 
   const maxAllowedDamage: DamageMap[] = [];
-  let damageLeft = 0;
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    const checkHpEffect = new CheckHpEffect(opponent, cardList);
-    store.reduceEffect(state, checkHpEffect);
-    damageLeft += checkHpEffect.hp - cardList.damage;
-    maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+    maxAllowedDamage.push({ target, damage: 20 });
   });
-    
-  const damage = Math.min(20, damageLeft);
+
+  const damage = 20;
 
   return store.prompt(state, new PutDamagePrompt(
     effect.player.id,

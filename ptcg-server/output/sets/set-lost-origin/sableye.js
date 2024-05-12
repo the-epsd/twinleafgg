@@ -8,20 +8,15 @@ const state_utils_1 = require("../../game/store/state-utils");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const game_message_1 = require("../../game/game-message");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 const __1 = require("../..");
 function* useLostMine(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     const maxAllowedDamage = [];
-    let damageLeft = 0;
     opponent.forEachPokemon(play_card_action_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        const checkHpEffect = new check_effects_1.CheckHpEffect(opponent, cardList);
-        store.reduceEffect(state, checkHpEffect);
-        damageLeft += checkHpEffect.hp - cardList.damage;
-        maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+        maxAllowedDamage.push({ target, damage: 120 });
     });
-    const damage = Math.min(120, damageLeft);
+    const damage = 120;
     if (player.lostzone.cards.length <= 9) {
         throw new __1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
     }
