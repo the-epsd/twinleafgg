@@ -50,14 +50,13 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.deck.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
     store.log(state, GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: card.name });
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   });
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
-
 }
 export class NestBall extends TrainerCard {
 

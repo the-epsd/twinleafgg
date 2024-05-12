@@ -5,11 +5,10 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { DamageMap, GameError, GameMessage, PlayerType, PokemonCardList, PutDamagePrompt, SlotType, StateUtils } from '../../game';
-import { CheckHpEffect, CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { DamageMap, GameError, GameMessage, PlayerType, PutDamagePrompt, SlotType, StateUtils } from '../../game';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 
-function* useLostMine(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+function* useHexHurl(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
     
@@ -19,15 +18,11 @@ function* useLostMine(next: Function, store: StoreLike, state: State, effect: At
   }
 
   const maxAllowedDamage: DamageMap[] = [];
-  let damageLeft = 0;
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    const checkHpEffect = new CheckHpEffect(opponent, cardList);
-    store.reduceEffect(state, checkHpEffect);
-    damageLeft += checkHpEffect.hp - cardList.damage;
-    maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+    maxAllowedDamage.push({ target, damage: 20 });
   });
-    
-  const damage = Math.min(20, damageLeft);
+
+  const damage = 20;
 
   return store.prompt(state, new PutDamagePrompt(
     effect.player.id,
@@ -65,13 +60,13 @@ export class FlutterMane extends PokemonCard {
   public retreat = [ CardType.COLORLESS ];
 
   public powers = [{
-    name: 'Witching Hour Flutter',
+    name: 'Midnight Fluttering',
     powerType: PowerType.ABILITY,
     text: 'As long as this Pokémon is in the Active Spot, your opponent\'s Active Pokémon has no Abilities, except for Witching Hour Flutter.'
   }];
 
   public attacks = [{
-    name: 'Flying Curse',
+    name: 'Hex Hurl',
     cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
     damage: 90,
     text: 'Put 2 damage counters on your opponent\'s Benched Pokémon in any way you like.'
@@ -89,39 +84,46 @@ export class FlutterMane extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
+    if (effect instanceof PowerEffect
+        && effect.power.powerType === PowerType.ABILITY
+        && effect.power.name !== 'Midnight Fluttering' && effect.card === effect.player.active.cards[0] ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
-      // Flutter Mane is not active Pokemon
-      if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
+  
+      let isFlutterManeInPlay = false;
+  
+      if (player.active.cards[0] == this) {
+        isFlutterManeInPlay = true;
+      }
+  
+      if (opponent.active.cards[0] == this) {
+        isFlutterManeInPlay = true;
+      }
+        
+      if (!isFlutterManeInPlay) {
         return state;
       }
-
-      const pokemon = opponent.active.getPokemonCard();
-      if (pokemon && pokemon.powers && pokemon.powers.length > 0) {
-        const pokemonCardList = new PokemonCardList();
-        const checkPokemonType = new CheckPokemonTypeEffect(pokemonCardList);
-        store.reduceEffect(state, checkPokemonType);
-      }
-
 
       // Try reducing ability for opponent
       try {
         const playerPowerEffect = new PowerEffect(player, this.powers[0], this);
         store.reduceEffect(state, playerPowerEffect);
       } catch {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+        return state;
       }
-      return state;
+
+      // if (opponent.bench && player.bench) {
+      //   return state;
+      // }
+
+      throw new GameError(GameMessage.CANNOT_USE_POWER);
     }
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useLostMine(() => generator.next(), store, state, effect);
+      const generator = useHexHurl(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-
 
     return state;
   }

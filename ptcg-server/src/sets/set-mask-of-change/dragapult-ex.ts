@@ -9,7 +9,6 @@ import { PlayerType, SlotType } from '../../game/store/actions/play-card-action'
 import { DamageMap } from '../../game/store/prompts/move-damage-prompt';
 import { GameMessage } from '../../game/game-message';
 import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { PutDamagePrompt } from '../..';
 
 
@@ -23,15 +22,11 @@ function* usePhantomDive(next: Function, store: StoreLike, state: State, effect:
   }
 
   const maxAllowedDamage: DamageMap[] = [];
-  let damageLeft = 0;
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    const checkHpEffect = new CheckHpEffect(opponent, cardList);
-    store.reduceEffect(state, checkHpEffect);
-    damageLeft += checkHpEffect.hp - cardList.damage;
-    maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+    maxAllowedDamage.push({ target, damage: 60 });
   });
-  
-  const damage = Math.min(60, damageLeft);
+
+  const damage = 60;
 
   return store.prompt(state, new PutDamagePrompt(
     effect.player.id,

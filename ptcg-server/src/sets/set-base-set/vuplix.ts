@@ -19,7 +19,7 @@ export class Vulpix extends PokemonCard {
   
   public fullName = 'Vulpix BS';
   
-  public carddType = CardType.FIRE;
+  public cardType = CardType.FIRE;
   
   public stage = Stage.BASIC;
 

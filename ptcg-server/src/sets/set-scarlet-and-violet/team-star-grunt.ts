@@ -6,7 +6,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardType, TrainerType } from '../../game/store/card/card-types';
-import { StateUtils, EnergyCard, CardList, Card, ChooseEnergyPrompt } from '../../game';
+import { StateUtils, EnergyCard, Card, ChooseEnergyPrompt } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class TeamStarGrunt extends TrainerCard {
@@ -48,8 +48,6 @@ export class TeamStarGrunt extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const deckTop = new CardList();
-
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
@@ -59,12 +57,12 @@ export class TeamStarGrunt extends TrainerCard {
         checkProvidedEnergy.energyMap,
         [CardType.COLORLESS],
         { allowCancel: false }
-      ), (energy) => {
+      ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);
 
         // Fix error by looping through cards and moving individually
-        cards.forEach(card => {
-          deckTop.moveCardTo(card, opponent.deck);
+        cards.forEach(c => {
+          opponent.deck.cards.unshift(c);
         });
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         player.supporterTurn = 1;

@@ -123,6 +123,7 @@ export var GameCardMessage;
     GameCardMessage["WANT_TO_SWITCH_POKEMON"] = "WANT_TO_SWITCH_POKEMON";
     GameCardMessage["WANT_TO_USE_ABILITY"] = "WANT_TO_USE_ABILITY";
     GameCardMessage["CALAMITY_STORM"] = "CALAMITY_STORM";
+    GameCardMessage["INCREASE_DAMAGE_BY_30_AGAINST_OPPONENTS_EX_AND_V_POKEMON"] = "INCREASE_DAMAGE_BY_30_AGAINST_OPPONENTS_EX_AND_V_POKEMON";
 })(GameCardMessage || (GameCardMessage = {}));
 export var GameLog;
 (function (GameLog) {

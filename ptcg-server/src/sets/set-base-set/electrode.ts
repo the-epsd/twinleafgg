@@ -109,6 +109,7 @@ export class Electrode extends PokemonCard {
             
             if (benchIndex !== -1) {
               
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               const pokemonCard = player.bench[benchIndex].getPokemonCard()!;              
               (<any>pokemonCard)['provides'] = [option.value, option.value];
               
@@ -123,6 +124,7 @@ export class Electrode extends PokemonCard {
               
               store.reduceEffect(state, knockOutEffect);
             } else {
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               const pokemonCard = player.active.getPokemonCard()!;        
               (<any>pokemonCard)['provides'] = [option.value, option.value];      
               

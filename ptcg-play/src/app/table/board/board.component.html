@@ -45,7 +45,9 @@
         <div class="ptcg-board-row ptcg-board-supporter">
           <ptcg-board-card class="lost-zone"
             [cardList]="topPlayer?.lostzone" [owner]="topPlayer?.id === clientId"
-            (cardClick)="onLostZoneClick($event, topPlayer?.lostzone)">
+            (cardClick)="onLostZoneClick($event, topPlayer?.lostzone)"
+         showCardCount="true"
+              [style.transform]="'rotate(90deg)'">
           </ptcg-board-card>
         </div>
 
@@ -114,7 +116,8 @@
                 <div class="ptcg-board-row ptcg-board-stadium">
                   <ptcg-board-card class="lost-zone"
                     [cardList]="bottomPlayer?.lostzone" [owner]="bottomPlayer?.id === clientId"
-                    (cardClick)="onLostZoneClick($event, bottomPlayer?.lostzone)">
+                    (cardClick)="onLostZoneClick($event, bottomPlayer?.lostzone)"
+                    showCardCount="true">
                   </ptcg-board-card>
                 </div>
 

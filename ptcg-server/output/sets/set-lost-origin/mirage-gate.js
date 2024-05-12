@@ -17,8 +17,10 @@ function* playCard(next, store, state, effect) {
         yield store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 2 }), transfers => {
             transfers = transfers || [];
             for (const transfer of transfers) {
-                if (transfers[0].card.name === transfers[1].card.name) {
-                    throw new game_1.GameError(game_1.GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
+                if (transfers.length > 1) {
+                    if (transfers[0].card.name === transfers[1].card.name) {
+                        throw new game_1.GameError(game_1.GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
+                    }
                 }
                 const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                 player.deck.moveCardTo(transfer.card, target);

@@ -14,7 +14,7 @@ export declare class IronHandsex extends PokemonCard {
     retreat: CardType[];
     attacks: {
         name: string;
-        cost: never[];
+        cost: CardType[];
         damage: number;
         text: string;
     }[];

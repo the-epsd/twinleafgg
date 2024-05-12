@@ -47,9 +47,9 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, dealDamage);
             }
             if (effect instanceof game_effects_1.KnockOutEffect && effect.target == activePokemon) {
-                const dealDamage = new attack_effects_1.DealDamageEffect(effect, 200);
-                dealDamage.target = player.active;
-                store.reduceEffect(state, dealDamage);
+                const dealSelfDamage = new attack_effects_1.DealDamageEffect(effect, 200);
+                dealSelfDamage.target = player.active;
+                store.reduceEffect(state, dealSelfDamage);
             }
             if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
                 const stadiumCard = game_1.StateUtils.getStadiumCard(state);

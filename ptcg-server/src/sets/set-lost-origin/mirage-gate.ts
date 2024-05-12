@@ -29,8 +29,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       transfers = transfers || [];
       for (const transfer of transfers) {
 
-        if (transfers[0].card.name === transfers[1].card.name) {
-          throw new GameError (GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);  
+        if (transfers.length > 1) {
+          if (transfers[0].card.name === transfers[1].card.name) {
+            throw new GameError (GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);  
+          }
         }
 
         const target = StateUtils.getTarget(state, player, transfer.to);

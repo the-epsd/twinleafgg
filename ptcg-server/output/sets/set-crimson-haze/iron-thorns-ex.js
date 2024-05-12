@@ -16,7 +16,7 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Ability: Initialize',
+                name: 'Initialize',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'While this Pokémon is in the Active Spot, Pokémon with a Rule Box in play (except any Future Pokémon) don\'t have any Abilities.'
             }];
@@ -35,7 +35,29 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Iron Thorns ex SV5a';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect) {
+        if (effect instanceof game_effects_1.PowerEffect
+            && effect.power.powerType === game_1.PowerType.ABILITY
+            && effect.power.name !== 'Initialize') {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            let isIronThornsexInPlay = false;
+            if (player.active.cards[0] == this) {
+                isIronThornsexInPlay = true;
+            }
+            if (opponent.active.cards[0] == this) {
+                isIronThornsexInPlay = true;
+            }
+            if (!isIronThornsexInPlay) {
+                return state;
+            }
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                store.reduceEffect(state, powerEffect);
+            }
+            catch (_a) {
+                return state;
+            }
             const pokemonCard = effect.card;
             if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex && card_types_1.CardTag.FUTURE)) {
                 return state;
@@ -48,21 +70,20 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
                 // pokemonCard.powers.length = 0;
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                const player = effect.player;
-                const hasBench = player.bench.some(b => b.cards.length > 0);
-                if (hasBench === false) {
-                    return state;
-                }
-                return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.active, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 1, max: 1 }), transfers => {
-                    transfers = transfers || [];
-                    for (const transfer of transfers) {
-                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                        player.active.moveCardTo(transfer.card, target);
-                    }
-                });
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const hasBench = player.bench.some(b => b.cards.length > 0);
+            if (hasBench === false) {
+                return state;
             }
-            return state;
+            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.active, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 1, max: 1 }), transfers => {
+                transfers = transfers || [];
+                for (const transfer of transfers) {
+                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                    player.active.moveCardTo(transfer.card, target);
+                }
+            });
         }
         return state;
     }

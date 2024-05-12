@@ -107,6 +107,9 @@ class PokemonCardList extends card_list_1.CardList {
     vPokemon() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_V) || c.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || c.tags.includes(card_types_1.CardTag.POKEMON_VSTAR));
     }
+    exPokemon() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_V));
+    }
     getToolEffect() {
         if (!this.tool) {
             return;

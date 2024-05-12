@@ -197,10 +197,11 @@ ptcg-board-deck {
   align-self: flex-start;
   transform: rotate(-90deg);
     margin-top: 30%;
+    
 
-  .upside-down & {
-    transform: rotate(90deg);
-  }
+  // .upside-down & {
+  //   transform: rotate(90deg);
+  // }
 }
 
 .ptcg-card-preview {

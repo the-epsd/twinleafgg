@@ -11,10 +11,17 @@ const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
 const card_list_1 = require("../../game/store/state/card-list");
+const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     let cards = [];
+    const blocked = [];
+    player.deck.cards.forEach((card, index) => {
+        if (card instanceof game_1.PokemonCard && !card.tags.includes(card_types_1.CardTag.FUTURE)) {
+            blocked.push(index);
+        }
+    });
     cards = player.hand.cards.filter(c => c !== self);
     if (cards.length < 1) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -36,7 +43,7 @@ function* playCard(next, store, state, self, effect) {
         return state;
     }
     player.hand.moveCardsTo(cards, player.discard);
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC, cardTag: [card_types_1.CardTag.FUTURE] }, { min: 0, max: 2, allowCancel: false }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 2, allowCancel: false, blocked }), selected => {
         cards = selected || [];
         next();
     });

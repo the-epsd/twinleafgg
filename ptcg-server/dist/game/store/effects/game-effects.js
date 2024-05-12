@@ -82,6 +82,17 @@ export class KnockOutEffect {
         this.prizeCount = 1;
     }
 }
+// how many prizes when target Pokemon is KO
+export class KnockOutAttackEffect {
+    constructor(player, target, attack) {
+        this.type = GameEffects.KNOCK_OUT_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.target = target;
+        this.attack = attack;
+        this.prizeCount = 1;
+    }
+}
 export class HealEffect {
     constructor(player, target, damage) {
         this.type = GameEffects.HEAL_EFFECT;

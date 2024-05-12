@@ -9,7 +9,7 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 function* usePotion(next, store, state, effect) {
     const player = effect.player;
     const maxAllowedHealing = [];
-    let healingLeft = 0;
+    const healingLeft = 0;
     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         maxAllowedHealing.push({ target, damage: cardList.damage });
     });

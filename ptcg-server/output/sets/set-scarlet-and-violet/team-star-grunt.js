@@ -34,14 +34,13 @@ class TeamStarGrunt extends trainer_card_1.TrainerCard {
             if (!opponent.active.cards.some(c => c instanceof game_1.EnergyCard)) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            const deckTop = new game_1.CardList();
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(opponent);
             state = store.reduceEffect(state, checkProvidedEnergy);
-            state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS], { allowCancel: false }), (energy) => {
+            state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
                 const cards = (energy || []).map(e => e.card);
                 // Fix error by looping through cards and moving individually
-                cards.forEach(card => {
-                    deckTop.moveCardTo(card, opponent.deck);
+                cards.forEach(c => {
+                    opponent.deck.cards.unshift(c);
                 });
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 player.supporterTurn = 1;

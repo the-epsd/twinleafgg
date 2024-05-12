@@ -9,7 +9,6 @@ import { PlayerType, SlotType } from '../../game/store/actions/play-card-action'
 import { DamageMap } from '../../game/store/prompts/move-damage-prompt';
 import { GameMessage } from '../../game/game-message';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { GameError, PutDamagePrompt } from '../..';
 
 
@@ -18,15 +17,12 @@ function* useLostMine(next: Function, store: StoreLike, state: State, effect: At
   const opponent = StateUtils.getOpponent(state, player);
   
   const maxAllowedDamage: DamageMap[] = [];
-  let damageLeft = 0;
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    const checkHpEffect = new CheckHpEffect(opponent, cardList);
-    store.reduceEffect(state, checkHpEffect);
-    damageLeft += checkHpEffect.hp - cardList.damage;
-    maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+    maxAllowedDamage.push({ target, damage: 120 });
   });
-  
-  const damage = Math.min(120, damageLeft);
+
+  const damage = 120;
+
 
   if (player.lostzone.cards.length <= 9) {
     throw new GameError (GameMessage.CANNOT_USE_POWER);  

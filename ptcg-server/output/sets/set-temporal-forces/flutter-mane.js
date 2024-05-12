@@ -6,9 +6,8 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-function* useLostMine(next, store, state, effect) {
+function* useHexHurl(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
     const hasBenched = opponent.bench.some(b => b.cards.length > 0);
@@ -16,14 +15,10 @@ function* useLostMine(next, store, state, effect) {
         return state;
     }
     const maxAllowedDamage = [];
-    let damageLeft = 0;
     opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        const checkHpEffect = new check_effects_1.CheckHpEffect(opponent, cardList);
-        store.reduceEffect(state, checkHpEffect);
-        damageLeft += checkHpEffect.hp - cardList.damage;
-        maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+        maxAllowedDamage.push({ target, damage: 20 });
     });
-    const damage = Math.min(20, damageLeft);
+    const damage = 20;
     return store.prompt(state, new game_1.PutDamagePrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], damage, maxAllowedDamage, { allowCancel: false }), targets => {
         const results = targets || [];
         for (const result of results) {
@@ -45,12 +40,12 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.METAL }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Witching Hour Flutter',
+                name: 'Midnight Fluttering',
                 powerType: pokemon_types_1.PowerType.ABILITY,
                 text: 'As long as this Pokémon is in the Active Spot, your opponent\'s Active Pokémon has no Abilities, except for Witching Hour Flutter.'
             }];
         this.attacks = [{
-                name: 'Flying Curse',
+                name: 'Hex Hurl',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 90,
                 text: 'Put 2 damage counters on your opponent\'s Benched Pokémon in any way you like.'
@@ -62,19 +57,20 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
         this.fullName = 'Flutter Mane TEF';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY) {
+        if (effect instanceof game_effects_1.PowerEffect
+            && effect.power.powerType === pokemon_types_1.PowerType.ABILITY
+            && effect.power.name !== 'Midnight Fluttering' && effect.card === effect.player.active.cards[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            // Flutter Mane is not active Pokemon
-            if (player.active.getPokemonCard() !== this
-                && opponent.active.getPokemonCard() !== this) {
-                return state;
+            let isFlutterManeInPlay = false;
+            if (player.active.cards[0] == this) {
+                isFlutterManeInPlay = true;
             }
-            const pokemon = opponent.active.getPokemonCard();
-            if (pokemon && pokemon.powers && pokemon.powers.length > 0) {
-                const pokemonCardList = new game_1.PokemonCardList();
-                const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(pokemonCardList);
-                store.reduceEffect(state, checkPokemonType);
+            if (opponent.active.cards[0] == this) {
+                isFlutterManeInPlay = true;
+            }
+            if (!isFlutterManeInPlay) {
+                return state;
             }
             // Try reducing ability for opponent
             try {
@@ -82,12 +78,15 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, playerPowerEffect);
             }
             catch (_a) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                return state;
             }
-            return state;
+            // if (opponent.bench && player.bench) {
+            //   return state;
+            // }
+            throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const generator = useLostMine(() => generator.next(), store, state, effect);
+            const generator = useHexHurl(() => generator.next(), store, state, effect);
             return generator.next().value;
         }
         return state;

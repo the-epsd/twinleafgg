@@ -79,6 +79,15 @@ export declare class KnockOutEffect implements Effect {
     prizeCount: number;
     constructor(player: Player, target: PokemonCardList);
 }
+export declare class KnockOutAttackEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    player: Player;
+    target: PokemonCardList;
+    attack: Attack;
+    prizeCount: number;
+    constructor(player: Player, target: PokemonCardList, attack: Attack);
+}
 export declare class HealEffect implements Effect {
     readonly type: string;
     preventDefault: boolean;

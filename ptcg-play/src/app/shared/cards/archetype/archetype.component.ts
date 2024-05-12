@@ -12,9 +12,6 @@ export class ArchetypeComponent {
 
   @Input() set type(value: Archetype) {
     switch (value) {
-      case Archetype.CHARIZARD:
-        this.typeClass = 'charizard';
-        break;
       case Archetype.GRASS:
         this.typeClass = 'grass';
         break;

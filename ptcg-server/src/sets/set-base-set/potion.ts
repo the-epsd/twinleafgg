@@ -12,7 +12,7 @@ function* usePotion(next: Function, store: StoreLike, state: State, effect: Trai
   
   const maxAllowedHealing: DamageMap[] = [];
   
-  let healingLeft = 0;
+  const healingLeft = 0;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
     maxAllowedHealing.push({ target, damage: cardList.damage });
   });

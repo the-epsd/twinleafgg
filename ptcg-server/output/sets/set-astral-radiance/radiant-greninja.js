@@ -82,7 +82,7 @@ class RadiantGreninja extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkProvidedEnergy);
-            state = store.prompt(state, new choose_energy_prompt_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [], { allowCancel: false }), energy => {
+            state = store.prompt(state, new choose_energy_prompt_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
                 const cards = (energy || []).map(e => e.card);
                 const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
                 discardEnergy.target = player.active;

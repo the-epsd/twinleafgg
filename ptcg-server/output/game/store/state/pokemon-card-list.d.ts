@@ -45,5 +45,6 @@ export declare class PokemonCardList extends CardList {
     addSpecialCondition(sp: SpecialCondition): void;
     hasRuleBox(): boolean;
     vPokemon(): boolean;
+    exPokemon(): boolean;
     getToolEffect(): Power | Attack | undefined;
 }
