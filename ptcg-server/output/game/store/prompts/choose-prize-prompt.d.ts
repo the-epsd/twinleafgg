@@ -5,6 +5,7 @@ import { GameMessage } from '../../game-message';
 export declare const ChoosePrizePromptType = "Choose prize";
 export interface ChoosePrizeOptions {
     count: number;
+    blocked: number[];
     allowCancel: boolean;
 }
 export declare class ChoosePrizePrompt extends Prompt<CardList[]> {

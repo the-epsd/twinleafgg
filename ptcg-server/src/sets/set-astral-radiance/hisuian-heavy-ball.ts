@@ -1,4 +1,4 @@
-import { TrainerCard, TrainerType, StoreLike, State, ChoosePrizePrompt, GameMessage, Card } from '../../game';
+import { Card, CardList, ChoosePrizePrompt, GameMessage, PokemonCard, Stage, State, StoreLike, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
@@ -31,17 +31,30 @@ export class HisuianHeavyBall extends TrainerCard {
       // Make prizes no more secret, before displaying prompt
       prizes.forEach(p => { p.isSecret = false; });
 
-
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
+      const blocked: number[] = [];
+      player.prizes.map(p => p.cards[0]).forEach((c, index) => {
+        if (c instanceof PokemonCard && c.stage === Stage.BASIC) {
+          return;
+        } 
+        
+        blocked.push(index);
+      });
+      
       state = store.prompt(state, new ChoosePrizePrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON,
-        { count: 1, allowCancel: false },
+        { count: 1, blocked, allowCancel: true },
       ), chosenPrize => {
 
-        if (chosenPrize === null) {
+        if (chosenPrize === null || chosenPrize.length === 0) {          
+          prizes.forEach(p => { p.isSecret = true; });          
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          
+          player.prizes = this.shuffleArray(player.prizes);          
+          
           return state;
         }
 
@@ -54,20 +67,24 @@ export class HisuianHeavyBall extends TrainerCard {
         const chosenPrizeIndex = player.prizes.indexOf(chosenPrize[0]);
         player.supporter.moveCardTo(heavyBall, player.prizes[chosenPrizeIndex]);
 
-        // const shuffledPrizes = player.prizes.slice().sort(() => Math.random() - 0.5);
-        // player.prizes = shuffledPrizes;
-      
-
+        player.prizes = this.shuffleArray(player.prizes);          
+        
         prizes.forEach(p => { p.isSecret = true; });
-
-        // return store.prompt(state, new ShuffleHandPrompt(player.id), order => {
-        //   prizes.forEach(p => { p.applyOrder([order[0]]); });
-        // });
-
       });
 
       return state;
     }
     return state;
   }
+  
+  shuffleArray(array: CardList[]): CardList[] {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    
+    return array;
+}
 }

@@ -346,6 +346,7 @@
     "CHOOSE_ENERGIES_TO_HAND": "Choose energies, that will be returned to your opponent's hand.",
     "CHOOSE_ENERGY_TYPE": "Choose energy type",
     "CHOOSE_NEW_ACTIVE_POKEMON": "You have no Active Pokémon. Choose the new one.",
+    "CHOOSE_BASIC_POKEMON": "Select a basic Pokémon.",
     "CHOOSE_POKEMON_TO_ATTACH_CARDS": "Choose Pokémon to attach cards.",
     "CHOOSE_POKEMON_TO_DAMAGE": "Choose Pokémon to deal damage.",
     "CHOOSE_POKEMON_TO_DISCARD": "Choose Pokémon that will be discarded.",

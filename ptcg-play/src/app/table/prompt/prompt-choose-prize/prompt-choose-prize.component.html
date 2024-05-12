@@ -11,6 +11,7 @@
 
   <ptcg-choose-cards-panes
     [cards]="cards"
+    [blocked]="prompt.options.blocked"
     [cardbackMap]="revealed === false ? cardbackMap : {}"
     (changeCards)="onChange($event)">
   </ptcg-choose-cards-panes>

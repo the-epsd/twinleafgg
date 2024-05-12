@@ -25,8 +25,18 @@ class HisuianHeavyBall extends game_1.TrainerCard {
             prizes.forEach(p => { p.isSecret = false; });
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
-            state = store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON, { count: 1, allowCancel: false }), chosenPrize => {
-                if (chosenPrize === null) {
+            const blocked = [];
+            player.prizes.map(p => p.cards[0]).forEach((c, index) => {
+                if (c instanceof game_1.PokemonCard && c.stage === game_1.Stage.BASIC) {
+                    return;
+                }
+                blocked.push(index);
+            });
+            state = store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON, { count: 1, blocked, allowCancel: true }), chosenPrize => {
+                if (chosenPrize === null || chosenPrize.length === 0) {
+                    prizes.forEach(p => { p.isSecret = true; });
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                    player.prizes = this.shuffleArray(player.prizes);
                     return state;
                 }
                 const prizePokemon = chosenPrize[0];
@@ -35,16 +45,21 @@ class HisuianHeavyBall extends game_1.TrainerCard {
                 prizePokemon.moveTo(hand);
                 const chosenPrizeIndex = player.prizes.indexOf(chosenPrize[0]);
                 player.supporter.moveCardTo(heavyBall, player.prizes[chosenPrizeIndex]);
-                // const shuffledPrizes = player.prizes.slice().sort(() => Math.random() - 0.5);
-                // player.prizes = shuffledPrizes;
-                prizes.forEach(p => { p.isSecret = true; });
-                // return store.prompt(state, new ShuffleHandPrompt(player.id), order => {
-                //   prizes.forEach(p => { p.applyOrder([order[0]]); });
-                // });
+                player.prizes = this.shuffleArray(player.prizes);
+                // prizes.forEach(p => { p.isSecret = true; });
             });
             return state;
         }
         return state;
+    }
+    shuffleArray(array) {
+        for (var i = array.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
     }
 }
 exports.HisuianHeavyBall = HisuianHeavyBall;

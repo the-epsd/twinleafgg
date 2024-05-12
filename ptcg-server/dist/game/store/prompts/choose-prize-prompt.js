@@ -10,6 +10,7 @@ export class ChoosePrizePrompt extends Prompt {
         // Default options
         this.options = Object.assign({}, {
             count: 1,
+            blocked: [],
             allowCancel: false
         }, options);
     }

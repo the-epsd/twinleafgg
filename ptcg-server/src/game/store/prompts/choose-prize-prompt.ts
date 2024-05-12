@@ -8,6 +8,7 @@ export const ChoosePrizePromptType = 'Choose prize';
 
 export interface ChoosePrizeOptions {
   count: number;
+  blocked: number[];
   allowCancel: boolean;
 }
 
@@ -27,6 +28,7 @@ export class ChoosePrizePrompt extends Prompt<CardList[]> {
     // Default options
     this.options = Object.assign({}, {
       count: 1,
+      blocked: [],
       allowCancel: false
     }, options);
   }

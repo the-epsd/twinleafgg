@@ -13,6 +13,7 @@ class ChoosePrizePrompt extends prompt_1.Prompt {
         // Default options
         this.options = Object.assign({}, {
             count: 1,
+            blocked: [],
             allowCancel: false
         }, options);
     }
