@@ -39,14 +39,17 @@ class HisuianHeavyBall extends game_1.TrainerCard {
                     player.prizes = this.shuffleArray(player.prizes);
                     return state;
                 }
-                const prizePokemon = chosenPrize[0];
-                const hand = player.hand;
-                const heavyBall = effect.trainerCard;
-                prizePokemon.moveTo(hand);
-                const chosenPrizeIndex = player.prizes.indexOf(chosenPrize[0]);
-                player.supporter.moveCardTo(heavyBall, player.prizes[chosenPrizeIndex]);
-                player.prizes = this.shuffleArray(player.prizes);
-                // prizes.forEach(p => { p.isSecret = true; });
+                const opponent = game_1.StateUtils.getOpponent(state, player);
+                store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, chosenPrize[0].cards), () => {
+                    const prizePokemon = chosenPrize[0];
+                    const hand = player.hand;
+                    const heavyBall = effect.trainerCard;
+                    prizePokemon.moveTo(hand);
+                    const chosenPrizeIndex = player.prizes.indexOf(chosenPrize[0]);
+                    player.supporter.moveCardTo(heavyBall, player.prizes[chosenPrizeIndex]);
+                    player.prizes = this.shuffleArray(player.prizes);
+                    prizes.forEach(p => { p.isSecret = true; });
+                });
             });
             return state;
         }

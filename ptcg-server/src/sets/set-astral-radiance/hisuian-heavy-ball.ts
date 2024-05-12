@@ -1,4 +1,4 @@
-import { Card, CardList, ChoosePrizePrompt, GameMessage, PokemonCard, Stage, State, StoreLike, TrainerCard, TrainerType } from '../../game';
+import { Card, CardList, ChoosePrizePrompt, GameMessage, PokemonCard, ShowCardsPrompt, Stage, State, StateUtils, StoreLike, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
@@ -57,19 +57,26 @@ export class HisuianHeavyBall extends TrainerCard {
           
           return state;
         }
-
-        const prizePokemon = chosenPrize[0];
-        const hand = player.hand;
-        const heavyBall = effect.trainerCard;
-
-        prizePokemon.moveTo(hand);
-
-        const chosenPrizeIndex = player.prizes.indexOf(chosenPrize[0]);
-        player.supporter.moveCardTo(heavyBall, player.prizes[chosenPrizeIndex]);
-
-        player.prizes = this.shuffleArray(player.prizes);          
         
-        prizes.forEach(p => { p.isSecret = true; });
+        const opponent = StateUtils.getOpponent(state, player);
+        store.prompt(state, new ShowCardsPrompt(
+          opponent.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          chosenPrize[0].cards
+        ), () => {
+          const prizePokemon = chosenPrize[0];
+          const hand = player.hand;
+          const heavyBall = effect.trainerCard;
+
+          prizePokemon.moveTo(hand);
+
+          const chosenPrizeIndex = player.prizes.indexOf(chosenPrize[0]);
+          player.supporter.moveCardTo(heavyBall, player.prizes[chosenPrizeIndex]);
+
+          player.prizes = this.shuffleArray(player.prizes);          
+          
+          prizes.forEach(p => { p.isSecret = true; });  
+        });
       });
 
       return state;
