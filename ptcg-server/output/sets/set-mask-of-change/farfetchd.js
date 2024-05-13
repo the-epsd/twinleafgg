@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Farfetchd = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const game_1 = require("../../game");
-const card_types_1 = require("../../game/store/card/card-types");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_message_1 = require("../../game/game-message");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Farfetchd extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -48,8 +48,14 @@ class Farfetchd extends pokemon_card_1.PokemonCard {
                 return state;
             }
             state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.TOOL }, { min: 0, max: 1, allowCancel: false }), cards => {
+                let benchSlot = 0;
+                player.bench.forEach((cardList, index) => {
+                    if (cardList.getPokemonCard() === this) {
+                        benchSlot = index;
+                    }
+                });
                 if (cards[0] instanceof game_1.TrainerCard) {
-                    state = store.reduceEffect(state, new play_card_effects_1.AttachPokemonToolEffect(player, cards[0], player.bench[0]));
+                    state = store.reduceEffect(state, new play_card_effects_1.AttachPokemonToolEffect(player, cards[0], player.bench[benchSlot]));
                 }
                 state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);

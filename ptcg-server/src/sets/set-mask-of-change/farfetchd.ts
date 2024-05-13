@@ -1,14 +1,18 @@
-import { Effect } from '../../game/store/effects/effect';
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PowerType, StoreLike, State, 
-  StateUtils,
+import {
   ChooseCardsPrompt,
+  PowerType,
   ShuffleDeckPrompt,
-  TrainerCard} from '../../game';
-import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { AttachPokemonToolEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+  State,
+  StateUtils,
+  StoreLike,
+  TrainerCard
+} from '../../game';
 import { GameMessage } from '../../game/game-message';
+import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttachPokemonToolEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class Farfetchd extends PokemonCard {
@@ -72,8 +76,16 @@ export class Farfetchd extends PokemonCard {
         { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
         { min: 0, max: 1, allowCancel: false }
       ), cards => {
+        
+        let benchSlot = 0;
+        player.bench.forEach((cardList, index) => {
+          if (cardList.getPokemonCard() === this) {
+            benchSlot = index;
+          }
+        });
+        
         if (cards[0] instanceof TrainerCard) {
-          state = store.reduceEffect(state, new AttachPokemonToolEffect(player, cards[0] as TrainerCard, player.bench[0]));
+          state = store.reduceEffect(state, new AttachPokemonToolEffect(player, cards[0] as TrainerCard, player.bench[benchSlot]));
         }
 
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
