@@ -58,6 +58,10 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
         for (const card of result) {
             const count = countMap[card.superType] || 0;
             countMap[card.superType] = count + 1;
+            if (card.superType === card_types_1.SuperType.TRAINER) {
+                const trainerTypeCount = countMap[card.trainerType] || 0;
+                countMap[card.trainerType] = trainerTypeCount + 1;
+            }
         }
         const { maxPokemons, maxEnergies, maxTrainers, maxItems, maxTools } = this.options;
         if ((maxPokemons !== undefined && maxPokemons < countMap[card_types_1.SuperType.POKEMON])

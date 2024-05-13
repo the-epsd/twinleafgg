@@ -61,7 +61,7 @@ export function playCardReducer(store, state, action) {
                 let effect;
                 switch (handCard.trainerType) {
                     case TrainerType.SUPPORTER:
-                        if (state.turn === 1) {
+                        if (state.turn === 1 && handCard.firstTurn !== true) {
                             throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
                         }
                         if (player.supporter.cards.length > 0) {

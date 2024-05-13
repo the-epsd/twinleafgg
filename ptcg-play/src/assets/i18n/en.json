@@ -340,6 +340,7 @@
     "CHOOSE_CARD_TO_DECK": "Choose cards, that will be shuffled into deck.",
     "CHOOSE_CARD_TO_DISCARD": "Choose cards, that will be discarded.",
     "CHOOSE_CARD_TO_HAND": "Choose cards, that you will take into your hand.",
+    "CHOOSE_ONE_ITEM_AND_ONE_TOOL_TO_HAND": "Choose one item and one Pokémon tool to put in your hand.",
     "CHOOSE_CARD_TO_EVOLVE": "Choose an Evolution card.",
     "CHOOSE_CARD_TO_PUT_ONTO_BENCH": "Choose Pokémon, that will be put onto your Bench.",
     "CHOOSE_ENERGIES_TO_DISCARD": "Choose energies, that will be discarded.",
