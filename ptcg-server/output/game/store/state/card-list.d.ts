@@ -9,6 +9,7 @@ export declare class CardList {
     moveCardsTo(cards: Card[], destination: CardList): void;
     moveCardTo(card: Card, destination: CardList): void;
     top(count?: number): Card[];
+    moveToTopOfDestination(destination: CardList): void;
     moveToTop(cards: Card[]): void;
     filter(query: Partial<Card>): Card[];
     count(query: Partial<Card>): number;

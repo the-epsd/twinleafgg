@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { StateUtils, GameError, GameMessage, CoinFlipPrompt, ChooseCardsPrompt, Card, CardList, OrderCardsPrompt, ShowCardsPrompt } from '../../game';
 
-export class Cylene extends TrainerCard {
+export class Cyllene extends TrainerCard {
 
   public regulationMark = 'F';
 
@@ -18,9 +18,9 @@ export class Cylene extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public name: string = 'Cylene';
+  public name: string = 'Cyllene';
 
-  public fullName: string = 'Cylene ASR';
+  public fullName: string = 'Cyllene ASR';
 
   public text: string =
     'Flip 2 coins. Put a number of cards up to the number of heads from your discard pile on top of your deck in any order.';
@@ -53,56 +53,61 @@ export class Cylene extends TrainerCard {
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], results => {
         results.forEach(r => { heads += r ? 1 : 0; });
-      });
-      
-      if (heads === 0) {
-        return state;
-      }
-      
-      const deckTop = new CardList();
-
-      store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { },
-        { min: 2, max: 2, allowCancel: false }
-      ), selected => {
-        cards = selected || [];
-      });
-    
-      player.deck.moveCardsTo(cards, deckTop);
-    
-    
-      return store.prompt(state, new OrderCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARDS_ORDER,
-        deckTop,
-        { allowCancel: false },
-      ), order => {
-        if (order === null) {
+        
+        if (heads === 0) {
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
           return state;
         }
+        
+        const deckTop = new CardList();
+  
+        store.prompt(state, new ChooseCardsPrompt(
+          player.id,
+          GameMessage.CHOOSE_CARDS_TO_PUT_ON_TOP_OF_THE_DECK,
+          player.deck,
+          { },
+          { min: Math.min(heads, player.discard.cards.length), max: heads, allowCancel: false }
+        ), selected => {
+          cards = selected || [];    
+          
+          deckTop.cards = cards;
+          
+          return store.prompt(state, new OrderCardsPrompt(
+            player.id,
+            GameMessage.CHOOSE_CARDS_ORDER,
+            deckTop,
+            { allowCancel: false },
+          ), order => {
+            if (order === null) {
+              return state;
+            }
+        
+            deckTop.applyOrder(order);
+            deckTop.moveToTopOfDestination(player.deck);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            player.supporterTurn = 1;
     
-        deckTop.applyOrder(order);
-        deckTop.moveTo(player.deck);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        player.supporterTurn = 1;
-
-        if (cards.length > 0) {
-          return store.prompt(state, new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            cards
-          ), () => {
-
+            if (cards.length > 0) {
+              return store.prompt(state, new ShowCardsPrompt(
+                opponent.id,
+                GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+                cards
+              ), () => {
+    
+                return state;
+    
+              });
+            }
+            
+            player.deck.moveCardsTo(cards, deckTop);
+            
             return state;
-
           });
-        }
-        return state;
+        });
+        
       });
     }
+    
     return state;
   }
 }

@@ -65,6 +65,10 @@ class CardList {
         count = Math.min(count, this.cards.length);
         return this.cards.slice(0, count);
     }
+    moveToTopOfDestination(destination) {
+        destination.cards = [...this.cards, ...destination.cards];
+        ;
+    }
     moveToTop(cards) {
         this.cards = [...cards, ...this.cards];
     }

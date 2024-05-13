@@ -1,5 +1,6 @@
 import { Adaman } from './adaman';
 import { CancelingCologne } from './canceling-cologne';
+import { Cyllene } from './cyllene';
 import { DarkPatch } from './dark-patch';
 import { DarkraiV } from './darkrai-v';
 import { DarkraiVSTAR } from './darkrai-vstar';
@@ -51,6 +52,10 @@ export class AdamanArt extends Adaman {
 
 export class CancelingCologneArt extends CancelingCologne {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_136_R_EN_LG.png';
+}
+
+export class CylleneArt extends Cyllene {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_138_R_EN_LG.png';
 }
 
 export class DarkPatchArt extends DarkPatch {

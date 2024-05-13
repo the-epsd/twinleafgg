@@ -1,5 +1,6 @@
 import { Adaman } from './adaman';
 import { CancelingCologne } from './canceling-cologne';
+import { Cyllene } from './cyllene';
 import { DarkPatch } from './dark-patch';
 import { DarkraiV } from './darkrai-v';
 import { DarkraiVSTAR } from './darkrai-vstar';
@@ -48,6 +49,9 @@ export declare class AdamanArt extends Adaman {
     cardImage: string;
 }
 export declare class CancelingCologneArt extends CancelingCologne {
+    cardImage: string;
+}
+export declare class CylleneArt extends Cyllene {
     cardImage: string;
 }
 export declare class DarkPatchArt extends DarkPatch {
