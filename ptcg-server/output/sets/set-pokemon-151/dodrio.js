@@ -4,6 +4,7 @@ exports.Dodrio = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
+const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 class Dodrio extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -35,25 +36,28 @@ class Dodrio extends pokemon_card_1.PokemonCard {
         this.setNumber = '85';
         this.name = 'Dodrio';
         this.fullName = 'Dodrio MEW';
-        this.MAKE_IT_RAIN_MARKER = 'MAKE_IT_RAIN_MARKER';
+        this.ZOOMING_DRAW_MARKER = 'ZOOMING_DRAW_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            player.bench.forEach((card, index) => {
-                if (card instanceof pokemon_card_1.PokemonCard && card === this.cards) {
-                    card.damage += 10;
+            if (player.abilityMarker.hasMarker(this.ZOOMING_DRAW_MARKER, this)) {
+                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+            }
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.damage += 10;
                 }
             });
             player.deck.moveTo(player.hand, 1);
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                // Get Dodrio's damage
-                const dodrioDamage = effect.player.active.damage;
-                // Calculate 30 damage per counter
-                const damagePerCounter = 30;
-                effect.damage = dodrioDamage * damagePerCounter;
-                return state;
-            }
+            player.abilityMarker.addMarker(this.ZOOMING_DRAW_MARKER, this);
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            // Get Dodrio's damage
+            const dodrioDamage = effect.player.active.damage;
+            // Calculate 30 damage per counter
+            const damagePerCounter = 30;
+            effect.damage = dodrioDamage * damagePerCounter;
             return state;
         }
         return state;

@@ -51,7 +51,6 @@ export class Dodrio extends PokemonCard {
     if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
     
-    
       let isDodrioInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {

@@ -34,6 +34,6 @@ export declare class Dodrio extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly MAKE_IT_RAIN_MARKER = "MAKE_IT_RAIN_MARKER";
+    readonly ZOOMING_DRAW_MARKER = "ZOOMING_DRAW_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State;
 }
