@@ -19,6 +19,8 @@ export abstract class TrainerCard extends Card {
 
   public powers: Power[] = [];
 
+  public firstTurn: boolean = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect){
       for (let i = 0; i < this.attacks.length; i++) {

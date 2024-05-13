@@ -9,7 +9,7 @@ import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class Luxrayex extends PokemonCard {
   
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom: string = 'Luxio';
 

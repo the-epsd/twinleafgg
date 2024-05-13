@@ -19,7 +19,7 @@ function* useHexHurl(next: Function, store: StoreLike, state: State, effect: Att
 
   const maxAllowedDamage: DamageMap[] = [];
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    maxAllowedDamage.push({ target, damage: 20 });
+    maxAllowedDamage.push({ target, damage: card.hp + 20 });
   });
 
   const damage = 20;

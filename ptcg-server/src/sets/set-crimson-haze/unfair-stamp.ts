@@ -15,25 +15,25 @@ function* playCard(next: Function, store: StoreLike, state: State,
   self: UnfairStamp, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  
+
   // No Pokemon KO last turn
-  if (!player.marker.hasMarker(self.RAIHAN_MARKER)) {
+  if (!player.marker.hasMarker(self.UNFAIR_STAMP_MARKER)) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
-  // We will discard this card after prompt confirmation
-  // This will prevent unblocked supporter to appear in the discard pile
-  effect.preventDefault = true;
+
   const cards = player.hand.cards.filter(c => c !== self);
+
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
 
   player.hand.moveCardsTo(cards, player.deck);
   opponent.hand.moveTo(opponent.deck);
 
-  store.prompt(state, [
+  yield store.prompt(state, [
     new ShuffleDeckPrompt(player.id),
     new ShuffleDeckPrompt(opponent.id)
   ], deckOrder => {
@@ -42,6 +42,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
     player.deck.moveTo(player.hand, 5);
     opponent.deck.moveTo(opponent.hand, 2);
+
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   });
 }
 
@@ -68,7 +70,7 @@ export class UnfairStamp extends TrainerCard {
     '' +
     'Each player shuffles their hand into their deck. Then, you draw 5 cards, and your opponent draws 2 cards.';
 
-  public readonly RAIHAN_MARKER = 'RAIHAN_MARKER';
+  public readonly UNFAIR_STAMP_MARKER = 'UNFAIR_STAMP_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -90,13 +92,13 @@ export class UnfairStamp extends TrainerCard {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
-        effect.player.marker.addMarker(this.RAIHAN_MARKER, this);
+        effect.player.marker.addMarker(this.UNFAIR_STAMP_MARKER, this);
       }
       return state;
     }
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.RAIHAN_MARKER);
+      effect.player.marker.removeMarker(this.UNFAIR_STAMP_MARKER);
     }
 
     return state;

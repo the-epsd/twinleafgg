@@ -10,14 +10,7 @@ function* useTrinityNova(next: Function, store: StoreLike, state: State,
 
   const player = effect.player;
 
-
-
   if (player.deck.cards.length === 0) {
-    return state;
-  }
-
-  const hasBenched = player.bench.some(b => b.cards.length > 0);
-  if (!hasBenched) {
     return state;
   }
 
@@ -27,7 +20,6 @@ function* useTrinityNova(next: Function, store: StoreLike, state: State,
       blocked.push(target);
     }
   });
-
 
   yield store.prompt(state, new AttachEnergyPrompt(
     player.id,

@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.PoochyenaArt = exports.PerformanceFluteArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LegacyEnergyArt = exports.LaironArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.FarfetchdArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.BlisseyexArt = exports.AronArt = exports.AlakazamArt = exports.AggronArt = void 0;
+exports.WellspringMaskOgerponexArt = exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.PoochyenaArt = exports.PerformanceFluteArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LegacyEnergyArt = exports.LaironArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.FarfetchdArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.CarmineArt = exports.BlisseyexArt = exports.AronArt = exports.AlakazamArt = exports.AggronArt = void 0;
 const aggron_1 = require("./aggron");
 const alakazam_1 = require("./alakazam");
 const aron_1 = require("./aron");
 const blissey_ex_1 = require("./blissey-ex");
+const carmine_1 = require("./carmine");
 const dragapult_ex_1 = require("./dragapult-ex");
 const drakloak_1 = require("./drakloak");
 const dreepy_1 = require("./dreepy");
@@ -22,6 +23,7 @@ const poochyena_1 = require("./poochyena");
 const roto_stick_1 = require("./roto-stick");
 const scoop_up_cyclone_1 = require("./scoop-up-cyclone");
 const tatsugiri_1 = require("./tatsugiri");
+const wellspring_mask_ogerpon_ex_1 = require("./wellspring-mask-ogerpon-ex");
 class AggronArt extends aggron_1.Aggron {
     constructor() {
         super(...arguments);
@@ -50,6 +52,13 @@ class BlisseyexArt extends blissey_ex_1.Blisseyex {
     }
 }
 exports.BlisseyexArt = BlisseyexArt;
+class CarmineArt extends carmine_1.Carmine {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_97_R_JP_LG.png';
+    }
+}
+exports.CarmineArt = CarmineArt;
 class DreepyArt extends dreepy_1.Dreepy {
     constructor() {
         super(...arguments);
@@ -169,3 +178,10 @@ class TatsugiriArt extends tatsugiri_1.Tatsugiri {
     }
 }
 exports.TatsugiriArt = TatsugiriArt;
+class WellspringMaskOgerponexArt extends wellspring_mask_ogerpon_ex_1.WellspringMaskOgerponex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_38_R_JP.png';
+    }
+}
+exports.WellspringMaskOgerponexArt = WellspringMaskOgerponexArt;

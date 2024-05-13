@@ -1,18 +1,17 @@
-import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardTag, TrainerType } from '../../game/store/card/card-types';
+import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
-export declare class UnfairStamp extends TrainerCard {
-    trainerType: TrainerType;
-    tags: CardTag[];
-    set: string;
-    cardImage: string;
-    setNumber: string;
+import { Effect } from '../../game/store/effects/effect';
+export declare class HeavyBaton extends TrainerCard {
     regulationMark: string;
+    trainerType: TrainerType;
+    set: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     text: string;
-    readonly UNFAIR_STAMP_MARKER = "UNFAIR_STAMP_MARKER";
+    readonly RESCUE_SCARF_MAREKER = "RESCUE_SCARF_MAREKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

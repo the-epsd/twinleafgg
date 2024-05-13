@@ -43,6 +43,10 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.abilityMarker.removeMarker(this.TANDEM_UNIT_MARKER, this);
+        }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);

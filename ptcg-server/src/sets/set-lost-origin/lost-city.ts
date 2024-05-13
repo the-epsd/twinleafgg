@@ -1,12 +1,11 @@
 import { Effect } from '../../game/store/effects/effect';
-import { State } from '../../game/store/state/state';
+import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StateUtils } from '../../game/store/state-utils';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
-import { PokemonCardList } from '../..';
+import { Card, StateUtils } from '../../game';
+import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 
 export class LostCity extends TrainerCard {
 
@@ -27,26 +26,42 @@ export class LostCity extends TrainerCard {
   public text: string =
     'Whenever a Pokémon (either yours or your opponent\'s) is Knocked Out, put that Pokémon in the Lost Zone instead of the discard pile. (Discard all attached cards.)';
 
-  public reduceEffect(_store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof CheckTableStateEffect && StateUtils.getStadiumCard(state) === this) {
-      if (effect instanceof KnockOutEffect) {
-        const knockedOutPokemonCard = effect.target.getPokemonCard();
-        const cardList = StateUtils.findCardList(state, this);
-        const owner = StateUtils.findOwner(state, cardList);
-        if (knockedOutPokemonCard) {
-          if (knockedOutPokemonCard instanceof PokemonCardList) {
-            knockedOutPokemonCard.cards.forEach(card => {
-              cardList.moveCardTo(card, owner.lostzone);
-            });
+  public readonly LOST_CITY_MARKER = 'LOST_CITY_MARKER';
 
-            return state;
-          }
-          return state;
-        }
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof KnockOutEffect && StateUtils.getStadiumCard(state) === this) {
+      const player = effect.player;
+  
+      // Do not activate between turns, or when it's not opponents turn.
+      if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
-      return state;
+  
+      const target = effect.target;
+      const cards = target.getPokemons();
+      cards.forEach(card => {
+        player.marker.addMarker(this.LOST_CITY_MARKER, card);
+      });
     }
+  
+    if (effect instanceof BetweenTurnsEffect) {
+      state.players.forEach(player => {
+  
+        if (!player.marker.hasMarker(this.LOST_CITY_MARKER)) {
+          return;
+        }
+  
+        const lostZoned: Card[] = player.marker.markers
+          .filter(m => m.name === this.LOST_CITY_MARKER)
+          .map(m => m.source);
+  
+        player.discard.moveCardsTo(lostZoned, player.lostzone);
+        player.marker.removeMarker(this.LOST_CITY_MARKER);
+      });
+    }
+  
     return state;
   }
+  
 }
+  

@@ -127,6 +127,9 @@ var GameCardMessage;
     GameCardMessage["WANT_TO_USE_ABILITY"] = "WANT_TO_USE_ABILITY";
     GameCardMessage["CALAMITY_STORM"] = "CALAMITY_STORM";
     GameCardMessage["INCREASE_DAMAGE_BY_30_AGAINST_OPPONENTS_EX_AND_V_POKEMON"] = "INCREASE_DAMAGE_BY_30_AGAINST_OPPONENTS_EX_AND_V_POKEMON";
+    GameCardMessage["DISCARD_STADIUM_OR_TOOL"] = "DISCARD_STADIUM_OR_TOOL";
+    GameCardMessage["CHOICE_TOOL"] = "CHOICE_TOOL";
+    GameCardMessage["CHOICE_STADIUM"] = "CHOICE_STADIUM";
 })(GameCardMessage = exports.GameCardMessage || (exports.GameCardMessage = {}));
 var GameLog;
 (function (GameLog) {

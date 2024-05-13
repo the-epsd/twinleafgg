@@ -56,21 +56,22 @@ class LumineonV extends pokemon_card_1.PokemonCard {
                 if (wantToUse) {
                     state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 1, max: 1, allowCancel: true }), selected => {
                         const cards = selected || [];
-                        player.deck.moveCardsTo(cards, player.hand);
+                        store.prompt(state, [new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {
+                            player.deck.moveCardsTo(cards, player.hand);
+                        });
                     });
+                }
+                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+                    const player = effect.player;
+                    player.active.clearEffects();
+                    player.active.moveTo(player.deck);
                     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                         player.deck.applyOrder(order);
                     });
                 }
+                return state;
             });
-        }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            player.active.moveTo(player.deck);
-            player.active.clearEffects();
-            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                player.deck.applyOrder(order);
-            });
+            return state;
         }
         return state;
     }

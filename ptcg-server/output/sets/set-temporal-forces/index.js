@@ -40,6 +40,7 @@ exports.setTemporalForces = [
     new card_images_1.MasterBallArt(),
     new card_images_1.MaximumBeltArt(),
     new card_images_1.MetangArt(),
+    new card_images_1.MinccinoArt(),
     new card_images_1.MiraidonexArt(),
     new card_images_1.MiraidonArt(),
     new card_images_1.MistEnergyArt(),

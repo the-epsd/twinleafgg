@@ -23,7 +23,7 @@ function* usePhantomDive(next: Function, store: StoreLike, state: State, effect:
 
   const maxAllowedDamage: DamageMap[] = [];
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    maxAllowedDamage.push({ target, damage: 60 });
+    maxAllowedDamage.push({ target, damage: card.hp + 60 });
   });
 
   const damage = 60;

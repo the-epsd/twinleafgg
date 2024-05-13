@@ -41,19 +41,29 @@ class Hawlucha extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = game_1.StateUtils.findOwner(state, effect.target);
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                store.reduceEffect(state, powerEffect);
-            }
-            catch (_a) {
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+            if (!hasBenched) {
                 return state;
             }
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: true }), selected => {
-                const targets = selected || [];
-                targets.forEach(target => {
-                    target.damage += 10;
-                });
+            state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_message_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+                if (wantToUse) {
+                    // Try to reduce PowerEffect, to check if something is blocking our ability
+                    try {
+                        const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                        store.reduceEffect(state, powerEffect);
+                    }
+                    catch (_a) {
+                        return state;
+                    }
+                    return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: false }), selected => {
+                        const targets = selected || [];
+                        targets.forEach(target => {
+                            target.damage += 10;
+                        });
+                    });
+                }
+                return state;
             });
         }
         return state;

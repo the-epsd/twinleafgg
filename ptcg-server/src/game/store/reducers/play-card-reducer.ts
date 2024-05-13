@@ -54,9 +54,6 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
         //   // Allow multiple energy attachments per turn
         //   const effect = new AttachEnergyEffect(player, handCard, target);  
         //   return store.reduceEffect(state, effect);
-
-
-      
         // } else {
 
         if (player.energyPlayedTurn === state.turn) {
@@ -68,8 +65,6 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
         return store.reduceEffect(state, effect);
       }
         
-      
-
       if (handCard instanceof PokemonCard) {
         const target = findCardList(state, action.target);
         if (!(target instanceof PokemonCardList)) {
@@ -85,7 +80,7 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
         let effect: Effect;
         switch (handCard.trainerType) {
           case TrainerType.SUPPORTER:
-            if (state.turn === 1) {
+            if (state.turn === 1 && handCard.firstTurn !== true) {
               throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             if (player.supporter.cards.length > 0) {

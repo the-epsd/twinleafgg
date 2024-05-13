@@ -18,7 +18,7 @@ function* usePhantomDive(next, store, state, effect) {
     }
     const maxAllowedDamage = [];
     opponent.forEachPokemon(play_card_action_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        maxAllowedDamage.push({ target, damage: 60 });
+        maxAllowedDamage.push({ target, damage: card.hp + 60 });
     });
     const damage = 60;
     return store.prompt(state, new __1.PutDamagePrompt(effect.player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.BENCH], damage, maxAllowedDamage, { allowCancel: false }), targets => {

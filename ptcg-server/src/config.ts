@@ -73,8 +73,8 @@ export const config = {
       newline: 'unix',
       path: '/usr/sbin/sendmail'
     },
-    sender: 'example@example.com',
-    appName: 'AAAAA',
-    publicAddress: 'http://0.0.0.0' // Address inside the e-mail messages
+    sender: 'joey.myerscough@gmail.com',
+    appName: 'twinleaf.gg',
+    publicAddress: 'http://twinleaf.gg' // Address inside the e-mail messages
   }
 };

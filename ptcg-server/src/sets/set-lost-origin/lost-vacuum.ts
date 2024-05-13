@@ -83,74 +83,124 @@ export class LostVacuum extends TrainerCard {
         player.hand.moveCardsTo(cards, player.lostzone);
       });
 
-      const options: { message: GameMessage, action: () => void }[] = [
-        {
-          message: GameMessage.CHOOSE_TOOL,
-          action: () => {
+      if (pokemonsWithTool >= 1 && stadiumCard !== undefined) {
 
-            // We will discard this card after prompt confirmation
-            effect.preventDefault = true;
+        const options: { message: GameMessage, action: () => void }[] = [
+          {
+            message: GameMessage.CHOICE_TOOL,
+            action: () => {
 
-            const max = Math.min(1, pokemonsWithTool);
-            let targets: PokemonCardList[] = [];
-            return store.prompt(state, new ChoosePokemonPrompt(
-              player.id,
-              GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
-              PlayerType.ANY,
-              [SlotType.ACTIVE, SlotType.BENCH],
-              { min: 1, max: max, allowCancel: false, blocked }
-            ), results => {
-              targets = results || [];
+              // We will discard this card after prompt confirmation
+              effect.preventDefault = true;
 
-              if (targets.length === 0) {
-                return state;
-              }
+              const max = Math.min(1, pokemonsWithTool);
+              let targets: PokemonCardList[] = [];
+              return store.prompt(state, new ChoosePokemonPrompt(
+                player.id,
+                GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+                PlayerType.ANY,
+                [SlotType.ACTIVE, SlotType.BENCH],
+                { min: 1, max: max, allowCancel: false, blocked }
+              ), results => {
+                targets = results || [];
 
-              targets.forEach(target => {
-                const owner = StateUtils.findOwner(state, target);
-                if (target.tool !== undefined) {
-                  target.moveCardTo(target.tool, owner.lostzone);
-                  target.tool = undefined;
+                if (targets.length === 0) {
+                  return state;
                 }
+
+                targets.forEach(target => {
+                  const owner = StateUtils.findOwner(state, target);
+                  if (target.tool !== undefined) {
+                    target.moveCardTo(target.tool, owner.lostzone);
+                    target.tool = undefined;
+                  }
+                  return state;
+                });
                 return state;
               });
-              return state;
-            });
-          }
-        },
-        {
-          message: GameMessage.CHOOSE_STADIUM,
-          action: () => {
-            const stadiumCard = StateUtils.getStadiumCard(state);
-            if (stadiumCard == undefined) {
-              throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+          },
+          {
+            message: GameMessage.CHOICE_STADIUM,
+            action: () => {
+              const stadiumCard = StateUtils.getStadiumCard(state);
+              if (stadiumCard == undefined) {
+                throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+              }
 
-            // Discard Stadium
-            const cardList = StateUtils.findCardList(state, stadiumCard);
-            const player = StateUtils.findOwner(state, cardList);
-            cardList.moveTo(player.lostzone);
-            return state;
-          }
+              // Discard Stadium
+              const cardList = StateUtils.findCardList(state, stadiumCard);
+              const player = StateUtils.findOwner(state, cardList);
+              cardList.moveTo(player.lostzone);
+              return state;
+            }
           
-        }
-      ];
-    
-      return store.prompt(state, new SelectPrompt(
-        player.id,
-        GameMessage.CHOOSE_SPECIAL_CONDITION,
-        options.map(c => c.message),
-        { allowCancel: false }
-      ), choice => {
-        const option = options[choice];
+          }
+        ];
+        return store.prompt(state, new SelectPrompt(
+          player.id,
+          GameMessage.DISCARD_STADIUM_OR_TOOL,
+          options.map(c => c.message),
+          { allowCancel: false }
+        ), choice => {
+          const option = options[choice];
 
-        if (option.action) {
-          option.action();
+          if (option.action) {
+            option.action();
 
+          }
+          player.supporter.moveCardTo(this, player.discard);
+          return state;
+        });
+      }
+      if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
+        const stadiumCard = StateUtils.getStadiumCard(state);
+        if (stadiumCard == undefined) {
+          throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
         }
+
+        // Discard Stadium
+        const cardList = StateUtils.findCardList(state, stadiumCard);
+        const player = StateUtils.findOwner(state, cardList);
+        cardList.moveTo(player.lostzone);
         player.supporter.moveCardTo(this, player.discard);
         return state;
-      });
+      }
+
+      if (pokemonsWithTool >= 1 && stadiumCard == undefined) {
+
+        // We will discard this card after prompt confirmation
+        effect.preventDefault = true;
+
+        const max = Math.min(1, pokemonsWithTool);
+        let targets: PokemonCardList[] = [];
+        return store.prompt(state, new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+          PlayerType.ANY,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: max, allowCancel: false, blocked }
+        ), results => {
+          targets = results || [];
+
+          if (targets.length === 0) {
+            return state;
+          }
+
+          targets.forEach(target => {
+            const owner = StateUtils.findOwner(state, target);
+            if (target.tool !== undefined) {
+              target.moveCardTo(target.tool, owner.lostzone);
+              target.tool = undefined;
+              player.supporter.moveCardTo(this, player.discard);
+            }
+      
+            player.supporter.moveCardTo(this, player.discard);
+            return state;
+          });
+        });
+      }
+      return state;
     }
     return state;
   }

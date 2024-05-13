@@ -25,6 +25,7 @@ import { GougingFireex } from './gouging-fire-ex';
 import { Grotle } from './grotle';
 import { HandTrimmer } from './hand-trimmer';
 import { Haunter } from './haunter';
+import { HeavyBaton } from './heavy-baton';
 import { HerosCape } from './heros-cape';
 import { IronCrownex } from './iron-crown-ex';
 import { IronHands } from './iron-hands';
@@ -35,6 +36,7 @@ import { Koraidonex } from './koraidon-ex';
 import { MasterBall } from './master-ball';
 import { MaximumBelt } from './maximum-belt';
 import { Metang } from './metang';
+import { Minccino } from './minccino';
 import { Miraidon } from './miraidon';
 import { Miraidonex } from './miraidon-ex';
 import { MistEnergy } from './mist-energy';
@@ -147,6 +149,9 @@ export declare class HandTrimmerArt extends HandTrimmer {
 export declare class HaunterArt extends Haunter {
     cardImage: string;
 }
+export declare class HeavyBatonArt extends HeavyBaton {
+    cardImage: string;
+}
 export declare class HerosCapeArt extends HerosCape {
     cardImage: string;
 }
@@ -175,6 +180,9 @@ export declare class MasterBallArt extends MasterBall {
     cardImage: string;
 }
 export declare class MetangArt extends Metang {
+    cardImage: string;
+}
+export declare class MinccinoArt extends Minccino {
     cardImage: string;
 }
 export declare class MiraidonexArt extends Miraidonex {

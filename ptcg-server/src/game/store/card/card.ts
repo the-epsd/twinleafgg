@@ -3,6 +3,7 @@ import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { CardList } from '../state/card-list';
+import { Marker } from '../state/card-marker';
 
 export abstract class Card {
 
@@ -33,6 +34,8 @@ export abstract class Card {
   static tags: any;
   
   public cards: CardList = new CardList;
+
+  public marker = new Marker();
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;

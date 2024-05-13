@@ -14,7 +14,7 @@ function* useLostMine(next, store, state, effect) {
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     const maxAllowedDamage = [];
     opponent.forEachPokemon(play_card_action_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        maxAllowedDamage.push({ target, damage: 120 });
+        maxAllowedDamage.push({ target, damage: card.hp + 120 });
     });
     const damage = 120;
     if (player.lostzone.cards.length <= 9) {

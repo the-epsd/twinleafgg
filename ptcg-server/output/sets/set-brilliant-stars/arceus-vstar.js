@@ -10,10 +10,6 @@ function* useTrinityNova(next, store, state, effect) {
     if (player.deck.cards.length === 0) {
         return state;
     }
-    const hasBenched = player.bench.some(b => b.cards.length > 0);
-    if (!hasBenched) {
-        return state;
-    }
     const blocked = [];
     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         if (!cardList.vPokemon()) {

@@ -410,7 +410,10 @@
     "YES": "Yes",
     "NO": "No",
     "GO_FIRST": "Would you like to go first?",
-    "INCREASE_DAMAGE_BY_30_AGAINST_OPPONENTS_EX_AND_V_POKEMON": "Increase damage by 30 against your opponent's ex and V Pokémon."
+    "INCREASE_DAMAGE_BY_30_AGAINST_OPPONENTS_EX_AND_V_POKEMON": "Increase damage by 30 against your opponent's ex and V Pokémon.",
+    "DISCARD_STADIUM_OR_TOOL": "Choose a Stadium card or Tool card to discard",
+    "CHOICE_TOOL": "Tool",
+    "CHOICE_STADIUM": "Stadium"
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.'",

@@ -5,7 +5,8 @@ import { Stage, CardType, CardTag, SuperType, TrainerType } from '../../game/sto
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt,
   ShuffleDeckPrompt, 
-  ConfirmPrompt} from '../../game';
+  ConfirmPrompt,
+  ShowCardsPrompt} from '../../game';
 
 export class LumineonV extends PokemonCard {
 
@@ -81,28 +82,31 @@ export class LumineonV extends PokemonCard {
             { min: 1, max: 1, allowCancel: true }
           ), selected => {
             const cards = selected || [];
-            player.deck.moveCardsTo(cards, player.hand);
+
+            store.prompt(state, [new ShowCardsPrompt(
+              player.id,
+              GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+              cards
+            )], () => {
+              player.deck.moveCardsTo(cards, player.hand);
+            });
           });
-    
+        }
+
+        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+          const player = effect.player;
+
+          player.active.clearEffects();
+          player.active.moveTo(player.deck);
+  
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
           });
         }
+        return state;
       });
+      return state;
     }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-
-      player.active.moveTo(player.deck);
-      player.active.clearEffects();
-  
-      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-      });
-    }
-  
     return state;
   }
-  
 }

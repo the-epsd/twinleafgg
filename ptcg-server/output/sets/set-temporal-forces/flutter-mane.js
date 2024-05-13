@@ -16,7 +16,7 @@ function* useHexHurl(next, store, state, effect) {
     }
     const maxAllowedDamage = [];
     opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        maxAllowedDamage.push({ target, damage: 20 });
+        maxAllowedDamage.push({ target, damage: card.hp + 20 });
     });
     const damage = 20;
     return store.prompt(state, new game_1.PutDamagePrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], damage, maxAllowedDamage, { allowCancel: false }), targets => {

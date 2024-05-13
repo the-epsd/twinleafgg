@@ -2,6 +2,7 @@ import { Aggron } from './aggron';
 import { Alakazam } from './alakazam';
 import { Aron } from './aron';
 import { Blisseyex } from './blissey-ex';
+import { Carmine } from './carmine';
 import { Dragapultex } from './dragapult-ex';
 import { Drakloak } from './drakloak';
 import { Dreepy } from './dreepy';
@@ -19,6 +20,7 @@ import { Poochyena } from './poochyena';
 import { RotoStick } from './roto-stick';
 import { ScoopUpCyclone } from './scoop-up-cyclone';
 import { Tatsugiri } from './tatsugiri';
+import { WellspringMaskOgerponex } from './wellspring-mask-ogerpon-ex';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -29,6 +31,9 @@ export declare class AronArt extends Aron {
     cardImage: string;
 }
 export declare class BlisseyexArt extends Blisseyex {
+    cardImage: string;
+}
+export declare class CarmineArt extends Carmine {
     cardImage: string;
 }
 export declare class DreepyArt extends Dreepy {
@@ -80,5 +85,8 @@ export declare class ScoopUpCycloneArt extends ScoopUpCyclone {
     cardImage: string;
 }
 export declare class TatsugiriArt extends Tatsugiri {
+    cardImage: string;
+}
+export declare class WellspringMaskOgerponexArt extends WellspringMaskOgerponex {
     cardImage: string;
 }

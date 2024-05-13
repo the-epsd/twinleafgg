@@ -2,6 +2,7 @@ import { Aggron } from './aggron';
 import { Alakazam } from './alakazam';
 import { Aron } from './aron';
 import { Blisseyex } from './blissey-ex';
+import { Carmine } from './carmine';
 import { Dragapultex } from './dragapult-ex';
 import { Drakloak } from './drakloak';
 import { Dreepy } from './dreepy';
@@ -19,6 +20,7 @@ import { Poochyena } from './poochyena';
 import { RotoStick } from './roto-stick';
 import { ScoopUpCyclone } from './scoop-up-cyclone';
 import { Tatsugiri } from './tatsugiri';
+import { WellspringMaskOgerponex } from './wellspring-mask-ogerpon-ex';
 
 export class AggronArt extends Aggron {
   public cardImage = 'https://pokemonproxies.com/static/media/Aggron-075-6b.7ac10503aca6d6db414f.png';
@@ -34,6 +36,10 @@ export class AronArt extends Aron {
 
 export class BlisseyexArt extends Blisseyex {
   public cardImage = 'https://pokemonproxies.com/static/media/Blissey_ex-085-6b.62a9752c57fbf77de695.png';
+}
+
+export class CarmineArt extends Carmine {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_97_R_JP_LG.png';
 }
 
 export class DreepyArt extends Dreepy {
@@ -102,4 +108,8 @@ export class ScoopUpCycloneArt extends ScoopUpCyclone {
 
 export class TatsugiriArt extends Tatsugiri {
   public cardImage = 'https://pokemonproxies.com/static/media/Tatsugiri-082-6b.75a621805105113b23fd.png';
+}
+
+export class WellspringMaskOgerponexArt extends WellspringMaskOgerponex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_38_R_JP.png';
 }

@@ -9,5 +9,6 @@ export declare abstract class TrainerCard extends Card {
     text: string;
     attacks: Attack[];
     powers: Power[];
+    firstTurn: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

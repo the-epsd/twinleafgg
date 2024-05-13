@@ -25,6 +25,7 @@ import { GougingFireex } from './gouging-fire-ex';
 import { Grotle } from './grotle';
 import { HandTrimmer } from './hand-trimmer';
 import { Haunter } from './haunter';
+import { HeavyBaton } from './heavy-baton';
 import { HerosCape } from './heros-cape';
 import { IronCrownex } from './iron-crown-ex';
 import { IronHands } from './iron-hands';
@@ -35,6 +36,7 @@ import { Koraidonex } from './koraidon-ex';
 import { MasterBall } from './master-ball';
 import { MaximumBelt } from './maximum-belt';
 import { Metang } from './metang';
+import { Minccino } from './minccino';
 import { Miraidon } from './miraidon';
 import { Miraidonex } from './miraidon-ex';
 import { MistEnergy } from './mist-energy';
@@ -175,6 +177,10 @@ export class HaunterArt extends Haunter {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1705063849638-1RV0A3OU5Y4L7N264NC2/IMG_6418.png?format=2500w';
 }
 
+export class HeavyBatonArt extends HeavyBaton {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_151_R_EN_LG.png';
+}
+
 export class HerosCapeArt extends HerosCape {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1705649998788-63C8EYXWY6DB4QWXBVWE/045281_T_HIROMANTO.jpg?format=750w';
 }
@@ -213,6 +219,10 @@ export class MasterBallArt extends MasterBall {
 
 export class MetangArt extends Metang {
   public cardImage = 'https://pbs.twimg.com/media/GDnvc3lXQAIUrBf?format=jpg&name=large';
+}
+
+export class MinccinoArt extends Minccino {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_136_R_EN_LG.png';
 }
 
 export class MiraidonexArt extends Miraidonex {
