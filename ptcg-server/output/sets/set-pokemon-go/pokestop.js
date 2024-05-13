@@ -14,8 +14,8 @@ class Pokestop extends trainer_card_1.TrainerCard {
         this.setNumber = '68';
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'PGO';
-        this.name = 'PokéStop';
-        this.fullName = 'Pokéstop PGO';
+        this.name = 'Pokestop';
+        this.fullName = 'PokeStop PGO';
         this.text = 'Once during each player\'s turn, that player may discard 3 cards from the top of their deck. If a player discarded any Item cards in this way, they put those Item cards into their hand.';
     }
     reduceEffect(store, state, effect) {

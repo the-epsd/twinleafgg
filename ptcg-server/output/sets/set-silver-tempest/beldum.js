@@ -17,18 +17,7 @@ function* useMagneticLift(next, store, state, effect) {
         next();
     });
     player.deck.moveCardsTo(cards, deckTop);
-    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-        return store.prompt(state, new game_1.OrderCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARDS_ORDER, deckTop, { allowCancel: false }), order => {
-            if (order === null) {
-                return state;
-            }
-            deckTop.applyOrder(order);
-            deckTop.cards.push(player.deck.cards.slice(0, 1)[0]);
-            // Add cards from deckTop to the top of the player's deck
-            player.deck.moveToTop(deckTop.cards);
-        });
-    });
+    deckTop.moveToTopOfDestination(player.deck);
 }
 class Beldum extends pokemon_card_1.PokemonCard {
     constructor() {

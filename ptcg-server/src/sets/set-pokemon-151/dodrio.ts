@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, PlayerType, GameError, GameMessage } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 
 export class Dodrio extends PokemonCard {
@@ -52,6 +53,11 @@ export class Dodrio extends PokemonCard {
   public readonly ZOOMING_DRAW_MARKER = 'ZOOMING_DRAW_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
+
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.abilityMarker.removeMarker(this.ZOOMING_DRAW_MARKER, this);
+    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
