@@ -61,7 +61,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
       }
 
       deckTop.applyOrder(order);
-      deckTop.moveTo(player.deck);
+      deckTop.moveToTopOfDestination(player.deck);
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
       player.supporterTurn = 1;

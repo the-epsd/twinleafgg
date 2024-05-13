@@ -36,7 +36,7 @@ function* playCard(next, store, state, self, effect) {
                 return state;
             }
             deckTop.applyOrder(order);
-            deckTop.moveTo(player.deck);
+            deckTop.moveToTopOfDestination(player.deck);
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
             player.supporterTurn = 1;
         });

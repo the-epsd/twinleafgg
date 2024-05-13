@@ -64,7 +64,6 @@ export class CardList {
     }
     moveToTopOfDestination(destination) {
         destination.cards = [...this.cards, ...destination.cards];
-        ;
     }
     moveToTop(cards) {
         this.cards = [...cards, ...this.cards];
