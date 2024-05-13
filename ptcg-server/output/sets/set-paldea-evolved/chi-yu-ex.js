@@ -42,7 +42,7 @@ class ChiYuex extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // Discard 1 card from opponent's deck 
-            opponent.deck.moveTo(opponent.discard, 1);
+            opponent.deck.moveTo(opponent.discard, 2);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;

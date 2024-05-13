@@ -55,7 +55,7 @@ export class ChiYuex extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
             
       // Discard 1 card from opponent's deck 
-      opponent.deck.moveTo(opponent.discard, 1);
+      opponent.deck.moveTo(opponent.discard, 2);
 
     }
 
