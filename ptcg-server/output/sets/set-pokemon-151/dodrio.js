@@ -62,7 +62,7 @@ class Dodrio extends pokemon_card_1.PokemonCard {
             const dodrioDamage = effect.player.active.damage;
             // Calculate 30 damage per counter
             const damagePerCounter = 30;
-            effect.damage = dodrioDamage * damagePerCounter;
+            effect.damage = dodrioDamage * damagePerCounter / 10;
             return state;
         }
         return state;

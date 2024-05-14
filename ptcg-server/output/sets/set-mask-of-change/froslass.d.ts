@@ -1,8 +1,8 @@
-import { CardType, Stage } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard, PowerType } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { Effect } from '../../game/store/effects/effect';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 export declare class Froslass extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;

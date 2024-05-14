@@ -1,10 +1,10 @@
-import { CardType, Stage } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { GamePhase, State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
 import { PlayerType, PokemonCard, PowerType, StateUtils } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { GamePhase, State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class Froslass extends PokemonCard {
   
@@ -51,7 +51,7 @@ export class Froslass extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0] && !effect.player.marker.hasMarker(this.CHILLING_CURTAIN_MARKER, this)) {
+    if (effect instanceof BetweenTurnsEffect && effect.player.marker.hasMarker(this.CHILLING_CURTAIN_MARKER, this)) {
       if (state.phase === GamePhase.BETWEEN_TURNS) {
 
         const player = effect.player;
@@ -65,19 +65,27 @@ export class Froslass extends PokemonCard {
 
         const opponent = StateUtils.getOpponent(state, player);
 
+        let numberOfFroslass = 0;
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+          const pokemon = cardList.getPokemonCard();
+          if (!!pokemon && pokemon.name === 'Froslass' && pokemon.powers.map(p => p.name).includes(this.powers[0].name)) {
+            numberOfFroslass += 1;
+          }
+        })
+
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
           if (card.powers.length > 0 && card.name !== 'Froslass') {
-            cardList.damage += 10;
+            cardList.damage += (10 * numberOfFroslass);
           }
         });
 
         opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
           if (card.name !== 'Froslass' && card.powers.length > 0) {
-            cardList.damage += 10;
+            cardList.damage += (10 * numberOfFroslass);
           }
         });
 
-        player.marker.addMarker(this.CHILLING_CURTAIN_MARKER, this);
+        player.marker.removeMarker(this.CHILLING_CURTAIN_MARKER, this);
 
         return state;
       }
@@ -85,7 +93,34 @@ export class Froslass extends PokemonCard {
     }
       
     if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.CHILLING_CURTAIN_MARKER, this);
+
+      let numberOfFroslass = 0;
+      const player = effect.player;
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        const pokemon = cardList.getPokemonCard();
+        if (!!pokemon && pokemon.name === 'Froslass' && pokemon.powers.map(p => p.name).includes(this.powers[0].name)) {
+          numberOfFroslass += 1;
+        }
+      });
+
+      if (numberOfFroslass > 0 && !player.marker.hasMarker(this.CHILLING_CURTAIN_MARKER)) {
+        player.marker.addMarker(this.CHILLING_CURTAIN_MARKER, this);
+      }
+
+      numberOfFroslass = 0;
+
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        const pokemon = cardList.getPokemonCard();
+        if (!!pokemon && pokemon.name === 'Froslass' && pokemon.powers.map(p => p.name).includes(this.powers[0].name)) {
+          numberOfFroslass += 1;
+        }
+      });
+
+      if (numberOfFroslass > 0 && !opponent.marker.hasMarker(this.CHILLING_CURTAIN_MARKER)) {
+        opponent.marker.addMarker(this.CHILLING_CURTAIN_MARKER, this);
+      }
     }
 
     return state;
