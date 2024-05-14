@@ -5,10 +5,11 @@ const card_types_1 = require("../../game/store/card/card-types");
 const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Froslass extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Snorunt';
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.WATER;
@@ -33,25 +34,37 @@ class Froslass extends game_1.PokemonCard {
         this.setNumber = '33';
         this.name = 'Froslass';
         this.fullName = 'Froslass SV6';
+        this.CHILLING_CURTAIN_MARKER = 'CHILLING_CURTAIN_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0] && !effect.player.marker.hasMarker(this.CHILLING_CURTAIN_MARKER, this)) {
             if (state.phase === state_1.GamePhase.BETWEEN_TURNS) {
+                const player = effect.player;
+                try {
+                    const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                    store.reduceEffect(state, powerEffect);
+                }
+                catch (_a) {
+                    return state;
+                }
+                const opponent = game_1.StateUtils.getOpponent(state, player);
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                    if (effect.card.name !== 'Froslass') {
+                    if (card.powers.length > 0 && card.name !== 'Froslass') {
                         cardList.damage += 10;
                     }
                 });
                 opponent.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                    if (effect.card.name !== 'Froslass') {
+                    if (card.name !== 'Froslass' && card.powers.length > 0) {
                         cardList.damage += 10;
                     }
                 });
+                player.marker.addMarker(this.CHILLING_CURTAIN_MARKER, this);
                 return state;
             }
             return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.marker.removeMarker(this.CHILLING_CURTAIN_MARKER, this);
         }
         return state;
     }

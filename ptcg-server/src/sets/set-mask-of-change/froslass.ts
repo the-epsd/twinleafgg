@@ -4,10 +4,11 @@ import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayerType, PokemonCard, PowerType, StateUtils } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Froslass extends PokemonCard {
   
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom: string = 'Snorunt';
 
@@ -46,28 +47,47 @@ export class Froslass extends PokemonCard {
   
   public fullName: string = 'Froslass SV6';
 
+  public CHILLING_CURTAIN_MARKER = 'CHILLING_CURTAIN_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
+    if (effect instanceof PowerEffect && effect.power === this.powers[0] && !effect.player.marker.hasMarker(this.CHILLING_CURTAIN_MARKER, this)) {
       if (state.phase === GamePhase.BETWEEN_TURNS) {
 
+        const player = effect.player;
+
+        try {
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
+        } catch {
+          return state;
+        }
+
+        const opponent = StateUtils.getOpponent(state, player);
+
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (effect.card.name !== 'Froslass') {
+          if (card.powers.length > 0 && card.name !== 'Froslass') {
             cardList.damage += 10;
           }
         });
+
         opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (effect.card.name !== 'Froslass') {
+          if (card.name !== 'Froslass' && card.powers.length > 0) {
             cardList.damage += 10;
           }
         });
+
+        player.marker.addMarker(this.CHILLING_CURTAIN_MARKER, this);
+
         return state;
       }
       return state;
     }
+      
+    if (effect instanceof EndTurnEffect) {
+      effect.player.marker.removeMarker(this.CHILLING_CURTAIN_MARKER, this);
+    }
+
     return state;
   }
 }

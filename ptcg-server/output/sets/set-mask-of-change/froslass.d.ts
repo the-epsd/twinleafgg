@@ -29,5 +29,6 @@ export declare class Froslass extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    CHILLING_CURTAIN_MARKER: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
