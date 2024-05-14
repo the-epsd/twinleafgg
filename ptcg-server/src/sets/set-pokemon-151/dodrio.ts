@@ -22,7 +22,7 @@ export class Dodrio extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [ CardType.COLORLESS ];
 
   public powers = [{
     name: 'Zooming Draw',
@@ -84,7 +84,7 @@ export class Dodrio extends PokemonCard {
 
       // Calculate 30 damage per counter
       const damagePerCounter = 30;
-      effect.damage = dodrioDamage * damagePerCounter / 10;
+      effect.damage += (dodrioDamage * damagePerCounter / 10) ;
 
       return state;
     }

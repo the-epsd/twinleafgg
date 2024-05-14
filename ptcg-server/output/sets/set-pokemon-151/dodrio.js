@@ -17,7 +17,7 @@ class Dodrio extends pokemon_card_1.PokemonCard {
         this.hp = 100;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Zooming Draw',
                 useWhenInPlay: true,
@@ -62,7 +62,7 @@ class Dodrio extends pokemon_card_1.PokemonCard {
             const dodrioDamage = effect.player.active.damage;
             // Calculate 30 damage per counter
             const damagePerCounter = 30;
-            effect.damage = dodrioDamage * damagePerCounter / 10;
+            effect.damage += (dodrioDamage * damagePerCounter / 10);
             return state;
         }
         return state;
