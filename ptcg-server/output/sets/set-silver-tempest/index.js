@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSilverTempest = void 0;
-// new BeldumArt(),
 const card_images_1 = require("./card-images");
 exports.setSilverTempest = [
     new card_images_1.AlolanVulpixVArt(),
@@ -43,5 +42,5 @@ exports.setSilverTempest = [
     new card_images_1.VGuardEnergyArt(),
     new card_images_1.WorkerArt(),
     new card_images_1.ZeraoraArt(),
-    // new BeldumArt(),
+    new card_images_1.BeldumArt(),
 ];

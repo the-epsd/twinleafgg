@@ -43,9 +43,6 @@ class LuxrayV extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const cards = opponent.hand.cards.filter(c => c instanceof game_1.TrainerCard);
-            if (cards.length === 0) {
-                return state;
-            }
             store.prompt(state, new game_1.ChooseCardsPrompt(effect.player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, { superType: card_types_1.SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false }), selected => {
                 selected = cards || [];
                 opponent.hand.moveCardsTo(cards, opponent.discard);

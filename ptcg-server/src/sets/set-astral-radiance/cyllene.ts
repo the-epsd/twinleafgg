@@ -64,7 +64,7 @@ export class Cyllene extends TrainerCard {
         store.prompt(state, new ChooseCardsPrompt(
           player.id,
           GameMessage.CHOOSE_CARDS_TO_PUT_ON_TOP_OF_THE_DECK,
-          player.deck,
+          player.discard,
           { },
           { min: Math.min(heads, player.discard.cards.length), max: heads, allowCancel: false }
         ), selected => {

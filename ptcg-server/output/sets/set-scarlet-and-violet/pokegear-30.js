@@ -44,8 +44,8 @@ class Pokegear30 extends trainer_card_1.TrainerCard {
         this.set = 'SVI';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '186';
-        this.name = 'Pokégear 3.0';
-        this.fullName = 'Pokégear SVI';
+        this.name = 'Pokegear 3.0';
+        this.fullName = 'Pokegear SVI';
         this.text = 'Look at the top 7 cards of your deck. You may reveal a Supporter card ' +
             'you find there and put it into your hand. Shuffle the other cards back ' +
             'into your deck.';

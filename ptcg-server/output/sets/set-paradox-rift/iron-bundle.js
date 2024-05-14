@@ -18,7 +18,7 @@ class IronBundle extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [
             {
-                name: 'Tachyon Bits',
+                name: 'Hyper Blower',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'Once during your turn, if this Pokémon is on your Bench, you may switch out your opponent\'s Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.) If you do, discard this Pokémon and all attached cards.'
@@ -29,7 +29,7 @@ class IronBundle extends pokemon_card_1.PokemonCard {
                 name: 'Refrigerated Stream',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 80,
-                text: ''
+                text: 'If the Defending Pokémon is an Evolution Pokémon, it can\'t attack during your opponent\'s next turn.'
             }
         ];
         this.set = 'PAR';
@@ -56,7 +56,7 @@ class IronBundle extends pokemon_card_1.PokemonCard {
             if (benchIndex === -1) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
                 if (targets && targets.length > 0) {
                     opponent.active.clearEffects();
                     opponent.switchPokemon(targets[0]);

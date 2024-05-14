@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, CardList, ChooseCardsPrompt, GameError, GameMessage, OrderCardsPrompt, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, Card, CardList, ChooseCardsPrompt, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -9,7 +9,7 @@ function* useMagneticLift(next: Function, store: StoreLike, state: State,
 
   const player = effect.player;
   let cards: Card[] = [];
-    
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
@@ -28,27 +28,7 @@ function* useMagneticLift(next: Function, store: StoreLike, state: State,
   });
   
   player.deck.moveCardsTo(cards, deckTop);
-  
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  
-    return store.prompt(state, new OrderCardsPrompt(
-      player.id,
-      GameMessage.CHOOSE_CARDS_ORDER,
-      deckTop,
-      { allowCancel: false },
-    ), order => {
-      if (order === null) {
-        return state;
-      }
-
-      deckTop.applyOrder(order);
-      deckTop.cards.push(player.deck.cards.slice(0, 1)[0]);
-
-      // Add cards from deckTop to the top of the player's deck
-      player.deck.moveToTop(deckTop.cards);
-    });
-  });
+  deckTop.moveToTopOfDestination(player.deck);
 }
 
 export class Beldum extends PokemonCard {

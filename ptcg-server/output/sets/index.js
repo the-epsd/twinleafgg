@@ -101,8 +101,7 @@ __exportStar(require("./set-pokemon-151"), exports);
 __exportStar(require("./set-paradox-rift"), exports);
 __exportStar(require("./set-paldea-fates"), exports);
 __exportStar(require("./set-temporal-forces"), exports);
-__exportStar(require("./set-crimson-haze"), exports);
-__exportStar(require("./set-mask-of-change"), exports);
-__exportStar(require("./set-night-wanderer"), exports);
+__exportStar(require("./set-twilight-masquerade"), exports);
+__exportStar(require("./set-sv7"), exports);
 //TEST
 __exportStar(require("./set-test"), exports);

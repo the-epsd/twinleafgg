@@ -5,9 +5,8 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardType, TrainerType } from '../../game/store/card/card-types';
-import { StateUtils, EnergyCard, Card, ChooseEnergyPrompt } from '../../game';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { SuperType, TrainerType } from '../../game/store/card/card-types';
+import { StateUtils, EnergyCard, CardList, ChooseCardsPrompt } from '../../game';
 
 export class TeamStarGrunt extends TrainerCard {
 
@@ -48,32 +47,32 @@ export class TeamStarGrunt extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
-      state = store.reduceEffect(state, checkProvidedEnergy);
+      const deckTop = new CardList();
 
-      state = store.prompt(state, new ChooseEnergyPrompt(
+      const target = opponent.active;
+      state = store.prompt(state, new ChooseCardsPrompt(
         player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [CardType.COLORLESS],
-        { allowCancel: false }
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        target,
+        { superType: SuperType.ENERGY },
+        { min: 1, max: 1, allowCancel: true }
       ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
+        const cards: CardList[] = (energy || []).map(e => e.cards);
 
-        // Fix error by looping through cards and moving individually
-        cards.forEach(c => {
-          opponent.deck.cards.unshift(c);
-        });
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        player.supporterTurn = 1;
+        if (cards.length > 0) {
+          target.moveCardsTo(energy, deckTop);
+          deckTop.moveToTopOfDestination(opponent.deck);
+
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          player.supporterTurn = 1;
+        }
       });
+      
 
       return state;
     }
     return state;
   }
-
-
 
 }
 

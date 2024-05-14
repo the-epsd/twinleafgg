@@ -55,9 +55,9 @@ export class Pokeball extends TrainerCard {
 
   public setNumber: string = '185';
 
-  public name = 'Pokéball';
+  public name = 'Pokeball';
 
-  public fullName: string = 'Pokéball SVI 185';
+  public fullName: string = 'Pokeball SVI 185';
 
   public text: string = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' + 
   'you can\'t play this card.) Search your deck for a card and put it into ' + 

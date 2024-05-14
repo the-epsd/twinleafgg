@@ -56,9 +56,6 @@ export class LuxrayV extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const cards = opponent.hand.cards.filter(c => c instanceof TrainerCard);
-      if (cards.length === 0) {
-        return state;
-      }
       
       store.prompt(state, new ChooseCardsPrompt(
         effect.player.id,

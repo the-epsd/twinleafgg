@@ -101,9 +101,8 @@ cardManager.defineSet(sets.setPokemon151);
 cardManager.defineSet(sets.setParadoxRift);
 cardManager.defineSet(sets.setPaldeaFates);
 cardManager.defineSet(sets.setTemporalForces);
-cardManager.defineSet(sets.setCrimsonHaze);
-cardManager.defineSet(sets.setMaskOfChange);
-cardManager.defineSet(sets.setNightWanderer);
+cardManager.defineSet(sets.setTwilightMasquerade);
+cardManager.defineSet(sets.setSV7);
 
 cardManager.defineSet(sets.setTest);
 

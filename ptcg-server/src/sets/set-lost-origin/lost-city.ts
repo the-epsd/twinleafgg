@@ -1,11 +1,10 @@
-import { Effect } from '../../game/store/effects/effect';
-import { GamePhase, State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
+import { CardList, StateUtils } from '../../game';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { Card, StateUtils } from '../../game';
-import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class LostCity extends TrainerCard {
 
@@ -32,34 +31,29 @@ export class LostCity extends TrainerCard {
     if (effect instanceof KnockOutEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
   
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-  
       const target = effect.target;
       const cards = target.getPokemons();
-      cards.forEach(card => {
-        player.marker.addMarker(this.LOST_CITY_MARKER, card);
-      });
+      
+      const pokemonIndices = effect.target.cards.map((card, index) => index);
+
+      for (let i = pokemonIndices.length; i >= 0; i--) {
+        target.cards.splice(pokemonIndices[i], 1);
+        target.damage = 0;
+      }
+
+      if (cards.some(card => card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex))) {
+        effect.prizeCount += 1;
+      }
+      if (cards.some(card => card.tags.includes(CardTag.POKEMON_VMAX))) {
+        effect.prizeCount += 2;
+      }
+
+      const lostZoned = new CardList();
+      lostZoned.cards = cards;
+
+      lostZoned.moveTo(player.lostzone);
     }
-  
-    if (effect instanceof BetweenTurnsEffect) {
-      state.players.forEach(player => {
-  
-        if (!player.marker.hasMarker(this.LOST_CITY_MARKER)) {
-          return;
-        }
-  
-        const lostZoned: Card[] = player.marker.markers
-          .filter(m => m.name === this.LOST_CITY_MARKER)
-          .map(m => m.source);
-  
-        player.discard.moveCardsTo(lostZoned, player.lostzone);
-        player.marker.removeMarker(this.LOST_CITY_MARKER);
-      });
-    }
-  
+    
     return state;
   }
   

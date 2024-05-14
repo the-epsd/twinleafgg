@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, PlayerType, GameError, GameMessage } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 
 export class Dodrio extends PokemonCard {
@@ -21,7 +22,7 @@ export class Dodrio extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [ CardType.COLORLESS ];
 
   public powers = [{
     name: 'Zooming Draw',
@@ -53,6 +54,11 @@ export class Dodrio extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.abilityMarker.removeMarker(this.ZOOMING_DRAW_MARKER, this);
+    }
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
       const player = effect.player;
@@ -78,7 +84,7 @@ export class Dodrio extends PokemonCard {
 
       // Calculate 30 damage per counter
       const damagePerCounter = 30;
-      effect.damage = dodrioDamage * damagePerCounter;
+      effect.damage += (dodrioDamage * damagePerCounter / 10) ;
 
       return state;
     }

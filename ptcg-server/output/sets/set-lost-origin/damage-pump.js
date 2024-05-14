@@ -36,7 +36,7 @@ class DamagePump extends trainer_card_1.TrainerCard {
                 for (const transfer of transfers) {
                     const source = game_1.StateUtils.getTarget(state, player, transfer.from);
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    if (source.damage >= 20) {
+                    if (source.damage >= 10) {
                         source.damage -= 20;
                         target.damage += 20;
                     }

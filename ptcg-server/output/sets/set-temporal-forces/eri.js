@@ -9,7 +9,7 @@ class Eri extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'H';
-        this.trainerType = card_types_1.TrainerType.ITEM;
+        this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '146';
@@ -25,7 +25,6 @@ class Eri extends trainer_card_1.TrainerCard {
             if (supporterTurn > 0) {
                 throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
             }
-            player.hand.moveCardTo(effect.trainerCard, player.supporter);
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DECK, opponent.hand, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { allowCancel: false, min: 0, max: 2 }), cards => {
@@ -34,8 +33,8 @@ class Eri extends trainer_card_1.TrainerCard {
                 }
                 const trainerCard = cards[0];
                 opponent.hand.moveCardTo(trainerCard, opponent.discard);
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 player.supporterTurn = 1;
+                player.supporter.moveCardTo(this, player.discard);
             });
         }
         return state;
