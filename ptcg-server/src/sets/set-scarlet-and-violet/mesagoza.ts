@@ -1,12 +1,12 @@
+import { ChooseCardsPrompt, CoinFlipPrompt, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { GameMessage } from '../../game/game-message';
-import { StateUtils } from '../../game/store/state-utils';
+import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { UseStadiumEffect } from '../../game/store/effects/game-effects';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CoinFlipPrompt, ChooseCardsPrompt, ShuffleDeckPrompt, ShowCardsPrompt } from '../../game';
+import { UseStadiumEffect } from '../../game/store/effects/game-effects';
+import { StateUtils } from '../../game/store/state-utils';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class Mesagoza extends TrainerCard {
   
@@ -43,7 +43,7 @@ export class Mesagoza extends TrainerCard {
           player.id,
           GameMessage.CHOOSE_CARD_TO_HAND,
           player.deck,
-          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { superType: SuperType.POKEMON },
           { min: 1, max: 1, allowCancel: true }
         ), selected => {
           const cards = selected || [];

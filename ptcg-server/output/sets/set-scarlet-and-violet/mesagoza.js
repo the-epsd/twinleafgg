@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Mesagoza = void 0;
-const game_message_1 = require("../../game/game-message");
-const state_utils_1 = require("../../game/store/state-utils");
-const trainer_card_1 = require("../../game/store/card/trainer-card");
-const card_types_1 = require("../../game/store/card/card-types");
-const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
+const game_message_1 = require("../../game/game-message");
+const card_types_1 = require("../../game/store/card/card-types");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
+const game_effects_1 = require("../../game/store/effects/game-effects");
+const state_utils_1 = require("../../game/store/state-utils");
 class Mesagoza extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -30,7 +30,7 @@ class Mesagoza extends trainer_card_1.TrainerCard {
         const opponent = state_utils_1.StateUtils.getOpponent(state, player);
         return store.prompt(state, new game_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.COIN_FLIP), flipResult => {
             if (flipResult) {
-                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 1, max: 1, allowCancel: true }), selected => {
+                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: true }), selected => {
                     const cards = selected || [];
                     player.deck.moveCardsTo(cards, player.hand);
                     if (cards.length > 0) {
