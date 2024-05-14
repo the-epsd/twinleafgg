@@ -1,5 +1,5 @@
 import { CardList, StateUtils } from '../../game';
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
@@ -38,6 +38,14 @@ export class LostCity extends TrainerCard {
 
       for (let i = pokemonIndices.length; i >= 0; i--) {
         target.cards.splice(pokemonIndices[i], 1);
+        target.damage = 0;
+      }
+
+      if (cards.some(card => card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex))) {
+        effect.prizeCount += 1;
+      }
+      if (cards.some(card => card.tags.includes(CardTag.POKEMON_VMAX))) {
+        effect.prizeCount += 2;
       }
 
       const lostZoned = new CardList();

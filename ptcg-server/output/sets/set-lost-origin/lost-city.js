@@ -26,6 +26,13 @@ class LostCity extends trainer_card_1.TrainerCard {
             const pokemonIndices = effect.target.cards.map((card, index) => index);
             for (let i = pokemonIndices.length; i >= 0; i--) {
                 target.cards.splice(pokemonIndices[i], 1);
+                target.damage = 0;
+            }
+            if (cards.some(card => card.tags.includes(card_types_1.CardTag.POKEMON_EX) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_ex))) {
+                effect.prizeCount += 1;
+            }
+            if (cards.some(card => card.tags.includes(card_types_1.CardTag.POKEMON_VMAX))) {
+                effect.prizeCount += 2;
             }
             const lostZoned = new game_1.CardList();
             lostZoned.cards = cards;
