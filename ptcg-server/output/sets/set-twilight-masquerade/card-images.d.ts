@@ -39,6 +39,7 @@ import { SurvivalCast } from './survival-cast';
 import { TealMaskOgerponex } from './teal-mask-ogerpon-ex';
 import { UnfairStamp } from './unfair-stamp';
 import { BloodmoonUrsalunaex } from './bloodmoon-ursaluna-ex';
+import { Munkidori } from './munkidori';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -94,6 +95,9 @@ export declare class PerformanceFluteArt extends PerformanceFlute {
     cardImage: string;
 }
 export declare class PoochyenaArt extends Poochyena {
+    cardImage: string;
+}
+export declare class MunkidoriArt extends Munkidori {
     cardImage: string;
 }
 export declare class RotoStickArt extends RotoStick {

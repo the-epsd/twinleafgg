@@ -55,7 +55,7 @@ export class DamagePump extends TrainerCard {
         for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
-          if (source.damage >= 20) {
+          if (source.damage >= 10) {
             source.damage -= 20;
             target.damage += 20;
           }

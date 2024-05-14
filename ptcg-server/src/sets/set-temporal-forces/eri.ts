@@ -13,7 +13,7 @@ export class Eri extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public trainerType: TrainerType = TrainerType.ITEM;
+  public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'TEF';
 
@@ -38,8 +38,7 @@ export class Eri extends TrainerCard {
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-      
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
     
@@ -56,9 +55,8 @@ export class Eri extends TrainerCard {
         const trainerCard = cards[0] as TrainerCard;
         
         opponent.hand.moveCardTo(trainerCard, opponent.discard);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         player.supporterTurn = 1;
-
+        player.supporter.moveCardTo(this, player.discard);
       });
     }
     return state;

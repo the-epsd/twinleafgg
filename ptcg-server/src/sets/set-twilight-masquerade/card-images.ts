@@ -40,6 +40,7 @@ import { SurvivalCast } from './survival-cast';
 import { TealMaskOgerponex } from './teal-mask-ogerpon-ex';
 import { UnfairStamp } from './unfair-stamp';
 import { BloodmoonUrsalunaex } from './bloodmoon-ursaluna-ex';
+import { Munkidori } from './munkidori';
 
 export class AggronArt extends Aggron {
   public cardImage = 'https://pokemonproxies.com/static/media/Aggron-075-6b.7ac10503aca6d6db414f.png';
@@ -115,6 +116,10 @@ export class PerformanceFluteArt extends PerformanceFlute {
 
 export class PoochyenaArt extends Poochyena {
   public cardImage = 'https://pokemonproxies.com/static/media/Poochyena-066-6b.53362be54c848c0db18d.png';
+}
+
+export class MunkidoriArt extends Munkidori {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_55_R_JP_LG.png';
 }
 
 export class RotoStickArt extends RotoStick {
