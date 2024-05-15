@@ -19,10 +19,10 @@ export class Dudunsparce extends PokemonCard {
   public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
 
   public powers = [{
-    name: 'Draw and Skedaddle',
+    name: 'Run Away Draw',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may draw 3 cards. If you do, shuffle this Pokémon and all cards attached to it back into your deck.'
+    text: 'Once during your turn, you may draw 3 cards. If you drew any cards in this way, shuffle this Pokémon and all attached cards into your deck.'
   }];
 
   public attacks = [
@@ -36,15 +36,15 @@ export class Dudunsparce extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV5';
+  public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '57';
+  public setNumber: string = '129';
 
   public name: string = 'Dudunsparce';
 
-  public fullName: string = 'Dudunsparce SV5';
+  public fullName: string = 'Dudunsparce TEF';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

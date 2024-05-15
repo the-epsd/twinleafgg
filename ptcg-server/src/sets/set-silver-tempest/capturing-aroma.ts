@@ -6,7 +6,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, CoinFlipPrompt, ShuffleDeckPrompt } from '../../game';
+import { Card, ChooseCardsPrompt, CoinFlipPrompt, PokemonCard, ShuffleDeckPrompt } from '../../game';
 
 export class CapturingAroma extends TrainerCard {
 
@@ -35,6 +35,13 @@ export class CapturingAroma extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
+      const blocked: number[] = [];
+      player.deck.cards.forEach((card, index) => {
+        if (card instanceof PokemonCard && card.stage == Stage.BASIC) {
+          blocked.push(index);
+        }
+      });
+
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -45,8 +52,8 @@ export class CapturingAroma extends TrainerCard {
             player.id,
             GameMessage.CHOOSE_CARD_TO_HAND,
             player.deck,
-            { superType: SuperType.POKEMON, stage: Stage.STAGE_1 || Stage.STAGE_2 || Stage.VSTAR || Stage.VMAX },
-            { min: 0, max: 1, allowCancel: true }
+            { superType: SuperType.POKEMON },
+            { min: 0, max: 1, allowCancel: false, blocked }
           ), selectedCards => {
             cards = selectedCards || [];
 

@@ -44,7 +44,7 @@ export class Mesagoza extends TrainerCard {
           GameMessage.CHOOSE_CARD_TO_HAND,
           player.deck,
           { superType: SuperType.POKEMON },
-          { min: 1, max: 1, allowCancel: true }
+          { min: 0, max: 1, allowCancel: false }
         ), selected => {
           const cards = selected || [];
           

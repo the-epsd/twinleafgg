@@ -25,7 +25,7 @@ class ChoiceBelt extends trainer_card_1.TrainerCard {
                 return state;
             }
             const targetCard = effect.target.getPokemonCard();
-            if (targetCard && targetCard.tags.includes(card_types_1.CardTag.POKEMON_V) || targetCard && targetCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX || targetCard && targetCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR))) {
+            if (targetCard && targetCard.tags.includes(card_types_1.CardTag.POKEMON_V) || targetCard && targetCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || targetCard && targetCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR)) {
                 effect.damage += 30;
             }
         }

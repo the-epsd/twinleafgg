@@ -11,10 +11,10 @@ class StudentsInPaldea extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '178';
-        this.set = 'SV4';
-        this.name = 'Students In Paldea';
-        this.fullName = 'Students In Paldea SV4';
+        this.setNumber = '85';
+        this.set = 'PAF';
+        this.name = 'Paldean Student';
+        this.fullName = 'Paldean Student PAF';
         this.text = 'Search your deck for a Pokémon that doesn\'t have a Rule Box, reveal it, and put it into your hand. For each other Students in Paldea in your discard pile, you may search your deck for another Pokémon that doesn’t have a Rule Box. Then, shuffle your deck. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)';
     }
     reduceEffect(store, state, effect) {
@@ -28,7 +28,7 @@ class StudentsInPaldea extends trainer_card_1.TrainerCard {
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
-            const cardsInDiscard = effect.player.discard.cards.filter(c => c.name === 'Students In Paldea');
+            const cardsInDiscard = effect.player.discard.cards.filter(c => c.name === 'Paldean Student');
             const cardsToTake = 1 + cardsInDiscard.length;
             const blocked = [];
             player.deck.cards.forEach((card, index) => {

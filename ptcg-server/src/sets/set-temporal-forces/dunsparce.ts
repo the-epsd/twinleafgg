@@ -40,15 +40,15 @@ export class Dunsparce extends PokemonCard {
   
   public regulationMark = 'H';
   
-  public set: string = 'SV5';
+  public set: string = 'TEF';
   
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '56';
+  public setNumber: string = '128';
   
   public name: string = 'Dunsparce';
   
-  public fullName: string = 'Dunsparce SV5';
+  public fullName: string = 'Dunsparce TEF';
 
   public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
   public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';

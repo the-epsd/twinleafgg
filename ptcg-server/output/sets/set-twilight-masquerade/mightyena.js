@@ -43,7 +43,9 @@ class Mightyena extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
             const mightyenasInPlay = benchPokemon.filter(card => card.name == 'Mightyena');
-            effect.damage += 90 * mightyenasInPlay.length;
+            if (mightyenasInPlay) {
+                effect.damage += 90;
+            }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;

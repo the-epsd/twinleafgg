@@ -31,7 +31,7 @@ export class GougingFireex extends PokemonCard {
       name: 'Explosive Flare',
       cost: [ CardType.FIRE, CardType.FIRE, CardType.COLORLESS ],
       damage: 260,
-      text: 'This Pokémon can’t use Exploding Flare again until it leaves the Active Spot.'
+      text: 'This Pokémon can\'t use Exploding Flare again until it leaves the Active Spot.'
     }
   ];
 

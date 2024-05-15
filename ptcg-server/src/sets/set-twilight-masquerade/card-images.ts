@@ -41,6 +41,7 @@ import { TealMaskOgerponex } from './teal-mask-ogerpon-ex';
 import { UnfairStamp } from './unfair-stamp';
 import { BloodmoonUrsalunaex } from './bloodmoon-ursaluna-ex';
 import { Munkidori } from './munkidori';
+import { Kieran } from './kieran';
 
 export class AggronArt extends Aggron {
   public cardImage = 'https://pokemonproxies.com/static/media/Aggron-075-6b.7ac10503aca6d6db414f.png';
@@ -176,6 +177,10 @@ export class IronLeavesArt extends IronLeaves {
 
 export class IronThornsexArt extends IronThornsex {
   public cardImage = 'https://pokemonproxies.com/static/media/Iron_Thorns_ex-033-6a.6b321f64403bd7b196a7.png';
+}
+
+export class KieranArt extends Kieran {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_96_R_JP.png';
 }
 
 export class LoveBallArt extends LoveBall {

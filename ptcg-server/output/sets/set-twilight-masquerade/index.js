@@ -27,6 +27,7 @@ exports.setTwilightMasquerade = [
     new card_images_1.ScoopUpCycloneArt(),
     new card_images_1.TatsugiriArt(),
     new card_images_1.WellspringMaskOgerponexArt(),
+    new card_images_1.KieranArt(),
     new card_images_2.BloodmoonUrsalunaexArt(),
     new card_images_2.CaretakerArt(),
     new card_images_2.CommunityCenterArt(),

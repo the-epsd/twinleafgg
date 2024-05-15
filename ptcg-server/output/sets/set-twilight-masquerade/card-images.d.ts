@@ -40,6 +40,7 @@ import { TealMaskOgerponex } from './teal-mask-ogerpon-ex';
 import { UnfairStamp } from './unfair-stamp';
 import { BloodmoonUrsalunaex } from './bloodmoon-ursaluna-ex';
 import { Munkidori } from './munkidori';
+import { Kieran } from './kieran';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -140,6 +141,9 @@ export declare class IronLeavesArt extends IronLeaves {
     cardImage: string;
 }
 export declare class IronThornsexArt extends IronThornsex {
+    cardImage: string;
+}
+export declare class KieranArt extends Kieran {
     cardImage: string;
 }
 export declare class LoveBallArt extends LoveBall {

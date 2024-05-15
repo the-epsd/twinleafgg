@@ -57,8 +57,9 @@ export class Mightyena extends PokemonCard {
       const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
       const mightyenasInPlay = benchPokemon.filter(card => card.name == 'Mightyena');
       
-
-      effect.damage += 90 * mightyenasInPlay.length;
+      if (mightyenasInPlay) {
+        effect.damage += 90;
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

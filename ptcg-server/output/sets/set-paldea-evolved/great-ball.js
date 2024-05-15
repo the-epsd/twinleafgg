@@ -33,8 +33,8 @@ class GreatBall extends trainer_card_1.TrainerCard {
                 return store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_EFFECT, temp.cards), () => {
                     temp.cards.forEach(card => {
                         temp.moveCardTo(card, player.deck);
-                        player.supporter.moveCardTo(this, player.discard);
                     });
+                    player.supporter.moveCardTo(this, player.discard);
                     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                         player.deck.applyOrder(order);
                         return state;
