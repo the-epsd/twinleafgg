@@ -20,5 +20,6 @@ export declare abstract class Card {
     static tags: any;
     cards: CardList;
     marker: Marker;
+    abilityHasBeenUsed: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

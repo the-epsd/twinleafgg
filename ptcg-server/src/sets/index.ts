@@ -65,7 +65,6 @@ export * from './set-celestial-storm';
 //export * from './set-dragon-majesty';
 //export * from './set-lost-thunder';
 export * from './set-team-up';
-//export * from './set-detective-pikachu';
 export * from './set-unbroken-bonds';
 //export * from './set-unified-minds';
 export * from './set-hidden-fates';

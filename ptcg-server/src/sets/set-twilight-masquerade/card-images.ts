@@ -42,6 +42,7 @@ import { UnfairStamp } from './unfair-stamp';
 import { BloodmoonUrsalunaex } from './bloodmoon-ursaluna-ex';
 import { Munkidori } from './munkidori';
 import { Kieran } from './kieran';
+import { Chansey } from './chansey';
 
 export class AggronArt extends Aggron {
   public cardImage = 'https://pokemonproxies.com/static/media/Aggron-075-6b.7ac10503aca6d6db414f.png';
@@ -61,6 +62,10 @@ export class BlisseyexArt extends Blisseyex {
 
 export class CarmineArt extends Carmine {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_97_R_JP_LG.png';
+}
+
+export class ChanseyArt extends Chansey {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_84_R_JP_LG.png';
 }
 
 export class DreepyArt extends Dreepy {

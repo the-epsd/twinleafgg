@@ -13,7 +13,7 @@ export class Kieran extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -23,7 +23,7 @@ export class Kieran extends TrainerCard {
 
   public name: string = 'Kieran';
 
-  public fullName: string = 'Kieran SV6';
+  public fullName: string = 'Kieran TWM';
 
   public text: string =
     'Choose 1:'+

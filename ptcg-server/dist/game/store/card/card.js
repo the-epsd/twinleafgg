@@ -10,6 +10,7 @@ export class Card {
         this.retreat = [];
         this.cards = new CardList;
         this.marker = new Marker();
+        this.abilityHasBeenUsed = false;
     }
     reduceEffect(store, state, effect) {
         return state;

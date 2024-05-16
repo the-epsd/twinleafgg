@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { DraggedItem } from '@ng-dnd/sortable';
 import { DropTarget, DndService } from '@ng-dnd/core';
 import { Observable } from 'rxjs';
-import { Player, SlotType, PlayerType, CardTarget, Card, CardList } from 'ptcg-server';
+import { Player, SlotType, PlayerType, CardTarget, Card, CardList, PokemonCardList } from 'ptcg-server';
 import { map } from 'rxjs/operators';
 
 import { HandItem, HandCardType } from '../hand/hand-item.interface';

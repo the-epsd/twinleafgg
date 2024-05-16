@@ -46,4 +46,5 @@ exports.setTwilightMasquerade = [
     new card_images_2.FroakieArt(),
     new card_images_2.FrogadierArt(),
     new card_images_2.GreninjaexArt(),
+    new card_images_1.ChanseyArt(),
 ];

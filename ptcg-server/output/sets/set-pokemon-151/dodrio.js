@@ -55,6 +55,7 @@ class Dodrio extends pokemon_card_1.PokemonCard {
                 }
             });
             player.deck.moveTo(player.hand, 1);
+            this.abilityHasBeenUsed = true;
             player.abilityMarker.addMarker(this.ZOOMING_DRAW_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

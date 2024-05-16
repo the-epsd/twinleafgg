@@ -12,12 +12,12 @@ class Kieran extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '96';
         this.regulationMark = 'H';
         this.name = 'Kieran';
-        this.fullName = 'Kieran SV6';
+        this.fullName = 'Kieran TWM';
         this.text = 'Choose 1:' +
             '• Switch your Active Pokémon with 1 of your Benched Pokémon.' +
             '• Your Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon ex and Pokémon V this turn.';

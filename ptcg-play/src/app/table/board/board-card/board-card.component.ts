@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { PokemonCardList, Card, CardList, SuperType, SpecialCondition, Power, Player } from 'ptcg-server';
+import { PokemonCardList, Card, CardList, SuperType, SpecialCondition, Power, Player, PokemonCard } from 'ptcg-server';
 import { Marker } from 'ptcg-server/dist/game/store/state/card-marker';
 
 const MAX_ENERGY_CARDS = 4;
@@ -22,8 +22,8 @@ this.moreEnergies = 0;
 this.cardCount = 0;
 this.damage = 0;
 this.specialConditions = [];
-this.marker = [] as Marker[];
 this.isFaceDown = false;
+this.abilityUsed = false;
 
 this.isEmpty = !value || !value.cards.length;
 if (this.isEmpty) {
@@ -52,17 +52,17 @@ this.mainCard = value.cards[value.cards.length - 1];
     this.isFaceDown = !this.isEmpty && isFaceDown;
   }
 
-@Input() set card(value: Card) {
-this.mainCard = value;
-this.energyCards = [];
-this.trainerCard = undefined;
-this.moreEnergies = 0;
-this.cardCount = 0;
-this.damage = 0;
-this.specialConditions = [];
-this.marker = [] as Marker[];
-this.isEmpty = !value;
-}
+  @Input() set card(value: Card) {
+    this.mainCard = value;
+    this.energyCards = [];
+    this.trainerCard = undefined;
+    this.moreEnergies = 0;
+    this.cardCount = 0;
+    this.damage = 0;
+    this.specialConditions = [];
+    this.isEmpty = !value;
+    this.abilityUsed = false;
+  }
 
   @Input() isFaceDown = false;
 
@@ -75,8 +75,8 @@ this.isEmpty = !value;
   public powers: Power[] = [];
   public damage = 0;
   public specialConditions: SpecialCondition[] = [];
-  public SpecialCondition = SpecialCondition;
-  public marker: Marker[] = [];
+  public abilityUsed: boolean = false;
+
 
   private isSecret = false;
   private isPublic = false;
@@ -90,6 +90,7 @@ this.isEmpty = !value;
     this.trainerCard = undefined;
     this.mainCard = cardList.getPokemonCard();
     this.trainerCard = cardList.tool;
+    this.abilityUsed = this.card.abilityHasBeenUsed;
 
     for (const card of cardList.cards) {
       switch (card.superType) {

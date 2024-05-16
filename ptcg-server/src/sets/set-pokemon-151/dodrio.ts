@@ -73,7 +73,7 @@ export class Dodrio extends PokemonCard {
       });
       
       player.deck.moveTo(player.hand, 1);
-      
+      this.abilityHasBeenUsed = true;
       player.abilityMarker.addMarker(this.ZOOMING_DRAW_MARKER, this);      
     }
 

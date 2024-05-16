@@ -70,7 +70,6 @@ __exportStar(require("./set-celestial-storm"), exports);
 //export * from './set-dragon-majesty';
 //export * from './set-lost-thunder';
 __exportStar(require("./set-team-up"), exports);
-//export * from './set-detective-pikachu';
 __exportStar(require("./set-unbroken-bonds"), exports);
 //export * from './set-unified-minds';
 __exportStar(require("./set-hidden-fates"), exports);

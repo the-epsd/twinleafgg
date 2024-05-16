@@ -47,6 +47,11 @@ z-index: 0;
   min-width: $board-min-width;
   width: calc(var(--card-size) * #{$ptcg-bench-slots} + #{($ptcg-bench-slots + 1) * map-get($padding, small)});
   height: calc(var(--card-size) * #{$ptcg-bench-slots} + #{($ptcg-bench-slots + 1) * map-get($padding, small)});
+
+  position: absolute;
+  top: 33%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 #bottom_div {
@@ -87,7 +92,7 @@ z-index: 0;
     top: 0%;
     left: -40%;
     right: -40%;
-    height: 600px; //adjust this number to adjust curve  
+    height: 115%; //adjust this number to adjust curve  
     background:linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(255, 0, 0, 0.75);
     background-size: 56%;
     background-position: center;
@@ -134,7 +139,7 @@ z-index: 0;
 
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-width: 82px;
+width: 72px;
   }
 }
 
@@ -144,7 +149,7 @@ width: 82px;
 .ptcg-board-stadium {
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-    width: 82px;
+    width: 72px;
   }
 }
 
@@ -187,7 +192,7 @@ ptcg-board-deck {
 .stadium-card {
   align-self: flex-start;
 
-  margin-top: -35%;
+  margin-top: -31.25%;
   margin-left: 50%;
 
   }

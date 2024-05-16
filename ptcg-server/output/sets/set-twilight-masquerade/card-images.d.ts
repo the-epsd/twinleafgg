@@ -41,6 +41,7 @@ import { UnfairStamp } from './unfair-stamp';
 import { BloodmoonUrsalunaex } from './bloodmoon-ursaluna-ex';
 import { Munkidori } from './munkidori';
 import { Kieran } from './kieran';
+import { Chansey } from './chansey';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -54,6 +55,9 @@ export declare class BlisseyexArt extends Blisseyex {
     cardImage: string;
 }
 export declare class CarmineArt extends Carmine {
+    cardImage: string;
+}
+export declare class ChanseyArt extends Chansey {
     cardImage: string;
 }
 export declare class DreepyArt extends Dreepy {
