@@ -4,8 +4,8 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { CardList, ChooseCardsPrompt, GameError, ShuffleDeckPrompt } from '../../game';
+import { CardType, EnergyType, TrainerType } from '../../game/store/card/card-types';
+import { CardList, ChooseCardsPrompt, EnergyCard, GameError, PokemonCard, ShuffleDeckPrompt } from '../../game';
 
 export class Candice extends TrainerCard {
 
@@ -47,16 +47,24 @@ export class Candice extends TrainerCard {
       }
 
       const deckTop = new CardList();
+
+      const blocked: number[] = [];
+      deckTop.cards.forEach((card, index) => {
+        if ((card instanceof PokemonCard && card.cardType === CardType.WATER) || (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Water Energy')) {
+          // No else block needed
+        } else {
+          blocked.push(index);
+        }
+      });
+
       player.deck.moveTo(deckTop, 7);
 
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
-        { superType: SuperType.POKEMON, cardType: CardType.WATER } ||
-                { superType: SuperType.ENERGY, name : 'Water Energy' },
-
-        { min: 0, max: 7, allowCancel: true }
+        {},
+        { min: 0, max: 7, allowCancel: true, blocked: blocked }
       ), selected => {
 
         if (selected.length > 0) {
@@ -76,5 +84,5 @@ export class Candice extends TrainerCard {
     }
     return state;
   }
-
 }
+    

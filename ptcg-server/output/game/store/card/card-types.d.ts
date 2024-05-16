@@ -69,6 +69,9 @@ export declare enum SpecialCondition {
     POISONED = 3,
     BURNED = 4
 }
+export declare enum AbilityUsed {
+    TRUE = 0
+}
 export declare enum Format {
     NONE = 0,
     STANDARD = 1,

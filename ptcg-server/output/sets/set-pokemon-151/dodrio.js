@@ -52,10 +52,10 @@ class Dodrio extends pokemon_card_1.PokemonCard {
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {
                     cardList.damage += 10;
+                    cardList.addAbilityUsedTag(card_types_1.AbilityUsed.TRUE);
                 }
             });
             player.deck.moveTo(player.hand, 1);
-            this.abilityHasBeenUsed = true;
             player.abilityMarker.addMarker(this.ZOOMING_DRAW_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -42,6 +42,7 @@ import { BloodmoonUrsalunaex } from './bloodmoon-ursaluna-ex';
 import { Munkidori } from './munkidori';
 import { Kieran } from './kieran';
 import { Chansey } from './chansey';
+import { Morpeko } from './morpeko';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -100,6 +101,9 @@ export declare class PerformanceFluteArt extends PerformanceFlute {
     cardImage: string;
 }
 export declare class PoochyenaArt extends Poochyena {
+    cardImage: string;
+}
+export declare class MorpekoArt extends Morpeko {
     cardImage: string;
 }
 export declare class MunkidoriArt extends Munkidori {

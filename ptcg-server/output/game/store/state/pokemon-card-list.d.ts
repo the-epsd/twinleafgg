@@ -1,6 +1,6 @@
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
-import { SpecialCondition } from '../card/card-types';
+import { AbilityUsed, SpecialCondition } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Card } from '../card/card';
 import { Power, Attack } from '../card/pokemon-types';
@@ -14,6 +14,7 @@ export declare class PokemonCardList extends CardList {
     attackMarker: Marker;
     abilityMarker: Marker;
     pokemonPlayedTurn: number;
+    abilityHasBeenUsed: AbilityUsed[];
     static readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     static readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     static readonly CLEAR_KNOCKOUT_MARKER = "CLEAR_KNOCKOUT_MARKER";
@@ -43,6 +44,8 @@ export declare class PokemonCardList extends CardList {
     clearEffects(): void;
     removeSpecialCondition(sp: SpecialCondition): void;
     addSpecialCondition(sp: SpecialCondition): void;
+    addAbilityUsedTag(sp: AbilityUsed): void;
+    removeAbilityUsedTag(sp: AbilityUsed): void;
     hasRuleBox(): boolean;
     vPokemon(): boolean;
     exPokemon(): boolean;

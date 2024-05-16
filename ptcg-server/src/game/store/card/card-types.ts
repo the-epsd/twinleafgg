@@ -79,6 +79,10 @@ export enum SpecialCondition {
   BURNED
 }
 
+export enum AbilityUsed {
+  TRUE
+}
+
 export enum Format {
   NONE,
   STANDARD,

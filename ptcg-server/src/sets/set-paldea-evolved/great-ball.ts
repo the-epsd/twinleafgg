@@ -77,6 +77,7 @@ export class GreatBall extends TrainerCard {
           // Move chosen Pokemon to hand
             const pokemon = chosenCards[0]; 
             temp.moveCardTo(pokemon, player.hand);
+            player.supporter.moveCardTo(this, player.discard);
           } else {
           // No Pokemon chosen, shuffle all back
             temp.cards.forEach(card => {
@@ -84,7 +85,7 @@ export class GreatBall extends TrainerCard {
               player.supporter.moveCardTo(this, player.discard);
             });  
           }
-    
+          player.supporter.moveCardTo(this, player.discard);
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
             return state;

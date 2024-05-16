@@ -77,6 +77,10 @@ export var SpecialCondition;
     SpecialCondition[SpecialCondition["POISONED"] = 3] = "POISONED";
     SpecialCondition[SpecialCondition["BURNED"] = 4] = "BURNED";
 })(SpecialCondition || (SpecialCondition = {}));
+export var AbilityUsed;
+(function (AbilityUsed) {
+    AbilityUsed[AbilityUsed["TRUE"] = 0] = "TRUE";
+})(AbilityUsed || (AbilityUsed = {}));
 export var Format;
 (function (Format) {
     Format[Format["NONE"] = 0] = "NONE";

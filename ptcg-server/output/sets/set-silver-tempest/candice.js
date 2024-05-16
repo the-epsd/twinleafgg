@@ -32,9 +32,17 @@ class Candice extends trainer_card_1.TrainerCard {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             const deckTop = new game_1.CardList();
+            const blocked = [];
+            deckTop.cards.forEach((card, index) => {
+                if ((card instanceof game_1.PokemonCard && card.cardType === card_types_1.CardType.WATER) || (card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC && card.name === 'Water Energy')) {
+                    // No else block needed
+                }
+                else {
+                    blocked.push(index);
+                }
+            });
             player.deck.moveTo(deckTop, 7);
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.WATER } ||
-                { superType: card_types_1.SuperType.ENERGY, name: 'Water Energy' }, { min: 0, max: 7, allowCancel: true }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 0, max: 7, allowCancel: true, blocked: blocked }), selected => {
                 if (selected.length > 0) {
                     deckTop.moveCardsTo(selected, player.hand);
                     deckTop.moveTo(player.deck);

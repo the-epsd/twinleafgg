@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameMessage, ChooseCardsPrompt, AttachEnergyPrompt, CardList, EnergyCard, PlayerType, SlotType, StateUtils } from '../../game';
+import { StoreLike, State, GameMessage, AttachEnergyPrompt, CardList, EnergyCard, PlayerType, SlotType, StateUtils, ShowCardsPrompt, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
@@ -22,7 +22,7 @@ export class KyuremVMAX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public abilities = [{
+  public powers = [{
     name: 'Glaciated World',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
@@ -44,11 +44,40 @@ export class KyuremVMAX extends PokemonCard {
 
   public setNumber: string = '48';
 
-  public name: string = 'Kyurem V';
+  public name: string = 'Kyurem VMAX';
 
-  public fullName: string = 'Kyurem V LOR';
+  public fullName: string = 'Kyurem VMAX LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+      
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      const player = effect.player;
+        
+      // Prompt player to choose cards to discard 
+      return store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        player.active,
+        { superType: SuperType.ENERGY },
+        { allowCancel: false, min: 0 }
+      ), cards => {
+        cards = cards || [];
+        if (cards.length === 0) {
+          return;
+        }
+        const discardEnergy = new DiscardCardsEffect(effect, cards);
+        discardEnergy.target = player.active;
+        store.reduceEffect(state, discardEnergy);
+        player.hand.moveCardsTo(cards, player.discard);
+      
+        // Calculate damage
+        const damage = cards.length * 50;
+        effect.damage += damage;
+        return state;
+      });
+    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
@@ -63,25 +92,32 @@ export class KyuremVMAX extends PokemonCard {
         return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Water Energy';
       });
   
-      // If no energy cards were drawn, move all cards to hand
+      // If no energy cards were drawn, move all cards to discard
       if (energyCardsDrawn.length == 0) {
         temp.cards.slice(0, 1).forEach(card => {
-          temp.moveCardTo(card, player.hand); 
+
+          store.prompt(state, [new ShowCardsPrompt(
+            player.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            temp.cards
+          )], () => {
+            temp.moveTo(player.discard);
+          });
         });
-      } else {
         
-  
+      } else {
+
         // Prompt to attach energy if any were drawn
         return store.prompt(state, new AttachEnergyPrompt(
           player.id,
-          GameMessage.ATTACH_ENERGY_CARDS, 
+          GameMessage.ATTACH_ENERGY_CARDS,
           temp, // Only show drawn energies
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH, SlotType.ACTIVE],
-          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC},
-          {min: 0, max: energyCardsDrawn.length}
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { min: 0, max: energyCardsDrawn.length, allowCancel: false }
         ), transfers => {
-      
+
           // Attach energy based on prompt selection
           if (transfers) {
             for (const transfer of transfers) {
@@ -90,45 +126,11 @@ export class KyuremVMAX extends PokemonCard {
             }
             temp.cards.forEach(card => {
               temp.moveCardTo(card, player.hand); // Move card to hand
-              
-            });
-          }
-        });
-      }
-    
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-        const player = effect.player;
-      
-        return store.prompt(state, new ChooseCardsPrompt(
-          player.id,
-          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-          player.active, // Card source is target Pokemon
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-          { allowCancel: false }
-        ), selected => {
-          const cards = selected || [];
-          if (cards.length > 0) {
-      
-            let totalDiscarded = 0; 
-      
-            cards.forEach(target => {
-      
-              const discardEnergy = new DiscardCardsEffect(effect, cards);
-              discardEnergy.cards = [target];
-
-      
-              totalDiscarded += discardEnergy.cards.length;
-            
-              effect.damage = (totalDiscarded * 60) + 120;
-      
-              store.reduceEffect(state, discardEnergy);
 
             });
           }
         });
       }
-      return state;
     }
     return state;
   }

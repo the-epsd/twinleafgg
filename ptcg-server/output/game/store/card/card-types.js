@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Archetype = exports.Format = exports.SpecialCondition = exports.CardType = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
+exports.Archetype = exports.Format = exports.AbilityUsed = exports.SpecialCondition = exports.CardType = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
 var CardTag;
 (function (CardTag) {
     CardTag["POKEMON_SP"] = "SP";
@@ -80,6 +80,10 @@ var SpecialCondition;
     SpecialCondition[SpecialCondition["POISONED"] = 3] = "POISONED";
     SpecialCondition[SpecialCondition["BURNED"] = 4] = "BURNED";
 })(SpecialCondition = exports.SpecialCondition || (exports.SpecialCondition = {}));
+var AbilityUsed;
+(function (AbilityUsed) {
+    AbilityUsed[AbilityUsed["TRUE"] = 0] = "TRUE";
+})(AbilityUsed = exports.AbilityUsed || (exports.AbilityUsed = {}));
 var Format;
 (function (Format) {
     Format[Format["NONE"] = 0] = "NONE";

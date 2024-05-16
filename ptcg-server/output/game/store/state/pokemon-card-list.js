@@ -17,6 +17,7 @@ class PokemonCardList extends card_list_1.CardList {
         this.attackMarker = new card_marker_1.Marker();
         this.abilityMarker = new card_marker_1.Marker();
         this.pokemonPlayedTurn = 0;
+        this.abilityHasBeenUsed = [];
     }
     getPokemons() {
         const result = [];
@@ -100,6 +101,19 @@ class PokemonCardList extends card_list_1.CardList {
             card_types_1.SpecialCondition.ASLEEP,
         ].includes(s) === false);
         this.specialConditions.push(sp);
+    }
+    addAbilityUsedTag(sp) {
+        this.abilityHasBeenUsed = this.abilityHasBeenUsed.filter(s => [
+            card_types_1.AbilityUsed.TRUE,
+        ].includes(s) === false);
+        this.abilityHasBeenUsed.push(sp);
+    }
+    removeAbilityUsedTag(sp) {
+        if (!this.abilityHasBeenUsed.includes(sp)) {
+            return;
+        }
+        this.abilityHasBeenUsed = this.abilityHasBeenUsed
+            .filter(s => s !== sp);
     }
     hasRuleBox() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_ex) || c.tags.includes(card_types_1.CardTag.POKEMON_V) || c.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || c.tags.includes(card_types_1.CardTag.POKEMON_VSTAR));

@@ -37,8 +37,6 @@ export abstract class Card {
 
   public marker = new Marker();
 
-  public abilityHasBeenUsed: boolean = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;
   }

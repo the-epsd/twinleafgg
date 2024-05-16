@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, AbilityUsed } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, PlayerType, GameError, GameMessage } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -69,12 +69,12 @@ export class Dodrio extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {
           cardList.damage += 10;
+          cardList.addAbilityUsedTag(AbilityUsed.TRUE);
         }
       });
-      
+
       player.deck.moveTo(player.hand, 1);
-      this.abilityHasBeenUsed = true;
-      player.abilityMarker.addMarker(this.ZOOMING_DRAW_MARKER, this);      
+      player.abilityMarker.addMarker(this.ZOOMING_DRAW_MARKER, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -84,7 +84,7 @@ export class Dodrio extends PokemonCard {
 
       // Calculate 30 damage per counter
       const damagePerCounter = 30;
-      effect.damage += (dodrioDamage * damagePerCounter / 10) ;
+      effect.damage += (dodrioDamage * damagePerCounter / 10);
 
       return state;
     }

@@ -43,6 +43,7 @@ import { BloodmoonUrsalunaex } from './bloodmoon-ursaluna-ex';
 import { Munkidori } from './munkidori';
 import { Kieran } from './kieran';
 import { Chansey } from './chansey';
+import { Morpeko } from './morpeko';
 
 export class AggronArt extends Aggron {
   public cardImage = 'https://pokemonproxies.com/static/media/Aggron-075-6b.7ac10503aca6d6db414f.png';
@@ -122,6 +123,10 @@ export class PerformanceFluteArt extends PerformanceFlute {
 
 export class PoochyenaArt extends Poochyena {
   public cardImage = 'https://pokemonproxies.com/static/media/Poochyena-066-6b.53362be54c848c0db18d.png';
+}
+
+export class MorpekoArt extends Morpeko {
+  public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1709292206188-EP2WSFT3DF52RPXDXPB2/Morpeko.png?format=2500w';
 }
 
 export class MunkidoriArt extends Munkidori {

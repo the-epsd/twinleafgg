@@ -1,17 +1,16 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State } from '../../game';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class KyuremVMAX extends PokemonCard {
+export declare class Morpeko extends PokemonCard {
     stage: Stage;
-    tags: CardTag[];
-    evolvesFrom: string;
+    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
+    resistance: never[];
     retreat: CardType[];
     powers: {
         name: string;
@@ -26,10 +25,10 @@ export declare class KyuremVMAX extends PokemonCard {
         text: string;
     }[];
     set: string;
-    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;
+    readonly SNACK_SEARCH_MARKER = "SNACK_SEARCH_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
