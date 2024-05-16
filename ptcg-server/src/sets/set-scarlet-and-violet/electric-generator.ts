@@ -51,6 +51,7 @@ export class ElectricGenerator extends TrainerCard {
           
           temp.cards.forEach(card => {
             temp.moveCardTo(card, player.deck);
+            player.supporter.moveCardTo(this, player.discard);
           });
 
           player.supporter.moveCardTo(this, player.discard);
@@ -80,6 +81,7 @@ export class ElectricGenerator extends TrainerCard {
             for (const transfer of transfers) {
               const target = StateUtils.getTarget(state, player, transfer.to);
               temp.moveCardTo(transfer.card, target); // Move card to target
+              player.supporter.moveCardTo(this, player.discard);
             }
             
             temp.cards.forEach(card => {
@@ -92,7 +94,7 @@ export class ElectricGenerator extends TrainerCard {
             });
             
           }
-          
+          player.supporter.moveCardTo(this, player.discard);
           return state;
           
         });

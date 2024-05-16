@@ -80,7 +80,7 @@ export class Okidogiex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       const player = effect.player;
-      if (player.active.specialConditions.length > 0) {
+      if (player.active.specialConditions.includes(SpecialCondition.POISONED)) {
         const attackEffect = effect as AttackEffect;
         attackEffect.damage += 130;
       }

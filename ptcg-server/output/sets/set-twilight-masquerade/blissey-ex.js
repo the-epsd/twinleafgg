@@ -80,7 +80,7 @@ class Blisseyex extends game_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+            state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_DRAW_UNTIL_6), wantToUse => {
                 if (wantToUse) {
                     while (player.hand.cards.length < 6) {
                         player.deck.moveTo(player.hand, 1);

@@ -17,7 +17,7 @@ class Ralts extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Psyshot',
+                name: 'Teleportation Burst',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 10,
                 text: 'Switch this Pokemon with 1 of your Benched Pokémon.'

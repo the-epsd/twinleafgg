@@ -33,6 +33,7 @@ class ElectricGenerator extends trainer_card_1.TrainerCard {
                 return store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_EFFECT, temp.cards), () => {
                     temp.cards.forEach(card => {
                         temp.moveCardTo(card, player.deck);
+                        player.supporter.moveCardTo(this, player.discard);
                     });
                     player.supporter.moveCardTo(this, player.discard);
                     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
@@ -50,6 +51,7 @@ class ElectricGenerator extends trainer_card_1.TrainerCard {
                         for (const transfer of transfers) {
                             const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                             temp.moveCardTo(transfer.card, target); // Move card to target
+                            player.supporter.moveCardTo(this, player.discard);
                         }
                         temp.cards.forEach(card => {
                             temp.moveCardTo(card, player.deck); // Move remaining cards to deck
@@ -59,6 +61,7 @@ class ElectricGenerator extends trainer_card_1.TrainerCard {
                             return state;
                         });
                     }
+                    player.supporter.moveCardTo(this, player.discard);
                     return state;
                 });
             }

@@ -132,6 +132,7 @@ var GameCardMessage;
     GameCardMessage["DISCARD_STADIUM_OR_TOOL"] = "DISCARD_STADIUM_OR_TOOL";
     GameCardMessage["CHOICE_TOOL"] = "CHOICE_TOOL";
     GameCardMessage["CHOICE_STADIUM"] = "CHOICE_STADIUM";
+    GameCardMessage["WANT_TO_DRAW_UNTIL_6"] = "WANT_TO_DRAW_UNTIL_6";
 })(GameCardMessage = exports.GameCardMessage || (exports.GameCardMessage = {}));
 var GameLog;
 (function (GameLog) {

@@ -22,7 +22,7 @@ export class Ralts extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Psyshot',
+      name: 'Teleportation Burst',
       cost: [ CardType.PSYCHIC ],
       damage: 10,
       text: 'Switch this Pokemon with 1 of your Benched Pokémon.'

@@ -116,7 +116,7 @@ export class Blisseyex extends PokemonCard {
 
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
+        GameMessage.WANT_TO_DRAW_UNTIL_6,
       ), wantToUse => {
         if (wantToUse) {
 

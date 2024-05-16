@@ -52,7 +52,7 @@ export class ScoopUpCyclone extends TrainerCard {
         }
 
         // Discard trainer card
-        player.hand.moveCardTo(this, player.discard);
+        player.supporter.moveCardTo(this, player.discard);
 
         targets.forEach(target => {
           target.moveTo(player.hand);
