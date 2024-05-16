@@ -14,7 +14,7 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'H';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.COLORLESS;
-        this.hp = 10000;
+        this.hp = 260;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{

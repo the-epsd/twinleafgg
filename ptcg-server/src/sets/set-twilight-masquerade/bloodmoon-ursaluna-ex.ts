@@ -16,7 +16,7 @@ export class BloodmoonUrsalunaex extends PokemonCard {
 
   public cardType: CardType = CardType.COLORLESS;
 
-  public hp: number = 10000;
+  public hp: number = 260;
 
   public weakness = [{ type: CardType.FIGHTING }];
 

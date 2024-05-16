@@ -51,6 +51,7 @@ class BuddyBuddyPoffin extends trainer_card_1.TrainerCard {
                     cards.forEach((card, index) => {
                         player.deck.moveCardTo(card, slots[index]);
                         slots[index].pokemonPlayedTurn = state.turn;
+                        store.log(state, game_1.GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: card.name });
                     });
                     player.supporter.moveCardTo(this, player.discard);
                     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {

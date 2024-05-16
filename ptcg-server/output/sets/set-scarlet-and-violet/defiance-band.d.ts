@@ -12,6 +12,5 @@ export declare class DefianceBand extends TrainerCard {
     name: string;
     fullName: string;
     text: string;
-    private readonly DEFIANCE_BAND_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
