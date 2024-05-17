@@ -11,9 +11,7 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   
-  const discardPokemon = player.discard.cards
-    .filter(card => card.superType === SuperType.POKEMON) as PokemonCard[];
-
+  const discardPokemon = player.discard.cards.filter(card => card.superType === SuperType.POKEMON) as PokemonCard[];
   const dragonTypePokemon = discardPokemon.filter(card => card.cardType === CardType.DRAGON);
 
 

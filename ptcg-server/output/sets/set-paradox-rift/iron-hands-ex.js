@@ -34,8 +34,12 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
         this.setNumber = '70';
         this.name = 'Iron Hands ex';
         this.fullName = 'Iron Hands ex PAR';
+        this.usedAmpYouVeryMuch = false;
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            this.usedAmpYouVeryMuch = true;
+        }
         // Delta Plus
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target === effect.player.active) {
             const player = effect.player;
@@ -49,7 +53,11 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
             if (pokemonCard !== this) {
                 return state;
             }
-            effect.prizeCount += 1;
+            // Check if the attack that caused the KnockOutEffect is "Amp You Very Much"
+            if (this.usedAmpYouVeryMuch === true) {
+                effect.prizeCount += 1;
+                this.usedAmpYouVeryMuch = false;
+            }
             return state;
         }
         return state;

@@ -1,14 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PecharuntexArt = exports.OkidogiexArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.FezandipitiexArt = exports.ColresssObsessionArt = exports.BindingMochiArt = void 0;
+exports.RowlettArt = exports.PecharuntexArt = exports.OkidogiexArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.FezandipitiexArt = exports.DecidueyeArt = exports.DartrixArt = exports.ColresssObsessionArt = exports.BindingMochiArt = void 0;
 const binding_mochi_1 = require("./binding-mochi");
 const colresss_obsession_1 = require("./colresss-obsession");
+const dartrix_1 = require("./dartrix");
+const decidueye_1 = require("./decidueye");
 const fezandipiti_ex_1 = require("./fezandipiti-ex");
 const kyurem_1 = require("./kyurem");
 const munkidori_ex_1 = require("./munkidori-ex");
 const neutral_center_1 = require("./neutral-center");
 const okidogi_ex_1 = require("./okidogi-ex");
 const pecharunt_ex_1 = require("./pecharunt-ex");
+const rowlett_1 = require("./rowlett");
 class BindingMochiArt extends binding_mochi_1.BindingMochi {
     constructor() {
         super(...arguments);
@@ -23,6 +26,20 @@ class ColresssObsessionArt extends colresss_obsession_1.ColresssObsession {
     }
 }
 exports.ColresssObsessionArt = ColresssObsessionArt;
+class DartrixArt extends dartrix_1.Dartrix {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GNsTyzGXAAAGrF1?format=png&name=900x900';
+    }
+}
+exports.DartrixArt = DartrixArt;
+class DecidueyeArt extends decidueye_1.Decidueye {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GNsUyQVWYAEzThJ?format=png&name=900x900';
+    }
+}
+exports.DecidueyeArt = DecidueyeArt;
 class FezandipitiexArt extends fezandipiti_ex_1.Fezandipitiex {
     constructor() {
         super(...arguments);
@@ -65,3 +82,10 @@ class PecharuntexArt extends pecharunt_ex_1.Pecharuntex {
     }
 }
 exports.PecharuntexArt = PecharuntexArt;
+class RowlettArt extends rowlett_1.Rowlett {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GNsUjlwXEAAUjBC?format=png&name=900x900';
+    }
+}
+exports.RowlettArt = RowlettArt;

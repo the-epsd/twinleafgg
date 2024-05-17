@@ -1,69 +1,79 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage,
-  ChooseAttackPrompt, Attack, GameLog, PowerType, GameError } from '../../game';
+  ChooseAttackPrompt, PowerType,
+  EnergyMap,
+  GameError,
+  Player,
+  Card} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 
-function* useApexDragon(next: Function, store: StoreLike, state: State,
-  effect: PowerEffect): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-  
-  const discardPokemon = player.discard.cards
-    .filter(card => card.superType === SuperType.POKEMON) as PokemonCard[];
+// function* useApexDragon(next: Function, store: StoreLike, state: State,
+//   effect: PowerEffect): IterableIterator<State> {
+//   const player = effect.player;
+//   const opponent = StateUtils.getOpponent(state, player);
 
-  const basicPokemon = discardPokemon.filter(card => card.stage === Stage.BASIC && card.tags === undefined);
+//   const discardPokemon = player.discard.cards.filter(card => card.superType === SuperType.POKEMON) as PokemonCard[];
 
-  if (basicPokemon.length === 0) {
-    throw new GameError(GameMessage.CANNOT_USE_POWER);
-  }
+//   const basicPokemon = discardPokemon.filter(card => card.stage === Stage.BASIC);
 
-  let selected: any;
-  yield store.prompt(state, new ChooseAttackPrompt(
-    player.id,
-    GameMessage.CHOOSE_ATTACK_TO_COPY,
-    basicPokemon,
-    { allowCancel: false }
-  ), result => {
-    selected = result;
-    next();
-  });
+//   // const blocked: { index: number; attack: string }[] = [];
+//   // player.deck.cards.forEach((card, index) => {
+//   //   if (card instanceof PokemonCard && card.tags !== undefined) {
+//   //     blocked.push({ index, attack: card.attacks[0].name });
+//   //   }
+//   // });
 
-  const attack: Attack | null = selected;
+//   // if (basicPokemon.length === 0) {
+//   //   throw new GameError(GameMessage.CANNOT_USE_POWER);
+//   // }
 
-  // Get energy required for the attack
-  const requiredEnergy = attack?.cost;
+//   let selected: any;
+//   yield store.prompt(state, new ChooseAttackPrompt(
+//     player.id,
+//     GameMessage.CHOOSE_ATTACK_TO_COPY,
+//     basicPokemon,
+//     { allowCancel: false }
+//   ), result => {
+//     selected = result;
+//     next();
+//   });
 
-  // Check if Ditto (the active Pokemon) has the required energy
-  if (!player.active.cards.some(c => c instanceof PokemonCard && requiredEnergy?.includes(c.cardType))) {
-    return state;
-  }
-  if (!attack) {
-    return state;
-  }
+//   const attack: Attack | null = selected;
 
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: attack.name
-  });
-  
-  // Perform attack
-  const attackEffect = new AttackEffect(player, opponent, attack);
-  store.reduceEffect(state, attackEffect);
-  
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-  
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-  
-  return state;
-}
+//   // Get energy required for the attack
+//   const requiredEnergy = attack?.cost;
+
+//   // Check if Ditto (the active Pokemon) has the required energy
+//   if (!player.active.cards.some(c => c instanceof PokemonCard && requiredEnergy?.includes(c.cardType))) {
+//     return state;
+//   }
+//   if (!attack) {
+//     return state;
+//   }
+
+//   store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
+//     name: player.name,
+//     attack: attack.name
+//   });
+
+//   // Perform attack
+//   const attackEffect = new AttackEffect(player, opponent, attack);
+//   store.reduceEffect(state, attackEffect);
+
+//   if (store.hasPrompts()) {
+//     yield store.waitPrompt(state, () => next());
+//   }
+
+//   if (attackEffect.damage > 0) {
+//     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+//     state = store.reduceEffect(state, dealDamage);
+//   }
+
+//   return state;
+// }
 
 
 export class Ditto extends PokemonCard {
@@ -99,12 +109,95 @@ export class Ditto extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      const generator = useApexDragon(() => generator.next(), store, state, effect);
-      return generator.next().value;
-    }
+    //     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    //       const generator = useApexDragon(() => generator.next(), store, state, effect);
+    //       return generator.next().value;
+    //     }
   
+    //     return state;
+    //   }
+  
+    // }
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+      const pokemonCard = player.active.getPokemonCard();
+
+      if (pokemonCard !== this) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      // Build cards and blocked for Choose Attack prompt
+      const { pokemonCardsInDiscard2, blocked } = this.buildAttackList(state, store, player);
+
+      // No attacks to copy
+      if (pokemonCardsInDiscard2.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      return store.prompt(state, new ChooseAttackPrompt(
+        player.id,
+        GameMessage.CHOOSE_ATTACK_TO_COPY,
+        pokemonCardsInDiscard2,
+        { allowCancel: true, blocked }
+      ), attack => {
+        if (attack !== null) {
+          const useAttackEffect = new UseAttackEffect(player, attack);
+          store.reduceEffect(state, useAttackEffect);
+        }
+        return state;
+      });
+    }
     return state;
   }
-  
+
+
+  private buildAttackList(
+    state: State, store: StoreLike, player: Player
+  ): { pokemonCardsInDiscard2: PokemonCard[], blocked: { index: number, attack: string }[] } {
+
+    const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
+    store.reduceEffect(state, checkProvidedEnergyEffect);
+    const energyMap = checkProvidedEnergyEffect.energyMap;
+
+
+    const pokemonCardsInDiscard = player.discard.cards.filter(card => card.superType == SuperType.POKEMON) as PokemonCard[];
+    const pokemonCardsInDiscard2 = pokemonCardsInDiscard.filter(card => card.stage == Stage.BASIC);
+
+    const blocked: { index: number, attack: string }[] = [];
+    player.discard.cards.forEach((card: Card) => {
+      if (card.superType === SuperType.POKEMON && (card as PokemonCard).cardType) {
+        this.checkAttack(state, store, player, card as PokemonCard, energyMap, pokemonCardsInDiscard2, blocked);
+      }
+    });
+    
+
+    return { pokemonCardsInDiscard2, blocked };
+  }
+
+  private checkAttack(state: State, store: StoreLike, player: Player,
+    card: PokemonCard, energyMap: EnergyMap[], pokemonCardsInDiscard2: PokemonCard[],
+    blocked: { index: number, attack: string }[]
+  ) {
+    {
+      // No need to include Mew Ex to the list
+      if (card instanceof Ditto) {
+        return;
+      }
+      const attacks = card.attacks.filter(attack => {
+        const checkAttackCost = new CheckAttackCostEffect(player, attack);
+        state = store.reduceEffect(state, checkAttackCost);
+        return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost);
+      });
+      const index = pokemonCardsInDiscard2.length;
+      pokemonCardsInDiscard2.push(card);
+      card.attacks.forEach(attack => {
+        if (!attacks.includes(attack)) {
+          blocked.push({ index, attack: attack.name });
+        }
+        return state;
+      });
+    }
+    return state;
+  }
 }

@@ -3,7 +3,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { GamePhase, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 
 export class IronHandsex extends PokemonCard {
 
@@ -46,7 +46,13 @@ export class IronHandsex extends PokemonCard {
 
   public fullName: string = 'Iron Hands ex PAR';
 
+  private usedAmpYouVeryMuch = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      this.usedAmpYouVeryMuch = true;
+    }
 
     // Delta Plus
     if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
@@ -64,11 +70,15 @@ export class IronHandsex extends PokemonCard {
         return state;
       }
 
-      effect.prizeCount += 1;
+      // Check if the attack that caused the KnockOutEffect is "Amp You Very Much"
+      if (this.usedAmpYouVeryMuch === true) {
+        effect.prizeCount += 1;
+        this.usedAmpYouVeryMuch = false;
+      }
+
       return state;
     }
 
     return state;
   }
-
 }

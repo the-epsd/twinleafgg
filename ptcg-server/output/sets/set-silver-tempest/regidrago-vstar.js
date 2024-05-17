@@ -9,8 +9,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 function* useApexDragon(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
-    const discardPokemon = player.discard.cards
-        .filter(card => card.superType === card_types_1.SuperType.POKEMON);
+    const discardPokemon = player.discard.cards.filter(card => card.superType === card_types_1.SuperType.POKEMON);
     const dragonTypePokemon = discardPokemon.filter(card => card.cardType === card_types_1.CardType.DRAGON);
     let selected;
     yield store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, dragonTypePokemon, { allowCancel: false }), result => {

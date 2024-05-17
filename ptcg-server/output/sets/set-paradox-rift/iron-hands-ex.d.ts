@@ -23,5 +23,6 @@ export declare class IronHandsex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    private usedAmpYouVeryMuch;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

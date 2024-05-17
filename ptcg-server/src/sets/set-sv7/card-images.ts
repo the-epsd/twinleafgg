@@ -1,11 +1,14 @@
 import { BindingMochi } from './binding-mochi';
 import { ColresssObsession } from './colresss-obsession';
+import { Dartrix } from './dartrix';
+import { Decidueye } from './decidueye';
 import { Fezandipitiex } from './fezandipiti-ex';
 import { Kyurem } from './kyurem';
 import { Munkidoriex } from './munkidori-ex';
 import { NeutralCenter } from './neutral-center';
 import { Okidogiex } from './okidogi-ex';
 import { Pecharuntex } from './pecharunt-ex';
+import { Rowlett } from './rowlett';
 
 export class BindingMochiArt extends BindingMochi {
   public cardImage = 'https://pokemonproxies.com/static/media/Binding_Mochi-057-6a.688952c16887aa68ae41.png';
@@ -13,6 +16,14 @@ export class BindingMochiArt extends BindingMochi {
 
 export class ColresssObsessionArt extends ColresssObsession {
   public cardImage = 'https://pokemonproxies.com/static/media/Colress\'s_Tenacity-059-6a.090977514fede0a7fe80.png';
+}
+
+export class DartrixArt extends Dartrix {
+  public cardImage = 'https://pbs.twimg.com/media/GNsTyzGXAAAGrF1?format=png&name=900x900';
+}
+
+export class DecidueyeArt extends Decidueye {
+  public cardImage = 'https://pbs.twimg.com/media/GNsUyQVWYAEzThJ?format=png&name=900x900';
 }
 
 export class FezandipitiexArt extends Fezandipitiex {
@@ -37,4 +48,8 @@ export class OkidogiexArt extends Okidogiex {
 
 export class PecharuntexArt extends Pecharuntex {
   public cardImage = 'https://pokemonproxies.com/static/media/Pecharunt_ex-039-6a.b69e19ce32f2955552e0.png';
+}
+
+export class RowlettArt extends Rowlett {
+  public cardImage = 'https://pbs.twimg.com/media/GNsUjlwXEAAUjBC?format=png&name=900x900';
 }
