@@ -23,6 +23,7 @@ import { Jirachi } from './jirachi';
 import { Klawf } from './klawf';
 import { Latios } from './latios';
 import { LuxuriousCape } from './luxurious-cape';
+import { Mela } from './mela';
 import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
 import { Morpeko } from './morpeko';
@@ -143,6 +144,10 @@ export class LatiosArt extends Latios {
 
 export class LuxuriousCapeArt extends LuxuriousCape {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_166_R_EN_LG.png';
+}
+
+export class MelaArt extends Mela {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_167_R_EN_LG.png';
 }
 
 export class MewtwoexArt extends Mewtwoex {

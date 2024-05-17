@@ -23,6 +23,7 @@ import { Jirachi } from './jirachi';
 import { Klawf } from './klawf';
 import { Latios } from './latios';
 import { LuxuriousCape } from './luxurious-cape';
+import { Mela } from './mela';
 import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
 import { Morpeko } from './morpeko';
@@ -117,6 +118,9 @@ export declare class LatiosArt extends Latios {
     cardImage: string;
 }
 export declare class LuxuriousCapeArt extends LuxuriousCape {
+    cardImage: string;
+}
+export declare class MelaArt extends Mela {
     cardImage: string;
 }
 export declare class MewtwoexArt extends Mewtwoex {

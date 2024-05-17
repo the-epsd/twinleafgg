@@ -26,6 +26,7 @@ exports.setParadoxRift = [
     new card_images_1.KlawfArt(),
     new card_images_1.LatiosArt(),
     new card_images_1.LuxuriousCapeArt(),
+    new card_images_1.MelaArt(),
     new card_images_1.MewtwoexArt(),
     new card_images_1.MiniorArt(),
     new card_images_1.MorpekoArt(),
