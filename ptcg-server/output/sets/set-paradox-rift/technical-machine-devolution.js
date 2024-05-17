@@ -27,7 +27,7 @@ class TechnicalMachineDevolution extends trainer_card_1.TrainerCard {
         this.text = 'The Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) If this card is attached to 1 of your Pokémon, discard it at the end of your turn.';
     }
     reduceEffect(store, state, effect) {
-        var _a, _b, _c;
+        var _a;
         if (effect instanceof check_effects_1.CheckPokemonAttacksEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tools.includes(this)) &&
             !effect.attacks.includes(this.attacks[0])) {
             effect.attacks.push(this.attacks[0]);
@@ -35,27 +35,38 @@ class TechnicalMachineDevolution extends trainer_card_1.TrainerCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (((_c = (_b = opponent.active) === null || _b === void 0 ? void 0 : _b.getPokemonCard()) === null || _c === void 0 ? void 0 : _c.stage) != card_types_1.Stage.BASIC) {
-                const latestEvolution = opponent.active.cards[opponent.active.cards.length - 1];
-                opponent.active.moveCardsTo([latestEvolution], opponent.hand);
-                opponent.active.clearEffects();
+            // Look through all known cards to find out if Pokemon can evolve
+            const cm = game_1.CardManager.getInstance();
+            const evolutions = cm.getAllCards().filter(c => {
+                return c instanceof game_1.PokemonCard && c.stage !== card_types_1.Stage.BASIC;
+            });
+            // Build possible evolution card names
+            const evolutionNames = [];
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (list, card, target) => {
+                const valid = evolutions.filter(e => e.evolvesFrom === card.name && e.stage === card.stage + 1);
+                valid.forEach(c => {
+                    if (!evolutionNames.includes(c.name)) {
+                        evolutionNames.push(c.name);
+                    }
+                });
+            });
+            if (opponent.active.getPokemonCard()) {
+                const activeEvolutions = opponent.active.cards.filter(card => evolutionNames.includes(card.name));
+                opponent.active.moveCardsTo(activeEvolutions, opponent.hand);
             }
             opponent.bench.forEach(benchSpot => {
-                var _a;
-                if (((_a = benchSpot.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.stage) != card_types_1.Stage.BASIC) {
-                    const latestEvolution = benchSpot.cards[benchSpot.cards.length - 1];
-                    benchSpot.moveCardsTo([latestEvolution], opponent.hand);
-                    benchSpot.clearEffects();
+                if (benchSpot.getPokemonCard()) {
+                    const benchEvolutions = benchSpot.cards.filter(card => evolutionNames.includes(card.name));
+                    benchSpot.moveCardsTo(benchEvolutions, opponent.hand);
                 }
             });
-            if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
-                const player = effect.player;
-                const tool = effect.player.active.tool;
-                if (tool.name === this.name) {
-                    player.active.moveCardTo(tool, player.discard);
-                    player.active.tool = undefined;
-                }
-                return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
+            const player = effect.player;
+            const tool = effect.player.active.tool;
+            if (tool.name === this.name) {
+                player.active.moveCardTo(tool, player.discard);
+                player.active.tool = undefined;
             }
             return state;
         }

@@ -1,4 +1,4 @@
-import { Attack, StateUtils } from '../../game';
+import { Attack, CardManager, PlayerType, PokemonCard, StateUtils } from '../../game';
 import { CardType, Stage, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
@@ -44,39 +44,53 @@ export class TechnicalMachineDevolution extends TrainerCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
-
-      if (opponent.active?.getPokemonCard()?.stage != Stage.BASIC) {
-        const latestEvolution = opponent.active.cards[opponent.active.cards.length - 1];
-        opponent.active.moveCardsTo([latestEvolution], opponent.hand);
-        opponent.active.clearEffects();
+    
+      // Look through all known cards to find out if Pokemon can evolve
+      const cm = CardManager.getInstance();
+      const evolutions = cm.getAllCards().filter(c => {
+        return c instanceof PokemonCard && c.stage !== Stage.BASIC;
+      }) as PokemonCard[];
+    
+      // Build possible evolution card names
+      const evolutionNames: string[] = [];
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (list, card, target) => {
+        const valid = evolutions.filter(e => e.evolvesFrom === card.name && e.stage === card.stage + 1);
+        valid.forEach(c => {
+          if (!evolutionNames.includes(c.name)) {
+            evolutionNames.push(c.name);
+          }
+        });
+      });
+    
+      if (opponent.active.getPokemonCard()) {
+        const activeEvolutions = opponent.active.cards.filter(card => evolutionNames.includes(card.name));
+        opponent.active.moveCardsTo(activeEvolutions, opponent.hand);
       }
-
+    
       opponent.bench.forEach(benchSpot => {
-        if (benchSpot.getPokemonCard()?.stage != Stage.BASIC) {
-          const latestEvolution = benchSpot.cards[benchSpot.cards.length - 1];
-          benchSpot.moveCardsTo([latestEvolution], opponent.hand);
-          benchSpot.clearEffects();
+        if (benchSpot.getPokemonCard()) {
+          const benchEvolutions = benchSpot.cards.filter(card => evolutionNames.includes(card.name));
+          benchSpot.moveCardsTo(benchEvolutions, opponent.hand);
         }
       });
+    }
+    
 
 
-      if (effect instanceof EndTurnEffect && effect.player.active.tool) {
-        const player = effect.player;
-        const tool = effect.player.active.tool;
-        if (tool.name === this.name) {
-          player.active.moveCardTo(tool, player.discard);
-          player.active.tool = undefined;
-        }
-
-        return state;
+    if (effect instanceof EndTurnEffect && effect.player.active.tool) {
+      const player = effect.player;
+      const tool = effect.player.active.tool;
+      if (tool.name === this.name) {
+        player.active.moveCardTo(tool, player.discard);
+        player.active.tool = undefined;
       }
 
       return state;
     }
+
     return state;
   }
 }
+
