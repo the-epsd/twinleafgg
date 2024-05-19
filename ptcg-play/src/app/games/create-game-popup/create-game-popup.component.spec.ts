@@ -13,7 +13,15 @@ describe('CreateGamePopupComponent', () => {
   let data: CreateGamePopupData;
 
   beforeEach(waitForAsync(() => {
-    data = { decks: [ { value: 1, viewValue: 'name' } ] };
+    data = { decks: [{ value: {
+      id: 1, name: 'name',
+      cardType: [],
+      cardTag: [],
+      cards: [],
+      format: [],
+      isValid: false,
+      deckItems: []
+    }, viewValue: 'name' }] };
 
     TestBed.configureTestingModule({
       imports: [
@@ -21,14 +29,14 @@ describe('CreateGamePopupComponent', () => {
         MatCheckboxModule,
         TranslateModule.forRoot()
       ],
-      declarations: [ CreateGamePopupComponent ],
+      declarations: [CreateGamePopupComponent],
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: data }
       ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
