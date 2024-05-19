@@ -15,6 +15,8 @@ export class KyuremVMAX extends PokemonCard {
   public evolvesFrom = 'Kyurem V';
 
   public cardType: CardType = CardType.WATER; 
+
+  public cardTypez: CardType = CardType.KYUREM_VMAX;
    
   public hp = 330;
 

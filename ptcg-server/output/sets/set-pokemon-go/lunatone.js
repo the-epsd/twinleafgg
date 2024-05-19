@@ -12,6 +12,7 @@ class Lunatone extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.BASIC;
         this.regulationMark = 'F';
         this.cardType = card_types_1.CardType.PSYCHIC;
+        this.cardTypez = card_types_1.CardType.LUNATONE;
         this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.DARK }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];

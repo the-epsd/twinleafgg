@@ -13,6 +13,8 @@ export class Murkrow extends PokemonCard {
 
   public cardType: CardType = CardType.DARK;
 
+  public cardTypez: CardType = CardType.MURKROW;
+
   public hp: number = 60;
 
   public weakness = [{ type: CardType.LIGHTNING }];

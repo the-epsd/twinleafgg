@@ -14,6 +14,7 @@ class GiratinaVSTAR extends game_1.PokemonCard {
         this.evolvesFrom = 'Giratina V';
         this.regulationMark = 'F';
         this.cardType = card_types_1.CardType.DRAGON;
+        this.cardTypez = card_types_1.CardType.GIRATINA_VSTAR;
         this.hp = 280;
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
@@ -55,21 +56,21 @@ class GiratinaVSTAR extends game_1.PokemonCard {
                 }
                 player.usedVSTAR = true;
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                const player = effect.player;
-                return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false }), targets => {
-                    if (targets && targets.length > 0) {
-                        const target = targets[0];
-                        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, target, // Card source is target Pokemon
-                        { superType: card_types_1.SuperType.ENERGY }, { min: 2, max: 2, allowCancel: false }), selected => {
-                            const cards = selected || [];
-                            if (cards.length > 0) {
-                                target.moveCardsTo(cards, player.lostzone);
-                            }
-                        });
-                    }
-                });
-            }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 6, allowCancel: false }), targets => {
+                if (targets && targets.length > 0) {
+                    const target = targets[0];
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, target, // Card source is target Pokemon
+                    { superType: card_types_1.SuperType.ENERGY }, { min: 2, max: 2, allowCancel: false }), selected => {
+                        const cards = selected || [];
+                        if (cards.length > 0) {
+                            target.moveCardsTo(cards, player.lostzone);
+                        }
+                    });
+                }
+            });
         }
         return state;
     }

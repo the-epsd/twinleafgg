@@ -60,7 +60,23 @@ export declare enum CardType {
     DARK = 9,
     FIRE = 10,
     DRAGON = 11,
-    FAIRY = 12
+    FAIRY = 12,
+    CHARIZARD_EX = 13,
+    PIDGEOT_EX = 14,
+    GIRATINA_VSTAR = 15,
+    ARCEUS_VSTAR = 16,
+    COMFEY = 17,
+    SABLEYE = 18,
+    RAGING_BOLT_EX = 19,
+    SOLROCK = 20,
+    LUNATONE = 21,
+    KYUREM_VMAX = 22,
+    MURKROW = 23,
+    FLAMIGO = 24,
+    CHIEN_PAO_EX = 25,
+    BAXCALIBUR = 26,
+    SNORLAX_STALL = 27,
+    LUGIA_VSTAR = 28
 }
 export declare enum SpecialCondition {
     PARALYZED = 0,

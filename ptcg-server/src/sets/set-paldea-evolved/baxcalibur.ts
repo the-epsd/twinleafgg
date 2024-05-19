@@ -17,6 +17,8 @@ export class Baxcalibur extends PokemonCard {
 
   public cardType: CardType = CardType.WATER;
 
+  public cardTypez: CardType = CardType.BAXCALIBUR;
+
   public hp: number = 160;
 
   public weakness = [{ type: CardType.METAL }];

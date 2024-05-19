@@ -17,6 +17,8 @@ export class Comfey extends PokemonCard {
   public regulationMark = 'F';
   
   public cardType: CardType = CardType.PSYCHIC;
+
+  public cardTypez: CardType = CardType.COMFEY;
   
   public hp: number = 70;
   

@@ -36,6 +36,7 @@ class Flamigo extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'G';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.COLORLESS;
+        this.cardTypez = card_types_1.CardType.FLAMIGO;
         this.hp = 110;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];

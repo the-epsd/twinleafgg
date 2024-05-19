@@ -49,6 +49,8 @@ export class Flamigo extends PokemonCard {
 
   public cardType: CardType = CardType.COLORLESS;
 
+  public cardTypez: CardType = CardType.FLAMIGO;
+
   public hp: number = 110;
 
   public weakness = [{ type: CardType.LIGHTNING }];

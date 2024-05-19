@@ -11,6 +11,7 @@
 
   ptcg-sidebar {
     border-left: $sidebar-side-border;
+    background-color: mat.get-color-from-palette($background, dialog);
     color: mat.get-color-from-palette($foreground, text);
   }
 }

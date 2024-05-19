@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType, CardTag, Archetype } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils,
   GameMessage, PlayerType, SlotType, ConfirmPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -18,6 +18,8 @@ export class Charizardex extends PokemonCard {
   public evolvesFrom = 'Charmeleon';
 
   public cardType: CardType = CardType.DARK;
+
+  public cardTypez: CardType = CardType.CHARIZARD_EX;
 
   public hp: number = 330;
 
@@ -56,8 +58,6 @@ export class Charizardex extends PokemonCard {
   public name: string = 'Charizard ex';
 
   public fullName: string = 'Charizard ex OBF';
-
-  public archetype: Archetype = Archetype.CHARIZARD;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

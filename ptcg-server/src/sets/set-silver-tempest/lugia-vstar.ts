@@ -17,6 +17,8 @@ export class LugiaVSTAR extends PokemonCard {
 
   public cardType: CardType = CardType.COLORLESS;
 
+  public cardTypez: CardType = CardType.LUGIA_VSTAR;
+
   public hp: number = 280;
 
   public weakness = [{ type: CardType.LIGHTNING }];

@@ -1,12 +1,13 @@
 import { AttackEffect, PowerEffect } from '../effects/game-effects';
 import { Marker } from '../state/card-marker';
 import { Card } from './card';
-import { SuperType, Stage, PokemonType, CardType, Format, Archetype } from './card-types';
+import { SuperType, Stage, PokemonType, CardType, Format } from './card-types';
 export class PokemonCard extends Card {
     constructor() {
         super(...arguments);
         this.superType = SuperType.POKEMON;
         this.cardType = CardType.NONE;
+        this.cardTypez = CardType.NONE;
         this.cardTag = [];
         this.pokemonType = PokemonType.NORMAL;
         this.evolvesFrom = '';
@@ -21,7 +22,7 @@ export class PokemonCard extends Card {
         this.marker = new Marker();
         this.movedToActiveThisTurn = false;
         this.tools = [];
-        this.archetype = Archetype.NONE;
+        this.archetype = [];
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof AttackEffect) {

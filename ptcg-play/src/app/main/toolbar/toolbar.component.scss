@@ -17,6 +17,7 @@ mat-toolbar {
   @include mat.elevation(5);
   @include ptcg-toolbar-height();
   flex: 0 0 auto;
+  background-color: #0E1117;
 
   .epsd-spacer {
     flex: 1 1 auto;

@@ -35,9 +35,6 @@
   }
 
   &[type="fire"] {
-    // height: 39px;
-    // width: 44px;
-    // background-image: url(~src/assets/charizard.png);
     background-position: 0 0;
   }
 
@@ -56,10 +53,101 @@
   &[type="energyless"] {
     background-position: -50px -50px;
   }
+}
 
-  &[type="charizard"] {
-    height: 39px;
+.ptcg-archetype {
+  background-image: url(~src/assets/energy-types.png);
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 25px;
+  margin: 0 0px;
+  width: 25px;
+
+  &[archetype="charizard"] {
     width: 44px;
+    height: 39px;
     background-image: url(~src/assets/charizard.png);
+  }
+
+  &[archetype="pidgeot"] {
+    width: 34px;
+    height: 35px;
+    background-image: url(~src/assets/pidgeot.png);
+  }
+
+  &[archetype="arceus"] {
+    width: 35px;
+    height: 41px;
+    background-image: url(~src/assets/arceus.png);
+  }
+
+  &[archetype="giratina"] {
+    height: 44px;
+    width: 39px;
+    background-image: url(~src/assets/giratina.png);
+  }
+
+  &[archetype="chien-pao"] {
+    width: 42px;
+    height: 30px;
+    background-image: url(~src/assets/chien-pao.png);
+  }
+
+  &[archetype="baxcalibur"] {
+    width: 33px;
+    height: 32px;
+    background-image: url(~src/assets/baxcalibur.png);
+  }
+
+  &[archetype="comfey"] {
+    width: 31px;
+    height: 34px;
+    background-image: url(~src/assets/comfey.png);
+  }
+
+  &[archetype="sableye"] {
+    width: 31px;
+    height: 30px;
+    background-image: url(~src/assets/sableye.png);
+  }
+
+  &[archetype="raging-bolt"] {
+    width: 39px;
+    height: 44px;
+    background-image: url(~src/assets/raging-bolt.png);
+  }
+
+  &[archetype="solrock"] {
+    width: 30px;
+    height: 31px;
+    background-image: url(~src/assets/solrock.png);
+  }
+
+  &[archetype="lunatone"] {
+    width: 18px;
+    height: 24px;
+    background-image: url(~src/assets/lunatone.png);
+  }
+
+  &[archetype="kyurem"] {
+    width: 47px;
+    height: 31px;
+    background-image: url(~src/assets/kyurem.png);
+  }
+
+  &[archetype="murkrow"] {
+    width: 22px;
+    height: 28px;
+    background-image: url(~src/assets/murkrow.png);
+  }
+
+  &[archetype="flamigo"] {
+    width: 24px;
+    height: 37px;
+    background-image: url(~src/assets/flamigo.png);
+  }
+  
+  &[archetype="energyless"] {
+    background-position: -50px -50px;
   }
 }

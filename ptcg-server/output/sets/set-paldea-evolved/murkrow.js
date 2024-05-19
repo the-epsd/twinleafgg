@@ -12,6 +12,7 @@ class Murkrow extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'G';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.DARK;
+        this.cardTypez = card_types_1.CardType.MURKROW;
         this.hp = 60;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];

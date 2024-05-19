@@ -14,6 +14,7 @@ class RagingBoltex extends pokemon_card_1.PokemonCard {
         this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.ANCIENT];
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.DRAGON;
+        this.cardTypez = card_types_1.CardType.RAGING_BOLT_EX;
         this.hp = 240;
         this.weakness = [];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

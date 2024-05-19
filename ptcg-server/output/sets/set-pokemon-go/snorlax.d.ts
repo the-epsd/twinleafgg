@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class Snorlax extends PokemonCard {
     stage: Stage;
     cardType: CardType;
+    cardTypez: CardType;
     hp: number;
     weakness: {
         type: CardType;

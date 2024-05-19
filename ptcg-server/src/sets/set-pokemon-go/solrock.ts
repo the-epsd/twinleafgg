@@ -14,6 +14,8 @@ export class Solrock extends PokemonCard {
 
   public cardType: CardType = CardType.FIGHTING;
 
+  public cardTypez: CardType = CardType.SOLROCK;
+
   public hp: number = 90;
 
   public weakness = [{ type: CardType.GRASS }];

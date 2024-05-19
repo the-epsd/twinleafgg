@@ -4,7 +4,7 @@ import { Marker } from '../state/card-marker';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { Card } from './card';
-import { SuperType, Stage, PokemonType, CardType, CardTag, Format, Archetype } from './card-types';
+import { SuperType, Stage, PokemonType, CardType, CardTag, Format } from './card-types';
 import { Attack, Weakness, Resistance, Power } from './pokemon-types';
 import { TrainerCard } from './trainer-card';
 
@@ -13,6 +13,8 @@ export abstract class PokemonCard extends Card {
   public superType: SuperType = SuperType.POKEMON;
 
   public cardType: CardType = CardType.NONE;
+
+  public cardTypez: CardType = CardType.NONE;
 
   public cardTag: CardTag[] = [];
 
@@ -42,7 +44,7 @@ export abstract class PokemonCard extends Card {
 
   public tools: TrainerCard[] = [];
 
-  public archetype: Archetype = Archetype.NONE;
+  public archetype: CardType[] = [];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect){

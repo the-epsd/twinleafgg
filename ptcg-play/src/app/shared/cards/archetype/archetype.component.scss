@@ -1,56 +1,92 @@
+
 .ptcg-archetype {
   background-image: url(~src/assets/energy-types.png);
   background-repeat: no-repeat;
   display: inline-block;
-  height: 25px;
-  margin: 0 2px;
-  width: 25px;
+  height: 32px;
+  margin: 0 0px;
+  width: 36px;
 
-  &[type="charizard"] {
-    background-position: -25px -50px;
+  &[archetype="charizard"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/charizard.png);
   }
 
-  &[type="fighting"] {
-    background-position: -50px -25px;
+  &[archetype="pidgeot"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/pidgeot.png);
   }
 
-  &[type="psychic"] {
-    background-position: -75px -25px;
+  &[archetype="arceus"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/arceus.png);
   }
 
-  &[type="water"] {
-    background-position: -75px -50px;
+  &[archetype="giratina"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/giratina.png);
   }
 
-  &[type="lightning"] {
-    background-position: -25px -25px;
+  &[archetype="chien-pao"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/chien-pao.png);
   }
 
-  &[type="metal"] {
-    background-position: -75px 0;
+  &[archetype="baxcalibur"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/baxcalibur.png);
   }
 
-  &[type="darkness"] {
-    background-position: 0 -50px;
+  &[archetype="comfey"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/comfey.png);
   }
 
-  &[type="fire"] {
-    background-position: 0 0;
+  &[archetype="sableye"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/sableye.png);
   }
 
-  &[type="dragon"] {
-    background-position: 0 -25px;
+  &[archetype="raging-bolt"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/raging-bolt.png);
   }
 
-  &[type="fairy"] {
-    background-position: -50px 0;
+  &[archetype="solrock"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/solrock.png);
   }
 
-  &[type="colorless"] {
-    background-position: -25px 0;
+  &[archetype="lunatone"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/lunatone.png);
   }
 
-  &[type="energyless"] {
+  &[archetype="kyurem"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/kyurem.png);
+  }
+
+  &[archetype="murkrow"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/murkrow.png);
+  }
+
+  &[archetype="flamigo"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/flamigo.png);
+  }
+  &[archetype="snorlax"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/snorlax.png);
+  }
+
+  &[archetype="lugia"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/lugia.png);
+  }
+  
+  &[archetype="energyless"] {
     background-position: -50px -50px;
   }
 }

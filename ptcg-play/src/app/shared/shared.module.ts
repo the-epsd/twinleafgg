@@ -21,6 +21,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { SidebarContainerComponent } from './sidebar/sidebar-container.component';
 import { UserInfoModule } from './user-info/user-info.module';
 import { ValidationModule } from './validation/validation.module';
+import { ArchetypeComponent } from './cards/archetype/archetype.component';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { ValidationModule } from './validation/validation.module';
     CardsModule,
     ContentComponent,
     EnergyComponent,
+    ArchetypeComponent,
     FileInputComponent,
     ImageCacheModule,
     InfoComponent,

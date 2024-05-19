@@ -13,7 +13,7 @@
 
   ptcg-toolbar {
     .ptcg-logged-user {
-      background-color: $logged-user-background-color;
+      background-color: #0E1117;
       color: $logged-user-text-color;
     }
   }
@@ -23,7 +23,7 @@
       color: $sidenav-deleted-text-color;
     }
     .ptcg-sidenav-header {
-      background-color: $sidenav-table-header-background-color;
+      background-color: rgba(0, 0, 0, 0);
     }
   }
 }

@@ -18,6 +18,8 @@ export class GiratinaVSTAR extends PokemonCard {
   public regulationMark = 'F';
   
   public cardType: CardType = CardType.DRAGON;
+
+  public cardTypez: CardType = CardType.GIRATINA_VSTAR;
   
   public hp: number = 280;
   
@@ -73,41 +75,39 @@ export class GiratinaVSTAR extends PokemonCard {
         }
         player.usedVSTAR = true;
       }
+    }
     
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
-        const player = effect.player;
+      const player = effect.player;
     
-        return store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH], 
-          { allowCancel: false }
-        ), targets => {
-          if (targets && targets.length > 0) {
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH], 
+        { min: 1, max: 6, allowCancel: false }
+      ), targets => {
+        if (targets && targets.length > 0) {
   
-            const target = targets[0];
+          const target = targets[0];
   
-            return store.prompt(state, new ChooseCardsPrompt(
-              player.id,
-              GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-              target, // Card source is target Pokemon
-              { superType: SuperType.ENERGY },
-              { min: 2, max:2, allowCancel: false }
-            ), selected => {
-              const cards = selected || [];
-              if (cards.length > 0) {
+          return store.prompt(state, new ChooseCardsPrompt(
+            player.id,
+            GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+            target, // Card source is target Pokemon
+            { superType: SuperType.ENERGY },
+            { min: 2, max:2, allowCancel: false }
+          ), selected => {
+            const cards = selected || [];
+            if (cards.length > 0) {
       
-                target.moveCardsTo(cards, player.lostzone);
+              target.moveCardsTo(cards, player.lostzone);
 
-              }});
-          }});
-      }
-
+            }});
+        }});
     }
     return state;
   }
 }
-

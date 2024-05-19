@@ -18,6 +18,7 @@ import { ImageCacheModule } from '../image-cache/image-cache.module';
 import { MaterialModule } from '../material.module';
 import { TrainerTypeComponent } from './trainer-type/trainer-type.component';
 import { HoverHighlightComponent } from './hover-highlight/hover-highlight.component';
+import { ArchetypeComponent } from './archetype/archetype.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { HoverHighlightComponent } from './hover-highlight/hover-highlight.compo
     CardListPaneComponent,
     CardListPopupComponent,
     CardPlaceholderDirective,
+    ArchetypeComponent,
     EnergyComponent,
     DropHighlightDirective,
     TrainerTypeComponent,
@@ -52,6 +54,7 @@ import { HoverHighlightComponent } from './hover-highlight/hover-highlight.compo
     CardComponent,
     CardPlaceholderDirective,
     EnergyComponent,
+    ArchetypeComponent,
     DropHighlightDirective
   ]
 })

@@ -10,6 +10,7 @@ class PokemonCard extends card_1.Card {
         super(...arguments);
         this.superType = card_types_1.SuperType.POKEMON;
         this.cardType = card_types_1.CardType.NONE;
+        this.cardTypez = card_types_1.CardType.NONE;
         this.cardTag = [];
         this.pokemonType = card_types_1.PokemonType.NORMAL;
         this.evolvesFrom = '';
@@ -24,7 +25,7 @@ class PokemonCard extends card_1.Card {
         this.marker = new card_marker_1.Marker();
         this.movedToActiveThisTurn = false;
         this.tools = [];
-        this.archetype = card_types_1.Archetype.NONE;
+        this.archetype = [];
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect) {

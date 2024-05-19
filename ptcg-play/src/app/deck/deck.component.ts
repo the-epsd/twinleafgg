@@ -138,6 +138,25 @@ export class DeckComponent implements OnInit {
     });
   }
 
+  getDeckBackground(deckName: string): string {
+    let backgroundImage: string;
+  
+    // if (deckName.includes('Charizard')) {
+    //   backgroundImage = 'url("https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/b54fc451-b936-4668-b632-c3c090417702/Charizard+ex+OBF.png")';
+    // } else if (deckName.includes('Arceus')) {
+    //   backgroundImage = 'url("https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-55.jpg?height=200")';
+    // } else {
+      // backgroundImage = 'url("https://assets-prd.ignimgs.com/2024/02/27/pokemon-card-back-1709069641229.png?height=300")';
+    // }
+  
+    return `
+      linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.6)),
+      ${backgroundImage}
+    `;
+  }
+
+
+
   private handleError(error: ApiError): void {
     if (!error.handled) {
       this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));

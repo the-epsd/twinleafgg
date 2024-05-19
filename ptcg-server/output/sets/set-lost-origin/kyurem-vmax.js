@@ -14,6 +14,7 @@ class KyuremVMAX extends pokemon_card_1.PokemonCard {
         this.tags = [card_types_1.CardTag.POKEMON_VMAX];
         this.evolvesFrom = 'Kyurem V';
         this.cardType = card_types_1.CardType.WATER;
+        this.cardTypez = card_types_1.CardType.KYUREM_VMAX;
         this.hp = 330;
         this.weakness = [{ type: card_types_1.CardType.METAL }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

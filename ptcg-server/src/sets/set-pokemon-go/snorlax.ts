@@ -12,6 +12,8 @@ export class Snorlax extends PokemonCard {
 
   public cardType: CardType = CardType.COLORLESS;
 
+  public cardTypez: CardType = CardType.SNORLAX_STALL;
+
   public hp: number = 150;
 
   public weakness = [{ type: CardType.FIGHTING }];
