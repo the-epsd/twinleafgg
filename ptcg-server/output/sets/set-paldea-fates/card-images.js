@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.XatuArt = exports.UltraBallArt = exports.TechnicalMachineCrisisPunchArt = exports.NatuArt = exports.StudentsInPaldeaArt2 = exports.StudentsInPaldeaArt = exports.ScovillainexArt = exports.RareCandyArt = exports.ProfessorsResearch2Art = exports.ProfessorsResearchArt = exports.NemonaArt = exports.NestBallArt = exports.MoonlightHillArt = exports.MimeJrArt = exports.KilowattrelArt = exports.IonoArt = exports.HaunterArt = exports.GengarArt = exports.GastlyArt = exports.FrigibaxArt = exports.EspathraexArt = exports.ElectricGeneratorArt = exports.CliveArt = exports.CharizardexArt = exports.CharmeleonArt = exports.AtticusArt = void 0;
+exports.XatuArt = exports.UltraBallArt = exports.TechnicalMachineCrisisPunchArt = exports.NatuArt = exports.StudentsInPaldeaArt2 = exports.StudentsInPaldeaArt = exports.ScovillainexArt = exports.RareCandyArt = exports.ProfessorsResearch2Art = exports.ProfessorsResearchArt = exports.NemonaArt = exports.NestBallArt = exports.MoonlightHillArt = exports.MimikyuArt = exports.MimeJrArt = exports.KilowattrelArt = exports.IonoArt = exports.HaunterArt = exports.GengarArt = exports.GastlyArt = exports.FrigibaxArt = exports.EspathraexArt = exports.ElectricGeneratorArt = exports.CliveArt = exports.CharmanderArt = exports.CharizardexArt = exports.CharmeleonArt = exports.AtticusArt = void 0;
 const charizard_ex_1 = require("../set-obsidian-flames/charizard-ex");
+const charmander_1 = require("../set-obsidian-flames/charmander");
 const iono_1 = require("../set-paldea-evolved/iono");
+const mimikyu_1 = require("../set-paldea-evolved/mimikyu");
 const natu_1 = require("../set-paradox-rift/natu");
 const xatu_1 = require("../set-paradox-rift/xatu");
 const electric_generator_1 = require("../set-scarlet-and-violet/electric-generator");
@@ -50,6 +52,16 @@ class CharizardexArt extends charizard_ex_1.Charizardex {
     }
 }
 exports.CharizardexArt = CharizardexArt;
+class CharmanderArt extends charmander_1.Charmander {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_007_R_EN_LG.png';
+        this.fullName = 'Charmander PAF';
+        this.set = 'PAF';
+        this.setNumber = '7';
+    }
+}
+exports.CharmanderArt = CharmanderArt;
 class CliveArt extends clive_1.Clive {
     constructor() {
         super(...arguments);
@@ -126,6 +138,16 @@ class MimeJrArt extends mime_jr_1.MimeJr {
     }
 }
 exports.MimeJrArt = MimeJrArt;
+class MimikyuArt extends mimikyu_1.Mimikyu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_037_R_EN_LG.png';
+        this.fullName = 'Mimikyu PAF';
+        this.set = 'PAF';
+        this.setNumber = '37';
+    }
+}
+exports.MimikyuArt = MimikyuArt;
 class MoonlightHillArt extends moonlight_hill_1.MoonlightHill {
     constructor() {
         super(...arguments);

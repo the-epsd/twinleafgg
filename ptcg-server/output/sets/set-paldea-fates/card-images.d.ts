@@ -1,5 +1,7 @@
 import { Charizardex } from '../set-obsidian-flames/charizard-ex';
+import { Charmander } from '../set-obsidian-flames/charmander';
 import { Iono } from '../set-paldea-evolved/iono';
+import { Mimikyu } from '../set-paldea-evolved/mimikyu';
 import { Natu } from '../set-paradox-rift/natu';
 import { Xatu } from '../set-paradox-rift/xatu';
 import { ElectricGenerator } from '../set-scarlet-and-violet/electric-generator';
@@ -30,6 +32,12 @@ export declare class CharmeleonArt extends Charmeleon {
     cardImage: string;
 }
 export declare class CharizardexArt extends Charizardex {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
+}
+export declare class CharmanderArt extends Charmander {
     cardImage: string;
     fullName: string;
     set: string;
@@ -70,6 +78,12 @@ export declare class KilowattrelArt extends Kilowattrel {
 }
 export declare class MimeJrArt extends MimeJr {
     cardImage: string;
+}
+export declare class MimikyuArt extends Mimikyu {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
 }
 export declare class MoonlightHillArt extends MoonlightHill {
     cardImage: string;

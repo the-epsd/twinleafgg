@@ -25,16 +25,18 @@ class Eri extends trainer_card_1.TrainerCard {
             if (supporterTurn > 0) {
                 throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
             }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DECK, opponent.hand, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { allowCancel: false, min: 0, max: 2 }), cards => {
                 if (cards === null || cards.length === 0) {
                     return;
                 }
-                const trainerCard = cards[0];
-                opponent.hand.moveCardTo(trainerCard, opponent.discard);
-                player.supporterTurn = 1;
                 player.supporter.moveCardTo(this, player.discard);
+                cards.forEach(card => {
+                    opponent.hand.moveCardTo(card, opponent.discard);
+                    player.supporterTurn = 1;
+                });
             });
         }
         return state;

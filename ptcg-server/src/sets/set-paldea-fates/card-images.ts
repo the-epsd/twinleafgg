@@ -1,5 +1,7 @@
 import { Charizardex } from '../set-obsidian-flames/charizard-ex';
+import { Charmander } from '../set-obsidian-flames/charmander';
 import { Iono } from '../set-paldea-evolved/iono';
+import { Mimikyu } from '../set-paldea-evolved/mimikyu';
 import { Natu } from '../set-paradox-rift/natu';
 import { Xatu } from '../set-paradox-rift/xatu';
 import { ElectricGenerator } from '../set-scarlet-and-violet/electric-generator';
@@ -37,6 +39,13 @@ export class CharizardexArt extends Charizardex {
   public fullName = 'Charizard ex PAF';
   public set = 'PAF';
   public setNumber = '54';
+}
+
+export class CharmanderArt extends Charmander {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_007_R_EN_LG.png';
+  public fullName = 'Charmander PAF';
+  public set = 'PAF';
+  public setNumber = '7';
 }
 
 export class CliveArt extends Clive {
@@ -83,6 +92,13 @@ export class KilowattrelArt extends Kilowattrel {
 
 export class MimeJrArt extends MimeJr {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/542ccf97-0153-4abf-981d-dd3ed1683a6e/card-085.png?format=750w';
+}
+
+export class MimikyuArt extends Mimikyu {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_037_R_EN_LG.png';
+  public fullName = 'Mimikyu PAF';
+  public set = 'PAF';
+  public setNumber = '37';
 }
 
 export class MoonlightHillArt extends MoonlightHill {

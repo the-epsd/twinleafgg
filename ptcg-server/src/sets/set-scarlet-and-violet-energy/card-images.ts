@@ -42,49 +42,57 @@ import { WaterEnergy } from './water-energy';
 // Limitless Imports
 
 export class DarknessEnergyArt extends DarknessEnergy {
-  public set = '';
+  public set: string = '';
   public setNumber = '7';
   public cardImage = 'https://images.pokemoncard.io/images/sve/sve-7_hiresopt.jpg';
+  public fullName: string = 'Darkness Energy';
 }
 
 export class FightingEnergyArt extends FightingEnergy {
-  public set = '';
+  public set: string = '';
   public setNumber = '6';
   public cardImage = 'https://images.pokemoncard.io/images/sve/sve-6_hiresopt.jpg';
+  public fullName: string = 'Fighting Energy';
 }
 
 export class FireEnergyArt extends FireEnergy {
-  public set = '';
+  public set: string = '';
   public setNumber = '2';
   public cardImage = 'https://images.pokemoncard.io/images/sve/sve-2_hiresopt.jpg';
+  public fullName: string = 'Fire Energy';
 }
 
 export class GrassEnergyArt extends GrassEnergy {
-  public set = '';
+  public set: string = '';
   public setNumber = '1';
   public cardImage = 'https://images.pokemoncard.io/images/sve/sve-1_hiresopt.jpg';
+  public fullName: string = 'Grass Energy';
 }
 
 export class LightningEnergyArt extends LightningEnergy {
-  public set = '';
+  public set: string = '';
   public setNumber = '4';
   public cardImage = 'https://images.pokemoncard.io/images/sve/sve-4_hiresopt.jpg';
+  public fullName: string = 'Lightning Energy';
 }
 
 export class MetalEnergyArt extends MetalEnergy {
-  public set = '';
+  public set: string = '';
   public setNumber = '8';
   public cardImage = 'https://images.pokemoncard.io/images/sve/sve-8_hiresopt.jpg';
+  public fullName: string = 'Metal Energy';
 }
 
 export class PsychicEnergyArt extends PsychicEnergy {
-  public set = '';
+  public set: string = '';
   public setNumber = '5';
   public cardImage = 'https://images.pokemoncard.io/images/sve/sve-5_hiresopt.jpg';
+  public fullName: string = 'Psychic Energy';
 }
 
 export class WaterEnergyArt extends WaterEnergy {
-  public set = '';
+  public set: string = '';
   public setNumber = '3';
   public cardImage = 'https://images.pokemoncard.io/images/sve/sve-3_hiresopt.jpg';
+  public fullName: string = 'Water Energy';
 }

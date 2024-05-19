@@ -34,11 +34,12 @@ export class Eri extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const supporterTurn = player.supporterTurn;
-
+    
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-
+    
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
     
@@ -47,16 +48,16 @@ export class Eri extends TrainerCard {
         GameMessage.CHOOSE_CARD_TO_DECK,
         opponent.hand,
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-        { allowCancel: false , min: 0, max: 2}
+        { allowCancel: false, min: 0, max: 2 }
       ), cards => {
         if (cards === null || cards.length === 0) {
           return;
         }
-        const trainerCard = cards[0] as TrainerCard;
-        
-        opponent.hand.moveCardTo(trainerCard, opponent.discard);
-        player.supporterTurn = 1;
         player.supporter.moveCardTo(this, player.discard);
+        cards.forEach(card => {
+          opponent.hand.moveCardTo(card, opponent.discard);
+          player.supporterTurn = 1;
+        });
       });
     }
     return state;

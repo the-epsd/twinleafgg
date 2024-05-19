@@ -6,6 +6,8 @@ exports.setPaldeaFates = [
     new card_images_1.CharmeleonArt(),
     new card_images_1.AtticusArt(),
     new card_images_1.CliveArt(),
+    new card_images_1.CharmanderArt(),
+    new card_images_1.MimikyuArt(),
     new card_images_1.EspathraexArt(),
     new card_images_1.MoonlightHillArt(),
     new card_images_1.NemonaArt(),
