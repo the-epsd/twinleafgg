@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class RoaringMoonex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -19,7 +20,7 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Frenzied Gouging',
-                cost: [],
+                cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Knock Out your opponent\'s Active Pokémon. If your opponent\'s Active Pokémon is Knocked Out in this way, this Pokémon does 200 damage to itself.'
             },
@@ -35,7 +36,6 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
         this.setNumber = '54';
         this.name = 'Roaring Moon ex';
         this.fullName = 'Roaring Moon ex PAR';
-        this.tookKO = false;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -47,7 +47,7 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
                 dealDamage.target = opponent.active;
                 store.reduceEffect(state, dealDamage);
             }
-            if (this.tookKO == true) {
+            if (game_phase_effects_1.BetweenTurnsEffect && activePokemon !== undefined) {
                 const dealSelfDamage = new attack_effects_1.DealDamageEffect(effect, 200);
                 dealSelfDamage.target = player.active;
                 store.reduceEffect(state, dealSelfDamage);

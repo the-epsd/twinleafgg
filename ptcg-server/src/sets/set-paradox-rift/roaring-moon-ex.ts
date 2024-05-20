@@ -6,6 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { ConfirmPrompt, GameMessage, StateUtils } from '../../game';
 import { DealDamageEffect, KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 
 
 export class RoaringMoonex extends PokemonCard {
@@ -27,7 +28,7 @@ export class RoaringMoonex extends PokemonCard {
   public attacks = [
     {
       name: 'Frenzied Gouging',
-      cost: [  ],
+      cost: [ CardType.DARK, CardType.DARK, CardType.COLORLESS ],
       damage: 0,
       text: 'Knock Out your opponent\'s Active Pokémon. If your opponent\'s Active Pokémon is Knocked Out in this way, this Pokémon does 200 damage to itself.'
     },
@@ -49,8 +50,6 @@ export class RoaringMoonex extends PokemonCard {
 
   public fullName: string = 'Roaring Moon ex PAR';
 
-  private tookKO = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -65,7 +64,7 @@ export class RoaringMoonex extends PokemonCard {
         store.reduceEffect(state, dealDamage);
       }
 
-      if (this.tookKO == true) {
+      if (BetweenTurnsEffect && activePokemon !== undefined) {
         const dealSelfDamage = new DealDamageEffect(effect, 200);
         dealSelfDamage.target = player.active;
         store.reduceEffect(state, dealSelfDamage);
