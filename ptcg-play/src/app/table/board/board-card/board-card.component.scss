@@ -82,6 +82,20 @@ $ptcg-energy-card-offset: 10%;
   }
 }
 
+.ptcg-ability-used {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  :host-context(.upside-down) & {
+    top: 45%;
+    left: -44.5%;
+    transform: rotate(180deg) translate(-50%, -50%);
+  }
+}
+
+
 .ptcg-card-marker {
   z-index: 5;
   left: 0;
@@ -96,6 +110,34 @@ $ptcg-energy-card-offset: 10%;
 
   :host-context(.upside-down) & {
     transform: translateX(-100%) rotate(180deg);
+  }
+}
+
+.badge{
+  z-index: 2;
+  position:relative;
+  max-width: map-get($ptcg-size, card);
+  min-width: map-get($ptcg-size, board-card);
+  background:linear-gradient(100deg, #34DCE7 -6.37%, #7F5FFE 43.87%, #FF87A3 97.22%);
+}
+
+.badge::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  animation: holographic 2.4s linear infinite;
+  background:
+    linear-gradient(218deg, rgba(255, 255, 255, 0.00) 10.16%, #FFF 26.55%, rgba(255, 255, 255, 0.00) 41.78%, #FFF 56.62%, rgba(255, 255, 255, 0.00) 72.63%, #FFF 88.24%);
+  background-position:0%,0%;
+  background-size:200%;
+  background-repeat:no-repeat;
+  mix-blend-mode: overlay;
+  
+}
+
+@keyframes holographic{
+  to{
+    background-position:100%,0;
   }
 }
 

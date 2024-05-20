@@ -1,5 +1,6 @@
 import { LostVacuum } from '../set-lost-origin/lost-vacuum';
 import { RotomV } from '../set-lost-origin/rotom-v';
+import { Absol } from './absol';
 import { Bidoof } from './bidoof';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
@@ -10,6 +11,10 @@ import { RegigigasVSTAR } from './regigigas-vstar';
 import { ZacianVSTAR } from './zacian-vstar';
 import { Zamazenta } from './zamazenta';
 import { ZamazentaV } from './zamazenta-v';
+
+export class AbsolArt extends Absol {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_076_R_EN_LG.png';
+}
 
 export class BidoofArt extends Bidoof {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_111_R_EN_LG.png';

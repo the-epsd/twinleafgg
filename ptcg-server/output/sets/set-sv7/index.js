@@ -14,4 +14,5 @@ exports.setSV7 = [
     new card_images_1.OkidogiexArt(),
     new card_images_1.PecharuntexArt(),
     new card_images_1.RowlettArt(),
+    new card_images_1.XerosicsSchemeArt(),
 ];

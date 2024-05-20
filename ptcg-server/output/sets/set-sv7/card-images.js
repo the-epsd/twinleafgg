@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RowlettArt = exports.PecharuntexArt = exports.OkidogiexArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.FezandipitiexArt = exports.DecidueyeArt = exports.DartrixArt = exports.ColresssObsessionArt = exports.BindingMochiArt = void 0;
+exports.XerosicsSchemeArt = exports.RowlettArt = exports.PecharuntexArt = exports.OkidogiexArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.FezandipitiexArt = exports.DecidueyeArt = exports.DartrixArt = exports.ColresssObsessionArt = exports.BindingMochiArt = void 0;
 const binding_mochi_1 = require("./binding-mochi");
 const colresss_obsession_1 = require("./colresss-obsession");
 const dartrix_1 = require("./dartrix");
@@ -12,6 +12,7 @@ const neutral_center_1 = require("./neutral-center");
 const okidogi_ex_1 = require("./okidogi-ex");
 const pecharunt_ex_1 = require("./pecharunt-ex");
 const rowlett_1 = require("./rowlett");
+const xerosics_scheme_1 = require("./xerosics-scheme");
 class BindingMochiArt extends binding_mochi_1.BindingMochi {
     constructor() {
         super(...arguments);
@@ -89,3 +90,10 @@ class RowlettArt extends rowlett_1.Rowlett {
     }
 }
 exports.RowlettArt = RowlettArt;
+class XerosicsSchemeArt extends xerosics_scheme_1.XerosicsScheme {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Xerosic\'s_Scheme-062-6a.32170f7efa394e7bfd35.png';
+    }
+}
+exports.XerosicsSchemeArt = XerosicsSchemeArt;

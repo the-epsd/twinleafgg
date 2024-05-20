@@ -76,14 +76,16 @@ export declare enum CardType {
     CHIEN_PAO_EX = 25,
     BAXCALIBUR = 26,
     SNORLAX_STALL = 27,
-    LUGIA_VSTAR = 28
+    LUGIA_VSTAR = 28,
+    ABSOL_EX = 29
 }
 export declare enum SpecialCondition {
     PARALYZED = 0,
     CONFUSED = 1,
     ASLEEP = 2,
     POISONED = 3,
-    BURNED = 4
+    BURNED = 4,
+    ABILITY_USED = 5
 }
 export declare enum AbilityUsed {
     TRUE = 0

@@ -9,6 +9,7 @@ import { NeutralCenter } from './neutral-center';
 import { Okidogiex } from './okidogi-ex';
 import { Pecharuntex } from './pecharunt-ex';
 import { Rowlett } from './rowlett';
+import { XerosicsScheme } from './xerosics-scheme';
 export declare class BindingMochiArt extends BindingMochi {
     cardImage: string;
 }
@@ -40,5 +41,8 @@ export declare class PecharuntexArt extends Pecharuntex {
     cardImage: string;
 }
 export declare class RowlettArt extends Rowlett {
+    cardImage: string;
+}
+export declare class XerosicsSchemeArt extends XerosicsScheme {
     cardImage: string;
 }

@@ -31,13 +31,10 @@ export class PokemonCardList extends CardList {
   public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
   public static readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
   public static readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
-
   public static readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
   public static readonly CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
-  
   public static readonly PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN = 'PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN';
   public static readonly CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN = 'CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN';
-
   public static readonly OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER = 'OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER';
   public static readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
   public static readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
@@ -50,7 +47,6 @@ export class PokemonCardList extends CardList {
   public static readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
   public static readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
   public static readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES';
-  
 
   // Some pokemon cards can be attached as a tool and stadium,
   // we must remember, which card acts as a pokemon tool.
@@ -108,7 +104,14 @@ export class PokemonCardList extends CardList {
     this.attackMarker.removeMarker(PokemonCardList.CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN);
 
     this.marker.markers = [];
-    this.specialConditions = [];
+    // if (this.specialConditions.includes(SpecialCondition.ABILITY_USED)) {
+    //   return;
+    // }
+    this.removeSpecialCondition(SpecialCondition.POISONED);
+    this.removeSpecialCondition(SpecialCondition.ASLEEP);
+    this.removeSpecialCondition(SpecialCondition.BURNED);
+    this.removeSpecialCondition(SpecialCondition.CONFUSED);
+    this.removeSpecialCondition(SpecialCondition.PARALYZED);
     this.poisonDamage = 10;
     this.burnDamage = 20;
     if (this.cards.length === 0) {
@@ -145,6 +148,7 @@ export class PokemonCardList extends CardList {
       SpecialCondition.PARALYZED,
       SpecialCondition.CONFUSED,
       SpecialCondition.ASLEEP,
+      SpecialCondition.ABILITY_USED,
     ].includes(s) === false);
     this.specialConditions.push(sp);
   }

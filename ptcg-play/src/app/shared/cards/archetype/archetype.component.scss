@@ -85,6 +85,11 @@
     background-size: contain;
     background-image: url(~src/assets/archetypes/lugia.png);
   }
+
+  &[archetype="absol"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/absol.png);
+  }
   
   &[archetype="energyless"] {
     background-position: -50px -50px;

@@ -20,6 +20,7 @@ const card_images_16 = require("./card-images");
 const card_images_17 = require("./card-images");
 const full_arts_1 = require("./full-arts");
 exports.setObsidianFlames = [
+    new card_images_1.AbsolexArt(),
     new card_images_1.ArvenArt(),
     new card_images_2.CharizardexArt(),
     new card_images_3.CharmanderArt(),

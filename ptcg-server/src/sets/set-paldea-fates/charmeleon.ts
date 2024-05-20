@@ -23,7 +23,6 @@ export class Charmeleon extends PokemonCard {
   public powers = 
     [{
       name: 'Flare Veil',
-      useWhenInPlay: true,
       powerType: PowerType.ABILITY,
       text: 'Prevent all effects of attacks used by your opponent\'s Pokémon done to this Pokémon. (Damage is not an effect.)'
     }];

@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VengefulPunchArt = exports.TownStoreArt = exports.ThundurusArt = exports.ScizorArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.ArvenArt = void 0;
+exports.VengefulPunchArt = exports.TownStoreArt = exports.ThundurusArt = exports.ScizorArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.ArvenArt = exports.AbsolexArt = void 0;
 const arven_1 = require("../set-scarlet-and-violet/arven");
+const absol_ex_1 = require("./absol-ex");
 const bellibolt_1 = require("./bellibolt");
 const charizard_ex_1 = require("./charizard-ex");
 const charmander_1 = require("./charmander");
@@ -21,6 +22,13 @@ const scizor_1 = require("./scizor");
 const thundurus_1 = require("./thundurus");
 const town_store_1 = require("./town-store");
 const vengeful_punch_1 = require("./vengeful-punch");
+class AbsolexArt extends absol_ex_1.Absolex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_135_R_EN.png';
+    }
+}
+exports.AbsolexArt = AbsolexArt;
 class ArvenArt extends arven_1.Arven {
     constructor() {
         super(...arguments);

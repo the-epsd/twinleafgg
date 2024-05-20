@@ -74,6 +74,7 @@ this.mainCard = value.cards[value.cards.length - 1];
   public powers: Power[] = [];
   public damage = 0;
   public specialConditions: SpecialCondition[] = [];
+  public SpecialCondition = SpecialCondition;
   public abilityUsed: AbilityUsed[] = [];
 
 

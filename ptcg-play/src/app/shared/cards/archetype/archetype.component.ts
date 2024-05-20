@@ -64,6 +64,9 @@ export class ArchetypeComponent {
           case CardType.LUGIA_VSTAR:
             this.archetypeClass = 'lugia';
             break;
+            case CardType.ABSOL_EX:
+              this.archetypeClass = 'absol';
+              break;
       default:
         this.archetypeClass = 'energyless';
     }

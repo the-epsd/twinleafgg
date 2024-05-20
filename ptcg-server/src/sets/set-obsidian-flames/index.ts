@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 
-import { ArvenArt, BelliboltArt, ScizorArt, ThundurusArt } from './card-images';
+import { AbsolexArt, ArvenArt, BelliboltArt, ScizorArt, ThundurusArt } from './card-images';
 import { CharizardexArt } from './card-images';
 import { CharmanderArt } from './card-images';
 import { CharmeleonArt } from './card-images';
@@ -22,6 +22,7 @@ import { ArtazonHR, BelliboltIR, CharizardexFA, CharizardexHR, CharizardexSIR, C
 
 export const setObsidianFlames: Card[] = [
 
+  new AbsolexArt(),
   new ArvenArt(),
   new CharizardexArt(),
   new CharmanderArt(),

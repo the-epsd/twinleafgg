@@ -5,6 +5,7 @@ import { SpecialCondition } from '../card/card-types';
 import { GamePhase, GameWinner } from '../state/state';
 import { checkState, endGame } from './check-effect';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
+import { PlayerType } from '../actions/play-card-action';
 function getActivePlayer(state) {
     return state.players[state.activePlayer];
 }
@@ -113,6 +114,18 @@ function handleSpecialConditions(store, state, effect) {
 export function gamePhaseReducer(store, state, effect) {
     if (effect instanceof EndTurnEffect) {
         const player = state.players[state.activePlayer];
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            const pokemonCard = cardList.getPokemonCard();
+            if (pokemonCard && player.active.cards.includes(pokemonCard)) {
+                cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+            }
+        });
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+            if (cardList === player.active) {
+                return;
+            }
+            cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+        });
         player.supporterTurn = 0;
         console.log('player.supporterTurn', player.supporterTurn);
         if (player === undefined) {

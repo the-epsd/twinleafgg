@@ -19,7 +19,7 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Frenzied Gouging',
-                cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
+                cost: [],
                 damage: 0,
                 text: 'Knock Out your opponent\'s Active Pokémon. If your opponent\'s Active Pokémon is Knocked Out in this way, this Pokémon does 200 damage to itself.'
             },
@@ -35,6 +35,7 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
         this.setNumber = '54';
         this.name = 'Roaring Moon ex';
         this.fullName = 'Roaring Moon ex PAR';
+        this.tookKO = false;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -46,29 +47,28 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
                 dealDamage.target = opponent.active;
                 store.reduceEffect(state, dealDamage);
             }
-            if (effect instanceof game_effects_1.KnockOutEffect && effect.target == activePokemon) {
+            if (this.tookKO == true) {
                 const dealSelfDamage = new attack_effects_1.DealDamageEffect(effect, 200);
                 dealSelfDamage.target = player.active;
                 store.reduceEffect(state, dealSelfDamage);
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const stadiumCard = game_1.StateUtils.getStadiumCard(state);
-                if (stadiumCard) {
-                    state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.CALAMITY_STORM), wantToUse => {
-                        if (wantToUse) {
-                            // Discard Stadium
-                            const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-                            if (cardList) {
-                                const player = game_1.StateUtils.findOwner(state, cardList);
-                                cardList.moveTo(player.discard);
-                            }
-                            effect.damage += 120;
-                            return state;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const stadiumCard = game_1.StateUtils.getStadiumCard(state);
+            if (stadiumCard) {
+                state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.CALAMITY_STORM), wantToUse => {
+                    if (wantToUse) {
+                        // Discard Stadium
+                        const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
+                        if (cardList) {
+                            const player = game_1.StateUtils.findOwner(state, cardList);
+                            cardList.moveTo(player.discard);
                         }
+                        effect.damage += 120;
                         return state;
-                    });
+                    }
                     return state;
-                }
+                });
                 return state;
             }
             return state;

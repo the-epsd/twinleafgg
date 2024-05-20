@@ -1,4 +1,5 @@
 import { Arven } from '../set-scarlet-and-violet/arven';
+import { Absolex } from './absol-ex';
 import { Bellibolt } from './bellibolt';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
@@ -18,6 +19,10 @@ import { Scizor } from './scizor';
 import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
 import { VengefulPunch } from './vengeful-punch';
+
+export class AbsolexArt extends Absolex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_135_R_EN.png';
+}
 
 export class ArvenArt extends Arven {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_186_R_EN.png';

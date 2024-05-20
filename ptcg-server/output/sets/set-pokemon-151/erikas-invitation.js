@@ -37,13 +37,13 @@ function* playCard(next, store, state, effect) {
     if (cards.length === 0) {
         return state;
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
     cards.forEach((card, index) => {
         opponent.hand.moveCardTo(card, slots[index]);
         slots[index].pokemonPlayedTurn = state.turn;
         opponent.switchPokemon(slots[index]);
     });
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn = 1;
 }
 class EreikasInvitation extends trainer_card_1.TrainerCard {
     constructor() {

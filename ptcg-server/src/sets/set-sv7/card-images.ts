@@ -9,6 +9,7 @@ import { NeutralCenter } from './neutral-center';
 import { Okidogiex } from './okidogi-ex';
 import { Pecharuntex } from './pecharunt-ex';
 import { Rowlett } from './rowlett';
+import { XerosicsScheme } from './xerosics-scheme';
 
 export class BindingMochiArt extends BindingMochi {
   public cardImage = 'https://pokemonproxies.com/static/media/Binding_Mochi-057-6a.688952c16887aa68ae41.png';
@@ -52,4 +53,8 @@ export class PecharuntexArt extends Pecharuntex {
 
 export class RowlettArt extends Rowlett {
   public cardImage = 'https://pbs.twimg.com/media/GNsUjlwXEAAUjBC?format=png&name=900x900';
+}
+
+export class XerosicsSchemeArt extends XerosicsScheme {
+  public cardImage = 'https://pokemonproxies.com/static/media/Xerosic\'s_Scheme-062-6a.32170f7efa394e7bfd35.png';
 }

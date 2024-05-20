@@ -87,6 +87,7 @@ var CardType;
     CardType[CardType["BAXCALIBUR"] = 26] = "BAXCALIBUR";
     CardType[CardType["SNORLAX_STALL"] = 27] = "SNORLAX_STALL";
     CardType[CardType["LUGIA_VSTAR"] = 28] = "LUGIA_VSTAR";
+    CardType[CardType["ABSOL_EX"] = 29] = "ABSOL_EX";
 })(CardType = exports.CardType || (exports.CardType = {}));
 var SpecialCondition;
 (function (SpecialCondition) {
@@ -95,6 +96,7 @@ var SpecialCondition;
     SpecialCondition[SpecialCondition["ASLEEP"] = 2] = "ASLEEP";
     SpecialCondition[SpecialCondition["POISONED"] = 3] = "POISONED";
     SpecialCondition[SpecialCondition["BURNED"] = 4] = "BURNED";
+    SpecialCondition[SpecialCondition["ABILITY_USED"] = 5] = "ABILITY_USED";
 })(SpecialCondition = exports.SpecialCondition || (exports.SpecialCondition = {}));
 var AbilityUsed;
 (function (AbilityUsed) {

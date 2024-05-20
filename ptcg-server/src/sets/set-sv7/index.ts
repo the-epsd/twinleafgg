@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { BindingMochiArt, ColresssObsessionArt, DartrixArt, DecidueyeArt, FezandipitiexArt, KyuremArt, MunkidoriexArt, NeutralCenterArt, OkidogiexArt, PecharuntexArt, RowlettArt } from './card-images';
+import { BindingMochiArt, ColresssObsessionArt, DartrixArt, DecidueyeArt, FezandipitiexArt, KyuremArt, MunkidoriexArt, NeutralCenterArt, OkidogiexArt, PecharuntexArt, RowlettArt, XerosicsSchemeArt } from './card-images';
 
 export const setSV7: Card[] = [
   new BindingMochiArt(),
@@ -13,5 +13,6 @@ export const setSV7: Card[] = [
   new OkidogiexArt(),
   new PecharuntexArt(),
   new RowlettArt(),
+  new XerosicsSchemeArt(),
 
 ];

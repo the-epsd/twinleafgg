@@ -1,4 +1,5 @@
 import { Arven } from '../set-scarlet-and-violet/arven';
+import { Absolex } from './absol-ex';
 import { Bellibolt } from './bellibolt';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
@@ -18,6 +19,9 @@ import { Scizor } from './scizor';
 import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
 import { VengefulPunch } from './vengeful-punch';
+export declare class AbsolexArt extends Absolex {
+    cardImage: string;
+}
 export declare class ArvenArt extends Arven {
     cardImage: string;
     fullName: string;

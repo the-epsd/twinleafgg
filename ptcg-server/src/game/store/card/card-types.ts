@@ -84,7 +84,8 @@ export enum CardType {
   CHIEN_PAO_EX,
   BAXCALIBUR,
   SNORLAX_STALL,
-  LUGIA_VSTAR
+  LUGIA_VSTAR,
+  ABSOL_EX
 }
 
 export enum SpecialCondition {
@@ -92,7 +93,8 @@ export enum SpecialCondition {
   CONFUSED,
   ASLEEP,
   POISONED,
-  BURNED
+  BURNED,
+  ABILITY_USED
 }
 
 export enum AbilityUsed {

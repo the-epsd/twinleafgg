@@ -64,7 +64,14 @@ class PokemonCardList extends card_list_1.CardList {
         this.attackMarker.removeMarker(PokemonCardList.PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN);
         this.attackMarker.removeMarker(PokemonCardList.CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN);
         this.marker.markers = [];
-        this.specialConditions = [];
+        // if (this.specialConditions.includes(SpecialCondition.ABILITY_USED)) {
+        //   return;
+        // }
+        this.removeSpecialCondition(card_types_1.SpecialCondition.POISONED);
+        this.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
+        this.removeSpecialCondition(card_types_1.SpecialCondition.BURNED);
+        this.removeSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
+        this.removeSpecialCondition(card_types_1.SpecialCondition.PARALYZED);
         this.poisonDamage = 10;
         this.burnDamage = 20;
         if (this.cards.length === 0) {
@@ -99,6 +106,7 @@ class PokemonCardList extends card_list_1.CardList {
             card_types_1.SpecialCondition.PARALYZED,
             card_types_1.SpecialCondition.CONFUSED,
             card_types_1.SpecialCondition.ASLEEP,
+            card_types_1.SpecialCondition.ABILITY_USED,
         ].includes(s) === false);
         this.specialConditions.push(sp);
     }

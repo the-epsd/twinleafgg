@@ -30,7 +30,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_CARD_TO_HAND,
     deckTop,
     { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-    { min: 1, max: 1, allowCancel: true }
+    { min: 0, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();

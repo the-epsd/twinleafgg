@@ -8,6 +8,7 @@ const card_types_1 = require("../card/card-types");
 const state_1 = require("../state/state");
 const check_effect_1 = require("./check-effect");
 const coin_flip_prompt_1 = require("../prompts/coin-flip-prompt");
+const play_card_action_1 = require("../actions/play-card-action");
 function getActivePlayer(state) {
     return state.players[state.activePlayer];
 }
@@ -118,6 +119,18 @@ function handleSpecialConditions(store, state, effect) {
 function gamePhaseReducer(store, state, effect) {
     if (effect instanceof game_phase_effects_1.EndTurnEffect) {
         const player = state.players[state.activePlayer];
+        player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, cardList => {
+            const pokemonCard = cardList.getPokemonCard();
+            if (pokemonCard && player.active.cards.includes(pokemonCard)) {
+                cardList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+            }
+        });
+        player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+            if (cardList === player.active) {
+                return;
+            }
+            cardList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+        });
         player.supporterTurn = 0;
         console.log('player.supporterTurn', player.supporterTurn);
         if (player === undefined) {

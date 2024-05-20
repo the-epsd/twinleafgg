@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setCrownZenith = void 0;
 const card_images_1 = require("./card-images");
 exports.setCrownZenith = [
+    new card_images_1.AbsolArt(),
     new card_images_1.BidoofArt(),
     new card_images_1.KyogreArt(),
     new card_images_1.RadiantCharizardArt(),

@@ -17,7 +17,6 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Flare Veil',
-                useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'Prevent all effects of attacks used by your opponent\'s Pokémon done to this Pokémon. (Damage is not an effect.)'
             }];

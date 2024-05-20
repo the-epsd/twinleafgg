@@ -24,5 +24,6 @@ export declare class RoaringMoonex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    private tookKO;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

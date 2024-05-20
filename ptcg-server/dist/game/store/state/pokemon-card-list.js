@@ -61,7 +61,14 @@ export class PokemonCardList extends CardList {
         this.attackMarker.removeMarker(PokemonCardList.PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN);
         this.attackMarker.removeMarker(PokemonCardList.CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN);
         this.marker.markers = [];
-        this.specialConditions = [];
+        // if (this.specialConditions.includes(SpecialCondition.ABILITY_USED)) {
+        //   return;
+        // }
+        this.removeSpecialCondition(SpecialCondition.POISONED);
+        this.removeSpecialCondition(SpecialCondition.ASLEEP);
+        this.removeSpecialCondition(SpecialCondition.BURNED);
+        this.removeSpecialCondition(SpecialCondition.CONFUSED);
+        this.removeSpecialCondition(SpecialCondition.PARALYZED);
         this.poisonDamage = 10;
         this.burnDamage = 20;
         if (this.cards.length === 0) {
@@ -96,6 +103,7 @@ export class PokemonCardList extends CardList {
             SpecialCondition.PARALYZED,
             SpecialCondition.CONFUSED,
             SpecialCondition.ASLEEP,
+            SpecialCondition.ABILITY_USED,
         ].includes(s) === false);
         this.specialConditions.push(sp);
     }

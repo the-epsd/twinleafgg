@@ -1,5 +1,6 @@
 import { LostVacuum } from '../set-lost-origin/lost-vacuum';
 import { RotomV } from '../set-lost-origin/rotom-v';
+import { Absol } from './absol';
 import { Bidoof } from './bidoof';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
@@ -10,6 +11,9 @@ import { RegigigasVSTAR } from './regigigas-vstar';
 import { ZacianVSTAR } from './zacian-vstar';
 import { Zamazenta } from './zamazenta';
 import { ZamazentaV } from './zamazenta-v';
+export declare class AbsolArt extends Absol {
+    cardImage: string;
+}
 export declare class BidoofArt extends Bidoof {
     cardImage: string;
 }

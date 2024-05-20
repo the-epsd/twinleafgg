@@ -54,15 +54,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  player.supporterTurn = 1;
   
   cards.forEach((card, index) => {
     opponent.hand.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
     opponent.switchPokemon(slots[index]); 
   });
-
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  player.supporterTurn = 1;
+  
 
 }
 export class EreikasInvitation extends TrainerCard {
