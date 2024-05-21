@@ -44,6 +44,7 @@ import { Kieran } from './kieran';
 import { Chansey } from './chansey';
 import { Morpeko } from './morpeko';
 import { BugCatchingSet } from './bug-catching-set';
+import { Dipplin } from './dipplin';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -63,6 +64,9 @@ export declare class CarmineArt extends Carmine {
     cardImage: string;
 }
 export declare class ChanseyArt extends Chansey {
+    cardImage: string;
+}
+export declare class DipplinArt extends Dipplin {
     cardImage: string;
 }
 export declare class DreepyArt extends Dreepy {

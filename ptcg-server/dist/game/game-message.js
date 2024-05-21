@@ -130,6 +130,7 @@ export var GameCardMessage;
     GameCardMessage["CHOICE_TOOL"] = "CHOICE_TOOL";
     GameCardMessage["CHOICE_STADIUM"] = "CHOICE_STADIUM";
     GameCardMessage["WANT_TO_DRAW_UNTIL_6"] = "WANT_TO_DRAW_UNTIL_6";
+    GameCardMessage["WANT_TO_USE_FESTIVAL_FEVER"] = "WANT_TO_USE_FESTIVAL_FEVER";
 })(GameCardMessage || (GameCardMessage = {}));
 export var GameLog;
 (function (GameLog) {

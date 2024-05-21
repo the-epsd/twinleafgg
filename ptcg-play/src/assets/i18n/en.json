@@ -417,7 +417,8 @@
     "DISCARD_STADIUM_OR_TOOL": "Choose a Stadium card or Tool card to discard",
     "CHOICE_TOOL": "Tool",
     "CHOICE_STADIUM": "Stadium",
-    "WANT_TO_DRAW_UNTIL_6": "Do you want to draw until you have 6 cards in your hand?"
+    "WANT_TO_DRAW_UNTIL_6": "Do you want to draw until you have 6 cards in your hand?",
+    "WANT_TO_USE_FESTIVAL_FEVER": "Festival Plaza is in play. Do you want to attack again?"
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.",

@@ -49,4 +49,5 @@ exports.setTwilightMasquerade = [
     new card_images_2.GreninjaexArt(),
     new card_images_1.ChanseyArt(),
     new card_images_1.BugCatchingSetArt(),
+    new card_images_1.DipplinArt(),
 ];

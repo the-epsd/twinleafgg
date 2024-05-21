@@ -45,6 +45,7 @@ import { Kieran } from './kieran';
 import { Chansey } from './chansey';
 import { Morpeko } from './morpeko';
 import { BugCatchingSet } from './bug-catching-set';
+import { Dipplin } from './dipplin';
 
 export class AggronArt extends Aggron {
   public cardImage = 'https://pokemonproxies.com/static/media/Aggron-075-6b.7ac10503aca6d6db414f.png';
@@ -72,6 +73,10 @@ export class CarmineArt extends Carmine {
 
 export class ChanseyArt extends Chansey {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_84_R_JP_LG.png';
+}
+
+export class DipplinArt extends Dipplin {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_12_R_JP_LG.png';
 }
 
 export class DreepyArt extends Dreepy {
