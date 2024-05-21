@@ -1,7 +1,7 @@
 <div class="ptcg-player-actions">
   <div *ngIf="isObserver ; then observerActions ; else playerActions"></div>
   <ng-template #playerActions>
-    <button class="ptcg-button-colors" mat-stroked-button (click)="leave()">
+    <button class="concede-button" mat-stroked-button (click)="leave()">
       {{ 'BUTTON_LEAVE' | translate }}
     </button>
     <button class="ptcg-button-colors" mat-stroked-button (click)="join.next()" *ngIf="!isPlaying"

@@ -56,18 +56,31 @@ export var Stage;
 export var CardType;
 (function (CardType) {
     CardType[CardType["ANY"] = 0] = "ANY";
-    CardType[CardType["GRASS"] = 1] = "GRASS";
-    CardType[CardType["FIRE"] = 2] = "FIRE";
-    CardType[CardType["WATER"] = 3] = "WATER";
-    CardType[CardType["LIGHTNING"] = 4] = "LIGHTNING";
+    CardType[CardType["NONE"] = 1] = "NONE";
+    CardType[CardType["COLORLESS"] = 2] = "COLORLESS";
+    CardType[CardType["GRASS"] = 3] = "GRASS";
+    CardType[CardType["FIGHTING"] = 4] = "FIGHTING";
     CardType[CardType["PSYCHIC"] = 5] = "PSYCHIC";
-    CardType[CardType["FIGHTING"] = 6] = "FIGHTING";
-    CardType[CardType["DARK"] = 7] = "DARK";
+    CardType[CardType["WATER"] = 6] = "WATER";
+    CardType[CardType["LIGHTNING"] = 7] = "LIGHTNING";
     CardType[CardType["METAL"] = 8] = "METAL";
-    CardType[CardType["COLORLESS"] = 9] = "COLORLESS";
-    CardType[CardType["FAIRY"] = 10] = "FAIRY";
+    CardType[CardType["DARK"] = 9] = "DARK";
+    CardType[CardType["FIRE"] = 10] = "FIRE";
     CardType[CardType["DRAGON"] = 11] = "DRAGON";
-    CardType[CardType["NONE"] = 12] = "NONE";
+    CardType[CardType["FAIRY"] = 12] = "FAIRY";
+    //   ANY,
+    // GRASS,
+    // FIRE,
+    // WATER,
+    // LIGHTNING,
+    // PSYCHIC,
+    // FIGHTING,
+    // DARK,
+    // METAL,
+    // COLORLESS,
+    // FAIRY,
+    // DRAGON,
+    //   NONE,
     CardType[CardType["CHARIZARD_EX"] = 13] = "CHARIZARD_EX";
     CardType[CardType["PIDGEOT_EX"] = 14] = "PIDGEOT_EX";
     CardType[CardType["GIRATINA_VSTAR"] = 15] = "GIRATINA_VSTAR";

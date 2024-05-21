@@ -45,8 +45,7 @@ class RagingBoltex extends pokemon_card_1.PokemonCard {
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            const cards = player.hand.cards;
-            player.hand.moveCardsTo(cards, player.discard);
+            player.hand.moveTo(player.discard);
             player.deck.moveTo(player.hand, 6);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
