@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, StateUtils, PowerType } from '../../game';
+import { StoreLike, State, GameError, StateUtils, PowerType, PlayerType } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -81,11 +81,33 @@ export class BruteBonnet extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      if (player.marker.hasMarker(this.TOXIC_POWDER_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
       const active = opponent.active;
 
       active.addSpecialCondition(SpecialCondition.POISONED);
       player.active.addSpecialCondition(SpecialCondition.POISONED);
 
+      player.marker.addMarker(this.TOXIC_POWDER_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
+
+
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
+        if (player instanceof BruteBonnet) {
+          player.marker.removeMarker(this.TOXIC_POWDER_MARKER);
+        }
+        return state;
+      });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -75,6 +75,11 @@ class Fezandipitiex extends pokemon_card_1.PokemonCard {
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
                 effect.player.marker.addMarker(this.TABLE_TURNER_MARKER, this);
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
             }
             return state;
         }

@@ -63,6 +63,11 @@ class Pidgeotex extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
             player.marker.addMarker(this.QUICK_SEARCH_MARKER, this);
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            });
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: false }), cards => {
                 player.deck.moveCardsTo(cards, player.hand);
                 return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {

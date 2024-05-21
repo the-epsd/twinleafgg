@@ -59,6 +59,11 @@ class Drakloak extends game_1.PokemonCard {
             player.deck.moveTo(deckTop, 2);
             return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1, allowCancel: true }), selected => {
                 player.marker.addMarker(this.TELLING_SPIRIT_MARKER, this);
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(deckBottom);
                 deckBottom.moveTo(player.deck);

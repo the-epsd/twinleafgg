@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, EnergyType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -76,6 +76,13 @@ export class Squawkabillyex extends PokemonCard {
         // Mark power as used this turn
         player.usedSquawkAndSeizeThisTurn = true;
         // Return updated state
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
       }
     }
 

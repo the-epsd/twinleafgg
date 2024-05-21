@@ -58,6 +58,11 @@ class Regidrago extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             player.marker.addMarker(this.DRAGONS_HOARD_MARKER, this);
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            });
             if (player.active.getPokemonCard() === this) {
                 while (player.hand.cards.length < 4) {
                     player.deck.moveTo(player.hand, 1);

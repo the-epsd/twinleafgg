@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ConfirmPrompt, PowerType, ChooseCardsPrompt, ShuffleDeckPrompt, GameError} from '../../game';
+import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, ConfirmPrompt, PowerType, ChooseCardsPrompt, ShuffleDeckPrompt, GameError, PlayerType} from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -84,6 +84,13 @@ export class Pidgeotex extends PokemonCard {
       }
   
       player.marker.addMarker(this.QUICK_SEARCH_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,

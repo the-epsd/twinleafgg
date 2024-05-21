@@ -1,11 +1,11 @@
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CardList } from '../../game/store/state/card-list';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { GameMessage } from '../../game/game-message';
-import { GameError, PokemonCard, PowerType } from '../../game';
+import { GameError, PlayerType, PokemonCard, PowerType } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -84,6 +84,13 @@ export class Drakloak extends PokemonCard {
         { min: 1, max: 1, allowCancel: true }
       ), selected => {
         player.marker.addMarker(this.TELLING_SPIRIT_MARKER, this);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(deckBottom);
         deckBottom.moveTo(player.deck);

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType, 
   GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, State, StoreLike, GameError } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -85,6 +85,13 @@ export class Archeops extends PokemonCard {
           return;
         }
         player.abilityMarker.addMarker(this.PRIMAL_TURBO_MARKER, this);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.deck.moveCardTo(transfer.card, target);

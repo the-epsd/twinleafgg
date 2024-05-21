@@ -44,6 +44,7 @@ import { Munkidori } from './munkidori';
 import { Kieran } from './kieran';
 import { Chansey } from './chansey';
 import { Morpeko } from './morpeko';
+import { BugCatchingSet } from './bug-catching-set';
 
 export class AggronArt extends Aggron {
   public cardImage = 'https://pokemonproxies.com/static/media/Aggron-075-6b.7ac10503aca6d6db414f.png';
@@ -59,6 +60,10 @@ export class AronArt extends Aron {
 
 export class BlisseyexArt extends Blisseyex {
   public cardImage = 'https://pokemonproxies.com/static/media/Blissey_ex-085-6b.62a9752c57fbf77de695.png';
+}
+
+export class BugCatchingSetArt extends BugCatchingSet {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_94_R_JP_LG.png';
 }
 
 export class CarmineArt extends Carmine {

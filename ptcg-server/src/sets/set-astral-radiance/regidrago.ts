@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PowerType, State, StoreLike } from '../../game';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { GameError, GameMessage, PlayerType, PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -75,6 +75,13 @@ export class Regidrago extends PokemonCard {
       }
     
       player.marker.addMarker(this.DRAGONS_HOARD_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
+
       if (player.active.getPokemonCard() === this) {
         while (player.hand.cards.length < 4) {
           player.deck.moveTo(player.hand, 1);

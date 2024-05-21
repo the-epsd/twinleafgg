@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -99,6 +99,13 @@ export class Fezandipitiex extends PokemonCard {
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
         effect.player.marker.addMarker(this.TABLE_TURNER_MARKER, this);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
       }
       return state;
     }

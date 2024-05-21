@@ -67,6 +67,11 @@ class Blisseyex extends game_1.PokemonCard {
                 }
                 for (const transfer of transfers) {
                     player.marker.addMarker(this.BLISSFUL_SWAP_MARKER, this);
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        }
+                    });
                     const source = game_1.StateUtils.getTarget(state, player, transfer.from);
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     source.moveCardTo(transfer.card, target);

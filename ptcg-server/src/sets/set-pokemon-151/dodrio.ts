@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, AbilityUsed } from '../../game/store/card/card-types';
+import { Stage, CardType, AbilityUsed, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, PlayerType, GameError, GameMessage } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -75,6 +75,13 @@ export class Dodrio extends PokemonCard {
 
       player.deck.moveTo(player.hand, 1);
       player.abilityMarker.addMarker(this.ZOOMING_DRAW_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
+
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

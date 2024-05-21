@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, CardList, GameError, GameMessage, ShowCardsPrompt, ConfirmPrompt } from '../../game';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType, CardList, GameError, GameMessage, ShowCardsPrompt, ConfirmPrompt, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -80,6 +80,13 @@ export class Morpeko extends PokemonCard {
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 1);
       player.marker.addMarker(this.SNACK_SEARCH_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
+
     
       return store.prompt(state, new ShowCardsPrompt(
         player.id,

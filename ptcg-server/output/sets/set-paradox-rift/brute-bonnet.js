@@ -63,9 +63,26 @@ class BruteBonnet extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (player.marker.hasMarker(this.TOXIC_POWDER_MARKER, this)) {
+                throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
+            }
             const active = opponent.active;
             active.addSpecialCondition(card_types_1.SpecialCondition.POISONED);
             player.active.addSpecialCondition(card_types_1.SpecialCondition.POISONED);
+            player.marker.addMarker(this.TOXIC_POWDER_MARKER, this);
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            });
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
+                if (player instanceof BruteBonnet) {
+                    player.marker.removeMarker(this.TOXIC_POWDER_MARKER);
+                }
+                return state;
+            });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker

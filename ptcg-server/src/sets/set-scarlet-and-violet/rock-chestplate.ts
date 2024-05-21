@@ -1,12 +1,11 @@
 import { CardType, TrainerType } from '../../game/store/card/card-types';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { StateUtils } from '../../game';
+import { StateUtils, TrainerCard } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
-export class RockChestplate extends EnergyCard {
+export class RockChestplate extends TrainerCard {
 
   public regulationMark = 'G';
 

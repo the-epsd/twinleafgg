@@ -57,6 +57,11 @@ class Squawkabillyex extends pokemon_card_1.PokemonCard {
                 // Mark power as used this turn
                 player.usedSquawkAndSeizeThisTurn = true;
                 // Return updated state
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -93,7 +93,19 @@ export class Gengar extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const generator = useNightGate(() => generator.next(), store, state, effect);
+      const player = effect.player;
+      if (player.marker.hasMarker(this.NIGHT_GATE_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
       effect.player.marker.addMarker(this.NIGHT_GATE_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
+
       return generator.next().value;
     }
 

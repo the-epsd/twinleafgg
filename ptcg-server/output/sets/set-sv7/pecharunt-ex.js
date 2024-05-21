@@ -64,6 +64,12 @@ class Pecharuntex extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const generator = useChainsOfControl(() => generator.next(), store, state, effect);
+            const player = effect.player;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            });
             return generator.next().value;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

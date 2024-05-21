@@ -91,6 +91,12 @@ export class Pecharuntex extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const generator = useChainsOfControl(() => generator.next(), store, state, effect);
+      const player = effect.player;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
       return generator.next().value;
     }
 

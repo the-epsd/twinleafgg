@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -94,6 +94,13 @@ export class Xatu extends PokemonCard {
         }
         for (const transfer of transfers) {
           player.marker.addMarker(this.AKASHIC_SENSE_MARKER, this);
+
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            }
+          });
+
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.hand.moveCardTo(transfer.card, target);
         }

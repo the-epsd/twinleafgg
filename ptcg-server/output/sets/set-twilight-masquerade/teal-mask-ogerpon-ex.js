@@ -66,6 +66,11 @@ class TealMaskOgerponex extends pokemon_card_1.PokemonCard {
                 cards = cards || [];
                 if (cards.length > 0) {
                     player.marker.addMarker(this.TEAL_DANCE_MARKER, this);
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        }
+                    });
                     player.hand.moveCardsTo(cards, cardList);
                     player.deck.moveTo(player.hand, 1);
                 }

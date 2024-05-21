@@ -2,11 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RockChestplate = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
-const energy_card_1 = require("../../game/store/card/energy-card");
 const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-class RockChestplate extends energy_card_1.EnergyCard {
+class RockChestplate extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'G';

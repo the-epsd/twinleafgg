@@ -140,6 +140,11 @@ class IronValiantex extends pokemon_card_1.PokemonCard {
                 targets.forEach(target => {
                     target.damage += 20;
                     player.abilityMarker.addMarker(this.TACHYON_BITS_MARKER, this);
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        }
+                    });
                     return state;
                 });
                 return state;

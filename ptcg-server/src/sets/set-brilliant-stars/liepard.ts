@@ -1,7 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameError, GameMessage,
-  ChooseCardsPrompt} from '../../game';
+  ChooseCardsPrompt,
+  PlayerType} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -77,6 +78,13 @@ export class Liepard extends PokemonCard {
           return;
         }
         player.marker.addMarker(this.TRADE_MARKER, this);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
         player.hand.moveCardsTo(cards, player.discard);
         player.deck.moveTo(player.hand, 2);
       });

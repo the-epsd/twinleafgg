@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UnfairStampArt = exports.TealMaskOgerponexArt = exports.SurvivalCastArt = exports.ScreamTailexArt = exports.PhioneArt = exports.PerrinArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.KieranArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.HyperAromaArt = exports.GreninjaexArt = exports.FrogadierArt = exports.FroakieArt = exports.EnhancedHammerArt = exports.CommunityCenterArt = exports.CaretakerArt = exports.BloodmoonUrsalunaexArt = exports.WellspringMaskOgerponexArt = exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.MunkidoriArt = exports.MorpekoArt = exports.PoochyenaArt = exports.PerformanceFluteArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LegacyEnergyArt = exports.LaironArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.FarfetchdArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.ChanseyArt = exports.CarmineArt = exports.BlisseyexArt = exports.AronArt = exports.AlakazamArt = exports.AggronArt = void 0;
+exports.UnfairStampArt = exports.TealMaskOgerponexArt = exports.SurvivalCastArt = exports.ScreamTailexArt = exports.PhioneArt = exports.PerrinArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.KieranArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.HyperAromaArt = exports.GreninjaexArt = exports.FrogadierArt = exports.FroakieArt = exports.EnhancedHammerArt = exports.CommunityCenterArt = exports.CaretakerArt = exports.BloodmoonUrsalunaexArt = exports.WellspringMaskOgerponexArt = exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.MunkidoriArt = exports.MorpekoArt = exports.PoochyenaArt = exports.PerformanceFluteArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LegacyEnergyArt = exports.LaironArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.FarfetchdArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.ChanseyArt = exports.CarmineArt = exports.BugCatchingSetArt = exports.BlisseyexArt = exports.AronArt = exports.AlakazamArt = exports.AggronArt = void 0;
 const aggron_1 = require("./aggron");
 const alakazam_1 = require("./alakazam");
 const aron_1 = require("./aron");
@@ -46,6 +46,7 @@ const munkidori_1 = require("./munkidori");
 const kieran_1 = require("./kieran");
 const chansey_1 = require("./chansey");
 const morpeko_1 = require("./morpeko");
+const bug_catching_set_1 = require("./bug-catching-set");
 class AggronArt extends aggron_1.Aggron {
     constructor() {
         super(...arguments);
@@ -74,6 +75,13 @@ class BlisseyexArt extends blissey_ex_1.Blisseyex {
     }
 }
 exports.BlisseyexArt = BlisseyexArt;
+class BugCatchingSetArt extends bug_catching_set_1.BugCatchingSet {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_94_R_JP_LG.png';
+    }
+}
+exports.BugCatchingSetArt = BugCatchingSetArt;
 class CarmineArt extends carmine_1.Carmine {
     constructor() {
         super(...arguments);

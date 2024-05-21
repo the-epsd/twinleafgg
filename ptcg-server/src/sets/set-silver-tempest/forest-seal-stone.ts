@@ -1,7 +1,7 @@
 
 import { ChooseCardsPrompt, GameError, GameMessage, PowerType, ShuffleDeckPrompt, State, StoreLike, TrainerCard } from '../../game';
 
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -42,6 +42,9 @@ export class ForestSealStone extends TrainerCard {
 
     if (effect instanceof CheckPokemonPowersEffect && effect.target.cards.includes(this) &&
         !effect.powers.find(p => p.name === this.powers[0].name)) {
+      if (!effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);       
+      }
       effect.powers.push(this.powers[0]);
     }
 

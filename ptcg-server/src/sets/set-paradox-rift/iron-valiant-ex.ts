@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, PowerType, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -181,6 +181,13 @@ export class IronValiantex extends PokemonCard {
         targets.forEach(target => {
           target.damage += 20;
           player.abilityMarker.addMarker(this.TACHYON_BITS_MARKER, this);
+
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            }
+          });
+
           return state;
         });
         return state;

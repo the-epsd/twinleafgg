@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, GameError, GameMessage, PlayerType } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -79,6 +79,13 @@ export class EnteiV extends PokemonCard {
       // Draw a card
       player.deck.moveTo(player.hand, 1);
       player.marker.addMarker(this.FLEET_FOOTED_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
+
     }
     if (effect instanceof EndTurnEffect) {
 

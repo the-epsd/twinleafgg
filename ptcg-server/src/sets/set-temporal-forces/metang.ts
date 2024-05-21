@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, AttachEnergyPrompt, CardList, EnergyCard, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt, GameError, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -94,6 +94,13 @@ export class Metang extends PokemonCard {
               deckBottom.applyOrder(order);
               deckBottom.moveTo(player.deck);
               player.marker.addMarker(this.METAL_MAKER_MARKER, this);
+
+              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                  cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                }
+              });
+
             });
             return state;
           });
@@ -127,6 +134,13 @@ export class Metang extends PokemonCard {
                 deckBottom.applyOrder(order);
                 deckBottom.moveTo(player.deck);
                 player.marker.addMarker(this.METAL_MAKER_MARKER, this);
+
+                player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+                  if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                  }
+                });
+
               });
               return state;
             });

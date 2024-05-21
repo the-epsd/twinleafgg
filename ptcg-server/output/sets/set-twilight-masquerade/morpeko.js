@@ -61,6 +61,11 @@ class Morpeko extends pokemon_card_1.PokemonCard {
             const deckTop = new game_1.CardList();
             player.deck.moveTo(deckTop, 1);
             player.marker.addMarker(this.SNACK_SEARCH_MARKER, this);
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            });
             return store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, deckTop.cards), () => {
                 state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
                     if (wantToUse) {

@@ -64,7 +64,16 @@ class Gengar extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const generator = useNightGate(() => generator.next(), store, state, effect);
+            const player = effect.player;
+            if (player.marker.hasMarker(this.NIGHT_GATE_MARKER, this)) {
+                throw new __1.GameError(__1.GameMessage.POWER_ALREADY_USED);
+            }
             effect.player.marker.addMarker(this.NIGHT_GATE_MARKER, this);
+            player.forEachPokemon(__1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            });
             return generator.next().value;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

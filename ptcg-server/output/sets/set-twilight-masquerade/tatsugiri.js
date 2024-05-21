@@ -62,6 +62,11 @@ class Tatsugiri extends game_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 0, max: 1, allowCancel: true }), selected => {
                 player.marker.addMarker(this.CROWD_PULLER_MARKER, this);
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.deck);
                 if (selected.length > 0) {

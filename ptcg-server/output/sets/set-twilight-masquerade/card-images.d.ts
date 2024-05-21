@@ -43,6 +43,7 @@ import { Munkidori } from './munkidori';
 import { Kieran } from './kieran';
 import { Chansey } from './chansey';
 import { Morpeko } from './morpeko';
+import { BugCatchingSet } from './bug-catching-set';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -53,6 +54,9 @@ export declare class AronArt extends Aron {
     cardImage: string;
 }
 export declare class BlisseyexArt extends Blisseyex {
+    cardImage: string;
+}
+export declare class BugCatchingSetArt extends BugCatchingSet {
     cardImage: string;
 }
 export declare class CarmineArt extends Carmine {

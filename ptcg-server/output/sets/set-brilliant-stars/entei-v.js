@@ -60,6 +60,11 @@ class EnteiV extends pokemon_card_1.PokemonCard {
             // Draw a card
             player.deck.moveTo(player.hand, 1);
             player.marker.addMarker(this.FLEET_FOOTED_MARKER, this);
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            });
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {

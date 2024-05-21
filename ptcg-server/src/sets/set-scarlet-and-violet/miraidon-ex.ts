@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, 
   GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt, GameError, PokemonCardList, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -105,6 +105,12 @@ export class Miraidonex extends PokemonCard {
       }
              
       player.abilityMarker.addMarker(this.TANDEM_UNIT_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
           
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(

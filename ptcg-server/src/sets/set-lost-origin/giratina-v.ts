@@ -66,7 +66,6 @@ export class GiratinaV extends PokemonCard {
         { },
         { min: 2, max: 2, allowCancel: true }
       ), selected => {
-        player.marker.addMarker(this.FLOWER_SELECTING_MARKER, this);
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.lostzone);
         return state;

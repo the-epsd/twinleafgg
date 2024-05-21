@@ -58,6 +58,11 @@ class Archeops extends pokemon_card_1.PokemonCard {
                     return;
                 }
                 player.abilityMarker.addMarker(this.PRIMAL_TURBO_MARKER, this);
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.deck.moveCardTo(transfer.card, target);

@@ -57,6 +57,11 @@ class Dodrio extends pokemon_card_1.PokemonCard {
             });
             player.deck.moveTo(player.hand, 1);
             player.abilityMarker.addMarker(this.ZOOMING_DRAW_MARKER, this);
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Get Dodrio's damage

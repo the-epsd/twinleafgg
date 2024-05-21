@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, EnergyCard, AttachEnergyPrompt, GameError, GameMessage, SlotType, StateUtils, ChoosePokemonPrompt } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -115,6 +115,13 @@ export class Regigigas extends PokemonCard {
                 const target = StateUtils.getTarget(state, player, transfer.to);
                 player.discard.moveCardTo(transfer.card, target);
                 player.marker.addMarker(this.ANCIENT_WISDOM_MARKER, this);
+
+                player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+                  if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                  }
+                });
+
               }
             });
           });

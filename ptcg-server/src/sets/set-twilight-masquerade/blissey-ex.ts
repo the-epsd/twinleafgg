@@ -1,4 +1,4 @@
-import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { CardTag, CardType, EnergyType, SpecialCondition, Stage, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -96,6 +96,13 @@ export class Blisseyex extends PokemonCard {
     
         for (const transfer of transfers) {
           player.marker.addMarker(this.BLISSFUL_SWAP_MARKER, this);
+
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            }
+          });
+
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
           source.moveCardTo(transfer.card, target);
