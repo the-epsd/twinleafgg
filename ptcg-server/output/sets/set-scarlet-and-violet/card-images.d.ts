@@ -1,5 +1,6 @@
 import { Armarouge } from './armarouge';
 import { Arven } from './arven';
+import { Banetteex } from './banette-ex';
 import { BeachCourt } from './beach-court';
 import { Charcadet } from './charcadet';
 import { CrushingHammer } from './crushing-hammer';
@@ -40,6 +41,7 @@ import { RareCandy } from './rare-candy';
 import { RockChestplate } from './rock-chestplate';
 import { RockyHelmet } from './rocky-helmet';
 import { Scovillain } from './scovillain';
+import { Shuppet } from './shuppet';
 import { Skwovet } from './skwovet';
 import { Switch } from './switch';
 import { TeamStarGrunt } from './team-star-grunt';
@@ -50,6 +52,9 @@ export declare class ArmarougeArt extends Armarouge {
     cardImage: string;
 }
 export declare class ArvenArt extends Arven {
+    cardImage: string;
+}
+export declare class BanetteexArt extends Banetteex {
     cardImage: string;
 }
 export declare class BeachCourtArt extends BeachCourt {
@@ -175,6 +180,9 @@ export declare class RockyHelmetArt extends RockyHelmet {
     cardImage: string;
 }
 export declare class ScovillainArt extends Scovillain {
+    cardImage: string;
+}
+export declare class ShuppetArt extends Shuppet {
     cardImage: string;
 }
 export declare class SkwovetArt extends Skwovet {

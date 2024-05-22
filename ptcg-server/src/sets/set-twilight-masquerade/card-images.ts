@@ -46,6 +46,9 @@ import { Chansey } from './chansey';
 import { Morpeko } from './morpeko';
 import { BugCatchingSet } from './bug-catching-set';
 import { Dipplin } from './dipplin';
+import { Grookey } from './grookey';
+import { Thwackey } from './thwackey';
+import { FestivalGrounds } from './festival-plaza';
 
 export class AggronArt extends Aggron {
   public cardImage = 'https://pokemonproxies.com/static/media/Aggron-075-6b.7ac10503aca6d6db414f.png';
@@ -95,6 +98,10 @@ export class FarfetchdArt extends Farfetchd {
   public cardImage = 'https://pokemonproxies.com/static/media/Farfetch_d-083-6b.e1124bde5fffcea0a822.png';
 }
 
+export class FestivalGroundsArt extends FestivalGrounds {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_99_R_JP.png';
+}
+
 export class FroslassArt extends Froslass {
   public cardImage = 'https://pokemonproxies.com/static/media/Froslass-033-6b.f16e1d2f43bb70c54265.png';
 }
@@ -105,6 +112,10 @@ export class HandyFanArt extends HandyFan {
 
 export class HasselArt extends Hassel {
   public cardImage = 'https://pokemonproxies.com/static/media/Hassel-098-6b.3b2063f3daaed90ea5f3.png';
+}
+
+export class GrookeyArt extends Grookey {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_8_R_JP_LG.png';
 }
 
 export class LaironArt extends Lairon {
@@ -233,4 +244,8 @@ export class TealMaskOgerponexArt extends TealMaskOgerponex {
 
 export class UnfairStampArt extends UnfairStamp {
   public cardImage = 'https://pokemonproxies.com/static/media/Unfair_Stamp-053-6a.7e1279f2c7c61c775bf7.png';
+}
+
+export class ThwackeyArt extends Thwackey {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_9_R_JP_LG.png';
 }

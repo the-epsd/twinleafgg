@@ -101,6 +101,7 @@ var CardType;
     CardType[CardType["SNORLAX_STALL"] = 27] = "SNORLAX_STALL";
     CardType[CardType["LUGIA_VSTAR"] = 28] = "LUGIA_VSTAR";
     CardType[CardType["ABSOL_EX"] = 29] = "ABSOL_EX";
+    CardType[CardType["THWACKEY"] = 30] = "THWACKEY";
 })(CardType = exports.CardType || (exports.CardType = {}));
 var SpecialCondition;
 (function (SpecialCondition) {

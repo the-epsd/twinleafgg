@@ -1,17 +1,25 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { State, StoreLike } from '../../game';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class AlolanVulpixVSTAR extends PokemonCard {
+export declare class Thwackey extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;
+    cardTypez: CardType;
     hp: number;
-    tags: CardTag[];
     weakness: {
         type: CardType;
     }[];
+    resistance: never[];
     retreat: CardType[];
+    powers: {
+        name: string;
+        powerType: PowerType;
+        useWhenInPlay: boolean;
+        text: string;
+    }[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -19,11 +27,10 @@ export declare class AlolanVulpixVSTAR extends PokemonCard {
         text: string;
     }[];
     set: string;
-    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;
-    readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = "PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER";
+    readonly BOOM_BOOM_DRUM_MARKER = "BOOM_BOOM_DRUM_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

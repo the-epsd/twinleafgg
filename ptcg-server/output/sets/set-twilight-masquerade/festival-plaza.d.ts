@@ -1,14 +1,14 @@
+import { Effect } from '../../game/store/effects/effect';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
-export declare class Switch extends TrainerCard {
+export declare class FestivalGrounds extends TrainerCard {
     regulationMark: string;
-    trainerType: TrainerType;
-    set: string;
     cardImage: string;
     setNumber: string;
+    trainerType: TrainerType;
+    set: string;
     name: string;
     fullName: string;
     text: string;

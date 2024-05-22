@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SkwovetArt = exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RareCandyArt = exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GardevoirexArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CharcadetArt = exports.BeachCourtArt = exports.ArvenArt = exports.ArmarougeArt = void 0;
+exports.VitalityBandArt = exports.UltraBallArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SkwovetArt = exports.ShuppetArt = exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RareCandyArt = exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GardevoirexArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CharcadetArt = exports.BeachCourtArt = exports.BanetteexArt = exports.ArvenArt = exports.ArmarougeArt = void 0;
+exports.NestBallArt2 = exports.YoungsterArt = void 0;
 const armarouge_1 = require("./armarouge");
 const arven_1 = require("./arven");
+const banette_ex_1 = require("./banette-ex");
 const beach_court_1 = require("./beach-court");
 const charcadet_1 = require("./charcadet");
 const crushing_hammer_1 = require("./crushing-hammer");
@@ -43,6 +45,7 @@ const rare_candy_1 = require("./rare-candy");
 const rock_chestplate_1 = require("./rock-chestplate");
 const rocky_helmet_1 = require("./rocky-helmet");
 const scovillain_1 = require("./scovillain");
+const shuppet_1 = require("./shuppet");
 const skwovet_1 = require("./skwovet");
 const switch_1 = require("./switch");
 const team_star_grunt_1 = require("./team-star-grunt");
@@ -63,6 +66,13 @@ class ArvenArt extends arven_1.Arven {
     }
 }
 exports.ArvenArt = ArvenArt;
+class BanetteexArt extends banette_ex_1.Banetteex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_088_R_EN_LG.png';
+    }
+}
+exports.BanetteexArt = BanetteexArt;
 class BeachCourtArt extends beach_court_1.BeachCourt {
     constructor() {
         super(...arguments);
@@ -352,6 +362,13 @@ class ScovillainArt extends scovillain_1.Scovillain {
     }
 }
 exports.ScovillainArt = ScovillainArt;
+class ShuppetArt extends shuppet_1.Shuppet {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_087_R_EN_LG.png';
+    }
+}
+exports.ShuppetArt = ShuppetArt;
 class SkwovetArt extends skwovet_1.Skwovet {
     constructor() {
         super(...arguments);

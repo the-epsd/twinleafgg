@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UnfairStampArt = exports.TealMaskOgerponexArt = exports.SurvivalCastArt = exports.ScreamTailexArt = exports.PhioneArt = exports.PerrinArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.KieranArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.HyperAromaArt = exports.GreninjaexArt = exports.FrogadierArt = exports.FroakieArt = exports.EnhancedHammerArt = exports.CommunityCenterArt = exports.CaretakerArt = exports.BloodmoonUrsalunaexArt = exports.WellspringMaskOgerponexArt = exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.MunkidoriArt = exports.MorpekoArt = exports.PoochyenaArt = exports.PerformanceFluteArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LegacyEnergyArt = exports.LaironArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.FarfetchdArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.DipplinArt = exports.ChanseyArt = exports.CarmineArt = exports.BugCatchingSetArt = exports.BlisseyexArt = exports.AronArt = exports.AlakazamArt = exports.AggronArt = void 0;
+exports.ThwackeyArt = exports.UnfairStampArt = exports.TealMaskOgerponexArt = exports.SurvivalCastArt = exports.ScreamTailexArt = exports.PhioneArt = exports.PerrinArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.KieranArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.HyperAromaArt = exports.GreninjaexArt = exports.FrogadierArt = exports.FroakieArt = exports.EnhancedHammerArt = exports.CommunityCenterArt = exports.CaretakerArt = exports.BloodmoonUrsalunaexArt = exports.WellspringMaskOgerponexArt = exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.MunkidoriArt = exports.MorpekoArt = exports.PoochyenaArt = exports.PerformanceFluteArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LegacyEnergyArt = exports.LaironArt = exports.GrookeyArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.FestivalGroundsArt = exports.FarfetchdArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.DipplinArt = exports.ChanseyArt = exports.CarmineArt = exports.BugCatchingSetArt = exports.BlisseyexArt = exports.AronArt = exports.AlakazamArt = exports.AggronArt = void 0;
 const aggron_1 = require("./aggron");
 const alakazam_1 = require("./alakazam");
 const aron_1 = require("./aron");
@@ -48,6 +48,9 @@ const chansey_1 = require("./chansey");
 const morpeko_1 = require("./morpeko");
 const bug_catching_set_1 = require("./bug-catching-set");
 const dipplin_1 = require("./dipplin");
+const grookey_1 = require("./grookey");
+const thwackey_1 = require("./thwackey");
+const festival_plaza_1 = require("./festival-plaza");
 class AggronArt extends aggron_1.Aggron {
     constructor() {
         super(...arguments);
@@ -132,6 +135,13 @@ class FarfetchdArt extends farfetchd_1.Farfetchd {
     }
 }
 exports.FarfetchdArt = FarfetchdArt;
+class FestivalGroundsArt extends festival_plaza_1.FestivalGrounds {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_99_R_JP.png';
+    }
+}
+exports.FestivalGroundsArt = FestivalGroundsArt;
 class FroslassArt extends froslass_1.Froslass {
     constructor() {
         super(...arguments);
@@ -153,6 +163,13 @@ class HasselArt extends hassel_1.Hassel {
     }
 }
 exports.HasselArt = HasselArt;
+class GrookeyArt extends grookey_1.Grookey {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_8_R_JP_LG.png';
+    }
+}
+exports.GrookeyArt = GrookeyArt;
 class LaironArt extends lairon_1.Lairon {
     constructor() {
         super(...arguments);
@@ -377,3 +394,10 @@ class UnfairStampArt extends unfair_stamp_1.UnfairStamp {
     }
 }
 exports.UnfairStampArt = UnfairStampArt;
+class ThwackeyArt extends thwackey_1.Thwackey {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_9_R_JP_LG.png';
+    }
+}
+exports.ThwackeyArt = ThwackeyArt;

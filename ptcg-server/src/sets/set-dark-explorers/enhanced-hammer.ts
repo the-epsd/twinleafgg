@@ -70,6 +70,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 export class EnhancedHammer extends TrainerCard {
 
+  public regulationMark = 'H';
+
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'DEX';

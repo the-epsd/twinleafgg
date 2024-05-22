@@ -98,7 +98,8 @@ export enum CardType {
   BAXCALIBUR,
   SNORLAX_STALL,
   LUGIA_VSTAR,
-  ABSOL_EX
+  ABSOL_EX,
+  THWACKEY
 }
 
 export enum SpecialCondition {

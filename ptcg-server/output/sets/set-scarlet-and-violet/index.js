@@ -98,6 +98,8 @@ exports.setScarletAndViolet = [
     new card_images_44.UltraBallArt(),
     new card_images_45.VitalityBandArt(),
     new card_images_46.YoungsterArt(),
+    new card_images_1.BanetteexArt(),
+    new card_images_1.ShuppetArt(),
     //Alt-Arts
     new full_arts_1.ArmarougeIR(),
     new full_arts_1.ArvenFA(),

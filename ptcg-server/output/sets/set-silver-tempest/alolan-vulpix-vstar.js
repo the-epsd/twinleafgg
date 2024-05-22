@@ -38,17 +38,17 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
         this.setNumber = '34';
         this.name = 'Alolan Vulpix VSTAR';
         this.fullName = 'Alolan Vulpix VSTAR SIT';
-        this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES';
+        this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            player.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES, this);
+            player.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            player.marker.addMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES, this);
+            player.marker.addMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
             const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 160);
             store.reduceEffect(state, applyWeakness);
             const damage = applyWeakness.damage;
@@ -57,7 +57,7 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
                 opponent.active.damage += damage;
                 const afterDamage = new attack_effects_1.AfterDamageEffect(effect, damage);
                 state = store.reduceEffect(state, afterDamage);
-                if (player.marker.hasMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES, this)) {
+                if (player.marker.hasMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
                     const opponent = game_1.StateUtils.getOpponent(state, player);
                     if (opponent.active) {
                         const opponentActive = opponent.active.getPokemonCard();
@@ -93,7 +93,7 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
             return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES, this);
+            effect.player.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
         }
         return state;
     }

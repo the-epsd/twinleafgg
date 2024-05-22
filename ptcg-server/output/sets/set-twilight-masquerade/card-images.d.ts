@@ -45,6 +45,9 @@ import { Chansey } from './chansey';
 import { Morpeko } from './morpeko';
 import { BugCatchingSet } from './bug-catching-set';
 import { Dipplin } from './dipplin';
+import { Grookey } from './grookey';
+import { Thwackey } from './thwackey';
+import { FestivalGrounds } from './festival-plaza';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -81,6 +84,9 @@ export declare class DragapultexArt extends Dragapultex {
 export declare class FarfetchdArt extends Farfetchd {
     cardImage: string;
 }
+export declare class FestivalGroundsArt extends FestivalGrounds {
+    cardImage: string;
+}
 export declare class FroslassArt extends Froslass {
     cardImage: string;
 }
@@ -88,6 +94,9 @@ export declare class HandyFanArt extends HandyFan {
     cardImage: string;
 }
 export declare class HasselArt extends Hassel {
+    cardImage: string;
+}
+export declare class GrookeyArt extends Grookey {
     cardImage: string;
 }
 export declare class LaironArt extends Lairon {
@@ -184,5 +193,8 @@ export declare class TealMaskOgerponexArt extends TealMaskOgerponex {
     cardImage: string;
 }
 export declare class UnfairStampArt extends UnfairStamp {
+    cardImage: string;
+}
+export declare class ThwackeyArt extends Thwackey {
     cardImage: string;
 }

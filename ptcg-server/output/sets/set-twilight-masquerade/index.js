@@ -50,4 +50,7 @@ exports.setTwilightMasquerade = [
     new card_images_1.ChanseyArt(),
     new card_images_1.BugCatchingSetArt(),
     new card_images_1.DipplinArt(),
+    new card_images_1.GrookeyArt(),
+    new card_images_1.ThwackeyArt(),
+    new card_images_1.FestivalGroundsArt(),
 ];

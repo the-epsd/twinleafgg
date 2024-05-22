@@ -58,24 +58,28 @@ export class BruteBonnet extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.attackMarker.removeMarker(this.TOXIC_POWDER_MARKER, this);
+      player.marker.removeMarker(this.TOXIC_POWDER_MARKER, this);
     }
 
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+      const player = effect.player;
+      player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+      player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+      const player = effect.player;
+      player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.TOXIC_POWDER_MARKER, this)) {
-      effect.player.attackMarker.removeMarker(this.TOXIC_POWDER_MARKER, this);
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.TOXIC_POWDER_MARKER, this);
       console.log('toxic powder marker cleared');
     }
+
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
@@ -96,17 +100,6 @@ export class BruteBonnet extends PokemonCard {
         if (cardList.getPokemonCard() === this) {
           cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
         }
-      });
-
-
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player instanceof BruteBonnet) {
-          player.marker.removeMarker(this.TOXIC_POWDER_MARKER);
-        }
-        return state;
       });
     }
 

@@ -1,5 +1,6 @@
 import { Armarouge } from './armarouge';
 import { Arven } from './arven';
+import { Banetteex } from './banette-ex';
 import { BeachCourt } from './beach-court';
 import { Charcadet } from './charcadet';
 import { CrushingHammer } from './crushing-hammer';
@@ -40,6 +41,7 @@ import { RareCandy } from './rare-candy';
 import { RockChestplate } from './rock-chestplate';
 import { RockyHelmet } from './rocky-helmet';
 import { Scovillain } from './scovillain';
+import { Shuppet } from './shuppet';
 import { Skwovet } from './skwovet';
 import { Switch } from './switch';
 import { TeamStarGrunt } from './team-star-grunt';
@@ -53,6 +55,10 @@ export class ArmarougeArt extends Armarouge {
 
 export class ArvenArt extends Arven {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_166_R_EN_LG.png';
+}
+
+export class BanetteexArt extends Banetteex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_088_R_EN_LG.png';
 }
 
 export class BeachCourtArt extends BeachCourt {
@@ -219,6 +225,10 @@ export class RockyHelmetArt extends RockyHelmet {
 
 export class ScovillainArt extends Scovillain {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_029_R_EN_LG.png';
+}
+
+export class ShuppetArt extends Shuppet {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_087_R_EN_LG.png';
 }
 
 export class SkwovetArt extends Skwovet {

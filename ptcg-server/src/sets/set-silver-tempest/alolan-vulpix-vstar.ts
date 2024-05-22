@@ -50,18 +50,18 @@ export class AlolanVulpixVSTAR extends PokemonCard {
 
   public fullName = 'Alolan Vulpix VSTAR SIT';
 
-  public readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES';
+  public readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES, this);
+      player.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      player.marker.addMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES, this);
+      player.marker.addMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
 
       const applyWeakness = new ApplyWeaknessEffect(effect, 160);
       store.reduceEffect(state, applyWeakness);
@@ -74,7 +74,7 @@ export class AlolanVulpixVSTAR extends PokemonCard {
         const afterDamage = new AfterDamageEffect(effect, damage);
         state = store.reduceEffect(state, afterDamage);
 
-        if (player.marker.hasMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES, this)) {
+        if (player.marker.hasMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
           const opponent = StateUtils.getOpponent(state, player);
 
           if (opponent.active) {
@@ -120,7 +120,7 @@ export class AlolanVulpixVSTAR extends PokemonCard {
       return state;
     }
     if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES, this);
+      effect.player.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
     }
     return state;
   }

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArmarougeArt, CharcadetArt, NemonaArt, NestBallArt2, RockyHelmetArt } from './card-images';
+import { ArmarougeArt, BanetteexArt, CharcadetArt, NemonaArt, NestBallArt2, RockyHelmetArt, ShuppetArt } from './card-images';
 import { ArvenArt } from './card-images';
 import { BeachCourtArt } from './card-images';
 import { CrushingHammerArt } from './card-images';
@@ -97,6 +97,8 @@ export const setScarletAndViolet: Card[] = [
   new UltraBallArt(),
   new VitalityBandArt(),
   new YoungsterArt(),
+  new BanetteexArt(),
+  new ShuppetArt(),
 
   //Alt-Arts
   new ArmarougeIR(),

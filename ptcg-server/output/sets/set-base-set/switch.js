@@ -31,6 +31,7 @@ function* playCard(next, store, state, effect) {
 class Switch extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BS';
         this.cardImage = 'assets/cardback.png';
