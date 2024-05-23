@@ -31,15 +31,15 @@ export class Aron extends PokemonCard {
     }
   ];
   
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '73';
+  public setNumber: string = '120';
   
   public name: string = 'Aron';
   
-  public fullName: string = 'Aron SV6';
+  public fullName: string = 'Aron TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

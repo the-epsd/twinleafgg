@@ -32,14 +32,14 @@ export class Alakazam extends PokemonCard {
     },
   ];
 
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '49';
+  public setNumber: string = '82';
 
   public name: string = 'Alakazam';
 
-  public fullName: string = 'Alakazam SV6';
+  public fullName: string = 'Alakazam TWM';
 
 }

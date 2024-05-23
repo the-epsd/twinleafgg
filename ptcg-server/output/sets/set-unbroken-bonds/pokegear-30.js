@@ -37,6 +37,7 @@ class Pokegear30 extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
+        this.regulationMark = 'G';
         this.set = 'UNB';
         this.name = 'Pokegear 3.0';
         this.fullName = 'Pokegear 3.0 UNB';

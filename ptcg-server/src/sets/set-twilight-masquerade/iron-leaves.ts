@@ -37,15 +37,15 @@ export class IronLeaves extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5a';
+  public set: string = 'TWM';
 
   public name: string = 'Iron Leaves';
 
-  public fullName: string = 'Iron Leaves SV5a';
+  public fullName: string = 'Iron Leaves TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '62';
+  public setNumber: string = '19';
 
   public readonly VENGEFUL_EDGE_MARKER = 'VENGEFUL_EDGE_MARKER';
 

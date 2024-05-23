@@ -61,11 +61,11 @@ class Clefable extends game_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '45';
+        this.setNumber = '78';
         this.name = 'Clefable';
-        this.fullName = 'Clefable SV6';
+        this.fullName = 'Clefable TWM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

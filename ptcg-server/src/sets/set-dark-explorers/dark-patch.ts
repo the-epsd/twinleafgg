@@ -16,6 +16,8 @@ export class DarkPatch extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
+  public regulationMark = 'F';
+
   public set: string = 'DEX';
 
   public name: string = 'Dark Patch';

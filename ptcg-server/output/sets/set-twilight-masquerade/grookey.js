@@ -28,7 +28,7 @@ class Grookey extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '8';
+        this.setNumber = '14';
         this.name = 'Grookey';
         this.fullName = 'Grookey TWM';
     }

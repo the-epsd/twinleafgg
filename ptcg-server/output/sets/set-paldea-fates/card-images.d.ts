@@ -123,9 +123,13 @@ export declare class StudentsInPaldeaArt extends StudentsInPaldea {
 }
 export declare class StudentsInPaldeaArt2 extends StudentsInPaldea {
     cardImage: string;
+    setNumber: string;
 }
 export declare class NatuArt extends Natu {
     cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
 }
 export declare class TechnicalMachineCrisisPunchArt extends TechnicalMachineCrisisPunch {
     cardImage: string;
@@ -138,4 +142,7 @@ export declare class UltraBallArt extends UltraBall {
 }
 export declare class XatuArt extends Xatu {
     cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
 }

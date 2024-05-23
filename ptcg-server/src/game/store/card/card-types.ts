@@ -99,7 +99,8 @@ export enum CardType {
   SNORLAX_STALL,
   LUGIA_VSTAR,
   ABSOL_EX,
-  THWACKEY
+  THWACKEY,
+  DIPPLIN
 }
 
 export enum SpecialCondition {

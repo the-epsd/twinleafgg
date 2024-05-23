@@ -55,11 +55,11 @@ class MimeJr extends pokemon_card_1.PokemonCard {
                 damage: 0,
                 text: 'Your opponent chooses 1 of their Pokémon\'s attacks. Use that attack as this attack.'
             }];
-        this.set = 'SV4';
+        this.set = 'PAF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '85';
+        this.setNumber = '31';
         this.name = 'Mime Jr.';
-        this.fullName = 'Mime Jr. SV4';
+        this.fullName = 'Mime Jr. PAF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

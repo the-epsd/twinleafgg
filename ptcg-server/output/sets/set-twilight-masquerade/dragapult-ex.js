@@ -54,11 +54,11 @@ class Dragapultex extends pokemon_card_1.PokemonCard {
                 damage: 200,
                 text: 'Put 6 damage counters on your opponent\'s Benched Pokemon in any way you like.'
             }];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '81';
+        this.setNumber = '130';
         this.name = 'Dragapult ex';
-        this.fullName = 'Dragapult ex SV6';
+        this.fullName = 'Dragapult ex TWM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

@@ -39,17 +39,17 @@ export class Kilowattrel extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV4';
+  public set: string = 'PAF';
 
   public regulationMark = 'G';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '70';
+  public setNumber: string = '22';
 
   public name: string = 'Kilowattrel';
 
-  public fullName: string = 'Kilowattrel SV4';
+  public fullName: string = 'Kilowattrel PAF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

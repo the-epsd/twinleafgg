@@ -35,15 +35,15 @@ export class Poochyena extends PokemonCard {
     },
   ];
 
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '66';
+  public setNumber: string = '113';
 
   public name: string = 'Poochyena';
 
-  public fullName: string = 'Poochyena SV6';
+  public fullName: string = 'Poochyena TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

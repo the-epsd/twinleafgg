@@ -1,3 +1,4 @@
+import { MasterBall } from '../set-temporal-forces/master-ball';
 import { JirachiEx } from './jirachi-ex';
 import { ScoopUpCyclone } from './scoop-up-cyclone';
 import { SilverBangle } from './silver-bangle';
@@ -22,4 +23,8 @@ export class UltraBallArt extends UltraBall {
 
 export class VirizionExArt extends VirizionEx {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLB/PLB_009_R_EN.png';
+}
+
+export class MasterBallArt extends MasterBall {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLB/PLB_094_R_EN_LG.png';
 }

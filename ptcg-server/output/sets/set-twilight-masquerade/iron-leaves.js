@@ -31,11 +31,11 @@ class IronLeaves extends pokemon_card_1.PokemonCard {
                 text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, +60 damage.'
             }
         ];
-        this.set = 'SV5a';
+        this.set = 'TWM';
         this.name = 'Iron Leaves';
-        this.fullName = 'Iron Leaves SV5a';
+        this.fullName = 'Iron Leaves TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '62';
+        this.setNumber = '19';
         this.VENGEFUL_EDGE_MARKER = 'VENGEFUL_EDGE_MARKER';
     }
     reduceEffect(store, state, effect) {

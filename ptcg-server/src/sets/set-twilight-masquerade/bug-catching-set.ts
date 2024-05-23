@@ -83,7 +83,7 @@ export class BugCatchingSet extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '94';
+  public setNumber: string = '143';
 
   public name: string = 'Bug Catching Set';
 

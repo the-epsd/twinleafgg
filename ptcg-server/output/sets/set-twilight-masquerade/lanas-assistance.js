@@ -46,11 +46,11 @@ class LanasAssistance extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'SV5a';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '64';
-        this.name = 'Lana\'s Assistance';
-        this.fullName = 'Lana\'s Assistance SV5a';
+        this.setNumber = '155';
+        this.name = 'Lana\'s Aid';
+        this.fullName = 'Lana\'s Aid TWM';
         this.text = 'Put up to 3 in any combination of Pokémon that don\'t have a Rule Box and Basic Energy cards from your discard pile into your hand.';
     }
     reduceEffect(store, state, effect) {

@@ -13,15 +13,15 @@ export class Carmine extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '97';
+  public setNumber: string = '145';
 
   public name: string = 'Carmine';
 
-  public fullName: string = 'Carmine SV6';
+  public fullName: string = 'Carmine TWM';
 
   public firstTurn = true;
 

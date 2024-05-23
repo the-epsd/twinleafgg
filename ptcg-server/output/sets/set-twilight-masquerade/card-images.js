@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ThwackeyArt = exports.UnfairStampArt = exports.TealMaskOgerponexArt = exports.SurvivalCastArt = exports.ScreamTailexArt = exports.PhioneArt = exports.PerrinArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.KieranArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.HyperAromaArt = exports.GreninjaexArt = exports.FrogadierArt = exports.FroakieArt = exports.EnhancedHammerArt = exports.CommunityCenterArt = exports.CaretakerArt = exports.BloodmoonUrsalunaexArt = exports.WellspringMaskOgerponexArt = exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.MunkidoriArt = exports.MorpekoArt = exports.PoochyenaArt = exports.PerformanceFluteArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LegacyEnergyArt = exports.LaironArt = exports.GrookeyArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.FestivalGroundsArt = exports.FarfetchdArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.DipplinArt = exports.ChanseyArt = exports.CarmineArt = exports.BugCatchingSetArt = exports.BlisseyexArt = exports.AronArt = exports.AlakazamArt = exports.AggronArt = void 0;
+exports.UnfairStampArt = exports.TealMaskOgerponexArt = exports.SurvivalCastArt = exports.ScreamTailexArt = exports.PhioneArt = exports.PerrinArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.KieranArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.HyperAromaArt = exports.GreninjaexArt = exports.FrogadierArt = exports.FroakieArt = exports.EnhancedHammerArt = exports.CommunityCenterArt = exports.CaretakerArt = exports.BloodmoonUrsalunaexArt = exports.WellspringMaskOgerponexArt = exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.MunkidoriArt = exports.MorpekoArt = exports.PoochyenaArt = exports.PerformanceFluteArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LegacyEnergyArt = exports.LaironArt = exports.GrookeyArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.FestivalGroundsArt = exports.FarfetchdArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.DipplinArt = exports.ChanseyArt = exports.CarmineArt = exports.BugCatchingSetArt = exports.BlisseyexArt = exports.ApplinArt2 = exports.ApplinArt = exports.AronArt = exports.AggronArt = void 0;
+exports.ChiYuArt = exports.HearthflameMaskOgerponexArt = exports.TingLuArt = exports.ShinxArt = exports.LanasAssistanceArt = exports.EmolgaArt = exports.ClefairyArt = exports.ClefableArt = exports.ThwackeyArt = void 0;
 const aggron_1 = require("./aggron");
-const alakazam_1 = require("./alakazam");
 const aron_1 = require("./aron");
 const blissey_ex_1 = require("./blissey-ex");
 const carmine_1 = require("./carmine");
@@ -51,353 +51,429 @@ const dipplin_1 = require("./dipplin");
 const grookey_1 = require("./grookey");
 const thwackey_1 = require("./thwackey");
 const festival_plaza_1 = require("./festival-plaza");
+const applin_1 = require("./applin");
+const applin_2_1 = require("./applin-2");
+const clefable_1 = require("./clefable");
+const clefairy_1 = require("./clefairy");
+const lanas_assistance_1 = require("./lanas-assistance");
+const emolga_1 = require("./emolga");
+const shinx_1 = require("./shinx");
+const ting_lu_1 = require("./ting-lu");
+const hearthflame_mask_ogerpon_ex_1 = require("./hearthflame-mask-ogerpon-ex");
+const chi_yu_1 = require("./chi-yu");
 class AggronArt extends aggron_1.Aggron {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Aggron-075-6b.7ac10503aca6d6db414f.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_122_R_EN_LG.png';
     }
 }
 exports.AggronArt = AggronArt;
-class AlakazamArt extends alakazam_1.Alakazam {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Alakazam-049-6b.1b54b9774ef9a69d4629.png';
-    }
-}
-exports.AlakazamArt = AlakazamArt;
+// export class AlakazamArt extends Alakazam {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_082_R_EN_LG.png';
+// }
 class AronArt extends aron_1.Aron {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Aron-073-6b.31ee23eb6881e62ddb10.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_120_R_EN_LG.png';
     }
 }
 exports.AronArt = AronArt;
+class ApplinArt extends applin_1.Applin {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_126_R_EN_LG.png';
+    }
+}
+exports.ApplinArt = ApplinArt;
+class ApplinArt2 extends applin_2_1.Applin2 {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_017_R_EN_LG.png';
+    }
+}
+exports.ApplinArt2 = ApplinArt2;
 class BlisseyexArt extends blissey_ex_1.Blisseyex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Blissey_ex-085-6b.62a9752c57fbf77de695.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_134_R_EN_LG.png';
     }
 }
 exports.BlisseyexArt = BlisseyexArt;
 class BugCatchingSetArt extends bug_catching_set_1.BugCatchingSet {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_94_R_JP_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_143_R_EN_LG.png';
     }
 }
 exports.BugCatchingSetArt = BugCatchingSetArt;
 class CarmineArt extends carmine_1.Carmine {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_97_R_JP_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_145_R_EN_LG.png';
     }
 }
 exports.CarmineArt = CarmineArt;
 class ChanseyArt extends chansey_1.Chansey {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_84_R_JP_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_133_R_EN_LG.png';
     }
 }
 exports.ChanseyArt = ChanseyArt;
 class DipplinArt extends dipplin_1.Dipplin {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_12_R_JP_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_018_R_EN_LG.png';
     }
 }
 exports.DipplinArt = DipplinArt;
 class DreepyArt extends dreepy_1.Dreepy {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Dreepy-079-6b.f82640a652eb6fccdc11.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_128_R_EN_LG.png';
     }
 }
 exports.DreepyArt = DreepyArt;
 class DrakloakArt extends drakloak_1.Drakloak {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Drakloak-080-6b.5f41c00d086fcfc8c4b1.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_129_R_EN_LG.png';
     }
 }
 exports.DrakloakArt = DrakloakArt;
 class DragapultexArt extends dragapult_ex_1.Dragapultex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Dragapult_ex-081-6b.fe23ee615c082381624f.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_130_R_EN_LG.png';
     }
 }
 exports.DragapultexArt = DragapultexArt;
 class FarfetchdArt extends farfetchd_1.Farfetchd {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Farfetch_d-083-6b.e1124bde5fffcea0a822.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_132_R_EN_LG.png';
     }
 }
 exports.FarfetchdArt = FarfetchdArt;
 class FestivalGroundsArt extends festival_plaza_1.FestivalGrounds {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_99_R_JP.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_149_R_EN_LG.png';
     }
 }
 exports.FestivalGroundsArt = FestivalGroundsArt;
 class FroslassArt extends froslass_1.Froslass {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Froslass-033-6b.f16e1d2f43bb70c54265.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_053_R_EN_LG.png';
     }
 }
 exports.FroslassArt = FroslassArt;
 class HandyFanArt extends handy_fan_1.HandyFan {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Handy_Fan-095-6b.df423ab4ac780bd124ac.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_150_R_EN_LG.png';
     }
 }
 exports.HandyFanArt = HandyFanArt;
 class HasselArt extends hassel_1.Hassel {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Hassel-098-6b.3b2063f3daaed90ea5f3.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_151_R_EN_LG.png';
     }
 }
 exports.HasselArt = HasselArt;
 class GrookeyArt extends grookey_1.Grookey {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_8_R_JP_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_014_R_EN_LG.png';
     }
 }
 exports.GrookeyArt = GrookeyArt;
 class LaironArt extends lairon_1.Lairon {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Lairon-074-6b.1c78261fc13db3e8c011.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_121_R_EN_LG.png';
     }
 }
 exports.LaironArt = LaironArt;
 class LegacyEnergyArt extends legacy_energy_1.LegacyEnergy {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Legacy_Energy-101-6b.1fb81a2426158cabc977.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_167_R_EN_LG.png';
     }
 }
 exports.LegacyEnergyArt = LegacyEnergyArt;
 class LuxioArt extends luxio_1.Luxio {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_40_R_JP.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_067_R_EN_LG.png';
     }
 }
 exports.LuxioArt = LuxioArt;
 class LuxrayexArt extends luxray_ex_1.Luxrayex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Luxray_ex-041-6b.d1363594ccb95d4d05ae.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_068_R_EN_LG.png';
     }
 }
 exports.LuxrayexArt = LuxrayexArt;
 class MightyenaArt extends mightyena_1.Mightyena {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Mightyena-067-6b.c0ccbda4c99375cbd61e.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_114_R_EN_LG.png';
     }
 }
 exports.MightyenaArt = MightyenaArt;
 class PerformanceFluteArt extends performance_flute_1.PerformanceFlute {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_91_R_JP.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_142_R_EN_LG.png';
     }
 }
 exports.PerformanceFluteArt = PerformanceFluteArt;
 class PoochyenaArt extends poochyena_1.Poochyena {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Poochyena-066-6b.53362be54c848c0db18d.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_113_R_EN_LG.png';
     }
 }
 exports.PoochyenaArt = PoochyenaArt;
 class MorpekoArt extends morpeko_1.Morpeko {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1709292206188-EP2WSFT3DF52RPXDXPB2/Morpeko.png?format=2500w';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_072_R_EN_LG.png';
     }
 }
 exports.MorpekoArt = MorpekoArt;
 class MunkidoriArt extends munkidori_1.Munkidori {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_55_R_JP_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_095_R_EN_LG.png';
     }
 }
 exports.MunkidoriArt = MunkidoriArt;
 class RotoStickArt extends roto_stick_1.RotoStick {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GLgdOQsakAAybIc?format=jpg&name=large';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_133_R_EN_LG.png';
     }
 }
 exports.RotoStickArt = RotoStickArt;
 class ScoopUpCycloneArt extends scoop_up_cyclone_1.ScoopUpCyclone {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Scoop_Up_Cyclone-093-6b.9557e3d68dd2610ec8e1.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_162_R_EN_LG.png';
     }
 }
 exports.ScoopUpCycloneArt = ScoopUpCycloneArt;
 class TatsugiriArt extends tatsugiri_1.Tatsugiri {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Tatsugiri-082-6b.75a621805105113b23fd.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_131_R_EN_LG.png';
     }
 }
 exports.TatsugiriArt = TatsugiriArt;
 class WellspringMaskOgerponexArt extends wellspring_mask_ogerpon_ex_1.WellspringMaskOgerponex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_38_R_JP.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_064_R_EN_LG.png';
     }
 }
 exports.WellspringMaskOgerponexArt = WellspringMaskOgerponexArt;
 class BloodmoonUrsalunaexArt extends bloodmoon_ursaluna_ex_1.BloodmoonUrsalunaex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Bloodmoon_Ursaluna_ex-052-6a.234703fccc37108b0a89.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_141_R_EN_LG.png';
     }
 }
 exports.BloodmoonUrsalunaexArt = BloodmoonUrsalunaexArt;
 class CaretakerArt extends caretaker_1.Caretaker {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Caretaker-061-6a.c083ae07dcf993d59c53.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_144_R_EN_LG.png';
     }
 }
 exports.CaretakerArt = CaretakerArt;
 class CommunityCenterArt extends community_center_1.CommunityCenter {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Community_Center-065-6a.271ae1f8d37775ccb0ce.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_144_R_EN_LG.png';
     }
 }
 exports.CommunityCenterArt = CommunityCenterArt;
 class EnhancedHammerArt extends enhanced_hammer_1.EnhancedHammer {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Enhanced_Hammer-054-6a.c730a36dc067de882b07.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_148_R_EN_LG.png';
     }
 }
 exports.EnhancedHammerArt = EnhancedHammerArt;
 class FroakieArt extends froakie_1.Froakie {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Froakie-023-6a.5b2a6a97b3cbf470e84d.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_056_R_EN_LG.png';
     }
 }
 exports.FroakieArt = FroakieArt;
 class FrogadierArt extends frogadier_1.Frogadier {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Frogadier-024-6a.4def849cb32b1189a6d4.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_057_R_EN_LG.png';
     }
 }
 exports.FrogadierArt = FrogadierArt;
 class GreninjaexArt extends greninja_ex_1.Greninjaex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Greninja_ex-045-6a.3786fd21c98a5bbb4620.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_106_R_EN_LG.png';
     }
 }
 exports.GreninjaexArt = GreninjaexArt;
 class HyperAromaArt extends hyper_aroma_1.HyperAroma {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Hyper_Aroma-055-6a.9a1209a4170d0e7c160d.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_152_R_EN_LG.png';
     }
 }
 exports.HyperAromaArt = HyperAromaArt;
 class IronLeavesArt extends iron_leaves_1.IronLeaves {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Iron_Leaves-007-6a.35d4c6a2a02bbef9eb6a.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_019_R_EN_LG.png';
     }
 }
 exports.IronLeavesArt = IronLeavesArt;
 class IronThornsexArt extends iron_thorns_ex_1.IronThornsex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Iron_Thorns_ex-033-6a.6b321f64403bd7b196a7.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_077_R_EN_LG.png';
     }
 }
 exports.IronThornsexArt = IronThornsexArt;
 class KieranArt extends kieran_1.Kieran {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_96_R_JP.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_154_R_EN_LG.png';
     }
 }
 exports.KieranArt = KieranArt;
 class LoveBallArt extends love_ball_1.LoveBall {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Love_Ball-058-6a.ba282a7c7ab88aa05813.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_156_R_EN_LG.png';
     }
 }
 exports.LoveBallArt = LoveBallArt;
 class LuckyHelmetArt extends lucky_helmet_1.LuckyHelmet {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Lucky_Helmet-060-6a.6fdabbbe8bfcbd54e3ad.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_158_R_EN_LG.png';
     }
 }
 exports.LuckyHelmetArt = LuckyHelmetArt;
 class PerrinArt extends perrin_1.Perrin {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Perrin-063-6a.1911b08c290e31021cf0.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_160_R_EN_LG.png';
     }
 }
 exports.PerrinArt = PerrinArt;
 class PhioneArt extends phione_1.Phione {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Phione-022-6a.b5ca8e7e8ea63ae00ad3.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_055_R_EN_LG.png';
     }
 }
 exports.PhioneArt = PhioneArt;
 class ScreamTailexArt extends scream_tail_ex_1.ScreamTailex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Scream_Tail_ex-040-6a.07f912cd23c20bd211c5.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_094_R_EN_LG.png';
     }
 }
 exports.ScreamTailexArt = ScreamTailexArt;
 class SurvivalCastArt extends survival_cast_1.SurvivalCast {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Survival_Cast-059-6a.8b3c539713989d2bd8b8.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_164_R_EN_LG.png';
     }
 }
 exports.SurvivalCastArt = SurvivalCastArt;
 class TealMaskOgerponexArt extends teal_mask_ogerpon_ex_1.TealMaskOgerponex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GIojanGWgAEQkrU?format=jpg&name=medium';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_024_R_EN_LG.png';
     }
 }
 exports.TealMaskOgerponexArt = TealMaskOgerponexArt;
 class UnfairStampArt extends unfair_stamp_1.UnfairStamp {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Unfair_Stamp-053-6a.7e1279f2c7c61c775bf7.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_165_R_EN_LG.png';
     }
 }
 exports.UnfairStampArt = UnfairStampArt;
 class ThwackeyArt extends thwackey_1.Thwackey {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV6/SV6_9_R_JP_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_015_R_EN_LG.png';
     }
 }
 exports.ThwackeyArt = ThwackeyArt;
+class ClefableArt extends clefable_1.Clefable {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_078_R_EN_LG.png';
+    }
+}
+exports.ClefableArt = ClefableArt;
+class ClefairyArt extends clefairy_1.Clefairy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_077_R_EN_LG.png';
+    }
+}
+exports.ClefairyArt = ClefairyArt;
+class EmolgaArt extends emolga_1.Emolga {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_069_R_EN_LG.png';
+    }
+}
+exports.EmolgaArt = EmolgaArt;
+class LanasAssistanceArt extends lanas_assistance_1.LanasAssistance {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_155_R_EN_LG.png';
+    }
+}
+exports.LanasAssistanceArt = LanasAssistanceArt;
+class ShinxArt extends shinx_1.Shinx {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_066_R_EN_LG.png';
+    }
+}
+exports.ShinxArt = ShinxArt;
+class TingLuArt extends ting_lu_1.TingLu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_110_R_EN_LG.png';
+    }
+}
+exports.TingLuArt = TingLuArt;
+class HearthflameMaskOgerponexArt extends hearthflame_mask_ogerpon_ex_1.HearthflameMaskOgerponex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_040_R_EN_LG.png';
+    }
+}
+exports.HearthflameMaskOgerponexArt = HearthflameMaskOgerponexArt;
+class ChiYuArt extends chi_yu_1.ChiYu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_039_R_EN_LG.png';
+    }
+}
+exports.ChiYuArt = ChiYuArt;

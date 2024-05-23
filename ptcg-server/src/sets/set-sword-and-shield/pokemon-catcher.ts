@@ -42,6 +42,8 @@ export class PokemonCatcher extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
+  public regulationMark = 'G';
+
   public set: string = 'BW';
 
   public name: string = 'Pokemon Catcher';

@@ -15,15 +15,15 @@ export class PerformanceFlute extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '91';
+  public setNumber: string = '142';
 
-  public name: string = 'Performance Flute';
+  public name: string = 'Accompanying Flute';
 
-  public fullName: string = 'Performance Flute SV6';
+  public fullName: string = 'Accompanying Flute TWM';
 
   public text: string =
     'Reveal the top 5 cards of your opponent\'s deck, and put any number of Basic Pokémon you find there onto your opponent\'s Bench. Then, they shuffle the remaining cards back into their deck.';

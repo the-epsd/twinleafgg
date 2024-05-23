@@ -33,11 +33,11 @@ class Drakloak extends game_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '80';
+        this.setNumber = '129';
         this.name = 'Drakloak';
-        this.fullName = 'Drakloak SV6';
+        this.fullName = 'Drakloak TWM';
         this.TELLING_SPIRIT_MARKER = 'TELLING_SPIRIT_MARKER';
     }
     reduceEffect(store, state, effect) {

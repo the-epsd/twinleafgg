@@ -25,11 +25,11 @@ class Frogadier extends pokemon_card_1.PokemonCard {
                 text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '24';
+        this.setNumber = '57';
         this.name = 'Frogadier';
-        this.fullName = 'Frogadier SV5';
+        this.fullName = 'Frogadier TWM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

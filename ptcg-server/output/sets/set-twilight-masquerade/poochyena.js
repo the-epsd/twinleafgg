@@ -29,11 +29,11 @@ class Poochyena extends pokemon_card_1.PokemonCard {
                 text: ''
             },
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '66';
+        this.setNumber = '113';
         this.name = 'Poochyena';
-        this.fullName = 'Poochyena SV6';
+        this.fullName = 'Poochyena TWM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

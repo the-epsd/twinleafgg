@@ -24,14 +24,14 @@ export class Clefairy extends PokemonCard {
     }
   ];
   
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '45';
+  public setNumber: string = '77';
   
   public name: string = 'Clefairy';
   
-  public fullName: string = 'Clefairy SV6';
+  public fullName: string = 'Clefairy TWM';
 
 }

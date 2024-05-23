@@ -32,10 +32,10 @@ class Scovillainex extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '89';
-        this.set = 'SV4';
+        this.setNumber = '107';
+        this.set = 'PAF';
         this.name = 'Scovillain ex';
-        this.fullName = 'Scovillain ex SV4';
+        this.fullName = 'Scovillain ex PAF';
         this.SPICY_BIND_MARKER = 'SPICY_BIND_MARKER';
     }
     reduceEffect(store, state, effect) {

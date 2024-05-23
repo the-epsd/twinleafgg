@@ -51,6 +51,7 @@ class CrushingHammer extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
+        this.regulationMark = 'G';
         this.set = 'EPO';
         this.name = 'Crushing Hammer';
         this.fullName = 'Crushing Hammer EPO';

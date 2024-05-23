@@ -11,11 +11,11 @@ class Carmine extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '97';
+        this.setNumber = '145';
         this.name = 'Carmine';
-        this.fullName = 'Carmine SV6';
+        this.fullName = 'Carmine TWM';
         this.firstTurn = true;
         this.text = 'If you go first, you can use this card on your first turn.' +
             '' +

@@ -12,10 +12,10 @@ class Atticus extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '56';
-        this.set = 'SV4';
+        this.setNumber = '77';
+        this.set = 'PAF';
         this.name = 'Atticus';
-        this.fullName = 'Atticus SV4';
+        this.fullName = 'Atticus PAF';
         this.text = 'You can use this card only if your opponent\'s Active Pokémon is Poisoned.' +
             '' +
             'Shuffle your hand into your deck, then draw 7 cards.';

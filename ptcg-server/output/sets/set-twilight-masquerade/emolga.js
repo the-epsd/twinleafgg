@@ -23,11 +23,11 @@ class Emolga extends pokemon_card_1.PokemonCard {
                 text: 'This attack also does 10 damage to each Benched Pokémon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '42';
+        this.setNumber = '69';
         this.name = 'Emolga';
-        this.fullName = 'Emolga SV6';
+        this.fullName = 'Emolga TWM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

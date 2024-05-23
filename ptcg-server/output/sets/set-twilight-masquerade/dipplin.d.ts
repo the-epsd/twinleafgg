@@ -6,6 +6,7 @@ export declare class Dipplin extends PokemonCard {
     evolvesFrom: string;
     regulationMark: string;
     cardType: CardType;
+    cardTypez: CardType;
     hp: number;
     weakness: {
         type: CardType;

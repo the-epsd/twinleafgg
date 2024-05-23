@@ -25,11 +25,11 @@ class Luxio extends pokemon_card_1.PokemonCard {
                 text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '40';
+        this.setNumber = '67';
         this.name = 'Luxio';
-        this.fullName = 'Luxio SV6';
+        this.fullName = 'Luxio TWM';
         this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
     }
     reduceEffect(store, state, effect) {

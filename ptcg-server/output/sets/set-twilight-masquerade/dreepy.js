@@ -28,7 +28,7 @@ class Dreepy extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'SV6';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '79';
+        this.setNumber = '128';
         this.name = 'Dreepy';
         this.fullName = 'Dreepy SV6';
     }

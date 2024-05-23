@@ -11,10 +11,10 @@ class Clive extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '175';
-        this.set = 'SV4';
+        this.setNumber = '78';
+        this.set = 'PAF';
         this.name = 'Clive';
-        this.fullName = 'Clive SV4';
+        this.fullName = 'Clive PAF';
         this.text = 'Your opponent reveals their hand. Draw 2 cards for each Supporter card you find there.';
     }
     reduceEffect(store, state, effect) {

@@ -14,15 +14,15 @@ export class Caretaker extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'SV5a';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '61';
+  public setNumber: string = '144';
 
   public name: string = 'Caretaker';
 
-  public fullName: string = 'Caretaker SV5a';
+  public fullName: string = 'Caretaker TWM';
 
   public text: string =
     'Draw 2 cards. Then, if Community Center is in play, shuffle this Caretaker back into your deck.';

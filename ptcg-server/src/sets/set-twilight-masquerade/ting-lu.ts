@@ -5,7 +5,7 @@ import { StoreLike, State,
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
-export class LugiaVSTAR extends PokemonCard {
+export class TingLu extends PokemonCard {
 
   public regulationMark = 'H';
 
@@ -34,15 +34,15 @@ export class LugiaVSTAR extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '46';
+  public setNumber: string = '110';
 
   public name: string = 'Ting-Lu';
 
-  public fullName: string = 'Ting-Lu SV6';
+  public fullName: string = 'Ting-Lu TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

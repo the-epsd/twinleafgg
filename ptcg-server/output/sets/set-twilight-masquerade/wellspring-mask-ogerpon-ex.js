@@ -31,11 +31,11 @@ class WellspringMaskOgerponex extends game_1.PokemonCard {
                 text: 'You may shuffle 3 Energy attached to this Pokémon into your Deck. If you do, this attack also does 120 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '38';
+        this.setNumber = '64';
         this.name = 'Wellspring Mask Ogerpon ex';
-        this.fullName = 'Wellspring Mask Ogerpon ex SV6';
+        this.fullName = 'Wellspring Mask Ogerpon ex TWM';
         this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
     }
     reduceEffect(store, state, effect) {

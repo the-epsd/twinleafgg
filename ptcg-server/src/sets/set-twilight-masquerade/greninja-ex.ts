@@ -43,15 +43,15 @@ export class Greninjaex extends PokemonCard {
     },
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '45';
+  public setNumber: string = '106';
 
   public name: string = 'Greninja ex';
 
-  public fullName: string = 'Greninja ex SV5';
+  public fullName: string = 'Greninja ex TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

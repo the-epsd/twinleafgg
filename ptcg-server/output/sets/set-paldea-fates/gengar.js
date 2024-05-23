@@ -47,7 +47,7 @@ class Gengar extends pokemon_card_1.PokemonCard {
             }];
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '35';
+        this.setNumber = '57';
         this.set = 'PAF';
         this.name = 'Gengar';
         this.fullName = 'Gengar PAF';

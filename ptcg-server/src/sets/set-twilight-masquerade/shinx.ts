@@ -36,15 +36,15 @@ export class Shinx extends PokemonCard {
     }
   ];
   
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '39';
+  public setNumber: string = '66';
   
   public name: string = 'Shinx';
   
-  public fullName: string = 'Shinx SV6';
+  public fullName: string = 'Shinx TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

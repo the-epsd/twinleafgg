@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 export declare class PokeBall extends TrainerCard {
     trainerType: TrainerType;
+    regulationMark: string;
     set: string;
     cardImage: string;
     setNumber: string;

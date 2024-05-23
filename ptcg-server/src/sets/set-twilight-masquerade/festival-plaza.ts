@@ -16,7 +16,7 @@ export class FestivalGrounds extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '99';
+  public setNumber: string = '149';
     
   public  trainerType = TrainerType.STADIUM;
   

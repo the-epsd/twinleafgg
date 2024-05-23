@@ -36,7 +36,7 @@ class Thwackey extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '9';
+        this.setNumber = '15';
         this.name = 'Thwackey';
         this.fullName = 'Thwackey TWM';
         this.BOOM_BOOM_DRUM_MARKER = 'BOOM_BOOM_DRUM_MARKER';

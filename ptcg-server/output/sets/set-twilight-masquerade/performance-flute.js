@@ -13,11 +13,11 @@ class PerformanceFlute extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '91';
-        this.name = 'Performance Flute';
-        this.fullName = 'Performance Flute SV6';
+        this.setNumber = '142';
+        this.name = 'Accompanying Flute';
+        this.fullName = 'Accompanying Flute TWM';
         this.text = 'Reveal the top 5 cards of your opponent\'s deck, and put any number of Basic Pokémon you find there onto your opponent\'s Bench. Then, they shuffle the remaining cards back into their deck.';
     }
     reduceEffect(store, state, effect) {

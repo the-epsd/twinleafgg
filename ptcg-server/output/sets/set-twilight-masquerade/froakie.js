@@ -29,11 +29,11 @@ class Froakie extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '23';
+        this.setNumber = '56';
         this.name = 'Froakie';
-        this.fullName = 'Froakie SV5';
+        this.fullName = 'Froakie TWM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

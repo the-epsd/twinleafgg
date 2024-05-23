@@ -35,15 +35,15 @@ export class IronThornsex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5a';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '33';
+  public setNumber: string = '77';
 
   public name: string = 'Iron Thorns ex';
 
-  public fullName: string = 'Iron Thorns ex SV5a';
+  public fullName: string = 'Iron Thorns ex TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -35,15 +35,15 @@ export class Chansey extends PokemonCard {
     }
   ];
   
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '84';
+  public setNumber: string = '133';
   
   public name: string = 'Chansey';
   
-  public fullName: string = 'Chansey SV6';
+  public fullName: string = 'Chansey TWM';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

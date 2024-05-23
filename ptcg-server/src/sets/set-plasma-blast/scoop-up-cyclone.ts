@@ -13,6 +13,8 @@ export class ScoopUpCyclone extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
+  public regulationMark = 'H';
+
   public tags = [ CardTag.ACE_SPEC ];
 
   public set: string = 'PLB';

@@ -38,15 +38,15 @@ export class Mightyena extends PokemonCard {
     },
   ];
 
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '67';
+  public setNumber: string = '114';
 
   public name: string = 'Mightyena';
 
-  public fullName: string = 'Mightyena SV6';
+  public fullName: string = 'Mightyena TWM';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

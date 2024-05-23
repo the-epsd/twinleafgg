@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LugiaVSTAR = void 0;
+exports.TingLu = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class LugiaVSTAR extends pokemon_card_1.PokemonCard {
+class TingLu extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'H';
@@ -28,11 +28,11 @@ class LugiaVSTAR extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '46';
+        this.setNumber = '110';
         this.name = 'Ting-Lu';
-        this.fullName = 'Ting-Lu SV6';
+        this.fullName = 'Ting-Lu TWM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -49,4 +49,4 @@ class LugiaVSTAR extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.LugiaVSTAR = LugiaVSTAR;
+exports.TingLu = TingLu;

@@ -56,6 +56,8 @@ export class Pokegear30 extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
+  public regulationMark = 'G';
+
   public set: string = 'UNB';
 
   public name: string = 'Pokegear 3.0';

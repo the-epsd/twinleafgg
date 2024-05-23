@@ -21,7 +21,6 @@ class Charizardex extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Infernal Reign',
-                useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'When you play this Pokémon from your hand to evolve ' +
                     '1 of your Pokémon during your turn, you may search your ' +

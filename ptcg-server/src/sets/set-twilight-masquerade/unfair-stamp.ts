@@ -53,17 +53,17 @@ export class UnfairStamp extends TrainerCard {
 
   public tags = [ CardTag.ACE_SPEC ];
 
-  public set: string = 'SV5a';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '152';
+  public setNumber: string = '165';
 
   public regulationMark = 'H';
 
   public name: string = 'Unfair Stamp';
 
-  public fullName: string = 'Unfair Stamp SV5a';
+  public fullName: string = 'Unfair Stamp TWM';
 
   public text: string =
     'You can play this card only if one of your Pokémon was Knocked Out during your opponent\'s last turn.' +

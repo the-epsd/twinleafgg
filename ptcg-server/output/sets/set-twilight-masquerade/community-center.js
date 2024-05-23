@@ -11,12 +11,12 @@ class CommunityCenter extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
-        this.set = 'SV5a';
+        this.set = 'TWM';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '65';
+        this.setNumber = '146';
         this.name = 'Community Center';
-        this.fullName = 'Community Center SV5a';
+        this.fullName = 'Community Center TWM';
         this.text = 'Once during each player\'s turn, if that player has already played a Supporter from their hand, they may heal 10 damage from each of their Pokémon';
     }
     useStadium(store, state, effect) {

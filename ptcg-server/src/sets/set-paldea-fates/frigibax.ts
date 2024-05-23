@@ -33,15 +33,15 @@ export class Frigibax extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV4';
+  public set: string = 'PAF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '51';
+  public setNumber: string = '17';
 
   public name: string = 'Frigibax';
 
-  public fullName: string = 'Frigibax SV4';
+  public fullName: string = 'Frigibax PAF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

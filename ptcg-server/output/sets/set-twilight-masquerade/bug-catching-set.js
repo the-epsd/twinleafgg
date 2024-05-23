@@ -59,7 +59,7 @@ class BugCatchingSet extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '94';
+        this.setNumber = '143';
         this.name = 'Bug Catching Set';
         this.fullName = 'Bug Catching Set TWM';
         this.text = 'Look at the top 7 cards of your deck, and put up to 2 in any combination of [G] Pokémon and Basic [G] Energy cards you find there into your hand. Shuffle the remaining cards back into your deck.';

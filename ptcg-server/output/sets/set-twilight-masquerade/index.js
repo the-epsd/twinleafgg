@@ -5,7 +5,6 @@ const card_images_1 = require("./card-images");
 const card_images_2 = require("./card-images");
 exports.setTwilightMasquerade = [
     new card_images_1.AggronArt(),
-    new card_images_1.AlakazamArt(),
     new card_images_1.AronArt(),
     new card_images_1.BlisseyexArt(),
     new card_images_1.CarmineArt(),
@@ -53,4 +52,6 @@ exports.setTwilightMasquerade = [
     new card_images_1.GrookeyArt(),
     new card_images_1.ThwackeyArt(),
     new card_images_1.FestivalGroundsArt(),
+    new card_images_1.ApplinArt(),
+    new card_images_1.ApplinArt2(),
 ];

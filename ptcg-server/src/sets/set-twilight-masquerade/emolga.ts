@@ -29,15 +29,15 @@ export class Emolga extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '42';
+  public setNumber: string = '69';
 
   public name: string = 'Emolga';
 
-  public fullName: string = 'Emolga SV6';
+  public fullName: string = 'Emolga TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

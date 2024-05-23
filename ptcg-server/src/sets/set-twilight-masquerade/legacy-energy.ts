@@ -12,17 +12,17 @@ export class LegacyEnergy extends EnergyCard {
 
   public tags = [ CardTag.ACE_SPEC ];
   
-  public set: string = 'PAL';
+  public set: string = 'TWM';
   
   public regulationMark = 'G';
   
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '191';
+  public setNumber: string = '167';
   
   public name = 'Legacy Energy';
   
-  public fullName = 'Legacy Energy PAL';
+  public fullName = 'Legacy Energy TWM';
 
   public text: string =
     'If the Pokemon this card is attached to is your Active Pokemon and is ' +

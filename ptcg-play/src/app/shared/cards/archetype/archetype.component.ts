@@ -67,6 +67,12 @@ export class ArchetypeComponent {
             case CardType.ABSOL_EX:
               this.archetypeClass = 'absol';
               break;
+              case CardType.DIPPLIN:
+                this.archetypeClass = 'dipplin';
+                break;
+                case CardType.THWACKEY:
+                  this.archetypeClass = 'thwackey';
+                  break;
       default:
         this.archetypeClass = 'energyless';
     }

@@ -38,11 +38,11 @@ class HyperAroma extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.tags = [card_types_1.CardTag.ACE_SPEC];
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'SV5A';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '55';
+        this.setNumber = '152';
         this.name = 'Hyper Aroma';
-        this.fullName = 'Hyper Aroma SV5A';
+        this.fullName = 'Hyper Aroma TWM';
         this.text = 'Search your deck for up to three Stage 1 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {

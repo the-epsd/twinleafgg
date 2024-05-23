@@ -14,6 +14,8 @@ export class Dipplin extends PokemonCard {
 
   public cardType: CardType = CardType.GRASS;
 
+  public cardTypez: CardType = CardType.DIPPLIN;
+
   public hp: number = 80;
 
   public weakness = [ {type: CardType.FIRE}];
@@ -39,7 +41,7 @@ export class Dipplin extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '80';
+  public setNumber: string = '18';
 
   public name: string = 'Dipplin';
 

@@ -12,7 +12,7 @@ export class Shuppet extends PokemonCard {
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public hp: number = 90;
+  public hp: number = 60;
 
   public weakness = [{ type: CardType.DARK }];
 

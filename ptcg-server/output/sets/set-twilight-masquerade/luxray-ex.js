@@ -31,11 +31,11 @@ class Luxrayex extends game_1.PokemonCard {
                 text: 'Discard all Energy from this Pokémon.'
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '41';
+        this.setNumber = '68';
         this.name = 'Luxray ex';
-        this.fullName = 'Luxray ex SV6';
+        this.fullName = 'Luxray ex TWM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

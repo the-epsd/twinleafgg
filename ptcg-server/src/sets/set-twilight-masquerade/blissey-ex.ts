@@ -41,15 +41,15 @@ export class Blisseyex extends PokemonCard {
     }
   ];
   
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '85';
+  public setNumber: string = '134';
   
   public name: string = 'Blissey ex';
   
-  public fullName: string = 'Blissey ex SV6';
+  public fullName: string = 'Blissey ex TWM';
 
   public readonly BLISSFUL_SWAP_MARKER = 'BLISSFUL_SWAP_MARKER';
 

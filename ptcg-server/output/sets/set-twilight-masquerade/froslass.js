@@ -29,11 +29,11 @@ class Froslass extends game_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '33';
+        this.setNumber = '53';
         this.name = 'Froslass';
-        this.fullName = 'Froslass SV6';
+        this.fullName = 'Froslass TWM';
         this.CHILLING_CURTAIN_MARKER = 'CHILLING_CURTAIN_MARKER';
     }
     reduceEffect(store, state, effect) {

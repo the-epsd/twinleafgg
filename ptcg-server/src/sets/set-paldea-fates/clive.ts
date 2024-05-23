@@ -14,13 +14,13 @@ export class Clive extends TrainerCard {
   
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '175';
+  public setNumber: string = '78';
   
-  public set = 'SV4';
+  public set = 'PAF';
   
   public name = 'Clive';
   
-  public fullName = 'Clive SV4';
+  public fullName = 'Clive PAF';
 
   public text: string =
     'Your opponent reveals their hand. Draw 2 cards for each Supporter card you find there.';

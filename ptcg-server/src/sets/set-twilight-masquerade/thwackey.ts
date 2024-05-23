@@ -49,7 +49,7 @@ export class Thwackey extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '9';
+  public setNumber: string = '15';
 
   public name: string = 'Thwackey';
 

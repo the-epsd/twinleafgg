@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, GameError, TrainerCard, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -9,6 +9,8 @@ import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
 export class Banetteex extends PokemonCard {
 
   public regulationMark = 'G';
+
+  public tags = [ CardTag.POKEMON_ex ];
   
   public stage: Stage = Stage.STAGE_1;
 

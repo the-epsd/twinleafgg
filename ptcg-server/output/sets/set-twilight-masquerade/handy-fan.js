@@ -12,11 +12,11 @@ class HandyFan extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.TOOL;
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '95';
-        this.name = 'Handy Fan';
-        this.fullName = 'Handy Fan SV6';
+        this.setNumber = '150';
+        this.name = 'Handheld Fan';
+        this.fullName = 'Handheld Fan TWM';
         this.text = 'Whenever the Active Pokémon this card is attached to takes damage from an opponent\'s attack, move an Energy from the attacking Pokémon to 1 of your opponent\'s Benched Pokémon.';
     }
     reduceEffect(store, state, effect) {

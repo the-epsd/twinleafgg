@@ -42,15 +42,15 @@ export class Tatsugiri extends PokemonCard {
     }
   ];
   
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '82';
+  public setNumber: string = '131';
   
   public name: string = 'Tatsugiri';
   
-  public fullName: string = 'Tatsugiri SV6';
+  public fullName: string = 'Tatsugiri TWM';
 
   public readonly CROWD_PULLER_MARKER = 'CROWD_PULLER_MARKER';
 

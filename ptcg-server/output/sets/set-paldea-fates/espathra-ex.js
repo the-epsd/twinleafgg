@@ -32,10 +32,10 @@ class Espathraex extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '23';
-        this.set = 'SV4';
+        this.setNumber = '6';
+        this.set = 'PAF';
         this.name = 'Espathra ex';
-        this.fullName = 'Espathra ex SV4';
+        this.fullName = 'Espathra ex PAF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

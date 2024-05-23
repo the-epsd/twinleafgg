@@ -12,17 +12,17 @@ export class CommunityCenter extends TrainerCard {
     
   public trainerType = TrainerType.STADIUM;
 
-  public set = 'SV5a';
+  public set = 'TWM';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '65';
+  public setNumber: string = '146';
 
   public name = 'Community Center';
 
-  public fullName = 'Community Center SV5a';
+  public fullName = 'Community Center TWM';
 
   public text = 'Once during each player\'s turn, if that player has already played a Supporter from their hand, they may heal 10 damage from each of their Pokémon';
         

@@ -65,17 +65,17 @@ export class Hassel extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '98';
+  public setNumber: string = '151';
 
   public regulationMark = 'H';
 
   public name: string = 'Hassel';
 
-  public fullName: string = 'Hassel SV6';
+  public fullName: string = 'Hassel TWM';
 
   public text: string =
     'You can play this card only if any of your Pokémon were Knocked Out during your opponent’s last turn. Look at the top 8 cards of your deck. Put up to 3 of them into your hand, and shuffle the rest into your deck.';

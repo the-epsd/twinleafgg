@@ -30,11 +30,11 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon can\'t attack during your next turn.'
             }
         ];
-        this.set = 'SV5a';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '52';
+        this.setNumber = '141';
         this.name = 'Bloodmoon Ursaluna ex';
-        this.fullName = 'Bloodmoon Ursaluna ex SV5a';
+        this.fullName = 'Bloodmoon Ursaluna ex TWM';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }

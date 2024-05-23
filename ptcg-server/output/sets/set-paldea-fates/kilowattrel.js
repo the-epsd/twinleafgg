@@ -32,12 +32,12 @@ class Kilowattrel extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV4';
+        this.set = 'PAF';
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '70';
+        this.setNumber = '22';
         this.name = 'Kilowattrel';
-        this.fullName = 'Kilowattrel SV4';
+        this.fullName = 'Kilowattrel PAF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

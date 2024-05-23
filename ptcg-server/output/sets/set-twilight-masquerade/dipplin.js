@@ -12,6 +12,7 @@ class Dipplin extends game_1.PokemonCard {
         this.evolvesFrom = 'Applin';
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.GRASS;
+        this.cardTypez = card_types_1.CardType.DIPPLIN;
         this.hp = 80;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
@@ -30,7 +31,7 @@ class Dipplin extends game_1.PokemonCard {
         ];
         this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '80';
+        this.setNumber = '18';
         this.name = 'Dipplin';
         this.fullName = 'Dipplin TWM';
     }

@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class EnergyRetrieval extends TrainerCard {
     trainerType: TrainerType;
+    regulationMark: string;
     set: string;
     cardImage: string;
     setNumber: string;

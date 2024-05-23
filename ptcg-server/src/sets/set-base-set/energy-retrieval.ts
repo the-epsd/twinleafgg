@@ -72,6 +72,8 @@ export class EnergyRetrieval extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
+  public regulationMark = 'G';
+
   public set: string = 'BS';
 
   public cardImage: string = 'assets/cardback.png';

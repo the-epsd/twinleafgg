@@ -45,6 +45,8 @@ export class Switch extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
+  public regulationMark = 'G';
+
   public set: string = 'SSH';
 
   public name: string = 'Switch';

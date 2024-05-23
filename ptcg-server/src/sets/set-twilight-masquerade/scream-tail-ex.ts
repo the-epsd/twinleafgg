@@ -38,15 +38,15 @@ export class ScreamTailex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5a';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '40';
+  public setNumber: string = '94';
 
   public name: string = 'Scream Tail ex';
 
-  public fullName: string = 'Scream Tail ex SV5a';
+  public fullName: string = 'Scream Tail ex TWM';
 
   public readonly SUDDEN_SHRIEK_MARKER = 'SUDDEN_SHRIEK_MARKER';
 

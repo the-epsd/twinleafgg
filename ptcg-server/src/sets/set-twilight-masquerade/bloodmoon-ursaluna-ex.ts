@@ -37,15 +37,15 @@ export class BloodmoonUrsalunaex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5a';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '52';
+  public setNumber: string = '141';
 
   public name: string = 'Bloodmoon Ursaluna ex';
 
-  public fullName: string = 'Bloodmoon Ursaluna ex SV5a';
+  public fullName: string = 'Bloodmoon Ursaluna ex TWM';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

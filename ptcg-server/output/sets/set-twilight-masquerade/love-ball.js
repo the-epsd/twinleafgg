@@ -36,11 +36,11 @@ class LoveBall extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'H';
-        this.set = 'SV5';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '141';
+        this.setNumber = '156';
         this.name = 'Love Ball';
-        this.fullName = 'Love Ball SV5';
+        this.fullName = 'Love Ball TWM';
         this.text = 'Search your deck for a Pokémon with the same name as one of your opponent\'s Pokémon in play, reveal it, and put it into your hand. Then shuffle your deck.';
     }
     reduceEffect(store, state, effect) {

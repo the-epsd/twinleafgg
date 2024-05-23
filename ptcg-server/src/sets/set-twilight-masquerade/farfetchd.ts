@@ -46,15 +46,15 @@ export class Farfetchd extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '83';
+  public setNumber: string = '132';
 
   public name: string = 'Farfetch\'d';
 
-  public fullName: string = 'Farfetch\'d SV6';
+  public fullName: string = 'Farfetch\'d TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -35,7 +35,7 @@ class Morpeko extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '30';
+        this.setNumber = '72';
         this.name = 'Morpeko';
         this.fullName = 'Morpeko TWM';
         this.SNACK_SEARCH_MARKER = 'SNACK_SEARCH_MARKER';

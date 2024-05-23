@@ -28,11 +28,11 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
                 text: 'Move 1 Energy from this Pokémon to 1 of your Benched Pokémon.'
             }
         ];
-        this.set = 'SV5a';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '33';
+        this.setNumber = '77';
         this.name = 'Iron Thorns ex';
-        this.fullName = 'Iron Thorns ex SV5a';
+        this.fullName = 'Iron Thorns ex TWM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect

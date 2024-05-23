@@ -62,44 +62,49 @@ export class RadiantAlakazam extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      
+            
       const maxAllowedDamage: DamageMap[] = [];
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        const checkHpEffect = new CheckHpEffect(opponent, cardList);
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        const checkHpEffect = new CheckHpEffect(player, cardList);
         store.reduceEffect(state, checkHpEffect);
         maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
       });
-      
+    
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+            
       return store.prompt(state, new MoveDamagePrompt(
         effect.player.id,
         GameMessage.MOVE_DAMAGE,
         PlayerType.TOP_PLAYER,
         [ SlotType.ACTIVE, SlotType.BENCH ],
         maxAllowedDamage,
-        { allowCancel: true }
+        { min: 1, max: 2, allowCancel: false }
       ), transfers => {
         if (transfers === null) {
           return;
         }
-      
+            
         for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
-          if (source.damage >= 20) {
+          if (source.damage >= 10) {
             source.damage -= 20;
             target.damage += 20;
           }
+          player.supporter.moveCardTo(this, player.discard);
+          return state;
         }
       });
     }
+        
+      
+    
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       effect.ignoreResistance = true;
       return state;
     }
-
     return state;
   }
-
 }

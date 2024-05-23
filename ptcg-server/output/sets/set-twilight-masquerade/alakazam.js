@@ -27,11 +27,11 @@ class Alakazam extends pokemon_card_1.PokemonCard {
                 text: ''
             },
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '49';
+        this.setNumber = '82';
         this.name = 'Alakazam';
-        this.fullName = 'Alakazam SV6';
+        this.fullName = 'Alakazam TWM';
     }
 }
 exports.Alakazam = Alakazam;

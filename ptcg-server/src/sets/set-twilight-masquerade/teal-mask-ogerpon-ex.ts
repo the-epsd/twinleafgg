@@ -40,15 +40,15 @@ export class TealMaskOgerponex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '33';
+  public setNumber: string = '24';
 
   public name: string = 'Teal Mask Ogerpon ex';
 
-  public fullName: string = 'Teal Mask Ogerpon ex SV5';
+  public fullName: string = 'Teal Mask Ogerpon ex TWM';
 
   public readonly TEAL_DANCE_MARKER = 'TEAL_DANCE_MARKER';
 

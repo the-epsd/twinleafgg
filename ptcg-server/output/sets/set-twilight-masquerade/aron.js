@@ -23,11 +23,11 @@ class Aron extends game_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '73';
+        this.setNumber = '120';
         this.name = 'Aron';
-        this.fullName = 'Aron SV6';
+        this.fullName = 'Aron TWM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

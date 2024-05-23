@@ -77,7 +77,9 @@ export declare enum CardType {
     BAXCALIBUR = 26,
     SNORLAX_STALL = 27,
     LUGIA_VSTAR = 28,
-    ABSOL_EX = 29
+    ABSOL_EX = 29,
+    THWACKEY = 30,
+    DIPPLIN = 31
 }
 export declare enum SpecialCondition {
     PARALYZED = 0,

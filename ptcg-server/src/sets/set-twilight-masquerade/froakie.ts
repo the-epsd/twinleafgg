@@ -34,15 +34,15 @@ export class Froakie extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '23';
+  public setNumber: string = '56';
 
   public name: string = 'Froakie';
 
-  public fullName: string = 'Froakie SV5';
+  public fullName: string = 'Froakie TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

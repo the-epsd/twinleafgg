@@ -31,11 +31,11 @@ class ScreamTailex extends pokemon_card_1.PokemonCard {
                 text: 'Discard an Energy from your opponent\'s Active Pokémon.'
             }
         ];
-        this.set = 'SV5a';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '40';
+        this.setNumber = '94';
         this.name = 'Scream Tail ex';
-        this.fullName = 'Scream Tail ex SV5a';
+        this.fullName = 'Scream Tail ex TWM';
         this.SUDDEN_SHRIEK_MARKER = 'SUDDEN_SHRIEK_MARKER';
     }
     reduceEffect(store, state, effect) {

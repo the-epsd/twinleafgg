@@ -36,11 +36,11 @@ class Greninjaex extends pokemon_card_1.PokemonCard {
                     'Weakness and Resistance for Benched Pokémon.)'
             },
         ];
-        this.set = 'SV5';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '45';
+        this.setNumber = '106';
         this.name = 'Greninja ex';
-        this.fullName = 'Greninja ex SV5';
+        this.fullName = 'Greninja ex TWM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -39,15 +39,15 @@ export class WellspringMaskOgerponex extends PokemonCard {
     }
   ];
   
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '38';
+  public setNumber: string = '64';
   
   public name: string = 'Wellspring Mask Ogerpon ex';
   
-  public fullName: string = 'Wellspring Mask Ogerpon ex SV6';
+  public fullName: string = 'Wellspring Mask Ogerpon ex TWM';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

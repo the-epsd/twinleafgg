@@ -1,5 +1,4 @@
 import { Aggron } from './aggron';
-import { Alakazam } from './alakazam';
 import { Aron } from './aron';
 import { Blisseyex } from './blissey-ex';
 import { Carmine } from './carmine';
@@ -48,13 +47,26 @@ import { Dipplin } from './dipplin';
 import { Grookey } from './grookey';
 import { Thwackey } from './thwackey';
 import { FestivalGrounds } from './festival-plaza';
+import { Applin } from './applin';
+import { Applin2 } from './applin-2';
+import { Clefable } from './clefable';
+import { Clefairy } from './clefairy';
+import { LanasAssistance } from './lanas-assistance';
+import { Emolga } from './emolga';
+import { Shinx } from './shinx';
+import { TingLu } from './ting-lu';
+import { HearthflameMaskOgerponex } from './hearthflame-mask-ogerpon-ex';
+import { ChiYu } from './chi-yu';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
-export declare class AlakazamArt extends Alakazam {
+export declare class AronArt extends Aron {
     cardImage: string;
 }
-export declare class AronArt extends Aron {
+export declare class ApplinArt extends Applin {
+    cardImage: string;
+}
+export declare class ApplinArt2 extends Applin2 {
     cardImage: string;
 }
 export declare class BlisseyexArt extends Blisseyex {
@@ -196,5 +208,29 @@ export declare class UnfairStampArt extends UnfairStamp {
     cardImage: string;
 }
 export declare class ThwackeyArt extends Thwackey {
+    cardImage: string;
+}
+export declare class ClefableArt extends Clefable {
+    cardImage: string;
+}
+export declare class ClefairyArt extends Clefairy {
+    cardImage: string;
+}
+export declare class EmolgaArt extends Emolga {
+    cardImage: string;
+}
+export declare class LanasAssistanceArt extends LanasAssistance {
+    cardImage: string;
+}
+export declare class ShinxArt extends Shinx {
+    cardImage: string;
+}
+export declare class TingLuArt extends TingLu {
+    cardImage: string;
+}
+export declare class HearthflameMaskOgerponexArt extends HearthflameMaskOgerponex {
+    cardImage: string;
+}
+export declare class ChiYuArt extends ChiYu {
     cardImage: string;
 }

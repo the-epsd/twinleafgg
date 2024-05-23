@@ -17,15 +17,15 @@ export class ScoopUpCyclone extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public name: string = 'Scoop Up Cyclone';
 
-  public fullName: string = 'Scoop Up Cyclone SV6';
+  public fullName: string = 'Scoop Up Cyclone TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '93';
+  public setNumber: string = '162';
 
   public text: string =
     'Put 1 of your Pokemon and all cards attached to it into your hand.';

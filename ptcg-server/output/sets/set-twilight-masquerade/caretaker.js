@@ -12,11 +12,11 @@ class Caretaker extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'SV5a';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '61';
+        this.setNumber = '144';
         this.name = 'Caretaker';
-        this.fullName = 'Caretaker SV5a';
+        this.fullName = 'Caretaker TWM';
         this.text = 'Draw 2 cards. Then, if Community Center is in play, shuffle this Caretaker back into your deck.';
     }
     reduceEffect(store, state, effect) {

@@ -72,15 +72,15 @@ export class EnhancedHammer extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SV5a';
+  public set: string = 'TWM';
 
   public name: string = 'Enhanced Hammer';
 
-  public fullName: string = 'Enhanced Hammer SV5a';
+  public fullName: string = 'Enhanced Hammer TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '54';
+  public setNumber: string = '144';
 
   public text: string =
     'Discard a Special Energy attached to 1 of your opponent\'s Pokemon.';

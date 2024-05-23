@@ -85,6 +85,8 @@ export class UltraBall extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
+  public regulationMark = 'G';
+
   public set: string = 'PLB';
 
   public name: string = 'Ultra Ball';

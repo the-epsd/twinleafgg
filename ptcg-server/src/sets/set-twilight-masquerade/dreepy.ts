@@ -36,7 +36,7 @@ export class Dreepy extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '79';
+  public setNumber: string = '128';
 
   public name: string = 'Dreepy';
 

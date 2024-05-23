@@ -42,13 +42,13 @@ export class Espathraex extends PokemonCard {
   
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '23';
+  public setNumber: string = '6';
   
-  public set = 'SV4';
+  public set = 'PAF';
 
   public name: string = 'Espathra ex';
 
-  public fullName: string = 'Espathra ex SV4';
+  public fullName: string = 'Espathra ex PAF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

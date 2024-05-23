@@ -44,7 +44,7 @@ export class Morpeko extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '30';
+  public setNumber: string = '72';
 
   public name: string = 'Morpeko';
 

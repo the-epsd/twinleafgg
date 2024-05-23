@@ -81,15 +81,15 @@ export class MimeJr extends PokemonCard {
     text: 'Your opponent chooses 1 of their Pokémon\'s attacks. Use that attack as this attack.'
   }];
 
-  public set: string = 'SV4';
+  public set: string = 'PAF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '85';
+  public setNumber: string = '31';
 
   public name: string = 'Mime Jr.';
 
-  public fullName: string = 'Mime Jr. SV4';
+  public fullName: string = 'Mime Jr. PAF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
   

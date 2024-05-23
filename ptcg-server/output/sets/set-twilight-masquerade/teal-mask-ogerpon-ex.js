@@ -33,11 +33,11 @@ class TealMaskOgerponex extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 30 more damage for each Energy attached to both Active Pokémon.'
             }
         ];
-        this.set = 'SV5';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '33';
+        this.setNumber = '24';
         this.name = 'Teal Mask Ogerpon ex';
-        this.fullName = 'Teal Mask Ogerpon ex SV5';
+        this.fullName = 'Teal Mask Ogerpon ex TWM';
         this.TEAL_DANCE_MARKER = 'TEAL_DANCE_MARKER';
     }
     reduceEffect(store, state, effect) {

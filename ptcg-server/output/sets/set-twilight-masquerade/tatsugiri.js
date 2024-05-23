@@ -33,11 +33,11 @@ class Tatsugiri extends game_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '82';
+        this.setNumber = '131';
         this.name = 'Tatsugiri';
-        this.fullName = 'Tatsugiri SV6';
+        this.fullName = 'Tatsugiri TWM';
         this.CROWD_PULLER_MARKER = 'CROWD_PULLER_MARKER';
     }
     reduceEffect(store, state, effect) {

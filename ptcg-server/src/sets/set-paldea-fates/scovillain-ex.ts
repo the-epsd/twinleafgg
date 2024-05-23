@@ -40,13 +40,13 @@ export class Scovillainex extends PokemonCard {
   
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '89';
+  public setNumber: string = '107';
   
-  public set = 'SV4';
+  public set = 'PAF';
 
   public name: string = 'Scovillain ex';
 
-  public fullName: string = 'Scovillain ex SV4';
+  public fullName: string = 'Scovillain ex PAF';
 
   public readonly SPICY_BIND_MARKER = 'SPICY_BIND_MARKER';
 

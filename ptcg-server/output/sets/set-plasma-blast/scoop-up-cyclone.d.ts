@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class ScoopUpCyclone extends TrainerCard {
     trainerType: TrainerType;
+    regulationMark: string;
     tags: CardTag[];
     set: string;
     name: string;

@@ -66,6 +66,8 @@ export class EnergySwitch extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
+  public regulationMark = 'G';
+
   public set: string = 'LTR';
 
   public name: string = 'Energy Switch';

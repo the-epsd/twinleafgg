@@ -23,11 +23,11 @@ class Haunter extends pokemon_card_1.PokemonCard {
                 text: 'Your opponent\'s Active Pokémon is now Asleep.'
             }
         ];
-        this.set = 'SV4';
+        this.set = 'PAF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '34';
+        this.setNumber = '56';
         this.name = 'Haunter';
-        this.fullName = 'Haunter SV4';
+        this.fullName = 'Haunter PAF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

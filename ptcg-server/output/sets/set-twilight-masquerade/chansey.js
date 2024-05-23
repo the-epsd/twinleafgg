@@ -28,11 +28,11 @@ class Chansey extends game_1.PokemonCard {
                 text: 'During your next turn, this Pokémon can\'t attack.'
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '84';
+        this.setNumber = '133';
         this.name = 'Chansey';
-        this.fullName = 'Chansey SV6';
+        this.fullName = 'Chansey TWM';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }

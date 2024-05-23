@@ -15,7 +15,7 @@ class ProfessorsResearch2 extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '190';
         this.name = 'Professor\'s Research';
-        this.fullName = 'Professors Research SVI 190';
+        this.fullName = 'Professors Research SVI';
         this.text = 'Discard your hand and draw 7 cards.';
     }
     reduceEffect(store, state, effect) {

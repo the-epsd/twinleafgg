@@ -98,6 +98,8 @@ export var CardType;
     CardType[CardType["SNORLAX_STALL"] = 27] = "SNORLAX_STALL";
     CardType[CardType["LUGIA_VSTAR"] = 28] = "LUGIA_VSTAR";
     CardType[CardType["ABSOL_EX"] = 29] = "ABSOL_EX";
+    CardType[CardType["THWACKEY"] = 30] = "THWACKEY";
+    CardType[CardType["DIPPLIN"] = 31] = "DIPPLIN";
 })(CardType || (CardType = {}));
 export var SpecialCondition;
 (function (SpecialCondition) {

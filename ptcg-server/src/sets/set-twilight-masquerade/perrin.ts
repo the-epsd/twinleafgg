@@ -91,15 +91,15 @@ export class Perrin extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SV5a';
+  public set: string = 'TWM';
 
   public name: string = 'Perrin';
 
-  public fullName: string = 'Perrin SV5a';
+  public fullName: string = 'Perrin TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '63';
+  public setNumber: string = '160';
 
   public text: string =
     'Reveal up to 2 Pokémon from your hand and shuffle them into your deck. Then, search your deck for up to that many Pokémon, reveal them, and put them into your hand. Then shuffle your deck.';

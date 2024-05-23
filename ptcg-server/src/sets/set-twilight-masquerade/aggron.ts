@@ -40,15 +40,15 @@ export class Aggron extends PokemonCard {
     }
   ];
   
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '75';
+  public setNumber: string = '122';
   
   public name: string = 'Aggron';
   
-  public fullName: string = 'Aggron SV6';
+  public fullName: string = 'Aggron TWM';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
 

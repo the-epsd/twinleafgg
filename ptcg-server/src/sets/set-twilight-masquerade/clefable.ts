@@ -84,15 +84,15 @@ export class Clefable extends PokemonCard {
     }
   ];
   
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '45';
+  public setNumber: string = '78';
   
   public name: string = 'Clefable';
   
-  public fullName: string = 'Clefable SV6';
+  public fullName: string = 'Clefable TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

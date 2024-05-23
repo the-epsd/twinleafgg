@@ -29,7 +29,6 @@ export class Charizardex extends PokemonCard {
 
   public powers = [{
     name: 'Infernal Reign',
-    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokémon from your hand to evolve ' +
       '1 of your Pokémon during your turn, you may search your ' +

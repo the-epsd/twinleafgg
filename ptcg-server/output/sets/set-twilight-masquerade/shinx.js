@@ -28,11 +28,11 @@ class Shinx extends game_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '39';
+        this.setNumber = '66';
         this.name = 'Shinx';
-        this.fullName = 'Shinx SV6';
+        this.fullName = 'Shinx TWM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -30,11 +30,11 @@ class Farfetchd extends pokemon_card_1.PokemonCard {
                 text: 'Discard a Special Energy from your opponent\'s Active Pokémon.'
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '83';
+        this.setNumber = '132';
         this.name = 'Farfetch\'d';
-        this.fullName = 'Farfetch\'d SV6';
+        this.fullName = 'Farfetch\'d TWM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

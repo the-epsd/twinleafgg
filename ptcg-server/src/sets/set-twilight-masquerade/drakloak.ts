@@ -42,15 +42,15 @@ export class Drakloak extends PokemonCard {
     }
   ];
   
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '80';
+  public setNumber: string = '129';
   
   public name: string = 'Drakloak';
   
-  public fullName: string = 'Drakloak SV6';
+  public fullName: string = 'Drakloak TWM';
 
   public readonly TELLING_SPIRIT_MARKER = 'TELLING_SPIRIT_MARKER';
 

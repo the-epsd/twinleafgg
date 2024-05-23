@@ -10,12 +10,12 @@ class LegacyEnergy extends game_1.EnergyCard {
         this.provides = [game_1.CardType.COLORLESS];
         this.energyType = game_1.EnergyType.SPECIAL;
         this.tags = [game_1.CardTag.ACE_SPEC];
-        this.set = 'PAL';
+        this.set = 'TWM';
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '191';
+        this.setNumber = '167';
         this.name = 'Legacy Energy';
-        this.fullName = 'Legacy Energy PAL';
+        this.fullName = 'Legacy Energy TWM';
         this.text = 'If the Pokemon this card is attached to is your Active Pokemon and is ' +
             'damaged by an opponent\'s attack (even if that Pokemon is Knocked Out), ' +
             'put 2 damage counters on the Attacking Pokemon.';

@@ -34,7 +34,7 @@ export class Grookey extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '8';
+  public setNumber: string = '14';
 
   public name: string = 'Grookey';
 

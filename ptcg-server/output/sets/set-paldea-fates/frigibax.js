@@ -27,11 +27,11 @@ class Frigibax extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV4';
+        this.set = 'PAF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '51';
+        this.setNumber = '17';
         this.name = 'Frigibax';
-        this.fullName = 'Frigibax SV4';
+        this.fullName = 'Frigibax PAF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

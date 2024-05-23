@@ -13,11 +13,11 @@ class ScoopUpCyclone extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.tags = [card_types_1.CardTag.ACE_SPEC];
         this.regulationMark = 'H';
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.name = 'Scoop Up Cyclone';
-        this.fullName = 'Scoop Up Cyclone SV6';
+        this.fullName = 'Scoop Up Cyclone TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '93';
+        this.setNumber = '162';
         this.text = 'Put 1 of your Pokemon and all cards attached to it into your hand.';
     }
     reduceEffect(store, state, effect) {

@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Banetteex extends PokemonCard {
     regulationMark: string;
+    tags: CardTag[];
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;

@@ -31,11 +31,11 @@ class Blisseyex extends game_1.PokemonCard {
                 text: 'You may draw until you have 6 cards in hand.'
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '85';
+        this.setNumber = '134';
         this.name = 'Blissey ex';
-        this.fullName = 'Blissey ex SV6';
+        this.fullName = 'Blissey ex TWM';
         this.BLISSFUL_SWAP_MARKER = 'BLISSFUL_SWAP_MARKER';
     }
     reduceEffect(store, state, effect) {

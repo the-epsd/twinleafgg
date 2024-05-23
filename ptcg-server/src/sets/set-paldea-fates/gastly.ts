@@ -32,15 +32,15 @@ export class Gastly extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV4';
+  public set: string = 'PAF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '33';
+  public setNumber: string = '55';
 
   public name: string = 'Gastly';
 
-  public fullName: string = 'Gastly SV4';
+  public fullName: string = 'Gastly PAF';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 

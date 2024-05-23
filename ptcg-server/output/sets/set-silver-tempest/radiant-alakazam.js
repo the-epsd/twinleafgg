@@ -45,24 +45,27 @@ class RadiantAlakazam extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             const maxAllowedDamage = [];
-            opponent.forEachPokemon(play_card_action_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                const checkHpEffect = new check_effects_1.CheckHpEffect(opponent, cardList);
+            player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                const checkHpEffect = new check_effects_1.CheckHpEffect(player, cardList);
                 store.reduceEffect(state, checkHpEffect);
                 maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
             });
-            return store.prompt(state, new move_damage_prompt_1.MoveDamagePrompt(effect.player.id, game_message_1.GameMessage.MOVE_DAMAGE, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], maxAllowedDamage, { allowCancel: true }), transfers => {
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
+            return store.prompt(state, new move_damage_prompt_1.MoveDamagePrompt(effect.player.id, game_message_1.GameMessage.MOVE_DAMAGE, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 2, allowCancel: false }), transfers => {
                 if (transfers === null) {
                     return;
                 }
                 for (const transfer of transfers) {
                     const source = state_utils_1.StateUtils.getTarget(state, player, transfer.from);
                     const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
-                    if (source.damage >= 20) {
+                    if (source.damage >= 10) {
                         source.damage -= 20;
                         target.damage += 20;
                     }
+                    player.supporter.moveCardTo(this, player.discard);
+                    return state;
                 }
             });
         }

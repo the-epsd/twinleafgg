@@ -37,15 +37,15 @@ export class Munkidori extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '55';
+  public setNumber: string = '95';
 
   public name: string = 'Munkidori';
 
-  public fullName: string = 'Munkidori SV6';
+  public fullName: string = 'Munkidori TWM';
 
   public readonly REFINEMENT_MARKER = 'REFINEMENT_MARKER';
 

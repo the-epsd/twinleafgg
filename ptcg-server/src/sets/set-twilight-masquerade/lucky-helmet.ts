@@ -12,15 +12,15 @@ export class LuckyHelmet extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
   
-  public set: string = 'SV5a';
+  public set: string = 'TWM';
   
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '60';
+  public setNumber: string = '158';
   
   public name = 'Lucky Helmet';
   
-  public fullName = 'Lucky Helmet SV5a';
+  public fullName = 'Lucky Helmet TWM';
 
   public text: string =
     'If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if it is Knocked Out), draw 2 cards.';

@@ -11,11 +11,11 @@ class SurvivalCast extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.TOOL;
-        this.set = 'SV5';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '59';
-        this.name = 'Survival Cast';
-        this.fullName = 'Survival Cast SV5';
+        this.setNumber = '164';
+        this.name = 'Survival Brace';
+        this.fullName = 'Survival Brace TWM';
         this.text = 'If the Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent\'s attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.';
     }
     reduceEffect(store, state, effect) {

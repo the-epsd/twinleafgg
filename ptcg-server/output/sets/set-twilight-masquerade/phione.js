@@ -30,11 +30,11 @@ class Phione extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV5a';
+        this.set = 'TWM';
         this.name = 'Phione';
-        this.fullName = 'Phione SV5a';
+        this.fullName = 'Phione TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '22';
+        this.setNumber = '55';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

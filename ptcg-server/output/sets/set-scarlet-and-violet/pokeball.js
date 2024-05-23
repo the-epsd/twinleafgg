@@ -39,7 +39,7 @@ class Pokeball extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '185';
         this.name = 'Pokeball';
-        this.fullName = 'Pokeball SVI 185';
+        this.fullName = 'Pokeball SVI';
         this.text = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' +
             'you can\'t play this card.) Search your deck for a card and put it into ' +
             'your hand. Shuffle your deck afterward.';

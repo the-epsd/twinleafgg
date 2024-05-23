@@ -15,13 +15,13 @@ export class Atticus extends TrainerCard {
   
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '56';
+  public setNumber: string = '77';
   
-  public set = 'SV4';
+  public set = 'PAF';
   
   public name = 'Atticus';
   
-  public fullName = 'Atticus SV4';
+  public fullName = 'Atticus PAF';
 
   public text: string =
     'You can use this card only if your opponent\'s Active Pokémon is Poisoned.' +

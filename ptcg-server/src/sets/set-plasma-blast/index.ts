@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { JirachiExArt, ScoopUpCycloneArt, SilverBangleArt, UltraBallArt, VirizionExArt } from './card-images';
+import { JirachiExArt, MasterBallArt, ScoopUpCycloneArt, SilverBangleArt, UltraBallArt, VirizionExArt } from './card-images';
 
 export const setPlasmaBlast: Card[] = [
   new JirachiExArt(),
@@ -7,5 +7,6 @@ export const setPlasmaBlast: Card[] = [
   new SilverBangleArt(),
   new UltraBallArt(),
   new VirizionExArt(),
+  new MasterBallArt(),
 
 ];

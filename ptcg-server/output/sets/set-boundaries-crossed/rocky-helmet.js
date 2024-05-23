@@ -10,6 +10,7 @@ class RockyHelmet extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.TOOL;
+        this.regulationMark = 'G';
         this.set = 'BCR';
         this.name = 'Rocky Helmet';
         this.fullName = 'Rocky Helmet BCR';

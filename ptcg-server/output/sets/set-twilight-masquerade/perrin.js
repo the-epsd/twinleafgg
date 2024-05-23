@@ -55,11 +55,11 @@ class Perrin extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'SV5a';
+        this.set = 'TWM';
         this.name = 'Perrin';
-        this.fullName = 'Perrin SV5a';
+        this.fullName = 'Perrin TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '63';
+        this.setNumber = '160';
         this.text = 'Reveal up to 2 Pokémon from your hand and shuffle them into your deck. Then, search your deck for up to that many Pokémon, reveal them, and put them into your hand. Then shuffle your deck.';
     }
     reduceEffect(store, state, effect) {

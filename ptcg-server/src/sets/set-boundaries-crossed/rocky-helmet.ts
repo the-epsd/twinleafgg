@@ -10,6 +10,8 @@ export class RockyHelmet extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
 
+  public regulationMark = 'G';
+
   public set: string = 'BCR';
 
   public name: string = 'Rocky Helmet';

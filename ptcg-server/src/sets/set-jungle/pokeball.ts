@@ -47,6 +47,8 @@ export class PokeBall extends TrainerCard {
 
   public trainerType = TrainerType.ITEM;
 
+  public regulationMark = 'G';
+
   public set = 'JU';
 
   public cardImage: string = 'assets/cardback.png';

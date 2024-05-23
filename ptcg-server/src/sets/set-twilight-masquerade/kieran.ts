@@ -17,7 +17,7 @@ export class Kieran extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '96';
+  public setNumber: string = '154';
 
   public regulationMark = 'H';
 

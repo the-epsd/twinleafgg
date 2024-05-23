@@ -13,15 +13,15 @@ export class HandyFan extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
   
-  public set: string = 'SV6';
+  public set: string = 'TWM';
   
   public cardImage: string = 'assets/cardback.png';
   
-  public setNumber: string = '95';
+  public setNumber: string = '150';
   
-  public name = 'Handy Fan';
+  public name = 'Handheld Fan';
   
-  public fullName = 'Handy Fan SV6';
+  public fullName = 'Handheld Fan TWM';
 
   public text: string =
     'Whenever the Active Pokémon this card is attached to takes damage from an opponent\'s attack, move an Energy from the attacking Pokémon to 1 of your opponent\'s Benched Pokémon.';

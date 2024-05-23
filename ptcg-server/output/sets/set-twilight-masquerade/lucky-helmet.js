@@ -11,11 +11,11 @@ class LuckyHelmet extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.TOOL;
-        this.set = 'SV5a';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '60';
+        this.setNumber = '158';
         this.name = 'Lucky Helmet';
-        this.fullName = 'Lucky Helmet SV5a';
+        this.fullName = 'Lucky Helmet TWM';
         this.text = 'If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if it is Knocked Out), draw 2 cards.';
     }
     reduceEffect(store, state, effect) {

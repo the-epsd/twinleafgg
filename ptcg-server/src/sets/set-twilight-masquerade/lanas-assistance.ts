@@ -63,15 +63,15 @@ export class LanasAssistance extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'SV5a';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '64';
+  public setNumber: string = '155';
 
-  public name: string = 'Lana\'s Assistance';
+  public name: string = 'Lana\'s Aid';
 
-  public fullName: string = 'Lana\'s Assistance SV5a';
+  public fullName: string = 'Lana\'s Aid TWM';
 
   public text: string =
     'Put up to 3 in any combination of Pokémon that don\'t have a Rule Box and Basic Energy cards from your discard pile into your hand.';

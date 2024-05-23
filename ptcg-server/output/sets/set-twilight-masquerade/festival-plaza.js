@@ -14,7 +14,7 @@ class FestivalGrounds extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '99';
+        this.setNumber = '149';
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'TWM';
         this.name = 'Festival Grounds';

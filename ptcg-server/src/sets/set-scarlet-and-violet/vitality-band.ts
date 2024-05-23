@@ -34,7 +34,7 @@ export class VitalityBand extends TrainerCard {
         return state;
       }
 
-      effect.damage += 30;
+      effect.damage += 10;
     }
     return state;
   }

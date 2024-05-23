@@ -35,15 +35,15 @@ export class Phione extends PokemonCard {
 
   public regulationMark: string = 'H';
 
-  public set: string = 'SV5a';
+  public set: string = 'TWM';
 
   public name: string = 'Phione';
 
-  public fullName: string = 'Phione SV5a';
+  public fullName: string = 'Phione TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '22';
+  public setNumber: string = '55';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

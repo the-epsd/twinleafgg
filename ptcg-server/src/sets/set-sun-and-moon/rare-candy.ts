@@ -119,6 +119,8 @@ export class RareCandy extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
+  public regulationMark = 'G';
+
   public set: string = 'SUM';
 
   public name: string = 'Rare Candy';

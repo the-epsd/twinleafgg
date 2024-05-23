@@ -30,11 +30,11 @@ class Munkidori extends game_1.PokemonCard {
                 text: 'Move any number of damage counters from your opponent\'s Benched Pokémon to their Active Pokémon.'
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '55';
+        this.setNumber = '95';
         this.name = 'Munkidori';
-        this.fullName = 'Munkidori SV6';
+        this.fullName = 'Munkidori TWM';
         this.REFINEMENT_MARKER = 'REFINEMENT_MARKER';
     }
     reduceEffect(store, state, effect) {

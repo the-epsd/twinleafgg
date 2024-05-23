@@ -14,6 +14,8 @@ export class ExpShare extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
 
+  public regulationMark = 'G';
+
   public set: string = 'SUM';
 
   public name: string = 'Exp Share';

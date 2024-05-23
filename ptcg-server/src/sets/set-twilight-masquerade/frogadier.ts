@@ -31,15 +31,15 @@ export class Frogadier extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '24';
+  public setNumber: string = '57';
 
   public name: string = 'Frogadier';
 
-  public fullName: string = 'Frogadier SV5';
+  public fullName: string = 'Frogadier TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
