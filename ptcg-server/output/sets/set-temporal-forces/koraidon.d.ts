@@ -9,6 +9,7 @@ export declare class Koraidon extends PokemonCard {
     regulationMark: string;
     stage: Stage;
     cardType: CardType;
+    cardTypez: CardType;
     hp: number;
     retreat: CardType[];
     attacks: {

@@ -18,6 +18,8 @@ export class Blisseyex extends PokemonCard {
   public regulationMark = 'H';
   
   public cardType: CardType = CardType.COLORLESS;
+
+  public cardTypez: CardType = CardType.BLISSEY_EX;
   
   public weakness = [{ type: CardType.FIGHTING }];
 

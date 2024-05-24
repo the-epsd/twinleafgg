@@ -19,6 +19,8 @@ export class Archeops extends PokemonCard {
 
   public cardType: CardType = CardType.COLORLESS;
 
+  public cardTypez: CardType = CardType.ARCHEOPS;
+
   public hp: number = 150;
 
   public weakness = [{ type: CardType.LIGHTNING }];

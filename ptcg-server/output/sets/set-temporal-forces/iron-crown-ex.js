@@ -13,6 +13,7 @@ class IronCrownex extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'H';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.PSYCHIC;
+        this.cardTypez = card_types_1.CardType.IRON_CROWN_EX;
         this.hp = 220;
         this.weakness = [{ type: card_types_1.CardType.DARK }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];

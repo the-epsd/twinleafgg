@@ -15,6 +15,7 @@ class Bibarel extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'F';
         this.evolvesFrom = 'Bidoof';
         this.cardType = card_types_1.CardType.COLORLESS;
+        this.cardTypez = card_types_1.CardType.BIBAREL;
         this.hp = 120;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

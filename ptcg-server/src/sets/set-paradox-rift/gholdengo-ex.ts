@@ -21,6 +21,8 @@ export class Gholdengoex extends PokemonCard {
 
   public cardType: CardType = CardType.METAL;
 
+  public cardTypez: CardType = CardType.GHOLDENGO_EX;
+
   public hp: number = 260;
 
   public weakness = [{ type: CardType.FIRE }];

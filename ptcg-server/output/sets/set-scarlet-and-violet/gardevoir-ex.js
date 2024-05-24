@@ -15,6 +15,7 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Kirlia';
         this.cardType = card_types_1.CardType.PSYCHIC;
+        this.cardTypez = card_types_1.CardType.GARDEVOIR_EX;
         this.hp = 310;
         this.weakness = [{ type: card_types_1.CardType.DARK }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];

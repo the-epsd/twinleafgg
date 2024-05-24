@@ -39,6 +39,7 @@ class Dragapultex extends pokemon_card_1.PokemonCard {
         this.evolvesFrom = 'Drakloak';
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.DRAGON;
+        this.cardTypez = card_types_1.CardType.DRAGAPULT_EX;
         this.hp = 320;
         this.weakness = [];
         this.resistance = [];

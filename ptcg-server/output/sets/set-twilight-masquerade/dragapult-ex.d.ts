@@ -9,6 +9,7 @@ export declare class Dragapultex extends PokemonCard {
     evolvesFrom: string;
     regulationMark: string;
     cardType: CardType;
+    cardTypez: CardType;
     hp: number;
     weakness: never[];
     resistance: never[];

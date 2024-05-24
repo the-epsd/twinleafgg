@@ -14,6 +14,7 @@ class Luxrayex extends game_1.PokemonCard {
         this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.LIGHTNING;
+        this.cardTypez = card_types_1.CardType.LUXRAY_EX;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.hp = 310;
         this.retreat = [card_types_1.CardType.COLORLESS];

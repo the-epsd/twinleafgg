@@ -7,6 +7,7 @@ export declare class Archeops extends PokemonCard {
     regulationMark: string;
     evolvesFrom: string;
     cardType: CardType;
+    cardTypez: CardType;
     hp: number;
     weakness: {
         type: CardType;

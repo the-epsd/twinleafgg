@@ -156,7 +156,6 @@ export class DeckComponent implements OnInit {
   }
 
 
-
   private handleError(error: ApiError): void {
     if (!error.handled) {
       this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));

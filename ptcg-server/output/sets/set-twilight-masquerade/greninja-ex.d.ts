@@ -6,6 +6,7 @@ export declare class Greninjaex extends PokemonCard {
     tags: CardTag[];
     regulationMark: string;
     stage: Stage;
+    cardTypez: CardType;
     evolvesFrom: string;
     cardType: CardType;
     hp: number;

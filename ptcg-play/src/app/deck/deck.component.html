@@ -20,12 +20,13 @@
             <mat-icon *ngIf="!deck.isValid">remove</mat-icon>
           </div>
         </div>
-        <div class="deck-content">
-          <div class="deck-card-types">
-            <ptcg-archetype *ngFor="let type of deck.cardTypes" [type]="type"></ptcg-archetype>
-          </div>
-          <div class="deck-name">{{ deck.name }}</div>
+        
+        <div class="deck-card-types">
+          <ptcg-archetype *ngFor="let type of deck.cardTypes.slice(0, deck.cardTypes.length > 2 ? 2 : deck.cardTypes.length); let i = index" [type]="type"></ptcg-archetype>
+          <span *ngIf="deck.cardTypes.length > 2"></span>
         </div>
+        <div class="deck-name">{{ deck.name }}</div>
+        
         <div class="deck-footer">
           <div class="deck-formats">
             <ptcg-deck-validity [deck]="deck.deckItems" [validOnly]="true"></ptcg-deck-validity>

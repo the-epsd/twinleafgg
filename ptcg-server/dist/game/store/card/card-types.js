@@ -55,32 +55,32 @@ export var Stage;
 })(Stage || (Stage = {}));
 export var CardType;
 (function (CardType) {
-    CardType[CardType["ANY"] = 0] = "ANY";
-    CardType[CardType["NONE"] = 1] = "NONE";
-    CardType[CardType["COLORLESS"] = 2] = "COLORLESS";
-    CardType[CardType["GRASS"] = 3] = "GRASS";
-    CardType[CardType["FIGHTING"] = 4] = "FIGHTING";
-    CardType[CardType["PSYCHIC"] = 5] = "PSYCHIC";
-    CardType[CardType["WATER"] = 6] = "WATER";
-    CardType[CardType["LIGHTNING"] = 7] = "LIGHTNING";
-    CardType[CardType["METAL"] = 8] = "METAL";
-    CardType[CardType["DARK"] = 9] = "DARK";
-    CardType[CardType["FIRE"] = 10] = "FIRE";
-    CardType[CardType["DRAGON"] = 11] = "DRAGON";
-    CardType[CardType["FAIRY"] = 12] = "FAIRY";
-    //   ANY,
+    // ANY,
+    // NONE,
+    // COLORLESS,
     // GRASS,
-    // FIRE,
+    // FIGHTING,
+    // PSYCHIC,
     // WATER,
     // LIGHTNING,
-    // PSYCHIC,
-    // FIGHTING,
-    // DARK,
     // METAL,
-    // COLORLESS,
-    // FAIRY,
+    // DARK,
+    // FIRE,
     // DRAGON,
-    //   NONE,
+    // FAIRY,
+    CardType[CardType["ANY"] = 0] = "ANY";
+    CardType[CardType["GRASS"] = 1] = "GRASS";
+    CardType[CardType["FIRE"] = 2] = "FIRE";
+    CardType[CardType["WATER"] = 3] = "WATER";
+    CardType[CardType["LIGHTNING"] = 4] = "LIGHTNING";
+    CardType[CardType["PSYCHIC"] = 5] = "PSYCHIC";
+    CardType[CardType["FIGHTING"] = 6] = "FIGHTING";
+    CardType[CardType["DARK"] = 7] = "DARK";
+    CardType[CardType["METAL"] = 8] = "METAL";
+    CardType[CardType["COLORLESS"] = 9] = "COLORLESS";
+    CardType[CardType["FAIRY"] = 10] = "FAIRY";
+    CardType[CardType["DRAGON"] = 11] = "DRAGON";
+    CardType[CardType["NONE"] = 12] = "NONE";
     CardType[CardType["CHARIZARD_EX"] = 13] = "CHARIZARD_EX";
     CardType[CardType["PIDGEOT_EX"] = 14] = "PIDGEOT_EX";
     CardType[CardType["GIRATINA_VSTAR"] = 15] = "GIRATINA_VSTAR";
@@ -100,6 +100,27 @@ export var CardType;
     CardType[CardType["ABSOL_EX"] = 29] = "ABSOL_EX";
     CardType[CardType["THWACKEY"] = 30] = "THWACKEY";
     CardType[CardType["DIPPLIN"] = 31] = "DIPPLIN";
+    CardType[CardType["PALKIA_VSTAR"] = 32] = "PALKIA_VSTAR";
+    CardType[CardType["ROTOM_V"] = 33] = "ROTOM_V";
+    CardType[CardType["BIBAREL"] = 34] = "BIBAREL";
+    CardType[CardType["GHOLDENGO_EX"] = 35] = "GHOLDENGO_EX";
+    CardType[CardType["SANDY_SHOCKS_EX"] = 36] = "SANDY_SHOCKS_EX";
+    CardType[CardType["GARDEVOIR_EX"] = 37] = "GARDEVOIR_EX";
+    CardType[CardType["XATU"] = 38] = "XATU";
+    CardType[CardType["TEALMASK_OGERPON_EX"] = 39] = "TEALMASK_OGERPON_EX";
+    CardType[CardType["LUXRAY_EX"] = 40] = "LUXRAY_EX";
+    CardType[CardType["GRENINJA_EX"] = 41] = "GRENINJA_EX";
+    CardType[CardType["BLISSEY_EX"] = 42] = "BLISSEY_EX";
+    CardType[CardType["ROARING_MOON"] = 43] = "ROARING_MOON";
+    CardType[CardType["KORAIDON"] = 44] = "KORAIDON";
+    CardType[CardType["IRON_CROWN_EX"] = 45] = "IRON_CROWN_EX";
+    CardType[CardType["CINCINNO"] = 46] = "CINCINNO";
+    CardType[CardType["ARCHEOPS"] = 47] = "ARCHEOPS";
+    CardType[CardType["MIRAIDON_EX"] = 48] = "MIRAIDON_EX";
+    CardType[CardType["IRON_HANDS_EX"] = 49] = "IRON_HANDS_EX";
+    CardType[CardType["DRAGAPULT_EX"] = 50] = "DRAGAPULT_EX";
+    CardType[CardType["DRIFLOON"] = 51] = "DRIFLOON";
+    CardType[CardType["FROSLASS"] = 52] = "FROSLASS";
 })(CardType || (CardType = {}));
 export var SpecialCondition;
 (function (SpecialCondition) {

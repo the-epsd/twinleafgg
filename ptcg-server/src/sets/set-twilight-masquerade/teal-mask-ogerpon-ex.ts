@@ -18,6 +18,8 @@ export class TealMaskOgerponex extends PokemonCard {
 
   public cardType: CardType = CardType.GRASS;
 
+  public cardTypez: CardType = CardType.TEALMASK_OGERPON_EX;
+
   public hp: number = 210;
 
   public weakness = [{ type: CardType.FIRE }];
