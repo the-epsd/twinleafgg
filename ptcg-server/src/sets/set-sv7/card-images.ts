@@ -1,6 +1,7 @@
 import { BindingMochi } from './binding-mochi';
 import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
 import { ColresssObsession } from './colresss-obsession';
+import { DangerousLaser } from './dangerous-laser';
 import { Dartrix } from './dartrix';
 import { Decidueye } from './decidueye';
 import { Fezandipitiex } from './fezandipiti-ex';
@@ -19,6 +20,10 @@ export class BindingMochiArt extends BindingMochi {
 
 export class ColresssObsessionArt extends ColresssObsession {
   public cardImage = 'https://pokemonproxies.com/static/media/Colress\'s_Tenacity-059-6a.090977514fede0a7fe80.png';
+}
+
+export class DangerousLaserArt extends DangerousLaser {
+  public cardImage = 'https://pbs.twimg.com/media/GOUgxq_XYAAA3Kx?format=jpg&name=medium';
 }
 
 export class DartrixArt extends Dartrix {

@@ -21,6 +21,8 @@ export class EmergencyBoard extends TrainerCard {
   
   public fullName: string = 'Rescue Board TEF';
 
+  public text: string = 'The Retreat Cost of the Pokémon this card is attached to is [C] less. If that Pokémon\'s remaining HP is 30 or less, it has no Retreat Cost.';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
       const player = effect.player;

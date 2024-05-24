@@ -1,4 +1,8 @@
+import { Octillery } from './octillery';
 import { TownMap } from './town-map';
 export declare class TownMapArt extends TownMap {
+    cardImage: string;
+}
+export declare class OctilleryArt extends Octillery {
     cardImage: string;
 }

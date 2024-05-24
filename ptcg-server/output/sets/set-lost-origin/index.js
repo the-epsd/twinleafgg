@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setLostOrigin = void 0;
 const card_images_1 = require("./card-images");
 exports.setLostOrigin = [
+    new card_images_1.BanetteArt(),
     new card_images_1.BouffalantArt(),
     new card_images_1.ColresssExperimentArt(),
     new card_images_1.ComfeyArt(),

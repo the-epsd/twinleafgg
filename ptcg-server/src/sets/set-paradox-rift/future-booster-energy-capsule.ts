@@ -17,7 +17,7 @@ export class FutureBoosterEnergyCapsule extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '62';
+  public setNumber: string = '164';
 
   public set: string = 'PAR';
 

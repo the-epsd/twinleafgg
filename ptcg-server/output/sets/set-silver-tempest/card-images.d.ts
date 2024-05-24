@@ -19,6 +19,7 @@ import { Kirlia } from './kirlia';
 import { LugiaV } from './lugia-v';
 import { LugiaVSTAR } from './lugia-vstar';
 import { Metagross } from './metagross';
+import { Mismagius } from './mismagius';
 import { PrimordialAltar } from './primordial-altar';
 import { RadiantAlakazam } from './radiant-alakazam';
 import { RadiantJirachi } from './radiant-jirachi';
@@ -99,6 +100,9 @@ export declare class LugiaVSTARArt extends LugiaVSTAR {
     cardImage: string;
 }
 export declare class MetagrossArt extends Metagross {
+    cardImage: string;
+}
+export declare class MismagiusArt extends Mismagius {
     cardImage: string;
 }
 export declare class PrimordialAltarArt extends PrimordialAltar {

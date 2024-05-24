@@ -1,11 +1,12 @@
 import { Card } from '../../game/store/card/card';
-import { AncientBoosterEnergyCapsuleArt, BounsweetArt, BruteBonnetArt, CounterCatcherArt, DefianceVestArt, DeoxysArt, EarthenVesselArt, ElekidArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GholdengoexArt, GibleArt, GimmighoulArt, GroudonArt, HoopaexArt, IronBundleArt, IronHandsexArt, IronJugulisArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MelaArt, MewtwoexArt, MiniorArt, MorpekoArt, NatuArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RoaringMoonexArt, SandyShocksexArt, ScreamTailArt, SlitherWingArt, SnoruntArt, SteeneeArt, TapuKokoexArt, TechnicalMachineBlindsideArt, TechnicalMachineDevolutionArt, TechnicalMachineEvolutionArt, TechnicalMachineTurboEnergizeArt, TechnoRadarArt, TsareenaexArt, TulipArt, XatuArt } from './card-images';
+import { AncientBoosterEnergyCapsuleArt, BounsweetArt, BruteBonnetArt, ChiYuArt, CounterCatcherArt, DefianceVestArt, DeoxysArt, EarthenVesselArt, ElekidArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GholdengoexArt, GibleArt, GimmighoulArt, GroudonArt, HoopaexArt, IronBundleArt, IronHandsexArt, IronJugulisArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MelaArt, MewtwoexArt, MiniorArt, MorpekoArt, NatuArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RemoraidArt, RoaringMoonexArt, SandyShocksexArt, ScreamTailArt, SlitherWingArt, SnoruntArt, SteeneeArt, TapuKokoexArt, TechnicalMachineBlindsideArt, TechnicalMachineDevolutionArt, TechnicalMachineEvolutionArt, TechnicalMachineTurboEnergizeArt, TechnoRadarArt, TsareenaexArt, TulipArt, XatuArt } from './card-images';
 
 export const setParadoxRift: Card[] = [
   
   new AncientBoosterEnergyCapsuleArt(),
   new BruteBonnetArt(),
   new BounsweetArt(),
+  new ChiYuArt(),
   new CounterCatcherArt(),
   new DefianceVestArt(),
   new DeoxysArt(),
@@ -43,6 +44,7 @@ export const setParadoxRift: Card[] = [
   new TechnicalMachineDevolutionArt(),
   new TechnicalMachineEvolutionArt(),
   new TechnicalMachineTurboEnergizeArt(),
+  new RemoraidArt(),
   new TechnoRadarArt(),
   new TsareenaexArt(),
   new TulipArt(),

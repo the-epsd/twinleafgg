@@ -17,4 +17,5 @@ exports.setSV7 = [
     new card_images_1.XerosicsSchemeArt(),
     // new GenesectArt(),
     new card_images_1.BloodmoonUrsalunaArt(),
+    new card_images_1.DangerousLaserArt(),
 ];

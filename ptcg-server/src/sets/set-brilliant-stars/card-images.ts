@@ -10,6 +10,7 @@ import { CollapsedStadium } from './collapsed-stadium';
 import { CynthiasAmbition } from './cynthias-ambition';
 import { DoubleTurboEnergy } from './double-turbo-energy';
 import { Druddigon } from './druddigon';
+import { Electabuzz } from './electabuzz';
 import { Electivire } from './electivire';
 import { Empoleon } from './empoleon';
 import { EnteiV } from './entei-v';
@@ -76,6 +77,10 @@ export class DoubleTurboEnergyArt extends DoubleTurboEnergy {
 
 export class DruddigonArt extends Druddigon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_113_R_EN_LG.png';
+}
+
+export class ElectabuzzArt extends Electabuzz {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_044_R_EN_LG.png';
 }
 
 export class ElectivireArt extends Electivire {

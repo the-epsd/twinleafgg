@@ -9,7 +9,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class Luxio extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Shinx';
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.LIGHTNING;
@@ -20,7 +20,7 @@ class Luxio extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Big Bite',
-                cost: [],
+                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING],
                 damage: 60,
                 text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
             }

@@ -13,6 +13,7 @@ import { FusionStrikeEnergy } from './fusion-strike-energy';
 import { GenesectV } from './genesect-v';
 import { GengarV } from './gengar-v';
 import { GengarVMAX } from './gengar-vmax';
+import { Heatmor } from './heatmor';
 import { InteleonV } from './inteleon-v';
 import { InteleonVMAX } from './inteleon-vmax';
 import { Judge } from './judge';
@@ -86,6 +87,10 @@ export class GengarVArt extends GengarV {
 
 export class GengarVMAXArt extends GengarVMAX {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_157_R_EN_LG.png';
+}
+
+export class HeatmorArt extends Heatmor {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_041_R_EN_LG.png';
 }
 
 export class InteleonVArt extends InteleonV {

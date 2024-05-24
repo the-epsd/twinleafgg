@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BloodmoonUrsalunaArt = exports.GenesectArt = exports.XerosicsSchemeArt = exports.RowlettArt = exports.PecharuntexArt = exports.OkidogiexArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.FezandipitiexArt = exports.DecidueyeArt = exports.DartrixArt = exports.ColresssObsessionArt = exports.BindingMochiArt = void 0;
+exports.BloodmoonUrsalunaArt = exports.GenesectArt = exports.XerosicsSchemeArt = exports.RowlettArt = exports.PecharuntexArt = exports.OkidogiexArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.FezandipitiexArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.ColresssObsessionArt = exports.BindingMochiArt = void 0;
 const binding_mochi_1 = require("./binding-mochi");
 const bloodmoon_ursaluna_1 = require("./bloodmoon-ursaluna");
 const colresss_obsession_1 = require("./colresss-obsession");
+const dangerous_laser_1 = require("./dangerous-laser");
 const dartrix_1 = require("./dartrix");
 const decidueye_1 = require("./decidueye");
 const fezandipiti_ex_1 = require("./fezandipiti-ex");
@@ -29,6 +30,13 @@ class ColresssObsessionArt extends colresss_obsession_1.ColresssObsession {
     }
 }
 exports.ColresssObsessionArt = ColresssObsessionArt;
+class DangerousLaserArt extends dangerous_laser_1.DangerousLaser {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GOUgxq_XYAAA3Kx?format=jpg&name=medium';
+    }
+}
+exports.DangerousLaserArt = DangerousLaserArt;
 class DartrixArt extends dartrix_1.Dartrix {
     constructor() {
         super(...arguments);

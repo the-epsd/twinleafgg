@@ -1,4 +1,5 @@
 import { Articuno } from './articuno';
+import { Blastoise } from './blastoise';
 import { Charmander } from './charmander';
 import { Ditto } from './ditto';
 import { Lunatone } from './lunatone';
@@ -14,6 +15,10 @@ import { Zapdos } from './zapdos';
 
 export class ArticunoArt extends Articuno {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_024_R_EN_LG.png';
+}
+
+export class BlastoiseArt extends Blastoise {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_017_R_EN_LG.png';
 }
 
 export class CharmanderArt extends Charmander {

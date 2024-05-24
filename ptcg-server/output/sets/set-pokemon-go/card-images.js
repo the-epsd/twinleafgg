@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.SolrockArt = exports.SnorlaxArt = exports.SlowbroArt = exports.SlakingVArt = exports.RadiantVenusaurArt = exports.PokestopArt = exports.MoltresArt = exports.LureModuleArt = exports.LunatoneArt = exports.DittoArt = exports.CharmanderArt = exports.ArticunoArt = void 0;
+exports.ZapdosArt = exports.SolrockArt = exports.SnorlaxArt = exports.SlowbroArt = exports.SlakingVArt = exports.RadiantVenusaurArt = exports.PokestopArt = exports.MoltresArt = exports.LureModuleArt = exports.LunatoneArt = exports.DittoArt = exports.CharmanderArt = exports.BlastoiseArt = exports.ArticunoArt = void 0;
 const articuno_1 = require("./articuno");
+const blastoise_1 = require("./blastoise");
 const charmander_1 = require("./charmander");
 const ditto_1 = require("./ditto");
 const lunatone_1 = require("./lunatone");
@@ -21,6 +22,13 @@ class ArticunoArt extends articuno_1.Articuno {
     }
 }
 exports.ArticunoArt = ArticunoArt;
+class BlastoiseArt extends blastoise_1.Blastoise {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_017_R_EN_LG.png';
+    }
+}
+exports.BlastoiseArt = BlastoiseArt;
 class CharmanderArt extends charmander_1.Charmander {
     constructor() {
         super(...arguments);

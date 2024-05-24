@@ -19,6 +19,7 @@ import { Kirlia } from './kirlia';
 import { LugiaV } from './lugia-v';
 import { LugiaVSTAR } from './lugia-vstar';
 import { Metagross } from './metagross';
+import { Mismagius } from './mismagius';
 import { PrimordialAltar } from './primordial-altar';
 import { RadiantAlakazam } from './radiant-alakazam';
 import { RadiantJirachi } from './radiant-jirachi';
@@ -121,6 +122,10 @@ export class LugiaVSTARArt extends LugiaVSTAR {
 
 export class MetagrossArt extends Metagross {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_119_R_EN_LG.png';
+}
+
+export class MismagiusArt extends Mismagius {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_064_R_EN_LG.png';
 }
 
 export class PrimordialAltarArt extends PrimordialAltar {

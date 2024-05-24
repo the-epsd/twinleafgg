@@ -81,7 +81,7 @@ export class LumineonV extends PokemonCard {
             GameMessage.CHOOSE_CARD_TO_HAND,
             player.deck,
             { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-            { min: 1, max: 1, allowCancel: true }
+            { min: 0, max: 1, allowCancel: false }
           ), selected => {
             const cards = selected || [];
 

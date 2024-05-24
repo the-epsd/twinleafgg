@@ -1,4 +1,5 @@
 import { Arezu } from './arezu';
+import { Banette } from './banette';
 import { Bouffalant } from './bouffalant';
 import { BoxOfDisaster } from './box-of-disaster';
 import { ColresssExperiment } from './colress\'s-experiment';
@@ -42,6 +43,10 @@ import { Volo } from './volo';
 
 export class ArezuArt extends Arezu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_153_R_EN_LG.png';
+}
+
+export class BanetteArt extends Banette {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_073_R_EN_LG.png';
 }
   
 export class BouffalantArt extends Bouffalant {

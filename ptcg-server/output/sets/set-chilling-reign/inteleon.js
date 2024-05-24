@@ -13,7 +13,7 @@ class Inteleon extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.tags = [card_types_1.CardTag.RAPID_STRIKE];
         this.regulationMark = 'E';
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Drizzile';
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 150;

@@ -77,6 +77,7 @@ __exportStar(require("./set-cosmic-eclipse"), exports);
 //SWSH Era
 __exportStar(require("./set-sword-and-shield"), exports);
 __exportStar(require("./set-sword-and-shield-promos"), exports);
+__exportStar(require("./set-darkness-ablaze"), exports);
 __exportStar(require("./set-vivid-voltage"), exports);
 __exportStar(require("./set-battle-styles"), exports);
 __exportStar(require("./set-chilling-reign"), exports);

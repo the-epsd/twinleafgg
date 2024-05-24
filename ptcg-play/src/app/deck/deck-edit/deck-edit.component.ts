@@ -90,7 +90,7 @@ export class DeckEditComponent implements OnInit {
   sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {
     const firstTrainerIndex = cards.findIndex((d) => d.card.superType === SuperType.TRAINER);
     
-    for (let i = 0; i < firstTrainerIndex; i++) {
+    for (let i = firstTrainerIndex - 1; i >= 0; i--) {
       if ((<PokemonCard>cards[i].card).evolvesFrom) {
         const indexOfPrevolution = this.findLastIndex(cards, c => c.card.name === (<PokemonCard>cards[i].card).evolvesFrom);
         
@@ -112,13 +112,13 @@ export class DeckEditComponent implements OnInit {
   }
   
   findLastIndex<T>(array: Array<T>, predicate: (value: T, index: number, obj: T[]) => boolean): number {
-    let l = array.length;
-    while (l--) {
-        if (predicate(array[l], l, array))
-            return l;
+    for (let i = array.length - 1; i >= 0; i--) {
+      if (predicate(array[i], i, array))
+        return i;
     }
     return -1;
   }
+  
 
   importFromClipboard() {
     navigator.clipboard.readText()

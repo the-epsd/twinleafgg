@@ -1,4 +1,5 @@
 import { Arezu } from './arezu';
+import { Banette } from './banette';
 import { Bouffalant } from './bouffalant';
 import { BoxOfDisaster } from './box-of-disaster';
 import { ColresssExperiment } from './colress\'s-experiment';
@@ -40,6 +41,9 @@ import { Snorlax } from './snorlax';
 import { Thorton } from './thorton';
 import { Volo } from './volo';
 export declare class ArezuArt extends Arezu {
+    cardImage: string;
+}
+export declare class BanetteArt extends Banette {
     cardImage: string;
 }
 export declare class BouffalantArt extends Bouffalant {
