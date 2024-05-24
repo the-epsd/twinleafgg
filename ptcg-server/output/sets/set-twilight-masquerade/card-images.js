@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UnfairStampArt = exports.TealMaskOgerponexArt = exports.SurvivalCastArt = exports.ScreamTailexArt = exports.PhioneArt = exports.PerrinArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.KieranArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.HyperAromaArt = exports.GreninjaexArt = exports.FrogadierArt = exports.FroakieArt = exports.EnhancedHammerArt = exports.CommunityCenterArt = exports.CaretakerArt = exports.BloodmoonUrsalunaexArt = exports.WellspringMaskOgerponexArt = exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.MunkidoriArt = exports.MorpekoArt = exports.PoochyenaArt = exports.PerformanceFluteArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LegacyEnergyArt = exports.LaironArt = exports.GrookeyArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.FestivalGroundsArt = exports.FarfetchdArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.DipplinArt = exports.ChanseyArt = exports.CarmineArt = exports.BugCatchingSetArt = exports.BlisseyexArt = exports.ApplinArt2 = exports.ApplinArt = exports.AronArt = exports.AggronArt = void 0;
-exports.ChiYuArt = exports.HearthflameMaskOgerponexArt = exports.TingLuArt = exports.ShinxArt = exports.LanasAssistanceArt = exports.EmolgaArt = exports.ClefairyArt = exports.ClefableArt = exports.ThwackeyArt = void 0;
+exports.JammingTowerArt = exports.ChiYuArt = exports.HearthflameMaskOgerponexArt = exports.TingLuArt = exports.ShinxArt = exports.LanasAssistanceArt = exports.EmolgaArt = exports.ClefairyArt = exports.ClefableArt = exports.ThwackeyArt = void 0;
 const aggron_1 = require("./aggron");
 const aron_1 = require("./aron");
 const blissey_ex_1 = require("./blissey-ex");
@@ -61,6 +61,7 @@ const shinx_1 = require("./shinx");
 const ting_lu_1 = require("./ting-lu");
 const hearthflame_mask_ogerpon_ex_1 = require("./hearthflame-mask-ogerpon-ex");
 const chi_yu_1 = require("./chi-yu");
+const jamming_tower_1 = require("./jamming-tower");
 class AggronArt extends aggron_1.Aggron {
     constructor() {
         super(...arguments);
@@ -477,3 +478,10 @@ class ChiYuArt extends chi_yu_1.ChiYu {
     }
 }
 exports.ChiYuArt = ChiYuArt;
+class JammingTowerArt extends jamming_tower_1.JammingTower {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_153_R_EN_LG.png';
+    }
+}
+exports.JammingTowerArt = JammingTowerArt;

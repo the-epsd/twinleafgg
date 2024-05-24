@@ -1,13 +1,21 @@
 import { Charizardex } from '../set-obsidian-flames/charizard-ex';
 import { Charmander } from '../set-obsidian-flames/charmander';
+import { Artazon } from '../set-paldea-evolved/artazon';
 import { Iono } from '../set-paldea-evolved/iono';
 import { Mimikyu } from '../set-paldea-evolved/mimikyu';
+import { Noibat } from '../set-paldea-evolved/noibat';
+import { Noivernex } from '../set-paldea-evolved/noivern-ex';
+import { Squawkabillyex } from '../set-paldea-evolved/squawkabilly-ex';
 import { Natu } from '../set-paradox-rift/natu';
 import { Xatu } from '../set-paradox-rift/xatu';
+import { Armarouge } from '../set-scarlet-and-violet/armarouge';
+import { Charcadet } from '../set-scarlet-and-violet/charcadet';
 import { ElectricGenerator } from '../set-scarlet-and-violet/electric-generator';
+import { Gardevoirex } from '../set-scarlet-and-violet/gardevoir-ex';
 import { NestBall } from '../set-scarlet-and-violet/nest-ball';
 import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
 import { ProfessorsResearch2 } from '../set-scarlet-and-violet/professors-research2';
+import { Ralts } from '../set-scarlet-and-violet/ralts';
 import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
 import { Atticus } from './atticus';
@@ -173,4 +181,60 @@ export class XatuArt extends Xatu {
   public fullName = 'Xatu PAF';
   public set = 'PAF';
   public setNumber = '26';
+}
+
+export class ArmarougeArt extends Armarouge {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_015_R_EN_LG.png';
+  public fullName = 'Armarouge PAF';
+  public set = 'PAF';
+  public setNumber = '15';
+}
+
+export class CharcadetArt extends Charcadet {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_014_R_EN_LG.png';
+  public fullName = 'Charcadet PAF';
+  public set = 'PAF';
+  public setNumber = '14';
+}
+
+export class RaltsArt extends Ralts {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_027_R_EN_LG.png';
+  public fullName = 'Ralts PAF';
+  public set = 'PAF';
+  public setNumber = '27';
+}
+
+export class GardevoirexArt extends Gardevoirex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_029_R_EN_LG.png';
+  public fullName = 'Gardevoir ex PAF';
+  public set = 'PAF';
+  public setNumber = '29';
+}
+
+export class NoibatArt extends Noibat {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_068_R_EN_LG.png';
+  public fullName = 'Noibat PAF';
+  public set = 'PAF';
+  public setNumber = '68';
+}
+
+export class NoivernexArt extends Noivernex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_069_R_EN_LG.png';
+  public fullName = 'Novern ex PAF';
+  public set = 'PAF';
+  public setNumber = '69';
+}
+
+export class SquawkabillyexArt extends Squawkabillyex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_075_R_EN_LG.png';
+  public fullName = 'Squawkabilly ex PAF';
+  public set = 'PAF';
+  public setNumber = '75';
+}
+
+export class ArtazonArt extends Artazon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_076_R_EN_LG.png';
+  public fullName = 'Artazon PAF';
+  public set = 'PAF';
+  public setNumber = '76';
 }

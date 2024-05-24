@@ -1,8 +1,10 @@
 import { BindingMochi } from './binding-mochi';
+import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
 import { ColresssObsession } from './colresss-obsession';
 import { Dartrix } from './dartrix';
 import { Decidueye } from './decidueye';
 import { Fezandipitiex } from './fezandipiti-ex';
+import { Genesect } from './genesect';
 import { Kyurem } from './kyurem';
 import { Munkidoriex } from './munkidori-ex';
 import { NeutralCenter } from './neutral-center';
@@ -57,4 +59,12 @@ export class RowlettArt extends Rowlett {
 
 export class XerosicsSchemeArt extends XerosicsScheme {
   public cardImage = 'https://pokemonproxies.com/static/media/Xerosic\'s_Scheme-062-6a.32170f7efa394e7bfd35.png';
+}
+
+export class GenesectArt extends Genesect {
+  public cardImage = 'https://pbs.twimg.com/media/GOLfMYxWYAAofXF?format=jpg&name=small';
+}
+
+export class BloodmoonUrsalunaArt extends BloodmoonUrsaluna {
+  public cardImage = 'https://pbs.twimg.com/media/GOQWrmdWwAAqfY0?format=png&name=900x900';
 }

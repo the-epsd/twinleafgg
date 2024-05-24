@@ -262,7 +262,7 @@ export class RabscaArt extends Rabsca {
 }
 
 export class RagingBoltexArt extends RagingBoltex {
-  public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1703418814020-AHDP8YUS4QEO32HRL0OG/Raging+Bolt+ex.png?format=1500w';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_123_R_EN.png';
 }
 
 export class RaichuArt extends Raichu {

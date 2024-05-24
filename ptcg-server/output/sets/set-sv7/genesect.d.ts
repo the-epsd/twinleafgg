@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, PowerType } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-export declare class TestPokemon extends PokemonCard {
+export declare class Genesect extends PokemonCard {
     regulationMark: string;
     stage: Stage;
     cardType: CardType;
@@ -10,17 +10,27 @@ export declare class TestPokemon extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    retreat: never[];
+    resistance: {
+        type: CardType;
+        value: number;
+    }[];
+    retreat: CardType[];
+    powers: {
+        name: string;
+        powerType: PowerType;
+        text: string;
+    }[];
     attacks: {
         name: string;
-        cost: never[];
+        cost: CardType[];
         damage: number;
         text: string;
-        effect: (store: StoreLike, state: State, effect: AttackEffect) => void;
     }[];
     set: string;
     cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;
+    readonly OPPONENT_CANNOT_PLAY_ACE_SPECS_MARKER = "OPPONENT_CANNOT_PLAY_ACE_SPECS_MARKER";
+    reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State;
 }

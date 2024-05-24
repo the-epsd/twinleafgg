@@ -6,7 +6,8 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt,
   ShuffleDeckPrompt, 
   ConfirmPrompt,
-  ShowCardsPrompt} from '../../game';
+  ShowCardsPrompt,
+  StateUtils} from '../../game';
 
 export class LumineonV extends PokemonCard {
 
@@ -56,6 +57,7 @@ export class LumineonV extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       if (player.deck.cards.length === 0) {
         return state;
@@ -84,7 +86,7 @@ export class LumineonV extends PokemonCard {
             const cards = selected || [];
 
             store.prompt(state, [new ShowCardsPrompt(
-              player.id,
+              opponent.id,
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
               cards
             )], () => {

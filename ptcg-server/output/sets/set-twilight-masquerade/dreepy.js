@@ -26,11 +26,11 @@ class Dreepy extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV6';
+        this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '128';
         this.name = 'Dreepy';
-        this.fullName = 'Dreepy SV6';
+        this.fullName = 'Dreepy TWM';
     }
 }
 exports.Dreepy = Dreepy;

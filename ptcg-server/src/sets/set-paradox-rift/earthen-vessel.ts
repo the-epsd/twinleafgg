@@ -94,7 +94,7 @@ export class EarthenVessel extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '60';
+  public setNumber: string = '163';
 
   public name: string = 'Earthen Vessel';
 

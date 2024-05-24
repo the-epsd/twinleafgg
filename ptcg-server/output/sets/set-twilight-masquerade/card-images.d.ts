@@ -57,6 +57,7 @@ import { Shinx } from './shinx';
 import { TingLu } from './ting-lu';
 import { HearthflameMaskOgerponex } from './hearthflame-mask-ogerpon-ex';
 import { ChiYu } from './chi-yu';
+import { JammingTower } from './jamming-tower';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -232,5 +233,8 @@ export declare class HearthflameMaskOgerponexArt extends HearthflameMaskOgerpone
     cardImage: string;
 }
 export declare class ChiYuArt extends ChiYu {
+    cardImage: string;
+}
+export declare class JammingTowerArt extends JammingTower {
     cardImage: string;
 }

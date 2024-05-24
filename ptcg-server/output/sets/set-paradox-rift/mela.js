@@ -56,7 +56,7 @@ class Mela extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '152';
+        this.setNumber = '167';
         this.regulationMark = 'G';
         this.name = 'Mela';
         this.fullName = 'Mela PAR';

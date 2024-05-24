@@ -70,7 +70,7 @@ export class Thwackey extends PokemonCard {
     
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.BOOM_BOOM_DRUM_MARKER)) {
+      if (player.marker.hasMarker(this.BOOM_BOOM_DRUM_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 

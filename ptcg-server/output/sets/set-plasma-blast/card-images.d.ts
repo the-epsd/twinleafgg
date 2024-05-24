@@ -1,3 +1,4 @@
+import { MasterBall } from '../set-temporal-forces/master-ball';
 import { JirachiEx } from './jirachi-ex';
 import { ScoopUpCyclone } from './scoop-up-cyclone';
 import { SilverBangle } from './silver-bangle';
@@ -16,5 +17,8 @@ export declare class UltraBallArt extends UltraBall {
     cardImage: string;
 }
 export declare class VirizionExArt extends VirizionEx {
+    cardImage: string;
+}
+export declare class MasterBallArt extends MasterBall {
     cardImage: string;
 }

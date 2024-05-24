@@ -2,9 +2,6 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_ATTACK_DOES_X_MORE_DAMAGE } from '../../game/store/prefabs/prefabs';
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 
 export class TestPokemon extends PokemonCard {
@@ -23,10 +20,10 @@ export class TestPokemon extends PokemonCard {
 
   public attacks = [
     { 
-      name: 'Put Energy On Bench',
-      cost: [ CardType.COLORLESS],
-      damage: 10,
-      text: 'You may attach up to 2 Basic Energy from your discard pile to your Benched Pokémon in any way you like.',
+      name: 'Put Opponent Card In Prizes',
+      cost: [ ],
+      damage: 0,
+      text: 'Add top 2 cards of opponent\'s deck to prizes',
       effect: (store: StoreLike, state: State, effect: AttackEffect) => {
       }
     }
@@ -36,18 +33,30 @@ export class TestPokemon extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '2';
+  public setNumber: string = '1';
 
   public name: string = 'Test';
 
   public fullName: string = 'Test TEST';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 1);
-      THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 10);
-    }
-    return state;
-  }
+  // public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+  //   if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+  //     const player = effect.player;
+  //     const opponent = StateUtils.getOpponent(state, player);
+
+  //     const deckTop = new CardList();
+  //     opponent.deck.moveTo(deckTop, 2);
+
+  //     deckTop.moveTo(opponent.prizes);
+
+  //     import { Pokemon } from '../models/pokemon';
+
+  //     const newPrizeCard1 = new Pokemon();
+
+  //     import { Card, PokemonCard } from '../models';
+
+  //     const newPrizeCard2 = new PokemonCard();
+
+  //     opponent.prizes.push(newPrizeCard1, newPrizeCard2);
 }

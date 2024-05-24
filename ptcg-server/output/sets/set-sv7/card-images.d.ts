@@ -1,8 +1,10 @@
 import { BindingMochi } from './binding-mochi';
+import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
 import { ColresssObsession } from './colresss-obsession';
 import { Dartrix } from './dartrix';
 import { Decidueye } from './decidueye';
 import { Fezandipitiex } from './fezandipiti-ex';
+import { Genesect } from './genesect';
 import { Kyurem } from './kyurem';
 import { Munkidoriex } from './munkidori-ex';
 import { NeutralCenter } from './neutral-center';
@@ -44,5 +46,11 @@ export declare class RowlettArt extends Rowlett {
     cardImage: string;
 }
 export declare class XerosicsSchemeArt extends XerosicsScheme {
+    cardImage: string;
+}
+export declare class GenesectArt extends Genesect {
+    cardImage: string;
+}
+export declare class BloodmoonUrsalunaArt extends BloodmoonUrsaluna {
     cardImage: string;
 }

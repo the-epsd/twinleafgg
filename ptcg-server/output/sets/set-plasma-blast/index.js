@@ -8,4 +8,5 @@ exports.setPlasmaBlast = [
     new card_images_1.SilverBangleArt(),
     new card_images_1.UltraBallArt(),
     new card_images_1.VirizionExArt(),
+    new card_images_1.MasterBallArt(),
 ];

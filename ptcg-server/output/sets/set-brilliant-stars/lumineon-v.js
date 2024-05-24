@@ -41,6 +41,7 @@ class LumineonV extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             if (player.deck.cards.length === 0) {
                 return state;
             }
@@ -56,7 +57,7 @@ class LumineonV extends pokemon_card_1.PokemonCard {
                 if (wantToUse) {
                     state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 1, max: 1, allowCancel: true }), selected => {
                         const cards = selected || [];
-                        store.prompt(state, [new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {
+                        store.prompt(state, [new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {
                             player.deck.moveCardsTo(cards, player.hand);
                         });
                     });

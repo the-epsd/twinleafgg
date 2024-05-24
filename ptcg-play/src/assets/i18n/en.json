@@ -299,7 +299,7 @@
   "USERS_USER_DETAILS": "User details",
   "VALIDATION_CANNOT_CONNECT_TO_SERVER": "Could not connect to server.",
   "VALIDATION_FIELD_REQUIRED": "This field is required.",
-  "VALIDATION_INVALID_ADDRESS": "This is not a valid e-mail address.",
+  "VALIDATION_INVALID_ADDRESS": "This is not a valid server address.",
   "VALIDATION_INVALID_DECK_FILE": "The deck file could not be loaded.",
   "VALIDATION_INVALID_EMAIL_FORMAT": "This is not a valid e-mail address.",
   "VALIDATION_INVALID_IMAGE": "The selected image file type is not supported.",
