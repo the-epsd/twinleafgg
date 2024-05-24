@@ -44,7 +44,7 @@ export class TealMaskOgerponex extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '24';
+  public setNumber: string = '25';
 
   public name: string = 'Teal Mask Ogerpon ex';
 

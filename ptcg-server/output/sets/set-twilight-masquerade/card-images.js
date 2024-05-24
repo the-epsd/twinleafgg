@@ -404,7 +404,7 @@ exports.SurvivalCastArt = SurvivalCastArt;
 class TealMaskOgerponexArt extends teal_mask_ogerpon_ex_1.TealMaskOgerponex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_024_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_025_R_EN_LG.png';
     }
 }
 exports.TealMaskOgerponexArt = TealMaskOgerponexArt;

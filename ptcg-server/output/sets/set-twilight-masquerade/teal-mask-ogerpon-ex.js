@@ -35,7 +35,7 @@ class TealMaskOgerponex extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '24';
+        this.setNumber = '25';
         this.name = 'Teal Mask Ogerpon ex';
         this.fullName = 'Teal Mask Ogerpon ex TWM';
         this.TEAL_DANCE_MARKER = 'TEAL_DANCE_MARKER';

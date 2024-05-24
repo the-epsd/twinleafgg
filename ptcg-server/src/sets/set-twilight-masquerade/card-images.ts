@@ -257,7 +257,7 @@ export class SurvivalCastArt extends SurvivalCast {
 }
 
 export class TealMaskOgerponexArt extends TealMaskOgerponex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_024_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_025_R_EN_LG.png';
 }
 
 export class UnfairStampArt extends UnfairStamp {
