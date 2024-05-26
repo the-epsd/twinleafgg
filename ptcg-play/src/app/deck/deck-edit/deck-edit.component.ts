@@ -124,28 +124,29 @@ export class DeckEditComponent implements OnInit {
     navigator.clipboard.readText()
       .then(text => {
         const cardNames = text.split('\n')
-            .map(line => line.trim())
-            .filter(line => !!line)
-            .flatMap(line => {
-                const parts = line.split(' ');
-
-                // Check if the first part is a number
-                const count = parseInt(parts[0], 10);
-                if (isNaN(count)) {
-                    return []; // Ignore lines that don't start with a number
-                }
-
-                const cardDetails = parts.slice(1);
-                const cardName = cardDetails.slice(0, -1).join(' ');
-                const setNumber = cardDetails.slice(-1)[0];
-
-                return new Array(count).fill({ cardName, setNumber });
-            });
-
+          .map(line => line.trim().replace(/é/gi, 'e')) // Replace 'é' with 'e' (case-insensitive)
+          .filter(line => !!line)
+          .flatMap(line => {
+            const parts = line.split(' ');
+  
+            // Check if the first part is a number
+            const count = parseInt(parts[0], 10);
+            if (isNaN(count)) {
+              return []; // Ignore lines that don't start with a number
+            }
+  
+            const cardDetails = parts.slice(1);
+            const cardName = cardDetails.slice(0, -1).join(' ');
+            const setNumber = cardDetails.slice(-1)[0];
+  
+            return new Array(count).fill({ cardName, setNumber });
+          });
+  
         // Call import deck method
         this.importDeck(cardNames);
-    });
+      });
   }
+  
 
   public importDeck(cardDetails: { cardName: string, setNumber?: string }[]) {
     this.deckItems = this.loadDeckItems(cardDetails.map(card => card.cardName));

@@ -467,7 +467,7 @@ exports.SalvatoreArt = SalvatoreArt;
 class SandyShocksArt extends sandy_shocks_1.SandyShocks {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1703403447370-HD9NREQ3BT8ZMD7OWBR9/1529_011_0989SUNANOKEGAWA_ol.png?format=2500w';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_098_R_EN_LG.png';
     }
 }
 exports.SandyShocksArt = SandyShocksArt;

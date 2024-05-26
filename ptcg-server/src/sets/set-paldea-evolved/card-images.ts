@@ -169,7 +169,7 @@ export class WoChienexArt extends WoChienex {
 }
   
 export class ShinxArt extends Shinx {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_069_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_068_R_EN_LG.png';
 }
   
 export class TadbulbArt extends Tadbulb {

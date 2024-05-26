@@ -272,7 +272,7 @@ exports.WoChienexArt = WoChienexArt;
 class ShinxArt extends shinx_1.Shinx {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_069_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_068_R_EN_LG.png';
     }
 }
 exports.ShinxArt = ShinxArt;

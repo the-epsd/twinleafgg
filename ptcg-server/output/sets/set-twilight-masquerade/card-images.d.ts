@@ -58,6 +58,7 @@ import { TingLu } from './ting-lu';
 import { HearthflameMaskOgerponex } from './hearthflame-mask-ogerpon-ex';
 import { ChiYu } from './chi-yu';
 import { JammingTower } from './jamming-tower';
+import { CornerstoneMaskOgerponex } from './cornerstone-mask-ogerpon-ex';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -80,6 +81,9 @@ export declare class CarmineArt extends Carmine {
     cardImage: string;
 }
 export declare class ChanseyArt extends Chansey {
+    cardImage: string;
+}
+export declare class CornerstoneMaskOgerponexArt extends CornerstoneMaskOgerponex {
     cardImage: string;
 }
 export declare class DipplinArt extends Dipplin {

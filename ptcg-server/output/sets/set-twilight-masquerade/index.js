@@ -8,6 +8,7 @@ exports.setTwilightMasquerade = [
     new card_images_1.AronArt(),
     new card_images_1.BlisseyexArt(),
     new card_images_1.CarmineArt(),
+    new card_images_1.CornerstoneMaskOgerponexArt(),
     new card_images_1.DreepyArt(),
     new card_images_1.DrakloakArt(),
     new card_images_1.DragapultexArt(),

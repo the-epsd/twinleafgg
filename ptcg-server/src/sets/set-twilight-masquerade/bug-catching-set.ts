@@ -52,13 +52,13 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   if (cards.length === 0) {
+    deckTop.moveTo(player.deck);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
   }
-
   deckTop.moveCardsTo(cards, player.hand);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   deckTop.moveTo(player.deck);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

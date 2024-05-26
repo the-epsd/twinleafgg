@@ -59,6 +59,7 @@ import { TingLu } from './ting-lu';
 import { HearthflameMaskOgerponex } from './hearthflame-mask-ogerpon-ex';
 import { ChiYu } from './chi-yu';
 import { JammingTower } from './jamming-tower';
+import { CornerstoneMaskOgerponex } from './cornerstone-mask-ogerpon-ex';
 
 export class AggronArt extends Aggron {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_122_R_EN_LG.png';
@@ -94,6 +95,10 @@ export class CarmineArt extends Carmine {
 
 export class ChanseyArt extends Chansey {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_133_R_EN_LG.png';
+}
+
+export class CornerstoneMaskOgerponexArt extends CornerstoneMaskOgerponex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_112_R_EN_LG.png';
 }
 
 export class DipplinArt extends Dipplin {
