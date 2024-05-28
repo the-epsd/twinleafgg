@@ -20,6 +20,7 @@ this.trainerCard = undefined;
 this.moreEnergies = 0;
 this.cardCount = 0;
 this.damage = 0;
+this.hp = 0;
 this.specialConditions = [];
 this.abilityUsed = [];
 this.isFaceDown = false;
@@ -73,6 +74,7 @@ this.mainCard = value.cards[value.cards.length - 1];
   public trainerCard: Card;
   public powers: Power[] = [];
   public damage = 0;
+  public hp = 0;
   public specialConditions: SpecialCondition[] = [];
   public SpecialCondition = SpecialCondition;
   public abilityUsed: AbilityUsed[] = [];
@@ -86,6 +88,7 @@ this.mainCard = value.cards[value.cards.length - 1];
 
   private initPokemonCardList(cardList: PokemonCardList) {
     this.damage = cardList.damage;
+    this.hp = cardList.hp;
     this.specialConditions = cardList.specialConditions;
     this.trainerCard = undefined;
     this.mainCard = cardList.getPokemonCard();

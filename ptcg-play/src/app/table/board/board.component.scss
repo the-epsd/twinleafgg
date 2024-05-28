@@ -148,19 +148,27 @@ z-index: 0;
 
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-width: 72px;
+width: 85px;
   }
 }
 
-.ptcg-board-active,
+.ptcg-board-active {
+  grid-area: active;
+
+  > ptcg-board-card,
+  > .ptcg-board-drop-target {
+    width: 98px; // Increase the width to 92px for the active card
+  }
+}
 
 .ptcg-board-supporter,
 .ptcg-board-stadium {
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-    width: 72px;
+    width: 85px; // Keep the width at 72px for other cards
   }
 }
+
 
 .ptcg-board-drop-target > ptcg-board-card {
   display: block;
@@ -201,7 +209,7 @@ ptcg-board-deck {
 .stadium-card {
   align-self: flex-start;
 
-  margin-top: -31.25%;
+  margin-top: -36%;
   margin-left: 50%;
 
   }

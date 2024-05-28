@@ -32,7 +32,7 @@ export class BoardComponent implements OnDestroy {
   public topBench = new Array(MAX_BENCH_SIZE);
   public bottomActive: BoardCardItem;
   public bottomBench: BoardCardItem[];
-
+  public activePlayer: Player;
   public boardTarget: DropTargetType;
   public boardHighlight$: Observable<boolean>;
   public bottomActiveTarget: DropTargetType;
@@ -155,6 +155,10 @@ export class BoardComponent implements OnDestroy {
       this.gameService.retreatAction(gameId, item.index);
       return;
     }
+  }
+
+  updateActivePlayer(newActivePlayer: Player) {
+    this.activePlayer = newActivePlayer;
   }
 
   ngOnDestroy() {

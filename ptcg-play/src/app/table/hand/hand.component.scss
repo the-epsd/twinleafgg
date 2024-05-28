@@ -4,6 +4,7 @@ $ptcg-hand-padding: map-get($padding, normal);
 $ptcg-hand-height: calc(var(--card-size) * #{$card-aspect-ratio} + #{4 * $ptcg-hand-padding});
 
 .ptcg-hand {
+  margin-bottom: -60px;
   display: flex;
   height: $ptcg-hand-height;
   overflow: auto;
@@ -47,7 +48,7 @@ ptcg-badge {
 
 ptcg-card {
   flex: 0 0 auto;
-  width: 85px;
+  width: 105px;
   padding: 3px;
 
   &.draggable {

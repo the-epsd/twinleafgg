@@ -202,7 +202,7 @@ export class CaretakerArt extends Caretaker {
 }
 
 export class CommunityCenterArt extends CommunityCenter {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_144_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_146_R_EN_LG.png';
 }
 
 export class EnhancedHammerArt extends EnhancedHammer {

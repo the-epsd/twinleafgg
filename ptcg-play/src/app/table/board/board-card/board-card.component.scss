@@ -31,16 +31,26 @@ $ptcg-energy-card-offset: 14%;
 
 .ptcg-energy-cards {
   ptcg-card {
+    top: 76%;
+    left: -11%;
+    z-index: 3;
     position: absolute;
-    width: 100%;
-  }
+    clip-path: circle(24%);
+    width: 40%;
 
-  @for $i from 1 through $ptcg-max-energy-cards {
-    ptcg-card:nth-last-child(#{$i}) {
-      top: #{-$ptcg-energy-card-offset * $i};
+    // &:first-child {
+    //   // Keep the first energy card at top: 76%, left: -11%
+    // }
+
+    // Move every subsequent energy card to the right
+    @for $i from 2 through $ptcg-max-energy-cards {
+      &:nth-child(#{$i}) {
+        left: calc(-11% + (#{$i - 1} * #{$ptcg-energy-card-offset}));
+      }
     }
   }
 }
+
 
 .ptcg-energy-more {
   padding: $ptcg-board-tiny-padding 0;
@@ -54,7 +64,7 @@ $ptcg-energy-card-offset: 14%;
 }
 
 .ptcg-trainer-card {
-  left: 50%;
+  left: 35%;
   position: absolute;
   transform: rotate(90deg);
   width: 100%;
@@ -74,8 +84,8 @@ $ptcg-energy-card-offset: 14%;
 
 .ptcg-card-damage {
   position: absolute;
-  top: 0%;
-  right: 0%;
+  top: -2%;
+  right: -2%;
 
   :host-context(.upside-down) & {
     transform: rotate(180deg);

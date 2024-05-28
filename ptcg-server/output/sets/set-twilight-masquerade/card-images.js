@@ -307,7 +307,7 @@ exports.CaretakerArt = CaretakerArt;
 class CommunityCenterArt extends community_center_1.CommunityCenter {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_144_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_146_R_EN_LG.png';
     }
 }
 exports.CommunityCenterArt = CommunityCenterArt;
