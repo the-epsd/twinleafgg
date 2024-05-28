@@ -13,6 +13,7 @@ class Froslass extends game_1.PokemonCard {
         this.evolvesFrom = 'Snorunt';
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.WATER;
+        this.cardTypez = card_types_1.CardType.FROSLASS;
         this.weakness = [{ type: card_types_1.CardType.METAL }];
         this.hp = 90;
         this.retreat = [card_types_1.CardType.COLORLESS];

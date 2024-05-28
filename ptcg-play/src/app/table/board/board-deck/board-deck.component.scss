@@ -10,6 +10,18 @@
 }
 
 ptcg-board-card {
-  width: 72px;
-  margin-top: 30%;
+  width: 85px;
+  margin-top: -48%;
+}
+
+.deck-container,
+.discard-container {
+  position: relative;
+}
+
+.deck-card,
+.discard-card {
+  position: absolute;
+  left: 0;
+  top: 0;
 }

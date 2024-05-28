@@ -7,7 +7,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Luxio extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom: string = 'Shinx';
 
@@ -26,7 +26,7 @@ export class Luxio extends PokemonCard {
   public attacks = [
     {
       name: 'Big Bite',
-      cost: [ ],
+      cost: [ CardType.LIGHTNING, CardType.LIGHTNING ],
       damage: 60,
       text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
     }

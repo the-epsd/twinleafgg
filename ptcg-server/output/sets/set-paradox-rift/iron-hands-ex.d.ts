@@ -7,6 +7,7 @@ export declare class IronHandsex extends PokemonCard {
     regulationMark: string;
     tags: CardTag[];
     cardType: CardType;
+    cardTypez: CardType;
     hp: number;
     weakness: {
         type: CardType;

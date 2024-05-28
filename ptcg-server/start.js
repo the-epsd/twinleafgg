@@ -75,8 +75,9 @@ cardManager.defineSet(sets.setHiddenFates);
 cardManager.defineSet(sets.setCosmicEclipse);
 
 
-// cardManager.defineSet(sets.setSwordAndShield);
+cardManager.defineSet(sets.setSwordAndShield);
 cardManager.defineSet(sets.setSwordAndShieldPromos);
+cardManager.defineSet(sets.setDarknessAblaze);
 cardManager.defineSet(sets.setShiningLegends);
 cardManager.defineSet(sets.setVividVoltage);
 cardManager.defineSet(sets.setBattleStyles);

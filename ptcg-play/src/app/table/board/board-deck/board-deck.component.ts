@@ -31,6 +31,11 @@ export class BoardDeckComponent implements OnChanges {
     }
   }
 
+  createRange(length: number): number[] {
+    return Array.from({ length }, (_, i) => i);
+  }
+  
+
   public onDeckClick() {
     let card;
     if (this.deck && this.deck.cards.length > 0) {

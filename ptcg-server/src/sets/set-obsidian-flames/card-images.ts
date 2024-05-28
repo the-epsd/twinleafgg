@@ -8,6 +8,7 @@ import { Cleffa } from './cleffa';
 import { Dragonair } from './dragonair';
 import { Dragoniteex } from './dragonite-ex';
 import { Dratini } from './dratini';
+import { Entei } from './entei';
 import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Lunatone } from './lunatone';
 import { Pidgeotex } from './pidgeot-ex';
@@ -62,6 +63,10 @@ export class DragoniteexArt extends Dragoniteex {
   
 export class DratiniArt extends Dratini {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_157_R_EN_LG.png';
+}
+
+export class EnteiArt extends Entei {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_030_R_EN.png';
 }
   
 export class LetterOfEncouragementArt extends LetterOfEncouragement {

@@ -39,7 +39,7 @@ export class Squirtle extends PokemonCard {
     text: ''
   }];
 
-  public set = '151';
+  public set = 'MEW';
 
   public cardImage: string = 'assets/cardback.png';
 

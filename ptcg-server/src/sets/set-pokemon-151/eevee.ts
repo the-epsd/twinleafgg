@@ -37,7 +37,7 @@ export class Eevee extends PokemonCard {
     }
   ];
 
-  public set: string = '151';
+  public set: string = 'MEW';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '133';
   public name: string = 'Eevee';

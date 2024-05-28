@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZamazentaVArt = exports.ZamazentaArt = exports.ZacianVSTARArt = exports.RotomVArt = exports.RegigigasVSTARArt = exports.RegigigasVArt = exports.RadiantEternatusArt = exports.RadiantCharizardArt = exports.LostVacuumArt = exports.LuxrayArt = exports.KyogreArt = exports.BidoofArt = exports.AbsolArt = void 0;
+exports.ZamazentaVArt = exports.ZamazentaArt = exports.ZacianVSTARArt = exports.RotomVArt = exports.RegigigasVSTARArt = exports.RegigigasVArt = exports.RadiantEternatusArt = exports.RadiantCharizardArt = exports.LostVacuumArt = exports.LuxrayArt = exports.KyogreArt = exports.HoopaArt = exports.BidoofArt = exports.AbsolArt = void 0;
 const lost_vacuum_1 = require("../set-lost-origin/lost-vacuum");
 const rotom_v_1 = require("../set-lost-origin/rotom-v");
 const absol_1 = require("./absol");
 const bidoof_1 = require("./bidoof");
+const hoopa_1 = require("./hoopa");
 const kyogre_1 = require("./kyogre");
 const luxray_1 = require("./luxray");
 const radiant_charizard_1 = require("./radiant-charizard");
@@ -28,6 +29,13 @@ class BidoofArt extends bidoof_1.Bidoof {
     }
 }
 exports.BidoofArt = BidoofArt;
+class HoopaArt extends hoopa_1.Hoopa {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_083_R_EN_LG.png';
+    }
+}
+exports.HoopaArt = HoopaArt;
 class KyogreArt extends kyogre_1.Kyogre {
     constructor() {
         super(...arguments);

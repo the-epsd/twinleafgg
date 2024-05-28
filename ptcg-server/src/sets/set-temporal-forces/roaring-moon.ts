@@ -14,6 +14,8 @@ export class RoaringMoon extends PokemonCard {
 
   public cardType: CardType = CardType.DARK;
 
+  public cardTypez: CardType = CardType.ROARING_MOON;
+
   public hp: number = 140;
 
   public weakness = [{ type: CardType.GRASS }];

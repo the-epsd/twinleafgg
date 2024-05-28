@@ -8,6 +8,7 @@ import { Cleffa } from './cleffa';
 import { Dragonair } from './dragonair';
 import { Dragoniteex } from './dragonite-ex';
 import { Dratini } from './dratini';
+import { Entei } from './entei';
 import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Lunatone } from './lunatone';
 import { Pidgeotex } from './pidgeot-ex';
@@ -50,6 +51,9 @@ export declare class DragoniteexArt extends Dragoniteex {
     cardImage: string;
 }
 export declare class DratiniArt extends Dratini {
+    cardImage: string;
+}
+export declare class EnteiArt extends Entei {
     cardImage: string;
 }
 export declare class LetterOfEncouragementArt extends LetterOfEncouragement {

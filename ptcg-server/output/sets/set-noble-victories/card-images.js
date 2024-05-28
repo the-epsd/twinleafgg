@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VanilluxeArt = exports.VanilliteArt = exports.VanillishArt = exports.TynamoArt = exports.TerrakionArt = exports.SuperRodArt = exports.PlumeFossilArt = exports.KyuremArt = exports.EelektrikArt = exports.DurantArt = exports.ChandelureArt = exports.ArcheopsArt = exports.ArchenArt = void 0;
+exports.VanilluxeArt = exports.VanilliteArt = exports.VanillishArt = exports.TynamoArt = exports.TrubbishArt = exports.TerrakionArt = exports.SuperRodArt = exports.PlumeFossilArt = exports.KyuremArt = exports.EelektrikArt = exports.DurantArt = exports.ChandelureArt = exports.ArcheopsArt = exports.ArchenArt = void 0;
 const archen_1 = require("./archen");
 const archeops_1 = require("./archeops");
 const chandelure_1 = require("./chandelure");
@@ -10,6 +10,7 @@ const kyurem_1 = require("./kyurem");
 const plume_fossil_1 = require("./plume-fossil");
 const super_rod_1 = require("./super-rod");
 const terrakion_1 = require("./terrakion");
+const trubbish_1 = require("./trubbish");
 const tynamo_1 = require("./tynamo");
 const vanillish_1 = require("./vanillish");
 const vanillite_1 = require("./vanillite");
@@ -77,6 +78,13 @@ class TerrakionArt extends terrakion_1.Terrakion {
     }
 }
 exports.TerrakionArt = TerrakionArt;
+class TrubbishArt extends trubbish_1.Trubbish {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_048_R_EN_LG.png';
+    }
+}
+exports.TrubbishArt = TrubbishArt;
 class TynamoArt extends tynamo_1.Tynamo {
     constructor() {
         super(...arguments);

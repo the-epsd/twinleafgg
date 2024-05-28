@@ -1,6 +1,7 @@
 import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
 import { Bounsweet } from './bounsweet';
 import { BruteBonnet } from './brute-bonnet';
+import { ChiYu } from './chi-yu';
 import { CounterCatcher } from './counter-catcher';
 import { DefianceVest } from './defiance-vest';
 import { Deoxys } from './deoxys';
@@ -28,8 +29,10 @@ import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
 import { Morpeko } from './morpeko';
 import { Natu } from './natu';
+import { Porygon } from './porygon';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
+import { Remoraid } from './remoraid';
 import { RoaringMoonex } from './roaring-moon-ex';
 import { SandyShocksex } from './sandy-shocks-ex';
 import { ScreamTail } from './scream-tail';
@@ -52,6 +55,9 @@ export declare class BounsweetArt extends Bounsweet {
     cardImage: string;
 }
 export declare class BruteBonnetArt extends BruteBonnet {
+    cardImage: string;
+}
+export declare class ChiYuArt extends ChiYu {
     cardImage: string;
 }
 export declare class CounterCatcherArt extends CounterCatcher {
@@ -135,10 +141,16 @@ export declare class MorpekoArt extends Morpeko {
 export declare class NatuArt extends Natu {
     cardImage: string;
 }
+export declare class PorygonArt extends Porygon {
+    cardImage: string;
+}
 export declare class ProfessorSadasVitalityArt extends ProfessorSadasVitality {
     cardImage: string;
 }
 export declare class ProfessorTurosScenarioArt extends ProfessorTurosScenario {
+    cardImage: string;
+}
+export declare class RemoraidArt extends Remoraid {
     cardImage: string;
 }
 export declare class RoaringMoonexArt extends RoaringMoonex {

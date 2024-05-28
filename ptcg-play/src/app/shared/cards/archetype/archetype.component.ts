@@ -73,6 +73,69 @@ export class ArchetypeComponent {
                 case CardType.THWACKEY:
                   this.archetypeClass = 'thwackey';
                   break;
+                  case CardType.BIBAREL:
+                    this.archetypeClass = 'bibarel';
+                    break;
+                  case CardType.IRON_CROWN_EX:
+                    this.archetypeClass = 'iron-crown';
+                    break;
+                  case CardType.GHOLDENGO_EX:
+                    this.archetypeClass = 'gholdengo';
+                    break;
+                  case CardType.PALKIA_VSTAR:
+                    this.archetypeClass = 'palkia-origin';
+                    break;
+                  case CardType.BLISSEY_EX:
+                    this.archetypeClass = 'blissey';
+                    break;
+                  case CardType.CINCINNO:
+                    this.archetypeClass = 'cinccino';
+                    break;
+                  case CardType.DRAGAPULT_EX:
+                    this.archetypeClass = 'dragapult';
+                    break;
+                  case CardType.DRIFLOON:
+                    this.archetypeClass = 'drifloon';
+                    break;
+                  case CardType.FROSLASS:
+                    this.archetypeClass = 'froslass';
+                    break;
+                  case CardType.GARDEVOIR_EX:
+                    this.archetypeClass = 'gardevoir';
+                    break;
+                  case CardType.GRENINJA_EX:
+                    this.archetypeClass = 'greninja';
+                    break;
+                  case CardType.IRON_HANDS_EX:
+                    this.archetypeClass = 'iron-hands';
+                    break;
+                  case CardType.KORAIDON:
+                    this.archetypeClass = 'koraidon';
+                    break;
+                  case CardType.LUXRAY_EX:
+                    this.archetypeClass = 'luxray';
+                    break;
+                  case CardType.MIRAIDON_EX:
+                    this.archetypeClass = 'miraidon';
+                    break;
+                  case CardType.TEALMASK_OGERPON_EX:
+                    this.archetypeClass = 'ogerpon';
+                    break;
+                  case CardType.THWACKEY:
+                    this.archetypeClass = 'thwackey';
+                    break;
+                  case CardType.ROARING_MOON:
+                    this.archetypeClass = 'roaring-moon';
+                    break;
+                  case CardType.ROTOM_V:
+                    this.archetypeClass = 'rotom';
+                    break;
+                  case CardType.SANDY_SHOCKS_EX:
+                    this.archetypeClass = 'sandy-shocks';
+                    break;
+                  case CardType.XATU:
+                    this.archetypeClass = 'xatu';
+                    break;
       default:
         this.archetypeClass = 'energyless';
     }

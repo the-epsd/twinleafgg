@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AtticusArt, CharizardexArt, CharmanderArt, CharmeleonArt, CliveArt, ElectricGeneratorArt, EspathraexArt, FrigibaxArt, GastlyArt, GengarArt, HaunterArt, IonoArt, KilowattrelArt, MimeJrArt, MimikyuArt, MoonlightHillArt, NemonaArt, NestBallArt, ProfessorsResearch2Art, ProfessorsResearchArt, RareCandyArt, ScovillainexArt, StudentsInPaldeaArt, TechnicalMachineCrisisPunchArt, UltraBallArt } from './card-images';
+import { ArmarougeArt, ArtazonArt, AtticusArt, CharcadetArt, CharizardexArt, CharmanderArt, CharmeleonArt, CliveArt, ElectricGeneratorArt, EspathraexArt, FrigibaxArt, GardevoirexArt, GastlyArt, GengarArt, HaunterArt, IonoArt, KilowattrelArt, MimeJrArt, MimikyuArt, MoonlightHillArt, NatuArt, NemonaArt, NestBallArt, NoibatArt, NoivernexArt, ProfessorsResearch2Art, ProfessorsResearchArt, RaltsArt, RareCandyArt, ScovillainexArt, SquawkabillyexArt, StudentsInPaldeaArt, TechnicalMachineCrisisPunchArt, UltraBallArt, XatuArt } from './card-images';
 
 export const setPaldeaFates: Card[] = [
   new CharmeleonArt(),
@@ -27,5 +27,16 @@ export const setPaldeaFates: Card[] = [
   new ProfessorsResearchArt(),
   new ProfessorsResearch2Art(),
   new UltraBallArt(),
+  new ArmarougeArt(),
+  new NatuArt(),
+  new XatuArt(),
+  new CharcadetArt(),
+  new RaltsArt(),
+  new GardevoirexArt(),
+  new NoibatArt(),
+  new NoivernexArt(),
+  new SquawkabillyexArt(),
+  new ArtazonArt(),
+  
 
 ];

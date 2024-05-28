@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
-
+import { Router } from '@angular/router';
 import { ApiError } from '../api/api.error';
 import { DeckListEntry } from '../api/interfaces/deck.interface';
 import { DeckService } from '../api/services/deck.service';
@@ -28,7 +28,8 @@ export class DeckComponent implements OnInit {
     private alertService: AlertService,
     private deckService: DeckService,
     private cardsBaseService: CardsBaseService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router // Add this line
   ) { }
 
   public ngOnInit() {
@@ -67,17 +68,24 @@ export class DeckComponent implements OnInit {
     if (name === undefined) {
       return;
     }
-
+  
     this.loading = true;
     this.deckService.createDeck(name).pipe(
       finalize(() => { this.loading = false; }),
       untilDestroyed(this)
-    ).subscribe(() => {
-      this.refreshList();
-    }, (error: ApiError) => {
-      this.handleError(error);
-    });
+    ).subscribe(
+      (response) => {
+        // Navigate to the deck editor with the new deck ID
+        this.router.navigate(['/deck', response.deck.id]);
+        this.refreshList();
+      },
+      (error: ApiError) => {
+        this.handleError(error);
+      }
+    );
   }
+  
+  
 
   public async deleteDeck(deckId: number) {
     if (!await this.alertService.confirm(this.translate.instant('DECK_DELETE_SELECTED'))) {
@@ -154,7 +162,6 @@ export class DeckComponent implements OnInit {
       ${backgroundImage}
     `;
   }
-
 
 
   private handleError(error: ApiError): void {

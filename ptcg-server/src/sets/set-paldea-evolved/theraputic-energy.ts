@@ -1,5 +1,5 @@
 import { StoreLike, State, StateUtils } from '../../game';
-import { CardType, EnergyType } from '../../game/store/card/card-types';
+import { CardType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckTableStateEffect, CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -38,7 +38,9 @@ export class TheraputicEnergy extends EnergyCard {
           if (checkPokemonTypeEffect) {
             const conditions = pokemon.specialConditions.slice();
             conditions.forEach(condition => {
-              pokemon.removeSpecialCondition(condition);
+              pokemon.removeSpecialCondition(SpecialCondition.ASLEEP);
+              pokemon.removeSpecialCondition(SpecialCondition.PARALYZED);
+              pokemon.removeSpecialCondition(SpecialCondition.CONFUSED);
             });
           }
         });

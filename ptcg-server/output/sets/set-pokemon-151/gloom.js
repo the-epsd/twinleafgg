@@ -23,7 +23,7 @@ class Gloom extends game_1.PokemonCard {
                 damage: 30,
                 text: ''
             }];
-        this.set = '151';
+        this.set = 'MEW';
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '44';

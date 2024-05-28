@@ -24,7 +24,7 @@ class Magmar extends pokemon_card_1.PokemonCard {
                 damage: 80,
                 text: 'If Electabuzz is on your Bench, this attack does 80 more damage.'
             }];
-        this.set = '151';
+        this.set = 'MEW';
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '126';

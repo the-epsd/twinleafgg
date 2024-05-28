@@ -6,6 +6,7 @@ export declare class Drifloon extends PokemonCard {
     stage: Stage;
     regulationMark: string;
     cardType: CardType;
+    cardTypez: CardType;
     hp: number;
     weakness: {
         type: CardType;

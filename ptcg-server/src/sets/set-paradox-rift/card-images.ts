@@ -1,6 +1,7 @@
 import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
 import { Bounsweet } from './bounsweet';
 import { BruteBonnet } from './brute-bonnet';
+import { ChiYu } from './chi-yu';
 import { CounterCatcher } from './counter-catcher';
 import { DefianceVest } from './defiance-vest';
 import { Deoxys } from './deoxys';
@@ -28,8 +29,10 @@ import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
 import { Morpeko } from './morpeko';
 import { Natu } from './natu';
+import { Porygon } from './porygon';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
+import { Remoraid } from './remoraid';
 import { RoaringMoonex } from './roaring-moon-ex';
 import { SandyShocksex } from './sandy-shocks-ex';
 import { ScreamTail } from './scream-tail';
@@ -56,6 +59,10 @@ export class BounsweetArt extends Bounsweet {
 
 export class BruteBonnetArt extends BruteBonnet {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_123_R_EN_LG.png';
+}
+
+export class ChiYuArt extends ChiYu {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_029_R_EN_LG.png';
 }
 
 export class CounterCatcherArt extends CounterCatcher {
@@ -166,12 +173,20 @@ export class NatuArt extends Natu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_071_R_EN_LG.png';
 }
 
+export class PorygonArt extends Porygon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_142_R_EN_LG.png';
+}
+
 export class ProfessorSadasVitalityArt extends ProfessorSadasVitality {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_170_R_EN_LG.png';
 }
 
 export class ProfessorTurosScenarioArt extends ProfessorTurosScenario {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_171_R_EN_LG.png';
+}
+
+export class RemoraidArt extends Remoraid {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_033_R_EN_LG.png';
 }
 
 export class RoaringMoonexArt extends RoaringMoonex {

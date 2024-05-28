@@ -14,6 +14,8 @@ export class Cincinno extends PokemonCard {
 
   public cardType: CardType = CardType.COLORLESS;
 
+  public cardTypez: CardType = CardType.CINCINNO;
+
   public hp: number = 110;
 
   public weakness = [{ type: CardType.FIGHTING }];

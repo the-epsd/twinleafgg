@@ -7,6 +7,7 @@ import { Kyurem } from './kyurem';
 import { PlumeFossil } from './plume-fossil';
 import { SuperRod } from './super-rod';
 import { Terrakion } from './terrakion';
+import { Trubbish } from './trubbish';
 import { Tynamo } from './tynamo';
 import { Vanillish } from './vanillish';
 import { Vanillite } from './vanillite';
@@ -46,6 +47,10 @@ export class SuperRodArt extends SuperRod {
 
 export class TerrakionArt extends Terrakion {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_073_R_EN.png';
+}
+
+export class TrubbishArt extends Trubbish {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_048_R_EN_LG.png';
 }
 
 export class TynamoArt extends Tynamo {

@@ -6,6 +6,7 @@ exports.setParadoxRift = [
     new card_images_1.AncientBoosterEnergyCapsuleArt(),
     new card_images_1.BruteBonnetArt(),
     new card_images_1.BounsweetArt(),
+    new card_images_1.ChiYuArt(),
     new card_images_1.CounterCatcherArt(),
     new card_images_1.DefianceVestArt(),
     new card_images_1.DeoxysArt(),
@@ -43,6 +44,7 @@ exports.setParadoxRift = [
     new card_images_1.TechnicalMachineDevolutionArt(),
     new card_images_1.TechnicalMachineEvolutionArt(),
     new card_images_1.TechnicalMachineTurboEnergizeArt(),
+    new card_images_1.RemoraidArt(),
     new card_images_1.TechnoRadarArt(),
     new card_images_1.TsareenaexArt(),
     new card_images_1.TulipArt(),
@@ -50,4 +52,5 @@ exports.setParadoxRift = [
     new card_images_1.GroudonArt(),
     new card_images_1.IronJugulisArt(),
     new card_images_1.TapuKokoexArt(),
+    new card_images_1.PorygonArt(),
 ];

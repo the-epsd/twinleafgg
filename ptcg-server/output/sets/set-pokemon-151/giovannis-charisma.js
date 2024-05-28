@@ -35,7 +35,7 @@ class GiovannisCharisma extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = '151';
+        this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '161';
         this.name = 'Giovanni\'s Charisma';

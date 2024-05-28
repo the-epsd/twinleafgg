@@ -29,11 +29,11 @@ class Decidueye extends pokemon_card_1.PokemonCard {
                 text: 'Discard 1 Basic Grass Energy from your hand. If you can\'t, this attack does nothing.'
             }
         ];
-        this.set = 'SV7';
+        this.set = 'SV6a';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '5';
         this.name = 'Decidueye';
-        this.fullName = 'Decidueye SV7';
+        this.fullName = 'Decidueye SV6a';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

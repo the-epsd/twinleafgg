@@ -1,4 +1,5 @@
 import { Articuno } from './articuno';
+import { Blastoise } from './blastoise';
 import { Charmander } from './charmander';
 import { Ditto } from './ditto';
 import { Lunatone } from './lunatone';
@@ -12,6 +13,9 @@ import { Snorlax } from './snorlax';
 import { Solrock } from './solrock';
 import { Zapdos } from './zapdos';
 export declare class ArticunoArt extends Articuno {
+    cardImage: string;
+}
+export declare class BlastoiseArt extends Blastoise {
     cardImage: string;
 }
 export declare class CharmanderArt extends Charmander {

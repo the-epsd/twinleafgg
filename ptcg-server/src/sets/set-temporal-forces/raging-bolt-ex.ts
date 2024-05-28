@@ -33,9 +33,10 @@ export class RagingBoltex extends PokemonCard {
       text: 'Discard your hand and draw 6 cards.'
     },
     {
-      name: 'Climactic Descent',
+      name: 'Bellowing Thunder',
       cost: [CardType.LIGHTNING, CardType.FIGHTING ],
       damage: 70,
+      damageCalculation: 'x',
       text: 'You may discard any amount of Basic Energy from your Pokémon. This attack does 70 damage for each card you discarded in this way.'
     }
   ];

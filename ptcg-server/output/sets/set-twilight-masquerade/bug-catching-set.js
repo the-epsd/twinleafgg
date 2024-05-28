@@ -38,12 +38,13 @@ function* playCard(next, store, state, self, effect) {
         next();
     });
     if (cards.length === 0) {
+        deckTop.moveTo(player.deck);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
     }
     deckTop.moveCardsTo(cards, player.hand);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     deckTop.moveTo(player.deck);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     if (cards.length > 0) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
     }

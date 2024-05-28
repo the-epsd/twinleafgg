@@ -15,7 +15,7 @@ class BindingMochi extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.name = 'Binding Mochi';
         this.fullName = 'Binding Mochi SV6a';
-        this.text = ' If the Pokémon this card is attached to is Poisoned, its attacks deal 40 more damage to your opponent\'s Active Pokémon..';
+        this.text = ' If the Pokémon this card is attached to is Poisoned, its attacks deal 40 more damage to your opponent\'s Active Pokémon.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {

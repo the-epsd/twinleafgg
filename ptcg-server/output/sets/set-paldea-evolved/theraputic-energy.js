@@ -30,7 +30,9 @@ class TheraputicEnergy extends energy_card_1.EnergyCard {
                     if (checkPokemonTypeEffect) {
                         const conditions = pokemon.specialConditions.slice();
                         conditions.forEach(condition => {
-                            pokemon.removeSpecialCondition(condition);
+                            pokemon.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
+                            pokemon.removeSpecialCondition(card_types_1.SpecialCondition.PARALYZED);
+                            pokemon.removeSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
                         });
                     }
                 });

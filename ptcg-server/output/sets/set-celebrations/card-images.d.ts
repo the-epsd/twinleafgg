@@ -1,6 +1,7 @@
 import { FlyingPikachuV } from './flying-pikachu-v';
 import { FlyingPikachuVMAX } from './flying-pikachu-vmax';
 import { Kyogre } from './kyogre';
+import { Lugia } from './lugia';
 import { Mew } from './mew';
 import { Yveltal } from './yveltal';
 import { ZacianV } from './zacian-v';
@@ -11,6 +12,9 @@ export declare class FlyingPikachuVMAXArt extends FlyingPikachuVMAX {
     cardImage: string;
 }
 export declare class KyogreArt extends Kyogre {
+    cardImage: string;
+}
+export declare class LugiaArt extends Lugia {
     cardImage: string;
 }
 export declare class MewArt extends Mew {

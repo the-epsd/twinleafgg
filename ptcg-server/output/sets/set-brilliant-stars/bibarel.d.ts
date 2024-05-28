@@ -9,6 +9,7 @@ export declare class Bibarel extends PokemonCard {
     regulationMark: string;
     evolvesFrom: string;
     cardType: CardType;
+    cardTypez: CardType;
     hp: number;
     weakness: {
         type: CardType;

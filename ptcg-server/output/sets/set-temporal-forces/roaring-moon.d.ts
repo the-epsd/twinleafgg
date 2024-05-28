@@ -6,6 +6,7 @@ export declare class RoaringMoon extends PokemonCard {
     stage: Stage;
     tags: CardTag[];
     cardType: CardType;
+    cardTypez: CardType;
     hp: number;
     weakness: {
         type: CardType;

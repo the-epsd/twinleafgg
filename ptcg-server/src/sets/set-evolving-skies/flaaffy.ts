@@ -84,8 +84,8 @@ export class Flaaffy extends PokemonCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
-        { allowCancel: true, min: 1, max: 1 }
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+        { allowCancel: false, min: 1, max: 2 }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user

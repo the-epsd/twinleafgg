@@ -7,6 +7,7 @@ import { Kyurem } from './kyurem';
 import { PlumeFossil } from './plume-fossil';
 import { SuperRod } from './super-rod';
 import { Terrakion } from './terrakion';
+import { Trubbish } from './trubbish';
 import { Tynamo } from './tynamo';
 import { Vanillish } from './vanillish';
 import { Vanillite } from './vanillite';
@@ -36,6 +37,9 @@ export declare class SuperRodArt extends SuperRod {
     cardImage: string;
 }
 export declare class TerrakionArt extends Terrakion {
+    cardImage: string;
+}
+export declare class TrubbishArt extends Trubbish {
     cardImage: string;
 }
 export declare class TynamoArt extends Tynamo {

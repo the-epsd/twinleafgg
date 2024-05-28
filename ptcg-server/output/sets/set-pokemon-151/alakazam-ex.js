@@ -27,7 +27,7 @@ class Alakazamex extends pokemon_card_1.PokemonCard {
                 text: 'You may use this attack even if this Pokemon is on the Bench.'
             }
         ];
-        this.set = '151';
+        this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '65';
         this.name = 'Alakazam ex';

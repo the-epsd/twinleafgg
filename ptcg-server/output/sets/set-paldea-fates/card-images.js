@@ -1,16 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.XatuArt = exports.UltraBallArt = exports.TechnicalMachineCrisisPunchArt = exports.NatuArt = exports.StudentsInPaldeaArt2 = exports.StudentsInPaldeaArt = exports.ScovillainexArt = exports.RareCandyArt = exports.ProfessorsResearch2Art = exports.ProfessorsResearchArt = exports.NemonaArt = exports.NestBallArt = exports.MoonlightHillArt = exports.MimikyuArt = exports.MimeJrArt = exports.KilowattrelArt = exports.IonoArt = exports.HaunterArt = exports.GengarArt = exports.GastlyArt = exports.FrigibaxArt = exports.EspathraexArt = exports.ElectricGeneratorArt = exports.CliveArt = exports.CharmanderArt = exports.CharizardexArt = exports.CharmeleonArt = exports.AtticusArt = void 0;
+exports.ArtazonArt = exports.SquawkabillyexArt = exports.NoivernexArt = exports.NoibatArt = exports.GardevoirexArt = exports.RaltsArt = exports.CharcadetArt = exports.ArmarougeArt = exports.XatuArt = exports.UltraBallArt = exports.TechnicalMachineCrisisPunchArt = exports.NatuArt = exports.StudentsInPaldeaArt2 = exports.StudentsInPaldeaArt = exports.ScovillainexArt = exports.RareCandyArt = exports.ProfessorsResearch2Art = exports.ProfessorsResearchArt = exports.NemonaArt = exports.NestBallArt = exports.MoonlightHillArt = exports.MimikyuArt = exports.MimeJrArt = exports.KilowattrelArt = exports.IonoArt = exports.HaunterArt = exports.GengarArt = exports.GastlyArt = exports.FrigibaxArt = exports.EspathraexArt = exports.ElectricGeneratorArt = exports.CliveArt = exports.CharmanderArt = exports.CharizardexArt = exports.CharmeleonArt = exports.AtticusArt = void 0;
 const charizard_ex_1 = require("../set-obsidian-flames/charizard-ex");
 const charmander_1 = require("../set-obsidian-flames/charmander");
+const artazon_1 = require("../set-paldea-evolved/artazon");
 const iono_1 = require("../set-paldea-evolved/iono");
 const mimikyu_1 = require("../set-paldea-evolved/mimikyu");
+const noibat_1 = require("../set-paldea-evolved/noibat");
+const noivern_ex_1 = require("../set-paldea-evolved/noivern-ex");
+const squawkabilly_ex_1 = require("../set-paldea-evolved/squawkabilly-ex");
 const natu_1 = require("../set-paradox-rift/natu");
 const xatu_1 = require("../set-paradox-rift/xatu");
+const armarouge_1 = require("../set-scarlet-and-violet/armarouge");
+const charcadet_1 = require("../set-scarlet-and-violet/charcadet");
 const electric_generator_1 = require("../set-scarlet-and-violet/electric-generator");
+const gardevoir_ex_1 = require("../set-scarlet-and-violet/gardevoir-ex");
 const nest_ball_1 = require("../set-scarlet-and-violet/nest-ball");
 const professors_research_1 = require("../set-scarlet-and-violet/professors-research");
 const professors_research2_1 = require("../set-scarlet-and-violet/professors-research2");
+const ralts_1 = require("../set-scarlet-and-violet/ralts");
 const rare_candy_1 = require("../set-scarlet-and-violet/rare-candy");
 const ultra_ball_1 = require("../set-scarlet-and-violet/ultra-ball");
 const atticus_1 = require("./atticus");
@@ -261,3 +269,83 @@ class XatuArt extends xatu_1.Xatu {
     }
 }
 exports.XatuArt = XatuArt;
+class ArmarougeArt extends armarouge_1.Armarouge {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_015_R_EN_LG.png';
+        this.fullName = 'Armarouge PAF';
+        this.set = 'PAF';
+        this.setNumber = '15';
+    }
+}
+exports.ArmarougeArt = ArmarougeArt;
+class CharcadetArt extends charcadet_1.Charcadet {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_014_R_EN_LG.png';
+        this.fullName = 'Charcadet PAF';
+        this.set = 'PAF';
+        this.setNumber = '14';
+    }
+}
+exports.CharcadetArt = CharcadetArt;
+class RaltsArt extends ralts_1.Ralts {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_027_R_EN_LG.png';
+        this.fullName = 'Ralts PAF';
+        this.set = 'PAF';
+        this.setNumber = '27';
+    }
+}
+exports.RaltsArt = RaltsArt;
+class GardevoirexArt extends gardevoir_ex_1.Gardevoirex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_029_R_EN_LG.png';
+        this.fullName = 'Gardevoir ex PAF';
+        this.set = 'PAF';
+        this.setNumber = '29';
+    }
+}
+exports.GardevoirexArt = GardevoirexArt;
+class NoibatArt extends noibat_1.Noibat {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_068_R_EN_LG.png';
+        this.fullName = 'Noibat PAF';
+        this.set = 'PAF';
+        this.setNumber = '68';
+    }
+}
+exports.NoibatArt = NoibatArt;
+class NoivernexArt extends noivern_ex_1.Noivernex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_069_R_EN_LG.png';
+        this.fullName = 'Novern ex PAF';
+        this.set = 'PAF';
+        this.setNumber = '69';
+    }
+}
+exports.NoivernexArt = NoivernexArt;
+class SquawkabillyexArt extends squawkabilly_ex_1.Squawkabillyex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_075_R_EN_LG.png';
+        this.fullName = 'Squawkabilly ex PAF';
+        this.set = 'PAF';
+        this.setNumber = '75';
+    }
+}
+exports.SquawkabillyexArt = SquawkabillyexArt;
+class ArtazonArt extends artazon_1.Artazon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_076_R_EN_LG.png';
+        this.fullName = 'Artazon PAF';
+        this.set = 'PAF';
+        this.setNumber = '76';
+    }
+}
+exports.ArtazonArt = ArtazonArt;

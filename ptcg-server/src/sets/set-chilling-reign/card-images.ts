@@ -31,6 +31,7 @@ import { Melony } from './melony';
 //import { OldCemetery } from './old-cemetery';
 import { PathToThePeak } from './path-to-the-peak';
 import { Peony } from './peony';
+import { Porygon2 } from './porygon2';
 import { ShadowRiderCalyrexV } from './shadow-rider-calyrex-v';
 import { ShadowRiderCalyrexVMAX } from './shadow-rider-calyrex-vmax';
 import { Sneasel } from './sneasel';
@@ -164,6 +165,10 @@ export class PathToThePeakArt extends PathToThePeak {
 
 export class PeonyArt extends Peony {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_150_R_EN_LG.png';
+}
+
+export class Porygon2Art extends Porygon2 {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_117_R_EN_LG.png';
 }
 
 export class ShadowRiderCalyrexVArt extends ShadowRiderCalyrexV {

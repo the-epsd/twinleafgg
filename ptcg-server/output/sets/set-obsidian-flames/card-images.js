@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VengefulPunchArt = exports.TownStoreArt = exports.ThundurusArt = exports.ScizorArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.ArvenArt = exports.AbsolexArt = void 0;
+exports.VengefulPunchArt = exports.TownStoreArt = exports.ThundurusArt = exports.ScizorArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.ArvenArt = exports.AbsolexArt = void 0;
 const arven_1 = require("../set-scarlet-and-violet/arven");
 const absol_ex_1 = require("./absol-ex");
 const bellibolt_1 = require("./bellibolt");
@@ -11,6 +11,7 @@ const cleffa_1 = require("./cleffa");
 const dragonair_1 = require("./dragonair");
 const dragonite_ex_1 = require("./dragonite-ex");
 const dratini_1 = require("./dratini");
+const entei_1 = require("./entei");
 const letter_of_encouragement_1 = require("./letter-of-encouragement");
 const lunatone_1 = require("./lunatone");
 const pidgeot_ex_1 = require("./pidgeot-ex");
@@ -95,6 +96,13 @@ class DratiniArt extends dratini_1.Dratini {
     }
 }
 exports.DratiniArt = DratiniArt;
+class EnteiArt extends entei_1.Entei {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_030_R_EN.png';
+    }
+}
+exports.EnteiArt = EnteiArt;
 class LetterOfEncouragementArt extends letter_of_encouragement_1.LetterOfEncouragement {
     constructor() {
         super(...arguments);

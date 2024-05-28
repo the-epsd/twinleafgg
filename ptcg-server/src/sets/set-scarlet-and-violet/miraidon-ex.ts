@@ -18,6 +18,8 @@ export class Miraidonex extends PokemonCard {
 
   public cardType: CardType = CardType.LIGHTNING;
 
+  public cardTypez: CardType = CardType.MIRAIDON_EX;
+
   public hp: number = 220;
 
   public weakness = [{ type: CardType.FIGHTING }];

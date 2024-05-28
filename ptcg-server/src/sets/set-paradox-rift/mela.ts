@@ -71,9 +71,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 }
     
-    
-
-
 export class Mela extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -82,7 +79,7 @@ export class Mela extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '152';
+  public setNumber: string = '167';
 
   public regulationMark = 'G';
 

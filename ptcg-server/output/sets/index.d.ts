@@ -45,6 +45,7 @@ export * from './set-hidden-fates';
 export * from './set-cosmic-eclipse';
 export * from './set-sword-and-shield';
 export * from './set-sword-and-shield-promos';
+export * from './set-darkness-ablaze';
 export * from './set-vivid-voltage';
 export * from './set-battle-styles';
 export * from './set-chilling-reign';

@@ -10,6 +10,7 @@ import { CollapsedStadium } from './collapsed-stadium';
 import { CynthiasAmbition } from './cynthias-ambition';
 import { DoubleTurboEnergy } from './double-turbo-energy';
 import { Druddigon } from './druddigon';
+import { Electabuzz } from './electabuzz';
 import { Electivire } from './electivire';
 import { Empoleon } from './empoleon';
 import { EnteiV } from './entei-v';
@@ -63,6 +64,9 @@ export declare class DoubleTurboEnergyArt extends DoubleTurboEnergy {
     cardImage: string;
 }
 export declare class DruddigonArt extends Druddigon {
+    cardImage: string;
+}
+export declare class ElectabuzzArt extends Electabuzz {
     cardImage: string;
 }
 export declare class ElectivireArt extends Electivire {

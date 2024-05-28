@@ -1,13 +1,21 @@
 import { Charizardex } from '../set-obsidian-flames/charizard-ex';
 import { Charmander } from '../set-obsidian-flames/charmander';
+import { Artazon } from '../set-paldea-evolved/artazon';
 import { Iono } from '../set-paldea-evolved/iono';
 import { Mimikyu } from '../set-paldea-evolved/mimikyu';
+import { Noibat } from '../set-paldea-evolved/noibat';
+import { Noivernex } from '../set-paldea-evolved/noivern-ex';
+import { Squawkabillyex } from '../set-paldea-evolved/squawkabilly-ex';
 import { Natu } from '../set-paradox-rift/natu';
 import { Xatu } from '../set-paradox-rift/xatu';
+import { Armarouge } from '../set-scarlet-and-violet/armarouge';
+import { Charcadet } from '../set-scarlet-and-violet/charcadet';
 import { ElectricGenerator } from '../set-scarlet-and-violet/electric-generator';
+import { Gardevoirex } from '../set-scarlet-and-violet/gardevoir-ex';
 import { NestBall } from '../set-scarlet-and-violet/nest-ball';
 import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
 import { ProfessorsResearch2 } from '../set-scarlet-and-violet/professors-research2';
+import { Ralts } from '../set-scarlet-and-violet/ralts';
 import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
 import { Atticus } from './atticus';
@@ -141,6 +149,54 @@ export declare class UltraBallArt extends UltraBall {
     setNumber: string;
 }
 export declare class XatuArt extends Xatu {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
+}
+export declare class ArmarougeArt extends Armarouge {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
+}
+export declare class CharcadetArt extends Charcadet {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
+}
+export declare class RaltsArt extends Ralts {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
+}
+export declare class GardevoirexArt extends Gardevoirex {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
+}
+export declare class NoibatArt extends Noibat {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
+}
+export declare class NoivernexArt extends Noivernex {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
+}
+export declare class SquawkabillyexArt extends Squawkabillyex {
+    cardImage: string;
+    fullName: string;
+    set: string;
+    setNumber: string;
+}
+export declare class ArtazonArt extends Artazon {
     cardImage: string;
     fullName: string;
     set: string;

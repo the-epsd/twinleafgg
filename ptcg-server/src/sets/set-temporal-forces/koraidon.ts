@@ -19,6 +19,8 @@ export class Koraidon extends PokemonCard {
 
   public cardType: CardType = CardType.DRAGON;
 
+  public cardTypez: CardType = CardType.KORAIDON;
+
   public hp: number = 140;
 
   public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];

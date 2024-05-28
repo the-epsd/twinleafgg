@@ -32,7 +32,7 @@ class Ivysaur extends pokemon_card_1.PokemonCard {
                 effect: undefined
             }
         ];
-        this.set = '151';
+        this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '2';
         this.name = 'Ivysaur';

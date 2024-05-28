@@ -32,7 +32,7 @@ class Dodrio extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 30 more damage for each damage counter on this Pokémon.'
             }
         ];
-        this.set = '151';
+        this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '85';
         this.name = 'Dodrio';

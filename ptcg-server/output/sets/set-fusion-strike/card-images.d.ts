@@ -13,6 +13,7 @@ import { FusionStrikeEnergy } from './fusion-strike-energy';
 import { GenesectV } from './genesect-v';
 import { GengarV } from './gengar-v';
 import { GengarVMAX } from './gengar-vmax';
+import { Heatmor } from './heatmor';
 import { InteleonV } from './inteleon-v';
 import { InteleonVMAX } from './inteleon-vmax';
 import { Judge } from './judge';
@@ -70,6 +71,9 @@ export declare class GengarVArt extends GengarV {
     cardImage: string;
 }
 export declare class GengarVMAXArt extends GengarVMAX {
+    cardImage: string;
+}
+export declare class HeatmorArt extends Heatmor {
     cardImage: string;
 }
 export declare class InteleonVArt extends InteleonV {

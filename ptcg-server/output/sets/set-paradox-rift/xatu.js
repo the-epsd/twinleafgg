@@ -14,6 +14,7 @@ class Xatu extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'G';
         this.evolvesFrom = 'Natu';
         this.cardType = card_types_1.CardType.PSYCHIC;
+        this.cardTypez = card_types_1.CardType.XATU;
         this.hp = 100;
         this.weakness = [{ type: card_types_1.CardType.DARK }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];

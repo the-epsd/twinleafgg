@@ -150,7 +150,6 @@ export const BanLists: { [key: number]: string[] } = {
   [Format.RETRO]: [],
   [Format.UNLIMITED]: [],
   [Format.STANDARD]: [
-    'Forest Seal Stone SVI 156'
   ]
 }
 
@@ -280,5 +279,7 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'MEW': new Date('2023-09-22'),
   'PAR': new Date('2023-11-03'),
   'PAF': new Date('2024-01-26'),
-  'TEF': new Date('2024-03-22')
+  'TEF': new Date('2024-03-22'),
+  'TWM': new Date('2024-05-24'),
+  'SV6a': new Date('2024-05-24')
 }

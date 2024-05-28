@@ -15,6 +15,15 @@ z-index: 0;
   justify-content: center;
   align-items: center;
   }
+
+  .text {
+    font-family: "forma-djr-display", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 12px;
+    color: #449058;
+    text-indent: 25px;
+  }
   
   .parent {
     height: 640px;
@@ -69,7 +78,7 @@ z-index: 0;
     right: -55%;
     height: 100%; //adjust this number to adjust curve  
     background:linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(0, 90, 207, 0.75);
-    // background-image: url(https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-53.jpg);
+    // background-image: url(https://i.imgur.com/HjestZe.png);
     background-size: 56%;
     background-position: center, top;
     border-top-left-radius:50% 100%;
@@ -139,19 +148,27 @@ z-index: 0;
 
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-width: 72px;
+width: 85px;
   }
 }
 
-.ptcg-board-active,
+.ptcg-board-active {
+  grid-area: active;
+
+  > ptcg-board-card,
+  > .ptcg-board-drop-target {
+    width: 98px; // Increase the width to 92px for the active card
+  }
+}
 
 .ptcg-board-supporter,
 .ptcg-board-stadium {
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-    width: 72px;
+    width: 85px; // Keep the width at 72px for other cards
   }
 }
+
 
 .ptcg-board-drop-target > ptcg-board-card {
   display: block;
@@ -192,7 +209,7 @@ ptcg-board-deck {
 .stadium-card {
   align-self: flex-start;
 
-  margin-top: -31.25%;
+  margin-top: -36%;
   margin-left: 50%;
 
   }

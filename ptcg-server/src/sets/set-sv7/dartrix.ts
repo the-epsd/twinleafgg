@@ -38,7 +38,7 @@ export class Dartrix extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV7';
+  public set: string = 'SV6a';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -46,7 +46,7 @@ export class Dartrix extends PokemonCard {
 
   public name: string = 'Dartrix';
 
-  public fullName: string = 'Dartrix SV7';
+  public fullName: string = 'Dartrix SV6a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -7,6 +7,7 @@ export declare class TealMaskOgerponex extends PokemonCard {
     regulationMark: string;
     stage: Stage;
     cardType: CardType;
+    cardTypez: CardType;
     hp: number;
     weakness: {
         type: CardType;

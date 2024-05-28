@@ -29,6 +29,7 @@ exports.setObsidianFlames = [
     new card_images_6.DragonairArt(),
     new card_images_7.DragoniteexArt(),
     new card_images_8.DratiniArt(),
+    new card_images_1.EnteiArt(),
     new card_images_9.LetterOfEncouragementArt(),
     new card_images_10.LunatoneArt(),
     new card_images_12.PidgeottoArt(),

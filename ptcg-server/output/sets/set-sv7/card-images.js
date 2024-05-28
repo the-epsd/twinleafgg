@@ -1,11 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.XerosicsSchemeArt = exports.RowlettArt = exports.PecharuntexArt = exports.OkidogiexArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.FezandipitiexArt = exports.DecidueyeArt = exports.DartrixArt = exports.ColresssObsessionArt = exports.BindingMochiArt = void 0;
+exports.BloodmoonUrsalunaArt = exports.GenesectArt = exports.XerosicsSchemeArt = exports.RowlettArt = exports.PecharuntexArt = exports.OkidogiexArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.FezandipitiexArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.ColresssObsessionArt = exports.BindingMochiArt = void 0;
 const binding_mochi_1 = require("./binding-mochi");
+const bloodmoon_ursaluna_1 = require("./bloodmoon-ursaluna");
 const colresss_obsession_1 = require("./colresss-obsession");
+const dangerous_laser_1 = require("./dangerous-laser");
 const dartrix_1 = require("./dartrix");
 const decidueye_1 = require("./decidueye");
 const fezandipiti_ex_1 = require("./fezandipiti-ex");
+const genesect_1 = require("./genesect");
 const kyurem_1 = require("./kyurem");
 const munkidori_ex_1 = require("./munkidori-ex");
 const neutral_center_1 = require("./neutral-center");
@@ -27,6 +30,13 @@ class ColresssObsessionArt extends colresss_obsession_1.ColresssObsession {
     }
 }
 exports.ColresssObsessionArt = ColresssObsessionArt;
+class DangerousLaserArt extends dangerous_laser_1.DangerousLaser {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GOUgxq_XYAAA3Kx?format=jpg&name=medium';
+    }
+}
+exports.DangerousLaserArt = DangerousLaserArt;
 class DartrixArt extends dartrix_1.Dartrix {
     constructor() {
         super(...arguments);
@@ -97,3 +107,17 @@ class XerosicsSchemeArt extends xerosics_scheme_1.XerosicsScheme {
     }
 }
 exports.XerosicsSchemeArt = XerosicsSchemeArt;
+class GenesectArt extends genesect_1.Genesect {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GOLfMYxWYAAofXF?format=jpg&name=small';
+    }
+}
+exports.GenesectArt = GenesectArt;
+class BloodmoonUrsalunaArt extends bloodmoon_ursaluna_1.BloodmoonUrsaluna {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GOQWrmdWwAAqfY0?format=png&name=900x900';
+    }
+}
+exports.BloodmoonUrsalunaArt = BloodmoonUrsalunaArt;

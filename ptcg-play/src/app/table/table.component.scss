@@ -17,6 +17,7 @@
 }
 
 .ptcg-table {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -24,6 +25,7 @@
 }
 
 ptcg-board {
+  overflow: hidden;
   flex: 1 1 auto;
   margin-top: -3%;
 
@@ -33,6 +35,6 @@ ptcg-hand {
   // background-color: #1a202c00;
   position: static;
   // flex: 0 0 auto;
-  margin-top: -6%;
+  margin-top: -7%;
   z-index: 1;
 }

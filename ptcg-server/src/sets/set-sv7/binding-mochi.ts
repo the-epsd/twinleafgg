@@ -23,7 +23,7 @@ export class BindingMochi extends TrainerCard {
   public fullName: string = 'Binding Mochi SV6a';
 
   public text: string =
-    ' If the Pokémon this card is attached to is Poisoned, its attacks deal 40 more damage to your opponent\'s Active Pokémon..';
+    ' If the Pokémon this card is attached to is Poisoned, its attacks deal 40 more damage to your opponent\'s Active Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {

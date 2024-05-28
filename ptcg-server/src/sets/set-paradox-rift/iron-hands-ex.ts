@@ -15,6 +15,8 @@ export class IronHandsex extends PokemonCard {
 
   public cardType: CardType = CardType.LIGHTNING;
 
+  public cardTypez: CardType = CardType.IRON_HANDS_EX;
+
   public hp: number = 230;
 
   public weakness = [{ type: CardType.FIGHTING }];

@@ -13,7 +13,7 @@ export class Inteleon extends PokemonCard {
 
   public regulationMark = 'E';
   
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Drizzile';
 

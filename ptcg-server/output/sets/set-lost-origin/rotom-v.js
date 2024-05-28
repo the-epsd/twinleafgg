@@ -15,6 +15,7 @@ class RotomV extends pokemon_card_1.PokemonCard {
         this.tags = [card_types_1.CardTag.POKEMON_V];
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.LIGHTNING;
+        this.cardTypez = card_types_1.CardType.ROTOM_V;
         this.hp = 190;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS];

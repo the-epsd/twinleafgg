@@ -23,7 +23,7 @@ class Vileplume extends game_1.PokemonCard {
                 damage: 90,
                 text: ''
             }];
-        this.set = '151';
+        this.set = 'MEW';
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '45';

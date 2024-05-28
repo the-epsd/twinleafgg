@@ -32,7 +32,7 @@ export class Dreepy extends PokemonCard {
 
   ];
 
-  public set: string = 'SV6';
+  public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -40,6 +40,6 @@ export class Dreepy extends PokemonCard {
 
   public name: string = 'Dreepy';
 
-  public fullName: string = 'Dreepy SV6';
+  public fullName: string = 'Dreepy TWM';
 
 }

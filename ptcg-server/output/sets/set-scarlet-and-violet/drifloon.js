@@ -10,6 +10,7 @@ class Drifloon extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.BASIC;
         this.regulationMark = 'G';
         this.cardType = card_types_1.CardType.PSYCHIC;
+        this.cardTypez = card_types_1.CardType.DRIFLOON;
         this.hp = 70;
         this.weakness = [{ type: card_types_1.CardType.DARK }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];

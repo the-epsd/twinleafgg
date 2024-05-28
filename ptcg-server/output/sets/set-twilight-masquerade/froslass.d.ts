@@ -8,6 +8,7 @@ export declare class Froslass extends PokemonCard {
     evolvesFrom: string;
     regulationMark: string;
     cardType: CardType;
+    cardTypez: CardType;
     weakness: {
         type: CardType;
     }[];

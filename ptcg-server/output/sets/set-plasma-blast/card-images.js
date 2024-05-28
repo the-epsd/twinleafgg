@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VirizionExArt = exports.UltraBallArt = exports.SilverBangleArt = exports.ScoopUpCycloneArt = exports.JirachiExArt = void 0;
+exports.MasterBallArt = exports.VirizionExArt = exports.UltraBallArt = exports.SilverBangleArt = exports.ScoopUpCycloneArt = exports.JirachiExArt = void 0;
+const master_ball_1 = require("../set-temporal-forces/master-ball");
 const jirachi_ex_1 = require("./jirachi-ex");
 const scoop_up_cyclone_1 = require("./scoop-up-cyclone");
 const silver_bangle_1 = require("./silver-bangle");
@@ -41,3 +42,10 @@ class VirizionExArt extends virizion_ex_1.VirizionEx {
     }
 }
 exports.VirizionExArt = VirizionExArt;
+class MasterBallArt extends master_ball_1.MasterBall {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLB/PLB_094_R_EN_LG.png';
+    }
+}
+exports.MasterBallArt = MasterBallArt;
