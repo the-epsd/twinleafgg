@@ -17,6 +17,7 @@
 }
 
 .ptcg-table {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -24,6 +25,7 @@
 }
 
 ptcg-board {
+  overflow: hidden;
   flex: 1 1 auto;
   margin-top: -3%;
 
