@@ -1,4 +1,4 @@
- import { Card, CardTag, EnergyType, Format, SuperType } from "ptcg-server";
+ import { Card, CardTag, EnergyType, Format, PokemonCard, SuperType } from "ptcg-server";
 
 export class FormatValidator {
   
@@ -16,12 +16,33 @@ export class FormatValidator {
     });
     
     if (formats.includes(Format.GLC)) {
+      
+      // check for singleton violation
       const nonBasicEnergyCards = cards.filter(c => c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC);
       
-      try {
-        const set = new Set(nonBasicEnergyCards.map(c => c.name));
-      } catch (ex) {
-        formats = formats.filter(f => f !== Format.GLC);
+      const set = new Set(nonBasicEnergyCards.map(c => c.name));
+      
+      if (set.size > nonBasicEnergyCards.length) {
+        formats = formats.filter(f => f !== Format.GLC);        
+        return formats;
+      }
+      
+      if ((set.has('Professor Sycamore') && set.has('Professor Juniper')) ||
+          (set.has('Professor Juniper') && set.has('Professor\'s Research')) ||
+          (set.has('Professor Sycamore') && set.has('Professor\'s Research')) ||
+          (set.has('Lysandre') && set.has('Boss\'s Orders'))) {
+        formats = formats.filter(f => f!== Format.GLC);
+        return formats;        
+      }
+      
+      // check for different type violation
+      const pokemonCards = cards.filter(c => c.superType === SuperType.POKEMON);
+      
+      const pokemonSet = new Set(pokemonCards.map(c => (<PokemonCard>c).cardType));
+      
+      if (pokemonSet.size > 1) {
+        formats = formats.filter(f => f !== Format.GLC);        
+        return formats;        
       }
     }
     
