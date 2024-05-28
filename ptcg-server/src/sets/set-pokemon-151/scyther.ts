@@ -31,7 +31,7 @@ export class Scyther extends PokemonCard {
     }
   ];
 
-  public set: string = '151';
+  public set: string = 'MEW';
 
   public regulationMark = 'G';
 

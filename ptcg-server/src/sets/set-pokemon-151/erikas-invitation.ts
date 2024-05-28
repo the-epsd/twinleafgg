@@ -71,7 +71,7 @@ export class EreikasInvitation extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = '151';
+  public set: string = 'MEW';
 
   public cardImage: string = 'assets/cardback.png';
 

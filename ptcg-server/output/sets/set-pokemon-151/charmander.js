@@ -37,7 +37,7 @@ class Charmander extends pokemon_card_1.PokemonCard {
                 text: '',
             }
         ];
-        this.set = '151';
+        this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '4';
         this.name = 'Charmander';

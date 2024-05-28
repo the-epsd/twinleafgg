@@ -93,7 +93,7 @@ export class Mewex extends PokemonCard {
     'as this attack.'
   }];
 
-  public set: string = '151';
+  public set: string = 'MEW';
 
   public cardImage: string = 'assets/cardback.png';
 

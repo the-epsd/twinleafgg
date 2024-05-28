@@ -41,7 +41,7 @@ export class Zapdosex extends PokemonCard {
     text: 'This attack also does 90 damage to 1 of your opponent\'s Benched Pokémon that has any damage counters on it. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
-  public set: string = '151';
+  public set: string = 'MEW';
 
   public cardImage: string = 'assets/cardback.png';
 

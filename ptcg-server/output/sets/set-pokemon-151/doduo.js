@@ -23,7 +23,7 @@ class Doduo extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon also does 10 damage to itself.'
             }
         ];
-        this.set = '151';
+        this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '84';
         this.name = 'Doduo';

@@ -14,7 +14,7 @@ export class CyclingRoad extends TrainerCard {
 
   public regulationMark = 'G';
 
-  public set = '151';
+  public set = 'MEW';
 
   public cardImage: string = 'assets/cardback.png';
 
