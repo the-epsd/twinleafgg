@@ -15,6 +15,16 @@ export class FormatValidator {
       console.log(this.getValidFormats(card));
     });
     
+    if (formats.includes(Format.GLC)) {
+      const nonBasicEnergyCards = cards.filter(c => c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC);
+      
+      try {
+        const set = new Set(nonBasicEnergyCards.map(c => c.name));
+      } catch (ex) {
+        formats = formats.filter(f => f !== Format.GLC);
+      }
+    }
+    
     return formats.reduce((a, b) => a.filter(c => b.includes(c)))
   }
   
@@ -58,7 +68,7 @@ export class FormatValidator {
       case Format.GLC:
         var banList = BanLists[format];        
         var setDate = SetReleaseDates[card.set];
-        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && 
+        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
                !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
                !card.tags.some(t => [
                 CardTag.ACE_SPEC.toString(),
