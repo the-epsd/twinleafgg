@@ -2,6 +2,7 @@ import { LostVacuum } from '../set-lost-origin/lost-vacuum';
 import { RotomV } from '../set-lost-origin/rotom-v';
 import { Absol } from './absol';
 import { Bidoof } from './bidoof';
+import { Hoopa } from './hoopa';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
 import { RadiantCharizard } from './radiant-charizard';
@@ -15,6 +16,9 @@ export declare class AbsolArt extends Absol {
     cardImage: string;
 }
 export declare class BidoofArt extends Bidoof {
+    cardImage: string;
+}
+export declare class HoopaArt extends Hoopa {
     cardImage: string;
 }
 export declare class KyogreArt extends Kyogre {

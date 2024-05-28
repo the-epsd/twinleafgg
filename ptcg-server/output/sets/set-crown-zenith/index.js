@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setCrownZenith = [
     new card_images_1.AbsolArt(),
     new card_images_1.BidoofArt(),
+    new card_images_1.HoopaArt(),
     new card_images_1.KyogreArt(),
     new card_images_1.RadiantCharizardArt(),
     new card_images_1.ZamazentaArt(),

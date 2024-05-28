@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianZapdosVArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.FlanneryArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DynaTreeHillArt = exports.DrizzileArt = exports.CaitlinArt = exports.BlisseyVArt = exports.BlazikenVMAXArt = exports.BlazikenVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = exports.AgathaArt = void 0;
+exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.Porygon2Art = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianZapdosVArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.FlanneryArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DynaTreeHillArt = exports.DrizzileArt = exports.CaitlinArt = exports.BlisseyVArt = exports.BlazikenVMAXArt = exports.BlazikenVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = exports.AgathaArt = void 0;
 const agatha_1 = require("./agatha");
 const avery_1 = require("./avery");
 const banette_1 = require("./banette");
@@ -34,6 +34,7 @@ const melony_1 = require("./melony");
 //import { OldCemetery } from './old-cemetery';
 const path_to_the_peak_1 = require("./path-to-the-peak");
 const peony_1 = require("./peony");
+const porygon2_1 = require("./porygon2");
 const shadow_rider_calyrex_v_1 = require("./shadow-rider-calyrex-v");
 const shadow_rider_calyrex_vmax_1 = require("./shadow-rider-calyrex-vmax");
 const sneasel_1 = require("./sneasel");
@@ -264,6 +265,13 @@ class PeonyArt extends peony_1.Peony {
     }
 }
 exports.PeonyArt = PeonyArt;
+class Porygon2Art extends porygon2_1.Porygon2 {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_117_R_EN_LG.png';
+    }
+}
+exports.Porygon2Art = Porygon2Art;
 class ShadowRiderCalyrexVArt extends shadow_rider_calyrex_v_1.ShadowRiderCalyrexV {
     constructor() {
         super(...arguments);

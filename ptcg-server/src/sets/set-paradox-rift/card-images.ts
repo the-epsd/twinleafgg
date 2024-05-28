@@ -29,6 +29,7 @@ import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
 import { Morpeko } from './morpeko';
 import { Natu } from './natu';
+import { Porygon } from './porygon';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
 import { Remoraid } from './remoraid';
@@ -170,6 +171,10 @@ export class MorpekoArt extends Morpeko {
 
 export class NatuArt extends Natu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_071_R_EN_LG.png';
+}
+
+export class PorygonArt extends Porygon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_142_R_EN_LG.png';
 }
 
 export class ProfessorSadasVitalityArt extends ProfessorSadasVitality {

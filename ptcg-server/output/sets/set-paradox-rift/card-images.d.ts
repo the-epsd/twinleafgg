@@ -29,6 +29,7 @@ import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
 import { Morpeko } from './morpeko';
 import { Natu } from './natu';
+import { Porygon } from './porygon';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
 import { Remoraid } from './remoraid';
@@ -138,6 +139,9 @@ export declare class MorpekoArt extends Morpeko {
     cardImage: string;
 }
 export declare class NatuArt extends Natu {
+    cardImage: string;
+}
+export declare class PorygonArt extends Porygon {
     cardImage: string;
 }
 export declare class ProfessorSadasVitalityArt extends ProfessorSadasVitality {

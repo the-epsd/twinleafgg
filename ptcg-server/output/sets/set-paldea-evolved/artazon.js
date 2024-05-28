@@ -14,14 +14,14 @@ function* useStadium(next, store, state, effect) {
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    if (slots.length < 0) {
+    if (slots.length == 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     else {
         // handle no open slots
         const blocked = [];
         player.deck.cards.forEach((card, index) => {
-            if (card instanceof game_1.PokemonCard && card.tags.length > 0) {
+            if (card instanceof game_1.PokemonCard && card.tags.includes(card_types_1.CardTag.RADIANT) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || card.tags.includes(card_types_1.CardTag.POKEMON_ex)) {
                 blocked.push(index);
             }
         });
