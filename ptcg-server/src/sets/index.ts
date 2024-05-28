@@ -60,7 +60,7 @@ export * from './set-guardians-rising';
 export * from './set-shining-legends';
 //export * from './set-crimson-invasion';
 export * from './set-ultra-prism';
-//export * from './set-forbidden-light';
+export * from './set-forbidden-light';
 export * from './set-celestial-storm';
 //export * from './set-dragon-majesty';
 //export * from './set-lost-thunder';

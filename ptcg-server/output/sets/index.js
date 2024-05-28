@@ -65,7 +65,7 @@ __exportStar(require("./set-guardians-rising"), exports);
 __exportStar(require("./set-shining-legends"), exports);
 //export * from './set-crimson-invasion';
 __exportStar(require("./set-ultra-prism"), exports);
-//export * from './set-forbidden-light';
+__exportStar(require("./set-forbidden-light"), exports);
 __exportStar(require("./set-celestial-storm"), exports);
 //export * from './set-dragon-majesty';
 //export * from './set-lost-thunder';
