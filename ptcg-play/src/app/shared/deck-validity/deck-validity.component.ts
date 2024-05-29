@@ -32,7 +32,16 @@ export class DeckValidityComponent {
   deck$ = this._deck.asObservable();
   
   validFormats$ = this.deck$.pipe(
-    map(cards => cards.map(c => c.card)),
+    map(cards => {
+      const cardList = [];
+      cards.forEach(card => {
+        for(let i = 0; i < card.count; i++) {
+          cardList.push(card.card);
+        }
+      });
+      
+      return cardList;
+    }),
     map(cards => FormatValidator.getValidFormatsForCardList(cards)),
   );
 }

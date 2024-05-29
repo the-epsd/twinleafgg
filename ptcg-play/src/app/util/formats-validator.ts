@@ -15,24 +15,26 @@ export class FormatValidator {
       console.log(this.getValidFormats(card));
     });
     
-    if (formats.includes(Format.GLC)) {
+    let formatList = formats.reduce((a, b) => a.filter(c => b.includes(c)))
+    
+    if (formatList.includes(Format.GLC)) {
       
       // check for singleton violation
       const nonBasicEnergyCards = cards.filter(c => c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC);
       
       const set = new Set(nonBasicEnergyCards.map(c => c.name));
       
-      if (set.size > nonBasicEnergyCards.length) {
-        formats = formats.filter(f => f !== Format.GLC);        
-        return formats;
+      if (set.size < nonBasicEnergyCards.length) {
+        formatList = formatList.filter(f => f !== Format.GLC);        
+        return formatList;
       }
       
       if ((set.has('Professor Sycamore') && set.has('Professor Juniper')) ||
           (set.has('Professor Juniper') && set.has('Professor\'s Research')) ||
           (set.has('Professor Sycamore') && set.has('Professor\'s Research')) ||
           (set.has('Lysandre') && set.has('Boss\'s Orders'))) {
-        formats = formats.filter(f => f!== Format.GLC);
-        return formats;        
+            formatList = formatList.filter(f => f!== Format.GLC);
+        return formatList;        
       }
       
       // check for different type violation
@@ -41,12 +43,12 @@ export class FormatValidator {
       const pokemonSet = new Set(pokemonCards.map(c => (<PokemonCard>c).cardType));
       
       if (pokemonSet.size > 1) {
-        formats = formats.filter(f => f !== Format.GLC);        
-        return formats;        
+        formatList = formatList.filter(f => f !== Format.GLC);        
+        return formatList;        
       }
     }
     
-    return formats.reduce((a, b) => a.filter(c => b.includes(c)))
+    return formatList
   }
   
   static getValidFormats(card: Card): Format[] {
