@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.WorkerArt = exports.VGuardEnergyArt = exports.UrsalunaVArt = exports.SerperiorVSTARArt = exports.SerperiorVArt = exports.SerenaArt = exports.RuffletArt = exports.RegielekiVMAXArt = exports.RegielekiVArt = exports.RegidragoVSTARArt = exports.RegidragoVArt = exports.RegenerativeEnergyArt = exports.RaltsArt = exports.RaichuArt = exports.RadiantTsareenaArt = exports.RadiantJirachiArt = exports.RadiantAlakazamArt = exports.PrimordialAltarArt = exports.MismagiusArt = exports.MetagrossArt = exports.LugiaVSTARArt = exports.LugiaVArt = exports.KirliaArt = exports.HisuianBraviaryArt = exports.FurisodeGirlArt = exports.ForestSealStoneArt = exports.FeebasArt = exports.EmergencyJellyArt = exports.ElgyemArt = exports.DragoniteArt = exports.CobalionArt = exports.CapturingAromaArt = exports.CandiceArt = exports.BraixenArt = exports.BeldumArt = exports.BeheeyemArt = exports.ArticunoArt = exports.ArcheopsArt = exports.AlolanVulpixVSTARArt = exports.AlolanVulpixVArt = void 0;
+exports.ZeraoraArt = exports.WorkerArt = exports.WailordArt = exports.VGuardEnergyArt = exports.UrsalunaVArt = exports.SerperiorVSTARArt = exports.SerperiorVArt = exports.SerenaArt = exports.RuffletArt = exports.RegielekiVMAXArt = exports.RegielekiVArt = exports.RegidragoVSTARArt = exports.RegidragoVArt = exports.RegenerativeEnergyArt = exports.RaltsArt = exports.RaichuArt = exports.RadiantTsareenaArt = exports.RadiantJirachiArt = exports.RadiantAlakazamArt = exports.PrimordialAltarArt = exports.MismagiusArt = exports.MetagrossArt = exports.LugiaVSTARArt = exports.LugiaVArt = exports.KirliaArt = exports.HisuianBraviaryArt = exports.FurisodeGirlArt = exports.ForestSealStoneArt = exports.FeebasArt = exports.EmergencyJellyArt = exports.ElgyemArt = exports.DragoniteArt = exports.CobalionArt = exports.CapturingAromaArt = exports.CandiceArt = exports.BraixenArt = exports.BeldumArt = exports.BeheeyemArt = exports.ArticunoArt = exports.ArcheopsArt = exports.AlolanVulpixVSTARArt = exports.AlolanVulpixVArt = void 0;
 const alolan_vulpix_v_1 = require("./alolan-vulpix-v");
 const alolan_vulpix_vstar_1 = require("./alolan-vulpix-vstar");
 const archeops_1 = require("./archeops");
@@ -40,6 +40,7 @@ const serperior_v_1 = require("./serperior-v");
 const serperior_vstar_1 = require("./serperior-vstar");
 const ursaluna_v_1 = require("./ursaluna-v");
 const v_guard_energy_1 = require("./v-guard-energy");
+const wailord_1 = require("./wailord");
 const worker_1 = require("./worker");
 const zeraora_1 = require("./zeraora");
 class AlolanVulpixVArt extends alolan_vulpix_v_1.AlolanVulpixV {
@@ -315,6 +316,13 @@ class VGuardEnergyArt extends v_guard_energy_1.VGuardEnergy {
     }
 }
 exports.VGuardEnergyArt = VGuardEnergyArt;
+class WailordArt extends wailord_1.Wailord {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_038_R_EN_LG.png';
+    }
+}
+exports.WailordArt = WailordArt;
 class WorkerArt extends worker_1.Worker {
     constructor() {
         super(...arguments);

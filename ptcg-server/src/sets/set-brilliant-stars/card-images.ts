@@ -3,6 +3,7 @@ import { AggronV } from './aggron-v';
 import { AggronVMAX } from './aggron-vmax';
 import { ArceusV } from './arceus-v';
 import { ArceusVSTAR } from './arceus-vstar';
+import { Axew } from './axew';
 import { Bibarel } from './bibarel';
 import { CherensCare } from './cherens-care';
 import { CleansingGloves } from './cleansing-gloves';
@@ -49,6 +50,10 @@ export class ArceusVArt extends ArceusV {
 
 export class ArceusVSTARArt extends ArceusVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_123_R_EN_LG.png';
+}
+
+export class AxewArt extends Axew {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_110_R_EN_LG.png';
 }
 
 export class BibarelArt extends Bibarel {

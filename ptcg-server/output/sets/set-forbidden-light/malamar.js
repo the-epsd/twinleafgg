@@ -34,7 +34,6 @@ class Malamar extends pokemon_card_1.PokemonCard {
                 damage: 60,
                 text: ''
             }];
-        this.regulationMark = 'G';
         this.set = 'FLI';
         this.name = 'Malamar';
         this.fullName = 'Malamar FLI';

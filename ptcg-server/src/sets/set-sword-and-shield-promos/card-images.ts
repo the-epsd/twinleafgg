@@ -7,6 +7,7 @@ import { LeafeonVSTAR } from './leafeon-vstar';
 import { LucarioVSTAR } from './lucario-vstar';
 import { Manaphy } from './manaphy';
 import { ProfessorBurnet } from './professor-burnett';
+import { Tepig } from './tepig';
 import { VenusaurV } from './venusaur-v';
 import { VenusaurVMAX } from './venusaur-vmax';
 
@@ -48,6 +49,10 @@ export class ProfessorBurnettArt extends ProfessorBurnet {
 
 export class EscapeRopeArt extends EscapeRope {
   public cardImage = 'https://www.serebii.net/card/ggend/51.jpg';
+}
+
+export class TepigArt extends Tepig {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_172_R_EN_LG.png';
 }
 
 export class VenusaurVArt extends VenusaurV {

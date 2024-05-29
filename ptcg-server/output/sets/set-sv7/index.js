@@ -8,6 +8,8 @@ exports.setSV7 = [
     new card_images_1.DartrixArt(),
     new card_images_1.DecidueyeArt(),
     new card_images_1.FezandipitiexArt(),
+    new card_images_1.FraxureArt,
+    new card_images_1.HaxorusArt(),
     new card_images_1.KyuremArt(),
     new card_images_1.MunkidoriexArt(),
     new card_images_1.NeutralCenterArt(),

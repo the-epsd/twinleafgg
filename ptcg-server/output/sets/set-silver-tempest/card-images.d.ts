@@ -37,6 +37,7 @@ import { SerperiorV } from './serperior-v';
 import { SerperiorVSTAR } from './serperior-vstar';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
+import { Wailord } from './wailord';
 import { Worker } from './worker';
 import { Zeraora } from './zeraora';
 export declare class AlolanVulpixVArt extends AlolanVulpixV {
@@ -154,6 +155,9 @@ export declare class UrsalunaVArt extends UrsalunaV {
     cardImage: string;
 }
 export declare class VGuardEnergyArt extends VGuardEnergy {
+    cardImage: string;
+}
+export declare class WailordArt extends Wailord {
     cardImage: string;
 }
 export declare class WorkerArt extends Worker {

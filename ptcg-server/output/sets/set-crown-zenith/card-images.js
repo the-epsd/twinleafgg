@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZamazentaVArt = exports.ZamazentaArt = exports.ZacianVSTARArt = exports.RotomVArt = exports.RegigigasVSTARArt = exports.RegigigasVArt = exports.RadiantEternatusArt = exports.RadiantCharizardArt = exports.LostVacuumArt = exports.LuxrayArt = exports.KyogreArt = exports.HoopaArt = exports.BidoofArt = exports.AbsolArt = void 0;
+exports.ZamazentaVArt = exports.ZamazentaArt = exports.ZacianVSTARArt = exports.WailmerArt = exports.RotomVArt = exports.RegigigasVSTARArt = exports.RegigigasVArt = exports.RadiantEternatusArt = exports.RadiantCharizardArt = exports.LostVacuumArt = exports.LuxrayArt = exports.KyogreArt = exports.HoopaArt = exports.BidoofArt = exports.AbsolArt = void 0;
 const lost_vacuum_1 = require("../set-lost-origin/lost-vacuum");
 const rotom_v_1 = require("../set-lost-origin/rotom-v");
 const absol_1 = require("./absol");
@@ -12,6 +12,7 @@ const radiant_charizard_1 = require("./radiant-charizard");
 const radiant_eternatus_1 = require("./radiant-eternatus");
 const regigigas_v_1 = require("./regigigas-v");
 const regigigas_vstar_1 = require("./regigigas-vstar");
+const wailmer_1 = require("./wailmer");
 const zacian_vstar_1 = require("./zacian-vstar");
 const zamazenta_1 = require("./zamazenta");
 const zamazenta_v_1 = require("./zamazenta-v");
@@ -98,6 +99,13 @@ class RotomVArt extends rotom_v_1.RotomV {
     }
 }
 exports.RotomVArt = RotomVArt;
+class WailmerArt extends wailmer_1.Wailmer {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_031_R_EN_LG.png';
+    }
+}
+exports.WailmerArt = WailmerArt;
 class ZacianVSTARArt extends zacian_vstar_1.ZacianVSTAR {
     constructor() {
         super(...arguments);

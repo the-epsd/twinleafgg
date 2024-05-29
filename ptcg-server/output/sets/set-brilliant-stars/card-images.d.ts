@@ -3,6 +3,7 @@ import { AggronV } from './aggron-v';
 import { AggronVMAX } from './aggron-vmax';
 import { ArceusV } from './arceus-v';
 import { ArceusVSTAR } from './arceus-vstar';
+import { Axew } from './axew';
 import { Bibarel } from './bibarel';
 import { CherensCare } from './cherens-care';
 import { CleansingGloves } from './cleansing-gloves';
@@ -43,6 +44,9 @@ export declare class ArceusVArt extends ArceusV {
     cardImage: string;
 }
 export declare class ArceusVSTARArt extends ArceusVSTAR {
+    cardImage: string;
+}
+export declare class AxewArt extends Axew {
     cardImage: string;
 }
 export declare class BibarelArt extends Bibarel {

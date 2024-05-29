@@ -20,7 +20,6 @@ class Inkay extends pokemon_card_1.PokemonCard {
                 damage: 0,
                 text: 'Your opponent\'s Active Pokémon is now Asleep.'
             }];
-        this.regulationMark = 'G';
         this.set = 'FLI';
         this.name = 'Inkay';
         this.fullName = 'Inkay FLI';

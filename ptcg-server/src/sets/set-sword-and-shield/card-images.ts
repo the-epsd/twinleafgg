@@ -3,6 +3,7 @@ import { Cinccino } from './cinccino';
 import { Drizzile } from './drizzile';
 import { Inteleon } from './inteleon';
 import { QuickBall } from './quick-ball';
+import { Sizzlipede } from './sizzlipede';
 import { Snom } from './snom';
 
 export class AirBalloonArt extends AirBalloon {
@@ -27,4 +28,8 @@ export class SnomArt extends Snom {
 
 export class QuickBallArt extends QuickBall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_179_R_EN_LG.png';
+}
+
+export class SizzlipedeArt extends Sizzlipede {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_037_R_EN_LG.png';
 }

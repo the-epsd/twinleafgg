@@ -9,6 +9,7 @@ import { RadiantCharizard } from './radiant-charizard';
 import { RadiantEternatus } from './radiant-eternatus';
 import { RegigigasV } from './regigigas-v';
 import { RegigigasVSTAR } from './regigigas-vstar';
+import { Wailmer } from './wailmer';
 import { ZacianVSTAR } from './zacian-vstar';
 import { Zamazenta } from './zamazenta';
 import { ZamazentaV } from './zamazenta-v';
@@ -61,6 +62,10 @@ export class RotomVArt extends RotomV {
   public fullName = 'Rotom V CRZ';
   public set = 'CRZ';
   public setNumber = '45';
+}
+
+export class WailmerArt extends Wailmer {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_031_R_EN_LG.png';
 }
 
 export class ZacianVSTARArt extends ZacianVSTAR {

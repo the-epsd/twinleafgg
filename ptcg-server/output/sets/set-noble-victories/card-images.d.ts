@@ -1,5 +1,6 @@
 import { Archen } from './archen';
 import { Archeops } from './archeops';
+import { Blitzle } from './blitzle';
 import { Chandelure } from './chandelure';
 import { Durant } from './durant';
 import { Eelektrik } from './eelektrik';
@@ -16,6 +17,9 @@ export declare class ArchenArt extends Archen {
     cardImage: string;
 }
 export declare class ArcheopsArt extends Archeops {
+    cardImage: string;
+}
+export declare class BlitzleArt extends Blitzle {
     cardImage: string;
 }
 export declare class ChandelureArt extends Chandelure {

@@ -5,7 +5,9 @@ import { DangerousLaser } from './dangerous-laser';
 import { Dartrix } from './dartrix';
 import { Decidueye } from './decidueye';
 import { Fezandipitiex } from './fezandipiti-ex';
+import { Fraxure } from './fraxure';
 import { Genesect } from './genesect';
+import { Haxorus } from './haxorus';
 import { Kyurem } from './kyurem';
 import { Munkidoriex } from './munkidori-ex';
 import { NeutralCenter } from './neutral-center';
@@ -29,6 +31,12 @@ export declare class DecidueyeArt extends Decidueye {
     cardImage: string;
 }
 export declare class FezandipitiexArt extends Fezandipitiex {
+    cardImage: string;
+}
+export declare class FraxureArt extends Fraxure {
+    cardImage: string;
+}
+export declare class HaxorusArt extends Haxorus {
     cardImage: string;
 }
 export declare class KyuremArt extends Kyurem {

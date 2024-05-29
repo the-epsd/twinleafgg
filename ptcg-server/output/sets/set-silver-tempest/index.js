@@ -40,6 +40,7 @@ exports.setSilverTempest = [
     new card_images_1.SerperiorVSTARArt(),
     new card_images_1.UrsalunaVArt(),
     new card_images_1.VGuardEnergyArt(),
+    new card_images_1.WailordArt(),
     new card_images_1.WorkerArt(),
     new card_images_1.ZeraoraArt(),
     new card_images_1.BeldumArt(),

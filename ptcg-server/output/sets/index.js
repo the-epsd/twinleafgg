@@ -68,7 +68,7 @@ __exportStar(require("./set-ultra-prism"), exports);
 __exportStar(require("./set-forbidden-light"), exports);
 __exportStar(require("./set-celestial-storm"), exports);
 //export * from './set-dragon-majesty';
-//export * from './set-lost-thunder';
+__exportStar(require("./set-lost-thunder"), exports);
 __exportStar(require("./set-team-up"), exports);
 __exportStar(require("./set-unbroken-bonds"), exports);
 //export * from './set-unified-minds';

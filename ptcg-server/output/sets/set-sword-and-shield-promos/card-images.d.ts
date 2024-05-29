@@ -7,6 +7,7 @@ import { LeafeonVSTAR } from './leafeon-vstar';
 import { LucarioVSTAR } from './lucario-vstar';
 import { Manaphy } from './manaphy';
 import { ProfessorBurnet } from './professor-burnett';
+import { Tepig } from './tepig';
 import { VenusaurV } from './venusaur-v';
 import { VenusaurVMAX } from './venusaur-vmax';
 export declare class ChampionsFestivalArt extends ChampionsFestival {
@@ -34,6 +35,9 @@ export declare class ProfessorBurnettArt extends ProfessorBurnet {
     cardImage: string;
 }
 export declare class EscapeRopeArt extends EscapeRope {
+    cardImage: string;
+}
+export declare class TepigArt extends Tepig {
     cardImage: string;
 }
 export declare class VenusaurVArt extends VenusaurV {

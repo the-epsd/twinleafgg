@@ -25,7 +25,6 @@ export declare class Malamar extends PokemonCard {
         damage: number;
         text: string;
     }[];
-    regulationMark: string;
     set: string;
     name: string;
     fullName: string;

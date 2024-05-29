@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
-import { ProfessorOaksSetupArt } from './card-images';
+import { ProfessorOaksSetupArt, SlugmaArt } from './card-images';
 
 export const setCosmicEclipse: Card[] = [
   new ProfessorOaksSetupArt(),
+  new SlugmaArt()
 ];

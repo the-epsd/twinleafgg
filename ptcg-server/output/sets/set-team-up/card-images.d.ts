@@ -1,7 +1,11 @@
+import { Dragonite } from './dragonite';
 import { Lapras } from './lapras';
 import { PokemonCommunication } from './pokemon-communication';
 import { ViridianForest } from './viridian-forest';
 import { Zapdos } from './zapdos';
+export declare class DragoniteArt extends Dragonite {
+    cardImage: string;
+}
 export declare class LaprasArt extends Lapras {
     cardImage: string;
 }

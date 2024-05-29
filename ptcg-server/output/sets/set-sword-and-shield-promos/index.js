@@ -13,6 +13,7 @@ exports.setSwordAndShieldPromos = [
     new card_images_1.ProfessorBurnettArt(),
     new card_images_1.ManaphyArt(),
     new card_images_1.EscapeRopeArt(),
+    new card_images_1.TepigArt(),
     new card_images_1.VenusaurVArt(),
     new card_images_1.VenusaurVMAXArt(),
 ];

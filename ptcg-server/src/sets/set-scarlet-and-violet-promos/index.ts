@@ -5,6 +5,5 @@ import { AmpharosexArt, CharmanderArt, MimikyuexArt } from './card-images';
 export const setScarletAndVioletPromos: Card[] = [
   new AmpharosexArt(),
   new CharmanderArt(),
-  new MimikyuexArt(),
-
+  new MimikyuexArt()
 ];

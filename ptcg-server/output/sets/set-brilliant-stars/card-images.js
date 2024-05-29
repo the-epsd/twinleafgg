@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TeamYellsCheerArt = exports.ShayminVSTARArt = exports.ShayminVArt = exports.RoseannesBackupArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.MinccinoArt = exports.ManaphyArt = exports.MagmortarArt = exports.MagmaBasinArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.ElectabuzzArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = exports.AcerolasPremonitionArt = void 0;
+exports.TeamYellsCheerArt = exports.ShayminVSTARArt = exports.ShayminVArt = exports.RoseannesBackupArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.MinccinoArt = exports.ManaphyArt = exports.MagmortarArt = exports.MagmaBasinArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.ElectabuzzArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.AxewArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = exports.AcerolasPremonitionArt = void 0;
 const acerolas_premonition_1 = require("./acerolas-premonition");
 const aggron_v_1 = require("./aggron-v");
 const aggron_vmax_1 = require("./aggron-vmax");
 const arceus_v_1 = require("./arceus-v");
 const arceus_vstar_1 = require("./arceus-vstar");
+const axew_1 = require("./axew");
 const bibarel_1 = require("./bibarel");
 const cherens_care_1 = require("./cherens-care");
 const cleansing_gloves_1 = require("./cleansing-gloves");
@@ -68,6 +69,13 @@ class ArceusVSTARArt extends arceus_vstar_1.ArceusVSTAR {
     }
 }
 exports.ArceusVSTARArt = ArceusVSTARArt;
+class AxewArt extends axew_1.Axew {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_110_R_EN_LG.png';
+    }
+}
+exports.AxewArt = AxewArt;
 class BibarelArt extends bibarel_1.Bibarel {
     constructor() {
         super(...arguments);

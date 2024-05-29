@@ -20,7 +20,7 @@ export class Inkay extends PokemonCard {
     damage: 0,
     text: 'Your opponent\'s Active Pokémon is now Asleep.'
   }];
-  public regulationMark: string = 'G';
+
   public set: string = 'FLI';
   public name: string = 'Inkay';
   public fullName: string = 'Inkay FLI';
