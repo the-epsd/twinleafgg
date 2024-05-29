@@ -20,6 +20,7 @@ export declare class Player {
     energyPlayedTurn: number;
     stadiumPlayedTurn: number;
     stadiumUsedTurn: number;
+    usedDragonsWish: boolean;
     marker: Marker;
     attackMarker: Marker;
     abilityMarker: Marker;

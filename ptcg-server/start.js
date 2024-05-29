@@ -64,7 +64,7 @@ cardManager.defineSet(sets.setGuardiansRising);
 
 
 cardManager.defineSet(sets.setUltraPrism);
-
+cardManager.defineSet(sets.setForbiddenLight);
 cardManager.defineSet(sets.setCelestialStorm);
 
 cardManager.defineSet(sets.setTeamUp);

@@ -1,7 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { EnergyRetrievalArt, ExpShareArt, RainbowEnergyArt, RareCandyArt } from './card-images';
+import { DragonairArt, EnergyRetrievalArt, ExpShareArt, RainbowEnergyArt, RareCandyArt } from './card-images';
 
 export const setSunAndMoon: Card[] = [
+  new DragonairArt(),
   new EnergyRetrievalArt(),
   new ExpShareArt(),
   new RainbowEnergyArt(),
