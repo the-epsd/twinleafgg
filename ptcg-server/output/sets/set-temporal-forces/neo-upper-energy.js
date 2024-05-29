@@ -4,7 +4,6 @@ exports.NeoUpperEnergy = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 class NeoUpperEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -23,8 +22,8 @@ class NeoUpperEnergy extends energy_card_1.EnergyCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const attachedTo = effect.source;
-            if (attachedTo instanceof pokemon_card_1.PokemonCard && card_types_1.Stage.STAGE_2) {
+            const pokemon = effect.source.getPokemonCard();
+            if (pokemon && pokemon.stage == card_types_1.Stage.STAGE_2) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY, card_types_1.CardType.ANY] });
             }
             else {

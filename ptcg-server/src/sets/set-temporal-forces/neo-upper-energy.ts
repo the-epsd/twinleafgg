@@ -4,7 +4,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { PokemonCard } from '../../game/store/card/pokemon-card';
 
 export class NeoUpperEnergy extends EnergyCard {
 
@@ -34,12 +33,12 @@ export class NeoUpperEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
 
-      const attachedTo = effect.source;
+      const pokemon = effect.source.getPokemonCard();
 
-      if (attachedTo instanceof PokemonCard && Stage.STAGE_2) {
-        effect.energyMap.push({ card: this, provides: [ CardType.ANY, CardType.ANY ] });
+      if (pokemon && pokemon.stage == Stage.STAGE_2) {
+        effect.energyMap.push({ card: this, provides: [CardType.ANY, CardType.ANY] });
       } else {
-        effect.energyMap.push({ card: this, provides: [ CardType.COLORLESS ] });
+        effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
       }
       return state;
     }

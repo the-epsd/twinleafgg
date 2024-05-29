@@ -1,6 +1,6 @@
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
-import { AbilityUsed, SpecialCondition } from '../card/card-types';
+import { AbilityUsed, SpecialCondition, Stage } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Card } from '../card/card';
 import { Power, Attack } from '../card/pokemon-types';
@@ -38,6 +38,7 @@ export declare class PokemonCardList extends CardList {
     static readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = "OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER";
     tool: Card | undefined;
     stadium: Card | undefined;
+    stage: Stage;
     getPokemons(): PokemonCard[];
     getPokemonCard(): PokemonCard | undefined;
     isBasic(): boolean;

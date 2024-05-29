@@ -15,6 +15,7 @@ export class PokemonCardList extends CardList {
         this.abilityMarker = new Marker();
         this.pokemonPlayedTurn = 0;
         this.abilityHasBeenUsed = [];
+        this.stage = Stage.BASIC;
     }
     getPokemons() {
         const result = [];
