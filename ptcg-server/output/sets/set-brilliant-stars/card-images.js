@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TeamYellsCheerArt = exports.ShayminVSTARArt = exports.ShayminVArt = exports.RoseannesBackupArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.MinccinoArt = exports.ManaphyArt = exports.MagmortarArt = exports.MagmaBasinArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.ElectabuzzArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.AxewArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = exports.AcerolasPremonitionArt = void 0;
+exports.TeamYellsCheerArt = exports.ShayminVSTARArt = exports.ShayminVArt = exports.RoseannesBackupArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.MinccinoArt = exports.ManaphyArt = exports.MagmortarArt = exports.MagmaBasinArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.GarchompArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.ElectabuzzArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BibarelArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = exports.AcerolasPremonitionArt = void 0;
 const acerolas_premonition_1 = require("./acerolas-premonition");
 const aggron_v_1 = require("./aggron-v");
 const aggron_vmax_1 = require("./aggron-vmax");
@@ -18,6 +19,7 @@ const electabuzz_1 = require("./electabuzz");
 const electivire_1 = require("./electivire");
 const empoleon_1 = require("./empoleon");
 const entei_v_1 = require("./entei-v");
+const garchomp_1 = require("./garchomp");
 const lapras_1 = require("./lapras");
 const liepard_1 = require("./liepard");
 const lumineon_v_1 = require("./lumineon-v");
@@ -153,6 +155,13 @@ class EnteiVArt extends entei_v_1.EnteiV {
     }
 }
 exports.EnteiVArt = EnteiVArt;
+class GarchompArt extends garchomp_1.Garchomp {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_109_R_EN_LG.png';
+    }
+}
+exports.GarchompArt = GarchompArt;
 class LaprasArt extends lapras_1.Lapras {
     constructor() {
         super(...arguments);

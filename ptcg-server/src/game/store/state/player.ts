@@ -37,6 +37,8 @@ export class Player {
 
   stadiumUsedTurn: number = 0;
 
+  usedDragonsWish: boolean = false;
+
   marker = new Marker();
 
   attackMarker = new Marker();

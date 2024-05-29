@@ -20,6 +20,7 @@ export class Player {
         this.energyPlayedTurn = 0;
         this.stadiumPlayedTurn = 0;
         this.stadiumUsedTurn = 0;
+        this.usedDragonsWish = false;
         this.marker = new Marker();
         this.attackMarker = new Marker();
         this.abilityMarker = new Marker();

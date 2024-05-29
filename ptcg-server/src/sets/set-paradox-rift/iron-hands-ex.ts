@@ -52,11 +52,14 @@ export class IronHandsex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      this.usedAmpYouVeryMuch = false;
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       this.usedAmpYouVeryMuch = true;
     }
 
-    // Delta Plus
     if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -66,7 +69,7 @@ export class IronHandsex extends PokemonCard {
         return state;
       }
 
-      // Articuno wasn't attacking
+      // Iron Hands wasn't attacking
       const pokemonCard = opponent.active.getPokemonCard();
       if (pokemonCard !== this) {
         return state;

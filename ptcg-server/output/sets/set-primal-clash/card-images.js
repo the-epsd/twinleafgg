@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WailordExArt = exports.SilentLabArt = exports.ScorchedEarthArt = exports.RoughSeasArt = exports.MaxiesHiddenBallTrickArt = exports.ArchiesAceInTheHoleArt = exports.AcroBikeArt = void 0;
+exports.WailordExArt = exports.SilentLabArt = exports.ScorchedEarthArt = exports.RoughSeasArt = exports.MiloticArt = exports.MaxiesHiddenBallTrickArt = exports.ArchiesAceInTheHoleArt = exports.AcroBikeArt = void 0;
 const acro_bike_1 = require("./acro-bike");
 const archies_ace_in_the_hole_1 = require("./archies-ace-in-the hole");
 const maxies_hidden_ball_trick_1 = require("./maxies-hidden-ball-trick");
+const milotic_1 = require("./milotic");
 const rough_seas_1 = require("./rough-seas");
 const scorched_earth_1 = require("./scorched-earth");
 const silent_lab_1 = require("./silent-lab");
@@ -29,6 +30,13 @@ class MaxiesHiddenBallTrickArt extends maxies_hidden_ball_trick_1.MaxiesHiddenBa
     }
 }
 exports.MaxiesHiddenBallTrickArt = MaxiesHiddenBallTrickArt;
+class MiloticArt extends milotic_1.Milotic {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_044_R_EN.png';
+    }
+}
+exports.MiloticArt = MiloticArt;
 class RoughSeasArt extends rough_seas_1.RoughSeas {
     constructor() {
         super(...arguments);

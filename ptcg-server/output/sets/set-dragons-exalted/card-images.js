@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZweilousArt = exports.ToolScrapperArt = exports.SigilyphArt = exports.RoseradeArt = exports.RoseliaArt = exports.RescueScarfArt = exports.RayquazaExArt = exports.HydreigonArt = exports.HoOhExArt = exports.GarbodorArt = exports.EmolgaArt = exports.DeinoArt = exports.BouffalantArt = void 0;
+exports.ZweilousArt = exports.ToolScrapperArt = exports.SigilyphArt = exports.RoseradeArt = exports.RoseliaArt = exports.RescueScarfArt = exports.RayquazaExArt = exports.HydreigonArt = exports.HoOhExArt = exports.GarbodorArt = exports.GabiteArt = exports.EmolgaArt = exports.DeinoArt = exports.BouffalantArt = void 0;
 const bouffalant_1 = require("./bouffalant");
 const deino_1 = require("./deino");
 const emolga_1 = require("./emolga");
+const gabite_1 = require("./gabite");
 const garbodor_1 = require("./garbodor");
 const ho_oh_ex_1 = require("./ho-oh-ex");
 const hydreigon_1 = require("./hydreigon");
@@ -35,6 +36,13 @@ class EmolgaArt extends emolga_1.Emolga {
     }
 }
 exports.EmolgaArt = EmolgaArt;
+class GabiteArt extends gabite_1.Gabite {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRX/DRX_089_R_EN_LG.png';
+    }
+}
+exports.GabiteArt = GabiteArt;
 class GarbodorArt extends garbodor_1.Garbodor {
     constructor() {
         super(...arguments);
