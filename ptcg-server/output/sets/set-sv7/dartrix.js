@@ -31,11 +31,11 @@ class Dartrix extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV7';
+        this.set = 'SV6a';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '4';
         this.name = 'Dartrix';
-        this.fullName = 'Dartrix SV7';
+        this.fullName = 'Dartrix SV6a';
     }
     reduceEffect(store, state, effect) {
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {

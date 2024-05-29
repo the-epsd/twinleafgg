@@ -1,4 +1,4 @@
- import { Card, CardTag, EnergyType, Format, SuperType } from "ptcg-server";
+ import { Card, CardTag, EnergyType, Format, PokemonCard, SuperType } from "ptcg-server";
 
 export class FormatValidator {
   
@@ -14,6 +14,37 @@ export class FormatValidator {
       formats.push(this.getValidFormats(card));
       console.log(this.getValidFormats(card));
     });
+    
+    if (formats.includes(Format.GLC)) {
+      
+      // check for singleton violation
+      const nonBasicEnergyCards = cards.filter(c => c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC);
+      
+      const set = new Set(nonBasicEnergyCards.map(c => c.name));
+      
+      if (set.size > nonBasicEnergyCards.length) {
+        formats = formats.filter(f => f !== Format.GLC);        
+        return formats;
+      }
+      
+      if ((set.has('Professor Sycamore') && set.has('Professor Juniper')) ||
+          (set.has('Professor Juniper') && set.has('Professor\'s Research')) ||
+          (set.has('Professor Sycamore') && set.has('Professor\'s Research')) ||
+          (set.has('Lysandre') && set.has('Boss\'s Orders'))) {
+        formats = formats.filter(f => f!== Format.GLC);
+        return formats;        
+      }
+      
+      // check for different type violation
+      const pokemonCards = cards.filter(c => c.superType === SuperType.POKEMON);
+      
+      const pokemonSet = new Set(pokemonCards.map(c => (<PokemonCard>c).cardType));
+      
+      if (pokemonSet.size > 1) {
+        formats = formats.filter(f => f !== Format.GLC);        
+        return formats;        
+      }
+    }
     
     return formats.reduce((a, b) => a.filter(c => b.includes(c)))
   }
@@ -58,7 +89,7 @@ export class FormatValidator {
       case Format.GLC:
         var banList = BanLists[format];        
         var setDate = SetReleaseDates[card.set];
-        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && 
+        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
                !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
                !card.tags.some(t => [
                 CardTag.ACE_SPEC.toString(),
@@ -140,7 +171,6 @@ export const BanLists: { [key: number]: string[] } = {
   [Format.RETRO]: [],
   [Format.UNLIMITED]: [],
   [Format.STANDARD]: [
-    'Forest Seal Stone SVI 156'
   ]
 }
 
@@ -270,5 +300,7 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'MEW': new Date('2023-09-22'),
   'PAR': new Date('2023-11-03'),
   'PAF': new Date('2024-01-26'),
-  'TEF': new Date('2024-03-22')
+  'TEF': new Date('2024-03-22'),
+  'TWM': new Date('2024-05-24'),
+  'SV6a': new Date('2024-05-24')
 }

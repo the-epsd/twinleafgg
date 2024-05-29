@@ -16,7 +16,7 @@ export class Grabber extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = '151';
+  public set: string = 'MEW';
 
   public cardImage: string = 'assets/cardback.png';
 

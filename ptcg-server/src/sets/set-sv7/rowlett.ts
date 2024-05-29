@@ -33,7 +33,7 @@ export class Rowlett extends PokemonCard {
     },
   ];
 
-  public set: string = 'SV7';
+  public set: string = 'SV6a';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -41,7 +41,7 @@ export class Rowlett extends PokemonCard {
 
   public name: string = 'Rowlett';
 
-  public fullName: string = 'Rowlett SV7';
+  public fullName: string = 'Rowlett SV6a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

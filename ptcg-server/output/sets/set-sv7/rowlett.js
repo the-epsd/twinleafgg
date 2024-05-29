@@ -27,11 +27,11 @@ class Rowlett extends pokemon_card_1.PokemonCard {
                 text: ''
             },
         ];
-        this.set = 'SV7';
+        this.set = 'SV6a';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '3';
         this.name = 'Rowlett';
-        this.fullName = 'Rowlett SV7';
+        this.fullName = 'Rowlett SV6a';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -31,7 +31,7 @@ export class Electabuzz extends PokemonCard {
     text: ''
   }];
 
-  public set: string = '151';
+  public set: string = 'MEW';
 
   public regulationMark = 'G';
 

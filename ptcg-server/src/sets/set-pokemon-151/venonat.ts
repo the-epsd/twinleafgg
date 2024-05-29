@@ -24,7 +24,7 @@ export class Venonat extends PokemonCard {
       text: '',
     }
   ];
-  public set: string = '151';
+  public set: string = 'MEW';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
   public name: string = 'Venonat';

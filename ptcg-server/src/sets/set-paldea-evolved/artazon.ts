@@ -17,14 +17,14 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  if (slots.length < 0) {
+  if (slots.length == 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   } else {
     // handle no open slots
 
     const blocked: number[] = [];
     player.deck.cards.forEach((card, index) => {
-      if (card instanceof PokemonCard && card.tags.length > 0) {
+      if (card instanceof PokemonCard && card.tags.includes(CardTag.RADIANT) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.POKEMON_ex)) {
         blocked.push(index);
       }
     });

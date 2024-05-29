@@ -1,6 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { TapuKokoArt } from './card-images';
+import { KangaskhanArt, LugiaArt, TapuKokoArt } from './card-images';
 
 export const setDarknessAblaze: Card[] = [
+  new KangaskhanArt(),
+  new LugiaArt(),
   new TapuKokoArt(),
 ];

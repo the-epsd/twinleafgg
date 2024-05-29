@@ -2,6 +2,7 @@ import { LostVacuum } from '../set-lost-origin/lost-vacuum';
 import { RotomV } from '../set-lost-origin/rotom-v';
 import { Absol } from './absol';
 import { Bidoof } from './bidoof';
+import { Hoopa } from './hoopa';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
 import { RadiantCharizard } from './radiant-charizard';
@@ -18,6 +19,10 @@ export class AbsolArt extends Absol {
 
 export class BidoofArt extends Bidoof {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_111_R_EN_LG.png';
+}
+
+export class HoopaArt extends Hoopa {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_083_R_EN_LG.png';
 }
 
 export class KyogreArt extends Kyogre {

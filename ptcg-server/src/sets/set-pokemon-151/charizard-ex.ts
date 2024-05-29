@@ -44,7 +44,7 @@ export class Charizardex extends PokemonCard {
     },
   ];
 
-  public set: string = '151';
+  public set: string = 'MEW';
 
   public cardImage: string = 'assets/cardback.png';
 

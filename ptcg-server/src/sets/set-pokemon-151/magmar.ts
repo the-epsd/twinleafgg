@@ -31,7 +31,7 @@ export class Magmar extends PokemonCard {
     text: 'If Electabuzz is on your Bench, this attack does 80 more damage.'
   }];
 
-  public set: string = '151';
+  public set: string = 'MEW';
 
   public regulationMark = 'G';
 

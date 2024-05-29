@@ -35,7 +35,7 @@ export class Decidueye extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV7';
+  public set: string = 'SV6a';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -43,7 +43,7 @@ export class Decidueye extends PokemonCard {
 
   public name: string = 'Decidueye';
 
-  public fullName: string = 'Decidueye SV7';
+  public fullName: string = 'Decidueye SV6a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

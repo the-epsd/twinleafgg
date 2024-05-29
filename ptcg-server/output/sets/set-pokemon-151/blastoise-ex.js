@@ -34,7 +34,7 @@ class Blastoiseex extends pokemon_card_1.PokemonCard {
                     'this way.'
             }
         ];
-        this.set = '151';
+        this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '9';
         this.name = 'Blastoise ex';

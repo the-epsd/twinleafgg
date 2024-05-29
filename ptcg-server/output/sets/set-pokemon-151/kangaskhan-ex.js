@@ -28,7 +28,7 @@ class Kangaskhanex extends pokemon_card_1.PokemonCard {
                 text: 'Flip 4 coins. This attack does 100 damage for each heads.'
             }
         ];
-        this.set = '151';
+        this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '115';
         this.name = 'Kangaskhan ex';

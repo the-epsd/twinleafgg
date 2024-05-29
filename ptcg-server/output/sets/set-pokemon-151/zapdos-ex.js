@@ -31,7 +31,7 @@ class Zapdosex extends pokemon_card_1.PokemonCard {
                 damage: 120,
                 text: 'This attack also does 90 damage to 1 of your opponent\'s Benched Pokémon that has any damage counters on it. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }];
-        this.set = '151';
+        this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '145';
         this.name = 'Zapdos ex';

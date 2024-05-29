@@ -10,7 +10,7 @@ class Grabber extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = '151';
+        this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '162';
         this.name = 'Grabber';

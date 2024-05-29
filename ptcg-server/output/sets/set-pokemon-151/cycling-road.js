@@ -12,7 +12,7 @@ class CyclingRoad extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.regulationMark = 'G';
-        this.set = '151';
+        this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '157';
         this.name = 'Cycling Road';

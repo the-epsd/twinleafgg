@@ -30,7 +30,7 @@ class Jolteon extends pokemon_card_1.PokemonCard {
                 text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 90 more damage.'
             }
         ];
-        this.set = '151';
+        this.set = 'MEW';
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '135';
