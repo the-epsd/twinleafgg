@@ -7,7 +7,7 @@ $ptcg-hand-height: calc(var(--card-size) * #{$card-aspect-ratio} + #{4 * $ptcg-h
   margin-bottom: -30px;
   display: flex;
   height: $ptcg-hand-height;
-  overflow: auto;
+  overflow: visible;
 }
 
 .ptcg-hand-container {
@@ -53,6 +53,13 @@ ptcg-card {
 
   &.draggable {
     touch-action: none;
+  }
+  
+  transition: transform .2s;
+  
+  &:hover {
+    transform: scale(1.5);
+    z-index: 10;
   }
 }
 
