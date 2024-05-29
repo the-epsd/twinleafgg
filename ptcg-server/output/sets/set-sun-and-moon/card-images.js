@@ -1,11 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RareCandyArt = exports.RainbowEnergyArt = exports.NestBallArt = exports.ExpShareArt = exports.EnergyRetrievalArt = void 0;
+exports.RareCandyArt = exports.RainbowEnergyArt = exports.NestBallArt = exports.ExpShareArt = exports.EnergyRetrievalArt = exports.DragonairArt = void 0;
+const dragonair_1 = require("./dragonair");
 const energy_retrieval_1 = require("./energy-retrieval");
 const exp_share_1 = require("./exp-share");
 const nest_ball_1 = require("./nest-ball");
 const rainbow_energy_1 = require("./rainbow-energy");
 const rare_candy_1 = require("./rare-candy");
+class DragonairArt extends dragonair_1.Dragonair {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_095_R_EN.png';
+    }
+}
+exports.DragonairArt = DragonairArt;
 class EnergyRetrievalArt extends energy_retrieval_1.EnergyRetrieval {
     constructor() {
         super(...arguments);

@@ -1,6 +1,7 @@
 import { Bouffalant } from './bouffalant';
 import { Deino } from './deino';
 import { Emolga } from './emolga';
+import { Gabite } from './gabite';
 import { Garbodor } from './garbodor';
 import { HoOhEx } from './ho-oh-ex';
 import { Hydreigon } from './hydreigon';
@@ -22,6 +23,10 @@ export class DeinoArt extends Deino {
 
 export class EmolgaArt extends Emolga {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRX/DRX_045_R_EN.png';
+}
+
+export class GabiteArt extends Gabite {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRX/DRX_089_R_EN_LG.png';
 }
 
 export class GarbodorArt extends Garbodor {

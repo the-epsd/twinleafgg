@@ -38,10 +38,12 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
         this.usedAmpYouVeryMuch = false;
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            this.usedAmpYouVeryMuch = false;
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             this.usedAmpYouVeryMuch = true;
         }
-        // Delta Plus
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target === effect.player.active) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
@@ -49,7 +51,7 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
             if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
                 return state;
             }
-            // Articuno wasn't attacking
+            // Iron Hands wasn't attacking
             const pokemonCard = opponent.active.getPokemonCard();
             if (pokemonCard !== this) {
                 return state;

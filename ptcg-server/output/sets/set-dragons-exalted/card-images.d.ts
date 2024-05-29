@@ -1,6 +1,7 @@
 import { Bouffalant } from './bouffalant';
 import { Deino } from './deino';
 import { Emolga } from './emolga';
+import { Gabite } from './gabite';
 import { Garbodor } from './garbodor';
 import { HoOhEx } from './ho-oh-ex';
 import { Hydreigon } from './hydreigon';
@@ -18,6 +19,9 @@ export declare class DeinoArt extends Deino {
     cardImage: string;
 }
 export declare class EmolgaArt extends Emolga {
+    cardImage: string;
+}
+export declare class GabiteArt extends Gabite {
     cardImage: string;
 }
 export declare class GarbodorArt extends Garbodor {

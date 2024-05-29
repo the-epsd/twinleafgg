@@ -1,6 +1,7 @@
 import { AcroBike } from './acro-bike';
 import { ArchiesAceInTheHole } from './archies-ace-in-the hole';
 import { MaxiesHiddenBallTrick } from './maxies-hidden-ball-trick';
+import { Milotic } from './milotic';
 import { RoughSeas } from './rough-seas';
 import { ScorchedEarth } from './scorched-earth';
 import { SilentLab } from './silent-lab';
@@ -16,6 +17,10 @@ export class ArchiesAceInTheHoleArt extends ArchiesAceInTheHole {
 
 export class MaxiesHiddenBallTrickArt extends MaxiesHiddenBallTrick {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_133_R_EN.png';
+}
+
+export class MiloticArt extends Milotic {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_044_R_EN.png';
 }
 
 export class RoughSeasArt extends RoughSeas {

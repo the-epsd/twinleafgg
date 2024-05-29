@@ -12,6 +12,7 @@ export declare class LegacyEnergy extends EnergyCard {
     setNumber: string;
     name: string;
     fullName: string;
+    private legacyEnergyUsed;
     text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
