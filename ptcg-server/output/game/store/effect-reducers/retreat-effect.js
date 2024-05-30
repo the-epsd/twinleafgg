@@ -23,6 +23,9 @@ function retreatPokemon(store, state, effect) {
     player.retreatedTurn = state.turn;
     player.switchPokemon(player.bench[effect.benchIndex]);
 }
+// function flatMap<T, U>(array: T[], fn: (item: T) => U[]): U[] {
+//   return array.reduce((acc, item) => acc.concat(fn(item)), [] as U[]);
+// }
 function retreatReducer(store, state, effect) {
     /* Retreat pokemon */
     if (effect instanceof game_effects_1.RetreatEffect) {
@@ -49,6 +52,16 @@ function retreatReducer(store, state, effect) {
         if (enoughEnergies === false) {
             throw new game_error_1.GameError(game_message_1.GameMessage.NOT_ENOUGH_ENERGY);
         }
+        // If the player has the exact energy cost, automatically discard the energy and retreat
+        // if (StateUtils.checkExactEnergy(checkProvidedEnergy.energyMap, checkRetreatCost.cost)) {
+        //   const cards = flatMap(checkProvidedEnergy.energyMap, e => Array.from({ length: e.provides.length }, () => e.card));
+        //   player.active.clearEffects();
+        //   player.active.moveCardsTo(cards, player.discard);
+        //   retreatPokemon(store, state, effect);
+        //   const activePokemonCard = player.active.getPokemonCard() as PokemonCard;
+        //   activePokemonCard.movedToActiveThisTurn = true;
+        //   return state;
+        // }
         return store.prompt(state, new choose_energy_prompt_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, checkProvidedEnergy.energyMap, checkRetreatCost.cost), energy => {
             if (energy === null) {
                 return; // operation cancelled

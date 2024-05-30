@@ -1,15 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, StateUtils, PlayerType } from '../../game';
+import { StoreLike, State, PowerType, EnergyCard, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Venusaur extends PokemonCard {
   
-  public stage: Stage = Stage.BASIC;
-
-  public regulationMark: string = 'F';
+  public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Ivysaur';
 
@@ -48,48 +46,39 @@ export class Venusaur extends PokemonCard {
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        if (player.active.specialConditions.length === 0) {
-          return;
-        }
-
-        let hasVenusaurInPlay = false;
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (card === this) {
-            hasVenusaurInPlay = true;
-          }
-        });
-
-        if (!hasVenusaurInPlay) {
-          return state;
-        }
-
-        const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
-        store.reduceEffect(state, checkProvidedEnergyEffect);
-
-        const energyMap = checkProvidedEnergyEffect.energyMap;
-        const hasGrassEnergy = StateUtils.checkEnoughEnergy(energyMap, [ CardType.GRASS ]);
-
-        if (hasGrassEnergy) {
-          // Try to reduce PowerEffect, to check if something is blocking our ability
-          try {
-            const powerEffect = new PowerEffect(player, this.powers[0], this);
-            store.reduceEffect(state, powerEffect);
-          } catch {
-            return state;
-          }
-
-          energyMap.forEach(energy => {
-            if (Array.isArray(energy.provides) && energy.provides.includes(CardType.GRASS)) {
-              energy.provides = [CardType.GRASS, CardType.GRASS];
-            }
-          });
+    if (effect instanceof CheckProvidedEnergyEffect) {
+      const player = effect.player;
+      let hasVenusaurInPlay = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          hasVenusaurInPlay = true;
         }
       });
-    }
 
+      if (!hasVenusaurInPlay) {
+        return state;
+      }
+
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
+      }
+
+      if (hasVenusaurInPlay) {
+        effect.source.cards.forEach(c => {
+          if (c instanceof EnergyCard && !effect.energyMap.some(e => e.card === c)) {
+            const providedTypes = c.provides.filter(type => type === CardType.GRASS);
+            if (providedTypes.length > 0) {
+              effect.energyMap.push({ card: c, provides: [CardType.GRASS, CardType.GRASS] });
+            }
+          }
+        });
+        return state;
+      }
+      return state;
+    }
     return state;
   }
-
 }

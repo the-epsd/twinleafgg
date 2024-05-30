@@ -4,7 +4,6 @@ import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Venusaur extends PokemonCard {
     stage: Stage;
-    regulationMark: string;
     evolvesFrom: string;
     cardType: CardType;
     hp: number;
