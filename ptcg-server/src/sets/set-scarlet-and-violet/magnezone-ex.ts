@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -9,6 +9,8 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 export class Magnezoneex extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
+
+  public tags = [ CardTag.POKEMON_ex ];
 
   public evolvesFrom = 'Magneton';
 

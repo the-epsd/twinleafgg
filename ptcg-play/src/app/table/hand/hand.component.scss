@@ -58,9 +58,9 @@ ptcg-card {
   transition: transform .2s;
   
   &:hover {
-    transform: scale(1.5);
+    transform: scale(1.25) translateY(-12.5px); // Add translateY(-10px) to slide up 10px
     z-index: 10;
-  }
+  }  
 }
 
 ptcg-card:first-child {
