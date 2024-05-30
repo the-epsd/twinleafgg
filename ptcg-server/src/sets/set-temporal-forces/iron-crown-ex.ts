@@ -34,7 +34,7 @@ export class IronCrownex extends PokemonCard {
   public attacks = [
     {
       name: 'Twin Shotels',
-      cost: [  ],
+      cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
       damage: 0,
       text: 'This attack does 50 damage to 2 of your opponent\'s Pokémon. This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on those Pokémon.'
     }

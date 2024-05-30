@@ -1,7 +1,12 @@
-import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike } from '../../game/store/store-like';
+import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Bombirdierex extends PokemonCard {
+import { PowerType } from '../../game/store/card/pokemon-types';
+export declare class Florges extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
@@ -12,6 +17,11 @@ export declare class Bombirdierex extends PokemonCard {
         value: number;
     }[];
     retreat: CardType[];
+    powers: {
+        name: string;
+        powerType: PowerType;
+        text: string;
+    }[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -20,7 +30,6 @@ export declare class Bombirdierex extends PokemonCard {
     }[];
     set: string;
     cardImage: string;
-    regulationMark: string;
     setNumber: string;
     name: string;
     fullName: string;

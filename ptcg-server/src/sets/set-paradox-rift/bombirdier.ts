@@ -3,7 +3,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 
-export class BombirdierEx extends PokemonCard {
+export class Bombirdierex extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 

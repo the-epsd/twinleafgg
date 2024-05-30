@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BombirdierEx = void 0;
+exports.Bombirdierex = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class BombirdierEx extends game_1.PokemonCard {
+class Bombirdierex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.BASIC;
@@ -75,4 +75,4 @@ class BombirdierEx extends game_1.PokemonCard {
         return state;
     }
 }
-exports.BombirdierEx = BombirdierEx;
+exports.Bombirdierex = Bombirdierex;

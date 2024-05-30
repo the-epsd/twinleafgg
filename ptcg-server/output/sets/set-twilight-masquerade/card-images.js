@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TealMaskOgerponexArt = exports.SurvivalCastArt = exports.ScreamTailexArt = exports.PhioneArt = exports.PerrinArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.KieranArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.HyperAromaArt = exports.GreninjaexArt = exports.FrogadierArt = exports.FroakieArt = exports.EnhancedHammerArt = exports.CommunityCenterArt = exports.CaretakerArt = exports.BloodmoonUrsalunaexArt = exports.WellspringMaskOgerponexArt = exports.TatsugiriArt = exports.ScoopUpCycloneArt = exports.RotoStickArt = exports.MunkidoriArt = exports.MorpekoArt = exports.PoochyenaArt = exports.PerformanceFluteArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LegacyEnergyArt = exports.LaironArt = exports.GrookeyArt = exports.HasselArt = exports.HandyFanArt = exports.FroslassArt = exports.FestivalGroundsArt = exports.FarfetchdArt = exports.DragapultexArt = exports.DrakloakArt = exports.DreepyArt = exports.DipplinArt = exports.CornerstoneMaskOgerponexArt = exports.ChanseyArt = exports.CarmineArt = exports.BugCatchingSetArt = exports.BlisseyexArt = exports.ApplinArt2 = exports.ApplinArt = exports.AronArt = exports.AggronArt = void 0;
-exports.JammingTowerArt = exports.ChiYuArt = exports.HearthflameMaskOgerponexArt = exports.TingLuArt = exports.ShinxArt = exports.LanasAssistanceArt = exports.EmolgaArt = exports.ClefairyArt = exports.ClefableArt = exports.ThwackeyArt = exports.UnfairStampArt = void 0;
+exports.PoochyenaArt = exports.PhioneArt = exports.PerrinArt = exports.PerformanceFluteArt = exports.MunkidoriArt = exports.MorpekoArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.LegacyEnergyArt = exports.LanasAssistanceArt = exports.LaironArt = exports.KieranArt = exports.JammingTowerArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.HyperAromaArt = exports.HearthflameMaskOgerponexArt = exports.HasselArt = exports.HandyFanArt = exports.GrookeyArt = exports.GreninjaexArt = exports.FroslassArt = exports.FrogadierArt = exports.FroakieArt = exports.FestivalGroundsArt = exports.FarfetchdArt = exports.EnhancedHammerArt = exports.EmolgaArt = exports.DreepyArt = exports.DrakloakArt = exports.DragapultexArt = exports.DipplinArt = exports.CornerstoneMaskOgerponexArt = exports.CommunityCenterArt = exports.ClefairyArt = exports.ClefableArt = exports.ChiYuArt = exports.ChanseyArt = exports.CarmineArt = exports.CaretakerArt = exports.BugCatchingSetArt = exports.BloodmoonUrsalunaexArt = exports.BlisseyexArt = exports.AronArt = exports.ApplinArt2 = exports.ApplinArt = exports.AggronArt = void 0;
+exports.WellspringMaskOgerponexArt = exports.UnfairStampArt = exports.TingLuArt = exports.ThwackeyArt = exports.TealMaskOgerponexArt = exports.TatsugiriArt = exports.SurvivalCastArt = exports.ShinxArt = exports.ScoopUpCycloneArt = exports.ScreamTailexArt = exports.RotoStickArt = void 0;
 const aggron_1 = require("./aggron");
 const aron_1 = require("./aron");
 const blissey_ex_1 = require("./blissey-ex");
@@ -70,16 +70,6 @@ class AggronArt extends aggron_1.Aggron {
     }
 }
 exports.AggronArt = AggronArt;
-// export class AlakazamArt extends Alakazam {
-//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_082_R_EN_LG.png';
-// }
-class AronArt extends aron_1.Aron {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_120_R_EN_LG.png';
-    }
-}
-exports.AronArt = AronArt;
 class ApplinArt extends applin_1.Applin {
     constructor() {
         super(...arguments);
@@ -94,6 +84,13 @@ class ApplinArt2 extends applin_2_1.Applin2 {
     }
 }
 exports.ApplinArt2 = ApplinArt2;
+class AronArt extends aron_1.Aron {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_120_R_EN_LG.png';
+    }
+}
+exports.AronArt = AronArt;
 class BlisseyexArt extends blissey_ex_1.Blisseyex {
     constructor() {
         super(...arguments);
@@ -101,6 +98,13 @@ class BlisseyexArt extends blissey_ex_1.Blisseyex {
     }
 }
 exports.BlisseyexArt = BlisseyexArt;
+class BloodmoonUrsalunaexArt extends bloodmoon_ursaluna_ex_1.BloodmoonUrsalunaex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_141_R_EN_LG.png';
+    }
+}
+exports.BloodmoonUrsalunaexArt = BloodmoonUrsalunaexArt;
 class BugCatchingSetArt extends bug_catching_set_1.BugCatchingSet {
     constructor() {
         super(...arguments);
@@ -108,6 +112,13 @@ class BugCatchingSetArt extends bug_catching_set_1.BugCatchingSet {
     }
 }
 exports.BugCatchingSetArt = BugCatchingSetArt;
+class CaretakerArt extends caretaker_1.Caretaker {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_144_R_EN_LG.png';
+    }
+}
+exports.CaretakerArt = CaretakerArt;
 class CarmineArt extends carmine_1.Carmine {
     constructor() {
         super(...arguments);
@@ -122,6 +133,34 @@ class ChanseyArt extends chansey_1.Chansey {
     }
 }
 exports.ChanseyArt = ChanseyArt;
+class ChiYuArt extends chi_yu_1.ChiYu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_039_R_EN_LG.png';
+    }
+}
+exports.ChiYuArt = ChiYuArt;
+class ClefableArt extends clefable_1.Clefable {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_078_R_EN_LG.png';
+    }
+}
+exports.ClefableArt = ClefableArt;
+class ClefairyArt extends clefairy_1.Clefairy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_077_R_EN_LG.png';
+    }
+}
+exports.ClefairyArt = ClefairyArt;
+class CommunityCenterArt extends community_center_1.CommunityCenter {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_146_R_EN_LG.png';
+    }
+}
+exports.CommunityCenterArt = CommunityCenterArt;
 class CornerstoneMaskOgerponexArt extends cornerstone_mask_ogerpon_ex_1.CornerstoneMaskOgerponex {
     constructor() {
         super(...arguments);
@@ -136,20 +175,6 @@ class DipplinArt extends dipplin_1.Dipplin {
     }
 }
 exports.DipplinArt = DipplinArt;
-class DreepyArt extends dreepy_1.Dreepy {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_128_R_EN_LG.png';
-    }
-}
-exports.DreepyArt = DreepyArt;
-class DrakloakArt extends drakloak_1.Drakloak {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_129_R_EN_LG.png';
-    }
-}
-exports.DrakloakArt = DrakloakArt;
 class DragapultexArt extends dragapult_ex_1.Dragapultex {
     constructor() {
         super(...arguments);
@@ -157,6 +182,34 @@ class DragapultexArt extends dragapult_ex_1.Dragapultex {
     }
 }
 exports.DragapultexArt = DragapultexArt;
+class DrakloakArt extends drakloak_1.Drakloak {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_129_R_EN_LG.png';
+    }
+}
+exports.DrakloakArt = DrakloakArt;
+class DreepyArt extends dreepy_1.Dreepy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_128_R_EN_LG.png';
+    }
+}
+exports.DreepyArt = DreepyArt;
+class EmolgaArt extends emolga_1.Emolga {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_069_R_EN_LG.png';
+    }
+}
+exports.EmolgaArt = EmolgaArt;
+class EnhancedHammerArt extends enhanced_hammer_1.EnhancedHammer {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_148_R_EN_LG.png';
+    }
+}
+exports.EnhancedHammerArt = EnhancedHammerArt;
 class FarfetchdArt extends farfetchd_1.Farfetchd {
     constructor() {
         super(...arguments);
@@ -171,153 +224,6 @@ class FestivalGroundsArt extends festival_plaza_1.FestivalGrounds {
     }
 }
 exports.FestivalGroundsArt = FestivalGroundsArt;
-class FroslassArt extends froslass_1.Froslass {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_053_R_EN_LG.png';
-    }
-}
-exports.FroslassArt = FroslassArt;
-class HandyFanArt extends handy_fan_1.HandyFan {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_150_R_EN_LG.png';
-    }
-}
-exports.HandyFanArt = HandyFanArt;
-class HasselArt extends hassel_1.Hassel {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_151_R_EN_LG.png';
-    }
-}
-exports.HasselArt = HasselArt;
-class GrookeyArt extends grookey_1.Grookey {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_014_R_EN_LG.png';
-    }
-}
-exports.GrookeyArt = GrookeyArt;
-class LaironArt extends lairon_1.Lairon {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_121_R_EN_LG.png';
-    }
-}
-exports.LaironArt = LaironArt;
-class LegacyEnergyArt extends legacy_energy_1.LegacyEnergy {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_167_R_EN_LG.png';
-    }
-}
-exports.LegacyEnergyArt = LegacyEnergyArt;
-class LuxioArt extends luxio_1.Luxio {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_067_R_EN_LG.png';
-    }
-}
-exports.LuxioArt = LuxioArt;
-class LuxrayexArt extends luxray_ex_1.Luxrayex {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_068_R_EN_LG.png';
-    }
-}
-exports.LuxrayexArt = LuxrayexArt;
-class MightyenaArt extends mightyena_1.Mightyena {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_114_R_EN_LG.png';
-    }
-}
-exports.MightyenaArt = MightyenaArt;
-class PerformanceFluteArt extends performance_flute_1.PerformanceFlute {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_142_R_EN_LG.png';
-    }
-}
-exports.PerformanceFluteArt = PerformanceFluteArt;
-class PoochyenaArt extends poochyena_1.Poochyena {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_113_R_EN_LG.png';
-    }
-}
-exports.PoochyenaArt = PoochyenaArt;
-class MorpekoArt extends morpeko_1.Morpeko {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_072_R_EN_LG.png';
-    }
-}
-exports.MorpekoArt = MorpekoArt;
-class MunkidoriArt extends munkidori_1.Munkidori {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_095_R_EN_LG.png';
-    }
-}
-exports.MunkidoriArt = MunkidoriArt;
-class RotoStickArt extends roto_stick_1.RotoStick {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_133_R_EN_LG.png';
-    }
-}
-exports.RotoStickArt = RotoStickArt;
-class ScoopUpCycloneArt extends scoop_up_cyclone_1.ScoopUpCyclone {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_162_R_EN_LG.png';
-    }
-}
-exports.ScoopUpCycloneArt = ScoopUpCycloneArt;
-class TatsugiriArt extends tatsugiri_1.Tatsugiri {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_131_R_EN_LG.png';
-    }
-}
-exports.TatsugiriArt = TatsugiriArt;
-class WellspringMaskOgerponexArt extends wellspring_mask_ogerpon_ex_1.WellspringMaskOgerponex {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_064_R_EN_LG.png';
-    }
-}
-exports.WellspringMaskOgerponexArt = WellspringMaskOgerponexArt;
-class BloodmoonUrsalunaexArt extends bloodmoon_ursaluna_ex_1.BloodmoonUrsalunaex {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_141_R_EN_LG.png';
-    }
-}
-exports.BloodmoonUrsalunaexArt = BloodmoonUrsalunaexArt;
-class CaretakerArt extends caretaker_1.Caretaker {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_144_R_EN_LG.png';
-    }
-}
-exports.CaretakerArt = CaretakerArt;
-class CommunityCenterArt extends community_center_1.CommunityCenter {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_146_R_EN_LG.png';
-    }
-}
-exports.CommunityCenterArt = CommunityCenterArt;
-class EnhancedHammerArt extends enhanced_hammer_1.EnhancedHammer {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_148_R_EN_LG.png';
-    }
-}
-exports.EnhancedHammerArt = EnhancedHammerArt;
 class FroakieArt extends froakie_1.Froakie {
     constructor() {
         super(...arguments);
@@ -332,6 +238,13 @@ class FrogadierArt extends frogadier_1.Frogadier {
     }
 }
 exports.FrogadierArt = FrogadierArt;
+class FroslassArt extends froslass_1.Froslass {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_053_R_EN_LG.png';
+    }
+}
+exports.FroslassArt = FroslassArt;
 class GreninjaexArt extends greninja_ex_1.Greninjaex {
     constructor() {
         super(...arguments);
@@ -339,6 +252,34 @@ class GreninjaexArt extends greninja_ex_1.Greninjaex {
     }
 }
 exports.GreninjaexArt = GreninjaexArt;
+class GrookeyArt extends grookey_1.Grookey {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_014_R_EN_LG.png';
+    }
+}
+exports.GrookeyArt = GrookeyArt;
+class HandyFanArt extends handy_fan_1.HandyFan {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_150_R_EN_LG.png';
+    }
+}
+exports.HandyFanArt = HandyFanArt;
+class HasselArt extends hassel_1.Hassel {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_151_R_EN_LG.png';
+    }
+}
+exports.HasselArt = HasselArt;
+class HearthflameMaskOgerponexArt extends hearthflame_mask_ogerpon_ex_1.HearthflameMaskOgerponex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_040_R_EN_LG.png';
+    }
+}
+exports.HearthflameMaskOgerponexArt = HearthflameMaskOgerponexArt;
 class HyperAromaArt extends hyper_aroma_1.HyperAroma {
     constructor() {
         super(...arguments);
@@ -360,6 +301,13 @@ class IronThornsexArt extends iron_thorns_ex_1.IronThornsex {
     }
 }
 exports.IronThornsexArt = IronThornsexArt;
+class JammingTowerArt extends jamming_tower_1.JammingTower {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_153_R_EN_LG.png';
+    }
+}
+exports.JammingTowerArt = JammingTowerArt;
 class KieranArt extends kieran_1.Kieran {
     constructor() {
         super(...arguments);
@@ -367,6 +315,27 @@ class KieranArt extends kieran_1.Kieran {
     }
 }
 exports.KieranArt = KieranArt;
+class LaironArt extends lairon_1.Lairon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_121_R_EN_LG.png';
+    }
+}
+exports.LaironArt = LaironArt;
+class LanasAssistanceArt extends lanas_assistance_1.LanasAssistance {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_155_R_EN_LG.png';
+    }
+}
+exports.LanasAssistanceArt = LanasAssistanceArt;
+class LegacyEnergyArt extends legacy_energy_1.LegacyEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_167_R_EN_LG.png';
+    }
+}
+exports.LegacyEnergyArt = LegacyEnergyArt;
 class LoveBallArt extends love_ball_1.LoveBall {
     constructor() {
         super(...arguments);
@@ -381,6 +350,48 @@ class LuckyHelmetArt extends lucky_helmet_1.LuckyHelmet {
     }
 }
 exports.LuckyHelmetArt = LuckyHelmetArt;
+class LuxioArt extends luxio_1.Luxio {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_067_R_EN_LG.png';
+    }
+}
+exports.LuxioArt = LuxioArt;
+class LuxrayexArt extends luxray_ex_1.Luxrayex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_068_R_EN_LG.png';
+    }
+}
+exports.LuxrayexArt = LuxrayexArt;
+class MightyenaArt extends mightyena_1.Mightyena {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_114_R_EN_LG.png';
+    }
+}
+exports.MightyenaArt = MightyenaArt;
+class MorpekoArt extends morpeko_1.Morpeko {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_072_R_EN_LG.png';
+    }
+}
+exports.MorpekoArt = MorpekoArt;
+class MunkidoriArt extends munkidori_1.Munkidori {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_095_R_EN_LG.png';
+    }
+}
+exports.MunkidoriArt = MunkidoriArt;
+class PerformanceFluteArt extends performance_flute_1.PerformanceFlute {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_142_R_EN_LG.png';
+    }
+}
+exports.PerformanceFluteArt = PerformanceFluteArt;
 class PerrinArt extends perrin_1.Perrin {
     constructor() {
         super(...arguments);
@@ -395,6 +406,20 @@ class PhioneArt extends phione_1.Phione {
     }
 }
 exports.PhioneArt = PhioneArt;
+class PoochyenaArt extends poochyena_1.Poochyena {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_113_R_EN_LG.png';
+    }
+}
+exports.PoochyenaArt = PoochyenaArt;
+class RotoStickArt extends roto_stick_1.RotoStick {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_133_R_EN_LG.png';
+    }
+}
+exports.RotoStickArt = RotoStickArt;
 class ScreamTailexArt extends scream_tail_ex_1.ScreamTailex {
     constructor() {
         super(...arguments);
@@ -402,62 +427,13 @@ class ScreamTailexArt extends scream_tail_ex_1.ScreamTailex {
     }
 }
 exports.ScreamTailexArt = ScreamTailexArt;
-class SurvivalCastArt extends survival_cast_1.SurvivalCast {
+class ScoopUpCycloneArt extends scoop_up_cyclone_1.ScoopUpCyclone {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_164_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_162_R_EN_LG.png';
     }
 }
-exports.SurvivalCastArt = SurvivalCastArt;
-class TealMaskOgerponexArt extends teal_mask_ogerpon_ex_1.TealMaskOgerponex {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_025_R_EN_LG.png';
-    }
-}
-exports.TealMaskOgerponexArt = TealMaskOgerponexArt;
-class UnfairStampArt extends unfair_stamp_1.UnfairStamp {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_165_R_EN_LG.png';
-    }
-}
-exports.UnfairStampArt = UnfairStampArt;
-class ThwackeyArt extends thwackey_1.Thwackey {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_015_R_EN_LG.png';
-    }
-}
-exports.ThwackeyArt = ThwackeyArt;
-class ClefableArt extends clefable_1.Clefable {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_078_R_EN_LG.png';
-    }
-}
-exports.ClefableArt = ClefableArt;
-class ClefairyArt extends clefairy_1.Clefairy {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_077_R_EN_LG.png';
-    }
-}
-exports.ClefairyArt = ClefairyArt;
-class EmolgaArt extends emolga_1.Emolga {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_069_R_EN_LG.png';
-    }
-}
-exports.EmolgaArt = EmolgaArt;
-class LanasAssistanceArt extends lanas_assistance_1.LanasAssistance {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_155_R_EN_LG.png';
-    }
-}
-exports.LanasAssistanceArt = LanasAssistanceArt;
+exports.ScoopUpCycloneArt = ScoopUpCycloneArt;
 class ShinxArt extends shinx_1.Shinx {
     constructor() {
         super(...arguments);
@@ -465,6 +441,34 @@ class ShinxArt extends shinx_1.Shinx {
     }
 }
 exports.ShinxArt = ShinxArt;
+class SurvivalCastArt extends survival_cast_1.SurvivalCast {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_164_R_EN_LG.png';
+    }
+}
+exports.SurvivalCastArt = SurvivalCastArt;
+class TatsugiriArt extends tatsugiri_1.Tatsugiri {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_131_R_EN_LG.png';
+    }
+}
+exports.TatsugiriArt = TatsugiriArt;
+class TealMaskOgerponexArt extends teal_mask_ogerpon_ex_1.TealMaskOgerponex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_025_R_EN_LG.png';
+    }
+}
+exports.TealMaskOgerponexArt = TealMaskOgerponexArt;
+class ThwackeyArt extends thwackey_1.Thwackey {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_015_R_EN_LG.png';
+    }
+}
+exports.ThwackeyArt = ThwackeyArt;
 class TingLuArt extends ting_lu_1.TingLu {
     constructor() {
         super(...arguments);
@@ -472,24 +476,17 @@ class TingLuArt extends ting_lu_1.TingLu {
     }
 }
 exports.TingLuArt = TingLuArt;
-class HearthflameMaskOgerponexArt extends hearthflame_mask_ogerpon_ex_1.HearthflameMaskOgerponex {
+class UnfairStampArt extends unfair_stamp_1.UnfairStamp {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_040_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_165_R_EN_LG.png';
     }
 }
-exports.HearthflameMaskOgerponexArt = HearthflameMaskOgerponexArt;
-class ChiYuArt extends chi_yu_1.ChiYu {
+exports.UnfairStampArt = UnfairStampArt;
+class WellspringMaskOgerponexArt extends wellspring_mask_ogerpon_ex_1.WellspringMaskOgerponex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_039_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_064_R_EN_LG.png';
     }
 }
-exports.ChiYuArt = ChiYuArt;
-class JammingTowerArt extends jamming_tower_1.JammingTower {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_153_R_EN_LG.png';
-    }
-}
-exports.JammingTowerArt = JammingTowerArt;
+exports.WellspringMaskOgerponexArt = WellspringMaskOgerponexArt;

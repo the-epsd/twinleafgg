@@ -52,7 +52,7 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '71';
+        this.setNumber = '78';
         this.name = 'Flutter Mane';
         this.fullName = 'Flutter Mane TEF';
     }

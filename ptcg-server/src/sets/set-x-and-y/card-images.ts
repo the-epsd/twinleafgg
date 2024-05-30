@@ -1,5 +1,6 @@
 import { DoubleColorlessEnergy } from './double-colorless-energy';
 import { Evosoda } from './evosoda';
+import { FairyEnergy } from './fairy-energy';
 import { MuscleBand } from './muscle-band';
 import { Pikachu } from './pikachu';
 import { ProfessorsLetter } from './professors-letter';
@@ -8,6 +9,13 @@ import { ShadowCircle } from './shadow-circle';
 import { Shauna } from './shauna';
 import { SuperPotion } from './super-potion';
 import { YveltalEx } from './yveltal-ex';
+
+export class FairyEnergyArt extends FairyEnergy {
+  public set: string = '';
+  public setNumber = '9';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/XY/XY_140_R_EN_LG.png';
+  public fullName: string = 'Fairy Energy';
+}
 
 export class DoubleColorlessEnergyArt extends DoubleColorlessEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/XY/XY_130_R_EN.png';

@@ -23,9 +23,7 @@ class Bibarel extends pokemon_card_1.PokemonCard {
                 name: 'Industrious Incisors',
                 useWhenInPlay: true,
                 powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'As long as this Pokemon is on your Bench, prevent all ' +
-                    'damage done to this Pokemon by attacks (both yours and ' +
-                    'your opponent\'s).'
+                text: 'Once during your turn, you may draw cards until you have 5 cards in your hand.'
             }];
         this.attacks = [{
                 name: 'Hyper Fang',

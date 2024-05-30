@@ -1,4 +1,5 @@
 import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
+import { Bombirdierex } from './bombirdier';
 import { Bounsweet } from './bounsweet';
 import { BruteBonnet } from './brute-bonnet';
 import { ChiYu } from './chi-yu';
@@ -49,6 +50,9 @@ import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
 import { Xatu } from './xatu';
 export declare class AncientBoosterEnergyCapsuleArt extends AncientBoosterEnergyCapsule {
+    cardImage: string;
+}
+export declare class BombirdierexArt extends Bombirdierex {
     cardImage: string;
 }
 export declare class BounsweetArt extends Bounsweet {

@@ -22,6 +22,7 @@ import { FlutterMane } from './flutter-mane';
 import { Gastly } from './gastly';
 import { Gengarex } from './gengar-ex';
 import { GougingFireex } from './gouging-fire-ex';
+import { GreatTusk } from './great-tusk';
 import { Grotle } from './grotle';
 import { HandTrimmer } from './hand-trimmer';
 import { Haunter } from './haunter';
@@ -35,6 +36,7 @@ import { Koraidon } from './koraidon';
 import { Koraidonex } from './koraidon-ex';
 import { MasterBall } from './master-ball';
 import { MaximumBelt } from './maximum-belt';
+import { Metagross } from './metagross';
 import { Metang } from './metang';
 import { Minccino } from './minccino';
 import { Miraidon } from './miraidon';
@@ -131,6 +133,9 @@ export declare class FutureBoosterEnergyCapsuleArt extends FutureBoosterEnergyCa
     set: string;
     setNumber: string;
 }
+export declare class GreatTuskArt extends GreatTusk {
+    cardImage: string;
+}
 export declare class GastlyArt extends Gastly {
     cardImage: string;
 }
@@ -180,6 +185,9 @@ export declare class MasterBallArt extends MasterBall {
     cardImage: string;
 }
 export declare class MetangArt extends Metang {
+    cardImage: string;
+}
+export declare class MetagrossArt extends Metagross {
     cardImage: string;
 }
 export declare class MinccinoArt extends Minccino {

@@ -62,19 +62,25 @@ import { CornerstoneMaskOgerponex } from './cornerstone-mask-ogerpon-ex';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
-export declare class AronArt extends Aron {
-    cardImage: string;
-}
 export declare class ApplinArt extends Applin {
     cardImage: string;
 }
 export declare class ApplinArt2 extends Applin2 {
     cardImage: string;
 }
+export declare class AronArt extends Aron {
+    cardImage: string;
+}
 export declare class BlisseyexArt extends Blisseyex {
     cardImage: string;
 }
+export declare class BloodmoonUrsalunaexArt extends BloodmoonUrsalunaex {
+    cardImage: string;
+}
 export declare class BugCatchingSetArt extends BugCatchingSet {
+    cardImage: string;
+}
+export declare class CaretakerArt extends Caretaker {
     cardImage: string;
 }
 export declare class CarmineArt extends Carmine {
@@ -83,19 +89,37 @@ export declare class CarmineArt extends Carmine {
 export declare class ChanseyArt extends Chansey {
     cardImage: string;
 }
+export declare class ChiYuArt extends ChiYu {
+    cardImage: string;
+}
+export declare class ClefableArt extends Clefable {
+    cardImage: string;
+}
+export declare class ClefairyArt extends Clefairy {
+    cardImage: string;
+}
+export declare class CommunityCenterArt extends CommunityCenter {
+    cardImage: string;
+}
 export declare class CornerstoneMaskOgerponexArt extends CornerstoneMaskOgerponex {
     cardImage: string;
 }
 export declare class DipplinArt extends Dipplin {
     cardImage: string;
 }
-export declare class DreepyArt extends Dreepy {
+export declare class DragapultexArt extends Dragapultex {
     cardImage: string;
 }
 export declare class DrakloakArt extends Drakloak {
     cardImage: string;
 }
-export declare class DragapultexArt extends Dragapultex {
+export declare class DreepyArt extends Dreepy {
+    cardImage: string;
+}
+export declare class EmolgaArt extends Emolga {
+    cardImage: string;
+}
+export declare class EnhancedHammerArt extends EnhancedHammer {
     cardImage: string;
 }
 export declare class FarfetchdArt extends Farfetchd {
@@ -104,7 +128,19 @@ export declare class FarfetchdArt extends Farfetchd {
 export declare class FestivalGroundsArt extends FestivalGrounds {
     cardImage: string;
 }
+export declare class FroakieArt extends Froakie {
+    cardImage: string;
+}
+export declare class FrogadierArt extends Frogadier {
+    cardImage: string;
+}
 export declare class FroslassArt extends Froslass {
+    cardImage: string;
+}
+export declare class GreninjaexArt extends Greninjaex {
+    cardImage: string;
+}
+export declare class GrookeyArt extends Grookey {
     cardImage: string;
 }
 export declare class HandyFanArt extends HandyFan {
@@ -113,67 +149,7 @@ export declare class HandyFanArt extends HandyFan {
 export declare class HasselArt extends Hassel {
     cardImage: string;
 }
-export declare class GrookeyArt extends Grookey {
-    cardImage: string;
-}
-export declare class LaironArt extends Lairon {
-    cardImage: string;
-}
-export declare class LegacyEnergyArt extends LegacyEnergy {
-    cardImage: string;
-}
-export declare class LuxioArt extends Luxio {
-    cardImage: string;
-}
-export declare class LuxrayexArt extends Luxrayex {
-    cardImage: string;
-}
-export declare class MightyenaArt extends Mightyena {
-    cardImage: string;
-}
-export declare class PerformanceFluteArt extends PerformanceFlute {
-    cardImage: string;
-}
-export declare class PoochyenaArt extends Poochyena {
-    cardImage: string;
-}
-export declare class MorpekoArt extends Morpeko {
-    cardImage: string;
-}
-export declare class MunkidoriArt extends Munkidori {
-    cardImage: string;
-}
-export declare class RotoStickArt extends RotoStick {
-    cardImage: string;
-}
-export declare class ScoopUpCycloneArt extends ScoopUpCyclone {
-    cardImage: string;
-}
-export declare class TatsugiriArt extends Tatsugiri {
-    cardImage: string;
-}
-export declare class WellspringMaskOgerponexArt extends WellspringMaskOgerponex {
-    cardImage: string;
-}
-export declare class BloodmoonUrsalunaexArt extends BloodmoonUrsalunaex {
-    cardImage: string;
-}
-export declare class CaretakerArt extends Caretaker {
-    cardImage: string;
-}
-export declare class CommunityCenterArt extends CommunityCenter {
-    cardImage: string;
-}
-export declare class EnhancedHammerArt extends EnhancedHammer {
-    cardImage: string;
-}
-export declare class FroakieArt extends Froakie {
-    cardImage: string;
-}
-export declare class FrogadierArt extends Frogadier {
-    cardImage: string;
-}
-export declare class GreninjaexArt extends Greninjaex {
+export declare class HearthflameMaskOgerponexArt extends HearthflameMaskOgerponex {
     cardImage: string;
 }
 export declare class HyperAromaArt extends HyperAroma {
@@ -185,7 +161,19 @@ export declare class IronLeavesArt extends IronLeaves {
 export declare class IronThornsexArt extends IronThornsex {
     cardImage: string;
 }
+export declare class JammingTowerArt extends JammingTower {
+    cardImage: string;
+}
 export declare class KieranArt extends Kieran {
+    cardImage: string;
+}
+export declare class LaironArt extends Lairon {
+    cardImage: string;
+}
+export declare class LanasAssistanceArt extends LanasAssistance {
+    cardImage: string;
+}
+export declare class LegacyEnergyArt extends LegacyEnergy {
     cardImage: string;
 }
 export declare class LoveBallArt extends LoveBall {
@@ -194,51 +182,63 @@ export declare class LoveBallArt extends LoveBall {
 export declare class LuckyHelmetArt extends LuckyHelmet {
     cardImage: string;
 }
+export declare class LuxioArt extends Luxio {
+    cardImage: string;
+}
+export declare class LuxrayexArt extends Luxrayex {
+    cardImage: string;
+}
+export declare class MightyenaArt extends Mightyena {
+    cardImage: string;
+}
+export declare class MorpekoArt extends Morpeko {
+    cardImage: string;
+}
+export declare class MunkidoriArt extends Munkidori {
+    cardImage: string;
+}
+export declare class PerformanceFluteArt extends PerformanceFlute {
+    cardImage: string;
+}
 export declare class PerrinArt extends Perrin {
     cardImage: string;
 }
 export declare class PhioneArt extends Phione {
     cardImage: string;
 }
+export declare class PoochyenaArt extends Poochyena {
+    cardImage: string;
+}
+export declare class RotoStickArt extends RotoStick {
+    cardImage: string;
+}
 export declare class ScreamTailexArt extends ScreamTailex {
     cardImage: string;
 }
-export declare class SurvivalCastArt extends SurvivalCast {
-    cardImage: string;
-}
-export declare class TealMaskOgerponexArt extends TealMaskOgerponex {
-    cardImage: string;
-}
-export declare class UnfairStampArt extends UnfairStamp {
-    cardImage: string;
-}
-export declare class ThwackeyArt extends Thwackey {
-    cardImage: string;
-}
-export declare class ClefableArt extends Clefable {
-    cardImage: string;
-}
-export declare class ClefairyArt extends Clefairy {
-    cardImage: string;
-}
-export declare class EmolgaArt extends Emolga {
-    cardImage: string;
-}
-export declare class LanasAssistanceArt extends LanasAssistance {
+export declare class ScoopUpCycloneArt extends ScoopUpCyclone {
     cardImage: string;
 }
 export declare class ShinxArt extends Shinx {
     cardImage: string;
 }
+export declare class SurvivalCastArt extends SurvivalCast {
+    cardImage: string;
+}
+export declare class TatsugiriArt extends Tatsugiri {
+    cardImage: string;
+}
+export declare class TealMaskOgerponexArt extends TealMaskOgerponex {
+    cardImage: string;
+}
+export declare class ThwackeyArt extends Thwackey {
+    cardImage: string;
+}
 export declare class TingLuArt extends TingLu {
     cardImage: string;
 }
-export declare class HearthflameMaskOgerponexArt extends HearthflameMaskOgerponex {
+export declare class UnfairStampArt extends UnfairStamp {
     cardImage: string;
 }
-export declare class ChiYuArt extends ChiYu {
-    cardImage: string;
-}
-export declare class JammingTowerArt extends JammingTower {
+export declare class WellspringMaskOgerponexArt extends WellspringMaskOgerponex {
     cardImage: string;
 }

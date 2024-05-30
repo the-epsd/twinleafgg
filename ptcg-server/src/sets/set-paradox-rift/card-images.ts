@@ -1,4 +1,5 @@
 import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
+import { Bombirdierex } from './bombirdier';
 import { Bounsweet } from './bounsweet';
 import { BruteBonnet } from './brute-bonnet';
 import { ChiYu } from './chi-yu';
@@ -51,6 +52,10 @@ import { Xatu } from './xatu';
 
 export class AncientBoosterEnergyCapsuleArt extends AncientBoosterEnergyCapsule {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_159_R_EN_LG.png';
+}
+
+export class BombirdierexArt extends Bombirdierex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_156_R_EN_LG.png';
 }
     
 export class BounsweetArt extends Bounsweet {

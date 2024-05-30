@@ -24,7 +24,7 @@ export declare class IronCrownex extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: never[];
+        cost: CardType[];
         damage: number;
         text: string;
     }[];

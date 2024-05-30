@@ -41,7 +41,7 @@ export class Miraidon extends PokemonCard {
 
     public cardImage: string = 'assets/cardback.png';
 
-    public setNumber: string = '23';
+    public setNumber: string = '121';
 
     public name: string = 'Miraidon';
 

@@ -33,8 +33,8 @@ class Reuniclus extends pokemon_card_1.PokemonCard {
         this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '72';
-        this.name = 'Duosion';
-        this.fullName = 'Duosion TEF';
+        this.name = 'Reuniclus';
+        this.fullName = 'Reuniclus TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

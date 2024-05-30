@@ -44,7 +44,7 @@ export class Koraidon extends PokemonCard {
 
     public cardImage: string = 'assets/cardback.png';
 
-    public setNumber: string = '33';
+    public setNumber: string = '119';
 
     public name: string = 'Koraidon';
 

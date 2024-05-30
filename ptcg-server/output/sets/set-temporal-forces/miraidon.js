@@ -32,7 +32,7 @@ class Miraidon extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '23';
+        this.setNumber = '121';
         this.name = 'Miraidon';
         this.fullName = 'Miraidon TEF';
     }

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AncientBoosterEnergyCapsuleArt, BeldumArt, BiancasDevotionArt, BuddyBuddyPoffinArt, CharjabugArt, ChatotArt, CincinnoArt, CroconawArt, CryptomaniacsDecipheringArt, DeliveryBoxArt, DrilburArt, DrumsOfAwakeningArt, DudunsparceArt, DunsparceArt, DuosionArt, EmergencyBoardArt, EriArt, ExplorersGuidanceArt, FeraligatrArt, FlutterManeArt, FutureBoosterEnergyCapsuleArt, GastlyArt, GengarexArt, GougingFireexArt, GrotleArt, HandTrimmerArt, HaunterArt, HerosCapeArt, IronCrownexArt, IronHandsArt, IronLeavesexArt, IronThornsArt, KoraidonArt, KoraidonexArt, MasterBallArt, MaximumBeltArt, MetangArt, MinccinoArt, MiraidonArt, MiraidonexArt, MistEnergyArt, MortysConvictionArt, MrMimeArt, NeoUpperEnergyArt, PikachuArt, PrimeCatcherArt, RabscaArt, RagingBoltexArt, RaichuArt, RebootPodArt, RellorArt, ReuniclusArt, RoaringMoonArt, SableyeArt, SalvatoreArt, SandyShocksArt, SolosisArt, TorterraexArt, TotodileArt, TurtwigArt, VictiniArt, VikavoltArt, WalkingWakeexArt } from './card-images';
+import { AncientBoosterEnergyCapsuleArt, BeldumArt, BiancasDevotionArt, BuddyBuddyPoffinArt, CharjabugArt, ChatotArt, CincinnoArt, CroconawArt, CryptomaniacsDecipheringArt, DeliveryBoxArt, DrilburArt, DrumsOfAwakeningArt, DudunsparceArt, DunsparceArt, DuosionArt, EmergencyBoardArt, EriArt, ExplorersGuidanceArt, FeraligatrArt, FlutterManeArt, FutureBoosterEnergyCapsuleArt, GastlyArt, GengarexArt, GougingFireexArt, GreatTuskArt, GrotleArt, HandTrimmerArt, HaunterArt, HerosCapeArt, IronCrownexArt, IronHandsArt, IronLeavesexArt, IronThornsArt, KoraidonArt, KoraidonexArt, MasterBallArt, MaximumBeltArt, MetagrossArt, MetangArt, MinccinoArt, MiraidonArt, MiraidonexArt, MistEnergyArt, MortysConvictionArt, MrMimeArt, NeoUpperEnergyArt, PikachuArt, PrimeCatcherArt, RabscaArt, RagingBoltexArt, RaichuArt, RebootPodArt, RellorArt, ReuniclusArt, RoaringMoonArt, SableyeArt, SalvatoreArt, SandyShocksArt, SolosisArt, TorterraexArt, TotodileArt, TurtwigArt, VictiniArt, VikavoltArt, WalkingWakeexArt } from './card-images';
 
 export const setTemporalForces: Card[] = [
   
@@ -27,6 +27,7 @@ export const setTemporalForces: Card[] = [
   new GastlyArt(),
   new GengarexArt(),
   new GougingFireexArt(),
+  new GreatTuskArt(),
   new GrotleArt(),
   new HandTrimmerArt(),
   new HaunterArt(),
@@ -39,6 +40,7 @@ export const setTemporalForces: Card[] = [
   new KoraidonArt(),
   new MasterBallArt(),
   new MaximumBeltArt(),
+  new MetagrossArt(),
   new MetangArt(),
   new MinccinoArt(),
   new MiraidonexArt(),

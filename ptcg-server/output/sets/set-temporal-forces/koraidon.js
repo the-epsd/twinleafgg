@@ -34,7 +34,7 @@ class Koraidon extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '33';
+        this.setNumber = '119';
         this.name = 'Koraidon';
         this.fullName = 'Koraidon TEF';
     }

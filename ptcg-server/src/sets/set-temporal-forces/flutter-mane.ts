@@ -76,7 +76,7 @@ export class FlutterMane extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '71';
+  public setNumber: string = '78';
 
   public name: string = 'Flutter Mane';
 
