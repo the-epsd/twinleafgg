@@ -36,7 +36,7 @@ export class Malamar extends PokemonCard {
     text: ''
   }];
 
-  public regulationMark: string = 'G';
+ 
   public set: string = 'FLI';
   public name: string = 'Malamar';
   public fullName: string = 'Malamar FLI';

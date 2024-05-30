@@ -3,6 +3,7 @@ import { AggronV } from './aggron-v';
 import { AggronVMAX } from './aggron-vmax';
 import { ArceusV } from './arceus-v';
 import { ArceusVSTAR } from './arceus-vstar';
+import { Axew } from './axew';
 import { Bibarel } from './bibarel';
 import { CherensCare } from './cherens-care';
 import { CleansingGloves } from './cleansing-gloves';
@@ -15,6 +16,7 @@ import { Electivire } from './electivire';
 import { Empoleon } from './empoleon';
 import { EnteiV } from './entei-v';
 import { Garchomp } from './garchomp';
+import { Grotle } from './grotle';
 import { Lapras } from './lapras';
 import { Liepard } from './liepard';
 import { LumineonV } from './lumineon-v';
@@ -50,6 +52,10 @@ export class ArceusVArt extends ArceusV {
 
 export class ArceusVSTARArt extends ArceusVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_123_R_EN_LG.png';
+}
+
+export class AxewArt extends Axew {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_110_R_EN_LG.png';
 }
 
 export class BibarelArt extends Bibarel {
@@ -98,6 +104,10 @@ export class EnteiVArt extends EnteiV {
 
 export class GarchompArt extends Garchomp {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_109_R_EN_LG.png';
+}
+
+export class GrotleArt extends Grotle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_007_R_EN_LG.png';
 }
 
 export class LaprasArt extends Lapras {

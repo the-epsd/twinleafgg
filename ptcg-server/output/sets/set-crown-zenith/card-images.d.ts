@@ -9,6 +9,7 @@ import { RadiantCharizard } from './radiant-charizard';
 import { RadiantEternatus } from './radiant-eternatus';
 import { RegigigasV } from './regigigas-v';
 import { RegigigasVSTAR } from './regigigas-vstar';
+import { Wailmer } from './wailmer';
 import { ZacianVSTAR } from './zacian-vstar';
 import { Zamazenta } from './zamazenta';
 import { ZamazentaV } from './zamazenta-v';
@@ -50,6 +51,9 @@ export declare class RotomVArt extends RotomV {
     fullName: string;
     set: string;
     setNumber: string;
+}
+export declare class WailmerArt extends Wailmer {
+    cardImage: string;
 }
 export declare class ZacianVSTARArt extends ZacianVSTAR {
     cardImage: string;

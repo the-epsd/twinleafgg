@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AlolanVulpixVArt, AlolanVulpixVSTARArt, ArcheopsArt, ArticunoArt, BeheeyemArt, BeldumArt, BraixenArt, CandiceArt, CapturingAromaArt, CobalionArt, DragoniteArt, ElgyemArt, EmergencyJellyArt, FeebasArt, ForestSealStoneArt, FurisodeGirlArt, HisuianBraviaryArt, KirliaArt, LugiaVArt, LugiaVSTARArt, MetagrossArt, PrimordialAltarArt, RadiantAlakazamArt, RadiantJirachiArt, RadiantTsareenaArt, RaichuArt, RaltsArt, RegenerativeEnergyArt, RegidragoVArt, RegidragoVSTARArt, RegielekiVArt, RegielekiVMAXArt, RuffletArt, SerenaArt, SerperiorVArt, SerperiorVSTARArt, UrsalunaVArt, VGuardEnergyArt, WorkerArt, ZeraoraArt } from './card-images';
+import { AlolanVulpixVArt, AlolanVulpixVSTARArt, ArcheopsArt, ArticunoArt, BeheeyemArt, BeldumArt, BraixenArt, CandiceArt, CapturingAromaArt, CobalionArt, DragoniteArt, ElgyemArt, EmergencyJellyArt, FeebasArt, ForestSealStoneArt, FurisodeGirlArt, HisuianBraviaryArt, KirliaArt, LugiaVArt, LugiaVSTARArt, MetagrossArt, PrimordialAltarArt, RadiantAlakazamArt, RadiantJirachiArt, RadiantTsareenaArt, RaichuArt, RaltsArt, RegenerativeEnergyArt, RegidragoVArt, RegidragoVSTARArt, RegielekiVArt, RegielekiVMAXArt, RuffletArt, SerenaArt, SerperiorVArt, SerperiorVSTARArt, UrsalunaVArt, VGuardEnergyArt, WailordArt, WorkerArt, ZeraoraArt } from './card-images';
 
 export const setSilverTempest: Card[] = [
   new AlolanVulpixVArt(),
@@ -39,6 +39,7 @@ export const setSilverTempest: Card[] = [
   new SerperiorVSTARArt(),
   new UrsalunaVArt(),
   new VGuardEnergyArt(),
+  new WailordArt(),
   new WorkerArt(),
   new ZeraoraArt(),
 

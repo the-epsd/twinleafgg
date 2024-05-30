@@ -37,6 +37,7 @@ import { SerperiorV } from './serperior-v';
 import { SerperiorVSTAR } from './serperior-vstar';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
+import { Wailord } from './wailord';
 import { Worker } from './worker';
 import { Zeraora } from './zeraora';
 
@@ -194,6 +195,10 @@ export class UrsalunaVArt extends UrsalunaV {
 
 export class VGuardEnergyArt extends VGuardEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_169_R_EN_LG.png';
+}
+
+export class WailordArt extends Wailord {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_038_R_EN_LG.png';
 }
 
 export class WorkerArt extends Worker {

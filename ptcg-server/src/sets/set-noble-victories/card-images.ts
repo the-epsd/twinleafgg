@@ -1,5 +1,6 @@
 import { Archen } from './archen';
 import { Archeops } from './archeops';
+import { Blitzle } from './blitzle';
 import { Chandelure } from './chandelure';
 import { Durant } from './durant';
 import { Eelektrik } from './eelektrik';
@@ -19,6 +20,10 @@ export class ArchenArt extends Archen {
 
 export class ArcheopsArt extends Archeops {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_067_R_EN.png';
+}
+
+export class BlitzleArt extends Blitzle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_035_R_EN_LG.png';
 }
 
 export class ChandelureArt extends Chandelure {

@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setNobleVictories = [
     new card_images_1.ArchenArt(),
     new card_images_1.ArcheopsArt(),
+    new card_images_1.BlitzleArt(),
     new card_images_1.ChandelureArt(),
     new card_images_1.DurantArt(),
     new card_images_1.EelektrikArt(),

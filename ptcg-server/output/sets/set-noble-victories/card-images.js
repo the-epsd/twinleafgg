@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VanilluxeArt = exports.VanilliteArt = exports.VanillishArt = exports.TynamoArt = exports.TrubbishArt = exports.TerrakionArt = exports.SuperRodArt = exports.PlumeFossilArt = exports.KyuremArt = exports.EelektrikArt = exports.DurantArt = exports.ChandelureArt = exports.ArcheopsArt = exports.ArchenArt = void 0;
+exports.VanilluxeArt = exports.VanilliteArt = exports.VanillishArt = exports.TynamoArt = exports.TrubbishArt = exports.TerrakionArt = exports.SuperRodArt = exports.PlumeFossilArt = exports.KyuremArt = exports.EelektrikArt = exports.DurantArt = exports.ChandelureArt = exports.BlitzleArt = exports.ArcheopsArt = exports.ArchenArt = void 0;
 const archen_1 = require("./archen");
 const archeops_1 = require("./archeops");
+const blitzle_1 = require("./blitzle");
 const chandelure_1 = require("./chandelure");
 const durant_1 = require("./durant");
 const eelektrik_1 = require("./eelektrik");
@@ -29,6 +30,13 @@ class ArcheopsArt extends archeops_1.Archeops {
     }
 }
 exports.ArcheopsArt = ArcheopsArt;
+class BlitzleArt extends blitzle_1.Blitzle {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_035_R_EN_LG.png';
+    }
+}
+exports.BlitzleArt = BlitzleArt;
 class ChandelureArt extends chandelure_1.Chandelure {
     constructor() {
         super(...arguments);

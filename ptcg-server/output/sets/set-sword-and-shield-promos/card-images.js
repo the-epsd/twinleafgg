@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VenusaurVMAXArt = exports.VenusaurVArt = exports.EscapeRopeArt = exports.ProfessorBurnettArt = exports.ManaphyArt = exports.LucarioVSTARArt = exports.LeafeonVSTARArt = exports.HisuianElectrodeVArt = exports.DeoxysVSTARArt = exports.DeoxysVArt = exports.ChampionsFestivalArt = void 0;
+exports.VenusaurVMAXArt = exports.VenusaurVArt = exports.TepigArt = exports.EscapeRopeArt = exports.ProfessorBurnettArt = exports.ManaphyArt = exports.LucarioVSTARArt = exports.LeafeonVSTARArt = exports.HisuianElectrodeVArt = exports.DeoxysVSTARArt = exports.DeoxysVArt = exports.ChampionsFestivalArt = void 0;
 const escape_rope_1 = require("../set-battle-styles/escape-rope");
 const champions_festival_1 = require("./champions-festival");
 const deoxys_v_1 = require("./deoxys-v");
@@ -10,6 +10,7 @@ const leafeon_vstar_1 = require("./leafeon-vstar");
 const lucario_vstar_1 = require("./lucario-vstar");
 const manaphy_1 = require("./manaphy");
 const professor_burnett_1 = require("./professor-burnett");
+const tepig_1 = require("./tepig");
 const venusaur_v_1 = require("./venusaur-v");
 const venusaur_vmax_1 = require("./venusaur-vmax");
 class ChampionsFestivalArt extends champions_festival_1.ChampionsFestival {
@@ -78,6 +79,13 @@ class EscapeRopeArt extends escape_rope_1.EscapeRope {
     }
 }
 exports.EscapeRopeArt = EscapeRopeArt;
+class TepigArt extends tepig_1.Tepig {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_172_R_EN_LG.png';
+    }
+}
+exports.TepigArt = TepigArt;
 class VenusaurVArt extends venusaur_v_1.VenusaurV {
     constructor() {
         super(...arguments);

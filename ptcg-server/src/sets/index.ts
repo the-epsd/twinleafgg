@@ -63,7 +63,7 @@ export * from './set-ultra-prism';
 export * from './set-forbidden-light';
 export * from './set-celestial-storm';
 //export * from './set-dragon-majesty';
-//export * from './set-lost-thunder';
+export * from './set-lost-thunder';
 export * from './set-team-up';
 export * from './set-unbroken-bonds';
 //export * from './set-unified-minds';

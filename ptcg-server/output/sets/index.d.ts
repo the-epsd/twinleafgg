@@ -40,6 +40,7 @@ export * from './set-shining-legends';
 export * from './set-ultra-prism';
 export * from './set-forbidden-light';
 export * from './set-celestial-storm';
+export * from './set-lost-thunder';
 export * from './set-team-up';
 export * from './set-unbroken-bonds';
 export * from './set-hidden-fates';

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BloodmoonUrsalunaArt = exports.GenesectArt = exports.XerosicsSchemeArt = exports.RowlettArt = exports.PecharuntexArt = exports.OkidogiexArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.FezandipitiexArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.ColresssObsessionArt = exports.BindingMochiArt = void 0;
+exports.BloodmoonUrsalunaArt = exports.GenesectArt = exports.XerosicsSchemeArt = exports.RowlettArt = exports.PecharuntexArt = exports.OkidogiexArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.HaxorusArt = exports.FraxureArt = exports.FezandipitiexArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.ColresssObsessionArt = exports.BindingMochiArt = void 0;
 const binding_mochi_1 = require("./binding-mochi");
 const bloodmoon_ursaluna_1 = require("./bloodmoon-ursaluna");
 const colresss_obsession_1 = require("./colresss-obsession");
@@ -8,7 +8,9 @@ const dangerous_laser_1 = require("./dangerous-laser");
 const dartrix_1 = require("./dartrix");
 const decidueye_1 = require("./decidueye");
 const fezandipiti_ex_1 = require("./fezandipiti-ex");
+const fraxure_1 = require("./fraxure");
 const genesect_1 = require("./genesect");
+const haxorus_1 = require("./haxorus");
 const kyurem_1 = require("./kyurem");
 const munkidori_ex_1 = require("./munkidori-ex");
 const neutral_center_1 = require("./neutral-center");
@@ -58,6 +60,20 @@ class FezandipitiexArt extends fezandipiti_ex_1.Fezandipitiex {
     }
 }
 exports.FezandipitiexArt = FezandipitiexArt;
+class FraxureArt extends fraxure_1.Fraxure {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/05/IMG_7330.png';
+    }
+}
+exports.FraxureArt = FraxureArt;
+class HaxorusArt extends haxorus_1.Haxorus {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GOqH9U0WYAAnufY?format=jpg&name=large';
+    }
+}
+exports.HaxorusArt = HaxorusArt;
 class KyuremArt extends kyurem_1.Kyurem {
     constructor() {
         super(...arguments);

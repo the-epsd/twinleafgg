@@ -37,6 +37,7 @@ import { RadiantGardevoir } from './radiant-gardevoir';
 import { RadiantHisuianSneasler } from './radiant-hisuian-sneasler';
 import { RotomV } from './rotom-v';
 import { Sableye } from './sableye';
+import { Silcoon } from './silcoon';
 import { Snorlax } from './snorlax';
 import { Thorton } from './thorton';
 import { Volo } from './volo';
@@ -155,6 +156,9 @@ export declare class RotomVArt extends RotomV {
     cardImage: string;
 }
 export declare class SableyeArt extends Sableye {
+    cardImage: string;
+}
+export declare class SilcoonArt extends Silcoon {
     cardImage: string;
 }
 export declare class SnorlaxArt extends Snorlax {

@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.QuickBallArt = exports.SnomArt = exports.InteleonArt = exports.DrizzileArt = exports.CinccinoArt = exports.AirBalloonArt = void 0;
+exports.SizzlipedeArt = exports.QuickBallArt = exports.SnomArt = exports.InteleonArt = exports.DrizzileArt = exports.CinccinoArt = exports.AirBalloonArt = void 0;
 const air_balloon_1 = require("./air-balloon");
 const cinccino_1 = require("./cinccino");
 const drizzile_1 = require("./drizzile");
 const inteleon_1 = require("./inteleon");
 const quick_ball_1 = require("./quick-ball");
+const sizzlipede_1 = require("./sizzlipede");
 const snom_1 = require("./snom");
 class AirBalloonArt extends air_balloon_1.AirBalloon {
     constructor() {
@@ -49,3 +50,10 @@ class QuickBallArt extends quick_ball_1.QuickBall {
     }
 }
 exports.QuickBallArt = QuickBallArt;
+class SizzlipedeArt extends sizzlipede_1.Sizzlipede {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_037_R_EN_LG.png';
+    }
+}
+exports.SizzlipedeArt = SizzlipedeArt;

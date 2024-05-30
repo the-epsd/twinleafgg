@@ -3,6 +3,7 @@ import { AggronV } from './aggron-v';
 import { AggronVMAX } from './aggron-vmax';
 import { ArceusV } from './arceus-v';
 import { ArceusVSTAR } from './arceus-vstar';
+import { Axew } from './axew';
 import { Bibarel } from './bibarel';
 import { CherensCare } from './cherens-care';
 import { CleansingGloves } from './cleansing-gloves';
@@ -15,6 +16,7 @@ import { Electivire } from './electivire';
 import { Empoleon } from './empoleon';
 import { EnteiV } from './entei-v';
 import { Garchomp } from './garchomp';
+import { Grotle } from './grotle';
 import { Lapras } from './lapras';
 import { Liepard } from './liepard';
 import { LumineonV } from './lumineon-v';
@@ -44,6 +46,9 @@ export declare class ArceusVArt extends ArceusV {
     cardImage: string;
 }
 export declare class ArceusVSTARArt extends ArceusVSTAR {
+    cardImage: string;
+}
+export declare class AxewArt extends Axew {
     cardImage: string;
 }
 export declare class BibarelArt extends Bibarel {
@@ -80,6 +85,9 @@ export declare class EnteiVArt extends EnteiV {
     cardImage: string;
 }
 export declare class GarchompArt extends Garchomp {
+    cardImage: string;
+}
+export declare class GrotleArt extends Grotle {
     cardImage: string;
 }
 export declare class LaprasArt extends Lapras {

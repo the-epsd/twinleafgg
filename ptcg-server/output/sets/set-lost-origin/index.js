@@ -34,6 +34,7 @@ exports.setLostOrigin = [
     new card_images_1.RadiantGardevoirArt(),
     new card_images_1.RotomVArt(),
     new card_images_1.SableyeArt(),
+    new card_images_1.SilcoonArt(),
     new card_images_1.SnorlaxArt(),
     new card_images_1.VoloArt(),
     new card_images_1.MissFortuneSistersArt(),

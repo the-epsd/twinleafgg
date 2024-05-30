@@ -5,7 +5,9 @@ import { DangerousLaser } from './dangerous-laser';
 import { Dartrix } from './dartrix';
 import { Decidueye } from './decidueye';
 import { Fezandipitiex } from './fezandipiti-ex';
+import { Fraxure } from './fraxure';
 import { Genesect } from './genesect';
+import { Haxorus } from './haxorus';
 import { Kyurem } from './kyurem';
 import { Munkidoriex } from './munkidori-ex';
 import { NeutralCenter } from './neutral-center';
@@ -36,6 +38,14 @@ export class DecidueyeArt extends Decidueye {
 
 export class FezandipitiexArt extends Fezandipitiex {
   public cardImage = 'https://pokemonproxies.com/static/media/Fezandipiti_ex-038-6a.728d9be2a8a80b2bca1a.png';
+}
+
+export class FraxureArt extends Fraxure {
+  public cardImage = 'https://www.pokebeach.com/news/2024/05/IMG_7330.png';
+}
+
+export class HaxorusArt extends Haxorus {
+  public cardImage = 'https://pbs.twimg.com/media/GOqH9U0WYAAnufY?format=jpg&name=large';
 }
 
 export class KyuremArt extends Kyurem {
