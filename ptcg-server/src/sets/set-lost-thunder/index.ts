@@ -1,7 +1,10 @@
 import { Card } from '../../game/store/card/card';
-import { ChikoritaArt, TreeckoArt } from './card-images';
+import { ChikoritaArt, GrovleArt, TreeckoArt, WurmpleArt, ZebstrikaArt } from './card-images';
 
 export const setLostThunder: Card[] = [
   new ChikoritaArt(),
-  new TreeckoArt()
+  new GrovleArt(),
+  new TreeckoArt(), 
+  new WurmpleArt(),
+  new ZebstrikaArt()
 ];

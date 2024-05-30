@@ -1,11 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TurtwigArt = exports.PokemonFanClubArt = void 0;
-const pokemon_fan_club_1 = require("./pokemon-fan-club");
-const turtwig_1 = require("./turtwig");
-exports.PokemonFanClubArt = exports.GibleArt = void 0;
+exports.TurtwigArt = exports.PokemonFanClubArt = exports.GibleArt = void 0;
 const gible_1 = require("./gible");
 const pokemon_fan_club_1 = require("./pokemon-fan-club");
+const turtwig_1 = require("./turtwig");
 class GibleArt extends gible_1.Gible {
     constructor() {
         super(...arguments);

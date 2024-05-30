@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VoloArt = exports.ThortonArt = exports.SnorlaxArt = exports.SableyeArt = exports.RotomVArt = exports.RadiantHisuianSneaslerArt = exports.RadiantGardevoirArt = exports.PidgeotVArt = exports.PanicMaskArt = exports.MissFortuneSistersArt = exports.MirageGateArt = exports.MawileArt = exports.MagnezoneVSTARArt = exports.MagnezoneVArt = exports.LostVacuumArt = exports.LostCityArt = exports.LadyArt = exports.KyuremVMAXArt = exports.KyuremVArt = exports.JynxArt = exports.HisuianZoroarkArt = exports.HisuianZoruaArt = exports.HisuianZoroarkVSTARArt = exports.HisuianZoroarkVArt = exports.HisuianGoodraVSTARArt = exports.HisuianGoodraVArt = exports.GiratinaVSTARArt = exports.GiratinaVArt = exports.GiftEnergyArt = exports.GengarArt = exports.DrapionVSTARArt = exports.DrapionVArt = exports.DelphoxVArt = exports.DamagePumpArt = exports.CresseliaArt = exports.CramorantArt = exports.ComfeyArt = exports.ColresssExperimentArt = exports.BoxOfDisasterArt = exports.BouffalantArt = exports.BanetteArt = exports.ArezuArt = void 0;
+exports.VoloArt = exports.ThortonArt = exports.SnorlaxArt = exports.SilcoonArt = exports.SableyeArt = exports.RotomVArt = exports.RadiantHisuianSneaslerArt = exports.RadiantGardevoirArt = exports.PidgeotVArt = exports.PanicMaskArt = exports.MissFortuneSistersArt = exports.MirageGateArt = exports.MawileArt = exports.MagnezoneVSTARArt = exports.MagnezoneVArt = exports.LostVacuumArt = exports.LostCityArt = exports.LadyArt = exports.KyuremVMAXArt = exports.KyuremVArt = exports.JynxArt = exports.HisuianZoroarkArt = exports.HisuianZoruaArt = exports.HisuianZoroarkVSTARArt = exports.HisuianZoroarkVArt = exports.HisuianGoodraVSTARArt = exports.HisuianGoodraVArt = exports.GiratinaVSTARArt = exports.GiratinaVArt = exports.GiftEnergyArt = exports.GengarArt = exports.DrapionVSTARArt = exports.DrapionVArt = exports.DelphoxVArt = exports.DamagePumpArt = exports.CresseliaArt = exports.CramorantArt = exports.ComfeyArt = exports.ColresssExperimentArt = exports.BoxOfDisasterArt = exports.BouffalantArt = exports.BanetteArt = exports.ArezuArt = void 0;
 const arezu_1 = require("./arezu");
 const banette_1 = require("./banette");
 const bouffalant_1 = require("./bouffalant");
@@ -40,6 +40,7 @@ const radiant_gardevoir_1 = require("./radiant-gardevoir");
 const radiant_hisuian_sneasler_1 = require("./radiant-hisuian-sneasler");
 const rotom_v_1 = require("./rotom-v");
 const sableye_1 = require("./sableye");
+const silcoon_1 = require("./silcoon");
 const snorlax_1 = require("./snorlax");
 const thorton_1 = require("./thorton");
 const volo_1 = require("./volo");
@@ -316,6 +317,13 @@ class SableyeArt extends sableye_1.Sableye {
     }
 }
 exports.SableyeArt = SableyeArt;
+class SilcoonArt extends silcoon_1.Silcoon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_007_R_EN_LG.png';
+    }
+}
+exports.SilcoonArt = SilcoonArt;
 class SnorlaxArt extends snorlax_1.Snorlax {
     constructor() {
         super(...arguments);
