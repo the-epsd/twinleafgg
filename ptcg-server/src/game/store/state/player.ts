@@ -74,6 +74,8 @@ export class Player {
   usedTableTurner: any;
   chainsOfControlUsed: any;
 
+  pecharuntexIsInPlay = false;
+
   getPrizeLeft(): number {
     return this.prizes.reduce((left, p) => left + p.cards.length, 0);
   }

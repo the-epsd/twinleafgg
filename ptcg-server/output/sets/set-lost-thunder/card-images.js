@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.GrovleArt = exports.ChikoritaArt = void 0;
-const wurmple_1 = require("../set-roaring-skies/wurmple");
+const wurmple_1 = require("./wurmple");
 const chikorita_1 = require("./chikorita");
 const grovyle_1 = require("./grovyle");
 const treecko_1 = require("./treecko");

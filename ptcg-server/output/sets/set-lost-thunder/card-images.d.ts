@@ -1,4 +1,4 @@
-import { Wurmple } from '../set-roaring-skies/wurmple';
+import { Wurmple } from './wurmple';
 import { Chikorita } from './chikorita';
 import { Grovyle } from './grovyle';
 import { Treecko } from './treecko';

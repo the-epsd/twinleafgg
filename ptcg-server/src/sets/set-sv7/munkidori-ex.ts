@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
-import { GamePhase, State } from '../../game/store/state/state';
+import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { GameError, GameMessage, PowerType, StateUtils } from '../../game';
+import { GameError, GameMessage, PowerType } from '../../game';
 import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
@@ -63,13 +63,8 @@ export class Munkidoriex extends PokemonCard {
       console.log('second marker added');
     }
 
-    if (effect instanceof KnockOutEffect) {
+    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
-
-      if (player === targetPlayer || targetPlayer.active !== effect.target) {
-        return state;
-      }
 
       try {
         const powerEffect = new PowerEffect(player, this.powers[0], this);
@@ -77,32 +72,22 @@ export class Munkidoriex extends PokemonCard {
       } catch {
         return state;
       }
-      const munkidoriActive = player.active;
-      const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
-      const pecharuntexInPlay = benchPokemon.filter(card => card.name == 'Pecharunt ex');
-      if (pecharuntexInPlay) {
-        if (state.phase === GamePhase.ATTACK) {
-          if (effect.target === munkidoriActive) {
-            effect.prizeCount -= 1;
-          }
-        }
-      
 
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-  
-          // Check marker
-          if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            console.log('attack blocked');
-            throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-          }
-          effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-          console.log('marker added');
-        }
-        return state;
+      if (player.pecharuntexIsInPlay == true) {
+        effect.prizeCount -= 1;
       }
-      return state;
+    } 
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+  
+      // Check marker
+      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        console.log('attack blocked');
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+      console.log('marker added');
     }
     return state;
   }
 }
-  

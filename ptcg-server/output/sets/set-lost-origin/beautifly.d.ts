@@ -1,23 +1,21 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerType } from '../../game';
-export declare class Fezandipitiex extends PokemonCard {
+export declare class Beautifly extends PokemonCard {
     stage: Stage;
-    tags: CardTag[];
-    regulationMark: string;
     cardType: CardType;
+    hp: number;
     weakness: {
         type: CardType;
     }[];
-    hp: number;
     retreat: CardType[];
     powers: {
         name: string;
-        powerType: PowerType;
         useWhenInPlay: boolean;
+        powerType: PowerType;
         text: string;
     }[];
     attacks: {
@@ -26,11 +24,12 @@ export declare class Fezandipitiex extends PokemonCard {
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
     cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;
-    readonly RETALIATE_MARKER = "RETALIATE_MARKER";
+    readonly STOKED_STRAW_MARKER = "STOKED_STRAW_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 function* useChainsOfControl(next, store, state, effect) {
     const player = effect.player;
     const hasBench = player.bench.some(b => b.cards.length > 0);
@@ -62,6 +63,10 @@ class Pecharuntex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Pecharunt ex SV6a';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.chainsOfControlUsed = false;
+        }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const generator = useChainsOfControl(() => generator.next(), store, state, effect);
             const player = effect.player;
@@ -79,9 +84,19 @@ class Pecharuntex extends pokemon_card_1.PokemonCard {
             const damagePerPrize = 60;
             effect.damage = prizesTaken * damagePerPrize;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const player = effect.player;
-            player.chainsOfControlUsed == false;
+        if (effect instanceof check_effects_1.CheckTableStateEffect) {
+            state.players.forEach(player => {
+                if (player.active.specialConditions.length === 0) {
+                    return;
+                }
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                    if (card === this) {
+                        player.pecharuntexIsInPlay = true;
+                        console.log('Pecharunt ex is in play');
+                    }
+                });
+            });
+            return state;
         }
         return state;
     }

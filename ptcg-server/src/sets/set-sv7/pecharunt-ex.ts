@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 
 function* useChainsOfControl(next: Function, store: StoreLike, state: State,
   effect: PowerEffect): IterableIterator<State> {
@@ -89,6 +90,11 @@ export class Pecharuntex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.chainsOfControlUsed = false;
+    }
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const generator = useChainsOfControl(() => generator.next(), store, state, effect);
       const player = effect.player;
@@ -112,11 +118,22 @@ export class Pecharuntex extends PokemonCard {
       effect.damage = prizesTaken * damagePerPrize;
     }
 
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      player.chainsOfControlUsed == false;
+    if (effect instanceof CheckTableStateEffect) {
+      state.players.forEach(player => {
+        if (player.active.specialConditions.length === 0) {
+          return;
+        }
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+          if (card === this) {
+            player.pecharuntexIsInPlay = true;
+            console.log('Pecharunt ex is in play');
+          }
+        });
+      });
+
+      return state;
     }
     return state;
   }
 }
-
