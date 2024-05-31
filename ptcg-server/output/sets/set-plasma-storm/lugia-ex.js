@@ -21,7 +21,7 @@ class LugiaEx extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Overflow',
-                powerType: pokemon_types_1.PowerType.ANCIENT_TRAIT,
+                powerType: pokemon_types_1.PowerType.ABILITY,
                 text: 'If your opponent\'s Pokemon is Knocked Out by damage from an ' +
                     'attack of this Pokemon, take 1 more Prize card.'
             }];
@@ -70,6 +70,13 @@ class LugiaEx extends pokemon_card_1.PokemonCard {
                 // Lugia wasn't attacking
                 const pokemonCard = opponent.active.getPokemonCard();
                 if (pokemonCard !== this) {
+                    return state;
+                }
+                try {
+                    const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                    store.reduceEffect(state, powerEffect);
+                }
+                catch (_a) {
                     return state;
                 }
                 effect.prizeCount += 1;

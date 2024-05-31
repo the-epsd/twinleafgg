@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/stor
 import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { GameMessage, Card, ChooseCardsPrompt, EnergyCard } from '../../game';
@@ -27,7 +27,7 @@ export class LugiaEx extends PokemonCard {
 
   public powers = [{
     name: 'Overflow',
-    powerType: PowerType.ANCIENT_TRAIT,
+    powerType: PowerType.ABILITY,
     text: 'If your opponent\'s Pokemon is Knocked Out by damage from an ' +
       'attack of this Pokemon, take 1 more Prize card.'
   }];
@@ -98,6 +98,13 @@ export class LugiaEx extends PokemonCard {
         // Lugia wasn't attacking
         const pokemonCard = opponent.active.getPokemonCard();
         if (pokemonCard !== this) {
+          return state;
+        }
+
+        try {
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
+        } catch {
           return state;
         }
 
