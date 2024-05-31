@@ -88,31 +88,37 @@ export class Squawkabillyex extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const hasBench = player.bench.some(b => b.cards.length > 0);
-
-      const hasBasicEnergy = player.active.cards.some(c => { return c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.ANY); });
-      
-
-      if (hasBench === false || hasBasicEnergy === false) {
-        return state;
+  
+      const hasEnergyInDiscard = player.discard.cards.some(c => {
+        return c instanceof EnergyCard
+            && c.energyType === EnergyType.BASIC;
+      });
+      if (!hasEnergyInDiscard) {
+        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
   
-      return store.prompt(state, new AttachEnergyPrompt(
+      state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.active,
+        player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [ SlotType.BENCH, SlotType.ACTIVE ],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { allowCancel: false, min: 1, max: 2 }
       ), transfers => {
         transfers = transfers || [];
+        // cancelled by user
+        if (transfers.length === 0) {
+          return;
+        }
+
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.active.moveCardTo(transfer.card, target);
-        } 
-        return state;
+          player.discard.moveCardTo(transfer.card, target);
+        }
       });
+  
+      return state;
     }
     return state;
   }
