@@ -94,7 +94,7 @@ export class Squawkabillyex extends PokemonCard {
             && c.energyType === EnergyType.BASIC;
       });
       if (!hasEnergyInDiscard) {
-        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+        return state;
       }
   
       state = store.prompt(state, new AttachEnergyPrompt(

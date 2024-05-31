@@ -18,6 +18,9 @@ function* useChainsOfControl(next, store, state, effect) {
         if (card.name === 'Pecharunt ex') {
             blocked.push(target);
         }
+        if (card.cardType !== card_types_1.CardType.DARK) {
+            blocked.push(target);
+        }
     });
     if (hasBench === false) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);

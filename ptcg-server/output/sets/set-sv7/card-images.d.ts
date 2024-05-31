@@ -1,6 +1,7 @@
 import { BindingMochi } from './binding-mochi';
 import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
 import { ColresssObsession } from './colresss-obsession';
+import { Cresselia } from './cresselia';
 import { DangerousLaser } from './dangerous-laser';
 import { Dartrix } from './dartrix';
 import { Decidueye } from './decidueye';
@@ -19,6 +20,9 @@ export declare class BindingMochiArt extends BindingMochi {
     cardImage: string;
 }
 export declare class ColresssObsessionArt extends ColresssObsession {
+    cardImage: string;
+}
+export declare class CresseliaArt extends Cresselia {
     cardImage: string;
 }
 export declare class DangerousLaserArt extends DangerousLaser {

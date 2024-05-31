@@ -22,6 +22,9 @@ function* useChainsOfControl(next: Function, store: StoreLike, state: State,
     if (card.name === 'Pecharunt ex') {
       blocked.push(target);
     }
+    if (card.cardType !== CardType.DARK) {
+      blocked.push(target);
+    }
   });
   
   if (hasBench === false) {

@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BloodmoonUrsalunaArt = exports.GenesectArt = exports.XerosicsSchemeArt = exports.RowlettArt = exports.PecharuntexArt = exports.OkidogiexArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.HaxorusArt = exports.FraxureArt = exports.FezandipitiexArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.ColresssObsessionArt = exports.BindingMochiArt = void 0;
+exports.BloodmoonUrsalunaArt = exports.GenesectArt = exports.XerosicsSchemeArt = exports.RowlettArt = exports.PecharuntexArt = exports.OkidogiexArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.HaxorusArt = exports.FraxureArt = exports.FezandipitiexArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.CresseliaArt = exports.ColresssObsessionArt = exports.BindingMochiArt = void 0;
 const binding_mochi_1 = require("./binding-mochi");
 const bloodmoon_ursaluna_1 = require("./bloodmoon-ursaluna");
 const colresss_obsession_1 = require("./colresss-obsession");
+const cresselia_1 = require("./cresselia");
 const dangerous_laser_1 = require("./dangerous-laser");
 const dartrix_1 = require("./dartrix");
 const decidueye_1 = require("./decidueye");
@@ -32,6 +33,13 @@ class ColresssObsessionArt extends colresss_obsession_1.ColresssObsession {
     }
 }
 exports.ColresssObsessionArt = ColresssObsessionArt;
+class CresseliaArt extends cresselia_1.Cresselia {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Cresselia-021-6a.6b3cc4ace9e5c8122200.png';
+    }
+}
+exports.CresseliaArt = CresseliaArt;
 class DangerousLaserArt extends dangerous_laser_1.DangerousLaser {
     constructor() {
         super(...arguments);
