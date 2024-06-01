@@ -21,22 +21,22 @@ class XerosicsScheme extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const opponent = __1.StateUtils.getOpponent(state, player);
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new __1.GameError(__1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
             // Get opponent's hand length
             const opponentHandLength = opponent.hand.cards.length;
             if (opponentHandLength <= 3) {
                 throw new __1.GameError(__1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            // Set discard amount to reach hand size of 5
+            // Set discard amount to reach hand size of 3
             const discardAmount = opponentHandLength - 3;
-            const supporterTurn = player.supporterTurn;
-            if (supporterTurn > 0) {
-                throw new __1.GameError(__1.GameMessage.SUPPORTER_ALREADY_PLAYED);
-            }
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             // Opponent discards first
-            if (opponent.hand.cards.length > 5) {
+            if (opponent.hand.cards.length > 3) {
                 store.prompt(state, new __1.ChooseCardsPrompt(opponent.id, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: discardAmount, max: discardAmount, allowCancel: false }), selected => {
                     const cards = selected || [];
                     opponent.hand.moveCardsTo(cards, opponent.discard);

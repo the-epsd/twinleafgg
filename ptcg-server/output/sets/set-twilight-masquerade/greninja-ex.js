@@ -60,19 +60,19 @@ class Greninjaex extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkProvidedEnergy);
-            state = store.prompt(state, new choose_energy_prompt_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [], { allowCancel: false }), energy => {
-                const cards = (energy || []).map(e => e.card);
-                const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
-                discardEnergy.target = player.active;
-                store.reduceEffect(state, discardEnergy);
-            });
-            const max = Math.min(2);
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: false }), selected => {
-                const targets = selected || [];
-                targets.forEach(target => {
-                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 120);
-                    damageEffect.target = target;
-                    store.reduceEffect(state, damageEffect);
+            state = store.prompt(state, new choose_energy_prompt_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
+                const max = Math.min(2);
+                return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: false }), selected => {
+                    const targets = selected || [];
+                    targets.forEach(target => {
+                        const damageEffect = new attack_effects_1.PutDamageEffect(effect, 120);
+                        damageEffect.target = target;
+                        store.reduceEffect(state, damageEffect);
+                        const cards = (energy || []).map(e => e.card);
+                        const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+                        discardEnergy.target = player.active;
+                        store.reduceEffect(state, discardEnergy);
+                    });
                 });
                 return state;
             });

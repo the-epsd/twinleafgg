@@ -48,6 +48,7 @@ export declare class Player {
     usedTurnSkip: any;
     usedTableTurner: any;
     chainsOfControlUsed: any;
+    pecharuntexIsInPlay: boolean;
     getPrizeLeft(): number;
     forEachPokemon(player: PlayerType, handler: (cardList: PokemonCardList, pokemonCard: PokemonCard, target: CardTarget) => void): void;
     switchPokemon(target: PokemonCardList): void;

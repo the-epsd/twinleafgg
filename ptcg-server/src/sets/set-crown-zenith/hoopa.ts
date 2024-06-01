@@ -49,6 +49,7 @@ export class Hoopa extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       if (!this.movedToActiveThisTurn) {
+        effect.damage = 0;
         return state;
       }
       effect.ignoreWeakness = true;

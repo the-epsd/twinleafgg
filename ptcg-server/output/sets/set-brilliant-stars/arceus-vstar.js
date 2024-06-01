@@ -71,7 +71,7 @@ class ArceusVSTAR extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             player.usedVSTAR = true;
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 2, allowCancel: false }), cards => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 2, allowCancel: false }), cards => {
                 player.deck.moveCardsTo(cards, player.hand);
                 state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);

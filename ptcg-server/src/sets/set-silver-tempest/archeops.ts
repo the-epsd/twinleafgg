@@ -79,7 +79,7 @@ export class Archeops extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH, SlotType.ACTIVE ],
         { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-        { allowCancel: true, min: 0, max: 2 }
+        { allowCancel: false, min: 0, max: 2, sameTarget: true }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user

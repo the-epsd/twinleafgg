@@ -3,8 +3,9 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PlayPokemonEffect, AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class BloodmoonUrsalunaex extends PokemonCard {
 
@@ -51,6 +52,28 @@ export class BloodmoonUrsalunaex extends PokemonCard {
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof PlayPokemonEffect) {
+      const player = effect.player;
+      // Check attack cost
+      const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
+      state = store.reduceEffect(state, checkCost);
+
+      // Check attached energy
+      const checkEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkEnergy);
+    }
+
+    if (effect instanceof AttachEnergyEffect) {
+      const player = effect.player;
+      // Check attack cost
+      const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
+      state = store.reduceEffect(state, checkCost);
+
+      // Check attached energy
+      const checkEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkEnergy);
+    }
 
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);

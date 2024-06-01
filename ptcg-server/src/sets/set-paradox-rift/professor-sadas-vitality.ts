@@ -6,7 +6,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { AttachEnergyPrompt, EnergyCard, GameError, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
@@ -79,42 +78,40 @@ export class ProfessorSadasVitality extends TrainerCard {
         }
       });
   
-      return store.prompt(state, new ChoosePokemonPrompt(
+      // return store.prompt(state, new ChoosePokemonPrompt(
+      //   player.id,
+      //   GameMessage.ATTACH_ENERGY_TO_BENCH,
+      //   PlayerType.BOTTOM_PLAYER,
+      //   [SlotType.BENCH, SlotType.ACTIVE],
+      //   { min: 0, max: 2, blocked: blocked2 }
+      // ), chosen => {
+  
+      //   chosen.forEach(target => {
+  
+      state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+        player.discard,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
-        { min: 0, max: 2, blocked: blocked2 }
-      ), chosen => {
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        { allowCancel: false, min: 1, max: 2, blockedTo: blocked2, differentTargets: true  }
+      ), transfers => {
+        transfers = transfers || [];
   
-        chosen.forEach(target => {
+        if (transfers.length === 0) {
+          return;
+        }
   
-          state = store.prompt(state, new AttachEnergyPrompt(
-            player.id,
-            GameMessage.ATTACH_ENERGY_TO_ACTIVE,
-            player.discard,
-            PlayerType.BOTTOM_PLAYER,
-            [SlotType.BENCH, SlotType.ACTIVE],
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-            { allowCancel: true, min: 0, max: 1 }
-          ), transfers => {
-            transfers = transfers || [];
-  
-            if (transfers.length === 0) {
-              return;
-            }
-  
-            for (const transfer of transfers) {
-              const target = StateUtils.getTarget(state, player, transfer.to);
-              player.marker.addMarker(this.ANCIENT_SUPPORTER_MARKER, this);
-              player.discard.moveCardTo(transfer.card, target);
-            }
-          });
-          player.deck.moveTo(player.hand, 3);
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          player.supporterTurn = 1;
-        });
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.marker.addMarker(this.ANCIENT_SUPPORTER_MARKER, this);
+          player.discard.moveCardTo(transfer.card, target);
+        }
       });
+      player.deck.moveTo(player.hand, 3);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      player.supporterTurn = 1;
     }
     return state;
   }

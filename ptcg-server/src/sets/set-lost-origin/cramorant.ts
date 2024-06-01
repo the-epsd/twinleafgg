@@ -3,8 +3,9 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard, PowerType, StateUtils } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { AttackEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { PlayPokemonEffect, AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class Cramorant extends PokemonCard {
   
@@ -46,6 +47,39 @@ export class Cramorant extends PokemonCard {
   public fullName: string = 'Cramorant LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof PlayPokemonEffect) {
+      const player = effect.player;
+      // Check attack cost
+      const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
+      state = store.reduceEffect(state, checkCost);
+
+      // Check attached energy
+      const checkEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkEnergy);
+    }
+
+    if (effect instanceof RetreatEffect) {
+      const player = effect.player;
+      // Check attack cost
+      const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
+      state = store.reduceEffect(state, checkCost);
+
+      // Check attached energy
+      const checkEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkEnergy);
+    }
+
+    if (effect instanceof AttachEnergyEffect) {
+      const player = effect.player;
+      // Check attack cost
+      const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
+      state = store.reduceEffect(state, checkCost);
+
+      // Check attached energy
+      const checkEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkEnergy);
+    }
     
     if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
@@ -70,6 +104,14 @@ export class Cramorant extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      // Check attack cost
+      const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
+      state = store.reduceEffect(state, checkCost);
+
+      // Check attached energy
+      const checkEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkEnergy);
 
       effect.ignoreWeakness = true;
       

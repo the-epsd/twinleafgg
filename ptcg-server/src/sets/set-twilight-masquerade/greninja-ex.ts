@@ -92,27 +92,29 @@ export class Greninjaex extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ ],
+        [ CardType.COLORLESS, CardType.COLORLESS ],
         { allowCancel: false }
       ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
-        store.reduceEffect(state, discardEnergy);
-      });
-      const max = Math.min(2);
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
-        { min: 1, max: max, allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 120);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
+        const max = Math.min(2);
+        return store.prompt(state, new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [ SlotType.ACTIVE, SlotType.BENCH ],
+          { min: 1, max: max, allowCancel: false }
+        ), selected => {
+          const targets = selected || [];
+          targets.forEach(target => {
+
+            const damageEffect = new PutDamageEffect(effect, 120);
+            damageEffect.target = target;
+            store.reduceEffect(state, damageEffect);
+
+            const cards: Card[] = (energy || []).map(e => e.card);
+            const discardEnergy = new DiscardCardsEffect(effect, cards);
+            discardEnergy.target = player.active;
+            store.reduceEffect(state, discardEnergy);
+          });
         });
         return state; 
       });

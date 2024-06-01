@@ -11,7 +11,6 @@ import { GameMessage } from '../../game/game-message';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { GameError, PutDamagePrompt } from '../..';
 
-
 function* useLostMine(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);

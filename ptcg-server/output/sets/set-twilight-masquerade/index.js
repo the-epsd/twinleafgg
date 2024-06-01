@@ -21,6 +21,7 @@ exports.setTwilightMasquerade = [
     new card_images_1.LuxioArt(),
     new card_images_1.LuxrayexArt(),
     new card_images_1.MightyenaArt(),
+    new card_images_1.MunkidoriArt(),
     new card_images_1.MorpekoArt(),
     new card_images_1.PerformanceFluteArt(),
     new card_images_1.PoochyenaArt(),

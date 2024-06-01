@@ -52,7 +52,7 @@ class Archeops extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.PRIMAL_TURBO_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { allowCancel: true, min: 0, max: 2 }), transfers => {
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { allowCancel: false, min: 0, max: 2, sameTarget: true }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {
