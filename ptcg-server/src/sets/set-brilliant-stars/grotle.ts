@@ -7,7 +7,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Grotle extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Turtwig';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 100;

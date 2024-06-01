@@ -38,4 +38,5 @@ exports.setBrilliantStars = [
     new card_images_1.ShayminVSTARArt(),
     new card_images_1.PotHelmetArt(),
     new card_images_1.TeamYellsCheerArt(),
+    new card_images_1.TorterraArt()
 ];

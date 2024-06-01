@@ -31,6 +31,7 @@ class Turtwig extends pokemon_card_1.PokemonCard {
         this.name = 'Turtwig';
         this.fullName = 'Turtwig UPR';
         this.setNumber = '6';
+        this.cardImage = 'assets/cardback.png';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -54,6 +54,7 @@ cardManager.defineSet(sets.setPrimalClash);
 
 cardManager.defineSet(sets.setRoaringSkies);
 cardManager.defineSet(sets.setAncientOrigins);
+//cardManager.defineSet(sets.setBreakpoint);
 cardManager.defineSet(sets.setBreakthrough);
 
 cardManager.defineSet(sets.setFatesCollide);
@@ -80,6 +81,7 @@ cardManager.defineSet(sets.setSwordAndShieldPromos);
 cardManager.defineSet(sets.setDarknessAblaze);
 cardManager.defineSet(sets.setShiningLegends);
 cardManager.defineSet(sets.setVividVoltage);
+cardManager.defineSet(sets.setShiningFates);
 cardManager.defineSet(sets.setBattleStyles);
 cardManager.defineSet(sets.setChillingReign);
 cardManager.defineSet(sets.setEvolvingSkies);

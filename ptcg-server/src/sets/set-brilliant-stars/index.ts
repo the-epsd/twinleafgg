@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AcerolasPremonitionArt, AggronVArt, AggronVMAXArt, ArceusVArt, ArceusVSTARArt, AxewArt, BibarelArt, CherensCareArt, CleansingGlovesArt, CollapsedStadiumArt, CynthiasAmbitionArt, DoubleTurboEnergyArt, DruddigonArt, ElectabuzzArt, ElectivireArt, EmpoleonArt, EnteiVArt, GarchompArt, GrotleArt, LaprasArt, LiepardArt, LumineonVArt, MagmaBasinArt, MagmortarArt, ManaphyArt, MinccinoArt, MoltresArt, PotHelmetArt, PurrloinArt, RaichuVArt, RaikouVArt, RoseannesBackupArt, ShayminVArt, ShayminVSTARArt, TeamYellsCheerArt } from './card-images';
+import { AcerolasPremonitionArt, AggronVArt, AggronVMAXArt, ArceusVArt, ArceusVSTARArt, AxewArt, BibarelArt, CherensCareArt, CleansingGlovesArt, CollapsedStadiumArt, CynthiasAmbitionArt, DoubleTurboEnergyArt, DruddigonArt, ElectabuzzArt, ElectivireArt, EmpoleonArt, EnteiVArt, GarchompArt, GrotleArt, LaprasArt, LiepardArt, LumineonVArt, MagmaBasinArt, MagmortarArt, ManaphyArt, MinccinoArt, MoltresArt, PotHelmetArt, PurrloinArt, RaichuVArt, RaikouVArt, RoseannesBackupArt, ShayminVArt, ShayminVSTARArt, TeamYellsCheerArt, TorterraArt } from './card-images';
 
 
 export const setBrilliantStars: Card[] = [
@@ -39,5 +39,6 @@ export const setBrilliantStars: Card[] = [
   new ShayminVSTARArt(),
   new PotHelmetArt(),
   new TeamYellsCheerArt(),
+  new TorterraArt()
   
 ];

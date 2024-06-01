@@ -33,6 +33,7 @@ import { RoseannesBackup } from './roseannes-backup';
 import { ShayminV } from './shaymin-v';
 import { ShayminVSTAR } from './shaymin-vstar';
 import { TeamYellsCheer } from './team-yells-cheer';
+import { Torterra } from './torterra';
 export declare class AcerolasPremonitionArt extends AcerolasPremonition {
     cardImage: string;
 }
@@ -136,5 +137,8 @@ export declare class ShayminVSTARArt extends ShayminVSTAR {
     cardImage: string;
 }
 export declare class TeamYellsCheerArt extends TeamYellsCheer {
+    cardImage: string;
+}
+export declare class TorterraArt extends Torterra {
     cardImage: string;
 }

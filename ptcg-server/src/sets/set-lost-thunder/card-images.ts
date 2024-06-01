@@ -3,6 +3,7 @@ import { Chikorita } from './chikorita';
 import { Grovyle } from './grovyle';
 import { Treecko } from './treecko';
 import { Zebstrika } from './zebstrika';
+import { Meganium } from './meganium';
 
 
 export class ChikoritaArt extends Chikorita {
@@ -11,6 +12,10 @@ export class ChikoritaArt extends Chikorita {
 
 export class GrovleArt extends Grovyle {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_021_R_EN_LG.png';
+}
+
+export class MeganiumArt extends Meganium {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_008_R_EN_LG.png';
 }
 
 export class TreeckoArt extends Treecko {

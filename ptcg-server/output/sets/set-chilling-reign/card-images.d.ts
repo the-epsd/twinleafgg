@@ -37,6 +37,7 @@ import { Sneasel } from './sneasel';
 import { Snorunt } from './snorunt';
 import { Sobble } from './sobble';
 import { SpiralEnergy } from './spiral-energy';
+import { Zarude } from './zarude';
 export declare class AgathaArt extends Agatha {
     cardImage: string;
 }
@@ -152,5 +153,8 @@ export declare class SobbleArt extends Sobble {
     cardImage: string;
 }
 export declare class SpiralEnergyArt extends SpiralEnergy {
+    cardImage: string;
+}
+export declare class ZarudeArt extends Zarude {
     cardImage: string;
 }

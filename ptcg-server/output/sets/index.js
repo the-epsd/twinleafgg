@@ -52,7 +52,7 @@ __exportStar(require("./set-primal-clash"), exports);
 __exportStar(require("./set-roaring-skies"), exports);
 __exportStar(require("./set-ancient-origins"), exports);
 __exportStar(require("./set-breakthrough"), exports);
-//export * from './set-breakpoint';
+__exportStar(require("./set-breakpoint"), exports); //remember to comment this out
 //export * from './set-generations';
 __exportStar(require("./set-fates-collide"), exports);
 //export * from './set-steam-siege';
@@ -79,6 +79,7 @@ __exportStar(require("./set-sword-and-shield"), exports);
 __exportStar(require("./set-sword-and-shield-promos"), exports);
 __exportStar(require("./set-darkness-ablaze"), exports);
 __exportStar(require("./set-vivid-voltage"), exports);
+__exportStar(require("./set-shining-fates"), exports);
 __exportStar(require("./set-battle-styles"), exports);
 __exportStar(require("./set-chilling-reign"), exports);
 __exportStar(require("./set-evolving-skies"), exports);

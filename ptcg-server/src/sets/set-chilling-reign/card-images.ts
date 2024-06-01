@@ -38,6 +38,7 @@ import { Sneasel } from './sneasel';
 import { Snorunt } from './snorunt';
 import { Sobble } from './sobble';
 import { SpiralEnergy } from './spiral-energy';
+import { Zarude } from './zarude';
 
 export class AgathaArt extends Agatha {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_129_R_EN.png';
@@ -193,4 +194,8 @@ export class SobbleArt extends Sobble {
 
 export class SpiralEnergyArt extends SpiralEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_159_R_EN.png';
+}
+
+export class ZarudeArt extends Zarude {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_019_R_EN_LG.png';
 }

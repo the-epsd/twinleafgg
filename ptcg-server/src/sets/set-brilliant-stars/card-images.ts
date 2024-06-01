@@ -33,6 +33,7 @@ import { RoseannesBackup } from './roseannes-backup';
 import { ShayminV } from './shaymin-v';
 import { ShayminVSTAR } from './shaymin-vstar';
 import { TeamYellsCheer } from './team-yells-cheer';
+import { Torterra } from './torterra';
 
 export class AcerolasPremonitionArt extends AcerolasPremonition {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_129_R_EN_LG.png';
@@ -172,4 +173,8 @@ export class ShayminVSTARArt extends ShayminVSTAR {
 
 export class TeamYellsCheerArt extends TeamYellsCheer {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_149_R_EN.png';
+}
+
+export class TorterraArt extends Torterra {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_008_R_EN_LG.png';
 }
