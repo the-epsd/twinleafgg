@@ -52,7 +52,7 @@ __exportStar(require("./set-primal-clash"), exports);
 __exportStar(require("./set-roaring-skies"), exports);
 __exportStar(require("./set-ancient-origins"), exports);
 __exportStar(require("./set-breakthrough"), exports);
-__exportStar(require("./set-breakpoint"), exports); //remember to comment this out
+__exportStar(require("./set-breakpoint"), exports);
 //export * from './set-generations';
 __exportStar(require("./set-fates-collide"), exports);
 //export * from './set-steam-siege';

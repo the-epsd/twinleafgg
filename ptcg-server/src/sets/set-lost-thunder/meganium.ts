@@ -6,14 +6,106 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
-import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { Card } from '../../game/store/card/card';
-import { ChoosePokemonPrompt } from '../../game';
+import { Card, CardManager, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, PokemonCardList, SlotType } from '../../game';
 
+function isMatchingStage2(stage1: PokemonCard[], basic: PokemonCard, stage2: PokemonCard): boolean {
+  for (const card of stage1) {
+    if (card.name === stage2.evolvesFrom && basic.name === card.evolvesFrom) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function* playCard(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
+  const player = effect.player;
+
+  // Create list of non - Pokemon SP slots
+  const blocked: CardTarget[] = [];
+  let hasBasicPokemon: boolean = false;
+
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
+  const stage2 = player.hand.cards.filter(c => {
+    return c instanceof PokemonCard && c.stage === Stage.STAGE_2;
+  }) as PokemonCard[];
+
+  if (stage2.length === 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+
+  // Look through all known cards to find out if it's a valid Stage 2
+  const cm = CardManager.getInstance();
+  const stage1 = cm.getAllCards().filter(c => {
+    return c instanceof PokemonCard && c.stage === Stage.STAGE_1;
+  }) as PokemonCard[];
+
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+    if (card.stage === Stage.BASIC && stage2.some(s => isMatchingStage2(stage1, card, s))) {
+
+      hasBasicPokemon = true;
+      return;
+    }
+    blocked.push(target);
+  });
+
+  if (!hasBasicPokemon) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
+  let targets: PokemonCardList[] = [];
+  yield store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.ACTIVE, SlotType.BENCH],
+    { allowCancel: false, blocked }
+  ), selection => {
+    targets = selection || [];
+    next();
+  });
+
+  if (targets.length === 0) {
+    return state; // canceled by user
+  }
+  const pokemonCard = targets[0].getPokemonCard();
+  if (pokemonCard === undefined) {
+    return state; // invalid target?
+  }
+
+  const blocked2: number[] = [];
+  player.hand.cards.forEach((c, index) => {
+    if (c instanceof PokemonCard && c.stage === Stage.STAGE_2) {
+      if (!isMatchingStage2(stage1, pokemonCard, c)) {
+        blocked2.push(index);
+      }
+    }
+  });
+
+  let cards: Card[] = [];
+  return store.prompt(state, new ChooseCardsPrompt(
+    player.id,
+    GameMessage.CHOOSE_CARD_TO_EVOLVE,
+    player.hand,
+    { superType: SuperType.POKEMON, stage: Stage.STAGE_2 },
+    { min: 1, max: 1, allowCancel: true, blocked: blocked2 }
+  ), selected => {
+    cards = selected || [];
+
+    if (cards.length > 0) {
+      const pokemonCard = cards[0] as PokemonCard;
+      const evolveEffect = new EvolveEffect(player, targets[0], pokemonCard);
+      store.reduceEffect(state, evolveEffect);
+    }
+  });
+}
 export class Meganium extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public cardType: CardType = CardType.GRASS;
@@ -59,35 +151,13 @@ export class Meganium extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+
       if (player.marker.hasMarker(this.QUICK_RIPENING_HERB_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
+      const generator = playCard(() => generator.next(), store, state, effect);
+      return generator.next().value;
 
-      let cards: Card[] = [];
-
-      return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_EVOLVE,
-        player.hand,
-        { superType: SuperType.POKEMON, stage: Stage.STAGE_2 },
-        { min: 1, max: 1, allowCancel: true }
-      ), selected => {
-        cards = selected || [];
-
-        return store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_CARD_TO_EVOLVE,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH, SlotType.ACTIVE],
-        ), targets => {
-          if (cards.length > 0) {
-            // Evolve Pokemon
-            player.hand.moveCardsTo(cards, targets[0]);
-            targets[0].clearEffects();
-            targets[0].pokemonPlayedTurn = state.turn;
-          }
-        });
-      });
     }
     return state;
   }

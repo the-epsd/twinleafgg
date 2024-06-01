@@ -36,7 +36,6 @@ class Torterra extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const playerBench = player.bench;
-            //console.log(playerBench);
             let evolutionPokemonCount = 0;
             playerBench.forEach(c => {
                 var _a, _b, _c, _d, _e;
@@ -47,7 +46,6 @@ class Torterra extends pokemon_card_1.PokemonCard {
                     }
                 }
             });
-            console.log('number of evolution pokemon ' + evolutionPokemonCount);
             effect.damage = (evolutionPokemonCount + 1) * 50;
             return state;
         }

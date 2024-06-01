@@ -45,7 +45,7 @@ export * from './set-primal-clash';
 export * from './set-roaring-skies';
 export * from './set-ancient-origins';
 export * from './set-breakthrough';
-//export * from './set-breakpoint'; 
+export * from './set-breakpoint'; 
 //export * from './set-generations';
 export * from './set-fates-collide';
 //export * from './set-steam-siege';

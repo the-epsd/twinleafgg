@@ -54,7 +54,7 @@ cardManager.defineSet(sets.setPrimalClash);
 
 cardManager.defineSet(sets.setRoaringSkies);
 cardManager.defineSet(sets.setAncientOrigins);
-//cardManager.defineSet(sets.setBreakpoint);
+cardManager.defineSet(sets.setBreakpoint);
 cardManager.defineSet(sets.setBreakthrough);
 
 cardManager.defineSet(sets.setFatesCollide);
