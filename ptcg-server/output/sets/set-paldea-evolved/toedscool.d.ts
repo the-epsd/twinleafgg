@@ -1,38 +1,34 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerType } from '../../game';
-export declare class Charizard extends PokemonCard {
+export declare class Toedscool extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
-    resistance: {
-        type: CardType;
-        value: number;
-    }[];
     retreat: CardType[];
-    powers: {
-        name: string;
-        useWhenInPlay: boolean;
-        powerType: PowerType;
-        text: string;
-    }[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        effect?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        text: string;
+        effect: (store: StoreLike, state: State, effect: AttackEffect) => void;
+    })[];
     set: string;
+    cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;
-    readonly ENERGY_BURN_MARKER = "ENERGY_BURN_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

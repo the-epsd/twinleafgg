@@ -178,6 +178,7 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
   if (effect instanceof EvolveEffect) {
     const pokemonCard = effect.target.getPokemonCard();
+
     if (pokemonCard === undefined) {
       throw new GameError(GameMessage.INVALID_TARGET);
     }

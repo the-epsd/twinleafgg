@@ -11,7 +11,9 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Charizard extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
+
+  public evolvesFrom = 'Charmeleon';
 
   public cardType: CardType = CardType.FIRE;
 

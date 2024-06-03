@@ -10,7 +10,8 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class Charizard extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
+        this.evolvesFrom = 'Charmeleon';
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 120;
         this.weakness = [{

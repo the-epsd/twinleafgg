@@ -13,7 +13,7 @@ export class CornerstoneMaskOgerponex extends PokemonCard {
 
   public hp = 210;
   
-  public tags = [CardTag.POKEMON_ex];
+  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
   
   public weakness = [{ type: CardType.GRASS }];
   

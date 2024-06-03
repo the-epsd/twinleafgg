@@ -9,7 +9,7 @@ export class Charmeleon extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Charmeleon';
+  public evolvesFrom = 'Charmander';
 
   public cardType: CardType = CardType.FIRE;
 

@@ -12,7 +12,7 @@ class CornerstoneMaskOgerponex extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.FIGHTING;
         this.hp = 210;
-        this.tags = [card_types_1.CardTag.POKEMON_ex];
+        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{

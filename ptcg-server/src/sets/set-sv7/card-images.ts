@@ -84,7 +84,7 @@ export class CresseliaArt extends Cresselia {
 }
 
 export class CrispinArt extends Crispin {
-  public cardImage = 'https://pbs.twimg.com/media/GPC48haWAAAWFTy?format=jpg&name=medium';
+  public cardImage = 'https://pokemonproxies.com/static/media/Crispin-097-7i.4e4c9b250a0290d1e075.png';
 }
 
 export class CufantArt extends Cufant {
@@ -116,7 +116,7 @@ export class DuskullArt extends Duskull {
 }
 
 export class FanRotomArt extends FanRotom {
-  public cardImage = 'https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/pokemon-card-3-standard.jpg';
+  public cardImage = 'https://pokemonproxies.com/static/media/Fan_Rotom-080-7i.563baf619c788aa45607.png';
 }
 
 export class FezandipitiexArt extends Fezandipitiex {
@@ -132,7 +132,7 @@ export class GenesectArt extends Genesect {
 }
 
 export class GlisteningCrystalArt extends GlisteningCrystal {
-  public cardImage = 'https://pbs.twimg.com/media/GPC37-jW0AAv3rN?format=jpg&name=900x900';
+  public cardImage = 'https://pokemonproxies.com/static/media/Sparkling_Crystal-094-7i.22d199d348f9a7578ee3.png';
 }
 
 export class HaxorusArt extends Haxorus {
@@ -140,7 +140,7 @@ export class HaxorusArt extends Haxorus {
 }
 
 export class HoothootArt extends Hoothoot {
-  public cardImage = 'https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/pokemon-card-1-2-high.jpg';
+  public cardImage = 'https://pokemonproxies.com/static/media/Hoothoot-076-7i.d5f7da4cc05a21bc557f.png';
 }
 
 export class HorseaArt extends Horsea {
@@ -184,7 +184,7 @@ export class NightlyStretcherArt extends NightlyStretcher {
 }
 
 export class NoctowlArt extends Noctowl {
-  public cardImage = 'https://pbs.twimg.com/media/GPC6CU9WoAE0P-Y?format=jpg&name=900x900';
+  public cardImage = 'https://pokemonproxies.com/static/media/Noctowl-077-7i.b077a0e9fd35803bcbdc.png';
 }
 
 export class OkidogiexArt extends Okidogiex {

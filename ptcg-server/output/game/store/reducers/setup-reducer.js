@@ -21,6 +21,7 @@ const card_types_1 = require("../card/card-types");
 const game_phase_effects_1 = require("../effects/game-phase-effects");
 const check_effect_1 = require("../effect-reducers/check-effect");
 const game_phase_effect_1 = require("../effect-reducers/game-phase-effect");
+const select_prompt_1 = require("../prompts/select-prompt");
 function putStartingPokemonsAndPrizes(player, cards) {
     if (cards.length === 0) {
         return;
@@ -34,10 +35,30 @@ function putStartingPokemonsAndPrizes(player, cards) {
     }
 }
 function* setupGame(next, store, state) {
-    const basicPokemon = { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC };
-    const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
     const player = state.players[0];
     const opponent = state.players[1];
+    const whoBeginsEffect = new game_phase_effects_1.WhoBeginsEffect();
+    if (whoBeginsEffect.player) {
+        state.activePlayer = state.players.indexOf(whoBeginsEffect.player);
+    }
+    else {
+        const coinFlipPrompt = new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.SETUP_WHO_BEGINS_FLIP);
+        store.prompt(state, coinFlipPrompt, whoBegins => {
+            const goFirstPrompt = new select_prompt_1.SelectPrompt(whoBegins ? player.id : opponent.id, game_message_1.GameMessage.GO_FIRST, [game_message_1.GameMessage.YES, game_message_1.GameMessage.NO]);
+            store.prompt(state, goFirstPrompt, choice => {
+                if (choice === 0) {
+                    state.activePlayer = whoBegins ? 0 : 1;
+                    next();
+                }
+                else {
+                    state.activePlayer = whoBegins ? 1 : 0;
+                    next();
+                }
+            });
+        });
+    }
+    const basicPokemon = { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC };
+    const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
     let playerHasBasic = false;
     let opponentHasBasic = false;
     while (!playerHasBasic || !opponentHasBasic) {
@@ -92,7 +113,6 @@ function* setupGame(next, store, state) {
         putStartingPokemonsAndPrizes(opponent, choice[1]);
         next();
     });
-    const whoBeginsEffect = new game_phase_effects_1.WhoBeginsEffect();
     store.reduceEffect(state, whoBeginsEffect);
     if (whoBeginsEffect.player) {
         state.activePlayer = state.players.indexOf(whoBeginsEffect.player);

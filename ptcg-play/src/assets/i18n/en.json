@@ -418,7 +418,8 @@
     "CHOICE_TOOL": "Tool",
     "CHOICE_STADIUM": "Stadium",
     "WANT_TO_DRAW_UNTIL_6": "Do you want to draw until you have 6 cards in your hand?",
-    "WANT_TO_USE_FESTIVAL_FEVER": "Festival Plaza is in play. Do you want to attack again?"
+    "WANT_TO_USE_FESTIVAL_FEVER": "Festival Plaza is in play. Do you want to attack again?",
+    "CANNOT_EVOLVE_ON_YOUR_FIRST_TURN": "Cannot evolve Pokémon on your first turn."
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.",

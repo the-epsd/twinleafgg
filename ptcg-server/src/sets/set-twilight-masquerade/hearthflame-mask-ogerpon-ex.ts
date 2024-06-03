@@ -8,7 +8,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class HearthflameMaskOgerponex extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
 
   public regulationMark = 'H';
 
