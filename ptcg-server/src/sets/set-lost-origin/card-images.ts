@@ -26,6 +26,7 @@ import { KyuremVMAX } from './kyurem-vmax';
 import { Lady } from './lady';
 import { LostCity } from './lost-city';
 import { LostVacuum } from './lost-vacuum';
+import { Machop } from './machop';
 import { MagnezoneV } from './magnezone-v';
 import { MagnezoneVSTAR } from './magnezone-vstar';
 import { Mawile } from './mawile';
@@ -152,6 +153,10 @@ export class LostCityArt extends LostCity {
 
 export class LostVacuumArt extends LostVacuum {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_162_R_EN_LG.png';
+}
+
+export class MachopArt extends Machop {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_086_R_EN_LG.png';
 }
 
 export class MagnezoneVArt extends MagnezoneV {

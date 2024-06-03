@@ -1,6 +1,7 @@
 import { Bellsprout } from './bellsprout';
 import { Bronzong } from './bronzong';
 import { Bruno } from './bruno';
+import { Carkol } from './carkol';
 import { Cherrim } from './cherrim';
 import { Cherubi } from './cherubi';
 import { Cheryl } from './cheryl';
@@ -24,6 +25,7 @@ import { RapidStrikeEnergy } from './rapid-strike-energy';
 import { RapidStrikeUrshifuV } from './rapid-strike-urshifu-v';
 import { RapidStrikeUrshifuVMAX } from './rapid-strike-urshifu-vmax';
 import { Remoraid } from './remoraid';
+import { Rolycoly } from './rolycoly';
 import { SingleStrikeEnergy } from './single-strike-energy';
 import { SingleStrikeUrshifuV } from './single-strike-urshifu-v';
 import { SingleStrikeUrshifuVMAX } from './single-strike-urshifu-vmax';
@@ -51,6 +53,10 @@ export class BronzongArt extends Bronzong {
 
 export class BrunoArt extends Bruno {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_121_R_EN.png';
+}
+
+export class CarkolArt extends Carkol {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_079_R_EN_LG.png';
 }
 
 export class CherrimArt extends Cherrim {
@@ -143,6 +149,10 @@ export class RapidStrikeUrshifuVMAXArt extends RapidStrikeUrshifuVMAX {
 
 export class RemoraidArt extends Remoraid {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_036_R_EN.png';
+}
+
+export class RolycolyArt extends Rolycoly {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_078_R_EN_LG.png';
 }
 
 export class SingleStrikeEnergyArt extends SingleStrikeEnergy {

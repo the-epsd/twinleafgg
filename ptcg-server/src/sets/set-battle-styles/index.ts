@@ -1,11 +1,12 @@
 import { Card } from '../../game/store/card/card';
-import { BellsproutArt, BronzongArt, BrunoArt, CherrimArt, CherubiArt, CherylArt, DurantArt, EmpoleonVArt, EnergyRecyclerArt, EscapeRopeArt, FalinksArt, FanOfWavesArt, FlappleVArt, FlappleVMAXArt, HoundoomArt, HoundourArt, KorrinasFocusArt, KricketuneVArt, LevelBallArt, MimikyuVArt, NecrozmaVArt, OctilleryArt, RapidStrikeEnergyArt, RapidStrikeUrshifuVArt, RapidStrikeUrshifuVMAXArt, RemoraidArt, SingleStrikeEnergyArt, SingleStrikeUrshifuVArt, SingleStrikeUrshifuVMAXArt, StonjournerArt, StoutlandVArt, TapuKokoVArt, TapuKokoVMAXArt, ToolJammerArt, TowerOfDarknessArt, TowerOfWatersArt, TyranitarVArt, UrnOfVitalityArt, VictiniVArt, VictiniVMAXArt, VictreebelArt, WeepinbellArt } from './card-images';
+import { BellsproutArt, BronzongArt, BrunoArt, CarkolArt, CherrimArt, CherubiArt, CherylArt, DurantArt, EmpoleonVArt, EnergyRecyclerArt, EscapeRopeArt, FalinksArt, FanOfWavesArt, FlappleVArt, FlappleVMAXArt, HoundoomArt, HoundourArt, KorrinasFocusArt, KricketuneVArt, LevelBallArt, MimikyuVArt, NecrozmaVArt, OctilleryArt, RapidStrikeEnergyArt, RapidStrikeUrshifuVArt, RapidStrikeUrshifuVMAXArt, RemoraidArt, RolycolyArt, SingleStrikeEnergyArt, SingleStrikeUrshifuVArt, SingleStrikeUrshifuVMAXArt, StonjournerArt, StoutlandVArt, TapuKokoVArt, TapuKokoVMAXArt, ToolJammerArt, TowerOfDarknessArt, TowerOfWatersArt, TyranitarVArt, UrnOfVitalityArt, VictiniVArt, VictiniVMAXArt, VictreebelArt, WeepinbellArt } from './card-images';
 
 export const setBattleStyles: Card[] = [
 
   new BellsproutArt(),
   new BronzongArt(),
   new BrunoArt(),
+  new CarkolArt(),
   new CherrimArt(),
   new CherubiArt(),
   new CherylArt(),
@@ -28,6 +29,7 @@ export const setBattleStyles: Card[] = [
   new RapidStrikeUrshifuVArt(),
   new RapidStrikeUrshifuVMAXArt(),
   new RemoraidArt(),
+  new RolycolyArt(),
   new SingleStrikeEnergyArt(),
   new SingleStrikeUrshifuVArt(),
   new SingleStrikeUrshifuVMAXArt(),

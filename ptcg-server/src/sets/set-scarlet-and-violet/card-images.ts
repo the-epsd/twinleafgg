@@ -1,3 +1,4 @@
+import { Annihilape } from './annihilape';
 import { Armarouge } from './armarouge';
 import { Arven } from './arven';
 import { Banetteex } from './banette-ex';
@@ -22,6 +23,7 @@ import { Koraidonex } from './koraidon-ex';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { Magnezoneex } from './magnezone-ex';
+import { Mankey } from './mankey';
 import { Mareep } from './mareep';
 import { Mesagoza } from './mesagoza';
 import { Miraidonex } from './miraidon-ex';
@@ -35,6 +37,7 @@ import { Pokeball } from './pokeball';
 import { Pokegear30 } from './pokegear-30';
 import { PokemonCatcher } from './pokemon-catcher';
 import { Potion } from './potion';
+import { Primeape } from './primeape';
 import { ProfessorsResearch } from './professors-research';
 import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
@@ -48,6 +51,10 @@ import { TeamStarGrunt } from './team-star-grunt';
 import { UltraBall } from './ultra-ball';
 import { VitalityBand } from './vitality-band';
 import { Youngster } from './youngster';
+
+export class AnnihilapeArt extends Annihilape {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_109_R_EN_LG.png';
+}
 
 export class ArmarougeArt extends Armarouge {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_041_R_EN_LG.png';
@@ -145,6 +152,10 @@ export class MagnezoneexArt extends Magnezoneex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_065_R_EN_LG.png';
 }
 
+export class MankeyArt extends Mankey {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_107_R_EN_LG.png';
+}
+
 export class MareepArt extends Mareep {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_066_R_EN_LG.png';
 }
@@ -195,6 +206,10 @@ export class PokemonCatcherArt extends PokemonCatcher {
 
 export class PotionArt extends Potion {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_188_R_EN_LG.png';
+}
+
+export class PrimeapeArt extends Primeape {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_108_R_EN_LG.png';
 }
 
 export class ProfessorsResearchArt1 extends ProfessorsResearch {

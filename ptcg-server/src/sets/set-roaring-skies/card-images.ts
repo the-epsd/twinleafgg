@@ -1,6 +1,7 @@
 import { Articuno } from './articuno';
 import { Beautifly } from './beautifly';
 import { ShayminEx } from './shaymin-ex';
+import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
 import { SkyField } from './sky-field';
 import { TrainersMail } from './trainers-mail';
@@ -16,6 +17,10 @@ export class BeautiflyArt extends Beautifly {
 
 export class ShayminExArt extends ShayminEx {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_077_R_EN.png';
+}
+
+export class ShuppetArt extends Shuppet {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_030_R_EN_LG.png';
 }
 
 export class SilcoonArt extends Silcoon {

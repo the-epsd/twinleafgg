@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArmarougeArt, BanetteexArt, CharcadetArt, NemonaArt, NestBallArt2, RockyHelmetArt, ShuppetArt } from './card-images';
+import { AnnihilapeArt, ArmarougeArt, BanetteexArt, CharcadetArt, MankeyArt, NemonaArt, NestBallArt2, PrimeapeArt, RockyHelmetArt, ShuppetArt } from './card-images';
 import { ArvenArt } from './card-images';
 import { BeachCourtArt } from './card-images';
 import { CrushingHammerArt } from './card-images';
@@ -48,6 +48,7 @@ import { YoungsterArt } from './card-images';
 import { ArmarougeIR, ArvenFA, ArvenSIR, FightingEnergyHR, GardevoirexFA, GardevoirexSIR, JacqFA, JacqSIR, KatyFA, KoraidonexFA, KoraidonexHR, KoraidonexSIR, LightningEnergyHR, MagnezoneexFA, MiraidonexFA, MiraidonexHR, MiraidonexSIR, MiriamFA, MiriamSIR, NestBallHR, PennyFA, PennySIR, ProfessorsResearchFA1, ProfessorsResearchFA2, RaltsIR, RareCandyHR, SkwovetIR, TeamStarGruntFA } from './full-arts';
 
 export const setScarletAndViolet: Card[] = [
+  new AnnihilapeArt(),
   new ArmarougeArt(),
   new ArvenArt(),
   new BeachCourtArt(),
@@ -71,6 +72,7 @@ export const setScarletAndViolet: Card[] = [
   new MagnemiteArt(),
   new MagnetonArt(),
   new MagnezoneexArt(),
+  new MankeyArt(),
   new MareepArt(),
   new MesagozaArt(),
   new MiraidonexArt(),
@@ -84,6 +86,7 @@ export const setScarletAndViolet: Card[] = [
   new Pokegear30Art(),
   new PokemonCatcherArt(),
   new PotionArt(),
+  new PrimeapeArt(),
   new ProfessorsResearchArt1(),
   new ProfessorsResearchArt2(),
   new RaltsArt(),

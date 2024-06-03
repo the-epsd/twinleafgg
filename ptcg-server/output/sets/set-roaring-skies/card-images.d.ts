@@ -1,6 +1,7 @@
 import { Articuno } from './articuno';
 import { Beautifly } from './beautifly';
 import { ShayminEx } from './shaymin-ex';
+import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
 import { SkyField } from './sky-field';
 import { TrainersMail } from './trainers-mail';
@@ -12,6 +13,9 @@ export declare class BeautiflyArt extends Beautifly {
     cardImage: string;
 }
 export declare class ShayminExArt extends ShayminEx {
+    cardImage: string;
+}
+export declare class ShuppetArt extends Shuppet {
     cardImage: string;
 }
 export declare class SilcoonArt extends Silcoon {

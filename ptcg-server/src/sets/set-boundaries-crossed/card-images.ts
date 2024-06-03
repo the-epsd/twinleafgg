@@ -7,6 +7,7 @@ import { Duskull } from './duskull';
 import { KeldeoEx } from './keldeo-ex';
 import { LandorusEx } from './landorus-ex';
 import { Munna } from './munna';
+import { Pignite } from './pignite';
 import { Potion } from './potion';
 import { RockyHelmet } from './rocky-helmet';
 import { Skyla } from './skyla';
@@ -47,6 +48,10 @@ export class LandorusExArt extends LandorusEx {
 
 export class MunnaArt extends Munna {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BCR/BCR_068_R_EN.png';
+}
+
+export class PigniteArt extends Pignite {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BCR/BCR_025_R_EN_LG.png';
 }
 
 export class PotionArt extends Potion {

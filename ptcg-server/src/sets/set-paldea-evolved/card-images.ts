@@ -35,6 +35,9 @@ import { TheraputicEnergy } from './theraputic-energy';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
 import { ChiYuex } from './chi-yu-ex';
+import { Tinkatink } from './tinkatink';
+import { Tinkatuff } from './tinkatuff';
+import { Tinkaton } from './tinkaton';
 
 export class ArctibaxArt extends Arctibax {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_059_R_EN_LG.png';
@@ -182,4 +185,16 @@ export class TheraputicEnergyArt extends TheraputicEnergy {
   
 export class TingLuexArt extends TingLuex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_127_R_EN_LG.png';
+}
+
+export class TinkatinkArt extends Tinkatink {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_101_R_EN_LG.png';
+}
+
+export class TinkatuffArt extends Tinkatuff {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_103_R_EN_LG.png';
+}
+
+export class TinkatonArt extends Tinkaton {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_105_R_EN_LG.png';
 }

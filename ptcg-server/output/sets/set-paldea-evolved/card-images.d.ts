@@ -35,6 +35,9 @@ import { TheraputicEnergy } from './theraputic-energy';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
 import { ChiYuex } from './chi-yu-ex';
+import { Tinkatink } from './tinkatink';
+import { Tinkatuff } from './tinkatuff';
+import { Tinkaton } from './tinkaton';
 export declare class ArctibaxArt extends Arctibax {
     cardImage: string;
 }
@@ -144,5 +147,14 @@ export declare class TheraputicEnergyArt extends TheraputicEnergy {
     cardImage: string;
 }
 export declare class TingLuexArt extends TingLuex {
+    cardImage: string;
+}
+export declare class TinkatinkArt extends Tinkatink {
+    cardImage: string;
+}
+export declare class TinkatuffArt extends Tinkatuff {
+    cardImage: string;
+}
+export declare class TinkatonArt extends Tinkaton {
     cardImage: string;
 }

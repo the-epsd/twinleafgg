@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AspertiaCityGymArt, BlastoiseArt, ComputerSearchArt, DusclopsArt, DusknoirArt, DuskullArt, KeldeoExArt, LandorusExArt, MunnaArt, PotionArt, RockyHelmetArt, SkylaArt, SquirtleArt, WartortleArt } from './card-images';
+import { AspertiaCityGymArt, BlastoiseArt, ComputerSearchArt, DusclopsArt, DusknoirArt, DuskullArt, KeldeoExArt, LandorusExArt, MunnaArt, PigniteArt, PotionArt, RockyHelmetArt, SkylaArt, SquirtleArt, WartortleArt } from './card-images';
 
 export const setBoundariesCrossed: Card[] = [
   new AspertiaCityGymArt(),
@@ -11,6 +11,7 @@ export const setBoundariesCrossed: Card[] = [
   new KeldeoExArt(),
   new LandorusExArt(),
   new MunnaArt(),
+  new PigniteArt(),
   new PotionArt(),
   new RockyHelmetArt(),
   new SkylaArt(),
