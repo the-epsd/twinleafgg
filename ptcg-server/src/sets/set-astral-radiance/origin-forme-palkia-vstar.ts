@@ -14,7 +14,7 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
 
   public stage: Stage = Stage.VSTAR;
 
-  public evolvesFrom = 'Palkia V';
+  public evolvesFrom = 'Origin Forme Palkia V';
 
   public cardType: CardType = CardType.WATER;
 
