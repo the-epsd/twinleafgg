@@ -75,6 +75,8 @@ export class Player {
   chainsOfControlUsed: any;
 
   pecharuntexIsInPlay = false;
+  usedJewelHunt = false;
+  usedFanCall = false;
 
   getPrizeLeft(): number {
     return this.prizes.reduce((left, p) => left + p.cards.length, 0);

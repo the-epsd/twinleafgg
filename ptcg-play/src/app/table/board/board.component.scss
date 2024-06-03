@@ -28,7 +28,7 @@ z-index: 0;
   .parent {
     height: 640px;
     margin: 0;
-    width: 900px;
+    width: 940px;
     transform: perspective(55em) rotateX(18deg);
     display: flex;
     padding: 0;
@@ -148,7 +148,7 @@ z-index: 0;
 
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-width: 85px;
+width: 65px;
   }
 }
 
@@ -165,7 +165,7 @@ width: 85px;
 .ptcg-board-stadium {
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-    width: 85px; // Keep the width at 72px for other cards
+    width: 65px; 
   }
 }
 
@@ -209,7 +209,7 @@ ptcg-board-deck {
 .stadium-card {
   align-self: flex-start;
 
-  margin-top: -36%;
+  margin-top: -27%;
   margin-left: 50%;
 
   }

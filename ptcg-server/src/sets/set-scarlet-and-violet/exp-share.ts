@@ -22,9 +22,9 @@ export class ExpShare extends TrainerCard {
 
   public setNumber: string = '174';
 
-  public name: string = 'Exp Share';
+  public name: string = 'Exp. Share';
 
-  public fullName: string = 'Exp Share SVI';
+  public fullName: string = 'Exp. Share SVI';
 
   public text: string =
     'When your Active Pokemon is Knocked Out by damage from an opponent\'s ' +

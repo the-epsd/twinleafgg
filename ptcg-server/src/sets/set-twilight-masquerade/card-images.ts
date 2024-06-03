@@ -60,6 +60,7 @@ import { HearthflameMaskOgerponex } from './hearthflame-mask-ogerpon-ex';
 import { ChiYu } from './chi-yu';
 import { JammingTower } from './jamming-tower';
 import { CornerstoneMaskOgerponex } from './cornerstone-mask-ogerpon-ex';
+import { BoomerangEnergy } from './boomerang-energy';
 
 
 export class AggronArt extends Aggron {
@@ -84,6 +85,10 @@ export class BlisseyexArt extends Blisseyex {
 
 export class BloodmoonUrsalunaexArt extends BloodmoonUrsalunaex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_141_R_EN_LG.png';
+}
+
+export class BoomerangEnergyArt extends BoomerangEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_166_R_EN_LG.png';
 }
 
 export class BugCatchingSetArt extends BugCatchingSet {

@@ -89,6 +89,6 @@ export declare class CheckProvidedEnergyEffect implements Effect {
 export declare class CheckTableStateEffect implements Effect {
     readonly type: string;
     preventDefault: boolean;
-    benchSize: number;
-    constructor();
+    benchSizes: number[];
+    constructor(benchSizes: number[]);
 }

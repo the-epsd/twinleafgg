@@ -35,8 +35,9 @@ function findKoPokemons(store: StoreLike, state: State): PokemonItem[] {
   return pokemons;
 }
 
-function handleBenchSizeChange(store: StoreLike, state: State, benchSize: number): State {
-  state.players.forEach(player => {
+function handleBenchSizeChange(store: StoreLike, state: State, benchSizes: number[]): State {
+  state.players.forEach((player, index) => {
+    const benchSize = benchSizes[index];
     // Add empty slots if bench is smaller
     while (player.bench.length < benchSize) {
       const bench = new PokemonCardList();
@@ -258,11 +259,12 @@ function* executeCheckState(next: Function, store: StoreLike, state: State,
   const prizesToTake: [number, number] = [0, 0];
 
   // This effect checks the general data from the table (bench size)
-  const checkTableStateEffect = new CheckTableStateEffect();
+  // In the file where you create the instance
+  const checkTableStateEffect = new CheckTableStateEffect([5, 5]); // Pass the benchSizes array
   store.reduceEffect(state, checkTableStateEffect);
 
   // Size of the bench has changed. This may require some Pokemons to be discarded
-  handleBenchSizeChange(store, state, checkTableStateEffect.benchSize);
+  handleBenchSizeChange(store, state, checkTableStateEffect.benchSizes);
   if (store.hasPrompts()) {
     yield store.waitPrompt(state, () => next());
   }

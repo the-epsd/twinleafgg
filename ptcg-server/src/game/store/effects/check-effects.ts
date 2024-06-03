@@ -154,9 +154,9 @@ export class CheckProvidedEnergyEffect implements Effect {
 export class CheckTableStateEffect implements Effect {
   readonly type: string = CheckEffects.CHECK_TABLE_STATE_EFFECT;
   public preventDefault = false;
-  public benchSize: number;
+  public benchSizes: number[];
 
-  constructor() {
-    this.benchSize = 5;
+  constructor(benchSizes: number[]) {
+    this.benchSizes = benchSizes;
   }
 }

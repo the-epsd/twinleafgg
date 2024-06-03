@@ -23,9 +23,11 @@ class LostCity extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const target = effect.target;
             const cards = target.getPokemons();
+            const removedCards = [];
             const pokemonIndices = effect.target.cards.map((card, index) => index);
-            for (let i = pokemonIndices.length; i >= 0; i--) {
-                target.cards.splice(pokemonIndices[i], 1);
+            for (let i = pokemonIndices.length - 1; i >= 0; i--) {
+                const removedCard = target.cards.splice(pokemonIndices[i], 1)[0];
+                removedCards.push(removedCard);
                 target.damage = 0;
             }
             if (cards.some(card => card.tags.includes(card_types_1.CardTag.POKEMON_EX) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_ex))) {
@@ -34,9 +36,12 @@ class LostCity extends trainer_card_1.TrainerCard {
             if (cards.some(card => card.tags.includes(card_types_1.CardTag.POKEMON_VMAX))) {
                 effect.prizeCount += 2;
             }
+            const attachedCards = new game_1.CardList();
+            attachedCards.cards = removedCards;
             const lostZoned = new game_1.CardList();
             lostZoned.cards = cards;
             lostZoned.moveTo(player.lostzone);
+            attachedCards.moveTo(player.discard);
         }
         return state;
     }

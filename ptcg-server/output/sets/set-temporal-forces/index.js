@@ -31,6 +31,7 @@ exports.setTemporalForces = [
     new card_images_1.GrotleArt(),
     new card_images_1.HandTrimmerArt(),
     new card_images_1.HaunterArt(),
+    new card_images_1.HeavyBatonArt(),
     new card_images_1.HerosCapeArt(),
     new card_images_1.IronCrownexArt(),
     new card_images_1.IronHandsArt(),

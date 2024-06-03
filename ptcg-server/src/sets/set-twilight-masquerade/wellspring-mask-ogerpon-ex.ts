@@ -3,7 +3,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { Card, ChooseEnergyPrompt, ChoosePokemonPrompt, ConfirmPrompt, GameError, GameMessage, PlayerType, PokemonCard, ShuffleDeckPrompt, SlotType, StateUtils } from '../../game';
-import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -12,7 +12,7 @@ export class WellspringMaskOgerponex extends PokemonCard {
   
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
 
   public regulationMark = 'H';
   
@@ -117,6 +117,37 @@ export class WellspringMaskOgerponex extends PokemonCard {
         }
         return state;
       });
+    }
+
+    if (effect instanceof PutDamageEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Target is not Active
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[1], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
+      }
+
+      // Target is this Ogerpon
+      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const powerEffect = new PowerEffect(player, this.powers[1], this);
+          store.reduceEffect(state, powerEffect);
+        } catch {
+          return state;
+        }
+
+        effect.preventDefault = true;
+      }
     }
     return state;
   }

@@ -48,36 +48,41 @@ class ChienPaoex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             if (player.active.cards[0] !== this) {
-                return state; // Not active
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { min: 0, max: 2, allowCancel: true }), cards => {
                 player.deck.moveCardsTo(cards, player.hand);
-                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                    player.deck.applyOrder(order);
-                });
-            });
-        }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 6, allowCancel: false }), targets => {
-                targets.forEach(target => {
-                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, target, // Card source is target Pokemon
-                    { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: false }), selected => {
-                        const cards = selected || [];
-                        if (cards.length > 0) {
-                            let totalDiscarded = 0;
-                            targets.forEach(target => {
-                                const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
-                                discardEnergy.target = target;
-                                totalDiscarded += discardEnergy.cards.length;
-                                effect.damage = totalDiscarded * 60;
-                                store.reduceEffect(state, discardEnergy);
-                            });
-                            return state;
-                        }
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                        player.deck.applyOrder(order);
                     });
                 });
-                return state;
+                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+                    const player = effect.player;
+                    return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 6, allowCancel: false }), targets => {
+                        targets.forEach(target => {
+                            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, target, // Card source is target Pokemon
+                            { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: false }), selected => {
+                                const cards = selected || [];
+                                if (cards.length > 0) {
+                                    let totalDiscarded = 0;
+                                    targets.forEach(target => {
+                                        const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+                                        discardEnergy.target = target;
+                                        totalDiscarded += discardEnergy.cards.length;
+                                        effect.damage = totalDiscarded * 60;
+                                        store.reduceEffect(state, discardEnergy);
+                                    });
+                                    return state;
+                                }
+                            });
+                        });
+                        return state;
+                    });
+                }
             });
         }
         return state;

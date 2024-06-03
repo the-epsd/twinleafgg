@@ -30,8 +30,7 @@ function* playCard(next, store, state, self, effect) {
     });
     const maxPokemons = Math.min(pokemons, 1);
     const maxEnergies = Math.min(energies, 1);
-    const count = maxPokemons || maxEnergies;
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 0, max: 1, allowCancel: false, blocked, maxPokemons, maxEnergies }), selected => {
         cards = selected || [];
         next();
     });

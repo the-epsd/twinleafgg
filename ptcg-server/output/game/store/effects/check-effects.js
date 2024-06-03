@@ -114,10 +114,10 @@ class CheckProvidedEnergyEffect {
 }
 exports.CheckProvidedEnergyEffect = CheckProvidedEnergyEffect;
 class CheckTableStateEffect {
-    constructor() {
+    constructor(benchSizes) {
         this.type = CheckEffects.CHECK_TABLE_STATE_EFFECT;
         this.preventDefault = false;
-        this.benchSize = 5;
+        this.benchSizes = benchSizes;
     }
 }
 exports.CheckTableStateEffect = CheckTableStateEffect;

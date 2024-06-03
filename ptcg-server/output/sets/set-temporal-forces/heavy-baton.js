@@ -3,11 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HeavyBaton = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const state_1 = require("../../game/store/state/state");
-const game_effects_1 = require("../../game/store/effects/game-effects");
-const state_utils_1 = require("../../game/store/state-utils");
 const game_1 = require("../../game");
-const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class HeavyBaton extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -19,47 +16,52 @@ class HeavyBaton extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '151';
         this.text = 'If the Pokémon this card is attached to has a Retreat Cost of exactly 4, is in the Active Spot, and is Knocked Out by damage from an attack from your opponent\'s Pokémon, move up to 3 Basic Energy cards from that Pokémon to your Benched Pokémon in any way you like.';
-        this.RESCUE_SCARF_MAREKER = 'RESCUE_SCARF_MAREKER';
+        this.HEAVY_BATON_MARKER = 'HEAVY_BATON_MARKER';
     }
     reduceEffect(store, state, effect) {
+        var _a;
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
-            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            const hasBench = player.bench.some(b => b.cards.length > 0);
-            //   const energyList = new CardList();
-            // Get attached energy cards
-            const attachedEnergies = effect.target.cards.filter(card => {
-                return card instanceof game_1.EnergyCard;
-            });
-            //   attachedEnergies.forEach(energy => {
-            //     energy.cards.moveTo(energyList);
-            //   });
-            //   const retreatCost = effect.target.getPokemonCard()?.retreat;
-            //   if (retreatCost && retreatCost.length === 4 && retreatCost.every(cost => cost === CardType.COLORLESS)) {
-            //     // Retreat cost is 4 colorless energy
-            //   }
-            // Do not activate between turns, or when it's not opponents turn.
-            if (state.phase !== state_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-                return state;
-            }
-            if (hasBench === false) {
-                return state;
-            }
             const target = effect.target;
             const cards = target.getPokemons();
-            cards.forEach(card => {
-                attachedEnergies.forEach(energyCard => this.marker.addMarker(this.RESCUE_SCARF_MAREKER, card));
-            });
-            if (effect instanceof game_phase_effects_1.BetweenTurnsEffect) {
-                state.players.forEach(player => {
-                    if (!player.marker.hasMarker(this.RESCUE_SCARF_MAREKER)) {
+            const removedCards = [];
+            const pokemonIndices = effect.target.cards.map((card, index) => index);
+            const retreatCost = (_a = effect.target.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.retreat.length;
+            if (retreatCost !== undefined && retreatCost == 4) {
+                for (let i = pokemonIndices.length - 1; i >= 0; i--) {
+                    const removedCard = target.cards.splice(pokemonIndices[i], 1)[0];
+                    removedCards.push(removedCard);
+                    target.damage = 0;
+                }
+                if (cards.some(card => card.tags.includes(card_types_1.CardTag.POKEMON_EX) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_ex))) {
+                    effect.prizeCount += 1;
+                }
+                if (cards.some(card => card.tags.includes(card_types_1.CardTag.POKEMON_VMAX))) {
+                    effect.prizeCount += 2;
+                }
+                const energyToAttach = new game_1.CardList();
+                const toolCard = new game_1.CardList();
+                toolCard.cards = removedCards.filter(c => c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL);
+                const lostZoned = new game_1.CardList();
+                lostZoned.cards = cards;
+                const specialEnergy = new game_1.CardList();
+                specialEnergy.cards = removedCards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.SPECIAL);
+                const basicEnergy = new game_1.CardList();
+                basicEnergy.cards = removedCards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC);
+                lostZoned.moveTo(player.discard);
+                toolCard.moveTo(player.discard);
+                specialEnergy.moveTo(player.discard);
+                basicEnergy.moveTo(energyToAttach);
+                return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, energyToAttach, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 3 }), transfers => {
+                    transfers = transfers || [];
+                    // cancelled by user
+                    if (transfers.length === 0) {
                         return;
                     }
-                    const rescued = player.marker.markers
-                        .filter(m => m.name === this.RESCUE_SCARF_MAREKER)
-                        .map(m => m.source);
-                    player.discard.moveCardsTo(rescued, player.hand);
-                    player.marker.removeMarker(this.RESCUE_SCARF_MAREKER);
+                    for (const transfer of transfers) {
+                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                        energyToAttach.moveCardTo(transfer.card, target);
+                    }
                 });
             }
             return state;
@@ -68,17 +70,3 @@ class HeavyBaton extends trainer_card_1.TrainerCard {
     }
 }
 exports.HeavyBaton = HeavyBaton;
-//   return store.prompt(state, new AttachEnergyPrompt(
-//     player.id,
-//     GameMessage.ATTACH_ENERGY_TO_BENCH,
-//     energyList,
-//     PlayerType.BOTTOM_PLAYER,
-//     [ SlotType.BENCH ],
-//     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-//     { allowCancel: false, min: 0, max: 3 }
-//   ), transfers => {
-//     transfers = transfers || [];
-//     for (const transfer of transfers) {
-//       const target = StateUtils.getTarget(state, player, transfer.to);
-//       energyList.moveCardTo(transfer.card, target);
-//     }

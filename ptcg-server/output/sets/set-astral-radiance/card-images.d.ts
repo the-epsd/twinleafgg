@@ -18,6 +18,7 @@ import { HisuianHeavyBall } from './hisuian-heavy-ball';
 import { HisuianSamurottV } from './hisuian-samurott-v';
 import { HisuianSamurottVSTAR } from './hisuian-samurott-vstar';
 import { Irida } from './irida';
+import { Keldeo } from './keldeo';
 import { Kleavor } from './kleavor';
 import { LucarioV } from './lucario-v';
 import { LuxrayV } from './luxray-v';
@@ -103,6 +104,9 @@ export declare class HisuianSamurottVSTARArt extends HisuianSamurottVSTAR {
     cardImage: string;
 }
 export declare class IridaArt extends Irida {
+    cardImage: string;
+}
+export declare class KeldeoArt extends Keldeo {
     cardImage: string;
 }
 export declare class KleavorArt extends Kleavor {

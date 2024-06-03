@@ -19,6 +19,7 @@ var CardTag;
     CardTag["POKEMON_ex"] = "ex";
     CardTag["FUTURE"] = "Future";
     CardTag["ANCIENT"] = "Ancient";
+    CardTag["POKEMON_TERA"] = "POKEMON_TERA";
 })(CardTag = exports.CardTag || (exports.CardTag = {}));
 var SuperType;
 (function (SuperType) {

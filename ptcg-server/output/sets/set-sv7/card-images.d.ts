@@ -1,4 +1,5 @@
 import { Absol } from './absol';
+import { AreaZeroUnderdepths } from './area-zero-underdepths';
 import { Axew } from './axew';
 import { BindingMochi } from './binding-mochi';
 import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
@@ -6,6 +7,7 @@ import { Cassiopeia } from './cassiopeia';
 import { ColresssObsession } from './colresss-obsession';
 import { Copperajah } from './copperajah';
 import { Cresselia } from './cresselia';
+import { Crispin } from './crispin';
 import { Cufant } from './cufant';
 import { DangerousLaser } from './dangerous-laser';
 import { Dartrix } from './dartrix';
@@ -13,10 +15,13 @@ import { Decidueye } from './decidueye';
 import { Dusclops } from './dusclops';
 import { Dusknoir } from './dusknoir';
 import { Duskull } from './duskull';
+import { FanRotom } from './fan-rotom';
 import { Fezandipitiex } from './fezandipiti-ex';
 import { Fraxure } from './fraxure';
 import { Genesect } from './genesect';
+import { GlisteningCrystal } from './glistening-crystal';
 import { Haxorus } from './haxorus';
+import { Hoothoot } from './hoothoot';
 import { Horsea } from './horsea';
 import { Houndoom } from './houndoom';
 import { Houndour } from './houndour';
@@ -27,6 +32,7 @@ import { Munkidoriex } from './munkidori-ex';
 import { NeutralCenter } from './neutral-center';
 import { NightTimeAcademy } from './night-time-academy';
 import { NightlyStretcher } from './nightly-stretcher';
+import { Noctowl } from './noctowl';
 import { Okidogiex } from './okidogi-ex';
 import { Pecharuntex } from './pecharunt-ex';
 import { PokeVitalA } from './pokevital-a';
@@ -36,10 +42,14 @@ import { Rowlett } from './rowlett';
 import { Seadra } from './seadra';
 import { SlitherWing } from './slither-wing';
 import { TapuBulu } from './tapu-bulu';
+import { Terapagosex } from './terapagos-ex';
 import { XerosicsScheme } from './xerosics-scheme';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 export declare class AbsolArt extends Absol {
+    cardImage: string;
+}
+export declare class AreaZeroUnderdepthsArt extends AreaZeroUnderdepths {
     cardImage: string;
 }
 export declare class AxewArt extends Axew {
@@ -63,6 +73,9 @@ export declare class CopperajahArt extends Copperajah {
 export declare class CresseliaArt extends Cresselia {
     cardImage: string;
 }
+export declare class CrispinArt extends Crispin {
+    cardImage: string;
+}
 export declare class CufantArt extends Cufant {
     cardImage: string;
 }
@@ -84,6 +97,9 @@ export declare class DusknoirArt extends Dusknoir {
 export declare class DuskullArt extends Duskull {
     cardImage: string;
 }
+export declare class FanRotomArt extends FanRotom {
+    cardImage: string;
+}
 export declare class FezandipitiexArt extends Fezandipitiex {
     cardImage: string;
 }
@@ -93,7 +109,13 @@ export declare class FraxureArt extends Fraxure {
 export declare class GenesectArt extends Genesect {
     cardImage: string;
 }
+export declare class GlisteningCrystalArt extends GlisteningCrystal {
+    cardImage: string;
+}
 export declare class HaxorusArt extends Haxorus {
+    cardImage: string;
+}
+export declare class HoothootArt extends Hoothoot {
     cardImage: string;
 }
 export declare class HorseaArt extends Horsea {
@@ -126,6 +148,9 @@ export declare class NightTimeAcademyArt extends NightTimeAcademy {
 export declare class NightlyStretcherArt extends NightlyStretcher {
     cardImage: string;
 }
+export declare class NoctowlArt extends Noctowl {
+    cardImage: string;
+}
 export declare class OkidogiexArt extends Okidogiex {
     cardImage: string;
 }
@@ -151,6 +176,9 @@ export declare class SlitherWingArt extends SlitherWing {
     cardImage: string;
 }
 export declare class TapuBuluArt extends TapuBulu {
+    cardImage: string;
+}
+export declare class TerapagosexArt extends Terapagosex {
     cardImage: string;
 }
 export declare class XerosicsSchemeArt extends XerosicsScheme {

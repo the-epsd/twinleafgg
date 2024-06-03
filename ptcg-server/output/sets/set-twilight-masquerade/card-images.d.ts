@@ -59,6 +59,7 @@ import { HearthflameMaskOgerponex } from './hearthflame-mask-ogerpon-ex';
 import { ChiYu } from './chi-yu';
 import { JammingTower } from './jamming-tower';
 import { CornerstoneMaskOgerponex } from './cornerstone-mask-ogerpon-ex';
+import { BoomerangEnergy } from './boomerang-energy';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -75,6 +76,9 @@ export declare class BlisseyexArt extends Blisseyex {
     cardImage: string;
 }
 export declare class BloodmoonUrsalunaexArt extends BloodmoonUrsalunaex {
+    cardImage: string;
+}
+export declare class BoomerangEnergyArt extends BoomerangEnergy {
     cardImage: string;
 }
 export declare class BugCatchingSetArt extends BugCatchingSet {

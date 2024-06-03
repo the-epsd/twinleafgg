@@ -27,7 +27,7 @@ class CollapsedStadium extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckTableStateEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
-            effect.benchSize = 4;
+            effect.benchSizes = [4];
         }
         if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
             throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_STADIUM);

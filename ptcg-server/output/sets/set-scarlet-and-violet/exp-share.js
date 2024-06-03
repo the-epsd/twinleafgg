@@ -18,8 +18,8 @@ class ExpShare extends trainer_card_1.TrainerCard {
         this.set = 'SVI';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '174';
-        this.name = 'Exp Share';
-        this.fullName = 'Exp Share SVI';
+        this.name = 'Exp. Share';
+        this.fullName = 'Exp. Share SVI';
         this.text = 'When your Active Pokemon is Knocked Out by damage from an opponent\'s ' +
             'attack, you may move 1 basic Energy card that was attached to that ' +
             'Pokemon to the Pokemon this card is attached to.';

@@ -1,7 +1,6 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class HeavyBaton extends TrainerCard {
     regulationMark: string;
@@ -12,6 +11,6 @@ export declare class HeavyBaton extends TrainerCard {
     cardImage: string;
     setNumber: string;
     text: string;
-    readonly RESCUE_SCARF_MAREKER = "RESCUE_SCARF_MAREKER";
+    readonly HEAVY_BATON_MARKER = "HEAVY_BATON_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -1,4 +1,5 @@
 import { Absol } from './absol';
+import { AreaZeroUnderdepths } from './area-zero-underdepths';
 import { Axew } from './axew';
 import { BindingMochi } from './binding-mochi';
 import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
@@ -6,6 +7,7 @@ import { Cassiopeia } from './cassiopeia';
 import { ColresssObsession } from './colresss-obsession';
 import { Copperajah } from './copperajah';
 import { Cresselia } from './cresselia';
+import { Crispin } from './crispin';
 import { Cufant } from './cufant';
 import { DangerousLaser } from './dangerous-laser';
 import { Dartrix } from './dartrix';
@@ -13,10 +15,13 @@ import { Decidueye } from './decidueye';
 import { Dusclops } from './dusclops';
 import { Dusknoir } from './dusknoir';
 import { Duskull } from './duskull';
+import { FanRotom } from './fan-rotom';
 import { Fezandipitiex } from './fezandipiti-ex';
 import { Fraxure } from './fraxure';
 import { Genesect } from './genesect';
+import { GlisteningCrystal } from './glistening-crystal';
 import { Haxorus } from './haxorus';
+import { Hoothoot } from './hoothoot';
 import { Horsea } from './horsea';
 import { Houndoom } from './houndoom';
 import { Houndour } from './houndour';
@@ -27,6 +32,7 @@ import { Munkidoriex } from './munkidori-ex';
 import { NeutralCenter } from './neutral-center';
 import { NightTimeAcademy } from './night-time-academy';
 import { NightlyStretcher } from './nightly-stretcher';
+import { Noctowl } from './noctowl';
 import { Okidogiex } from './okidogi-ex';
 import { Pecharuntex } from './pecharunt-ex';
 import { PokeVitalA } from './pokevital-a';
@@ -36,12 +42,17 @@ import { Rowlett } from './rowlett';
 import { Seadra } from './seadra';
 import { SlitherWing } from './slither-wing';
 import { TapuBulu } from './tapu-bulu';
+import { Terapagosex } from './terapagos-ex';
 import { XerosicsScheme } from './xerosics-scheme';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 
 export class AbsolArt extends Absol {
   public cardImage = 'https://pokemonproxies.com/static/media/Absol-030-6a.17ae9a4e96251e1bf464.png';
+}
+
+export class AreaZeroUnderdepthsArt extends AreaZeroUnderdepths {
+  public cardImage = 'https://pokemonproxies.com/static/media/Area_Zero_Underdepths-102-7i.4dd76540f7ac7d471002.png';
 }
 
 export class AxewArt extends Axew {
@@ -72,6 +83,10 @@ export class CresseliaArt extends Cresselia {
   public cardImage = 'https://pokemonproxies.com/static/media/Cresselia-021-6a.6b3cc4ace9e5c8122200.png';
 }
 
+export class CrispinArt extends Crispin {
+  public cardImage = 'https://pbs.twimg.com/media/GPC48haWAAAWFTy?format=jpg&name=medium';
+}
+
 export class CufantArt extends Cufant {
   public cardImage = 'https://pokemonproxies.com/static/media/Cufant-041-6a.70ca961623a45aa966b6.png';
 }
@@ -100,6 +115,10 @@ export class DuskullArt extends Duskull {
   public cardImage = 'https://pokemonproxies.com/static/media/Duskull-018-6a.c128736c2af5dcc7ab47.png';
 }
 
+export class FanRotomArt extends FanRotom {
+  public cardImage = 'https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/pokemon-card-3-standard.jpg';
+}
+
 export class FezandipitiexArt extends Fezandipitiex {
   public cardImage = 'https://pokemonproxies.com/static/media/Fezandipiti_ex-038-6a.728d9be2a8a80b2bca1a.png';
 }
@@ -112,8 +131,16 @@ export class GenesectArt extends Genesect {
   public cardImage = 'https://pokemonproxies.com/static/media/Genesect-040-6a.d7db741d7b9c4dce0401.png';
 }
 
+export class GlisteningCrystalArt extends GlisteningCrystal {
+  public cardImage = 'https://pbs.twimg.com/media/GPC37-jW0AAv3rN?format=jpg&name=900x900';
+}
+
 export class HaxorusArt extends Haxorus {
   public cardImage = 'https://pokemonproxies.com/static/media/Haxorus-046-6a.44a06cff59cac0ea8aca.png';
+}
+
+export class HoothootArt extends Hoothoot {
+  public cardImage = 'https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/pokemon-card-1-2-high.jpg';
 }
 
 export class HorseaArt extends Horsea {
@@ -156,6 +183,10 @@ export class NightlyStretcherArt extends NightlyStretcher {
   public cardImage = 'https://pokemonproxies.com/static/media/Nightly_Stretcher-056-6a.bc8124136aab1fc03cfb.png';
 }
 
+export class NoctowlArt extends Noctowl {
+  public cardImage = 'https://pbs.twimg.com/media/GPC6CU9WoAE0P-Y?format=jpg&name=900x900';
+}
+
 export class OkidogiexArt extends Okidogiex {
   public cardImage = 'https://pokemonproxies.com/static/media/Okidogi_ex-036-6a.d3f8cbc4dc12fa960846.png';
 }
@@ -190,6 +221,10 @@ export class SlitherWingArt extends SlitherWing {
 
 export class TapuBuluArt extends TapuBulu {
   public cardImage = 'https://pokemonproxies.com/static/media/Tapu_Bulu-006-6a.de6a90788c5ce21f61e9.png';
+}
+
+export class TerapagosexArt extends Terapagosex {
+  public cardImage = 'https://pokemonproxies.com/static/media/Terapagos_ex-088-7i.bbfe9ae7bc8e365c6a29.png';
 }
 
 export class XerosicsSchemeArt extends XerosicsScheme {

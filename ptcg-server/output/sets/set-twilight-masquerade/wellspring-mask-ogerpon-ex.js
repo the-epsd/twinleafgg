@@ -11,7 +11,7 @@ class WellspringMaskOgerponex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.tags = [card_types_1.CardTag.POKEMON_ex];
+        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.WATER;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
@@ -80,6 +80,34 @@ class WellspringMaskOgerponex extends game_1.PokemonCard {
                 }
                 return state;
             });
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Target is not Active
+            if (effect.target === player.active || effect.target === opponent.active) {
+                return state;
+            }
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[1], this);
+                store.reduceEffect(state, powerEffect);
+            }
+            catch (_a) {
+                return state;
+            }
+            // Target is this Ogerpon
+            if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+                // Try to reduce PowerEffect, to check if something is blocking our ability
+                try {
+                    const powerEffect = new game_effects_1.PowerEffect(player, this.powers[1], this);
+                    store.reduceEffect(state, powerEffect);
+                }
+                catch (_b) {
+                    return state;
+                }
+                effect.preventDefault = true;
+            }
         }
         return state;
     }

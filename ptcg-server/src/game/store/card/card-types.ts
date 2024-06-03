@@ -15,7 +15,8 @@ export enum CardTag {
     RAPID_STRIKE = 'RAPID_STRIKE',
     POKEMON_ex = 'ex',
     FUTURE = 'Future',
-    ANCIENT = 'Ancient'
+    ANCIENT = 'Ancient',
+    POKEMON_TERA = 'POKEMON_TERA'
 }
 
 

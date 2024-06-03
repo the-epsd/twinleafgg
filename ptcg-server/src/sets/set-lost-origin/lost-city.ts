@@ -34,10 +34,13 @@ export class LostCity extends TrainerCard {
       const target = effect.target;
       const cards = target.getPokemons();
       
-      const pokemonIndices = effect.target.cards.map((card, index) => index);
+      const removedCards = [];
 
-      for (let i = pokemonIndices.length; i >= 0; i--) {
-        target.cards.splice(pokemonIndices[i], 1);
+      const pokemonIndices = effect.target.cards.map((card, index) => index);
+      
+      for (let i = pokemonIndices.length - 1; i >= 0; i--) {
+        const removedCard = target.cards.splice(pokemonIndices[i], 1)[0];
+        removedCards.push(removedCard);
         target.damage = 0;
       }
 
@@ -48,10 +51,14 @@ export class LostCity extends TrainerCard {
         effect.prizeCount += 2;
       }
 
+      const attachedCards = new CardList();
+      attachedCards.cards = removedCards;
+
       const lostZoned = new CardList();
       lostZoned.cards = cards;
 
       lostZoned.moveTo(player.lostzone);
+      attachedCards.moveTo(player.discard);
     }
     
     return state;

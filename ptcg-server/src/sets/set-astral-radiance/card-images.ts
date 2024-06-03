@@ -18,6 +18,7 @@ import { HisuianHeavyBall } from './hisuian-heavy-ball';
 import { HisuianSamurottV } from './hisuian-samurott-v';
 import { HisuianSamurottVSTAR } from './hisuian-samurott-vstar';
 import { Irida } from './irida';
+import { Keldeo } from './keldeo';
 import { Kleavor } from './kleavor';
 import { LucarioV } from './lucario-v';
 import { LuxrayV } from './luxray-v';
@@ -124,6 +125,10 @@ export class HisuianSamurottVSTARArt extends HisuianSamurottVSTAR {
 
 export class IridaArt extends Irida {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_147_R_EN_LG.png';
+}
+
+export class KeldeoArt extends Keldeo {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_045_R_EN_LG.png';
 }
 
 export class KleavorArt extends Kleavor {

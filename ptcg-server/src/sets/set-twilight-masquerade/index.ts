@@ -6,6 +6,7 @@ export const setTwilightMasquerade: Card[] = [
   new AggronArt(),
   new AronArt(),
   new BlisseyexArt(),
+  // new BoomerangEnergyArt(),
   new CarmineArt(),
   new CornerstoneMaskOgerponexArt(),
   new DreepyArt(),
