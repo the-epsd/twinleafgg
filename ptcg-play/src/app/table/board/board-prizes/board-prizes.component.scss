@@ -6,7 +6,8 @@
   height: 100%;
   justify-content: center;
   width: 100%;
-  margin-top: 3.5%;
+  margin-top: -3.5%;
+  margin-left: -24px;
 }
 
 .ptcg-board-prizes-container {
@@ -16,5 +17,5 @@
 }
 
 ptcg-board-card {
-  width: 65px;
+  width: 75px;
 }

@@ -22,7 +22,8 @@ z-index: 0;
     font-style: normal;
     font-size: 12px;
     color: #449058;
-    text-indent: 25px;
+    // text-indent: 25px;
+    margin-left: -22px;
   }
   
   .parent {
@@ -58,7 +59,7 @@ z-index: 0;
   height: calc(var(--card-size) * #{$ptcg-bench-slots} + #{($ptcg-bench-slots + 1) * map-get($padding, small)});
 
   position: absolute;
-  top: 33%;
+  top: 36.5%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
@@ -148,7 +149,7 @@ z-index: 0;
 
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-width: 65px;
+width: 75px;
   }
 }
 
@@ -165,7 +166,7 @@ width: 65px;
 .ptcg-board-stadium {
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-    width: 65px; 
+    width: 75px; 
   }
 }
 
@@ -209,7 +210,7 @@ ptcg-board-deck {
 .stadium-card {
   align-self: flex-start;
 
-  margin-top: -27%;
+  margin-top: -28%;
   margin-left: 50%;
 
   }
@@ -235,5 +236,5 @@ ptcg-board-deck {
 .ptcg-card-marker {
   border-radius: $card-border-radius;
   position: absolute;
-  width: 92px;
+  width: 87px;
 }
