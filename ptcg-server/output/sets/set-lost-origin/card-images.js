@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VoloArt = exports.ThortonArt = exports.SnorlaxArt = exports.SilcoonArt = exports.SableyeArt = exports.RotomVArt = exports.RadiantHisuianSneaslerArt = exports.RadiantGardevoirArt = exports.PidgeotVArt = exports.PanicMaskArt = exports.MissFortuneSistersArt = exports.MirageGateArt = exports.MawileArt = exports.MagnezoneVSTARArt = exports.MagnezoneVArt = exports.LostVacuumArt = exports.LostCityArt = exports.LadyArt = exports.KyuremVMAXArt = exports.KyuremVArt = exports.JynxArt = exports.HisuianZoroarkArt = exports.HisuianZoruaArt = exports.HisuianZoroarkVSTARArt = exports.HisuianZoroarkVArt = exports.HisuianGoodraVSTARArt = exports.HisuianGoodraVArt = exports.GiratinaVSTARArt = exports.GiratinaVArt = exports.GiftEnergyArt = exports.GengarArt = exports.DrapionVSTARArt = exports.DrapionVArt = exports.DelphoxVArt = exports.DamagePumpArt = exports.CresseliaArt = exports.CramorantArt = exports.ComfeyArt = exports.ColresssExperimentArt = exports.BoxOfDisasterArt = exports.BouffalantArt = exports.BanetteArt = exports.ArezuArt = void 0;
+exports.VoloArt = exports.ThortonArt = exports.SnorlaxArt = exports.SilcoonArt = exports.SableyeArt = exports.RotomVArt = exports.RadiantHisuianSneaslerArt = exports.RadiantGardevoirArt = exports.PidgeotVArt = exports.PanicMaskArt = exports.MissFortuneSistersArt = exports.MirageGateArt = exports.MawileArt = exports.MagnezoneVSTARArt = exports.MagnezoneVArt = exports.MachopArt = exports.LostVacuumArt = exports.LostCityArt = exports.LadyArt = exports.KyuremVMAXArt = exports.KyuremVArt = exports.JynxArt = exports.HisuianZoroarkArt = exports.HisuianZoruaArt = exports.HisuianZoroarkVSTARArt = exports.HisuianZoroarkVArt = exports.HisuianGoodraVSTARArt = exports.HisuianGoodraVArt = exports.GiratinaVSTARArt = exports.GiratinaVArt = exports.GiftEnergyArt = exports.GengarArt = exports.DrapionVSTARArt = exports.DrapionVArt = exports.DelphoxVArt = exports.DamagePumpArt = exports.CresseliaArt = exports.CramorantArt = exports.ComfeyArt = exports.ColresssExperimentArt = exports.BoxOfDisasterArt = exports.BouffalantArt = exports.BanetteArt = exports.ArezuArt = void 0;
 const arezu_1 = require("./arezu");
 const banette_1 = require("./banette");
 const bouffalant_1 = require("./bouffalant");
@@ -29,6 +29,7 @@ const kyurem_vmax_1 = require("./kyurem-vmax");
 const lady_1 = require("./lady");
 const lost_city_1 = require("./lost-city");
 const lost_vacuum_1 = require("./lost-vacuum");
+const machop_1 = require("./machop");
 const magnezone_v_1 = require("./magnezone-v");
 const magnezone_vstar_1 = require("./magnezone-vstar");
 const mawile_1 = require("./mawile");
@@ -240,6 +241,13 @@ class LostVacuumArt extends lost_vacuum_1.LostVacuum {
     }
 }
 exports.LostVacuumArt = LostVacuumArt;
+class MachopArt extends machop_1.Machop {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_086_R_EN_LG.png';
+    }
+}
+exports.MachopArt = MachopArt;
 class MagnezoneVArt extends magnezone_v_1.MagnezoneV {
     constructor() {
         super(...arguments);

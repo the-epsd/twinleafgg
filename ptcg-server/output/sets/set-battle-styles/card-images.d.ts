@@ -1,6 +1,7 @@
 import { Bellsprout } from './bellsprout';
 import { Bronzong } from './bronzong';
 import { Bruno } from './bruno';
+import { Carkol } from './carkol';
 import { Cherrim } from './cherrim';
 import { Cherubi } from './cherubi';
 import { Cheryl } from './cheryl';
@@ -24,6 +25,7 @@ import { RapidStrikeEnergy } from './rapid-strike-energy';
 import { RapidStrikeUrshifuV } from './rapid-strike-urshifu-v';
 import { RapidStrikeUrshifuVMAX } from './rapid-strike-urshifu-vmax';
 import { Remoraid } from './remoraid';
+import { Rolycoly } from './rolycoly';
 import { SingleStrikeEnergy } from './single-strike-energy';
 import { SingleStrikeUrshifuV } from './single-strike-urshifu-v';
 import { SingleStrikeUrshifuVMAX } from './single-strike-urshifu-vmax';
@@ -47,6 +49,9 @@ export declare class BronzongArt extends Bronzong {
     cardImage: string;
 }
 export declare class BrunoArt extends Bruno {
+    cardImage: string;
+}
+export declare class CarkolArt extends Carkol {
     cardImage: string;
 }
 export declare class CherrimArt extends Cherrim {
@@ -116,6 +121,9 @@ export declare class RapidStrikeUrshifuVMAXArt extends RapidStrikeUrshifuVMAX {
     cardImage: string;
 }
 export declare class RemoraidArt extends Remoraid {
+    cardImage: string;
+}
+export declare class RolycolyArt extends Rolycoly {
     cardImage: string;
 }
 export declare class SingleStrikeEnergyArt extends SingleStrikeEnergy {

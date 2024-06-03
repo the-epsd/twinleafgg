@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VitalityBandArt = exports.UltraBallArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SkwovetArt = exports.ShuppetArt = exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RareCandyArt = exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GardevoirexArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CharcadetArt = exports.BeachCourtArt = exports.BanetteexArt = exports.ArvenArt = exports.ArmarougeArt = void 0;
-exports.NestBallArt2 = exports.YoungsterArt = void 0;
+exports.SwitchArt = exports.SkwovetArt = exports.ShuppetArt = exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RareCandyArt = exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PrimeapeArt = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MankeyArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GardevoirexArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CharcadetArt = exports.BeachCourtArt = exports.BanetteexArt = exports.ArvenArt = exports.ArmarougeArt = exports.AnnihilapeArt = void 0;
+exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.TeamStarGruntArt = void 0;
+const annihilape_1 = require("./annihilape");
 const armarouge_1 = require("./armarouge");
 const arven_1 = require("./arven");
 const banette_ex_1 = require("./banette-ex");
@@ -26,6 +27,7 @@ const koraidon_ex_1 = require("./koraidon-ex");
 const magnemite_1 = require("./magnemite");
 const magneton_1 = require("./magneton");
 const magnezone_ex_1 = require("./magnezone-ex");
+const mankey_1 = require("./mankey");
 const mareep_1 = require("./mareep");
 const mesagoza_1 = require("./mesagoza");
 const miraidon_ex_1 = require("./miraidon-ex");
@@ -39,6 +41,7 @@ const pokeball_1 = require("./pokeball");
 const pokegear_30_1 = require("./pokegear-30");
 const pokemon_catcher_1 = require("./pokemon-catcher");
 const potion_1 = require("./potion");
+const primeape_1 = require("./primeape");
 const professors_research_1 = require("./professors-research");
 const ralts_1 = require("./ralts");
 const rare_candy_1 = require("./rare-candy");
@@ -52,6 +55,13 @@ const team_star_grunt_1 = require("./team-star-grunt");
 const ultra_ball_1 = require("./ultra-ball");
 const vitality_band_1 = require("./vitality-band");
 const youngster_1 = require("./youngster");
+class AnnihilapeArt extends annihilape_1.Annihilape {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_109_R_EN_LG.png';
+    }
+}
+exports.AnnihilapeArt = AnnihilapeArt;
 class ArmarougeArt extends armarouge_1.Armarouge {
     constructor() {
         super(...arguments);
@@ -220,6 +230,13 @@ class MagnezoneexArt extends magnezone_ex_1.Magnezoneex {
     }
 }
 exports.MagnezoneexArt = MagnezoneexArt;
+class MankeyArt extends mankey_1.Mankey {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_107_R_EN_LG.png';
+    }
+}
+exports.MankeyArt = MankeyArt;
 class MareepArt extends mareep_1.Mareep {
     constructor() {
         super(...arguments);
@@ -311,6 +328,13 @@ class PotionArt extends potion_1.Potion {
     }
 }
 exports.PotionArt = PotionArt;
+class PrimeapeArt extends primeape_1.Primeape {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_108_R_EN_LG.png';
+    }
+}
+exports.PrimeapeArt = PrimeapeArt;
 class ProfessorsResearchArt1 extends professors_research_1.ProfessorsResearch {
     constructor() {
         super(...arguments);

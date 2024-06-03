@@ -7,6 +7,7 @@ import { Duskull } from './duskull';
 import { KeldeoEx } from './keldeo-ex';
 import { LandorusEx } from './landorus-ex';
 import { Munna } from './munna';
+import { Pignite } from './pignite';
 import { Potion } from './potion';
 import { RockyHelmet } from './rocky-helmet';
 import { Skyla } from './skyla';
@@ -37,6 +38,9 @@ export declare class LandorusExArt extends LandorusEx {
     cardImage: string;
 }
 export declare class MunnaArt extends Munna {
+    cardImage: string;
+}
+export declare class PigniteArt extends Pignite {
     cardImage: string;
 }
 export declare class PotionArt extends Potion {

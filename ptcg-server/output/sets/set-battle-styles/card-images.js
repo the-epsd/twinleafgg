@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeepinbellArt = exports.VictreebelArt = exports.VictiniVMAXArt = exports.VictiniVArt = exports.UrnOfVitalityArt = exports.TyranitarVArt = exports.TowerOfWatersArt = exports.TowerOfDarknessArt = exports.ToolJammerArt = exports.TapuKokoVMAXArt = exports.TapuKokoVArt = exports.StoutlandVArt = exports.StonjournerArt = exports.SingleStrikeUrshifuVMAXArt = exports.SingleStrikeUrshifuVArt = exports.SingleStrikeEnergyArt = exports.RemoraidArt = exports.RapidStrikeUrshifuVMAXArt = exports.RapidStrikeUrshifuVArt = exports.RapidStrikeEnergyArt = exports.OctilleryArt = exports.NecrozmaVArt = exports.MimikyuVArt = exports.LevelBallArt = exports.KricketuneVArt = exports.KorrinasFocusArt = exports.HoundourArt = exports.HoundoomArt = exports.FlappleVMAXArt = exports.FlappleVArt = exports.FanOfWavesArt = exports.FalinksArt = exports.EscapeRopeArt = exports.EnergyRecyclerArt = exports.EmpoleonVArt = exports.DurantArt = exports.CherylArt = exports.CherubiArt = exports.CherrimArt = exports.BrunoArt = exports.BronzongArt = exports.BellsproutArt = void 0;
+exports.WeepinbellArt = exports.VictreebelArt = exports.VictiniVMAXArt = exports.VictiniVArt = exports.UrnOfVitalityArt = exports.TyranitarVArt = exports.TowerOfWatersArt = exports.TowerOfDarknessArt = exports.ToolJammerArt = exports.TapuKokoVMAXArt = exports.TapuKokoVArt = exports.StoutlandVArt = exports.StonjournerArt = exports.SingleStrikeUrshifuVMAXArt = exports.SingleStrikeUrshifuVArt = exports.SingleStrikeEnergyArt = exports.RolycolyArt = exports.RemoraidArt = exports.RapidStrikeUrshifuVMAXArt = exports.RapidStrikeUrshifuVArt = exports.RapidStrikeEnergyArt = exports.OctilleryArt = exports.NecrozmaVArt = exports.MimikyuVArt = exports.LevelBallArt = exports.KricketuneVArt = exports.KorrinasFocusArt = exports.HoundourArt = exports.HoundoomArt = exports.FlappleVMAXArt = exports.FlappleVArt = exports.FanOfWavesArt = exports.FalinksArt = exports.EscapeRopeArt = exports.EnergyRecyclerArt = exports.EmpoleonVArt = exports.DurantArt = exports.CherylArt = exports.CherubiArt = exports.CherrimArt = exports.CarkolArt = exports.BrunoArt = exports.BronzongArt = exports.BellsproutArt = void 0;
 const bellsprout_1 = require("./bellsprout");
 const bronzong_1 = require("./bronzong");
 const bruno_1 = require("./bruno");
+const carkol_1 = require("./carkol");
 const cherrim_1 = require("./cherrim");
 const cherubi_1 = require("./cherubi");
 const cheryl_1 = require("./cheryl");
@@ -27,6 +28,7 @@ const rapid_strike_energy_1 = require("./rapid-strike-energy");
 const rapid_strike_urshifu_v_1 = require("./rapid-strike-urshifu-v");
 const rapid_strike_urshifu_vmax_1 = require("./rapid-strike-urshifu-vmax");
 const remoraid_1 = require("./remoraid");
+const rolycoly_1 = require("./rolycoly");
 const single_strike_energy_1 = require("./single-strike-energy");
 const single_strike_urshifu_v_1 = require("./single-strike-urshifu-v");
 const single_strike_urshifu_vmax_1 = require("./single-strike-urshifu-vmax");
@@ -64,6 +66,13 @@ class BrunoArt extends bruno_1.Bruno {
     }
 }
 exports.BrunoArt = BrunoArt;
+class CarkolArt extends carkol_1.Carkol {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_079_R_EN_LG.png';
+    }
+}
+exports.CarkolArt = CarkolArt;
 class CherrimArt extends cherrim_1.Cherrim {
     constructor() {
         super(...arguments);
@@ -225,6 +234,13 @@ class RemoraidArt extends remoraid_1.Remoraid {
     }
 }
 exports.RemoraidArt = RemoraidArt;
+class RolycolyArt extends rolycoly_1.Rolycoly {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_078_R_EN_LG.png';
+    }
+}
+exports.RolycolyArt = RolycolyArt;
 class SingleStrikeEnergyArt extends single_strike_energy_1.SingleStrikeEnergy {
     constructor() {
         super(...arguments);

@@ -36,6 +36,9 @@ class Regigigas extends pokemon_card_1.PokemonCard {
         this.ANCIENT_WISDOM_MARKER = 'ANCIENT_WISDOM_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
+        }
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
             player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
@@ -65,27 +68,22 @@ class Regigigas extends pokemon_card_1.PokemonCard {
                 if (player.marker.hasMarker(this.ANCIENT_WISDOM_MARKER, this)) {
                     throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
                 }
-                return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 0, max: 1, allowCancel: true }), chosen => {
-                    chosen.forEach(target => {
-                        state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [chosen], { superType: card_types_1.SuperType.POKEMON }, { allowCancel: true, min: 0, max: 3 }), transfers => {
-                            transfers = transfers || [];
-                            // cancelled by user
-                            if (transfers.length === 0) {
-                                return;
-                            }
-                            for (const transfer of transfers) {
-                                const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                                player.discard.moveCardTo(transfer.card, target);
-                                player.marker.addMarker(this.ANCIENT_WISDOM_MARKER, this);
-                                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                                    if (cardList.getPokemonCard() === this) {
-                                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
-                                    }
-                                });
+                state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 0, max: 3, sameTarget: true }), transfers => {
+                    transfers = transfers || [];
+                    // cancelled by user
+                    if (transfers.length === 0) {
+                        return;
+                    }
+                    for (const transfer of transfers) {
+                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                        player.discard.moveCardTo(transfer.card, target);
+                        player.marker.addMarker(this.ANCIENT_WISDOM_MARKER, this);
+                        player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                            if (cardList.getPokemonCard() === this) {
+                                cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
                             }
                         });
-                    });
-                    return state;
+                    }
                 });
             }
             if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
@@ -95,10 +93,6 @@ class Regigigas extends pokemon_card_1.PokemonCard {
                 if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
                     effect.damage += 150;
                 }
-                if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-                    effect.player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
-                }
-                return state;
             }
             return state;
         }

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, PlayerType, EnergyCard, AttachEnergyPrompt, GameError, GameMessage, SlotType, StateUtils, ChoosePokemonPrompt } from '../../game';
+import { StoreLike, State, PowerType, PlayerType, EnergyCard, AttachEnergyPrompt, GameError, GameMessage, SlotType, StateUtils } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -48,6 +48,10 @@ export class Regigigas extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof EndTurnEffect) {
+      effect.player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
+    }
+
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
@@ -87,45 +91,32 @@ export class Regigigas extends PokemonCard {
           throw new GameError(GameMessage.POWER_ALREADY_USED);
         }
 
-        return store.prompt(state, new ChoosePokemonPrompt(
+        state = store.prompt(state, new AttachEnergyPrompt(
           player.id,
           GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.discard,
           PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH, SlotType.ACTIVE],
-          { min: 0, max: 1, allowCancel: true }
-        ), chosen => {
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 0, max: 3, sameTarget: true }
+        ), transfers => {
+          transfers = transfers || [];
+          // cancelled by user
+          if (transfers.length === 0) {
+            return;
+          }
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.discard.moveCardTo(transfer.card, target);
+            player.marker.addMarker(this.ANCIENT_WISDOM_MARKER, this);
 
-          chosen.forEach(target => {
-
-            state = store.prompt(state, new AttachEnergyPrompt(
-              player.id,
-              GameMessage.ATTACH_ENERGY_TO_BENCH,
-              player.discard,
-              PlayerType.BOTTOM_PLAYER,
-              [chosen as unknown as SlotType],
-              { superType: SuperType.POKEMON },
-              { allowCancel: true, min: 0, max: 3 }
-            ), transfers => {
-              transfers = transfers || [];
-              // cancelled by user
-              if (transfers.length === 0) {
-                return;
-              }
-              for (const transfer of transfers) {
-                const target = StateUtils.getTarget(state, player, transfer.to);
-                player.discard.moveCardTo(transfer.card, target);
-                player.marker.addMarker(this.ANCIENT_WISDOM_MARKER, this);
-
-                player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-                  if (cardList.getPokemonCard() === this) {
-                    cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
-                  }
-                });
-
+            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+              if (cardList.getPokemonCard() === this) {
+                cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
               }
             });
-          });
-          return state;
+
+          }
         });
       }
 
@@ -137,11 +128,6 @@ export class Regigigas extends PokemonCard {
         if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VMAX)) {
           effect.damage += 150;
         }
-
-        if (effect instanceof EndTurnEffect) {
-          effect.player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
-        }
-        return state;
       }
       return state;
     }

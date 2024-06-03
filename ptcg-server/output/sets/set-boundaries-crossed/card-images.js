@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WartortleArt = exports.SquirtleArt = exports.SkylaArt = exports.RockyHelmetArt = exports.PotionArt = exports.MunnaArt = exports.LandorusExArt = exports.KeldeoExArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.ComputerSearchArt = exports.BlastoiseArt = exports.AspertiaCityGymArt = void 0;
+exports.WartortleArt = exports.SquirtleArt = exports.SkylaArt = exports.RockyHelmetArt = exports.PotionArt = exports.PigniteArt = exports.MunnaArt = exports.LandorusExArt = exports.KeldeoExArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.ComputerSearchArt = exports.BlastoiseArt = exports.AspertiaCityGymArt = void 0;
 const aspertia_city_gym_1 = require("./aspertia-city-gym");
 const blastoise_1 = require("./blastoise");
 const computer_search_1 = require("./computer-search");
@@ -10,6 +10,7 @@ const duskull_1 = require("./duskull");
 const keldeo_ex_1 = require("./keldeo-ex");
 const landorus_ex_1 = require("./landorus-ex");
 const munna_1 = require("./munna");
+const pignite_1 = require("./pignite");
 const potion_1 = require("./potion");
 const rocky_helmet_1 = require("./rocky-helmet");
 const skyla_1 = require("./skyla");
@@ -78,6 +79,13 @@ class MunnaArt extends munna_1.Munna {
     }
 }
 exports.MunnaArt = MunnaArt;
+class PigniteArt extends pignite_1.Pignite {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BCR/BCR_025_R_EN_LG.png';
+    }
+}
+exports.PigniteArt = PigniteArt;
 class PotionArt extends potion_1.Potion {
     constructor() {
         super(...arguments);

@@ -12,6 +12,7 @@ exports.setBoundariesCrossed = [
     new card_images_1.KeldeoExArt(),
     new card_images_1.LandorusExArt(),
     new card_images_1.MunnaArt(),
+    new card_images_1.PigniteArt(),
     new card_images_1.PotionArt(),
     new card_images_1.RockyHelmetArt(),
     new card_images_1.SkylaArt(),

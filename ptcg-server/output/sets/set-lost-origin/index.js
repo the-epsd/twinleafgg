@@ -27,6 +27,7 @@ exports.setLostOrigin = [
     new card_images_1.LadyArt(),
     new card_images_1.LostCityArt(),
     new card_images_1.LostVacuumArt(),
+    new card_images_1.MachopArt(),
     new card_images_1.MawileArt(),
     new card_images_1.MirageGateArt(),
     new card_images_1.PidgeotVArt(),

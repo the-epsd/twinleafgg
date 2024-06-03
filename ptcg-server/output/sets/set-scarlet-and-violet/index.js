@@ -49,6 +49,7 @@ const card_images_45 = require("./card-images");
 const card_images_46 = require("./card-images");
 const full_arts_1 = require("./full-arts");
 exports.setScarletAndViolet = [
+    new card_images_1.AnnihilapeArt(),
     new card_images_1.ArmarougeArt(),
     new card_images_2.ArvenArt(),
     new card_images_3.BeachCourtArt(),
@@ -72,6 +73,7 @@ exports.setScarletAndViolet = [
     new card_images_20.MagnemiteArt(),
     new card_images_21.MagnetonArt(),
     new card_images_22.MagnezoneexArt(),
+    new card_images_1.MankeyArt(),
     new card_images_23.MareepArt(),
     new card_images_24.MesagozaArt(),
     new card_images_25.MiraidonexArt(),
@@ -85,6 +87,7 @@ exports.setScarletAndViolet = [
     new card_images_32.Pokegear30Art(),
     new card_images_33.PokemonCatcherArt(),
     new card_images_34.PotionArt(),
+    new card_images_1.PrimeapeArt(),
     new card_images_35.ProfessorsResearchArt1(),
     new card_images_36.ProfessorsResearchArt2(),
     new card_images_37.RaltsArt(),
