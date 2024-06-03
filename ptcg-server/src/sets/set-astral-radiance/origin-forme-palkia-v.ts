@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, GameError, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -31,7 +31,7 @@ export class OriginFormePalkiaV extends PokemonCard {
     {
       name: 'Hydro Break',
       cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
-      damage: 60,
+      damage: 200,
       text: 'During your next turn, this Pokémon can\'t attack.'
     }
   ];
@@ -51,27 +51,37 @@ export class OriginFormePalkiaV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      // Check marker
-      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+    if (effect instanceof AttackEffect) {
+      const cardList = new PokemonCardList;
+      if (!cardList) {
+        return state;
+      }
+
+      if (cardList.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
-    }
-  
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
+    if (effect instanceof EndTurnEffect) {
+      const cardList = new PokemonCardList;
+      if (!cardList) {
+        return state;
+      }
+
+      if (cardList.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+        cardList.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+        cardList.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+        console.log('marker cleared');
+      }
+
+      if (cardList.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        cardList.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+        console.log('second marker added');
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
       const player = effect.player;
       
       return store.prompt(state, new ChooseCardsPrompt(
@@ -90,7 +100,16 @@ export class OriginFormePalkiaV extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+      const cardList = new PokemonCardList;
+      if (!cardList) {
+        return state;
+      }
+
+      if (cardList.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        console.log('attack blocked');
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+      cardList.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
       console.log('marker added');
     }
     return state;

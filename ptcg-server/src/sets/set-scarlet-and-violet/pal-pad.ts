@@ -14,7 +14,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: PalPad,
   const player = effect.player;
 
   const hasSupporter = player.discard.cards.some(c => {
-    return c instanceof TrainerCard && c.trainerType === TrainerType.ITEM;
+    return c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER;
   });
 
   if (!hasSupporter) {

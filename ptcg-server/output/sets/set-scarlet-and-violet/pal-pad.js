@@ -11,7 +11,7 @@ const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const hasSupporter = player.discard.cards.some(c => {
-        return c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.ITEM;
+        return c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.SUPPORTER;
     });
     if (!hasSupporter) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);

@@ -17,32 +17,11 @@ class TempleofSinnoh extends trainer_card_1.TrainerCard {
         this.text = 'All Special Energy attached to Pokémon (both yours and your opponent\'s) provide C Energy and have no other effect.';
     }
     reduceEffect(store, state, effect) {
-        //   if (effect instanceof AttachEnergyEffect && StateUtils.getStadiumCard(state) === this) {
-        //     const target = effect.target;
-        //     const player = StateUtils.findOwner(state, target);
-        //     const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, target);
-        //     store.reduceEffect(state, checkProvidedEnergyEffect);
-        //     const energyMap = checkProvidedEnergyEffect.energyMap;
-        //     const hasDarknessEnergy = energyMap.some(energyMap => energyMap.card.energyType === EnergyType.SPECIAL);
-        //     if (hasDarknessEnergy) {
-        //       energyMap.forEach(energyMap => {
-        //         energyMap.provides = [CardType.COLORLESS];
-        //       });
-        //       // effect.preventDefault = true;
-        //     }
-        //     return state;
-        //   }
-        //   if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
-        //     throw new GameError(GameMessage.CANNOT_USE_STADIUM);
-        //   }
-        //   return state;
-        // }
         if (effect instanceof game_1.EnergyCard && game_1.StateUtils.getStadiumCard(state) === this) {
-            effect.energyMap.forEach(({ card, provides }) => {
-                if (card.superType === card_types_1.SuperType.ENERGY && card.energyType === card_types_1.EnergyType.SPECIAL) {
-                    provides = [card_types_1.CardType.COLORLESS];
-                    effect.preventDefault;
-                    return state;
+            // Set isBlocked to true for all EnergyCard instances
+            effect.cards.cards.forEach((card) => {
+                if (card instanceof game_1.EnergyCard) {
+                    card.isBlocked = true;
                 }
             });
         }

@@ -1,10 +1,10 @@
-import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, PlayerType } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, PlayerType, Card, GameError, GameMessage, TrainerCard, TrainerType, ChooseCardsPrompt, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Banette extends PokemonCard {
   
-  public stage: Stage = Stage.STAGE_1;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Shuppet';
   
@@ -48,8 +48,29 @@ export class Banette extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+
+      const hasSupporter = player.discard.cards.some(c => {
+        return c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER;
+      });
+    
+      if (!hasSupporter) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      let cards: Card[] = [];
+      state = store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_DECK,
+        player.discard,
+        { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+        { min: 1, max: 1, allowCancel: false }
+      ), selected => {
+        cards = selected || [];
+      });
+    
+      player.discard.moveCardsTo(cards, player.hand);
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {

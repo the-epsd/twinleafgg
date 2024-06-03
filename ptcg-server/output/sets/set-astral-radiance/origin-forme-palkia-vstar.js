@@ -29,6 +29,7 @@ class OriginFormePalkiaVSTAR extends pokemon_card_1.PokemonCard {
                 name: 'Subspace Swell',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER],
                 damage: 60,
+                damageCalculation: '+',
                 text: 'This attack does 20 more damage for each Benched ' +
                     'Pokémon (both yours and your opponent\'s).'
             }
@@ -42,6 +43,9 @@ class OriginFormePalkiaVSTAR extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
+            if (player.usedVSTAR === true) {
+                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+            }
             const hasBench = player.bench.some(b => b.cards.length > 0);
             if (!hasBench) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
@@ -53,9 +57,6 @@ class OriginFormePalkiaVSTAR extends pokemon_card_1.PokemonCard {
             });
             if (!hasEnergyInDiscard) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-            }
-            if (player.usedVSTAR === true) {
-                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: true, min: 0, max: 3 }), transfers => {
                 transfers = transfers || [];

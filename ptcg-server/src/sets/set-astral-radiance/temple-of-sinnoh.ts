@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { State, EnergyCard, StateUtils, Card, StoreLike } from '../../game';
+import { TrainerType } from '../../game/store/card/card-types';
+import { State, EnergyCard, StateUtils, StoreLike, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
 export class TempleofSinnoh extends TrainerCard {
@@ -23,41 +23,12 @@ export class TempleofSinnoh extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect & EnergyCard): State {
 
-    //   if (effect instanceof AttachEnergyEffect && StateUtils.getStadiumCard(state) === this) {
-
-    //     const target = effect.target;
-    //     const player = StateUtils.findOwner(state, target);
-
-    //     const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, target);
-    //     store.reduceEffect(state, checkProvidedEnergyEffect);
-    //     const energyMap = checkProvidedEnergyEffect.energyMap;
-    //     const hasDarknessEnergy = energyMap.some(energyMap => energyMap.card.energyType === EnergyType.SPECIAL);
-
-    //     if (hasDarknessEnergy) {
-    //       energyMap.forEach(energyMap => {
-    //         energyMap.provides = [CardType.COLORLESS];
-    //       });
-    //       // effect.preventDefault = true;
-    //     }
-
-    //     return state;
-    //   }
-
-    //   if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
-    //     throw new GameError(GameMessage.CANNOT_USE_STADIUM);
-    //   }
-
-    //   return state;
-    // }
-
-
-
     if (effect instanceof EnergyCard && StateUtils.getStadiumCard(state) === this) {
-      (effect as any).energyMap.forEach(({ card, provides }: { card: Card, provides: CardType[] }) => {
-        if (card.superType === SuperType.ENERGY && card.energyType === EnergyType.SPECIAL) {
-          provides = [CardType.COLORLESS];
-          effect.preventDefault;
-          return state;
+
+      // Set isBlocked to true for all EnergyCard instances
+      effect.cards.cards.forEach((card: Card) => {
+        if (card instanceof EnergyCard) {
+          card.isBlocked = true;
         }
       });
     }

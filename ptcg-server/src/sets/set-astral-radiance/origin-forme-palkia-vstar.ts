@@ -38,6 +38,7 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
       name: 'Subspace Swell',
       cost: [ CardType.WATER, CardType.WATER ],
       damage: 60,
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each Benched ' +
       'Pokémon (both yours and your opponent\'s).'
     }
@@ -58,6 +59,10 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
+      if (player.usedVSTAR === true) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
       const hasBench = player.bench.some(b => b.cards.length > 0);
       if (!hasBench) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -70,10 +75,6 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
 
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      if (player.usedVSTAR === true) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
       state = store.prompt(state, new AttachEnergyPrompt(
@@ -99,6 +100,7 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
 
       return state;
     }
+    
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 

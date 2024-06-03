@@ -4,10 +4,10 @@ $ptcg-hand-padding: map-get($padding, normal);
 $ptcg-hand-height: calc(var(--card-size) * #{$card-aspect-ratio} + #{4 * $ptcg-hand-padding});
 
 .ptcg-hand {
-  margin-bottom: -30px;
+  margin-bottom: -60px;
   display: flex;
-  height: $ptcg-hand-height;
-  overflow: visible;
+  height: 200px;
+  overflow: auto;
 }
 
 .ptcg-hand-container {

@@ -13,4 +13,6 @@ export abstract class EnergyCard extends Card {
   public provides: CardType[] = [];
 
   public text: string = '';
+
+  public isBlocked = false;
 }

@@ -11,6 +11,7 @@ class EnergyCard extends card_1.Card {
         this.format = card_types_1.Format.NONE;
         this.provides = [];
         this.text = '';
+        this.isBlocked = false;
     }
 }
 exports.EnergyCard = EnergyCard;

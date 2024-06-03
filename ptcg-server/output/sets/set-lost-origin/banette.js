@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Banette = void 0;
 const game_1 = require("../../game");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class Banette extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.STAGE_1;
+        this.stage = game_1.Stage.BASIC;
         this.evolvesFrom = 'Shuppet';
         this.regulationMark = 'F';
         this.cardType = game_1.CardType.PSYCHIC;
@@ -35,8 +35,19 @@ class Banette extends game_1.PokemonCard {
         this.fullName = 'Banette LOR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
+            const hasSupporter = player.discard.cards.some(c => {
+                return c instanceof game_1.TrainerCard && c.trainerType === game_1.TrainerType.SUPPORTER;
+            });
+            if (!hasSupporter) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            let cards = [];
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, { superType: game_1.SuperType.TRAINER, trainerType: game_1.TrainerType.SUPPORTER }, { min: 1, max: 1, allowCancel: false }), selected => {
+                cards = selected || [];
+            });
+            player.discard.moveCardsTo(cards, player.hand);
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {
                     const pokemons = cardList.getPokemons();
