@@ -103,6 +103,29 @@ export class Player {
     }
   }
 
+  evolvePokemon(target: PokemonCardList) {
+
+    //breakdown of markers to be removed on switchPokemon()
+    this.attackMarker.removeMarker(this.ATTACK_USED_MARKER);
+    this.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER);
+    this.attackMarker.removeMarker(this.KNOCKOUT_MARKER);
+    this.attackMarker.removeMarker(this.CLEAR_KNOCKOUT_MARKER);
+    this.attackMarker.removeMarker(this.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER);
+    this.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER);
+    this.attackMarker.removeMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER);
+    this.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER);
+    this.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER);
+    this.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER);
+    this.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER);
+    this.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER);
+    this.attackMarker.removeMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
+    this.attackMarker.removeMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
+    this.attackMarker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES);
+
+    target.clearEffects();
+  }
+  
+
   switchPokemon(target: PokemonCardList) {
     const benchIndex = this.bench.indexOf(target);
     if (benchIndex !== -1) {

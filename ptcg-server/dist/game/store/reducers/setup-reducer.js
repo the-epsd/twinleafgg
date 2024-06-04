@@ -18,6 +18,7 @@ import { SuperType, Stage } from '../card/card-types';
 import { WhoBeginsEffect } from '../effects/game-phase-effects';
 import { endGame } from '../effect-reducers/check-effect';
 import { initNextTurn } from '../effect-reducers/game-phase-effect';
+import { SelectPrompt } from '../prompts/select-prompt';
 function putStartingPokemonsAndPrizes(player, cards) {
     if (cards.length === 0) {
         return;
@@ -31,10 +32,30 @@ function putStartingPokemonsAndPrizes(player, cards) {
     }
 }
 function* setupGame(next, store, state) {
-    const basicPokemon = { superType: SuperType.POKEMON, stage: Stage.BASIC };
-    const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
     const player = state.players[0];
     const opponent = state.players[1];
+    const whoBeginsEffect = new WhoBeginsEffect();
+    if (whoBeginsEffect.player) {
+        state.activePlayer = state.players.indexOf(whoBeginsEffect.player);
+    }
+    else {
+        const coinFlipPrompt = new CoinFlipPrompt(player.id, GameMessage.SETUP_WHO_BEGINS_FLIP);
+        store.prompt(state, coinFlipPrompt, whoBegins => {
+            const goFirstPrompt = new SelectPrompt(whoBegins ? player.id : opponent.id, GameMessage.GO_FIRST, [GameMessage.YES, GameMessage.NO]);
+            store.prompt(state, goFirstPrompt, choice => {
+                if (choice === 0) {
+                    state.activePlayer = whoBegins ? 0 : 1;
+                    next();
+                }
+                else {
+                    state.activePlayer = whoBegins ? 1 : 0;
+                    next();
+                }
+            });
+        });
+    }
+    const basicPokemon = { superType: SuperType.POKEMON, stage: Stage.BASIC };
+    const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
     let playerHasBasic = false;
     let opponentHasBasic = false;
     while (!playerHasBasic || !opponentHasBasic) {
@@ -89,7 +110,6 @@ function* setupGame(next, store, state) {
         putStartingPokemonsAndPrizes(opponent, choice[1]);
         next();
     });
-    const whoBeginsEffect = new WhoBeginsEffect();
     store.reduceEffect(state, whoBeginsEffect);
     if (whoBeginsEffect.player) {
         state.activePlayer = state.players.indexOf(whoBeginsEffect.player);

@@ -149,6 +149,8 @@ function gameReducer(store, state, effect) {
         effect.player.hand.moveCardTo(effect.pokemonCard, effect.target);
         effect.target.pokemonPlayedTurn = state.turn;
         effect.target.clearEffects();
+        // Apply the evolvePokemon method from the Player class
+        effect.player.evolvePokemon(effect.target);
     }
     return state;
 }

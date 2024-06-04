@@ -55,6 +55,7 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       const evolveEffect = new EvolveEffect(effect.player, effect.target, effect.pokemonCard);
       store.reduceEffect(state, evolveEffect);
       effect.target.clearEffects();
+      effect.player.evolvePokemon(effect.target);
       return state;
     }
 

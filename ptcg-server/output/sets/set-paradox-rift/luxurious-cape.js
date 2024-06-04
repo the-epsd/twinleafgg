@@ -27,7 +27,7 @@ class LuxuriousCape extends trainer_card_1.TrainerCard {
             }
         }
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
-            if (effect.target.hasRuleBox()) {
+            if (!effect.target.hasRuleBox()) {
                 effect.prizeCount += 1;
             }
             return state;

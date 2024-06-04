@@ -131,6 +131,8 @@ export var GameCardMessage;
     GameCardMessage["CHOICE_STADIUM"] = "CHOICE_STADIUM";
     GameCardMessage["WANT_TO_DRAW_UNTIL_6"] = "WANT_TO_DRAW_UNTIL_6";
     GameCardMessage["WANT_TO_USE_FESTIVAL_FEVER"] = "WANT_TO_USE_FESTIVAL_FEVER";
+    GameCardMessage["CANNOT_EVOLVE_ON_YOUR_FIRST_TURN"] = "CANNOT_EVOLVE_ON_YOUR_FIRST_TURN";
+    GameCardMessage["WANT_TO_USE_TORRENTIAL_PUMP"] = "WANT_TO_USE_TORRENTIAL_PUMP";
 })(GameCardMessage || (GameCardMessage = {}));
 export var GameLog;
 (function (GameLog) {

@@ -8,5 +8,6 @@ export class EnergyCard extends Card {
         this.format = Format.NONE;
         this.provides = [];
         this.text = '';
+        this.isBlocked = false;
     }
 }

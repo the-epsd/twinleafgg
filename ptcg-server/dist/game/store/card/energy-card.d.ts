@@ -6,4 +6,5 @@ export declare abstract class EnergyCard extends Card {
     format: Format;
     provides: CardType[];
     text: string;
+    isBlocked: boolean;
 }

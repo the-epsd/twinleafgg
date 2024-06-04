@@ -36,7 +36,7 @@ export class LuxuriousCape extends TrainerCard {
     }
                 
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
-      if (effect.target.hasRuleBox()) {
+      if (!effect.target.hasRuleBox()) {
         effect.prizeCount += 1;
       }
       return state;
