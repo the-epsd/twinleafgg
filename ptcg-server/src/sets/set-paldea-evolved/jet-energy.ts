@@ -24,17 +24,17 @@ export class JetEnergy extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if(effect instanceof AttachEnergyEffect && effect.energyCard === this) {
-    
+    if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
+
       const player = effect.player;
       const target = effect.target;
-    
+
       player.switchPokemon(target);
-    
+
     }
-    
+
     return state;
-    
+
   }
     
 }

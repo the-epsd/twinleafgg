@@ -5,5 +5,5 @@ const card_images_1 = require("./card-images");
 exports.setShiningFates = [
     new card_images_1.FrosmothArt(),
     new card_images_1.RillaboomArt(),
-    new card_images_1.ThwackeyArt()
+    new card_images_1.ThwackeyArt(),
 ];

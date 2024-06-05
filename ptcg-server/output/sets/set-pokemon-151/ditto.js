@@ -47,9 +47,11 @@ class Ditto extends pokemon_card_1.PokemonCard {
                 return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: true }), selectedCards => {
                     cards = selectedCards || [];
                     cards.forEach((card, index) => {
+                        effect.player.removePokemonEffects(player.active);
                         player.active.moveCardTo(card, player.discard);
                         player.deck.moveCardTo(card, player.active);
                         player.active.pokemonPlayedTurn = state.turn;
+                        effect.player.removePokemonEffects(player.active);
                     });
                     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                         player.deck.applyOrder(order);

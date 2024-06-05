@@ -38,14 +38,11 @@ class Golurk extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             let pokemonToolCount = 0;
-            console.log('Pokemon Tool Count before check:' + pokemonToolCount);
             player.active.cards.forEach(card => {
                 if (card instanceof game_1.TrainerCard && card.trainerType === card_types_1.TrainerType.TOOL) {
-                    console.log('Pokemon Tool found:' + card.name);
                     pokemonToolCount++;
                 }
             });
-            console.log('Pokemon Tool Count after check:' + pokemonToolCount);
             if (pokemonToolCount > 0) {
                 effect.damage += 90;
             }

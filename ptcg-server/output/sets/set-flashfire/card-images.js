@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ToxicroakExArt = exports.StartlingMegaphoneArt = exports.SkrelpArt = exports.SacredAshArt = exports.PyroarArt = exports.MiltankArt = exports.LysandreArt = exports.LitleoArt = exports.DragalgeArt = void 0;
+exports.ToxicroakExArt = exports.StartlingMegaphoneArt = exports.SkrelpArt = exports.SacredAshArt = exports.PyroarArt = exports.MiltankArt = exports.LysandreArt = exports.LitleoArt = exports.DragalgeArt = exports.BlacksmithArt = void 0;
+const blacksmith_1 = require("./blacksmith");
 const dragalge_1 = require("./dragalge");
 const litleo_1 = require("./litleo");
 const lysandre_1 = require("./lysandre");
@@ -10,6 +11,13 @@ const sacred_ash_1 = require("./sacred-ash");
 const skrelp_1 = require("./skrelp");
 const startling_megaphone_1 = require("./startling-megaphone");
 const toxicroak_ex_1 = require("./toxicroak-ex");
+class BlacksmithArt extends blacksmith_1.Blacksmith {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_088_R_EN_LG.png';
+    }
+}
+exports.BlacksmithArt = BlacksmithArt;
 class DragalgeArt extends dragalge_1.Dragalge {
     constructor() {
         super(...arguments);

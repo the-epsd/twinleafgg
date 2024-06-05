@@ -64,12 +64,13 @@ export class Ditto extends PokemonCard {
           { min: 0, max: 1, allowCancel: true }
         ), selectedCards => {
           cards = selectedCards || [];
-      
   
           cards.forEach((card, index) => {
+            effect.player.removePokemonEffects(player.active);
             player.active.moveCardTo(card, player.discard);
             player.deck.moveCardTo(card, player.active);
             player.active.pokemonPlayedTurn = state.turn;
+            effect.player.removePokemonEffects(player.active);
           });
       
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

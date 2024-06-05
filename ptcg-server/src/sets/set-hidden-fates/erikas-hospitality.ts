@@ -6,15 +6,11 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { Card} from '../../game/store/card/card';
-import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { CardList } from '../../game/store/state/card-list';
 import { StateUtils } from '../../game/store/state-utils';
 
 function* playCard(next: Function, store: StoreLike, state: State,
-  self: MortysConviction, effect: TrainerEffect): IterableIterator<State> {
+  self: ErikasHospitality, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
-  let cards: Card[] = [];
 
   const supporterTurn = player.supporterTurn;
 
@@ -25,9 +21,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  
-  cards = player.hand.cards.filter(c => c !== self);
-  if (cards.length < 2) {
+
+  if (player.hand.cards.length < 4) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
@@ -38,25 +33,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  // prepare card list without Junk Arm
-  const handTemp = new CardList();
-  handTemp.cards = player.hand.cards.filter(c => c !== self);
-
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    handTemp,
-    { },
-    { min: 1, max: 1, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
-
-  player.hand.moveCardsTo(cards, player.discard);
-
   const opponent = StateUtils.getOpponent(state, player);
-  const cardsToDraw = opponent.bench.length;
+  const cardsToDraw = opponent.bench.length + opponent.active.cards.length;
 
   player.deck.moveTo(player.hand, cardsToDraw);
 
@@ -65,26 +43,26 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   return state;
 }
-export class MortysConviction extends TrainerCard {
+export class ErikasHospitality extends TrainerCard {
 
   public regulationMark = 'H';
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'TEF';
+  public set: string = 'HIF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '155';
+  public setNumber: string = '56';
 
-  public name: string = 'Morty\'s Conviction';
+  public name: string = 'Erika\'s Hospitality';
 
-  public fullName: string = 'Morty\'s Conviction TEF';
+  public fullName: string = 'Erika\'s Hospitality HIF';
 
   public text: string =
-    'You can use this card only if you discard another card from your hand.' +
+    'You can play this card only if you have 4 or fewer other cards in your hand.' +
     '' +
-    'Draw a card for each of your opponent\'s Benched Pokémon.';
+    'Draw a card for each of your opponent\'s Pokémon in play.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

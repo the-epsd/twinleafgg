@@ -53,6 +53,6 @@ export declare class Player {
     usedFanCall: boolean;
     getPrizeLeft(): number;
     forEachPokemon(player: PlayerType, handler: (cardList: PokemonCardList, pokemonCard: PokemonCard, target: CardTarget) => void): void;
-    evolvePokemon(target: PokemonCardList): void;
+    removePokemonEffects(target: PokemonCardList): void;
     switchPokemon(target: PokemonCardList): void;
 }

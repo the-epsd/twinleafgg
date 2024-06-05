@@ -9,10 +9,10 @@
     <mat-label translate>GAMES_FORMAT</mat-label>
     <mat-select [(value)]="settings.format" (selectionChange)="onFormatSelected($event.value)">
       <mat-option *ngFor="let option of formats" [value]="option.value">
-        {{option.label | translate }}
+        {{ option.label | translate }}
       </mat-option>
     </mat-select>
-  </mat-form-field>
+  </mat-form-field>  
 
     <!-- Deck -->
     <mat-form-field>

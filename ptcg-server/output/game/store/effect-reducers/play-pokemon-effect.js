@@ -45,7 +45,7 @@ function playPokemonReducer(store, state, effect) {
             const evolveEffect = new game_effects_1.EvolveEffect(effect.player, effect.target, effect.pokemonCard);
             store.reduceEffect(state, evolveEffect);
             effect.target.clearEffects();
-            effect.player.evolvePokemon(effect.target);
+            effect.player.removePokemonEffects(effect.target);
             return state;
         }
         throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_TARGET);

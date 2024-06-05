@@ -103,7 +103,7 @@ export class Player {
     }
   }
 
-  evolvePokemon(target: PokemonCardList) {
+  removePokemonEffects(target: PokemonCardList) {
 
     //breakdown of markers to be removed on switchPokemon()
     this.attackMarker.removeMarker(this.ATTACK_USED_MARKER);

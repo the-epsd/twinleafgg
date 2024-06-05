@@ -28,6 +28,15 @@ class TechnicalMachineTurboEnergize extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         var _a;
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
+            const player = effect.player;
+            const tool = effect.player.active.tool;
+            if (tool.name === this.name) {
+                player.active.moveCardTo(tool, player.discard);
+                player.active.tool = undefined;
+            }
+            return state;
+        }
         if (effect instanceof check_effects_1.CheckPokemonAttacksEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tools.includes(this)) &&
             !effect.attacks.includes(this.attacks[0])) {
             effect.attacks.push(this.attacks[0]);
@@ -42,15 +51,6 @@ class TechnicalMachineTurboEnergize extends trainer_card_1.TrainerCard {
                 }
                 return state;
             });
-            return state;
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
-            const player = effect.player;
-            const tool = effect.player.active.tool;
-            if (tool.name === this.name) {
-                player.active.moveCardTo(tool, player.discard);
-                player.active.tool = undefined;
-            }
             return state;
         }
         return state;

@@ -127,17 +127,6 @@ export class TechnicalMachineEvolution extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
-!effect.attacks.includes(this.attacks[0])) {
-      effect.attacks.push(this.attacks[0]);
-    }
-
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = playCard(() => generator.next(), store, state, effect);
-      return generator.next().value;
-    }
-
     if (effect instanceof EndTurnEffect && effect.player.active.tool) {
       const player = effect.player;
       const tool = effect.player.active.tool;
@@ -148,6 +137,17 @@ export class TechnicalMachineEvolution extends TrainerCard {
 
       return state;
     }
+
+    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
+!effect.attacks.includes(this.attacks[0])) {
+      effect.attacks.push(this.attacks[0]);
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const generator = playCard(() => generator.next(), store, state, effect);
+      return generator.next().value;
+    }
+
     return state;
   }
 }

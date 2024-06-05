@@ -32,21 +32,21 @@ class TechnicalMachineCrisisPunch extends trainer_card_1.TrainerCard {
             !effect.attacks.includes(this.attacks[0])) {
             effect.attacks.includes(this.attacks[0]);
         }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
+            const player = effect.player;
+            const tool = effect.player.active.tool;
+            if (tool.name === this.name) {
+                player.active.moveCardTo(tool, player.discard);
+                player.active.tool = undefined;
+            }
+            return state;
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const prizes = opponent.getPrizeLeft();
             if (prizes !== 1) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-            }
-            if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
-                const player = effect.player;
-                const tool = effect.player.active.tool;
-                if (tool.name === this.name) {
-                    player.active.moveCardTo(tool, player.discard);
-                    player.active.tool = undefined;
-                }
-                return state;
             }
             return state;
         }

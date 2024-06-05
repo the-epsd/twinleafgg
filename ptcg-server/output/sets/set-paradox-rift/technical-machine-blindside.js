@@ -33,6 +33,15 @@ class TechnicalMachineBlindside extends trainer_card_1.TrainerCard {
             !effect.attacks.includes(this.attacks[0])) {
             effect.attacks.push(this.attacks[0]);
         }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
+            const player = effect.player;
+            const tool = effect.player.active.tool;
+            if (tool.name === this.name) {
+                player.active.moveCardTo(tool, player.discard);
+                player.active.tool = undefined;
+            }
+            return state;
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
@@ -60,15 +69,6 @@ class TechnicalMachineBlindside extends trainer_card_1.TrainerCard {
                 damageEffect.target = target[0];
                 store.reduceEffect(state, damageEffect);
             });
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
-            const player = effect.player;
-            const tool = effect.player.active.tool;
-            if (tool.name === this.name) {
-                player.active.moveCardTo(tool, player.discard);
-                player.active.tool = undefined;
-            }
-            return state;
         }
         return state;
     }

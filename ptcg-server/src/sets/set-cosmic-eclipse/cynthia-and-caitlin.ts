@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { TrainerType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -9,36 +9,41 @@ import { GameMessage } from '../../game/game-message';
 import { Card} from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../game/store/state/card-list';
-import { StateUtils } from '../../game/store/state-utils';
+
 
 function* playCard(next: Function, store: StoreLike, state: State,
-  self: MortysConviction, effect: TrainerEffect): IterableIterator<State> {
+  self: CynthiaAndCaitlin, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
-
-  const supporterTurn = player.supporterTurn;
-
-  if (supporterTurn > 0) {
-    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
-  }
-
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
   
   cards = player.hand.cards.filter(c => c !== self);
   if (cards.length < 2) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  if (player.deck.cards.length === 0) {
+  let supporterInDiscard = 0;
+  player.discard.cards.forEach(c => {
+    if (c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER) {
+      supporterInDiscard += 1;
+    }
+  });
+
+  if (supporterInDiscard === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // We will discard this card after prompt confirmation
+  const supporterTurn = player.supporterTurn;
+  
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+
+  // Do not discard the card yet
   effect.preventDefault = true;
 
-  // prepare card list without Junk Arm
+  // prepare card list without Self
   const handTemp = new CardList();
   handTemp.cards = player.hand.cards.filter(c => c !== self);
 
@@ -53,38 +58,58 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
+  // Operation canceled by the user
+  if (cards.length === 0) {
+    return state;
+  }
+
+
+  let recovered: Card[] = [];
+  yield store.prompt(state, new ChooseCardsPrompt(
+    player.id,
+    GameMessage.CHOOSE_CARD_TO_HAND,
+    player.discard,
+    { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+    { min: 1, max: 1, allowCancel: false }
+  ), selected => {
+    recovered = selected || [];
+    next();
+  });
+
+  // Operation canceled by the user
+  if (recovered.length === 0) {
+    return state;
+  }
+
   player.hand.moveCardsTo(cards, player.discard);
+  player.discard.moveCardsTo(recovered, player.hand);
 
-  const opponent = StateUtils.getOpponent(state, player);
-  const cardsToDraw = opponent.bench.length;
-
-  player.deck.moveTo(player.hand, cardsToDraw);
-
+  player.deck.moveTo(player.hand, 3);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
   player.supporterTurn = 1;
-
   return state;
 }
-export class MortysConviction extends TrainerCard {
 
-  public regulationMark = 'H';
+export class CynthiaAndCaitlin extends TrainerCard {
+
+  public regulationMark = 'G';
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'TEF';
+  public set: string = 'CEC';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '155';
+  public setNumber: string = '189';
 
-  public name: string = 'Morty\'s Conviction';
+  public name: string = 'Cynthia & Caitlin';
 
-  public fullName: string = 'Morty\'s Conviction TEF';
+  public fullName: string = 'Cynthia & Caitlin CEC';
 
   public text: string =
-    'You can use this card only if you discard another card from your hand.' +
-    '' +
-    'Draw a card for each of your opponent\'s Benched Pokémon.';
+    'Put a Supporter card from your discard pile into your hand. You can\'t choose Cynthia & Caitlin or a card you discarded with the effect of this card.'+
+    ''+
+    'When you play this card, you may discard another card from your hand. If you do, draw 3 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

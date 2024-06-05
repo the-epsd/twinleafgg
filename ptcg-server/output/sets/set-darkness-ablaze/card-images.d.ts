@@ -1,6 +1,10 @@
+import { BirdKeeper } from './bird-keeper';
 import { Kangaskhan } from './kangaskhan';
 import { Lugia } from './lugia';
 import { TapuKoko } from './tapu-koko';
+export declare class BirdKeeperArt extends BirdKeeper {
+    cardImage: string;
+}
 export declare class KangaskhanArt extends Kangaskhan {
     cardImage: string;
 }

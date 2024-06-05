@@ -1,3 +1,4 @@
+import { Blacksmith } from './blacksmith';
 import { Dragalge } from './dragalge';
 import { Litleo } from './litleo';
 import { Lysandre } from './lysandre';
@@ -7,6 +8,10 @@ import { SacredAsh } from './sacred-ash';
 import { Skrelp } from './skrelp';
 import { StartlingMegaphone } from './startling-megaphone';
 import { ToxicroakEx } from './toxicroak-ex';
+
+export class BlacksmithArt extends Blacksmith {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_088_R_EN_LG.png';
+}
 
 export class DragalgeArt extends Dragalge {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_071_R_EN.png';

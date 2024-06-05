@@ -38,6 +38,17 @@ export class TechnicalMachineDevolution extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof EndTurnEffect && effect.player.active.tool) {
+      const player = effect.player;
+      const tool = effect.player.active.tool;
+      if (tool.name === this.name) {
+        player.active.moveCardTo(tool, player.discard);
+        player.active.tool = undefined;
+      }
+
+      return state;
+    }
+
     if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
 !effect.attacks.includes(this.attacks[0])) {
       effect.attacks.push(this.attacks[0]);
@@ -75,19 +86,6 @@ export class TechnicalMachineDevolution extends TrainerCard {
           benchSpot.moveCardsTo(benchEvolutions, opponent.hand);
         }
       });
-    }
-    
-
-
-    if (effect instanceof EndTurnEffect && effect.player.active.tool) {
-      const player = effect.player;
-      const tool = effect.player.active.tool;
-      if (tool.name === this.name) {
-        player.active.moveCardTo(tool, player.discard);
-        player.active.tool = undefined;
-      }
-
-      return state;
     }
 
     return state;
