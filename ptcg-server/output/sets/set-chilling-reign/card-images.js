@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZarudeArt = exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.Porygon2Art = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianZapdosVArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.FlanneryArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DynaTreeHillArt = exports.DrizzileArt = exports.CaitlinArt = exports.BlisseyVArt = exports.BlazikenVMAXArt = exports.BlazikenVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = exports.AgathaArt = void 0;
+exports.ZarudeArt = exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.Porygon2Art = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GolurkArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianZapdosVArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.FlanneryArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DynaTreeHillArt = exports.DrizzileArt = exports.CaitlinArt = exports.BlisseyVArt = exports.BlazikenVMAXArt = exports.BlazikenVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = exports.AgathaArt = void 0;
 const agatha_1 = require("./agatha");
 const avery_1 = require("./avery");
 const banette_1 = require("./banette");
@@ -21,6 +21,7 @@ const galarian_moltres_v_1 = require("./galarian-moltres-v");
 const galarian_zapdos_v_1 = require("./galarian-zapdos-v");
 const gallade_1 = require("./gallade");
 const gardevoir_1 = require("./gardevoir");
+const golurk_1 = require("./golurk");
 const ice_rider_calyrex_v_1 = require("./ice-rider-calyrex-v");
 const ice_rider_calyrex_vmax_1 = require("./ice-rider-calyrex-vmax");
 const impact_energy_1 = require("./impact-energy");
@@ -182,6 +183,13 @@ class GalladeArt extends gallade_1.Gallade {
     }
 }
 exports.GalladeArt = GalladeArt;
+class GolurkArt extends golurk_1.Golurk {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_066_R_EN_LG.png';
+    }
+}
+exports.GolurkArt = GolurkArt;
 class IceRiderCalyrexVArt extends ice_rider_calyrex_v_1.IceRiderCalyrexV {
     constructor() {
         super(...arguments);

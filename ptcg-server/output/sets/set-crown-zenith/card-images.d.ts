@@ -5,6 +5,7 @@ import { Bidoof } from './bidoof';
 import { Hoopa } from './hoopa';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
+import { Mewtwo } from './mewtwo';
 import { RadiantCharizard } from './radiant-charizard';
 import { RadiantEternatus } from './radiant-eternatus';
 import { RegigigasV } from './regigigas-v';
@@ -33,6 +34,9 @@ export declare class LostVacuumArt extends LostVacuum {
     fullName: string;
     set: string;
     setNumber: string;
+}
+export declare class MewtwoArt extends Mewtwo {
+    cardImage: string;
 }
 export declare class RadiantCharizardArt extends RadiantCharizard {
     cardImage: string;

@@ -63,7 +63,7 @@ __exportStar(require("./set-sun-and-moon"), exports);
 __exportStar(require("./set-guardians-rising"), exports);
 //export * from './set-burning-shadows';
 __exportStar(require("./set-shining-legends"), exports);
-//export * from './set-crimson-invasion';
+__exportStar(require("./set-crimson-invasion"), exports);
 __exportStar(require("./set-ultra-prism"), exports);
 __exportStar(require("./set-forbidden-light"), exports);
 __exportStar(require("./set-celestial-storm"), exports);
@@ -71,7 +71,7 @@ __exportStar(require("./set-celestial-storm"), exports);
 __exportStar(require("./set-lost-thunder"), exports);
 __exportStar(require("./set-team-up"), exports);
 __exportStar(require("./set-unbroken-bonds"), exports);
-//export * from './set-unified-minds';
+__exportStar(require("./set-unified-minds"), exports);
 __exportStar(require("./set-hidden-fates"), exports);
 __exportStar(require("./set-cosmic-eclipse"), exports);
 //SWSH Era

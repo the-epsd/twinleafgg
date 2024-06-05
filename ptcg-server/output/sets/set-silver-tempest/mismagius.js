@@ -41,7 +41,7 @@ class Mismagius extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             if (this.hp == this.hp) {
-                opponent.active.damage += 20;
+                opponent.active.damage += 80;
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

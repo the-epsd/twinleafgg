@@ -1,6 +1,7 @@
 import { Bayleef } from './bayleef';
 import { Delinquent } from './delinquent';
 import { Kricketot } from './kricketot';
+import { Phantump } from './phantump';
 import { Staryu } from './staryu';
 
 export class BayleefArt extends Bayleef {
@@ -13,6 +14,10 @@ export class DelinquentArt extends Delinquent {
 
 export class KricketotArt extends Kricketot {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_005_R_EN_LG.png';
+}
+
+export class PhantumpArt extends Phantump {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_064_R_EN_LG.png';
 }
 
 export class StaryuArt extends Staryu {

@@ -5,6 +5,7 @@ import { Bidoof } from './bidoof';
 import { Hoopa } from './hoopa';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
+import { Mewtwo } from './mewtwo';
 import { RadiantCharizard } from './radiant-charizard';
 import { RadiantEternatus } from './radiant-eternatus';
 import { RegigigasV } from './regigigas-v';
@@ -39,6 +40,10 @@ export class LostVacuumArt extends LostVacuum {
   public fullName = 'Lost Vacuum CRZ';
   public set = 'CRZ';
   public setNumber = '135';
+}
+
+export class MewtwoArt extends Mewtwo {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_059_R_EN_LG.png';
 }
 
 export class RadiantCharizardArt extends RadiantCharizard {

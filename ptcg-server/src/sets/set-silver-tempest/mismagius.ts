@@ -55,7 +55,7 @@ export class Mismagius extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       if (this.hp == this.hp) {
-        opponent.active.damage += 20;
+        opponent.active.damage += 80;
       }
     }
 

@@ -11,6 +11,7 @@ exports.setCrownZenith = [
     new card_images_1.ZamazentaArt(),
     new card_images_1.LuxrayArt(),
     new card_images_1.LostVacuumArt(),
+    new card_images_1.MewtwoArt(),
     new card_images_1.ZamazentaVArt(),
     new card_images_1.RadiantEternatusArt(),
     new card_images_1.RegigigasVArt(),
