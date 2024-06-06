@@ -16,18 +16,17 @@ class Munkidori extends game_1.PokemonCard {
         this.resistance = [{ type: game_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [game_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Refinement',
+                name: 'Adrena-Brain',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'You must discard a card from your hand in order to use ' +
-                    'this Ability. Once during your turn, you may draw 2 cards.'
+                text: 'Once during your turn, if this Pokémon has any [D] Energy attached, you may move up to 3 damage counters from 1 of your Pokémon to 1 of your opponent\'s Pokémon.'
             }];
         this.attacks = [
             {
-                name: 'Damage Collector',
-                cost: [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS],
-                damage: 0,
-                text: 'Move any number of damage counters from your opponent\'s Benched Pokémon to their Active Pokémon.'
+                name: 'Mind Bend',
+                cost: [game_1.CardType.PSYCHIC, game_1.CardType.COLORLESS],
+                damage: 60,
+                text: 'Your opponent\'s Active Pokémon is now Confused.'
             }
         ];
         this.set = 'TWM';

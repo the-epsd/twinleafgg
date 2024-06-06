@@ -28,10 +28,10 @@ export class Blisseyex extends PokemonCard {
   public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
   
   public powers = [{
-    name: 'Blissful Swap',
+    name: 'Happy Switch',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may move 1 Basic Energy from 1 of your Pokémon to another of your Pokémon.'
+    text: 'Once during your turn, you may move a Basic Energy from 1 of your Pokémon to another of your Pokémon.'
   }];
 
   public attacks = [

@@ -5,7 +5,7 @@ import { BiancasDevotion } from './biancas-devotion';
 import { BuddyBuddyPoffin } from './buddy-buddy-poffin';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
-import { Cincinno } from './cincinno';
+import { Cinccino } from './cincinno';
 import { Croconaw } from './croconaw';
 import { CryptomaniacsDeciphering } from './cryptomaniacs-deciphering';
 import { DeliveryBox } from './delivery-box';
@@ -92,7 +92,7 @@ export class ChatotArt extends Chatot {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_132_R_EN.png';
 }
 
-export class CincinnoArt extends Cincinno {
+export class CinccinoArt extends Cinccino {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_137_R_EN.png';
 }
 

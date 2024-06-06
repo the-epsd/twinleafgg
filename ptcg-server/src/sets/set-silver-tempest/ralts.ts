@@ -33,7 +33,7 @@ export class Ralts extends PokemonCard {
 
   public setNumber: string = '67';
 
-  public name: string = 'Raltsx';
+  public name: string = 'Ralts';
 
   public fullName: string = 'Ralts SIT';
 

@@ -42,7 +42,7 @@ export function playPokemonReducer(store, state, effect) {
             const evolveEffect = new EvolveEffect(effect.player, effect.target, effect.pokemonCard);
             store.reduceEffect(state, evolveEffect);
             effect.target.clearEffects();
-            effect.player.evolvePokemon(effect.target);
+            effect.player.removePokemonEffects(effect.target);
             return state;
         }
         throw new GameError(GameMessage.INVALID_TARGET);

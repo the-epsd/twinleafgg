@@ -19,10 +19,10 @@ class Blisseyex extends game_1.PokemonCard {
         this.hp = 310;
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Blissful Swap',
+                name: 'Happy Switch',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your turn, you may move 1 Basic Energy from 1 of your Pokémon to another of your Pokémon.'
+                text: 'Once during your turn, you may move a Basic Energy from 1 of your Pokémon to another of your Pokémon.'
             }];
         this.attacks = [
             {

@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Cincinno = void 0;
+exports.Cinccino = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class Cincinno extends pokemon_card_1.PokemonCard {
+class Cinccino extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'H';
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Minccino';
         this.cardType = card_types_1.CardType.COLORLESS;
-        this.cardTypez = card_types_1.CardType.CINCINNO;
+        this.cardTypez = card_types_1.CardType.CINCCINO;
         this.hp = 110;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS];
@@ -33,8 +33,8 @@ class Cincinno extends pokemon_card_1.PokemonCard {
         this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '137';
-        this.name = 'Cincinno';
-        this.fullName = 'Cincinno TEF';
+        this.name = 'Cinccino';
+        this.fullName = 'Cinccino TEF';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
@@ -54,4 +54,4 @@ class Cincinno extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.Cincinno = Cincinno;
+exports.Cinccino = Cinccino;

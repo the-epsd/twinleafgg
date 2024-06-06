@@ -7,11 +7,11 @@
   $foreground: map-get($theme, foreground);
 
   $sidebar-side-border: solid 1px mat.get-color-from-palette($foreground, divider);
-  $sidebar-background-color: mat.get-color-from-palette($background, dialog);
+  $sidebar-background-color: #2D3748;
 
   ptcg-sidebar {
     border-left: $sidebar-side-border;
-    background-color: mat.get-color-from-palette($background, dialog);
+    background-color: #2D3748;
     color: mat.get-color-from-palette($foreground, text);
   }
 }

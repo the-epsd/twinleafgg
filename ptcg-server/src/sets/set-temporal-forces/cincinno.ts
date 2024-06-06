@@ -4,7 +4,7 @@ import { StoreLike, State, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-export class Cincinno extends PokemonCard {
+export class Cinccino extends PokemonCard {
 
   public regulationMark = 'H';
 
@@ -14,7 +14,7 @@ export class Cincinno extends PokemonCard {
 
   public cardType: CardType = CardType.COLORLESS;
 
-  public cardTypez: CardType = CardType.CINCINNO;
+  public cardTypez: CardType = CardType.CINCCINO;
 
   public hp: number = 110;
 
@@ -43,9 +43,9 @@ export class Cincinno extends PokemonCard {
 
   public setNumber: string = '137';
 
-  public name: string = 'Cincinno';
+  public name: string = 'Cinccino';
 
-  public fullName: string = 'Cincinno TEF';
+  public fullName: string = 'Cinccino TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

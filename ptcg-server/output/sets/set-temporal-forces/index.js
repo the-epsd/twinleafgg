@@ -9,7 +9,7 @@ exports.setTemporalForces = [
     new card_images_1.BuddyBuddyPoffinArt(),
     new card_images_1.CharjabugArt(),
     new card_images_1.ChatotArt(),
-    new card_images_1.CincinnoArt(),
+    new card_images_1.CinccinoArt(),
     new card_images_1.CroconawArt(),
     new card_images_1.CryptomaniacsDecipheringArt(),
     new card_images_1.DeliveryBoxArt(),

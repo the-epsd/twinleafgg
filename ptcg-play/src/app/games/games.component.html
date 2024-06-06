@@ -29,9 +29,9 @@
       </a>
     </mat-nav-list>
   </ptcg-sidebar>
-
+<div class="bg">
   <ptcg-content [loading]="loading">
-    <mat-toolbar>
+
       <mat-toolbar-row>
         <h1 translate>GAMES_TITLE</h1>
 
@@ -43,7 +43,7 @@
           {{ 'GAMES_CREATE_GAME_BUTTON' | translate }}
         </button>
       </mat-toolbar-row>
-    </mat-toolbar>
+
 
     <div class="ptcg-active-games">
       <ptcg-games-table></ptcg-games-table>
@@ -53,5 +53,5 @@
       <ptcg-match-table></ptcg-match-table>
     </div>
   </ptcg-content>
-
+</div>
 </ptcg-sidebar-container>

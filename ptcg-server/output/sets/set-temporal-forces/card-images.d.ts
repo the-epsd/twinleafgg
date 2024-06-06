@@ -5,7 +5,7 @@ import { BiancasDevotion } from './biancas-devotion';
 import { BuddyBuddyPoffin } from './buddy-buddy-poffin';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
-import { Cincinno } from './cincinno';
+import { Cinccino } from './cincinno';
 import { Croconaw } from './croconaw';
 import { CryptomaniacsDeciphering } from './cryptomaniacs-deciphering';
 import { DeliveryBox } from './delivery-box';
@@ -85,7 +85,7 @@ export declare class CharjabugArt extends Charjabug {
 export declare class ChatotArt extends Chatot {
     cardImage: string;
 }
-export declare class CincinnoArt extends Cincinno {
+export declare class CinccinoArt extends Cinccino {
     cardImage: string;
 }
 export declare class CroconawArt extends Croconaw {

@@ -64,7 +64,7 @@ export class Player {
             }
         }
     }
-    evolvePokemon(target) {
+    removePokemonEffects(target) {
         //breakdown of markers to be removed on switchPokemon()
         this.attackMarker.removeMarker(this.ATTACK_USED_MARKER);
         this.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER);

@@ -23,7 +23,7 @@ class Ralts extends pokemon_card_1.PokemonCard {
         this.set = 'SIT';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '67';
-        this.name = 'Raltsx';
+        this.name = 'Ralts';
         this.fullName = 'Ralts SIT';
         this.MEAN_LOOK_MARKER = 'MEAN_LOOK_MARKER';
     }

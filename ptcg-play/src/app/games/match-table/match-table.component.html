@@ -3,7 +3,7 @@
   <h3 translate>GAMES_RECENT_GAMES_TITLE</h3>
 
   <ptcg-content [loading]="loading">
-    <table mat-table [dataSource]="matches" class="mat-elevation-z2">
+    <table mat-table [dataSource]="matches" class="bg">
 
       <!-- Game ID Column -->
       <ng-container matColumnDef="id">
@@ -79,7 +79,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator hidePageSize="true"
+    <mat-paginator class ="bg" hidePageSize="true"
       [disabled]="loading"
       [length]="matchesTotal"
       [pageIndex]="pageIndex"
