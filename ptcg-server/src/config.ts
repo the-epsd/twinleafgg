@@ -3,7 +3,7 @@ export const config = {
   backend: {
     address: 'http://server.epsd.ca',
     port: 8080,
-    serverPassword: 'j1aan3', // Password required to create an account
+    serverPassword: 'tw1n3psd', // Password required to create an account
     registrationEnabled: true,  // Completly disables/enables registration
     allowCors: true,
     secret: '!secret!',

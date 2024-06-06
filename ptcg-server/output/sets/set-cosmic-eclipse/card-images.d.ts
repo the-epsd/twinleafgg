@@ -1,8 +1,12 @@
 import { Blacephalon } from './blacephalon';
+import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
 import { Golett } from './golett';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
 export declare class BlacephalonArt extends Blacephalon {
+    cardImage: string;
+}
+export declare class CynthiaAndCaitlinArt extends CynthiaAndCaitlin {
     cardImage: string;
 }
 export declare class GolettArt extends Golett {

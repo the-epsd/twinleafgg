@@ -4,6 +4,8 @@ exports.setUltraPrism = void 0;
 const card_images_1 = require("./card-images");
 const card_images_2 = require("./card-images");
 exports.setUltraPrism = [
+    new card_images_1.CynthiaArt(),
+    new card_images_1.GardeniaArt(),
     new card_images_2.GibleArt(),
     new card_images_1.PokemonFanClubArt(),
     new card_images_1.TurtwigArt()
