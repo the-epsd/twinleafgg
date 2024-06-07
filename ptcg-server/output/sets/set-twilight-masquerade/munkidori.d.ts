@@ -30,6 +30,6 @@ export declare class Munkidori extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly REFINEMENT_MARKER = "REFINEMENT_MARKER";
+    readonly ADRENA_BRAIN_MARKER = "ADRENA_BRAIN_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

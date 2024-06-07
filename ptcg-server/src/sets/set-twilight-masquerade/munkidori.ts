@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, GameMessage, PlayerType, SlotType, StateUtils, DamageMap, PowerType, ChoosePokemonPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { RemoveDamagePrompt } from '../../game/store/prompts/remove-damage-prompt';
 
@@ -46,13 +47,17 @@ export class Munkidori extends PokemonCard {
 
   public fullName: string = 'Munkidori TWM';
 
-  public readonly REFINEMENT_MARKER = 'REFINEMENT_MARKER';
+  public readonly ADRENA_BRAIN_MARKER = 'ADRENA_BRAIN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.REFINEMENT_MARKER, this);
+      player.marker.removeMarker(this.ADRENA_BRAIN_MARKER, this);
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      effect.player.marker.removeMarker(this.ADRENA_BRAIN_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
