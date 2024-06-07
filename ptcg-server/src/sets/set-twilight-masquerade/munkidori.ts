@@ -47,17 +47,17 @@ export class Munkidori extends PokemonCard {
 
   public fullName: string = 'Munkidori TWM';
 
-  public readonly ADRENABRAIN_MARKER = 'ADRENABRAIN_MARKER';
+  public readonly ADRENA_BRAIN_MARKER = 'ADRENA_BRAIN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.ADRENABRAIN_MARKER, this);
+      player.marker.removeMarker(this.ADRENA_BRAIN_MARKER, this);
     }
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.ADRENABRAIN_MARKER, this);
+      effect.player.marker.removeMarker(this.ADRENA_BRAIN_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

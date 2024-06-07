@@ -35,15 +35,15 @@ class Munkidori extends game_1.PokemonCard {
         this.setNumber = '95';
         this.name = 'Munkidori';
         this.fullName = 'Munkidori TWM';
-        this.ADRENABRAIN_MARKER = 'ADRENABRAIN_MARKER';
+        this.ADRENA_BRAIN_MARKER = 'ADRENA_BRAIN_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            player.marker.removeMarker(this.ADRENABRAIN_MARKER, this);
+            player.marker.removeMarker(this.ADRENA_BRAIN_MARKER, this);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.ADRENABRAIN_MARKER, this);
+            effect.player.marker.removeMarker(this.ADRENA_BRAIN_MARKER, this);
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
