@@ -62,9 +62,9 @@ class Munkidori extends game_1.PokemonCard {
             // });
             const maxAllowedDamage = [];
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                maxAllowedDamage.push({ target, damage: card.hp + 20 });
+                maxAllowedDamage.push({ target, damage: card.hp + 30 });
             });
-            const damage = 20;
+            const damage = 30;
             return store.prompt(state, new remove_damage_prompt_1.RemoveDamagePrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_HEAL, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], damage, maxAllowedDamage, { allowCancel: false }), targets => {
                 const results = targets || [];
                 for (const result of results) {

@@ -9,7 +9,7 @@ export const config = {
     secret: '!secret!',
     tokenExpire: 86400,
     defaultPageSize: 50,
-    avatarsDir: '/avatars/uploads',
+    avatarsDir: '',
     avatarsUrl: '/avatars/{name}',
     avatarFileSize: 256 * 1024,
     avatarMinSize: 64,

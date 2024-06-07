@@ -80,10 +80,10 @@ export class Munkidori extends PokemonCard {
     
       const maxAllowedDamage: DamageMap[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        maxAllowedDamage.push({ target, damage: card.hp + 20 });
+        maxAllowedDamage.push({ target, damage: card.hp + 30 });
       });
     
-      const damage = 20;
+      const damage = 30;
     
       return store.prompt(
         state,
