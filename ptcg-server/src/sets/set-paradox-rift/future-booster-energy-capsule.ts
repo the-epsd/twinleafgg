@@ -30,7 +30,7 @@ export class FutureBoosterEnergyCapsule extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
+    if (effect instanceof DealDamageEffect && effect.source.tool === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 
@@ -47,21 +47,16 @@ export class FutureBoosterEnergyCapsule extends TrainerCard {
       if (card && card.tags.includes(CardTag.FUTURE)) {
         effect.damage += 20;
       }
+    }
 
-      if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
-        const card = effect.target.getPokemonCard();
-
-        if (card === undefined) {
-          return state;
-        }
-
-        if (card && card.tags.includes(CardTag.FUTURE)) {
-          effect.cost = [];
-        }
-        return state;
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+      if (effect.player.active.futurePokemon()) {
+        effect.cost = [];
       }
       return state;
     }
     return state;
   }
+
 }
+

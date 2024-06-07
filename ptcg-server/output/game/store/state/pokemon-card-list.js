@@ -134,6 +134,12 @@ class PokemonCardList extends card_list_1.CardList {
     exPokemon() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_V));
     }
+    futurePokemon() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.FUTURE));
+    }
+    ancientPokemon() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.ANCIENT));
+    }
     getToolEffect() {
         if (!this.tool) {
             return;

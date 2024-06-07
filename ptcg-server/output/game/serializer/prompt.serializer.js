@@ -21,6 +21,7 @@ const select_prompt_1 = require("../store/prompts/select-prompt");
 const show_cards_prompt_1 = require("../store/prompts/show-cards-prompt");
 const shuffle_prompt_1 = require("../store/prompts/shuffle-prompt");
 const shuffle_hand_prompt_1 = require("../store/prompts/shuffle-hand-prompt");
+const remove_damage_prompt_1 = require("../store/prompts/remove-damage-prompt");
 class PromptSerializer {
     constructor() {
         this.rows = [
@@ -41,7 +42,8 @@ class PromptSerializer {
             { classValue: select_prompt_1.SelectPrompt, type: 'SelectPrompt' },
             { classValue: show_cards_prompt_1.ShowCardsPrompt, type: 'ShowCardsPrompt' },
             { classValue: shuffle_prompt_1.ShuffleDeckPrompt, type: 'ShuffleDeckPrompt' },
-            { classValue: shuffle_hand_prompt_1.ShuffleHandPrompt, type: 'ShuffleHandPrompt' }
+            { classValue: shuffle_hand_prompt_1.ShuffleHandPrompt, type: 'ShuffleHandPrompt' },
+            { classValue: remove_damage_prompt_1.RemoveDamagePrompt, type: 'RemoveDamagePrompt' }
         ];
         this.types = this.rows.map(p => p.type);
         this.classes = this.rows.map(p => p.classValue);

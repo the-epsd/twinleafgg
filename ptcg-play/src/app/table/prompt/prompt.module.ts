@@ -24,6 +24,7 @@ import { PromptInvitePlayerComponent } from './prompt-invite-player/prompt-invit
 import { PromptChooseAttackComponent } from './prompt-choose-attack/prompt-choose-attack.component';
 import { PromptPutDamageComponent } from './prompt-put-damage/prompt-put-damage.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { PromptRemoveDamageComponent } from './prompt-remove-damage/prompt-remove-damage.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { TranslateModule } from '@ngx-translate/core';
     PromptSelectComponent,
     PromptInvitePlayerComponent,
     PromptChooseAttackComponent,
-    PromptPutDamageComponent
+    PromptPutDamageComponent,
+    PromptRemoveDamageComponent
   ],
   imports: [
     BoardModule,

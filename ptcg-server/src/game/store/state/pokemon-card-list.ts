@@ -183,6 +183,14 @@ export class PokemonCardList extends CardList {
     return this.cards.some(c => c.tags.includes(CardTag.POKEMON_V));
   }
 
+  futurePokemon(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.FUTURE));
+  }
+
+  ancientPokemon(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.ANCIENT));
+  }
+
   getToolEffect(): Power | Attack | undefined {
     if (!this.tool) {
       return;

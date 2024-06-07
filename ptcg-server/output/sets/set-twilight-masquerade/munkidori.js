@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Munkidori = void 0;
 const game_1 = require("../../game");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const remove_damage_prompt_1 = require("../../game/store/prompts/remove-damage-prompt");
 class Munkidori extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -43,68 +43,43 @@ class Munkidori extends game_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const blocked = [];
+            // const blocked: CardTarget[] = [];
+            // let hasPokemonWithDamage: boolean = false;
+            // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+            //   if (cardList.damage === 0) {
+            //     blocked.push(target);
+            //   } else {
+            //     hasPokemonWithDamage = true;
+            //   }
+            // });
+            // if (hasPokemonWithDamage === false) {
+            //   throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+            // }
+            // player.active.cards.forEach((card, index) => {
+            //   if (card instanceof PokemonCardList && card.damage == 0) {
+            //     blocked.push();
+            //   }
+            // });
+            const maxAllowedDamage = [];
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                if (cardList.damage > 0) {
-                    return state;
-                }
-                else {
-                    blocked.push(target);
+                maxAllowedDamage.push({ target, damage: card.hp + 20 });
+            });
+            const damage = 20;
+            return store.prompt(state, new remove_damage_prompt_1.RemoveDamagePrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_HEAL, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], damage, maxAllowedDamage, { allowCancel: false }), targets => {
+                const results = targets || [];
+                for (const result of results) {
+                    const target = game_1.StateUtils.getTarget(state, player, result.target);
+                    const healEffect = new game_effects_1.HealEffect(player, target, result.damage);
+                    state = store.reduceEffect(state, healEffect);
+                    return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 1, allowCancel: false }), selected => {
+                        const targets = selected || [];
+                        targets.forEach(target => {
+                            target.damage += result.damage;
+                        });
+                        return state;
+                    });
                 }
             });
-            if (!blocked.length) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
-            }
-            if (blocked.length) {
-                // Opponent has damaged benched Pokemon
-                const maxAllowedDamage = [];
-                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                    const checkHpEffect = new check_effects_1.CheckHpEffect(opponent, cardList);
-                    store.reduceEffect(state, checkHpEffect);
-                    maxAllowedDamage.push({ target, damage: 30 });
-                });
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                    if (cardList == player.active || player.bench.includes(cardList)) {
-                        const source = game_1.StateUtils.getTarget(state, player, target);
-                        if (source.damage >= 30) {
-                            source.damage -= 30;
-                        }
-                    }
-                });
-                const blockedFrom = [];
-                const blockedTo = [];
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                    if (cardList == player.active || player.bench.includes(cardList)) {
-                        blockedTo.push(target);
-                    }
-                });
-                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                    if (cardList == opponent.active || opponent.bench.includes(cardList)) {
-                        blockedFrom.push(target);
-                    }
-                });
-                return store.prompt(state, new game_1.MoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { blockedFrom, blockedTo, max: 1, allowCancel: false }), transfers => {
-                    if (transfers === null) {
-                        return state;
-                    }
-                    for (const transfer of transfers) {
-                        const source = game_1.StateUtils.getTarget(state, player, transfer.from);
-                        if (source.damage >= 30) {
-                            source.damage -= 30;
-                        }
-                    }
-                    return store.prompt(state, new game_1.MoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { blockedFrom, blockedTo, max: 1, allowCancel: false }), transfers => {
-                        if (transfers === null) {
-                            return state;
-                        }
-                        for (const transfer of transfers) {
-                            const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                            target.damage += 30;
-                        }
-                    });
-                });
-            }
         }
         return state;
     }

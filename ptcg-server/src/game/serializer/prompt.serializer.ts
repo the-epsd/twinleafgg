@@ -20,6 +20,7 @@ import { SelectPrompt } from '../store/prompts/select-prompt';
 import { ShowCardsPrompt } from '../store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../store/prompts/shuffle-prompt';
 import { ShuffleHandPrompt } from '../store/prompts/shuffle-hand-prompt';
+import { RemoveDamagePrompt } from '../store/prompts/remove-damage-prompt';
 
 export class PromptSerializer implements Serializer<Prompt<any>> {
 
@@ -44,7 +45,8 @@ export class PromptSerializer implements Serializer<Prompt<any>> {
     { classValue: SelectPrompt, type: 'SelectPrompt' },
     { classValue: ShowCardsPrompt, type: 'ShowCardsPrompt' },
     { classValue: ShuffleDeckPrompt, type: 'ShuffleDeckPrompt' },
-    { classValue: ShuffleHandPrompt, type: 'ShuffleHandPrompt'}
+    { classValue: ShuffleHandPrompt, type: 'ShuffleHandPrompt'},
+    { classValue: RemoveDamagePrompt, type: 'RemoveDamagePrompt'}
   ];
 
   constructor () {

@@ -52,6 +52,7 @@ __exportStar(require("./store/prompts/put-damage-prompt"), exports);
 __exportStar(require("./store/prompts/select-prompt"), exports);
 __exportStar(require("./store/prompts/show-cards-prompt"), exports);
 __exportStar(require("./store/prompts/shuffle-prompt"), exports);
+__exportStar(require("./store/prompts/remove-damage-prompt"), exports);
 // export * from './store/prompts/shuffle-prizes-prompt';
 __exportStar(require("./store/state/card-list"), exports);
 __exportStar(require("./store/state/player"), exports);

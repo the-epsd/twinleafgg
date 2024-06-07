@@ -21,7 +21,6 @@ import { SuperType, Stage } from '../card/card-types';
 import { WhoBeginsEffect } from '../effects/game-phase-effects';
 import { endGame } from '../effect-reducers/check-effect';
 import { initNextTurn } from '../effect-reducers/game-phase-effect';
-import { SelectPrompt } from '../prompts/select-prompt';
 
 
 function putStartingPokemonsAndPrizes(player: Player, cards: Card[]): void {
@@ -38,35 +37,10 @@ function putStartingPokemonsAndPrizes(player: Player, cards: Card[]): void {
 }
 
 function* setupGame(next: Function, store: StoreLike, state: State): IterableIterator<State> {
-  const player = state.players[0];
-  const opponent = state.players[1];
-
-  const whoBeginsEffect = new WhoBeginsEffect();
-
-  if (whoBeginsEffect.player) {
-    state.activePlayer = state.players.indexOf(whoBeginsEffect.player);
-  } else {
-    const coinFlipPrompt = new CoinFlipPrompt(player.id, GameMessage.SETUP_WHO_BEGINS_FLIP);
-    store.prompt(state, coinFlipPrompt, whoBegins => {
-      const goFirstPrompt = new SelectPrompt(
-        whoBegins ? player.id : opponent.id,
-        GameMessage.GO_FIRST,
-        [GameMessage.YES, GameMessage.NO]
-      );
-      store.prompt(state, goFirstPrompt, choice => {
-        if (choice === 0) {
-          state.activePlayer = whoBegins ? 0 : 1;
-          next();
-        } else {
-          state.activePlayer = whoBegins ? 1 : 0;
-          next();
-        }
-      });
-
-    });
-  }
   const basicPokemon = {superType: SuperType.POKEMON, stage: Stage.BASIC};
   const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
+  const player = state.players[0];
+  const opponent = state.players[1];
 
   let playerHasBasic = false;
   let opponentHasBasic = false;
@@ -132,6 +106,7 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
     next();
   });
 
+  const whoBeginsEffect = new WhoBeginsEffect();
   store.reduceEffect(state, whoBeginsEffect);
 
   if (whoBeginsEffect.player) {
