@@ -55,30 +55,30 @@ export class RegigigasVSTAR extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.getPrizeLeft() === 1) {
-
-        if (player.usedVSTAR == true) {
-          throw new GameError(GameMessage.POWER_ALREADY_USED);
-        }
-        player.usedVSTAR = true;
-
-        return store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { min: 1, max: 1, allowCancel: true },
-        ), selected => {
-          const targets = selected || [];
-          targets.forEach(target => {
-            target.moveTo(opponent.discard);
-          });
-          return state;
-        });
+      if (opponent.getPrizeLeft() !== 1) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      return state;
+
+      if (player.usedVSTAR == true) {
+        throw new GameError(GameMessage.LABEL_VSTAR_USED);
+      }
+      player.usedVSTAR = true;
+
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.BENCH],
+        { min: 1, max: 1, allowCancel: true },
+      ), selected => {
+        const targets = selected || [];
+        targets.forEach(target => {
+          target.moveTo(opponent.discard);
+        });
+        return state;
+      });
     }
     return state;
   }
-
 }
+

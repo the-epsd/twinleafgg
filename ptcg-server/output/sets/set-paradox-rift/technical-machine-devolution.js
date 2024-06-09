@@ -52,7 +52,7 @@ class TechnicalMachineDevolution extends trainer_card_1.TrainerCard {
             // Build possible evolution card names
             const evolutionNames = [];
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (list, card, target) => {
-                const valid = evolutions.filter(e => e.evolvesFrom === card.name && e.stage === card.stage + 1);
+                const valid = evolutions.filter(e => e.stage != card_types_1.Stage.BASIC && e.name === card.name);
                 valid.forEach(c => {
                     if (!evolutionNames.includes(c.name)) {
                         evolutionNames.push(c.name);
@@ -61,12 +61,18 @@ class TechnicalMachineDevolution extends trainer_card_1.TrainerCard {
             });
             if (opponent.active.getPokemonCard()) {
                 const activeEvolutions = opponent.active.cards.filter(card => evolutionNames.includes(card.name));
-                opponent.active.moveCardsTo(activeEvolutions, opponent.hand);
+                if (activeEvolutions.length > 0) {
+                    const highestEvolutionIndex = 0; // Assuming you sorted the cards in descending order
+                    opponent.active.moveCardTo(activeEvolutions[highestEvolutionIndex], opponent.hand);
+                }
             }
             opponent.bench.forEach(benchSpot => {
                 if (benchSpot.getPokemonCard()) {
                     const benchEvolutions = benchSpot.cards.filter(card => evolutionNames.includes(card.name));
-                    benchSpot.moveCardsTo(benchEvolutions, opponent.hand);
+                    if (benchEvolutions.length > 0) {
+                        const highestEvolutionIndex = 0; // Assuming you sorted the cards in descending order
+                        benchSpot.moveCardTo(benchEvolutions[highestEvolutionIndex], opponent.hand);
+                    }
                 }
             });
         }

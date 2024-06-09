@@ -47,7 +47,7 @@ class LugiaVSTAR extends pokemon_card_1.PokemonCard {
             const slots = player.bench.filter(b => b.cards.length === 0);
             const max = Math.min(slots.length, 2);
             if (player.usedVSTAR === true) {
-                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
             player.usedVSTAR = true;
             let cards = [];

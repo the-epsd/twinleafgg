@@ -17,6 +17,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   if (player.lostzone.cards.length >= 7) {
 
+    // Do not discard the card yet
+    effect.preventDefault = true;
+
     yield store.prompt(state, new AttachEnergyPrompt(
       player.id,
       GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -37,11 +40,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
         const target = StateUtils.getTarget(state, player, transfer.to);
         player.deck.moveCardTo(transfer.card, target); 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         next();
       }
     });
-
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);
 

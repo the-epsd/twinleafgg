@@ -4,7 +4,7 @@
   display: inline-flex;
 }
 
-$ptcg-deck-card-width: map-get($ptcg-size, card) + map-get($padding, large);
+$ptcg-deck-card-width: map-get($ptcg-size, card) + map-get($padding, small);
 
 .ptcg-deck-card {
   align-items: center;

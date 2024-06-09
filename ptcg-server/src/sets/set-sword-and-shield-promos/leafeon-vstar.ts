@@ -60,7 +60,7 @@ export class LeafeonVSTAR extends PokemonCard {
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
 
       if (player.usedVSTAR === true) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
+        throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
 
       if (!hasBench) {

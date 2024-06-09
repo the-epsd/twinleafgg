@@ -44,7 +44,7 @@ class LeafeonVSTAR extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const hasBench = opponent.bench.some(b => b.cards.length > 0);
             if (player.usedVSTAR === true) {
-                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
             if (!hasBench) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);

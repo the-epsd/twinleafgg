@@ -52,7 +52,7 @@ class MagnezoneVSTAR extends game_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             if (player.usedVSTAR === true) {
-                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
             player.usedVSTAR = true;
             state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: false }), targets => {

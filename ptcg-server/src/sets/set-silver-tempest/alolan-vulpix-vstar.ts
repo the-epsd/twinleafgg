@@ -95,7 +95,7 @@ export class AlolanVulpixVSTAR extends PokemonCard {
         const opponent = StateUtils.getOpponent(state, player);
 
         if (player.usedVSTAR === true) {
-          throw new GameError(GameMessage.POWER_ALREADY_USED);
+          throw new GameError(GameMessage.LABEL_VSTAR_USED);
         }
 
         const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];

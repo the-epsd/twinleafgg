@@ -73,7 +73,7 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
                 const player = effect.player;
                 const opponent = game_1.StateUtils.getOpponent(state, player);
                 if (player.usedVSTAR === true) {
-                    throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+                    throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
                 }
                 const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
                 const vPokemons = benchPokemon.filter(card => card.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX));

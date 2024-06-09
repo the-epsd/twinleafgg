@@ -56,6 +56,7 @@ export enum GameStoreMessage {
   UNKNOWN_ATTACK = 'UNKNOWN_ATTACK',
   UNKNOWN_CARD = 'UNKNOWN_CARD',
   UNKNOWN_POWER = 'UNKNOWN_POWER',
+  LABEL_VSTAR_USED = 'LABEL_VSTAR_USED',
 }
 
 export enum GameCardMessage {
@@ -173,6 +174,7 @@ export enum GameLog {
   LOG_TIME_ELAPSED = 'LOG_TIME_ELAPSED', // { name }
   LOG_TURN = 'LOG_TURN', // { turn }
   LOG_PLAYER_PUTS_CARD_IN_HAND = 'LOG_PLAYER_PUTS_CARD_IN_HAND', // { name, card, pokemon }
+  LOG_HISUIAN_HEAVY_BALL = 'LOG_HISUIAN_HEAVY_BALL', // { name, card }
 }
 
 // tslint:disable-next-line

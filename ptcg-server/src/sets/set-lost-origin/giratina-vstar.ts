@@ -61,7 +61,7 @@ export class GiratinaVSTAR extends PokemonCard {
       }
 
       if (player.usedVSTAR === true) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
+        throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
           
       if (player.lostzone.cards.length >= 10) {

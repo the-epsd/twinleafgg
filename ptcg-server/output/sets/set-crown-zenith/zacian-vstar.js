@@ -58,7 +58,7 @@ class ZacianVSTAR extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const damage = 30;
             if (player.usedVSTAR === true) {
-                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
             const dealDamage = new attack_effects_1.DealDamageEffect(effect, damage);
             dealDamage.target = player.active;

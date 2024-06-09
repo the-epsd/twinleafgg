@@ -8,8 +8,6 @@ import { CardList, GameError, GameMessage } from '../../game';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 
-
-
 export class Iono extends TrainerCard {
 
   public regulationMark = 'G';

@@ -68,7 +68,7 @@ export class LucarioVSTAR extends PokemonCard {
         const opponent = StateUtils.getOpponent(state, player);
 
         if (player.usedVSTAR === true) {
-          throw new GameError(GameMessage.POWER_ALREADY_USED);
+          throw new GameError(GameMessage.LABEL_VSTAR_USED);
         }
     
         let totalEnergy = 0;

@@ -50,7 +50,7 @@ class LucarioVSTAR extends pokemon_card_1.PokemonCard {
                 const player = effect.player;
                 const opponent = state_utils_1.StateUtils.getOpponent(state, player);
                 if (player.usedVSTAR === true) {
-                    throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+                    throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
                 }
                 let totalEnergy = 0;
                 opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {

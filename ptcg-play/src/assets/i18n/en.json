@@ -124,7 +124,7 @@
   "GAMES_TURN": "Turn",
   "GAMES_YOUR_DECK": "Your deck",
   "GAMES_YOUR_DECK_TITLE": "Choose your deck",
-  "LABEL_ABILITYUSED": "Ability Used",
+  "LABEL_VSTAR_USED": "Your VSTAR Power has already been used this game.",
   "LABEL_ACTIONS": "Actions",
   "LABEL_ANY": "Any",
   "LABEL_ASLEEP": "Asleep",
@@ -460,6 +460,7 @@
     "LOG_TEXT": "{{text}}",
     "LOG_TIME_ELAPSED": "Time elapsed for {{name}}.",
     "LOG_TURN": "Turn {{turn}}.",
-    "LOG_PLAYER_PUTS_CARD_IN_HAND": "{{name}} puts {{card}} in their hand."
+    "LOG_PLAYER_PUTS_CARD_IN_HAND": "{{name}} puts {{card}} in their hand.",
+    "LOG_HISUIAN_HEAVY_BALL": "{{name}} has taken {{card}} from their Prize Cards with Hisuian Heavy Ball."
   }
 }

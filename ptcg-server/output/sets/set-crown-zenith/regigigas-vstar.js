@@ -39,20 +39,20 @@ class RegigigasVSTAR extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (opponent.getPrizeLeft() === 1) {
-                if (player.usedVSTAR == true) {
-                    throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
-                }
-                player.usedVSTAR = true;
-                return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: true }), selected => {
-                    const targets = selected || [];
-                    targets.forEach(target => {
-                        target.moveTo(opponent.discard);
-                    });
-                    return state;
-                });
+            if (opponent.getPrizeLeft() !== 1) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            return state;
+            if (player.usedVSTAR == true) {
+                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
+            }
+            player.usedVSTAR = true;
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: true }), selected => {
+                const targets = selected || [];
+                targets.forEach(target => {
+                    target.moveTo(opponent.discard);
+                });
+                return state;
+            });
         }
         return state;
     }

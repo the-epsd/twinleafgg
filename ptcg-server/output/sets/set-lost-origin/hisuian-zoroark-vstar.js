@@ -39,10 +39,10 @@ class HisuianZoroarkVSTAR extends game_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             if (player.usedVSTAR === true) {
-                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
             if (player.deck.cards.length === 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             const cards = player.hand.cards.filter(c => c !== this);
             player.hand.moveCardsTo(cards, player.discard);

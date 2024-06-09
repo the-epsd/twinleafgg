@@ -27,12 +27,11 @@ class HisuianHeavyBall extends game_1.TrainerCard {
             effect.preventDefault = true;
             const blocked = [];
             player.prizes.map(p => p.cards[0]).forEach((c, index) => {
-                if (c instanceof game_1.PokemonCard && c.stage === game_1.Stage.BASIC) {
-                    return;
+                if (!(c instanceof game_1.PokemonCard && c.stage === game_1.Stage.BASIC)) {
+                    blocked.push(index);
                 }
-                blocked.push(index);
             });
-            state = store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON, { count: 1, blocked, allowCancel: true }), chosenPrize => {
+            state = store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON, { count: 1, blocked: blocked, allowCancel: true }), chosenPrize => {
                 if (chosenPrize === null || chosenPrize.length === 0) {
                     prizes.forEach(p => { p.isSecret = true; });
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
@@ -44,6 +43,7 @@ class HisuianHeavyBall extends game_1.TrainerCard {
                     const prizePokemon = chosenPrize[0];
                     const hand = player.hand;
                     const heavyBall = effect.trainerCard;
+                    store.log(state, game_1.GameLog.LOG_HISUIAN_HEAVY_BALL, { name: player.name, card: chosenPrize[0].cards[0].name });
                     prizePokemon.moveTo(hand);
                     const chosenPrizeIndex = player.prizes.indexOf(chosenPrize[0]);
                     player.supporter.moveCardTo(heavyBall, player.prizes[chosenPrizeIndex]);

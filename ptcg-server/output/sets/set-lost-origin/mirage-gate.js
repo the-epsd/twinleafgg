@@ -14,6 +14,8 @@ function* playCard(next, store, state, effect) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     if (player.lostzone.cards.length >= 7) {
+        // Do not discard the card yet
+        effect.preventDefault = true;
         yield store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 2 }), transfers => {
             transfers = transfers || [];
             for (const transfer of transfers) {
@@ -24,10 +26,10 @@ function* playCard(next, store, state, effect) {
                 }
                 const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                 player.deck.moveCardTo(transfer.card, target);
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 next();
             }
         });
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
         });

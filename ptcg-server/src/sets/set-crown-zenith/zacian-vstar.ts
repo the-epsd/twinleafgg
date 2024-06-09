@@ -77,7 +77,7 @@ export class ZacianVSTAR extends PokemonCard {
       const damage = 30;
 
       if (player.usedVSTAR === true) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
+        throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
   
       const dealDamage = new DealDamageEffect(effect, damage);

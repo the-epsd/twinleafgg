@@ -57,7 +57,7 @@ export class DarkraiVSTAR extends PokemonCard {
       const player = effect.player;
 
       if (player.usedVSTAR === true) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
+        throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
   
       const hasItem = player.discard.cards.some(c => {

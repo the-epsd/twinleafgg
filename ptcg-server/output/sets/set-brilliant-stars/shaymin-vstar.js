@@ -40,7 +40,7 @@ class ShayminVSTAR extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             if (player.usedVSTAR === true) {
-                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
             // Heal each Pokemon by 10 damage
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {

@@ -45,7 +45,7 @@ class GiratinaVSTAR extends game_1.PokemonCard {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
             if (player.usedVSTAR === true) {
-                throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
+                throw new game_1.GameError(game_message_1.GameMessage.LABEL_VSTAR_USED);
             }
             if (player.lostzone.cards.length >= 10) {
                 const activePokemon = opponent.active.getPokemonCard();

@@ -25,9 +25,9 @@ class Klefki extends pokemon_card_1.PokemonCard {
             }];
         this.attacks = [{
                 name: 'Joust',
-                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.COLORLESS],
                 damage: 10,
-                text: ''
+                text: 'Before doing damage, discard all Pokémon Tools from your opponent\'s Active Pokémon.'
             }];
         this.set = 'SVI';
         this.cardImage = 'assets/cardback.png';
@@ -53,14 +53,15 @@ class Klefki extends pokemon_card_1.PokemonCard {
             if (effect.card.stage !== card_types_1.Stage.BASIC) {
                 return state;
             }
-            const pokemonCard = effect.card;
+            // const pokemonCard = effect.card;
             // Try reducing ability for each player  
             try {
                 const playerPowerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
                 store.reduceEffect(state, playerPowerEffect);
             }
             catch (_a) {
-                pokemonCard.powers = [];
+                // pokemonCard.powers = [ ];
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             return state;
         }

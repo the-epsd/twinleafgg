@@ -64,7 +64,7 @@ export class LugiaVSTAR extends PokemonCard {
       const max = Math.min(slots.length, 2);
 
       if (player.usedVSTAR === true) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
+        throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
 
       player.usedVSTAR = true;

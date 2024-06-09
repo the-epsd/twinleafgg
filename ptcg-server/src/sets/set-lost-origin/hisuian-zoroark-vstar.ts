@@ -55,11 +55,11 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
       const player = effect.player;
 
       if (player.usedVSTAR === true) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
+        throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
 
       if (player.deck.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       const cards = player.hand.cards.filter(c => c !== this);

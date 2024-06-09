@@ -86,16 +86,26 @@ this.mainCard = value.cards[value.cards.length - 1];
 
   constructor() { }
 
+  private sortCardsByStage(cards: Card[]): Card[] {
+    return cards.sort((a, b) => {
+      const stageA = (a as PokemonCard).stage;
+      const stageB = (b as PokemonCard).stage;
+      return stageB - stageA; // Descending order (highest stage first)
+    });
+  }
+
   private initPokemonCardList(cardList: PokemonCardList) {
+    const sortedCards = this.sortCardsByStage(cardList.cards);
+
     this.damage = cardList.damage;
     this.hp = cardList.hp;
     this.specialConditions = cardList.specialConditions;
     this.trainerCard = undefined;
-    this.mainCard = cardList.getPokemonCard();
+    this.mainCard = sortedCards[0];
     this.trainerCard = cardList.tool;
     this.abilityUsed = cardList.abilityHasBeenUsed;
 
-    for (const card of cardList.cards) {
+    for (const card of sortedCards) {
       switch (card.superType) {
         case SuperType.ENERGY:
           if (this.energyCards.length < MAX_ENERGY_CARDS) {

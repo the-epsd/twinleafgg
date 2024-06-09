@@ -70,7 +70,7 @@ class DeoxysVSTAR extends pokemon_card_1.PokemonCard {
                 const player = effect.player;
                 const opponent = game_1.StateUtils.getOpponent(state, player);
                 if (player.usedVSTAR === true) {
-                    throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+                    throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
                 }
                 player.usedVSTAR = true;
                 const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(opponent);

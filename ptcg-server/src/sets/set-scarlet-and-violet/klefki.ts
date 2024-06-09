@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { PokemonCardList, StateUtils } from '../../game';
+import { GameError, GameMessage, PokemonCardList, StateUtils } from '../../game';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
 export class Klefki extends PokemonCard {
@@ -32,9 +32,9 @@ export class Klefki extends PokemonCard {
 
   public attacks = [{
     name: 'Joust',
-    cost: [ CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS ],
+    cost: [ CardType.COLORLESS ],
     damage: 10,
-    text: ''
+    text: 'Before doing damage, discard all Pokémon Tools from your opponent\'s Active Pokémon.'
   }];
 
   public set: string = 'SVI';
@@ -70,17 +70,19 @@ export class Klefki extends PokemonCard {
         return state;
       }
 
-      const pokemonCard = effect.card;
+      // const pokemonCard = effect.card;
 
       // Try reducing ability for each player  
       try {
         const playerPowerEffect = new PowerEffect(player, this.powers[0], this);
         store.reduceEffect(state, playerPowerEffect);
       } catch {
-        pokemonCard.powers = [ ];
+        // pokemonCard.powers = [ ];
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
       return state;
     }
+    
 
 
 
