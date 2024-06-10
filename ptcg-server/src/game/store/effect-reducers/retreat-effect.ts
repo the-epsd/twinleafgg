@@ -81,7 +81,7 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
 
     return store.prompt(state, new ChooseEnergyPrompt(
       player.id,
-      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+      GameMessage.CHOOSE_ENERGY_TO_DISCARD,
       checkProvidedEnergy.energyMap,
       checkRetreatCost.cost
     ), energy => {
