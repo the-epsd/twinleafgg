@@ -20,7 +20,7 @@ function* playCard(next, store, state, effect) {
     // Build possible evolution card names
     const evolutionNames = [];
     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        const valid = evolutions.filter(e => e.evolvesFrom === card.name && e.stage === card.stage + 1);
+        const valid = evolutions.filter(e => e.evolvesFrom === card.name);
         valid.forEach(c => {
             if (!evolutionNames.includes(c.name)) {
                 evolutionNames.push(c.name);
@@ -35,38 +35,40 @@ function* playCard(next, store, state, effect) {
     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
     });
     let targets = [];
-    yield store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_EVOLVE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, blocked: blocked2 }), selection => {
+    yield store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_EVOLVE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: false, blocked: blocked2 }), selection => {
         targets = selection || [];
         next();
     });
     if (targets.length === 0) {
         return state; // canceled by user
     }
-    const pokemonCard = targets[0].getPokemonCard();
-    if (pokemonCard === undefined) {
-        return state; // invalid target?
-    }
-    // Blocking pokemon cards, that cannot be valid evolutions
-    const blocked = [];
-    player.deck.cards.forEach((card, index) => {
-        if (card instanceof game_1.PokemonCard && !evolutionNames.includes(card.name)) {
-            blocked.push(index);
+    for (const target of targets) {
+        const pokemonCard = target.getPokemonCard();
+        if (pokemonCard === undefined) {
+            return state; // invalid target?
         }
-    });
-    let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
-        cards = selected || [];
-        next();
-    });
-    // Canceled by user, he didn't found the card in the deck
-    if (cards.length === 0) {
-        return state;
+        // Blocking pokemon cards, that cannot be valid evolutions
+        const blocked = [];
+        player.deck.cards.forEach((card, index) => {
+            if (card instanceof game_1.PokemonCard && card.evolvesFrom !== pokemonCard.name) {
+                blocked.push(index);
+            }
+        });
+        let cards = [];
+        yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
+            cards = selected || [];
+            next();
+        });
+        // Canceled by user, he didn't found the card in the deck
+        if (cards.length === 0) {
+            return state;
+        }
+        const evolution = cards[0];
+        // Evolve Pokemon
+        player.deck.moveCardTo(evolution, target);
+        target.clearEffects();
+        target.pokemonPlayedTurn = state.turn;
     }
-    const evolution = cards[0];
-    // Evolve Pokemon
-    player.deck.moveCardTo(evolution, targets[0]);
-    targets[0].clearEffects();
-    targets[0].pokemonPlayedTurn = state.turn;
     return state;
 }
 class TechnicalMachineEvolution extends trainer_card_1.TrainerCard {

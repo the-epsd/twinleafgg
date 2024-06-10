@@ -18,6 +18,7 @@ import { SuperType, Stage } from '../card/card-types';
 import { WhoBeginsEffect } from '../effects/game-phase-effects';
 import { endGame } from '../effect-reducers/check-effect';
 import { initNextTurn } from '../effect-reducers/game-phase-effect';
+import { SelectPrompt } from '../prompts/select-prompt';
 function putStartingPokemonsAndPrizes(player, cards) {
     if (cards.length === 0) {
         return;
@@ -37,6 +38,8 @@ function* setupGame(next, store, state) {
     const opponent = state.players[1];
     let playerHasBasic = false;
     let opponentHasBasic = false;
+    let playerCardsToDraw = 0;
+    let opponentCardsToDraw = 0;
     while (!playerHasBasic || !opponentHasBasic) {
         if (!playerHasBasic) {
             player.hand.moveTo(player.deck);
@@ -63,7 +66,7 @@ function* setupGame(next, store, state) {
                 new AlertPrompt(opponent.id, GameMessage.SETUP_PLAYER_NO_BASIC)
             ], results => {
                 if (results[0]) {
-                    player.deck.moveTo(player.hand, 1);
+                    playerCardsToDraw++;
                 }
                 next();
             });
@@ -75,7 +78,7 @@ function* setupGame(next, store, state) {
                 new AlertPrompt(player.id, GameMessage.SETUP_PLAYER_NO_BASIC)
             ], results => {
                 if (results[0]) {
-                    opponent.deck.moveTo(opponent.hand, 1);
+                    opponentCardsToDraw++;
                 }
                 next();
             });
@@ -106,6 +109,32 @@ function* setupGame(next, store, state) {
     const second = state.players[state.activePlayer ? 0 : 1];
     first.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => { cardList.pokemonPlayedTurn = 1; });
     second.forEachPokemon(PlayerType.TOP_PLAYER, cardList => { cardList.pokemonPlayedTurn = 2; });
+    // player.deck.moveTo(player.hand, playerCardsToDraw);
+    // opponent.deck.moveTo(opponent.hand, opponentCardsToDraw);
+    if (playerCardsToDraw > 0) {
+        const options = [];
+        for (let i = 0; i <= playerCardsToDraw; i++) {
+            options.push({ message: `Draw ${i} card(s)`, value: i });
+        }
+        return store.prompt(state, new SelectPrompt(player.id, GameMessage.WANT_TO_DRAW_CARDS, options.map(c => c.message), { allowCancel: false }), choice => {
+            const option = options[choice];
+            const numCardsToDraw = option.value;
+            player.deck.moveTo(player.hand, numCardsToDraw);
+            return initNextTurn(store, state);
+        });
+    }
+    if (opponentCardsToDraw > 0) {
+        const options = [];
+        for (let i = 0; i <= opponentCardsToDraw; i++) {
+            options.push({ message: `Draw ${i} card(s)`, value: i });
+        }
+        return store.prompt(state, new SelectPrompt(opponent.id, GameMessage.WANT_TO_DRAW_CARDS, options.map(c => c.message), { allowCancel: false }), choice => {
+            const option = options[choice];
+            const numCardsToDraw = option.value;
+            opponent.deck.moveTo(opponent.hand, numCardsToDraw);
+            return initNextTurn(store, state);
+        });
+    }
     return initNextTurn(store, state);
 }
 function createPlayer(id, name) {
@@ -191,7 +220,9 @@ export function setupPhaseReducer(store, state, action) {
                     return generator.next().value;
                 }
             });
+            return state;
         }
+        return state;
     }
     return state;
 }

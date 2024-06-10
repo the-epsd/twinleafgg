@@ -24,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
   // Build possible evolution card names
   const evolutionNames: string[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-    const valid = evolutions.filter(e => e.evolvesFrom === card.name && e.stage === card.stage + 1);
+    const valid = evolutions.filter(e => e.evolvesFrom === card.name);
     valid.forEach(c => {
       if (!evolutionNames.includes(c.name)) {
         evolutionNames.push(c.name);
@@ -47,7 +47,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
     GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
     PlayerType.BOTTOM_PLAYER,
     [SlotType.BENCH],
-    { allowCancel: false, blocked: blocked2 }
+    { min: 1, max: 2, allowCancel: false, blocked: blocked2 }
   ), selection => {
     targets = selection || [];
     next();
@@ -56,42 +56,45 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
   if (targets.length === 0) {
     return state; // canceled by user
   }
-  const pokemonCard = targets[0].getPokemonCard();
-  if (pokemonCard === undefined) {
-    return state; // invalid target?
-  }
-
-  // Blocking pokemon cards, that cannot be valid evolutions
-  const blocked: number[] = [];
-  player.deck.cards.forEach((card, index) => {
-    if (card instanceof PokemonCard && !evolutionNames.includes(card.name)) {
-      blocked.push(index);
+  
+  for (const target of targets) {
+    const pokemonCard = target.getPokemonCard();
+    if (pokemonCard === undefined) {
+      return state; // invalid target?
     }
-  });
 
-  let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
-    GameMessage.CHOOSE_CARD_TO_EVOLVE,
-    player.deck,
-    { superType: SuperType.POKEMON },
-    { min: 1, max: 1, allowCancel: true, blocked }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+    // Blocking pokemon cards, that cannot be valid evolutions
+    const blocked: number[] = [];
+    player.deck.cards.forEach((card, index) => {
+      if (card instanceof PokemonCard && card.evolvesFrom !== pokemonCard.name) {
+        blocked.push(index);
+      }
+    });
 
-  // Canceled by user, he didn't found the card in the deck
-  if (cards.length === 0) {
-    return state;
+    let cards: Card[] = [];
+    yield store.prompt(state, new ChooseCardsPrompt(
+      player.id,
+      GameMessage.CHOOSE_CARD_TO_EVOLVE,
+      player.deck,
+      { superType: SuperType.POKEMON },
+      { min: 1, max: 1, allowCancel: true, blocked }
+    ), selected => {
+      cards = selected || [];
+      next();
+    });
+
+    // Canceled by user, he didn't found the card in the deck
+    if (cards.length === 0) {
+      return state;
+    }
+
+    const evolution = cards[0] as PokemonCard;
+
+    // Evolve Pokemon
+    player.deck.moveCardTo(evolution, target);
+    target.clearEffects();
+    target.pokemonPlayedTurn = state.turn;
   }
-
-  const evolution = cards[0] as PokemonCard;
-
-  // Evolve Pokemon
-  player.deck.moveCardTo(evolution, targets[0]);
-  targets[0].clearEffects();
-  targets[0].pokemonPlayedTurn = state.turn;
 
   return state;
 }

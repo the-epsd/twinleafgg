@@ -57,6 +57,7 @@ export var GameStoreMessage;
     GameStoreMessage["UNKNOWN_ATTACK"] = "UNKNOWN_ATTACK";
     GameStoreMessage["UNKNOWN_CARD"] = "UNKNOWN_CARD";
     GameStoreMessage["UNKNOWN_POWER"] = "UNKNOWN_POWER";
+    GameStoreMessage["LABEL_VSTAR_USED"] = "LABEL_VSTAR_USED";
 })(GameStoreMessage || (GameStoreMessage = {}));
 export var GameCardMessage;
 (function (GameCardMessage) {
@@ -174,6 +175,7 @@ export var GameLog;
     GameLog["LOG_TIME_ELAPSED"] = "LOG_TIME_ELAPSED";
     GameLog["LOG_TURN"] = "LOG_TURN";
     GameLog["LOG_PLAYER_PUTS_CARD_IN_HAND"] = "LOG_PLAYER_PUTS_CARD_IN_HAND";
+    GameLog["LOG_HISUIAN_HEAVY_BALL"] = "LOG_HISUIAN_HEAVY_BALL";
 })(GameLog || (GameLog = {}));
 // tslint:disable-next-line
 export const GameMessage = Object.assign(Object.assign(Object.assign({}, GameCoreError), GameStoreMessage), GameCardMessage);
