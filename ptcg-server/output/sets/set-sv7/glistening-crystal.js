@@ -19,16 +19,20 @@ class GlisteningCrystal extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         var _a;
-        if (effect instanceof check_effects_1.CheckAttackCostEffect) {
+        if (effect instanceof check_effects_1.CheckAttackCostEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tools.includes(this))) {
             const player = effect.player;
-            const attackCost = effect.attack.cost;
-            if ((_a = player.active.tool) === null || _a === void 0 ? void 0 : _a.cards.cards.includes(this)) {
-                // Remove 1 of any energy type from the attack cost
-                const energyIndex = attackCost.findIndex(c => c === card_types_1.CardType.COLORLESS || c === card_types_1.CardType.FIGHTING || c === card_types_1.CardType.PSYCHIC || c === card_types_1.CardType.LIGHTNING || c === card_types_1.CardType.FIRE || c === card_types_1.CardType.WATER || c === card_types_1.CardType.GRASS);
-                if (energyIndex !== -1) {
-                    attackCost.splice(energyIndex, 1);
+            const pokemonCard = player.active.getPokemonCard();
+            if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_TERA)) {
+                const index = effect.cost.indexOf(card_types_1.CardType.ANY);
+                if (index > -1) {
+                    effect.cost.splice(index, 0, card_types_1.CardType.ANY);
                 }
+                else {
+                    effect.cost.splice(card_types_1.CardType.ANY);
+                }
+                return state;
             }
+            return state;
         }
         return state;
     }

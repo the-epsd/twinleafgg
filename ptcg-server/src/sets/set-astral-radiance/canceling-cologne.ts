@@ -3,9 +3,9 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { StateUtils } from '../..';
+import { GameError, GameMessage, StateUtils } from '../..';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class CancelingCologne extends TrainerCard {
 
@@ -30,52 +30,30 @@ export class CancelingCologne extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
+    if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.active) {
-        opponent.active.getPokemons().forEach(pokemon => {
-          pokemon.powers.forEach(power => {
-            pokemon.powers.slice(pokemon.powers.indexOf(power), 1);
-          });
-        });
+      if (opponent.marker.hasMarker(this.CANCELING_COLOGNE_MARKER)) {
+        opponent.marker.removeMarker(this.CANCELING_COLOGNE_MARKER);
       }
-      if (effect instanceof PowerEffect) {
-        effect.preventDefault;
+    }
+
+    if (effect instanceof PowerEffect && !effect.power.exemptFromAbilityLock) {
+      const player = effect.player;
+
+      const opponent = StateUtils.getOpponent(state, player);
+
+      opponent.marker.addMarker(this.CANCELING_COLOGNE_MARKER, this);
+
+      const pokemonCard = effect.card;
+      const activePokemon = opponent.active.cards[0]; // Assuming activePokemon is the first card in the array
+      if (opponent.marker.hasMarker(this.CANCELING_COLOGNE_MARKER)) {
+        if (pokemonCard === activePokemon) {
+          throw new GameError(GameMessage.CANNOT_USE_POWER);
+        }
       }
-      return state;
     }
     return state;
   }
-        
 }
-
-
-//       const player = effect.player;
-//       const opponent = StateUtils.getOpponent(state, player);
-
-//       opponent.marker.addMarker(this.CANCELING_COLOGNE_MARKER, this);
-
-//       if (opponent.marker.hasMarker(this.CANCELING_COLOGNE_MARKER, this)) {
-
-//         opponent.active.getPokemons().forEach(pokemon => {
-//         //   pokemon.powers.pop();
-//           if (effect instanceof PowerEffect) {
-//             throw new GameError(GameMessage.CANNOT_USE_POWER);
-//           }
-//         });
-
-//         if (effect instanceof EndTurnEffect && opponent.marker.hasMarker(this.CANCELING_COLOGNE_MARKER, this)) {
-//           opponent.marker.removeMarker(this.CANCELING_COLOGNE_MARKER, this);
-//           console.log('marker cleared');
-//         }
-
-//         return state;
-//       }
-//       return state;
-//     }
-//     return state;
-//   }
-// }

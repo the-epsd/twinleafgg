@@ -29,10 +29,10 @@ export class Thwackey extends PokemonCard {
   public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
 
   public powers = [{
-    name: 'Boom-Boom Drum',
+    name: 'Boom Boom Groove',
     powerType: PowerType.ABILITY,
     useWhenInPlay: true,
-    text: 'You may use this Ability once during your turn, if your Active Pokémon has the Festival Fever Ability. Search your deck for a card and put it into your hand. Then, shuffle your deck.'
+    text: 'Once during your turn, if your Active Pokémon has the Festival Lead Ability, you may search your deck for a card and put it into your hand. Then, shuffle your deck.'
 
   }];
 

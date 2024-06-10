@@ -1,20 +1,16 @@
-import { PokemonCard, CardType, Stage, PowerType, State, StoreLike } from '../../game';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Decidueyeex extends PokemonCard {
-    cardType: CardType;
+export declare class Finizen extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
-    evolvesFrom: string;
+    cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
     retreat: CardType[];
-    powers: {
-        name: string;
-        useWhenInPlay: boolean;
-        powerType: PowerType;
-        text: string;
-    }[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -26,6 +22,5 @@ export declare class Decidueyeex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly TOTAL_FREEDOM_MARKER = "TOTAL_FREEDOM_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

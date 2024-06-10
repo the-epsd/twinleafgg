@@ -20,17 +20,13 @@ class FutureBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
         this.text = 'The Future Pokémon this card is attached to has no Retreat Cost, and the attacks it uses do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.tool === this) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.player.active.tool === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
             if (effect.target !== player.active && effect.target !== opponent.active) {
                 return state;
             }
-            const card = effect.target.getPokemonCard();
-            if (card === undefined) {
-                return state;
-            }
-            if (card && card.tags.includes(card_types_1.CardTag.FUTURE)) {
+            if (effect.player.active.futurePokemon()) {
                 effect.damage += 20;
             }
         }

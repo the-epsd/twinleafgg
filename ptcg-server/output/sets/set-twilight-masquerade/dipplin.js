@@ -17,9 +17,9 @@ class Dipplin extends game_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Festival Fever',
+                name: 'Festival Lead',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'If Festival Plaza is in play, this Pokémon can use its own attack twice in a row.'
+                text: 'If Festival Grounds is in play, this Pokémon may use an attack it has twice. If the first attack Knocks Out your opponent\'s Active Pokémon, you may attack again after your opponent chooses a new Active Pokémon.'
             }];
         this.attacks = [
             {

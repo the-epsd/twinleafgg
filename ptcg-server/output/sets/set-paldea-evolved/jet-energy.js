@@ -20,6 +20,9 @@ class JetEnergy extends energy_card_1.EnergyCard {
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard === this) {
             const player = effect.player;
             const target = effect.target;
+            if (player.specialEnergyBlocked === true) {
+                this.provides = [card_types_1.CardType.COLORLESS];
+            }
             player.switchPokemon(target);
         }
         return state;

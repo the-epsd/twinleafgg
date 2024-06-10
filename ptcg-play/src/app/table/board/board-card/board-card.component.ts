@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PokemonCardList, Card, CardList, SuperType, SpecialCondition, Power, Player, PokemonCard, AbilityUsed } from 'ptcg-server';
 
-const MAX_ENERGY_CARDS = 4;
+const MAX_ENERGY_CARDS = 5;
 
 @Component({
   selector: 'ptcg-board-card',

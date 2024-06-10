@@ -28,7 +28,7 @@ class PathToThePeak extends trainer_card_1.TrainerCard {
                 pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||
                 pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex) ||
                 pokemonCard.tags.includes(card_types_1.CardTag.RADIANT)) {
-                // pokemonCard.powers.length = 0;
+                // pokemonCard.powers.length -= 1;
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {

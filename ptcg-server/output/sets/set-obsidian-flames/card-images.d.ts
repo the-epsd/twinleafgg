@@ -9,8 +9,10 @@ import { Dragonair } from './dragonair';
 import { Dragoniteex } from './dragonite-ex';
 import { Dratini } from './dratini';
 import { Entei } from './entei';
+import { Finizen } from './finizen';
 import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Lunatone } from './lunatone';
+import { Palafin } from './palafin';
 import { Pidgeotex } from './pidgeot-ex';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
@@ -56,10 +58,16 @@ export declare class DratiniArt extends Dratini {
 export declare class EnteiArt extends Entei {
     cardImage: string;
 }
+export declare class FinizenArt extends Finizen {
+    cardImage: string;
+}
 export declare class LetterOfEncouragementArt extends LetterOfEncouragement {
     cardImage: string;
 }
 export declare class LunatoneArt extends Lunatone {
+    cardImage: string;
+}
+export declare class PalafinArt extends Palafin {
     cardImage: string;
 }
 export declare class PidgeotexArt extends Pidgeotex {

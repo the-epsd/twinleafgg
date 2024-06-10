@@ -28,18 +28,20 @@ export class GlisteningCrystal extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckAttackCostEffect) {
+    if (effect instanceof CheckAttackCostEffect && effect.player.active.getPokemonCard()?.tools.includes(this)) {
       const player = effect.player;
-      const attackCost = effect.attack.cost;
+      const pokemonCard = player.active.getPokemonCard();
 
-      if (player.active.tool?.cards.cards.includes(this)) {
-        // Remove 1 of any energy type from the attack cost
-        const energyIndex = attackCost.findIndex(c => c === CardType.COLORLESS || c === CardType.FIGHTING || c === CardType.PSYCHIC || c === CardType.LIGHTNING || c === CardType.FIRE || c === CardType.WATER || c === CardType.GRASS);
-
-        if (energyIndex !== -1) {
-          attackCost.splice(energyIndex, 1);
+      if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_TERA)) {
+        const index = effect.cost.indexOf(CardType.ANY);
+        if (index > -1) {
+          effect.cost.splice(index, 0, CardType.ANY);
+        } else {
+          effect.cost.splice(CardType.ANY);
         }
+        return state;
       }
+      return state;
     }
     return state;
   }

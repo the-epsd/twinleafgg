@@ -37,7 +37,7 @@ export class PathToThePeak extends TrainerCard {
         pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
         pokemonCard.tags.includes(CardTag.POKEMON_ex) ||
         pokemonCard.tags.includes(CardTag.RADIANT)) {
-        // pokemonCard.powers.length = 0;
+        // pokemonCard.powers.length -= 1;
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 

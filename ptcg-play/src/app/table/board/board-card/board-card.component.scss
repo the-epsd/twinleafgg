@@ -1,6 +1,6 @@
 @import '../../../../theme/variables.scss';
 
-$ptcg-max-energy-cards: 4;
+$ptcg-max-energy-cards: 5;
 $ptcg-energy-card-offset: 14%;
 
 .ptcg-board-card {
@@ -56,10 +56,10 @@ $ptcg-energy-card-offset: 14%;
   padding: $ptcg-board-tiny-padding 0;
   position: absolute;
   top: #{-$ptcg-energy-card-offset * $ptcg-max-energy-cards};
-  transform: translateY(-100%);
+  transform: translateY(-10%);
 
   :host-context(.upside-down) & {
-    transform: translateY(-100%) rotate(180deg);
+    transform: translateY(-10%) rotate(180deg);
   }
 }
 

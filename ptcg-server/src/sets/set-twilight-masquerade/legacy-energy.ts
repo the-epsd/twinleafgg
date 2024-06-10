@@ -34,11 +34,19 @@ export class LegacyEnergy extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+      const player = effect.player;
+      if (player.specialEnergyBlocked === true) {
+        this.provides = [CardType.COLORLESS];
+      }
       effect.energyMap.push({ card: this, provides: [ CardType.ANY ] });
     }
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
       if (state.phase === GamePhase.ATTACK) {
         if (this.legacyEnergyUsed == false) {
+          const player = effect.player;
+          if (player.specialEnergyBlocked === true) {
+            this.provides = [CardType.COLORLESS];
+          }
           effect.prizeCount -= 1;
           this.legacyEnergyUsed = true;
         }

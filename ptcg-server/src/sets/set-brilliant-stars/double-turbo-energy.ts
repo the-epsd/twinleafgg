@@ -1,7 +1,7 @@
 import { StoreLike, State } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 export class DoubleTurboEnergy extends EnergyCard {
@@ -29,10 +29,10 @@ export class DoubleTurboEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
-      effect.damage -= 20;
-    }
-
-    if (effect instanceof PutDamageEffect && effect.source.cards.includes(this)) {
+      const player = effect.player;
+      if (player.specialEnergyBlocked === true) {
+        this.provides = [CardType.COLORLESS];
+      }
       effect.damage -= 20;
     }
 

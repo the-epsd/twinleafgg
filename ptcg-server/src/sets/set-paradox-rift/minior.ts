@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, State, StateUtils, StoreLike } from '../../game';
+import { ConfirmPrompt, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class Minior extends PokemonCard {
@@ -56,18 +56,30 @@ export class Minior extends PokemonCard {
   
         return state;
       }
+    }
 
-      if (effect instanceof AttachEnergyEffect && effect.target.cards == this) {
-        const player = effect.player;
+    if (effect instanceof AttachEnergyEffect && effect.target.cards[0] == this) {
+      const player = effect.player;
+      const target = effect.target;
 
-        player.switchPokemon(player.active);
-
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
         return state;
       }
+      state = store.prompt(state, new ConfirmPrompt(
+        effect.player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (wantToUse) {
 
+          player.switchPokemon(target);
+
+        }
+      });
     }
     return state;
   }
-
 }
-

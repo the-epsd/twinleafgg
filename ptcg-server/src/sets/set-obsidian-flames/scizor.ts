@@ -9,7 +9,7 @@ export class Scizor extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public cardType: CardType = CardType.METAL;
 
@@ -49,27 +49,18 @@ export class Scizor extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
+    
       const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
       const vPokemons = benchPokemon.filter(card => card.powers.length);
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.powers.length !== undefined) {
+      if (opponentActive && opponentActive.powers.length) {
         vPokemons.push(opponentActive);
       }
-
-      let vPokes = vPokemons.length;
-
-      if (opponentActive) {
-        vPokes++;
-      }
-
+      const vPokes = vPokemons.length;
       effect.damage += vPokes * 50;
-
     }
     return state;
   }
 }
-

@@ -56,6 +56,9 @@ export class Klefki extends PokemonCard {
       // Klefki is not active Pokemon
       if (player.active.getPokemonCard() !== this
         && opponent.active.getPokemonCard() !== this) {
+        // const pokemonCard = effect.card;
+        // pokemonCard.powers.length = 1; 
+        // pokemonCard.powers.push();
         return state;
       }
 
@@ -78,6 +81,8 @@ export class Klefki extends PokemonCard {
         store.reduceEffect(state, playerPowerEffect);
       } catch {
         // pokemonCard.powers = [ ];
+        // const pokemonCard = effect.card;
+        // pokemonCard.powers.length -= 1;
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
       return state;

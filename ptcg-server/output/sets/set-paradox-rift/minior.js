@@ -42,11 +42,23 @@ class Minior extends pokemon_card_1.PokemonCard {
                 effect.damage = retreatCost * 20;
                 return state;
             }
-            if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.target.cards == this) {
-                const player = effect.player;
-                player.switchPokemon(player.active);
+        }
+        if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.target.cards[0] == this) {
+            const player = effect.player;
+            const target = effect.target;
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                store.reduceEffect(state, powerEffect);
+            }
+            catch (_a) {
                 return state;
             }
+            state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+                if (wantToUse) {
+                    player.switchPokemon(target);
+                }
+            });
         }
         return state;
     }

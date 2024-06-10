@@ -30,6 +30,7 @@ class Eri extends trainer_card_1.TrainerCard {
             effect.preventDefault = true;
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DECK, opponent.hand, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { allowCancel: false, min: 0, max: 2 }), cards => {
                 if (cards === null || cards.length === 0) {
+                    player.supporter.moveCardTo(this, player.discard);
                     return;
                 }
                 player.supporter.moveCardTo(this, player.discard);

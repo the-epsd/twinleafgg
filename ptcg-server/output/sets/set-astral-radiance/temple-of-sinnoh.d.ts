@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { State, EnergyCard, StoreLike } from '../../game';
+import { State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class TempleofSinnoh extends TrainerCard {
     regulationMark: string;
@@ -11,5 +11,5 @@ export declare class TempleofSinnoh extends TrainerCard {
     name: string;
     fullName: string;
     text: string;
-    reduceEffect(store: StoreLike, state: State, effect: Effect & EnergyCard): State;
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

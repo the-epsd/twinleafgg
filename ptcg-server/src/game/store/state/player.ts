@@ -47,6 +47,8 @@ export class Player {
 
   avatarName: string = '';
 
+  specialEnergyBlocked: boolean = false;
+
   usedVSTAR: boolean = false;
 
   usedGX: boolean = false;

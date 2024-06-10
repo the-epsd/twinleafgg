@@ -21,9 +21,10 @@ class DoubleTurboEnergy extends energy_card_1.EnergyCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
-            effect.damage -= 20;
-        }
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.cards.includes(this)) {
+            const player = effect.player;
+            if (player.specialEnergyBlocked === true) {
+                this.provides = [card_types_1.CardType.COLORLESS];
+            }
             effect.damage -= 20;
         }
         return state;

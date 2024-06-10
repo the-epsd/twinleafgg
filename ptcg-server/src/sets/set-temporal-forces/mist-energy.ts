@@ -33,9 +33,13 @@ export class MistEnergy extends EnergyCard {
     // Prevent effects of attacks
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
       const sourceCard = effect.source.getPokemonCard();
-      
+      const player = effect.player;
       if (sourceCard) {
     
+        if (player.specialEnergyBlocked === true) {
+          this.provides = [CardType.COLORLESS];
+        }
+
         // Allow damage
         if (effect instanceof PutDamageEffect) {
           return state; 

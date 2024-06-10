@@ -9,7 +9,7 @@ class Scizor extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'G';
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.cardType = card_types_1.CardType.METAL;
         this.hp = 140;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
@@ -42,13 +42,10 @@ class Scizor extends pokemon_card_1.PokemonCard {
             const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
             const vPokemons = benchPokemon.filter(card => card.powers.length);
             const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && opponentActive.powers.length !== undefined) {
+            if (opponentActive && opponentActive.powers.length) {
                 vPokemons.push(opponentActive);
             }
-            let vPokes = vPokemons.length;
-            if (opponentActive) {
-                vPokes++;
-            }
+            const vPokes = vPokemons.length;
             effect.damage += vPokes * 50;
         }
         return state;

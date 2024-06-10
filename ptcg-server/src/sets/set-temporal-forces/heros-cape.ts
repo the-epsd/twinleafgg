@@ -4,7 +4,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import { PokemonCard } from '../../game';
 
 export class HerosCape extends TrainerCard {
 
@@ -29,14 +28,8 @@ export class HerosCape extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (this instanceof PokemonCard) {
-
-      if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
-
-        effect.hp += 100;
-
-      }
-      return state;
+    if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
+      effect.hp += 100;
     }
     return state;
   }

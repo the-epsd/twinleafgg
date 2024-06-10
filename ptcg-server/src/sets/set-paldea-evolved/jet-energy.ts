@@ -25,9 +25,12 @@ export class JetEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
-
       const player = effect.player;
       const target = effect.target;
+
+      if (player.specialEnergyBlocked === true) {
+        this.provides = [CardType.COLORLESS];
+      }
 
       player.switchPokemon(target);
 

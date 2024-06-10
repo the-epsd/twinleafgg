@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 
-import { AbsolexArt, ArvenArt, BelliboltArt, EnteiArt, ScizorArt, ThundurusArt } from './card-images';
+import { AbsolexArt, ArvenArt, BelliboltArt, EnteiArt, FinizenArt, PalafinArt, ScizorArt, ThundurusArt } from './card-images';
 import { CharizardexArt } from './card-images';
 import { CharmanderArt } from './card-images';
 import { CharmeleonArt } from './card-images';
@@ -32,8 +32,10 @@ export const setObsidianFlames: Card[] = [
   new DragoniteexArt(),
   new DratiniArt(),
   new EnteiArt(),
+  new FinizenArt(),
   new LetterOfEncouragementArt(),
   new LunatoneArt(),
+  new PalafinArt(),
   new PidgeottoArt(),
   new PidgeotexArt(),
   new PidgeyArt(),

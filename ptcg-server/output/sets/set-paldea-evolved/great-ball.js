@@ -20,49 +20,38 @@ class GreatBall extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             const temp = new game_1.CardList();
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             player.deck.moveTo(temp, 7);
-            // Check if any cards drawn are basic energy
-            const pokemonDrawn = temp.cards.filter(card => {
-                return card instanceof game_1.PokemonCard && card.superType === card_types_1.SuperType.POKEMON;
-            });
-            // If a Pokemon was taken, show the opponent
-            if (pokemonDrawn.length == 0) {
-                return store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_EFFECT, temp.cards), () => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, temp, { superType: card_types_1.SuperType.POKEMON }, { allowCancel: false, min: 0, max: 1 }), chosenCards => {
+                if (chosenCards.length <= 0) {
+                    // No Pokemon chosen, shuffle all back
                     temp.cards.forEach(card => {
                         temp.moveCardTo(card, player.deck);
-                    });
-                    player.supporter.moveCardTo(this, player.discard);
-                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                        player.deck.applyOrder(order);
-                        return state;
-                    });
-                });
-            }
-            else {
-                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, temp, { superType: card_types_1.SuperType.POKEMON }, { allowCancel: false, min: 0, max: 1 }), chosenCards => {
-                    if (chosenCards.length > 0) {
-                        // Move chosen Pokemon to hand
-                        const pokemon = chosenCards[0];
-                        temp.moveCardTo(pokemon, player.hand);
                         player.supporter.moveCardTo(this, player.discard);
-                    }
-                    else {
-                        // No Pokemon chosen, shuffle all back
-                        temp.cards.forEach(card => {
-                            temp.moveCardTo(card, player.deck);
-                            player.supporter.moveCardTo(this, player.discard);
-                        });
-                    }
+                    });
                     player.supporter.moveCardTo(this, player.discard);
+                }
+                if (chosenCards.length > 0) {
+                    // Move chosen Pokemon to hand
+                    const pokemon = chosenCards[0];
+                    temp.moveCardTo(pokemon, player.hand);
+                    player.supporter.moveCardTo(this, player.discard);
+                    chosenCards.forEach((card, index) => {
+                        store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+                    });
+                    if (chosenCards.length > 0) {
+                        state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, chosenCards), () => state);
+                    }
                     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                         player.deck.applyOrder(order);
                         return state;
                     });
-                });
-            }
+                }
+                player.supporter.moveCardTo(this, player.discard);
+            });
         }
         return state;
     }

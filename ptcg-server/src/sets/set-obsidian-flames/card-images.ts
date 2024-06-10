@@ -9,8 +9,10 @@ import { Dragonair } from './dragonair';
 import { Dragoniteex } from './dragonite-ex';
 import { Dratini } from './dratini';
 import { Entei } from './entei';
+import { Finizen } from './finizen';
 import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Lunatone } from './lunatone';
+import { Palafin } from './palafin';
 import { Pidgeotex } from './pidgeot-ex';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
@@ -68,6 +70,10 @@ export class DratiniArt extends Dratini {
 export class EnteiArt extends Entei {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_030_R_EN.png';
 }
+
+export class FinizenArt extends Finizen {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_060_R_EN.png';
+}
   
 export class LetterOfEncouragementArt extends LetterOfEncouragement {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_189_R_EN_LG.png';
@@ -75,6 +81,10 @@ export class LetterOfEncouragementArt extends LetterOfEncouragement {
 
 export class LunatoneArt extends Lunatone {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_092_R_EN_LG.png';
+}
+
+export class PalafinArt extends Palafin {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_062_R_EN.png';
 }
   
 export class PidgeotexArt extends Pidgeotex {
