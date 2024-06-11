@@ -48,11 +48,20 @@ export class LoginPopupComponent implements OnDestroy {
     )
       .subscribe({
         next: response => {
-          this.dialogRef.close();
-          if (this.rememberMe) {
-            this.loginRememberService.rememberToken(response.token);
+          const bannedUsernames = ['Joacotaco24', 'leofanax', 'RedditKarmaGold'];
+          if (bannedUsernames.includes(this.name)) {
+            this.alertService.toast(this.translate.instant('User has been banned'));
+            this.dialogRef.close();
+            this.loginRememberService.rememberToken();
+            this.loginService.logout(); // Disconnect the user
+            this.router.navigate(['/login']); // Navigate to the login page
+          } else {
+            this.dialogRef.close();
+            if (this.rememberMe) {
+              this.loginRememberService.rememberToken(response.token);
+            }
+            this.router.navigate([this.data.redirectUrl]);
           }
-          this.router.navigate([this.data.redirectUrl]);
         },
         error: (error: ApiError) => {
           switch (error.code) {
@@ -66,6 +75,8 @@ export class LoginPopupComponent implements OnDestroy {
         }
       });
   }
+  
+
 
   changeServer(): Promise<void> {
     const dialog = this.dialog.open(ChangeServerPopupComponent, {
