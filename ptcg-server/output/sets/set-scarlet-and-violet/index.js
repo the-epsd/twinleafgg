@@ -92,6 +92,7 @@ exports.setScarletAndViolet = [
     new card_images_36.ProfessorsResearchArt2(),
     new card_images_37.RaltsArt(),
     new card_images_38.RareCandyArt(),
+    new card_images_1.RevavroomArt(),
     new card_images_39.RockChestplateArt(),
     new card_images_1.RockyHelmetArt(),
     new card_images_40.ScovillainArt(),

@@ -41,6 +41,7 @@ import { Primeape } from './primeape';
 import { ProfessorsResearch } from './professors-research';
 import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
+import { Revavroom } from './revavroom';
 import { RockChestplate } from './rock-chestplate';
 import { RockyHelmet } from './rocky-helmet';
 import { Scovillain } from './scovillain';
@@ -228,6 +229,10 @@ export class RaltsArt extends Ralts {
 
 export class RareCandyArt extends RareCandy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_191_R_EN_LG.png';
+}
+
+export class RevavroomArt extends Revavroom {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_142_R_EN_LG.png';
 }
 
 export class RockChestplateArt extends RockChestplate {

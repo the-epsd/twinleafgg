@@ -18,6 +18,7 @@ import { HisuianBraviary } from './hisuian-braviary';
 import { Kirlia } from './kirlia';
 import { LugiaV } from './lugia-v';
 import { LugiaVSTAR } from './lugia-vstar';
+import { Meowstic } from './meowstic';
 import { Metagross } from './metagross';
 import { Mismagius } from './mismagius';
 import { PrimordialAltar } from './primordial-altar';
@@ -119,6 +120,10 @@ export class LugiaVArt extends LugiaV {
 
 export class LugiaVSTARArt extends LugiaVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_139_R_EN_LG.png';
+}
+
+export class MeowsticArt extends Meowstic {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_082_R_EN_LG.png';
 }
 
 export class MetagrossArt extends Metagross {

@@ -1,3 +1,5 @@
+import { Braixen } from './braixen';
+import { Delphox } from './delphox';
 import { DoubleColorlessEnergy } from './double-colorless-energy';
 import { Evosoda } from './evosoda';
 import { FairyEnergy } from './fairy-energy';
@@ -10,11 +12,12 @@ import { Shauna } from './shauna';
 import { SuperPotion } from './super-potion';
 import { YveltalEx } from './yveltal-ex';
 
-export class FairyEnergyArt extends FairyEnergy {
-  public set: string = '';
-  public setNumber = '9';
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/XY/XY_140_R_EN_LG.png';
-  public fullName: string = 'Fairy Energy';
+export class BraixenArt extends Braixen {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/XY/XY_025_R_EN_LG.png';
+}
+
+export class DelphoxArt extends Delphox {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/XY/XY_026_R_EN_LG.png';
 }
 
 export class DoubleColorlessEnergyArt extends DoubleColorlessEnergy {
@@ -24,7 +27,14 @@ export class DoubleColorlessEnergyArt extends DoubleColorlessEnergy {
 export class EvosodaArt extends Evosoda {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/XY/XY_116_R_EN.png'; 
 }
-  
+
+export class FairyEnergyArt extends FairyEnergy {
+  public set: string = '';
+  public setNumber = '9';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/XY/XY_140_R_EN_LG.png';
+  public fullName: string = 'Fairy Energy';
+}  
+
 export class MuscleBandArt extends MuscleBand {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/XY/XY_121_R_EN.png';
 }

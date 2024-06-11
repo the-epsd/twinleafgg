@@ -4,6 +4,7 @@ import { Grovyle } from './grovyle';
 import { Treecko } from './treecko';
 import { Zebstrika } from './zebstrika';
 import { Meganium } from './meganium';
+import { Nihilego } from './nihilego';
 
 
 export class ChikoritaArt extends Chikorita {
@@ -16,6 +17,10 @@ export class GrovleArt extends Grovyle {
 
 export class MeganiumArt extends Meganium {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_008_R_EN_LG.png';
+}
+
+export class NihilegoArt extends Nihilego {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_106_R_EN_LG.png';
 }
 
 export class TreeckoArt extends Treecko {

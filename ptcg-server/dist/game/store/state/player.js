@@ -25,6 +25,7 @@ export class Player {
         this.attackMarker = new Marker();
         this.abilityMarker = new Marker();
         this.avatarName = '';
+        this.specialEnergyBlocked = false;
         this.usedVSTAR = false;
         this.usedGX = false;
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

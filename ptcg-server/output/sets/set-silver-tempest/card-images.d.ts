@@ -18,6 +18,7 @@ import { HisuianBraviary } from './hisuian-braviary';
 import { Kirlia } from './kirlia';
 import { LugiaV } from './lugia-v';
 import { LugiaVSTAR } from './lugia-vstar';
+import { Meowstic } from './meowstic';
 import { Metagross } from './metagross';
 import { Mismagius } from './mismagius';
 import { PrimordialAltar } from './primordial-altar';
@@ -98,6 +99,9 @@ export declare class LugiaVArt extends LugiaV {
     cardImage: string;
 }
 export declare class LugiaVSTARArt extends LugiaVSTAR {
+    cardImage: string;
+}
+export declare class MeowsticArt extends Meowstic {
     cardImage: string;
 }
 export declare class MetagrossArt extends Metagross {

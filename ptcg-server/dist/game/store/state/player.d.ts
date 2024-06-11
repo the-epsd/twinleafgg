@@ -25,6 +25,7 @@ export declare class Player {
     attackMarker: Marker;
     abilityMarker: Marker;
     avatarName: string;
+    specialEnergyBlocked: boolean;
     usedVSTAR: boolean;
     usedGX: boolean;
     readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";

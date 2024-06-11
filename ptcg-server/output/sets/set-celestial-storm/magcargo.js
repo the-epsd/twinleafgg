@@ -44,7 +44,7 @@ class Magcargo extends pokemon_card_1.PokemonCard {
                 name: 'Smooth Over',
                 useWhenInPlay: true,
                 powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'Once during your turn, you may discard a Fire Energy card attached to this Pokémon. If you do, this Pokémon gets +20 HP until the end of your turn.'
+                text: 'Once during your turn, you may search your deck for a card, shuffle your deck, then put that card on top of it.'
             }];
         this.attacks = [{
                 name: 'Combustion',
