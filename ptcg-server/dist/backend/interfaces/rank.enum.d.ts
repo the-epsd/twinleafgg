@@ -1,9 +1,12 @@
 export declare enum Rank {
-    JUNIOR = "JUNIOR",
-    SENIOR = "SENIOR",
-    ULTRA = "ULTRA",
-    MASTER = "MASTER",
-    ADMIN = "ADMIN"
+    JUNIOR = 'JUNIOR',
+    SENIOR = 'SENIOR',
+    ULTRA = 'ULTRA',
+    MASTER = 'MASTER',
+    ADMIN = 'ADMIN',
+    BANNED = 'BANNED',
+    POKE = 'POKE',
+    GREAT = 'GREAT'
 }
 export interface RankLevel {
     points: number;

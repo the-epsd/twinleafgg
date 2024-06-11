@@ -3,7 +3,10 @@ export enum Rank {
   SENIOR = 'SENIOR',
   ULTRA = 'ULTRA',
   MASTER = 'MASTER',
-  ADMIN = 'ADMIN'
+  ADMIN = 'ADMIN',
+  BANNED = 'BANNED',
+  POKE = "POKE",
+  GREAT = "GREAT"
 }
 
 export interface RankLevel {
@@ -12,8 +15,9 @@ export interface RankLevel {
 }
 
 export const rankLevels: RankLevel[] = [
-  { points: 0, rank: Rank.JUNIOR },
-  { points: 500, rank: Rank.SENIOR },
+  { points: -1, rank: Rank.BANNED },
+  { points: 0, rank: Rank.POKE },
+  { points: 250, rank: Rank.GREAT },
   { points: 1000, rank: Rank.ULTRA },
   { points: 2500, rank: Rank.MASTER }
 ];

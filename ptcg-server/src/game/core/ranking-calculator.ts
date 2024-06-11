@@ -75,14 +75,16 @@ export class RankingCalculator {
 
   private getRankMultipier(rank: Rank): number {
     switch (rank) {
-      case Rank.JUNIOR:
+      case Rank.POKE:
         return 2.0;
-      case Rank.SENIOR:
+      case Rank.GREAT:
         return 1.0;
       case Rank.ULTRA:
         return 0.75;
       case Rank.MASTER:
         return 0.5;
+        case Rank.BANNED:
+          return -1;
     }
     return 1;
   }

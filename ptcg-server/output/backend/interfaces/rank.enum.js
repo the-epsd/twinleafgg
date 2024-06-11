@@ -8,10 +8,14 @@ var Rank;
     Rank["ULTRA"] = "ULTRA";
     Rank["MASTER"] = "MASTER";
     Rank["ADMIN"] = "ADMIN";
+    Rank["BANNED"] = "BANNED";
+    Rank["POKE"] = "POKE";
+    Rank["GREAT"] = "GREAT";
 })(Rank = exports.Rank || (exports.Rank = {}));
 exports.rankLevels = [
-    { points: 0, rank: Rank.JUNIOR },
-    { points: 500, rank: Rank.SENIOR },
+    { points: -1, rank: Rank.BANNED },
+    { points: 0, rank: Rank.POKE },
+    { points: 250, rank: Rank.GREAT },
     { points: 1000, rank: Rank.ULTRA },
     { points: 2500, rank: Rank.MASTER }
 ];

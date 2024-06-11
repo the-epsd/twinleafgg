@@ -62,14 +62,16 @@ class RankingCalculator {
     }
     getRankMultipier(rank) {
         switch (rank) {
-            case backend_1.Rank.JUNIOR:
+            case backend_1.Rank.POKE:
                 return 2.0;
-            case backend_1.Rank.SENIOR:
+            case backend_1.Rank.GREAT:
                 return 1.0;
             case backend_1.Rank.ULTRA:
                 return 0.75;
             case backend_1.Rank.MASTER:
                 return 0.5;
+            case backend_1.Rank.BANNED:
+                return -1;
         }
         return 1;
     }
