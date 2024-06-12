@@ -21,6 +21,7 @@ import { Poppy } from './poppy';
 import { Scizor } from './scizor';
 import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
+import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
 export declare class AbsolexArt extends Absolex {
     cardImage: string;
@@ -92,6 +93,9 @@ export declare class ThundurusArt extends Thundurus {
     cardImage: string;
 }
 export declare class TownStoreArt extends TownStore {
+    cardImage: string;
+}
+export declare class VaroomArt extends Varoom {
     cardImage: string;
 }
 export declare class VengefulPunchArt extends VengefulPunch {

@@ -12,7 +12,7 @@ export var Rank;
 export const rankLevels = [
     { points: -1, rank: Rank.BANNED },
     { points: 0, rank: Rank.POKE },
-    { points: 500, rank: Rank.GREAT },
+    { points: 250, rank: Rank.GREAT },
     { points: 1000, rank: Rank.ULTRA },
     { points: 2500, rank: Rank.MASTER }
 ];

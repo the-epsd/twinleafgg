@@ -5,8 +5,8 @@ export enum Rank {
   MASTER = 'MASTER',
   ADMIN = 'ADMIN',
   BANNED = 'BANNED',
-  POKE = "POKE",
-  GREAT = "GREAT"
+  POKE = 'POKE',
+  GREAT = 'GREAT'
 }
 
 export interface RankLevel {

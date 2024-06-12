@@ -80,10 +80,12 @@ class RankingCalculator {
         const oneDay = config_1.config.core.rankingDecraseTime;
         const today = Date.now();
         const yesterday = today - oneDay;
-        const users = await storage_1.User.find({ where: {
+        const users = await storage_1.User.find({
+            where: {
                 lastRankingChange: typeorm_1.LessThan(yesterday),
                 ranking: typeorm_1.MoreThan(0)
-            } });
+            }
+        });
         // calculate new ranking in the server
         users.forEach(user => {
             user.lastRankingChange = today;

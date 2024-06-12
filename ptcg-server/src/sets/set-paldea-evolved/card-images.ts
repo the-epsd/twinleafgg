@@ -38,6 +38,7 @@ import { ChiYuex } from './chi-yu-ex';
 import { Tinkatink } from './tinkatink';
 import { Tinkatuff } from './tinkatuff';
 import { Tinkaton } from './tinkaton';
+import { Wingull } from './wingull';
 
 export class ArctibaxArt extends Arctibax {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_059_R_EN_LG.png';
@@ -197,4 +198,8 @@ export class TinkatuffArt extends Tinkatuff {
 
 export class TinkatonArt extends Tinkaton {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_105_R_EN_LG.png';
+}
+
+export class WingullArt extends Wingull {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_158_R_EN_LG.png';
 }

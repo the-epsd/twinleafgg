@@ -11,6 +11,7 @@ export class Primeape extends PokemonCard {
   public hp: number = 90;
   public weakness = [{ type: CardType.PSYCHIC }];
   public retreat = [CardType.COLORLESS];
+  public evolvesFrom = 'Mankey';
 
   public attacks = [
     {

@@ -6,6 +6,7 @@ exports.setCosmicEclipse = [
     new card_images_1.BlacephalonArt(),
     new card_images_1.CynthiaAndCaitlinArt(),
     new card_images_1.GolettArt(),
+    new card_images_1.GuzzlordArt(),
     new card_images_1.ProfessorOaksSetupArt(),
     new card_images_1.SlugmaArt()
 ];

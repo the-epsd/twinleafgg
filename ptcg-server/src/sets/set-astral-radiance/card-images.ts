@@ -22,6 +22,7 @@ import { Keldeo } from './keldeo';
 import { Kleavor } from './kleavor';
 import { LucarioV } from './lucario-v';
 import { LuxrayV } from './luxray-v';
+import { Magneton } from './magneton';
 import { Mantine } from './mantine';
 import { Mightyena } from './mightyena';
 import { Miltank } from './miltank';
@@ -141,6 +142,10 @@ export class LucarioVArt extends LucarioV {
 
 export class LuxrayVArt extends LuxrayV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_050_R_EN_LG.png';
+}
+
+export class MagnetonArt extends Magneton {
+  public cardIMage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_106_R_EN_LG.png';
 }
 
 export class MantineArt extends Mantine {

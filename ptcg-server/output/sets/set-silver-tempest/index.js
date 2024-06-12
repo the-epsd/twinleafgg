@@ -12,6 +12,7 @@ exports.setSilverTempest = [
     new card_images_1.CandiceArt(),
     new card_images_1.CapturingAromaArt(),
     new card_images_1.CobalionArt(),
+    new card_images_1.CrobatArt(),
     new card_images_1.DragoniteArt(),
     new card_images_1.ElgyemArt(),
     new card_images_1.EmergencyJellyArt(),
@@ -36,6 +37,7 @@ exports.setSilverTempest = [
     new card_images_1.RegielekiVArt(),
     new card_images_1.RegielekiVMAXArt(),
     new card_images_1.RuffletArt(),
+    new card_images_1.SandygastArt(),
     new card_images_1.SerenaArt(),
     new card_images_1.SerperiorVArt(),
     new card_images_1.SerperiorVSTARArt(),
@@ -44,5 +46,6 @@ exports.setSilverTempest = [
     new card_images_1.WailordArt(),
     new card_images_1.WorkerArt(),
     new card_images_1.ZeraoraArt(),
-    new card_images_1.BeldumArt(),
+    new card_images_1.ZubatArt(),
+    new card_images_1.BeldumArt()
 ];

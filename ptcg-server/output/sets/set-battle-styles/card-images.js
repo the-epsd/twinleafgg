@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeepinbellArt = exports.VictreebelArt = exports.VictiniVMAXArt = exports.VictiniVArt = exports.UrnOfVitalityArt = exports.TyranitarVArt = exports.TowerOfWatersArt = exports.TowerOfDarknessArt = exports.ToolJammerArt = exports.TapuKokoVMAXArt = exports.TapuKokoVArt = exports.StoutlandVArt = exports.StonjournerArt = exports.SingleStrikeUrshifuVMAXArt = exports.SingleStrikeUrshifuVArt = exports.SingleStrikeEnergyArt = exports.RolycolyArt = exports.RemoraidArt = exports.RapidStrikeUrshifuVMAXArt = exports.RapidStrikeUrshifuVArt = exports.RapidStrikeEnergyArt = exports.OctilleryArt = exports.NecrozmaVArt = exports.MimikyuVArt = exports.LevelBallArt = exports.KricketuneVArt = exports.KorrinasFocusArt = exports.HoundourArt = exports.HoundoomArt = exports.FlappleVMAXArt = exports.FlappleVArt = exports.FanOfWavesArt = exports.FalinksArt = exports.EscapeRopeArt = exports.EnergyRecyclerArt = exports.EmpoleonVArt = exports.DurantArt = exports.CherylArt = exports.CherubiArt = exports.CherrimArt = exports.CarkolArt = exports.BrunoArt = exports.BronzongArt = exports.BellsproutArt = void 0;
+exports.WeepinbellArt = exports.VictreebelArt = exports.VictiniVMAXArt = exports.VictiniVArt = exports.UrnOfVitalityArt = exports.TyranitarVArt = exports.TowerOfWatersArt = exports.TowerOfDarknessArt = exports.ToolJammerArt = exports.TapuKokoVMAXArt = exports.TapuKokoVArt = exports.StoutlandVArt = exports.StonjournerArt = exports.SingleStrikeUrshifuVMAXArt = exports.SingleStrikeUrshifuVArt = exports.SingleStrikeEnergyArt = exports.RolycolyArt = exports.RemoraidArt = exports.RapidStrikeUrshifuVMAXArt = exports.RapidStrikeUrshifuVArt = exports.RapidStrikeEnergyArt = exports.OctilleryArt = exports.NecrozmaVArt = exports.MimikyuVArt = exports.LevelBallArt = exports.KricketuneVArt = exports.KorrinasFocusArt = exports.HoundourArt = exports.HoundoomArt = exports.GolbatArt = exports.FlappleVMAXArt = exports.FlappleVArt = exports.FanOfWavesArt = exports.FalinksArt = exports.EscapeRopeArt = exports.EnergyRecyclerArt = exports.EmpoleonVArt = exports.DurantArt = exports.CrobatArt = exports.CherylArt = exports.CherubiArt = exports.CherrimArt = exports.CarkolArt = exports.BrunoArt = exports.BronzongArt = exports.BellsproutArt = void 0;
 const bellsprout_1 = require("./bellsprout");
 const bronzong_1 = require("./bronzong");
 const bruno_1 = require("./bruno");
@@ -8,6 +8,7 @@ const carkol_1 = require("./carkol");
 const cherrim_1 = require("./cherrim");
 const cherubi_1 = require("./cherubi");
 const cheryl_1 = require("./cheryl");
+const crobat_1 = require("./crobat");
 const durant_1 = require("./durant");
 const empoleon_v_1 = require("./empoleon-v");
 const energy_recycler_1 = require("./energy-recycler");
@@ -16,6 +17,7 @@ const falinks_1 = require("./falinks");
 const fan_of_waves_1 = require("./fan-of-waves");
 const flapple_v_1 = require("./flapple-v");
 const flapple_vmax_1 = require("./flapple-vmax");
+const golbat_1 = require("./golbat");
 const houndoom_1 = require("./houndoom");
 const houndour_1 = require("./houndour");
 const korrinas_focus_1 = require("./korrinas-focus");
@@ -94,6 +96,13 @@ class CherylArt extends cheryl_1.Cheryl {
     }
 }
 exports.CherylArt = CherylArt;
+class CrobatArt extends crobat_1.Crobat {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_091_R_EN_LG.png';
+    }
+}
+exports.CrobatArt = CrobatArt;
 class DurantArt extends durant_1.Durant {
     constructor() {
         super(...arguments);
@@ -150,6 +159,13 @@ class FlappleVMAXArt extends flapple_vmax_1.FlappleVMAX {
     }
 }
 exports.FlappleVMAXArt = FlappleVMAXArt;
+class GolbatArt extends golbat_1.Golbat {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_090_R_EN_LG.png';
+    }
+}
+exports.GolbatArt = GolbatArt;
 class HoundoomArt extends houndoom_1.Houndoom {
     constructor() {
         super(...arguments);

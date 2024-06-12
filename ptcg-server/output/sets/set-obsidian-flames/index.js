@@ -44,6 +44,7 @@ exports.setObsidianFlames = [
     new card_images_16.TownStoreArt(),
     new card_images_17.VengefulPunchArt(),
     new card_images_1.BelliboltArt(),
+    new card_images_1.VaroomArt(),
     //Alt-Arts
     new full_arts_1.BelliboltIR(),
     new full_arts_1.CleffaIR(),
@@ -59,4 +60,5 @@ exports.setObsidianFlames = [
     new full_arts_1.CharizardexHR(),
     new full_arts_1.ArtazonHR(),
     new full_arts_1.FireEnergyHR(),
+    new full_arts_1.VaroomIR()
 ];

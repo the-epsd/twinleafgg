@@ -8,6 +8,7 @@ import { Braixen } from './braixen';
 import { Candice } from './candice';
 import { CapturingAroma } from './capturing-aroma';
 import { Cobalion } from './cobalion';
+import { Crobat } from './crobat';
 import { Dragonite } from './dragonite';
 import { Elgyem } from './elgyem';
 import { EmergencyJelly } from './emergency-jelly';
@@ -33,6 +34,7 @@ import { RegidragoVSTAR } from './regidrago-vstar';
 import { RegielekiV } from './regieleki-v';
 import { RegielekiVMAX } from './regieleki-vmax';
 import { Rufflet } from './rufflet';
+import { Sandygast } from './sandygast';
 import { Serena } from './serena';
 import { SerperiorV } from './serperior-v';
 import { SerperiorVSTAR } from './serperior-vstar';
@@ -41,6 +43,7 @@ import { VGuardEnergy } from './v-guard-energy';
 import { Wailord } from './wailord';
 import { Worker } from './worker';
 import { Zeraora } from './zeraora';
+import { Zubat } from './zubat';
 
 export class AlolanVulpixVArt extends AlolanVulpixV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_033_R_EN_LG.png';
@@ -80,6 +83,10 @@ export class CapturingAromaArt extends CapturingAroma {
 
 export class CobalionArt extends Cobalion {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_126_R_EN_LG.png';
+}
+
+export class CrobatArt extends Crobat {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_105_R_EN_LG.png';
 }
 
 export class DragoniteArt extends Dragonite {
@@ -182,6 +189,10 @@ export class RuffletArt extends Rufflet {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_148_R_EN_LG.png';
 }
 
+export class SandygastArt extends Sandygast {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_099_R_EN_LG.png';
+}
+
 export class SerenaArt extends Serena {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_164_R_EN_LG.png';
 }
@@ -212,4 +223,8 @@ export class WorkerArt extends Worker {
 
 export class ZeraoraArt extends Zeraora {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_056_R_EN_LG.png';
+}
+
+export class ZubatArt extends Zubat {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_103_R_EN_LG.png';
 }

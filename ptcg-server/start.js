@@ -94,6 +94,7 @@ cardManager.defineSet(sets.setPokemonGO);
 cardManager.defineSet(sets.setLostOrigin);
 cardManager.defineSet(sets.setSilverTempest);
 cardManager.defineSet(sets.setCrownZenith);
+cardManager.defineSet(sets.setRebelClash);
 
 
 cardManager.defineSet(sets.setScarletAndViolet);

@@ -10,6 +10,7 @@ export declare class Primeape extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
+    evolvesFrom: string;
     attacks: {
         name: string;
         cost: CardType[];

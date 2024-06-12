@@ -14,6 +14,7 @@ class Annihilape extends pokemon_card_1.PokemonCard {
         this.hp = 140;
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.evolvesFrom = 'Primeape';
         this.attacks = [
             {
                 name: 'Rage Fist',

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VengefulPunchArt = exports.TownStoreArt = exports.ThundurusArt = exports.ScizorArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalafinArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.ArvenArt = exports.AbsolexArt = void 0;
+exports.VengefulPunchArt = exports.VaroomArt = exports.TownStoreArt = exports.ThundurusArt = exports.ScizorArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalafinArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.ArvenArt = exports.AbsolexArt = void 0;
 const arven_1 = require("../set-scarlet-and-violet/arven");
 const absol_ex_1 = require("./absol-ex");
 const bellibolt_1 = require("./bellibolt");
@@ -24,6 +24,7 @@ const poppy_1 = require("./poppy");
 const scizor_1 = require("./scizor");
 const thundurus_1 = require("./thundurus");
 const town_store_1 = require("./town-store");
+const varoom_1 = require("./varoom");
 const vengeful_punch_1 = require("./vengeful-punch");
 class AbsolexArt extends absol_ex_1.Absolex {
     constructor() {
@@ -189,6 +190,13 @@ class TownStoreArt extends town_store_1.TownStore {
     }
 }
 exports.TownStoreArt = TownStoreArt;
+class VaroomArt extends varoom_1.Varoom {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_154_R_EN_LG.png';
+    }
+}
+exports.VaroomArt = VaroomArt;
 class VengefulPunchArt extends vengeful_punch_1.VengefulPunch {
     constructor() {
         super(...arguments);

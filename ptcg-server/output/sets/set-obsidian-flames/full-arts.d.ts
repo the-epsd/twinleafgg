@@ -8,6 +8,7 @@ import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { Poppy } from './poppy';
 import { Scizor } from './scizor';
+import { Varoom } from './varoom';
 declare class BelliboltIR extends Bellibolt {
     cardImage: string;
     setNumber: string;
@@ -78,4 +79,9 @@ declare class FireEnergyHR extends FireEnergy {
     setNumber: string;
     fullName: string;
 }
-export { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, ScizorIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, ArtazonHR, FireEnergyHR };
+declare class VaroomIR extends Varoom {
+    cardImage: string;
+    setNumber: string;
+    fullName: string;
+}
+export { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, ScizorIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, ArtazonHR, FireEnergyHR, VaroomIR };

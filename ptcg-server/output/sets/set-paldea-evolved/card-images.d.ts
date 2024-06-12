@@ -38,6 +38,7 @@ import { ChiYuex } from './chi-yu-ex';
 import { Tinkatink } from './tinkatink';
 import { Tinkatuff } from './tinkatuff';
 import { Tinkaton } from './tinkaton';
+import { Wingull } from './wingull';
 export declare class ArctibaxArt extends Arctibax {
     cardImage: string;
 }
@@ -156,5 +157,8 @@ export declare class TinkatuffArt extends Tinkatuff {
     cardImage: string;
 }
 export declare class TinkatonArt extends Tinkaton {
+    cardImage: string;
+}
+export declare class WingullArt extends Wingull {
     cardImage: string;
 }

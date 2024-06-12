@@ -64,6 +64,7 @@ export * from './set-pokemon-go';
 export * from './set-lost-origin';
 export * from './set-silver-tempest';
 export * from './set-crown-zenith';
+export * from './set-rebel-clash';
 export * from './set-scarlet-and-violet';
 export * from './set-scarlet-and-violet-energy';
 export * from './set-scarlet-and-violet-promos';

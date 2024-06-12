@@ -53,7 +53,7 @@ export class RankingCalculator {
     player1.lastRankingChange = today;
     player2.lastRankingChange = today;
 
-    return [ player1, player2 ];
+    return [player1, player2];
   }
 
   private getRankingDiff(rank1: Rank, rank2: Rank, diff: number): number {
@@ -83,8 +83,8 @@ export class RankingCalculator {
         return 0.75;
       case Rank.MASTER:
         return 0.5;
-        case Rank.BANNED:
-          return -1;
+      case Rank.BANNED:
+        return -1;
     }
     return 1;
   }
@@ -94,10 +94,12 @@ export class RankingCalculator {
     const oneDay = config.core.rankingDecraseTime;
     const today = Date.now();
     const yesterday = today - oneDay;
-    const users = await User.find({ where: {
-      lastRankingChange: LessThan(yesterday),
-      ranking: MoreThan(0)
-    }});
+    const users = await User.find({
+      where: {
+        lastRankingChange: LessThan(yesterday),
+        ranking: MoreThan(0)
+      }
+    });
 
     // calculate new ranking in the server
     users.forEach(user => {

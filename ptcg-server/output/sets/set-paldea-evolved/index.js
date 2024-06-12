@@ -70,5 +70,6 @@ exports.setPaldeaEvolved = [
     new card_images_1.TinkatuffArt(),
     new card_images_1.TinkatonArt(),
     new card_images_24.WattrelArt(),
+    new card_images_1.WingullArt(),
     new card_images_26.WoChienexArt()
 ];

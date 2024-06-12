@@ -88,6 +88,7 @@ export * from './set-pokemon-go';
 export * from './set-lost-origin';
 export * from './set-silver-tempest';
 export * from './set-crown-zenith';
+export * from './set-rebel-clash';
 
 //SVI Era
 export * from './set-scarlet-and-violet';

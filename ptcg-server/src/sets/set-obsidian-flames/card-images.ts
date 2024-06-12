@@ -21,6 +21,7 @@ import { Poppy } from './poppy';
 import { Scizor } from './scizor';
 import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
+import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
 
 export class AbsolexArt extends Absolex {
@@ -117,6 +118,10 @@ export class ThundurusArt extends Thundurus {
   
 export class TownStoreArt extends TownStore {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_196_R_EN_LG.png';
+}
+
+export class VaroomArt extends Varoom {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_154_R_EN_LG.png';
 }
   
 export class VengefulPunchArt extends VengefulPunch {

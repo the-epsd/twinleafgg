@@ -4,6 +4,7 @@ import { ScoopUpCyclone } from './scoop-up-cyclone';
 import { SilverBangle } from './silver-bangle';
 import { UltraBall } from './ultra-ball';
 import { VirizionEx } from './virizion-ex';
+import { Wartortle } from './wartortle';
 export declare class JirachiExArt extends JirachiEx {
     cardImage: string;
 }
@@ -20,5 +21,8 @@ export declare class VirizionExArt extends VirizionEx {
     cardImage: string;
 }
 export declare class MasterBallArt extends MasterBall {
+    cardImage: string;
+}
+export declare class WartortleArt extends Wartortle {
     cardImage: string;
 }

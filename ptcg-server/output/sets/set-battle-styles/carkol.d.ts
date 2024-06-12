@@ -10,6 +10,7 @@ export declare class Carkol extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
+    evolvesFrom: string;
     attacks: {
         name: string;
         cost: CardType[];

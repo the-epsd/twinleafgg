@@ -12,6 +12,7 @@ import { Froslassex } from './froslass-ex';
 import { FutureBoosterEnergyCapsule } from './future-booster-energy-capsule';
 import { Gabite } from './gabite';
 import { Garchompex } from './garchomp-ex';
+import { Garganacl } from './garganacl';
 import { Gholdengoex } from './gholdengo-ex';
 import { Gible } from './gible';
 import { Gimmighoul } from './gimmighoul';
@@ -29,6 +30,8 @@ import { Mela } from './mela';
 import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
 import { Morpeko } from './morpeko';
+import { Nacli } from './nacli';
+import { Naclstack } from './naclstack';
 import { Natu } from './natu';
 import { Porygon } from './porygon';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
@@ -106,6 +109,10 @@ export class GarchompexArt extends Garchompex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_038_R_EN_LG.png';
 }
 
+export class GarganaclArt extends Garganacl {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_104_R_EN_LG.png';
+}
+
 export class GholdengoexArt extends Gholdengoex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_139_R_EN_LG.png';
 }
@@ -172,6 +179,14 @@ export class MiniorArt extends Minior {
 
 export class MorpekoArt extends Morpeko {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_121_R_EN_LG.png';
+}
+
+export class NacliArt extends Nacli {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_102_R_EN_LG.png';
+}
+
+export class NaclstackArt extends Naclstack {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_103_R_EN_LG.png';
 }
 
 export class NatuArt extends Natu {

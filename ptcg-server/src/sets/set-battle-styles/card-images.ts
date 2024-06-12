@@ -5,6 +5,7 @@ import { Carkol } from './carkol';
 import { Cherrim } from './cherrim';
 import { Cherubi } from './cherubi';
 import { Cheryl } from './cheryl';
+import { Crobat } from './crobat';
 import { Durant } from './durant';
 import { EmpoleonV } from './empoleon-v';
 import { EnergyRecycler } from './energy-recycler';
@@ -13,6 +14,7 @@ import { Falinks } from './falinks';
 import { FanOfWaves } from './fan-of-waves';
 import { FlappleV } from './flapple-v';
 import { FlappleVMAX } from './flapple-vmax';
+import { Golbat } from './golbat';
 import { Houndoom } from './houndoom';
 import { Houndour } from './houndour';
 import { KorrinasFocus } from './korrinas-focus';
@@ -71,6 +73,10 @@ export class CherylArt extends Cheryl {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_123_R_EN.png';
 }
 
+export class CrobatArt extends Crobat {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_091_R_EN_LG.png';
+}
+
 export class DurantArt extends Durant {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_010_R_EN.png';
 }
@@ -101,6 +107,10 @@ export class FlappleVArt extends FlappleV {
 
 export class FlappleVMAXArt extends FlappleVMAX {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_019_R_EN.png';
+}
+
+export class GolbatArt extends Golbat {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_090_R_EN_LG.png';
 }
 
 export class HoundoomArt extends Houndoom {

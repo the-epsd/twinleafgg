@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 
-import { AbsolexArt, ArvenArt, BelliboltArt, EnteiArt, FinizenArt, PalafinArt, ScizorArt, ThundurusArt } from './card-images';
+import { AbsolexArt, ArvenArt, BelliboltArt, EnteiArt, FinizenArt, PalafinArt, ScizorArt, ThundurusArt, VaroomArt } from './card-images';
 import { CharizardexArt } from './card-images';
 import { CharmanderArt } from './card-images';
 import { CharmeleonArt } from './card-images';
@@ -17,7 +17,7 @@ import { PokemonLeagueHeadquartersArt } from './card-images';
 import { PoppyArt } from './card-images';
 import { TownStoreArt } from './card-images';
 import { VengefulPunchArt } from './card-images';
-import { ArtazonHR, BelliboltIR, CharizardexFA, CharizardexHR, CharizardexSIR, CleffaIR, FireEnergyHR, PidgeotexFA, PidgeotexSIR, PidgeottoIR, PidgeyIR, PoppyFA, PoppySIR, ScizorIR } from './full-arts';
+import { ArtazonHR, BelliboltIR, CharizardexFA, CharizardexHR, CharizardexSIR, CleffaIR, FireEnergyHR, PidgeotexFA, PidgeotexSIR, PidgeottoIR, PidgeyIR, PoppyFA, PoppySIR, ScizorIR, VaroomIR } from './full-arts';
 
 
 export const setObsidianFlames: Card[] = [
@@ -46,6 +46,7 @@ export const setObsidianFlames: Card[] = [
   new TownStoreArt(),
   new VengefulPunchArt(),
   new BelliboltArt(),
+  new VaroomArt(),
 
   //Alt-Arts
 
@@ -63,5 +64,6 @@ export const setObsidianFlames: Card[] = [
   new CharizardexHR(),
   new ArtazonHR(),
   new FireEnergyHR(),
+  new VaroomIR()
 
 ];
