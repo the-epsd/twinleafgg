@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class GlisteningCrystal extends TrainerCard {
 
@@ -31,6 +32,13 @@ export class GlisteningCrystal extends TrainerCard {
     if (effect instanceof CheckAttackCostEffect && effect.player.active.getPokemonCard()?.tools.includes(this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
 
       if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_TERA)) {
         const index = effect.cost.indexOf(CardType.ANY);

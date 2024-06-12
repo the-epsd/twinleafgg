@@ -1,5 +1,6 @@
 import { Attack, Power, State, StoreLike } from '../../..';
 import { Effect } from '../effects/effect';
+import { ToolEffect } from '../effects/play-card-effects';
 import { Card } from './card';
 import { Format, SuperType, TrainerType } from './card-types';
 export declare abstract class TrainerCard extends Card {
@@ -10,5 +11,6 @@ export declare abstract class TrainerCard extends Card {
     attacks: Attack[];
     powers: Power[];
     firstTurn: boolean;
+    toolEffect: ToolEffect | undefined;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

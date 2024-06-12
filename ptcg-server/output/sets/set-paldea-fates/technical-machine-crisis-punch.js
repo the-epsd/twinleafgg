@@ -7,6 +7,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class TechnicalMachineCrisisPunch extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -30,11 +31,26 @@ class TechnicalMachineCrisisPunch extends trainer_card_1.TrainerCard {
         var _a;
         if (effect instanceof check_effects_1.CheckPokemonAttacksEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tools.includes(this)) &&
             !effect.attacks.includes(this.attacks[0])) {
+            const player = effect.player;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_b) {
+                return state;
+            }
             effect.attacks.includes(this.attacks[0]);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
             const player = effect.player;
             const tool = effect.player.active.tool;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_c) {
+                return state;
+            }
             if (tool.name === this.name) {
                 player.active.moveCardTo(tool, player.discard);
                 player.active.tool = undefined;
@@ -44,6 +60,13 @@ class TechnicalMachineCrisisPunch extends trainer_card_1.TrainerCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_d) {
+                return state;
+            }
             const prizes = opponent.getPrizeLeft();
             if (prizes !== 1) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);

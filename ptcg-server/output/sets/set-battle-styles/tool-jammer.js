@@ -22,6 +22,13 @@ class ToolJammer extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const opponent = __1.StateUtils.getOpponent(state, player);
             const opponentActivePokemon = opponent.active;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_a) {
+                return state;
+            }
             if (opponentActivePokemon && opponentActivePokemon.tool) {
                 opponentActivePokemon.tool.reduceEffect = () => state;
             }

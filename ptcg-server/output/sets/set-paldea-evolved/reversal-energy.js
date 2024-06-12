@@ -6,6 +6,7 @@ const energy_card_1 = require("../../game/store/card/energy-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const game_1 = require("../../game");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class ReversalEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -26,6 +27,13 @@ class ReversalEnergy extends energy_card_1.EnergyCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const attachedTo = effect.source;
+            try {
+                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                store.reduceEffect(state, energyEffect);
+            }
+            catch (_a) {
+                return state;
+            }
             if (attachedTo instanceof pokemon_card_1.PokemonCard && player.getPrizeLeft() <= opponent.getPrizeLeft() && !attachedTo.cardTag.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_ex || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.RADIANT)) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY, card_types_1.CardType.ANY, card_types_1.CardType.ANY] });
             }

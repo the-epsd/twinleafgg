@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class BindingMochi extends TrainerCard {
 
@@ -31,6 +32,13 @@ export class BindingMochi extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, effect.player);
 
       if (effect.target !== player.active && effect.target !== opponent.active) {
+        return state;
+      }
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
         return state;
       }
       

@@ -4,6 +4,7 @@ exports.LuminousEnergy = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class LuminousEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -21,12 +22,20 @@ class LuminousEnergy extends energy_card_1.EnergyCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+            const player = effect.player;
             const attachedTo = effect.source;
             const otherSpecialEnergy = attachedTo.cards.some(card => {
                 return card instanceof energy_card_1.EnergyCard
                     && card.energyType === card_types_1.EnergyType.SPECIAL
                     && card !== this;
             });
+            try {
+                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                store.reduceEffect(state, energyEffect);
+            }
+            catch (_a) {
+                return state;
+            }
             if (otherSpecialEnergy) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.COLORLESS] });
             }

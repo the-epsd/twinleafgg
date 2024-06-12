@@ -4,6 +4,7 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils, TrainerCard } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class RockChestplate extends TrainerCard {
 
@@ -35,6 +36,14 @@ export class RockChestplate extends TrainerCard {
   
       const player = StateUtils.findOwner(state, effect.target);
       const sourceCard = player.active.getPokemonCard();
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       if (sourceCard?.cardType == CardType.FIGHTING) {
   
         // Check if damage target is owned by this card's owner 

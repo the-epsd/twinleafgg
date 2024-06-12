@@ -5,6 +5,7 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class LuckyEnergy extends EnergyCard {
 
@@ -39,6 +40,13 @@ export class LuckyEnergy extends EnergyCard {
       }
 
       const player = StateUtils.findOwner(state, effect.target);
+
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
 
       // Check if damage target is owned by this card's owner 
       const targetPlayer = StateUtils.findOwner(state, effect.target);

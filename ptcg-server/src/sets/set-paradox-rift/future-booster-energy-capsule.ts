@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class FutureBoosterEnergyCapsule extends TrainerCard {
 
@@ -34,6 +35,13 @@ export class FutureBoosterEnergyCapsule extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       if (effect.target !== player.active && effect.target !== opponent.active) {
         return state;
       }
@@ -44,6 +52,15 @@ export class FutureBoosterEnergyCapsule extends TrainerCard {
     }
 
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+      const player = effect.player;
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       if (effect.player.active.futurePokemon()) {
         effect.cost = [];
       }

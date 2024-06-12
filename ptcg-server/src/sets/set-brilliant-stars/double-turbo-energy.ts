@@ -3,6 +3,7 @@ import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class DoubleTurboEnergy extends EnergyCard {
 
@@ -30,12 +31,17 @@ export class DoubleTurboEnergy extends EnergyCard {
 
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
-      if (player.specialEnergyBlocked === true) {
-        this.provides = [CardType.COLORLESS];
+
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
       }
+      
+      // Apply damage reduction and increase the energy provided only if EnergyEffect is successful
       effect.damage -= 20;
     }
-
     return state;
   }
 }

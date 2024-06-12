@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SupereffectiveGlasses = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class SupereffectiveGlasses extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -17,6 +18,14 @@ class SupereffectiveGlasses extends game_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.ApplyWeaknessEffect && effect.target.tool === this) {
+            const player = effect.player;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_a) {
+                return state;
+            }
             effect.damage = effect.damage * 1.5;
         }
         return state;

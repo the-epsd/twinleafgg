@@ -9,6 +9,7 @@ import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-promp
 import { PlayerType, SlotType, CardTarget } from '../../game/store/actions/play-card-action';
 import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class ExpShare extends TrainerCard {
 
@@ -46,6 +47,13 @@ export class ExpShare extends TrainerCard {
       }
 
       if (active.marker.hasMarker(this.EXP_SHARE_MARKER)) {
+        return state;
+      }
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
         return state;
       }
 

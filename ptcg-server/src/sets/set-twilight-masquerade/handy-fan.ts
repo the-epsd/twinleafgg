@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class HandyFan extends TrainerCard {
 
@@ -32,6 +33,13 @@ export class HandyFan extends TrainerCard {
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
       if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
+        return state;
+      }
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
         return state;
       }
 

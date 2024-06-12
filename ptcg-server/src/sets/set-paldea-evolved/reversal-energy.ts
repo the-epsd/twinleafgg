@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { StateUtils } from '../../game';
+import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class ReversalEnergy extends EnergyCard {
 
@@ -37,6 +38,13 @@ export class ReversalEnergy extends EnergyCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const attachedTo = effect.source;
+
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
 
       if (attachedTo instanceof PokemonCard && player.getPrizeLeft() <= opponent.getPrizeLeft() && !attachedTo.cardTag.includes(CardTag.POKEMON_V || CardTag.POKEMON_ex || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.RADIANT)) {
         effect.energyMap.push({ card: this, provides: [ CardType.ANY, CardType.ANY, CardType.ANY ] });

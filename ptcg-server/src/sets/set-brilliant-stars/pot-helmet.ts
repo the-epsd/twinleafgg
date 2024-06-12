@@ -5,6 +5,7 @@ import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class PotHelmet extends TrainerCard {
 
@@ -28,7 +29,7 @@ export class PotHelmet extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.source.cards.includes(this)) {
       const sourceCard = effect.source.getPokemonCard();
-    
+
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
         return state;
@@ -40,6 +41,14 @@ export class PotHelmet extends TrainerCard {
       }
     
       const player = StateUtils.findOwner(state, effect.target);
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR || sourceCard.tags.includes(CardTag.POKEMON_ex || CardTag.RADIANT))) {
         return state;
       }

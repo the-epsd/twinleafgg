@@ -7,6 +7,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const game_1 = require("../../game");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class SingleStrikeEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -33,7 +34,15 @@ class SingleStrikeEnergy extends energy_card_1.EnergyCard {
         var _a;
         // Provide energy when attached to Single Strike Pokemon
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+            const player = effect.player;
             const pokemon = effect.source;
+            try {
+                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                store.reduceEffect(state, energyEffect);
+            }
+            catch (_b) {
+                return state;
+            }
             if ((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.SINGLE_STRIKE)) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.FIGHTING || card_types_1.CardType.DARK] });
             }
@@ -47,6 +56,13 @@ class SingleStrikeEnergy extends energy_card_1.EnergyCard {
                     if (!cardList.cards.includes(this)) {
                         return;
                     }
+                    try {
+                        const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                        store.reduceEffect(state, energyEffect);
+                    }
+                    catch (_b) {
+                        return state;
+                    }
                     const pokemon = cardList;
                     if (!((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.SINGLE_STRIKE))) {
                         cardList.moveCardTo(this, player.discard);
@@ -59,6 +75,13 @@ class SingleStrikeEnergy extends energy_card_1.EnergyCard {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             if (effect.target !== opponent.active) {
+                return state;
+            }
+            try {
+                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                store.reduceEffect(state, energyEffect);
+            }
+            catch (_c) {
                 return state;
             }
             effect.damage += 20;

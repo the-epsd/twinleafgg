@@ -7,6 +7,7 @@ import { Player } from './state/player';
 import { PokemonCardList } from './state/pokemon-card-list';
 import { EnergyMap } from './prompts/choose-energy-prompt';
 export declare class StateUtils {
+    static getStadium(state: State): void;
     static checkEnoughEnergy(energy: EnergyMap[], cost: CardType[]): boolean;
     static checkExactEnergy(energy: EnergyMap[], cost: CardType[]): boolean;
     static getOpponent(state: State, player: Player): Player;
