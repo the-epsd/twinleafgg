@@ -5,6 +5,7 @@ import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard, StateUtils } from '../../game';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class VengefulPunch extends TrainerCard {
 
@@ -30,6 +31,13 @@ export class VengefulPunch extends TrainerCard {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
   
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
         return state;
       }

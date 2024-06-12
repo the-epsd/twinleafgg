@@ -9,6 +9,7 @@ import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-promp
 import { PlayerType, SlotType, CardTarget } from '../../game/store/actions/play-card-action';
 import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class ExpShare extends TrainerCard {
 
@@ -42,6 +43,13 @@ export class ExpShare extends TrainerCard {
 
       // Do not activate between turns, or when it's not opponents turn.
       if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+        return state;
+      }
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
         return state;
       }
 

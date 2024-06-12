@@ -7,6 +7,7 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType } from '../../game';
+import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class SingleStrikeEnergy extends EnergyCard {
 
@@ -42,7 +43,16 @@ export class SingleStrikeEnergy extends EnergyCard {
     
     // Provide energy when attached to Single Strike Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+      const player = effect.player;
       const pokemon = effect.source;
+
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
+
       if (pokemon.getPokemonCard()?.tags.includes(CardTag.SINGLE_STRIKE)) {
         effect.energyMap.push({ card: this, provides: [ CardType.FIGHTING || CardType.DARK ] });
       }
@@ -56,6 +66,14 @@ export class SingleStrikeEnergy extends EnergyCard {
           if (!cardList.cards.includes(this)) {
             return;
           }
+
+          try {
+            const energyEffect = new EnergyEffect(player, this);
+            store.reduceEffect(state, energyEffect);
+          } catch {
+            return state;
+          }
+
           const pokemon = cardList;
           if (!pokemon.getPokemonCard()?.tags.includes(CardTag.SINGLE_STRIKE)) {
             cardList.moveCardTo(this, player.discard);
@@ -71,6 +89,14 @@ export class SingleStrikeEnergy extends EnergyCard {
       if (effect.target !== opponent.active) {
         return state;
       }
+
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
+
       effect.damage += 20;
     }
     

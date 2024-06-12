@@ -10,6 +10,9 @@ import { PokemonCardList } from './state/pokemon-card-list';
 import { EnergyMap } from './prompts/choose-energy-prompt';
 
 export class StateUtils {
+  static getStadium(state: State) {
+    throw new Error('Method not implemented.');
+  }
   public static checkEnoughEnergy(energy: EnergyMap[], cost: CardType[]): boolean {
     if (cost.length === 0) {
       return true;

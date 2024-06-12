@@ -5,6 +5,7 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class RockyHelmet extends TrainerCard {
 
@@ -31,6 +32,13 @@ export class RockyHelmet extends TrainerCard {
     if (effect instanceof AfterDamageEffect && effect.target.tool === this) {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
 
       if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
         return state;

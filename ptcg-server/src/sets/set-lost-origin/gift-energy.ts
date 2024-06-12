@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class GiftEnergy extends EnergyCard {
 
@@ -54,7 +55,13 @@ export class GiftEnergy extends EnergyCard {
           return;
         }
 
-
+        try {
+          const energyEffect = new EnergyEffect(player, this);
+          store.reduceEffect(state, energyEffect);
+        } catch {
+          return state;
+        }
+        
         while (player.hand.cards.length < 7) {
           player.deck.moveTo(player.hand, 1);
         }

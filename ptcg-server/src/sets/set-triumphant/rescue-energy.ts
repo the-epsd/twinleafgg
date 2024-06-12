@@ -6,6 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class RescueEnergy extends EnergyCard {
 
@@ -31,6 +32,7 @@ export class RescueEnergy extends EnergyCard {
     'your hand. (Discard all cards attached to that Pokemon.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
 
@@ -51,6 +53,13 @@ export class RescueEnergy extends EnergyCard {
 
         if (!player.marker.hasMarker(this.RESCUE_ENERGY_MAREKER)) {
           return;
+        }
+
+        try {
+          const energyEffect = new EnergyEffect(player, this);
+          store.reduceEffect(state, energyEffect);
+        } catch {
+          return state;
         }
 
         const rescued: Card[] = player.marker.markers

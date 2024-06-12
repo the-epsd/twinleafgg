@@ -6,6 +6,7 @@ import { CheckPokemonAttacksEffect } from '../../game/store/effects/check-effect
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -41,12 +42,29 @@ export class TechnicalMachineBlindside extends TrainerCard {
 
     if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
 !effect.attacks.includes(this.attacks[0])) {
+      const player = effect.player;
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       effect.attacks.push(this.attacks[0]);
     }
 
     if (effect instanceof EndTurnEffect && effect.player.active.tool) {
       const player = effect.player;
       const tool = effect.player.active.tool;
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       if (tool.name === this.name) {
         player.active.moveCardTo(tool, player.discard);
         player.active.tool = undefined;
@@ -59,6 +77,13 @@ export class TechnicalMachineBlindside extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
   
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       const blocked: CardTarget[] = [];
   
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);

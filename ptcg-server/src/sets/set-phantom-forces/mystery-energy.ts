@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect, CheckPokemonTypeEffect, CheckTableStateEffect,
   CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { PlayerType } from '../../game/store/actions/play-card-action';
-import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 
@@ -41,6 +41,15 @@ export class MysteryEnergy extends EnergyCard {
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
+      const player = effect.player;
+
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
+
       if (!checkPokemonType.cardTypes.includes(CardType.PSYCHIC)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -51,6 +60,15 @@ export class MysteryEnergy extends EnergyCard {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const checkPokemonType = new CheckPokemonTypeEffect(effect.source);
       store.reduceEffect(state, checkPokemonType);
+      const player = effect.player;
+
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
+
       if (checkPokemonType.cardTypes.includes(CardType.PSYCHIC)) {
         effect.energyMap.push({ card: this, provides: [ CardType.PSYCHIC ] });
       }
@@ -64,6 +82,14 @@ export class MysteryEnergy extends EnergyCard {
           if (!cardList.cards.includes(this)) {
             return;
           }
+
+          try {
+            const energyEffect = new EnergyEffect(player, this);
+            store.reduceEffect(state, energyEffect);
+          } catch {
+            return state;
+          }
+
           const checkPokemonType = new CheckPokemonTypeEffect(cardList);
           store.reduceEffect(state, checkPokemonType);
           if (!checkPokemonType.cardTypes.includes(CardType.PSYCHIC)) {
@@ -76,6 +102,14 @@ export class MysteryEnergy extends EnergyCard {
 
     if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
+
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
+
       if (player.active.cards.includes(this)) {
         for (let i = 0; i < 2; i++) {
           const index = effect.cost.indexOf(CardType.COLORLESS);

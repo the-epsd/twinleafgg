@@ -1,3 +1,4 @@
+import { EnergyEffect } from '../effects/play-card-effects';
 import { Card } from './card';
 import { SuperType, CardType, EnergyType, Format } from './card-types';
 export declare abstract class EnergyCard extends Card {
@@ -7,4 +8,5 @@ export declare abstract class EnergyCard extends Card {
     provides: CardType[];
     text: string;
     isBlocked: boolean;
+    energyEffect: EnergyEffect | undefined;
 }

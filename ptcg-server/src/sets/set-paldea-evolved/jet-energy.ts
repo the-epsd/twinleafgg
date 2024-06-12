@@ -2,7 +2,7 @@ import { StoreLike, State } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class JetEnergy extends EnergyCard {
 
@@ -27,17 +27,18 @@ export class JetEnergy extends EnergyCard {
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;
       const target = effect.target;
-
-      if (player.specialEnergyBlocked === true) {
-        this.provides = [CardType.COLORLESS];
+  
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
       }
-
+      // Switch the active Pokemon only if the EnergyEffect is successful
       player.switchPokemon(target);
-
+      console.log('special energy worked');
     }
-
+  
     return state;
-
   }
-    
 }

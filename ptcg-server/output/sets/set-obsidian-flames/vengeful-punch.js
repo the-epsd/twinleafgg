@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class VengefulPunch extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -22,6 +23,13 @@ class VengefulPunch extends trainer_card_1.TrainerCard {
         if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tool === this) {
             const player = effect.player;
             const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_a) {
+                return state;
+            }
             if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
                 return state;
             }

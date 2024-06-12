@@ -6,6 +6,9 @@ const card_types_1 = require("./card/card-types");
 const game_error_1 = require("../game-error");
 const game_message_1 = require("../game-message");
 class StateUtils {
+    static getStadium(state) {
+        throw new Error('Method not implemented.');
+    }
     static checkEnoughEnergy(energy, cost) {
         if (cost.length === 0) {
             return true;

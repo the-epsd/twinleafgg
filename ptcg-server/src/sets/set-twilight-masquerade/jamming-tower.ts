@@ -6,7 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
-import { UseStadiumEffect, useToolEffect } from '../../game/store/effects/game-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class JammingTower extends TrainerCard {
 
@@ -28,16 +28,15 @@ export class JammingTower extends TrainerCard {
     'Pokémon Tools attached to each Pokémon (both yours and your opponent\'s) have no effect.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof useToolEffect) {
-      // Prevent the effect of all tools in play
+
+    if (effect instanceof ToolEffect && StateUtils.getStadiumCard(state) === this) {
+      // effect.preventDefault = true;
+      // effect.card.provides = [CardType.COLORLESS];
       effect.preventDefault = true;
-      return state;
-    }
-      
-    if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
+      console.log('Jamming Tower blocks Tool Effect');
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
-      
     return state;
   }
 }
+  

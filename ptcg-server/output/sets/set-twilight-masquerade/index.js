@@ -57,4 +57,5 @@ exports.setTwilightMasquerade = [
     new card_images_1.FestivalGroundsArt(),
     new card_images_1.ApplinArt(),
     new card_images_1.ApplinArt2(),
+    new card_images_1.JammingTowerArt(),
 ];

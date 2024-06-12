@@ -5,6 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class PowerHourglass extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -25,6 +26,13 @@ class PowerHourglass extends trainer_card_1.TrainerCard {
                     && c.energyType === card_types_1.EnergyType.BASIC;
             });
             if (!hasEnergyInDiscard) {
+                return state;
+            }
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_a) {
                 return state;
             }
             state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 1, max: 1 }), transfers => {

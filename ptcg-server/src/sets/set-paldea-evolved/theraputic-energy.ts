@@ -1,8 +1,9 @@
-import { StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State } from '../../game';
 import { CardType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckTableStateEffect, CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class TheraputicEnergy extends EnergyCard {
 
@@ -26,12 +27,19 @@ export class TheraputicEnergy extends EnergyCard {
 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const pokemon = effect.source;
-      if (effect instanceof CheckTableStateEffect && StateUtils.getStadiumCard(state) === this) {
+      if (effect instanceof CheckTableStateEffect) {
         state.players.forEach(player => {
           if (pokemon.specialConditions.length === 0) {
             return;
           }
   
+          try {
+            const energyEffect = new EnergyEffect(player, this);
+            store.reduceEffect(state, energyEffect);
+          } catch {
+            return state;
+          }
+
           const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
           store.reduceEffect(state, checkPokemonTypeEffect);
   

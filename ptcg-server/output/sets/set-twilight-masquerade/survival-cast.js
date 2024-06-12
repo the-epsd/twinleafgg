@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class SurvivalCast extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -27,6 +28,13 @@ class SurvivalCast extends trainer_card_1.TrainerCard {
             }
             const activePokemon = player.active;
             const maxHp = activePokemon.hp;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_a) {
+                return state;
+            }
             if (state.phase === state_1.GamePhase.ATTACK) {
                 if (player.active.damage === 0) {
                     if (effect.source.damage >= maxHp) {

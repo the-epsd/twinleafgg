@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class MuscleBand extends TrainerCard {
 
@@ -27,7 +28,16 @@ export class MuscleBand extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
+      const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       if (effect.damage > 0 && effect.target === opponent.active) {
         effect.damage += 20;
       }
