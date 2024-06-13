@@ -2,6 +2,7 @@ import { Player } from './player';
 import { Prompt } from '../prompts/prompt';
 import { StateLog } from './state-log';
 import { Rules } from './rules';
+import { Attack } from '../..';
 
 export enum GamePhase {
   WAITING_FOR_PLAYERS,
@@ -41,4 +42,5 @@ export class State {
 
   public skipOpponentTurn = false;
 
+  public lastAttack: Attack | null = null;
 }

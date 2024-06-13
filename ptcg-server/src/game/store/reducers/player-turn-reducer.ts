@@ -65,9 +65,12 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       if (attack === undefined) {
         throw new GameError(GameMessage.UNKNOWN_ATTACK);
       }
-
+           
       const useAttackEffect = new UseAttackEffect(player, attack);
       state = store.reduceEffect(state, useAttackEffect);
+      
+      state.lastAttack = attack;
+      
       return state;
     }
 

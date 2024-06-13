@@ -2,6 +2,7 @@ import { Player } from './player';
 import { Prompt } from '../prompts/prompt';
 import { StateLog } from './state-log';
 import { Rules } from './rules';
+import { Attack } from '../..';
 export declare enum GamePhase {
     WAITING_FOR_PLAYERS = 0,
     SETUP = 1,
@@ -27,4 +28,5 @@ export declare class State {
     winner: GameWinner;
     players: Player[];
     skipOpponentTurn: boolean;
+    lastAttack: Attack | null;
 }

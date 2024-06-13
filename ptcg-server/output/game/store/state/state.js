@@ -30,6 +30,7 @@ class State {
         this.winner = GameWinner.NONE;
         this.players = [];
         this.skipOpponentTurn = false;
+        this.lastAttack = null;
     }
 }
 exports.State = State;

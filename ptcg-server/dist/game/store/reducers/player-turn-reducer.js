@@ -49,6 +49,7 @@ export function playerTurnReducer(store, state, action) {
             }
             const useAttackEffect = new UseAttackEffect(player, attack);
             state = store.reduceEffect(state, useAttackEffect);
+            state.lastAttack = attack;
             return state;
         }
         if (action instanceof UseAbilityAction) {
