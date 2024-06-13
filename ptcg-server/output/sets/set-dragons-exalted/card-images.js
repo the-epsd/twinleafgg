@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZweilousArt = exports.ToolScrapperArt = exports.SigilyphArt = exports.RoseradeArt = exports.RoseliaArt = exports.RescueScarfArt = exports.RayquazaExArt = exports.HydreigonArt = exports.HoOhExArt = exports.GarbodorArt = exports.GabiteArt = exports.EmolgaArt = exports.DeinoArt = exports.BouffalantArt = void 0;
+exports.ZweilousArt = exports.ToolScrapperArt = exports.SigilyphArt = exports.RoseradeArt = exports.RoseliaArt = exports.RescueScarfArt = exports.RayquazaExArt = exports.HydreigonArt = exports.HoOhExArt = exports.GarbodorArt = exports.GabiteArt = exports.EmolgaArt = exports.DeinoArt = exports.BouffalantArt = exports.BlendEnergyWLFMArt = void 0;
+const blend_energy_wlfm_1 = require("./blend-energy-wlfm");
 const bouffalant_1 = require("./bouffalant");
 const deino_1 = require("./deino");
 const emolga_1 = require("./emolga");
@@ -15,6 +16,13 @@ const roserade_1 = require("./roserade");
 const sigilyph_1 = require("./sigilyph");
 const tool_scrapper_1 = require("./tool-scrapper");
 const zweilous_1 = require("./zweilous");
+class BlendEnergyWLFMArt extends blend_energy_wlfm_1.BlendEnergyWLFM {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRX/DRX_118_R_EN.png';
+    }
+}
+exports.BlendEnergyWLFMArt = BlendEnergyWLFMArt;
 class BouffalantArt extends bouffalant_1.Bouffalant {
     constructor() {
         super(...arguments);

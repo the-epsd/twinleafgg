@@ -66,10 +66,6 @@ class Coalossal extends pokemon_card_1.PokemonCard {
                     if (option.value === -1) {
                         state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { allowCancel: false, min: 1, max: 1 }), transfers => {
                             transfers = transfers || [];
-                            // cancelled by user
-                            if (transfers.length === 0) {
-                                return;
-                            }
                             player.marker.addMarker(this.TAR_GENERATOR_MARKER, this);
                             for (const transfer of transfers) {
                                 const target = game_1.StateUtils.getTarget(state, player, transfer.to);
@@ -80,10 +76,6 @@ class Coalossal extends pokemon_card_1.PokemonCard {
                     if (option.value === 0) {
                         state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min: 1, max: 1 }), transfers => {
                             transfers = transfers || [];
-                            // cancelled by user
-                            if (transfers.length === 0) {
-                                return;
-                            }
                             player.marker.addMarker(this.TAR_GENERATOR_MARKER, this);
                             for (const transfer of transfers) {
                                 const target = game_1.StateUtils.getTarget(state, player, transfer.to);

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setDragonsExalted = void 0;
 const card_images_1 = require("./card-images");
 exports.setDragonsExalted = [
+    new card_images_1.BlendEnergyWLFMArt(),
     new card_images_1.BouffalantArt(),
     new card_images_1.DeinoArt(),
     new card_images_1.EmolgaArt(),

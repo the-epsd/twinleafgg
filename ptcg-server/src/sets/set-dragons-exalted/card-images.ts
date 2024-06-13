@@ -1,3 +1,4 @@
+import { BlendEnergyWLFM } from './blend-energy-wlfm';
 import { Bouffalant } from './bouffalant';
 import { Deino } from './deino';
 import { Emolga } from './emolga';
@@ -12,6 +13,10 @@ import { Roserade } from './roserade';
 import { Sigilyph } from './sigilyph';
 import { ToolScrapper } from './tool-scrapper';
 import { Zweilous } from './zweilous';
+
+export class BlendEnergyWLFMArt extends BlendEnergyWLFM {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRX/DRX_118_R_EN.png';
+}
 
 export class BouffalantArt extends Bouffalant {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRX/DRX_110_R_EN.png';
