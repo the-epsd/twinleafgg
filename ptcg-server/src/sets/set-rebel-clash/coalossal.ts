@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SpecialCondition, SuperType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, EnergyCard, GameError, GameMessage, PlayerType, AttachEnergyPrompt, SlotType, StateUtils } from '../../game';
+import { StoreLike, State, EnergyCard, GameError, GameMessage, PlayerType, SelectPrompt, AttachEnergyPrompt, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -63,56 +63,103 @@ export class Coalossal extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      state = store.prompt(state, new AttachEnergyPrompt(
+      const options: { message: GameMessage, value: number }[] = [
+        { message: GameMessage.WANT_TO_ATTACH_ONLY_FIGHTING_ENERGY, value: -1 },
+        { message: GameMessage.WANT_TO_ATTACH_ONLY_FIRE_ENERGY, value: 0 },
+        { message: GameMessage.WANT_TO_ATTACH_ONE_OF_EACH, value: 1 }
+      ];
+
+      return store.prompt(state, new SelectPrompt(
         player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
-        { allowCancel: true, min: 1, max: 1 }
-      ), transfers => {
-        transfers = transfers || [];
-        // cancelled by user
-        if (transfers.length === 0) {
-          return;
-        }
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-        }
+        GameMessage.CHOOSE_SPECIAL_CONDITION,
+        options.map(c => c.message),
+        { allowCancel: false }
+      ), choice => {
+        const option = options[choice];
 
-        store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          player.discard,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH, SlotType.ACTIVE],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-          { allowCancel: true, min: 1, max: 1 }
-        ), transfers => {
-          transfers = transfers || [];
-          // cancelled by user
-          if (transfers.length === 0) {
-            return;
+        if (option !== undefined) {
+          if (option.value === -1) {
+            state = store.prompt(state, new AttachEnergyPrompt(
+              player.id,
+              GameMessage.ATTACH_ENERGY_TO_BENCH,
+              player.discard,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.BENCH, SlotType.ACTIVE],
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
+              { allowCancel: false, min: 1, max: 1 }
+            ), transfers => {
+              transfers = transfers || [];
+
+              player.marker.addMarker(this.TAR_GENERATOR_MARKER, this);
+              for (const transfer of transfers) {
+                const target = StateUtils.getTarget(state, player, transfer.to);
+                player.discard.moveCardTo(transfer.card, target);
+              }
+            });
           }
-          player.marker.addMarker(this.TAR_GENERATOR_MARKER, this);
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.discard.moveCardTo(transfer.card, target);
+          if (option.value === 0) {
+            state = store.prompt(state, new AttachEnergyPrompt(
+              player.id,
+              GameMessage.ATTACH_ENERGY_TO_BENCH,
+              player.discard,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.BENCH, SlotType.ACTIVE],
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+              { allowCancel: false, min: 1, max: 1 }
+            ), transfers => {
+              transfers = transfers || [];
 
+              player.marker.addMarker(this.TAR_GENERATOR_MARKER, this);
+              for (const transfer of transfers) {
+                const target = StateUtils.getTarget(state, player, transfer.to);
+                player.discard.moveCardTo(transfer.card, target);
+              }
+            });
           }
-        });
-      });
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          if (option.value === 1) {
+            state = store.prompt(state, new AttachEnergyPrompt(
+              player.id,
+              GameMessage.ATTACH_ENERGY_TO_BENCH,
+              player.discard,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.BENCH, SlotType.ACTIVE],
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+              { allowCancel: false, min: 1, max: 1 }
+            ), transfers => {
+              transfers = transfers || [];
+
+              for (const transfer of transfers) {
+                const target = StateUtils.getTarget(state, player, transfer.to);
+                player.discard.moveCardTo(transfer.card, target);
+              }
+            });
+
+            state = store.prompt(state, new AttachEnergyPrompt(
+              player.id,
+              GameMessage.ATTACH_ENERGY_TO_BENCH,
+              player.discard,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.BENCH, SlotType.ACTIVE],
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
+              { allowCancel: false, min: 1, max: 1 }
+            ), transfers => {
+              transfers = transfers || [];
+
+              player.marker.addMarker(this.TAR_GENERATOR_MARKER, this);
+              for (const transfer of transfers) {
+                const target = StateUtils.getTarget(state, player, transfer.to);
+                player.discard.moveCardTo(transfer.card, target);
+              }
+            });
+          }
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            }
+          });
         }
       });
-
-      return state;
-
 
     }
 

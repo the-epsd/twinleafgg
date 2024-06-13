@@ -138,6 +138,9 @@ var GameCardMessage;
     GameCardMessage["WANT_TO_USE_FESTIVAL_FEVER"] = "WANT_TO_USE_FESTIVAL_FEVER";
     GameCardMessage["CANNOT_EVOLVE_ON_YOUR_FIRST_TURN"] = "CANNOT_EVOLVE_ON_YOUR_FIRST_TURN";
     GameCardMessage["WANT_TO_USE_TORRENTIAL_PUMP"] = "WANT_TO_USE_TORRENTIAL_PUMP";
+    GameCardMessage["WANT_TO_ATTACH_ONLY_FIGHTING_ENERGY"] = "WANT_TO_ATTACH_ONLY_FIGHTING_ENERGY";
+    GameCardMessage["WANT_TO_ATTACH_ONLY_FIRE_ENERGY"] = "WANT_TO_ATTACH_ONLY_FIRE_ENERGY";
+    GameCardMessage["WANT_TO_ATTACH_ONE_OF_EACH"] = "WANT_TO_ATTACH_ONE_OF_EACH";
 })(GameCardMessage = exports.GameCardMessage || (exports.GameCardMessage = {}));
 var GameLog;
 (function (GameLog) {
