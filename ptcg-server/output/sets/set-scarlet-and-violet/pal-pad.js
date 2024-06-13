@@ -10,6 +10,7 @@ const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-pro
 const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
+    const opponent = game_1.StateUtils.getOpponent(state, player);
     const hasSupporter = player.discard.cards.some(c => {
         return c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.SUPPORTER;
     });
@@ -25,6 +26,12 @@ function* playCard(next, store, state, self, effect) {
     });
     if (cards.length > 0) {
         player.discard.moveCardsTo(cards, player.deck);
+        cards.forEach((card, index) => {
+            store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+        });
+        if (cards.length > 0) {
+            state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
+        }
     }
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {

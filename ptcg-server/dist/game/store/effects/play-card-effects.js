@@ -7,6 +7,8 @@ export var PlayCardEffects;
     PlayCardEffects["PLAY_POKEMON_TOOL_EFFECT"] = "PLAY_POKEMON_TOOL_EFFECT";
     PlayCardEffects["PLAY_ITEM_EFFECT"] = "PLAY_ITEM_EFFECT";
     PlayCardEffects["TRAINER_EFFECT"] = "TRAINER_EFFECT";
+    PlayCardEffects["ENERGY_EFFECT"] = "ENERGY_EFFECT";
+    PlayCardEffects["TOOL_EFFECT"] = "TOOL_EFFECT";
 })(PlayCardEffects || (PlayCardEffects = {}));
 export class AttachEnergyEffect {
     constructor(player, energyCard, target) {
@@ -68,5 +70,21 @@ export class TrainerEffect {
         this.player = player;
         this.trainerCard = trainerCard;
         this.target = target;
+    }
+}
+export class EnergyEffect {
+    constructor(player, card) {
+        this.type = PlayCardEffects.ENERGY_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.card = card;
+    }
+}
+export class ToolEffect {
+    constructor(player, card) {
+        this.type = PlayCardEffects.TOOL_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.card = card;
     }
 }

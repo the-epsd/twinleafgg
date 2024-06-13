@@ -49,7 +49,7 @@ export class GreatBall extends TrainerCard {
         if (chosenCards.length <= 0) {
           // No Pokemon chosen, shuffle all back
           temp.cards.forEach(card => {
-            temp.moveCardTo(card, player.deck);
+            temp.moveTo(player.deck);
             player.supporter.moveCardTo(this, player.discard);
           });  
           player.supporter.moveCardTo(this, player.discard);
@@ -59,6 +59,7 @@ export class GreatBall extends TrainerCard {
           // Move chosen Pokemon to hand
           const pokemon = chosenCards[0]; 
           temp.moveCardTo(pokemon, player.hand);
+          temp.moveTo(player.deck);
           player.supporter.moveCardTo(this, player.discard);
           
           chosenCards.forEach((card, index) => {

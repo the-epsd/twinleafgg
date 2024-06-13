@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
+import { GameLog, GameMessage } from '../../game/game-message';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
@@ -35,20 +35,25 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
     { },
-    { min: 1, max: 3, allowCancel: false }
+    { min: 1, max: 3, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();
   });
 
-  player.hand.moveCardTo(self, player.discard);
+  cards.forEach((card, index) => {
+    store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
+  });
+
   player.discard.moveCardsTo(cards, player.deck);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -80,8 +85,9 @@ export class SuperRod extends TrainerCard {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
-
+  
     return state;
   }
-
+  
 }
+  

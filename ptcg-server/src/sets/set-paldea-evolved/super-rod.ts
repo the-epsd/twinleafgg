@@ -60,7 +60,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 }
 
-
 export class SuperRod extends TrainerCard {
 
   public regulationMark = 'G';

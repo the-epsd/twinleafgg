@@ -75,10 +75,13 @@ class ProfessorSadasVitality extends trainer_card_1.TrainerCard {
                     player.marker.addMarker(this.ANCIENT_SUPPORTER_MARKER, this);
                     player.discard.moveCardTo(transfer.card, target);
                 }
+                if (transfers.length > 0) {
+                    player.deck.moveTo(player.hand, 3);
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                    player.supporterTurn = 1;
+                }
+                return state;
             });
-            player.deck.moveTo(player.hand, 3);
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            player.supporterTurn = 1;
         }
         return state;
     }

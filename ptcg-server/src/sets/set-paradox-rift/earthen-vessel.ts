@@ -10,7 +10,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
+import { GameLog, GameMessage } from '../../game/game-message';
 import { CardList } from '../..';
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -63,6 +63,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
   ), selected => {
     cards = selected || [];
     next();
+  });
+
+  cards.forEach((card, index) => {
+    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
   });
 
   if (cards.length > 0) {
