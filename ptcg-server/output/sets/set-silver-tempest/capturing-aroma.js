@@ -22,6 +22,7 @@ class CapturingAroma extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             if (player.deck.cards.length === 0) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
@@ -42,6 +43,12 @@ class CapturingAroma extends trainer_card_1.TrainerCard {
                         if (cards.length === 0) {
                             return state;
                         }
+                        cards.forEach((card, index) => {
+                            store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+                        });
+                        if (cards.length > 0) {
+                            state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
+                        }
                         cards.forEach(card => {
                             player.deck.moveCardTo(card, player.hand);
                             player.supporter.moveCardTo(this, player.discard);
@@ -58,6 +65,12 @@ class CapturingAroma extends trainer_card_1.TrainerCard {
                         // Operation canceled by the user
                         if (cards.length === 0) {
                             return state;
+                        }
+                        cards.forEach((card, index) => {
+                            store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+                        });
+                        if (cards.length > 0) {
+                            state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
                         }
                         cards.forEach(card => {
                             player.deck.moveCardTo(card, player.hand);

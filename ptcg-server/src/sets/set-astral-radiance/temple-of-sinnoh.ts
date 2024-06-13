@@ -1,7 +1,8 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
-import { State, EnergyCard, StateUtils, StoreLike, Card } from '../../game';
+import {  CardType, TrainerType } from '../../game/store/card/card-types';
+import { GameError, GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class TempleofSinnoh extends TrainerCard {
 
@@ -21,16 +22,13 @@ export class TempleofSinnoh extends TrainerCard {
 
   public text = 'All Special Energy attached to Pokémon (both yours and your opponent\'s) provide C Energy and have no other effect.';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect & EnergyCard): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EnergyCard && StateUtils.getStadiumCard(state) === this) {
-
-      // Set isBlocked to true for all EnergyCard instances
-      effect.cards.cards.forEach((card: Card) => {
-        if (card instanceof EnergyCard) {
-          card.isBlocked = true;
-        }
-      });
+    if (effect instanceof EnergyEffect && StateUtils.getStadiumCard(state) === this) {
+      effect.preventDefault = true;
+      effect.card.provides = [CardType.COLORLESS];
+      console.log('Jamming Tower blocks Tool Effect');
+      throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
     return state;
   }

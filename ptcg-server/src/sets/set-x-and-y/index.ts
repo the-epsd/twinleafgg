@@ -1,10 +1,12 @@
 import { Card } from '../../game/store/card/card';
-import { DoubleColorlessEnergyArt, EvosodaArt, FairyEnergyArt, MuscleBandArt, PikachuArt, ProfessorsLetterArt, RaichuArt, ShadowCircleArt, ShaunaArt, SuperPotionArt, YveltalExArt } from './card-images';
+import { BraixenArt, DelphoxArt, DoubleColorlessEnergyArt, EvosodaArt, FairyEnergyArt, MuscleBandArt, PikachuArt, ProfessorsLetterArt, RaichuArt, ShadowCircleArt, ShaunaArt, SuperPotionArt, YveltalExArt } from './card-images';
 
 export const setXY: Card[] = [
-  new FairyEnergyArt(),
+  new BraixenArt(),
+  new DelphoxArt(),
   new DoubleColorlessEnergyArt(),
   new EvosodaArt(),
+  new FairyEnergyArt(),
   new MuscleBandArt(),
   new PikachuArt(),
   new ProfessorsLetterArt(),

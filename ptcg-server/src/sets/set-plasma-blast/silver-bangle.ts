@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class SilverBangle extends TrainerCard {
 
@@ -36,6 +37,13 @@ export class SilverBangle extends TrainerCard {
 
       const pokemonCard = effect.source.getPokemonCard();
       if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_EX)) {
+        return state;
+      }
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
         return state;
       }
 

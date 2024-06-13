@@ -54,10 +54,10 @@ class Serena extends trainer_card_1.TrainerCard {
                         const blocked = [];
                         opponent.bench.forEach((card, index) => {
                             if (card instanceof game_1.PokemonCard && card.tags.includes(card_types_1.CardTag.POKEMON_V)) {
-                                blocked.push({ card, index });
+                                blocked.push({ index, player: opponent.id, slot: game_1.SlotType.BENCH });
                             }
                         });
-                        return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
+                        return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, blocked }), result => {
                             const cardList = result[0];
                             opponent.switchPokemon(cardList);
                             player.supporter.moveCardTo(effect.trainerCard, player.discard);

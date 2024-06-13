@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class GlisteningCrystal extends TrainerCard {
 
@@ -28,18 +29,27 @@ export class GlisteningCrystal extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckAttackCostEffect) {
+    if (effect instanceof CheckAttackCostEffect && effect.player.active.getPokemonCard()?.tools.includes(this)) {
       const player = effect.player;
-      const attackCost = effect.attack.cost;
+      const pokemonCard = player.active.getPokemonCard();
 
-      if (player.active.tool?.cards.cards.includes(this)) {
-        // Remove 1 of any energy type from the attack cost
-        const energyIndex = attackCost.findIndex(c => c === CardType.COLORLESS || c === CardType.FIGHTING || c === CardType.PSYCHIC || c === CardType.LIGHTNING || c === CardType.FIRE || c === CardType.WATER || c === CardType.GRASS);
-
-        if (energyIndex !== -1) {
-          attackCost.splice(energyIndex, 1);
-        }
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
       }
+
+      if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_TERA)) {
+        const index = effect.cost.indexOf(CardType.ANY);
+        if (index > -1) {
+          effect.cost.splice(index, 0, CardType.ANY);
+        } else {
+          effect.cost.splice(CardType.ANY);
+        }
+        return state;
+      }
+      return state;
     }
     return state;
   }

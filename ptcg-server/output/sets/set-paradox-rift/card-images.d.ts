@@ -12,6 +12,7 @@ import { Froslassex } from './froslass-ex';
 import { FutureBoosterEnergyCapsule } from './future-booster-energy-capsule';
 import { Gabite } from './gabite';
 import { Garchompex } from './garchomp-ex';
+import { Garganacl } from './garganacl';
 import { Gholdengoex } from './gholdengo-ex';
 import { Gible } from './gible';
 import { Gimmighoul } from './gimmighoul';
@@ -29,6 +30,8 @@ import { Mela } from './mela';
 import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
 import { Morpeko } from './morpeko';
+import { Nacli } from './nacli';
+import { Naclstack } from './naclstack';
 import { Natu } from './natu';
 import { Porygon } from './porygon';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
@@ -91,6 +94,9 @@ export declare class GabiteArt extends Gabite {
 export declare class GarchompexArt extends Garchompex {
     cardImage: string;
 }
+export declare class GarganaclArt extends Garganacl {
+    cardImage: string;
+}
 export declare class GholdengoexArt extends Gholdengoex {
     cardImage: string;
 }
@@ -140,6 +146,12 @@ export declare class MiniorArt extends Minior {
     cardImage: string;
 }
 export declare class MorpekoArt extends Morpeko {
+    cardImage: string;
+}
+export declare class NacliArt extends Nacli {
+    cardImage: string;
+}
+export declare class NaclstackArt extends Naclstack {
     cardImage: string;
 }
 export declare class NatuArt extends Natu {

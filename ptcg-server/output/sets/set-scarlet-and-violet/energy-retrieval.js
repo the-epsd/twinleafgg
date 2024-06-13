@@ -8,8 +8,10 @@ const card_types_1 = require("../../game/store/card/card-types");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const energy_card_1 = require("../../game/store/card/energy-card");
+const game_1 = require("../../game");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
+    const opponent = game_1.StateUtils.getOpponent(state, player);
     // Player has no Basic Energy in the discard pile
     let basicEnergyCards = 0;
     player.discard.cards.forEach(c => {
@@ -25,6 +27,15 @@ function* playCard(next, store, state, effect) {
     const min = Math.min(basicEnergyCards, 2);
     return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, max: min, allowCancel: false }), cards => {
         cards = cards || [];
+        if (cards.length > 0) {
+            player.discard.moveCardsTo(cards, player.deck);
+            cards.forEach((card, index) => {
+                store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+            });
+            if (cards.length > 0) {
+                state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
+            }
+        }
         if (cards.length > 0) {
             // Recover discarded Pokemon
             player.discard.moveCardsTo(cards, player.hand);

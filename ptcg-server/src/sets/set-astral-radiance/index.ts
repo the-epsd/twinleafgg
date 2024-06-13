@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AdamanArt, CancelingCologneArt, CylleneArt, DarkPatchArt, DarkraiVArt, DarkraiVSTARArt, DiancieArt, EnergyLotoArt, FeatherBallArt, GalladeArt, GapejawBogArt, GardeniasVigorArt, GrantArt, GutsyPickaxeArt, HisuianArcanineArt, HisuianBasculinArt, HisuianHeavyBallArt, HisuianSamurottVArt, HisuianSamurottVSTARArt, IridaArt, KeldeoArt, KleavorArt, LucarioVArt, LuxrayVArt, MantineArt, MightyenaArt, MiltankArt, OriginFormeDialgaVArt, OriginFormeDialgaVSTARArt, OriginFormePalkiaVArt, OriginFormePalkiaVSTARArt, RadiantGreninjaArt, RadiantHawluchaArt, RaltsArt, RegiceArt, RegidragoArt, RegielekiArt, RegigigasArt, RegirockArt, RegisteelArt, RoxanneArt, SpicySeasonedCurryArt, StarmieVArt, SupereffectiveGlassesArt, SwitchCartArt, TempleofSinnohArt, TrekkingShoesArt, WyrdeerVArt } from './card-images';
+import { AdamanArt, CancelingCologneArt, CylleneArt, DarkPatchArt, DarkraiVArt, DarkraiVSTARArt, DiancieArt, EnergyLotoArt, FeatherBallArt, GalladeArt, GapejawBogArt, GardeniasVigorArt, GrantArt, GutsyPickaxeArt, HisuianArcanineArt, HisuianBasculinArt, HisuianHeavyBallArt, HisuianSamurottVArt, HisuianSamurottVSTARArt, IridaArt, KeldeoArt, KleavorArt, LucarioVArt, LuxrayVArt, MagnetonArt, MantineArt, MightyenaArt, MiltankArt, OriginFormeDialgaVArt, OriginFormeDialgaVSTARArt, OriginFormePalkiaVArt, OriginFormePalkiaVSTARArt, RadiantGreninjaArt, RadiantHawluchaArt, RaltsArt, RegiceArt, RegidragoArt, RegielekiArt, RegigigasArt, RegirockArt, RegisteelArt, RoxanneArt, SpicySeasonedCurryArt, StarmieVArt, SupereffectiveGlassesArt, SwitchCartArt, TempleofSinnohArt, TrekkingShoesArt, WyrdeerVArt } from './card-images';
 
 
 
@@ -29,6 +29,7 @@ export const setAstralRadiance: Card[] = [
   new KleavorArt(),
   new LucarioVArt(),
   new LuxrayVArt(),
+  new MagnetonArt(),
   new MightyenaArt(),
   new MantineArt(),
   new MiltankArt(),

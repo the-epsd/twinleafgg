@@ -109,6 +109,7 @@ var GameCardMessage;
     GameCardMessage["CHOOSE_POKEMON_TO_HEAL"] = "CHOOSE_POKEMON_TO_HEAL";
     GameCardMessage["CHOOSE_POKEMON_TO_PICK_UP"] = "CHOOSE_POKEMON_TO_PICK_UP";
     GameCardMessage["CHOOSE_POKEMON_TO_SWITCH"] = "CHOOSE_POKEMON_TO_SWITCH";
+    GameCardMessage["CHOOSE_ENERGY_TO_DISCARD"] = "CHOOSE_ENERGY_TO_DISCARD";
     GameCardMessage["CHOOSE_SPECIAL_CONDITION"] = "CHOOSE_SPECIAL_CONDITION";
     GameCardMessage["COIN_FLIP"] = "COIN_FLIP";
     GameCardMessage["MOVE_DAMAGE"] = "MOVE_DAMAGE";
@@ -137,6 +138,9 @@ var GameCardMessage;
     GameCardMessage["WANT_TO_USE_FESTIVAL_FEVER"] = "WANT_TO_USE_FESTIVAL_FEVER";
     GameCardMessage["CANNOT_EVOLVE_ON_YOUR_FIRST_TURN"] = "CANNOT_EVOLVE_ON_YOUR_FIRST_TURN";
     GameCardMessage["WANT_TO_USE_TORRENTIAL_PUMP"] = "WANT_TO_USE_TORRENTIAL_PUMP";
+    GameCardMessage["WANT_TO_ATTACH_ONLY_FIGHTING_ENERGY"] = "WANT_TO_ATTACH_ONLY_FIGHTING_ENERGY";
+    GameCardMessage["WANT_TO_ATTACH_ONLY_FIRE_ENERGY"] = "WANT_TO_ATTACH_ONLY_FIRE_ENERGY";
+    GameCardMessage["WANT_TO_ATTACH_ONE_OF_EACH"] = "WANT_TO_ATTACH_ONE_OF_EACH";
 })(GameCardMessage = exports.GameCardMessage || (exports.GameCardMessage = {}));
 var GameLog;
 (function (GameLog) {

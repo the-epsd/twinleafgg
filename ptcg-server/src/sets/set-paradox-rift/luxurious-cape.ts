@@ -4,6 +4,7 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class LuxuriousCape extends TrainerCard {
 
@@ -27,6 +28,15 @@ export class LuxuriousCape extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
+      const player = effect.player;
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       if (effect.target.tool instanceof LuxuriousCape) {
         if (effect.target.hasRuleBox()) {
           return state;
@@ -36,6 +46,15 @@ export class LuxuriousCape extends TrainerCard {
     }
                 
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+      const player = effect.player;
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       if (!effect.target.hasRuleBox()) {
         effect.prizeCount += 1;
       }

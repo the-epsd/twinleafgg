@@ -4,6 +4,7 @@ exports.DoubleTurboEnergy = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class DoubleTurboEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -21,9 +22,15 @@ class DoubleTurboEnergy extends energy_card_1.EnergyCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
-            effect.damage -= 20;
-        }
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.cards.includes(this)) {
+            const player = effect.player;
+            try {
+                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                store.reduceEffect(state, energyEffect);
+            }
+            catch (_a) {
+                return state;
+            }
+            // Apply damage reduction and increase the energy provided only if EnergyEffect is successful
             effect.damage -= 20;
         }
         return state;

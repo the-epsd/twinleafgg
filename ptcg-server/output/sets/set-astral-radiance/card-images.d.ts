@@ -22,6 +22,7 @@ import { Keldeo } from './keldeo';
 import { Kleavor } from './kleavor';
 import { LucarioV } from './lucario-v';
 import { LuxrayV } from './luxray-v';
+import { Magneton } from './magneton';
 import { Mantine } from './mantine';
 import { Mightyena } from './mightyena';
 import { Miltank } from './miltank';
@@ -117,6 +118,9 @@ export declare class LucarioVArt extends LucarioV {
 }
 export declare class LuxrayVArt extends LuxrayV {
     cardImage: string;
+}
+export declare class MagnetonArt extends Magneton {
+    cardIMage: string;
 }
 export declare class MantineArt extends Mantine {
     cardImage: string;

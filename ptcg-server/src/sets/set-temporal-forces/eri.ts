@@ -51,6 +51,7 @@ export class Eri extends TrainerCard {
         { allowCancel: false, min: 0, max: 2 }
       ), cards => {
         if (cards === null || cards.length === 0) {
+          player.supporter.moveCardTo(this, player.discard);
           return;
         }
         player.supporter.moveCardTo(this, player.discard);

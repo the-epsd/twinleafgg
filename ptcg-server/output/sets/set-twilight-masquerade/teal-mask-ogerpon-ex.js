@@ -73,6 +73,9 @@ class TealMaskOgerponex extends pokemon_card_1.PokemonCard {
                         }
                     });
                     player.hand.moveCardsTo(cards, cardList);
+                    cards.forEach((card, index) => {
+                        store.log(state, game_1.GameLog.LOG_PLAYER_ATTACHES_CARD, { name: player.name, card: card.name });
+                    });
                     player.deck.moveTo(player.hand, 1);
                 }
             });

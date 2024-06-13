@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AnnihilapeArt, ArmarougeArt, BanetteexArt, CharcadetArt, MankeyArt, NemonaArt, NestBallArt2, PrimeapeArt, RockyHelmetArt, ShuppetArt } from './card-images';
+import { AnnihilapeArt, ArmarougeArt, BanetteexArt, CharcadetArt, MankeyArt, NemonaArt, NestBallArt2, PrimeapeArt, RevavroomArt, RockyHelmetArt, ShuppetArt } from './card-images';
 import { ArvenArt } from './card-images';
 import { BeachCourtArt } from './card-images';
 import { CrushingHammerArt } from './card-images';
@@ -91,6 +91,7 @@ export const setScarletAndViolet: Card[] = [
   new ProfessorsResearchArt2(),
   new RaltsArt(),
   new RareCandyArt(),
+  new RevavroomArt(),
   new RockChestplateArt(),
   new RockyHelmetArt(),
   new ScovillainArt(),

@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.GolettArt = exports.CynthiaAndCaitlinArt = exports.BlacephalonArt = void 0;
+exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.GuzzlordArt = exports.GolettArt = exports.CynthiaAndCaitlinArt = exports.BlacephalonArt = void 0;
 const blacephalon_1 = require("./blacephalon");
 const cynthia_and_caitlin_1 = require("./cynthia-and-caitlin");
 const golett_1 = require("./golett");
+const guzzlord_1 = require("./guzzlord");
 const professor_oaks_setup_1 = require("./professor-oaks-setup");
 const slugma_1 = require("./slugma");
 class BlacephalonArt extends blacephalon_1.Blacephalon {
@@ -27,6 +28,13 @@ class GolettArt extends golett_1.Golett {
     }
 }
 exports.GolettArt = GolettArt;
+class GuzzlordArt extends guzzlord_1.Guzzlord {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_136_R_EN_LG.png';
+    }
+}
+exports.GuzzlordArt = GuzzlordArt;
 class ProfessorOaksSetupArt extends professor_oaks_setup_1.ProfessorOaksSetup {
     constructor() {
         super(...arguments);

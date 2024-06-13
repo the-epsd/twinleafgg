@@ -5,6 +5,7 @@ import { CheckPokemonAttacksEffect } from '../../game/store/effects/check-effect
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -41,6 +42,14 @@ export class TechnicalMachineDevolution extends TrainerCard {
     if (effect instanceof EndTurnEffect && effect.player.active.tool) {
       const player = effect.player;
       const tool = effect.player.active.tool;
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       if (tool.name === this.name) {
         player.active.moveCardTo(tool, player.discard);
         player.active.tool = undefined;
@@ -51,47 +60,64 @@ export class TechnicalMachineDevolution extends TrainerCard {
 
     if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
 !effect.attacks.includes(this.attacks[0])) {
+      const player = effect.player;
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       effect.attacks.push(this.attacks[0]);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
     
       // Look through all known cards to find out if Pokemon can evolve
       const cm = CardManager.getInstance();
       const evolutions = cm.getAllCards().filter(c => {
         return c instanceof PokemonCard && c.stage !== Stage.BASIC;
       }) as PokemonCard[];
-    
+
       // Build possible evolution card names
       const evolutionNames: string[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (list, card, target) => {
-        const valid = evolutions.filter(e => e.stage != Stage.BASIC && e.name === card.name);
+        const valid = evolutions.filter(e => e.evolvesFrom === card.name);
         valid.forEach(c => {
           if (!evolutionNames.includes(c.name)) {
             evolutionNames.push(c.name);
           }
         });
       });
-    
+
       if (opponent.active.getPokemonCard()) {
         const activeEvolutions = opponent.active.cards.filter(card => evolutionNames.includes(card.name));
         if (activeEvolutions.length > 0) {
-          const highestEvolutionIndex = 0; // Assuming you sorted the cards in descending order
+          const highestEvolutionIndex = activeEvolutions.findIndex(card => (card as PokemonCard).stage === Math.max(...activeEvolutions.map(c => (c as PokemonCard).stage)));
           opponent.active.moveCardTo(activeEvolutions[highestEvolutionIndex], opponent.hand);
         }
       }
-    
+
       opponent.bench.forEach(benchSpot => {
         if (benchSpot.getPokemonCard()) {
           const benchEvolutions = benchSpot.cards.filter(card => evolutionNames.includes(card.name));
           if (benchEvolutions.length > 0) {
-            const highestEvolutionIndex = 0; // Assuming you sorted the cards in descending order
+            const highestEvolutionIndex = benchEvolutions.findIndex(card => (card as PokemonCard).stage === Math.max(...benchEvolutions.map(c => (c as PokemonCard).stage)));
             benchSpot.moveCardTo(benchEvolutions[highestEvolutionIndex], opponent.hand);
           }
         }
       });
+
     }
     
     return state;

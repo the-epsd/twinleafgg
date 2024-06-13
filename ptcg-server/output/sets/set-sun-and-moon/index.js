@@ -6,6 +6,7 @@ exports.setSunAndMoon = [
     new card_images_1.DragonairArt(),
     new card_images_1.EnergyRetrievalArt(),
     new card_images_1.ExpShareArt(),
+    new card_images_1.OranguruArt(),
     new card_images_1.RainbowEnergyArt(),
     new card_images_1.RareCandyArt(),
 ];

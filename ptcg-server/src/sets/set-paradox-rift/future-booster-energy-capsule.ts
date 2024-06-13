@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class FutureBoosterEnergyCapsule extends TrainerCard {
 
@@ -30,26 +31,36 @@ export class FutureBoosterEnergyCapsule extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.source.tool === this) {
+    if (effect instanceof DealDamageEffect && effect.player.active.tool === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
 
       if (effect.target !== player.active && effect.target !== opponent.active) {
         return state;
       }
-
-      const card = effect.target.getPokemonCard();
-
-      if (card === undefined) {
-        return state;
-      }
-
-      if (card && card.tags.includes(CardTag.FUTURE)) {
+      
+      if (effect.player.active.futurePokemon()) {
         effect.damage += 20;
       }
     }
 
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+      const player = effect.player;
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       if (effect.player.active.futurePokemon()) {
         effect.cost = [];
       }

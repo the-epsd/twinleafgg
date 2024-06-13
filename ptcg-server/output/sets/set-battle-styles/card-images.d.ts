@@ -5,6 +5,7 @@ import { Carkol } from './carkol';
 import { Cherrim } from './cherrim';
 import { Cherubi } from './cherubi';
 import { Cheryl } from './cheryl';
+import { Crobat } from './crobat';
 import { Durant } from './durant';
 import { EmpoleonV } from './empoleon-v';
 import { EnergyRecycler } from './energy-recycler';
@@ -13,6 +14,7 @@ import { Falinks } from './falinks';
 import { FanOfWaves } from './fan-of-waves';
 import { FlappleV } from './flapple-v';
 import { FlappleVMAX } from './flapple-vmax';
+import { Golbat } from './golbat';
 import { Houndoom } from './houndoom';
 import { Houndour } from './houndour';
 import { KorrinasFocus } from './korrinas-focus';
@@ -63,6 +65,9 @@ export declare class CherubiArt extends Cherubi {
 export declare class CherylArt extends Cheryl {
     cardImage: string;
 }
+export declare class CrobatArt extends Crobat {
+    cardImage: string;
+}
 export declare class DurantArt extends Durant {
     cardImage: string;
 }
@@ -85,6 +90,9 @@ export declare class FlappleVArt extends FlappleV {
     cardImage: string;
 }
 export declare class FlappleVMAXArt extends FlappleVMAX {
+    cardImage: string;
+}
+export declare class GolbatArt extends Golbat {
     cardImage: string;
 }
 export declare class HoundoomArt extends Houndoom {

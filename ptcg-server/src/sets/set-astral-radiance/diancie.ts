@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PokemonCardList, PowerType, State, StoreLike } from '../../game';
+import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -40,20 +40,38 @@ export class Diancie extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlaySupporterEffect && effect.target instanceof PokemonCardList && effect.target !== effect.player.bench[0]) {
-      const opponentBench = effect.target;
-
-      if (opponentBench.getPokemonCard() !== this) {
+    if (effect instanceof PlaySupporterEffect && effect.target == effect.player.bench[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+  
+      let isDiancieInPlay = false;
+  
+      if (player.active.cards[0] == this) {
+        isDiancieInPlay = true;
+      }
+  
+      if (opponent.active.cards[0] == this) {
+        isDiancieInPlay = true;
+      }
+        
+      if (!isDiancieInPlay) {
         return state;
       }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
+      // Try reducing ability for opponent
       try {
-        const powerEffect = new PowerEffect(effect.player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
+        const playerPowerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, playerPowerEffect);
       } catch {
-        effect.preventDefault = true;
+        return state;
       }
+
+      // if (opponent.bench && player.bench) {
+      //   return state;
+      // }
+
+      effect.preventDefault = true;
+      
     }
     return state;
   }

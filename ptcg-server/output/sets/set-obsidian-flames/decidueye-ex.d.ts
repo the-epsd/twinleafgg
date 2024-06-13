@@ -1,4 +1,5 @@
-import { PokemonCard, CardType, Stage, PowerType } from '../../game';
+import { PokemonCard, CardType, Stage, PowerType, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class Decidueyeex extends PokemonCard {
     cardType: CardType;
     stage: Stage;
@@ -25,4 +26,6 @@ export declare class Decidueyeex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly TOTAL_FREEDOM_MARKER = "TOTAL_FREEDOM_MARKER";
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -13,6 +13,7 @@ class Primeape extends pokemon_card_1.PokemonCard {
         this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [card_types_1.CardType.COLORLESS];
+        this.evolvesFrom = 'Mankey';
         this.attacks = [
             {
                 name: 'Raging Punch',

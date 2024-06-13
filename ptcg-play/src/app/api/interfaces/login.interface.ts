@@ -7,5 +7,6 @@ export interface LoginResponse extends Response {
 }
 
 export interface InfoResponse extends Response {
+  banned: string;
   config: ServerConfig;
 }

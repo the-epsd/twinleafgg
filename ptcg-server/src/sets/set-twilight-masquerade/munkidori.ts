@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, GameMessage, PlayerType, SlotType, StateUtils, DamageMap, PowerType, ChoosePokemonPrompt } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, GameMessage, PlayerType, SlotType, StateUtils, DamageMap, PowerType, ChoosePokemonPrompt, GameError, SpecialCondition } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -63,26 +63,30 @@ export class Munkidori extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
+      if (player.marker.hasMarker(this.ADRENA_BRAIN_MARKER, this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       // const blocked: CardTarget[] = [];
       // let hasPokemonWithDamage: boolean = false;
       // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
       //   if (cardList.damage === 0) {
-      //     blocked.push(target);
-      //   } else {
-      //     hasPokemonWithDamage = true;
-      //   }
-      // });
-    
-      // if (hasPokemonWithDamage === false) {
-      //   throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      // }
-
-      // player.active.cards.forEach((card, index) => {
-      //   if (card instanceof PokemonCardList && card.damage == 0) {
       //     blocked.push();
       //   }
-      // });
+      //   player.active.cards.forEach((card, index) => {
+      //     if (card instanceof PokemonCardList && card.damage == 0) {
+      //       blocked.push();
+      //     } else {
+      //       hasPokemonWithDamage = true;
+      //     }
+      //   });
     
+      //   if (hasPokemonWithDamage === false) {
+      //     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      //   }
+
+      player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
+
       const maxAllowedDamage: DamageMap[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         maxAllowedDamage.push({ target, damage: card.hp + 30 });
@@ -114,13 +118,17 @@ export class Munkidori extends PokemonCard {
               GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
               PlayerType.TOP_PLAYER,
               [ SlotType.BENCH, SlotType.ACTIVE ],
-              { min: 1, max: 1, allowCancel: false },
+              { min: 0, max: 1, allowCancel: false },
             ), selected => {
               const targets = selected || [];
               targets.forEach(target => {
                 target.damage += result.damage;
               });
-
+              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                  cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                }
+              });
               return state;
             }
             );

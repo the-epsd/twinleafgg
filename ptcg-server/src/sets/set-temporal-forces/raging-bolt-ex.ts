@@ -56,6 +56,7 @@ export class RagingBoltex extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+      
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -64,9 +65,8 @@ export class RagingBoltex extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
       const player = effect.player;
-    
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
@@ -81,7 +81,7 @@ export class RagingBoltex extends PokemonCard {
             GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
             target, // Card source is target Pokemon
             { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-            { allowCancel: false }
+            { min: 1, allowCancel: false }
           ), selected => {
             const cards = selected || [];
             if (cards.length > 0) {
@@ -95,7 +95,7 @@ export class RagingBoltex extends PokemonCard {
 
                 totalDiscarded += discardEnergy.cards.length;
       
-                effect.damage = totalDiscarded * 70;
+                effect.damage = totalDiscarded * 60;
 
                 store.reduceEffect(state, discardEnergy);
               });

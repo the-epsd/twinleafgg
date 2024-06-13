@@ -1,6 +1,7 @@
 import { Cynthia } from './cynthia';
 import { Gardenia } from './gardenia';
 import { Gible } from './gible';
+import { Magnezone } from './magnezone';
 import { PokemonFanClub } from './pokemon-fan-club';
 import { Turtwig } from './turtwig';
 
@@ -14,6 +15,10 @@ export class GardeniaArt extends Gardenia {
 
 export class GibleArt extends Gible {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_096_R_EN.png';
+}
+
+export class MagnezoneArt extends Magnezone {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_083_R_EN_LG.png';
 }
 
 export class PokemonFanClubArt extends PokemonFanClub {

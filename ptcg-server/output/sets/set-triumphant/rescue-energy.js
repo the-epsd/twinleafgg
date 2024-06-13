@@ -6,6 +6,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 const energy_card_1 = require("../../game/store/card/energy-card");
 const state_1 = require("../../game/store/state/state");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class RescueEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -38,6 +39,13 @@ class RescueEnergy extends energy_card_1.EnergyCard {
             state.players.forEach(player => {
                 if (!player.marker.hasMarker(this.RESCUE_ENERGY_MAREKER)) {
                     return;
+                }
+                try {
+                    const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                    store.reduceEffect(state, energyEffect);
+                }
+                catch (_a) {
+                    return state;
                 }
                 const rescued = player.marker.markers
                     .filter(m => m.name === this.RESCUE_ENERGY_MAREKER)

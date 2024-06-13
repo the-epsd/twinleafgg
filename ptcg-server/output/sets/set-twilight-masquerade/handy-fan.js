@@ -7,6 +7,7 @@ const state_1 = require("../../game/store/state/state");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const game_1 = require("../../game");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class HandyFan extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -24,6 +25,13 @@ class HandyFan extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
             if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
+                return state;
+            }
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_a) {
                 return state;
             }
             if (state.phase === state_1.GamePhase.ATTACK) {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WyrdeerVArt = exports.TrekkingShoesArt = exports.TempleofSinnohArt = exports.SwitchCartArt = exports.SupereffectiveGlassesArt = exports.StarmieVArt = exports.SpicySeasonedCurryArt = exports.RoxanneArt = exports.RegisteelArt = exports.RegirockArt = exports.RegigigasArt = exports.RegielekiArt = exports.RegidragoArt = exports.RegiceArt = exports.RaltsArt = exports.RadiantHawluchaArt = exports.RadiantGreninjaArt = exports.OriginFormePalkiaVSTARArt = exports.OriginFormePalkiaVArt = exports.OriginFormeDialgaVSTARArt = exports.OriginFormeDialgaVArt = exports.MiltankArt = exports.MightyenaArt = exports.MantineArt = exports.LuxrayVArt = exports.LucarioVArt = exports.KleavorArt = exports.KeldeoArt = exports.IridaArt = exports.HisuianSamurottVSTARArt = exports.HisuianSamurottVArt = exports.HisuianHeavyBallArt = exports.HisuianBasculinArt = exports.HisuianArcanineArt = exports.GutsyPickaxeArt = exports.GrantArt = exports.GardeniasVigorArt = exports.GapejawBogArt = exports.GalladeArt = exports.FeatherBallArt = exports.EnergyLotoArt = exports.DiancieArt = exports.DarkraiVSTARArt = exports.DarkraiVArt = exports.DarkPatchArt = exports.CylleneArt = exports.CancelingCologneArt = exports.AdamanArt = void 0;
+exports.WyrdeerVArt = exports.TrekkingShoesArt = exports.TempleofSinnohArt = exports.SwitchCartArt = exports.SupereffectiveGlassesArt = exports.StarmieVArt = exports.SpicySeasonedCurryArt = exports.RoxanneArt = exports.RegisteelArt = exports.RegirockArt = exports.RegigigasArt = exports.RegielekiArt = exports.RegidragoArt = exports.RegiceArt = exports.RaltsArt = exports.RadiantHawluchaArt = exports.RadiantGreninjaArt = exports.OriginFormePalkiaVSTARArt = exports.OriginFormePalkiaVArt = exports.OriginFormeDialgaVSTARArt = exports.OriginFormeDialgaVArt = exports.MiltankArt = exports.MightyenaArt = exports.MantineArt = exports.MagnetonArt = exports.LuxrayVArt = exports.LucarioVArt = exports.KleavorArt = exports.KeldeoArt = exports.IridaArt = exports.HisuianSamurottVSTARArt = exports.HisuianSamurottVArt = exports.HisuianHeavyBallArt = exports.HisuianBasculinArt = exports.HisuianArcanineArt = exports.GutsyPickaxeArt = exports.GrantArt = exports.GardeniasVigorArt = exports.GapejawBogArt = exports.GalladeArt = exports.FeatherBallArt = exports.EnergyLotoArt = exports.DiancieArt = exports.DarkraiVSTARArt = exports.DarkraiVArt = exports.DarkPatchArt = exports.CylleneArt = exports.CancelingCologneArt = exports.AdamanArt = void 0;
 const adaman_1 = require("./adaman");
 const canceling_cologne_1 = require("./canceling-cologne");
 const cyllene_1 = require("./cyllene");
@@ -25,6 +25,7 @@ const keldeo_1 = require("./keldeo");
 const kleavor_1 = require("./kleavor");
 const lucario_v_1 = require("./lucario-v");
 const luxray_v_1 = require("./luxray-v");
+const magneton_1 = require("./magneton");
 const mantine_1 = require("./mantine");
 const mightyena_1 = require("./mightyena");
 const miltank_1 = require("./miltank");
@@ -217,6 +218,13 @@ class LuxrayVArt extends luxray_v_1.LuxrayV {
     }
 }
 exports.LuxrayVArt = LuxrayVArt;
+class MagnetonArt extends magneton_1.Magneton {
+    constructor() {
+        super(...arguments);
+        this.cardIMage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_106_R_EN_LG.png';
+    }
+}
+exports.MagnetonArt = MagnetonArt;
 class MantineArt extends mantine_1.Mantine {
     constructor() {
         super(...arguments);

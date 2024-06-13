@@ -9,8 +9,10 @@ import { Dragonair } from './dragonair';
 import { Dragoniteex } from './dragonite-ex';
 import { Dratini } from './dratini';
 import { Entei } from './entei';
+import { Finizen } from './finizen';
 import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Lunatone } from './lunatone';
+import { Palafin } from './palafin';
 import { Pidgeotex } from './pidgeot-ex';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
@@ -19,6 +21,7 @@ import { Poppy } from './poppy';
 import { Scizor } from './scizor';
 import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
+import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
 export declare class AbsolexArt extends Absolex {
     cardImage: string;
@@ -56,10 +59,16 @@ export declare class DratiniArt extends Dratini {
 export declare class EnteiArt extends Entei {
     cardImage: string;
 }
+export declare class FinizenArt extends Finizen {
+    cardImage: string;
+}
 export declare class LetterOfEncouragementArt extends LetterOfEncouragement {
     cardImage: string;
 }
 export declare class LunatoneArt extends Lunatone {
+    cardImage: string;
+}
+export declare class PalafinArt extends Palafin {
     cardImage: string;
 }
 export declare class PidgeotexArt extends Pidgeotex {
@@ -84,6 +93,9 @@ export declare class ThundurusArt extends Thundurus {
     cardImage: string;
 }
 export declare class TownStoreArt extends TownStore {
+    cardImage: string;
+}
+export declare class VaroomArt extends Varoom {
     cardImage: string;
 }
 export declare class VengefulPunchArt extends VengefulPunch {

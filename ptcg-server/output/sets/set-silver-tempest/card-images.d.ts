@@ -8,6 +8,7 @@ import { Braixen } from './braixen';
 import { Candice } from './candice';
 import { CapturingAroma } from './capturing-aroma';
 import { Cobalion } from './cobalion';
+import { Crobat } from './crobat';
 import { Dragonite } from './dragonite';
 import { Elgyem } from './elgyem';
 import { EmergencyJelly } from './emergency-jelly';
@@ -18,6 +19,7 @@ import { HisuianBraviary } from './hisuian-braviary';
 import { Kirlia } from './kirlia';
 import { LugiaV } from './lugia-v';
 import { LugiaVSTAR } from './lugia-vstar';
+import { Meowstic } from './meowstic';
 import { Metagross } from './metagross';
 import { Mismagius } from './mismagius';
 import { PrimordialAltar } from './primordial-altar';
@@ -32,6 +34,7 @@ import { RegidragoVSTAR } from './regidrago-vstar';
 import { RegielekiV } from './regieleki-v';
 import { RegielekiVMAX } from './regieleki-vmax';
 import { Rufflet } from './rufflet';
+import { Sandygast } from './sandygast';
 import { Serena } from './serena';
 import { SerperiorV } from './serperior-v';
 import { SerperiorVSTAR } from './serperior-vstar';
@@ -40,6 +43,7 @@ import { VGuardEnergy } from './v-guard-energy';
 import { Wailord } from './wailord';
 import { Worker } from './worker';
 import { Zeraora } from './zeraora';
+import { Zubat } from './zubat';
 export declare class AlolanVulpixVArt extends AlolanVulpixV {
     cardImage: string;
 }
@@ -70,6 +74,9 @@ export declare class CapturingAromaArt extends CapturingAroma {
 export declare class CobalionArt extends Cobalion {
     cardImage: string;
 }
+export declare class CrobatArt extends Crobat {
+    cardImage: string;
+}
 export declare class DragoniteArt extends Dragonite {
     cardImage: string;
 }
@@ -98,6 +105,9 @@ export declare class LugiaVArt extends LugiaV {
     cardImage: string;
 }
 export declare class LugiaVSTARArt extends LugiaVSTAR {
+    cardImage: string;
+}
+export declare class MeowsticArt extends Meowstic {
     cardImage: string;
 }
 export declare class MetagrossArt extends Metagross {
@@ -142,6 +152,9 @@ export declare class RegielekiVMAXArt extends RegielekiVMAX {
 export declare class RuffletArt extends Rufflet {
     cardImage: string;
 }
+export declare class SandygastArt extends Sandygast {
+    cardImage: string;
+}
 export declare class SerenaArt extends Serena {
     cardImage: string;
 }
@@ -164,5 +177,8 @@ export declare class WorkerArt extends Worker {
     cardImage: string;
 }
 export declare class ZeraoraArt extends Zeraora {
+    cardImage: string;
+}
+export declare class ZubatArt extends Zubat {
     cardImage: string;
 }

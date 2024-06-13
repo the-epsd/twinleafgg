@@ -30,8 +30,10 @@ exports.setObsidianFlames = [
     new card_images_7.DragoniteexArt(),
     new card_images_8.DratiniArt(),
     new card_images_1.EnteiArt(),
+    new card_images_1.FinizenArt(),
     new card_images_9.LetterOfEncouragementArt(),
     new card_images_10.LunatoneArt(),
+    new card_images_1.PalafinArt(),
     new card_images_12.PidgeottoArt(),
     new card_images_11.PidgeotexArt(),
     new card_images_13.PidgeyArt(),
@@ -42,6 +44,7 @@ exports.setObsidianFlames = [
     new card_images_16.TownStoreArt(),
     new card_images_17.VengefulPunchArt(),
     new card_images_1.BelliboltArt(),
+    new card_images_1.VaroomArt(),
     //Alt-Arts
     new full_arts_1.BelliboltIR(),
     new full_arts_1.CleffaIR(),
@@ -57,4 +60,5 @@ exports.setObsidianFlames = [
     new full_arts_1.CharizardexHR(),
     new full_arts_1.ArtazonHR(),
     new full_arts_1.FireEnergyHR(),
+    new full_arts_1.VaroomIR()
 ];

@@ -7,6 +7,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class TechnicalMachineDevolution extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -31,6 +32,13 @@ class TechnicalMachineDevolution extends trainer_card_1.TrainerCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
             const player = effect.player;
             const tool = effect.player.active.tool;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_b) {
+                return state;
+            }
             if (tool.name === this.name) {
                 player.active.moveCardTo(tool, player.discard);
                 player.active.tool = undefined;
@@ -39,11 +47,26 @@ class TechnicalMachineDevolution extends trainer_card_1.TrainerCard {
         }
         if (effect instanceof check_effects_1.CheckPokemonAttacksEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tools.includes(this)) &&
             !effect.attacks.includes(this.attacks[0])) {
+            const player = effect.player;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_c) {
+                return state;
+            }
             effect.attacks.push(this.attacks[0]);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_d) {
+                return state;
+            }
             // Look through all known cards to find out if Pokemon can evolve
             const cm = game_1.CardManager.getInstance();
             const evolutions = cm.getAllCards().filter(c => {
@@ -52,7 +75,7 @@ class TechnicalMachineDevolution extends trainer_card_1.TrainerCard {
             // Build possible evolution card names
             const evolutionNames = [];
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (list, card, target) => {
-                const valid = evolutions.filter(e => e.stage != card_types_1.Stage.BASIC && e.name === card.name);
+                const valid = evolutions.filter(e => e.evolvesFrom === card.name);
                 valid.forEach(c => {
                     if (!evolutionNames.includes(c.name)) {
                         evolutionNames.push(c.name);
@@ -62,7 +85,7 @@ class TechnicalMachineDevolution extends trainer_card_1.TrainerCard {
             if (opponent.active.getPokemonCard()) {
                 const activeEvolutions = opponent.active.cards.filter(card => evolutionNames.includes(card.name));
                 if (activeEvolutions.length > 0) {
-                    const highestEvolutionIndex = 0; // Assuming you sorted the cards in descending order
+                    const highestEvolutionIndex = activeEvolutions.findIndex(card => card.stage === Math.max(...activeEvolutions.map(c => c.stage)));
                     opponent.active.moveCardTo(activeEvolutions[highestEvolutionIndex], opponent.hand);
                 }
             }
@@ -70,7 +93,7 @@ class TechnicalMachineDevolution extends trainer_card_1.TrainerCard {
                 if (benchSpot.getPokemonCard()) {
                     const benchEvolutions = benchSpot.cards.filter(card => evolutionNames.includes(card.name));
                     if (benchEvolutions.length > 0) {
-                        const highestEvolutionIndex = 0; // Assuming you sorted the cards in descending order
+                        const highestEvolutionIndex = benchEvolutions.findIndex(card => card.stage === Math.max(...benchEvolutions.map(c => c.stage)));
                         benchSpot.moveCardTo(benchEvolutions[highestEvolutionIndex], opponent.hand);
                     }
                 }

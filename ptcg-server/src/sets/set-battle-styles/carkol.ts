@@ -11,6 +11,7 @@ export class Carkol extends PokemonCard {
   public hp: number = 70;
   public weakness = [{ type: CardType.GRASS }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public evolvesFrom = 'Rolycoly';
 
   public attacks = [
     {

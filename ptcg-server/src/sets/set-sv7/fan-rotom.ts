@@ -97,28 +97,27 @@ export class FanRotom extends PokemonCard {
             }
           });
 
-          store.prompt(state, [new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            cards
-          )], () => {
+          if (cards.length > 0) {
+            store.prompt(state, [new ShowCardsPrompt(
+              opponent.id,
+              GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+              cards
+            )], () => {
 
-            player.deck.moveCardsTo(cards, player.hand);
-            player.usedFanCall = true;
-          });
+              player.deck.moveCardsTo(cards, player.hand);
+              player.usedFanCall = true;
+            });
+          }
         });
       }
-    }
-
-    
-      
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const stadiumCard = StateUtils.getStadiumCard(state);
-      if (stadiumCard == undefined) {
-        effect.damage = 0;
-      } else {
-        effect.damage = 70;
+  
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+        const stadiumCard = StateUtils.getStadiumCard(state);
+        if (stadiumCard == undefined) {
+          effect.damage = 0;
+        } else {
+          effect.damage = 70;
+        }
       }
     }
     return state;

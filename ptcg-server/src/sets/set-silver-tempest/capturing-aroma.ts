@@ -1,12 +1,12 @@
 import { Effect } from '../../game/store/effects/effect';
 import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
+import { GameLog, GameMessage } from '../../game/game-message';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, CoinFlipPrompt, PokemonCard, ShuffleDeckPrompt } from '../../game';
+import { Card, ChooseCardsPrompt, CoinFlipPrompt, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
 
 export class CapturingAroma extends TrainerCard {
 
@@ -30,6 +30,7 @@ export class CapturingAroma extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -62,6 +63,18 @@ export class CapturingAroma extends TrainerCard {
               return state;
             }
 
+            cards.forEach((card, index) => {
+              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+            });
+            
+
+            if (cards.length > 0) {
+              state = store.prompt(state, new ShowCardsPrompt(
+                opponent.id,
+                GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+                cards), () => state);
+            }
+
             cards.forEach(card => {
               player.deck.moveCardTo(card, player.hand);
               player.supporter.moveCardTo(this, player.discard);
@@ -85,6 +98,18 @@ export class CapturingAroma extends TrainerCard {
             // Operation canceled by the user
             if (cards.length === 0) {
               return state;
+            }
+
+            cards.forEach((card, index) => {
+              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+            });
+            
+
+            if (cards.length > 0) {
+              state = store.prompt(state, new ShowCardsPrompt(
+                opponent.id,
+                GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+                cards), () => state);
             }
 
             cards.forEach(card => {

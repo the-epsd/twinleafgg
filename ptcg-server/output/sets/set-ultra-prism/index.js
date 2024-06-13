@@ -7,6 +7,7 @@ exports.setUltraPrism = [
     new card_images_1.CynthiaArt(),
     new card_images_1.GardeniaArt(),
     new card_images_2.GibleArt(),
+    new card_images_1.MagnezoneArt(),
     new card_images_1.PokemonFanClubArt(),
     new card_images_1.TurtwigArt()
 ];

@@ -91,6 +91,7 @@ __exportStar(require("./set-pokemon-go"), exports);
 __exportStar(require("./set-lost-origin"), exports);
 __exportStar(require("./set-silver-tempest"), exports);
 __exportStar(require("./set-crown-zenith"), exports);
+__exportStar(require("./set-rebel-clash"), exports);
 //SVI Era
 __exportStar(require("./set-scarlet-and-violet"), exports);
 __exportStar(require("./set-scarlet-and-violet-energy"), exports);

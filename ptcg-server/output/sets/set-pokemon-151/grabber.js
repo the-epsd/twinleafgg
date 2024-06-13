@@ -27,6 +27,7 @@ class Grabber extends trainer_card_1.TrainerCard {
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DECK, opponent.hand, { superType: card_types_1.SuperType.POKEMON }, { allowCancel: false, min: 0, max: 1 }), selectedCard => {
                 const selected = selectedCard || [];
                 if (selectedCard === null || selected.length === 0) {
+                    player.supporter.moveCardTo(this, player.discard);
                     return;
                 }
                 opponent.hand.moveCardTo(selected[0], deckBottom);

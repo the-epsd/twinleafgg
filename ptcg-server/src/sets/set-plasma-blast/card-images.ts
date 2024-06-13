@@ -4,6 +4,7 @@ import { ScoopUpCyclone } from './scoop-up-cyclone';
 import { SilverBangle } from './silver-bangle';
 import { UltraBall } from './ultra-ball';
 import { VirizionEx } from './virizion-ex';
+import { Wartortle } from './wartortle';
 
 export class JirachiExArt extends JirachiEx {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLB/PLB_060_R_EN.png';
@@ -27,4 +28,8 @@ export class VirizionExArt extends VirizionEx {
 
 export class MasterBallArt extends MasterBall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLB/PLB_094_R_EN_LG.png';
+}
+
+export class WartortleArt extends Wartortle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLB/PLB_015_R_EN_LG.png';
 }

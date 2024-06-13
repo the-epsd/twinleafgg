@@ -62,14 +62,16 @@ class RankingCalculator {
     }
     getRankMultipier(rank) {
         switch (rank) {
-            case backend_1.Rank.JUNIOR:
+            case backend_1.Rank.POKE:
                 return 2.0;
-            case backend_1.Rank.SENIOR:
+            case backend_1.Rank.GREAT:
                 return 1.0;
             case backend_1.Rank.ULTRA:
                 return 0.75;
             case backend_1.Rank.MASTER:
                 return 0.5;
+            case backend_1.Rank.BANNED:
+                return -1;
         }
         return 1;
     }
@@ -78,10 +80,12 @@ class RankingCalculator {
         const oneDay = config_1.config.core.rankingDecraseTime;
         const today = Date.now();
         const yesterday = today - oneDay;
-        const users = await storage_1.User.find({ where: {
+        const users = await storage_1.User.find({
+            where: {
                 lastRankingChange: typeorm_1.LessThan(yesterday),
                 ranking: typeorm_1.MoreThan(0)
-            } });
+            }
+        });
         // calculate new ranking in the server
         users.forEach(user => {
             user.lastRankingChange = today;

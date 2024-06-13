@@ -28,6 +28,7 @@ class Player {
         this.attackMarker = new card_marker_1.Marker();
         this.abilityMarker = new card_marker_1.Marker();
         this.avatarName = '';
+        this.specialEnergyBlocked = false;
         this.usedVSTAR = false;
         this.usedGX = false;
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

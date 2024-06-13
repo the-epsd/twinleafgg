@@ -3,6 +3,9 @@ import { CardType } from './card/card-types';
 import { GameError } from '../game-error';
 import { GameMessage } from '../game-message';
 export class StateUtils {
+    static getStadium(state) {
+        throw new Error('Method not implemented.');
+    }
     static checkEnoughEnergy(energy, cost) {
         if (cost.length === 0) {
             return true;

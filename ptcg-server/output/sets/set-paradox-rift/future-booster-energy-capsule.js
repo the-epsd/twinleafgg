@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class FutureBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,21 +21,32 @@ class FutureBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
         this.text = 'The Future Pokémon this card is attached to has no Retreat Cost, and the attacks it uses do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.tool === this) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.player.active.tool === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_a) {
+                return state;
+            }
             if (effect.target !== player.active && effect.target !== opponent.active) {
                 return state;
             }
-            const card = effect.target.getPokemonCard();
-            if (card === undefined) {
-                return state;
-            }
-            if (card && card.tags.includes(card_types_1.CardTag.FUTURE)) {
+            if (effect.player.active.futurePokemon()) {
                 effect.damage += 20;
             }
         }
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
+            const player = effect.player;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_b) {
+                return state;
+            }
             if (effect.player.active.futurePokemon()) {
                 effect.cost = [];
             }

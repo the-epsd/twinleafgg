@@ -3,7 +3,10 @@ export declare enum Rank {
     SENIOR = "SENIOR",
     ULTRA = "ULTRA",
     MASTER = "MASTER",
-    ADMIN = "ADMIN"
+    ADMIN = "ADMIN",
+    BANNED = "BANNED",
+    POKE = "POKE",
+    GREAT = "GREAT"
 }
 export interface RankLevel {
     points: number;

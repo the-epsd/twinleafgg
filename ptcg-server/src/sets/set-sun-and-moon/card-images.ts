@@ -2,6 +2,7 @@ import { Dragonair } from './dragonair';
 import { EnergyRetrieval } from './energy-retrieval';
 import { ExpShare } from './exp-share';
 import { NestBall } from './nest-ball';
+import { Oranguru } from './oranguru';
 import { RainbowEnergy } from './rainbow-energy';
 import { RareCandy } from './rare-candy';
 
@@ -19,6 +20,10 @@ export class ExpShareArt extends ExpShare {
 
 export class NestBallArt extends NestBall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_123_R_EN.png';
+}
+
+export class OranguruArt extends Oranguru {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_113_R_EN_LG.png';
 }
 
 export class RainbowEnergyArt extends RainbowEnergy {

@@ -1,5 +1,5 @@
 import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
+import { GameLog, GameMessage } from '../../game/game-message';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, SuperType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
@@ -8,9 +8,11 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard } from '../../game/store/card/energy-card';
+import { ShowCardsPrompt, StateUtils } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
 
   // Player has no Basic Energy in the discard pile
   let basicEnergyCards = 0;
@@ -35,6 +37,20 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     { min: 1, max: min, allowCancel: false }
   ), cards => {
     cards = cards || [];
+    
+    if (cards.length > 0) {
+      player.discard.moveCardsTo(cards, player.deck);
+      cards.forEach((card, index) => {
+        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+      });
+      if (cards.length > 0) {
+        state = store.prompt(state, new ShowCardsPrompt(
+          opponent.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          cards), () => state);
+      }
+    }
+
     if (cards.length > 0) {
       // Recover discarded Pokemon
       player.discard.moveCardsTo(cards, player.hand);

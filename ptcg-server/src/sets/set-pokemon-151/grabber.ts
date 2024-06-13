@@ -48,6 +48,7 @@ export class Grabber extends TrainerCard {
       ), selectedCard => {
         const selected = selectedCard || [];
         if (selectedCard === null || selected.length === 0) {
+          player.supporter.moveCardTo(this, player.discard);
           return;
         }
 

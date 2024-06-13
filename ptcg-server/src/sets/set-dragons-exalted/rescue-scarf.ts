@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 import { Card } from '../../game/store/card/card';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class RescueScarf extends TrainerCard {
 
@@ -37,6 +38,13 @@ export class RescueScarf extends TrainerCard {
         return state;
       }
 
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
+
       const target = effect.target;
       const cards = target.getPokemons();
       cards.forEach(card => {
@@ -49,6 +57,13 @@ export class RescueScarf extends TrainerCard {
 
         if (!player.marker.hasMarker(this.RESCUE_SCARF_MAREKER)) {
           return;
+        }
+
+        try {
+          const toolEffect = new ToolEffect(player, this);
+          store.reduceEffect(state, toolEffect);
+        } catch {
+          return state;
         }
 
         const rescued: Card[] = player.marker.markers

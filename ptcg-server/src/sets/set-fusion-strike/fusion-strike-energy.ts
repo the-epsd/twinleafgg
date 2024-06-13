@@ -3,6 +3,7 @@ import { CardTag, CardType, EnergyType } from '../../game/store/card/card-types'
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class FusionStrikeEnergy extends EnergyCard {
 
@@ -33,7 +34,16 @@ export class FusionStrikeEnergy extends EnergyCard {
     
     // Provide energy when attached to Fusion Strike Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+      const player = effect.player;
       const pokemon = effect.source;
+
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
+
       if (pokemon.getPokemonCard()?.tags.includes(CardTag.FUSION_STRIKE)) {
         effect.energyMap.push({ card: this, provides: [ CardType.ANY ] });
       }
@@ -47,6 +57,14 @@ export class FusionStrikeEnergy extends EnergyCard {
           if (!cardList.cards.includes(this)) {
             return;
           }
+
+          try {
+            const energyEffect = new EnergyEffect(player, this);
+            store.reduceEffect(state, energyEffect);
+          } catch {
+            return state;
+          }
+
           const pokemon = cardList;
           if (!pokemon.getPokemonCard()?.tags.includes(CardTag.FUSION_STRIKE)) {
             cardList.moveCardTo(this, player.discard);

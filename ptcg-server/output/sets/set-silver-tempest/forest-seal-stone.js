@@ -5,6 +5,7 @@ const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class ForestSealStone extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -33,6 +34,14 @@ class ForestSealStone extends game_1.TrainerCard {
         var _a;
         if (effect instanceof check_effects_1.CheckPokemonPowersEffect && effect.target.cards.includes(this) &&
             !effect.powers.find(p => p.name === this.powers[0].name)) {
+            const player = effect.player;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_b) {
+                return state;
+            }
             if (!((_a = effect.target.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_VSTAR))) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
@@ -42,6 +51,13 @@ class ForestSealStone extends game_1.TrainerCard {
             const player = effect.player;
             if (player.usedVSTAR === true) {
                 throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
+            }
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_c) {
+                return state;
             }
             player.usedVSTAR = true;
             state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 1, allowCancel: false }), cards => {

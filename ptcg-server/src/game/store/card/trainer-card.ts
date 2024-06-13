@@ -1,6 +1,7 @@
 import { Attack, Power, State, StoreLike } from '../../..';
 import { Effect } from '../effects/effect';
 import { AttackEffect, PowerEffect } from '../effects/game-effects';
+import { ToolEffect } from '../effects/play-card-effects';
 import { Card } from './card';
 import { Format, SuperType, TrainerType } from './card-types';
 
@@ -20,6 +21,8 @@ export abstract class TrainerCard extends Card {
   public powers: Power[] = [];
 
   public firstTurn: boolean = false;
+
+  public toolEffect: ToolEffect | undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect){

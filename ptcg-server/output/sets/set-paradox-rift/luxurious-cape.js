@@ -5,6 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class LuxuriousCape extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -19,6 +20,14 @@ class LuxuriousCape extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckHpEffect && effect.target.cards.includes(this)) {
+            const player = effect.player;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_a) {
+                return state;
+            }
             if (effect.target.tool instanceof LuxuriousCape) {
                 if (effect.target.hasRuleBox()) {
                     return state;
@@ -27,6 +36,14 @@ class LuxuriousCape extends trainer_card_1.TrainerCard {
             }
         }
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
+            const player = effect.player;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_b) {
+                return state;
+            }
             if (!effect.target.hasRuleBox()) {
                 effect.prizeCount += 1;
             }

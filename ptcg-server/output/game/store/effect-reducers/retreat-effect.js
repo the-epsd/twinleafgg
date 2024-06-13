@@ -62,7 +62,7 @@ function retreatReducer(store, state, effect) {
         //   activePokemonCard.movedToActiveThisTurn = true;
         //   return state;
         // }
-        return store.prompt(state, new choose_energy_prompt_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, checkProvidedEnergy.energyMap, checkRetreatCost.cost), energy => {
+        return store.prompt(state, new choose_energy_prompt_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGY_TO_DISCARD, checkProvidedEnergy.energyMap, checkRetreatCost.cost), energy => {
             if (energy === null) {
                 return; // operation cancelled
             }

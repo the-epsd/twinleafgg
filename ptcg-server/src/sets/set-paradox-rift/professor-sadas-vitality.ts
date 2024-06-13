@@ -98,20 +98,24 @@ export class ProfessorSadasVitality extends TrainerCard {
         { allowCancel: false, min: 1, max: 2, blockedTo: blocked2, differentTargets: true  }
       ), transfers => {
         transfers = transfers || [];
-  
+
         if (transfers.length === 0) {
           return;
         }
-  
+
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.marker.addMarker(this.ANCIENT_SUPPORTER_MARKER, this);
           player.discard.moveCardTo(transfer.card, target);
         }
+
+        if (transfers.length > 0) {
+          player.deck.moveTo(player.hand, 3);
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          player.supporterTurn = 1;
+        }
+        return state;
       });
-      player.deck.moveTo(player.hand, 3);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      player.supporterTurn = 1;
     }
     return state;
   }

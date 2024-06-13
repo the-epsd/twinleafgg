@@ -7,6 +7,7 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class ExpertBelt extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -21,15 +22,39 @@ class ExpertBelt extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckHpEffect && effect.target.cards.includes(this)) {
+            const player = effect.player;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_a) {
+                return state;
+            }
             effect.hp += 20;
         }
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
+            const player = effect.player;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_b) {
+                return state;
+            }
             if (effect.damage > 0 && effect.target === opponent.active) {
                 effect.damage += 20;
             }
         }
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
+            const player = effect.player;
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_c) {
+                return state;
+            }
             effect.prizeCount += 1;
         }
         return state;

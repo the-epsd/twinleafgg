@@ -5,6 +5,7 @@ import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils, PokemonCard } from '../../game';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class SurvivalCast extends TrainerCard {
 
@@ -37,6 +38,13 @@ export class SurvivalCast extends TrainerCard {
 
       const activePokemon = player.active as unknown as PokemonCard;
       const maxHp = activePokemon.hp;
+
+      try {
+        const toolEffect = new ToolEffect(player, this);
+        store.reduceEffect(state, toolEffect);
+      } catch {
+        return state;
+      }
 
       if (state.phase === GamePhase.ATTACK) {
         if (player.active.damage === 0) {

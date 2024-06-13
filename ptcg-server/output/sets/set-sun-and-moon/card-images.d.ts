@@ -2,6 +2,7 @@ import { Dragonair } from './dragonair';
 import { EnergyRetrieval } from './energy-retrieval';
 import { ExpShare } from './exp-share';
 import { NestBall } from './nest-ball';
+import { Oranguru } from './oranguru';
 import { RainbowEnergy } from './rainbow-energy';
 import { RareCandy } from './rare-candy';
 export declare class DragonairArt extends Dragonair {
@@ -14,6 +15,9 @@ export declare class ExpShareArt extends ExpShare {
     cardImage: string;
 }
 export declare class NestBallArt extends NestBall {
+    cardImage: string;
+}
+export declare class OranguruArt extends Oranguru {
     cardImage: string;
 }
 export declare class RainbowEnergyArt extends RainbowEnergy {

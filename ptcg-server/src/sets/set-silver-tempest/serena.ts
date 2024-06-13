@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SelectPrompt, SlotType, StateUtils } from '../../game';
+import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SelectPrompt, SlotType, StateUtils } from '../../game';
 
 export class Serena extends TrainerCard {
 
@@ -76,10 +76,10 @@ export class Serena extends TrainerCard {
           message: GameMessage.SWITCH_POKEMON,
           action: () => {
 
-            const blocked: { card: PokemonCard, index: number }[] = [];
+            const blocked: CardTarget[] = [];
             opponent.bench.forEach((card, index) => {
               if (card instanceof PokemonCard && card.tags.includes(CardTag.POKEMON_V)) {
-                blocked.push({ card, index });
+                blocked.push({ index, player: opponent.id, slot: SlotType.BENCH });
               }
             });
 
@@ -88,7 +88,7 @@ export class Serena extends TrainerCard {
               GameMessage.CHOOSE_POKEMON_TO_SWITCH,
               PlayerType.TOP_PLAYER,
               [SlotType.BENCH],
-              { allowCancel: false }
+              { allowCancel: false, blocked }
             ), result => {
               const cardList = result[0];
               opponent.switchPokemon(cardList);

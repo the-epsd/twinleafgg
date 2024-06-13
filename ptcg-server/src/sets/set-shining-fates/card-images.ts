@@ -1,9 +1,14 @@
 import { Frosmoth } from './frosmoth';
+import { Koffing } from './koffing';
 import { Rillaboom } from './rillaboom';
 import { Thwackey } from './thwackey';
 
 export class FrosmothArt extends Frosmoth {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_030_R_EN_LG.png';
+}
+
+export class KoffingArt extends Koffing {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_041_R_EN_LG.png';
 }
 
 export class RillaboomArt extends Rillaboom {

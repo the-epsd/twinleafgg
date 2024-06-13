@@ -13,6 +13,7 @@ class Carkol extends pokemon_card_1.PokemonCard {
         this.hp = 70;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.evolvesFrom = 'Rolycoly';
         this.attacks = [
             {
                 name: 'Tackle',

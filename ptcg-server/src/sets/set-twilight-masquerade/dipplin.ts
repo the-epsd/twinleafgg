@@ -23,9 +23,9 @@ export class Dipplin extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
-    name: 'Festival Fever',
+    name: 'Festival Lead',
     powerType: PowerType.ABILITY,
-    text: 'If Festival Plaza is in play, this Pokémon can use its own attack twice in a row.'
+    text: 'If Festival Grounds is in play, this Pokémon may use an attack it has twice. If the first attack Knocks Out your opponent\'s Active Pokémon, you may attack again after your opponent chooses a new Active Pokémon.'
   }];
 
   public attacks = [

@@ -15,30 +15,36 @@ export class RankComponent {
         this.rankName = 'USERS_RANK_ADMIN';
         break;
       case Rank.MASTER:
-        this.rankColor = 'red';
+        this.rankColor = 'purple';
         this.rankName = 'USERS_RANK_MASTER';
         break;
         case Rank.ULTRA:
-          this.rankColor = 'blue';
+          this.rankColor = 'black';
           this.rankName = 'USERS_RANK_ULTRA';
           break;
-      case Rank.SENIOR:
-        this.rankColor = 'orange';
-        this.rankName = 'USERS_RANK_SENIOR';
+      case Rank.GREAT:
+        this.rankColor = 'blue';
+        this.rankName = 'USERS_RANK_GREAT';
         break;
-      case Rank.JUNIOR:
-        this.rankColor = 'green';
-        this.rankName = 'USERS_RANK_JUNIOR';
+      case Rank.POKE:
+        this.rankColor = 'red';
+        this.rankName = 'USERS_RANK_POKE';
         break;
+        case Rank.BANNED:
+          this.rankColor = 'banned';
+          this.rankName = 'USERS_RANK_BANNED';
+          break;
       default:
         this.rankColor = '';
         this.rankName = 'USERS_RANK_UNKNOWN';
     }
+    
   }
 
   @Input() ranking: number;
   public rankName: string;
   public rankColor: string;
+  public isAdmin = false;
 
   constructor() { }
 

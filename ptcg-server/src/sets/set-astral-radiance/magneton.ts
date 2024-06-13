@@ -1,0 +1,60 @@
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike } from '../../game/store/store-like';
+import { State } from '../../game/store/state/state';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StateUtils } from '../../game/store/state-utils';
+import { GameMessage } from '../../game/game-message';
+import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
+import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
+
+export class Magneton extends PokemonCard {
+  public stage: Stage = Stage.STAGE_1;
+  public regulationMark = 'F';
+  public cardType: CardType = CardType.METAL;
+  public hp: number = 90;
+  public weakness = [{ type: CardType.FIRE }];
+  public resistance = [{ type: CardType.GRASS, value: -30 }];
+  public retreat = [CardType.COLORLESS];
+
+  public attacks = [{
+    name: 'Bounce Back',
+    cost: [CardType.METAL, CardType.COLORLESS],
+    damage: 50,
+    text: 'Your opponent switches their Active Pokemon wtih 1 of their Benched Pokemon.'
+  }];
+
+  public set: string = 'ASR';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '106';
+  public name: string = 'Magneton';
+  public fullName: string = 'Magneton ASR';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (player.active.cards[0] == this) {
+        return state; // Not active
+      }
+
+      return store.prompt(state, new ChoosePokemonPrompt(
+        opponent.id,
+        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH],
+        { allowCancel: false }
+      ), targets => {
+        if (targets && targets.length > 0) {
+          opponent.active.clearEffects();
+          opponent.switchPokemon(targets[0]);
+          return state;
+        }
+      });
+    }
+
+    return state;
+  }
+}

@@ -47,23 +47,26 @@ class Munkidori extends game_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
+            if (player.marker.hasMarker(this.ADRENA_BRAIN_MARKER, this)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             // const blocked: CardTarget[] = [];
             // let hasPokemonWithDamage: boolean = false;
             // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
             //   if (cardList.damage === 0) {
-            //     blocked.push(target);
-            //   } else {
-            //     hasPokemonWithDamage = true;
-            //   }
-            // });
-            // if (hasPokemonWithDamage === false) {
-            //   throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-            // }
-            // player.active.cards.forEach((card, index) => {
-            //   if (card instanceof PokemonCardList && card.damage == 0) {
             //     blocked.push();
             //   }
-            // });
+            //   player.active.cards.forEach((card, index) => {
+            //     if (card instanceof PokemonCardList && card.damage == 0) {
+            //       blocked.push();
+            //     } else {
+            //       hasPokemonWithDamage = true;
+            //     }
+            //   });
+            //   if (hasPokemonWithDamage === false) {
+            //     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+            //   }
+            player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
             const maxAllowedDamage = [];
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
                 maxAllowedDamage.push({ target, damage: card.hp + 30 });
@@ -75,10 +78,15 @@ class Munkidori extends game_1.PokemonCard {
                     const target = game_1.StateUtils.getTarget(state, player, result.target);
                     const healEffect = new game_effects_1.HealEffect(player, target, result.damage);
                     state = store.reduceEffect(state, healEffect);
-                    return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 1, allowCancel: false }), selected => {
+                    return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 0, max: 1, allowCancel: false }), selected => {
                         const targets = selected || [];
                         targets.forEach(target => {
                             target.damage += result.damage;
+                        });
+                        player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                            if (cardList.getPokemonCard() === this) {
+                                cardList.addSpecialCondition(game_1.SpecialCondition.ABILITY_USED);
+                            }
                         });
                         return state;
                     });

@@ -11,6 +11,7 @@ export class Annihilape extends PokemonCard {
   public hp: number = 140;
   public weakness = [{ type: CardType.PSYCHIC }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public evolvesFrom = 'Primeape';
 
   public attacks = [
     {

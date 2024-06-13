@@ -12,7 +12,7 @@ export const environment = {
   refreshTokenInterval: 60 * 60 * 1000,
   enableImageCache: false,
   defaultLanguage: 'en',
-  languages: { en: 'English', jp: 'Japanese' },
+  languages: { en: 'English', jp: 'Japanese', fr: 'French' },
 };
 
 /*
