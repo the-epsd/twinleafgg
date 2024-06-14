@@ -53,6 +53,5 @@ class Charizard extends pokemon_card_1.PokemonCard {
         }
         return state;
     }
-    ;
 }
 exports.Charizard = Charizard;

@@ -71,10 +71,10 @@ export class Charizard extends PokemonCard {
               energyCard.provides.push(...energyCard.provides);
             }
           }
-        })
-      })
+        });
+      });
     }
     
     return state;
-  };
+  }
 }

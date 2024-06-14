@@ -81,7 +81,7 @@ export class Coalossal extends PokemonCard {
           if (option.value === -1) {
             state = store.prompt(state, new AttachEnergyPrompt(
               player.id,
-              GameMessage.ATTACH_ENERGY_TO_BENCH,
+              GameMessage.ATTACH_ENERGY_CARDS,
               player.discard,
               PlayerType.BOTTOM_PLAYER,
               [SlotType.BENCH, SlotType.ACTIVE],
@@ -100,7 +100,7 @@ export class Coalossal extends PokemonCard {
           if (option.value === 0) {
             state = store.prompt(state, new AttachEnergyPrompt(
               player.id,
-              GameMessage.ATTACH_ENERGY_TO_BENCH,
+              GameMessage.ATTACH_ENERGY_CARDS,
               player.discard,
               PlayerType.BOTTOM_PLAYER,
               [SlotType.BENCH, SlotType.ACTIVE],
@@ -117,39 +117,34 @@ export class Coalossal extends PokemonCard {
             });
           }
 
+          const blocked: number[] = [];
+          player.discard.cards.forEach((card, index) => {
+            if(card.name !== 'Fighting Energy' && card.name !== 'Fire Energy') {
+              blocked.push(index);
+            }
+          });
+
           if (option.value === 1) {
             state = store.prompt(state, new AttachEnergyPrompt(
               player.id,
-              GameMessage.ATTACH_ENERGY_TO_BENCH,
+              GameMessage.ATTACH_ENERGY_CARDS,
               player.discard,
               PlayerType.BOTTOM_PLAYER,
               [SlotType.BENCH, SlotType.ACTIVE],
-              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-              { allowCancel: false, min: 1, max: 1 }
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+              { allowCancel: false, min: 0, max: 2, blocked}
             ), transfers => {
               transfers = transfers || [];
-
               for (const transfer of transfers) {
-                const target = StateUtils.getTarget(state, player, transfer.to);
-                player.discard.moveCardTo(transfer.card, target);
-              }
-            });
 
-            state = store.prompt(state, new AttachEnergyPrompt(
-              player.id,
-              GameMessage.ATTACH_ENERGY_TO_BENCH,
-              player.discard,
-              PlayerType.BOTTOM_PLAYER,
-              [SlotType.BENCH, SlotType.ACTIVE],
-              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
-              { allowCancel: false, min: 1, max: 1 }
-            ), transfers => {
-              transfers = transfers || [];
-
-              player.marker.addMarker(this.TAR_GENERATOR_MARKER, this);
-              for (const transfer of transfers) {
+                if (transfers.length > 1) {
+                  if (transfers[0].card.name === transfers[1].card.name) {
+                    throw new GameError (GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);  
+                  }
+                }
+                
                 const target = StateUtils.getTarget(state, player, transfer.to);
-                player.discard.moveCardTo(transfer.card, target);
+                player.discard.moveCardTo(transfer.card, target); 
               }
             });
           }
