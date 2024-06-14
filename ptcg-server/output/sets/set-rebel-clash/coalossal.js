@@ -85,7 +85,7 @@ class Coalossal extends pokemon_card_1.PokemonCard {
                     }
                     const blocked = [];
                     player.discard.cards.forEach((card, index) => {
-                        if (card.name !== 'Fighting Energy' && card.name !== 'Fire Energy') {
+                        if (card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC && !card.provides.includes(card_types_1.CardType.FIGHTING) && !card.provides.includes(card_types_1.CardType.FIRE)) {
                             blocked.push(index);
                         }
                     });

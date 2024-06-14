@@ -27,8 +27,8 @@ function* useNightGate(next, store, state, effect) {
 class Gengar extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
-        //   public evolvesFrom = 'Haunter';
+        this.stage = card_types_1.Stage.STAGE_2;
+        this.evolvesFrom = 'Haunter';
         this.cardType = card_types_1.CardType.DARK;
         this.hp = 130;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];

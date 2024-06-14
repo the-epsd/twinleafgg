@@ -39,9 +39,9 @@ function* useNightGate(next: Function, store: StoreLike, state: State,
 
 export class Gengar extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
 
-  //   public evolvesFrom = 'Haunter';
+  public evolvesFrom = 'Haunter';
 
   public cardType: CardType = CardType.DARK;
 

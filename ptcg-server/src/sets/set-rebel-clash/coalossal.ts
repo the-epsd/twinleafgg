@@ -119,7 +119,7 @@ export class Coalossal extends PokemonCard {
 
           const blocked: number[] = [];
           player.discard.cards.forEach((card, index) => {
-            if(card.name !== 'Fighting Energy' && card.name !== 'Fire Energy') {
+            if(card instanceof EnergyCard && card.energyType === EnergyType.BASIC && !card.provides.includes(CardType.FIGHTING) && !card.provides.includes(CardType.FIRE)) {
               blocked.push(index);
             }
           });

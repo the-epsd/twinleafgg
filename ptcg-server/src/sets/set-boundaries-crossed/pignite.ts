@@ -6,6 +6,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Pignite extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom = 'Tepig';
   public cardType: CardType = CardType.FIRE;
   public hp: number = 90;
   public weakness = [{ type: CardType.WATER }];

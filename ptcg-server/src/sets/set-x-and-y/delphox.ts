@@ -7,8 +7,8 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Delphox extends PokemonCard {
-  public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = 'Fennekin';
+  public stage: Stage = Stage.STAGE_2;
+  public evolvesFrom = 'Braixen';
   public cardType: CardType = CardType.FIRE;
   public hp: number = 80;
   public weakness = [{ type: CardType.WATER }];
