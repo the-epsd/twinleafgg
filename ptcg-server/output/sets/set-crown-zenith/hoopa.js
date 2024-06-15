@@ -11,7 +11,7 @@ class Hoopa extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'D';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.DARK;
-        this.hp = 330;
+        this.hp = 120;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [

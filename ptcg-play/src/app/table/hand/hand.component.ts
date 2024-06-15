@@ -1,6 +1,5 @@
-import { Component, HostBinding, Input, OnChanges } from '@angular/core';
-import { Player, Card, CardList, SuperType } from 'ptcg-server';
-
+import { Component, Input, OnChanges } from '@angular/core';
+import { Player, Card, CardList } from 'ptcg-server';
 import { SortableSpec, DraggedItem } from '@ng-dnd/sortable';
 
 import { CardsBaseService } from '../../shared/cards/cards-base.service';
@@ -14,7 +13,7 @@ import { GameService } from '../../api/services/game.service';
   styleUrls: ['./hand.component.scss']
 })
 export class HandComponent implements OnChanges {
-  @HostBinding('style.--card-padding') cardPadding: number;
+
   public readonly handListId = 'HAND_LIST';
 
   @Input() player: Player;
@@ -73,7 +72,6 @@ export class HandComponent implements OnChanges {
       this.tempList = [];
     }
   }
-  
 
   public showCardInfo(card: Card) {
     const facedown = this.isFaceDown;
@@ -96,52 +94,15 @@ export class HandComponent implements OnChanges {
     return temp;
   }
 
-//   private buildHandList(cards: CardList): HandItem[] {
-//     const groupedCards = cards.cards.reduce((acc, card) => {
-//       const name = card.name;
-//       if (!acc[name]) {
-//         acc[name] = [];
-//       }
-//       acc[name].push(card);
-//       return acc;
-//     }, {} as { [key: string]: Card[] });
+  private buildHandList(cards: CardList): HandItem[] {
+    return cards.cards.map((card, index) => {
+      const item: HandItem = {
+        card,
+        index,
+        scanUrl: this.cardsBaseService.getScanUrl(card)
+      };
+      return item;
+    });
+  }
 
-//     const handItems: HandItem[] = [];
-
-//     for (const [name, group] of Object.entries(groupedCards)) {
-//       const item: HandItem = {
-//         card: group[0],
-//         index: handItems.length,
-//         scanUrl: this.cardsBaseService.getScanUrl(group[0]),
-//         count: group.length
-//       };
-//       handItems.push(item);
-//     }
-
-//     return handItems;
-//   }
-// }
-
-
-private buildHandList(cards: CardList): HandItem[] {
-  const sortedCards = cards.cards.slice().sort((a, b) => {
-    // First, sort by superType
-    const superTypeDiff = a.superType - b.superType;
-    if (superTypeDiff !== 0) {
-      return superTypeDiff;
-    }
-
-    // If superTypes are the same, sort by name
-    return a.name.localeCompare(b.name);
-  });
-
-  return sortedCards.map((card, index) => {
-    const item: HandItem = {
-      card,
-      index,
-      scanUrl: this.cardsBaseService.getScanUrl(card)
-    };
-    return item;
-  });
-}
 }
