@@ -7,11 +7,10 @@
   #myVideo {
     position: fixed;
     width: 100%;
-    height: auto;
+    height: 100%;
     right: 0;
     bottom: 0;
-    min-width: 80%; 
-    min-height: 80%;
+    object-fit: cover;
     z-index: 0;
   }
 }

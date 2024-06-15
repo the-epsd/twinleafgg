@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PhioneArt = exports.PerrinArt = exports.PerformanceFluteArt = exports.MunkidoriArt = exports.MorpekoArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.LegacyEnergyArt = exports.LanasAssistanceArt = exports.LaironArt = exports.KieranArt = exports.JammingTowerArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.HyperAromaArt = exports.HearthflameMaskOgerponexArt = exports.HasselArt = exports.HandyFanArt = exports.GrookeyArt = exports.GreninjaexArt = exports.FroslassArt = exports.FrogadierArt = exports.FroakieArt = exports.FestivalGroundsArt = exports.FarfetchdArt = exports.EnhancedHammerArt = exports.EmolgaArt = exports.DreepyArt = exports.DrakloakArt = exports.DragapultexArt = exports.DipplinArt = exports.CornerstoneMaskOgerponexArt = exports.CommunityCenterArt = exports.ClefairyArt = exports.ClefableArt = exports.ChiYuArt = exports.ChanseyArt = exports.CarmineArt = exports.CaretakerArt = exports.BugCatchingSetArt = exports.BoomerangEnergyArt = exports.BloodmoonUrsalunaexArt = exports.BlisseyexArt = exports.AronArt = exports.ApplinArt2 = exports.ApplinArt = exports.AggronArt = void 0;
-exports.WellspringMaskOgerponexArt = exports.UnfairStampArt = exports.TingLuArt = exports.ThwackeyArt = exports.TealMaskOgerponexArt = exports.TatsugiriArt = exports.SurvivalCastArt = exports.ShinxArt = exports.ScoopUpCycloneArt = exports.ScreamTailexArt = exports.RotoStickArt = exports.PoochyenaArt = void 0;
+exports.PerrinArt = exports.PerformanceFluteArt = exports.MunkidoriArt = exports.MorpekoArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.LegacyEnergyArt = exports.LanasAssistanceArt = exports.LaironArt = exports.KieranArt = exports.JammingTowerArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.InfernapeArt = exports.HyperAromaArt = exports.HearthflameMaskOgerponexArt = exports.HasselArt = exports.HandyFanArt = exports.GrookeyArt = exports.GreninjaexArt = exports.FroslassArt = exports.FrogadierArt = exports.FroakieArt = exports.FestivalGroundsArt = exports.FarfetchdArt = exports.EnhancedHammerArt = exports.EmolgaArt = exports.DreepyArt = exports.DrakloakArt = exports.DragapultexArt = exports.DipplinArt = exports.CornerstoneMaskOgerponexArt = exports.CommunityCenterArt = exports.ClefairyArt = exports.ClefableArt = exports.ChiYuArt = exports.ChanseyArt = exports.CarmineArt = exports.CaretakerArt = exports.BugCatchingSetArt = exports.BoomerangEnergyArt = exports.BloodmoonUrsalunaexArt = exports.BlisseyexArt = exports.AronArt = exports.ApplinArt2 = exports.ApplinArt = exports.AggronArt = void 0;
+exports.WellspringMaskOgerponexArt = exports.UnfairStampArt = exports.TingLuArt = exports.ThwackeyArt = exports.TealMaskOgerponexArt = exports.TatsugiriArt = exports.SurvivalCastArt = exports.ShinxArt = exports.ScoopUpCycloneArt = exports.ScreamTailexArt = exports.RotoStickArt = exports.PoochyenaArt = exports.PhioneArt = void 0;
 const aggron_1 = require("./aggron");
 const aron_1 = require("./aron");
 const blissey_ex_1 = require("./blissey-ex");
@@ -64,6 +64,7 @@ const chi_yu_1 = require("./chi-yu");
 const jamming_tower_1 = require("./jamming-tower");
 const cornerstone_mask_ogerpon_ex_1 = require("./cornerstone-mask-ogerpon-ex");
 const boomerang_energy_1 = require("./boomerang-energy");
+const infernape_1 = require("./infernape");
 class AggronArt extends aggron_1.Aggron {
     constructor() {
         super(...arguments);
@@ -295,6 +296,13 @@ class HyperAromaArt extends hyper_aroma_1.HyperAroma {
     }
 }
 exports.HyperAromaArt = HyperAromaArt;
+class InfernapeArt extends infernape_1.Infernape {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_033_R_EN_LG.png';
+    }
+}
+exports.InfernapeArt = InfernapeArt;
 class IronLeavesArt extends iron_leaves_1.IronLeaves {
     constructor() {
         super(...arguments);

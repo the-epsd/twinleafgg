@@ -1,16 +1,18 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { GameMessage } from '../../game/game-message';
+import { GameLog, GameMessage } from '../../game/game-message';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
+import { StateUtils, ShowCardsPrompt } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
   let coinResult = false;
 
   // We will discard this card after prompt confirmation
@@ -34,6 +36,19 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       next();
     });
 
+    if (cards.length > 0) {
+      player.discard.moveCardsTo(cards, player.deck);
+      cards.forEach((card, index) => {
+        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+      });
+      if (cards.length > 0) {
+        state = store.prompt(state, new ShowCardsPrompt(
+          opponent.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          cards), () => state);
+      }
+    }
+
     player.deck.moveCardsTo(cards, player.hand);
   }
 
@@ -55,9 +70,9 @@ export class Pokeball extends TrainerCard {
 
   public setNumber: string = '185';
 
-  public name = 'Pokeball';
+  public name = 'Poké Ball';
 
-  public fullName: string = 'Pokeball SVI';
+  public fullName: string = 'Poké Ball SVI';
 
   public text: string = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' + 
   'you can\'t play this card.) Search your deck for a card and put it into ' + 

@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoruaArt = exports.ZoroarkArt = exports.XerosicsSchemeArt = exports.TerapagosexArt = exports.TapuBuluArt = exports.SlitherWingArt = exports.SeadraArt = exports.RowlettArt = exports.RevavroomexArt = exports.PowerHourglassArt = exports.PokeVitalAArt = exports.PecharuntexArt = exports.OkidogiexArt = exports.NoctowlArt = exports.NightlyStretcherArt = exports.NightTimeAcademyArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.KingdraexArt = exports.JaninesSecretTechniqueArt = exports.HoundourArt = exports.HoundoomArt = exports.HorseaArt = exports.HoothootArt = exports.HaxorusArt = exports.GlisteningCrystalArt = exports.GenesectArt = exports.FraxureArt = exports.FezandipitiexArt = exports.FanRotomArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.CufantArt = exports.CrispinArt = exports.CresseliaArt = exports.CopperajahArt = exports.ColresssObsessionArt = exports.CassiopeiaArt = exports.BloodmoonUrsalunaArt = exports.BindingMochiArt = exports.AxewArt = exports.AreaZeroUnderdepthsArt = exports.AbsolArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.XerosicsSchemeArt = exports.TerapagosexArt = exports.TapuBuluArt = exports.SlitherWingArt = exports.SeadraArt = exports.RowlettArt = exports.RevavroomexArt = exports.PowerHourglassArt = exports.PokeVitalAArt = exports.PecharuntexArt = exports.OkidogiexArt = exports.NoctowlArt = exports.NightlyStretcherArt = exports.NightTimeAcademyArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.KingdraexArt = exports.JaninesSecretTechniqueArt = exports.HoundourArt = exports.HoundoomArt = exports.HorseaArt = exports.HoothootArt = exports.HaxorusArt = exports.GlisteningCrystalArt = exports.GenesectArt = exports.FraxureArt = exports.FezandipitiexArt = exports.FanRotomArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.CufantArt = exports.CrispinArt = exports.CresseliaArt = exports.CopperajahArt = exports.ColresssObsessionArt = exports.CassiopeiaArt = exports.BriarArt = exports.BloodmoonUrsalunaArt = exports.BindingMochiArt = exports.AxewArt = exports.AreaZeroUnderdepthsArt = exports.AbsolArt = void 0;
 const absol_1 = require("./absol");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
 const axew_1 = require("./axew");
 const binding_mochi_1 = require("./binding-mochi");
 const bloodmoon_ursaluna_1 = require("./bloodmoon-ursaluna");
+const briar_1 = require("./briar");
 const cassiopeia_1 = require("./cassiopeia");
 const colresss_obsession_1 = require("./colresss-obsession");
 const copperajah_1 = require("./copperajah");
@@ -84,6 +85,13 @@ class BloodmoonUrsalunaArt extends bloodmoon_ursaluna_1.BloodmoonUrsaluna {
     }
 }
 exports.BloodmoonUrsalunaArt = BloodmoonUrsalunaArt;
+class BriarArt extends briar_1.Briar {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GQAkviMWoAAp8Y9?format=png&name=900x900';
+    }
+}
+exports.BriarArt = BriarArt;
 class CassiopeiaArt extends cassiopeia_1.Cassiopeia {
     constructor() {
         super(...arguments);

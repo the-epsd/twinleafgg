@@ -3,6 +3,7 @@ import { AreaZeroUnderdepths } from './area-zero-underdepths';
 import { Axew } from './axew';
 import { BindingMochi } from './binding-mochi';
 import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
+import { Briar } from './briar';
 import { Cassiopeia } from './cassiopeia';
 import { ColresssObsession } from './colresss-obsession';
 import { Copperajah } from './copperajah';
@@ -59,6 +60,9 @@ export declare class BindingMochiArt extends BindingMochi {
     cardImage: string;
 }
 export declare class BloodmoonUrsalunaArt extends BloodmoonUrsaluna {
+    cardImage: string;
+}
+export declare class BriarArt extends Briar {
     cardImage: string;
 }
 export declare class CassiopeiaArt extends Cassiopeia {

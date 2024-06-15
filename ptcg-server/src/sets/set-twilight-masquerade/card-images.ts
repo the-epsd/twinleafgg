@@ -61,6 +61,7 @@ import { ChiYu } from './chi-yu';
 import { JammingTower } from './jamming-tower';
 import { CornerstoneMaskOgerponex } from './cornerstone-mask-ogerpon-ex';
 import { BoomerangEnergy } from './boomerang-energy';
+import { Infernape } from './infernape';
 
 
 export class AggronArt extends Aggron {
@@ -193,6 +194,10 @@ export class HearthflameMaskOgerponexArt extends HearthflameMaskOgerponex {
 
 export class HyperAromaArt extends HyperAroma {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_152_R_EN_LG.png';
+}
+
+export class InfernapeArt extends Infernape {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_033_R_EN_LG.png';
 }
 
 export class IronLeavesArt extends IronLeaves {

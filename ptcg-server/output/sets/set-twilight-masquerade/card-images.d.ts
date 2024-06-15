@@ -60,6 +60,7 @@ import { ChiYu } from './chi-yu';
 import { JammingTower } from './jamming-tower';
 import { CornerstoneMaskOgerponex } from './cornerstone-mask-ogerpon-ex';
 import { BoomerangEnergy } from './boomerang-energy';
+import { Infernape } from './infernape';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -157,6 +158,9 @@ export declare class HearthflameMaskOgerponexArt extends HearthflameMaskOgerpone
     cardImage: string;
 }
 export declare class HyperAromaArt extends HyperAroma {
+    cardImage: string;
+}
+export declare class InfernapeArt extends Infernape {
     cardImage: string;
 }
 export declare class IronLeavesArt extends IronLeaves {

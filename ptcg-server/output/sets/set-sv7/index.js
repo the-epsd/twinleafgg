@@ -8,6 +8,7 @@ exports.setSV7 = [
     new card_images_1.AxewArt(),
     new card_images_1.BindingMochiArt(),
     new card_images_1.BloodmoonUrsalunaArt(),
+    new card_images_1.BriarArt(),
     new card_images_1.CassiopeiaArt(),
     new card_images_1.ColresssObsessionArt(),
     new card_images_1.CopperajahArt(),

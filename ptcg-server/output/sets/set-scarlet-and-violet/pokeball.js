@@ -8,8 +8,10 @@ const game_message_1 = require("../../game/game-message");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
 const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
+const game_1 = require("../../game");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
+    const opponent = game_1.StateUtils.getOpponent(state, player);
     let coinResult = false;
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
@@ -23,6 +25,15 @@ function* playCard(next, store, state, effect) {
             cards = selected || [];
             next();
         });
+        if (cards.length > 0) {
+            player.discard.moveCardsTo(cards, player.deck);
+            cards.forEach((card, index) => {
+                store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+            });
+            if (cards.length > 0) {
+                state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
+            }
+        }
         player.deck.moveCardsTo(cards, player.hand);
     }
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
@@ -38,8 +49,8 @@ class Pokeball extends trainer_card_1.TrainerCard {
         this.set = 'SVI';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '185';
-        this.name = 'Pokeball';
-        this.fullName = 'Pokeball SVI';
+        this.name = 'Poké Ball';
+        this.fullName = 'Poké Ball SVI';
         this.text = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' +
             'you can\'t play this card.) Search your deck for a card and put it into ' +
             'your hand. Shuffle your deck afterward.';

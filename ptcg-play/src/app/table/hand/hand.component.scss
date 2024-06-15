@@ -2,11 +2,12 @@
 
 $ptcg-hand-padding: map-get($padding, normal);
 $ptcg-hand-height: calc(var(--card-size) * #{$card-aspect-ratio} + #{4 * $ptcg-hand-padding});
+$ptcg-hand-max-margin: map-get($padding, normal);
 
 .ptcg-hand {
-  margin-bottom: -60px;
+  margin-bottom: -69px;
   display: flex;
-  height: 200px;
+  height: 215px;
   overflow: auto;
 }
 
@@ -60,15 +61,19 @@ ptcg-card {
   &:hover {
     transform: scale(1.25) translateY(-12.5px); // Add translateY(-10px) to slide up 10px
     z-index: 10;
-  }  
-}
+  }
 
-ptcg-card:first-child {
-  margin-left: $ptcg-hand-padding;
-}
+  @media (min-width: 1710px) {
+    width: 112px;
+  }
 
-ptcg-card:last-child {
-  margin-right: $ptcg-hand-padding;
+  @media (min-width: 1470px) and (max-width: 1709px) {
+    width: 82px;
+  }
+
+  @media (max-width: 1469px) {
+    width: 73px;
+  }
 }
 
 .ptcg-card-preview {

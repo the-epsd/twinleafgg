@@ -2,8 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Pikachu extends PokemonCard {
 
@@ -11,32 +11,31 @@ export class Pikachu extends PokemonCard {
 
   public cardType: CardType = CardType.LIGHTNING;
 
-  public hp: number = 70;
+  public hp: number = 50;
 
   public weakness = [{ type: CardType.FIGHTING }];
 
   public retreat = [ CardType.COLORLESS ];
 
-  public attacks = [
-    {
-      name: 'Random Spark',
-      cost: [ ],
-      damage: 10,
-      text: 'This attack does 10 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = 
+    [
+      {
+        name: 'Spark',
+        cost: [ CardType.LIGHTNING, CardType.LIGHTNING ],
+        damage: 20,
+        text: 'If your opponent has any Benched Pokémon, choose 1 of them and this attack does 10 damage to it. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      }
+    ];
 
-  public set: string = 'TEF';
-
-  public regulationMark = 'H';
+  public set: string = 'JU';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '51';
+  public setNumber: string = '60';
 
   public name: string = 'Pikachu';
 
-  public fullName: string = 'Pikachu TEF';
+  public fullName: string = 'Pikachu JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

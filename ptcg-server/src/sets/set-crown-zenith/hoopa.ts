@@ -13,7 +13,7 @@ export class Hoopa extends PokemonCard {
 
   public cardType: CardType = CardType.DARK;
 
-  public hp: number = 330;
+  public hp: number = 120;
 
   public weakness = [{ type: CardType.GRASS }];
 

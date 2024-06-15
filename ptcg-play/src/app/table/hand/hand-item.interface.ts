@@ -7,5 +7,5 @@ export interface HandItem {
   card: Card;
   index: number;
   scanUrl: string;
-  spec?: SortableSpec<HandItem, any>;
+  count?: number; // Add this line
 }

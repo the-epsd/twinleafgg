@@ -3,6 +3,7 @@ import { AreaZeroUnderdepths } from './area-zero-underdepths';
 import { Axew } from './axew';
 import { BindingMochi } from './binding-mochi';
 import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
+import { Briar } from './briar';
 import { Cassiopeia } from './cassiopeia';
 import { ColresssObsession } from './colresss-obsession';
 import { Copperajah } from './copperajah';
@@ -65,6 +66,10 @@ export class BindingMochiArt extends BindingMochi {
 
 export class BloodmoonUrsalunaArt extends BloodmoonUrsaluna {
   public cardImage = 'https://pokemonproxies.com/static/media/Bloodmoon_Ursaluna-025-6a.8576ad8a2465438f2477.png';
+}
+
+export class BriarArt extends Briar {
+  public cardImage = 'https://pbs.twimg.com/media/GQAkviMWoAAp8Y9?format=png&name=900x900';
 }
 
 export class CassiopeiaArt extends Cassiopeia {
