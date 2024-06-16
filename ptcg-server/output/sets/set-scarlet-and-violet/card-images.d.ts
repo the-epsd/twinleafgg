@@ -16,12 +16,14 @@ import { EnergySwitch } from './energy-switch';
 import { ExpShare } from './exp-share';
 import { Gardevoirex } from './gardevoir-ex';
 import { Growlithe } from './growlithe';
+import { Gyaradosex } from './gyarados-ex';
 import { Hawlucha } from './hawlucha';
 import { Jacq } from './jacq';
 import { Judge } from './judge';
 import { Katy } from './katy';
 import { Klefki } from './klefki';
 import { Koraidonex } from './koraidon-ex';
+import { Magikarp } from './magikarp';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { Magnezoneex } from './magnezone-ex';
@@ -108,6 +110,9 @@ export declare class GardevoirexArt extends Gardevoirex {
 export declare class GrowlitheArt extends Growlithe {
     cardImage: string;
 }
+export declare class GyaradosexArt extends Gyaradosex {
+    cardImage: string;
+}
 export declare class HawluchaArt extends Hawlucha {
     cardImage: string;
 }
@@ -124,6 +129,9 @@ export declare class KlefkiArt extends Klefki {
     cardImage: string;
 }
 export declare class KoraidonexArt extends Koraidonex {
+    cardImage: string;
+}
+export declare class MagikarpArt extends Magikarp {
     cardImage: string;
 }
 export declare class MagnemiteArt extends Magnemite {

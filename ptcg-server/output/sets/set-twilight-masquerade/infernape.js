@@ -62,12 +62,17 @@ class Infernape extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.TAR_GENERATOR_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
-            const filter = (card) => {
-                return card.superType === card_types_1.SuperType.ENERGY
-                    && card.energyType === card_types_1.EnergyType.BASIC
-                    && (card.name === 'Fighting Energy' || card.name === 'Fire Energy');
+            const filterType = {
+                superType: card_types_1.SuperType.ENERGY,
+                energyType: card_types_1.EnergyType.BASIC,
+                name: 'Fighting Energy',
             };
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], filter, { allowCancel: false, min: 1, max: 2 }), transfers => {
+            const filterType2 = {
+                superType: card_types_1.SuperType.ENERGY,
+                energyType: card_types_1.EnergyType.BASIC,
+                name: 'Fire Energy',
+            };
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], filterType || filterType2, { allowCancel: false, min: 1, max: 2 }), transfers => {
                 transfers = transfers || [];
                 player.marker.addMarker(this.TAR_GENERATOR_MARKER, this);
                 if (transfers.length === 0) {

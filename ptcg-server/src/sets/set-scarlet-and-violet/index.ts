@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AnnihilapeArt, ArmarougeArt, BanetteexArt, CharcadetArt, MankeyArt, NemonaArt, NestBallArt2, PrimeapeArt, RevavroomArt, RockyHelmetArt, ShuppetArt } from './card-images';
+import { AnnihilapeArt, ArcanineexArt, ArmarougeArt, BanetteexArt, CharcadetArt, GrowlitheArt, GyaradosexArt, MagikarpArt, MankeyArt, NemonaArt, NestBallArt2, PrimeapeArt, RevavroomArt, RockyHelmetArt, ShuppetArt } from './card-images';
 import { ArvenArt } from './card-images';
 import { BeachCourtArt } from './card-images';
 import { CrushingHammerArt } from './card-images';
@@ -46,11 +46,11 @@ import { UltraBallArt } from './card-images';
 import { VitalityBandArt } from './card-images';
 import { YoungsterArt } from './card-images';
 import { ArmarougeIR, ArvenFA, ArvenSIR, FightingEnergyHR, GardevoirexFA, GardevoirexSIR, JacqFA, JacqSIR, KatyFA, KoraidonexFA, KoraidonexHR, KoraidonexSIR, LightningEnergyHR, MagnezoneexFA, MiraidonexFA, MiraidonexHR, MiraidonexSIR, MiriamFA, MiriamSIR, NestBallHR, PennyFA, PennySIR, ProfessorsResearchFA1, ProfessorsResearchFA2, RaltsIR, RareCandyHR, SkwovetIR, TeamStarGruntFA } from './full-arts';
-import { Growlithe } from './growlithe';
 
 
 export const setScarletAndViolet: Card[] = [
   new AnnihilapeArt(),
+  new ArcanineexArt(),
   new ArmarougeArt(),
   new ArvenArt(),
   new BeachCourtArt(),
@@ -65,12 +65,15 @@ export const setScarletAndViolet: Card[] = [
   new EnergySwitchArt(),
   new ExpShareArt(),
   new GardevoirexArt(),
+  new GrowlitheArt(),
+  new GyaradosexArt(),
   new HawluchaArt(),
   new JacqArt(),
   new JudgeArt(),
   new KatyArt(),
   new KlefkiArt(),
   new KoraidonexArt(),
+  new MagikarpArt(),
   new MagnemiteArt(),
   new MagnetonArt(),
   new MagnezoneexArt(),
@@ -137,6 +140,5 @@ export const setScarletAndViolet: Card[] = [
   new TeamStarGruntFA(),
 
   new NestBallArt2(),
-  new Growlithe(),
 ];
   

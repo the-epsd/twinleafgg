@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RevavroomArt = exports.RareCandyArt = exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PrimeapeArt = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MankeyArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GrowlitheArt = exports.GardevoirexArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CharcadetArt = exports.BeachCourtArt = exports.BanetteexArt = exports.ArvenArt = exports.ArmarougeArt = exports.ArcanineexArt = exports.AnnihilapeArt = void 0;
-exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SkwovetArt = exports.ShuppetArt = void 0;
+exports.RockChestplateArt = exports.RevavroomArt = exports.RareCandyArt = exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PrimeapeArt = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MankeyArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.MagikarpArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GyaradosexArt = exports.GrowlitheArt = exports.GardevoirexArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CharcadetArt = exports.BeachCourtArt = exports.BanetteexArt = exports.ArvenArt = exports.ArmarougeArt = exports.ArcanineexArt = exports.AnnihilapeArt = void 0;
+exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SkwovetArt = exports.ShuppetArt = exports.ScovillainArt = exports.RockyHelmetArt = void 0;
 const annihilape_1 = require("./annihilape");
 const arcanine_ex_1 = require("./arcanine-ex");
 const armarouge_1 = require("./armarouge");
@@ -20,12 +20,14 @@ const energy_switch_1 = require("./energy-switch");
 const exp_share_1 = require("./exp-share");
 const gardevoir_ex_1 = require("./gardevoir-ex");
 const growlithe_1 = require("./growlithe");
+const gyarados_ex_1 = require("./gyarados-ex");
 const hawlucha_1 = require("./hawlucha");
 const jacq_1 = require("./jacq");
 const judge_1 = require("./judge");
 const katy_1 = require("./katy");
 const klefki_1 = require("./klefki");
 const koraidon_ex_1 = require("./koraidon-ex");
+const magikarp_1 = require("./magikarp");
 const magnemite_1 = require("./magnemite");
 const magneton_1 = require("./magneton");
 const magnezone_ex_1 = require("./magnezone-ex");
@@ -184,6 +186,13 @@ class GrowlitheArt extends growlithe_1.Growlithe {
     }
 }
 exports.GrowlitheArt = GrowlitheArt;
+class GyaradosexArt extends gyarados_ex_1.Gyaradosex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_045_R_EN_LG.png';
+    }
+}
+exports.GyaradosexArt = GyaradosexArt;
 class HawluchaArt extends hawlucha_1.Hawlucha {
     constructor() {
         super(...arguments);
@@ -226,6 +235,13 @@ class KoraidonexArt extends koraidon_ex_1.Koraidonex {
     }
 }
 exports.KoraidonexArt = KoraidonexArt;
+class MagikarpArt extends magikarp_1.Magikarp {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_044_R_EN_LG.png';
+    }
+}
+exports.MagikarpArt = MagikarpArt;
 class MagnemiteArt extends magnemite_1.Magnemite {
     constructor() {
         super(...arguments);
