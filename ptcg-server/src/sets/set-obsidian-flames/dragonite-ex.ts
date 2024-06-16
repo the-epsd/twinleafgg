@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -15,7 +15,7 @@ export class Dragoniteex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
 
   public stage: Stage = Stage.STAGE_2;
 
@@ -81,34 +81,17 @@ export class Dragoniteex extends PokemonCard {
     if (effect instanceof PutDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       // Target is not Active
       if (effect.target === player.active || effect.target === opponent.active) {
         return state;
       }
-  
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-  
-      // Target is this Squirtle
+
+      // Target is this Pokemon
       if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const powerEffect = new PowerEffect(player, this.powers[0], this);
-          store.reduceEffect(state, powerEffect);
-        } catch {
-          return state;
-        }
-  
         effect.preventDefault = true;
       }
     }
-  
     return state;
   }
 }

@@ -46,6 +46,8 @@ import { UltraBallArt } from './card-images';
 import { VitalityBandArt } from './card-images';
 import { YoungsterArt } from './card-images';
 import { ArmarougeIR, ArvenFA, ArvenSIR, FightingEnergyHR, GardevoirexFA, GardevoirexSIR, JacqFA, JacqSIR, KatyFA, KoraidonexFA, KoraidonexHR, KoraidonexSIR, LightningEnergyHR, MagnezoneexFA, MiraidonexFA, MiraidonexHR, MiraidonexSIR, MiriamFA, MiriamSIR, NestBallHR, PennyFA, PennySIR, ProfessorsResearchFA1, ProfessorsResearchFA2, RaltsIR, RareCandyHR, SkwovetIR, TeamStarGruntFA } from './full-arts';
+import { Growlithe } from './growlithe';
+
 
 export const setScarletAndViolet: Card[] = [
   new AnnihilapeArt(),
@@ -135,6 +137,6 @@ export const setScarletAndViolet: Card[] = [
   new TeamStarGruntFA(),
 
   new NestBallArt2(),
-
+  new Growlithe(),
 ];
   

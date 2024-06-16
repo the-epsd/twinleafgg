@@ -46,7 +46,9 @@ export class RapidStrikeEnergy extends EnergyCard {
       }
 
       if (pokemon.getPokemonCard()?.tags.includes(CardTag.RAPID_STRIKE)) {
-        effect.energyMap.push({ card: this, provides: [ CardType.FIGHTING, CardType.WATER] });
+        effect.energyMap.push({ card: this, provides: 
+          [CardType.WATER, CardType.FIGHTING || CardType.WATER, CardType.WATER || CardType.FIGHTING, CardType.FIGHTING] // 2 Fighting
+        });
       }
       return state;
     }

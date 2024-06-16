@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SpecialCondition, SuperType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, EnergyCard, GameError, GameMessage, PlayerType, AttachEnergyPrompt, SlotType, StateUtils } from '../../game';
+import { StoreLike, State, EnergyCard, GameError, GameMessage, PlayerType, AttachEnergyPrompt, SlotType, StateUtils, FilterType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -10,7 +10,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../game/
 
 export class Infernape extends PokemonCard {
 
-  public stage: Stage = Stage.STAGE_2;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom: string = 'Monferno';
 
@@ -68,13 +68,13 @@ export class Infernape extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      const hasEnergyInHand = player.hand.cards.some(c => {
+      const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
           && c.energyType === EnergyType.BASIC
           && (c.provides.includes(CardType.FIGHTING) || c.provides.includes(CardType.FIRE));
       });
 
-      if (!hasEnergyInHand) {
+      if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -82,23 +82,27 @@ export class Infernape extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      const blocked: number[] = [];
-      player.hand.cards.forEach((card, index) => {
-        if(card instanceof EnergyCard && card.energyType === EnergyType.BASIC && !card.provides.includes(CardType.FIGHTING) && !card.provides.includes(CardType.FIRE)) {
-          blocked.push(index);
-        }
-      });
+      const filterType: FilterType = {
+        superType: SuperType.ENERGY,
+        energyType: EnergyType.BASIC,
+        name: 'Fighting Energy',
+      };
+      const filterType2: FilterType = {
+        superType: SuperType.ENERGY,
+        energyType: EnergyType.BASIC,
+        name: 'Fire Energy',
+      };
 
       state = store.prompt(
         state,
         new AttachEnergyPrompt(
           player.id,
           GameMessage.ATTACH_ENERGY_CARDS,
-          player.hand,
+          player.discard,
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH, SlotType.ACTIVE],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { allowCancel: false, min: 1, max: 2, blocked }
+          filterType || filterType2,
+          { allowCancel: false, min: 1, max: 2 }
         ), transfers => {
           transfers = transfers || [];
 
@@ -116,7 +120,7 @@ export class Infernape extends PokemonCard {
 
           for (const transfer of transfers) {
             const target = StateUtils.getTarget(state, player, transfer.to);
-            player.hand.moveCardTo(transfer.card, target);
+            player.discard.moveCardTo(transfer.card, target);
 
             player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
               if (cardList.getPokemonCard() === this) {

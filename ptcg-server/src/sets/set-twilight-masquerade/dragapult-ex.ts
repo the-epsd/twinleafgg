@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { DamageMap } from '../../game/store/prompts/move-damage-prompt';
@@ -100,30 +100,14 @@ export class Dragapultex extends PokemonCard {
     if (effect instanceof PutDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       // Target is not Active
       if (effect.target === player.active || effect.target === opponent.active) {
         return state;
       }
-  
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[1], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-  
-      // Target is this Charizard
+
+      // Target is this Pokemon
       if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const powerEffect = new PowerEffect(player, this.powers[1], this);
-          store.reduceEffect(state, powerEffect);
-        } catch {
-          return state;
-        }
-  
         effect.preventDefault = true;
       }
     }

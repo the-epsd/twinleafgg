@@ -3,7 +3,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { Card, ChooseEnergyPrompt, ChoosePokemonPrompt, ConfirmPrompt, GameError, GameMessage, PlayerType, PokemonCard, ShuffleDeckPrompt, SlotType, StateUtils } from '../../game';
-import { AttackEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -128,24 +128,8 @@ export class WellspringMaskOgerponex extends PokemonCard {
         return state;
       }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[1], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-
-      // Target is this Ogerpon
+      // Target is this Pokemon
       if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const powerEffect = new PowerEffect(player, this.powers[1], this);
-          store.reduceEffect(state, powerEffect);
-        } catch {
-          return state;
-        }
-
         effect.preventDefault = true;
       }
     }

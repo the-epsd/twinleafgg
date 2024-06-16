@@ -1,4 +1,5 @@
 import { Annihilape } from './annihilape';
+import { Arcanineex } from './arcanine-ex';
 import { Armarouge } from './armarouge';
 import { Arven } from './arven';
 import { Banetteex } from './banette-ex';
@@ -14,6 +15,7 @@ import { EnergySearch } from './energy-search';
 import { EnergySwitch } from './energy-switch';
 import { ExpShare } from './exp-share';
 import { Gardevoirex } from './gardevoir-ex';
+import { Growlithe } from './growlithe';
 import { Hawlucha } from './hawlucha';
 import { Jacq } from './jacq';
 import { Judge } from './judge';
@@ -53,6 +55,9 @@ import { UltraBall } from './ultra-ball';
 import { VitalityBand } from './vitality-band';
 import { Youngster } from './youngster';
 export declare class AnnihilapeArt extends Annihilape {
+    cardImage: string;
+}
+export declare class ArcanineexArt extends Arcanineex {
     cardImage: string;
 }
 export declare class ArmarougeArt extends Armarouge {
@@ -98,6 +103,9 @@ export declare class ExpShareArt extends ExpShare {
     cardImage: string;
 }
 export declare class GardevoirexArt extends Gardevoirex {
+    cardImage: string;
+}
+export declare class GrowlitheArt extends Growlithe {
     cardImage: string;
 }
 export declare class HawluchaArt extends Hawlucha {

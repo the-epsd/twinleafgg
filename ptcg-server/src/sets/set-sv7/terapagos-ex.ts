@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Terapagosex extends PokemonCard {
@@ -83,30 +83,14 @@ export class Terapagosex extends PokemonCard {
     if (effect instanceof PutDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       // Target is not Active
       if (effect.target === player.active || effect.target === opponent.active) {
         return state;
       }
-  
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[1], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-  
-      // Target is this Terapagos
+
+      // Target is this Pokemon
       if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const powerEffect = new PowerEffect(player, this.powers[1], this);
-          store.reduceEffect(state, powerEffect);
-        } catch {
-          return state;
-        }
-  
         effect.preventDefault = true;
       }
     }

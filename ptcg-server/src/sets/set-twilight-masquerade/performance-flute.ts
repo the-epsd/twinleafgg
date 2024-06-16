@@ -65,7 +65,12 @@ export class PerformanceFlute extends TrainerCard {
       
         // Operation canceled by the user
         if (cards.length === 0) {
-          return state;
+          deckTop.moveTo(opponent.deck);
+          
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+            return state;
+          });
         }
       
         cards.forEach((card, index) => {

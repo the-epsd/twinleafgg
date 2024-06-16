@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SkwovetArt = exports.ShuppetArt = exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RevavroomArt = exports.RareCandyArt = exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PrimeapeArt = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MankeyArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GardevoirexArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CharcadetArt = exports.BeachCourtArt = exports.BanetteexArt = exports.ArvenArt = exports.ArmarougeArt = exports.AnnihilapeArt = void 0;
-exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.TeamStarGruntArt = exports.SwitchArt = void 0;
+exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RevavroomArt = exports.RareCandyArt = exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PrimeapeArt = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MankeyArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GrowlitheArt = exports.GardevoirexArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CharcadetArt = exports.BeachCourtArt = exports.BanetteexArt = exports.ArvenArt = exports.ArmarougeArt = exports.ArcanineexArt = exports.AnnihilapeArt = void 0;
+exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SkwovetArt = exports.ShuppetArt = void 0;
 const annihilape_1 = require("./annihilape");
+const arcanine_ex_1 = require("./arcanine-ex");
 const armarouge_1 = require("./armarouge");
 const arven_1 = require("./arven");
 const banette_ex_1 = require("./banette-ex");
@@ -18,6 +19,7 @@ const energy_search_1 = require("./energy-search");
 const energy_switch_1 = require("./energy-switch");
 const exp_share_1 = require("./exp-share");
 const gardevoir_ex_1 = require("./gardevoir-ex");
+const growlithe_1 = require("./growlithe");
 const hawlucha_1 = require("./hawlucha");
 const jacq_1 = require("./jacq");
 const judge_1 = require("./judge");
@@ -63,6 +65,13 @@ class AnnihilapeArt extends annihilape_1.Annihilape {
     }
 }
 exports.AnnihilapeArt = AnnihilapeArt;
+class ArcanineexArt extends arcanine_ex_1.Arcanineex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_032_R_EN_LG.png';
+    }
+}
+exports.ArcanineexArt = ArcanineexArt;
 class ArmarougeArt extends armarouge_1.Armarouge {
     constructor() {
         super(...arguments);
@@ -168,6 +177,13 @@ class GardevoirexArt extends gardevoir_ex_1.Gardevoirex {
     }
 }
 exports.GardevoirexArt = GardevoirexArt;
+class GrowlitheArt extends growlithe_1.Growlithe {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_030_R_EN_LG.png';
+    }
+}
+exports.GrowlitheArt = GrowlitheArt;
 class HawluchaArt extends hawlucha_1.Hawlucha {
     constructor() {
         super(...arguments);

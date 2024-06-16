@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -8,6 +8,8 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 
 export class Espathraex extends PokemonCard {
+
+  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
 
   public stage: Stage = Stage.STAGE_1;
 
@@ -90,31 +92,13 @@ export class Espathraex extends PokemonCard {
           return state;
         }
   
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const powerEffect = new PowerEffect(player, this.powers[1], this);
-          store.reduceEffect(state, powerEffect);
-        } catch {
-          return state;
-        }
-  
-        // Target is this Espathra
+        // Target is this Pokemon
         if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-          // Try to reduce PowerEffect, to check if something is blocking our ability
-          try {
-            const powerEffect = new PowerEffect(player, this.powers[1], this);
-            store.reduceEffect(state, powerEffect);
-          } catch {
-            return state;
-          }
-  
           effect.preventDefault = true;
         }
-        return state;
       }
       return state;
     }
     return state;
   }
-
 }

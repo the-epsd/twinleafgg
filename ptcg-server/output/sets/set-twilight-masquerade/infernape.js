@@ -12,7 +12,7 @@ const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Infernape extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.STAGE_2;
+        this.stage = card_types_1.Stage.BASIC;
         this.evolvesFrom = 'Monferno';
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.FIRE;
@@ -51,24 +51,23 @@ class Infernape extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            const hasEnergyInHand = player.hand.cards.some(c => {
+            const hasEnergyInDiscard = player.discard.cards.some(c => {
                 return c instanceof game_1.EnergyCard
                     && c.energyType === card_types_1.EnergyType.BASIC
                     && (c.provides.includes(card_types_1.CardType.FIGHTING) || c.provides.includes(card_types_1.CardType.FIRE));
             });
-            if (!hasEnergyInHand) {
+            if (!hasEnergyInDiscard) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             if (player.marker.hasMarker(this.TAR_GENERATOR_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
-            const blocked = [];
-            player.hand.cards.forEach((card, index) => {
-                if (card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC && !card.provides.includes(card_types_1.CardType.FIGHTING) && !card.provides.includes(card_types_1.CardType.FIRE)) {
-                    blocked.push(index);
-                }
-            });
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 1, max: 2, blocked }), transfers => {
+            const filter = (card) => {
+                return card.superType === card_types_1.SuperType.ENERGY
+                    && card.energyType === card_types_1.EnergyType.BASIC
+                    && (card.name === 'Fighting Energy' || card.name === 'Fire Energy');
+            };
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], filter, { allowCancel: false, min: 1, max: 2 }), transfers => {
                 transfers = transfers || [];
                 player.marker.addMarker(this.TAR_GENERATOR_MARKER, this);
                 if (transfers.length === 0) {
@@ -81,7 +80,7 @@ class Infernape extends pokemon_card_1.PokemonCard {
                 }
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    player.hand.moveCardTo(transfer.card, target);
+                    player.discard.moveCardTo(transfer.card, target);
                     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                         if (cardList.getPokemonCard() === this) {
                             cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);

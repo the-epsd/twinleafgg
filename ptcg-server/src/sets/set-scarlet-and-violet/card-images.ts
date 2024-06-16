@@ -1,4 +1,5 @@
 import { Annihilape } from './annihilape';
+import { Arcanineex } from './arcanine-ex';
 import { Armarouge } from './armarouge';
 import { Arven } from './arven';
 import { Banetteex } from './banette-ex';
@@ -14,6 +15,7 @@ import { EnergySearch } from './energy-search';
 import { EnergySwitch } from './energy-switch';
 import { ExpShare } from './exp-share';
 import { Gardevoirex } from './gardevoir-ex';
+import { Growlithe } from './growlithe';
 import { Hawlucha } from './hawlucha';
 import { Jacq } from './jacq';
 import { Judge } from './judge';
@@ -55,6 +57,10 @@ import { Youngster } from './youngster';
 
 export class AnnihilapeArt extends Annihilape {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_109_R_EN_LG.png';
+}
+
+export class ArcanineexArt extends Arcanineex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_032_R_EN_LG.png';
 }
 
 export class ArmarougeArt extends Armarouge {
@@ -115,6 +121,10 @@ export class ExpShareArt extends ExpShare {
 
 export class GardevoirexArt extends Gardevoirex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_086_R_EN_LG.png';
+}
+
+export class GrowlitheArt extends Growlithe {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_030_R_EN_LG.png';
 }
 
 export class HawluchaArt extends Hawlucha {

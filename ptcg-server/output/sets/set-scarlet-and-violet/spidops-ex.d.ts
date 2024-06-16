@@ -1,11 +1,8 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Espathraex extends PokemonCard {
-    tags: CardTag[];
+export declare class Spidopsex extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
@@ -14,7 +11,6 @@ export declare class Espathraex extends PokemonCard {
     retreat: CardType[];
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];
@@ -22,12 +18,12 @@ export declare class Espathraex extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
-    regulationMark: string;
+    set: string;
     cardImage: string;
     setNumber: string;
-    set: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

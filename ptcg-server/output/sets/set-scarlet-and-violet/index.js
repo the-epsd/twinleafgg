@@ -48,6 +48,7 @@ const card_images_44 = require("./card-images");
 const card_images_45 = require("./card-images");
 const card_images_46 = require("./card-images");
 const full_arts_1 = require("./full-arts");
+const growlithe_1 = require("./growlithe");
 exports.setScarletAndViolet = [
     new card_images_1.AnnihilapeArt(),
     new card_images_1.ArmarougeArt(),
@@ -134,4 +135,5 @@ exports.setScarletAndViolet = [
     new full_arts_1.SkwovetIR(),
     new full_arts_1.TeamStarGruntFA(),
     new card_images_1.NestBallArt2(),
+    new growlithe_1.Growlithe(),
 ];
