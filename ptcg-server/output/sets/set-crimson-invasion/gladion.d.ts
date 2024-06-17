@@ -1,8 +1,7 @@
 import { CardList, State, StoreLike, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class HisuianHeavyBall extends TrainerCard {
+export declare class Gladion extends TrainerCard {
     trainerType: TrainerType;
-    regulationMark: string;
     set: string;
     name: string;
     cardImage: string;
