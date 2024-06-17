@@ -89,6 +89,7 @@ class Coalossal extends pokemon_card_1.PokemonCard {
                             blocked.push(index);
                         }
                     });
+                    console.log(blocked);
                     if (option.value === 1) {
                         state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 2, blocked }), transfers => {
                             transfers = transfers || [];

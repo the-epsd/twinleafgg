@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.ViridianForestArt = exports.PokemonCommunicationArt = exports.LaprasArt = exports.DragoniteArt = void 0;
+exports.ZapdosArt = exports.ViridianForestArt = exports.PokemonCommunicationArt = exports.LaprasArt = exports.JirachiArt = exports.DragoniteArt = void 0;
 const dragonite_1 = require("./dragonite");
+const jirachi_1 = require("./jirachi");
 const lapras_1 = require("./lapras");
 const pokemon_communication_1 = require("./pokemon-communication");
 const viridian_forest_1 = require("./viridian-forest");
@@ -13,6 +14,13 @@ class DragoniteArt extends dragonite_1.Dragonite {
     }
 }
 exports.DragoniteArt = DragoniteArt;
+class JirachiArt extends jirachi_1.Jirachi {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_099_R_EN_LG.png';
+    }
+}
+exports.JirachiArt = JirachiArt;
 class LaprasArt extends lapras_1.Lapras {
     constructor() {
         super(...arguments);
