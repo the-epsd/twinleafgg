@@ -5,9 +5,9 @@ $ptcg-hand-height: calc(var(--card-size) * #{$card-aspect-ratio} + #{4 * $ptcg-h
 $ptcg-hand-max-margin: map-get($padding, normal);
 
 .ptcg-hand {
-  margin-bottom: -69px;
+  margin-bottom: -60px;
   display: flex;
-  height: 215px;
+  height: 170px;
   overflow: auto;
 }
 
@@ -49,7 +49,7 @@ ptcg-badge {
 
 ptcg-card {
   flex: 0 0 auto;
-  width: 100px;
+  width: 92px;
   padding: 3px;
 
   &.draggable {
@@ -59,20 +59,8 @@ ptcg-card {
   transition: transform .2s;
   
   &:hover {
-    transform: scale(1.25) translateY(-12.5px); // Add translateY(-10px) to slide up 10px
+    transform: scale(1.15) translateY(-12.5px); // Add translateY(-10px) to slide up 10px
     z-index: 10;
-  }
-
-  @media (min-width: 1710px) {
-    width: 91px;
-  }
-
-  @media (min-width: 1470px) and (max-width: 1709px) {
-    width: 82px;
-  }
-
-  @media (max-width: 1469px) {
-    width: 73px;
   }
 }
 

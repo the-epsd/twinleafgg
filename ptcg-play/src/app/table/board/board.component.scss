@@ -9,17 +9,6 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   overflow: hidden;
 z-index: 0;
 
-@media (min-width: 1710px) {
-  zoom: 100%;
-}
-
-@media (min-width: 1470px) and (max-width: 1709px) {
-  zoom: 80%;
-}
-
-@media (max-width: 1469px) {
-  zoom: 70%;
-  }
 }
 
 * {

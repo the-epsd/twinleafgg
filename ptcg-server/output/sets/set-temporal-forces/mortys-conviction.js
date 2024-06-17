@@ -37,7 +37,8 @@ function* playCard(next, store, state, self, effect) {
     });
     player.hand.moveCardsTo(cards, player.discard);
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-    const cardsToDraw = opponent.bench.length;
+    const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+    const cardsToDraw = opponentBenched;
     player.deck.moveTo(player.hand, cardsToDraw);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     player.supporterTurn = 1;

@@ -1,4 +1,5 @@
 import { Annihilape } from './annihilape';
+import { Arcanineex } from './arcanine-ex';
 import { Armarouge } from './armarouge';
 import { Arven } from './arven';
 import { Banetteex } from './banette-ex';
@@ -14,12 +15,15 @@ import { EnergySearch } from './energy-search';
 import { EnergySwitch } from './energy-switch';
 import { ExpShare } from './exp-share';
 import { Gardevoirex } from './gardevoir-ex';
+import { Growlithe } from './growlithe';
+import { Gyaradosex } from './gyarados-ex';
 import { Hawlucha } from './hawlucha';
 import { Jacq } from './jacq';
 import { Judge } from './judge';
 import { Katy } from './katy';
 import { Klefki } from './klefki';
 import { Koraidonex } from './koraidon-ex';
+import { Magikarp } from './magikarp';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { Magnezoneex } from './magnezone-ex';
@@ -53,6 +57,9 @@ import { UltraBall } from './ultra-ball';
 import { VitalityBand } from './vitality-band';
 import { Youngster } from './youngster';
 export declare class AnnihilapeArt extends Annihilape {
+    cardImage: string;
+}
+export declare class ArcanineexArt extends Arcanineex {
     cardImage: string;
 }
 export declare class ArmarougeArt extends Armarouge {
@@ -100,6 +107,12 @@ export declare class ExpShareArt extends ExpShare {
 export declare class GardevoirexArt extends Gardevoirex {
     cardImage: string;
 }
+export declare class GrowlitheArt extends Growlithe {
+    cardImage: string;
+}
+export declare class GyaradosexArt extends Gyaradosex {
+    cardImage: string;
+}
 export declare class HawluchaArt extends Hawlucha {
     cardImage: string;
 }
@@ -116,6 +129,9 @@ export declare class KlefkiArt extends Klefki {
     cardImage: string;
 }
 export declare class KoraidonexArt extends Koraidonex {
+    cardImage: string;
+}
+export declare class MagikarpArt extends Magikarp {
     cardImage: string;
 }
 export declare class MagnemiteArt extends Magnemite {

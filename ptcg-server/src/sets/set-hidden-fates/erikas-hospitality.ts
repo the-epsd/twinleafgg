@@ -22,7 +22,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  if (player.hand.cards.length < 4) {
+  const cards = player.hand.cards.filter(c => c !== effect.trainerCard);
+
+  if (cards.length > 4) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
@@ -34,7 +36,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
 
   const opponent = StateUtils.getOpponent(state, player);
-  const cardsToDraw = opponent.bench.length + opponent.active.cards.length;
+  const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+  const cardsToDraw = opponentBenched + 1;
 
   player.deck.moveTo(player.hand, cardsToDraw);
 

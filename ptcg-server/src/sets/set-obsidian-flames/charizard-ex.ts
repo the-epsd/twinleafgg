@@ -118,7 +118,6 @@ export class Charizardex extends PokemonCard {
       effect.damage = this.attacks[0].damage + (prizesTaken * damagePerPrize);
     }
 
-
     if (effect instanceof PutDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -128,24 +127,8 @@ export class Charizardex extends PokemonCard {
         return state;
       }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[1], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-
-      // Target is this Charizard
+      // Target is this Pokemon
       if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const powerEffect = new PowerEffect(player, this.powers[1], this);
-          store.reduceEffect(state, powerEffect);
-        } catch {
-          return state;
-        }
-
         effect.preventDefault = true;
       }
     }

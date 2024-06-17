@@ -86,24 +86,8 @@ class CornerstoneMaskOgerponex extends pokemon_card_1.PokemonCard {
             if (effect.target === player.active || effect.target === opponent.active) {
                 return state;
             }
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[1], this);
-                store.reduceEffect(state, powerEffect);
-            }
-            catch (_b) {
-                return state;
-            }
-            // Target is this Charizard
+            // Target is this Pokemon
             if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-                // Try to reduce PowerEffect, to check if something is blocking our ability
-                try {
-                    const powerEffect = new game_effects_1.PowerEffect(player, this.powers[1], this);
-                    store.reduceEffect(state, powerEffect);
-                }
-                catch (_c) {
-                    return state;
-                }
                 effect.preventDefault = true;
             }
         }

@@ -16,7 +16,8 @@ function* playCard(next, store, state, self, effect) {
     player.hand.moveCardTo(effect.trainerCard, player.supporter);
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
-    if (player.hand.cards.length < 4) {
+    const cards = player.hand.cards.filter(c => c !== effect.trainerCard);
+    if (cards.length > 4) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     if (player.deck.cards.length === 0) {
@@ -25,7 +26,8 @@ function* playCard(next, store, state, self, effect) {
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-    const cardsToDraw = opponent.bench.length + opponent.active.cards.length;
+    const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+    const cardsToDraw = opponentBenched + 1;
     player.deck.moveTo(player.hand, cardsToDraw);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     player.supporterTurn = 1;

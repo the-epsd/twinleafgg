@@ -50,6 +50,7 @@ const card_images_46 = require("./card-images");
 const full_arts_1 = require("./full-arts");
 exports.setScarletAndViolet = [
     new card_images_1.AnnihilapeArt(),
+    new card_images_1.ArcanineexArt(),
     new card_images_1.ArmarougeArt(),
     new card_images_2.ArvenArt(),
     new card_images_3.BeachCourtArt(),
@@ -64,12 +65,15 @@ exports.setScarletAndViolet = [
     new card_images_11.EnergySwitchArt(),
     new card_images_12.ExpShareArt(),
     new card_images_13.GardevoirexArt(),
+    new card_images_1.GrowlitheArt(),
+    new card_images_1.GyaradosexArt(),
     new card_images_14.HawluchaArt(),
     new card_images_15.JacqArt(),
     new card_images_16.JudgeArt(),
     new card_images_17.KatyArt(),
     new card_images_18.KlefkiArt(),
     new card_images_19.KoraidonexArt(),
+    new card_images_1.MagikarpArt(),
     new card_images_20.MagnemiteArt(),
     new card_images_21.MagnetonArt(),
     new card_images_22.MagnezoneexArt(),

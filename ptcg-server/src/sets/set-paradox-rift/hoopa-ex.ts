@@ -5,7 +5,7 @@ import { StoreLike, State,
   EnergyCard,
   StateUtils} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
@@ -15,7 +15,7 @@ export class Hoopaex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
 
   public stage: Stage = Stage.BASIC;
 
@@ -96,30 +96,14 @@ export class Hoopaex extends PokemonCard {
     if (effect instanceof PutDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       // Target is not Active
       if (effect.target === player.active || effect.target === opponent.active) {
         return state;
       }
-  
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[1], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-  
-      // Target is this Hoopa
+
+      // Target is this Pokemon
       if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const powerEffect = new PowerEffect(player, this.powers[1], this);
-          store.reduceEffect(state, powerEffect);
-        } catch {
-          return state;
-        }
-  
         effect.preventDefault = true;
       }
     }

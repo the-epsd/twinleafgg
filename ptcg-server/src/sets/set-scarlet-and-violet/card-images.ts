@@ -1,4 +1,5 @@
 import { Annihilape } from './annihilape';
+import { Arcanineex } from './arcanine-ex';
 import { Armarouge } from './armarouge';
 import { Arven } from './arven';
 import { Banetteex } from './banette-ex';
@@ -14,12 +15,15 @@ import { EnergySearch } from './energy-search';
 import { EnergySwitch } from './energy-switch';
 import { ExpShare } from './exp-share';
 import { Gardevoirex } from './gardevoir-ex';
+import { Growlithe } from './growlithe';
+import { Gyaradosex } from './gyarados-ex';
 import { Hawlucha } from './hawlucha';
 import { Jacq } from './jacq';
 import { Judge } from './judge';
 import { Katy } from './katy';
 import { Klefki } from './klefki';
 import { Koraidonex } from './koraidon-ex';
+import { Magikarp } from './magikarp';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { Magnezoneex } from './magnezone-ex';
@@ -55,6 +59,10 @@ import { Youngster } from './youngster';
 
 export class AnnihilapeArt extends Annihilape {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_109_R_EN_LG.png';
+}
+
+export class ArcanineexArt extends Arcanineex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_032_R_EN_LG.png';
 }
 
 export class ArmarougeArt extends Armarouge {
@@ -117,6 +125,14 @@ export class GardevoirexArt extends Gardevoirex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_086_R_EN_LG.png';
 }
 
+export class GrowlitheArt extends Growlithe {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_030_R_EN_LG.png';
+}
+
+export class GyaradosexArt extends Gyaradosex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_045_R_EN_LG.png';
+}
+
 export class HawluchaArt extends Hawlucha {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_118_R_EN_LG.png';
 }
@@ -139,6 +155,10 @@ export class KlefkiArt extends Klefki {
 
 export class KoraidonexArt extends Koraidonex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_125_R_EN_LG.png';
+}
+
+export class MagikarpArt extends Magikarp {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_044_R_EN_LG.png';
 }
 
 export class MagnemiteArt extends Magnemite {

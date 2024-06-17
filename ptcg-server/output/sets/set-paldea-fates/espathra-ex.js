@@ -10,6 +10,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Espathraex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
+        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Flittle';
         this.cardType = card_types_1.CardType.GRASS;
@@ -66,27 +67,10 @@ class Espathraex extends pokemon_card_1.PokemonCard {
                 if (effect.target === player.active || effect.target === opponent.active) {
                     return state;
                 }
-                // Try to reduce PowerEffect, to check if something is blocking our ability
-                try {
-                    const powerEffect = new game_effects_1.PowerEffect(player, this.powers[1], this);
-                    store.reduceEffect(state, powerEffect);
-                }
-                catch (_a) {
-                    return state;
-                }
-                // Target is this Espathra
+                // Target is this Pokemon
                 if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-                    // Try to reduce PowerEffect, to check if something is blocking our ability
-                    try {
-                        const powerEffect = new game_effects_1.PowerEffect(player, this.powers[1], this);
-                        store.reduceEffect(state, powerEffect);
-                    }
-                    catch (_b) {
-                        return state;
-                    }
                     effect.preventDefault = true;
                 }
-                return state;
             }
             return state;
         }
