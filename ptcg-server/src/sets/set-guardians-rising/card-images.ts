@@ -1,9 +1,14 @@
 import { AlolanVulpix } from './alolan-vulpix';
 import { EnhancedHammer } from './enhanced-hammer';
+import { Mallow } from './mallow';
 import { Mimikyu } from './mimikyu';
 
 export class AlolanVulpixArt extends AlolanVulpix {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HIF/HIF_007_R_EN.png';
+}
+
+export class MallowArt extends Mallow {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_127_R_EN_LG.png';  
 }
 
 export class MimikyuArt extends Mimikyu {

@@ -50,6 +50,7 @@ cardManager.defineSet(sets.setXY);
 cardManager.defineSet(sets.setFlashfire);
 cardManager.defineSet(sets.setFuriousFists);
 cardManager.defineSet(sets.setPhantomForces);
+cardManager.defineSet(sets.setBurningShadows);
 cardManager.defineSet(sets.setPrimalClash);
 
 cardManager.defineSet(sets.setRoaringSkies);

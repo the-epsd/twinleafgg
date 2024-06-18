@@ -1,7 +1,7 @@
-import { PokemonCardList } from '../../game';
+import { GameError, PokemonCardList } from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
-import { CardTag, TrainerType } from '../../game/store/card/card-types';
+import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -14,7 +14,13 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  // Don't allow to play both Prime Catchers when opponen has an empty bench
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+  
+  // Don't allow to play both Guzmas when opponen has an empty bench
   const benchCount = opponent.bench.reduce((sum, b) => {
     return sum + (b.cards.length > 0 ? 1 : 0);
   }, 0);
@@ -41,9 +47,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       // Do not discard the card yet
       effect.preventDefault = true;
     
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const playerHasBench = player.bench.some(b => b.cards.length > 0);
       
-      if (!hasBench) {
+      if (!playerHasBench) {
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
       }
@@ -73,26 +79,22 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 }
 
-export class PrimeCatcher extends TrainerCard {
+export class Guzma extends TrainerCard {
 
-  public trainerType: TrainerType = TrainerType.ITEM;
-
-  public tags = [ CardTag.ACE_SPEC ];
-
-  public regulationMark = 'H';
+  public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '157';
+  public setNumber: string = '115';
 
-  public set: string = 'TEF';
+  public set: string = 'BUS';
 
-  public name: string = 'Prime Catcher';
+  public name: string = 'Guzma';
 
-  public fullName: string = 'Prime Catcher TEF';
+  public fullName: string = 'Guzma BUS';
 
   public text: string =
-    'Switch in 1 of your opponent\'s Benched Pokémon to the Active Spot. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.';
+    "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

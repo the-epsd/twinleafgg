@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PrimeCatcher = void 0;
+exports.Guzma = void 0;
+const game_1 = require("../../game");
 const game_message_1 = require("../../game/game-message");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const card_types_1 = require("../../game/store/card/card-types");
@@ -11,7 +12,11 @@ const state_utils_1 = require("../../game/store/state-utils");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-    // Don't allow to play both Prime Catchers when opponen has an empty bench
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
+    // Don't allow to play both Guzmas when opponen has an empty bench
     const benchCount = opponent.bench.reduce((sum, b) => {
         return sum + (b.cards.length > 0 ? 1 : 0);
     }, 0);
@@ -27,8 +32,8 @@ function* playCard(next, store, state, effect) {
             next();
             // Do not discard the card yet
             effect.preventDefault = true;
-            const hasBench = player.bench.some(b => b.cards.length > 0);
-            if (!hasBench) {
+            const playerHasBench = player.bench.some(b => b.cards.length > 0);
+            if (!playerHasBench) {
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 return state;
             }
@@ -48,18 +53,16 @@ function* playCard(next, store, state, effect) {
         });
     }
 }
-class PrimeCatcher extends trainer_card_1.TrainerCard {
+class Guzma extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
-        this.trainerType = card_types_1.TrainerType.ITEM;
-        this.tags = [card_types_1.CardTag.ACE_SPEC];
-        this.regulationMark = 'H';
+        this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '157';
-        this.set = 'TEF';
-        this.name = 'Prime Catcher';
-        this.fullName = 'Prime Catcher TEF';
-        this.text = 'Switch in 1 of your opponent\'s Benched Pokémon to the Active Spot. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.';
+        this.setNumber = '115';
+        this.set = 'BUS';
+        this.name = 'Guzma';
+        this.fullName = 'Guzma BUS';
+        this.text = "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.";
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
@@ -69,4 +72,4 @@ class PrimeCatcher extends trainer_card_1.TrainerCard {
         return state;
     }
 }
-exports.PrimeCatcher = PrimeCatcher;
+exports.Guzma = Guzma;

@@ -38,6 +38,7 @@ export * from './set-fates-collide';
 export * from './set-sun-and-moon';
 export * from './set-sun-and-moon-promos';
 export * from './set-guardians-rising';
+export * from './set-burning-shadows';
 export * from './set-shining-legends';
 export * from './set-crimson-invasion';
 export * from './set-ultra-prism';
