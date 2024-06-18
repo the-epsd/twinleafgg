@@ -89,3 +89,4 @@ ptcg-server/node_modules
 ptcg-play/node_modules
 ptcg-server/dist/avatars
 ptcg-server/avatars
+ptcg-server/.nyc_output/processinfo/index.json
