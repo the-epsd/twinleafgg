@@ -1,4 +1,5 @@
 import { Dragonite } from './dragonite';
+import { Jirachi } from './jirachi';
 import { Lapras } from './lapras';
 import { PokemonCommunication } from './pokemon-communication';
 import { ViridianForest } from './viridian-forest';
@@ -6,6 +7,10 @@ import { Zapdos } from './zapdos';
 
 export class DragoniteArt extends Dragonite {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_119_R_EN_LG.png';
+}
+
+export class JirachiArt extends Jirachi {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_099_R_EN_LG.png';
 }
 
 export class LaprasArt extends Lapras {

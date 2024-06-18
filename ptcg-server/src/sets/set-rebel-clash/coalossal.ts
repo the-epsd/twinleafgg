@@ -124,6 +124,8 @@ export class Coalossal extends PokemonCard {
             }
           });
 
+          console.log(blocked);
+
           if (option.value === 1) {
             state = store.prompt(state, new AttachEnergyPrompt(
               player.id,
