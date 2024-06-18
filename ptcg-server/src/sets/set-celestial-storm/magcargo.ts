@@ -25,7 +25,7 @@ function* useSmoothOver(next: Function, store: StoreLike, state: State,
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
-    GameMessage.CHOOSE_CARD_TO_HAND,
+    GameMessage.CHOOSE_CARDS_TO_PUT_ON_TOP_OF_THE_DECK,
     player.deck,
     {},
     { min: 1, max: 1, allowCancel: false }

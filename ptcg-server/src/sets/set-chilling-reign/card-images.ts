@@ -6,6 +6,7 @@ import { BlazikenV } from './blaziken-v';
 import { BlazikenVMAX } from './blaziken-vmax';
 import { BlisseyV } from './blissey-v';
 import { Caitlin } from './caitlin';
+import { CastformSunnyForm } from './castform-sunny-form';
 import { Drizzile } from './drizzile';
 import { DynaTreeHill } from './dyna-tree-hill';
 import { EchoingHorn } from './echoing-horn';
@@ -71,6 +72,10 @@ export class BlisseyVArt extends BlisseyV {
 
 export class CaitlinArt extends Caitlin {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_132_R_EN_LG.png';
+}
+
+export class CastformSunnyFormArt extends CastformSunnyForm {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_022_R_EN_LG.png';
 }
 
 export class DrizzileArt extends Drizzile {

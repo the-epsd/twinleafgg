@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AgathaArt, AveryArt, BanetteArt, BeedrillArt, BlazikenVArt, BlazikenVMAXArt, BlisseyVArt, CaitlinArt, DrizzileArt, DynaTreeHillArt, EchoingHornArt, ExpeditionUniformArt, FlanneryArt, FogCrystalArt, FroslassArt, GalarianArticunoVArt, GalarianMoltresVArt, GalarianZapdosVArt, GalladeArt, GardevoirArt, GolurkArt, IceRiderCalyrexVArt, IceRiderCalyrexVMAXArt, InteleonArt, JustifiedGlovesArt, KarensConvictionArt, KirliaArt, KlaraArt, LuckyEnergyArt, MelonyArt, PathToThePeakArt, PeonyArt, Porygon2Art, ShadowRiderCalyrexVArt, ShadowRiderCalyrexVMAXArt, SneaselArt, SnoruntArt, SobbleArt, SpiralEnergyArt, ZarudeArt } from './card-images';
+import { AgathaArt, AveryArt, BanetteArt, BeedrillArt, BlazikenVArt, BlazikenVMAXArt, BlisseyVArt, CaitlinArt, CastformSunnyFormArt, DrizzileArt, DynaTreeHillArt, EchoingHornArt, ExpeditionUniformArt, FlanneryArt, FogCrystalArt, FroslassArt, GalarianArticunoVArt, GalarianMoltresVArt, GalarianZapdosVArt, GalladeArt, GardevoirArt, GolurkArt, IceRiderCalyrexVArt, IceRiderCalyrexVMAXArt, InteleonArt, JustifiedGlovesArt, KarensConvictionArt, KirliaArt, KlaraArt, LuckyEnergyArt, MelonyArt, PathToThePeakArt, PeonyArt, Porygon2Art, ShadowRiderCalyrexVArt, ShadowRiderCalyrexVMAXArt, SneaselArt, SnoruntArt, SobbleArt, SpiralEnergyArt, ZarudeArt } from './card-images';
 
 export const setChillingReign: Card[] = [
   
@@ -11,6 +11,7 @@ export const setChillingReign: Card[] = [
   new BlazikenVMAXArt(),
   new BlisseyVArt(),
   new CaitlinArt(),
+  new CastformSunnyFormArt(),
   new DrizzileArt(),
   new DynaTreeHillArt(),
   new EchoingHornArt(),

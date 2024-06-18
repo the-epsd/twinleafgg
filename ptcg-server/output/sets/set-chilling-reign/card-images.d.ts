@@ -6,6 +6,7 @@ import { BlazikenV } from './blaziken-v';
 import { BlazikenVMAX } from './blaziken-vmax';
 import { BlisseyV } from './blissey-v';
 import { Caitlin } from './caitlin';
+import { CastformSunnyForm } from './castform-sunny-form';
 import { Drizzile } from './drizzile';
 import { DynaTreeHill } from './dyna-tree-hill';
 import { EchoingHorn } from './echoing-horn';
@@ -61,6 +62,9 @@ export declare class BlisseyVArt extends BlisseyV {
     cardImage: string;
 }
 export declare class CaitlinArt extends Caitlin {
+    cardImage: string;
+}
+export declare class CastformSunnyFormArt extends CastformSunnyForm {
     cardImage: string;
 }
 export declare class DrizzileArt extends Drizzile {
