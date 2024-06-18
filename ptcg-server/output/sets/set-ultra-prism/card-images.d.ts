@@ -1,10 +1,14 @@
 import { Cynthia } from './cynthia';
+import { EscapeBoard } from './escape-board';
 import { Gardenia } from './gardenia';
 import { Gible } from './gible';
 import { Magnezone } from './magnezone';
 import { PokemonFanClub } from './pokemon-fan-club';
 import { Turtwig } from './turtwig';
 export declare class CynthiaArt extends Cynthia {
+    cardImage: string;
+}
+export declare class EscapeBoardArt extends EscapeBoard {
     cardImage: string;
 }
 export declare class GardeniaArt extends Gardenia {

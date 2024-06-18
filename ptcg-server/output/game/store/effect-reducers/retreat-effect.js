@@ -34,7 +34,7 @@ function retreatReducer(store, state, effect) {
             throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
         }
         const sp = player.active.specialConditions;
-        if (sp.includes(card_types_1.SpecialCondition.PARALYZED) || sp.includes(card_types_1.SpecialCondition.ASLEEP)) {
+        if ((sp.includes(card_types_1.SpecialCondition.PARALYZED) || sp.includes(card_types_1.SpecialCondition.ASLEEP)) && !effect.ignoreStatusConditions) {
             throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_SPECIAL_CONDITION);
         }
         if (player.retreatedTurn === state.turn) {

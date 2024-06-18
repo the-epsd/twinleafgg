@@ -22,6 +22,7 @@ export class RetreatEffect implements Effect {
   public preventDefault = false;
   public player: Player;
   public benchIndex: number;
+  public ignoreStatusConditions = false;
 
   constructor(player: Player, benchIndex: number) {
     this.player = player;

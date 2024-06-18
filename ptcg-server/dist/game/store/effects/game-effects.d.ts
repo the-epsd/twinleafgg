@@ -20,6 +20,7 @@ export declare class RetreatEffect implements Effect {
     preventDefault: boolean;
     player: Player;
     benchIndex: number;
+    ignoreStatusConditions: boolean;
     constructor(player: Player, benchIndex: number);
 }
 export declare class UsePowerEffect implements Effect {

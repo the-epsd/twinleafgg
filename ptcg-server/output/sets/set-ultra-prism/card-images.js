@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TurtwigArt = exports.PokemonFanClubArt = exports.MagnezoneArt = exports.GibleArt = exports.GardeniaArt = exports.CynthiaArt = void 0;
+exports.TurtwigArt = exports.PokemonFanClubArt = exports.MagnezoneArt = exports.GibleArt = exports.GardeniaArt = exports.EscapeBoardArt = exports.CynthiaArt = void 0;
 const cynthia_1 = require("./cynthia");
+const escape_board_1 = require("./escape-board");
 const gardenia_1 = require("./gardenia");
 const gible_1 = require("./gible");
 const magnezone_1 = require("./magnezone");
@@ -14,6 +15,13 @@ class CynthiaArt extends cynthia_1.Cynthia {
     }
 }
 exports.CynthiaArt = CynthiaArt;
+class EscapeBoardArt extends escape_board_1.EscapeBoard {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_122_R_EN_LG.png';
+    }
+}
+exports.EscapeBoardArt = EscapeBoardArt;
 class GardeniaArt extends gardenia_1.Gardenia {
     constructor() {
         super(...arguments);

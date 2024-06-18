@@ -14,6 +14,7 @@ export class RetreatEffect {
     constructor(player, benchIndex) {
         this.type = GameEffects.RETREAT_EFFECT;
         this.preventDefault = false;
+        this.ignoreStatusConditions = false;
         this.player = player;
         this.benchIndex = benchIndex;
     }

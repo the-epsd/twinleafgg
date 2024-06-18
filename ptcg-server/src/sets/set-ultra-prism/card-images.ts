@@ -1,4 +1,5 @@
 import { Cynthia } from './cynthia';
+import { EscapeBoard } from './escape-board';
 import { Gardenia } from './gardenia';
 import { Gible } from './gible';
 import { Magnezone } from './magnezone';
@@ -7,6 +8,10 @@ import { Turtwig } from './turtwig';
 
 export class CynthiaArt extends Cynthia {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_119_R_EN_LG.png';
+}
+
+export class EscapeBoardArt extends EscapeBoard {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_122_R_EN_LG.png';
 }
 
 export class GardeniaArt extends Gardenia {
