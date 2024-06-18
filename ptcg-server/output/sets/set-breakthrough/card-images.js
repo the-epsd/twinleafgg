@@ -1,9 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OctilleryArt = exports.FlorgesArt = exports.TownMapArt = void 0;
+exports.OctilleryArt = exports.FlorgesArt = exports.TownMapArt = exports.BrigetteArt = void 0;
+const brigette_1 = require("./brigette");
 const florges_1 = require("./florges");
 const octillery_1 = require("./octillery");
 const town_map_1 = require("./town-map");
+class BrigetteArt extends brigette_1.Brigette {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKT/BKT_134_R_EN_LG.png';
+    }
+}
+exports.BrigetteArt = BrigetteArt;
 class TownMapArt extends town_map_1.TownMap {
     constructor() {
         super(...arguments);

@@ -39,6 +39,8 @@ function* playCard(next: Function, store: StoreLike, state: State, self: VsSeeke
     player.hand.moveCardTo(self, player.discard);
     player.discard.moveCardsTo(cards, player.hand);
   }
+  
+  player.supporter.moveCardTo(self, player.discard);
 
   return state;
 }

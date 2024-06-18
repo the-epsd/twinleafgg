@@ -1,8 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MisdreavusArt = exports.GladionArt = void 0;
+exports.MisdreavusArt = exports.GladionArt = exports.CounterEnergyArt = void 0;
+const counter_energy_1 = require("./counter-energy");
 const gladion_1 = require("./gladion");
 const misdreavus_1 = require("./misdreavus");
+class CounterEnergyArt extends counter_energy_1.CounterEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CIN/CIN_100_R_EN_LG.png';
+    }
+}
+exports.CounterEnergyArt = CounterEnergyArt;
 class GladionArt extends gladion_1.Gladion {
     constructor() {
         super(...arguments);

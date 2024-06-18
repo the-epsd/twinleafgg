@@ -1,16 +1,15 @@
-import { Card } from '../../game/store/card/card';
+import { EnergyCard, GameError, PokemonCard } from '../../game';
 import { GameMessage } from '../../game/game-message';
-import { Effect } from '../../game/store/effects/effect';
+import { Card } from '../../game/store/card/card';
+import { EnergyType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { StateUtils } from '../../game/store/state-utils';
+import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
-import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { EnergyCard, PokemonCard } from '../../game';
+import { StateUtils } from '../../game/store/state-utils';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Klara, effect: TrainerEffect): IterableIterator<State> {
@@ -18,6 +17,22 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
+  const pokemonAndEnergyInDiscardPile = player.discard.cards.filter(c => c instanceof PokemonCard || c instanceof EnergyCard).length;
+  
+  if (pokemonAndEnergyInDiscardPile === 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+  
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+  
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+    
   let pokemons = 0;
   let energies = 0;
   const blocked: number[] = [];
@@ -47,6 +62,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   player.discard.moveCardsTo(cards, player.hand);
+  player.supporterTurn = 1;
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -55,10 +72,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
+  
+  return state;
 }
 
 export class Klara extends TrainerCard {

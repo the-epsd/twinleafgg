@@ -1,5 +1,6 @@
 import { Bayleef } from './bayleef';
 import { Delinquent } from './delinquent';
+import { FightingFuryBelt } from './fighting-fury-belt';
 import { Kricketot } from './kricketot';
 import { Phantump } from './phantump';
 import { Staryu } from './staryu';
@@ -7,6 +8,9 @@ export declare class BayleefArt extends Bayleef {
     cardImage: string;
 }
 export declare class DelinquentArt extends Delinquent {
+    cardImage: string;
+}
+export declare class FightingFuryBeltArt extends FightingFuryBelt {
     cardImage: string;
 }
 export declare class KricketotArt extends Kricketot {

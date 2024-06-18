@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StaryuArt = exports.PhantumpArt = exports.KricketotArt = exports.DelinquentArt = exports.BayleefArt = void 0;
+exports.StaryuArt = exports.PhantumpArt = exports.KricketotArt = exports.FightingFuryBeltArt = exports.DelinquentArt = exports.BayleefArt = void 0;
 const bayleef_1 = require("./bayleef");
 const delinquent_1 = require("./delinquent");
+const fighting_fury_belt_1 = require("./fighting-fury-belt");
 const kricketot_1 = require("./kricketot");
 const phantump_1 = require("./phantump");
 const staryu_1 = require("./staryu");
@@ -20,6 +21,13 @@ class DelinquentArt extends delinquent_1.Delinquent {
     }
 }
 exports.DelinquentArt = DelinquentArt;
+class FightingFuryBeltArt extends fighting_fury_belt_1.FightingFuryBelt {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_099_R_EN_LG.png';
+    }
+}
+exports.FightingFuryBeltArt = FightingFuryBeltArt;
 class KricketotArt extends kricketot_1.Kricketot {
     constructor() {
         super(...arguments);

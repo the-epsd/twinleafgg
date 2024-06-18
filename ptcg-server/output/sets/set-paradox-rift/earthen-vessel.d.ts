@@ -1,8 +1,8 @@
-import { Effect } from '../../game/store/effects/effect';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
+import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 export declare class EarthenVessel extends TrainerCard {
     trainerType: TrainerType;
     regulationMark: string;

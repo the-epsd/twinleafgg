@@ -20,11 +20,9 @@ class BuddyBuddyPoffin extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
-            let pokemons = 0;
             const blocked = [];
             player.deck.cards.forEach((c, index) => {
                 if (c instanceof game_1.PokemonCard && c.stage === card_types_1.Stage.BASIC && c.hp <= 70) {
-                    pokemons += 1;
                 }
                 else {
                     blocked.push(index);
@@ -42,11 +40,11 @@ class BuddyBuddyPoffin extends trainer_card_1.TrainerCard {
                     // No open slots, throw error
                     throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
                 }
-                const maxPokemons = Math.min(pokemons, 2);
+                const maxPokemons = Math.min(openSlots.length, 2);
                 // We will discard this card after prompt confirmation
                 effect.preventDefault = true;
                 let cards = [];
-                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 2, allowCancel: false, blocked, maxPokemons }), selectedCards => {
+                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: maxPokemons, allowCancel: false, blocked, maxPokemons }), selectedCards => {
                     cards = selectedCards || [];
                     cards.forEach((card, index) => {
                         player.deck.moveCardTo(card, slots[index]);

@@ -5,5 +5,6 @@ const card_images_1 = require("./card-images");
 exports.setGuardiansRising = [
     new card_images_1.AlolanVulpixArt(),
     new card_images_1.MallowArt(),
-    new card_images_1.MimikyuArt()
+    new card_images_1.MimikyuArt(),
+    new card_images_1.RescueStretcherArt()
 ];

@@ -6,10 +6,15 @@ import { Zebstrika } from './zebstrika';
 import { Meganium } from './meganium';
 import { Nihilego } from './nihilego';
 import { Mareep } from './mareep';
+import { Electropower } from './electropower';
 
 
 export class ChikoritaArt extends Chikorita {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_006_R_EN_LG.png';
+}
+
+export class ElectropowerArt extends Electropower {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_172_R_EN_LG.png';
 }
 
 export class GrovleArt extends Grovyle {

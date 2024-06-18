@@ -6,7 +6,11 @@ import { Zebstrika } from './zebstrika';
 import { Meganium } from './meganium';
 import { Nihilego } from './nihilego';
 import { Mareep } from './mareep';
+import { Electropower } from './electropower';
 export declare class ChikoritaArt extends Chikorita {
+    cardImage: string;
+}
+export declare class ElectropowerArt extends Electropower {
     cardImage: string;
 }
 export declare class GrovleArt extends Grovyle {

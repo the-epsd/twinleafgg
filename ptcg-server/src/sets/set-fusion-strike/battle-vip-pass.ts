@@ -56,13 +56,15 @@ export class BattleVIPPass extends TrainerCard {
           // We will discard this card after prompt confirmation
           effect.preventDefault = true;
            
+          const maxCards = Math.min(2, openSlots.length);
+          
           let cards: Card[] = [];
           return store.prompt(state, new ChooseCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
             player.deck,
             { superType: SuperType.POKEMON, stage: Stage.BASIC },
-            { min: 0, max: 2, allowCancel: false }
+            { min: 0, max: maxCards, allowCancel: false }
           ), selectedCards => {
             cards = selectedCards || [];
         

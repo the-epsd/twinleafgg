@@ -5,6 +5,7 @@ import { NestBall } from './nest-ball';
 import { Oranguru } from './oranguru';
 import { RainbowEnergy } from './rainbow-energy';
 import { RareCandy } from './rare-candy';
+import { TimerBall } from './timer-ball';
 
 export class DragonairArt extends Dragonair {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_095_R_EN.png';
@@ -32,4 +33,8 @@ export class RainbowEnergyArt extends RainbowEnergy {
 
 export class RareCandyArt extends RareCandy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_129_R_EN.png';
+}
+
+export class TimerBallArt extends TimerBall {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_134_R_EN_LG.png';
 }

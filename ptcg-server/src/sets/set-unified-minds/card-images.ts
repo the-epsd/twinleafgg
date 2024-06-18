@@ -1,5 +1,6 @@
 import { Necrozma } from './necrozma';
 import { Purrloin } from './purrloin';
+import { UTurnBoard } from './u-turn-board';
 
 
 export class NecrozmaArt extends Necrozma {
@@ -8,4 +9,8 @@ export class NecrozmaArt extends Necrozma {
 
 export class PurrloinArt extends Purrloin {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_135_R_EN_LG.png';
+}
+
+export class UTurnBoardArt extends UTurnBoard {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_211_R_EN_LG.png';
 }

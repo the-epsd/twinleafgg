@@ -26,6 +26,7 @@ function* playCard(next, store, state, self, effect) {
         player.hand.moveCardTo(self, player.discard);
         player.discard.moveCardsTo(cards, player.hand);
     }
+    player.supporter.moveCardTo(self, player.discard);
     return state;
 }
 class VsSeeker extends trainer_card_1.TrainerCard {

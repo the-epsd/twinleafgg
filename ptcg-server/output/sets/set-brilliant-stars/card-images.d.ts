@@ -16,6 +16,7 @@ import { Electivire } from './electivire';
 import { Empoleon } from './empoleon';
 import { EnteiV } from './entei-v';
 import { Garchomp } from './garchomp';
+import { Gloria } from './gloria';
 import { Grotle } from './grotle';
 import { Lapras } from './lapras';
 import { Liepard } from './liepard';
@@ -86,6 +87,9 @@ export declare class EnteiVArt extends EnteiV {
     cardImage: string;
 }
 export declare class GarchompArt extends Garchomp {
+    cardImage: string;
+}
+export declare class GloriaArt extends Gloria {
     cardImage: string;
 }
 export declare class GrotleArt extends Grotle {

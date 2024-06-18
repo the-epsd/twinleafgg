@@ -5,6 +5,7 @@ import { NestBall } from './nest-ball';
 import { Oranguru } from './oranguru';
 import { RainbowEnergy } from './rainbow-energy';
 import { RareCandy } from './rare-candy';
+import { TimerBall } from './timer-ball';
 export declare class DragonairArt extends Dragonair {
     cardImage: string;
 }
@@ -24,5 +25,8 @@ export declare class RainbowEnergyArt extends RainbowEnergy {
     cardImage: string;
 }
 export declare class RareCandyArt extends RareCandy {
+    cardImage: string;
+}
+export declare class TimerBallArt extends TimerBall {
     cardImage: string;
 }
