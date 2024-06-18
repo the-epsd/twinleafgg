@@ -55,6 +55,7 @@ export * from './set-fates-collide';
 
 //SM Era
 export * from './set-sun-and-moon';
+export * from './set-sun-and-moon-promos';
 export * from './set-guardians-rising';
 //export * from './set-burning-shadows';
 export * from './set-shining-legends';

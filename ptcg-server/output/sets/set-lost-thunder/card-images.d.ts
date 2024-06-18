@@ -5,10 +5,14 @@ import { Treecko } from './treecko';
 import { Zebstrika } from './zebstrika';
 import { Meganium } from './meganium';
 import { Nihilego } from './nihilego';
+import { Mareep } from './mareep';
 export declare class ChikoritaArt extends Chikorita {
     cardImage: string;
 }
 export declare class GrovleArt extends Grovyle {
+    cardImage: string;
+}
+export declare class MareepArt extends Mareep {
     cardImage: string;
 }
 export declare class MeganiumArt extends Meganium {

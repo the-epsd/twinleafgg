@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TurtwigArt = exports.PokemonFanClubArt = exports.MagnezoneArt = exports.GibleArt = exports.GardeniaArt = exports.EscapeBoardArt = exports.CynthiaArt = void 0;
+exports.VolknerArt = exports.TurtwigArt = exports.PokemonFanClubArt = exports.MagnezoneArt = exports.GibleArt = exports.GardeniaArt = exports.EscapeBoardArt = exports.CynthiaArt = void 0;
 const cynthia_1 = require("./cynthia");
 const escape_board_1 = require("./escape-board");
 const gardenia_1 = require("./gardenia");
@@ -8,6 +8,7 @@ const gible_1 = require("./gible");
 const magnezone_1 = require("./magnezone");
 const pokemon_fan_club_1 = require("./pokemon-fan-club");
 const turtwig_1 = require("./turtwig");
+const volkner_1 = require("./volkner");
 class CynthiaArt extends cynthia_1.Cynthia {
     constructor() {
         super(...arguments);
@@ -57,3 +58,10 @@ class TurtwigArt extends turtwig_1.Turtwig {
     }
 }
 exports.TurtwigArt = TurtwigArt;
+class VolknerArt extends volkner_1.Volkner {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_135_R_EN_LG.png';
+    }
+}
+exports.VolknerArt = VolknerArt;

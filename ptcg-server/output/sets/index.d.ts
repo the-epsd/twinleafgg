@@ -36,6 +36,7 @@ export * from './set-breakthrough';
 export * from './set-breakpoint';
 export * from './set-fates-collide';
 export * from './set-sun-and-moon';
+export * from './set-sun-and-moon-promos';
 export * from './set-guardians-rising';
 export * from './set-shining-legends';
 export * from './set-crimson-invasion';

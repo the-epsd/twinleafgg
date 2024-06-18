@@ -5,6 +5,7 @@ import { Gible } from './gible';
 import { Magnezone } from './magnezone';
 import { PokemonFanClub } from './pokemon-fan-club';
 import { Turtwig } from './turtwig';
+import { Volkner } from './volkner';
 
 export class CynthiaArt extends Cynthia {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_119_R_EN_LG.png';
@@ -32,4 +33,8 @@ export class PokemonFanClubArt extends PokemonFanClub {
 
 export class TurtwigArt extends Turtwig {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_006_R_EN_LG.png';
+}
+
+export class VolknerArt extends Volkner {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_135_R_EN_LG.png';  
 }

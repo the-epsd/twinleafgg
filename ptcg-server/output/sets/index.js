@@ -60,6 +60,7 @@ __exportStar(require("./set-fates-collide"), exports);
 //export
 //SM Era
 __exportStar(require("./set-sun-and-moon"), exports);
+__exportStar(require("./set-sun-and-moon-promos"), exports);
 __exportStar(require("./set-guardians-rising"), exports);
 //export * from './set-burning-shadows';
 __exportStar(require("./set-shining-legends"), exports);

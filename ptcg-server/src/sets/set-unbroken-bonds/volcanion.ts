@@ -28,7 +28,7 @@ function* useFlareStarter(next: Function, store: StoreLike, state: State, effect
     player.deck,
     PlayerType.BOTTOM_PLAYER,
     [ SlotType.BENCH, SlotType.ACTIVE ],
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
     { allowCancel: false, min: 0, max }
   ), transfers => {
     transfers = transfers || [];

@@ -262,6 +262,7 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'EVO': new Date('2016-11-02'),
   // SUN & MOON
   'SUM': new Date('2017-02-03'),
+  'SMP': new Date('2017-02-03'),
   'GRI': new Date('2017-05-05'),
   'BUS': new Date('2017-08-04'),
   'SLG': new Date('2017-10-06'),

@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setLostThunder = [
     new card_images_1.ChikoritaArt(),
     new card_images_1.GrovleArt(),
+    new card_images_1.MareepArt(),
     new card_images_1.MeganiumArt(),
     new card_images_1.NihilegoArt(),
     new card_images_1.TreeckoArt(),

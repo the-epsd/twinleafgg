@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.NihilegoArt = exports.MeganiumArt = exports.GrovleArt = exports.ChikoritaArt = void 0;
+exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.NihilegoArt = exports.MeganiumArt = exports.MareepArt = exports.GrovleArt = exports.ChikoritaArt = void 0;
 const wurmple_1 = require("./wurmple");
 const chikorita_1 = require("./chikorita");
 const grovyle_1 = require("./grovyle");
@@ -8,6 +8,7 @@ const treecko_1 = require("./treecko");
 const zebstrika_1 = require("./zebstrika");
 const meganium_1 = require("./meganium");
 const nihilego_1 = require("./nihilego");
+const mareep_1 = require("./mareep");
 class ChikoritaArt extends chikorita_1.Chikorita {
     constructor() {
         super(...arguments);
@@ -22,6 +23,13 @@ class GrovleArt extends grovyle_1.Grovyle {
     }
 }
 exports.GrovleArt = GrovleArt;
+class MareepArt extends mareep_1.Mareep {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_075_R_EN_LG.png';
+    }
+}
+exports.MareepArt = MareepArt;
 class MeganiumArt extends meganium_1.Meganium {
     constructor() {
         super(...arguments);

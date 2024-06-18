@@ -1,10 +1,10 @@
+import { GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, CardList, ChooseCardsPrompt, GameError, GameMessage, PlayerType, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Mareep extends PokemonCard {
   
@@ -50,7 +50,11 @@ export class Mareep extends PokemonCard {
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      
       const player = effect.player;
+      if (player.marker.hasMarker(this.FLUFFY_PILLOW_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
   
       player.marker.addMarker(this.FLUFFY_PILLOW_MARKER, this);
       const opponent = StateUtils.getOpponent(state, player);
@@ -61,7 +65,7 @@ export class Mareep extends PokemonCard {
     if (effect instanceof EndTurnEffect) {
       const player = (effect as EndTurnEffect).player;
       player.marker.removeMarker(this.FLUFFY_PILLOW_MARKER, this);
-    }
+  }
 
     return state;
   }

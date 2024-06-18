@@ -5,6 +5,7 @@ import { Gible } from './gible';
 import { Magnezone } from './magnezone';
 import { PokemonFanClub } from './pokemon-fan-club';
 import { Turtwig } from './turtwig';
+import { Volkner } from './volkner';
 export declare class CynthiaArt extends Cynthia {
     cardImage: string;
 }
@@ -24,5 +25,8 @@ export declare class PokemonFanClubArt extends PokemonFanClub {
     cardImage: string;
 }
 export declare class TurtwigArt extends Turtwig {
+    cardImage: string;
+}
+export declare class VolknerArt extends Volkner {
     cardImage: string;
 }

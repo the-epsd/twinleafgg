@@ -60,6 +60,7 @@ cardManager.defineSet(sets.setBreakthrough);
 cardManager.defineSet(sets.setFatesCollide);
 
 cardManager.defineSet(sets.setSunAndMoon);
+cardManager.defineSet(sets.setSunAndMoonPromos);
 cardManager.defineSet(sets.setGuardiansRising);
 
 
