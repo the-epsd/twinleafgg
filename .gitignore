@@ -91,3 +91,4 @@ ptcg-server/dist/avatars
 ptcg-server/avatars
 ptcg-play/src/environments/environment.ts
 ptcg-server/.nyc_output/processinfo/index.json
+ptcg-play/src/environments/environment.ts
