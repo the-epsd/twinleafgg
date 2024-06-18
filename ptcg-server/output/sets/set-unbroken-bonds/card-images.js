@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PorygonZArt = exports.Pokegear30Art = exports.MewArt = exports.CleffaArt = void 0;
+exports.VolcanionArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewArt = exports.CleffaArt = void 0;
 const cleffa_1 = require("./cleffa");
 const mew_1 = require("./mew");
 const pokegear_30_1 = require("./pokegear-30");
 const porygon_z_1 = require("./porygon-z");
+const volcanion_1 = require("./volcanion");
 class CleffaArt extends cleffa_1.Cleffa {
     constructor() {
         super(...arguments);
@@ -33,3 +34,10 @@ class PorygonZArt extends porygon_z_1.PorygonZ {
     }
 }
 exports.PorygonZArt = PorygonZArt;
+class VolcanionArt extends volcanion_1.Volcanion {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_025_R_EN_LG.png';
+    }
+}
+exports.VolcanionArt = VolcanionArt;
