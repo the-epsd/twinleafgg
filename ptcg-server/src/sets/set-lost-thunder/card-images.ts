@@ -5,6 +5,7 @@ import { Treecko } from './treecko';
 import { Zebstrika } from './zebstrika';
 import { Meganium } from './meganium';
 import { Nihilego } from './nihilego';
+import { Mareep } from './mareep';
 
 
 export class ChikoritaArt extends Chikorita {
@@ -13,6 +14,10 @@ export class ChikoritaArt extends Chikorita {
 
 export class GrovleArt extends Grovyle {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_021_R_EN_LG.png';
+}
+
+export class MareepArt extends Mareep {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_075_R_EN_LG.png';
 }
 
 export class MeganiumArt extends Meganium {
