@@ -1,4 +1,4 @@
-import { Card, CardTarget, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SelectPrompt, ShuffleDeckPrompt, SlotType } from '../../game';
+import { CardTarget, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SelectPrompt, ShuffleDeckPrompt, SlotType } from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -46,23 +46,6 @@ export class TateAndLiza extends TrainerCard {
 
       const options: { message: GameMessage, action: () => void }[] = [
         {
-          message: GameMessage.SHUFFLE_AND_DRAW_5_CARDS,
-          action: () => {
-
-            if (player.hand.cards.length > 0) {
-              player.hand.moveCardsTo(cards, player.deck);
-            }
-            
-            store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-            });
-          
-            player.deck.moveTo(player.hand, 5);
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            player.supporterTurn = 1;
-          }
-        },
-        {
           message: GameMessage.SWITCH_POKEMON,
           action: () => {
 
@@ -86,6 +69,23 @@ export class TateAndLiza extends TrainerCard {
               player.supporterTurn = 1;
             });
           }
+        },
+        {
+          message: GameMessage.SHUFFLE_AND_DRAW_5_CARDS,
+          action: () => {
+
+            if (player.hand.cards.length > 0) {
+              player.hand.moveCardsTo(player.hand.cards.filter(c => c !== this), player.deck);
+            }
+            
+            store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+            });
+          
+            player.deck.moveTo(player.hand, 5);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            player.supporterTurn = 1;
+          }
         }
       ];
 
@@ -94,10 +94,6 @@ export class TateAndLiza extends TrainerCard {
       if (!hasBench) {
         options.splice(1, 1);
       }
-
-      let cards: Card[] = [];
-
-      cards = player.hand.cards;
 
       if (player.deck.cards.length === 0) {
         options.splice(0, 1);

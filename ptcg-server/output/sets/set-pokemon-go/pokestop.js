@@ -6,6 +6,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const card_list_1 = require("../../game/store/state/card-list");
+const game_1 = require("../../game");
 class Pokestop extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -33,6 +34,9 @@ class Pokestop extends trainer_card_1.TrainerCard {
             c.trainerType === card_types_1.TrainerType.ITEM);
         // Move all cards to discard
         deckTop.moveTo(player.discard, deckTop.cards.length);
+        itemCards.forEach((card, index) => {
+            store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+        });
         // Move item cards to hand
         player.discard.moveCardsTo(itemCards, player.hand);
         return state;

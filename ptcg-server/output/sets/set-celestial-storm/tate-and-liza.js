@@ -32,20 +32,6 @@ class TateAndLiza extends trainer_card_1.TrainerCard {
             effect.preventDefault = true;
             const options = [
                 {
-                    message: game_message_1.GameMessage.SHUFFLE_AND_DRAW_5_CARDS,
-                    action: () => {
-                        if (cards.length > 0) {
-                            player.hand.moveCardsTo(cards, player.deck);
-                            store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                                player.deck.applyOrder(order);
-                            });
-                        }
-                        player.deck.moveTo(player.hand, 5);
-                        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                        player.supporterTurn = 1;
-                    }
-                },
-                {
                     message: game_message_1.GameMessage.SWITCH_POKEMON,
                     action: () => {
                         const blocked = [];
@@ -61,14 +47,26 @@ class TateAndLiza extends trainer_card_1.TrainerCard {
                             player.supporterTurn = 1;
                         });
                     }
+                },
+                {
+                    message: game_message_1.GameMessage.SHUFFLE_AND_DRAW_5_CARDS,
+                    action: () => {
+                        if (player.hand.cards.length > 0) {
+                            player.hand.moveCardsTo(player.hand.cards.filter(c => c !== this), player.deck);
+                        }
+                        store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                            player.deck.applyOrder(order);
+                        });
+                        player.deck.moveTo(player.hand, 5);
+                        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                        player.supporterTurn = 1;
+                    }
                 }
             ];
             const hasBench = player.bench.some(b => b.cards.length > 0);
             if (!hasBench) {
                 options.splice(1, 1);
             }
-            let cards = [];
-            cards = player.hand.cards;
             if (player.deck.cards.length === 0) {
                 options.splice(0, 1);
             }

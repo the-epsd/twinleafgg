@@ -11,7 +11,6 @@ export declare class WishfulBaton extends TrainerCard {
     cardImage: string;
     setNumber: string;
     text: string;
-    readonly EXP_SHARE_MARKER: string;
     damageDealt: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

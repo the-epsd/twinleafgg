@@ -6,6 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CardList } from '../../game/store/state/card-list';
+import { GameLog } from '../../game';
 
 export class Pokestop extends TrainerCard {
 
@@ -46,7 +47,11 @@ export class Pokestop extends TrainerCard {
   
     // Move all cards to discard
     deckTop.moveTo(player.discard, deckTop.cards.length);
-  
+   
+    itemCards.forEach((card, index) => {
+      store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+    });
+    
     // Move item cards to hand
     player.discard.moveCardsTo(itemCards, player.hand);
   

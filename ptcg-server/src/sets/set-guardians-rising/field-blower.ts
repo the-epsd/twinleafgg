@@ -152,18 +152,14 @@ export class FieldBlower extends TrainerCard {
           player.supporter.moveCardTo(this, player.discard);
           return state;
         });
-      }
-      
-      if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
+      } else if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
         // Discard Stadium
         const cardList = StateUtils.findCardList(state, stadiumCard);
         const player = StateUtils.findOwner(state, cardList);
         cardList.moveTo(player.discard);
         player.supporter.moveCardTo(this, player.discard);
         return state;
-      }
-
-      if (pokemonsWithTool >= 1 && stadiumCard == undefined) {
+      } else if (pokemonsWithTool >= 1 && stadiumCard == undefined) {
 
         // We will discard this card after prompt confirmation
         effect.preventDefault = true;

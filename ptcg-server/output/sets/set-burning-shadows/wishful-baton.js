@@ -12,8 +12,6 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const attach_energy_prompt_1 = require("../../game/store/prompts/attach-energy-prompt");
 const state_utils_1 = require("../../game/store/state-utils");
-const pokemon_card_list_1 = require("../../game/store/state/pokemon-card-list");
-const state_1 = require("../../game/store/state/state");
 class WishfulBaton extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -24,24 +22,32 @@ class WishfulBaton extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '128';
         this.text = 'If the Pokémon this card is attached to is your Active Pokémon and is Knocked Out by damage from an opponent\'s attack, move up to 3 basic Energy cards from that Pokémon to 1 of your Benched Pokémon.';
-        this.EXP_SHARE_MARKER = 'EXP_SHARE_MARKER';
         this.damageDealt = false;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && state_utils_1.StateUtils.getOpponent(state, effect.player).active.tool === this &&
-            (effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect)) {
-            this.damageDealt = true;
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.player.active.tool === this) {
             this.damageDealt = false;
         }
-        if (effect instanceof game_effects_1.KnockOutEffect && effect.target === effect.player.active && effect.target.tool === this && this.damageDealt) {
-            const player = effect.player;
-            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            // Do not activate between turns, or when it's not opponents turn.
-            if (state.phase !== state_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-                return state;
+        if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) &&
+            effect.target.tool === this) {
+            const player = state_utils_1.StateUtils.getOpponent(state, effect.player);
+            if (player.active.tool === this) {
+                this.damageDealt = true;
             }
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player === state_utils_1.StateUtils.getOpponent(state, effect.player)) {
+            const cardList = state_utils_1.StateUtils.findCardList(state, this);
+            const owner = state_utils_1.StateUtils.findOwner(state, cardList);
+            if (owner === effect.player) {
+                this.damageDealt = false;
+            }
+        }
+        if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
+            const player = effect.player;
+            const target = effect.target;
+            const cards = target.getPokemons();
+            const removedCards = [];
+            const pokemonIndices = effect.target.cards.map((card, index) => index);
             try {
                 const toolEffect = new play_card_effects_1.ToolEffect(player, this);
                 store.reduceEffect(state, toolEffect);
@@ -49,19 +55,38 @@ class WishfulBaton extends trainer_card_1.TrainerCard {
             catch (_a) {
                 return state;
             }
-            // Make copy of the active pokemon cards,
-            // because they will be transfered to discard shortly
-            const activeCopy = new pokemon_card_list_1.PokemonCardList();
-            activeCopy.cards = player.active.cards.slice();
-            const energyCards = activeCopy.cards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC);
-            const max = Math.min(energyCards.length, 3);
-            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, activeCopy, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 1, max, sameTarget: true }), transfers => {
-                transfers = transfers || [];
-                for (const transfer of transfers) {
-                    const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
-                    player.discard.moveCardTo(transfer.card, target);
+            if (this.damageDealt) {
+                for (let i = pokemonIndices.length - 1; i >= 0; i--) {
+                    const removedCard = target.cards.splice(pokemonIndices[i], 1)[0];
+                    removedCards.push(removedCard);
+                    target.damage = 0;
                 }
-            });
+                const energyToAttach = new game_1.CardList();
+                const toolCard = new game_1.CardList();
+                toolCard.cards = removedCards.filter(c => c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL);
+                const lostZoned = new game_1.CardList();
+                lostZoned.cards = cards;
+                const specialEnergy = new game_1.CardList();
+                specialEnergy.cards = removedCards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.SPECIAL);
+                const basicEnergy = new game_1.CardList();
+                basicEnergy.cards = removedCards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC);
+                lostZoned.moveTo(player.discard);
+                toolCard.moveTo(player.discard);
+                specialEnergy.moveTo(player.discard);
+                basicEnergy.moveTo(energyToAttach);
+                return store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, energyToAttach, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 3, sameTarget: true }), transfers => {
+                    transfers = transfers || [];
+                    // cancelled by user
+                    if (transfers.length === 0) {
+                        return;
+                    }
+                    for (const transfer of transfers) {
+                        const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
+                        energyToAttach.moveCardTo(transfer.card, target);
+                    }
+                });
+            }
+            return state;
         }
         return state;
     }

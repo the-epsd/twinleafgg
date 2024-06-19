@@ -109,7 +109,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                     return state;
                 });
             }
-            if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
+            else if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
                 // Discard Stadium
                 const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
                 const player = game_1.StateUtils.findOwner(state, cardList);
@@ -117,7 +117,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                 player.supporter.moveCardTo(this, player.discard);
                 return state;
             }
-            if (pokemonsWithTool >= 1 && stadiumCard == undefined) {
+            else if (pokemonsWithTool >= 1 && stadiumCard == undefined) {
                 // We will discard this card after prompt confirmation
                 effect.preventDefault = true;
                 const max = Math.min(2, pokemonsWithTool);
