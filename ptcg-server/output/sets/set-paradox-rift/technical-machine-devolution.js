@@ -83,18 +83,30 @@ class TechnicalMachineDevolution extends trainer_card_1.TrainerCard {
                 });
             });
             if (opponent.active.getPokemonCard()) {
-                const activeEvolutions = opponent.active.cards.filter(card => evolutionNames.includes(card.name));
-                if (activeEvolutions.length > 0) {
-                    const highestEvolutionIndex = activeEvolutions.findIndex(card => card.stage === Math.max(...activeEvolutions.map(c => c.stage)));
-                    opponent.active.moveCardTo(activeEvolutions[highestEvolutionIndex], opponent.hand);
+                const activePokemon = opponent.active.cards.filter(card => card.superType === card_types_1.SuperType.POKEMON);
+                if (activePokemon.length > 0) {
+                    let lastPlayedPokemonIndex = activePokemon.length - 1;
+                    while (lastPlayedPokemonIndex >= 0 && activePokemon[lastPlayedPokemonIndex] instanceof game_1.PokemonCard && activePokemon[lastPlayedPokemonIndex].stage === card_types_1.Stage.BASIC) {
+                        lastPlayedPokemonIndex--;
+                    }
+                    if (lastPlayedPokemonIndex >= 0) {
+                        const lastPlayedPokemon = activePokemon[lastPlayedPokemonIndex];
+                        opponent.active.moveCardTo(lastPlayedPokemon, opponent.hand);
+                    }
                 }
             }
             opponent.bench.forEach(benchSpot => {
                 if (benchSpot.getPokemonCard()) {
-                    const benchEvolutions = benchSpot.cards.filter(card => evolutionNames.includes(card.name));
-                    if (benchEvolutions.length > 0) {
-                        const highestEvolutionIndex = benchEvolutions.findIndex(card => card.stage === Math.max(...benchEvolutions.map(c => c.stage)));
-                        benchSpot.moveCardTo(benchEvolutions[highestEvolutionIndex], opponent.hand);
+                    const benchPokemon = benchSpot.cards.filter(card => card.superType === card_types_1.SuperType.POKEMON);
+                    if (benchPokemon.length > 0) {
+                        let lastPlayedPokemonIndex = benchPokemon.length - 1;
+                        while (lastPlayedPokemonIndex >= 0 && benchPokemon[lastPlayedPokemonIndex] instanceof game_1.PokemonCard && benchPokemon[lastPlayedPokemonIndex].stage === card_types_1.Stage.BASIC) {
+                            lastPlayedPokemonIndex--;
+                        }
+                        if (lastPlayedPokemonIndex >= 0) {
+                            const lastPlayedPokemon = benchPokemon[lastPlayedPokemonIndex];
+                            benchSpot.moveCardTo(lastPlayedPokemon, opponent.hand);
+                        }
                     }
                 }
             });

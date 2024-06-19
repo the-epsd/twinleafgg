@@ -105,6 +105,24 @@ this.mainCard = value.cards[value.cards.length - 1];
     }
   }
 
+  getCustomImageUrl(card: Card): string {
+    const customImageUrls = {
+      'Grass Energy': 'assets/energy/grass.png',
+      'Fire Energy': 'assets/energy/fire.png',
+      'Water Energy': 'assets/energy/water.png',
+      'Lightning Energy': 'assets/energy/lightning.png',
+      'Psychic Energy': 'assets/energy/psychic.png',
+      'Fighting Energy': 'assets/energy/fighting.png',
+      'Darkness Energy': 'assets/energy/dark.png',
+      'Metal Energy': 'assets/energy/metal.png',
+      'Fairy Energy': 'assets/energy/fairy.png',
+      'Double Turbo Energy': 'assets/energy/double-turbo.png',
+      // Add more custom image URLs for other energy cards
+    };
+
+    return customImageUrls[card.name] || '';
+  }
+  
   public onCardClick(card: Card) {
     this.cardClick.next(card);
   }

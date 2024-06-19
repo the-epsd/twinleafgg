@@ -5,6 +5,7 @@ import { Arven } from './arven';
 import { Banetteex } from './banette-ex';
 import { BeachCourt } from './beach-court';
 import { Charcadet } from './charcadet';
+import { Croagunk } from './croagunk';
 import { CrushingHammer } from './crushing-hammer';
 import { Cyclizar } from './cyclizar';
 import { DefianceBand } from './defiance-band';
@@ -83,6 +84,10 @@ export class BeachCourtArt extends BeachCourt {
 
 export class CharcadetArt extends Charcadet {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1680198113791-1VWVMG23L04H9XYVG7S6/sv1_en_040.png?format=1500w';
+}
+
+export class CroagunkArt extends Croagunk {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_130_R_EN_LG.png';
 }
 
 export class CrushingHammerArt extends CrushingHammer {

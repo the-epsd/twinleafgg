@@ -10,20 +10,17 @@ import { CardsBaseService } from '../cards-base.service';
   exportAs: 'ptcgCard'
 })
 export class CardComponent {
-
   public scanUrl: string;
   public data: Card;
 
   @Input() cardback = false;
-
   @Input() placeholder = false;
+  @Input() customImageUrl: string;
 
   @Input() set card(value: Card) {
     this.data = value;
-    this.scanUrl = this.cardsBaseService.getScanUrl(this.data);
+    this.scanUrl = this.customImageUrl || this.cardsBaseService.getScanUrl(this.data);
   }
-  
-  constructor(
-    private cardsBaseService: CardsBaseService
-  ) { }
+
+  constructor(private cardsBaseService: CardsBaseService) {}
 }

@@ -7,48 +7,30 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 :host {
   display: flex;
   overflow: hidden;
-z-index: 0;
-
+  z-index: 0;
+  justify-content: center;
 }
 
 * {
   box-sizing: content-box;
   justify-content: center;
   align-items: center;
-  }
+}
 
-  .text {
-    font-family: "forma-djr-display", sans-serif;
-    font-weight: 500;
-    font-style: normal;
-    font-size: 12px;
-    color: #449058;
-    // text-indent: 25px;
-    margin-left: -22px;
-  }
-  
-  .parent {
-    height: 640px;
-    margin: 0;
-    width: 940px;
-    transform: perspective(55em) rotateX(18deg);
-    display: flex;
-    padding: 0;
-  }
-  
- // .parent.perspective {
- //   perspective: 65em;
- // }
-  
-  //.child {
-  //  margin: 0 auto;
-  //  width: 100%;
-  //  height: 100%;
-  //}
-  
- // .parent.transform .child {
- //   transform: perspective(55em) rotateX(35deg);
- // }
+.text {
+  font-family: "forma-djr-display", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 12px;
+  color: #449058;
+  margin-left: -22px;
+}
+
+.parent {
+  height: 640px;
+  width: 960px;
+  transform: perspective(55em) rotateX(18deg);
+}
 
 .ptcg-board-container {
   display: grid;
@@ -60,86 +42,71 @@ z-index: 0;
   height: calc(var(--card-size) * #{$ptcg-bench-slots} + #{($ptcg-bench-slots + 1) * map-get($padding, small)});
 
   position: absolute;
-  top: 36.5%;
+  top: 32.5%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
 
 #bottom_div {
-
   width: 100%;
 
-}
-
-#bottom_div {
   &:after {
     content: '';
     position: absolute;
     top: 66%;
     left: -55%;
     right: -55%;
-    height: 100%; //adjust this number to adjust curve  
-    background:linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(0, 90, 207, 0.75);
-    // background-image: url(https://i.imgur.com/HjestZe.png);
+    height: 100%;
+    background: linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(0, 90, 207, 0.75);
     background-size: 56%;
     background-position: center, top;
-    border-top-left-radius:50% 100%;
-    border-top-right-radius:50% 100%;
+    border-top-left-radius: 50% 100%;
+    border-top-right-radius: 50% 100%;
     margin-top: -135px;
     z-index: -1;
   }
 }
 
 #top_div {
-
   width: 100%;
 
-}
-
-#top_div {
   &:after {
     content: '';
     position: absolute;
     top: 0%;
     left: -40%;
     right: -40%;
-    height: 115%; //adjust this number to adjust curve  
-    background:linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(255, 0, 0, 0.75);
+    height: 115%;
+    background: linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(255, 0, 0, 0.75);
     background-size: 56%;
     background-position: center;
     transform: scaleY(-1);
-    border-top-left-radius:50% 100%;
-    border-top-right-radius:50% 100%;
+    border-top-left-radius: 50% 100%;
+    border-top-right-radius: 50% 100%;
     margin-top: -350px;
     z-index: -1;
   }
 }
 
-
-
 .ptcg-board-player {
-  
   display: grid;
-  border-radius: 12px;
-  padding: 6px; 
-  // background-image: url(https://www.chromethemer.com/download/hd-wallpapers/pokemon-1920x1080.jpg);
+  border-radius: 0px;
+  padding: 0px;
   grid-template-columns:
-      2fr
-      #{math.div($ptcg-bench-slots, 3)}fr
-      #{math.div($ptcg-bench-slots, 3)}fr
-      #{math.div($ptcg-bench-slots, 3)}fr
-      2fr;
+    2fr
+    #{math.div($ptcg-bench-slots, 3)}fr
+    #{math.div($ptcg-bench-slots, 3)}fr
+    #{math.div($ptcg-bench-slots, 3)}fr
+    2fr;
   grid-template-rows: auto;
   grid-template-areas:
     "prizes stadium active supporter deck"
     "prizes bench bench bench deck";
 
-    
   &.upside-down {
     transform: rotate(180deg);
   }
 }
-
 
 .ptcg-board-row {
   align-items: center;
@@ -150,27 +117,27 @@ z-index: 0;
 
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-width: 75px;
+    width: 75px;
   }
 }
 
 .ptcg-board-active {
   grid-area: active;
-
-  > ptcg-board-card,
-  > .ptcg-board-drop-target {
-    width: 98px; // Increase the width to 92px for the active card
-  }
+  width: 98px;
 }
+
+// .ptcg-board-active > ptcg-board-card,
+// .ptcg-board-active > .ptcg-board-drop-target {
+//   transform: scale(0.833333); // Inverse of the scale value (1 / 1.2)
+// }
 
 .ptcg-board-supporter,
 .ptcg-board-stadium {
   > ptcg-board-card,
   > .ptcg-board-drop-target {
-    width: 75px; 
+    width: 75px;
   }
 }
-
 
 .ptcg-board-drop-target > ptcg-board-card {
   display: block;
@@ -195,9 +162,6 @@ ptcg-board-deck {
 
 .ptcg-board-bench {
   grid-area: bench;
-  // border-radius: 12px;
-  // background: #575757;
-  // padding: 2px; 
 }
 
 .ptcg-board-stadium {
@@ -210,22 +174,14 @@ ptcg-board-deck {
 
 .stadium-card {
   align-self: flex-start;
-
   margin-top: -28%;
   margin-left: 50%;
-
-  }
-
+}
 
 .lost-zone {
   align-self: flex-start;
   transform: rotate(-90deg);
-    margin-top: 30%;
-    
-
-  // .upside-down & {
-  //   transform: rotate(90deg);
-  // }
+  margin-top: 30%;
 }
 
 .ptcg-card-preview {
@@ -234,8 +190,8 @@ ptcg-board-deck {
   width: 98px;
 }
 
-.ptcg-card-marker {
-  border-radius: $card-border-radius;
-  position: absolute;
-  width: 87px;
-}
+// .ptcg-card-marker {
+//   border-radius: $card-border-radius;
+//   position: absolute;
+//   width: 87px;
+// }

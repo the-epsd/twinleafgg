@@ -28,10 +28,10 @@ export class Charcadet extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '040';
+  public setNumber: string = '40';
 
   public name: string = 'Charcadet';
 
-  public fullName: string = 'Charcadet';
+  public fullName: string = 'Charcadet SVI';
 
 }

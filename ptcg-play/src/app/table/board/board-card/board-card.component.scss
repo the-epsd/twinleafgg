@@ -6,6 +6,11 @@ $ptcg-energy-card-offset: 14%;
 .ptcg-board-card {
   max-width: map-get($ptcg-size, card);
   min-width: map-get($ptcg-size, board-card);
+  // max-width: 4.5vw; // Adjust this value to your preference
+  // min-width: 4.5vw; // Adjust this value to your preference
+  // height: calc(4.5vw * #{$card-aspect-ratio}); // Maintain the aspect ratio
+  // margin-left: calc(1 * $spacing-unit);
+  // margin-right: calc(1 * $spacing-unit);
   position: relative;
 
   &.empty:after {
@@ -29,14 +34,43 @@ $ptcg-energy-card-offset: 14%;
   }
 }
 
+// Import custom energy card images
+// $custom-grass-energy-image: '~src/assets/custom-grass-energy.png';
+// $custom-fire-energy-image: '~src/assets/custom-fire-energy.png';
+
 .ptcg-energy-cards {
   ptcg-card {
-    top: 76%;
+    width: 30%;
+    // height: 25px;
+    // width: 25px;
+    top: 80%;
     left: -11%;
     z-index: 3;
     position: absolute;
-    clip-path: circle(24%);
-    width: 40%;
+    // clip-path: circle(37%);
+
+    // // Set custom energy card images based on their names
+    // &[data-name="Grass Energy"] {
+    //   background-image: url('#{$custom-grass-energy-image}');
+    //   background-size: cover;
+    //   background-repeat: no-repeat;
+    //   &:after {
+    //     content: '';
+    //     display: block;
+    //     padding-bottom: 100%;
+    //   }
+    // }
+
+    // &[data-name="Fire Energy"] {
+    //   background-image: url('#{$custom-fire-energy-image}');
+    //   background-size: cover;
+    //   background-repeat: no-repeat;
+    //   &:after {
+    //     content: '';
+    //     display: block;
+    //     padding-bottom: 100%;
+    //   }
+    // }
 
     // &:first-child {
     //   // Keep the first energy card at top: 76%, left: -11%
@@ -64,10 +98,10 @@ $ptcg-energy-card-offset: 14%;
 }
 
 .ptcg-trainer-card {
+  width: 100%; // Same as the card size
   left: 35%;
   position: absolute;
   transform: rotate(90deg);
-  width: 100%;
 }
 
 .ptcg-card-counts {

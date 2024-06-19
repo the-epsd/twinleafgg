@@ -1,5 +1,5 @@
 import { Attack, CardManager, PlayerType, PokemonCard, StateUtils } from '../../game';
-import { CardType, Stage, TrainerType } from '../../game/store/card/card-types';
+import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -101,22 +101,36 @@ export class TechnicalMachineDevolution extends TrainerCard {
       });
 
       if (opponent.active.getPokemonCard()) {
-        const activeEvolutions = opponent.active.cards.filter(card => evolutionNames.includes(card.name));
-        if (activeEvolutions.length > 0) {
-          const highestEvolutionIndex = activeEvolutions.findIndex(card => (card as PokemonCard).stage === Math.max(...activeEvolutions.map(c => (c as PokemonCard).stage)));
-          opponent.active.moveCardTo(activeEvolutions[highestEvolutionIndex], opponent.hand);
+        const activePokemon = opponent.active.cards.filter(card => card.superType === SuperType.POKEMON);
+        if (activePokemon.length > 0) {
+          let lastPlayedPokemonIndex = activePokemon.length - 1;
+          while (lastPlayedPokemonIndex >= 0 && activePokemon[lastPlayedPokemonIndex] instanceof PokemonCard && (activePokemon[lastPlayedPokemonIndex] as PokemonCard).stage === Stage.BASIC) {
+            lastPlayedPokemonIndex--;
+          }
+          if (lastPlayedPokemonIndex >= 0) {
+            const lastPlayedPokemon = activePokemon[lastPlayedPokemonIndex];
+            opponent.active.moveCardTo(lastPlayedPokemon, opponent.hand);
+          }
         }
       }
+      
 
       opponent.bench.forEach(benchSpot => {
         if (benchSpot.getPokemonCard()) {
-          const benchEvolutions = benchSpot.cards.filter(card => evolutionNames.includes(card.name));
-          if (benchEvolutions.length > 0) {
-            const highestEvolutionIndex = benchEvolutions.findIndex(card => (card as PokemonCard).stage === Math.max(...benchEvolutions.map(c => (c as PokemonCard).stage)));
-            benchSpot.moveCardTo(benchEvolutions[highestEvolutionIndex], opponent.hand);
+          const benchPokemon = benchSpot.cards.filter(card => card.superType === SuperType.POKEMON);
+          if (benchPokemon.length > 0) {
+            let lastPlayedPokemonIndex = benchPokemon.length - 1;
+            while (lastPlayedPokemonIndex >= 0 && benchPokemon[lastPlayedPokemonIndex] instanceof PokemonCard && (benchPokemon[lastPlayedPokemonIndex] as PokemonCard).stage === Stage.BASIC) {
+              lastPlayedPokemonIndex--;
+            }
+            if (lastPlayedPokemonIndex >= 0) {
+              const lastPlayedPokemon = benchPokemon[lastPlayedPokemonIndex];
+              benchSpot.moveCardTo(lastPlayedPokemon, opponent.hand);
+            }
           }
         }
       });
+      
 
     }
     

@@ -22,9 +22,9 @@ class Charcadet extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'SVI';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '040';
+        this.setNumber = '40';
         this.name = 'Charcadet';
-        this.fullName = 'Charcadet';
+        this.fullName = 'Charcadet SVI';
     }
 }
 exports.Charcadet = Charcadet;
