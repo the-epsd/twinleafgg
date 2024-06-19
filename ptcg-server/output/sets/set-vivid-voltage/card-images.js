@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SnorlaxArt = exports.RaikouArt = exports.LeonArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = void 0;
+exports.SnorlaxArt = exports.RaikouArt = exports.LeonArt = exports.JirachiArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = void 0;
 const charizard_1 = require("./charizard");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
+const jirachi_1 = require("./jirachi");
 const leon_1 = require("./leon");
 const raikou_1 = require("./raikou");
 const snorlax_1 = require("./snorlax");
@@ -28,6 +29,13 @@ class CharmeleonArt extends charmeleon_1.Charmeleon {
     }
 }
 exports.CharmeleonArt = CharmeleonArt;
+class JirachiArt extends jirachi_1.Jirachi {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_119_R_EN_LG.png';
+    }
+}
+exports.JirachiArt = JirachiArt;
 class LeonArt extends leon_1.Leon {
     constructor() {
         super(...arguments);
