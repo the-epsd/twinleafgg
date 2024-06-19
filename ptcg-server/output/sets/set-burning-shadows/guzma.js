@@ -62,7 +62,7 @@ class Guzma extends trainer_card_1.TrainerCard {
         this.set = 'BUS';
         this.name = 'Guzma';
         this.fullName = 'Guzma BUS';
-        this.text = "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.";
+        this.text = 'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

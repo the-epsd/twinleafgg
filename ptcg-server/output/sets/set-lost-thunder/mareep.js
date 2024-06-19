@@ -25,7 +25,7 @@ class Mareep extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Fluffy Pillow',
                 powerType: game_1.PowerType.ABILITY,
-                text: "Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may leave your opponent's Active Pokémon Asleep.",
+                text: 'Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may leave your opponent\'s Active Pokémon Asleep.',
                 useWhenInPlay: true
             }];
         this.set = 'LOT';

@@ -10,6 +10,7 @@ exports.setBrilliantStars = [
     new card_images_1.ArceusVSTARArt(),
     new card_images_1.AxewArt(),
     new card_images_1.BibarelArt(),
+    new card_images_1.BidoofArt(),
     new card_images_1.CherensCareArt(),
     new card_images_1.CleansingGlovesArt(),
     new card_images_1.CollapsedStadiumArt(),

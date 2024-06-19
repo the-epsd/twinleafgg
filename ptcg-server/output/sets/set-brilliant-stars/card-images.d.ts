@@ -5,6 +5,7 @@ import { ArceusV } from './arceus-v';
 import { ArceusVSTAR } from './arceus-vstar';
 import { Axew } from './axew';
 import { Bibarel } from './bibarel';
+import { Bidoof } from './bidoof';
 import { CherensCare } from './cherens-care';
 import { CleansingGloves } from './cleansing-gloves';
 import { CollapsedStadium } from './collapsed-stadium';
@@ -54,6 +55,9 @@ export declare class AxewArt extends Axew {
     cardImage: string;
 }
 export declare class BibarelArt extends Bibarel {
+    cardImage: string;
+}
+export declare class BidoofArt extends Bidoof {
     cardImage: string;
 }
 export declare class CherensCareArt extends CherensCare {

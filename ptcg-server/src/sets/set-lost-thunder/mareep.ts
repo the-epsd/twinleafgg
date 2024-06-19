@@ -30,7 +30,7 @@ export class Mareep extends PokemonCard {
   public powers = [{
     name: 'Fluffy Pillow',
     powerType: PowerType.ABILITY,
-    text: "Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may leave your opponent's Active Pokémon Asleep.",
+    text: 'Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may leave your opponent\'s Active Pokémon Asleep.',
     useWhenInPlay: true
   }];
 
@@ -65,7 +65,7 @@ export class Mareep extends PokemonCard {
     if (effect instanceof EndTurnEffect) {
       const player = (effect as EndTurnEffect).player;
       player.marker.removeMarker(this.FLUFFY_PILLOW_MARKER, this);
-  }
+    }
 
     return state;
   }

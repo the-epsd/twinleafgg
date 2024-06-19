@@ -41,12 +41,12 @@ class Volcanion extends pokemon_card_1.PokemonCard {
                 name: 'Flare Starter',
                 cost: [card_types_1.CardType.FIRE],
                 damage: 0,
-                text: "Search your deck for a [R] Energy card and attach it to 1 of your Pokémon. If you go second and it's your first turn, instead search for up to 3 [R] Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck."
+                text: 'Search your deck for a [R] Energy card and attach it to 1 of your Pokémon. If you go second and it\'s your first turn, instead search for up to 3 [R] Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.'
             }, {
                 name: 'High-Heat Blast',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE],
                 damage: 50,
-                text: "If you have at least 4 [R] Energy in play, this attack does 60 more damage."
+                text: 'If you have at least 4 [R] Energy in play, this attack does 60 more damage.'
             }];
         this.set = 'UNB';
         this.cardImage = 'assets/cardback.png';

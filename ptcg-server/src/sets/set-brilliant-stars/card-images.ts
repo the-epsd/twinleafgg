@@ -5,6 +5,7 @@ import { ArceusV } from './arceus-v';
 import { ArceusVSTAR } from './arceus-vstar';
 import { Axew } from './axew';
 import { Bibarel } from './bibarel';
+import { Bidoof } from './bidoof';
 import { CherensCare } from './cherens-care';
 import { CleansingGloves } from './cleansing-gloves';
 import { CollapsedStadium } from './collapsed-stadium';
@@ -62,6 +63,10 @@ export class AxewArt extends Axew {
 
 export class BibarelArt extends Bibarel {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_121_R_EN_LG.png';
+}
+
+export class BidoofArt extends Bidoof {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_120_R_EN_LG.png';
 }
 
 export class CherensCareArt extends CherensCare {
