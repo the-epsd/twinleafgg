@@ -1,4 +1,4 @@
-import { StateUtils } from '../../game';
+import { GameError, GameMessage, StateUtils } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -33,38 +33,50 @@ export class CynthiasAmbition extends TrainerCard {
 
       const player = effect.player;
 
-      if (effect instanceof KnockOutEffect) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
 
-        const duringTurn = [GamePhase.PLAYER_TURN, GamePhase.ATTACK].includes(state.phase);
+      const supporterTurn = player.supporterTurn;
 
-        // Do not activate between turns, or when it's not opponents turn.
-        if (!duringTurn || state.players[state.activePlayer] !== opponent) {
-          return state;
-        }
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
 
-        const cardList = StateUtils.findCardList(state, this);
-        const owner = StateUtils.findOwner(state, cardList);
-        if (owner === player) {
-          effect.player.marker.addMarker(this.CYNTHIAS_AMBITION_MARKER, this);
-        }
-        return state;
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
+      // No Pokemon KO last turn
+      if (!player.marker.hasMarker(this.CYNTHIAS_AMBITION_MARKER)) {
+        const cards = player.hand.cards.filter(c => c !== this);
+        const cardsToDraw = Math.max(0, 5 - cards.length);
+        player.deck.moveTo(player.hand, cardsToDraw);
+      } else {
+        const cards = player.hand.cards.filter(c => c !== this);
+        const cardsToDraw = Math.max(0, 8 - cards.length);
+        player.deck.moveTo(player.hand, cardsToDraw);
       }
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      // No Pokemon KO last turn
-      if (!player.marker.hasMarker(this.CYNTHIAS_AMBITION_MARKER)) {
-        while (player.hand.cards.length < 5) {
-          player.deck.moveTo(player.hand, 1);
-        }
-      } else {
-        while (player.hand.cards.length < 8) {
-          player.deck.moveTo(player.hand, 1);
-        }        
+    }
+
+    if (effect instanceof KnockOutEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const duringTurn = [GamePhase.PLAYER_TURN, GamePhase.ATTACK].includes(state.phase);
+
+      // Do not activate between turns, or when it's not opponents turn.
+      if (!duringTurn || state.players[state.activePlayer] !== opponent) {
+        return state;
       }
 
-      player.supporterTurn = 1;      
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+      if (owner === player) {
+        effect.player.marker.addMarker(this.CYNTHIAS_AMBITION_MARKER, this);
+      }
+      return state;
     }
 
     if (effect instanceof EndTurnEffect) {

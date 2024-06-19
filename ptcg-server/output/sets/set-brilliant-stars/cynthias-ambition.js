@@ -24,34 +24,43 @@ class CynthiasAmbition extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
-            if (effect instanceof game_effects_1.KnockOutEffect) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                const duringTurn = [state_1.GamePhase.PLAYER_TURN, state_1.GamePhase.ATTACK].includes(state.phase);
-                // Do not activate between turns, or when it's not opponents turn.
-                if (!duringTurn || state.players[state.activePlayer] !== opponent) {
-                    return state;
-                }
-                const cardList = game_1.StateUtils.findCardList(state, this);
-                const owner = game_1.StateUtils.findOwner(state, cardList);
-                if (owner === player) {
-                    effect.player.marker.addMarker(this.CYNTHIAS_AMBITION_MARKER, this);
-                }
-                return state;
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             // No Pokemon KO last turn
             if (!player.marker.hasMarker(this.CYNTHIAS_AMBITION_MARKER)) {
-                while (player.hand.cards.length < 5) {
-                    player.deck.moveTo(player.hand, 1);
-                }
+                const cards = player.hand.cards.filter(c => c !== this);
+                const cardsToDraw = Math.max(0, 5 - cards.length);
+                player.deck.moveTo(player.hand, cardsToDraw);
             }
             else {
-                while (player.hand.cards.length < 8) {
-                    player.deck.moveTo(player.hand, 1);
-                }
+                const cards = player.hand.cards.filter(c => c !== this);
+                const cardsToDraw = Math.max(0, 8 - cards.length);
+                player.deck.moveTo(player.hand, cardsToDraw);
             }
-            player.supporterTurn = 1;
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        }
+        if (effect instanceof game_effects_1.KnockOutEffect) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const duringTurn = [state_1.GamePhase.PLAYER_TURN, state_1.GamePhase.ATTACK].includes(state.phase);
+            // Do not activate between turns, or when it's not opponents turn.
+            if (!duringTurn || state.players[state.activePlayer] !== opponent) {
+                return state;
+            }
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            if (owner === player) {
+                effect.player.marker.addMarker(this.CYNTHIAS_AMBITION_MARKER, this);
+            }
+            return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             effect.player.marker.removeMarker(this.CYNTHIAS_AMBITION_MARKER);
