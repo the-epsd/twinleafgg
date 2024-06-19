@@ -117,6 +117,11 @@ this.mainCard = value.cards[value.cards.length - 1];
       'Metal Energy': 'assets/energy/metal.png',
       'Fairy Energy': 'assets/energy/fairy.png',
       'Double Turbo Energy': 'assets/energy/double-turbo.png',
+      'Jet Energy': 'assets/energy/jet.png',
+      'Gift Energy': 'assets/energy/gift.png',
+      'Mist Energy': 'assets/energy/mist.png',
+      'Legacy Energy': 'assets/energy/legacy.png',
+      'Neo Upper Energy': 'assets/energy/neo-upper.png',
       // Add more custom image URLs for other energy cards
     };
 
