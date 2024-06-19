@@ -7,4 +7,5 @@ exports.setBreakthrough = [
     new card_images_1.FlorgesArt(),
     new card_images_1.TownMapArt(),
     new card_images_1.OctilleryArt(),
+    new card_images_1.ParallelCityArt()
 ];

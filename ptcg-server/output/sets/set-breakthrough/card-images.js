@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OctilleryArt = exports.FlorgesArt = exports.TownMapArt = exports.BrigetteArt = void 0;
+exports.ParallelCityArt = exports.OctilleryArt = exports.FlorgesArt = exports.TownMapArt = exports.BrigetteArt = void 0;
 const brigette_1 = require("./brigette");
 const florges_1 = require("./florges");
 const octillery_1 = require("./octillery");
+const parallel_city_1 = require("./parallel-city");
 const town_map_1 = require("./town-map");
 class BrigetteArt extends brigette_1.Brigette {
     constructor() {
@@ -33,3 +34,10 @@ class OctilleryArt extends octillery_1.Octillery {
     }
 }
 exports.OctilleryArt = OctilleryArt;
+class ParallelCityArt extends parallel_city_1.ParallelCity {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKT/BKT_145_R_EN_LG.png';
+    }
+}
+exports.ParallelCityArt = ParallelCityArt;

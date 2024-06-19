@@ -26,7 +26,7 @@ class ReversalEnergy extends energy_card_1.EnergyCard {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const attachedTo = effect.source;
+            const attachedTo = effect.source.getPokemonCard();
             try {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
@@ -34,7 +34,7 @@ class ReversalEnergy extends energy_card_1.EnergyCard {
             catch (_a) {
                 return state;
             }
-            if (attachedTo instanceof pokemon_card_1.PokemonCard && player.getPrizeLeft() <= opponent.getPrizeLeft() && !attachedTo.cardTag.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_ex || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.RADIANT)) {
+            if (!!attachedTo && attachedTo instanceof pokemon_card_1.PokemonCard && player.getPrizeLeft() <= opponent.getPrizeLeft() && !attachedTo.cardTag.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_ex || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.RADIANT)) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY, card_types_1.CardType.ANY, card_types_1.CardType.ANY] });
             }
             else {

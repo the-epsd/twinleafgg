@@ -14,6 +14,7 @@ class TrainerCard extends card_1.Card {
         this.attacks = [];
         this.powers = [];
         this.firstTurn = false;
+        this.stadiumDirection = 'up';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect) {

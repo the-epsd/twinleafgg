@@ -11,6 +11,7 @@ export declare abstract class TrainerCard extends Card {
     attacks: Attack[];
     powers: Power[];
     firstTurn: boolean;
+    stadiumDirection: 'up' | 'down';
     toolEffect: ToolEffect | undefined;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

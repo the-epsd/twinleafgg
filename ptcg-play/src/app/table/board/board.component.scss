@@ -179,7 +179,10 @@ ptcg-board-deck {
   margin-top: -29%;
   margin-left: 50%;
 
+  &.stadium-card-down {
+    transform: rotate(180deg);
   }
+}
 
 .lost-zone {
   align-self: flex-start;

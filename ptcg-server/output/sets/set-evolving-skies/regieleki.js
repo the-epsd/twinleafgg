@@ -36,22 +36,24 @@ class Regieleki extends pokemon_card_1.PokemonCard {
         this.fullName = 'Regieleki EVS';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            const benched = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-            effect.damage = benched * 20;
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const benched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+            const min = Math.min(2, benched);
+            const max = Math.min(2, benched);
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min, max, allowCancel: true }), selected => {
+                const targets = selected || [];
+                targets.forEach(target => {
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 40);
+                    damageEffect.target = target;
+                    store.reduceEffect(state, damageEffect);
+                });
                 const player = effect.player;
                 const cards = player.active.cards.filter(c => c instanceof game_1.EnergyCard);
                 const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
                 discardEnergy.target = player.active;
-                return store.reduceEffect(state, discardEnergy);
-            }
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: true }), selected => {
-                const targets = selected || [];
-                targets.forEach(target => {
-                    target.damage += 40;
-                });
+                store.reduceEffect(state, discardEnergy);
                 return state;
             });
         }

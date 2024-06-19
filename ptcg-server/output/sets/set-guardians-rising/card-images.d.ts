@@ -1,5 +1,6 @@
 import { AlolanVulpix } from './alolan-vulpix';
 import { EnhancedHammer } from './enhanced-hammer';
+import { FieldBlower } from './field-blower';
 import { Mallow } from './mallow';
 import { Mimikyu } from './mimikyu';
 import { RescueStretcher } from './rescue-stretcher';
@@ -7,6 +8,9 @@ export declare class AlolanVulpixArt extends AlolanVulpix {
     cardImage: string;
 }
 export declare class EnhancedHammerArt extends EnhancedHammer {
+    cardImage: string;
+}
+export declare class FieldBlowerArt extends FieldBlower {
     cardImage: string;
 }
 export declare class MallowArt extends Mallow {

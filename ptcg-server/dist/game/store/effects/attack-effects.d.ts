@@ -1,10 +1,10 @@
-import { Attack } from '../card/pokemon-types';
-import { AttackEffect } from './game-effects';
 import { Card } from '../card/card';
-import { Effect } from './effect';
+import { SpecialCondition } from '../card/card-types';
+import { Attack } from '../card/pokemon-types';
 import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
-import { SpecialCondition } from '../card/card-types';
+import { Effect } from './effect';
+import { AttackEffect } from './game-effects';
 export declare enum AttackEffects {
     APPLY_WEAKNESS_EFFECT = "APPLY_WEAKNESS_EFFECT",
     DEAL_DAMAGE_EFFECT = "DEAL_DAMAGE_EFFECT",

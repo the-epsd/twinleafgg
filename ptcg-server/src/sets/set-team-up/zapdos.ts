@@ -1,8 +1,8 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
 import { State, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Zapdos extends PokemonCard {
@@ -39,12 +39,15 @@ export class Zapdos extends PokemonCard {
   public fullName: string = 'Zapdos TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect) {
-      this.movedToActiveThisTurn = false;
-      console.log('movedToActiveThisTurn = false');
-    }
   
+    if (effect instanceof EndTurnEffect) {
+      this.movedToActiveThisTurn = false; 
+    }
+    
+    if (effect instanceof RetreatEffect && effect.player.active.getPokemonCard() !== this) {
+      this.movedToActiveThisTurn = true;
+    }
+    
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       effect.ignoreWeakness = true;
       if (this.movedToActiveThisTurn) {

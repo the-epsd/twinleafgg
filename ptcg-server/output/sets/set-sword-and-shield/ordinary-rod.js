@@ -44,6 +44,9 @@ function* playCard(next, store, state, self, effect) {
     });
     player.discard.moveCardsTo(cards, player.deck);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    cards.forEach((card, index) => {
+        store.log(state, game_message_1.GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
+    });
     if (cards.length > 0) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
     }

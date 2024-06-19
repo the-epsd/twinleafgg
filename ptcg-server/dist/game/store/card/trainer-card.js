@@ -11,6 +11,7 @@ export class TrainerCard extends Card {
         this.attacks = [];
         this.powers = [];
         this.firstTurn = false;
+        this.stadiumDirection = 'up';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof AttackEffect) {

@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RescueStretcherArt = exports.MimikyuArt = exports.MallowArt = exports.EnhancedHammerArt = exports.AlolanVulpixArt = void 0;
+exports.RescueStretcherArt = exports.MimikyuArt = exports.MallowArt = exports.FieldBlowerArt = exports.EnhancedHammerArt = exports.AlolanVulpixArt = void 0;
 const alolan_vulpix_1 = require("./alolan-vulpix");
 const enhanced_hammer_1 = require("./enhanced-hammer");
+const field_blower_1 = require("./field-blower");
 const mallow_1 = require("./mallow");
 const mimikyu_1 = require("./mimikyu");
 const rescue_stretcher_1 = require("./rescue-stretcher");
@@ -20,6 +21,13 @@ class EnhancedHammerArt extends enhanced_hammer_1.EnhancedHammer {
     }
 }
 exports.EnhancedHammerArt = EnhancedHammerArt;
+class FieldBlowerArt extends field_blower_1.FieldBlower {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_125_R_EN_LG.png';
+    }
+}
+exports.FieldBlowerArt = FieldBlowerArt;
 class MallowArt extends mallow_1.Mallow {
     constructor() {
         super(...arguments);

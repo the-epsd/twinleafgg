@@ -21,6 +21,8 @@ export abstract class TrainerCard extends Card {
   public powers: Power[] = [];
 
   public firstTurn: boolean = false;
+  
+  public stadiumDirection: 'up' | 'down' = 'up';
 
   public toolEffect: ToolEffect | undefined;
 

@@ -1,14 +1,6 @@
 export const environment = {
-  /**
-   * Uncomment this for local dev
-   */
-  apiUrl: 'http://0.0.0.0:8080',
-
-  /**
-   * Uncomment this for prod
-   */
-  // apiUrl: 'https://play-server.twinleaf.gg',
-  timeout: 10000 * 1000,
+  apiUrl: 'http://127.0.0.1:8080',
+  timeout: 10000 * 10000,
   production: false,
   apiVersion: 2,
   defaultPageSize: 50,
@@ -16,5 +8,5 @@ export const environment = {
   refreshTokenInterval: 60 * 60 * 1000,
   enableImageCache: false,
   defaultLanguage: 'en',
-  languages: { en: 'English', jp: 'Japanese', fr: 'French' },
+  languages: { en: 'English', jp: 'Japanese' },
 };

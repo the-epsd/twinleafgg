@@ -33,7 +33,7 @@ class CounterEnergy extends energy_card_1.EnergyCard {
             catch (_a) {
                 return state;
             }
-            if (attachedTo instanceof game_1.PokemonCard && player.getPrizeLeft() <= opponent.getPrizeLeft() && !attachedToExOrGx) {
+            if (!!attachedTo.getPokemonCard() && player.getPrizeLeft() > opponent.getPrizeLeft() && !attachedToExOrGx) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY, card_types_1.CardType.ANY] });
             }
             else {

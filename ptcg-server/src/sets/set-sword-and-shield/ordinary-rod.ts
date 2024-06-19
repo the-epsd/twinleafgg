@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { GameMessage } from '../../game/game-message';
+import { GameLog, GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, EnergyType } from '../../game/store/card/card-types';
@@ -57,6 +57,10 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Ordinar
 
   player.discard.moveCardsTo(cards, player.deck);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  
+  cards.forEach((card, index) => {
+    store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
+  });
   
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

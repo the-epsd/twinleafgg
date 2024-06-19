@@ -1,12 +1,12 @@
-import { TrainerCard } from '../../game/store/card/trainer-card';
+import { StateUtils } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { GamePhase, State } from '../../game/store/state/state';
+import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { StateUtils, GameError, GameMessage } from '../../game';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { GamePhase, State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 export class CynthiasAmbition extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -37,20 +37,6 @@ export class CynthiasAmbition extends TrainerCard {
         const player = effect.player;
         const opponent = StateUtils.getOpponent(state, player);
 
-        const supporterTurn = player.supporterTurn;
-
-        if (supporterTurn > 0) {
-          throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
-        }
-        
-        player.hand.moveCardTo(effect.trainerCard, player.supporter);
-        // We will discard this card after prompt confirmation
-        effect.preventDefault = true;
-
-        if (player.deck.cards.length === 0) {
-          throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-        }
-
         const duringTurn = [GamePhase.PLAYER_TURN, GamePhase.ATTACK].includes(state.phase);
 
         // Do not activate between turns, or when it's not opponents turn.
@@ -66,20 +52,19 @@ export class CynthiasAmbition extends TrainerCard {
         return state;
       }
 
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
       // No Pokemon KO last turn
       if (!player.marker.hasMarker(this.CYNTHIAS_AMBITION_MARKER)) {
         while (player.hand.cards.length < 5) {
           player.deck.moveTo(player.hand, 1);
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          player.supporterTurn = 1;
         }
+      } else {
+        while (player.hand.cards.length < 8) {
+          player.deck.moveTo(player.hand, 1);
+        }        
       }
 
-      while (player.hand.cards.length < 8) {
-        player.deck.moveTo(player.hand, 1);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        player.supporterTurn = 1;
-      }
+      player.supporterTurn = 1;      
     }
 
     if (effect instanceof EndTurnEffect) {

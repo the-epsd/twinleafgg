@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Player = void 0;
-const card_list_1 = require("./card-list");
 const play_card_action_1 = require("../actions/play-card-action");
-const pokemon_card_list_1 = require("./pokemon-card-list");
+const card_list_1 = require("./card-list");
 const card_marker_1 = require("./card-marker");
+const pokemon_card_list_1 = require("./pokemon-card-list");
 class Player {
     constructor() {
         this.id = 0;
@@ -91,7 +91,6 @@ class Player {
         const benchIndex = this.bench.indexOf(target);
         if (benchIndex !== -1) {
             const temp = this.active;
-            const tempCard = temp.getPokemonCard();
             //breakdown of markers to be removed on switchPokemon()
             this.attackMarker.removeMarker(this.ATTACK_USED_MARKER);
             this.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER);
@@ -111,7 +110,7 @@ class Player {
             this.active.clearEffects();
             this.active = this.bench[benchIndex];
             this.bench[benchIndex] = temp;
-            tempCard.movedToActiveThisTurn = true;
+            this.active.getPokemonCard().movedToActiveThisTurn = true;
         }
     }
 }

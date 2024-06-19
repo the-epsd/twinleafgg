@@ -1,7 +1,7 @@
-import { CardList } from './card-list';
 import { SlotType } from '../actions/play-card-action';
-import { PokemonCardList } from './pokemon-card-list';
+import { CardList } from './card-list';
 import { Marker } from './card-marker';
+import { PokemonCardList } from './pokemon-card-list';
 export class Player {
     constructor() {
         this.id = 0;
@@ -88,7 +88,6 @@ export class Player {
         const benchIndex = this.bench.indexOf(target);
         if (benchIndex !== -1) {
             const temp = this.active;
-            const tempCard = temp.getPokemonCard();
             //breakdown of markers to be removed on switchPokemon()
             this.attackMarker.removeMarker(this.ATTACK_USED_MARKER);
             this.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER);
@@ -108,7 +107,7 @@ export class Player {
             this.active.clearEffects();
             this.active = this.bench[benchIndex];
             this.bench[benchIndex] = temp;
-            tempCard.movedToActiveThisTurn = true;
+            this.active.getPokemonCard().movedToActiveThisTurn = true;
         }
     }
 }

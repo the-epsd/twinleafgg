@@ -54,6 +54,7 @@
     <!-- Top Stadium -->
     <div class="ptcg-board-row ptcg-board-supporter">
       <ptcg-board-card class="stadium-card"
+        [ngClass]="topPlayer?.stadium?.cards[0]?.stadiumDirection === 'down' ? 'stadium-card-down' : ''"
         [cardList]="topPlayer?.stadium" [owner]="topPlayer?.id === clientId"
         (cardClick)="onStadiumClick($event)">
       </ptcg-board-card>
@@ -124,6 +125,7 @@
     <!-- Bottom Stadium -->
     <div class="ptcg-board-row ptcg-board-stadium">
       <ptcg-board-card class="stadium-card"
+        [ngClass]="bottomPlayer?.stadium?.cards[0]?.stadiumDirection === 'down' ? 'stadium-card-down' : ''"
         [cardList]="bottomPlayer?.stadium" [owner]="bottomPlayer?.id === clientId"
         (cardClick)="onStadiumClick($event)">
       </ptcg-board-card>

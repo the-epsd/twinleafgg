@@ -1,8 +1,8 @@
-import { CardList } from './card-list';
 import { CardTarget, PlayerType } from '../actions/play-card-action';
 import { PokemonCard } from '../card/pokemon-card';
-import { PokemonCardList } from './pokemon-card-list';
+import { CardList } from './card-list';
 import { Marker } from './card-marker';
+import { PokemonCardList } from './pokemon-card-list';
 export declare class Player {
     id: number;
     name: string;

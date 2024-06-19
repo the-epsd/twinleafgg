@@ -1,6 +1,6 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
 import { State, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Zapdos extends PokemonCard {
     stage: Stage;

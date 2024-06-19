@@ -1,6 +1,7 @@
 import { Brigette } from './brigette';
 import { Florges } from './florges';
 import { Octillery } from './octillery';
+import { ParallelCity } from './parallel-city';
 import { TownMap } from './town-map';
 
 export class BrigetteArt extends Brigette {
@@ -17,4 +18,8 @@ export class FlorgesArt extends Florges {
 
 export class OctilleryArt extends Octillery {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKT/BKT_033_R_EN_LG.png';
+}
+
+export class ParallelCityArt extends ParallelCity {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKT/BKT_145_R_EN_LG.png';
 }

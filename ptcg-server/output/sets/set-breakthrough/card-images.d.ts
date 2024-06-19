@@ -1,6 +1,7 @@
 import { Brigette } from './brigette';
 import { Florges } from './florges';
 import { Octillery } from './octillery';
+import { ParallelCity } from './parallel-city';
 import { TownMap } from './town-map';
 export declare class BrigetteArt extends Brigette {
     cardImage: string;
@@ -12,5 +13,8 @@ export declare class FlorgesArt extends Florges {
     cardImage: string;
 }
 export declare class OctilleryArt extends Octillery {
+    cardImage: string;
+}
+export declare class ParallelCityArt extends ParallelCity {
     cardImage: string;
 }

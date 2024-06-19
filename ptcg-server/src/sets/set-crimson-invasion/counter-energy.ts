@@ -43,14 +43,14 @@ export class CounterEnergy extends EnergyCard {
         return state;
       }
 
-      if (attachedTo instanceof PokemonCard && player.getPrizeLeft() <= opponent.getPrizeLeft() && !attachedToExOrGx) {
+      if (!!attachedTo.getPokemonCard() && player.getPrizeLeft() > opponent.getPrizeLeft() && !attachedToExOrGx) {
         effect.energyMap.push({ card: this, provides: [ CardType.ANY, CardType.ANY ] });
       } else {
         effect.energyMap.push({ card: this, provides: [ CardType.COLORLESS ] });
       }
     }
   
-    return state;
+  return state;
   }
 
 }
