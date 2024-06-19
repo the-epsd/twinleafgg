@@ -123,13 +123,14 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 
 .ptcg-board-active {
   grid-area: active;
+  margin-left: 23%;
   width: 98px;
 }
 
-// .ptcg-board-active > ptcg-board-card,
-// .ptcg-board-active > .ptcg-board-drop-target {
-//   transform: scale(0.833333); // Inverse of the scale value (1 / 1.2)
-// }
+.ptcg-board-active > ptcg-board-card,
+.ptcg-board-active > .ptcg-board-drop-target {
+  transform: scale(1.25); // Inverse of the scale value (1 / 1.2)
+}
 
 .ptcg-board-supporter,
 .ptcg-board-stadium {
@@ -156,9 +157,9 @@ ptcg-board-deck {
   grid-area: deck;
 }
 
-.ptcg-board-active {
-  grid-area: active;
-}
+// .ptcg-board-active {
+//   grid-area: active;
+// }
 
 .ptcg-board-bench {
   grid-area: bench;
@@ -174,9 +175,11 @@ ptcg-board-deck {
 
 .stadium-card {
   align-self: flex-start;
-  margin-top: -28%;
+
+  margin-top: -29%;
   margin-left: 50%;
-}
+
+  }
 
 .lost-zone {
   align-self: flex-start;

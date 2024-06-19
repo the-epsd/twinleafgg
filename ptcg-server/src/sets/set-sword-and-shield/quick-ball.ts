@@ -87,6 +87,12 @@ export class QuickBall extends TrainerCard {
 
   public set: string = 'SSH';
 
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '179';
+
+  public regulationMark = 'D';
+
   public name: string = 'Quick Ball';
 
   public fullName: string = 'Quick Ball SSH';

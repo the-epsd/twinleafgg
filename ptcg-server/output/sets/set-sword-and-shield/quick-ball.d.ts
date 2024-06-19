@@ -6,6 +6,9 @@ import { State } from '../../game/store/state/state';
 export declare class QuickBall extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    cardImage: string;
+    setNumber: string;
+    regulationMark: string;
     name: string;
     fullName: string;
     text: string;

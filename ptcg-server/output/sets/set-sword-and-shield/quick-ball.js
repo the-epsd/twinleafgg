@@ -54,6 +54,9 @@ class QuickBall extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SSH';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '179';
+        this.regulationMark = 'D';
         this.name = 'Quick Ball';
         this.fullName = 'Quick Ball SSH';
         this.text = 'You can play this card only if you discard another card from your hand. ' +
