@@ -22,7 +22,7 @@ export class Brigette extends TrainerCard {
   public fullName: string = 'Brigette BKT';
 
   public text: string =
-    "Search your deck for 1 Basic Pokémon-EX or 3 Basic Pokémon (except for Pokémon-EX) and put them onto your Bench. Shuffle your deck afterward.";
+    'Search your deck for 1 Basic Pokémon-EX or 3 Basic Pokémon (except for Pokémon-EX) and put them onto your Bench. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -38,7 +38,7 @@ export class Brigette extends TrainerCard {
   
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      } else {
+      } else {     
         // Check if bench has open slots
         const openSlots = player.bench.filter(b => b.cards.length === 0);
     
@@ -49,6 +49,7 @@ export class Brigette extends TrainerCard {
         
         const blocked: number[] = [];
         player.deck.cards.forEach((c, index) => {
+          // eslint-disable-next-line no-empty
           if (c instanceof PokemonCard && c.stage === Stage.BASIC && !c.tags.includes(CardTag.POKEMON_EX)) {
             
           } else {

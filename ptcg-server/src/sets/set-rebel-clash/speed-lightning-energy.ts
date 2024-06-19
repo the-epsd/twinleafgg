@@ -25,7 +25,7 @@ export class SpeedLightningEnergy extends EnergyCard {
   public setNumber: string = '173';
 
   public text =
-    "As long as this card is attached to a Pokémon, it provides [L] Energy. When you attach this card from your hand to a [L] Pokémon, draw 2 cards.";
+    'As long as this card is attached to a Pokémon, it provides [L] Energy. When you attach this card from your hand to a [L] Pokémon, draw 2 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
@@ -50,7 +50,7 @@ export class SpeedLightningEnergy extends EnergyCard {
         return state;
       }
 
-      if (effect.target.getPokemonCard()!.cardType === CardType.LIGHTNING) {
+      if (effect.target.getPokemonCard()?.cardType === CardType.LIGHTNING) {
         player.deck.moveTo(player.hand, 2);        
       }
     }

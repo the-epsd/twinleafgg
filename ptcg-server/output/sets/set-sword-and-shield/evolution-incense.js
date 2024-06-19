@@ -20,6 +20,7 @@ function* playCard(next, store, state, effect) {
     }
     const blocked = [];
     player.deck.cards.forEach((card, index) => {
+        // eslint-disable-next-line no-empty
         if (card instanceof pokemon_card_1.PokemonCard && card.stage !== card_types_1.Stage.BASIC && card.stage !== card_types_1.Stage.RESTORED) {
         }
         else {
@@ -48,7 +49,7 @@ class EvolutionIncense extends trainer_card_1.TrainerCard {
         this.fullName = 'Evolution Incense SSH';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '163';
-        this.text = "Search your deck for an Evolution Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.";
+        this.text = 'Search your deck for an Evolution Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

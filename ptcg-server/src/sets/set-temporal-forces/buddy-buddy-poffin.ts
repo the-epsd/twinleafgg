@@ -31,6 +31,7 @@ export class BuddyBuddyPoffin extends TrainerCard {
 
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
+        // eslint-disable-next-line no-empty
         if (c instanceof PokemonCard && c.stage === Stage.BASIC && c.hp <= 70) {
           
         } else {

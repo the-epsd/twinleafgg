@@ -22,6 +22,7 @@ class BuddyBuddyPoffin extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const blocked = [];
             player.deck.cards.forEach((c, index) => {
+                // eslint-disable-next-line no-empty
                 if (c instanceof game_1.PokemonCard && c.stage === card_types_1.Stage.BASIC && c.hp <= 70) {
                 }
                 else {

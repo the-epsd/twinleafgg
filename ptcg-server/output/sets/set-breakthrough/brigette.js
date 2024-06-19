@@ -15,7 +15,7 @@ class Brigette extends trainer_card_1.TrainerCard {
         this.regulationMark = 'E';
         this.name = 'Brigette';
         this.fullName = 'Brigette BKT';
-        this.text = "Search your deck for 1 Basic Pokémon-EX or 3 Basic Pokémon (except for Pokémon-EX) and put them onto your Bench. Shuffle your deck afterward.";
+        this.text = 'Search your deck for 1 Basic Pokémon-EX or 3 Basic Pokémon (except for Pokémon-EX) and put them onto your Bench. Shuffle your deck afterward.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
@@ -37,6 +37,7 @@ class Brigette extends trainer_card_1.TrainerCard {
                 }
                 const blocked = [];
                 player.deck.cards.forEach((c, index) => {
+                    // eslint-disable-next-line no-empty
                     if (c instanceof game_1.PokemonCard && c.stage === card_types_1.Stage.BASIC && !c.tags.includes(card_types_1.CardTag.POKEMON_EX)) {
                     }
                     else {

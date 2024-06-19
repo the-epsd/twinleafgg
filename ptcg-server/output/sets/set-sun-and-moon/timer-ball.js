@@ -20,7 +20,7 @@ class TimerBall extends trainer_card_1.TrainerCard {
         this.fullName = 'Timer Ball SUM';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '134';
-        this.text = "Flip 2 coins. For each heads, search your deck for an Evolution Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.";
+        this.text = 'Flip 2 coins. For each heads, search your deck for an Evolution Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
@@ -45,6 +45,7 @@ class TimerBall extends trainer_card_1.TrainerCard {
                 let cards = [];
                 const blocked = [];
                 player.deck.cards.forEach((card, index) => {
+                    // eslint-disable-next-line no-empty
                     if (card instanceof pokemon_card_1.PokemonCard && card.stage !== card_types_1.Stage.BASIC && card.stage !== card_types_1.Stage.RESTORED) {
                     }
                     else {

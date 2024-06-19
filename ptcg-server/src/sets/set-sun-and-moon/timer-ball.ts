@@ -28,7 +28,7 @@ export class TimerBall extends TrainerCard {
   public setNumber: string = '134';
 
   public text: string =
-    "Flip 2 coins. For each heads, search your deck for an Evolution Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.";
+    'Flip 2 coins. For each heads, search your deck for an Evolution Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -62,6 +62,7 @@ export class TimerBall extends TrainerCard {
 
         const blocked: number[] = [];
         player.deck.cards.forEach((card, index) => {
+          // eslint-disable-next-line no-empty
           if (card instanceof PokemonCard && card.stage !== Stage.BASIC && card.stage !== Stage.RESTORED) {
           } else {
             blocked.push(index);            

@@ -17,7 +17,7 @@ class AuroraEnergy extends energy_card_1.EnergyCard {
         this.fullName = 'Aurora Energy SSH';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '186';
-        this.text = "You can attach this card to 1 of your Pokémon only if you discard another card from your hand. As long as this card is attached to a Pokémon, it provides every type of Energy but provides only 1 Energy at a time.";
+        this.text = 'You can attach this card to 1 of your Pokémon only if you discard another card from your hand. As long as this card is attached to a Pokémon, it provides every type of Energy but provides only 1 Energy at a time.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {

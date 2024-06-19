@@ -24,6 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
+    // eslint-disable-next-line no-empty
     if (card instanceof PokemonCard && card.stage !== Stage.BASIC && card.stage !== Stage.RESTORED) {
     } else {
       blocked.push(index);      
@@ -73,7 +74,7 @@ export class EvolutionIncense extends TrainerCard {
   public setNumber: string = '163';
 
   public text: string =
-    "Search your deck for an Evolution Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.";
+    'Search your deck for an Evolution Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -22,7 +22,7 @@ export class Electropower extends TrainerCard {
   public fullName: string = 'Electropower LOT';
 
   public text: string =
-    "During this turn, your [L] Pokémon's attacks do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).";
+    'During this turn, your [L] Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
 
   private readonly ELECTROPOWER_MARKER = 'ELECTROPOWER_MARKER';
 

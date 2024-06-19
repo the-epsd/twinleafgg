@@ -15,7 +15,7 @@ class Electropower extends trainer_card_1.TrainerCard {
         this.setNumber = '172';
         this.name = 'Electropower';
         this.fullName = 'Electropower LOT';
-        this.text = "During this turn, your [L] Pokémon's attacks do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).";
+        this.text = 'During this turn, your [L] Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
         this.ELECTROPOWER_MARKER = 'ELECTROPOWER_MARKER';
     }
     reduceEffect(store, state, effect) {

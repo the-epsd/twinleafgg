@@ -16,16 +16,17 @@ class SpeedLightningEnergy extends energy_card_1.EnergyCard {
         this.fullName = 'Speed Lightning Energy RCL';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '173';
-        this.text = "As long as this card is attached to a Pokémon, it provides [L] Energy. When you attach this card from your hand to a [L] Pokémon, draw 2 cards.";
+        this.text = 'As long as this card is attached to a Pokémon, it provides [L] Energy. When you attach this card from your hand to a [L] Pokémon, draw 2 cards.';
     }
     reduceEffect(store, state, effect) {
+        var _a;
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             try {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_a) {
+            catch (_b) {
                 return state;
             }
             effect.energyMap.push({ card: this, provides: [card_types_1.CardType.LIGHTNING] });
@@ -36,10 +37,10 @@ class SpeedLightningEnergy extends energy_card_1.EnergyCard {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_b) {
+            catch (_c) {
                 return state;
             }
-            if (effect.target.getPokemonCard().cardType === card_types_1.CardType.LIGHTNING) {
+            if (((_a = effect.target.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === card_types_1.CardType.LIGHTNING) {
                 player.deck.moveTo(player.hand, 2);
             }
         }

@@ -15,7 +15,7 @@ class Gloria extends trainer_card_1.TrainerCard {
         this.regulationMark = 'E';
         this.name = 'Gloria';
         this.fullName = 'Gloria BRS';
-        this.text = "Search your deck for up to 3 Basic Pokémon that don't have a Rule Box and put them onto your Bench. Then, shuffle your deck. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)";
+        this.text = 'Search your deck for up to 3 Basic Pokémon that don\'t have a Rule Box and put them onto your Bench. Then, shuffle your deck. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
@@ -45,6 +45,7 @@ class Gloria extends trainer_card_1.TrainerCard {
                         !c.tags.includes(card_types_1.CardTag.POKEMON_GX) &&
                         !c.tags.includes(card_types_1.CardTag.POKEMON_LV_X) &&
                         !c.tags.includes(card_types_1.CardTag.POKEMON_ex) &&
+                        // eslint-disable-next-line no-empty
                         !c.tags.includes(card_types_1.CardTag.RADIANT)) {
                     }
                     else {

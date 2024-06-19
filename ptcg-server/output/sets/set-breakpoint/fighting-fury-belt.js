@@ -16,7 +16,7 @@ class FightingFuryBelt extends trainer_card_1.TrainerCard {
         this.fullName = 'Fighting Fury Belt BKP';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '99';
-        this.text = "The Basic Pokémon this card is attached to gets +40 HP and its attacks do 10 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).";
+        this.text = 'The Basic Pokémon this card is attached to gets +40 HP and its attacks do 10 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {

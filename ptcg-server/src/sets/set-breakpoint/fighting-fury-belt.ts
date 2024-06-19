@@ -23,7 +23,7 @@ export class FightingFuryBelt extends TrainerCard {
   public setNumber: string = '99';
 
   public text: string =
-    "The Basic Pokémon this card is attached to gets +40 HP and its attacks do 10 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).";
+    'The Basic Pokémon this card is attached to gets +40 HP and its attacks do 10 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {

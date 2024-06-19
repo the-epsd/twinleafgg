@@ -15,7 +15,7 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
         this.fullName = 'U-Turn Board UNM';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '211';
-        this.text = "The Retreat Cost of the Pokémon this card is attached to is [C] less. If this card is discarded from play, put it into your hand instead of the discard pile.";
+        this.text = 'The Retreat Cost of the Pokémon this card is attached to is [C] less. If this card is discarded from play, put it into your hand instead of the discard pile.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.DiscardCardsEffect && effect.target.cards.includes(this)) {

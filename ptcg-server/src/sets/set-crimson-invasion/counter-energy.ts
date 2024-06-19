@@ -24,7 +24,7 @@ export class CounterEnergy extends EnergyCard {
   public setNumber: string = '137';
 
   public text =
-    "This card provides [C] Energy. If you have more Prize cards remaining than your opponent, and if this card is attached to a Pokémon that isn't a Pokémon-GX or Pokémon-EX, this card provides every type of Energy but provides only 2 Energy at a time.";
+    'This card provides [C] Energy. If you have more Prize cards remaining than your opponent, and if this card is attached to a Pokémon that isn\'t a Pokémon-GX or Pokémon-EX, this card provides every type of Energy but provides only 2 Energy at a time.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
