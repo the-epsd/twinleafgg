@@ -66,7 +66,7 @@ export class ParallelCity extends TrainerCard {
       const stadiumCardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, stadiumCardList);
       
-      const benchSizes = [0, 0]
+      const benchSizes = [0, 0];
       if (this.stadiumDirection === 'up') {
         state.players.forEach((p, index) => {
           if (p === owner) {

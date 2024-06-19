@@ -20,14 +20,14 @@
   (click)="onCardClick(mainCard)">
   <ng-content></ng-content>
 </ptcg-card>
-
   
+
   <div class="ptcg-card-damage" *ngIf="damage > 0">
     <ptcg-badge color="warn">{{ damage }}</ptcg-badge>
   </div>
 
   <div class="ptcg-special-conditions" *ngIf="specialConditions.length > 0">
-    <div *ngFor="let condition of specialConditions" [ngSwitch]="condition">
+    <div *ngFor="let condition of specialConditions" [ngSwitch]="condition" [ngClass]="upside-down">
       <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.PARALYZED">
         {{ 'LABEL_PARALYZED' | translate }}
       </ptcg-badge>

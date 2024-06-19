@@ -111,9 +111,6 @@ export declare enum SpecialCondition {
     BURNED = 4,
     ABILITY_USED = 5
 }
-export declare enum AbilityUsed {
-    TRUE = 0
-}
 export declare enum Format {
     NONE = 0,
     STANDARD = 1,
@@ -122,7 +119,8 @@ export declare enum Format {
     RETRO = 4,
     GLC = 5
 }
-export declare enum Archetype {
+export declare enum Direction {
     NONE = 0,
-    CHARIZARD = 1
+    UP = 1,
+    DOWN = 2
 }

@@ -70,7 +70,7 @@ export enum CardType {
   // FIRE,
   // DRAGON,
   // FAIRY,
-  ANY,
+ANY,
 GRASS,
 FIRE,
 WATER,
@@ -134,10 +134,6 @@ export enum SpecialCondition {
   ABILITY_USED
 }
 
-export enum AbilityUsed {
-  TRUE
-}
-
 export enum Format {
   NONE,
   STANDARD,
@@ -147,7 +143,8 @@ export enum Format {
   GLC
 }
 
-export enum Archetype {
+export enum Direction {
   NONE,
-  CHARIZARD
+  UP,
+  DOWN
 }

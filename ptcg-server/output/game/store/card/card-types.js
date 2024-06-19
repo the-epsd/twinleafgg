@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Archetype = exports.Format = exports.AbilityUsed = exports.SpecialCondition = exports.CardType = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
+exports.Direction = exports.Format = exports.SpecialCondition = exports.CardType = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
 var CardTag;
 (function (CardTag) {
     CardTag["POKEMON_SP"] = "SP";
@@ -135,10 +135,6 @@ var SpecialCondition;
     SpecialCondition[SpecialCondition["BURNED"] = 4] = "BURNED";
     SpecialCondition[SpecialCondition["ABILITY_USED"] = 5] = "ABILITY_USED";
 })(SpecialCondition = exports.SpecialCondition || (exports.SpecialCondition = {}));
-var AbilityUsed;
-(function (AbilityUsed) {
-    AbilityUsed[AbilityUsed["TRUE"] = 0] = "TRUE";
-})(AbilityUsed = exports.AbilityUsed || (exports.AbilityUsed = {}));
 var Format;
 (function (Format) {
     Format[Format["NONE"] = 0] = "NONE";
@@ -148,8 +144,9 @@ var Format;
     Format[Format["RETRO"] = 4] = "RETRO";
     Format[Format["GLC"] = 5] = "GLC";
 })(Format = exports.Format || (exports.Format = {}));
-var Archetype;
-(function (Archetype) {
-    Archetype[Archetype["NONE"] = 0] = "NONE";
-    Archetype[Archetype["CHARIZARD"] = 1] = "CHARIZARD";
-})(Archetype = exports.Archetype || (exports.Archetype = {}));
+var Direction;
+(function (Direction) {
+    Direction[Direction["NONE"] = 0] = "NONE";
+    Direction[Direction["UP"] = 1] = "UP";
+    Direction[Direction["DOWN"] = 2] = "DOWN";
+})(Direction = exports.Direction || (exports.Direction = {}));

@@ -126,3 +126,8 @@ export declare enum Archetype {
     NONE = 0,
     CHARIZARD = 1
 }
+export declare enum Direction {
+    NONE = 0,
+    UP = 1,
+    DOWN = 2
+}

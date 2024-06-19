@@ -50,7 +50,7 @@ export class CounterEnergy extends EnergyCard {
       }
     }
   
-  return state;
+    return state;
   }
 
 }

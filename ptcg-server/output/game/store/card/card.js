@@ -13,6 +13,7 @@ class Card {
         this.retreat = [];
         this.cards = new card_list_1.CardList;
         this.marker = new card_marker_1.Marker();
+        this.cardDirection = [];
     }
     reduceEffect(store, state, effect) {
         return state;

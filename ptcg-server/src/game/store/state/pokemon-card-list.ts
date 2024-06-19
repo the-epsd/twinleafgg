@@ -1,6 +1,6 @@
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
-import { AbilityUsed, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Card } from '../card/card';
 import { Power, Attack } from '../card/pokemon-types';
@@ -24,8 +24,6 @@ export class PokemonCardList extends CardList {
   public abilityMarker = new Marker();
 
   public pokemonPlayedTurn: number = 0;
-
-  public abilityHasBeenUsed: AbilityUsed[] = [];
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
@@ -154,21 +152,6 @@ export class PokemonCardList extends CardList {
       SpecialCondition.ABILITY_USED,
     ].includes(s) === false);
     this.specialConditions.push(sp);
-  }
-
-  addAbilityUsedTag(sp: AbilityUsed): void {
-    this.abilityHasBeenUsed = this.abilityHasBeenUsed.filter(s => [
-      AbilityUsed.TRUE,
-    ].includes(s) === false);
-    this.abilityHasBeenUsed.push(sp);
-  }
-
-  removeAbilityUsedTag(sp: AbilityUsed): void {
-    if (!this.abilityHasBeenUsed.includes(sp)) {
-      return;
-    }
-    this.abilityHasBeenUsed = this.abilityHasBeenUsed
-      .filter(s => s !== sp);
   }
 
   hasRuleBox(): boolean {

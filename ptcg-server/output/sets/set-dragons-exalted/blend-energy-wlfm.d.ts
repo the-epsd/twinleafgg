@@ -6,6 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 export declare class BlendEnergyWLFM extends EnergyCard {
     provides: CardType[];
     energyType: EnergyType;
+    regulationMark: string;
     set: string;
     cardImage: string;
     setNumber: string;

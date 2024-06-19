@@ -98,6 +98,10 @@ $ptcg-energy-card-offset: 14%;
   }
 }
 
+.upside-down {
+  transform: rotate(180deg);
+}
+
 .ptcg-trainer-card {
   width: 100%; // Same as the card size
   left: 35%;

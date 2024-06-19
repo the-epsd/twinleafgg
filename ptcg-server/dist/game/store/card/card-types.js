@@ -150,3 +150,9 @@ export var Archetype;
     Archetype[Archetype["NONE"] = 0] = "NONE";
     Archetype[Archetype["CHARIZARD"] = 1] = "CHARIZARD";
 })(Archetype || (Archetype = {}));
+export var Direction;
+(function (Direction) {
+    Direction[Direction["NONE"] = 0] = "NONE";
+    Direction[Direction["UP"] = 1] = "UP";
+    Direction[Direction["DOWN"] = 2] = "DOWN";
+})(Direction || (Direction = {}));

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { PokemonCardList, Card, CardList, SuperType, SpecialCondition, Power, Player, PokemonCard, AbilityUsed } from 'ptcg-server';
+import { PokemonCardList, Card, CardList, SuperType, SpecialCondition, Power, Player, PokemonCard, AbilityUsed, Direction } from 'ptcg-server';
 
 const MAX_ENERGY_CARDS = 4;
 
@@ -23,6 +23,7 @@ this.damage = 0;
 this.specialConditions = [];
 this.abilityUsed = [];
 this.isFaceDown = false;
+this.cardDirection = [];
 
 this.isEmpty = !value || !value.cards.length;
 if (this.isEmpty) {
@@ -61,6 +62,7 @@ this.mainCard = value.cards[value.cards.length - 1];
     this.specialConditions = [];
     this.abilityUsed = [];
     this.isEmpty = !value;
+    this.cardDirection = [];
   }
 
   @Input() isFaceDown = false;
@@ -76,6 +78,7 @@ this.mainCard = value.cards[value.cards.length - 1];
   public specialConditions: SpecialCondition[] = [];
   public SpecialCondition = SpecialCondition;
   public abilityUsed: AbilityUsed[] = [];
+  public cardDirection: Direction[] = [];
 
 
   private isSecret = false;

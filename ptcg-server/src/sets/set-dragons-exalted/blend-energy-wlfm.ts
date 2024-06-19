@@ -12,6 +12,8 @@ export class BlendEnergyWLFM extends EnergyCard {
 
   public energyType = EnergyType.SPECIAL;
 
+  public regulationMark = 'H';
+
   public set: string = 'DRX';
 
   public cardImage: string = 'assets/cardback.png';
@@ -25,7 +27,6 @@ export class BlendEnergyWLFM extends EnergyCard {
   public text = 'This card provides C Energy. When this card is attached to a Pokémon, this card provides W, L, F, or M Energy but provides only 1 Energy at a time.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
 
@@ -36,12 +37,46 @@ export class BlendEnergyWLFM extends EnergyCard {
         return state;
       }
 
-      effect.energyMap.push({ card: this, provides: [ CardType.WATER || CardType.LIGHTNING || CardType.FIGHTING || CardType.METAL ] });
+      const pokemonCard = effect.source.getPokemonCard();
+      const attackCost = pokemonCard && pokemonCard.attacks[0].cost;
+      const providedEnergy: CardType[] = [];
+
+      if (attackCost) {
+        const attachedEnergy = effect.source.cards.filter(
+          card => card instanceof EnergyCard
+        ) as EnergyCard[];
+
+        const attachedEnergyTypes = new Set(
+          attachedEnergy.flatMap(energy => energy.provides)
+        );
+
+        for (const costType of attackCost) {
+          if (!attachedEnergyTypes.has(costType)) {
+            if (costType === CardType.WATER || costType === CardType.LIGHTNING || costType === CardType.FIGHTING || costType === CardType.METAL) {
+              providedEnergy.push(costType);
+            }
+          }
+        }
+      }
+
+      if (providedEnergy.length > 0) {
+        effect.energyMap.push({ card: this, provides: providedEnergy });
+      }
+
+      // if (attackCost && attackCost.includes(CardType.WATER)) {
+      //   providedEnergy = [CardType.WATER];
+      // } else if (attackCost && attackCost.includes(CardType.LIGHTNING)) {
+      //   providedEnergy = [CardType.LIGHTNING];
+      // } else if (attackCost && attackCost.includes(CardType.FIGHTING)) {
+      //   providedEnergy = [CardType.FIGHTING];
+      // } else if (attackCost && attackCost.includes(CardType.METAL)) {
+      //   providedEnergy = [CardType.METAL];
+      // }
+
+
       return state;
     }
-    
+
     return state;
   }
-    
 }
-    

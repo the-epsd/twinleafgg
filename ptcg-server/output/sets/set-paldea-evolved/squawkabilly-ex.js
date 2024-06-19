@@ -60,6 +60,7 @@ class Squawkabillyex extends pokemon_card_1.PokemonCard {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                     if (cardList.getPokemonCard() === this) {
                         cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        this.cardDirection = [card_types_1.Direction.DOWN];
                     }
                 });
             }
