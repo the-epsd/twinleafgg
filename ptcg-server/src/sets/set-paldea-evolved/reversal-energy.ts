@@ -46,7 +46,7 @@ export class ReversalEnergy extends EnergyCard {
         return state;
       }
 
-      if (!!attachedTo && attachedTo instanceof PokemonCard && player.getPrizeLeft() <= opponent.getPrizeLeft() && !attachedTo.cardTag.includes(CardTag.POKEMON_V || CardTag.POKEMON_ex || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.RADIANT)) {
+      if (!!attachedTo && attachedTo instanceof PokemonCard && player.getPrizeLeft() < opponent.getPrizeLeft() && !attachedTo.cardTag.includes(CardTag.POKEMON_V || CardTag.POKEMON_ex || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.RADIANT)) {
         effect.energyMap.push({ card: this, provides: [ CardType.ANY, CardType.ANY, CardType.ANY ] });
       } else {
         effect.energyMap.push({ card: this, provides: [ CardType.COLORLESS ] });
