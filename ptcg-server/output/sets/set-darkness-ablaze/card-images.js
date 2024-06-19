@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TapuKokoArt = exports.LugiaArt = exports.KangaskhanArt = exports.BirdKeeperArt = void 0;
+exports.TapuKokoArt = exports.RoseTowerArt = exports.LugiaArt = exports.KangaskhanArt = exports.BirdKeeperArt = void 0;
 const bird_keeper_1 = require("./bird-keeper");
 const kangaskhan_1 = require("./kangaskhan");
 const lugia_1 = require("./lugia");
+const rose_tower_1 = require("./rose-tower");
 const tapu_koko_1 = require("./tapu-koko");
 class BirdKeeperArt extends bird_keeper_1.BirdKeeper {
     constructor() {
@@ -26,6 +27,13 @@ class LugiaArt extends lugia_1.Lugia {
     }
 }
 exports.LugiaArt = LugiaArt;
+class RoseTowerArt extends rose_tower_1.RoseTower {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_169_R_EN_LG.png';
+    }
+}
+exports.RoseTowerArt = RoseTowerArt;
 class TapuKokoArt extends tapu_koko_1.TapuKoko {
     constructor() {
         super(...arguments);

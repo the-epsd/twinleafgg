@@ -14,7 +14,7 @@ function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     let cards = [];
-    const pokemonAndEnergyInDiscardPile = player.discard.cards.filter(c => c instanceof game_1.PokemonCard || c instanceof game_1.EnergyCard).length;
+    const pokemonAndEnergyInDiscardPile = player.discard.cards.filter(c => c instanceof game_1.PokemonCard || (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC)).length;
     if (pokemonAndEnergyInDiscardPile === 0) {
         throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }

@@ -12,8 +12,6 @@ export class BlendEnergyWLFM extends EnergyCard {
 
   public energyType = EnergyType.SPECIAL;
 
-  public regulationMark = 'H';
-
   public set: string = 'DRX';
 
   public cardImage: string = 'assets/cardback.png';

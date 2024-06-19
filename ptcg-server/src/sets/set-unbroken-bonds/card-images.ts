@@ -1,8 +1,13 @@
+import { Arcanine } from './arcanine';
 import { Cleffa } from './cleffa';
 import { Mew } from './mew';
 import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Volcanion } from './volcanion';
+
+export class ArcanineArt extends Arcanine {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_022_R_EN_LG.png';
+}
 
 export class CleffaArt extends Cleffa {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_131_R_EN.png';

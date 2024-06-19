@@ -1,8 +1,12 @@
+import { Arcanine } from './arcanine';
 import { Cleffa } from './cleffa';
 import { Mew } from './mew';
 import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Volcanion } from './volcanion';
+export declare class ArcanineArt extends Arcanine {
+    cardImage: string;
+}
 export declare class CleffaArt extends Cleffa {
     cardImage: string;
 }

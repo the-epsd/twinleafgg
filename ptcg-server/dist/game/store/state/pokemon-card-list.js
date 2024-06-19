@@ -1,6 +1,6 @@
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
-import { AbilityUsed, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 export class PokemonCardList extends CardList {
     constructor() {
@@ -14,7 +14,6 @@ export class PokemonCardList extends CardList {
         this.attackMarker = new Marker();
         this.abilityMarker = new Marker();
         this.pokemonPlayedTurn = 0;
-        this.abilityHasBeenUsed = [];
         this.stage = Stage.BASIC;
     }
     getPokemons() {
@@ -108,19 +107,6 @@ export class PokemonCardList extends CardList {
             SpecialCondition.ABILITY_USED,
         ].includes(s) === false);
         this.specialConditions.push(sp);
-    }
-    addAbilityUsedTag(sp) {
-        this.abilityHasBeenUsed = this.abilityHasBeenUsed.filter(s => [
-            AbilityUsed.TRUE,
-        ].includes(s) === false);
-        this.abilityHasBeenUsed.push(sp);
-    }
-    removeAbilityUsedTag(sp) {
-        if (!this.abilityHasBeenUsed.includes(sp)) {
-            return;
-        }
-        this.abilityHasBeenUsed = this.abilityHasBeenUsed
-            .filter(s => s !== sp);
     }
     hasRuleBox() {
         return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));

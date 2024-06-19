@@ -3,12 +3,14 @@ import { AuroraEnergy } from './aurora-energy';
 import { Cinccino } from './cinccino';
 import { Drizzile } from './drizzile';
 import { EvolutionIncense } from './evolution-incense';
+import { GiantHearth } from './giant-hearth';
 import { Inteleon } from './inteleon';
 import { Marnie } from './marnie';
 import { OrdinaryRod } from './ordinary-rod';
 import { QuickBall } from './quick-ball';
 import { Sizzlipede } from './sizzlipede';
 import { Snom } from './snom';
+import { Welder } from './welder';
 
 export class AirBalloonArt extends AirBalloon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_156_R_EN_LG.png';
@@ -28,6 +30,10 @@ export class DrizzileArt extends Drizzile {
 
 export class EvolutionIncenseArt extends EvolutionIncense {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_163_R_EN_LG.png';
+}
+
+export class GiantHearthArt extends GiantHearth {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_197_R_EN_LG.png';
 }
 
 export class InteleonArt extends Inteleon {
@@ -52,4 +58,8 @@ export class QuickBallArt extends QuickBall {
 
 export class SizzlipedeArt extends Sizzlipede {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_037_R_EN_LG.png';
+}
+
+export class WelderArt extends Welder {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_189_R_EN_LG.png';
 }

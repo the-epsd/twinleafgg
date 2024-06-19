@@ -4,7 +4,9 @@ exports.Charizard = void 0;
 const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class Charizard extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -38,18 +40,43 @@ class Charizard extends pokemon_card_1.PokemonCard {
         ];
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            [...player.bench, player.active].forEach(cardList => {
-                cardList.cards.forEach(c => {
-                    if (c.superType === card_types_1.SuperType.ENERGY) {
-                        const energyCard = c;
-                        if (energyCard.energyType === card_types_1.EnergyType.BASIC && energyCard.provides.includes(card_types_1.CardType.FIRE)) {
-                            energyCard.provides.push(...energyCard.provides);
+            const cards = player.active.cards.filter(c => c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.LIGHTNING));
+            const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+            discardEnergy.target = player.active;
+            store.reduceEffect(state, discardEnergy);
+        }
+        if (effect instanceof check_effects_1.CheckProvidedEnergyEffect) {
+            const player = effect.player;
+            let hasCharizardInPlay = false;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card === this) {
+                    hasCharizardInPlay = true;
+                }
+            });
+            if (!hasCharizardInPlay) {
+                return state;
+            }
+            try {
+                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                store.reduceEffect(state, powerEffect);
+            }
+            catch (_a) {
+                return state;
+            }
+            if (hasCharizardInPlay) {
+                effect.source.cards.forEach(c => {
+                    if (c instanceof game_1.EnergyCard && !effect.energyMap.some(e => e.card === c)) {
+                        const providedTypes = c.provides.filter(type => type === card_types_1.CardType.FIRE);
+                        if (providedTypes.length > 0) {
+                            effect.energyMap.push({ card: c, provides: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE] });
                         }
                     }
                 });
-            });
+                return state;
+            }
+            return state;
         }
         return state;
     }

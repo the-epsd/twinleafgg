@@ -266,6 +266,7 @@
   "SET_PASSWORD_NEW_HINT": "Must be at least 6 characters including at least one numeric character.",
   "SET_PASSWORD_SUCCESS": "Password has successfully been changed.",
   "SET_PASSWORD_TITLE": "Change your password",
+  "SHUFFLE_AND_DRAW_5_CARDS": "Shuffle and draw 5 cards",
   "TABLE_CARDS_COUNT": "{{count}} cards",
   "TABLE_CHOOSE_AVATAR": "Choose avatar",
   "TABLE_DECK_COUNT": "Deck: {{count}}",

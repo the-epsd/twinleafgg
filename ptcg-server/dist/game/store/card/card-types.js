@@ -132,10 +132,6 @@ export var SpecialCondition;
     SpecialCondition[SpecialCondition["BURNED"] = 4] = "BURNED";
     SpecialCondition[SpecialCondition["ABILITY_USED"] = 5] = "ABILITY_USED";
 })(SpecialCondition || (SpecialCondition = {}));
-export var AbilityUsed;
-(function (AbilityUsed) {
-    AbilityUsed[AbilityUsed["TRUE"] = 0] = "TRUE";
-})(AbilityUsed || (AbilityUsed = {}));
 export var Format;
 (function (Format) {
     Format[Format["NONE"] = 0] = "NONE";
@@ -145,11 +141,6 @@ export var Format;
     Format[Format["RETRO"] = 4] = "RETRO";
     Format[Format["GLC"] = 5] = "GLC";
 })(Format || (Format = {}));
-export var Archetype;
-(function (Archetype) {
-    Archetype[Archetype["NONE"] = 0] = "NONE";
-    Archetype[Archetype["CHARIZARD"] = 1] = "CHARIZARD";
-})(Archetype || (Archetype = {}));
 export var Direction;
 (function (Direction) {
     Direction[Direction["NONE"] = 0] = "NONE";

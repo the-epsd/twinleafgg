@@ -131,7 +131,7 @@ export class GardevoirexArt extends Gardevoirex {
 }
 
 export class GrowlitheArt extends Growlithe {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_030_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_031_R_EN_LG.png';
 }
 
 export class GyaradosexArt extends Gyaradosex {

@@ -10,7 +10,6 @@ class BlendEnergyWLFM extends energy_card_1.EnergyCard {
         super(...arguments);
         this.provides = [card_types_1.CardType.COLORLESS];
         this.energyType = card_types_1.EnergyType.SPECIAL;
-        this.regulationMark = 'H';
         this.set = 'DRX';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '118';

@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.SolrockArt = exports.SnorlaxArt = exports.SlowbroArt = exports.SlakingVArt = exports.RadiantVenusaurArt = exports.PokestopArt = exports.MoltresArt = exports.LureModuleArt = exports.LunatoneArt = exports.DittoArt = exports.CharmanderArt = exports.BlastoiseArt = exports.ArticunoArt = void 0;
+exports.ZapdosArt = exports.SolrockArt = exports.SnorlaxArt = exports.SlowbroArt = exports.SlakingVArt = exports.RadiantVenusaurArt = exports.PokestopArt = exports.MoltresArt = exports.LureModuleArt = exports.LunatoneArt = exports.DittoArt = exports.CharizardArt = exports.CharmanderArt = exports.BlastoiseArt = exports.ArticunoArt = void 0;
 const articuno_1 = require("./articuno");
 const blastoise_1 = require("./blastoise");
+const charizard_1 = require("./charizard");
 const charmander_1 = require("./charmander");
 const ditto_1 = require("./ditto");
 const lunatone_1 = require("./lunatone");
@@ -36,6 +37,13 @@ class CharmanderArt extends charmander_1.Charmander {
     }
 }
 exports.CharmanderArt = CharmanderArt;
+class CharizardArt extends charizard_1.Charizard {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_010_R_EN_LG.png';
+    }
+}
+exports.CharizardArt = CharizardArt;
 class DittoArt extends ditto_1.Ditto {
     constructor() {
         super(...arguments);

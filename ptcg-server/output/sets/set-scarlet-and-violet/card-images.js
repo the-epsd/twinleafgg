@@ -190,7 +190,7 @@ exports.GardevoirexArt = GardevoirexArt;
 class GrowlitheArt extends growlithe_1.Growlithe {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_030_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_031_R_EN_LG.png';
     }
 }
 exports.GrowlitheArt = GrowlitheArt;

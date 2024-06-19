@@ -16,6 +16,7 @@ exports.setFusionStrike = [
     new card_images_1.GenesectVArt(),
     new card_images_1.GengarVArt(),
     new card_images_1.GengarVMAXArt(),
+    new card_images_1.HeatmorArt(),
     new card_images_1.InteleonVArt(),
     new card_images_1.InteleonVMAXArt(),
     new card_images_1.JudgeArt(),

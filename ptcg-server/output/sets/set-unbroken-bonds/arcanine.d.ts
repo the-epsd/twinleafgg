@@ -1,7 +1,11 @@
-import { CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Growlithe extends PokemonCard {
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
+export declare class Arcanine extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
@@ -15,7 +19,6 @@ export declare class Growlithe extends PokemonCard {
         text: string;
     }[];
     set: string;
-    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;

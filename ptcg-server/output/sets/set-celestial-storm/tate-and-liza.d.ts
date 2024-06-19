@@ -1,14 +1,14 @@
-import { CardType, EnergyType } from '../../game/store/card/card-types';
-import { EnergyCard } from '../../game/store/card/energy-card';
+import { TrainerType } from '../../game/store/card/card-types';
+import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-export declare class BlendEnergyWLFM extends EnergyCard {
-    provides: CardType[];
-    energyType: EnergyType;
+export declare class TateAndLiza extends TrainerCard {
+    trainerType: TrainerType;
     set: string;
     cardImage: string;
     setNumber: string;
+    regulationMark: string;
     name: string;
     fullName: string;
     text: string;

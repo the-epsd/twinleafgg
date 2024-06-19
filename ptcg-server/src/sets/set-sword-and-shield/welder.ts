@@ -45,7 +45,7 @@ export class Welder extends TrainerCard {
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH, SlotType.ACTIVE ],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { min: 1, max: 2, allowCancel: true }
+        { min: 1, max: 2, allowCancel: true, sameTarget: true }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {

@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, State, StoreLike, CoinFlipPrompt, GameMessage } from '../../game';
+import { AttachEnergyPrompt, CardType, EnergyType, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -8,18 +8,24 @@ export class Growlithe extends PokemonCard {
 
   public cardType = CardType.FIRE;
 
-  public hp = 70;
+  public hp = 90;
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
-      name: 'Relentless Flames',
-      cost: [CardType.FIRE],
-      damage: 30,
-      text: 'Flip a coin until you get tails. This attack does 30 damage for each heads.'
+      name: 'Stoke',
+      cost: [CardType.COLORLESS],
+      damage: 0,
+      text: 'Search your deck for up to 2 Basic [R] Energy cards and attach them to this Pokémon. Then, shuffle your deck.'
+    },
+    {
+      name: 'Fire Claws',
+      cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE],
+      damage: 70,
+      text: ''
     }
   ];
 
@@ -29,7 +35,7 @@ export class Growlithe extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '30';
+  public setNumber: string = '31';
 
   public name: string = 'Growlithe';
 
@@ -39,21 +45,22 @@ export class Growlithe extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      let heads = 0;
-    
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], (result: boolean[]) => {
-        let flipResult = result[0];
-        while (flipResult) {
-          heads++;
-          state = store.prompt(state, [
-            new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-          ], (newResult: boolean[]) => {
-            flipResult = newResult[0];
-          });
+      
+      store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_CARDS,
+        player.deck,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.ACTIVE],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+        { min: 0, max: 2, allowCancel: true }
+      ), transfers => {
+        transfers = transfers || [];
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.deck.moveCardTo(transfer.card, target);
         }
-        effect.damage = heads * 30;
+
         return state;
       });
     }

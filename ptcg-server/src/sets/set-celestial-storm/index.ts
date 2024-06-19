@@ -1,7 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { CopycatArt, MagcargoArt } from './card-images';
+import { CopycatArt, MagcargoArt, TateAndLizaArt } from './card-images';
 
 export const setCelestialStorm: Card[] = [
   new CopycatArt(),
-  new MagcargoArt()
+  new MagcargoArt(),
+  new TateAndLizaArt()
 ];
