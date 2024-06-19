@@ -1,5 +1,6 @@
 import { Fennekin } from './fennekin';
 import { Lucario } from './lucario';
+import { N } from './n';
 import { Riolu } from './riolu';
 
 export class FennekinArt extends Fennekin {
@@ -8,6 +9,10 @@ export class FennekinArt extends Fennekin {
 
 export class LucarioArt extends Lucario {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_063_R_EN_LG.png';
+}
+
+export class NArt extends N {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_105_R_EN_LG.png';
 }
 
 export class RioluArt extends Riolu {

@@ -4,6 +4,7 @@ import { Cinccino } from './cinccino';
 import { Drizzile } from './drizzile';
 import { EvolutionIncense } from './evolution-incense';
 import { Inteleon } from './inteleon';
+import { Marnie } from './marnie';
 import { OrdinaryRod } from './ordinary-rod';
 import { QuickBall } from './quick-ball';
 import { Sizzlipede } from './sizzlipede';
@@ -24,6 +25,9 @@ export declare class EvolutionIncenseArt extends EvolutionIncense {
     cardImage: string;
 }
 export declare class InteleonArt extends Inteleon {
+    cardImage: string;
+}
+export declare class MarnieArt extends Marnie {
     cardImage: string;
 }
 export declare class SnomArt extends Snom {

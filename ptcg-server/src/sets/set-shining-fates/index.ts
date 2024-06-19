@@ -1,8 +1,9 @@
 import { Card } from '../../game/store/card/card';
-import { FrosmothArt, KoffingArt, RillaboomArt, ThwackeyArt } from './card-images';
+import { BallGuyArt, FrosmothArt, KoffingArt, RillaboomArt, ThwackeyArt } from './card-images';
 
 
 export const setShiningFates: Card[] = [
+  new BallGuyArt(),
   new FrosmothArt(),
   new KoffingArt(),
   new RillaboomArt(),

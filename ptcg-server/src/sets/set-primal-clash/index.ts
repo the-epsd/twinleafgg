@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AcroBikeArt, ArchiesAceInTheHoleArt, MaxiesHiddenBallTrickArt, MiloticArt, RoughSeasArt, ScorchedEarthArt, SilentLabArt, WailordExArt } from './card-images';
+import { AcroBikeArt, ArchiesAceInTheHoleArt, MaxiesHiddenBallTrickArt, MiloticArt, RoughSeasArt, ScorchedEarthArt, SilentLabArt, TeammatesArt, WailordExArt } from './card-images';
 
 export const setPrimalClash: Card[] = [
   new AcroBikeArt(),
@@ -9,6 +9,6 @@ export const setPrimalClash: Card[] = [
   new RoughSeasArt(),
   new ScorchedEarthArt(),
   new SilentLabArt(),
-  new WailordExArt(),
-
+  new TeammatesArt(),
+  new WailordExArt()
 ];

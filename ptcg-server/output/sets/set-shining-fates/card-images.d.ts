@@ -1,7 +1,11 @@
+import { BallGuy } from './ball-guy';
 import { Frosmoth } from './frosmoth';
 import { Koffing } from './koffing';
 import { Rillaboom } from './rillaboom';
 import { Thwackey } from './thwackey';
+export declare class BallGuyArt extends BallGuy {
+    cardImage: string;
+}
 export declare class FrosmothArt extends Frosmoth {
     cardImage: string;
 }

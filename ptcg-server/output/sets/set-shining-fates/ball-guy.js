@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BallGuy = void 0;
-const trainer_card_1 = require("../../game/store/card/trainer-card");
-const card_types_1 = require("../../game/store/card/card-types");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
+const card_types_1 = require("../../game/store/card/card-types");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const show_cards_prompt_1 = require("../../game/store/prompts/show-cards-prompt");
-const state_utils_1 = require("../../game/store/state-utils");
 const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
+const state_utils_1 = require("../../game/store/state-utils");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
@@ -19,7 +19,14 @@ function* playCard(next, store, state, self, effect) {
     }
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 0, max: 3, allowCancel: false }), selected => {
+    const blocked = [];
+    player.deck.cards.forEach((c, index) => {
+        const regex = /\bBall\b/;
+        if (!c.name.match(regex)) {
+            blocked.push(index);
+        }
+    });
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 0, max: 3, allowCancel: false, blocked }), selected => {
         cards = selected || [];
         next();
     });

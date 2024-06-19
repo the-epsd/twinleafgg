@@ -5,6 +5,7 @@ import { Milotic } from './milotic';
 import { RoughSeas } from './rough-seas';
 import { ScorchedEarth } from './scorched-earth';
 import { SilentLab } from './silent-lab';
+import { Teammates } from './teammates';
 import { WailordEx } from './wailord-ex';
 export declare class AcroBikeArt extends AcroBike {
     cardImage: string;
@@ -25,6 +26,9 @@ export declare class ScorchedEarthArt extends ScorchedEarth {
     cardImage: string;
 }
 export declare class SilentLabArt extends SilentLab {
+    cardImage: string;
+}
+export declare class TeammatesArt extends Teammates {
     cardImage: string;
 }
 export declare class WailordExArt extends WailordEx {

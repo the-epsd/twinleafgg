@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RioluArt = exports.LucarioArt = exports.FennekinArt = void 0;
+exports.RioluArt = exports.NArt = exports.LucarioArt = exports.FennekinArt = void 0;
 const fennekin_1 = require("./fennekin");
 const lucario_1 = require("./lucario");
+const n_1 = require("./n");
 const riolu_1 = require("./riolu");
 class FennekinArt extends fennekin_1.Fennekin {
     constructor() {
@@ -18,6 +19,13 @@ class LucarioArt extends lucario_1.Lucario {
     }
 }
 exports.LucarioArt = LucarioArt;
+class NArt extends n_1.N {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_105_R_EN_LG.png';
+    }
+}
+exports.NArt = NArt;
 class RioluArt extends riolu_1.Riolu {
     constructor() {
         super(...arguments);

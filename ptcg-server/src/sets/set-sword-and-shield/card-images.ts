@@ -4,6 +4,7 @@ import { Cinccino } from './cinccino';
 import { Drizzile } from './drizzile';
 import { EvolutionIncense } from './evolution-incense';
 import { Inteleon } from './inteleon';
+import { Marnie } from './marnie';
 import { OrdinaryRod } from './ordinary-rod';
 import { QuickBall } from './quick-ball';
 import { Sizzlipede } from './sizzlipede';
@@ -31,6 +32,10 @@ export class EvolutionIncenseArt extends EvolutionIncense {
 
 export class InteleonArt extends Inteleon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_058_R_EN_LG.png';
+}
+
+export class MarnieArt extends Marnie {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_169_R_EN_LG.png';
 }
 
 export class SnomArt extends Snom {

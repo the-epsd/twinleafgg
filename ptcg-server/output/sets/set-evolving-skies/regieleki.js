@@ -50,7 +50,7 @@ class Regieleki extends pokemon_card_1.PokemonCard {
                     store.reduceEffect(state, damageEffect);
                 });
                 const player = effect.player;
-                const cards = player.active.cards.filter(c => c instanceof game_1.EnergyCard);
+                const cards = player.active.cards.filter(c => c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.LIGHTNING));
                 const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
                 discardEnergy.target = player.active;
                 store.reduceEffect(state, discardEnergy);

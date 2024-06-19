@@ -5,6 +5,7 @@ import { Milotic } from './milotic';
 import { RoughSeas } from './rough-seas';
 import { ScorchedEarth } from './scorched-earth';
 import { SilentLab } from './silent-lab';
+import { Teammates } from './teammates';
 import { WailordEx } from './wailord-ex';
 
 export class AcroBikeArt extends AcroBike {
@@ -33,6 +34,10 @@ export class ScorchedEarthArt extends ScorchedEarth {
 
 export class SilentLabArt extends SilentLab {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_140_R_EN.png';
+}
+
+export class TeammatesArt extends Teammates {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_141_R_EN_LG.png';
 }
 
 export class WailordExArt extends WailordEx {

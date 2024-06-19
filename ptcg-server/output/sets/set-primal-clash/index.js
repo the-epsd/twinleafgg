@@ -10,5 +10,6 @@ exports.setPrimalClash = [
     new card_images_1.RoughSeasArt(),
     new card_images_1.ScorchedEarthArt(),
     new card_images_1.SilentLabArt(),
-    new card_images_1.WailordExArt(),
+    new card_images_1.TeammatesArt(),
+    new card_images_1.WailordExArt()
 ];

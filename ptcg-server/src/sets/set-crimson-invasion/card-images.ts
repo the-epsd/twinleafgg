@@ -1,5 +1,6 @@
 import { CounterEnergy } from './counter-energy';
 import { Gladion } from './gladion';
+import { Lusamine } from './lusamine';
 import { Misdreavus } from './misdreavus';
 
 export class CounterEnergyArt extends CounterEnergy {
@@ -8,6 +9,10 @@ export class CounterEnergyArt extends CounterEnergy {
 
 export class GladionArt extends Gladion {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CIN/CIN_095_R_EN_LG.png';
+}
+
+export class LusamineArt extends Lusamine {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CIN/CIN_096_R_EN_LG.png';
 }
 
 export class MisdreavusArt extends Misdreavus {

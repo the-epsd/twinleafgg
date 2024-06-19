@@ -343,37 +343,40 @@ export class BoardComponent implements OnDestroy {
   }
 
   public onAlakazamexBenchClick(card: Card, cardList: CardList, index: number) {
-const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
-const isDeleted = this.gameState.deleted;
+    const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
+    const isDeleted = this.gameState.deleted;
 
-if (!isBottomOwner || isDeleted) {
-return this.onCardClick(card, cardList);
-}
+    if (!isBottomOwner || isDeleted) {
+    return this.onCardClick(card, cardList);
+    }
 
-const player = PlayerType.BOTTOM_PLAYER;
-const slot = SlotType.BENCH;
-const target: CardTarget = { player, slot, index };
+    const player = PlayerType.BOTTOM_PLAYER;
+    const slot = SlotType.BENCH;
+    const target: CardTarget = { player, slot, index };
 
-if (card.name === 'Alakazam ex') {
-const options = { enableAbility: { useWhenInPlay: true }, enableAttack: true };
-this.cardsBaseService.showCardInfo({ card, cardList, options })
-.then(result => {
-if (!result) {
-return;
-}
-const gameId = this.gameState.gameId;
+    if (card.name === 'Alakazam ex') {
+    const options = { enableAbility: { useWhenInPlay: true }, enableAttack: true };
+    this.cardsBaseService.showCardInfo({ card, cardList, options })
+      .then(result => {
+      if (!result) {
+        return;
+      }
+      const gameId = this.gameState.gameId;
 
-// Use second attack from the card 
-if (result.attack[1]) {
-this.gameService.attack(gameId, result.attack[1]);
-}
-});
-}
+      // Use second attack from the card 
+      if (result.attack[1]) {
+        this.gameService.attack(gameId, result.attack[1]);
+      }
+      });
+    }
   }
 
   public onStadiumClick(card: Card) {
     const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
     const isDeleted = this.gameState.deleted;
+    
+    console.log(this.bottomPlayer);
+    console.log(this.topPlayer);
 
     if (!isBottomOwner || isDeleted) {
       return this.onCardClick(card, undefined);

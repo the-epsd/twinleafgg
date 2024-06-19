@@ -8,6 +8,7 @@ exports.setSwordAndShield = [
     new card_images_1.DrizzileArt(),
     new card_images_1.EvolutionIncenseArt(),
     new card_images_1.InteleonArt(),
+    new card_images_1.MarnieArt(),
     new card_images_1.SnomArt(),
     new card_images_1.OrdinaryRodArt(),
     new card_images_1.QuickBallArt(),
