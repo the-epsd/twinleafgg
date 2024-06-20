@@ -48,7 +48,7 @@ export class LoginPopupComponent implements OnDestroy {
     )
       .subscribe({
         next: response => {
-          const removedUsernames = ['10Types'];
+          const removedUsernames = [''];
           const bannedUsernames = ['Joacotaco24', 'leofanax', 'RedditKarmaGold'];
           if (bannedUsernames.includes(this.name)) {
             this.alertService.toast(this.translate.instant('User has been banned'));
