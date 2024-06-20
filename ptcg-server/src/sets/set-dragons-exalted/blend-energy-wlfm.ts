@@ -61,17 +61,6 @@ export class BlendEnergyWLFM extends EnergyCard {
         effect.energyMap.push({ card: this, provides: providedEnergy });
       }
 
-      // if (attackCost && attackCost.includes(CardType.WATER)) {
-      //   providedEnergy = [CardType.WATER];
-      // } else if (attackCost && attackCost.includes(CardType.LIGHTNING)) {
-      //   providedEnergy = [CardType.LIGHTNING];
-      // } else if (attackCost && attackCost.includes(CardType.FIGHTING)) {
-      //   providedEnergy = [CardType.FIGHTING];
-      // } else if (attackCost && attackCost.includes(CardType.METAL)) {
-      //   providedEnergy = [CardType.METAL];
-      // }
-
-
       return state;
     }
 

@@ -14,8 +14,6 @@ export class UTurnBoard extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
 
-  public regulationMark = 'H';
-
   public set: string = 'UNM';
 
   public name: string = 'U-Turn Board';

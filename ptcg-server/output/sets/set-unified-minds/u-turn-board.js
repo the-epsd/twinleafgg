@@ -13,7 +13,6 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.TOOL;
-        this.regulationMark = 'H';
         this.set = 'UNM';
         this.name = 'U-Turn Board';
         this.fullName = 'U-Turn Board UNM';

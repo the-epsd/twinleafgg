@@ -174,7 +174,7 @@ $ptcg-energy-card-offset: 14%;
   }
 }
 
-.badge{
+.holo{
   z-index: 2;
   position:relative;
   max-width: map-get($ptcg-size, card);
@@ -182,7 +182,7 @@ $ptcg-energy-card-offset: 14%;
   background:linear-gradient(100deg, #34DCE7 -6.37%, #7F5FFE 43.87%, #FF87A3 97.22%);
 }
 
-.badge::after{
+.holo::after{
   content:'';
   position:absolute;
   inset:0;

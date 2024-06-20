@@ -38,3 +38,12 @@ ptcg-hand {
   margin-top: -7%;
   z-index: 1;
 }
+
+.opp-hand {
+  width: 60%;
+  transform: rotate(180deg);
+  z-index: 1;
+  margin: 0 auto; /* Add this line to center horizontally */
+  display: flex; /* Add this line to enable centering */
+  justify-content: center; /* Add this line to center horizontally */
+}

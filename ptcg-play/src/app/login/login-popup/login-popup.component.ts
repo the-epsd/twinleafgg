@@ -48,9 +48,18 @@ export class LoginPopupComponent implements OnDestroy {
     )
       .subscribe({
         next: response => {
+          const removedUsernames = ['10Types'];
           const bannedUsernames = ['Joacotaco24', 'leofanax', 'RedditKarmaGold'];
           if (bannedUsernames.includes(this.name)) {
             this.alertService.toast(this.translate.instant('User has been banned'));
+            this.dialogRef.close();
+            this.loginRememberService.rememberToken();
+            this.loginService.logout(); // Disconnect the user
+            this.router.navigate(['/login']); // Navigate to the login page
+          } 
+          
+          if (removedUsernames.includes(this.name)) {
+            this.alertService.toast(this.translate.instant('This account has been removed from the Closed Beta'));
             this.dialogRef.close();
             this.loginRememberService.rememberToken();
             this.loginService.logout(); // Disconnect the user

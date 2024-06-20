@@ -8,5 +8,5 @@ export const environment = {
   refreshTokenInterval: 60 * 60 * 1000,
   enableImageCache: true,
   defaultLanguage: 'en',
-  languages: { en: 'English' },
+  languages: { en: 'English', jp: 'Japanese', fr: 'French' },
 };
