@@ -35,6 +35,7 @@ export * from './set-ancient-origins';
 export * from './set-breakthrough';
 export * from './set-breakpoint';
 export * from './set-fates-collide';
+export * from './set-steam-siege';
 export * from './set-evolutions';
 export * from './set-sun-and-moon';
 export * from './set-sun-and-moon-promos';

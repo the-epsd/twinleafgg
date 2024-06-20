@@ -64,7 +64,7 @@ cardManager.defineSet(sets.setFatesCollide);
 cardManager.defineSet(sets.setSunAndMoon);
 cardManager.defineSet(sets.setSunAndMoonPromos);
 cardManager.defineSet(sets.setGuardiansRising);
-
+cardManager.defineSet(sets.setSteamSiege);
 
 
 cardManager.defineSet(sets.setUltraPrism);

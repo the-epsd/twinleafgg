@@ -55,7 +55,7 @@ __exportStar(require("./set-breakthrough"), exports);
 __exportStar(require("./set-breakpoint"), exports);
 //export * from './set-generations';
 __exportStar(require("./set-fates-collide"), exports);
-//export * from './set-steam-siege';
+__exportStar(require("./set-steam-siege"), exports);
 __exportStar(require("./set-evolutions"), exports);
 //export
 //SM Era

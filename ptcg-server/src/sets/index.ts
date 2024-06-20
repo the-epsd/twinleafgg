@@ -48,7 +48,7 @@ export * from './set-breakthrough';
 export * from './set-breakpoint'; 
 //export * from './set-generations';
 export * from './set-fates-collide';
-//export * from './set-steam-siege';
+export * from './set-steam-siege';
 export * from './set-evolutions';
 //export
 
