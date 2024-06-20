@@ -29,15 +29,13 @@ class SplashEnergy extends energy_card_1.EnergyCard {
         this.SPLASH_ENERGY_MARKER = 'SPLASH_ENERGY_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.player.active.tool === this) {
+        var _a, _b;
+        if (effect instanceof game_effects_1.AttackEffect && ((_b = (_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards) === null || _b === void 0 ? void 0 : _b.includes(this))) {
             this.damageDealt = false;
         }
         if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) &&
-            effect.target.tool === this) {
-            const player = game_1.StateUtils.getOpponent(state, effect.player);
-            if (player.active.tool === this) {
-                this.damageDealt = true;
-            }
+            effect.target.cards.includes(this)) {
+            this.damageDealt = true;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player === game_1.StateUtils.getOpponent(state, effect.player)) {
             const cardList = game_1.StateUtils.findCardList(state, this);
@@ -75,7 +73,7 @@ class SplashEnergy extends energy_card_1.EnergyCard {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_a) {
+            catch (_c) {
                 return state;
             }
             effect.energyMap.push({ card: this, provides: [card_types_1.CardType.WATER] });
@@ -91,7 +89,7 @@ class SplashEnergy extends energy_card_1.EnergyCard {
                 const toolEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, toolEffect);
             }
-            catch (_b) {
+            catch (_d) {
                 return state;
             }
             const target = effect.target;

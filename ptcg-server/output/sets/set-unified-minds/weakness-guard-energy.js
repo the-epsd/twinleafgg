@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WeaknessGuardEnergy = void 0;
-const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const game_effects_1 = require("../../game/store/effects/game-effects");
@@ -22,14 +21,14 @@ class WeaknessGuardEnergy extends energy_card_1.EnergyCard {
             'The Pokémon this card is attached to has no Weakness.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.target.cards.includes(this)) {
+        var _a, _b;
+        if (effect instanceof game_effects_1.AttackEffect && ((_b = (_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards) === null || _b === void 0 ? void 0 : _b.includes(this))) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
             try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(opponent, this);
+                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_a) {
+            catch (_c) {
                 return state;
             }
             effect.ignoreWeakness = true;

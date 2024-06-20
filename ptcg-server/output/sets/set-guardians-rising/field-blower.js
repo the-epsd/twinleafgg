@@ -10,7 +10,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'GRI';
-        this.name = 'Field BLower';
+        this.name = 'Field Blower';
         this.fullName = 'Field Blower GRI';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '125';

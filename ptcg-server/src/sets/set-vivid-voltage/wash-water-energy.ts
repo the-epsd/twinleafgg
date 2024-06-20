@@ -1,4 +1,3 @@
-import { StateUtils } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -49,13 +48,12 @@ export class WashWaterEnergy extends EnergyCard {
     }
     
     // Prevent effects of attacks
-    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof AbstractAttackEffect && effect.target?.cards?.includes(this)) {
       const sourceCard = effect.source.getPokemonCard();
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       try {
-        const energyEffect = new EnergyEffect(opponent, this);
+        const energyEffect = new EnergyEffect(player, this);
         store.reduceEffect(state, energyEffect);
       } catch {
         return state;
@@ -63,7 +61,7 @@ export class WashWaterEnergy extends EnergyCard {
       
       if (sourceCard && sourceCard.cardType === CardType.WATER) {
     
-        if (opponent.specialEnergyBlocked === true) {
+        if (player.specialEnergyBlocked === true) {
           this.provides = [CardType.COLORLESS];
         }
 

@@ -12,7 +12,7 @@ export class FieldBlower extends TrainerCard {
 
   public set: string = 'GRI';
 
-  public name: string = 'Field BLower';
+  public name: string = 'Field Blower';
 
   public fullName: string = 'Field Blower GRI';
 

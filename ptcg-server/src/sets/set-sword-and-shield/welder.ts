@@ -20,6 +20,8 @@ export class Welder extends TrainerCard {
   public name: string = 'Welder';
 
   public fullName: string = 'Welder UNB';
+  
+  public setNumber = '189';
 
   public text: string =
     'Attach up to 2 R Energy cards from your hand to 1 of your Pokemon. ' +

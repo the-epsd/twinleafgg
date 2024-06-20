@@ -17,6 +17,7 @@ class Welder extends trainer_card_1.TrainerCard {
         this.set = 'SSH';
         this.name = 'Welder';
         this.fullName = 'Welder UNB';
+        this.setNumber = '189';
         this.text = 'Attach up to 2 R Energy cards from your hand to 1 of your Pokemon. ' +
             'If you do, draw 3 cards.';
     }

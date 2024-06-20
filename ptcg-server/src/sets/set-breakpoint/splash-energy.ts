@@ -39,17 +39,13 @@ export class SplashEnergy extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.player.active.tool === this) {
+    if (effect instanceof AttackEffect && effect.target?.cards?.includes(this)) {
       this.damageDealt = false;
     }
 
     if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
-        effect.target.tool === this) {
-      const player = StateUtils.getOpponent(state, effect.player);
-
-      if (player.active.tool === this) {
-        this.damageDealt = true;
-      }
+         effect.target.cards.includes(this)) {
+      this.damageDealt = true;
     }
     
     if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {

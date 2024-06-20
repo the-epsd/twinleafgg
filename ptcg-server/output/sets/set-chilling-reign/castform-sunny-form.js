@@ -36,7 +36,7 @@ class CastformSunnyForm extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '022';
         this.name = 'Castform Sunny Form';
-        this.fullName = 'Castform Sunny Form CRE 022';
+        this.fullName = 'Castform Sunny Form CRE';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckAttackCostEffect) {
