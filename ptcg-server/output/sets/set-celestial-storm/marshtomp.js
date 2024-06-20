@@ -10,8 +10,8 @@ class Marshtomp extends game_1.PokemonCard {
         this.stage = game_1.Stage.STAGE_1;
         this.cardType = game_1.CardType.WATER;
         this.hp = 90;
-        this.weakness = [{ type: game_1.CardType.WATER }];
-        this.retreat = [game_1.CardType.COLORLESS];
+        this.weakness = [{ type: game_1.CardType.GRASS }];
+        this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
         this.attacks = [
             {
                 name: 'Muddy Water',

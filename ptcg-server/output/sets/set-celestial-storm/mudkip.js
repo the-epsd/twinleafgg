@@ -9,7 +9,7 @@ class Mudkip extends game_1.PokemonCard {
         this.stage = game_1.Stage.BASIC;
         this.cardType = game_1.CardType.WATER;
         this.hp = 60;
-        this.weakness = [{ type: game_1.CardType.WATER }];
+        this.weakness = [{ type: game_1.CardType.GRASS }];
         this.retreat = [game_1.CardType.COLORLESS];
         this.attacks = [
             {

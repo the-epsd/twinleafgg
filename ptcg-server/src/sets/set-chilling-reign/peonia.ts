@@ -51,7 +51,7 @@ export class Peonia extends TrainerCard {
         chosenPrizes = chosenPrizes || [];
         const hand = player.hand;
         
-        chosenPrizes.forEach(prize => prize.moveTo(hand));
+        chosenPrizes.forEach(prize => prize.moveTo(hand, 1));
         
         store.prompt(state, new ChooseCardsPrompt(
           player.id,

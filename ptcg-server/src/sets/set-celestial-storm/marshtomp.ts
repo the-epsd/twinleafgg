@@ -11,9 +11,9 @@ export class Marshtomp extends PokemonCard {
 
   public hp = 90;
 
-  public weakness = [{ type: CardType.WATER }];
+  public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {

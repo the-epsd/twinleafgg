@@ -6,7 +6,9 @@ export declare class Floatzel extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
-    weakness: never[];
+    weakness: {
+        type: CardType;
+    }[];
     retreat: CardType[];
     evolvesFrom: string;
     attacks: {

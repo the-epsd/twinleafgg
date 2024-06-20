@@ -11,9 +11,9 @@ export class Floatzel extends PokemonCard {
 
   public cardType: CardType = CardType.WATER;
 
-  public hp: number = 70;
+  public hp: number = 110;
 
-  public weakness = [ ];
+  public weakness = [{ type: CardType.LIGHTNING }];
 
   public retreat = [ CardType.COLORLESS ];
 

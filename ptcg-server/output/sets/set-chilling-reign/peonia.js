@@ -33,7 +33,7 @@ class Peonia extends trainer_card_1.TrainerCard {
             return store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_message_1.GameMessage.CHOOSE_PRIZE_CARD, { count: 3, allowCancel: false }), chosenPrizes => {
                 chosenPrizes = chosenPrizes || [];
                 const hand = player.hand;
-                chosenPrizes.forEach(prize => prize.moveTo(hand));
+                chosenPrizes.forEach(prize => prize.moveTo(hand, 1));
                 store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARDS_TO_RETURN_TO_PRIZES, player.hand, {}, { min: chosenPrizes.length, max: chosenPrizes.length, allowCancel: false }), cards => {
                     cards = cards || [];
                     const newPrizeCards = new game_1.CardList();

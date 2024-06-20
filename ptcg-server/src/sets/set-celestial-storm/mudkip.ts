@@ -10,7 +10,7 @@ export class Mudkip extends PokemonCard {
 
   public hp = 60;
 
-  public weakness = [{ type: CardType.WATER }];
+  public weakness = [{ type: CardType.GRASS }];
 
   public retreat = [CardType.COLORLESS ];
 

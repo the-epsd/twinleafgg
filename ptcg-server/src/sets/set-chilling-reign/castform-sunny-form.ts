@@ -47,7 +47,7 @@ export class CastformSunnyForm extends PokemonCard {
 
   public name: string = 'Castform Sunny Form';
 
-  public fullName: string = 'Castform Sunny Form CRE 022';
+  public fullName: string = 'Castform Sunny Form CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     
