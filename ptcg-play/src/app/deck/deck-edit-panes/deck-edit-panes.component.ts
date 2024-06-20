@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, NgZone, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, NgZone } from '@angular/core';
 import { DndService, DropTarget } from '@ng-dnd/core';
 import { DraggedItem, SortableSpec } from '@ng-dnd/sortable';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { VIRTUAL_SCROLL_STRATEGY } from '@angular/cdk/scrolling';
 import { map } from 'rxjs/operators';
+
 import { AlertService } from '../../shared/alert/alert.service';
 import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
 import { DeckEditPane } from './deck-edit-pane.interface';
@@ -12,7 +13,7 @@ import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-fi
 import { DeckItem, LibraryItem } from '../deck-card/deck-card.interface';
 import { DeckCardType } from '../deck-card/deck-card.component';
 import { DeckEditVirtualScrollStrategy } from './deck-edit-virtual-scroll-strategy';
-import { Card, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType } from 'ptcg-server';
+import { Card, EnergyType, PokemonCard, SuperType } from 'ptcg-server';
 
 const DECK_CARD_ITEM_WIDTH = 148;
 const DECK_CARD_ITEM_HEIGHT = 173;
@@ -86,20 +87,18 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   }
   
   sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {
-    // Sort by superType first
-    cards.sort((a, b) => a.card.superType - b.card.superType);
     const firstTrainerIndex = cards.findIndex((d) => d.card.superType === SuperType.TRAINER);
-  
+    
     for (let i = 0; i < firstTrainerIndex; i++) {
       if ((<PokemonCard>cards[i].card).evolvesFrom) {
         const indexOfPrevolution = this.findLastIndex(cards, c => c.card.name === (<PokemonCard>cards[i].card).evolvesFrom);
-  
+        
         if (cards[indexOfPrevolution]?.card.superType !== SuperType.POKEMON) {
           continue;
         }
-  
+        
         const currentPokemon = { ...cards.splice(i, 1)[0] };
-  
+        
         cards = [
           ...cards.slice(0, indexOfPrevolution + 1),
           { ...currentPokemon },
@@ -107,46 +106,9 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         ];
       }
     }
-  
-    // Sort Pokemon cards by cardType after sorting by evolution
-    const pokemonCards = cards.slice(0, firstTrainerIndex);
-    pokemonCards.sort((a, b) => {
-      const cardA = a.card as PokemonCard;
-      const cardB = b.card as PokemonCard;
-      return cardA.cardType - cardB.cardType;
-    });
-    cards = [...pokemonCards, ...cards.slice(firstTrainerIndex)];
-  
-    // Sort Trainer cards by trainerType and then alphabetically
-    const firstEnergyIndex = cards.findIndex((d) => d.card.superType === SuperType.ENERGY, firstTrainerIndex);
-    cards = [...cards.slice(0, firstTrainerIndex), ...cards.slice(firstTrainerIndex, firstEnergyIndex).sort((a, b) => {
-      const trainerA = a.card as TrainerCard;
-      const trainerB = b.card as TrainerCard;
-  
-      const trainerTypeOrder = [TrainerType.SUPPORTER, TrainerType.ITEM, TrainerType.TOOL, TrainerType.STADIUM];
-      const trainerAIndex = trainerTypeOrder.indexOf(trainerA.trainerType);
-      const trainerBIndex = trainerTypeOrder.indexOf(trainerB.trainerType);
-  
-      if (trainerAIndex !== trainerBIndex) {
-        return trainerAIndex - trainerBIndex;
-      }
-  
-      return trainerA.name.localeCompare(trainerB.name);
-    }), ...cards.slice(firstEnergyIndex)];
-  
-    // Sort Energy cards
-    const energyCards = cards.slice(firstEnergyIndex);
-    const specialEnergyCards = energyCards.filter((d) => d.card.energyType === EnergyType.SPECIAL);
-    const basicEnergyCards = energyCards.filter((d) => d.card.energyType === EnergyType.BASIC);
-  
-    specialEnergyCards.sort((a, b) => a.card.name.localeCompare(b.card.name));
-    basicEnergyCards.sort((a, b) => a.card.name.localeCompare(b.card.name));
-  
-    cards = [...cards.slice(0, firstEnergyIndex), ...specialEnergyCards, ...basicEnergyCards];
-  
+    
     return cards;
   }
-  
   
   findLastIndex<T>(array: Array<T>, predicate: (value: T, index: number, obj: T[]) => boolean): number {
     let l = array.length;

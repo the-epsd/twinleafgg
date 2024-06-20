@@ -12,7 +12,7 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.POKEMON_ex];
-        this.stage = card_types_1.Stage.STAGE_2;
+        this.stage = card_types_1.Stage.BASIC;
         this.evolvesFrom = 'Kirlia';
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.cardTypez = card_types_1.CardType.GARDEVOIR_EX;
@@ -44,18 +44,18 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            const blocked = [];
-            player.bench.forEach((card, index) => {
-                if (card instanceof pokemon_card_1.PokemonCard && card.cardType === card_types_1.CardType.PSYCHIC) {
-                    blocked.push(index);
-                }
-            });
-            player.active.cards.forEach((card, index) => {
-                if (card instanceof pokemon_card_1.PokemonCard && card.cardType === card_types_1.CardType.PSYCHIC) {
-                    blocked.push(index);
-                }
-            });
-            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Psychic Energy' }, { allowCancel: true, min: 0 }), transfers => {
+            // const blocked: CardTarget[] = [];
+            // player.bench.forEach((card, index) => {
+            //   if (card instanceof PokemonCard && card.cardType !== CardType.PSYCHIC) {
+            //     blocked.push();
+            //   }
+            // });
+            // player.active.cards.forEach((card, index) => {
+            //   if (card instanceof PokemonCard && card.cardType !== CardType.PSYCHIC) {
+            //     blocked.push();
+            //   }
+            // });
+            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Psychic Energy' }, { allowCancel: false, min: 0 }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {
@@ -64,24 +64,27 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     const pokemonCard = target.cards[0];
+                    if (!pokemonCard) {
+                        throw new game_1.GameError(game_1.GameMessage.INVALID_TARGET);
+                    }
                     if (pokemonCard.cardType !== card_types_1.CardType.PSYCHIC) {
                         throw new game_1.GameError(game_1.GameMessage.INVALID_TARGET);
                     }
-                    player.discard.moveCardTo(transfer.card, target);
-                    target.damage += 20;
-                    if (pokemonCard.hp <= 10) {
+                    const damageAfterTransfer = target.damage + 20;
+                    if (damageAfterTransfer >= pokemonCard.hp) {
                         throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                     }
+                    player.discard.moveCardTo(transfer.card, target);
+                    target.damage += 20;
                 }
-                return state;
             });
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                const player = effect.player;
-                const removeSpecialCondition = new attack_effects_1.RemoveSpecialConditionsEffect(effect, undefined);
-                removeSpecialCondition.target = player.active;
-                state = store.reduceEffect(state, removeSpecialCondition);
-                return state;
-            }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const removeSpecialCondition = new attack_effects_1.RemoveSpecialConditionsEffect(effect, undefined);
+            removeSpecialCondition.target = player.active;
+            state = store.reduceEffect(state, removeSpecialCondition);
+            return state;
         }
         return state;
     }

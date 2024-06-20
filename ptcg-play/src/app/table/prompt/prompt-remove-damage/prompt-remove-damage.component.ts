@@ -63,10 +63,10 @@ export class PromptRemoveDamageComponent implements OnChanges {
   }
 
   public removeDamage() {
-    this.damage -= 10;
+    this.damage += 10;
     const item = this.selectedItem;
     item.cardList = Object.assign(new PokemonCardList(), item.cardList);
-    item.cardList.damage += 10;
+    item.cardList.damage -= 10;
     this.updateButtonDisable();
     this.updateIsInvalid();
   }
@@ -75,7 +75,7 @@ export class PromptRemoveDamageComponent implements OnChanges {
     this.damage -= 10;
     const item = this.selectedItem;
     item.cardList = Object.assign(new PokemonCardList(), item.cardList);
-    item.cardList.damage += 10;
+    item.cardList.damage -= 10; // Subtract 10 from the damage property
     this.updateButtonDisable();
     this.updateIsInvalid();
   }

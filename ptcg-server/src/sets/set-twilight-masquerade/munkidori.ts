@@ -89,10 +89,10 @@ export class Munkidori extends PokemonCard {
 
       const maxAllowedDamage: DamageMap[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        maxAllowedDamage.push({ target, damage: card.hp + 30 });
+        maxAllowedDamage.push({ target, damage: card.hp + 10 });
       });
     
-      const damage = 30;
+      const damage = 10;
     
       return store.prompt(
         state,
@@ -107,18 +107,18 @@ export class Munkidori extends PokemonCard {
         ), targets => {
           const results = targets || [];
           for (const result of results) {
+
             const target = StateUtils.getTarget(state, player, result.target);
-            
             const healEffect = new HealEffect(player, target, result.damage);
             state = store.reduceEffect(state, healEffect);
-          
-
+            healEffect.target = target;
+            
             return store.prompt(state, new ChoosePokemonPrompt(
               player.id,
               GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
               PlayerType.TOP_PLAYER,
               [ SlotType.BENCH, SlotType.ACTIVE ],
-              { min: 0, max: 1, allowCancel: false },
+              { min: 1, max: 1, allowCancel: false },
             ), selected => {
               const targets = selected || [];
               targets.forEach(target => {

@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils,
-  GameMessage, PlayerType, SlotType, GameError } from '../../game';
+  GameMessage, PlayerType, SlotType, GameError} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
@@ -61,19 +61,18 @@ export class Gardevoirex extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      const blocked: number[] = [];
-      player.bench.forEach((card, index) => {
-        if (card instanceof PokemonCard && card.cardType === CardType.PSYCHIC) {
-          blocked.push(index);
-        }
-      });
+      // const blocked: CardTarget[] = [];
+      // player.bench.forEach((card, index) => {
+      //   if (card instanceof PokemonCard && card.cardType !== CardType.PSYCHIC) {
+      //     blocked.push();
+      //   }
+      // });
 
-      player.active.cards.forEach((card, index) => {
-        if (card instanceof PokemonCard && card.cardType === CardType.PSYCHIC) {
-          blocked.push(index);
-        }
-      });
-
+      // player.active.cards.forEach((card, index) => {
+      //   if (card instanceof PokemonCard && card.cardType !== CardType.PSYCHIC) {
+      //     blocked.push();
+      //   }
+      // });
 
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
@@ -82,7 +81,7 @@ export class Gardevoirex extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH, SlotType.ACTIVE ],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
-        { allowCancel: true, min: 0 },
+        { allowCancel: false, min: 0 },
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
@@ -92,26 +91,29 @@ export class Gardevoirex extends PokemonCard {
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           const pokemonCard = target.cards[0] as PokemonCard;
+          if (!pokemonCard) {
+            throw new GameError(GameMessage.INVALID_TARGET);
+          }
           if (pokemonCard.cardType !== CardType.PSYCHIC) {
             throw new GameError(GameMessage.INVALID_TARGET);
           }
-          player.discard.moveCardTo(transfer.card, target);
-          target.damage += 20;
-          if (pokemonCard.hp <= 10) {
+          const damageAfterTransfer = target.damage + 20;
+          if (damageAfterTransfer >= pokemonCard.hp) {
             throw new GameError(GameMessage.CANNOT_USE_POWER);
           }
+          player.discard.moveCardTo(transfer.card, target);
+          target.damage += 20;
         }
-
-        return state;
       });
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const player = effect.player;
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
   
-        const removeSpecialCondition = new RemoveSpecialConditionsEffect(effect, undefined);
-        removeSpecialCondition.target = player.active;
-        state = store.reduceEffect(state, removeSpecialCondition);
-        return state;
-      }
+      const removeSpecialCondition = new RemoveSpecialConditionsEffect(effect, undefined);
+      removeSpecialCondition.target = player.active;
+      state = store.reduceEffect(state, removeSpecialCondition);
+      return state;
     }
     return state;
   }

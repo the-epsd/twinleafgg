@@ -69,16 +69,17 @@ class Munkidori extends game_1.PokemonCard {
             player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
             const maxAllowedDamage = [];
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                maxAllowedDamage.push({ target, damage: card.hp + 30 });
+                maxAllowedDamage.push({ target, damage: card.hp + 10 });
             });
-            const damage = 30;
+            const damage = 10;
             return store.prompt(state, new remove_damage_prompt_1.RemoveDamagePrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_HEAL, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], damage, maxAllowedDamage, { allowCancel: false }), targets => {
                 const results = targets || [];
                 for (const result of results) {
                     const target = game_1.StateUtils.getTarget(state, player, result.target);
                     const healEffect = new game_effects_1.HealEffect(player, target, result.damage);
                     state = store.reduceEffect(state, healEffect);
-                    return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 0, max: 1, allowCancel: false }), selected => {
+                    healEffect.target = target;
+                    return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 1, allowCancel: false }), selected => {
                         const targets = selected || [];
                         targets.forEach(target => {
                             target.damage += result.damage;
