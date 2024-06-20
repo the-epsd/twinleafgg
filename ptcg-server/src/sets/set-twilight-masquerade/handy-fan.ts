@@ -53,18 +53,18 @@ export class HandyFan extends TrainerCard {
         }
   
         return store.prompt(state, new AttachEnergyPrompt(
-          player.id,
+          opponent.id,
           GameMessage.ATTACH_ENERGY_TO_BENCH,
-          opponent.active,
+          player.active,
           PlayerType.TOP_PLAYER,
           [SlotType.BENCH],
           { superType: SuperType.ENERGY },
-          { allowCancel: false, min: 1, max: 1 }
+          { allowCancel: false, min: 0, max: 1 }
         ), transfers => {
           transfers = transfers || [];
           for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            opponent.active.moveCardTo(transfer.card, target);
+            const target = StateUtils.getTarget(state, opponent, transfer.to);
+            player.active.moveCardTo(transfer.card, target);
           }
         });
       }

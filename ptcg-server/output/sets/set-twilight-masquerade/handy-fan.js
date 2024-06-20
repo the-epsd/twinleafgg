@@ -41,11 +41,11 @@ class HandyFan extends trainer_card_1.TrainerCard {
                 if (hasBench === false) {
                     return state;
                 }
-                return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, opponent.active, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 1, max: 1 }), transfers => {
+                return store.prompt(state, new game_1.AttachEnergyPrompt(opponent.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.active, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 0, max: 1 }), transfers => {
                     transfers = transfers || [];
                     for (const transfer of transfers) {
-                        const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
-                        opponent.active.moveCardTo(transfer.card, target);
+                        const target = state_utils_1.StateUtils.getTarget(state, opponent, transfer.to);
+                        player.active.moveCardTo(transfer.card, target);
                     }
                 });
             }

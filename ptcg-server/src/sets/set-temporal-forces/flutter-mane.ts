@@ -85,38 +85,41 @@ export class FlutterMane extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect
-        && effect.power.powerType === PowerType.ABILITY
-        && effect.power.name !== 'Midnight Fluttering' && effect.card === effect.player.active.cards[0] ) {
+      && effect.power.powerType === PowerType.ABILITY
+      && effect.power.name !== 'Midnight Fluttering' && effect.card === effect.player.active.cards[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       let isFlutterManeInPlay = false;
-  
-      if (player.active.cards[0] == this) {
+
+      if (player.active.cards[0] === this) {
         isFlutterManeInPlay = true;
       }
-  
-      if (opponent.active.cards[0] == this) {
+
+      if (opponent.active.cards[0] === this) {
         isFlutterManeInPlay = true;
       }
-        
+
       if (!isFlutterManeInPlay) {
         return state;
       }
 
-      // Try reducing ability for opponent
-      try {
-        const playerPowerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, playerPowerEffect);
-      } catch {
-        return state;
+      if (isFlutterManeInPlay) {
+
+        // Try reducing ability for opponent
+        try {
+          const playerPowerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, playerPowerEffect);
+        } catch {
+          return state;
+        }
+
+        // if (opponent.bench && player.bench) {
+        //   return state;
+        // }
+
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-
-      // if (opponent.bench && player.bench) {
-      //   return state;
-      // }
-
-      throw new GameError(GameMessage.CANNOT_USE_POWER);
     }
 
 

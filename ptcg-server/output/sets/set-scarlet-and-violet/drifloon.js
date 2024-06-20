@@ -37,11 +37,11 @@ class Drifloon extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            // Get Drifloon's damage
+            // Get Dodrio's damage
             const drifloonDamage = effect.player.active.damage;
             // Calculate 30 damage per counter
             const damagePerCounter = 30;
-            effect.damage = drifloonDamage * damagePerCounter;
+            effect.damage += (drifloonDamage * damagePerCounter / 10);
             return state;
         }
         return state;

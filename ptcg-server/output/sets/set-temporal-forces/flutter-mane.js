@@ -63,27 +63,29 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let isFlutterManeInPlay = false;
-            if (player.active.cards[0] == this) {
+            if (player.active.cards[0] === this) {
                 isFlutterManeInPlay = true;
             }
-            if (opponent.active.cards[0] == this) {
+            if (opponent.active.cards[0] === this) {
                 isFlutterManeInPlay = true;
             }
             if (!isFlutterManeInPlay) {
                 return state;
             }
-            // Try reducing ability for opponent
-            try {
-                const playerPowerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                store.reduceEffect(state, playerPowerEffect);
+            if (isFlutterManeInPlay) {
+                // Try reducing ability for opponent
+                try {
+                    const playerPowerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                    store.reduceEffect(state, playerPowerEffect);
+                }
+                catch (_a) {
+                    return state;
+                }
+                // if (opponent.bench && player.bench) {
+                //   return state;
+                // }
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            catch (_a) {
-                return state;
-            }
-            // if (opponent.bench && player.bench) {
-            //   return state;
-            // }
-            throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const generator = useHexHurl(() => generator.next(), store, state, effect);
