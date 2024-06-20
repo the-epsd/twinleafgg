@@ -1,10 +1,5 @@
-<<<<<<< Updated upstream
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Card, CardList, Direction, PokemonCardList, Power, SpecialCondition, SuperType } from 'ptcg-server';
-=======
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { PokemonCardList, Card, CardList, SuperType, SpecialCondition, Power, Player, PokemonCard } from 'ptcg-server';
->>>>>>> Stashed changes
+ import { Card, CardList, PokemonCardList, Power, SpecialCondition, SuperType } from 'ptcg-server';
 
 const MAX_ENERGY_CARDS = 4;
 
@@ -78,11 +73,6 @@ this.mainCard = value.cards[value.cards.length - 1];
   public damage = 0;
   public specialConditions: SpecialCondition[] = [];
   public SpecialCondition = SpecialCondition;
-<<<<<<< Updated upstream
-  public cardDirection: Direction[] = [];
-
-=======
->>>>>>> Stashed changes
 
   private isSecret = false;
   private isPublic = false;

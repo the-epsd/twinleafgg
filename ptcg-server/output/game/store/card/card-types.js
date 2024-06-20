@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Direction = exports.Format = exports.SpecialCondition = exports.CardType = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
+exports.Format = exports.SpecialCondition = exports.CardType = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
 var CardTag;
 (function (CardTag) {
     CardTag["POKEMON_SP"] = "SP";
@@ -144,9 +144,3 @@ var Format;
     Format[Format["RETRO"] = 4] = "RETRO";
     Format[Format["GLC"] = 5] = "GLC";
 })(Format = exports.Format || (exports.Format = {}));
-var Direction;
-(function (Direction) {
-    Direction[Direction["NONE"] = 0] = "NONE";
-    Direction[Direction["UP"] = 1] = "UP";
-    Direction[Direction["DOWN"] = 2] = "DOWN";
-})(Direction = exports.Direction || (exports.Direction = {}));

@@ -17,7 +17,6 @@ class PokemonCardList extends card_list_1.CardList {
         this.attackMarker = new card_marker_1.Marker();
         this.abilityMarker = new card_marker_1.Marker();
         this.pokemonPlayedTurn = 0;
-        this.cardDirection = [];
         this.stage = card_types_1.Stage.BASIC;
     }
     getPokemons() {

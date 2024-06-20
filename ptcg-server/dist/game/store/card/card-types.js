@@ -141,9 +141,3 @@ export var Format;
     Format[Format["RETRO"] = 4] = "RETRO";
     Format[Format["GLC"] = 5] = "GLC";
 })(Format || (Format = {}));
-export var Direction;
-(function (Direction) {
-    Direction[Direction["NONE"] = 0] = "NONE";
-    Direction[Direction["UP"] = 1] = "UP";
-    Direction[Direction["DOWN"] = 2] = "DOWN";
-})(Direction || (Direction = {}));

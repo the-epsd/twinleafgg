@@ -1,6 +1,6 @@
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
-import { CardTag, Direction, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Card } from '../card/card';
 import { Power, Attack } from '../card/pokemon-types';
@@ -24,8 +24,6 @@ export class PokemonCardList extends CardList {
   public abilityMarker = new Marker();
 
   public pokemonPlayedTurn: number = 0;
-
-  public cardDirection: Direction[] = [];
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

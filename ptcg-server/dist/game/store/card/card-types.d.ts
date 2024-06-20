@@ -119,8 +119,3 @@ export declare enum Format {
     RETRO = 4,
     GLC = 5
 }
-export declare enum Direction {
-    NONE = 0,
-    UP = 1,
-    DOWN = 2
-}

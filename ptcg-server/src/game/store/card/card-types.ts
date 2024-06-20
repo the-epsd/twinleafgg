@@ -142,9 +142,3 @@ export enum Format {
   RETRO,
   GLC
 }
-
-export enum Direction {
-  NONE,
-  UP,
-  DOWN
-}

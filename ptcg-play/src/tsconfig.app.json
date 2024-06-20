@@ -15,6 +15,5 @@
   ],
   "angularCompilerOptions": {
     "enableIvy": true,
-    "strictTemplates": true
   }
 }

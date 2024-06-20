@@ -1,4 +1,4 @@
-import { CardType, Direction, EnergyType, Format, SuperType } from './card-types';
+import { CardType, EnergyType, Format, SuperType } from './card-types';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
@@ -20,6 +20,5 @@ export declare abstract class Card {
     static tags: any;
     cards: CardList;
     marker: Marker;
-    cardDirection: Direction[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
