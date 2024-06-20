@@ -1,15 +1,20 @@
+import { Card } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
-import { State } from '../../game/store/state/state';
+import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class UTurnBoard extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
+
+  public regulationMark = 'H';
 
   public set: string = 'UNM';
 
@@ -20,6 +25,8 @@ export class UTurnBoard extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '211';
+
+  public readonly U_TURN_BOARD_MARKER = 'U_TURN_BOARD_MARKER';
 
   public text: string =
     'The Retreat Cost of the Pokémon this card is attached to is [C] less. If this card is discarded from play, put it into your hand instead of the discard pile.';
@@ -47,8 +54,48 @@ export class UTurnBoard extends TrainerCard {
         effect.cost.splice(0, 1);        
       }      
     }
-    
-    return state;
-  }
 
+    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+      const player = effect.player;
+
+      // Do not activate between turns, or when it's not opponents turn.
+      if (state.phase !== GamePhase.ATTACK) {
+        return state;
+      }
+
+      const target = effect.target;
+      const cards = target.cards;
+      cards.forEach(card => {
+        player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
+      });
+    }
+
+    if (effect instanceof BetweenTurnsEffect) {
+      state.players.forEach(player => {
+        if (!player.marker.hasMarker(this.U_TURN_BOARD_MARKER, this)) {
+          return;
+        }
+    
+        try {
+          const energyEffect = new ToolEffect(player, this);
+          store.reduceEffect(state, energyEffect);
+        } catch {
+          return state;
+        }
+    
+        const rescued: Card[] = player.marker.markers
+          .filter(m => m.name === this.U_TURN_BOARD_MARKER, this)
+          .map(m => m.source); // Assuming each marker has a 'card' property
+    
+        player.discard.moveCardsTo(rescued, player.hand);
+        player.marker.removeMarker(this.U_TURN_BOARD_MARKER, this);
+    
+        // Add this line to move the U-Turn Board card to the player's hand
+        player.hand.moveCardTo(this, player.hand);
+  
+      });
+    }
+    return state;
+    
+  }
 }

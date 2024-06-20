@@ -47,7 +47,7 @@ export class ProfessorsLetter extends TrainerCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { min: 1, max: 2, allowCancel: true }
+        { min: 0, max: 2, allowCancel: false }
       ), selected => {
         cards = selected || [];
 

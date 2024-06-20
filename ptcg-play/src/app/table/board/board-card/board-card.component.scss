@@ -102,6 +102,18 @@ $ptcg-energy-card-offset: 14%;
   transform: rotate(180deg);
 }
 
+.asleep-position {
+  transform: rotate(270deg);
+}
+
+.confused-position {
+  transform: rotate(180);
+}
+
+.paralyzed-position {
+  transform: rotate(90deg);
+}
+
 .ptcg-trainer-card {
   width: 100%; // Same as the card size
   left: 35%;
@@ -190,22 +202,36 @@ $ptcg-energy-card-offset: 14%;
   }
 }
 
+.ptcg-card-container {
+  &.rotate-180 {
+    transform: rotate(180deg);
+  }
+}
+
 .ptcg-special-conditions {
   left: 0;
   padding: map-get($padding, small);
   position: absolute;
   top: 0;
-  transform: translateX(-100%);
+  transform: translateX(100%);
 
   & > div {
     padding-bottom: $ptcg-board-tiny-padding;
   }
 
-  :host-context(.upside-down) & {
-    transform: translateX(-100%) rotate(180deg);
+  .asleep {
+    transform: rotate(90deg);
+  }
 
-    .asleep {
-      transform: rotate(90deg);
-    }
+  .paralyzed {
+    transform: translateX(-220%) translateY(150%) rotate(270deg);
+  }
+
+  .confused {
+    transform: translateX(-220%) translateY(150%) rotate(270deg);
+  }
+
+  :host-context(.upside-down) & {
+    transform: translateX(-100%) translateY(150%) rotate(180deg);
   }
 }

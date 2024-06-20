@@ -14,6 +14,10 @@ export class PokemonCardList extends CardList {
         this.attackMarker = new Marker();
         this.abilityMarker = new Marker();
         this.pokemonPlayedTurn = 0;
+<<<<<<< Updated upstream
+=======
+        this.cardDirection = [];
+>>>>>>> Stashed changes
         this.stage = Stage.BASIC;
     }
     getPokemons() {

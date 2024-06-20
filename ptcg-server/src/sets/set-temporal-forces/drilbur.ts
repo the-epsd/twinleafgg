@@ -72,7 +72,7 @@ export class Drilbur extends PokemonCard {
             GameMessage.CHOOSE_CARD_TO_HAND,
             player.deck,
             { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
-            { min: 1, max: 3, allowCancel: false }
+            { min: 0, max: 3, allowCancel: false }
           ), selected => {
             const cards = selected || [];
             player.deck.moveCardsTo(cards, player.discard);

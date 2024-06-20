@@ -5,11 +5,13 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 export declare class UTurnBoard extends TrainerCard {
     trainerType: TrainerType;
+    regulationMark: string;
     set: string;
     name: string;
     fullName: string;
     cardImage: string;
     setNumber: string;
+    readonly U_TURN_BOARD_MARKER = "U_TURN_BOARD_MARKER";
     text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
