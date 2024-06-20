@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WailordExArt = exports.TeammatesArt = exports.SilentLabArt = exports.ScorchedEarthArt = exports.RoughSeasArt = exports.MiloticArt = exports.MaxiesHiddenBallTrickArt = exports.ArchiesAceInTheHoleArt = exports.AcroBikeArt = void 0;
+exports.WailordExArt = exports.TeammatesArt = exports.SilentLabArt = exports.ScorchedEarthArt = exports.RoughSeasArt = exports.MiloticArt = exports.MaxiesHiddenBallTrickArt = exports.DiveBallArt = exports.ArchiesAceInTheHoleArt = exports.AcroBikeArt = void 0;
 const acro_bike_1 = require("./acro-bike");
 const archies_ace_in_the_hole_1 = require("./archies-ace-in-the hole");
+const dive_ball_1 = require("./dive-ball");
 const maxies_hidden_ball_trick_1 = require("./maxies-hidden-ball-trick");
 const milotic_1 = require("./milotic");
 const rough_seas_1 = require("./rough-seas");
@@ -24,6 +25,13 @@ class ArchiesAceInTheHoleArt extends archies_ace_in_the_hole_1.ArchiesAceInTheHo
     }
 }
 exports.ArchiesAceInTheHoleArt = ArchiesAceInTheHoleArt;
+class DiveBallArt extends dive_ball_1.DiveBall {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_125_R_EN_LG.png';
+    }
+}
+exports.DiveBallArt = DiveBallArt;
 class MaxiesHiddenBallTrickArt extends maxies_hidden_ball_trick_1.MaxiesHiddenBallTrick {
     constructor() {
         super(...arguments);

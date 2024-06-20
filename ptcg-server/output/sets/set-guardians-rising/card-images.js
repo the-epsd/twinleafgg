@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RescueStretcherArt = exports.MimikyuArt = exports.MallowArt = exports.FieldBlowerArt = exports.EnhancedHammerArt = exports.AlolanVulpixArt = void 0;
+exports.RescueStretcherArt = exports.MimikyuArt = exports.MallowArt = exports.FieldBlowerArt = exports.EnhancedHammerArt = exports.BrookletHillArt = exports.AquaPatchArt = exports.AlolanVulpixArt = void 0;
 const alolan_vulpix_1 = require("./alolan-vulpix");
+const aqua_patch_1 = require("./aqua-patch");
+const brooklet_hill_1 = require("./brooklet-hill");
 const enhanced_hammer_1 = require("./enhanced-hammer");
 const field_blower_1 = require("./field-blower");
 const mallow_1 = require("./mallow");
@@ -14,6 +16,20 @@ class AlolanVulpixArt extends alolan_vulpix_1.AlolanVulpix {
     }
 }
 exports.AlolanVulpixArt = AlolanVulpixArt;
+class AquaPatchArt extends aqua_patch_1.AquaPatch {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_119_R_EN_LG.png';
+    }
+}
+exports.AquaPatchArt = AquaPatchArt;
+class BrookletHillArt extends brooklet_hill_1.BrookletHill {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_120_R_EN_LG.png';
+    }
+}
+exports.BrookletHillArt = BrookletHillArt;
 class EnhancedHammerArt extends enhanced_hammer_1.EnhancedHammer {
     constructor() {
         super(...arguments);

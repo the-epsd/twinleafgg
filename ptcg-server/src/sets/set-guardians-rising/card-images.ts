@@ -1,4 +1,6 @@
 import { AlolanVulpix } from './alolan-vulpix';
+import { AquaPatch } from './aqua-patch';
+import { BrookletHill } from './brooklet-hill';
 import { EnhancedHammer } from './enhanced-hammer';
 import { FieldBlower } from './field-blower';
 import { Mallow } from './mallow';
@@ -7,6 +9,14 @@ import { RescueStretcher } from './rescue-stretcher';
 
 export class AlolanVulpixArt extends AlolanVulpix {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HIF/HIF_007_R_EN.png';
+}
+
+export class AquaPatchArt extends AquaPatch {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_119_R_EN_LG.png';
+}
+
+export class BrookletHillArt extends BrookletHill {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_120_R_EN_LG.png';
 }
 
 export class EnhancedHammerArt extends EnhancedHammer {

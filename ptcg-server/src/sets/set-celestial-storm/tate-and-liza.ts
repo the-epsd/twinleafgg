@@ -1,6 +1,6 @@
-import { CardTarget, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SelectPrompt, ShuffleDeckPrompt, SlotType } from '../../game';
+import { ChoosePokemonPrompt, GameError, PlayerType, SelectPrompt, ShuffleDeckPrompt, SlotType } from '../../game';
 import { GameMessage } from '../../game/game-message';
-import { CardTag, TrainerType } from '../../game/store/card/card-types';
+import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -17,11 +17,9 @@ export class TateAndLiza extends TrainerCard {
 
   public setNumber: string = '148';
 
-  public regulationMark = 'F';
-
   public name: string = 'Tate & Liza';
 
-  public fullName: string = 'Tate & Liza SIT';
+  public fullName: string = 'Tate & Liza CES';
 
   public text: string =
     'Choose 1:'+
@@ -48,20 +46,12 @@ export class TateAndLiza extends TrainerCard {
         {
           message: GameMessage.SWITCH_POKEMON,
           action: () => {
-
-            const blocked: CardTarget[] = [];
-            player.bench.forEach((card, index) => {
-              if (card instanceof PokemonCard && card.tags.includes(CardTag.POKEMON_V)) {
-                blocked.push({ index, player: player.id, slot: SlotType.BENCH });
-              }
-            });
-
             return store.prompt(state, new ChoosePokemonPrompt(
               player.id,
               GameMessage.CHOOSE_POKEMON_TO_SWITCH,
               PlayerType.BOTTOM_PLAYER,
               [SlotType.BENCH],
-              { allowCancel: false, blocked }
+              { allowCancel: false }
             ), result => {
               const cardList = result[0];
               player.switchPokemon(cardList);

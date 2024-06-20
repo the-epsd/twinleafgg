@@ -1,5 +1,6 @@
 import { AcroBike } from './acro-bike';
 import { ArchiesAceInTheHole } from './archies-ace-in-the hole';
+import { DiveBall } from './dive-ball';
 import { MaxiesHiddenBallTrick } from './maxies-hidden-ball-trick';
 import { Milotic } from './milotic';
 import { RoughSeas } from './rough-seas';
@@ -11,6 +12,9 @@ export declare class AcroBikeArt extends AcroBike {
     cardImage: string;
 }
 export declare class ArchiesAceInTheHoleArt extends ArchiesAceInTheHole {
+    cardImage: string;
+}
+export declare class DiveBallArt extends DiveBall {
     cardImage: string;
 }
 export declare class MaxiesHiddenBallTrickArt extends MaxiesHiddenBallTrick {

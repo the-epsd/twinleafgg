@@ -10,6 +10,7 @@ import { OrdinaryRod } from './ordinary-rod';
 import { QuickBall } from './quick-ball';
 import { Sizzlipede } from './sizzlipede';
 import { Snom } from './snom';
+import { Sobble } from './sobble';
 import { Welder } from './welder';
 
 export class AirBalloonArt extends AirBalloon {
@@ -44,10 +45,6 @@ export class MarnieArt extends Marnie {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_169_R_EN_LG.png';
 }
 
-export class SnomArt extends Snom {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_063_R_EN_LG.png';
-}
-
 export class OrdinaryRodArt extends OrdinaryRod {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_171_R_EN_LG.png';
 }
@@ -58,6 +55,14 @@ export class QuickBallArt extends QuickBall {
 
 export class SizzlipedeArt extends Sizzlipede {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_037_R_EN_LG.png';
+}
+
+export class SnomArt extends Snom {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_063_R_EN_LG.png';
+}
+
+export class SobbleArt extends Sobble {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_055_R_EN_LG.png';
 }
 
 export class WelderArt extends Welder {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZarudeArt = exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.Porygon2Art = exports.PeonyArt = exports.PathToThePeakArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GolurkArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianZapdosVArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.FlanneryArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DynaTreeHillArt = exports.DrizzileArt = exports.CastformSunnyFormArt = exports.CaitlinArt = exports.BlisseyVArt = exports.BlazikenVMAXArt = exports.BlazikenVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = exports.AgathaArt = void 0;
+exports.ZarudeArt = exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.Porygon2Art = exports.PeonyArt = exports.PeoniaArt = exports.PathToThePeakArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GolurkArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianZapdosVArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.FlanneryArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DynaTreeHillArt = exports.DrizzileArt = exports.CastformSunnyFormArt = exports.CaitlinArt = exports.BlisseyVArt = exports.BlazikenVMAXArt = exports.BlazikenVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = exports.AgathaArt = void 0;
 const agatha_1 = require("./agatha");
 const avery_1 = require("./avery");
 const banette_1 = require("./banette");
@@ -35,6 +35,7 @@ const lucky_energy_1 = require("./lucky-energy");
 const melony_1 = require("./melony");
 //import { OldCemetery } from './old-cemetery';
 const path_to_the_peak_1 = require("./path-to-the-peak");
+const peonia_1 = require("./peonia");
 const peony_1 = require("./peony");
 const porygon2_1 = require("./porygon2");
 const shadow_rider_calyrex_v_1 = require("./shadow-rider-calyrex-v");
@@ -275,6 +276,13 @@ class PathToThePeakArt extends path_to_the_peak_1.PathToThePeak {
     }
 }
 exports.PathToThePeakArt = PathToThePeakArt;
+class PeoniaArt extends peonia_1.Peonia {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_149_R_EN_LG.png';
+    }
+}
+exports.PeoniaArt = PeoniaArt;
 class PeonyArt extends peony_1.Peony {
     constructor() {
         super(...arguments);

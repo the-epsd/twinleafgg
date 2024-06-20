@@ -8,7 +8,6 @@ export declare class TateAndLiza extends TrainerCard {
     set: string;
     cardImage: string;
     setNumber: string;
-    regulationMark: string;
     name: string;
     fullName: string;
     text: string;

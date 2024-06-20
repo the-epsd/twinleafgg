@@ -31,6 +31,7 @@ import { Klara } from './klara';
 import { LuckyEnergy } from './lucky-energy';
 import { Melony } from './melony';
 import { PathToThePeak } from './path-to-the-peak';
+import { Peonia } from './peonia';
 import { Peony } from './peony';
 import { Porygon2 } from './porygon2';
 import { ShadowRiderCalyrexV } from './shadow-rider-calyrex-v';
@@ -137,6 +138,9 @@ export declare class MelonyArt extends Melony {
     cardImage: string;
 }
 export declare class PathToThePeakArt extends PathToThePeak {
+    cardImage: string;
+}
+export declare class PeoniaArt extends Peonia {
     cardImage: string;
 }
 export declare class PeonyArt extends Peony {

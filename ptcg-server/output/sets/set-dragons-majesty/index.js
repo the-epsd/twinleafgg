@@ -1,4 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setDragonsMajesty = void 0;
-exports.setDragonsMajesty = [];
+const card_images_1 = require("./card-images");
+exports.setDragonsMajesty = [
+    new card_images_1.FeebasArt()
+];

@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setPrimalClash = [
     new card_images_1.AcroBikeArt(),
     new card_images_1.ArchiesAceInTheHoleArt(),
+    new card_images_1.DiveBallArt(),
     new card_images_1.MaxiesHiddenBallTrickArt(),
     new card_images_1.MiloticArt(),
     new card_images_1.RoughSeasArt(),

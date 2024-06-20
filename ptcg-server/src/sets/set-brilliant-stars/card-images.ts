@@ -16,6 +16,7 @@ import { Electabuzz } from './electabuzz';
 import { Electivire } from './electivire';
 import { Empoleon } from './empoleon';
 import { EnteiV } from './entei-v';
+import { Floatzel } from './floatzel';
 import { Garchomp } from './garchomp';
 import { Gloria } from './gloria';
 import { Grotle } from './grotle';
@@ -107,6 +108,10 @@ export class EmpoleonArt extends Empoleon {
 
 export class EnteiVArt extends EnteiV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_022_R_EN_LG.png';
+}
+
+export class FloatzelArt extends Floatzel {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_039_R_EN_LG.png';
 }
 
 export class GarchompArt extends Garchomp {

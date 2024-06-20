@@ -49,7 +49,7 @@ export * from './set-breakpoint';
 //export * from './set-generations';
 export * from './set-fates-collide';
 //export * from './set-steam-siege';
-//export * from './set-evolutions';
+export * from './set-evolutions';
 //export
 
 
@@ -63,7 +63,7 @@ export * from './set-crimson-invasion';
 export * from './set-ultra-prism';
 export * from './set-forbidden-light';
 export * from './set-celestial-storm';
-//export * from './set-dragon-majesty';
+export * from './set-dragons-majesty';
 export * from './set-lost-thunder';
 export * from './set-team-up';
 export * from './set-unbroken-bonds';

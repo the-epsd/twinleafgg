@@ -10,7 +10,7 @@ const game_1 = require("../../game");
 class Peony extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'G';
+        this.regulationMark = 'E';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'CRE';
         this.cardImage = 'assets/cardback.png';

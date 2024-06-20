@@ -13,9 +13,8 @@ class TateAndLiza extends trainer_card_1.TrainerCard {
         this.set = 'CES';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '148';
-        this.regulationMark = 'F';
         this.name = 'Tate & Liza';
-        this.fullName = 'Tate & Liza SIT';
+        this.fullName = 'Tate & Liza CES';
         this.text = 'Choose 1:' +
             '• Shuffle your hand into your deck. Then, draw 5 cards.' +
             '• Switch your Active Pokémon with 1 of your Benched Pokémon.';
@@ -34,13 +33,7 @@ class TateAndLiza extends trainer_card_1.TrainerCard {
                 {
                     message: game_message_1.GameMessage.SWITCH_POKEMON,
                     action: () => {
-                        const blocked = [];
-                        player.bench.forEach((card, index) => {
-                            if (card instanceof game_1.PokemonCard && card.tags.includes(card_types_1.CardTag.POKEMON_V)) {
-                                blocked.push({ index, player: player.id, slot: game_1.SlotType.BENCH });
-                            }
-                        });
-                        return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, blocked }), result => {
+                        return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
                             const cardList = result[0];
                             player.switchPokemon(cardList);
                             player.supporter.moveCardTo(effect.trainerCard, player.discard);

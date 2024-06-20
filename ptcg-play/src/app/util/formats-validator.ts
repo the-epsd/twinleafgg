@@ -12,7 +12,6 @@ export class FormatValidator {
     
     cards.filter(c => !!c && c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC).forEach(card => {
       formats.push(this.getValidFormats(card));
-      console.log(this.getValidFormats(card));
     });
     
     let formatList = formats.reduce((a, b) => a.filter(c => b.includes(c)))

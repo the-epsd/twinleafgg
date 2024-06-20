@@ -1,6 +1,7 @@
 import { BlendEnergyWLFM } from './blend-energy-wlfm';
 import { Bouffalant } from './bouffalant';
 import { Deino } from './deino';
+import { DevolutionSpray } from './devolution-spray';
 import { Emolga } from './emolga';
 import { Gabite } from './gabite';
 import { Garbodor } from './garbodor';
@@ -24,6 +25,10 @@ export class BouffalantArt extends Bouffalant {
 
 export class DeinoArt extends Deino {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRX/DRX_093_R_EN.png';
+}
+
+export class DevolutionSprayArt extends DevolutionSpray {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRX/DRX_113_R_EN_LG.png';
 }
 
 export class EmolgaArt extends Emolga {

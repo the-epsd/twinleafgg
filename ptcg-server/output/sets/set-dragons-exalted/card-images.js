@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZweilousArt = exports.ToolScrapperArt = exports.SigilyphArt = exports.RoseradeArt = exports.RoseliaArt = exports.RescueScarfArt = exports.RayquazaExArt = exports.HydreigonArt = exports.HoOhExArt = exports.GarbodorArt = exports.GabiteArt = exports.EmolgaArt = exports.DeinoArt = exports.BouffalantArt = exports.BlendEnergyWLFMArt = void 0;
+exports.ZweilousArt = exports.ToolScrapperArt = exports.SigilyphArt = exports.RoseradeArt = exports.RoseliaArt = exports.RescueScarfArt = exports.RayquazaExArt = exports.HydreigonArt = exports.HoOhExArt = exports.GarbodorArt = exports.GabiteArt = exports.EmolgaArt = exports.DevolutionSprayArt = exports.DeinoArt = exports.BouffalantArt = exports.BlendEnergyWLFMArt = void 0;
 const blend_energy_wlfm_1 = require("./blend-energy-wlfm");
 const bouffalant_1 = require("./bouffalant");
 const deino_1 = require("./deino");
+const devolution_spray_1 = require("./devolution-spray");
 const emolga_1 = require("./emolga");
 const gabite_1 = require("./gabite");
 const garbodor_1 = require("./garbodor");
@@ -37,6 +38,13 @@ class DeinoArt extends deino_1.Deino {
     }
 }
 exports.DeinoArt = DeinoArt;
+class DevolutionSprayArt extends devolution_spray_1.DevolutionSpray {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRX/DRX_113_R_EN_LG.png';
+    }
+}
+exports.DevolutionSprayArt = DevolutionSprayArt;
 class EmolgaArt extends emolga_1.Emolga {
     constructor() {
         super(...arguments);

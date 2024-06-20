@@ -1,4 +1,5 @@
 import { BallGuy } from './ball-guy';
+import { Buizel } from './buizel';
 import { Frosmoth } from './frosmoth';
 import { Koffing } from './koffing';
 import { Rillaboom } from './rillaboom';
@@ -6,6 +7,10 @@ import { Thwackey } from './thwackey';
 
 export class BallGuyArt extends BallGuy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_057_R_EN_LG.png';
+}
+
+export class BuizelArt extends Buizel {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_022_R_EN_LG.png';
 }
 
 export class FrosmothArt extends Frosmoth {

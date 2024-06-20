@@ -3,10 +3,12 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
+import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { Card } from '../../game/store/card/card';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
+import { StateUtils } from '../../game';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class RescueScarf extends TrainerCard {
 
@@ -28,9 +30,34 @@ export class RescueScarf extends TrainerCard {
     'attached to that Pokemon.)';
 
   public readonly RESCUE_SCARF_MAREKER = 'RESCUE_SCARF_MAREKER';
+  
+  public damageDealt = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+    
+    if (effect instanceof AttackEffect && effect.player.active.tool === this) {
+      this.damageDealt = false;
+    }
+
+    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+        effect.target.tool === this) {
+      const player = StateUtils.getOpponent(state, effect.player);
+
+      if (player.active.tool === this) {
+        this.damageDealt = true;
+      }
+    }
+    
+    if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+      
+      if (owner === effect.player) {
+        this.damageDealt = false;
+      }
+    }
+    
+    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && this.damageDealt) {
       const player = effect.player;
 
       // Do not activate between turns, or when it's not opponents turn.

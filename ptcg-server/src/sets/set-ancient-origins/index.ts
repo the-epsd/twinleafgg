@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
-import { UnownArt } from './card-images';
+import { HexManiacArt, UnownArt } from './card-images';
 
 export const setAncientOrigins: Card[] = [
+  new HexManiacArt(),
   new UnownArt(),
 ];

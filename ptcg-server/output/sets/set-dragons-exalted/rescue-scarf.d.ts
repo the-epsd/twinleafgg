@@ -12,5 +12,6 @@ export declare class RescueScarf extends TrainerCard {
     setNumber: string;
     text: string;
     readonly RESCUE_SCARF_MAREKER = "RESCUE_SCARF_MAREKER";
+    damageDealt: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

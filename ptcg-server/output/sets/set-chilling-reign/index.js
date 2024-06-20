@@ -35,7 +35,9 @@ exports.setChillingReign = [
     new card_images_1.MelonyArt(),
     //new OldCemetery(),
     new card_images_1.PathToThePeakArt(),
+    new card_images_1.PeoniaArt(),
     new card_images_1.PeonyArt(),
+    new card_images_1.Porygon2Art(),
     new card_images_1.ShadowRiderCalyrexVArt(),
     new card_images_1.ShadowRiderCalyrexVMAXArt(),
     new card_images_1.SnoruntArt(),
@@ -43,6 +45,5 @@ exports.setChillingReign = [
     new card_images_1.SpiralEnergyArt(),
     new card_images_1.ExpeditionUniformArt(),
     new card_images_1.SneaselArt(),
-    new card_images_1.Porygon2Art(),
     new card_images_1.ZarudeArt()
 ];

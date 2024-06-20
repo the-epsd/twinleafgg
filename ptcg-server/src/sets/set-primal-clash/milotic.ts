@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, GameLog } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -82,6 +82,10 @@ export class Milotic extends PokemonCard {
               cards
             )], () => {
               player.discard.moveCardsTo(cards, player.hand);
+              
+              cards.forEach((card, index) => {
+                store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+              });
             });
           });
         }

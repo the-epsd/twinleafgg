@@ -1,10 +1,18 @@
 import { AlolanVulpix } from './alolan-vulpix';
+import { AquaPatch } from './aqua-patch';
+import { BrookletHill } from './brooklet-hill';
 import { EnhancedHammer } from './enhanced-hammer';
 import { FieldBlower } from './field-blower';
 import { Mallow } from './mallow';
 import { Mimikyu } from './mimikyu';
 import { RescueStretcher } from './rescue-stretcher';
 export declare class AlolanVulpixArt extends AlolanVulpix {
+    cardImage: string;
+}
+export declare class AquaPatchArt extends AquaPatch {
+    cardImage: string;
+}
+export declare class BrookletHillArt extends BrookletHill {
     cardImage: string;
 }
 export declare class EnhancedHammerArt extends EnhancedHammer {

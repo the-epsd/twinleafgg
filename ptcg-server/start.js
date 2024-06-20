@@ -38,6 +38,7 @@ cardManager.defineSet(sets.setNobleVictories);
 cardManager.defineSet(sets.setNextDestinies);
 cardManager.defineSet(sets.setDarkExplorers);
 cardManager.defineSet(sets.setDragonsExalted);
+cardManager.defineSet(sets.setDragonsMajesty);
 cardManager.defineSet(sets.setDragonVault);
 cardManager.defineSet(sets.setBoundariesCrossed);
 cardManager.defineSet(sets.setPlasmaStorm);
@@ -77,6 +78,7 @@ cardManager.defineSet(sets.setUnbrokenBonds);
 cardManager.defineSet(sets.setUnifiedMinds);
 cardManager.defineSet(sets.setHiddenFates);
 cardManager.defineSet(sets.setCosmicEclipse);
+cardManager.defineSet(sets.setEvolutions);
 
 
 cardManager.defineSet(sets.setSwordAndShield);

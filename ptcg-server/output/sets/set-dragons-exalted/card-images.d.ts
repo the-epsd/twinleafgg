@@ -1,6 +1,7 @@
 import { BlendEnergyWLFM } from './blend-energy-wlfm';
 import { Bouffalant } from './bouffalant';
 import { Deino } from './deino';
+import { DevolutionSpray } from './devolution-spray';
 import { Emolga } from './emolga';
 import { Gabite } from './gabite';
 import { Garbodor } from './garbodor';
@@ -20,6 +21,9 @@ export declare class BouffalantArt extends Bouffalant {
     cardImage: string;
 }
 export declare class DeinoArt extends Deino {
+    cardImage: string;
+}
+export declare class DevolutionSprayArt extends DevolutionSpray {
     cardImage: string;
 }
 export declare class EmolgaArt extends Emolga {

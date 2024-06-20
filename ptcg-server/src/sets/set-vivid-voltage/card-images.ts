@@ -3,8 +3,10 @@ import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
 import { Jirachi } from './jirachi';
 import { Leon } from './leon';
+import { Nessa } from './nessa';
 import { Raikou } from './raikou';
 import { Snorlax } from './snorlax';
+import { WashWaterEnergy } from './wash-water-energy';
 
 export class CharizardArt extends Charizard {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_025_R_EN.png';
@@ -26,10 +28,18 @@ export class LeonArt extends Leon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_154_R_EN.png';
 }
 
+export class NessaArt extends Nessa {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_157_R_EN_LG.png';
+}
+
 export class RaikouArt extends Raikou {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_050_R_EN.png';
 }
 
 export class SnorlaxArt extends Snorlax {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_131_R_EN.png';
+}
+
+export class WashWaterEnergyArt extends WashWaterEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_165_R_EN_LG.png';
 }

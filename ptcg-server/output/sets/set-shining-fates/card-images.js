@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ThwackeyArt = exports.RillaboomArt = exports.KoffingArt = exports.FrosmothArt = exports.BallGuyArt = void 0;
+exports.ThwackeyArt = exports.RillaboomArt = exports.KoffingArt = exports.FrosmothArt = exports.BuizelArt = exports.BallGuyArt = void 0;
 const ball_guy_1 = require("./ball-guy");
+const buizel_1 = require("./buizel");
 const frosmoth_1 = require("./frosmoth");
 const koffing_1 = require("./koffing");
 const rillaboom_1 = require("./rillaboom");
@@ -13,6 +14,13 @@ class BallGuyArt extends ball_guy_1.BallGuy {
     }
 }
 exports.BallGuyArt = BallGuyArt;
+class BuizelArt extends buizel_1.Buizel {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_022_R_EN_LG.png';
+    }
+}
+exports.BuizelArt = BuizelArt;
 class FrosmothArt extends frosmoth_1.Frosmoth {
     constructor() {
         super(...arguments);

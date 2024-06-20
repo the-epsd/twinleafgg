@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { BayleefArt, DelinquentArt, FightingFuryBeltArt, KricketotArt, PhantumpArt, StaryuArt } from './card-images';
+import { BayleefArt, DelinquentArt, FightingFuryBeltArt, KricketotArt, PhantumpArt, SplashEnergyArt, StaryuArt } from './card-images';
 
 export const setBreakpoint: Card[] = [
   new BayleefArt(),
@@ -7,5 +7,6 @@ export const setBreakpoint: Card[] = [
   new FightingFuryBeltArt(),
   new KricketotArt(),
   new PhantumpArt(),
+  new SplashEnergyArt(),
   new StaryuArt()
 ];

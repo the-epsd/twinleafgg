@@ -10,7 +10,7 @@ import { ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
 
 export class Peony extends TrainerCard {
 
-  public regulationMark = 'G';
+  public regulationMark = 'E';
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 

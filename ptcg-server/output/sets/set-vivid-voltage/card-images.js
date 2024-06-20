@@ -1,13 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SnorlaxArt = exports.RaikouArt = exports.LeonArt = exports.JirachiArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = void 0;
+exports.WashWaterEnergyArt = exports.SnorlaxArt = exports.RaikouArt = exports.NessaArt = exports.LeonArt = exports.JirachiArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = void 0;
 const charizard_1 = require("./charizard");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
 const jirachi_1 = require("./jirachi");
 const leon_1 = require("./leon");
+const nessa_1 = require("./nessa");
 const raikou_1 = require("./raikou");
 const snorlax_1 = require("./snorlax");
+const wash_water_energy_1 = require("./wash-water-energy");
 class CharizardArt extends charizard_1.Charizard {
     constructor() {
         super(...arguments);
@@ -43,6 +45,13 @@ class LeonArt extends leon_1.Leon {
     }
 }
 exports.LeonArt = LeonArt;
+class NessaArt extends nessa_1.Nessa {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_157_R_EN_LG.png';
+    }
+}
+exports.NessaArt = NessaArt;
 class RaikouArt extends raikou_1.Raikou {
     constructor() {
         super(...arguments);
@@ -57,3 +66,10 @@ class SnorlaxArt extends snorlax_1.Snorlax {
     }
 }
 exports.SnorlaxArt = SnorlaxArt;
+class WashWaterEnergyArt extends wash_water_energy_1.WashWaterEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_165_R_EN_LG.png';
+    }
+}
+exports.WashWaterEnergyArt = WashWaterEnergyArt;

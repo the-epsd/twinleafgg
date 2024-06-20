@@ -56,7 +56,7 @@ __exportStar(require("./set-breakpoint"), exports);
 //export * from './set-generations';
 __exportStar(require("./set-fates-collide"), exports);
 //export * from './set-steam-siege';
-//export * from './set-evolutions';
+__exportStar(require("./set-evolutions"), exports);
 //export
 //SM Era
 __exportStar(require("./set-sun-and-moon"), exports);
@@ -68,7 +68,7 @@ __exportStar(require("./set-crimson-invasion"), exports);
 __exportStar(require("./set-ultra-prism"), exports);
 __exportStar(require("./set-forbidden-light"), exports);
 __exportStar(require("./set-celestial-storm"), exports);
-//export * from './set-dragon-majesty';
+__exportStar(require("./set-dragons-majesty"), exports);
 __exportStar(require("./set-lost-thunder"), exports);
 __exportStar(require("./set-team-up"), exports);
 __exportStar(require("./set-unbroken-bonds"), exports);

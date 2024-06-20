@@ -16,6 +16,7 @@ import { Electabuzz } from './electabuzz';
 import { Electivire } from './electivire';
 import { Empoleon } from './empoleon';
 import { EnteiV } from './entei-v';
+import { Floatzel } from './floatzel';
 import { Garchomp } from './garchomp';
 import { Gloria } from './gloria';
 import { Grotle } from './grotle';
@@ -88,6 +89,9 @@ export declare class EmpoleonArt extends Empoleon {
     cardImage: string;
 }
 export declare class EnteiVArt extends EnteiV {
+    cardImage: string;
+}
+export declare class FloatzelArt extends Floatzel {
     cardImage: string;
 }
 export declare class GarchompArt extends Garchomp {

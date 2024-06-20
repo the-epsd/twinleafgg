@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UTurnBoardArt = exports.PurrloinArt = exports.NecrozmaArt = void 0;
+exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.PurrloinArt = exports.NecrozmaArt = void 0;
 const necrozma_1 = require("./necrozma");
 const purrloin_1 = require("./purrloin");
 const u_turn_board_1 = require("./u-turn-board");
+const weakness_guard_energy_1 = require("./weakness-guard-energy");
 class NecrozmaArt extends necrozma_1.Necrozma {
     constructor() {
         super(...arguments);
@@ -25,3 +26,10 @@ class UTurnBoardArt extends u_turn_board_1.UTurnBoard {
     }
 }
 exports.UTurnBoardArt = UTurnBoardArt;
+class WeaknessGuardEnergyArt extends weakness_guard_energy_1.WeaknessGuardEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_213_R_EN_LG.png';
+    }
+}
+exports.WeaknessGuardEnergyArt = WeaknessGuardEnergyArt;

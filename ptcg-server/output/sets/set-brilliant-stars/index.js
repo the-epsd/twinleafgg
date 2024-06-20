@@ -21,6 +21,7 @@ exports.setBrilliantStars = [
     new card_images_1.ElectivireArt(),
     new card_images_1.EmpoleonArt(),
     new card_images_1.EnteiVArt(),
+    new card_images_1.FloatzelArt(),
     new card_images_1.GarchompArt(),
     new card_images_1.GloriaArt(),
     new card_images_1.GrotleArt(),

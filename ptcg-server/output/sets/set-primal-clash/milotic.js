@@ -55,6 +55,9 @@ class Milotic extends pokemon_card_1.PokemonCard {
                         const cards = selected || [];
                         store.prompt(state, [new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {
                             player.discard.moveCardsTo(cards, player.hand);
+                            cards.forEach((card, index) => {
+                                store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+                            });
                         });
                     });
                 }

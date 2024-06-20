@@ -6,6 +6,7 @@ exports.setDragonsExalted = [
     new card_images_1.BlendEnergyWLFMArt(),
     new card_images_1.BouffalantArt(),
     new card_images_1.DeinoArt(),
+    new card_images_1.DevolutionSprayArt(),
     new card_images_1.EmolgaArt(),
     new card_images_1.GabiteArt(),
     new card_images_1.GarbodorArt(),

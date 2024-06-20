@@ -343,6 +343,7 @@
     "CHOOSE_BASIC_POKEMON_TO_BENCH": "Choose a Basic Pokémon to place on your bench.",
     "CHOOSE_OPPONENTS_BASIC_POKEMON_TO_BENCH": "Choose a Basic Pokémon to place on your opponent's bench.",
     "CHOOSE_CARD_TO_COPY_EFFECT": "Choose card effect to copy.",
+    "CHOOSE_CARDS_TO_RETURN_TO_PRIZES": "Choose cards to return to prizes",
     "CHOOSE_CARD_TO_DECK": "Choose cards that will be shuffled into deck.",
     "CHOOSE_CARD_TO_DISCARD": "Choose cards that will be discarded.",
     "CHOOSE_CARD_TO_HAND": "Choose cards that will be added to hand.",
@@ -410,6 +411,7 @@
     "UNKNOWN_POWER": "Unknown power",
     "WANT_TO_DISCARD_ENERGY": "Do you want to discard enegy cards?",
     "WANT_TO_DRAW_CARDS": "Do you want to draw cards from your deck?",
+    "WANT_TO_HEAL_POKEMON": "Do you want to discard two cards and heal this Pokemon?",
     "WANT_TO_PICK_UP_POKEMON": "Do you want to put Pokémon in your hand?",
     "WANT_TO_PLAY_BOTH_CARDS_AT_ONCE": "Do you want to play both cards at once?",
     "WANT_TO_SHUFFLE_POKEMON_INTO_DECK": "Do you want to shuffle Pokémon into deck?",
@@ -474,6 +476,8 @@
     "LOG_TIME_ELAPSED": "Time elapsed for {{name}}.",
     "LOG_TURN": "Turn {{turn}}.",
     "LOG_PLAYER_PUTS_CARD_IN_HAND": "{{name}} puts {{card}} in their hand.",
+    "LOG_PLAYER_DISCARDS_CARD_FROM_HAND": "{{name}} discards {{card}} from their hand.",
+    "LOG_PLAYER_HEALS_POKEMON": "{{name}} heals {{pokemon}} for {{healingAmount}}.",
     "LOG_HISUIAN_HEAVY_BALL": "{{name}} has taken {{card}} from their Prize Cards with Hisuian Heavy Ball."
   }
 }

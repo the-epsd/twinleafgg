@@ -3,6 +3,7 @@ import { Delinquent } from './delinquent';
 import { FightingFuryBelt } from './fighting-fury-belt';
 import { Kricketot } from './kricketot';
 import { Phantump } from './phantump';
+import { SplashEnergy } from './splash-energy';
 import { Staryu } from './staryu';
 
 export class BayleefArt extends Bayleef {
@@ -23,6 +24,10 @@ export class KricketotArt extends Kricketot {
 
 export class PhantumpArt extends Phantump {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_064_R_EN_LG.png';
+}
+
+export class SplashEnergyArt extends SplashEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_113_R_EN_LG.png';  
 }
 
 export class StaryuArt extends Staryu {

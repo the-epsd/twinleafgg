@@ -11,5 +11,6 @@ export declare class LuxuriousCape extends TrainerCard {
     name: string;
     fullName: string;
     text: string;
+    damageDealt: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
