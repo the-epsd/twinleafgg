@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType, SpecialCondition, Direction } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, EnergyType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -80,8 +80,6 @@ export class Squawkabillyex extends PokemonCard {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
             cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
-            cardList.addSpecialCondition(SpecialCondition.CONFUSED);
-            this.cardDirection = [Direction.DOWN];
           }
         });
 

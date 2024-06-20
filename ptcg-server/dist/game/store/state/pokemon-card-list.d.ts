@@ -1,10 +1,6 @@
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
-<<<<<<< Updated upstream
-import { SpecialCondition, Stage } from '../card/card-types';
-=======
 import { Direction, SpecialCondition, Stage } from '../card/card-types';
->>>>>>> Stashed changes
 import { PokemonCard } from '../card/pokemon-card';
 import { Card } from '../card/card';
 import { Power, Attack } from '../card/pokemon-types';
@@ -18,10 +14,7 @@ export declare class PokemonCardList extends CardList {
     attackMarker: Marker;
     abilityMarker: Marker;
     pokemonPlayedTurn: number;
-<<<<<<< Updated upstream
-=======
     cardDirection: Direction[];
->>>>>>> Stashed changes
     static readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     static readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     static readonly CLEAR_KNOCKOUT_MARKER = "CLEAR_KNOCKOUT_MARKER";
