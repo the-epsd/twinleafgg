@@ -15,6 +15,8 @@ export declare class EmboarArt extends Emboar {
 }
 export declare class EnergySwitchArt extends EnergySwitch {
     cardImage: string;
+    setNumber: string;
+    fullName: string;
 }
 export declare class GothitaArt extends Gothita {
     cardImage: string;

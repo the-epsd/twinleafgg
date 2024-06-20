@@ -37,6 +37,7 @@ class ProfessorTurosScenario extends trainer_card_1.TrainerCard {
                     cardList.moveCardsTo(pokemons, player.hand);
                     cardList.moveTo(player.discard);
                     cardList.clearEffects();
+                    cardList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
                     player.supporterTurn = 1;
                 }

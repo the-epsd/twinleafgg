@@ -22,4 +22,6 @@ export class RockGuardArt extends RockGuard {
 
 export class SuperiorEnergyRetrievalArt extends SuperiorEnergyRetrieval {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLF/PLF_103_R_EN.png';
+  public setNumber = '103';
+  public fullName: string = 'Superior Energy Retrieval PLF';
 }

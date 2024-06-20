@@ -48,6 +48,8 @@ export class PlumeFossilArt extends PlumeFossil {
 
 export class SuperRodArt extends SuperRod {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_095_R_EN.png';
+  public setNumber = '95';
+  public fullName: string = 'Super Rod NVI';
 }
 
 export class TerrakionArt extends Terrakion {

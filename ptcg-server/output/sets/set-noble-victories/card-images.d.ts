@@ -39,6 +39,8 @@ export declare class PlumeFossilArt extends PlumeFossil {
 }
 export declare class SuperRodArt extends SuperRod {
     cardImage: string;
+    setNumber: string;
+    fullName: string;
 }
 export declare class TerrakionArt extends Terrakion {
     cardImage: string;

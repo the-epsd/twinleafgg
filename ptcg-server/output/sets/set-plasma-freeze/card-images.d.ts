@@ -17,4 +17,6 @@ export declare class RockGuardArt extends RockGuard {
 }
 export declare class SuperiorEnergyRetrievalArt extends SuperiorEnergyRetrieval {
     cardImage: string;
+    setNumber: string;
+    fullName: string;
 }

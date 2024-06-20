@@ -1,7 +1,7 @@
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { GameMessage } from '../../game/game-message';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { SpecialCondition, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -55,6 +55,7 @@ export class ProfessorTurosScenario extends TrainerCard {
           cardList.moveCardsTo(pokemons, player.hand);
           cardList.moveTo(player.discard);
           cardList.clearEffects();
+          cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
           player.supporterTurn = 1;
         }

@@ -14,6 +14,8 @@ export class CherenArt extends Cheren {
 
 export class CrushingHammerArt extends CrushingHammer {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EPO/EPO_092_R_EN.png';
+  public setNumber = '92';
+  public fullName: string = 'Crushing Hammer EPO';
 }
 
 export class MaxPotionArt extends MaxPotion {

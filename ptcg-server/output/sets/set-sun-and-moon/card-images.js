@@ -20,6 +20,8 @@ class EnergyRetrievalArt extends energy_retrieval_1.EnergyRetrieval {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_116_R_EN.png';
+        this.setNumber = '116';
+        this.fullName = 'Energy Retrieval SUM';
     }
 }
 exports.EnergyRetrievalArt = EnergyRetrievalArt;
@@ -27,6 +29,8 @@ class ExpShareArt extends exp_share_1.ExpShare {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_118_R_EN.png';
+        this.setNumber = '118';
+        this.fullName = 'Exp. Share SUM';
     }
 }
 exports.ExpShareArt = ExpShareArt;
@@ -34,6 +38,8 @@ class NestBallArt extends nest_ball_1.NestBall {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_123_R_EN.png';
+        this.setNumber = '123';
+        this.fullName = 'Nest Ball SUM';
     }
 }
 exports.NestBallArt = NestBallArt;
@@ -55,6 +61,8 @@ class RareCandyArt extends rare_candy_1.RareCandy {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_129_R_EN.png';
+        this.setNumber = '129';
+        this.fullName = 'Rare Candy SUM';
     }
 }
 exports.RareCandyArt = RareCandyArt;

@@ -28,6 +28,8 @@ class EnergySwitchArt extends energy_switch_1.EnergySwitch {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LTR/LTR_112_R_EN.png';
+        this.setNumber = '112';
+        this.fullName = 'Energy Switch LTR';
     }
 }
 exports.EnergySwitchArt = EnergySwitchArt;

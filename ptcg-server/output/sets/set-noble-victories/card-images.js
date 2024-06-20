@@ -76,6 +76,8 @@ class SuperRodArt extends super_rod_1.SuperRod {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_095_R_EN.png';
+        this.setNumber = '95';
+        this.fullName = 'Super Rod NVI';
     }
 }
 exports.SuperRodArt = SuperRodArt;
