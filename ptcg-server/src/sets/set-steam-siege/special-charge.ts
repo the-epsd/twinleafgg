@@ -31,7 +31,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Speical
     player.id,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
-    { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
+    { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
     { min, max: 2, allowCancel: false }
   ), selected => {
     cards = selected || [];
