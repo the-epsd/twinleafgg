@@ -1,4 +1,3 @@
-import { StateUtils } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -31,12 +30,11 @@ export class WeaknessGuardEnergy extends EnergyCard {
     'The Pokémon this card is attached to has no Weakness.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof AttackEffect && effect.target?.cards?.includes(this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
       
       try {
-        const energyEffect = new EnergyEffect(opponent, this);
+        const energyEffect = new EnergyEffect(player, this);
         store.reduceEffect(state, energyEffect);
       } catch {
         return state;

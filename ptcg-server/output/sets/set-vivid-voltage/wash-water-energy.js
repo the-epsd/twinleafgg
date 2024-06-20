@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WashWaterEnergy = void 0;
-const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
@@ -23,32 +22,32 @@ class WashWaterEnergy extends energy_card_1.EnergyCard {
             'Prevent all effects of attacks from your opponent\'s Pokémon done to the [W] Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)';
     }
     reduceEffect(store, state, effect) {
+        var _a, _b;
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             try {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_a) {
+            catch (_c) {
                 return state;
             }
             effect.energyMap.push({ card: this, provides: [card_types_1.CardType.WATER] });
             return state;
         }
         // Prevent effects of attacks
-        if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this)) {
+        if (effect instanceof attack_effects_1.AbstractAttackEffect && ((_b = (_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards) === null || _b === void 0 ? void 0 : _b.includes(this))) {
             const sourceCard = effect.source.getPokemonCard();
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
             try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(opponent, this);
+                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_b) {
+            catch (_d) {
                 return state;
             }
             if (sourceCard && sourceCard.cardType === card_types_1.CardType.WATER) {
-                if (opponent.specialEnergyBlocked === true) {
+                if (player.specialEnergyBlocked === true) {
                     this.provides = [card_types_1.CardType.COLORLESS];
                 }
                 // Allow damage

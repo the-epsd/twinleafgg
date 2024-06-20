@@ -75,6 +75,8 @@ export class GiantHearth extends TrainerCard {
   public name: string = 'Giant Hearth';
 
   public fullName: string = 'Giant Hearth UNM';
+  
+  public setNumber = '197';
 
   public text: string =
     'Once during each player\'s turn, that player may discard a card from ' +
