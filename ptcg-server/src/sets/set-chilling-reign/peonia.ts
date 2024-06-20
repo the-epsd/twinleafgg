@@ -40,9 +40,6 @@ export class Peonia extends TrainerCard {
       
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      const cards = player.hand.cards.filter(c => c !== this);
-      player.hand.moveCardsTo(cards, player.discard);
-  
       return store.prompt(state, new ChoosePrizePrompt(
         player.id,
         GameMessage.CHOOSE_PRIZE_CARD,

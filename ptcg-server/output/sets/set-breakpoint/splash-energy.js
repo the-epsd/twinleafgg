@@ -60,7 +60,7 @@ class SplashEnergy extends energy_card_1.EnergyCard {
                         return state;
                     }
                     const pokemon = cardList;
-                    if (((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === card_types_1.CardType.WATER) {
+                    if (((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) !== card_types_1.CardType.WATER) {
                         cardList.moveCardTo(this, player.discard);
                     }
                 });

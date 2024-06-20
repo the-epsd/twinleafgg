@@ -28,8 +28,6 @@ class Peonia extends trainer_card_1.TrainerCard {
             // we'll discard peonia later
             effect.preventDefault = true;
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
-            const cards = player.hand.cards.filter(c => c !== this);
-            player.hand.moveCardsTo(cards, player.discard);
             return store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_message_1.GameMessage.CHOOSE_PRIZE_CARD, { count: 3, allowCancel: false }), chosenPrizes => {
                 chosenPrizes = chosenPrizes || [];
                 const hand = player.hand;

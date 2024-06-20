@@ -73,7 +73,7 @@ export class SplashEnergy extends EnergyCard {
           }
 
           const pokemon = cardList;
-          if (pokemon.getPokemonCard()?.cardType === CardType.WATER) {
+          if (pokemon.getPokemonCard()?.cardType !== CardType.WATER) {
             cardList.moveCardTo(this, player.discard);
           }
         });
