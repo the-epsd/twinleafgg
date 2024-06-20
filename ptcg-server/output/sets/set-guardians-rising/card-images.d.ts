@@ -1,7 +1,7 @@
+import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
 import { AlolanVulpix } from './alolan-vulpix';
 import { AquaPatch } from './aqua-patch';
 import { BrookletHill } from './brooklet-hill';
-import { EnhancedHammer } from './enhanced-hammer';
 import { FieldBlower } from './field-blower';
 import { Mallow } from './mallow';
 import { Mimikyu } from './mimikyu';

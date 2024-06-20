@@ -1,8 +1,8 @@
+import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
 import { MasterBall } from '../set-temporal-forces/master-ball';
 import { JirachiEx } from './jirachi-ex';
 import { ScoopUpCyclone } from './scoop-up-cyclone';
 import { SilverBangle } from './silver-bangle';
-import { UltraBall } from './ultra-ball';
 import { VirizionEx } from './virizion-ex';
 import { Wartortle } from './wartortle';
 export declare class JirachiExArt extends JirachiEx {

@@ -1,10 +1,10 @@
+import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
+import { ExpShare } from '../set-scarlet-and-violet/exp-share';
+import { NestBall } from '../set-scarlet-and-violet/nest-ball';
+import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 import { Dragonair } from './dragonair';
-import { EnergyRetrieval } from './energy-retrieval';
-import { ExpShare } from './exp-share';
-import { NestBall } from './nest-ball';
 import { Oranguru } from './oranguru';
 import { RainbowEnergy } from './rainbow-energy';
-import { RareCandy } from './rare-candy';
 import { TimerBall } from './timer-ball';
 
 export class DragonairArt extends Dragonair {

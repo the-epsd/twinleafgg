@@ -1,8 +1,8 @@
+import { SuperiorEnergyRetrieval } from '../set-paldea-evolved/superior-energy-retrieval';
 import { Exeggcute } from './exeggcute';
 import { FloatStone } from './float-stone';
 import { MrMime } from './mr-mime';
 import { RockGuard } from './rock-guard';
-import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
 
 export class ExeggcuteArt extends Exeggcute {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLF/PLF_004_R_EN.png';

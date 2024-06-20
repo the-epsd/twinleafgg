@@ -81,7 +81,7 @@ export class Gardevoirex extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH, SlotType.ACTIVE ],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
-        { allowCancel: false, min: 0 },
+        { allowCancel: true, min: 0 },
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
@@ -91,9 +91,6 @@ export class Gardevoirex extends PokemonCard {
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           const pokemonCard = target.cards[0] as PokemonCard;
-          if (!pokemonCard) {
-            throw new GameError(GameMessage.INVALID_TARGET);
-          }
           if (pokemonCard.cardType !== CardType.PSYCHIC) {
             throw new GameError(GameMessage.INVALID_TARGET);
           }

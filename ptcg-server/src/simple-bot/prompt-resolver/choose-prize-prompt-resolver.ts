@@ -1,7 +1,5 @@
-import { Player, State, Action, ResolvePromptAction, Prompt } from '../../game';
+import { State, Player, Prompt, Action, ChoosePrizePrompt, ResolvePromptAction } from '../../game';
 import { PromptResolver } from './prompt-resolver';
-import { ChoosePrizePrompt } from '../../game/store/prompts/choose-prize-prompt';
-
 
 export class ChoosePrizePromptResolver extends PromptResolver {
 

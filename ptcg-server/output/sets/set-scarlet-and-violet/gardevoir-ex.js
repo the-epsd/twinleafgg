@@ -55,7 +55,7 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
             //     blocked.push();
             //   }
             // });
-            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Psychic Energy' }, { allowCancel: false, min: 0 }), transfers => {
+            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Psychic Energy' }, { allowCancel: true, min: 0 }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {
@@ -64,9 +64,6 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     const pokemonCard = target.cards[0];
-                    if (!pokemonCard) {
-                        throw new game_1.GameError(game_1.GameMessage.INVALID_TARGET);
-                    }
                     if (pokemonCard.cardType !== card_types_1.CardType.PSYCHIC) {
                         throw new game_1.GameError(game_1.GameMessage.INVALID_TARGET);
                     }

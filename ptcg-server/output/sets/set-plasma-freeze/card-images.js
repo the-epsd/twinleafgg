@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SuperiorEnergyRetrievalArt = exports.RockGuardArt = exports.MrMimeArt = exports.FloatStoneArt = exports.ExeggcuteArt = void 0;
+const superior_energy_retrieval_1 = require("../set-paldea-evolved/superior-energy-retrieval");
 const exeggcute_1 = require("./exeggcute");
 const float_stone_1 = require("./float-stone");
 const mr_mime_1 = require("./mr-mime");
 const rock_guard_1 = require("./rock-guard");
-const superior_energy_retrieval_1 = require("./superior-energy-retrieval");
 class ExeggcuteArt extends exeggcute_1.Exeggcute {
     constructor() {
         super(...arguments);
