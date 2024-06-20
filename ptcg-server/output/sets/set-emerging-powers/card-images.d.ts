@@ -11,6 +11,8 @@ export declare class CherenArt extends Cheren {
 }
 export declare class CrushingHammerArt extends CrushingHammer {
     cardImage: string;
+    setNumber: string;
+    fullName: string;
 }
 export declare class MaxPotionArt extends MaxPotion {
     cardImage: string;

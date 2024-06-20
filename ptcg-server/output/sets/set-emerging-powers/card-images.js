@@ -24,6 +24,8 @@ class CrushingHammerArt extends crushing_hammer_1.CrushingHammer {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EPO/EPO_092_R_EN.png';
+        this.setNumber = '92';
+        this.fullName = 'Crushing Hammer EPO';
     }
 }
 exports.CrushingHammerArt = CrushingHammerArt;

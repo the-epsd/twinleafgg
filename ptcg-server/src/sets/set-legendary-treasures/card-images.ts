@@ -18,6 +18,8 @@ export class EmboarArt extends Emboar {
 
 export class EnergySwitchArt extends EnergySwitch {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LTR/LTR_112_R_EN.png';
+  public setNumber = '112';
+  public fullName: string = 'Energy Switch LTR';
 }
 
 export class GothitaArt extends Gothita {

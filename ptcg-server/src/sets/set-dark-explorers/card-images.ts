@@ -25,6 +25,8 @@ export class DarkClawArt extends DarkClaw {
 
 export class DarkPatchArt extends DarkPatch {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DEX/DEX_093_R_EN.png';
+  public setNumber = '93';
+  public fullName: string = 'Dark Patch DEX';
 }
 
 export class DarkraiExArt extends DarkraiEx {
@@ -37,6 +39,8 @@ export class EmpoleonArt extends Empoleon {
 
 export class EnhancedHammerArt extends EnhancedHammer {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DEX/DEX_094_R_EN.png';
+  public setNumber = '94';
+  public fullName: string = 'Enhanced Hammer DEX';
 }
 
 export class PiplupArt extends Piplup {

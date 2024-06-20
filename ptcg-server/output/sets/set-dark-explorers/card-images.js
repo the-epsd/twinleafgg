@@ -35,6 +35,8 @@ class DarkPatchArt extends dark_patch_1.DarkPatch {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DEX/DEX_093_R_EN.png';
+        this.setNumber = '93';
+        this.fullName = 'Dark Patch DEX';
     }
 }
 exports.DarkPatchArt = DarkPatchArt;
@@ -56,6 +58,8 @@ class EnhancedHammerArt extends enhanced_hammer_1.EnhancedHammer {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DEX/DEX_094_R_EN.png';
+        this.setNumber = '94';
+        this.fullName = 'Enhanced Hammer DEX';
     }
 }
 exports.EnhancedHammerArt = EnhancedHammerArt;

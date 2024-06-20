@@ -38,6 +38,8 @@ class SuperiorEnergyRetrievalArt extends superior_energy_retrieval_1.SuperiorEne
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLF/PLF_103_R_EN.png';
+        this.setNumber = '103';
+        this.fullName = 'Superior Energy Retrieval PLF';
     }
 }
 exports.SuperiorEnergyRetrievalArt = SuperiorEnergyRetrievalArt;

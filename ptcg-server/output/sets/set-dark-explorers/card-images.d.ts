@@ -22,6 +22,8 @@ export declare class DarkClawArt extends DarkClaw {
 }
 export declare class DarkPatchArt extends DarkPatch {
     cardImage: string;
+    setNumber: string;
+    fullName: string;
 }
 export declare class DarkraiExArt extends DarkraiEx {
     cardImage: string;
@@ -31,6 +33,8 @@ export declare class EmpoleonArt extends Empoleon {
 }
 export declare class EnhancedHammerArt extends EnhancedHammer {
     cardImage: string;
+    setNumber: string;
+    fullName: string;
 }
 export declare class PiplupArt extends Piplup {
     cardImage: string;
