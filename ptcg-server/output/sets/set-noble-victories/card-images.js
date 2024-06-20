@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VanilluxeArt = exports.VanilliteArt = exports.VanillishArt = exports.TynamoArt = exports.TrubbishArt = exports.TerrakionArt = exports.SuperRodArt = exports.PlumeFossilArt = exports.KyuremArt = exports.EelektrikArt = exports.DurantArt = exports.ChandelureArt = exports.BlitzleArt = exports.ArcheopsArt = exports.ArchenArt = void 0;
+const super_rod_1 = require("../set-paldea-evolved/super-rod");
 const archen_1 = require("./archen");
 const archeops_1 = require("./archeops");
 const blitzle_1 = require("./blitzle");
@@ -9,7 +10,6 @@ const durant_1 = require("./durant");
 const eelektrik_1 = require("./eelektrik");
 const kyurem_1 = require("./kyurem");
 const plume_fossil_1 = require("./plume-fossil");
-const super_rod_1 = require("./super-rod");
 const terrakion_1 = require("./terrakion");
 const trubbish_1 = require("./trubbish");
 const tynamo_1 = require("./tynamo");

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZoruaArt = exports.TynamoArt = exports.TwistMountainArt = exports.TornadusExArt = exports.ShelmetArt = exports.SableyeArt = exports.RandomReceiverArt = exports.RaikouExArt = exports.PrinplupArt = exports.PiplupArt = exports.EnhancedHammerArt = exports.EmpoleonArt = exports.DarkraiExArt = exports.DarkPatchArt = exports.DarkClawArt = exports.AccelgorArt = void 0;
+const dark_patch_1 = require("../set-astral-radiance/dark-patch");
+const enhanced_hammer_1 = require("../set-twilight-masquerade/enhanced-hammer");
 const accelgor_1 = require("./accelgor");
 const dark_claw_1 = require("./dark-claw");
-const dark_patch_1 = require("./dark-patch");
 const darkrai_ex_1 = require("./darkrai-ex");
 const empoleon_1 = require("./empoleon");
-const enhanced_hammer_1 = require("./enhanced-hammer");
 const piplup_1 = require("./piplup");
 const prinplup_1 = require("./prinplup");
 const raikou_ex_1 = require("./raikou-ex");

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges } from '@angular/core';
 import { Player, Card, CardList } from 'ptcg-server';
 import { SortableSpec, DraggedItem } from '@ng-dnd/sortable';
 
@@ -52,6 +52,10 @@ export class HandComponent implements OnChanges {
         this.tempList = this.list;
       }
     };
+  }
+
+  @HostBinding('style.--card-count') get cardCount() {
+    return this.cards.length;
   }
 
   ngOnChanges() {

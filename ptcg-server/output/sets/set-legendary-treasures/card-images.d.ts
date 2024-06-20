@@ -1,6 +1,6 @@
+import { EnergySwitch } from '../set-scarlet-and-violet/energy-switch';
 import { Cobalion } from './cobalion';
 import { Emboar } from './emboar';
-import { EnergySwitch } from './energy-switch';
 import { Gothita } from './gothita';
 import { Gothitelle } from './gothitelle';
 import { Gothorita } from './gothorita';

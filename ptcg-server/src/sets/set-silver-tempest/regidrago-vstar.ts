@@ -20,7 +20,7 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_ATTACK_TO_COPY,
     dragonTypePokemon,
-    { allowCancel: false }
+    { allowCancel: true }
   ), result => {
     selected = result;
     next();

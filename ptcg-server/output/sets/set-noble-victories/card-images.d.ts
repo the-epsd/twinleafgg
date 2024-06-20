@@ -1,3 +1,4 @@
+import { SuperRod } from '../set-paldea-evolved/super-rod';
 import { Archen } from './archen';
 import { Archeops } from './archeops';
 import { Blitzle } from './blitzle';
@@ -6,7 +7,6 @@ import { Durant } from './durant';
 import { Eelektrik } from './eelektrik';
 import { Kyurem } from './kyurem';
 import { PlumeFossil } from './plume-fossil';
-import { SuperRod } from './super-rod';
 import { Terrakion } from './terrakion';
 import { Trubbish } from './trubbish';
 import { Tynamo } from './tynamo';

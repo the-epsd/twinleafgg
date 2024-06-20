@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TimerBallArt = exports.RareCandyArt = exports.RainbowEnergyArt = exports.OranguruArt = exports.NestBallArt = exports.ExpShareArt = exports.EnergyRetrievalArt = exports.DragonairArt = void 0;
+const energy_retrieval_1 = require("../set-scarlet-and-violet/energy-retrieval");
+const exp_share_1 = require("../set-scarlet-and-violet/exp-share");
+const nest_ball_1 = require("../set-scarlet-and-violet/nest-ball");
+const rare_candy_1 = require("../set-scarlet-and-violet/rare-candy");
 const dragonair_1 = require("./dragonair");
-const energy_retrieval_1 = require("./energy-retrieval");
-const exp_share_1 = require("./exp-share");
-const nest_ball_1 = require("./nest-ball");
 const oranguru_1 = require("./oranguru");
 const rainbow_energy_1 = require("./rainbow-energy");
-const rare_candy_1 = require("./rare-candy");
 const timer_ball_1 = require("./timer-ball");
 class DragonairArt extends dragonair_1.Dragonair {
     constructor() {

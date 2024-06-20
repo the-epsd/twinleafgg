@@ -1,8 +1,8 @@
+import { SuperiorEnergyRetrieval } from '../set-paldea-evolved/superior-energy-retrieval';
 import { Exeggcute } from './exeggcute';
 import { FloatStone } from './float-stone';
 import { MrMime } from './mr-mime';
 import { RockGuard } from './rock-guard';
-import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
 export declare class ExeggcuteArt extends Exeggcute {
     cardImage: string;
 }

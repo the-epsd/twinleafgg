@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TrubbishArt = exports.RioluArt = exports.MewExArt = exports.GothoritaArt = exports.GothitelleArt = exports.GothitaArt = exports.EnergySwitchArt = exports.EmboarArt = exports.CobalionArt = void 0;
+const energy_switch_1 = require("../set-scarlet-and-violet/energy-switch");
 const cobalion_1 = require("./cobalion");
 const emboar_1 = require("./emboar");
-const energy_switch_1 = require("./energy-switch");
 const gothita_1 = require("./gothita");
 const gothitelle_1 = require("./gothitelle");
 const gothorita_1 = require("./gothorita");

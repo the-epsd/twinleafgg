@@ -1,9 +1,9 @@
+import { DarkPatch } from '../set-astral-radiance/dark-patch';
+import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
 import { Accelgor } from './accelgor';
 import { DarkClaw } from './dark-claw';
-import { DarkPatch } from './dark-patch';
 import { DarkraiEx } from './darkrai-ex';
 import { Empoleon } from './empoleon';
-import { EnhancedHammer } from './enhanced-hammer';
 import { Piplup } from './piplup';
 import { Prinplup } from './prinplup';
 import { RaikouEx } from './raikou-ex';
