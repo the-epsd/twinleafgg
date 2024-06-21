@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WurmpleArt = exports.WinonaArt = exports.WallyArt = exports.TrainersMailArt = exports.SkyFieldArt = exports.SilcoonArt = exports.ShuppetArt = exports.ShayminExArt = exports.BeautiflyArt = exports.ArticunoArt = void 0;
+exports.WurmpleArt = exports.WinonaArt = exports.WallyArt = exports.TrainersMailArt = exports.SkyFieldArt = exports.SilcoonArt = exports.ShuppetArt = exports.ShayminExArt = exports.DoubleDragonEnergyArt = exports.BeautiflyArt = exports.ArticunoArt = void 0;
 const articuno_1 = require("./articuno");
 const beautifly_1 = require("./beautifly");
+const double_dragon_energy_1 = require("./double-dragon-energy");
 const shaymin_ex_1 = require("./shaymin-ex");
 const shuppet_1 = require("./shuppet");
 const silcoon_1 = require("./silcoon");
@@ -25,6 +26,13 @@ class BeautiflyArt extends beautifly_1.Beautifly {
     }
 }
 exports.BeautiflyArt = BeautiflyArt;
+class DoubleDragonEnergyArt extends double_dragon_energy_1.DoubleDragonEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_097_R_EN_LG.png';
+    }
+}
+exports.DoubleDragonEnergyArt = DoubleDragonEnergyArt;
 class ShayminExArt extends shaymin_ex_1.ShayminEx {
     constructor() {
         super(...arguments);
