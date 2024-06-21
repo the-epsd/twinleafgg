@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AncientBoosterEnergyCapsuleArt, BounsweetArt, BruteBonnetArt, ChiYuArt, CounterCatcherArt, DefianceVestArt, DeoxysArt, EarthenVesselArt, ElekidArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GarganaclArt, GholdengoexArt, GibleArt, GimmighoulArt, GroudonArt, HoopaexArt, IronBundleArt, IronHandsexArt, IronJugulisArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MelaArt, MewtwoexArt, MiniorArt, MorpekoArt, NacliArt, NaclstackArt, NatuArt, PorygonArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RemoraidArt, RoaringMoonexArt, SandyShocksexArt, ScreamTailArt, SlitherWingArt, SnoruntArt, SteeneeArt, TapuKokoexArt, TechnicalMachineBlindsideArt, TechnicalMachineDevolutionArt, TechnicalMachineEvolutionArt, TechnicalMachineTurboEnergizeArt, TechnoRadarArt, TsareenaexArt, TulipArt, XatuArt } from './card-images';
+import { AncientBoosterEnergyCapsuleArt, BounsweetArt, BruteBonnetArt, ChiYuArt, CounterCatcherArt, DefianceVestArt, DeoxysArt, EarthenVesselArt, ElekidArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GarganaclArt, GholdengoexArt, GibleArt, GimmighoulArt, GroudonArt, HoopaexArt, IronBundleArt, IronHandsexArt, IronJugulisArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MelaArt, MewtwoexArt, MiniorArt, MorpekoArt, NacliArt, NaclstackArt, NatuArt, PorygonArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RemoraidArt, RoaringMoonexArt, SandyShocksexArt, ScreamTailArt, SlitherWingArt, SnoruntArt, SteeneeArt, TapuKokoexArt, TechnicalMachineBlindsideArt, TechnicalMachineDevolutionArt, TechnicalMachineEvolutionArt, TechnicalMachineTurboEnergizeArt, TechnoRadarArt, TsareenaexArt, TulipArt, XatuArt, ZacianArt } from './card-images';
 
 export const setParadoxRift: Card[] = [
   
@@ -56,4 +56,5 @@ export const setParadoxRift: Card[] = [
   new IronJugulisArt(),
   new TapuKokoexArt(),
   new PorygonArt(),
+  new ZacianArt()
 ];

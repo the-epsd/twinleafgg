@@ -6,6 +6,7 @@ import { Leon } from './leon';
 import { Nessa } from './nessa';
 import { Raikou } from './raikou';
 import { Snorlax } from './snorlax';
+import { Magearna } from './VIV_128_Magearna';
 import { WashWaterEnergy } from './wash-water-energy';
 export declare class CharizardArt extends Charizard {
     cardImage: string;
@@ -20,6 +21,9 @@ export declare class JirachiArt extends Jirachi {
     cardImage: string;
 }
 export declare class LeonArt extends Leon {
+    cardImage: string;
+}
+export declare class MagearnaArt extends Magearna {
     cardImage: string;
 }
 export declare class NessaArt extends Nessa {

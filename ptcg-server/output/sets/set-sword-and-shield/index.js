@@ -15,5 +15,6 @@ exports.setSwordAndShield = [
     new card_images_1.SobbleArt(),
     new card_images_1.OrdinaryRodArt(),
     new card_images_1.QuickBallArt(),
+    new card_images_1.ToxicroakArt(),
     new card_images_1.WelderArt()
 ];

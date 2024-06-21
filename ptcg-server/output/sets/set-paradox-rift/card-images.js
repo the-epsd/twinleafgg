@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TechnicalMachineTurboEnergizeArt = exports.TechnicalMachineEvolutionArt = exports.TechnicalMachineDevolutionArt = exports.TechnicalMachineBlindsideArt = exports.TapuKokoexArt = exports.SteeneeArt = exports.SnoruntArt = exports.SlitherWingArt = exports.ScreamTailArt = exports.SandyShocksexArt = exports.RoaringMoonexArt = exports.RemoraidArt = exports.ProfessorTurosScenarioArt = exports.ProfessorSadasVitalityArt = exports.PorygonArt = exports.NatuArt = exports.NaclstackArt = exports.NacliArt = exports.MorpekoArt = exports.MiniorArt = exports.MewtwoexArt = exports.MelaArt = exports.LuxuriousCapeArt = exports.LatiosArt = exports.KlawfArt = exports.JirachiArt = exports.IronValiantexArt = exports.IronJugulisArt = exports.IronHandsexArt = exports.IronBundleArt = exports.HoopaexArt = exports.GroudonArt = exports.GimmighoulArt = exports.GibleArt = exports.GholdengoexArt = exports.GarganaclArt = exports.GarchompexArt = exports.GabiteArt = exports.FutureBoosterEnergyCapsuleArt = exports.FroslassexArt = exports.ElekidArt = exports.EarthenVesselArt = exports.DeoxysArt = exports.DefianceVestArt = exports.CounterCatcherArt = exports.ChiYuArt = exports.BruteBonnetArt = exports.BounsweetArt = exports.BombirdierexArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
-exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TechnoRadarArt = void 0;
+exports.ZacianArt = exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TechnoRadarArt = void 0;
 const ancient_booster_energy_capsule_1 = require("./ancient-booster-energy-capsule");
 const bombirdier_1 = require("./bombirdier");
 const bounsweet_1 = require("./bounsweet");
@@ -37,6 +37,7 @@ const morpeko_1 = require("./morpeko");
 const nacli_1 = require("./nacli");
 const naclstack_1 = require("./naclstack");
 const natu_1 = require("./natu");
+const PAR_136_Zacian_1 = require("./PAR_136_Zacian");
 const porygon_1 = require("./porygon");
 const professor_sadas_vitality_1 = require("./professor-sadas-vitality");
 const professor_turos_scenario_1 = require("./professor-turos-scenario");
@@ -434,3 +435,10 @@ class XatuArt extends xatu_1.Xatu {
     }
 }
 exports.XatuArt = XatuArt;
+class ZacianArt extends PAR_136_Zacian_1.Zacian {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_136_R_EN_LG.png';
+    }
+}
+exports.ZacianArt = ZacianArt;

@@ -9,6 +9,7 @@ import { Deoxys } from './deoxys';
 import { Dreepy } from './dreepy';
 import { Dunsparce } from './dunsparce';
 import { ElesasSparkle } from './elesas-sparkle';
+import { Croagunk } from './FST_165_Croagunk';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
 import { GenesectV } from './genesect-v';
 import { GengarV } from './gengar-v';
@@ -51,6 +52,10 @@ export class CookArt extends Cook {
 
 export class CreamomaticArt extends Creamomatic {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_229_R_EN_LG.png';
+}
+
+export class CroagunkArt extends Croagunk {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_165_R_EN_LG.png';
 }
 
 export class CrossSwitcherArt extends CrossSwitcher {

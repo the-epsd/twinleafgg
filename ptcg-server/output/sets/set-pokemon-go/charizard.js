@@ -44,7 +44,7 @@ class Charizard extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkProvidedEnergy);
-            let cards = [];
+            const cards = [];
             for (const energyMap of checkProvidedEnergy.energyMap) {
                 const energy = energyMap.provides.filter(t => t === card_types_1.CardType.FIRE || t === card_types_1.CardType.ANY);
                 if (energy.length > 0) {

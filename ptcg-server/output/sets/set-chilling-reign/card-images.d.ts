@@ -7,6 +7,7 @@ import { BlazikenVMAX } from './blaziken-vmax';
 import { BlisseyV } from './blissey-v';
 import { Caitlin } from './caitlin';
 import { CastformSunnyForm } from './castform-sunny-form';
+import { Tauros } from './CRE_115_Tauros';
 import { Drizzile } from './drizzile';
 import { DynaTreeHill } from './dyna-tree-hill';
 import { EchoingHorn } from './echoing-horn';
@@ -169,6 +170,9 @@ export declare class SobbleArt extends Sobble {
     cardImage: string;
 }
 export declare class SpiralEnergyArt extends SpiralEnergy {
+    cardImage: string;
+}
+export declare class TaurosArt extends Tauros {
     cardImage: string;
 }
 export declare class ZarudeArt extends Zarude {

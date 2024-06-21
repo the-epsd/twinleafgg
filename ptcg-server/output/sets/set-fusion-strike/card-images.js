@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.YveltalArt = exports.ShelmetArt = exports.ShaunaArt = exports.SchoolgirlArt = exports.SchoolboyArt = exports.PyukumukuArt = exports.PowerTabletArt = exports.OricorioArt = exports.MewVMAXArt = exports.MewVArt = exports.MeloettaArt = exports.JudgeArt = exports.InteleonVMAXArt = exports.InteleonVArt = exports.HeatmorArt = exports.GengarVMAXArt = exports.GengarVArt = exports.GenesectVArt = exports.FusionStrikeEnergyArt = exports.ElesasSparkleArt = exports.DunsparceArt = exports.DreepyArt = exports.DeoxysArt = exports.CrossSwitcherArt = exports.CreamomaticArt = exports.CookArt = exports.BattleVIPPassArt = exports.BasculinArt = exports.AdventurersDiscoveryArt = exports.AccelgorArt = void 0;
+exports.YveltalArt = exports.ShelmetArt = exports.ShaunaArt = exports.SchoolgirlArt = exports.SchoolboyArt = exports.PyukumukuArt = exports.PowerTabletArt = exports.OricorioArt = exports.MewVMAXArt = exports.MewVArt = exports.MeloettaArt = exports.JudgeArt = exports.InteleonVMAXArt = exports.InteleonVArt = exports.HeatmorArt = exports.GengarVMAXArt = exports.GengarVArt = exports.GenesectVArt = exports.FusionStrikeEnergyArt = exports.ElesasSparkleArt = exports.DunsparceArt = exports.DreepyArt = exports.DeoxysArt = exports.CrossSwitcherArt = exports.CroagunkArt = exports.CreamomaticArt = exports.CookArt = exports.BattleVIPPassArt = exports.BasculinArt = exports.AdventurersDiscoveryArt = exports.AccelgorArt = void 0;
 const accelgor_1 = require("./accelgor");
 const adventurers_discovery_1 = require("./adventurers-discovery");
 const basculin_1 = require("./basculin");
@@ -12,6 +12,7 @@ const deoxys_1 = require("./deoxys");
 const dreepy_1 = require("./dreepy");
 const dunsparce_1 = require("./dunsparce");
 const elesas_sparkle_1 = require("./elesas-sparkle");
+const FST_165_Croagunk_1 = require("./FST_165_Croagunk");
 const fusion_strike_energy_1 = require("./fusion-strike-energy");
 const genesect_v_1 = require("./genesect-v");
 const gengar_v_1 = require("./gengar-v");
@@ -73,6 +74,13 @@ class CreamomaticArt extends cram_o_matic_1.Creamomatic {
     }
 }
 exports.CreamomaticArt = CreamomaticArt;
+class CroagunkArt extends FST_165_Croagunk_1.Croagunk {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_165_R_EN_LG.png';
+    }
+}
+exports.CroagunkArt = CroagunkArt;
 class CrossSwitcherArt extends cross_switcher_1.CrossSwitcher {
     constructor() {
         super(...arguments);

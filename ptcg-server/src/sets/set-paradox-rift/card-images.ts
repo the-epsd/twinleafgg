@@ -33,6 +33,7 @@ import { Morpeko } from './morpeko';
 import { Nacli } from './nacli';
 import { Naclstack } from './naclstack';
 import { Natu } from './natu';
+import { Zacian } from './PAR_136_Zacian';
 import { Porygon } from './porygon';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
@@ -267,4 +268,8 @@ export class TulipArt extends Tulip {
 
 export class XatuArt extends Xatu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_072_R_EN_LG.png';
+}
+
+export class ZacianArt extends Zacian {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_136_R_EN_LG.png';
 }

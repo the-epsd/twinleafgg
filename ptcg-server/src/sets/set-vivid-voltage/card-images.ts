@@ -6,6 +6,7 @@ import { Leon } from './leon';
 import { Nessa } from './nessa';
 import { Raikou } from './raikou';
 import { Snorlax } from './snorlax';
+import { Magearna } from './VIV_128_Magearna';
 import { WashWaterEnergy } from './wash-water-energy';
 
 export class CharizardArt extends Charizard {
@@ -26,6 +27,10 @@ export class JirachiArt extends Jirachi {
 
 export class LeonArt extends Leon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_154_R_EN.png';
+}
+
+export class MagearnaArt extends Magearna {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_128_R_EN_LG.png';
 }
 
 export class NessaArt extends Nessa {

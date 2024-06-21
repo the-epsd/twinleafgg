@@ -12,6 +12,7 @@ import { QuickBall } from './quick-ball';
 import { Sizzlipede } from './sizzlipede';
 import { Snom } from './snom';
 import { Sobble } from './sobble';
+import { Toxicroak } from './SSH_124_Toxicroak';
 import { Welder } from './welder';
 export declare class AirBalloonArt extends AirBalloon {
     cardImage: string;
@@ -53,6 +54,9 @@ export declare class SnomArt extends Snom {
     cardImage: string;
 }
 export declare class SobbleArt extends Sobble {
+    cardImage: string;
+}
+export declare class ToxicroakArt extends Toxicroak {
     cardImage: string;
 }
 export declare class WelderArt extends Welder {

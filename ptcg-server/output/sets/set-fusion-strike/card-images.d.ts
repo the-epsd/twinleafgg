@@ -9,6 +9,7 @@ import { Deoxys } from './deoxys';
 import { Dreepy } from './dreepy';
 import { Dunsparce } from './dunsparce';
 import { ElesasSparkle } from './elesas-sparkle';
+import { Croagunk } from './FST_165_Croagunk';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
 import { GenesectV } from './genesect-v';
 import { GengarV } from './gengar-v';
@@ -44,6 +45,9 @@ export declare class CookArt extends Cook {
     cardImage: string;
 }
 export declare class CreamomaticArt extends Creamomatic {
+    cardImage: string;
+}
+export declare class CroagunkArt extends Croagunk {
     cardImage: string;
 }
 export declare class CrossSwitcherArt extends CrossSwitcher {
