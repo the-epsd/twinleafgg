@@ -13,7 +13,6 @@ var CardTag;
     CardTag["ACE_SPEC"] = "ACE_SPEC";
     CardTag["RADIANT"] = "RADIANT";
     CardTag["TEAM_PLASMA"] = "TEAM_PLASMA";
-    CardTag["TAG_TEAM"] = "TAG_TEAM";
     CardTag["FUSION_STRIKE"] = "FUSION_STRIKE";
     CardTag["SINGLE_STRIKE"] = "SINGLE_STRIKE";
     CardTag["RAPID_STRIKE"] = "RAPID_STRIKE";
@@ -21,6 +20,8 @@ var CardTag;
     CardTag["FUTURE"] = "Future";
     CardTag["ANCIENT"] = "Ancient";
     CardTag["POKEMON_TERA"] = "POKEMON_TERA";
+    CardTag["ULTRA_BEAST"] = "ULTRA_BEAST";
+    CardTag["TAG_TEAM"] = "TAG_TEAM";
 })(CardTag = exports.CardTag || (exports.CardTag = {}));
 var SuperType;
 (function (SuperType) {

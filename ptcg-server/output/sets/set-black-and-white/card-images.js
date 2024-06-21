@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoruaArt = exports.ZoroarkArt = exports.ZekromArt = exports.TepigArt = exports.ReviveArt = exports.ReshiramArt = exports.ProfessorJuniperArt = exports.PlusPowerArt = exports.PigniteArt = exports.LillipupArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.ZekromArt = exports.TepigArt = exports.ReviveArt = exports.ReshiramArt = exports.ProfessorJuniperArt = exports.PokedexArt = exports.PlusPowerArt = exports.PigniteArt = exports.LillipupArt = void 0;
 const lillipup_1 = require("./lillipup");
 const pignite_1 = require("./pignite");
 const plus_power_1 = require("./plus-power");
+const pokedex_1 = require("./pokedex");
 const professor_juniper_1 = require("./professor-juniper");
 const reshiram_1 = require("./reshiram");
 const revive_1 = require("./revive");
@@ -32,6 +33,13 @@ class PlusPowerArt extends plus_power_1.PlusPower {
     }
 }
 exports.PlusPowerArt = PlusPowerArt;
+class PokedexArt extends pokedex_1.Pokedex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BLW/BLW_098_R_EN_LG.png';
+    }
+}
+exports.PokedexArt = PokedexArt;
 class ProfessorJuniperArt extends professor_juniper_1.ProfessorJuniper {
     constructor() {
         super(...arguments);

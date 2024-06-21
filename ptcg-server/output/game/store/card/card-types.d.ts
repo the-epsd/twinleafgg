@@ -9,14 +9,15 @@ export declare enum CardTag {
     ACE_SPEC = "ACE_SPEC",
     RADIANT = "RADIANT",
     TEAM_PLASMA = "TEAM_PLASMA",
-    TAG_TEAM = "TAG_TEAM",
     FUSION_STRIKE = "FUSION_STRIKE",
     SINGLE_STRIKE = "SINGLE_STRIKE",
     RAPID_STRIKE = "RAPID_STRIKE",
     POKEMON_ex = "ex",
     FUTURE = "Future",
     ANCIENT = "Ancient",
-    POKEMON_TERA = "POKEMON_TERA"
+    POKEMON_TERA = "POKEMON_TERA",
+    ULTRA_BEAST = "ULTRA_BEAST",
+    TAG_TEAM = "TAG_TEAM"
 }
 export declare enum SuperType {
     NONE = 0,

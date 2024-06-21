@@ -59,6 +59,7 @@ __exportStar(require("./set-roaring-skies"), exports);
 __exportStar(require("./set-steam-siege"), exports);
 //export
 //SM Era
+__exportStar(require("./set-champions-path"), exports);
 __exportStar(require("./set-burning-shadows"), exports);
 __exportStar(require("./set-celestial-storm"), exports);
 __exportStar(require("./set-cosmic-eclipse"), exports);
