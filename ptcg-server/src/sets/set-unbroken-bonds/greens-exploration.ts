@@ -1,9 +1,10 @@
-import { ChooseCardsPrompt, PokemonCard, ShuffleDeckPrompt } from '../../game';
+import { ChooseCardsPrompt, PokemonCard, PowerType, ShuffleDeckPrompt } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -18,9 +19,9 @@ export class GreensExploration extends TrainerCard {
 
   public setNumber: string = '175';
 
-  public name: string = 'Greens Exploration';
+  public name: string = 'Green\'s Exploration';
 
-  public fullName: string = 'Greens Exploration UNB';
+  public fullName: string = 'Green\'s Exploration UNB';
 
   public text: string =
     'You can play this card only if you have no Pokémon with Abilities in play.' + 
@@ -35,13 +36,42 @@ export class GreensExploration extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
       
-      const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
-      const pokemonWithAbilities = benchPokemon.filter(card => card.powers.length);
+      let benchPokemon: PokemonCard[] = [];
+      let pokemonWithAbilities: PokemonCard[] = [];
       const playerActive = player.active.getPokemonCard();
-      
-      if (playerActive && playerActive.powers.length) {
-        pokemonWithAbilities.push(playerActive);
+    
+      const stubPowerEffectForActive = new PowerEffect(player, {
+        name: 'test',
+        powerType: PowerType.ABILITY,
+        text: ''
+      }, player.active.getPokemonCard()!);
+
+      try {
+        store.reduceEffect(state, stubPowerEffectForActive);
+
+        if (playerActive && playerActive.powers.length) {
+          pokemonWithAbilities.push(playerActive);
+        }
+      } catch {
+        // no abilities in active
       }
+
+      if (player.bench.some(b => b.cards.length > 0)) {
+        const stubPowerEffectForBench = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, player.bench.filter(b => b.cards.length > 0)[0].getPokemonCard()!);
+
+        try {
+          store.reduceEffect(state, stubPowerEffectForBench);
+
+          benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
+          pokemonWithAbilities.push(...benchPokemon.filter(card => card.powers.length));
+        } catch {
+          // no abilities on bench
+        }
+      }   
 
       if (pokemonWithAbilities.length > 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);        
