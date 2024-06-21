@@ -1,10 +1,12 @@
 import { Copycat } from './copycat';
 import { DragoniteV } from './dragonite-v';
+import { Drampa } from './drampa';
 import { DuraludonV } from './duraludon-v';
 import { DuraludonVMAX } from './duraludon-vmax';
 import { EspeonV } from './espeon-v';
 import { EspeonVMAX } from './espeon-vmax';
 import { Flaaffy } from './flaaffy';
+import { Flapple } from './flapple';
 import { FullFaceGuard } from './full-face-guard';
 import { GalarianArticuno } from './galarian-articuno';
 import { GalarianMoltres } from './galarian-moltres';
@@ -42,6 +44,10 @@ export class DragoniteVArt extends DragoniteV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_191_R_EN_LG.png';
 }
 
+export class DrampaArt extends Drampa {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_119_R_EN_LG.png';
+}
+
 export class DuraludonVArt extends DuraludonV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_122_R_EN_LG.png';
 }
@@ -60,6 +66,10 @@ export class EspeonVMAXArt extends EspeonVMAX {
 
 export class FlaaffyArt extends Flaaffy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_055_R_EN_LG.png';
+}
+
+export class FlappleArt extends Flapple {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_120_R_EN_LG.png';
 }
 
 export class FullFaceGuardArt extends FullFaceGuard {

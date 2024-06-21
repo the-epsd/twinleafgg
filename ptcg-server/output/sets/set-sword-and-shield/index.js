@@ -10,6 +10,7 @@ exports.setSwordAndShield = [
     new card_images_1.GiantHearthArt(),
     new card_images_1.InteleonArt(),
     new card_images_1.MarnieArt(),
+    new card_images_1.MetalSaucerArt(),
     new card_images_1.SnomArt(),
     new card_images_1.SobbleArt(),
     new card_images_1.OrdinaryRodArt(),

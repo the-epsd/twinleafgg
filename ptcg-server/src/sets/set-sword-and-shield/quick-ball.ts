@@ -1,17 +1,17 @@
+import { GameError } from '../../game/game-error';
+import { GameLog, GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
-import { Effect } from '../../game/store/effects/effect';
+import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, SuperType, Stage } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { StateUtils } from '../../game/store/state-utils';
+import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
+import { StateUtils } from '../../game/store/state-utils';
 import { CardList } from '../../game/store/state/card-list';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: QuickBall, effect: TrainerEffect): IterableIterator<State> {
@@ -44,6 +44,11 @@ function* playCard(next: Function, store: StoreLike, state: State,
     { min: 1, max: 1, allowCancel: true }
   ), selected => {
     cards = selected || [];
+    
+    cards.forEach((card, index) => {
+      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
+    });
+    
     next();
   });
 

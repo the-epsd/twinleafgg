@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CynthiaAndCaitlin = void 0;
-const trainer_card_1 = require("../../game/store/card/trainer-card");
-const card_types_1 = require("../../game/store/card/card-types");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
+const card_types_1 = require("../../game/store/card/card-types");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const card_list_1 = require("../../game/store/state/card-list");
 function* playCard(next, store, state, self, effect) {
@@ -64,6 +64,7 @@ class CynthiaAndCaitlin extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'CEC';
+        this.tags = [card_types_1.CardTag.TAG_TEAM];
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '189';
         this.name = 'Cynthia & Caitlin';

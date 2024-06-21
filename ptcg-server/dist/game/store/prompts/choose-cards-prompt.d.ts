@@ -1,11 +1,11 @@
-import { Card } from '../card/card';
-import { CardList } from '../state/card-list';
-import { EnergyCard } from '../card/energy-card';
 import { GameMessage } from '../../game-message';
-import { Prompt } from './prompt';
+import { Card } from '../card/card';
+import { CardType } from '../card/card-types';
+import { EnergyCard } from '../card/energy-card';
 import { PokemonCard } from '../card/pokemon-card';
 import { TrainerCard } from '../card/trainer-card';
-import { CardType } from '../card/card-types';
+import { CardList } from '../state/card-list';
+import { Prompt } from './prompt';
 export declare const ChooseCardsPromptType = "Choose cards";
 export interface ChooseCardsOptions {
     min: number;
@@ -18,6 +18,8 @@ export interface ChooseCardsOptions {
     maxEnergies: number | undefined;
     maxTrainers: number | undefined;
     maxTools: number | undefined;
+    maxStadiums: number | undefined;
+    maxSpecialEnergies: number | undefined;
     maxItems: number | undefined;
 }
 export declare type FilterType = Partial<PokemonCard | TrainerCard | EnergyCard>;

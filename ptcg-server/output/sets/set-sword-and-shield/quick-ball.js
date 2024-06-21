@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QuickBall = void 0;
-const trainer_card_1 = require("../../game/store/card/trainer-card");
+const game_error_1 = require("../../game/game-error");
+const game_message_1 = require("../../game/game-message");
 const card_types_1 = require("../../game/store/card/card-types");
-const state_utils_1 = require("../../game/store/state-utils");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const show_cards_prompt_1 = require("../../game/store/prompts/show-cards-prompt");
 const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
-const game_error_1 = require("../../game/game-error");
-const game_message_1 = require("../../game/game-message");
+const state_utils_1 = require("../../game/store/state-utils");
 const card_list_1 = require("../../game/store/state/card-list");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
@@ -29,6 +29,9 @@ function* playCard(next, store, state, self, effect) {
     handTemp.cards = player.hand.cards.filter(c => c !== self);
     yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 1, max: 1, allowCancel: true }), selected => {
         cards = selected || [];
+        cards.forEach((card, index) => {
+            store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
+        });
         next();
     });
     // Operation canceled by the user

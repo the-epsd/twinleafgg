@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WelderArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CinccinoArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
+exports.WelderArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CinccinoArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
 const air_balloon_1 = require("./air-balloon");
 const aurora_energy_1 = require("./aurora-energy");
 const cinccino_1 = require("./cinccino");
@@ -9,6 +9,7 @@ const evolution_incense_1 = require("./evolution-incense");
 const giant_hearth_1 = require("./giant-hearth");
 const inteleon_1 = require("./inteleon");
 const marnie_1 = require("./marnie");
+const metal_saucer_1 = require("./metal-saucer");
 const ordinary_rod_1 = require("./ordinary-rod");
 const quick_ball_1 = require("./quick-ball");
 const sizzlipede_1 = require("./sizzlipede");
@@ -71,6 +72,13 @@ class MarnieArt extends marnie_1.Marnie {
     }
 }
 exports.MarnieArt = MarnieArt;
+class MetalSaucerArt extends metal_saucer_1.MetalSaucer {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_170_R_EN_LG.png';
+    }
+}
+exports.MetalSaucerArt = MetalSaucerArt;
 class OrdinaryRodArt extends ordinary_rod_1.OrdinaryRod {
     constructor() {
         super(...arguments);

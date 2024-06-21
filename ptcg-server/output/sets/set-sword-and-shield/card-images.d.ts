@@ -6,6 +6,7 @@ import { EvolutionIncense } from './evolution-incense';
 import { GiantHearth } from './giant-hearth';
 import { Inteleon } from './inteleon';
 import { Marnie } from './marnie';
+import { MetalSaucer } from './metal-saucer';
 import { OrdinaryRod } from './ordinary-rod';
 import { QuickBall } from './quick-ball';
 import { Sizzlipede } from './sizzlipede';
@@ -34,6 +35,9 @@ export declare class InteleonArt extends Inteleon {
     cardImage: string;
 }
 export declare class MarnieArt extends Marnie {
+    cardImage: string;
+}
+export declare class MetalSaucerArt extends MetalSaucer {
     cardImage: string;
 }
 export declare class OrdinaryRodArt extends OrdinaryRod {

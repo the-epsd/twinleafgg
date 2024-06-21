@@ -150,6 +150,7 @@ var GameCardMessage;
     GameCardMessage["WANT_TO_ATTACH_ONLY_FIGHTING_ENERGY"] = "WANT_TO_ATTACH_ONLY_FIGHTING_ENERGY";
     GameCardMessage["WANT_TO_ATTACH_ONLY_FIRE_ENERGY"] = "WANT_TO_ATTACH_ONLY_FIRE_ENERGY";
     GameCardMessage["WANT_TO_ATTACH_ONE_OF_EACH"] = "WANT_TO_ATTACH_ONE_OF_EACH";
+    GameCardMessage["WANT_TO_DISCARD_CARDS"] = "WANT_DISCARD_CARDS";
 })(GameCardMessage = exports.GameCardMessage || (exports.GameCardMessage = {}));
 var GameLog;
 (function (GameLog) {
@@ -192,6 +193,7 @@ var GameLog;
     GameLog["LOG_TIME_ELAPSED"] = "LOG_TIME_ELAPSED";
     GameLog["LOG_TURN"] = "LOG_TURN";
     GameLog["LOG_PLAYER_DISCARDS_CARD_FROM_HAND"] = "LOG_PLAYER_DISCARDS_CARD_FROM_HAND";
+    GameLog["LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE"] = "LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE";
     GameLog["LOG_PLAYER_PUTS_CARD_IN_HAND"] = "LOG_PLAYER_PUTS_CARD_IN_HAND";
     GameLog["LOG_HISUIAN_HEAVY_BALL"] = "LOG_HISUIAN_HEAVY_BALL";
 })(GameLog = exports.GameLog || (exports.GameLog = {}));

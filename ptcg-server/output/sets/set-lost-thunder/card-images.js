@@ -1,15 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.NihilegoArt = exports.MeganiumArt = exports.MareepArt = exports.GrovleArt = exports.ElectropowerArt = exports.ChikoritaArt = void 0;
-const wurmple_1 = require("./wurmple");
+exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.ChikoritaArt = exports.AdventureBagArt = void 0;
+const adventure_bag_1 = require("./adventure-bag");
 const chikorita_1 = require("./chikorita");
-const grovyle_1 = require("./grovyle");
-const treecko_1 = require("./treecko");
-const zebstrika_1 = require("./zebstrika");
-const meganium_1 = require("./meganium");
-const nihilego_1 = require("./nihilego");
-const mareep_1 = require("./mareep");
+const custom_catcher_1 = require("./custom-catcher");
 const electropower_1 = require("./electropower");
+const grovyle_1 = require("./grovyle");
+const lost_blender_1 = require("./lost-blender");
+const mareep_1 = require("./mareep");
+const meganium_1 = require("./meganium");
+const net_ball_1 = require("./net-ball");
+const nihilego_1 = require("./nihilego");
+const treecko_1 = require("./treecko");
+const wurmple_1 = require("./wurmple");
+const zebstrika_1 = require("./zebstrika");
+class AdventureBagArt extends adventure_bag_1.AdventureBag {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_167_R_EN_LG.png';
+    }
+}
+exports.AdventureBagArt = AdventureBagArt;
 class ChikoritaArt extends chikorita_1.Chikorita {
     constructor() {
         super(...arguments);
@@ -17,6 +28,13 @@ class ChikoritaArt extends chikorita_1.Chikorita {
     }
 }
 exports.ChikoritaArt = ChikoritaArt;
+class CustomCatcherArt extends custom_catcher_1.CustomCatcher {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_171_R_EN_LG.png';
+    }
+}
+exports.CustomCatcherArt = CustomCatcherArt;
 class ElectropowerArt extends electropower_1.Electropower {
     constructor() {
         super(...arguments);
@@ -31,6 +49,13 @@ class GrovleArt extends grovyle_1.Grovyle {
     }
 }
 exports.GrovleArt = GrovleArt;
+class LostBlenderArt extends lost_blender_1.LostBlender {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_181_R_EN_LG.png';
+    }
+}
+exports.LostBlenderArt = LostBlenderArt;
 class MareepArt extends mareep_1.Mareep {
     constructor() {
         super(...arguments);
@@ -45,6 +70,13 @@ class MeganiumArt extends meganium_1.Meganium {
     }
 }
 exports.MeganiumArt = MeganiumArt;
+class NetBallArt extends net_ball_1.NetBall {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_187_R_EN_LG.png';
+    }
+}
+exports.NetBallArt = NetBallArt;
 class NihilegoArt extends nihilego_1.Nihilego {
     constructor() {
         super(...arguments);

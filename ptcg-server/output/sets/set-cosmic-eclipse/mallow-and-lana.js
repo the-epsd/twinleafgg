@@ -12,6 +12,7 @@ class MallowAndLana extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'CEC';
+        this.tags = [card_types_1.CardTag.TAG_TEAM];
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '198';
         this.regulationMark = 'F';

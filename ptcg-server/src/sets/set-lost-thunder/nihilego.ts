@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, Attack, GameLog, GameError, ChooseAttackPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -62,6 +62,7 @@ export class Nihilego extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.PSYCHIC;
   public hp: number = 110;
+  public tag = [ CardTag.ULTRA_BEAST ];
   public weakness = [{ type: CardType.PSYCHIC }];
   public retreat = [CardType.COLORLESS];
 

@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.PurrloinArt = exports.NecrozmaArt = void 0;
+exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.StadiumNavArt = exports.ResetStampArt = exports.PurrloinArt = exports.NecrozmaArt = void 0;
 const necrozma_1 = require("./necrozma");
 const purrloin_1 = require("./purrloin");
+const reset_stamp_1 = require("./reset-stamp");
+const stadium_nav_1 = require("./stadium-nav");
 const u_turn_board_1 = require("./u-turn-board");
 const weakness_guard_energy_1 = require("./weakness-guard-energy");
 class NecrozmaArt extends necrozma_1.Necrozma {
@@ -19,6 +21,20 @@ class PurrloinArt extends purrloin_1.Purrloin {
     }
 }
 exports.PurrloinArt = PurrloinArt;
+class ResetStampArt extends reset_stamp_1.ResetStamp {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_206_R_EN_LG.png';
+    }
+}
+exports.ResetStampArt = ResetStampArt;
+class StadiumNavArt extends stadium_nav_1.StadiumNav {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_208_R_EN_LG.png';
+    }
+}
+exports.StadiumNavArt = StadiumNavArt;
 class UTurnBoardArt extends u_turn_board_1.UTurnBoard {
     constructor() {
         super(...arguments);

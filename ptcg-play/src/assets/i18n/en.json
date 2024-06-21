@@ -436,6 +436,7 @@
     "WANT_TO_ATTACH_ONLY_FIGHTING_ENERGY": "Would you like to attach only Fighting Energy?",
     "WANT_TO_ATTACH_ONLY_FIRE_ENERGY": "Would you like to attach only Fire Energy?",
     "WANT_TO_ATTACH_ONE_OF_EACH": "Would you like to attach one of each Energy card?",
+    "WANT_TO_DISCARD_CARDS": "Would you like to discard two cards?",
     "CAN_ONLY_ATTACH_TO_PSYCHIC": "Psychic Embrace can only accelerate Energy to Psychic Pokémon"
   },
   "GAME_LOGS": {
@@ -478,6 +479,7 @@
     "LOG_TURN": "Turn {{turn}}.",
     "LOG_PLAYER_PUTS_CARD_IN_HAND": "{{name}} puts {{card}} in their hand.",
     "LOG_PLAYER_DISCARDS_CARD_FROM_HAND": "{{name}} discards {{card}} from their hand.",
+    "LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE": "{{name}} puts {{card}} in the lost zone from their hand.",
     "LOG_PLAYER_HEALS_POKEMON": "{{name}} heals {{pokemon}} for {{healingAmount}}.",
     "LOG_HISUIAN_HEAVY_BALL": "{{name}} has taken {{card}} from their Prize Cards with Hisuian Heavy Ball."
   }

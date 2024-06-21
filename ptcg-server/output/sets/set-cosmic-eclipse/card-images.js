@@ -1,13 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GolettArt = exports.CynthiaAndCaitlinArt = exports.BlacephalonArt = void 0;
+exports.TagCallArt = exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.CynthiaAndCaitlinArt = exports.BlacephalonArt = void 0;
 const blacephalon_1 = require("./blacephalon");
 const cynthia_and_caitlin_1 = require("./cynthia-and-caitlin");
 const golett_1 = require("./golett");
+const guzma_and_hala_1 = require("./guzma-and-hala");
 const guzzlord_1 = require("./guzzlord");
+const lanas_fishing_rod_1 = require("./lanas-fishing-rod");
 const mallow_and_lana_1 = require("./mallow-and-lana");
 const professor_oaks_setup_1 = require("./professor-oaks-setup");
 const slugma_1 = require("./slugma");
+const tag_call_1 = require("./tag-call");
 class BlacephalonArt extends blacephalon_1.Blacephalon {
     constructor() {
         super(...arguments);
@@ -29,6 +32,13 @@ class GolettArt extends golett_1.Golett {
     }
 }
 exports.GolettArt = GolettArt;
+class GuzmaAndHalaArt extends guzma_and_hala_1.GuzmaAndHala {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_193_R_EN_LG.png';
+    }
+}
+exports.GuzmaAndHalaArt = GuzmaAndHalaArt;
 class GuzzlordArt extends guzzlord_1.Guzzlord {
     constructor() {
         super(...arguments);
@@ -43,6 +53,13 @@ class MallowAndLanaArt extends mallow_and_lana_1.MallowAndLana {
     }
 }
 exports.MallowAndLanaArt = MallowAndLanaArt;
+class LanasFishingRodArt extends lanas_fishing_rod_1.LanasFishingRod {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_195_R_EN_LG.png';
+    }
+}
+exports.LanasFishingRodArt = LanasFishingRodArt;
 class ProfessorOaksSetupArt extends professor_oaks_setup_1.ProfessorOaksSetup {
     constructor() {
         super(...arguments);
@@ -57,3 +74,10 @@ class SlugmaArt extends slugma_1.Slugma {
     }
 }
 exports.SlugmaArt = SlugmaArt;
+class TagCallArt extends tag_call_1.TagCall {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_206_R_EN_LG.png';
+    }
+}
+exports.TagCallArt = TagCallArt;

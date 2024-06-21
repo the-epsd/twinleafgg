@@ -55,7 +55,6 @@ class TimerBall extends trainer_card_1.TrainerCard {
                 store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: heads, allowCancel: false, blocked }), selected => {
                     cards = selected || [];
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                    player.supporterTurn = 1;
                     if (cards.length > 0) {
                         player.deck.moveCardsTo(cards, player.hand);
                         return store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => {

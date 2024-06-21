@@ -1,7 +1,9 @@
 import { Card } from '../../game/store/card/card';
-import { InkayArt, MalamarArt } from './card-images';
+import { BeastRingArt, InkayArt, MalamarArt, MysteriousTreasureArt } from './card-images';
 
 export const setForbiddenLight: Card[] = [
+  new BeastRingArt(),
   new InkayArt(),
-  new MalamarArt()
+  new MalamarArt(),
+  new MysteriousTreasureArt()
 ];

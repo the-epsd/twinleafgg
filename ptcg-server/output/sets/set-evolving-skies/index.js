@@ -6,11 +6,13 @@ const full_arts_1 = require("./full-arts");
 exports.setEvolvingSkies = [
     new card_images_1.CopycatArt(),
     new card_images_1.DragoniteVArt(),
+    new card_images_1.DrampaArt(),
     new card_images_1.DuraludonVArt(),
     new card_images_1.DuraludonVMAXArt(),
     new card_images_1.EspeonVArt(),
     new card_images_1.EspeonVMAXArt(),
     new card_images_1.FlaaffyArt(),
+    new card_images_1.FlappleArt(),
     new card_images_1.FullFaceGuardArt(),
     new card_images_1.GalarianArticunoArt(),
     new card_images_1.GalarianMoltresArt(),
