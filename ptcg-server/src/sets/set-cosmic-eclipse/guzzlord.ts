@@ -1,6 +1,6 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GamePhase } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
@@ -9,6 +9,7 @@ export class Guzzlord extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.DARK;
   public hp: number = 150;
+  public tags = [ CardTag.ULTRA_BEAST ];
   public weakness = [{ type: CardType.FIGHTING }];
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

@@ -1,4 +1,4 @@
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
@@ -6,6 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 export declare class MallowAndLana extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    tags: CardTag[];
     cardImage: string;
     setNumber: string;
     regulationMark: string;

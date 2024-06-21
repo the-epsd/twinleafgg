@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChooseCardsPrompt = exports.ChooseCardsPromptType = void 0;
-const prompt_1 = require("./prompt");
 const card_types_1 = require("../card/card-types");
+const prompt_1 = require("./prompt");
 exports.ChooseCardsPromptType = 'Choose cards';
 class ChooseCardsPrompt extends prompt_1.Prompt {
     constructor(playerId, message, cards, filter, options) {
@@ -23,6 +23,8 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
             maxEnergies: undefined,
             maxTrainers: undefined,
             maxTools: undefined,
+            maxStadiums: undefined,
+            maxSpecialEnergies: undefined,
             maxItems: undefined,
         }, options);
     }
@@ -62,12 +64,18 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
                 const trainerTypeCount = countMap[card.trainerType] || 0;
                 countMap[card.trainerType] = trainerTypeCount + 1;
             }
+            if (card.superType === card_types_1.SuperType.ENERGY) {
+                const energyTypeCount = countMap[card.energyType] || 0;
+                countMap[card.energyType] = energyTypeCount + 1;
+            }
         }
-        const { maxPokemons, maxEnergies, maxTrainers, maxItems, maxTools } = this.options;
+        const { maxPokemons, maxEnergies, maxTrainers, maxItems, maxTools, maxStadiums, maxSpecialEnergies } = this.options;
         if ((maxPokemons !== undefined && maxPokemons < countMap[card_types_1.SuperType.POKEMON])
             || (maxEnergies !== undefined && maxEnergies < countMap[card_types_1.SuperType.ENERGY])
             || (maxTrainers !== undefined && maxTrainers < countMap[card_types_1.SuperType.TRAINER])
             || (maxItems !== undefined && maxItems < countMap[card_types_1.TrainerType.ITEM])
+            || (maxStadiums !== undefined && maxStadiums < countMap[card_types_1.TrainerType.STADIUM])
+            || (maxSpecialEnergies !== undefined && maxSpecialEnergies < countMap[card_types_1.EnergyType.SPECIAL])
             || (maxTools !== undefined && maxTools < countMap[card_types_1.TrainerType.TOOL])) {
             return false;
         }

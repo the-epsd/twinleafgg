@@ -163,7 +163,7 @@ export class PromptPutDamageComponent implements OnChanges {
 
   private updateIsInvalid() {
     let isInvalid = false;
-    if (this.damage > 0) {
+    if (this.damage > 0 && !this.prompt.options.allowPlacePartialDamage) {
       isInvalid = true;
     }
     this.isInvalid = isInvalid;

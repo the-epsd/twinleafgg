@@ -17,7 +17,8 @@ class PutDamagePrompt extends prompt_1.Prompt {
         // Default options
         this.options = Object.assign({}, {
             allowCancel: true,
-            blocked: []
+            blocked: [],
+            allowPlacePartialDamage: false
         }, options);
     }
     decode(result, state) {
@@ -29,7 +30,7 @@ class PutDamagePrompt extends prompt_1.Prompt {
         }
         let damage = 0;
         result.forEach(r => { damage += r.damage; });
-        if (this.damage !== damage) {
+        if (this.damage !== damage && !this.options.allowPlacePartialDamage) {
             return false;
         }
         const player = state.players.find(p => p.id === this.playerId);

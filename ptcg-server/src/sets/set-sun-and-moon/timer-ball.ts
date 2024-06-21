@@ -79,7 +79,6 @@ export class TimerBall extends TrainerCard {
           cards = selected || [];
         
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          player.supporterTurn = 1;
     
           if (cards.length > 0) {
             

@@ -61,6 +61,7 @@ import { JammingTower } from './jamming-tower';
 import { CornerstoneMaskOgerponex } from './cornerstone-mask-ogerpon-ex';
 import { BoomerangEnergy } from './boomerang-energy';
 import { Infernape } from './infernape';
+import { WalkingWake } from './walking-wake';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -245,6 +246,9 @@ export declare class TingLuArt extends TingLu {
     cardImage: string;
 }
 export declare class UnfairStampArt extends UnfairStamp {
+    cardImage: string;
+}
+export declare class WalkingWakeArt extends WalkingWake {
     cardImage: string;
 }
 export declare class WellspringMaskOgerponexArt extends WellspringMaskOgerponex {

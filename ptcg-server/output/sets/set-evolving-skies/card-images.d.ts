@@ -1,11 +1,13 @@
 import { Copycat } from './copycat';
 import { DragoniteV } from './dragonite-v';
+import { Drampa } from './drampa';
 import { DuraludonV } from './duraludon-v';
 import { DuraludonVMAX } from './duraludon-vmax';
 import { EspeonV } from './espeon-v';
 import { EspeonVMAX } from './espeon-vmax';
 import { Vigoroth } from './EVS_130_Vigoroth';
 import { Flaaffy } from './flaaffy';
+import { Flapple } from './flapple';
 import { FullFaceGuard } from './full-face-guard';
 import { GalarianArticuno } from './galarian-articuno';
 import { GalarianMoltres } from './galarian-moltres';
@@ -40,6 +42,9 @@ export declare class CopycatArt extends Copycat {
 export declare class DragoniteVArt extends DragoniteV {
     cardImage: string;
 }
+export declare class DrampaArt extends Drampa {
+    cardImage: string;
+}
 export declare class DuraludonVArt extends DuraludonV {
     cardImage: string;
 }
@@ -53,6 +58,9 @@ export declare class EspeonVMAXArt extends EspeonVMAX {
     cardImage: string;
 }
 export declare class FlaaffyArt extends Flaaffy {
+    cardImage: string;
+}
+export declare class FlappleArt extends Flapple {
     cardImage: string;
 }
 export declare class FullFaceGuardArt extends FullFaceGuard {

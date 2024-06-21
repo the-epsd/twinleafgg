@@ -1,6 +1,7 @@
 import { Lillipup } from './lillipup';
 import { Pignite } from './pignite';
 import { PlusPower } from './plus-power';
+import { Pokedex } from './pokedex';
 import { ProfessorJuniper } from './professor-juniper';
 import { Reshiram } from './reshiram';
 import { Revive } from './revive';
@@ -15,6 +16,9 @@ export declare class PigniteArt extends Pignite {
     cardImage: string;
 }
 export declare class PlusPowerArt extends PlusPower {
+    cardImage: string;
+}
+export declare class PokedexArt extends Pokedex {
     cardImage: string;
 }
 export declare class ProfessorJuniperArt extends ProfessorJuniper {

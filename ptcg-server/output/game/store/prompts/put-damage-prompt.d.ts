@@ -7,6 +7,7 @@ export declare const PutDamagePromptType = "Put damage";
 export interface PutDamageOptions {
     allowCancel: boolean;
     blocked: CardTarget[];
+    allowPlacePartialDamage?: boolean | undefined;
 }
 export declare class PutDamagePrompt extends Prompt<DamageMap[]> {
     message: GameMessage;

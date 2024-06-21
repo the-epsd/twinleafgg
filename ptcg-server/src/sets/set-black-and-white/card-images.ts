@@ -1,6 +1,7 @@
 import { Lillipup } from './lillipup';
 import { Pignite } from './pignite';
 import { PlusPower } from './plus-power';
+import { Pokedex } from './pokedex';
 import { ProfessorJuniper } from './professor-juniper';
 import { Reshiram } from './reshiram';
 import { Revive } from './revive';
@@ -19,6 +20,10 @@ export class PigniteArt extends Pignite {
 
 export class PlusPowerArt extends PlusPower {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BLW/BLW_096_R_EN.png';
+}
+
+export class PokedexArt extends Pokedex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BLW/BLW_098_R_EN_LG.png';
 }
 
 export class ProfessorJuniperArt extends ProfessorJuniper {

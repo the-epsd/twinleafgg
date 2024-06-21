@@ -1,6 +1,6 @@
 import { ChooseCardsPrompt, ChoosePokemonPrompt, ConfirmPrompt, GameError, PlayerType, SlotType } from '../../game';
 import { GameLog, GameMessage } from '../../game/game-message';
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
@@ -13,6 +13,8 @@ export class MallowAndLana extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'CEC';
+  
+  public tags = [CardTag.TAG_TEAM];
 
   public cardImage: string = 'assets/cardback.png';
 

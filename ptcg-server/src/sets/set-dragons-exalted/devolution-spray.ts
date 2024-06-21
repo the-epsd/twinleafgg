@@ -47,6 +47,7 @@ export class DevolutionSpray extends TrainerCard {
             
             targetPokemon.moveCardsTo([targetPokemon.cards[targetPokemon.cards.length - 1]], effect.player.hand);
             targetPokemon.clearEffects();
+            targetPokemon.pokemonPlayedTurn = state.turn;
           }
           
           return state;

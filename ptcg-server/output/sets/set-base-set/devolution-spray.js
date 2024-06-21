@@ -38,6 +38,7 @@ class DevolutionSpray extends game_1.TrainerCard {
                     const targetPokemon = results[0];
                     targetPokemon.moveCardsTo([targetPokemon.cards[targetPokemon.cards.length - 1]], effect.player.hand);
                     targetPokemon.clearEffects();
+                    targetPokemon.pokemonPlayedTurn = state.turn;
                 }
                 return state;
             });

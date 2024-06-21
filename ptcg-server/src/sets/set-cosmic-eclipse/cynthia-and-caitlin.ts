@@ -1,14 +1,14 @@
-import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { Card} from '../../game/store/card/card';
+import { Card } from '../../game/store/card/card';
+import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { TrainerCard } from '../../game/store/card/trainer-card';
+import { Effect } from '../../game/store/effects/effect';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../game/store/state/card-list';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -97,6 +97,8 @@ export class CynthiaAndCaitlin extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'CEC';
+  
+  public tags = [CardTag.TAG_TEAM];  
 
   public cardImage: string = 'assets/cardback.png';
 
