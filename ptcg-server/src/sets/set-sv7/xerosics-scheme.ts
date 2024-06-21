@@ -48,25 +48,23 @@ export class XerosicsScheme extends TrainerCard {
       const discardAmount = opponentHandLength - 3;
     
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
+
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
       // Opponent discards first
-      if (opponent.hand.cards.length > 3) {
-        store.prompt(state, new ChooseCardsPrompt(
-          opponent.id,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          opponent.hand,
-          {},
-          { min: discardAmount, max: discardAmount, allowCancel: false }
-        ), selected => {
-          const cards = selected || [];
-          opponent.hand.moveCardsTo(cards, opponent.discard);
-        });
-      }
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      store.prompt(state, new ChooseCardsPrompt(
+        opponent.id,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        opponent.hand,
+        {},
+        { min: discardAmount, max: discardAmount, allowCancel: false }
+      ), selected => {
+        const cards = selected || [];
+        opponent.hand.moveCardsTo(cards, opponent.discard);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      });
     }
-
     return state;
   }
 }
