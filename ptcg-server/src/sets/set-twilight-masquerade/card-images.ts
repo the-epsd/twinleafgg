@@ -62,6 +62,7 @@ import { JammingTower } from './jamming-tower';
 import { CornerstoneMaskOgerponex } from './cornerstone-mask-ogerpon-ex';
 import { BoomerangEnergy } from './boomerang-energy';
 import { Infernape } from './infernape';
+import { WalkingWake } from './walking-wake';
 
 
 export class AggronArt extends Aggron {
@@ -310,6 +311,10 @@ export class TingLuArt extends TingLu {
 
 export class UnfairStampArt extends UnfairStamp {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_165_R_EN_LG.png';
+}
+
+export class WalkingWakeArt extends WalkingWake {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_063_R_EN_LG.png';
 }
 
 export class WellspringMaskOgerponexArt extends WellspringMaskOgerponex {

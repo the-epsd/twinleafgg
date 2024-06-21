@@ -1,6 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { DreepyArt, DrakloakArt, DragapultexArt, FroslassArt, BlisseyexArt, HandyFanArt, RotoStickArt, HasselArt, LegacyEnergyArt, LuxrayexArt, ScoopUpCycloneArt, TatsugiriArt, MightyenaArt, PoochyenaArt, AggronArt, AronArt, LaironArt, FarfetchdArt, PerformanceFluteArt, LuxioArt, WellspringMaskOgerponexArt, CarmineArt, KieranArt, ChanseyArt, MorpekoArt, BugCatchingSetArt, DipplinArt, GrookeyArt, ThwackeyArt, FestivalGroundsArt, ApplinArt, ApplinArt2, CornerstoneMaskOgerponexArt, MunkidoriArt, JammingTowerArt, InfernapeArt } from './card-images';
-import { BloodmoonUrsalunaexArt, CaretakerArt, CommunityCenterArt, EnhancedHammerArt, FroakieArt, FrogadierArt, GreninjaexArt, HyperAromaArt, IronLeavesArt, IronThornsexArt, LoveBallArt, LuckyHelmetArt, PerrinArt, PhioneArt, ScreamTailexArt, SurvivalCastArt, TealMaskOgerponexArt, UnfairStampArt } from './card-images';
+import { AggronArt, ApplinArt, ApplinArt2, AronArt, BlisseyexArt, BloodmoonUrsalunaexArt, BugCatchingSetArt, CaretakerArt, CarmineArt, ChanseyArt, CommunityCenterArt, CornerstoneMaskOgerponexArt, DipplinArt, DragapultexArt, DrakloakArt, DreepyArt, EnhancedHammerArt, FarfetchdArt, FestivalGroundsArt, FroakieArt, FrogadierArt, FroslassArt, GreninjaexArt, GrookeyArt, HandyFanArt, HasselArt, HyperAromaArt, InfernapeArt, IronLeavesArt, IronThornsexArt, JammingTowerArt, KieranArt, LaironArt, LegacyEnergyArt, LoveBallArt, LuckyHelmetArt, LuxioArt, LuxrayexArt, MightyenaArt, MorpekoArt, MunkidoriArt, PerformanceFluteArt, PerrinArt, PhioneArt, PoochyenaArt, RotoStickArt, ScoopUpCycloneArt, ScreamTailexArt, SurvivalCastArt, TatsugiriArt, TealMaskOgerponexArt, ThwackeyArt, UnfairStampArt, WalkingWakeArt, WellspringMaskOgerponexArt } from './card-images';
 export const setTwilightMasquerade: Card[] = [
 
   new AggronArt(),
@@ -58,4 +57,5 @@ export const setTwilightMasquerade: Card[] = [
   new ApplinArt2(),
   new JammingTowerArt(),
   new InfernapeArt(),
+  new WalkingWakeArt()
 ];

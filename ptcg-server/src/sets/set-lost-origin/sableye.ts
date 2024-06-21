@@ -22,7 +22,6 @@ function* useLostMine(next: Function, store: StoreLike, state: State, effect: At
 
   const damage = 120;
 
-
   if (player.lostzone.cards.length <= 9) {
     throw new GameError (GameMessage.CANNOT_USE_POWER);  
   }
