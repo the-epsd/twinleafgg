@@ -83,9 +83,11 @@ export class Klefki extends PokemonCard {
         // pokemonCard.powers = [ ];
         // const pokemonCard = effect.card;
         // pokemonCard.powers.length -= 1;
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+        if (!effect.power.exemptFromAbilityLock) {
+          throw new GameError(GameMessage.CANNOT_USE_POWER);
+        }
+        return state;
       }
-      return state;
     }
     
 

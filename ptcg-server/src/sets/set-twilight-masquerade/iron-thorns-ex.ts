@@ -49,7 +49,7 @@ export class IronThornsex extends PokemonCard {
 
     if (effect instanceof PowerEffect
       && effect.power.powerType === PowerType.ABILITY
-      && effect.power.name !== 'Initialize') {
+      && effect.power.name !== 'Initialize' && !effect.power.exemptFromAbilityLock) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

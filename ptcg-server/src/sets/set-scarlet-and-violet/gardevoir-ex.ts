@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 export class Gardevoirex extends PokemonCard {
 
@@ -90,12 +91,15 @@ export class Gardevoirex extends PokemonCard {
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          const pokemonCard = target.cards[0] as PokemonCard;
-          if (pokemonCard.cardType !== CardType.PSYCHIC) {
-            throw new GameError(GameMessage.INVALID_TARGET);
+          const checkHpEffect = new CheckHpEffect(player, target);
+          store.reduceEffect(state, checkHpEffect);
+
+          if (target.cards[0] instanceof PokemonCard && target.cards[0].cardType !== CardType.PSYCHIC) {
+            throw new GameError(GameMessage.CAN_ONLY_ATTACH_TO_PSYCHIC);
           }
+
           const damageAfterTransfer = target.damage + 20;
-          if (damageAfterTransfer >= pokemonCard.hp) {
+          if (damageAfterTransfer >= checkHpEffect.hp) {
             throw new GameError(GameMessage.CANNOT_USE_POWER);
           }
           player.discard.moveCardTo(transfer.card, target);

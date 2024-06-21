@@ -52,24 +52,26 @@ export class Jirachi extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+
       if (effect.target === player.active || effect.target === opponent.active) {
         return state;
       }
 
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
-      if (opponent.active.isBasic()) {
-
-        let isJirachiInPlay = false;
-        targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (card === this) {
-            isJirachiInPlay = true;
-          }
-        });
-
-        if (!isJirachiInPlay) {
-          return state;
+      let isJirachiInPlay = false;
+      targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isJirachiInPlay = true;
         }
+      });
+
+      if (!isJirachiInPlay) {
+        return state;
+      }
+
+      const sourceCard = effect.source.getPokemonCard();
+      if (sourceCard && sourceCard.stage === Stage.BASIC) {
 
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
@@ -78,13 +80,9 @@ export class Jirachi extends PokemonCard {
         } catch {
           return state;
         }
-
         effect.preventDefault = true;
       }
-
-      return state;
     }
     return state;
   }
-
 }

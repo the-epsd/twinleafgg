@@ -66,9 +66,11 @@ class Klefki extends pokemon_card_1.PokemonCard {
                 // pokemonCard.powers = [ ];
                 // const pokemonCard = effect.card;
                 // pokemonCard.powers.length -= 1;
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                if (!effect.power.exemptFromAbilityLock) {
+                    throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                }
+                return state;
             }
-            return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;

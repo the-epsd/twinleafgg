@@ -39,7 +39,7 @@ class Zoroark extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const cardList = game_1.StateUtils.findCardList(state, this);
             if (player.active.cards[0] == this) {
-                return state; // Not active
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             // Index of this Zoroark on bench
             const benchIndex = player.bench.indexOf(cardList);

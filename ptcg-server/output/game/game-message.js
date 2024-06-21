@@ -61,6 +61,7 @@ var GameStoreMessage;
     GameStoreMessage["UNKNOWN_CARD"] = "UNKNOWN_CARD";
     GameStoreMessage["UNKNOWN_POWER"] = "UNKNOWN_POWER";
     GameStoreMessage["LABEL_VSTAR_USED"] = "LABEL_VSTAR_USED";
+    GameStoreMessage["CAN_ONLY_ATTACH_TO_PSYCHIC"] = "CAN_ONLY_ATTACH_TO_PSYCHIC";
 })(GameStoreMessage = exports.GameStoreMessage || (exports.GameStoreMessage = {}));
 var GameCardMessage;
 (function (GameCardMessage) {

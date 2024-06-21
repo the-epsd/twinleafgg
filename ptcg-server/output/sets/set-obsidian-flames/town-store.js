@@ -11,6 +11,7 @@ const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 function* useStadium(next, store, state, effect) {
     const player = effect.player;
+    const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
@@ -26,6 +27,12 @@ function* useStadium(next, store, state, effect) {
             cards.forEach((card, index) => {
                 player.deck.moveCardTo(card, player.hand);
             });
+            cards.forEach((card, index) => {
+                store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+            });
+            if (cards.length > 0) {
+                state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
+            }
             return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
                 return state;
