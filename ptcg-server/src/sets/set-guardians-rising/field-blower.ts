@@ -61,13 +61,10 @@ export class FieldBlower extends TrainerCard {
           {
             message: GameMessage.YES,
             action: () => {
-
-              // We will discard this card after prompt confirmation
-              effect.preventDefault = true;
               
               const cardList = StateUtils.findCardList(state, stadiumCard);
-              const player = StateUtils.findOwner(state, cardList);
-              cardList.moveTo(player.discard);          
+              const stadiumPlayer = StateUtils.findOwner(state, cardList);
+              cardList.moveTo(stadiumPlayer.discard);          
               
               let targets: PokemonCardList[] = [];
               return store.prompt(state, new ChoosePokemonPrompt(
@@ -98,13 +95,6 @@ export class FieldBlower extends TrainerCard {
           {
             message: GameMessage.NO,
             action: () => {
-
-              // We will discard this card after prompt confirmation
-              effect.preventDefault = true;
-              
-              const cardList = StateUtils.findCardList(state, stadiumCard);
-              const player = StateUtils.findOwner(state, cardList);
-              cardList.moveTo(player.discard);                           
 
               const max = Math.min(2, pokemonsWithTool);
               let targets: PokemonCardList[] = [];
@@ -147,8 +137,8 @@ export class FieldBlower extends TrainerCard {
 
           if (option.action) {
             option.action();
-
           }
+          
           player.supporter.moveCardTo(this, player.discard);
           return state;
         });

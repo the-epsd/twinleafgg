@@ -14,7 +14,7 @@ class Zebstrika extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.retreat = [card_types_1.CardType.COLORLESS];
         this.evolvesFrom = 'Blitzle';
         this.powers = [{
                 name: 'Sprint',

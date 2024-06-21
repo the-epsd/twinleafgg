@@ -1,5 +1,6 @@
 import {
   Attack,
+  Card,
   EnergyCard,
   PlayerType,
   Power,
@@ -62,10 +63,20 @@ export class Charizard extends PokemonCard {
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+      
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const cards = player.active.cards.filter(c => c instanceof EnergyCard && c.provides.includes(CardType.LIGHTNING));
+      let cards: Card[] = [];
+      for (const energyMap of checkProvidedEnergy.energyMap) {
+        const energy = energyMap.provides.filter(t => t === CardType.FIRE || t === CardType.ANY);
+        if (energy.length > 0) {
+          cards.push(energyMap.card);
+        }
+      }
+      
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);

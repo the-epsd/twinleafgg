@@ -13,7 +13,7 @@ export class Zebstrika extends PokemonCard {
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 90;
   public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [CardType.COLORLESS];
   public evolvesFrom: string = 'Blitzle';
 
   public powers = [{

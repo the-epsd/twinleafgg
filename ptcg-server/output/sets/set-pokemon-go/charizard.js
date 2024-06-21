@@ -40,9 +40,17 @@ class Charizard extends pokemon_card_1.PokemonCard {
         ];
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            const cards = player.active.cards.filter(c => c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.LIGHTNING));
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+            state = store.reduceEffect(state, checkProvidedEnergy);
+            let cards = [];
+            for (const energyMap of checkProvidedEnergy.energyMap) {
+                const energy = energyMap.provides.filter(t => t === card_types_1.CardType.FIRE || t === card_types_1.CardType.ANY);
+                if (energy.length > 0) {
+                    cards.push(energyMap.card);
+                }
+            }
             const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
             discardEnergy.target = player.active;
             store.reduceEffect(state, discardEnergy);

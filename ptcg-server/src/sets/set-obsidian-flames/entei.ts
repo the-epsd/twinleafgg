@@ -65,14 +65,7 @@ export class Entei extends PokemonCard {
     }
 
     // Reduce damage by 20
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      const pokemonCard = effect.target.getPokemonCard();
-  
-      // It's not this pokemon card
-      if (pokemonCard !== this) {
-        return state;
-      }
-  
+    if (effect instanceof PutDamageEffect && StateUtils.getOpponent(state, effect.player).active.cards.includes(this)) {
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
         return state;

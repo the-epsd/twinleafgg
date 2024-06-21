@@ -116,10 +116,13 @@ export class WishfulBaton extends TrainerCard {
           if (transfers.length === 0) {
             return;
           }
+          
           for (const transfer of transfers) {
             const target = StateUtils.getTarget(state, player, transfer.to);
             energyToAttach.moveCardTo(transfer.card, target);
           }
+          
+          energyToAttach.moveTo(player.discard);
         });
 
       }

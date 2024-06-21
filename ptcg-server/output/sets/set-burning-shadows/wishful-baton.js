@@ -84,6 +84,7 @@ class WishfulBaton extends trainer_card_1.TrainerCard {
                         const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
                         energyToAttach.moveCardTo(transfer.card, target);
                     }
+                    energyToAttach.moveTo(player.discard);
                 });
             }
             return state;

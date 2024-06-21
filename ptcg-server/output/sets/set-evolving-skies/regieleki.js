@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Regieleki = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
-const game_effects_1 = require("../../game/store/effects/game-effects");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class Regieleki extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -49,8 +50,15 @@ class Regieleki extends pokemon_card_1.PokemonCard {
                     damageEffect.target = target;
                     store.reduceEffect(state, damageEffect);
                 });
-                const player = effect.player;
-                const cards = player.active.cards.filter(c => c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.LIGHTNING));
+                const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+                state = store.reduceEffect(state, checkProvidedEnergy);
+                let cards = [];
+                for (const energyMap of checkProvidedEnergy.energyMap) {
+                    const energy = energyMap.provides.filter(t => t === card_types_1.CardType.LIGHTNING || t === card_types_1.CardType.ANY);
+                    if (energy.length > 0) {
+                        cards.push(energyMap.card);
+                    }
+                }
                 const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
                 discardEnergy.target = player.active;
                 store.reduceEffect(state, discardEnergy);

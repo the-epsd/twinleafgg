@@ -1,9 +1,10 @@
+import { Card, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { Effect } from '../../game/store/effects/effect';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Regieleki extends PokemonCard {
 
@@ -67,8 +68,17 @@ export class Regieleki extends PokemonCard {
           store.reduceEffect(state, damageEffect);
         });
         
-        const player = effect.player;
-        const cards = player.active.cards.filter(c => c instanceof EnergyCard && c.provides.includes(CardType.LIGHTNING));
+        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+        state = store.reduceEffect(state, checkProvidedEnergy);
+        
+        let cards: Card[] = [];
+        for (const energyMap of checkProvidedEnergy.energyMap) {
+          const energy = energyMap.provides.filter(t => t === CardType.LIGHTNING || t === CardType.ANY);
+          if (energy.length > 0) {
+            cards.push(energyMap.card);
+          }
+        }
+        
         const discardEnergy = new DiscardCardsEffect(effect, cards);
         discardEnergy.target = player.active;
         store.reduceEffect(state, discardEnergy);

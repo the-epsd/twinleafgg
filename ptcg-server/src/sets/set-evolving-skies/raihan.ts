@@ -44,7 +44,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     GameMessage.ATTACH_ENERGY_TO_BENCH,
     player.discard,
     PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH],
+    [SlotType.BENCH, SlotType.ACTIVE],
     {superType: SuperType.ENERGY, energyType: EnergyType.BASIC},
     {allowCancel: false, min: 1, max: 1}
   ), transfers => {

@@ -49,11 +49,9 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                     {
                         message: game_1.GameMessage.YES,
                         action: () => {
-                            // We will discard this card after prompt confirmation
-                            effect.preventDefault = true;
                             const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-                            const player = game_1.StateUtils.findOwner(state, cardList);
-                            cardList.moveTo(player.discard);
+                            const stadiumPlayer = game_1.StateUtils.findOwner(state, cardList);
+                            cardList.moveTo(stadiumPlayer.discard);
                             let targets = [];
                             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 0, max: 1, allowCancel: true, blocked }), results => {
                                 targets = results || [];
@@ -75,11 +73,6 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                     {
                         message: game_1.GameMessage.NO,
                         action: () => {
-                            // We will discard this card after prompt confirmation
-                            effect.preventDefault = true;
-                            const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-                            const player = game_1.StateUtils.findOwner(state, cardList);
-                            cardList.moveTo(player.discard);
                             const max = Math.min(2, pokemonsWithTool);
                             let targets = [];
                             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: false, blocked }), results => {
