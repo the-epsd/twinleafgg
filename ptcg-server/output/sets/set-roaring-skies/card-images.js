@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WurmpleArt = exports.TrainersMailArt = exports.SkyFieldArt = exports.SilcoonArt = exports.ShuppetArt = exports.ShayminExArt = exports.BeautiflyArt = exports.ArticunoArt = void 0;
+exports.WurmpleArt = exports.WinonaArt = exports.WallyArt = exports.TrainersMailArt = exports.SkyFieldArt = exports.SilcoonArt = exports.ShuppetArt = exports.ShayminExArt = exports.BeautiflyArt = exports.ArticunoArt = void 0;
 const articuno_1 = require("./articuno");
 const beautifly_1 = require("./beautifly");
 const shaymin_ex_1 = require("./shaymin-ex");
@@ -8,6 +8,8 @@ const shuppet_1 = require("./shuppet");
 const silcoon_1 = require("./silcoon");
 const sky_field_1 = require("./sky-field");
 const trainers_mail_1 = require("./trainers-mail");
+const wally_1 = require("./wally");
+const winona_1 = require("./winona");
 const wurmple_1 = require("./wurmple");
 class ArticunoArt extends articuno_1.Articuno {
     constructor() {
@@ -58,6 +60,20 @@ class TrainersMailArt extends trainers_mail_1.TrainersMail {
     }
 }
 exports.TrainersMailArt = TrainersMailArt;
+class WallyArt extends wally_1.Wally {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_094_R_EN_LG.png';
+    }
+}
+exports.WallyArt = WallyArt;
+class WinonaArt extends winona_1.Winona {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_096_R_EN_LG.png';
+    }
+}
+exports.WinonaArt = WinonaArt;
 class WurmpleArt extends wurmple_1.Wurmple {
     constructor() {
         super(...arguments);

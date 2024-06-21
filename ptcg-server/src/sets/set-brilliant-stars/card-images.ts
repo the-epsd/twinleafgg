@@ -21,6 +21,7 @@ import { Floatzel } from './floatzel';
 import { Garchomp } from './garchomp';
 import { Gloria } from './gloria';
 import { Grotle } from './grotle';
+import { Kindler } from './kindler';
 import { Lapras } from './lapras';
 import { Liepard } from './liepard';
 import { LumineonV } from './lumineon-v';
@@ -129,6 +130,10 @@ export class GrotleArt extends Grotle {
 
 export class HeatranArt extends Heatran {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_100_R_EN_LG.png';
+}
+
+export class KindlerArt extends Kindler {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_143_R_EN_LG.png';  
 }
 
 export class LaprasArt extends Lapras {

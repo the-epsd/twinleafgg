@@ -26,6 +26,7 @@ exports.setBrilliantStars = [
     new card_images_1.GloriaArt(),
     new card_images_1.GrotleArt(),
     new card_images_1.HeatranArt(),
+    new card_images_1.KindlerArt(),
     new card_images_1.LaprasArt(),
     new card_images_1.LumineonVArt(),
     new card_images_1.MagmaBasinArt(),

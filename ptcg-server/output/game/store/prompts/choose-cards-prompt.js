@@ -19,6 +19,7 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
             blocked: [],
             isSecret: false,
             differentTypes: false,
+            allowDifferentSuperTypes: true,
             maxPokemons: undefined,
             maxEnergies: undefined,
             maxTrainers: undefined,
@@ -41,6 +42,12 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
         }
         if (result.length < this.options.min || result.length > this.options.max) {
             return false;
+        }
+        if (!this.options.allowDifferentSuperTypes) {
+            const set = new Set(result.map(r => r.superType));
+            if (set.size > 1) {
+                return false;
+            }
         }
         // Check if 'different types' restriction is valid
         if (this.options.differentTypes) {

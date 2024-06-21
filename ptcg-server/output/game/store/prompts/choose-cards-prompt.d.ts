@@ -21,6 +21,7 @@ export interface ChooseCardsOptions {
     maxStadiums: number | undefined;
     maxSpecialEnergies: number | undefined;
     maxItems: number | undefined;
+    allowDifferentSuperTypes: boolean;
 }
 export declare type FilterType = Partial<PokemonCard | TrainerCard | EnergyCard>;
 export declare class ChooseCardsPrompt extends Prompt<Card[]> {

@@ -23,6 +23,7 @@ export interface ChooseCardsOptions {
   maxStadiums: number | undefined;
   maxSpecialEnergies: number | undefined;
   maxItems: number | undefined;
+  allowDifferentSuperTypes: boolean;
 }
 
 export type FilterType = Partial<PokemonCard | TrainerCard | EnergyCard>;
@@ -50,6 +51,7 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
       blocked: [],
       isSecret: false,
       differentTypes: false,
+      allowDifferentSuperTypes: true,
       maxPokemons: undefined,
       maxEnergies: undefined,
       maxTrainers: undefined,
@@ -76,6 +78,13 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
       return false;
     }
 
+    if (!this.options.allowDifferentSuperTypes) {
+      const set = new Set(result.map(r => r.superType));      
+      if (set.size > 1) {
+        return false;
+      }
+    }
+    
     // Check if 'different types' restriction is valid
     if (this.options.differentTypes) {
       const typeMap: {[key: number]: boolean} = {};

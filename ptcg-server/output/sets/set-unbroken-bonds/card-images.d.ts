@@ -1,5 +1,6 @@
 import { Arcanine } from './arcanine';
 import { Cleffa } from './cleffa';
+import { GreensExploration } from './greens-exploration';
 import { MartialArtsDojo } from './martial-arts-dojo';
 import { Mew } from './mew';
 import { Pokegear30 } from './pokegear-30';
@@ -9,6 +10,9 @@ export declare class ArcanineArt extends Arcanine {
     cardImage: string;
 }
 export declare class CleffaArt extends Cleffa {
+    cardImage: string;
+}
+export declare class GreensExplorationArt extends GreensExploration {
     cardImage: string;
 }
 export declare class MartialArtsDojoArt extends MartialArtsDojo {

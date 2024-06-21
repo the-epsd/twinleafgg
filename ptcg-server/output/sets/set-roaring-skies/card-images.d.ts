@@ -5,6 +5,8 @@ import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
 import { SkyField } from './sky-field';
 import { TrainersMail } from './trainers-mail';
+import { Wally } from './wally';
+import { Winona } from './winona';
 import { Wurmple } from './wurmple';
 export declare class ArticunoArt extends Articuno {
     cardImage: string;
@@ -25,6 +27,12 @@ export declare class SkyFieldArt extends SkyField {
     cardImage: string;
 }
 export declare class TrainersMailArt extends TrainersMail {
+    cardImage: string;
+}
+export declare class WallyArt extends Wally {
+    cardImage: string;
+}
+export declare class WinonaArt extends Winona {
     cardImage: string;
 }
 export declare class WurmpleArt extends Wurmple {

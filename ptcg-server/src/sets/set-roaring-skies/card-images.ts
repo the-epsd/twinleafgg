@@ -5,6 +5,8 @@ import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
 import { SkyField } from './sky-field';
 import { TrainersMail } from './trainers-mail';
+import { Wally } from './wally';
+import { Winona } from './winona';
 import { Wurmple } from './wurmple';
 
 export class ArticunoArt extends Articuno {
@@ -33,6 +35,14 @@ export class SkyFieldArt extends SkyField {
 
 export class TrainersMailArt extends TrainersMail {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_092_R_EN.png';
+}
+
+export class WallyArt extends Wally {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_094_R_EN_LG.png';  
+}
+
+export class WinonaArt extends Winona {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_096_R_EN_LG.png';
 }
 
 export class WurmpleArt extends Wurmple {

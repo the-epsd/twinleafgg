@@ -1,7 +1,7 @@
-import { GameError } from '../../game/game-error';
+import { EnergyCard, GameError, PokemonCard } from '../../game';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
-import { SuperType, TrainerType } from '../../game/store/card/card-types';
+import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -13,36 +13,49 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 function* playCard(next: Function, store: StoreLike, state: State,
-  self: BallGuy, effect: TrainerEffect): IterableIterator<State> {
+  self: Sonia, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-  if (player.deck.cards.length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  const supporterTurn = player.supporterTurn;
+  
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
-    const regex = /\bBall\b/;
-    if (!c.name.match(regex)) {
-      blocked.push(index); 
-    }      
+    // eslint-disable-next-line no-empty
+    if (c instanceof EnergyCard) {
+      
+    // eslint-disable-next-line no-empty
+    } else if (c instanceof PokemonCard && c.cardType === CardType.DARK) {
+      
+    } else {
+      blocked.push(index);
+    }
   });
-  
+
+  // Pass max counts to prompt options
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
-    GameMessage.CHOOSE_CARD_TO_HAND,
+    GameMessage.CHOOSE_ONE_ITEM_AND_ONE_TOOL_TO_HAND,
     player.deck,
-    { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-    { min: 0, max: 3, allowCancel: false, blocked }
+    { },
+    { min: 0, max: 2, allowCancel: false, blocked, allowDifferentSuperTypes: false }
   ), selected => {
     cards = selected || [];
     next();
   });
+  
+  player.deck.moveCardsTo(cards, player.hand);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  player.supporterTurn = 1;
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
@@ -56,38 +69,37 @@ function* playCard(next: Function, store: StoreLike, state: State,
     ), () => next());
   }
 
-  player.deck.moveCardsTo(cards, player.hand);
-  player.supporter.moveCardTo(self, player.discard);
-
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
 }
 
-export class BallGuy extends TrainerCard {
+export class Sonia extends TrainerCard {
 
-  public regulationMark = 'G';
+  public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public trainerType: TrainerType = TrainerType.ITEM;
+  public regulationMark = 'D';
 
-  public set: string = 'SHF';
+  public set: string = 'CPA';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '57';
+  public setNumber: string = '065';
 
-  public name: string = 'Ball Guy';
+  public name: string = 'Sonia';
 
-  public fullName: string = 'Ball Guy SHF';
+  public fullName: string = 'Sonia CPA';
 
   public text: string =
-    'Search your deck for up to 3 different Item cards that have the word "Ball" in their name, reveal them, and put them into your hand. Then, shuffle your deck.';
+    'Search your deck for up to 2 Basic Pokémon or up to 2 basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
+
     return state;
   }
 

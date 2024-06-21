@@ -21,6 +21,7 @@ import { Floatzel } from './floatzel';
 import { Garchomp } from './garchomp';
 import { Gloria } from './gloria';
 import { Grotle } from './grotle';
+import { Kindler } from './kindler';
 import { Lapras } from './lapras';
 import { Liepard } from './liepard';
 import { LumineonV } from './lumineon-v';
@@ -105,6 +106,9 @@ export declare class GrotleArt extends Grotle {
     cardImage: string;
 }
 export declare class HeatranArt extends Heatran {
+    cardImage: string;
+}
+export declare class KindlerArt extends Kindler {
     cardImage: string;
 }
 export declare class LaprasArt extends Lapras {
