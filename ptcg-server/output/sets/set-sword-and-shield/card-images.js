@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WelderArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CinccinoArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
+exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CinccinoArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
 const air_balloon_1 = require("./air-balloon");
 const aurora_energy_1 = require("./aurora-energy");
 const cinccino_1 = require("./cinccino");
@@ -14,6 +14,7 @@ const quick_ball_1 = require("./quick-ball");
 const sizzlipede_1 = require("./sizzlipede");
 const snom_1 = require("./snom");
 const sobble_1 = require("./sobble");
+const SSH_124_Toxicroak_1 = require("./SSH_124_Toxicroak");
 const welder_1 = require("./welder");
 class AirBalloonArt extends air_balloon_1.AirBalloon {
     constructor() {
@@ -106,6 +107,13 @@ class SobbleArt extends sobble_1.Sobble {
     }
 }
 exports.SobbleArt = SobbleArt;
+class ToxicroakArt extends SSH_124_Toxicroak_1.Toxicroak {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_124_R_EN_LG.png';
+    }
+}
+exports.ToxicroakArt = ToxicroakArt;
 class WelderArt extends welder_1.Welder {
     constructor() {
         super(...arguments);

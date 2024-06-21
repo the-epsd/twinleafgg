@@ -6,6 +6,7 @@ exports.setFusionStrike = [
     new card_images_1.BasculinArt(),
     new card_images_1.BattleVIPPassArt(),
     new card_images_1.CreamomaticArt(),
+    new card_images_1.CroagunkArt(),
     new card_images_1.CrossSwitcherArt(),
     new card_images_1.CookArt(),
     new card_images_1.DeoxysArt(),

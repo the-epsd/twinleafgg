@@ -4,6 +4,7 @@ import { DuraludonV } from './duraludon-v';
 import { DuraludonVMAX } from './duraludon-vmax';
 import { EspeonV } from './espeon-v';
 import { EspeonVMAX } from './espeon-vmax';
+import { Vigoroth } from './EVS_130_Vigoroth';
 import { Flaaffy } from './flaaffy';
 import { FullFaceGuard } from './full-face-guard';
 import { GalarianArticuno } from './galarian-articuno';
@@ -156,6 +157,10 @@ export class UmbreonVArt extends UmbreonV {
 
 export class UmbreonVMAXArt extends UmbreonVMAX {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_095_R_EN_LG.png';
+}
+
+export class VigorothArt extends Vigoroth {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_130_R_EN_LG.png';
 }
 
 export class WishiwashiArt extends Wishiwashi {

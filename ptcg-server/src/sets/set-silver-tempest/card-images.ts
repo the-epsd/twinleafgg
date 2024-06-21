@@ -38,6 +38,7 @@ import { Sandygast } from './sandygast';
 import { Serena } from './serena';
 import { SerperiorV } from './serperior-v';
 import { SerperiorVSTAR } from './serperior-vstar';
+import { Palossand } from './SIT_100_Palossand';
 import { Klink } from './SIT_123_Klink';
 import { Klang } from './SIT_124_Klang';
 import { Klinklang } from './SIT_125_Klinklang';
@@ -154,6 +155,10 @@ export class MetagrossArt extends Metagross {
 
 export class MismagiusArt extends Mismagius {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_064_R_EN_LG.png';
+}
+
+export class PalossandArt extends Palossand {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_100_R_EN_LG.png';
 }
 
 export class PrimordialAltarArt extends PrimordialAltar {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WashWaterEnergyArt = exports.SnorlaxArt = exports.RaikouArt = exports.NessaArt = exports.LeonArt = exports.JirachiArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = void 0;
+exports.WashWaterEnergyArt = exports.SnorlaxArt = exports.RaikouArt = exports.NessaArt = exports.MagearnaArt = exports.LeonArt = exports.JirachiArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = void 0;
 const charizard_1 = require("./charizard");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
@@ -9,6 +9,7 @@ const leon_1 = require("./leon");
 const nessa_1 = require("./nessa");
 const raikou_1 = require("./raikou");
 const snorlax_1 = require("./snorlax");
+const VIV_128_Magearna_1 = require("./VIV_128_Magearna");
 const wash_water_energy_1 = require("./wash-water-energy");
 class CharizardArt extends charizard_1.Charizard {
     constructor() {
@@ -45,6 +46,13 @@ class LeonArt extends leon_1.Leon {
     }
 }
 exports.LeonArt = LeonArt;
+class MagearnaArt extends VIV_128_Magearna_1.Magearna {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_128_R_EN_LG.png';
+    }
+}
+exports.MagearnaArt = MagearnaArt;
 class NessaArt extends nessa_1.Nessa {
     constructor() {
         super(...arguments);

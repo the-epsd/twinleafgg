@@ -45,5 +45,6 @@ exports.setChillingReign = [
     new card_images_1.SpiralEnergyArt(),
     new card_images_1.ExpeditionUniformArt(),
     new card_images_1.SneaselArt(),
+    new card_images_1.TaurosArt(),
     new card_images_1.ZarudeArt()
 ];

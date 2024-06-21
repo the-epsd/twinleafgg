@@ -4,6 +4,7 @@ import { DuraludonV } from './duraludon-v';
 import { DuraludonVMAX } from './duraludon-vmax';
 import { EspeonV } from './espeon-v';
 import { EspeonVMAX } from './espeon-vmax';
+import { Vigoroth } from './EVS_130_Vigoroth';
 import { Flaaffy } from './flaaffy';
 import { FullFaceGuard } from './full-face-guard';
 import { GalarianArticuno } from './galarian-articuno';
@@ -124,6 +125,9 @@ export declare class UmbreonVArt extends UmbreonV {
     cardImage: string;
 }
 export declare class UmbreonVMAXArt extends UmbreonVMAX {
+    cardImage: string;
+}
+export declare class VigorothArt extends Vigoroth {
     cardImage: string;
 }
 export declare class WishiwashiArt extends Wishiwashi {

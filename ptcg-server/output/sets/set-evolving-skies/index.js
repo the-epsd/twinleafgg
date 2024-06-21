@@ -37,6 +37,7 @@ exports.setEvolvingSkies = [
     new card_images_1.TropiusArt(),
     new card_images_1.WishiwashiArt(),
     new card_images_1.SwitchingCupsArt(),
+    new card_images_1.VigorothArt(),
     // Full Art & Alternate Art
     new full_arts_1.RayquazaVAA(),
     new full_arts_1.RayquazaVMAXAA(),

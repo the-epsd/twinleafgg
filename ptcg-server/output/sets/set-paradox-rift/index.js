@@ -56,4 +56,5 @@ exports.setParadoxRift = [
     new card_images_1.IronJugulisArt(),
     new card_images_1.TapuKokoexArt(),
     new card_images_1.PorygonArt(),
+    new card_images_1.ZacianArt()
 ];

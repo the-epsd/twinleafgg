@@ -1,0 +1,79 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Heatran = void 0;
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const card_types_1 = require("../../game/store/card/card-types");
+const game_1 = require("../../game");
+const game_effects_1 = require("../../game/store/effects/game-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+class Heatran extends pokemon_card_1.PokemonCard {
+    constructor() {
+        super(...arguments);
+        this.stage = card_types_1.Stage.BASIC;
+        this.cardType = card_types_1.CardType.METAL;
+        this.hp = 140;
+        this.weakness = [{ type: card_types_1.CardType.FIRE }];
+        this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
+        this.attacks = [{
+                name: 'Guard Claw',
+                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                damage: 30,
+                text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance). '
+            },
+            {
+                name: 'Iron Hammer',
+                cost: [card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
+                damage: 80,
+                text: 'If this Pokémon has any [R] Energy attached, this attack does 80 more damage. '
+            }];
+        this.set = 'BRS';
+        this.regulationMark = 'F';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '100';
+        this.name = 'Heatran';
+        this.fullName = 'Heatran BRS';
+        this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
+        this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
+    }
+    reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            player.active.attackMarker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            opponent.attackMarker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            return state;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const pokemon = player.active;
+            let fireEnergyCount = 0;
+            pokemon.cards.forEach(c => {
+                if (c instanceof game_1.EnergyCard) {
+                    if (c.provides.includes(card_types_1.CardType.FIRE)) {
+                        fireEnergyCount++;
+                    }
+                }
+            });
+            if (fireEnergyCount > 0) {
+                effect.damage += 80;
+            }
+            return state;
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect
+            && effect.target.attackMarker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
+            effect.damage -= 30;
+            return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect
+            && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+            effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                cardList.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            });
+        }
+        return state;
+    }
+}
+exports.Heatran = Heatran;

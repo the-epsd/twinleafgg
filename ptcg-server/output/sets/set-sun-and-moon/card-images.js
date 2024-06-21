@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TimerBallArt = exports.RareCandyArt = exports.RainbowEnergyArt = exports.OranguruArt = exports.NestBallArt = exports.ExpShareArt = exports.EnergyRetrievalArt = exports.DragonairArt = void 0;
+exports.TimerBallArt = exports.RareCandyArt = exports.RainbowEnergyArt = exports.OranguruArt = exports.NestBallArt = exports.ExpShareArt = exports.EnergyRetrievalArt = exports.DragonairArt = exports.AlolanRattataArt = void 0;
 const energy_retrieval_1 = require("../set-scarlet-and-violet/energy-retrieval");
 const exp_share_1 = require("../set-scarlet-and-violet/exp-share");
 const nest_ball_1 = require("../set-scarlet-and-violet/nest-ball");
@@ -8,7 +8,15 @@ const rare_candy_1 = require("../set-scarlet-and-violet/rare-candy");
 const dragonair_1 = require("./dragonair");
 const oranguru_1 = require("./oranguru");
 const rainbow_energy_1 = require("./rainbow-energy");
+const SUM_76_Alolan_Rattata_1 = require("./SUM_76_Alolan_Rattata");
 const timer_ball_1 = require("./timer-ball");
+class AlolanRattataArt extends SUM_76_Alolan_Rattata_1.AlolanRattata {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_076_R_EN_LG.png';
+    }
+}
+exports.AlolanRattataArt = AlolanRattataArt;
 class DragonairArt extends dragonair_1.Dragonair {
     constructor() {
         super(...arguments);

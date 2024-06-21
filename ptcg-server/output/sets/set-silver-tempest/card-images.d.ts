@@ -38,6 +38,7 @@ import { Sandygast } from './sandygast';
 import { Serena } from './serena';
 import { SerperiorV } from './serperior-v';
 import { SerperiorVSTAR } from './serperior-vstar';
+import { Palossand } from './SIT_100_Palossand';
 import { Klink } from './SIT_123_Klink';
 import { Klang } from './SIT_124_Klang';
 import { Klinklang } from './SIT_125_Klinklang';
@@ -126,6 +127,9 @@ export declare class MetagrossArt extends Metagross {
     cardImage: string;
 }
 export declare class MismagiusArt extends Mismagius {
+    cardImage: string;
+}
+export declare class PalossandArt extends Palossand {
     cardImage: string;
 }
 export declare class PrimordialAltarArt extends PrimordialAltar {

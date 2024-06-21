@@ -7,6 +7,7 @@ import { BlazikenVMAX } from './blaziken-vmax';
 import { BlisseyV } from './blissey-v';
 import { Caitlin } from './caitlin';
 import { CastformSunnyForm } from './castform-sunny-form';
+import { Tauros } from './CRE_115_Tauros';
 import { Drizzile } from './drizzile';
 import { DynaTreeHill } from './dyna-tree-hill';
 import { EchoingHorn } from './echoing-horn';
@@ -209,6 +210,10 @@ export class SobbleArt extends Sobble {
 
 export class SpiralEnergyArt extends SpiralEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_159_R_EN.png';
+}
+
+export class TaurosArt extends Tauros {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_115_R_EN_LG.png';
 }
 
 export class ZarudeArt extends Zarude {

@@ -5,7 +5,12 @@ import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 import { Dragonair } from './dragonair';
 import { Oranguru } from './oranguru';
 import { RainbowEnergy } from './rainbow-energy';
+import { AlolanRattata } from './SUM_76_Alolan_Rattata';
 import { TimerBall } from './timer-ball';
+
+export class AlolanRattataArt extends AlolanRattata {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_076_R_EN_LG.png';
+}
 
 export class DragonairArt extends Dragonair {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_095_R_EN.png';
