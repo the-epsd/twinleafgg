@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TapuKokoArt = exports.RoseTowerArt = exports.LugiaArt = exports.KangaskhanArt = exports.BirdKeeperArt = void 0;
+exports.TapuKokoArt = exports.RoseTowerArt = exports.LugiaArt = exports.KangaskhanArt = exports.CapeOfToughnessArt = exports.BirdKeeperArt = void 0;
 const bird_keeper_1 = require("./bird-keeper");
+const cape_of_toughness_1 = require("./cape-of-toughness");
 const kangaskhan_1 = require("./kangaskhan");
 const lugia_1 = require("./lugia");
 const rose_tower_1 = require("./rose-tower");
@@ -13,6 +14,13 @@ class BirdKeeperArt extends bird_keeper_1.BirdKeeper {
     }
 }
 exports.BirdKeeperArt = BirdKeeperArt;
+class CapeOfToughnessArt extends cape_of_toughness_1.CapeOfToughness {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_160_R_EN_LG.png';
+    }
+}
+exports.CapeOfToughnessArt = CapeOfToughnessArt;
 class KangaskhanArt extends kangaskhan_1.Kangaskhan {
     constructor() {
         super(...arguments);

@@ -1,9 +1,13 @@
+import { KarateBelt } from './karate-belt';
 import { Necrozma } from './necrozma';
 import { Purrloin } from './purrloin';
 import { ResetStamp } from './reset-stamp';
 import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
+export declare class KarateBeltArt extends KarateBelt {
+    cardimage: string;
+}
 export declare class NecrozmaArt extends Necrozma {
     cardimage: string;
 }

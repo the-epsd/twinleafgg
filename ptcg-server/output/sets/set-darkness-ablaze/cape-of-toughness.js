@@ -1,0 +1,41 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CapeOfToughness = void 0;
+const card_types_1 = require("../../game/store/card/card-types");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
+const check_effects_1 = require("../../game/store/effects/check-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+class CapeOfToughness extends trainer_card_1.TrainerCard {
+    constructor() {
+        super(...arguments);
+        this.trainerType = card_types_1.TrainerType.TOOL;
+        this.regulationMark = 'D';
+        this.set = 'DAA';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '160';
+        this.name = 'Cape Of Toughness';
+        this.fullName = 'Cape Of Toughness DAA';
+        this.text = 'The Basic Pokémon this card is attached to gets +50 HP, except Pokémon-GX.';
+    }
+    reduceEffect(store, state, effect) {
+        if (effect instanceof check_effects_1.CheckHpEffect && effect.target.cards.includes(this)) {
+            const player = effect.player;
+            const card = effect.target.getPokemonCard();
+            try {
+                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, toolEffect);
+            }
+            catch (_a) {
+                return state;
+            }
+            if (card === undefined) {
+                return state;
+            }
+            if (card.stage === card_types_1.Stage.BASIC && !card.tags.includes(card_types_1.CardTag.POKEMON_GX)) {
+                effect.hp += 50;
+            }
+        }
+        return state;
+    }
+}
+exports.CapeOfToughness = CapeOfToughness;

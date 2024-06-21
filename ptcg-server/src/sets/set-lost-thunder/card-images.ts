@@ -1,5 +1,6 @@
 import { AdventureBag } from './adventure-bag';
 import { Chikorita } from './chikorita';
+import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
 import { Electropower } from './electropower';
 import { Grovyle } from './grovyle';
@@ -8,6 +9,7 @@ import { Mareep } from './mareep';
 import { Meganium } from './meganium';
 import { NetBall } from './net-ball';
 import { Nihilego } from './nihilego';
+import { SpellTag } from './spell-tag';
 import { Treecko } from './treecko';
 import { Wurmple } from './wurmple';
 import { Zebstrika } from './zebstrika';
@@ -18,6 +20,10 @@ export class AdventureBagArt extends AdventureBag {
 
 export class ChikoritaArt extends Chikorita {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_006_R_EN_LG.png';
+}
+
+export class CounterGainArt extends CounterGain {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_170_R_EN_LG.png';
 }
 
 export class CustomCatcherArt extends CustomCatcher {
@@ -50,6 +56,10 @@ export class NetBallArt extends NetBall {
 
 export class NihilegoArt extends Nihilego {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_106_R_EN_LG.png';
+}
+
+export class SpellTagArt extends SpellTag {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_190_R_EN_LG.png';
 }
 
 export class TreeckoArt extends Treecko {
