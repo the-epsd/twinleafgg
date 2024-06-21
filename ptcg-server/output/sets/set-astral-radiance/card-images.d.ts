@@ -20,6 +20,7 @@ import { HisuianSamurottVSTAR } from './hisuian-samurott-vstar';
 import { Irida } from './irida';
 import { Keldeo } from './keldeo';
 import { Kleavor } from './kleavor';
+import { Kricketune } from './kricketune';
 import { LucarioV } from './lucario-v';
 import { LuxrayV } from './luxray-v';
 import { Magneton } from './magneton';
@@ -111,6 +112,9 @@ export declare class KeldeoArt extends Keldeo {
     cardImage: string;
 }
 export declare class KleavorArt extends Kleavor {
+    cardImage: string;
+}
+export declare class KricketuneArt extends Kricketune {
     cardImage: string;
 }
 export declare class LucarioVArt extends LucarioV {

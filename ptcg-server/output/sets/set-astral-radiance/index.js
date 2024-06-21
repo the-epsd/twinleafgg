@@ -25,6 +25,7 @@ exports.setAstralRadiance = [
     new card_images_1.IridaArt(),
     new card_images_1.KeldeoArt(),
     new card_images_1.KleavorArt(),
+    new card_images_1.KricketuneArt(),
     new card_images_1.LucarioVArt(),
     new card_images_1.LuxrayVArt(),
     new card_images_1.MagnetonArt(),

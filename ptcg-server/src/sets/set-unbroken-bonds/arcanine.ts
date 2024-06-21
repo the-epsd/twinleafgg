@@ -60,7 +60,7 @@ export class Arcanine extends PokemonCard {
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
         if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fire Energy') {
-          
+          /**/
         } else {
           blocked.push(index);
         }

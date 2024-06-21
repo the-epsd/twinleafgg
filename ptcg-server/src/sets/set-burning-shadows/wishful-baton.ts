@@ -28,7 +28,7 @@ export class WishfulBaton extends TrainerCard {
   public setNumber: string = '128';
 
   public text: string =
-    'If the Pokémon this card is attached to is your Active Pokémon and is Knocked Out by damage from an opponent\'s attack, move up to 3 basic Energy cards from that Pokémon to 1 of your Benched Pokémon.'
+    'If the Pokémon this card is attached to is your Active Pokémon and is Knocked Out by damage from an opponent\'s attack, move up to 3 basic Energy cards from that Pokémon to 1 of your Benched Pokémon.';
 
   public damageDealt = false;
 

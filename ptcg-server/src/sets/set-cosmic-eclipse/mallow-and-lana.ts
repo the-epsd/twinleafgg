@@ -27,7 +27,7 @@ export class MallowAndLana extends TrainerCard {
   public text: string =
     'Switch your Active Pokémon with 1 of your Benched Pokémon.'+
     '' + 
-    'When you play this card, you may discard 2 other cards from your hand. If you do, heal 120 damage from the Pokémon you moved to your Bench.'
+    'When you play this card, you may discard 2 other cards from your hand. If you do, heal 120 damage from the Pokémon you moved to your Bench.';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -41,7 +41,7 @@ export class MallowAndLana extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
       
-      let benchedPokemon = player.bench.filter(b => b.cards.length > 0).length;      
+      const benchedPokemon = player.bench.filter(b => b.cards.length > 0).length;      
 
       if (benchedPokemon === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);

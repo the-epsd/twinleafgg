@@ -1,4 +1,5 @@
 import { Bayleef } from './bayleef';
+import { Zoroark } from './BKT_91_Zoroark';
 import { Delinquent } from './delinquent';
 import { FightingFuryBelt } from './fighting-fury-belt';
 import { Kricketot } from './kricketot';
@@ -32,4 +33,8 @@ export class SplashEnergyArt extends SplashEnergy {
 
 export class StaryuArt extends Staryu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_025_R_EN_LG.png';
+}
+
+export class ZoroarkArt extends Zoroark {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKT/BKT_091_R_EN_LG.png';
 }

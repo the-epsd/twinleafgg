@@ -38,6 +38,9 @@ import { Sandygast } from './sandygast';
 import { Serena } from './serena';
 import { SerperiorV } from './serperior-v';
 import { SerperiorVSTAR } from './serperior-vstar';
+import { Klink } from './SIT_123_Klink';
+import { Klang } from './SIT_124_Klang';
+import { Klinklang } from './SIT_125_Klinklang';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
 import { Wailord } from './wailord';
@@ -119,6 +122,18 @@ export class HisuianBraviaryArt extends HisuianBraviary {
 
 export class KirliaArt extends Kirlia {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_068_R_EN_LG.png';
+}
+
+export class KlangArt extends Klang {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_124_R_EN_LG.png';
+}
+
+export class KlinkArt extends Klink {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_123_R_EN_LG.png';
+}
+
+export class KlinklangArt extends Klinklang {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_125_R_EN_LG.png';
 }
 
 export class LugiaVArt extends LugiaV {

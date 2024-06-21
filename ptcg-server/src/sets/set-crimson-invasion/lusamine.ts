@@ -36,7 +36,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
     if (c instanceof TrainerCard && (c.trainerType === TrainerType.STADIUM || c.trainerType === TrainerType.SUPPORTER)) {
-      
+      /**/
     } else {
       blocked.push(index);
     }
