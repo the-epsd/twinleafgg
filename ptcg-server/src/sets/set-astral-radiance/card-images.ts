@@ -20,6 +20,7 @@ import { HisuianSamurottVSTAR } from './hisuian-samurott-vstar';
 import { Irida } from './irida';
 import { Keldeo } from './keldeo';
 import { Kleavor } from './kleavor';
+import { Kricketune } from './kricketune';
 import { LucarioV } from './lucario-v';
 import { LuxrayV } from './luxray-v';
 import { Magneton } from './magneton';
@@ -134,6 +135,10 @@ export class KeldeoArt extends Keldeo {
 
 export class KleavorArt extends Kleavor {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_085_R_EN_LG.png';
+}
+
+export class KricketuneArt extends Kricketune {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_010_R_EN_LG.png';
 }
 
 export class LucarioVArt extends LucarioV {
