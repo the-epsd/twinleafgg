@@ -18,6 +18,7 @@ import { HisuianHeavyBall } from './hisuian-heavy-ball';
 import { HisuianSamurottV } from './hisuian-samurott-v';
 import { HisuianSamurottVSTAR } from './hisuian-samurott-vstar';
 import { Irida } from './irida';
+import { JubilifeVillage } from './jubilife-village';
 import { Keldeo } from './keldeo';
 import { Kleavor } from './kleavor';
 import { Kricketune } from './kricketune';
@@ -106,6 +107,9 @@ export declare class HisuianSamurottVSTARArt extends HisuianSamurottVSTAR {
     cardImage: string;
 }
 export declare class IridaArt extends Irida {
+    cardImage: string;
+}
+export declare class JubilifeVillageArt extends JubilifeVillage {
     cardImage: string;
 }
 export declare class KeldeoArt extends Keldeo {

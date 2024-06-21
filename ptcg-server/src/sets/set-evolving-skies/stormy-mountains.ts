@@ -17,7 +17,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  if (slots.length < 0) {
+  if (slots.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   } else {
     // handle no open slots

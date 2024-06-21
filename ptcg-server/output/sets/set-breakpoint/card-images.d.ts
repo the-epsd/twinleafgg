@@ -4,6 +4,7 @@ import { Delinquent } from './delinquent';
 import { FightingFuryBelt } from './fighting-fury-belt';
 import { Kricketot } from './kricketot';
 import { Phantump } from './phantump';
+import { ReverseValley } from './reverse-valley';
 import { SplashEnergy } from './splash-energy';
 import { Staryu } from './staryu';
 export declare class BayleefArt extends Bayleef {
@@ -19,6 +20,9 @@ export declare class KricketotArt extends Kricketot {
     cardImage: string;
 }
 export declare class PhantumpArt extends Phantump {
+    cardImage: string;
+}
+export declare class ReverseValleyArt extends ReverseValley {
     cardImage: string;
 }
 export declare class SplashEnergyArt extends SplashEnergy {

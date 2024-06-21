@@ -30,6 +30,7 @@ import { Kirlia } from './kirlia';
 import { Klara } from './klara';
 import { LuckyEnergy } from './lucky-energy';
 import { Melony } from './melony';
+import { OldCemetery } from './old-cemetery';
 import { PathToThePeak } from './path-to-the-peak';
 import { Peonia } from './peonia';
 import { Peony } from './peony';
@@ -135,6 +136,9 @@ export declare class LuckyEnergyArt extends LuckyEnergy {
     cardImage: string;
 }
 export declare class MelonyArt extends Melony {
+    cardImage: string;
+}
+export declare class OldCemeteryArt extends OldCemetery {
     cardImage: string;
 }
 export declare class PathToThePeakArt extends PathToThePeak {

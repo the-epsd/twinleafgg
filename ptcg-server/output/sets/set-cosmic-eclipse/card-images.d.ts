@@ -1,4 +1,5 @@
 import { Blacephalon } from './blacephalon';
+import { ChaoticSwell } from './chaotic-swell';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
 import { Golett } from './golett';
 import { GuzmaAndHala } from './guzma-and-hala';
@@ -9,6 +10,9 @@ import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
 import { TagCall } from './tag-call';
 export declare class BlacephalonArt extends Blacephalon {
+    cardImage: string;
+}
+export declare class ChaoticSwellArt extends ChaoticSwell {
     cardImage: string;
 }
 export declare class CynthiaAndCaitlinArt extends CynthiaAndCaitlin {

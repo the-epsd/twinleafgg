@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RescueStretcherArt = exports.MimikyuArt = exports.MallowArt = exports.FieldBlowerArt = exports.EnhancedHammerArt = exports.BrookletHillArt = exports.AquaPatchArt = exports.AlolanVulpixArt = void 0;
+exports.RescueStretcherArt = exports.MimikyuArt = exports.MallowArt = exports.FieldBlowerArt = exports.EnhancedHammerArt = exports.BrookletHillArt = exports.AquaPatchArt = exports.AlolanVulpixArt = exports.AetherParadiseConvserationAreaArt = void 0;
 const enhanced_hammer_1 = require("../set-twilight-masquerade/enhanced-hammer");
+const aether_paradise_conservation_area_1 = require("./aether-paradise-conservation-area");
 const alolan_vulpix_1 = require("./alolan-vulpix");
 const aqua_patch_1 = require("./aqua-patch");
 const brooklet_hill_1 = require("./brooklet-hill");
@@ -9,6 +10,13 @@ const field_blower_1 = require("./field-blower");
 const mallow_1 = require("./mallow");
 const mimikyu_1 = require("./mimikyu");
 const rescue_stretcher_1 = require("./rescue-stretcher");
+class AetherParadiseConvserationAreaArt extends aether_paradise_conservation_area_1.AetherParadiseConvserationArea {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_116_R_EN_LG.png';
+    }
+}
+exports.AetherParadiseConvserationAreaArt = AetherParadiseConvserationAreaArt;
 class AlolanVulpixArt extends alolan_vulpix_1.AlolanVulpix {
     constructor() {
         super(...arguments);

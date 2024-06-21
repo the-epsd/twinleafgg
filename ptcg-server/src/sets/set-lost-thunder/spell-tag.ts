@@ -3,7 +3,7 @@ import { GameMessage } from '../../game/game-message';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect, PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -85,14 +85,14 @@ export class SpellTag extends TrainerCard {
           maxAllowedDamage,
           { allowCancel: false }
         ), targets => {
-          // const results = targets || [];
-          // for (const result of results) {
-            // const target = StateUtils.getTarget(state, player, result.target);
+          const results = targets || [];
+          for (const result of results) {
+            const target = StateUtils.getTarget(state, player, result.target);
             
-            // const putCountersEffect = new PutCountersEffect(effect, result.damage);
-            // putCountersEffect.target = target;
-            // store.reduceEffect(state, putCountersEffect);
-          // }
+            const putCountersEffect = new PutCountersEffect(result.target as unknown as AttackEffect, result.damage);
+            putCountersEffect.target = target;
+            store.reduceEffect(state, putCountersEffect);
+          }
         });
       }
       

@@ -33,7 +33,7 @@ exports.setChillingReign = [
     new card_images_1.KlaraArt(),
     new card_images_1.LuckyEnergyArt(),
     new card_images_1.MelonyArt(),
-    //new OldCemetery(),
+    new card_images_1.OldCemeteryArt(),
     new card_images_1.PathToThePeakArt(),
     new card_images_1.PeoniaArt(),
     new card_images_1.PeonyArt(),

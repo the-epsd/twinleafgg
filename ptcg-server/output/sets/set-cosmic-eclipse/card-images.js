@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TagCallArt = exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.CynthiaAndCaitlinArt = exports.BlacephalonArt = void 0;
+exports.TagCallArt = exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BlacephalonArt = void 0;
 const blacephalon_1 = require("./blacephalon");
+const chaotic_swell_1 = require("./chaotic-swell");
 const cynthia_and_caitlin_1 = require("./cynthia-and-caitlin");
 const golett_1 = require("./golett");
 const guzma_and_hala_1 = require("./guzma-and-hala");
@@ -18,6 +19,13 @@ class BlacephalonArt extends blacephalon_1.Blacephalon {
     }
 }
 exports.BlacephalonArt = BlacephalonArt;
+class ChaoticSwellArt extends chaotic_swell_1.ChaoticSwell {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_187_R_EN_LG.png';
+    }
+}
+exports.ChaoticSwellArt = ChaoticSwellArt;
 class CynthiaAndCaitlinArt extends cynthia_and_caitlin_1.CynthiaAndCaitlin {
     constructor() {
         super(...arguments);

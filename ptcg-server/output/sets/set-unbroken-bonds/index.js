@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setUnbrokenBonds = [
     new card_images_1.ArcanineArt(),
     new card_images_1.CleffaArt(),
+    new card_images_1.MartialArtsDojoArt(),
     new card_images_1.MewArt(),
     new card_images_1.Pokegear30Art(),
     new card_images_1.PorygonZArt(),

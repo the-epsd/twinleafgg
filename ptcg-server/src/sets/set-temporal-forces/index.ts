@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AncientBoosterEnergyCapsuleArt, BeldumArt, BiancasDevotionArt, BuddyBuddyPoffinArt, CharjabugArt, ChatotArt, CinccinoArt, CroconawArt, CryptomaniacsDecipheringArt, DeliveryBoxArt, DrilburArt, DrumsOfAwakeningArt, DudunsparceArt, DunsparceArt, DuosionArt, EmergencyBoardArt, EriArt, ExplorersGuidanceArt, FeraligatrArt, FlutterManeArt, FutureBoosterEnergyCapsuleArt, GastlyArt, GengarexArt, GougingFireexArt, GreatTuskArt, GrotleArt, HandTrimmerArt, HaunterArt, HeavyBatonArt, HerosCapeArt, IronCrownexArt, IronHandsArt, IronLeavesexArt, IronThornsArt, KoraidonArt, KoraidonexArt, MasterBallArt, MaximumBeltArt, MetagrossArt, MetangArt, MinccinoArt, MiraidonArt, MiraidonexArt, MistEnergyArt, MortysConvictionArt, MrMimeArt, NeoUpperEnergyArt, PikachuArt, PrimeCatcherArt, RabscaArt, RagingBoltexArt, RaichuArt, RebootPodArt, RellorArt, ReuniclusArt, RoaringMoonArt, SableyeArt, SalvatoreArt, SandyShocksArt, SolosisArt, TorterraexArt, TotodileArt, TurtwigArt, VictiniArt, VikavoltArt, WalkingWakeexArt } from './card-images';
+import { AncientBoosterEnergyCapsuleArt, BeldumArt, BiancasDevotionArt, BuddyBuddyPoffinArt, CharjabugArt, ChatotArt, CinccinoArt, CroconawArt, CryptomaniacsDecipheringArt, DeliveryBoxArt, DrilburArt, DrumsOfAwakeningArt, DudunsparceArt, DunsparceArt, DuosionArt, EmergencyBoardArt, EriArt, ExplorersGuidanceArt, FeraligatrArt, FlutterManeArt, FullMetalLabArt, FutureBoosterEnergyCapsuleArt, GastlyArt, GengarexArt, GougingFireexArt, GreatTuskArt, GrotleArt, HandTrimmerArt, HaunterArt, HeavyBatonArt, HerosCapeArt, IronCrownexArt, IronHandsArt, IronLeavesexArt, IronThornsArt, KoraidonArt, KoraidonexArt, MasterBallArt, MaximumBeltArt, MetagrossArt, MetangArt, MinccinoArt, MiraidonArt, MiraidonexArt, MistEnergyArt, MortysConvictionArt, MrMimeArt, NeoUpperEnergyArt, PikachuArt, PrimeCatcherArt, RabscaArt, RagingBoltexArt, RaichuArt, RebootPodArt, RellorArt, ReuniclusArt, RoaringMoonArt, SableyeArt, SalvatoreArt, SandyShocksArt, SolosisArt, TorterraexArt, TotodileArt, TurtwigArt, VictiniArt, VikavoltArt, WalkingWakeexArt } from './card-images';
 
 export const setTemporalForces: Card[] = [
   
@@ -23,6 +23,7 @@ export const setTemporalForces: Card[] = [
   new ExplorersGuidanceArt(),
   new FeraligatrArt(),
   new FlutterManeArt(),
+  new FullMetalLabArt(),
   new FutureBoosterEnergyCapsuleArt(),
   new GastlyArt(),
   new GengarexArt(),

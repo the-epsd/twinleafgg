@@ -1,4 +1,5 @@
 import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
+import { AetherParadiseConvserationArea } from './aether-paradise-conservation-area';
 import { AlolanVulpix } from './alolan-vulpix';
 import { AquaPatch } from './aqua-patch';
 import { BrookletHill } from './brooklet-hill';
@@ -6,6 +7,10 @@ import { FieldBlower } from './field-blower';
 import { Mallow } from './mallow';
 import { Mimikyu } from './mimikyu';
 import { RescueStretcher } from './rescue-stretcher';
+
+export class AetherParadiseConvserationAreaArt extends AetherParadiseConvserationArea {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_116_R_EN_LG.png';
+}
 
 export class AlolanVulpixArt extends AlolanVulpix {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HIF/HIF_007_R_EN.png';

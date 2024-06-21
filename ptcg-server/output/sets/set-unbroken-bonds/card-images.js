@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VolcanionArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewArt = exports.CleffaArt = exports.ArcanineArt = void 0;
+exports.VolcanionArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewArt = exports.MartialArtsDojoArt = exports.CleffaArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
+const martial_arts_dojo_1 = require("./martial-arts-dojo");
 const mew_1 = require("./mew");
 const pokegear_30_1 = require("./pokegear-30");
 const porygon_z_1 = require("./porygon-z");
@@ -21,6 +22,13 @@ class CleffaArt extends cleffa_1.Cleffa {
     }
 }
 exports.CleffaArt = CleffaArt;
+class MartialArtsDojoArt extends martial_arts_dojo_1.MartialArtsDojo {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_179_R_EN_LG.png';
+    }
+}
+exports.MartialArtsDojoArt = MartialArtsDojoArt;
 class MewArt extends mew_1.Mew {
     constructor() {
         super(...arguments);

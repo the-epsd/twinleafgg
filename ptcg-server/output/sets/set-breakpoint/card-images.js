@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoroarkArt = exports.StaryuArt = exports.SplashEnergyArt = exports.PhantumpArt = exports.KricketotArt = exports.FightingFuryBeltArt = exports.DelinquentArt = exports.BayleefArt = void 0;
+exports.ZoroarkArt = exports.StaryuArt = exports.SplashEnergyArt = exports.ReverseValleyArt = exports.PhantumpArt = exports.KricketotArt = exports.FightingFuryBeltArt = exports.DelinquentArt = exports.BayleefArt = void 0;
 const bayleef_1 = require("./bayleef");
 const BKT_91_Zoroark_1 = require("./BKT_91_Zoroark");
 const delinquent_1 = require("./delinquent");
 const fighting_fury_belt_1 = require("./fighting-fury-belt");
 const kricketot_1 = require("./kricketot");
 const phantump_1 = require("./phantump");
+const reverse_valley_1 = require("./reverse-valley");
 const splash_energy_1 = require("./splash-energy");
 const staryu_1 = require("./staryu");
 class BayleefArt extends bayleef_1.Bayleef {
@@ -44,6 +45,13 @@ class PhantumpArt extends phantump_1.Phantump {
     }
 }
 exports.PhantumpArt = PhantumpArt;
+class ReverseValleyArt extends reverse_valley_1.ReverseValley {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_110_R_EN_LG.png';
+    }
+}
+exports.ReverseValleyArt = ReverseValleyArt;
 class SplashEnergyArt extends splash_energy_1.SplashEnergy {
     constructor() {
         super(...arguments);

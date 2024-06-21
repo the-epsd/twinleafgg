@@ -1,10 +1,11 @@
-import { TrainerCard } from '../../game/store/card/trainer-card';
+import { GameError, GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { CardType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
+import { TrainerCard } from '../../game/store/card/trainer-card';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, UseStadiumEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class OldCemetery extends TrainerCard {
 
@@ -29,7 +30,15 @@ export class OldCemetery extends TrainerCard {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
 
-    if (effect instanceof AttachEnergyEffect && effect.target.getPokemons().some(p => p.cardType !== CardType.PSYCHIC)) {
+    if (effect instanceof AttachEnergyEffect) {
+      
+      const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.target);
+      store.reduceEffect(state, checkPokemonTypeEffect);
+
+      if (checkPokemonTypeEffect.cardTypes.includes(CardType.PSYCHIC)) {
+        return state;
+      }
+      
       const target = effect.target as unknown as AttackEffect;
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

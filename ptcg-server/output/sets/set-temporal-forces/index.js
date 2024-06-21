@@ -23,6 +23,7 @@ exports.setTemporalForces = [
     new card_images_1.ExplorersGuidanceArt(),
     new card_images_1.FeraligatrArt(),
     new card_images_1.FlutterManeArt(),
+    new card_images_1.FullMetalLabArt(),
     new card_images_1.FutureBoosterEnergyCapsuleArt(),
     new card_images_1.GastlyArt(),
     new card_images_1.GengarexArt(),

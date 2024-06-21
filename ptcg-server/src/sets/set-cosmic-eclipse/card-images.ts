@@ -1,4 +1,5 @@
 import { Blacephalon } from './blacephalon';
+import { ChaoticSwell } from './chaotic-swell';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
 import { Golett } from './golett';
 import { GuzmaAndHala } from './guzma-and-hala';
@@ -11,6 +12,10 @@ import { TagCall } from './tag-call';
 
 export class BlacephalonArt extends Blacephalon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_104_R_EN_LG.png';
+}
+
+export class ChaoticSwellArt extends ChaoticSwell {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_187_R_EN_LG.png';
 }
 
 export class CynthiaAndCaitlinArt extends CynthiaAndCaitlin {

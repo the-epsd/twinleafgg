@@ -19,6 +19,7 @@ import { Eri } from './eri';
 import { ExplorersGuidance } from './explorers-guidance';
 import { Feraligatr } from './feraligatr';
 import { FlutterMane } from './flutter-mane';
+import { FullMetalLab } from './full-metal-lab';
 import { Gastly } from './gastly';
 import { Gengarex } from './gengar-ex';
 import { GougingFireex } from './gouging-fire-ex';
@@ -125,6 +126,9 @@ export declare class FeraligatrArt extends Feraligatr {
     cardImage: string;
 }
 export declare class FlutterManeArt extends FlutterMane {
+    cardImage: string;
+}
+export declare class FullMetalLabArt extends FullMetalLab {
     cardImage: string;
 }
 export declare class FutureBoosterEnergyCapsuleArt extends FutureBoosterEnergyCapsule {

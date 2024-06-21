@@ -1,5 +1,6 @@
 import { Arcanine } from './arcanine';
 import { Cleffa } from './cleffa';
+import { MartialArtsDojo } from './martial-arts-dojo';
 import { Mew } from './mew';
 import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
@@ -11,6 +12,10 @@ export class ArcanineArt extends Arcanine {
 
 export class CleffaArt extends Cleffa {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_131_R_EN.png';
+}
+
+export class MartialArtsDojoArt extends MartialArtsDojo {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_179_R_EN_LG.png';
 }
 
 export class MewArt extends Mew {

@@ -19,6 +19,7 @@ import { Eri } from './eri';
 import { ExplorersGuidance } from './explorers-guidance';
 import { Feraligatr } from './feraligatr';
 import { FlutterMane } from './flutter-mane';
+import { FullMetalLab } from './full-metal-lab';
 import { Gastly } from './gastly';
 import { Gengarex } from './gengar-ex';
 import { GougingFireex } from './gouging-fire-ex';
@@ -146,6 +147,10 @@ export class FeraligatrArt extends Feraligatr {
 
 export class FlutterManeArt extends FlutterMane {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_078_R_EN.png';
+}
+
+export class FullMetalLabArt extends FullMetalLab {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_148_R_EN_LG.png';
 }
 
 export class FutureBoosterEnergyCapsuleArt extends FutureBoosterEnergyCapsule {

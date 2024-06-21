@@ -479,6 +479,7 @@
     "LOG_TURN": "Turn {{turn}}.",
     "LOG_PLAYER_PUTS_CARD_IN_HAND": "{{name}} puts {{card}} in their hand.",
     "LOG_PLAYER_DISCARDS_CARD_FROM_HAND": "{{name}} discards {{card}} from their hand.",
+    "LOG_DISCARD_STADIUM_CHAOTIC_SWELL": "{{name}} discards {{card}} as a result of Chaotic Swell.",
     "LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE": "{{name}} puts {{card}} in the lost zone from their hand.",
     "LOG_PLAYER_HEALS_POKEMON": "{{name}} heals {{pokemon}} for {{healingAmount}}.",
     "LOG_HISUIAN_HEAVY_BALL": "{{name}} has taken {{card}} from their Prize Cards with Hisuian Heavy Ball."

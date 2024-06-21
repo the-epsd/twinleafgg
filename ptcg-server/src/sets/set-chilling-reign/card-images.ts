@@ -30,7 +30,7 @@ import { Kirlia } from './kirlia';
 import { Klara } from './klara';
 import { LuckyEnergy } from './lucky-energy';
 import { Melony } from './melony';
-//import { OldCemetery } from './old-cemetery';
+import { OldCemetery } from './old-cemetery';
 import { PathToThePeak } from './path-to-the-peak';
 import { Peonia } from './peonia';
 import { Peony } from './peony';
@@ -169,6 +169,10 @@ export class LuckyEnergyArt extends LuckyEnergy {
 
 export class MelonyArt extends Melony {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_146_R_EN_LG.png';
+}
+
+export class OldCemeteryArt extends OldCemetery {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_147_R_EN_LG.png';
 }
 
 export class PathToThePeakArt extends PathToThePeak {

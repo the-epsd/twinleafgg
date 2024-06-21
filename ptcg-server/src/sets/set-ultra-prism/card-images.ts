@@ -3,6 +3,7 @@ import { EscapeBoard } from './escape-board';
 import { Gardenia } from './gardenia';
 import { Gible } from './gible';
 import { Magnezone } from './magnezone';
+import { MtCoronet } from './mt-coronet';
 import { PokemonFanClub } from './pokemon-fan-club';
 import { Turtwig } from './turtwig';
 import { Volkner } from './volkner';
@@ -25,6 +26,10 @@ export class GibleArt extends Gible {
 
 export class MagnezoneArt extends Magnezone {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_083_R_EN_LG.png';
+}
+
+export class MtCoronetArt extends MtCoronet {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_130_R_EN_LG.png';
 }
 
 export class PokemonFanClubArt extends PokemonFanClub {

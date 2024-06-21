@@ -4,6 +4,7 @@ import { Delinquent } from './delinquent';
 import { FightingFuryBelt } from './fighting-fury-belt';
 import { Kricketot } from './kricketot';
 import { Phantump } from './phantump';
+import { ReverseValley } from './reverse-valley';
 import { SplashEnergy } from './splash-energy';
 import { Staryu } from './staryu';
 
@@ -25,6 +26,10 @@ export class KricketotArt extends Kricketot {
 
 export class PhantumpArt extends Phantump {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_064_R_EN_LG.png';
+}
+
+export class ReverseValleyArt extends ReverseValley {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_110_R_EN_LG.png';
 }
 
 export class SplashEnergyArt extends SplashEnergy {
