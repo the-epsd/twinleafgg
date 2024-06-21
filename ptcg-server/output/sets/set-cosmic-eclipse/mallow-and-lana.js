@@ -28,7 +28,7 @@ class MallowAndLana extends trainer_card_1.TrainerCard {
             if (supporterTurn > 0) {
                 throw new game_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
             }
-            let benchedPokemon = player.bench.filter(b => b.cards.length > 0).length;
+            const benchedPokemon = player.bench.filter(b => b.cards.length > 0).length;
             if (benchedPokemon === 0) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }

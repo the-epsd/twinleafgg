@@ -38,6 +38,9 @@ import { Sandygast } from './sandygast';
 import { Serena } from './serena';
 import { SerperiorV } from './serperior-v';
 import { SerperiorVSTAR } from './serperior-vstar';
+import { Klink } from './SIT_123_Klink';
+import { Klang } from './SIT_124_Klang';
+import { Klinklang } from './SIT_125_Klinklang';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
 import { Wailord } from './wailord';
@@ -99,6 +102,15 @@ export declare class HisuianBraviaryArt extends HisuianBraviary {
     cardImage: string;
 }
 export declare class KirliaArt extends Kirlia {
+    cardImage: string;
+}
+export declare class KlangArt extends Klang {
+    cardImage: string;
+}
+export declare class KlinkArt extends Klink {
+    cardImage: string;
+}
+export declare class KlinklangArt extends Klinklang {
     cardImage: string;
 }
 export declare class LugiaVArt extends LugiaV {

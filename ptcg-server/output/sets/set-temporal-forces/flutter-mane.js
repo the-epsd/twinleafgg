@@ -59,7 +59,7 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect
             && effect.power.powerType === pokemon_types_1.PowerType.ABILITY
-            && effect.power.name !== 'Midnight Fluttering' && effect.card === effect.player.active.cards[0]) {
+            && effect.power.name !== 'Midnight Fluttering' && effect.card === effect.player.active.cards[0] && !effect.power.exemptFromAbilityLock) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let isFlutterManeInPlay = false;

@@ -26,6 +26,7 @@ function* playCard(next, store, state, self, effect) {
     const blocked = [];
     player.discard.cards.forEach((c, index) => {
         if (c instanceof trainer_card_1.TrainerCard && (c.trainerType === card_types_1.TrainerType.STADIUM || c.trainerType === card_types_1.TrainerType.SUPPORTER)) {
+            /**/
         }
         else {
             blocked.push(index);

@@ -1,10 +1,10 @@
 import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
+import { GameLog, GameMessage } from '../../game/game-message';
 import { StateUtils } from '../../game/store/state-utils';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
-import { Card, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
+import { Card, ChooseCardsPrompt, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -12,6 +12,7 @@ import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
   const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
   
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -37,6 +38,18 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
       cards.forEach((card, index) => {
         player.deck.moveCardTo(card, player.hand);
       });
+
+      cards.forEach((card, index) => {
+        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+      });
+
+      if (cards.length > 0) {
+        state = store.prompt(state, new ShowCardsPrompt(
+          opponent.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          cards
+        ), () => next());
+      }
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);

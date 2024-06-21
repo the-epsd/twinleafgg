@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attach_energy_prompt_1 = require("../../game/store/prompts/attach-energy-prompt");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 class Gardevoirex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -63,12 +64,13 @@ class Gardevoirex extends pokemon_card_1.PokemonCard {
                 }
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    const pokemonCard = target.cards[0];
-                    if (pokemonCard.cardType !== card_types_1.CardType.PSYCHIC) {
-                        throw new game_1.GameError(game_1.GameMessage.INVALID_TARGET);
+                    const checkHpEffect = new check_effects_1.CheckHpEffect(player, target);
+                    store.reduceEffect(state, checkHpEffect);
+                    if (target.cards[0] instanceof pokemon_card_1.PokemonCard && target.cards[0].cardType !== card_types_1.CardType.PSYCHIC) {
+                        throw new game_1.GameError(game_1.GameMessage.CAN_ONLY_ATTACH_TO_PSYCHIC);
                     }
                     const damageAfterTransfer = target.damage + 20;
-                    if (damageAfterTransfer >= pokemonCard.hp) {
+                    if (damageAfterTransfer >= checkHpEffect.hp) {
                         throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                     }
                     player.discard.moveCardTo(transfer.card, target);

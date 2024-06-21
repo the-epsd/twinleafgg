@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, ChoosePokemonPrompt, PlayerType, SlotType, GameError } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, ChoosePokemonPrompt, PlayerType, SlotType, GameError, ShowCardsPrompt, StateUtils } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { GameMessage } from '../../game/game-message';
+import { GameLog, GameMessage } from '../../game/game-message';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 
@@ -62,7 +62,7 @@ export class ChienPaoex extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       
       const player = effect.player;
-
+      const opponent = StateUtils.getOpponent(state, player);
       if (player.active.cards[0] !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
@@ -75,6 +75,23 @@ export class ChienPaoex extends PokemonCard {
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
         { min: 0, max: 2, allowCancel: true }
       ), cards => {
+
+        if (cards.length === 0) {
+          return state;
+        }
+
+        cards.forEach((card, index) => {
+          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+        });
+
+        if (cards.length > 0) {
+          state = store.prompt(state, new ShowCardsPrompt(
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            cards
+          ), () => state);
+        }
+
         player.deck.moveCardsTo(cards, player.hand);
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
@@ -89,7 +106,6 @@ export class ChienPaoex extends PokemonCard {
       });
     }
   
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;

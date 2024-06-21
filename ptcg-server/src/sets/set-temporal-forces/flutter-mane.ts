@@ -86,7 +86,7 @@ export class FlutterMane extends PokemonCard {
 
     if (effect instanceof PowerEffect
       && effect.power.powerType === PowerType.ABILITY
-      && effect.power.name !== 'Midnight Fluttering' && effect.card === effect.player.active.cards[0]) {
+      && effect.power.name !== 'Midnight Fluttering' && effect.card === effect.player.active.cards[0] && !effect.power.exemptFromAbilityLock) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

@@ -43,16 +43,17 @@ class Jirachi extends pokemon_card_1.PokemonCard {
                 return state;
             }
             const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);
-            if (opponent.active.isBasic()) {
-                let isJirachiInPlay = false;
-                targetPlayer.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                    if (card === this) {
-                        isJirachiInPlay = true;
-                    }
-                });
-                if (!isJirachiInPlay) {
-                    return state;
+            let isJirachiInPlay = false;
+            targetPlayer.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card === this) {
+                    isJirachiInPlay = true;
                 }
+            });
+            if (!isJirachiInPlay) {
+                return state;
+            }
+            const sourceCard = effect.source.getPokemonCard();
+            if (sourceCard && sourceCard.stage === card_types_1.Stage.BASIC) {
                 // Try to reduce PowerEffect, to check if something is blocking our ability
                 try {
                     const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
@@ -63,7 +64,6 @@ class Jirachi extends pokemon_card_1.PokemonCard {
                 }
                 effect.preventDefault = true;
             }
-            return state;
         }
         return state;
     }

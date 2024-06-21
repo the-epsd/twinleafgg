@@ -37,7 +37,7 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect
             && effect.power.powerType === game_1.PowerType.ABILITY
-            && effect.power.name !== 'Initialize') {
+            && effect.power.name !== 'Initialize' && !effect.power.exemptFromAbilityLock) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let isIronThornsexInPlay = false;

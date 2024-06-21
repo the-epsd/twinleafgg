@@ -47,6 +47,7 @@ class Arcanine extends pokemon_card_1.PokemonCard {
             const blocked = [];
             player.discard.cards.forEach((c, index) => {
                 if (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Fire Energy') {
+                    /**/
                 }
                 else {
                     blocked.push(index);
