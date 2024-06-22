@@ -19,7 +19,7 @@ export class TripleAccelerationEnergy extends EnergyCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '190';
+  public setNumber: string = '209';
 
   public name = 'Triple Acceleration Energy';
 

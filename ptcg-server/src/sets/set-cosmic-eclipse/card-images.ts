@@ -1,6 +1,7 @@
 import { Blacephalon } from './blacephalon';
 import { ChaoticSwell } from './chaotic-swell';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
+import { DrawEnergy } from './draw-energy';
 import { Golett } from './golett';
 import { GuzmaAndHala } from './guzma-and-hala';
 import { Guzzlord } from './guzzlord';
@@ -20,6 +21,10 @@ export class ChaoticSwellArt extends ChaoticSwell {
 
 export class CynthiaAndCaitlinArt extends CynthiaAndCaitlin {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_189_R_EN_LG.png';
+}
+
+export class DrawEnergyArt extends DrawEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_209_R_EN.png';
 }
 
 export class GolettArt extends Golett {
