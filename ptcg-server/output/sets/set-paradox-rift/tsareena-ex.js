@@ -48,6 +48,7 @@ class Tsareenaex extends pokemon_card_1.PokemonCard {
                 const selectedPokemonCard = selectedTarget.getPokemonCard();
                 const hp = selectedPokemonCard === null || selectedPokemonCard === void 0 ? void 0 : selectedPokemonCard.hp;
                 const remainingHp = hp ? hp - 30 : 0;
+                console.log('Pokemon\'s remaining hp: ' + remainingHp);
                 const damageEffect = new attack_effects_1.PutDamageEffect(effect, remainingHp);
                 damageEffect.target = selectedTarget;
                 store.reduceEffect(state, damageEffect);

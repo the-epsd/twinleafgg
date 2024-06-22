@@ -16,83 +16,83 @@ import { StoreLike } from '../../game/store/store-like';
 function* playCard(next: Function, store: StoreLike, state: State,
   self: MysteriousTreasure, effect: TrainerEffect): IterableIterator<State> {
 
-    const player = effect.player;
-    const opponent = StateUtils.getOpponent(state, player);
-    let cards: Card[] = [];
-  
-    const blocked: number[] = [];
-    player.deck.cards.forEach((card, index) => {
-      if (card instanceof PokemonCard && card.cardType !== CardType.DRAGON && card.cardType !== CardType.PSYCHIC) {
-        blocked.push(index);
-      }
-    });
-  
-    cards = player.hand.cards.filter(c => c !== self);
-    if (cards.length < 1) {
-      throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+  let cards: Card[] = [];
+
+  const blocked: number[] = [];
+  player.deck.cards.forEach((card, index) => {
+    if (card instanceof PokemonCard && card.cardType !== CardType.DRAGON && card.cardType !== CardType.PSYCHIC) {
+      blocked.push(index);
     }
-  
-    if (player.deck.cards.length === 0) {
-      throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-    }
-  
-    // We will discard this card after prompt confirmation
-    effect.preventDefault = true;
-  
-    // prepare card list without Junk Arm
-    const handTemp = new CardList();
-    handTemp.cards = player.hand.cards.filter(c => c !== self);
-  
-    yield store.prompt(state, new ChooseCardsPrompt(
-      player.id,
-      GameMessage.CHOOSE_CARD_TO_DISCARD,
-      handTemp,
-      { },
-      { min: 1, max: 1, allowCancel: false }
-    ), selected => {
-      cards = selected || [];
-      
-      cards.forEach((card, index) => {
-        store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
-      });
-      
-      next();
+  });
+
+  cards = player.hand.cards.filter(c => c !== self);
+  if (cards.length < 1) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+
+  if (player.deck.cards.length === 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
+  // prepare card list without Junk Arm
+  const handTemp = new CardList();
+  handTemp.cards = player.hand.cards.filter(c => c !== self);
+
+  yield store.prompt(state, new ChooseCardsPrompt(
+    player.id,
+    GameMessage.CHOOSE_CARD_TO_DISCARD,
+    handTemp,
+    {},
+    { min: 1, max: 1, allowCancel: false }
+  ), selected => {
+    cards = selected || [];
+
+    cards.forEach((card, index) => {
+      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
     });
-  
-    // Operation canceled by the user
-    if (cards.length === 0) {
-      return state;
-    }
-  
-    player.hand.moveCardsTo(cards, player.discard);
-  
-    yield store.prompt(state, new ChooseCardsPrompt(
-      player.id,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      player.deck,
-      { superType: SuperType.POKEMON},
-      { min: 0, max: 1, allowCancel: false, blocked }
-    ), selected => {
-      cards = selected || [];
-      
-      next();
-    });
-  
-    player.deck.moveCardsTo(cards, player.hand);
-  
-    if (cards.length > 0) {
-      yield store.prompt(state, new ShowCardsPrompt(
-        opponent.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        cards
-      ), () => next());
-    }
-  
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
-    return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-      player.deck.applyOrder(order);
-    });
+
+    next();
+  });
+
+  // Operation canceled by the user
+  if (cards.length === 0) {
+    return state;
+  }
+
+  player.hand.moveCardsTo(cards, player.discard);
+
+  yield store.prompt(state, new ChooseCardsPrompt(
+    player.id,
+    GameMessage.CHOOSE_CARD_TO_HAND,
+    player.deck,
+    { superType: SuperType.POKEMON },
+    { min: 0, max: 1, allowCancel: false, blocked }
+  ), selected => {
+    cards = selected || [];
+
+    next();
+  });
+
+  player.deck.moveCardsTo(cards, player.hand);
+
+  if (cards.length > 0) {
+    yield store.prompt(state, new ShowCardsPrompt(
+      opponent.id,
+      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+      cards
+    ), () => next());
+  }
+
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    player.deck.applyOrder(order);
+  });
 }
 
 export class MysteriousTreasure extends TrainerCard {
@@ -102,7 +102,7 @@ export class MysteriousTreasure extends TrainerCard {
   public set: string = 'FLI';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '113';
 
   public name: string = 'Mysterious Treasure';

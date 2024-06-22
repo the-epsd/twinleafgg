@@ -17,9 +17,10 @@ function* playCard(next, store, state, self, effect) {
     if (pokemonAndTools === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    let blocked = [];
+    const blocked = [];
     player.discard.cards.forEach((c, index) => {
         if (c instanceof game_1.PokemonCard || (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL)) {
+            /**/
         }
         else {
             blocked.push(index);

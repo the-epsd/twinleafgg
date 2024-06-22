@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPokemonGO = void 0;
 const card_images_1 = require("./card-images");
 exports.setPokemonGO = [
+    new card_images_1.AlolanRaticateArt(),
     new card_images_1.BlastoiseArt(),
     new card_images_1.CharmanderArt(),
     new card_images_1.CharizardArt(),

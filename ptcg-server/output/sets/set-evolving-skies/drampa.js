@@ -35,7 +35,7 @@ class Drampa extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            let hasBenchDamage = player.bench.some(cardList => cardList.damage > 0);
+            const hasBenchDamage = player.bench.some(cardList => cardList.damage > 0);
             if (hasBenchDamage) {
                 effect.damage += 90;
             }

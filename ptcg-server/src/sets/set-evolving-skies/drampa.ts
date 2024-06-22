@@ -45,7 +45,7 @@ export class Drampa extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       
-      let hasBenchDamage = player.bench.some(cardList => cardList.damage > 0);
+      const hasBenchDamage = player.bench.some(cardList => cardList.damage > 0);
 
       if (hasBenchDamage) {
         effect.damage += 90;

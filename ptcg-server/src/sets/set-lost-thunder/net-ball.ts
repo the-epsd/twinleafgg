@@ -23,19 +23,19 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   player.deck.cards.forEach((card, index) => {
     // eslint-disable-next-line no-empty    
     if ((card instanceof PokemonCard && card.stage === Stage.BASIC && card.cardType === CardType.GRASS) ||
-        (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Grass Energy')) {
-          
+      (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Grass Energy')) {
+      /**/
     } else {
       blocked.push(index);
     }
-  })
-  
+  });
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    {  },
+    {},
     { min: 0, max: 1, allowCancel: true, blocked }
   ), selected => {
     cards = selected || [];

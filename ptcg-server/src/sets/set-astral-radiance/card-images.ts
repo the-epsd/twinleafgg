@@ -1,4 +1,5 @@
 import { Adaman } from './adaman';
+import { HisuianGrowlithe } from './ASR_70_Hisuian_Growlithe';
 import { CancelingCologne } from './canceling-cologne';
 import { Cyllene } from './cyllene';
 import { DarkPatch } from './dark-patch';
@@ -112,6 +113,10 @@ export class HisuianArcanineArt extends HisuianArcanine {
 
 export class HisuianBasculinArt extends HisuianBasculin {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_043_R_EN_LG.png';
+}
+
+export class HisuianGrowlitheArt extends HisuianGrowlithe {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_070_R_EN_LG.png';
 }
 
 export class HisuianHeavyBallArt extends HisuianHeavyBall {

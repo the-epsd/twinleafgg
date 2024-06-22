@@ -25,7 +25,7 @@ export class Reshiram extends PokemonCard {
       useWhenInPlay: true,
       text: 'Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may attach a [R] Energy card from your hand to 1 of your [N] Pokémon.'
     }
-  ]
+  ];
   
   public attacks = [
     {

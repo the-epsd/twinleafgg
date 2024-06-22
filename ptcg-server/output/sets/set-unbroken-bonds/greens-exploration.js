@@ -28,7 +28,7 @@ class GreensExploration extends trainer_card_1.TrainerCard {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             let benchPokemon = [];
-            let pokemonWithAbilities = [];
+            const pokemonWithAbilities = [];
             const playerActive = player.active.getPokemonCard();
             const stubPowerEffectForActive = new game_effects_1.PowerEffect(player, {
                 name: 'test',

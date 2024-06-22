@@ -22,10 +22,10 @@ function* playCard(next: Function, store: StoreLike, state: State, self: LanasFi
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  let blocked: number[] = [];
+  const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
     if (c instanceof PokemonCard || (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL)) {
-      
+      /**/ 
     } else {
       blocked.push(index);
     }

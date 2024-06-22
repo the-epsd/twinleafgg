@@ -6,6 +6,7 @@ import { Ditto } from './ditto';
 import { Lunatone } from './lunatone';
 import { LureModule } from './lure-module';
 import { Moltres } from './moltres';
+import { AlolanRaticate } from './PGO_42_Alolan_Raticate';
 import { Pokestop } from './pokestop';
 import { RadiantVenusaur } from './radiant-venusaur';
 import { SlakingV } from './slaking-v';
@@ -13,6 +14,10 @@ import { Slowbro } from './slowbro';
 import { Snorlax } from './snorlax';
 import { Solrock } from './solrock';
 import { Zapdos } from './zapdos';
+
+export class AlolanRaticateArt extends AlolanRaticate {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_042_R_EN_LG.png';
+}
 
 export class ArticunoArt extends Articuno {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_024_R_EN_LG.png';

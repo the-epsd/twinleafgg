@@ -37,7 +37,7 @@ export class GreensExploration extends TrainerCard {
       }
       
       let benchPokemon: PokemonCard[] = [];
-      let pokemonWithAbilities: PokemonCard[] = [];
+      const pokemonWithAbilities: PokemonCard[] = [];
       const playerActive = player.active.getPokemonCard();
     
       const stubPowerEffectForActive = new PowerEffect(player, {

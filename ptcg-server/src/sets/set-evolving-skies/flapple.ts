@@ -50,7 +50,7 @@ export class Flapple extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       let benchPokemon: PokemonCard[] = [];
-      let pokemonWithAbilities: PokemonCard[] = [];
+      const pokemonWithAbilities: PokemonCard[] = [];
       const opponentActive = opponent.active.getPokemonCard();
     
       const stubPowerEffectForActive = new PowerEffect(opponent, {

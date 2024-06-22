@@ -21,7 +21,7 @@ export class LostBlender extends TrainerCard {
   public fullName: string = 'Lost Blender LOR';
 
   public text: string =
-    'Put 2 cards from your hand in the Lost Zone. If you do, draw a card.'
+    'Put 2 cards from your hand in the Lost Zone. If you do, draw a card.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

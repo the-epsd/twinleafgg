@@ -20,6 +20,7 @@ function* playCard(next, store, state, effect) {
         // eslint-disable-next-line no-empty    
         if ((card instanceof game_1.PokemonCard && card.stage === card_types_1.Stage.BASIC && card.cardType === card_types_1.CardType.GRASS) ||
             (card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC && card.name === 'Grass Energy')) {
+            /**/
         }
         else {
             blocked.push(index);

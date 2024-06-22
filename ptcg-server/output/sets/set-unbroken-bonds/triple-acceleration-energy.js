@@ -15,7 +15,7 @@ class TripleAccelerationEnergy extends energy_card_1.EnergyCard {
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'UNB';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '190';
+        this.setNumber = '209';
         this.name = 'Triple Acceleration Energy';
         this.fullName = 'Triple Acceleration Energy UNB';
         this.text = 'This card can only be attached to Evolution Pokémon. If this card is attached to 1 of your Pokémon, discard it at the end of the turn.' +

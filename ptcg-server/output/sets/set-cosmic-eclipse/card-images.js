@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TagCallArt = exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BlacephalonArt = void 0;
+exports.TagCallArt = exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BlacephalonArt = void 0;
 const blacephalon_1 = require("./blacephalon");
 const chaotic_swell_1 = require("./chaotic-swell");
 const cynthia_and_caitlin_1 = require("./cynthia-and-caitlin");
+const draw_energy_1 = require("./draw-energy");
 const golett_1 = require("./golett");
 const guzma_and_hala_1 = require("./guzma-and-hala");
 const guzzlord_1 = require("./guzzlord");
@@ -33,6 +34,13 @@ class CynthiaAndCaitlinArt extends cynthia_and_caitlin_1.CynthiaAndCaitlin {
     }
 }
 exports.CynthiaAndCaitlinArt = CynthiaAndCaitlinArt;
+class DrawEnergyArt extends draw_energy_1.DrawEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_209_R_EN.png';
+    }
+}
+exports.DrawEnergyArt = DrawEnergyArt;
 class GolettArt extends golett_1.Golett {
     constructor() {
         super(...arguments);

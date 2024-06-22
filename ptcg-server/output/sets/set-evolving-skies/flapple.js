@@ -39,7 +39,7 @@ class Flapple extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let benchPokemon = [];
-            let pokemonWithAbilities = [];
+            const pokemonWithAbilities = [];
             const opponentActive = opponent.active.getPokemonCard();
             const stubPowerEffectForActive = new game_effects_1.PowerEffect(opponent, {
                 name: 'test',

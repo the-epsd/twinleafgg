@@ -26,7 +26,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     } else {
       blocked.push(index);
     }
-  })
+  });
   
   let cards: Card[] = [];
   return store.prompt(state, new ChooseCardsPrompt(

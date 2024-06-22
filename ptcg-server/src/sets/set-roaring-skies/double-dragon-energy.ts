@@ -9,7 +9,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class DoubleDragonEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -25,15 +25,15 @@ export class DoubleDragonEnergy extends EnergyCard {
 
   public text =
     'This card can only be attached to [N] Pokémon.' +
-    '' + 
+    '' +
     'This card provides every type of Energy, but provides only 2 Energy at a time, only while this card is attached to a [N] Pokémon.' +
-    '' + 
+    '' +
     '(If this card is attached to anything other than a [N] Pokémon, discard this card.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
-      
+
       try {
         const energyEffect = new EnergyEffect(player, this);
         store.reduceEffect(state, energyEffect);
@@ -41,11 +41,11 @@ export class DoubleDragonEnergy extends EnergyCard {
         return state;
       }
 
-      effect.energyMap.push({ card: this, provides: [ CardType.ANY, CardType.ANY ] });
+      effect.energyMap.push({ card: this, provides: [CardType.ANY, CardType.ANY] });
     }
-    
-     // Discard card when not attached to Dragon Pokemon
-     if (effect instanceof CheckTableStateEffect) {
+
+    // Discard card when not attached to Dragon Pokemon
+    if (effect instanceof CheckTableStateEffect) {
       state.players.forEach(player => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (!cardList.cards.includes(this)) {
@@ -68,7 +68,7 @@ export class DoubleDragonEnergy extends EnergyCard {
       });
       return state;
     }
-  
+
     return state;
   }
 

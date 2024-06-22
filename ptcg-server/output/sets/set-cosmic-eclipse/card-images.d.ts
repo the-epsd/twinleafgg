@@ -1,6 +1,7 @@
 import { Blacephalon } from './blacephalon';
 import { ChaoticSwell } from './chaotic-swell';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
+import { DrawEnergy } from './draw-energy';
 import { Golett } from './golett';
 import { GuzmaAndHala } from './guzma-and-hala';
 import { Guzzlord } from './guzzlord';
@@ -16,6 +17,9 @@ export declare class ChaoticSwellArt extends ChaoticSwell {
     cardImage: string;
 }
 export declare class CynthiaAndCaitlinArt extends CynthiaAndCaitlin {
+    cardImage: string;
+}
+export declare class DrawEnergyArt extends DrawEnergy {
     cardImage: string;
 }
 export declare class GolettArt extends Golett {

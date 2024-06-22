@@ -24,28 +24,28 @@ export class ResetStamp extends TrainerCard {
   public text: string =
     'Your opponent shuffles his or her hand into his or her deck and draws 4 cards.';
 
-    public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-      if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
-  
-        const opponentCards = opponent.hand.cards.filter(c => c !== this);
-  
-        if (opponentCards.length === 0 && opponent.deck.cards.length === 0) {
-          throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-        }
-        
-        opponent.hand.moveCardsTo(opponentCards, opponent.deck);
-  
-        store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
-          opponent.deck.applyOrder(order);
-        });
-        
-        opponent.deck.moveTo(opponent.hand, 4);
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const opponentCards = opponent.hand.cards.filter(c => c !== this);
+
+      if (opponentCards.length === 0 && opponent.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
-      return state;
+
+      opponent.hand.moveCardsTo(opponentCards, opponent.deck);
+
+      store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+        opponent.deck.applyOrder(order);
+      });
+
+      opponent.deck.moveTo(opponent.hand, 4);
     }
+
+    return state;
+  }
 
 }

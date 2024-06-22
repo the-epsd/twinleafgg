@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.SolrockArt = exports.SnorlaxArt = exports.SlowbroArt = exports.SlakingVArt = exports.RadiantVenusaurArt = exports.PokestopArt = exports.MoltresArt = exports.LureModuleArt = exports.LunatoneArt = exports.DittoArt = exports.CharizardArt = exports.CharmanderArt = exports.BlastoiseArt = exports.ArticunoArt = void 0;
+exports.ZapdosArt = exports.SolrockArt = exports.SnorlaxArt = exports.SlowbroArt = exports.SlakingVArt = exports.RadiantVenusaurArt = exports.PokestopArt = exports.MoltresArt = exports.LureModuleArt = exports.LunatoneArt = exports.DittoArt = exports.CharizardArt = exports.CharmanderArt = exports.BlastoiseArt = exports.ArticunoArt = exports.AlolanRaticateArt = void 0;
 const articuno_1 = require("./articuno");
 const blastoise_1 = require("./blastoise");
 const charizard_1 = require("./charizard");
@@ -9,6 +9,7 @@ const ditto_1 = require("./ditto");
 const lunatone_1 = require("./lunatone");
 const lure_module_1 = require("./lure-module");
 const moltres_1 = require("./moltres");
+const PGO_42_Alolan_Raticate_1 = require("./PGO_42_Alolan_Raticate");
 const pokestop_1 = require("./pokestop");
 const radiant_venusaur_1 = require("./radiant-venusaur");
 const slaking_v_1 = require("./slaking-v");
@@ -16,6 +17,13 @@ const slowbro_1 = require("./slowbro");
 const snorlax_1 = require("./snorlax");
 const solrock_1 = require("./solrock");
 const zapdos_1 = require("./zapdos");
+class AlolanRaticateArt extends PGO_42_Alolan_Raticate_1.AlolanRaticate {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_042_R_EN_LG.png';
+    }
+}
+exports.AlolanRaticateArt = AlolanRaticateArt;
 class ArticunoArt extends articuno_1.Articuno {
     constructor() {
         super(...arguments);

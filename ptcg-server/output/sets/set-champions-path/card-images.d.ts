@@ -1,7 +1,7 @@
-import { Piers } from "./piers";
-import { RotomPhone } from "./rotom-phone";
-import { Sonia } from "./sonia";
-import { TurffieldStadium } from "./turffield-stadium";
+import { Piers } from './piers';
+import { RotomPhone } from './rotom-phone';
+import { Sonia } from './sonia';
+import { TurffieldStadium } from './turffield-stadium';
 export declare class PiersArt extends Piers {
     cardImage: string;
 }
