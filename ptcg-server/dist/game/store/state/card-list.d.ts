@@ -1,8 +1,13 @@
 import { Card } from '../card/card';
+export declare enum StadiumDirection {
+    UP = "up",
+    DOWN = "down"
+}
 export declare class CardList {
     cards: Card[];
     isPublic: boolean;
     isSecret: boolean;
+    stadiumDirection: StadiumDirection;
     static fromList(names: string[]): CardList;
     applyOrder(order: number[]): void;
     moveTo(destination: CardList, count?: number): void;

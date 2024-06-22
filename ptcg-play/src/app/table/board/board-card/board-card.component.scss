@@ -202,9 +202,16 @@ $ptcg-energy-card-offset: 14%;
   }
 }
 
+.upside-down {
+  transform: rotate(180deg);
+}
+
 .ptcg-card-container {
   &.rotate-180 {
     transform: rotate(180deg);
+  }
+  &.rotate-90 {
+    transform: rotate(90deg);
   }
 }
 

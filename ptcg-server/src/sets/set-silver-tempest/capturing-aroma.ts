@@ -97,7 +97,10 @@ export class CapturingAroma extends TrainerCard {
 
             // Operation canceled by the user
             if (cards.length === 0) {
-              return state;
+              player.supporter.moveCardTo(this, player.discard);
+              return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+              });
             }
 
             cards.forEach((card, index) => {
@@ -115,7 +118,6 @@ export class CapturingAroma extends TrainerCard {
             cards.forEach(card => {
               player.deck.moveCardTo(card, player.hand);
             });
-            player.supporter.moveCardTo(this, player.discard);
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
               player.deck.applyOrder(order);
             });

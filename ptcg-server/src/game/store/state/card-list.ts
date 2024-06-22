@@ -3,6 +3,11 @@ import { CardManager } from '../../cards/card-manager';
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
 
+export enum StadiumDirection {
+  UP = 'up',
+  DOWN = 'down'
+}
+
 export class CardList {
 
   public cards: Card[] = [];
@@ -10,6 +15,8 @@ export class CardList {
   public isPublic: boolean = false;
 
   public isSecret: boolean = false;
+
+  public stadiumDirection: StadiumDirection = StadiumDirection.UP;
 
   public static fromList(names: string[]): CardList {
     const cardList = new CardList();

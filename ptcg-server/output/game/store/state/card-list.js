@@ -1,14 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CardList = void 0;
+exports.CardList = exports.StadiumDirection = void 0;
 const card_manager_1 = require("../../cards/card-manager");
 const game_error_1 = require("../../game-error");
 const game_message_1 = require("../../game-message");
+var StadiumDirection;
+(function (StadiumDirection) {
+    StadiumDirection["UP"] = "up";
+    StadiumDirection["DOWN"] = "down";
+})(StadiumDirection = exports.StadiumDirection || (exports.StadiumDirection = {}));
 class CardList {
     constructor() {
         this.cards = [];
         this.isPublic = false;
         this.isSecret = false;
+        this.stadiumDirection = StadiumDirection.UP;
     }
     static fromList(names) {
         const cardList = new CardList();

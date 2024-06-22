@@ -31,8 +31,10 @@ class GreatBall extends trainer_card_1.TrainerCard {
                     temp.cards.forEach(card => {
                         temp.moveTo(player.deck);
                         player.supporter.moveCardTo(this, player.discard);
+                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                            player.deck.applyOrder(order);
+                        });
                     });
-                    player.supporter.moveCardTo(this, player.discard);
                 }
                 if (chosenCards.length > 0) {
                     // Move chosen Pokemon to hand

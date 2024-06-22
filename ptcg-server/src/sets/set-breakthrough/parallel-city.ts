@@ -1,4 +1,4 @@
-import { SelectPrompt } from '../../game';
+import { SelectPrompt, StadiumDirection } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { CardType, TrainerType } from '../../game/store/card/card-types';
@@ -39,11 +39,23 @@ export class ParallelCity extends TrainerCard {
       const options: { message: GameMessage, action: () => void }[] = [
         {
           message: GameMessage.UP,
-          action: () => { this.stadiumDirection = 'up'; }
+          action: () => {         const stadiumCard = StateUtils.getStadiumCard(state);
+            if (stadiumCard !== undefined ) {
+              const cardList = StateUtils.findCardList(state, stadiumCard);
+              cardList.stadiumDirection = StadiumDirection.UP;
+              return state; 
+            }
+          }
         },
         {
           message: GameMessage.DOWN,
-          action: () => { this.stadiumDirection = 'down'; }
+          action: () => { const stadiumCard = StateUtils.getStadiumCard(state);
+            if (stadiumCard !== undefined ) {
+              const cardList = StateUtils.findCardList(state, stadiumCard);
+              cardList.stadiumDirection = StadiumDirection.DOWN; 
+              return state;
+            }
+          }
         }];
         
       return store.prompt(state, new SelectPrompt(
@@ -67,7 +79,7 @@ export class ParallelCity extends TrainerCard {
       const owner = StateUtils.findOwner(state, stadiumCardList);
       
       const benchSizes = [0, 0];
-      if (this.stadiumDirection === 'up') {
+      if (StadiumDirection.UP) {
         state.players.forEach((p, index) => {
           if (p === owner) {
             benchSizes[index] = 5;
@@ -77,7 +89,8 @@ export class ParallelCity extends TrainerCard {
         });
         
         effect.benchSizes = benchSizes;
-      } else {
+      } 
+      if (StadiumDirection.DOWN) {
         state.players.forEach((p, index) => {
           if (p === owner) {
             benchSizes[index] = 3;
@@ -94,12 +107,12 @@ export class ParallelCity extends TrainerCard {
       const stadiumCardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, stadiumCardList);
       
-      if (effect.player === owner && this.stadiumDirection === 'up' &&
+      if (effect.player === owner && StadiumDirection.UP &&
           (effect.player.active.getPokemonCard()?.cardType === CardType.FIRE ||
           effect.player.active.getPokemonCard()?.cardType === CardType.WATER ||
           effect.player.active.getPokemonCard()?.cardType === CardType.GRASS)) {
         effect.damage -= 20;
-      } else if (effect.player !== owner && this.stadiumDirection === 'down' &&
+      } else if (effect.player !== owner && StadiumDirection.DOWN &&
         (effect.player.active.getPokemonCard()?.cardType === CardType.FIRE ||
         effect.player.active.getPokemonCard()?.cardType === CardType.WATER ||
         effect.player.active.getPokemonCard()?.cardType === CardType.GRASS)) {

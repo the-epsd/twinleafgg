@@ -19,6 +19,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -34,7 +36,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Operation canceled by the user
   if (cards.length === 0) {
-    return state;
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+      player.deck.applyOrder(order);
+    });
   }
 
   
@@ -42,7 +47,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.deck.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
   });
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

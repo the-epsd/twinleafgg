@@ -51,7 +51,7 @@ class Pecharuntex extends pokemon_card_1.PokemonCard {
                 name: 'Chains of Control',
                 powerType: game_1.PowerType.ABILITY,
                 useWhenInPlay: true,
-                text: 'Once during your turn, you may switch 1 of your Benched Darkness Pkmn (excl. Pecharunt ex) with your Active. Your new Active is now Poisoned. You can\'t use more than 1 Chains of Control Ability per turn.'
+                text: 'Once during your turn, you may switch 1 of your Benched D Pokémon (excluding Pecharunt ex) with your Active Pokémon. Your new Active Pokémon is now Poisoned. You can\'t use more than 1 Chains of Control Ability per turn.'
             }];
         this.attacks = [{
                 name: 'Irritating Burst',

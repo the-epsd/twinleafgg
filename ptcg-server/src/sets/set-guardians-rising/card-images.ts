@@ -13,7 +13,7 @@ export class AetherParadiseConvserationAreaArt extends AetherParadiseConvseratio
 }
 
 export class AlolanVulpixArt extends AlolanVulpix {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HIF/HIF_007_R_EN.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_021_R_EN_LG.png';
 }
 
 export class AquaPatchArt extends AquaPatch {

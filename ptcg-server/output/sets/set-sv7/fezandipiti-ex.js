@@ -27,7 +27,7 @@ class Fezandipitiex extends pokemon_card_1.PokemonCard {
         this.attacks = [{
                 name: 'Dirty Headbutt',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 100,
+                damage: 0,
                 text: 'This attack does 100 damage to 1 of your opponent\'s Pokémon.'
             }];
         this.set = 'SV6a';

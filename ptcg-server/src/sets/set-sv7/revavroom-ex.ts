@@ -4,6 +4,7 @@ import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Revavroomex extends PokemonCard {
 
@@ -51,11 +52,16 @@ export class Revavroomex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof EndTurnEffect) {
+      this.movedToActiveThisTurn = false;
+      console.log('movedToActiveThisTurn = false');
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       if (!this.movedToActiveThisTurn) {
+        effect.damage = 0;
         return state;
       }
-      effect.ignoreWeakness = true;
       effect.damage += 120;
     }
 

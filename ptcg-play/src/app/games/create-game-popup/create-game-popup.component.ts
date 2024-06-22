@@ -29,9 +29,9 @@ export class CreateGamePopupComponent {
   public formats = [
     {value: Format.STANDARD, label: 'LABEL_STANDARD' },
     {value: Format.GLC, label: 'LABEL_GLC' },
-    // {value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
+    {value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
     {value: Format.RETRO, label: 'LABEL_RETRO' },
-    // {value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
+    {value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
   ];
 
   public formatValidDecks: SelectPopupOption<number>[];

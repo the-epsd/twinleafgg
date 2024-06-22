@@ -31,11 +31,25 @@ class ParallelCity extends trainer_card_1.TrainerCard {
             const options = [
                 {
                     message: game_message_1.GameMessage.UP,
-                    action: () => { this.stadiumDirection = 'up'; }
+                    action: () => {
+                        const stadiumCard = state_utils_1.StateUtils.getStadiumCard(state);
+                        if (stadiumCard !== undefined) {
+                            const cardList = state_utils_1.StateUtils.findCardList(state, stadiumCard);
+                            cardList.stadiumDirection = game_1.StadiumDirection.UP;
+                            return state;
+                        }
+                    }
                 },
                 {
                     message: game_message_1.GameMessage.DOWN,
-                    action: () => { this.stadiumDirection = 'down'; }
+                    action: () => {
+                        const stadiumCard = state_utils_1.StateUtils.getStadiumCard(state);
+                        if (stadiumCard !== undefined) {
+                            const cardList = state_utils_1.StateUtils.findCardList(state, stadiumCard);
+                            cardList.stadiumDirection = game_1.StadiumDirection.DOWN;
+                            return state;
+                        }
+                    }
                 }
             ];
             return store.prompt(state, new game_1.SelectPrompt(player.id, game_message_1.GameMessage.WHICH_DIRECTION_TO_PLACE_STADIUM, options.map(c => c.message), { allowCancel: false }), choice => {
@@ -50,7 +64,7 @@ class ParallelCity extends trainer_card_1.TrainerCard {
             const stadiumCardList = state_utils_1.StateUtils.findCardList(state, this);
             const owner = state_utils_1.StateUtils.findOwner(state, stadiumCardList);
             const benchSizes = [0, 0];
-            if (this.stadiumDirection === 'up') {
+            if (game_1.StadiumDirection.UP) {
                 state.players.forEach((p, index) => {
                     if (p === owner) {
                         benchSizes[index] = 5;
@@ -61,7 +75,7 @@ class ParallelCity extends trainer_card_1.TrainerCard {
                 });
                 effect.benchSizes = benchSizes;
             }
-            else {
+            if (game_1.StadiumDirection.DOWN) {
                 state.players.forEach((p, index) => {
                     if (p === owner) {
                         benchSizes[index] = 3;
@@ -76,13 +90,13 @@ class ParallelCity extends trainer_card_1.TrainerCard {
         if (effect instanceof attack_effects_1.DealDamageEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
             const stadiumCardList = state_utils_1.StateUtils.findCardList(state, this);
             const owner = state_utils_1.StateUtils.findOwner(state, stadiumCardList);
-            if (effect.player === owner && this.stadiumDirection === 'up' &&
+            if (effect.player === owner && game_1.StadiumDirection.UP &&
                 (((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === card_types_1.CardType.FIRE ||
                     ((_b = effect.player.active.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.cardType) === card_types_1.CardType.WATER ||
                     ((_c = effect.player.active.getPokemonCard()) === null || _c === void 0 ? void 0 : _c.cardType) === card_types_1.CardType.GRASS)) {
                 effect.damage -= 20;
             }
-            else if (effect.player !== owner && this.stadiumDirection === 'down' &&
+            else if (effect.player !== owner && game_1.StadiumDirection.DOWN &&
                 (((_d = effect.player.active.getPokemonCard()) === null || _d === void 0 ? void 0 : _d.cardType) === card_types_1.CardType.FIRE ||
                     ((_e = effect.player.active.getPokemonCard()) === null || _e === void 0 ? void 0 : _e.cardType) === card_types_1.CardType.WATER ||
                     ((_f = effect.player.active.getPokemonCard()) === null || _f === void 0 ? void 0 : _f.cardType) === card_types_1.CardType.GRASS)) {

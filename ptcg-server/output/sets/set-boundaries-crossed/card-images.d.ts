@@ -1,3 +1,4 @@
+import { RockyHelmet } from '../set-scarlet-and-violet/rocky-helmet';
 import { AspertiaCityGym } from './aspertia-city-gym';
 import { Blastoise } from './blastoise';
 import { ComputerSearch } from './computer-search';
@@ -9,7 +10,6 @@ import { LandorusEx } from './landorus-ex';
 import { Munna } from './munna';
 import { Pignite } from './pignite';
 import { Potion } from './potion';
-import { RockyHelmet } from './rocky-helmet';
 import { Skyla } from './skyla';
 import { Squirtle } from './squirtle';
 import { Wartortle } from './wartortle';
@@ -48,6 +48,8 @@ export declare class PotionArt extends Potion {
 }
 export declare class RockyHelmetArt extends RockyHelmet {
     cardImage: string;
+    setNumber: string;
+    fullName: string;
 }
 export declare class SkylaArt extends Skyla {
     cardImage: string;

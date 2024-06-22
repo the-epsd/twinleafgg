@@ -20,7 +20,7 @@ exports.AetherParadiseConvserationAreaArt = AetherParadiseConvserationAreaArt;
 class AlolanVulpixArt extends alolan_vulpix_1.AlolanVulpix {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HIF/HIF_007_R_EN.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_021_R_EN_LG.png';
     }
 }
 exports.AlolanVulpixArt = AlolanVulpixArt;

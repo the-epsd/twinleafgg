@@ -30,11 +30,25 @@ class ReverseValley extends trainer_card_1.TrainerCard {
             const options = [
                 {
                     message: game_message_1.GameMessage.UP,
-                    action: () => { this.stadiumDirection = 'up'; }
+                    action: () => {
+                        const stadiumCard = state_utils_1.StateUtils.getStadiumCard(state);
+                        if (stadiumCard !== undefined) {
+                            const cardList = state_utils_1.StateUtils.findCardList(state, stadiumCard);
+                            cardList.stadiumDirection = game_1.StadiumDirection.UP;
+                            return state;
+                        }
+                    }
                 },
                 {
                     message: game_message_1.GameMessage.DOWN,
-                    action: () => { this.stadiumDirection = 'down'; }
+                    action: () => {
+                        const stadiumCard = state_utils_1.StateUtils.getStadiumCard(state);
+                        if (stadiumCard !== undefined) {
+                            const cardList = state_utils_1.StateUtils.findCardList(state, stadiumCard);
+                            cardList.stadiumDirection = game_1.StadiumDirection.DOWN;
+                            return state;
+                        }
+                    }
                 }
             ];
             return store.prompt(state, new game_1.SelectPrompt(player.id, game_message_1.GameMessage.WHICH_DIRECTION_TO_PLACE_STADIUM, options.map(c => c.message), { allowCancel: false }), choice => {
@@ -51,12 +65,12 @@ class ReverseValley extends trainer_card_1.TrainerCard {
             const checkDefenderType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
             store.reduceEffect(state, checkDefenderType);
             // attacking against metal direction down
-            if (checkDefenderType.cardTypes.includes(card_types_1.CardType.METAL) && this.stadiumDirection === 'up' &&
+            if (checkDefenderType.cardTypes.includes(card_types_1.CardType.METAL) && game_1.StadiumDirection.UP &&
                 owner !== effect.player) {
                 effect.damage = Math.max(0, effect.damage - 10);
                 effect.damageReduced = true;
             }
-            if (checkDefenderType.cardTypes.includes(card_types_1.CardType.METAL) && this.stadiumDirection === 'down' &&
+            if (checkDefenderType.cardTypes.includes(card_types_1.CardType.METAL) && game_1.StadiumDirection.DOWN &&
                 owner === effect.player) {
                 effect.damage = Math.max(0, effect.damage - 10);
                 effect.damageReduced = true;
@@ -69,11 +83,11 @@ class ReverseValley extends trainer_card_1.TrainerCard {
             const owner = state_utils_1.StateUtils.findOwner(state, stadiumCardList);
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(player.active);
             store.reduceEffect(state, checkPokemonType);
-            if (checkPokemonType.cardTypes.includes(card_types_1.CardType.DARK) && this.stadiumDirection === 'up' &&
+            if (checkPokemonType.cardTypes.includes(card_types_1.CardType.DARK) && game_1.StadiumDirection.UP &&
                 effect.damage > 0 && effect.target === opponent.active && owner === effect.player) {
                 effect.damage += 10;
             }
-            if (this.stadiumDirection === 'down' && owner !== player &&
+            if (game_1.StadiumDirection.DOWN && owner !== player &&
                 checkPokemonType.cardTypes.includes(card_types_1.CardType.DARK) && effect.target === opponent.active) {
                 effect.damage += 10;
             }

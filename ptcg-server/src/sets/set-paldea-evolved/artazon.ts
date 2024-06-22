@@ -44,12 +44,11 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
         return state;
       }
 
-      if (cards[0].tags.includes(CardTag.POKEMON_V) || 
-    cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
-    cards[0].tags.includes(CardTag.POKEMON_VMAX)  ||
-    cards[0].tags.includes(CardTag.POKEMON_ex)    ||
-    cards[0].tags.includes(CardTag.RADIANT)) 
-      {
+      if (cards[0].tags.includes(CardTag.POKEMON_V) ||
+        cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
+        cards[0].tags.includes(CardTag.POKEMON_VMAX) ||
+        cards[0].tags.includes(CardTag.POKEMON_ex) ||
+        cards[0].tags.includes(CardTag.RADIANT)) {
         throw new GameError(GameMessage.INVALID_TARGET);
       }
       else {
@@ -57,6 +56,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
           player.deck.moveCardTo(card, slots[index]);
           slots[index].pokemonPlayedTurn = state.turn;
         });
+
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
@@ -89,6 +89,7 @@ export class Artazon extends TrainerCard {
   '(Pokémon ex, Pokémon V, etc. have Rule Boxes.)';
     
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       const generator = useStadium(() => generator.next(), store, state, effect);
       return generator.next().value;

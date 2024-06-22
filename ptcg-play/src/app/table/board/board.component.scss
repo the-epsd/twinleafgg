@@ -123,7 +123,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 
 .ptcg-board-active {
   grid-area: active;
-  margin-left: 23%;
+  margin-left: 22.25%;
   width: 98px;
 }
 
@@ -176,7 +176,7 @@ ptcg-board-deck {
 .stadium-card {
   align-self: flex-start;
 
-  margin-top: -29%;
+  margin-top: -28.75%;
   margin-left: 50%;
 
   &.stadium-card-down {
@@ -194,6 +194,16 @@ ptcg-board-deck {
   border-radius: $card-border-radius;
   position: absolute;
   width: 98px;
+}
+
+.stadium-card {
+  align-self: flex-start;
+  margin-top: -29%;
+  margin-left: 50%;
+
+  &.stadium-card-down {
+    transform: rotate(180deg);
+  }
 }
 
 // .ptcg-card-marker {

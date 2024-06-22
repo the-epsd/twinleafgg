@@ -34,7 +34,7 @@ export class Fezandipitiex extends PokemonCard {
   public attacks = [{
     name: 'Dirty Headbutt',
     cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
-    damage: 100,
+    damage: 0,
     text: 'This attack does 100 damage to 1 of your opponent\'s Pokémon.'
   }];
 

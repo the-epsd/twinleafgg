@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
- import { Card, CardList, PokemonCardList, Power, SpecialCondition, SuperType } from 'ptcg-server';
+ import { Card, CardList, PokemonCardList, Power, SpecialCondition, StadiumDirection, SuperType } from 'ptcg-server';
 
 const MAX_ENERGY_CARDS = 4;
 
@@ -13,36 +13,37 @@ export class BoardCardComponent {
   @Input() showCardCount = false;
   @Output() cardClick = new EventEmitter<Card>();
 
-@Input() set cardList(value: CardList | PokemonCardList) {
-this.mainCard = undefined;
-this.energyCards = [];
-this.trainerCard = undefined;
-this.moreEnergies = 0;
-this.cardCount = 0;
-this.damage = 0;
-this.specialConditions = [];
-this.isFaceDown = false;
+  @Input() set cardList(value: CardList | PokemonCardList) {
+    this.mainCard = undefined;
+    this.energyCards = [];
+    this.trainerCard = undefined;
+    this.moreEnergies = 0;
+    this.cardCount = 0;
+    this.damage = 0;
+    this.specialConditions = [];
+    this.isFaceDown = false;
+    this.isUpsideDown = value.stadiumDirection === StadiumDirection.DOWN;
 
-this.isEmpty = !value || !value.cards.length;
-if (this.isEmpty) {
-return;
-}
+    this.isEmpty = !value || !value.cards.length;
+    if (this.isEmpty) {
+      return;
+    }
 
-const cards: Card[] = value.cards;
-this.cardCount = cards.length;
-this.isSecret = value.isSecret;
-this.isPublic = value.isPublic;
-this.isFaceDown = value.isSecret || (!value.isPublic && !this.isOwner);
+    const cards: Card[] = value.cards;
+    this.cardCount = cards.length;
+    this.isSecret = value.isSecret;
+    this.isPublic = value.isPublic;
+    this.isFaceDown = value.isSecret || (!value.isPublic && !this.isOwner);
 
-// Pokemon slot, init energies, tool, special conditions, etc.
-if (value instanceof PokemonCardList) {
-this.initPokemonCardList(value);
-return;
-}
+    // Pokemon slot, init energies, tool, special conditions, etc.
+    if (value instanceof PokemonCardList) {
+      this.initPokemonCardList(value);
+      return;
+    }
 
-// Normal card list, display top-card only
-this.mainCard = value.cards[value.cards.length - 1];
-}
+    // Normal card list, display top-card only
+    this.mainCard = value.cards[value.cards.length - 1];
+  }
 
   @Input() set owner(value: boolean) {
     this.isOwner = value;
@@ -73,6 +74,7 @@ this.mainCard = value.cards[value.cards.length - 1];
   public damage = 0;
   public specialConditions: SpecialCondition[] = [];
   public SpecialCondition = SpecialCondition;
+  public isUpsideDown = false;
 
   private isSecret = false;
   private isPublic = false;
@@ -122,7 +124,7 @@ this.mainCard = value.cards[value.cards.length - 1];
 
     return customImageUrls[card.name] || '';
   }
-  
+
   public onCardClick(card: Card) {
     this.cardClick.next(card);
   }

@@ -51,8 +51,10 @@ export class GreatBall extends TrainerCard {
           temp.cards.forEach(card => {
             temp.moveTo(player.deck);
             player.supporter.moveCardTo(this, player.discard);
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+            });
           });  
-          player.supporter.moveCardTo(this, player.discard);
         }
     
         if (chosenCards.length > 0) {

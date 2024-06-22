@@ -57,7 +57,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-  player.hand.moveCardTo(self, player.discard);
   player.hand.moveCardsTo(cards, player.discard);
 
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -80,7 +79,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

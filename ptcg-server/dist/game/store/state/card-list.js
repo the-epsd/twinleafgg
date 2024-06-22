@@ -1,11 +1,17 @@
 import { CardManager } from '../../cards/card-manager';
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
+export var StadiumDirection;
+(function (StadiumDirection) {
+    StadiumDirection["UP"] = "up";
+    StadiumDirection["DOWN"] = "down";
+})(StadiumDirection || (StadiumDirection = {}));
 export class CardList {
     constructor() {
         this.cards = [];
         this.isPublic = false;
         this.isSecret = false;
+        this.stadiumDirection = StadiumDirection.UP;
     }
     static fromList(names) {
         const cardList = new CardList();
