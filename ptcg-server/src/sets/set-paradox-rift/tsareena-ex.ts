@@ -6,6 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { HealTargetEffect, PutDamageEffect, RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 export class Tsareenaex extends PokemonCard {
 
@@ -65,33 +66,46 @@ export class Tsareenaex extends PokemonCard {
         if (!targets || targets.length === 0) {
           return;
         }
-
         const selectedTarget = targets[0];
-        const selectedPokemonCard = selectedTarget.getPokemonCard();
-        const hp = selectedPokemonCard?.hp;
-        const remainingHp = hp ? hp - 30 : 0;
-        console.log('Pokemon\'s remaining hp: ' + remainingHp);
-        const damageEffect = new PutDamageEffect(effect, remainingHp);
-        damageEffect.target = selectedTarget;
-        store.reduceEffect(state, damageEffect);
+        const checkHpEffect = new CheckHpEffect(effect.player, selectedTarget);
+        store.reduceEffect(state, checkHpEffect);
+      
+        const totalHp = checkHpEffect.hp;
+        let damageAmount = totalHp - 30;
+      
+        // Adjust damage if the target already has damage
+        const targetDamage = selectedTarget.damage;
+        if (targetDamage > 0) {
+          damageAmount = Math.max(0, damageAmount - targetDamage);
+        }
+      
+        if (damageAmount > 0) {
+          const damageEffect = new PutDamageEffect(effect, damageAmount);
+          damageEffect.target = selectedTarget;
+          store.reduceEffect(state, damageEffect);
+        } else if (damageAmount <= 0) {
+          const damageEffect = new PutDamageEffect(effect, 0);
+          damageEffect.target = selectedTarget;
+          store.reduceEffect(state, damageEffect);
+        }
       });
+      
+    }
+    
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
 
+      const healTargetEffect = new HealTargetEffect(effect, 30);
+      healTargetEffect.target = player.active;
+      state = store.reduceEffect(state, healTargetEffect);
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        const player = effect.player;
-
-        const healTargetEffect = new HealTargetEffect(effect, 30);
-        healTargetEffect.target = player.active;
-        state = store.reduceEffect(state, healTargetEffect);
-
-        const removeSpecialCondition = new RemoveSpecialConditionsEffect(effect, undefined);
-        removeSpecialCondition.target = player.active;
-        state = store.reduceEffect(state, removeSpecialCondition);
-      }
-      return state;
+      const removeSpecialCondition = new RemoveSpecialConditionsEffect(effect, undefined);
+      removeSpecialCondition.target = player.active;
+      state = store.reduceEffect(state, removeSpecialCondition);
     }
     return state;
   }
 
-
 }
+
+

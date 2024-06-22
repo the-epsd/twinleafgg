@@ -64,7 +64,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { superType: SuperType.POKEMON, stage: Stage.BASIC },
-    { min: 1, max: 1, allowCancel: true }
+    { min: 0, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();

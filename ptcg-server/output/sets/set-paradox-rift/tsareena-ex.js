@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 class Tsareenaex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -45,24 +46,35 @@ class Tsareenaex extends pokemon_card_1.PokemonCard {
                     return;
                 }
                 const selectedTarget = targets[0];
-                const selectedPokemonCard = selectedTarget.getPokemonCard();
-                const hp = selectedPokemonCard === null || selectedPokemonCard === void 0 ? void 0 : selectedPokemonCard.hp;
-                const remainingHp = hp ? hp - 30 : 0;
-                console.log('Pokemon\'s remaining hp: ' + remainingHp);
-                const damageEffect = new attack_effects_1.PutDamageEffect(effect, remainingHp);
-                damageEffect.target = selectedTarget;
-                store.reduceEffect(state, damageEffect);
+                const checkHpEffect = new check_effects_1.CheckHpEffect(effect.player, selectedTarget);
+                store.reduceEffect(state, checkHpEffect);
+                const totalHp = checkHpEffect.hp;
+                let damageAmount = totalHp - 30;
+                // Adjust damage if the target already has damage
+                const targetDamage = selectedTarget.damage;
+                if (targetDamage > 0) {
+                    damageAmount = Math.max(0, damageAmount - targetDamage);
+                }
+                if (damageAmount > 0) {
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, damageAmount);
+                    damageEffect.target = selectedTarget;
+                    store.reduceEffect(state, damageEffect);
+                }
+                else if (damageAmount <= 0) {
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 0);
+                    damageEffect.target = selectedTarget;
+                    store.reduceEffect(state, damageEffect);
+                }
             });
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                const healTargetEffect = new attack_effects_1.HealTargetEffect(effect, 30);
-                healTargetEffect.target = player.active;
-                state = store.reduceEffect(state, healTargetEffect);
-                const removeSpecialCondition = new attack_effects_1.RemoveSpecialConditionsEffect(effect, undefined);
-                removeSpecialCondition.target = player.active;
-                state = store.reduceEffect(state, removeSpecialCondition);
-            }
-            return state;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const healTargetEffect = new attack_effects_1.HealTargetEffect(effect, 30);
+            healTargetEffect.target = player.active;
+            state = store.reduceEffect(state, healTargetEffect);
+            const removeSpecialCondition = new attack_effects_1.RemoveSpecialConditionsEffect(effect, undefined);
+            removeSpecialCondition.target = player.active;
+            state = store.reduceEffect(state, removeSpecialCondition);
         }
         return state;
     }
