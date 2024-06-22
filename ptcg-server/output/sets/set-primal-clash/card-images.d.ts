@@ -5,6 +5,7 @@ import { MaxiesHiddenBallTrick } from './maxies-hidden-ball-trick';
 import { Milotic } from './milotic';
 import { RoughSeas } from './rough-seas';
 import { ScorchedEarth } from './scorched-earth';
+import { ShieldEnergy } from './shield-energy';
 import { SilentLab } from './silent-lab';
 import { Teammates } from './teammates';
 import { WailordEx } from './wailord-ex';
@@ -27,6 +28,9 @@ export declare class RoughSeasArt extends RoughSeas {
     cardImage: string;
 }
 export declare class ScorchedEarthArt extends ScorchedEarth {
+    cardImage: string;
+}
+export declare class ShieldEnergArt extends ShieldEnergy {
     cardImage: string;
 }
 export declare class SilentLabArt extends SilentLab {

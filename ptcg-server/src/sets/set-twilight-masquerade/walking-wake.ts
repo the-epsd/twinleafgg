@@ -72,11 +72,9 @@ function* attack(next: Function, store: StoreLike, state: State, effect: AttackE
   const player = effect.player;
     
   const maxAllowedDamage: DamageMap[] = [];
-  let damageLeft = 0;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
     const checkHpEffect = new CheckHpEffect(player, cardList);
     store.reduceEffect(state, checkHpEffect);
-    damageLeft += checkHpEffect.hp - cardList.damage;
     maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 90 });
   });
     
@@ -95,7 +93,7 @@ function* attack(next: Function, store: StoreLike, state: State, effect: AttackE
       const putCountersEffect = new PutCountersEffect(effect, result.damage);
       putCountersEffect.target = target;
       store.reduceEffect(state, putCountersEffect);
-      effect.damage = damageLeft * 2;
+      effect.damage = result.damage * 2;
     }
   });
 }

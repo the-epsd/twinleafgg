@@ -5,6 +5,7 @@ import { MaxiesHiddenBallTrick } from './maxies-hidden-ball-trick';
 import { Milotic } from './milotic';
 import { RoughSeas } from './rough-seas';
 import { ScorchedEarth } from './scorched-earth';
+import { ShieldEnergy } from './shield-energy';
 import { SilentLab } from './silent-lab';
 import { Teammates } from './teammates';
 import { WailordEx } from './wailord-ex';
@@ -35,6 +36,10 @@ export class RoughSeasArt extends RoughSeas {
 
 export class ScorchedEarthArt extends ScorchedEarth {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_138_R_EN.png';
+}
+
+export class ShieldEnergArt extends ShieldEnergy {
+  public cardImage = '';
 }
 
 export class SilentLabArt extends SilentLab {

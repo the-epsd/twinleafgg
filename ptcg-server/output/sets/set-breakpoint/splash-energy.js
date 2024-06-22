@@ -30,6 +30,13 @@ class SplashEnergy extends energy_card_1.EnergyCard {
     }
     reduceEffect(store, state, effect) {
         var _a, _b;
+        if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard === this) {
+            const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
+            store.reduceEffect(state, checkPokemonType);
+            if (!checkPokemonType.cardTypes.includes(card_types_1.CardType.WATER)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+        }
         if (effect instanceof game_effects_1.AttackEffect && ((_b = (_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards) === null || _b === void 0 ? void 0 : _b.includes(this))) {
             this.damageDealt = false;
         }
@@ -86,8 +93,8 @@ class SplashEnergy extends energy_card_1.EnergyCard {
                 return state;
             }
             try {
-                const toolEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, toolEffect);
+                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                store.reduceEffect(state, energyEffect);
             }
             catch (_d) {
                 return state;
@@ -104,8 +111,8 @@ class SplashEnergy extends energy_card_1.EnergyCard {
                     return;
                 }
                 try {
-                    const toolEffect = new play_card_effects_1.EnergyEffect(player, this);
-                    store.reduceEffect(state, toolEffect);
+                    const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                    store.reduceEffect(state, energyEffect);
                 }
                 catch (_a) {
                     return state;

@@ -55,11 +55,9 @@ exports.WalkingWake = WalkingWake;
 function* attack(next, store, state, effect) {
     const player = effect.player;
     const maxAllowedDamage = [];
-    let damageLeft = 0;
     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         const checkHpEffect = new check_effects_1.CheckHpEffect(player, cardList);
         store.reduceEffect(state, checkHpEffect);
-        damageLeft += checkHpEffect.hp - cardList.damage;
         maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 90 });
     });
     return store.prompt(state, new game_1.PutDamagePrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], 90, maxAllowedDamage, { allowCancel: false, allowPlacePartialDamage: true }), targets => {
@@ -69,7 +67,7 @@ function* attack(next, store, state, effect) {
             const putCountersEffect = new attack_effects_1.PutCountersEffect(effect, result.damage);
             putCountersEffect.target = target;
             store.reduceEffect(state, putCountersEffect);
-            effect.damage = damageLeft * 2;
+            effect.damage = result.damage * 2;
         }
     });
 }

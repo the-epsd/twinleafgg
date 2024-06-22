@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReversalEnergy = void 0;
+const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const game_1 = require("../../game");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class ReversalEnergy extends energy_card_1.EnergyCard {
     constructor() {
@@ -34,7 +34,9 @@ class ReversalEnergy extends energy_card_1.EnergyCard {
             catch (_a) {
                 return state;
             }
-            if (!!attachedTo && attachedTo instanceof pokemon_card_1.PokemonCard && player.getPrizeLeft() < opponent.getPrizeLeft() && !attachedTo.cardTag.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_ex || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.RADIANT)) {
+            if (!!attachedTo && attachedTo instanceof pokemon_card_1.PokemonCard && player.getPrizeLeft() < opponent.getPrizeLeft() &&
+                attachedTo.stage !== card_types_1.Stage.BASIC && attachedTo.stage !== card_types_1.Stage.RESTORED &&
+                !attachedTo.cardTag.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_ex || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.RADIANT)) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY, card_types_1.CardType.ANY, card_types_1.CardType.ANY] });
             }
             else {

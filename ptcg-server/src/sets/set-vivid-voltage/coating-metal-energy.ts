@@ -7,7 +7,7 @@ import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-export class WashWaterEnergy extends EnergyCard {
+export class CoatingMetalEnergy extends EnergyCard {
 
   public provides: CardType[] = [ CardType.COLORLESS ];
 
@@ -15,20 +15,18 @@ export class WashWaterEnergy extends EnergyCard {
 
   public set: string = 'VIV';
 
-  public regulationMark = 'D';
+  public name = 'Coating Metal Energy';
+
+  public fullName = 'Coating Metal Energy VIV';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '165';
-
-  public name = 'Wash Water Energy';
-
-  public fullName = 'Wash Water Energy VIV';
+  public setNumber: string = '163';
 
   public text =
-    'As long as this card is attached to a Pokémon, it provides [W] Energy.' +
+    'As long as this card is attached to a Pokémon, it provides [M] Energy.' +
     '' +
-    'Prevent all effects of attacks from your opponent\'s Pokémon done to the [W] Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)';
+    'The [M] Pokémon this card is attached to has no Weakness.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -42,11 +40,11 @@ export class WashWaterEnergy extends EnergyCard {
         return state;
       }
 
-      effect.energyMap.push({ card: this, provides: [ CardType.WATER ] });
+      effect.energyMap.push({ card: this, provides: [ CardType.METAL ] });
       
       return state;
     }
-    
+
     // Prevent effects of attacks
     if (effect instanceof AbstractAttackEffect && effect.target?.cards?.includes(this)) {
       const player = effect.player;
@@ -61,21 +59,23 @@ export class WashWaterEnergy extends EnergyCard {
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
 
-      if (checkPokemonType.cardTypes.includes(CardType.WATER)) {
+      if (checkPokemonType.cardTypes.includes(CardType.METAL)) {
+    
         // Allow damage
         if (effect instanceof PutDamageEffect) {
+          effect.attackEffect.ignoreWeakness = true;
           return state; 
         }
         if (effect instanceof DealDamageEffect) {
+          effect.attackEffect.ignoreWeakness = true;
           return state; 
         }
         
         effect.preventDefault = true;
       }
     }
-      
+
     return state;
   }
-      
+
 }
-      

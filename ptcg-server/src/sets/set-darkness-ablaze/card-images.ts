@@ -1,7 +1,9 @@
 import { BirdKeeper } from './bird-keeper';
 import { CapeOfToughness } from './cape-of-toughness';
+import { HidingDarknessEnergy } from './hiding-darkness-energy';
 import { Kangaskhan } from './kangaskhan';
 import { Lugia } from './lugia';
+import { PowerfulColorlessEnergy } from './powerful-colorless-energy';
 import { RoseTower } from './rose-tower';
 import { TapuKoko } from './tapu-koko';
 
@@ -13,12 +15,20 @@ export class CapeOfToughnessArt extends CapeOfToughness {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_160_R_EN_LG.png';
 }
 
+export class HidingDarknessEnergyArt extends HidingDarknessEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_175_R_EN.png';
+}
+
 export class KangaskhanArt extends Kangaskhan {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_133_R_EN_LG.png';
 }
 
 export class LugiaArt extends Lugia {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_140_R_EN_LG.png';
+}
+
+export class PowerfulColorlessEnergyArt extends PowerfulColorlessEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_176_R_EN.png';
 }
 
 export class RoseTowerArt extends RoseTower {

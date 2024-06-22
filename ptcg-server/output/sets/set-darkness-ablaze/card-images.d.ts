@@ -1,7 +1,9 @@
 import { BirdKeeper } from './bird-keeper';
 import { CapeOfToughness } from './cape-of-toughness';
+import { HidingDarknessEnergy } from './hiding-darkness-energy';
 import { Kangaskhan } from './kangaskhan';
 import { Lugia } from './lugia';
+import { PowerfulColorlessEnergy } from './powerful-colorless-energy';
 import { RoseTower } from './rose-tower';
 import { TapuKoko } from './tapu-koko';
 export declare class BirdKeeperArt extends BirdKeeper {
@@ -10,10 +12,16 @@ export declare class BirdKeeperArt extends BirdKeeper {
 export declare class CapeOfToughnessArt extends CapeOfToughness {
     cardImage: string;
 }
+export declare class HidingDarknessEnergyArt extends HidingDarknessEnergy {
+    cardImage: string;
+}
 export declare class KangaskhanArt extends Kangaskhan {
     cardImage: string;
 }
 export declare class LugiaArt extends Lugia {
+    cardImage: string;
+}
+export declare class PowerfulColorlessEnergyArt extends PowerfulColorlessEnergy {
     cardImage: string;
 }
 export declare class RoseTowerArt extends RoseTower {

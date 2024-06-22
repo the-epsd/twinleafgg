@@ -1,12 +1,12 @@
-import { CardTag, CardType, EnergyType } from '../../game/store/card/card-types';
-import { EnergyCard } from '../../game/store/card/energy-card';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { StateUtils } from '../../game';
+import { CardTag, CardType, EnergyType, Stage } from '../../game/store/card/card-types';
+import { EnergyCard } from '../../game/store/card/energy-card';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
 import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class ReversalEnergy extends EnergyCard {
 
@@ -46,7 +46,9 @@ export class ReversalEnergy extends EnergyCard {
         return state;
       }
 
-      if (!!attachedTo && attachedTo instanceof PokemonCard && player.getPrizeLeft() < opponent.getPrizeLeft() && !attachedTo.cardTag.includes(CardTag.POKEMON_V || CardTag.POKEMON_ex || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.RADIANT)) {
+      if (!!attachedTo && attachedTo instanceof PokemonCard && player.getPrizeLeft() < opponent.getPrizeLeft() &&
+         attachedTo.stage !== Stage.BASIC && attachedTo.stage !== Stage.RESTORED &&
+         !attachedTo.cardTag.includes(CardTag.POKEMON_V || CardTag.POKEMON_ex || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.RADIANT)) {
         effect.energyMap.push({ card: this, provides: [ CardType.ANY, CardType.ANY, CardType.ANY ] });
       } else {
         effect.energyMap.push({ card: this, provides: [ CardType.COLORLESS ] });

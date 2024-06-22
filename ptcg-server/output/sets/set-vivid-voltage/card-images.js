@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WashWaterEnergyArt = exports.SnorlaxArt = exports.RaikouArt = exports.NessaArt = exports.MagearnaArt = exports.LeonArt = exports.JirachiArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = void 0;
+exports.WashWaterEnergyArt = exports.SnorlaxArt = exports.RaikouArt = exports.NessaArt = exports.MagearnaArt = exports.LeonArt = exports.JirachiArt = exports.CoatingMetalEnergyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = void 0;
 const charizard_1 = require("./charizard");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
+const coating_metal_energy_1 = require("./coating-metal-energy");
 const jirachi_1 = require("./jirachi");
 const leon_1 = require("./leon");
 const nessa_1 = require("./nessa");
@@ -32,6 +33,13 @@ class CharmeleonArt extends charmeleon_1.Charmeleon {
     }
 }
 exports.CharmeleonArt = CharmeleonArt;
+class CoatingMetalEnergyArt extends coating_metal_energy_1.CoatingMetalEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_163_R_EN_LG.png';
+    }
+}
+exports.CoatingMetalEnergyArt = CoatingMetalEnergyArt;
 class JirachiArt extends jirachi_1.Jirachi {
     constructor() {
         super(...arguments);

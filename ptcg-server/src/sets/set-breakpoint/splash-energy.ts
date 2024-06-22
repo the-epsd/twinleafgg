@@ -1,12 +1,12 @@
-import { Card, PlayerType, StateUtils } from '../../game';
+import { Card, GameError, GameMessage, PlayerType, StateUtils } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -38,6 +38,15 @@ export class SplashEnergy extends EnergyCard {
   public SPLASH_ENERGY_MARKER = 'SPLASH_ENERGY_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
+      const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
+      store.reduceEffect(state, checkPokemonType);
+
+      if (!checkPokemonType.cardTypes.includes(CardType.WATER)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+    }
 
     if (effect instanceof AttackEffect && effect.target?.cards?.includes(this)) {
       this.damageDealt = false;
@@ -105,8 +114,8 @@ export class SplashEnergy extends EnergyCard {
       }
 
       try {
-        const toolEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, toolEffect);
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
       } catch {
         return state;
       }
@@ -126,8 +135,8 @@ export class SplashEnergy extends EnergyCard {
         }
 
         try {
-          const toolEffect = new EnergyEffect(player, this);
-          store.reduceEffect(state, toolEffect);
+          const energyEffect = new EnergyEffect(player, this);
+          store.reduceEffect(state, energyEffect);
         } catch {
           return state;
         }

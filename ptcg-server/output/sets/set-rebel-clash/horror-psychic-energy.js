@@ -1,30 +1,44 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WashWaterEnergy = void 0;
+exports.HorrorPsychicEnergy = void 0;
+const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-class WashWaterEnergy extends energy_card_1.EnergyCard {
+const state_1 = require("../../game/store/state/state");
+class HorrorPsychicEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
         this.provides = [card_types_1.CardType.COLORLESS];
         this.energyType = card_types_1.EnergyType.SPECIAL;
-        this.set = 'VIV';
-        this.regulationMark = 'D';
+        this.set = 'DAA';
+        this.name = 'Horror Psychic Energy';
+        this.fullName = 'Horror Psychic Energy DAA';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '165';
-        this.name = 'Wash Water Energy';
-        this.fullName = 'Wash Water Energy VIV';
-        this.text = 'As long as this card is attached to a Pokémon, it provides [W] Energy.' +
+        this.setNumber = '172';
+        this.text = 'As long as this card is attached to a Pokémon, it provides [P] Energy.' +
             '' +
-            'Prevent all effects of attacks from your opponent\'s Pokémon done to the [W] Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)';
+            'If the [P] Pokémon this card is attached to is in the Active Spot and is damaged by an opponent\'s attack (even if it is Knocked Out), put 2 damage counters on the Attacking Pokémon.';
     }
     reduceEffect(store, state, effect) {
-        var _a, _b;
+        var _a;
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
+            try {
+                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                store.reduceEffect(state, energyEffect);
+            }
+            catch (_b) {
+                return state;
+            }
+            effect.energyMap.push({ card: this, provides: [card_types_1.CardType.PSYCHIC] });
+            return state;
+        }
+        if (effect instanceof attack_effects_1.AfterDamageEffect && ((_a = effect.target.cards) === null || _a === void 0 ? void 0 : _a.includes(this))) {
+            const player = effect.player;
+            const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);
             try {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
@@ -32,28 +46,14 @@ class WashWaterEnergy extends energy_card_1.EnergyCard {
             catch (_c) {
                 return state;
             }
-            effect.energyMap.push({ card: this, provides: [card_types_1.CardType.WATER] });
-            return state;
-        }
-        // Prevent effects of attacks
-        if (effect instanceof attack_effects_1.AbstractAttackEffect && ((_b = (_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards) === null || _b === void 0 ? void 0 : _b.includes(this))) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_d) {
-                return state;
-            }
-            const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
+            const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(player.active);
             store.reduceEffect(state, checkPokemonType);
-            if (checkPokemonType.cardTypes.includes(card_types_1.CardType.WATER)) {
-                // Allow damage
-                if (effect instanceof attack_effects_1.PutDamageEffect) {
+            if (checkPokemonType.cardTypes.includes(card_types_1.CardType.PSYCHIC)) {
+                if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
                     return state;
                 }
-                if (effect instanceof attack_effects_1.DealDamageEffect) {
-                    return state;
+                if (state.phase === state_1.GamePhase.ATTACK) {
+                    effect.source.damage += 20;
                 }
                 effect.preventDefault = true;
             }
@@ -61,4 +61,4 @@ class WashWaterEnergy extends energy_card_1.EnergyCard {
         return state;
     }
 }
-exports.WashWaterEnergy = WashWaterEnergy;
+exports.HorrorPsychicEnergy = HorrorPsychicEnergy;

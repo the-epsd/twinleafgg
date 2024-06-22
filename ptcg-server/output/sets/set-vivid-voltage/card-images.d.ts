@@ -1,6 +1,7 @@
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
+import { CoatingMetalEnergy } from './coating-metal-energy';
 import { Jirachi } from './jirachi';
 import { Leon } from './leon';
 import { Nessa } from './nessa';
@@ -15,6 +16,9 @@ export declare class CharmanderArt extends Charmander {
     cardImage: string;
 }
 export declare class CharmeleonArt extends Charmeleon {
+    cardImage: string;
+}
+export declare class CoatingMetalEnergyArt extends CoatingMetalEnergy {
     cardImage: string;
 }
 export declare class JirachiArt extends Jirachi {
