@@ -6,7 +6,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Banette extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.BASIC;
+        this.stage = game_1.Stage.STAGE_1;
         this.evolvesFrom = 'Shuppet';
         this.regulationMark = 'F';
         this.cardType = game_1.CardType.PSYCHIC;

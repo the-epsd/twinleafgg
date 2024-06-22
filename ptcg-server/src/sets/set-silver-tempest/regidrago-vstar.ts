@@ -81,7 +81,7 @@ export class RegidragoVSTAR extends PokemonCard {
 
   public powers = [
     {
-      name: 'Summoning Star',
+      name: 'Legacy Star',
       useWhenInPlay: true,
       powerType: PowerType.ABILITY,
       text: 'During your turn, you may discard the top 7 cards of your deck. Then, put up to 2 cards from your discard pile into your hand. (You can\'t use more than 1 VSTAR Power in a game.)'

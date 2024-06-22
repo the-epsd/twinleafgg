@@ -72,7 +72,7 @@ export class RagingBoltex extends PokemonCard {
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH], 
-        { min: 1, max: 6, allowCancel: false }
+        { min: 1, max: 6, allowCancel: true }
       ), targets => {
         targets.forEach(target => {
 
@@ -81,7 +81,7 @@ export class RagingBoltex extends PokemonCard {
             GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
             target, // Card source is target Pokemon
             { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-            { min: 1, allowCancel: false }
+            { min: 1, allowCancel: true }
           ), selected => {
             const cards = selected || [];
             if (cards.length > 0) {
@@ -95,7 +95,7 @@ export class RagingBoltex extends PokemonCard {
 
                 totalDiscarded += discardEnergy.cards.length;
       
-                effect.damage = totalDiscarded * 60;
+                effect.damage = totalDiscarded * 70;
 
                 store.reduceEffect(state, discardEnergy);
               });

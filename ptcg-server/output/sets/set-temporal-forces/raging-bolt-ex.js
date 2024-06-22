@@ -51,10 +51,10 @@ class RagingBoltex extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 6, allowCancel: false }), targets => {
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 6, allowCancel: true }), targets => {
                 targets.forEach(target => {
                     return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, target, // Card source is target Pokemon
-                    { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, allowCancel: false }), selected => {
+                    { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, allowCancel: true }), selected => {
                         const cards = selected || [];
                         if (cards.length > 0) {
                             let totalDiscarded = 0;
@@ -62,7 +62,7 @@ class RagingBoltex extends pokemon_card_1.PokemonCard {
                                 const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
                                 discardEnergy.target = target;
                                 totalDiscarded += discardEnergy.cards.length;
-                                effect.damage = totalDiscarded * 60;
+                                effect.damage = totalDiscarded * 70;
                                 store.reduceEffect(state, discardEnergy);
                             });
                             return state;

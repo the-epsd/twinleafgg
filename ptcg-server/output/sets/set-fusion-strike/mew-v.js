@@ -17,7 +17,7 @@ class MewV extends pokemon_card_1.PokemonCard {
         this.retreat = [];
         this.attacks = [
             {
-                name: 'Strafe',
+                name: 'Energy Mix',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 30,
                 text: 'Search your deck for an Energy card and attach it to 1 of  ' +

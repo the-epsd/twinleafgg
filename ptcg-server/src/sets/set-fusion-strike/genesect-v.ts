@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { GameError, PlayerType, PowerType } from '../../game';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
@@ -118,6 +118,12 @@ export class GenesectV extends PokemonCard {
 
             while (player.hand.cards.length < fusionStrikeCount) {
               player.deck.moveTo(player.hand, 1);
+
+              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                  cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                }
+              });
           }
 
           player.attackMarker.addMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);

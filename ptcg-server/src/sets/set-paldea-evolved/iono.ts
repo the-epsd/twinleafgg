@@ -4,7 +4,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { CardList, GameError, GameMessage } from '../../game';
+import { CardList, GameError, GameMessage, Player } from '../../game';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 
@@ -45,6 +45,13 @@ export class Iono extends TrainerCard {
       effect.preventDefault = true;
 
       const cards = player.hand.cards.filter(c => c !== this);
+
+      // Shuffle the player's hand
+      this.shufflePlayerHand(player);
+
+      // Shuffle the opponent's hand
+      this.shufflePlayerHand(opponent);
+
       const deckBottom = new CardList();
       const opponentDeckBottom = new CardList();
 
@@ -71,5 +78,15 @@ export class Iono extends TrainerCard {
     }
     
     return state;
+  }
+
+  shufflePlayerHand(player: Player): void {
+    const hand = player.hand.cards;
+  
+    // Shuffle the hand using the Fisher-Yates shuffle algorithm
+    for (let i = hand.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [hand[i], hand[j]] = [hand[j], hand[i]];
+    }
   }
 }

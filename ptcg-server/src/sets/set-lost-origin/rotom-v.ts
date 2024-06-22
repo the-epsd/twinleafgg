@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, PowerType } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, PowerType, GameError } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -85,6 +85,10 @@ export class RotomV extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
         
       const player = effect.player;
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
 
       player.deck.moveTo(player.hand, 3);
       const endTurnEffect = new EndTurnEffect(player);

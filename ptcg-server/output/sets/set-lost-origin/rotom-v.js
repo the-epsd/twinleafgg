@@ -60,6 +60,9 @@ class RotomV extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
             player.deck.moveTo(player.hand, 3);
             const endTurnEffect = new game_phase_effects_1.EndTurnEffect(player);
             store.reduceEffect(state, endTurnEffect);

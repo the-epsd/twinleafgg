@@ -31,6 +31,10 @@ class Iono extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             const cards = player.hand.cards.filter(c => c !== this);
+            // Shuffle the player's hand
+            this.shufflePlayerHand(player);
+            // Shuffle the opponent's hand
+            this.shufflePlayerHand(opponent);
             const deckBottom = new game_1.CardList();
             const opponentDeckBottom = new game_1.CardList();
             if (cards.length === 0 && player.deck.cards.length === 0) {
@@ -49,6 +53,14 @@ class Iono extends trainer_card_1.TrainerCard {
             player.supporterTurn = 1;
         }
         return state;
+    }
+    shufflePlayerHand(player) {
+        const hand = player.hand.cards;
+        // Shuffle the hand using the Fisher-Yates shuffle algorithm
+        for (let i = hand.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [hand[i], hand[j]] = [hand[j], hand[i]];
+        }
     }
 }
 exports.Iono = Iono;

@@ -4,7 +4,7 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Banette extends PokemonCard {
   
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Shuppet';
   

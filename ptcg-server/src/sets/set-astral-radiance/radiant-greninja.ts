@@ -81,6 +81,11 @@ export class RadiantGreninja extends PokemonCard {
       if (player.marker.hasMarker(this.CONCEALED_CARDS_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       state = store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_DISCARD,

@@ -22,7 +22,7 @@ export class MewV extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Strafe',
+      name: 'Energy Mix',
       cost: [CardType.PSYCHIC],
       damage: 30,
       text: 'Search your deck for an Energy card and attach it to 1 of  ' +

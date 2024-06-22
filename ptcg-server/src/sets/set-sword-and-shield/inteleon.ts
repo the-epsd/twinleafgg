@@ -1,8 +1,7 @@
 import { PokemonCard, CardTag, Stage, CardType, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, State, StateUtils, StoreLike, SuperType, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { AttackEffect, EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Inteleon extends PokemonCard {
 
@@ -49,7 +48,7 @@ export class Inteleon extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+    if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       
