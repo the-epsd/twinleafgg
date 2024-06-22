@@ -12,30 +12,30 @@ export class Tsareenaex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [CardTag.POKEMON_ex];
-
+  public tags = [ CardTag.POKEMON_ex ];
+  
   public stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Steenee';
 
-  public cardType = CardType.WATER;
+  public  cardType = CardType.WATER;
 
   public hp = 310;
 
-  public weakness = [{ type: CardType.METAL }];
+  public weakness = [{type: CardType.METAL}];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Icicle Sole',
-      cost: [CardType.GRASS],
+      cost: [ CardType.GRASS ],
       damage: 0,
       text: 'Put damage counters on 1 of your opponent\'s Pokémon until its remaining HP is 30.'
     },
     {
       name: 'Trop Kick',
-      cost: [CardType.GRASS, CardType.GRASS],
+      cost: [ CardType.GRASS, CardType.GRASS ],
       damage: 180,
       text: 'Heal 30 damage from this Pokémon and it recovers from all Special Conditions.'
     }
@@ -46,9 +46,9 @@ export class Tsareenaex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '20';
-
+  
   public name: string = 'Tsareena ex';
-
+  
   public fullName: string = 'Tsareena ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
