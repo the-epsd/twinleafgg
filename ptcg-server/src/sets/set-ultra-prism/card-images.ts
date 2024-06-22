@@ -6,6 +6,8 @@ import { Magnezone } from './magnezone';
 import { MtCoronet } from './mt-coronet';
 import { PokemonFanClub } from './pokemon-fan-club';
 import { Turtwig } from './turtwig';
+import { UnitEnergyGRW } from './unit-energy-grw';
+import { UnitEnergyLPM } from './unit-energy-lpm';
 import { Volkner } from './volkner';
 
 export class CynthiaArt extends Cynthia {
@@ -38,6 +40,14 @@ export class PokemonFanClubArt extends PokemonFanClub {
 
 export class TurtwigArt extends Turtwig {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_006_R_EN_LG.png';
+}
+
+export class UnitEnergyGRWArt extends UnitEnergyGRW {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_137_R_EN.png';
+}
+
+export class UnitEnergyLPMArt extends UnitEnergyLPM {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_138_R_EN.png';
 }
 
 export class VolknerArt extends Volkner {

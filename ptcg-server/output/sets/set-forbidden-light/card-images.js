@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.InkayArt = exports.BeastRingArt = void 0;
+exports.UnitEnergyFDYArt = exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.InkayArt = exports.BeastRingArt = void 0;
 const beast_ring_1 = require("./beast-ring");
 const inkay_1 = require("./inkay");
 const malamar_1 = require("./malamar");
 const metal_frying_pan_1 = require("./metal-frying-pan");
 const mysterious_treasure_1 = require("./mysterious-treasure");
+const unit_energy_fdy_1 = require("./unit-energy-fdy");
 class BeastRingArt extends beast_ring_1.BeastRing {
     constructor() {
         super(...arguments);
@@ -41,3 +42,10 @@ class MysteriousTreasureArt extends mysterious_treasure_1.MysteriousTreasure {
     }
 }
 exports.MysteriousTreasureArt = MysteriousTreasureArt;
+class UnitEnergyFDYArt extends unit_energy_fdy_1.UnitEnergyFDY {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_118_R_EN.png';
+    }
+}
+exports.UnitEnergyFDYArt = UnitEnergyFDYArt;
