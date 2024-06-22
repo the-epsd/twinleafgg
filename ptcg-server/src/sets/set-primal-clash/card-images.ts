@@ -39,7 +39,7 @@ export class ScorchedEarthArt extends ScorchedEarth {
 }
 
 export class ShieldEnergArt extends ShieldEnergy {
-  public cardImage = '';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_143_R_EN.png';
 }
 
 export class SilentLabArt extends SilentLab {

@@ -21,8 +21,8 @@ class AlolanRattata extends pokemon_card_1.PokemonCard {
         this.set = 'SUM';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '76';
-        this.name = 'AlolanRattata';
-        this.fullName = 'AlolanRattata SUM';
+        this.name = 'Alolan Rattata';
+        this.fullName = 'Alolan Rattata SUM';
     }
 }
 exports.AlolanRattata = AlolanRattata;

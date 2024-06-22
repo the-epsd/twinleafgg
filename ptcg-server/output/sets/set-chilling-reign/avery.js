@@ -21,6 +21,13 @@ class Avery extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             // Draw 3 cards
             player.deck.moveTo(player.hand, 3);
             // Get opponent
@@ -41,6 +48,8 @@ class Avery extends trainer_card_1.TrainerCard {
                     return state;
                 });
             }
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            player.supporterTurn = 1;
             return state;
         }
         return state;

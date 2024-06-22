@@ -10,7 +10,7 @@ class AlolanRaticate extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
-        this.evolvesFrom = 'AlolanRattata';
+        this.evolvesFrom = 'Alolan Rattata';
         this.cardType = card_types_1.CardType.DARK;
         this.hp = 120;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
@@ -31,8 +31,8 @@ class AlolanRaticate extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '42';
-        this.name = 'AlolanRaticate';
-        this.fullName = 'AlolanRaticate PGO';
+        this.name = 'Alolan Raticate';
+        this.fullName = 'Alolan Raticate PGO';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

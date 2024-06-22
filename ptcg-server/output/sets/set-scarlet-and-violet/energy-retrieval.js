@@ -28,7 +28,7 @@ function* playCard(next, store, state, effect) {
     return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, max: min, allowCancel: false }), cards => {
         cards = cards || [];
         if (cards.length > 0) {
-            player.discard.moveCardsTo(cards, player.deck);
+            player.discard.moveCardsTo(cards, player.hand);
             cards.forEach((card, index) => {
                 store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
             });

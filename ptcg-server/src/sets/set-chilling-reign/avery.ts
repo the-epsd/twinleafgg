@@ -4,7 +4,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 
 //Avery is not done yet!! have to add the "remove from bench" logic
 
@@ -33,6 +33,16 @@ export class Avery extends TrainerCard {
 
       const player = effect.player;
 
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       // Draw 3 cards
       player.deck.moveTo(player.hand, 3);
 
@@ -60,9 +70,13 @@ export class Avery extends TrainerCard {
           selected.forEach(card => {
             card.moveTo(opponent.discard);
           });
+          
           return state;
         });
       }
+
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      player.supporterTurn = 1;
       return state;
     }
     return state;

@@ -36,7 +36,7 @@ class Floatzel extends pokemon_card_1.PokemonCard {
         this.setNumber = '039';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const itemCount = player.discard.cards.filter(c => {

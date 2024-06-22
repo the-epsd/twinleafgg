@@ -39,7 +39,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     cards = cards || [];
     
     if (cards.length > 0) {
-      player.discard.moveCardsTo(cards, player.deck);
+      player.discard.moveCardsTo(cards, player.hand);
       cards.forEach((card, index) => {
         store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
       });

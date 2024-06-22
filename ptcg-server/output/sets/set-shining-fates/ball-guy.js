@@ -46,7 +46,7 @@ class BallGuy extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'G';
-        this.trainerType = card_types_1.TrainerType.ITEM;
+        this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'SHF';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '57';

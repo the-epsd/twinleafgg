@@ -64,7 +64,7 @@ exports.ScorchedEarthArt = ScorchedEarthArt;
 class ShieldEnergArt extends shield_energy_1.ShieldEnergy {
     constructor() {
         super(...arguments);
-        this.cardImage = '';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_143_R_EN.png';
     }
 }
 exports.ShieldEnergArt = ShieldEnergArt;

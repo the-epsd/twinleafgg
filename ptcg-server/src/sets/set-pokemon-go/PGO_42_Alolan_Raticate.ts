@@ -7,7 +7,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class AlolanRaticate extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom: string = 'AlolanRattata';
+  public evolvesFrom: string = 'Alolan Rattata';
   public cardType: CardType = CardType.DARK;
   public hp: number = 120;
   public weakness = [{ type: CardType.GRASS }];
@@ -30,8 +30,8 @@ export class AlolanRaticate extends PokemonCard {
   public regulationMark: string = 'F';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
-  public name: string = 'AlolanRaticate';
-  public fullName: string = 'AlolanRaticate PGO';
+  public name: string = 'Alolan Raticate';
+  public fullName: string = 'Alolan Raticate PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
