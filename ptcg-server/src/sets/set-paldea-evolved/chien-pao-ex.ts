@@ -11,7 +11,7 @@ export class ChienPaoex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.BASIC;
 
@@ -23,7 +23,7 @@ export class ChienPaoex extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Shivery Chill',
@@ -38,8 +38,8 @@ export class ChienPaoex extends PokemonCard {
   public attacks = [
     {
       name: 'Hail Blade',
-      cost: [CardType.WATER, CardType.WATER ],
-      damage: 60,
+      cost: [CardType.WATER, CardType.WATER],
+      damage: 0,
       text: 'You may discard any amount of W Energy from your ' +
         'Pokémon. This attack does 60 damage for each card you ' +
         'discarded in this way.'
@@ -60,18 +60,18 @@ export class ChienPaoex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       if (player.active.cards[0] !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      
+
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id, 
+        player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck, 
+        player.deck,
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
         { min: 0, max: 2, allowCancel: true }
       ), cards => {
@@ -105,16 +105,16 @@ export class ChienPaoex extends PokemonCard {
         });
       });
     }
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
-    
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH], 
+        [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: 6, allowCancel: false }
       ), targets => {
         targets.forEach(target => {
@@ -129,21 +129,23 @@ export class ChienPaoex extends PokemonCard {
             const cards = selected || [];
             if (cards.length > 0) {
 
-              let totalDiscarded = 0; 
+              let totalDiscarded = 0;
 
-              targets.forEach(target => {
+              const discardEnergy = new DiscardCardsEffect(effect, cards);
+              discardEnergy.target = target;
 
-                const discardEnergy = new DiscardCardsEffect(effect, cards);
-                discardEnergy.target = target;
+              totalDiscarded += discardEnergy.cards.length;
 
-                totalDiscarded += discardEnergy.cards.length;
-      
-                effect.damage = totalDiscarded * 60;
+              store.reduceEffect(state, discardEnergy);
 
-                store.reduceEffect(state, discardEnergy);
-              });
+              console.log('Total discarded:' + totalDiscarded);
+
+              effect.damage += totalDiscarded * 60;
+              console.log('Total Damage: ' + effect.damage);
+
               return state;
-            }});
+            }
+          });
         });
         return state;
       });

@@ -86,19 +86,20 @@ export class RagingBoltex extends PokemonCard {
             const cards = selected || [];
             if (cards.length > 0) {
 
-              let totalDiscarded = 0; 
+              let totalDiscarded = 0;
 
-              targets.forEach(target => {
+              const discardEnergy = new DiscardCardsEffect(effect, cards);
+              discardEnergy.target = target;
 
-                const discardEnergy = new DiscardCardsEffect(effect, cards);
-                discardEnergy.target = target;
+              totalDiscarded += discardEnergy.cards.length;
 
-                totalDiscarded += discardEnergy.cards.length;
-      
-                effect.damage = totalDiscarded * 70;
+              store.reduceEffect(state, discardEnergy);
 
-                store.reduceEffect(state, discardEnergy);
-              });
+              console.log('Total discarded:' + totalDiscarded);
+
+              effect.damage += totalDiscarded * 70;
+              console.log('Total Damage: ' + effect.damage);
+
               return state;
             }});
         });

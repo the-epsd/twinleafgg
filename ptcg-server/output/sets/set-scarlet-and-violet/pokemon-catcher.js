@@ -6,7 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon-prompt");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_1 = require("../../game");
-function* playCard(next, store, state, effect) {
+function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
     const hasBench = opponent.bench.some(b => b.cards.length > 0);
@@ -21,13 +21,14 @@ function* playCard(next, store, state, effect) {
         next();
     });
     if (coinResult === false) {
+        player.supporter.moveCardTo(self, player.discard);
         return state;
     }
-    return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
+    yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
         const cardList = result[0];
         opponent.switchPokemon(cardList);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
+    player.supporter.moveCardTo(self, player.discard);
 }
 class PokemonCatcher extends trainer_card_1.TrainerCard {
     constructor() {
@@ -44,7 +45,7 @@ class PokemonCatcher extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
-            const generator = playCard(() => generator.next(), store, state, effect);
+            const generator = playCard(() => generator.next(), store, state, this, effect);
             return generator.next().value;
         }
         return state;

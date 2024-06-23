@@ -7,7 +7,7 @@ import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-pro
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { PlayerType, SlotType, CoinFlipPrompt, StateUtils, GameError, GameMessage } from '../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, self: PokemonCatcher, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   const hasBench = opponent.bench.some(b => b.cards.length > 0);
@@ -26,10 +26,11 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   if (coinResult === false) {
+    player.supporter.moveCardTo(self, player.discard);
     return state;
   }
 
-  return store.prompt(state, new ChoosePokemonPrompt(
+  yield store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_SWITCH,
     PlayerType.TOP_PLAYER,
@@ -38,8 +39,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   ), result => {
     const cardList = result[0];
     opponent.switchPokemon(cardList);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   });
+
+  player.supporter.moveCardTo(self, player.discard);
 }
 
 export class PokemonCatcher extends TrainerCard {
@@ -64,7 +66,7 @@ export class PokemonCatcher extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
+      const generator = playCard(() => generator.next(), store, state, this,  effect);
       return generator.next().value;
     }
     return state;

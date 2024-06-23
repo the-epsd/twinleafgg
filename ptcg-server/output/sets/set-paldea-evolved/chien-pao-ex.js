@@ -31,7 +31,7 @@ class ChienPaoex extends pokemon_card_1.PokemonCard {
             {
                 name: 'Hail Blade',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER],
-                damage: 60,
+                damage: 0,
                 text: 'You may discard any amount of W Energy from your ' +
                     'Pokémon. This attack does 60 damage for each card you ' +
                     'discarded in this way.'
@@ -81,13 +81,13 @@ class ChienPaoex extends pokemon_card_1.PokemonCard {
                         const cards = selected || [];
                         if (cards.length > 0) {
                             let totalDiscarded = 0;
-                            targets.forEach(target => {
-                                const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
-                                discardEnergy.target = target;
-                                totalDiscarded += discardEnergy.cards.length;
-                                effect.damage = totalDiscarded * 60;
-                                store.reduceEffect(state, discardEnergy);
-                            });
+                            const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+                            discardEnergy.target = target;
+                            totalDiscarded += discardEnergy.cards.length;
+                            store.reduceEffect(state, discardEnergy);
+                            console.log('Total discarded:' + totalDiscarded);
+                            effect.damage += totalDiscarded * 60;
+                            console.log('Total Damage: ' + effect.damage);
                             return state;
                         }
                     });

@@ -4,7 +4,7 @@ import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-t
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CardList, EnergyCard, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, ShuffleDeckPrompt, ShowCardsPrompt } from '../../game';
+import { CardList, EnergyCard, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, ShuffleDeckPrompt, ShowCardsPrompt, GameError } from '../../game';
 
 export class ElectricGenerator extends TrainerCard {
 
@@ -29,6 +29,10 @@ export class ElectricGenerator extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const temp = new CardList();
+
+      if(player.bench.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
   
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
