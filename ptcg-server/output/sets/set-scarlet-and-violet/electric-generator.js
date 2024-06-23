@@ -21,6 +21,9 @@ class ElectricGenerator extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const temp = new game_1.CardList();
+            if (player.bench.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             player.deck.moveTo(temp, 5);

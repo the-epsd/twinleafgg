@@ -36,7 +36,7 @@ export function playCardReducer(store, state, action) {
                 if (!(target instanceof PokemonCardList) || target.cards.length === 0) {
                     throw new GameError(GameMessage.INVALID_TARGET);
                 }
-                if (player.usedDragonsWish == true) {
+                if (player.usedDragonsWish === true || state.rules.unlimitedEnergyAttachments === true) {
                     // Allow multiple energy attachments per turn
                     const effect = new AttachEnergyEffect(player, handCard, target);
                     return store.reduceEffect(state, effect);

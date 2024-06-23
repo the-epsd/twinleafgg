@@ -107,6 +107,7 @@
   "GAMES_CREATE_GAME_BUTTON": "Create game",
   "GAMES_CREATE_GAME_TITLE": "Create game",
   "GAMES_DRAW_CARD_FIRST_TURN": "First player draws a card",
+  "GAMES_UNLIMITED_ENERGY": "Unlimited energy attachments per-turn",
   "GAMES_FORMAT": "Format",
   "GAMES_GAME_RULES": "Game rules",
   "GAMES_LIMIT_10_MIN": "10 min",

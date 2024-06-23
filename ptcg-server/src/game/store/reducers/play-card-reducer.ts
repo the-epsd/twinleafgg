@@ -50,9 +50,9 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
           throw new GameError(GameMessage.INVALID_TARGET);
         }
 
-        if (player.usedDragonsWish == true) {
+        if (player.usedDragonsWish === true || state.rules.unlimitedEnergyAttachments === true) {
           // Allow multiple energy attachments per turn
-          const effect = new AttachEnergyEffect(player, handCard, target);  
+          const effect = new AttachEnergyEffect(player, handCard, target);
           return store.reduceEffect(state, effect);
         } else {
 
@@ -65,7 +65,7 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
           return store.reduceEffect(state, effect);
         }
       }
-        
+
       if (handCard instanceof PokemonCard) {
         const target = findCardList(state, action.target);
         if (!(target instanceof PokemonCardList)) {
