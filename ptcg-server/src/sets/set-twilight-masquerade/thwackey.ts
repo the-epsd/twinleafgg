@@ -70,6 +70,13 @@ export class Thwackey extends PokemonCard {
     
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+
+      // const activePokemon = player.active.getPokemonCard();
+
+      // if (activePokemon && activePokemon.powers[0].name !== 'Fesival Lead') {
+      //   throw new GameError(GameMessage.CANNOT_USE_POWER);
+      // }
+
       if (player.marker.hasMarker(this.BOOM_BOOM_DRUM_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }

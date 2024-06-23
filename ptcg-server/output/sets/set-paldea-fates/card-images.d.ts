@@ -1,5 +1,4 @@
 import { Charizardex } from '../set-obsidian-flames/charizard-ex';
-import { Charmander } from '../set-obsidian-flames/charmander';
 import { Artazon } from '../set-paldea-evolved/artazon';
 import { Iono } from '../set-paldea-evolved/iono';
 import { Mimikyu } from '../set-paldea-evolved/mimikyu';
@@ -8,6 +7,7 @@ import { Noivernex } from '../set-paldea-evolved/noivern-ex';
 import { Squawkabillyex } from '../set-paldea-evolved/squawkabilly-ex';
 import { Natu } from '../set-paradox-rift/natu';
 import { Xatu } from '../set-paradox-rift/xatu';
+import { Charmander } from '../set-pokemon-151/charmander';
 import { Armarouge } from '../set-scarlet-and-violet/armarouge';
 import { Charcadet } from '../set-scarlet-and-violet/charcadet';
 import { ElectricGenerator } from '../set-scarlet-and-violet/electric-generator';

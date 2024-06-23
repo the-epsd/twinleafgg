@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArtazonArt = exports.SquawkabillyexArt = exports.NoivernexArt = exports.NoibatArt = exports.GardevoirexArt = exports.RaltsArt = exports.CharcadetArt = exports.ArmarougeArt = exports.XatuArt = exports.UltraBallArt = exports.TechnicalMachineCrisisPunchArt = exports.NatuArt = exports.StudentsInPaldeaArt2 = exports.StudentsInPaldeaArt = exports.ScovillainexArt = exports.RareCandyArt = exports.ProfessorsResearch2Art = exports.ProfessorsResearchArt = exports.NemonaArt = exports.NestBallArt = exports.MoonlightHillArt = exports.MimikyuArt = exports.MimeJrArt = exports.KilowattrelArt = exports.IonoArt = exports.HaunterArt = exports.GengarArt = exports.GastlyArt = exports.FrigibaxArt = exports.EspathraexArt = exports.ElectricGeneratorArt = exports.CliveArt = exports.CharmanderArt = exports.CharizardexArt = exports.CharmeleonArt = exports.AtticusArt = void 0;
 const charizard_ex_1 = require("../set-obsidian-flames/charizard-ex");
-const charmander_1 = require("../set-obsidian-flames/charmander");
 const artazon_1 = require("../set-paldea-evolved/artazon");
 const iono_1 = require("../set-paldea-evolved/iono");
 const mimikyu_1 = require("../set-paldea-evolved/mimikyu");
@@ -11,6 +10,7 @@ const noivern_ex_1 = require("../set-paldea-evolved/noivern-ex");
 const squawkabilly_ex_1 = require("../set-paldea-evolved/squawkabilly-ex");
 const natu_1 = require("../set-paradox-rift/natu");
 const xatu_1 = require("../set-paradox-rift/xatu");
+const charmander_1 = require("../set-pokemon-151/charmander");
 const armarouge_1 = require("../set-scarlet-and-violet/armarouge");
 const charcadet_1 = require("../set-scarlet-and-violet/charcadet");
 const electric_generator_1 = require("../set-scarlet-and-violet/electric-generator");

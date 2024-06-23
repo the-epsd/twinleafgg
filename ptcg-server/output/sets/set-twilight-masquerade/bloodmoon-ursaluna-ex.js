@@ -27,7 +27,7 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
             {
                 name: 'Blood Moon',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 250,
+                damage: 240,
                 text: 'This Pokémon can\'t attack during your next turn.'
             }
         ];

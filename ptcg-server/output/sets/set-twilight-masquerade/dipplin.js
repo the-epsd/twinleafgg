@@ -47,7 +47,7 @@ class Dipplin extends game_1.PokemonCard {
             }
             // Handle PowerEffect after damage is resolved
             // Check if 'Festival Plaza' stadium is in play
-            if (stadiumCard && stadiumCard.name === 'Festival Plaza') {
+            if (stadiumCard && stadiumCard.name === 'Festival Grounds') {
                 if (effect.damage > 0) {
                     const dealDamage = new attack_effects_1.DealDamageEffect(effect, effect.damage);
                     state = store.reduceEffect(state, dealDamage);
