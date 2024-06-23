@@ -29,6 +29,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+
   const cards = player.hand.cards.filter(c => c !== self);
 
   // We will discard this card after prompt confirmation

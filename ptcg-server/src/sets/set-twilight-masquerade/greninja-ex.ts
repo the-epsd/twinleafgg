@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, Card, State, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType, ShuffleDeckPrompt, GameError } from '../../game';
+import { StoreLike, Card, State, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType, ShuffleDeckPrompt, GameError, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -10,7 +10,7 @@ import { ChooseEnergyPrompt } from '../../game/store/prompts/choose-energy-promp
 
 export class Greninjaex extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
 
   public regulationMark = 'H';
 
@@ -116,10 +116,22 @@ export class Greninjaex extends PokemonCard {
             store.reduceEffect(state, discardEnergy);
           });
         });
-        return state; 
       });
     }
-    return state; 
+    if (effect instanceof PutDamageEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Target is not Active
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+
+      // Target is this Pokemon
+      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+        effect.preventDefault = true;
+      }
+    }
+    return state;
   }
 }
-

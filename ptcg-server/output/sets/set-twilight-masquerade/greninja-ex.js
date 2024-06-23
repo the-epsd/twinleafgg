@@ -12,7 +12,7 @@ const choose_energy_prompt_1 = require("../../game/store/prompts/choose-energy-p
 class Greninjaex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.POKEMON_ex];
+        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
         this.regulationMark = 'H';
         this.stage = card_types_1.Stage.STAGE_2;
         this.cardTypez = card_types_1.CardType.GRENINJA_EX;
@@ -74,8 +74,19 @@ class Greninjaex extends pokemon_card_1.PokemonCard {
                         store.reduceEffect(state, discardEnergy);
                     });
                 });
-                return state;
             });
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Target is not Active
+            if (effect.target === player.active || effect.target === opponent.active) {
+                return state;
+            }
+            // Target is this Pokemon
+            if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+                effect.preventDefault = true;
+            }
         }
         return state;
     }

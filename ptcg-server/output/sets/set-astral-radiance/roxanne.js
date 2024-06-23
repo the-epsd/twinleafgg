@@ -21,6 +21,7 @@ function* playCard(next, store, state, self, effect) {
     if (oppPrizes > 3) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     const cards = player.hand.cards.filter(c => c !== self);
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;

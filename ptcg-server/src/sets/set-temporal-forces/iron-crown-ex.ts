@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
@@ -87,30 +87,41 @@ export class IronCrownex extends PokemonCard {
           }
         });
       });
-    
-      if (effect instanceof DealDamageEffect) {
+    }
+    if (effect instanceof DealDamageEffect) {
 
-        const player = effect.player;
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, effect.player);
 
-        const targetCard = player.active.getPokemonCard();
-        if (targetCard && targetCard.tags.includes(CardTag.FUTURE)) {
-          if (targetCard.name == 'Iron Crown ex') {
-            return state;
-          }
+      let hasIronCrownexInPlay = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          hasIronCrownexInPlay = true;
+        }
+      });
 
-          // Try to reduce PowerEffect, to check if something is blocking our ability
-          try {
-            const powerEffect = new PowerEffect(player, this.powers[0], this);
-            store.reduceEffect(state, powerEffect);
-          } catch {
-            return state;
-          }
+      if (!hasIronCrownexInPlay) {
+        return state;
+      }
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
+      }
+
+      if (effect.target !== player.active && effect.target !== opponent.active) {
+        return state;
+      }
+      const futurePokemon = effect.player.active.getPokemonCard();
+      if (futurePokemon && futurePokemon.tags.includes(CardTag.FUTURE)) {
+        if (futurePokemon && futurePokemon.name !== 'Iron Crown ex') {
           effect.damage += 20;
         }
-      }         
-      return state; 
+      }
     }
     return state;
-  }
+  }       
 }
-

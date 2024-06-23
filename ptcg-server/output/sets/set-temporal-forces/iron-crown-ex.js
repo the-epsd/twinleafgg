@@ -62,25 +62,36 @@ class IronCrownex extends pokemon_card_1.PokemonCard {
                     }
                 });
             });
-            if (effect instanceof attack_effects_1.DealDamageEffect) {
-                const player = effect.player;
-                const targetCard = player.active.getPokemonCard();
-                if (targetCard && targetCard.tags.includes(card_types_1.CardTag.FUTURE)) {
-                    if (targetCard.name == 'Iron Crown ex') {
-                        return state;
-                    }
-                    // Try to reduce PowerEffect, to check if something is blocking our ability
-                    try {
-                        const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                        store.reduceEffect(state, powerEffect);
-                    }
-                    catch (_a) {
-                        return state;
-                    }
+        }
+        if (effect instanceof attack_effects_1.DealDamageEffect) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            let hasIronCrownexInPlay = false;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card === this) {
+                    hasIronCrownexInPlay = true;
+                }
+            });
+            if (!hasIronCrownexInPlay) {
+                return state;
+            }
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                store.reduceEffect(state, powerEffect);
+            }
+            catch (_a) {
+                return state;
+            }
+            if (effect.target !== player.active && effect.target !== opponent.active) {
+                return state;
+            }
+            const futurePokemon = effect.player.active.getPokemonCard();
+            if (futurePokemon && futurePokemon.tags.includes(card_types_1.CardTag.FUTURE)) {
+                if (futurePokemon && futurePokemon.name !== 'Iron Crown ex') {
                     effect.damage += 20;
                 }
             }
-            return state;
         }
         return state;
     }
