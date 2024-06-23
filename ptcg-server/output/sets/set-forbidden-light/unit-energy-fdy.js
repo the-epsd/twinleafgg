@@ -18,6 +18,7 @@ class UnitEnergyFDY extends energy_card_1.EnergyCard {
         this.text = 'This card provides [C] Energy.' +
             '' +
             'While this card is attached to a Pokémon, it provides [F], [D], and [Y] Energy but provides only 1 Energy at a time.';
+        this.blendedEnergies = [card_types_1.CardType.FAIRY, card_types_1.CardType.FIGHTING, card_types_1.CardType.DARK];
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {

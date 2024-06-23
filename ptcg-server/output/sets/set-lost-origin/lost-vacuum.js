@@ -81,8 +81,10 @@ class LostVacuum extends trainer_card_1.TrainerCard {
                                         target.moveCardTo(target.tool, owner.lostzone);
                                         target.tool = undefined;
                                     }
+                                    player.supporter.moveCardTo(this, player.discard);
                                     return state;
                                 });
+                                player.supporter.moveCardTo(this, player.discard);
                                 return state;
                             });
                         }
@@ -98,6 +100,7 @@ class LostVacuum extends trainer_card_1.TrainerCard {
                             const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
                             const player = game_1.StateUtils.findOwner(state, cardList);
                             cardList.moveTo(player.lostzone);
+                            player.supporter.moveCardTo(this, player.discard);
                             return state;
                         }
                     }

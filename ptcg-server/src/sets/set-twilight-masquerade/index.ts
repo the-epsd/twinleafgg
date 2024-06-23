@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AggronArt, ApplinArt, ApplinArt2, AronArt, BlisseyexArt, BloodmoonUrsalunaexArt, BugCatchingSetArt, CaretakerArt, CarmineArt, ChanseyArt, CommunityCenterArt, CornerstoneMaskOgerponexArt, DipplinArt, DragapultexArt, DrakloakArt, DreepyArt, EnhancedHammerArt, FarfetchdArt, FestivalGroundsArt, FroakieArt, FrogadierArt, FroslassArt, GreninjaexArt, GrookeyArt, HandyFanArt, HasselArt, HyperAromaArt, InfernapeArt, IronLeavesArt, IronThornsexArt, JammingTowerArt, KieranArt, LaironArt, LegacyEnergyArt, LoveBallArt, LuckyHelmetArt, LuxioArt, LuxrayexArt, MightyenaArt, MorpekoArt, MunkidoriArt, PerformanceFluteArt, PerrinArt, PhioneArt, PoochyenaArt, RotoStickArt, ScoopUpCycloneArt, ScreamTailexArt, SurvivalCastArt, TatsugiriArt, TealMaskOgerponexArt, ThwackeyArt, UnfairStampArt, WalkingWakeArt, WellspringMaskOgerponexArt } from './card-images';
+import { AggronArt, ApplinArt, ApplinArt2, AronArt, BlisseyexArt, BloodmoonUrsalunaexArt, BugCatchingSetArt, CaretakerArt, CarmineArt, ChanseyArt, CommunityCenterArt, CornerstoneMaskOgerponexArt, DipplinArt, DragapultexArt, DrakloakArt, DreepyArt, EnhancedHammerArt, FarfetchdArt, FestivalGroundsArt, FroakieArt, FrogadierArt, FroslassArt, GreninjaexArt, GrookeyArt, HandyFanArt, HasselArt, HyperAromaArt, InfernapeArt, IronLeavesArt, IronThornsexArt, JammingTowerArt, KieranArt, LaironArt, LegacyEnergyArt, LoveBallArt, LuckyHelmetArt, LuxioArt, LuxrayexArt, MightyenaArt, MorpekoArt, MunkidoriArt, OkidogiArt, PerformanceFluteArt, PerrinArt, PhioneArt, PoochyenaArt, RotoStickArt, ScoopUpCycloneArt, ScreamTailexArt, SurvivalCastArt, TatsugiriArt, TealMaskOgerponexArt, ThwackeyArt, UnfairStampArt, WalkingWakeArt, WellspringMaskOgerponexArt } from './card-images';
 export const setTwilightMasquerade: Card[] = [
 
   new AggronArt(),
@@ -38,6 +38,7 @@ export const setTwilightMasquerade: Card[] = [
   new IronThornsexArt(),
   new LoveBallArt(),
   new LuckyHelmetArt(),
+  new OkidogiArt(),
   new PerrinArt(),
   new PhioneArt(),
   new ScreamTailexArt(),

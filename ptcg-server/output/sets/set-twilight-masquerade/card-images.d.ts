@@ -62,6 +62,7 @@ import { CornerstoneMaskOgerponex } from './cornerstone-mask-ogerpon-ex';
 import { BoomerangEnergy } from './boomerang-energy';
 import { Infernape } from './infernape';
 import { WalkingWake } from './walking-wake';
+import { Okidogi } from './okidogi';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -204,6 +205,9 @@ export declare class MorpekoArt extends Morpeko {
     cardImage: string;
 }
 export declare class MunkidoriArt extends Munkidori {
+    cardImage: string;
+}
+export declare class OkidogiArt extends Okidogi {
     cardImage: string;
 }
 export declare class PerformanceFluteArt extends PerformanceFlute {

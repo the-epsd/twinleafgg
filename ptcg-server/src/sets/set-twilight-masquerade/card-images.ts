@@ -63,6 +63,7 @@ import { CornerstoneMaskOgerponex } from './cornerstone-mask-ogerpon-ex';
 import { BoomerangEnergy } from './boomerang-energy';
 import { Infernape } from './infernape';
 import { WalkingWake } from './walking-wake';
+import { Okidogi } from './okidogi';
 
 
 export class AggronArt extends Aggron {
@@ -255,6 +256,10 @@ export class MorpekoArt extends Morpeko {
 
 export class MunkidoriArt extends Munkidori {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_095_R_EN_LG.png';
+}
+
+export class OkidogiArt extends Okidogi {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_111_R_EN.png';
 }
 
 export class PerformanceFluteArt extends PerformanceFlute {

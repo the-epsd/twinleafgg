@@ -82,13 +82,13 @@ export class GuzmaAndHala extends TrainerCard {
         state = store.prompt(state, new ChooseCardsPrompt(
           player.id,
           GameMessage.CHOOSE_CARD_TO_HAND,
-          player.hand,
+          player.deck,
           { },
           { allowCancel: false, min: 0, max: 3, maxSpecialEnergies, maxTools, maxStadiums: 1 }
         ), cards => {
           cards = cards || [];
                         
-          player.hand.moveCardsTo(cards, player.hand);
+          player.deck.moveCardsTo(cards, player.hand);
           
           state = store.prompt(state, new ShowCardsPrompt(
             opponent.id,

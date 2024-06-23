@@ -12,6 +12,7 @@ class EnergyCard extends card_1.Card {
         this.provides = [];
         this.text = '';
         this.isBlocked = false;
+        this.blendedEnergies = [];
     }
 }
 exports.EnergyCard = EnergyCard;

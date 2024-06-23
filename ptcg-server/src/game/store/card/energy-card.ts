@@ -17,5 +17,7 @@ export abstract class EnergyCard extends Card {
 
   public isBlocked = false;
 
+  public blendedEnergies: CardType[] = [];
+
   public energyEffect: EnergyEffect | undefined;
 }

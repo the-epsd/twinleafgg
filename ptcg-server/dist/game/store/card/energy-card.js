@@ -9,5 +9,6 @@ export class EnergyCard extends Card {
         this.provides = [];
         this.text = '';
         this.isBlocked = false;
+        this.blendedEnergies = [];
     }
 }
