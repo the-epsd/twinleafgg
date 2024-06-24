@@ -10,7 +10,7 @@ class LugiaVSTAR extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VSTAR];
         this.regulationMark = 'F';
-        this.stage = card_types_1.Stage.VSTAR;
+        this.stage = card_types_1.Stage.BASIC;
         this.evolvesFrom = 'Lugia V';
         this.cardType = card_types_1.CardType.COLORLESS;
         this.cardTypez = card_types_1.CardType.LUGIA_VSTAR;
@@ -48,9 +48,15 @@ class LugiaVSTAR extends pokemon_card_1.PokemonCard {
             if (player.usedVSTAR === true) {
                 throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
+            const blocked = [];
+            player.discard.cards.forEach((card, index) => {
+                if (card instanceof pokemon_card_1.PokemonCard && card.tags.includes(card_types_1.CardTag.RADIANT) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || card.tags.includes(card_types_1.CardTag.POKEMON_ex)) {
+                    blocked.push(index);
+                }
+            });
             player.usedVSTAR = true;
             let cards = [];
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.COLORLESS }, { min: 1, max, allowCancel: true }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.COLORLESS }, { min: 1, max, allowCancel: true, blocked }), selected => {
                 cards = selected || [];
                 cards.forEach((card, index) => {
                     player.discard.moveCardTo(card, slots[index]);

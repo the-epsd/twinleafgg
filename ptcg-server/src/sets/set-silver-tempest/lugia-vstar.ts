@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, ChooseCardsPrompt, PokemonCardList, Card,
-  StateUtils, GameMessage, PowerType, GameError, ConfirmPrompt } from '../../game';
+  StateUtils, GameMessage, PowerType, GameError, ConfirmPrompt} from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -11,7 +11,7 @@ export class LugiaVSTAR extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public stage: Stage = Stage.VSTAR;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Lugia V';
 
@@ -66,6 +66,13 @@ export class LugiaVSTAR extends PokemonCard {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
 
+      const blocked: number[] = [];
+      player.discard.cards.forEach((card, index) => {
+        if (card instanceof PokemonCard && card.tags.includes(CardTag.RADIANT) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.POKEMON_ex)) {
+          blocked.push(index);
+        }
+      });
+
       player.usedVSTAR = true;
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
@@ -73,7 +80,7 @@ export class LugiaVSTAR extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
         player.discard,
         { superType: SuperType.POKEMON, cardType: CardType.COLORLESS },
-        { min: 1, max, allowCancel: true }
+        { min: 1, max, allowCancel: true, blocked }
       ), selected => {
         cards = selected || [];
 
