@@ -35,31 +35,7 @@ export class BlendEnergyWLFM extends EnergyCard {
         return state;
       }
 
-      const pokemonCard = effect.source.getPokemonCard();
-      const attackCost = pokemonCard && pokemonCard.attacks[0].cost;
-      const providedEnergy: CardType[] = [];
-
-      if (attackCost) {
-        const attachedEnergy = effect.source.cards.filter(
-          card => card instanceof EnergyCard
-        ) as EnergyCard[];
-
-        const attachedEnergyTypes = new Set(
-          attachedEnergy.flatMap(energy => energy.provides)
-        );
-
-        for (const costType of attackCost) {
-          if (!attachedEnergyTypes.has(costType)) {
-            if (costType === CardType.WATER || costType === CardType.LIGHTNING || costType === CardType.FIGHTING || costType === CardType.METAL) {
-              providedEnergy.push(costType);
-            }
-          }
-        }
-      }
-
-      if (providedEnergy.length > 0) {
-        effect.energyMap.push({ card: this, provides: providedEnergy });
-      }
+      effect.energyMap.push({ card: this, provides: [ CardType.WLFM ] });
 
       return state;
     }

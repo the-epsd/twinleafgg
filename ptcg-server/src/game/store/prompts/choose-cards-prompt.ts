@@ -99,30 +99,30 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
     }
 
     // Check if 'max' restrictions are valid
-    const countMap: {[key: number]: number} = {};
+    const countMap: {[key: string]: number} = {};
     for (const card of result) {
-      const count = countMap[card.superType] || 0;
-      countMap[card.superType] = count + 1;
+      const count = countMap[card.superType.toString()] || 0;
+      countMap[card.superType.toString()] = count + 1;
       
       if (card.superType === SuperType.TRAINER) {
-        const trainerTypeCount = countMap[(card as TrainerCard).trainerType] || 0;
-        countMap[(card as TrainerCard).trainerType] = trainerTypeCount + 1;
+        const trainerTypeCount = countMap[`${card.superType}-${(card as TrainerCard).trainerType}`] || 0;
+        countMap[`${card.superType}-${(card as TrainerCard).trainerType}`] = trainerTypeCount + 1;
       }
       
       if (card.superType === SuperType.ENERGY) {
-        const energyTypeCount = countMap[(card as EnergyCard).energyType] || 0;
-        countMap[(card as EnergyCard).energyType] = energyTypeCount + 1;
+        const energyTypeCount = countMap[`${card.superType}-${(card as EnergyCard).energyType}`] || 0;
+        countMap[`${card.superType}-${(card as EnergyCard).energyType}`] = energyTypeCount + 1;
       }
     }
     
     const { maxPokemons, maxEnergies, maxTrainers, maxItems, maxTools, maxStadiums, maxSpecialEnergies } = this.options;
-    if ((maxPokemons !== undefined && maxPokemons < countMap[SuperType.POKEMON])
-      || (maxEnergies !== undefined && maxEnergies < countMap[SuperType.ENERGY])
-      || (maxTrainers !== undefined && maxTrainers < countMap[SuperType.TRAINER])
-      || (maxItems !== undefined && maxItems < countMap[TrainerType.ITEM])
-      || (maxStadiums !== undefined && maxStadiums < countMap[TrainerType.STADIUM])
-      || (maxSpecialEnergies !== undefined && maxSpecialEnergies < countMap[EnergyType.SPECIAL])
-      || (maxTools !== undefined && maxTools < countMap[TrainerType.TOOL])) {
+    if ((maxPokemons !== undefined && maxPokemons < countMap[`${SuperType.POKEMON}`])
+      || (maxEnergies !== undefined && maxEnergies < countMap[`${SuperType.ENERGY}-${EnergyType.BASIC}`])
+      || (maxTrainers !== undefined && maxTrainers < countMap[`${SuperType.TRAINER}-${SuperType.TRAINER}`])
+      || (maxItems !== undefined && maxItems < countMap[`${SuperType.TRAINER}-${TrainerType.ITEM}`])
+      || (maxStadiums !== undefined && maxStadiums < countMap[`${SuperType.TRAINER}-${TrainerType.STADIUM}`])
+      || (maxSpecialEnergies !== undefined && maxSpecialEnergies < countMap[`${SuperType.ENERGY}-${EnergyType.SPECIAL}`])
+      || (maxTools !== undefined && maxTools < countMap[`${SuperType.TRAINER}-${TrainerType.TOOL}`])) {
       return false;
     }
 

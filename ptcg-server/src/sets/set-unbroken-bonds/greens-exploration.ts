@@ -1,6 +1,6 @@
-import { ChooseCardsPrompt, PokemonCard, PowerType, ShuffleDeckPrompt } from '../../game';
+import { ChooseCardsPrompt, PokemonCard, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
 import { GameError } from '../../game/game-error';
-import { GameLog, GameMessage } from '../../game/game-message';
+import { GameMessage } from '../../game/game-message';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -31,6 +31,7 @@ export class GreensExploration extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -92,10 +93,14 @@ export class GreensExploration extends TrainerCard {
             player.deck.applyOrder(order);
           });
           
-          cards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-          });
+          state = store.prompt(state, new ShowCardsPrompt(
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            cards), () => state);
         }
+        
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        player.supporterTurn = 1;
         return state;
       });
     }

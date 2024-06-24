@@ -103,7 +103,12 @@ export declare enum CardType {
     IRON_HANDS_EX = 49,
     DRAGAPULT_EX = 50,
     DRIFLOON = 51,
-    FROSLASS = 52
+    FROSLASS = 52,
+    WLFM = 53,
+    GRW = 54,
+    LPM = 55,
+    FDY = 56,
+    GRPD = 57
 }
 export declare enum SpecialCondition {
     PARALYZED = 0,

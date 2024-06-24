@@ -6,25 +6,23 @@ import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-export class UnitEnergyLPM extends EnergyCard {
+export class BlendEnergyGRPD extends EnergyCard {
 
   public provides: CardType[] = [ CardType.COLORLESS ];
 
   public energyType = EnergyType.SPECIAL;
 
-  public set: string = 'UPR';
+  public set: string = 'DRX';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '138';
+  public setNumber: string = '117';
 
-  public name = 'Unit Energy LPM';
+  public name = 'Blend Energy GRPD';
 
-  public fullName = 'Unit Energy LPM UPR';
+  public fullName = 'Blend Energy GRPD DRX';
 
-  public text = 'This card provides [C] Energy.' + 
-  '' +
-  'While this card is attached to a Pokémon, it provides [L], [P], and [M] Energy but provides only 1 Energy at a time.';
+  public text = 'This card provides [C] Energy. When this card is attached to a Pokémon, this card provides [G], [R], [P], or [D] Energy but provides only 1 Energy at a time.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
@@ -37,7 +35,7 @@ export class UnitEnergyLPM extends EnergyCard {
         return state;
       }
 
-      effect.energyMap.push({ card: this, provides: [ CardType.LPM] });
+      effect.energyMap.push({ card: this, provides: [ CardType.GRPD ] });
 
       return state;
     }

@@ -32,29 +32,44 @@ class GuzmaAndHala extends trainer_card_1.TrainerCard {
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
-            let maxTools = 0;
-            let maxSpecialEnergies = 0;
             if (player.hand.cards.length < 2) {
                 player.supporterTurn = 1;
             }
             state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_message_1.GameMessage.WANT_TO_DISCARD_CARDS), wantToUse => {
+                // taking stadium + special energy + tool
                 if (wantToUse) {
-                    maxTools = 1;
-                    maxSpecialEnergies = 1;
                     state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: false, min: 2, max: 2 }), cards => {
                         cards = cards || [];
                         player.hand.moveCardsTo(cards, player.discard);
                         cards.forEach((card, index) => {
                             store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
                         });
+                        // only taking stadium
+                        const blocked = [];
+                        player.deck.cards.forEach((card, index) => {
+                            // eslint-disable-next-line no-empty
+                            if ((card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.SPECIAL) ||
+                                (card instanceof trainer_card_1.TrainerCard && card.trainerType === card_types_1.TrainerType.TOOL) ||
+                                (card instanceof trainer_card_1.TrainerCard && card.trainerType === card_types_1.TrainerType.STADIUM)) {
+                            }
+                            else {
+                                blocked.push(index);
+                            }
+                        });
+                        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { allowCancel: false, min: 0, max: 3, maxSpecialEnergies: 1, maxTools: 1, maxStadiums: 1, blocked }), cards => {
+                            cards = cards || [];
+                            player.deck.moveCardsTo(cards, player.hand);
+                            return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
+                        });
                     });
                 }
-                state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { allowCancel: false, min: 0, max: 3, maxSpecialEnergies, maxTools, maxStadiums: 1 }), cards => {
-                    cards = cards || [];
-                    player.deck.moveCardsTo(cards, player.hand);
-                    state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
-                });
-                player.supporter.moveCardTo(this, player.discard);
+                else {
+                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.STADIUM }, { allowCancel: false, min: 0, max: 1 }), cards => {
+                        cards = cards || [];
+                        player.deck.moveCardsTo(cards, player.hand);
+                        state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
+                    });
+                }
                 state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
                     return state;

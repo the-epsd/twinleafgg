@@ -4,6 +4,7 @@ exports.Okidogi = void 0;
 const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
@@ -40,7 +41,7 @@ class Okidogi extends pokemon_card_1.PokemonCard {
         this.fullName = 'Okidogi TWM';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.player.active.getPokemonCard() === this) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             if (effect.damage === 0 || game_1.StateUtils.getOpponent(state, player).active !== effect.target) {
                 return state;
@@ -52,36 +53,26 @@ class Okidogi extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            // check for basic dark
-            const basicDarkEnergy = this.cards.cards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Darkness Energy');
-            if (basicDarkEnergy.length > 0) {
-                effect.damage += 100;
-                return state;
-            }
-            const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player);
+            const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, effect.source);
             store.reduceEffect(state, checkProvidedEnergyEffect);
             let darkProvided = false;
             checkProvidedEnergyEffect.energyMap.forEach(em => {
-                if (em.provides.includes(card_types_1.CardType.ANY) || em.provides.includes(card_types_1.CardType.DARK)) {
+                if (em.provides.includes(card_types_1.CardType.DARK)) {
                     darkProvided = true;
+                }
+                try {
+                    const energyEffect = new play_card_effects_1.EnergyEffect(player, em.card);
+                    store.reduceEffect(state, energyEffect);
+                    if ((em.card instanceof game_1.EnergyCard && em.card.blendedEnergies.includes(card_types_1.CardType.DARK)) ||
+                        (em.provides.includes(card_types_1.CardType.DARK) || em.provides.includes(card_types_1.CardType.ANY))) {
+                        darkProvided = true;
+                    }
+                }
+                catch (_a) {
+                    // specials blocked
                 }
             });
             if (darkProvided) {
-                effect.damage += 100;
-            }
-            const specialEnergy = this.cards.cards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.SPECIAL)
-                .map(c => c);
-            if (specialEnergy.length === 0) {
-                return state;
-            }
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, specialEnergy[0]);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_b) {
-                return state;
-            }
-            if (specialEnergy.some(e => e.blendedEnergies.includes(card_types_1.CardType.DARK))) {
                 effect.damage += 100;
                 return state;
             }
@@ -93,39 +84,28 @@ class Okidogi extends pokemon_card_1.PokemonCard {
                 const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
                 store.reduceEffect(state, powerEffect);
             }
-            catch (_c) {
+            catch (_b) {
                 return state;
             }
-            // check for basic dark
-            const basicDarkEnergy = this.cards.cards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Darkness Energy');
-            if (basicDarkEnergy.length > 0) {
-                effect.hp += 100;
-                return state;
-            }
-            const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player);
-            store.reduceEffect(state, checkProvidedEnergyEffect);
             let darkProvided = false;
+            const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, effect.target);
             checkProvidedEnergyEffect.energyMap.forEach(em => {
-                if (em.provides.includes(card_types_1.CardType.ANY) || em.provides.includes(card_types_1.CardType.DARK)) {
+                if (em.provides.includes(card_types_1.CardType.DARK)) {
                     darkProvided = true;
+                }
+                try {
+                    const energyEffect = new play_card_effects_1.EnergyEffect(player, em.card);
+                    store.reduceEffect(state, energyEffect);
+                    if ((em.card instanceof game_1.EnergyCard && em.card.blendedEnergies.includes(card_types_1.CardType.DARK)) ||
+                        (em.provides.includes(card_types_1.CardType.DARK) || em.provides.includes(card_types_1.CardType.ANY))) {
+                        darkProvided = true;
+                    }
+                }
+                catch (_a) {
+                    // specials blocked
                 }
             });
             if (darkProvided) {
-                effect.hp += 100;
-            }
-            const specialEnergy = this.cards.cards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.SPECIAL)
-                .map(c => c);
-            if (specialEnergy.length === 0) {
-                return state;
-            }
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, specialEnergy[0]);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_d) {
-                return state;
-            }
-            if (specialEnergy.some(e => e.blendedEnergies.includes(card_types_1.CardType.DARK))) {
                 effect.hp += 100;
                 return state;
             }

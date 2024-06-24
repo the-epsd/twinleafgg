@@ -58,19 +58,6 @@ export var Stage;
 })(Stage || (Stage = {}));
 export var CardType;
 (function (CardType) {
-    // ANY,
-    // NONE,
-    // COLORLESS,
-    // GRASS,
-    // FIGHTING,
-    // PSYCHIC,
-    // WATER,
-    // LIGHTNING,
-    // METAL,
-    // DARK,
-    // FIRE,
-    // DRAGON,
-    // FAIRY,
     CardType[CardType["ANY"] = 0] = "ANY";
     CardType[CardType["GRASS"] = 1] = "GRASS";
     CardType[CardType["FIRE"] = 2] = "FIRE";
@@ -124,6 +111,11 @@ export var CardType;
     CardType[CardType["DRAGAPULT_EX"] = 50] = "DRAGAPULT_EX";
     CardType[CardType["DRIFLOON"] = 51] = "DRIFLOON";
     CardType[CardType["FROSLASS"] = 52] = "FROSLASS";
+    CardType[CardType["WLFM"] = 53] = "WLFM";
+    CardType[CardType["GRW"] = 54] = "GRW";
+    CardType[CardType["LPM"] = 55] = "LPM";
+    CardType[CardType["FDY"] = 56] = "FDY";
+    CardType[CardType["GRPD"] = 57] = "GRPD";
 })(CardType || (CardType = {}));
 export var SpecialCondition;
 (function (SpecialCondition) {

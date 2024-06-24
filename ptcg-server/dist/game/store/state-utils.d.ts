@@ -1,14 +1,15 @@
-import { Card } from './card/card';
-import { CardList } from './state/card-list';
 import { CardTarget } from './actions/play-card-action';
+import { Card } from './card/card';
 import { CardType } from './card/card-types';
-import { State } from './state/state';
+import { EnergyMap } from './prompts/choose-energy-prompt';
+import { CardList } from './state/card-list';
 import { Player } from './state/player';
 import { PokemonCardList } from './state/pokemon-card-list';
-import { EnergyMap } from './prompts/choose-energy-prompt';
+import { State } from './state/state';
 export declare class StateUtils {
     static getStadium(state: State): void;
     static checkEnoughEnergy(energy: EnergyMap[], cost: CardType[]): boolean;
+    static getCombinations(arr: CardType[][], n: number): CardType[][];
     static checkExactEnergy(energy: EnergyMap[], cost: CardType[]): boolean;
     static getOpponent(state: State, player: Player): Player;
     static getTarget(state: State, player: Player, target: CardTarget): PokemonCardList;
