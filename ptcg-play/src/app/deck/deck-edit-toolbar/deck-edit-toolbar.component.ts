@@ -80,6 +80,27 @@ export class DeckEditToolbarComponent implements OnDestroy {
     {value: TrainerType.SUPPORTER, label: 'CARDS_SUPPORTER' },
     {value: TrainerType.TOOL , label: 'CARDS_POKEMON_TOOL' }
   ];
+
+  public cardTags = [
+    {value: CardTag.POKEMON_ex, label: 'Pokémon ex' },
+    {value: CardTag.POKEMON_V, label: 'Pokémon V' },
+    {value: CardTag.POKEMON_VMAX, label: 'Pokémon VMAX' },
+    {value: CardTag.POKEMON_VSTAR, label: 'Pokémon VSTAR' },
+    {value: CardTag.POKEMON_TERA, label: 'Pokémon Terastal' },
+    {value: CardTag.RADIANT, label: 'Radiant' },
+    {value: CardTag.FUTURE, label: 'Future' },
+    {value: CardTag.ANCIENT, label: 'Ancient' },
+    {value: CardTag.SINGLE_STRIKE, label: 'Single Strike' },
+    {value: CardTag.RAPID_STRIKE, label: 'Rapid Strike' },
+    {value: CardTag.FUSION_STRIKE, label: 'Fusion Strike' },
+    {value: CardTag.POKEMON_GX, label: 'Pokémon GX' },
+    {value: CardTag.TAG_TEAM, label: 'Tag Team' },
+    {value: CardTag.ULTRA_BEAST, label: 'Ultra Beast' },
+    {value: CardTag.POKEMON_EX, label: 'Pokémon EX' },
+    {value: CardTag.TEAM_PLASMA, label: 'Team Plasma' },
+    {value: CardTag.POKEMON_LV_X, label: 'Pokémon LV.X' },
+    {value: CardTag.POKEMON_SP, label: 'Pokémon SP' },
+  ];
   
   public attackCost = [
     { value: 0, label: '0'},
@@ -98,9 +119,9 @@ export class DeckEditToolbarComponent implements OnDestroy {
     { value: 4, label: '4'}
   ];
 
-  public cardTags = Object.keys(CardTag).map(key => 
-    ({value: CardTag[key], label: `LABEL_${key}`})
-  );
+  // public cardTags = Object.keys(CardTag).map(key => 
+  //   ({value: CardTag[key], label: `${key}`})
+  // );
   
   initialFormValue = {
     formats: [],

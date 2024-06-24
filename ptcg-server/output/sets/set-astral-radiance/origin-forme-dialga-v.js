@@ -39,12 +39,12 @@ class OriginFormeDialgaV extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            const hasEnergyInDiscard = player.discard.cards.some(c => {
+            const hasMetalEnergyInDiscard = player.discard.cards.some(c => {
                 return c instanceof game_1.EnergyCard
                     && c.energyType === card_types_1.EnergyType.BASIC
-                    && c.provides.includes(card_types_1.CardType.DARK);
+                    && c.provides.includes(card_types_1.CardType.METAL);
             });
-            if (!hasEnergyInDiscard) {
+            if (!hasMetalEnergyInDiscard) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             const cardList = game_1.StateUtils.findCardList(state, this);

@@ -44,7 +44,7 @@ export class MagmaBasin extends TrainerCard {
         return c instanceof EnergyCard && c.name == 'Fire Energy';
       });
       if (!hasEnergyInDiscard) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+        throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
 
       state = store.prompt(state, new AttachEnergyPrompt(

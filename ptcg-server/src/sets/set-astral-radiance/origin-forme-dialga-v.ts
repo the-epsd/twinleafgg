@@ -55,12 +55,12 @@ export class OriginFormeDialgaV extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      const hasEnergyInDiscard = player.discard.cards.some(c => {
+      const hasMetalEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
             && c.energyType === EnergyType.BASIC
-            && c.provides.includes(CardType.DARK);
+            && c.provides.includes(CardType.METAL);
       });
-      if (!hasEnergyInDiscard) {
+      if (!hasMetalEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
   

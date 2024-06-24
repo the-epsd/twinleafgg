@@ -28,7 +28,7 @@ class RagingBoltex extends pokemon_card_1.PokemonCard {
             {
                 name: 'Bellowing Thunder',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.FIGHTING],
-                damage: 70,
+                damage: 0,
                 damageCalculation: 'x',
                 text: 'You may discard any amount of Basic Energy from your Pokémon. This attack does 70 damage for each card you discarded in this way.'
             }

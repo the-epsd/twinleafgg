@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { BoardModule } from '../board/board.module';
 import { PromptComponent } from './prompt.component';
 import { PromptConfirmComponent } from './prompt-confirm/prompt-confirm.component';
@@ -25,6 +24,7 @@ import { PromptChooseAttackComponent } from './prompt-choose-attack/prompt-choos
 import { PromptPutDamageComponent } from './prompt-put-damage/prompt-put-damage.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PromptRemoveDamageComponent } from './prompt-remove-damage/prompt-remove-damage.component';
+import { PromptDiscardEnergyComponent } from './prompt-discard-energy/prompt-discard-energy.component';
 
 
 @NgModule({
@@ -49,7 +49,8 @@ import { PromptRemoveDamageComponent } from './prompt-remove-damage/prompt-remov
     PromptInvitePlayerComponent,
     PromptChooseAttackComponent,
     PromptPutDamageComponent,
-    PromptRemoveDamageComponent
+    PromptRemoveDamageComponent,
+    PromptDiscardEnergyComponent,
   ],
   imports: [
     BoardModule,

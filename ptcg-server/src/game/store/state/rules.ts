@@ -4,7 +4,7 @@ export class Rules {
 
   public firstTurnUseSupporter = true;
 
-  public unlimitedEnergyAttachments = true;
+  public unlimitedEnergyAttachments = false;
 
   constructor(init: Partial<Rules> = {}) {
     Object.assign(this, init);

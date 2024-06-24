@@ -439,7 +439,11 @@
     "WANT_TO_ATTACH_ONLY_FIRE_ENERGY": "Would you like to attach only Fire Energy?",
     "WANT_TO_ATTACH_ONE_OF_EACH": "Would you like to attach one of each Energy card?",
     "WANT_TO_DISCARD_CARDS": "Would you like to discard two cards?",
-    "CAN_ONLY_ATTACH_TO_PSYCHIC": "Psychic Embrace can only accelerate Energy to Psychic Pokémon"
+    "CAN_ONLY_ATTACH_TO_PSYCHIC": "Psychic Embrace can only accelerate Energy to Psychic Pokémon",
+    "MULLIGAN_CARDS": "Draw {{value}} card(s)",
+    "DRAW": "Draw",
+    "CARD": "Card",
+    "CARDS": "Cards"
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.",

@@ -32,7 +32,7 @@ class MagmaBasin extends trainer_card_1.TrainerCard {
                 return c instanceof game_1.EnergyCard && c.name == 'Fire Energy';
             });
             if (!hasEnergyInDiscard) {
-                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_STADIUM);
             }
             state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min: 1, max: 1, blocked: blocked }), transfers => {
                 transfers = transfers || [];

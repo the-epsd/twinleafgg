@@ -18,10 +18,10 @@ import { PlayerType } from '../actions/play-card-action';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { StoreLike } from '../store-like';
 import { SuperType, Stage } from '../card/card-types';
-import { WhoBeginsEffect } from '../effects/game-phase-effects';
 import { endGame } from '../effect-reducers/check-effect';
 import { initNextTurn } from '../effect-reducers/game-phase-effect';
 import { SelectPrompt } from '../prompts/select-prompt';
+import { WhoBeginsEffect } from '../effects/game-phase-effects';
 
 
 function putStartingPokemonsAndPrizes(player: Player, cards: Card[]): void {
@@ -42,6 +42,30 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
   const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
   const player = state.players[0];
   const opponent = state.players[1];
+
+  const whoBeginsEffect = new WhoBeginsEffect();
+  store.reduceEffect(state, whoBeginsEffect);
+
+
+  if (whoBeginsEffect.player) {
+    state.activePlayer = state.players.indexOf(whoBeginsEffect.player);
+  } else {
+    const coinFlipPrompt = new CoinFlipPrompt(player.id, GameMessage.SETUP_WHO_BEGINS_FLIP);
+    store.prompt(state, coinFlipPrompt, whoBegins => {
+      const goFirstPrompt = new SelectPrompt(
+        whoBegins ? player.id : opponent.id,
+        GameMessage.GO_FIRST,
+        [GameMessage.YES, GameMessage.NO]
+      );
+      store.prompt(state, goFirstPrompt, choice => {
+        if (choice === 0) {
+          state.activePlayer = whoBegins ? 0 : 1;
+        } else {
+          state.activePlayer = whoBegins ? 1 : 0;
+        }
+      });
+    });
+  }
 
   let playerHasBasic = false;
   let opponentHasBasic = false;
@@ -108,19 +132,6 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
     next();
   });
 
-  const whoBeginsEffect = new WhoBeginsEffect();
-  store.reduceEffect(state, whoBeginsEffect);
-
-  if (whoBeginsEffect.player) {
-    state.activePlayer = state.players.indexOf(whoBeginsEffect.player);
-  } else {
-    const coinFlipPrompt = new CoinFlipPrompt(player.id, GameMessage.SETUP_WHO_BEGINS_FLIP);
-    yield store.prompt(state, coinFlipPrompt, whoBegins => {
-      state.activePlayer = whoBegins ? 0 : 1;
-      next();
-    });
-  }
-
   // Set initial Pokemon Played Turn, so players can't evolve during first turn
   const first = state.players[state.activePlayer];
   const second = state.players[state.activePlayer ? 0 : 1];
@@ -131,9 +142,9 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
   // opponent.deck.moveTo(opponent.hand, opponentCardsToDraw);
 
   if (playerCardsToDraw > 0) {
-
+    
     const options: { message: string, value: number }[] = [];
-    for (let i = 0; i <= playerCardsToDraw; i++) {
+    for (let i = playerCardsToDraw; i >= 0; i--) {
       options.push({ message: `Draw ${i} card(s)`, value: i });
     }
 
@@ -152,9 +163,8 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
   }
 
   if (opponentCardsToDraw > 0) {
-
     const options: { message: string, value: number }[] = [];
-    for (let i = 0; i <= opponentCardsToDraw; i++) {
+    for (let i = opponentCardsToDraw; i >= 0; i--) {
       options.push({ message: `Draw ${i} card(s)`, value: i });
     }
 
@@ -173,6 +183,8 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
   }
   return initNextTurn(store, state);
 }
+
+
 
 
 function createPlayer(id: number, name: string): Player {

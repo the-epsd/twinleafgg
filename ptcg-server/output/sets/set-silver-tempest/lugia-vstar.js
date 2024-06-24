@@ -23,8 +23,7 @@ class LugiaVSTAR extends pokemon_card_1.PokemonCard {
                 name: 'Summoning Star',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Search your deck for up to 2 Basic Pokemon and put them onto ' +
-                    'your Bench. Shuffle your deck afterward.'
+                text: 'During your turn, you may put up to 2 [C] Pokémon that don\'t have a Rule Box from your discard pile onto your Bench. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.) (You can\'t use more than 1 VSTAR Power in a game.)'
             }
         ];
         this.attacks = [
@@ -63,7 +62,7 @@ class LugiaVSTAR extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const stadiumCard = game_1.StateUtils.getStadiumCard(state);
             if (stadiumCard !== undefined) {
-                state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+                state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_DISCARD_STADIUM), wantToUse => {
                     if (wantToUse) {
                         // Discard Stadium
                         const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
