@@ -31,7 +31,7 @@ exports.config = {
     core: {
         debug: false,
         // How often should we execute the background tasks
-        schedulerInterval: 60 * 1000,
+        schedulerInterval: 60 * 60 * 1000,
         // Wait till next hour before running tasks
         schedulerStartNextHour: false,
         // Decrease players' ranking every day by 0.95
@@ -41,11 +41,11 @@ exports.config = {
         rankingDecreaseIntervalCount: 0,
         // Deletes matches older than `keepMatchTike` from the database, to keep it small.
         // If you wish to disable this feature set IntervalCount to 0
-        keepMatchTime: 24 * 60 * 60 * 1000,
+        keepMatchTime: 31 * 24 * 60 * 60 * 1000,
         keepMatchIntervalCount: 0,
         // Deletes users that doesn't log in in the `keepUserTime` and their ranking is 0
         // If you wish to disable this feature set IntervalCount to 0
-        keepUserTime: 0,
+        keepUserTime: 7 * 24 * 60 * 60 * 1000,
         keepUserIntervalCount: 0 // run every X scheduler ticks
     },
     bots: {

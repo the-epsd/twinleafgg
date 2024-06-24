@@ -84,7 +84,7 @@ function* setupGame(next, store, state) {
         if (playerHasBasic && !opponentHasBasic) {
             store.log(state, game_message_1.GameLog.LOG_SETUP_NO_BASIC_POKEMON, { name: opponent.name });
             yield store.prompt(state, [
-                new show_cards_prompt_1.ShowCardsPrompt(player.id, game_message_1.GameMessage.SETUP_OPPONENT_NO_BASIC, opponent.hand.cards, { allowCancel: true }),
+                new show_cards_prompt_1.ShowCardsPrompt(player.id, game_message_1.GameMessage.SETUP_OPPONENT_NO_BASIC, opponent.hand.cards, { allowCancel: false }),
                 new alert_prompt_1.AlertPrompt(opponent.id, game_message_1.GameMessage.SETUP_PLAYER_NO_BASIC)
             ], results => {
                 if (results[0]) {
@@ -96,7 +96,7 @@ function* setupGame(next, store, state) {
         if (!playerHasBasic && opponentHasBasic) {
             store.log(state, game_message_1.GameLog.LOG_SETUP_NO_BASIC_POKEMON, { name: player.name });
             yield store.prompt(state, [
-                new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.SETUP_OPPONENT_NO_BASIC, player.hand.cards, { allowCancel: true }),
+                new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.SETUP_OPPONENT_NO_BASIC, player.hand.cards, { allowCancel: false }),
                 new alert_prompt_1.AlertPrompt(player.id, game_message_1.GameMessage.SETUP_PLAYER_NO_BASIC)
             ], results => {
                 if (results[0]) {
