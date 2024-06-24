@@ -55,6 +55,7 @@ export class Comfey extends PokemonCard {
   public readonly FLOWER_SELECTING_MARKER = 'FLOWER_SELECTING_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.FLOWER_SELECTING_MARKER, this);
@@ -73,7 +74,7 @@ export class Comfey extends PokemonCard {
       }
 
       if (player.active.cards[0] !== this) {
-        return state; // Not active
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
   
       const deckTop = new CardList();

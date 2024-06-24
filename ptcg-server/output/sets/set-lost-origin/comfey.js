@@ -55,7 +55,7 @@ class Comfey extends game_1.PokemonCard {
                 throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
             if (player.active.cards[0] !== this) {
-                return state; // Not active
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
             const deckTop = new card_list_1.CardList();
             player.deck.moveTo(deckTop, 2);

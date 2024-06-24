@@ -65,10 +65,12 @@ export class Ditto extends PokemonCard {
         ), selectedCards => {
           cards = selectedCards || [];
   
-          cards.forEach((card, index) => {
+          cards.forEach((card) => {
             effect.player.removePokemonEffects(player.active);
-            player.active.moveCardTo(card, player.discard);
+            player.active.moveTo(player.discard);
             player.deck.moveCardTo(card, player.active);
+            // const pokemonPlayed = new PlayPokemonEffect(player, card as PokemonCard, player.active);
+            // this.reduceEffect(store, state, pokemonPlayed);
             player.active.pokemonPlayedTurn = state.turn;
             effect.player.removePokemonEffects(player.active);
           });
