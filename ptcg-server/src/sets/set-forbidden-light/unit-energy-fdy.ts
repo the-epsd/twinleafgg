@@ -26,7 +26,7 @@ export class UnitEnergyFDY extends EnergyCard {
   '' +
   'While this card is attached to a Pokémon, it provides [F], [D], and [Y] Energy but provides only 1 Energy at a time.';
 
-  blendedEnergies = [ CardType.FAIRY, CardType.FIGHTING, CardType.DARK ]
+  blendedEnergies = [ CardType.FAIRY, CardType.FIGHTING, CardType.DARK ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
