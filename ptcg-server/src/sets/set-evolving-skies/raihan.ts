@@ -27,6 +27,12 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
   
+  const basicEnergyInDiscard = player.discard.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC).length;
+  
+  if (basicEnergyInDiscard === 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);    
+  }
+  
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
     const isBasicEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
