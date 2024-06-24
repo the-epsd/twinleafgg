@@ -49,9 +49,9 @@ class GuzmaAndHala extends trainer_card_1.TrainerCard {
                         });
                     });
                 }
-                state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.hand, {}, { allowCancel: false, min: 0, max: 3, maxSpecialEnergies, maxTools, maxStadiums: 1 }), cards => {
+                state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { allowCancel: false, min: 0, max: 3, maxSpecialEnergies, maxTools, maxStadiums: 1 }), cards => {
                     cards = cards || [];
-                    player.hand.moveCardsTo(cards, player.hand);
+                    player.deck.moveCardsTo(cards, player.hand);
                     state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
                 });
                 player.supporter.moveCardTo(this, player.discard);

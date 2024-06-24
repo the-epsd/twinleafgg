@@ -52,7 +52,6 @@ class Okidogi extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            ;
             // check for basic dark
             const basicDarkEnergy = this.cards.cards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Darkness Energy');
             if (basicDarkEnergy.length > 0) {
@@ -97,7 +96,6 @@ class Okidogi extends pokemon_card_1.PokemonCard {
             catch (_c) {
                 return state;
             }
-            ;
             // check for basic dark
             const basicDarkEnergy = this.cards.cards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Darkness Energy');
             if (basicDarkEnergy.length > 0) {

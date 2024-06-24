@@ -103,6 +103,7 @@ export class RagingBoltex extends PokemonCard {
               return state;
             }});
         });
+        effect.damage -= 70;
         return state;
       });
     }

@@ -18,9 +18,9 @@ export class Okidogi extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public resistance = [ ];
+  public resistance = [];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [
     {
@@ -34,7 +34,7 @@ export class Okidogi extends PokemonCard {
   public attacks = [
     {
       name: 'Good Punch',
-      cost: [ CardType.FIGHTING, CardType.FIGHTING ],
+      cost: [CardType.FIGHTING, CardType.FIGHTING],
       damage: 70,
       text: ''
     }
@@ -64,7 +64,7 @@ export class Okidogi extends PokemonCard {
         store.reduceEffect(state, powerEffect);
       } catch {
         return state;
-      };  
+      }
 
       // check for basic dark
       const basicDarkEnergy = this.cards.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Darkness Energy');
@@ -89,8 +89,8 @@ export class Okidogi extends PokemonCard {
       }
 
       const specialEnergy: EnergyCard[] = this.cards.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)
-                                                          .map(c => c as EnergyCard);
-         
+        .map(c => c as EnergyCard);
+
 
       if (specialEnergy.length === 0) {
         return state;
@@ -119,7 +119,7 @@ export class Okidogi extends PokemonCard {
         store.reduceEffect(state, powerEffect);
       } catch {
         return state;
-      };  
+      }
 
       // check for basic dark
       const basicDarkEnergy = this.cards.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Darkness Energy');
@@ -144,8 +144,8 @@ export class Okidogi extends PokemonCard {
       }
 
       const specialEnergy: EnergyCard[] = this.cards.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)
-                                                          .map(c => c as EnergyCard);
-         
+        .map(c => c as EnergyCard);
+
 
       if (specialEnergy.length === 0) {
         return state;
