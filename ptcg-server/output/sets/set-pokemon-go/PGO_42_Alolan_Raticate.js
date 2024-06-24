@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 class AlolanRaticate extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -49,13 +50,25 @@ class AlolanRaticate extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const selectedTarget = opponent.active;
-            const selectedPokemonCard = selectedTarget.getPokemonCard();
-            const hp = selectedPokemonCard === null || selectedPokemonCard === void 0 ? void 0 : selectedPokemonCard.hp;
-            const remainingHp = hp ? hp - 10 : 0;
-            console.log('Pokemon\'s remaining hp: ' + remainingHp);
-            const damageEffect = new attack_effects_1.PutDamageEffect(effect, remainingHp);
-            damageEffect.target = selectedTarget;
-            store.reduceEffect(state, damageEffect);
+            const checkHpEffect = new check_effects_1.CheckHpEffect(effect.player, selectedTarget);
+            store.reduceEffect(state, checkHpEffect);
+            const totalHp = checkHpEffect.hp;
+            let damageAmount = totalHp - 10;
+            // Adjust damage if the target already has damage
+            const targetDamage = selectedTarget.damage;
+            if (targetDamage > 0) {
+                damageAmount = Math.max(0, damageAmount - targetDamage);
+            }
+            if (damageAmount > 0) {
+                const damageEffect = new attack_effects_1.PutDamageEffect(effect, damageAmount);
+                damageEffect.target = selectedTarget;
+                store.reduceEffect(state, damageEffect);
+            }
+            else if (damageAmount <= 0) {
+                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 0);
+                damageEffect.target = selectedTarget;
+                store.reduceEffect(state, damageEffect);
+            }
         }
         return state;
     }

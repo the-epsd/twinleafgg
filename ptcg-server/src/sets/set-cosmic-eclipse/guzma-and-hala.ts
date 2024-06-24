@@ -79,7 +79,7 @@ export class GuzmaAndHala extends TrainerCard {
               if ((card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL) ||
                   (card instanceof TrainerCard && card.trainerType === TrainerType.TOOL) ||
                   (card instanceof TrainerCard && card.trainerType === TrainerType.STADIUM)) {
-                
+                /**/
               } else {
                 blocked.push(index);
               }

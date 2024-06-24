@@ -4,6 +4,7 @@ import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, ShuffleDe
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 export class AlolanRaticate extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -60,13 +61,27 @@ export class AlolanRaticate extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const selectedTarget = opponent.active;
-      const selectedPokemonCard = selectedTarget.getPokemonCard();
-      const hp = selectedPokemonCard?.hp;
-      const remainingHp = hp ? hp - 10 : 0;
-      console.log('Pokemon\'s remaining hp: ' + remainingHp);
-      const damageEffect = new PutDamageEffect(effect, remainingHp);
-      damageEffect.target = selectedTarget;
-      store.reduceEffect(state, damageEffect);
+      const checkHpEffect = new CheckHpEffect(effect.player, selectedTarget);
+      store.reduceEffect(state, checkHpEffect);
+
+      const totalHp = checkHpEffect.hp;
+      let damageAmount = totalHp - 10;
+
+      // Adjust damage if the target already has damage
+      const targetDamage = selectedTarget.damage;
+      if (targetDamage > 0) {
+        damageAmount = Math.max(0, damageAmount - targetDamage);
+      }
+
+      if (damageAmount > 0) {
+        const damageEffect = new PutDamageEffect(effect, damageAmount);
+        damageEffect.target = selectedTarget;
+        store.reduceEffect(state, damageEffect);
+      } else if (damageAmount <= 0) {
+        const damageEffect = new PutDamageEffect(effect, 0);
+        damageEffect.target = selectedTarget;
+        store.reduceEffect(state, damageEffect);
+      }
     }
 
     return state;

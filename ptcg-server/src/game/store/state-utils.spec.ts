@@ -1,6 +1,6 @@
-import { CardType, SuperType } from "./card/card-types";
-import { EnergyMap } from "./prompts/choose-energy-prompt";
-import { StateUtils } from "./state-utils";
+import { CardType, SuperType } from './card/card-types';
+import { EnergyMap } from './prompts/choose-energy-prompt';
+import { StateUtils } from './state-utils';
 
 describe('StateUtils', () => {
 
