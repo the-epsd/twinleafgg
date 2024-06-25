@@ -14,18 +14,18 @@ export class Dreepy extends PokemonCard {
 
   public weakness = [];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
-      name: 'Slight Jealousy',
-      cost: [ CardType.PSYCHIC ],
+      name: 'Petty Grudge',
+      cost: [CardType.PSYCHIC],
       damage: 10,
       text: ''
     },
     {
       name: 'Bite',
-      cost: [ CardType.FIRE, CardType.PSYCHIC ],
+      cost: [CardType.FIRE, CardType.PSYCHIC],
       damage: 40,
       text: ''
     }

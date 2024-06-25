@@ -17,22 +17,23 @@ import { AttachEnergyPrompt, ChooseCardsPrompt, PlayerType, SlotType } from '../
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Raihan, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
-  
+
   // No Pokemon KO last turn
   if (!player.marker.hasMarker(self.RAIHAN_MARKER)) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
-  const basicEnergyInDiscard = player.discard.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC).length;
-  
-  if (basicEnergyInDiscard === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);    
+
+  const hasEnergyInDiscard = player.discard.cards.some(c => {
+    return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+  });
+  if (!hasEnergyInDiscard) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
     const isBasicEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
@@ -40,43 +41,43 @@ function* playCard(next: Function, store: StoreLike, state: State,
       blocked.push(index);
     }
   });
-  
+
   // We will discard this card after prompt confirmation
   // This will prevent unblocked supporter to appear in the discard pile
   effect.preventDefault = true;
-  
+
   return store.prompt(state, new AttachEnergyPrompt(
     player.id,
     GameMessage.ATTACH_ENERGY_TO_BENCH,
     player.discard,
     PlayerType.BOTTOM_PLAYER,
     [SlotType.BENCH, SlotType.ACTIVE],
-    {superType: SuperType.ENERGY, energyType: EnergyType.BASIC},
-    {allowCancel: false, min: 1, max: 1}
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+    { allowCancel: false, min: 1, max: 1 }
   ), transfers => {
     if (transfers && transfers.length > 0) {
       for (const transfer of transfers) {
         const target = StateUtils.getTarget(state, player, transfer.to);
         player.discard.moveCardTo(transfer.card, target);
       }
-    
-  
+
+
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         {},
-        {min: 1, max: 1, allowCancel: false}
+        { min: 1, max: 1, allowCancel: false }
       ), selected => {
         cards = selected || [];
         next();
-      
-  
+
+
         player.hand.moveCardTo(self, player.supporter);
         player.deck.moveCardsTo(cards, player.hand);
-  
-  
+
+
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });

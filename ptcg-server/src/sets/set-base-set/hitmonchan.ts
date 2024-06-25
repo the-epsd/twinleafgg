@@ -21,7 +21,7 @@ export class Hitmonchan extends PokemonCard {
       text: ''
     },
     {
-      name: 'Thunderpunch',
+      name: 'Special Punch',
       cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
       damage: 40,
       text: ''

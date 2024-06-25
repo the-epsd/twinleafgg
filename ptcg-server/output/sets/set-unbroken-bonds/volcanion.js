@@ -46,6 +46,7 @@ class Volcanion extends pokemon_card_1.PokemonCard {
                 name: 'High-Heat Blast',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE],
                 damage: 50,
+                damageCalculation: '+',
                 text: 'If you have at least 4 [R] Energy in play, this attack does 60 more damage.'
             }];
         this.set = 'UNB';

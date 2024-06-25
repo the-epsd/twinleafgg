@@ -33,8 +33,9 @@ class MistEnergy extends energy_card_1.EnergyCard {
                 return state;
             }
             if (sourceCard) {
-                if (player.specialEnergyBlocked === true) {
-                    this.provides = [card_types_1.CardType.COLORLESS];
+                // Allow Weakness & Resistance
+                if (effect instanceof attack_effects_1.ApplyWeaknessEffect) {
+                    return state;
                 }
                 // Allow damage
                 if (effect instanceof attack_effects_1.PutDamageEffect) {

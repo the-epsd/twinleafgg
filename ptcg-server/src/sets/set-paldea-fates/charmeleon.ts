@@ -18,9 +18,9 @@ export class Charmeleon extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = 
+  public powers =
     [{
       name: 'Flare Veil',
       powerType: PowerType.ABILITY,
@@ -30,18 +30,18 @@ export class Charmeleon extends PokemonCard {
   public attacks = [
     {
       name: 'Raging Flames',
-      cost: [ CardType.FIRE, CardType.FIRE ],
+      cost: [CardType.FIRE, CardType.FIRE],
       damage: 60,
       text: 'Discard the top 3 cards of your deck.'
     }
   ];
 
   public regulationMark = 'G';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '8';
-  
+
   public set = 'PAF';
 
   public name: string = 'Charmeleon';
@@ -54,37 +54,36 @@ export class Charmeleon extends PokemonCard {
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
       const pokemonCard = effect.target.getPokemonCard();
       const sourceCard = effect.source.getPokemonCard();
-  
+
       if (pokemonCard !== this) {
         return state;
       }
-  
-      if (sourceCard) {
-        if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
 
-          // Allow damage
-          if (effect instanceof PutDamageEffect) {
-            return state; 
-          }
-          // Allow damage
-          if (effect instanceof DealDamageEffect) {
-            return state; 
-          }
-      
-          // Try to reduce PowerEffect, to check if something is blocking our ability
-          try {
-            const player = StateUtils.findOwner(state, effect.target);
-            const powerEffect = new PowerEffect(player, this.powers[0], this);
-            store.reduceEffect(state, powerEffect);
-          } catch {
-            return state;
-          }
-      
-          effect.preventDefault = true;
+      if (sourceCard) {
+        // if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
+
+        // Allow damage
+        if (effect instanceof PutDamageEffect) {
+          return state;
         }
+        // Allow damage
+        if (effect instanceof DealDamageEffect) {
+          return state;
+        }
+
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const player = StateUtils.findOwner(state, effect.target);
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
+        } catch {
+          return state;
+        }
+
+        effect.preventDefault = true;
       }
-      return state;
     }
     return state;
   }
 }
+

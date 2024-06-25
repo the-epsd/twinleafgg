@@ -11,45 +11,45 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Tatsugiri extends PokemonCard {
-  
+
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'H';
-  
-  public cardType: CardType = CardType.DRAGON;
-  
-  public hp: number = 70;
-  
-  public weakness = [ ];
 
-  public resistance = [ ];
-  
-  public retreat = [ CardType.COLORLESS ];
-  
+  public cardType: CardType = CardType.DRAGON;
+
+  public hp: number = 70;
+
+  public weakness = [];
+
+  public resistance = [];
+
+  public retreat = [CardType.COLORLESS];
+
   public powers = [{
-    name: 'Crowd Puller',
+    name: 'Attract Customers',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, if this Pokémon is in the Active Spot, you may look at the top 6 cards of your deck, reveal a Supporter you find there, and put it into your hand. Shuffle the other cards back into your deck.'
   }];
-  
+
   public attacks = [
     {
       name: 'Surf',
-      cost: [ CardType.FIRE, CardType.WATER ],
+      cost: [CardType.FIRE, CardType.WATER],
       damage: 50,
       text: ''
     }
   ];
-  
+
   public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '131';
-  
+
   public name: string = 'Tatsugiri';
-  
+
   public fullName: string = 'Tatsugiri TWM';
 
   public readonly CROWD_PULLER_MARKER = 'CROWD_PULLER_MARKER';
@@ -63,11 +63,11 @@ export class Tatsugiri extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-  
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-  
+
       if (player.marker.hasMarker(this.CROWD_PULLER_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -75,11 +75,11 @@ export class Tatsugiri extends PokemonCard {
       if (player.active.cards[0] !== this) {
         return state; // Not active
       }
-  
+
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 6);
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
@@ -118,8 +118,7 @@ export class Tatsugiri extends PokemonCard {
       const player = (effect as EndTurnEffect).player;
       player.marker.removeMarker(this.CROWD_PULLER_MARKER, this);
     }
-    
+
     return state;
   }
 }
-    

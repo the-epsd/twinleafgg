@@ -14,7 +14,7 @@ class Dreepy extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Slight Jealousy',
+                name: 'Petty Grudge',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 10,
                 text: ''

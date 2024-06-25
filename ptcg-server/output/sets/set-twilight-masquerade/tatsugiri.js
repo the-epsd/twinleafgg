@@ -20,7 +20,7 @@ class Tatsugiri extends game_1.PokemonCard {
         this.resistance = [];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Crowd Puller',
+                name: 'Attract Customers',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'Once during your turn, if this Pokémon is in the Active Spot, you may look at the top 6 cards of your deck, reveal a Supporter you find there, and put it into your hand. Shuffle the other cards back into your deck.'

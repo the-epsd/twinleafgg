@@ -9,7 +9,7 @@ import { AttachEnergyEffect, PlayPokemonEffect } from '../../game/store/effects/
 
 export class RadiantCharizard extends PokemonCard {
 
-  public tags = [ CardTag.RADIANT ];
+  public tags = [CardTag.RADIANT];
 
   public regulationMark = 'F';
 
@@ -21,7 +21,7 @@ export class RadiantCharizard extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Excited Heart',
@@ -114,24 +114,26 @@ export class RadiantCharizard extends PokemonCard {
       const index = effect.attack.cost.findIndex(c => c === CardType.COLORLESS);
 
       if (index !== -1) {
-        effect.attack.cost.splice(index, prizesTaken);
-      }
+        this.attacks.forEach(attack => {
+          attack.cost.splice(index, prizesTaken);
+        });
 
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-  
-        // Check marker
-        if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-          console.log('attack blocked');
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+          // Check marker
+          if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            console.log('attack blocked');
+            throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+          }
+          effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+          console.log('marker added');
         }
-        effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-        console.log('marker added');
+        return state;
       }
-      return state;
     }
     return state;
   }
+
+
 }
-
-

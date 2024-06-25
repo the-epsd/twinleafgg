@@ -80,18 +80,20 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
             const prizesTaken = 6 - opponent.getPrizeLeft();
             const index = effect.attack.cost.findIndex(c => c === card_types_1.CardType.COLORLESS);
             if (index !== -1) {
-                effect.attack.cost.splice(index, prizesTaken);
-            }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                // Check marker
-                if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                    console.log('attack blocked');
-                    throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+                this.attacks.forEach(attack => {
+                    attack.cost.splice(index, prizesTaken);
+                });
+                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+                    // Check marker
+                    if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+                        console.log('attack blocked');
+                        throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+                    }
+                    effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+                    console.log('marker added');
                 }
-                effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-                console.log('marker added');
+                return state;
             }
-            return state;
         }
         return state;
     }

@@ -3,12 +3,12 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class MistEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -42,26 +42,24 @@ export class MistEnergy extends EnergyCard {
       } catch {
         return state;
       }
-      
-      if (sourceCard) {
-    
-        if (player.specialEnergyBlocked === true) {
-          this.provides = [CardType.COLORLESS];
-        }
 
+      if (sourceCard) {
+        // Allow Weakness & Resistance
+        if (effect instanceof ApplyWeaknessEffect) {
+          return state;
+        }
         // Allow damage
         if (effect instanceof PutDamageEffect) {
-          return state; 
+          return state;
         }
         if (effect instanceof DealDamageEffect) {
-          return state; 
+          return state;
         }
         effect.preventDefault = true;
       }
     }
-      
+
     return state;
   }
-      
+
 }
-      

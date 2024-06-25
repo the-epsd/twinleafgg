@@ -19,7 +19,7 @@ class Hitmonchan extends pokemon_card_1.PokemonCard {
                 text: ''
             },
             {
-                name: 'Thunderpunch',
+                name: 'Special Punch',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
                 damage: 40,
                 text: ''

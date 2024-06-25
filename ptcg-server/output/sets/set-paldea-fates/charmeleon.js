@@ -44,28 +44,26 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
                 return state;
             }
             if (sourceCard) {
-                if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this)) {
-                    // Allow damage
-                    if (effect instanceof attack_effects_1.PutDamageEffect) {
-                        return state;
-                    }
-                    // Allow damage
-                    if (effect instanceof attack_effects_1.DealDamageEffect) {
-                        return state;
-                    }
-                    // Try to reduce PowerEffect, to check if something is blocking our ability
-                    try {
-                        const player = game_1.StateUtils.findOwner(state, effect.target);
-                        const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                        store.reduceEffect(state, powerEffect);
-                    }
-                    catch (_a) {
-                        return state;
-                    }
-                    effect.preventDefault = true;
+                // if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
+                // Allow damage
+                if (effect instanceof attack_effects_1.PutDamageEffect) {
+                    return state;
                 }
+                // Allow damage
+                if (effect instanceof attack_effects_1.DealDamageEffect) {
+                    return state;
+                }
+                // Try to reduce PowerEffect, to check if something is blocking our ability
+                try {
+                    const player = game_1.StateUtils.findOwner(state, effect.target);
+                    const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                    store.reduceEffect(state, powerEffect);
+                }
+                catch (_a) {
+                    return state;
+                }
+                effect.preventDefault = true;
             }
-            return state;
         }
         return state;
     }

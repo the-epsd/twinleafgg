@@ -7,30 +7,30 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 function* useAscension(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
-  
+
   if (player.deck.cards.length === 0) {
     return state;
   }
-  
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_EVOLVE,
     player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Gible'},
+    { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Gible' },
     { min: 1, max: 1, allowCancel: true }
   ), selected => {
     cards = selected || [];
     next();
   });
-  
+
   if (cards.length > 0) {
     // Evolve Pokemon
     player.deck.moveCardsTo(cards, player.active);
     player.active.clearEffects();
     player.active.pokemonPlayedTurn = state.turn;
   }
-  
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
@@ -40,19 +40,17 @@ export class Gible extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public regulationMark = 'G';
-
   public cardType: CardType = CardType.DRAGON;
 
   public hp: number = 50;
 
   public weakness = [{ type: CardType.FAIRY }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Ascension',
-    cost: [ CardType.FIGHTING ],
+    cost: [CardType.FIGHTING],
     damage: 20,
     text: 'Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck.'
   }
