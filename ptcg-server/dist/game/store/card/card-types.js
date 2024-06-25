@@ -19,6 +19,7 @@ export var CardTag;
     CardTag["POKEMON_TERA"] = "POKEMON_TERA";
     CardTag["ULTRA_BEAST"] = "ULTRA_BEAST";
     CardTag["TAG_TEAM"] = "TAG_TEAM";
+    CardTag["TEAM_MAGMA"] = "TEAM_MAGMA";
 })(CardTag || (CardTag = {}));
 export var SuperType;
 (function (SuperType) {

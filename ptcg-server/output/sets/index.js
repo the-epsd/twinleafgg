@@ -48,7 +48,7 @@ __exportStar(require("./set-furious-fists"), exports);
 __exportStar(require("./set-phantom-forces"), exports);
 __exportStar(require("./set-primal-clash"), exports);
 __exportStar(require("./set-x-and-y"), exports);
-//export * from './set-double-crisis';
+__exportStar(require("./set-double-crisis"), exports);
 __exportStar(require("./set-ancient-origins"), exports);
 __exportStar(require("./set-breakpoint"), exports);
 __exportStar(require("./set-breakthrough"), exports);

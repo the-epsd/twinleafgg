@@ -37,6 +37,7 @@ cardManager.defineSet(sets.setEmergingPowers);
 cardManager.defineSet(sets.setNobleVictories);
 cardManager.defineSet(sets.setNextDestinies);
 cardManager.defineSet(sets.setDarkExplorers);
+cardManager.defineSet(sets.setDoubleCrisis);
 cardManager.defineSet(sets.setDragonsExalted);
 cardManager.defineSet(sets.setDragonsMajesty);
 cardManager.defineSet(sets.setDragonVault);

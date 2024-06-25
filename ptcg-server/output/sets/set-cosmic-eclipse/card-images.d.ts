@@ -6,6 +6,7 @@ import { Golett } from './golett';
 import { GuzmaAndHala } from './guzma-and-hala';
 import { Guzzlord } from './guzzlord';
 import { LanasFishingRod } from './lanas-fishing-rod';
+import { LilliesPokeDoll } from './lillies-poke-doll';
 import { MallowAndLana } from './mallow-and-lana';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
@@ -35,6 +36,9 @@ export declare class MallowAndLanaArt extends MallowAndLana {
     cardImage: string;
 }
 export declare class LanasFishingRodArt extends LanasFishingRod {
+    cardImage: string;
+}
+export declare class LilliesPokeDollArt extends LilliesPokeDoll {
     cardImage: string;
 }
 export declare class ProfessorOaksSetupArt extends ProfessorOaksSetup {

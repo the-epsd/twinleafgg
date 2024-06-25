@@ -2,7 +2,7 @@ import { EnergyCard, PokemonCard, ShowCardsPrompt, StateUtils } from '../../game
 import { GameError } from '../../game/game-error';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
-import { CardType, EnergyType, Stage, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, EnergyType, Stage, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -22,8 +22,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
     // eslint-disable-next-line no-empty    
-    if ((card instanceof PokemonCard && card.stage === Stage.BASIC && card.cardType === CardType.GRASS) ||
-      (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Grass Energy')) {
+    if ((card instanceof PokemonCard && card.stage === Stage.BASIC && card.cardTag.includes(CardTag.TEAM_MAGMA)) ||
+      (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Fighting Energy')) {
       /**/
     } else {
       blocked.push(index);
@@ -50,11 +50,11 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   cards.forEach((card, index) => {
     player.deck.moveCardTo(card, player.hand);
   });
-  
+
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
   });
-
+  
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,
@@ -68,22 +68,22 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
 }
-export class NetBall extends TrainerCard {
+export class TeamMagmasGreatBall extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'LOT';
+  public set: string = 'DCR';
 
-  public name: string = 'Net Ball';
+  public name: string = 'Team Magma\'s Great Ball';
 
-  public fullName: string = 'Net Ball LOT';
+  public fullName: string = 'Team Magma\'s Great Ball DCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '187';
+  public setNumber: string = '31';
 
   public text: string =
-    'Search your deck for a Basic [G] Pokémon or a [G] Energy card, reveal it, and put it into your hand. Then, shuffle your deck.';
+    'Search your deck for a Basic Team Magma Pokémon and a basic [F] Energy card, reveal them, and put them into your hand. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

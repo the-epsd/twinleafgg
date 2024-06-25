@@ -19,6 +19,7 @@ export enum CardTag {
     POKEMON_TERA = 'POKEMON_TERA',
     ULTRA_BEAST = 'ULTRA_BEAST',
     TAG_TEAM = 'TAG_TEAM',
+    TEAM_MAGMA = 'TEAM_MAGMA',
 }
 
 

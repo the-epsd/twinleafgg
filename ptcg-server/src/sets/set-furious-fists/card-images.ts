@@ -1,5 +1,6 @@
 import { Dedenne } from './dedenne';
 import { FightingStadium } from './fighting-stadium';
+import { FocusSash } from './focus-sash';
 import { Hawlucha } from './hawlucha';
 import { Korrina } from './korrina';
 import { LucarioEx } from './lucario-ex';
@@ -13,6 +14,10 @@ export class DedenneArt extends Dedenne {
 
 export class FightingStadiumArt extends FightingStadium {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_090_R_EN.png';
+}
+
+export class FocusSashArt extends FocusSash {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_091_R_EN.png';
 }
 
 export class HawluchaArt extends Hawlucha {

@@ -6,6 +6,7 @@ import { Golett } from './golett';
 import { GuzmaAndHala } from './guzma-and-hala';
 import { Guzzlord } from './guzzlord';
 import { LanasFishingRod } from './lanas-fishing-rod';
+import { LilliesPokeDoll } from './lillies-poke-doll';
 import { MallowAndLana } from './mallow-and-lana';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
@@ -45,6 +46,10 @@ export class MallowAndLanaArt extends MallowAndLana {
 
 export class LanasFishingRodArt extends LanasFishingRod {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_195_R_EN_LG.png';
+}
+
+export class LilliesPokeDollArt extends LilliesPokeDoll {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_197_R_EN.png';
 }
 
 export class ProfessorOaksSetupArt extends ProfessorOaksSetup {

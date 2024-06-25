@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TrainingCenterArt = exports.StrongEnergyArt = exports.SeismitoadExArt = exports.LucarioExArt = exports.KorrinaArt = exports.HawluchaArt = exports.FightingStadiumArt = exports.DedenneArt = void 0;
+exports.TrainingCenterArt = exports.StrongEnergyArt = exports.SeismitoadExArt = exports.LucarioExArt = exports.KorrinaArt = exports.HawluchaArt = exports.FocusSashArt = exports.FightingStadiumArt = exports.DedenneArt = void 0;
 const dedenne_1 = require("./dedenne");
 const fighting_stadium_1 = require("./fighting-stadium");
+const focus_sash_1 = require("./focus-sash");
 const hawlucha_1 = require("./hawlucha");
 const korrina_1 = require("./korrina");
 const lucario_ex_1 = require("./lucario-ex");
@@ -23,6 +24,13 @@ class FightingStadiumArt extends fighting_stadium_1.FightingStadium {
     }
 }
 exports.FightingStadiumArt = FightingStadiumArt;
+class FocusSashArt extends focus_sash_1.FocusSash {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FFI/FFI_091_R_EN.png';
+    }
+}
+exports.FocusSashArt = FocusSashArt;
 class HawluchaArt extends hawlucha_1.Hawlucha {
     constructor() {
         super(...arguments);

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZapdosArt = exports.ViridianForestArt = exports.PokemonCommunicationArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.DragoniteArt = void 0;
 const dragonite_1 = require("./dragonite");
 const hitmonchan_1 = require("./hitmonchan");
+const hitmonlee_1 = require("./hitmonlee");
 const jirachi_1 = require("./jirachi");
 const lapras_1 = require("./lapras");
 const pokemon_communication_1 = require("./pokemon-communication");
@@ -22,7 +23,7 @@ class HitmonchanArt extends hitmonchan_1.Hitmonchan {
     }
 }
 exports.HitmonchanArt = HitmonchanArt;
-class HitmonleeArt extends hitmonchan_1.Hitmonchan {
+class HitmonleeArt extends hitmonlee_1.Hitmonlee {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_073_R_EN.png';

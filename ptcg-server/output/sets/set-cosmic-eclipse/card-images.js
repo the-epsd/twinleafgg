@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TagCallArt = exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BlacephalonArt = void 0;
+exports.TagCallArt = exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BlacephalonArt = void 0;
 const blacephalon_1 = require("./blacephalon");
 const chaotic_swell_1 = require("./chaotic-swell");
 const cynthia_and_caitlin_1 = require("./cynthia-and-caitlin");
@@ -9,6 +9,7 @@ const golett_1 = require("./golett");
 const guzma_and_hala_1 = require("./guzma-and-hala");
 const guzzlord_1 = require("./guzzlord");
 const lanas_fishing_rod_1 = require("./lanas-fishing-rod");
+const lillies_poke_doll_1 = require("./lillies-poke-doll");
 const mallow_and_lana_1 = require("./mallow-and-lana");
 const professor_oaks_setup_1 = require("./professor-oaks-setup");
 const slugma_1 = require("./slugma");
@@ -76,6 +77,13 @@ class LanasFishingRodArt extends lanas_fishing_rod_1.LanasFishingRod {
     }
 }
 exports.LanasFishingRodArt = LanasFishingRodArt;
+class LilliesPokeDollArt extends lillies_poke_doll_1.LilliesPokeDoll {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_197_R_EN.png';
+    }
+}
+exports.LilliesPokeDollArt = LilliesPokeDollArt;
 class ProfessorOaksSetupArt extends professor_oaks_setup_1.ProfessorOaksSetup {
     constructor() {
         super(...arguments);

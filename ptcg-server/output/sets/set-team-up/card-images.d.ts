@@ -1,5 +1,6 @@
 import { Dragonite } from './dragonite';
 import { Hitmonchan } from './hitmonchan';
+import { Hitmonlee } from './hitmonlee';
 import { Jirachi } from './jirachi';
 import { Lapras } from './lapras';
 import { PokemonCommunication } from './pokemon-communication';
@@ -11,7 +12,7 @@ export declare class DragoniteArt extends Dragonite {
 export declare class HitmonchanArt extends Hitmonchan {
     cardImage: string;
 }
-export declare class HitmonleeArt extends Hitmonchan {
+export declare class HitmonleeArt extends Hitmonlee {
     cardImage: string;
 }
 export declare class JirachiArt extends Jirachi {

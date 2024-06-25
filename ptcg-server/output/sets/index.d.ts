@@ -30,6 +30,7 @@ export * from './set-furious-fists';
 export * from './set-phantom-forces';
 export * from './set-primal-clash';
 export * from './set-x-and-y';
+export * from './set-double-crisis';
 export * from './set-ancient-origins';
 export * from './set-breakpoint';
 export * from './set-breakthrough';

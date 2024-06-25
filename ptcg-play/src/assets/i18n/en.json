@@ -475,6 +475,7 @@
     "LOG_PLAYER_PLAYS_TOOL": "{{name}} attaches {{card}} to {{pokemon}}.",
     "LOG_PLAYER_RETREATS": "{{name}} retreats {{active}} to {{benched}}.",
     "LOG_PLAYER_USES_ABILITY": "{{name}} uses {{ability}} ability.",
+    "LOG_PLAYER_SWITCHES_POKEMON_WITH_POKEMON_FROM_DECK": "{{name}} switches {{card}} with {{secondCard}} from the deck.",
     "LOG_PLAYER_USES_ATTACK": "{{name}} attacks with {{attack}}.",
     "LOG_PLAYER_USES_STADIUM": "{{name}} uses {{stadium}}.",
     "LOG_POKEMON_KO": "{{name}} has been Knocked Out.",

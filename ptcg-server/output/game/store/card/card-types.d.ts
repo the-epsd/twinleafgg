@@ -17,7 +17,8 @@ export declare enum CardTag {
     ANCIENT = "Ancient",
     POKEMON_TERA = "POKEMON_TERA",
     ULTRA_BEAST = "ULTRA_BEAST",
-    TAG_TEAM = "TAG_TEAM"
+    TAG_TEAM = "TAG_TEAM",
+    TEAM_MAGMA = "TEAM_MAGMA"
 }
 export declare enum SuperType {
     NONE = 0,

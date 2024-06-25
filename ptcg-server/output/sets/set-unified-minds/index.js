@@ -7,6 +7,7 @@ exports.setUnifiedMinds = [
     new card_images_1.NecrozmaArt(),
     new card_images_1.PurrloinArt(),
     new card_images_1.ResetStampArt(),
+    new card_images_1.RioluArt(),
     new card_images_1.StadiumNavArt(),
     new card_images_1.UTurnBoardArt(),
     new card_images_1.WeaknessGuardEnergyArt()

@@ -155,7 +155,7 @@ export class Player {
       this.bench[benchIndex] = temp;
       
       this.active.getPokemonCard()!.movedToActiveThisTurn = true;
-    }
+  }
   }
 
 }

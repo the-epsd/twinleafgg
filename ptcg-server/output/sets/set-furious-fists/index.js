@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setFuriousFists = [
     new card_images_1.DedenneArt(),
     new card_images_1.FightingStadiumArt(),
+    new card_images_1.FocusSashArt(),
     new card_images_1.HawluchaArt(),
     new card_images_1.KorrinaArt(),
     new card_images_1.LucarioExArt(),

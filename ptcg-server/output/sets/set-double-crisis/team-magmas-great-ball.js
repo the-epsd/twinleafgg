@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NetBall = void 0;
+exports.TeamMagmasGreatBall = void 0;
 const game_1 = require("../../game");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
@@ -18,8 +18,8 @@ function* playCard(next, store, state, effect) {
     const blocked = [];
     player.deck.cards.forEach((card, index) => {
         // eslint-disable-next-line no-empty    
-        if ((card instanceof game_1.PokemonCard && card.stage === card_types_1.Stage.BASIC && card.cardType === card_types_1.CardType.GRASS) ||
-            (card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC && card.name === 'Grass Energy')) {
+        if ((card instanceof game_1.PokemonCard && card.stage === card_types_1.Stage.BASIC && card.cardTag.includes(card_types_1.CardTag.TEAM_MAGMA)) ||
+            (card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC && card.name === 'Fighting Energy')) {
             /**/
         }
         else {
@@ -48,16 +48,16 @@ function* playCard(next, store, state, effect) {
         player.deck.applyOrder(order);
     });
 }
-class NetBall extends trainer_card_1.TrainerCard {
+class TeamMagmasGreatBall extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'LOT';
-        this.name = 'Net Ball';
-        this.fullName = 'Net Ball LOT';
+        this.set = 'DCR';
+        this.name = 'Team Magma\'s Great Ball';
+        this.fullName = 'Team Magma\'s Great Ball DCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '187';
-        this.text = 'Search your deck for a Basic [G] Pokémon or a [G] Energy card, reveal it, and put it into your hand. Then, shuffle your deck.';
+        this.setNumber = '31';
+        this.text = 'Search your deck for a Basic Team Magma Pokémon and a basic [F] Energy card, reveal them, and put them into your hand. Shuffle your deck afterward.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
@@ -67,4 +67,4 @@ class NetBall extends trainer_card_1.TrainerCard {
         return state;
     }
 }
-exports.NetBall = NetBall;
+exports.TeamMagmasGreatBall = TeamMagmasGreatBall;

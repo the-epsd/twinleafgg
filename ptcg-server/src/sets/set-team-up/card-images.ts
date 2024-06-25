@@ -1,5 +1,6 @@
 import { Dragonite } from './dragonite';
 import { Hitmonchan } from './hitmonchan';
+import { Hitmonlee } from './hitmonlee';
 import { Jirachi } from './jirachi';
 import { Lapras } from './lapras';
 import { PokemonCommunication } from './pokemon-communication';
@@ -14,7 +15,7 @@ export class HitmonchanArt extends Hitmonchan {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_074_R_EN.png';
 }
 
-export class HitmonleeArt extends Hitmonchan {
+export class HitmonleeArt extends Hitmonlee {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_073_R_EN.png';
 }
 
