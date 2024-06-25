@@ -11,6 +11,7 @@ import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
+import { PokemonCard } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Arezu, effect: TrainerEffect): IterableIterator<State> {
@@ -33,7 +34,17 @@ function* playCard(next: Function, store: StoreLike, state: State,
   if (supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
-  
+
+  const blocked: number[] = [];
+  player.deck.cards.forEach((card, index) => {
+    if (card instanceof PokemonCard && card.tags.includes(CardTag.RADIANT) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.POKEMON_ex)) {
+      blocked.push(index);
+    }
+    if (card instanceof PokemonCard && card.stage == Stage.BASIC) {
+      blocked.push(index);
+    }
+  });
+
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
@@ -42,8 +53,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.STAGE_1 || Stage.STAGE_2 },
-    { min: 1, max: 3, allowCancel: true }
+    { superType: SuperType.POKEMON },
+    { min: 1, max: 3, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();
@@ -51,31 +62,30 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   if (cards.length > 0) {
 
-    if (cards[0].tags.includes(CardTag.POKEMON_ex)    ||
-    cards[0].tags.includes(CardTag.POKEMON_GX) || 
-    cards[0].tags.includes(CardTag.POKEMON_EX)) 
-    {
-      throw new GameError(GameMessage.INVALID_TARGET);
-    }
-    else {
+    // if (cards[0].tags.includes(CardTag.POKEMON_ex) ||
+    //   cards[0].tags.includes(CardTag.POKEMON_GX) ||
+    //   cards[0].tags.includes(CardTag.POKEMON_EX)) {
+    //   throw new GameError(GameMessage.INVALID_TARGET);
+    // }
+    // else {
 
-      player.deck.moveCardsTo(cards, player.hand);
-      player.hand.moveCardTo(self, player.discard);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      player.supporterTurn = 1;
+    player.deck.moveCardsTo(cards, player.hand);
+    player.hand.moveCardTo(self, player.discard);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
 
-      yield store.prompt(state, new ShowCardsPrompt(
-        opponent.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        cards
-      ), () => next());
-    }
-
-    return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-      player.deck.applyOrder(order);
-    });
+    yield store.prompt(state, new ShowCardsPrompt(
+      opponent.id,
+      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+      cards
+    ), () => next());
   }
+
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    player.deck.applyOrder(order);
+  });
 }
+
 
 export class Arezu extends TrainerCard {
 
@@ -86,7 +96,7 @@ export class Arezu extends TrainerCard {
   public set: string = 'LOR';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '153';
 
   public name: string = 'Arezu';
