@@ -1,7 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { ExeggcuteArt, FloatStoneArt, MrMimeArt, RockGuardArt, SuperiorEnergyRetrievalArt } from './card-images';
+import { ElectrodeArt, ExeggcuteArt, FloatStoneArt, MrMimeArt, RockGuardArt, SuperiorEnergyRetrievalArt } from './card-images';
 
 export const setPlasmaFreeze: Card[] = [
+  new ElectrodeArt(),
   new ExeggcuteArt(),
   new FloatStoneArt(),
   new MrMimeArt(),

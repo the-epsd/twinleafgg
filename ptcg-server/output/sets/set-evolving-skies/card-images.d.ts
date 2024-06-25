@@ -6,6 +6,7 @@ import { DuraludonVMAX } from './duraludon-vmax';
 import { EspeonV } from './espeon-v';
 import { EspeonVMAX } from './espeon-vmax';
 import { Vigoroth } from './EVS_130_Vigoroth';
+import { GalarianZapdos } from './EVS_82_Galarian_Zapdos';
 import { Flaaffy } from './flaaffy';
 import { Flapple } from './flapple';
 import { FullFaceGuard } from './full-face-guard';
@@ -70,6 +71,9 @@ export declare class GalarianArticunoArt extends GalarianArticuno {
     cardImage: string;
 }
 export declare class GalarianMoltresArt extends GalarianMoltres {
+    cardImage: string;
+}
+export declare class GalarianZapdosArt extends GalarianZapdos {
     cardImage: string;
 }
 export declare class GyaradosVArt extends GyaradosV {

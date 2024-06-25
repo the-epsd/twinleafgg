@@ -6,6 +6,7 @@ import { DuraludonVMAX } from './duraludon-vmax';
 import { EspeonV } from './espeon-v';
 import { EspeonVMAX } from './espeon-vmax';
 import { Vigoroth } from './EVS_130_Vigoroth';
+import { GalarianZapdos } from './EVS_82_Galarian_Zapdos';
 import { Flaaffy } from './flaaffy';
 import { Flapple } from './flapple';
 import { FullFaceGuard } from './full-face-guard';
@@ -83,6 +84,10 @@ export class GalarianArticunoArt extends GalarianArticuno {
 
 export class GalarianMoltresArt extends GalarianMoltres {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_093_R_EN_LG.png';
+}
+
+export class GalarianZapdosArt extends GalarianZapdos {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_082_R_EN_LG.png';
 }
 
 export class GyaradosVArt extends GyaradosV {

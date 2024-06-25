@@ -1,10 +1,10 @@
 import { Card } from '../../game/store/card/card';
-import { CopycatArt, DragoniteVArt, DrampaArt, DuraludonVArt, DuraludonVMAXArt, EspeonVArt, EspeonVMAXArt, FlaaffyArt, FlappleArt, FullFaceGuardArt, GalarianArticunoArt, GalarianMoltresArt, GyaradosVArt, GyaradosVMAXArt, LeafeonVArt, LeafeonVMAXArt, MareepArt, PumpkabooArt, RaihanArt, RayquazaVArt, RayquazaVMAXArt, RegidragoArt, RegielekiArt, RescueCarrierArt, StormyMountainsArt, SuicuneVArt, SwabluArt, SwitchingCupsArt, TropiusArt, UmbreonVArt, UmbreonVMAXArt, VigorothArt, WishiwashiArt, ZinniasResolveArt, ZoroarkArt, ZoruaArt } from './card-images';
+import { CopycatArt, DragoniteVArt, DrampaArt, DuraludonVArt, DuraludonVMAXArt, EspeonVArt, EspeonVMAXArt, FlaaffyArt, FlappleArt, FullFaceGuardArt, GalarianArticunoArt, GalarianMoltresArt, GalarianZapdosArt, GyaradosVArt, GyaradosVMAXArt, LeafeonVArt, LeafeonVMAXArt, MareepArt, PumpkabooArt, RaihanArt, RayquazaVArt, RayquazaVMAXArt, RegidragoArt, RegielekiArt, RescueCarrierArt, StormyMountainsArt, SuicuneVArt, SwabluArt, SwitchingCupsArt, TropiusArt, UmbreonVArt, UmbreonVMAXArt, VigorothArt, WishiwashiArt, ZinniasResolveArt, ZoroarkArt, ZoruaArt } from './card-images';
 import { RayquazaVAA, RayquazaVMAXAA } from './full-arts';
 
 
 export const setEvolvingSkies: Card[] = [
-  
+
   new CopycatArt(),
   new DragoniteVArt(),
   new DrampaArt(),
@@ -17,6 +17,7 @@ export const setEvolvingSkies: Card[] = [
   new FullFaceGuardArt(),
   new GalarianArticunoArt(),
   new GalarianMoltresArt(),
+  new GalarianZapdosArt(),
   new GyaradosVArt(),
   new GyaradosVMAXArt(),
   new LeafeonVArt(),
@@ -41,7 +42,7 @@ export const setEvolvingSkies: Card[] = [
   new WishiwashiArt(),
   new SwitchingCupsArt(),
   new VigorothArt(),
-  
+
   // Full Art & Alternate Art
   new RayquazaVAA(),
   new RayquazaVMAXAA(),

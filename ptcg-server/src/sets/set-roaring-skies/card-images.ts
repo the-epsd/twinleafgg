@@ -1,6 +1,7 @@
 import { Articuno } from './articuno';
 import { Beautifly } from './beautifly';
 import { DoubleDragonEnergy } from './double-dragon-energy';
+import { Voltorb } from './ROS_21_Voltorb';
 import { ShayminEx } from './shaymin-ex';
 import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
@@ -42,8 +43,12 @@ export class TrainersMailArt extends TrainersMail {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_092_R_EN.png';
 }
 
+export class VoltorbArt extends Voltorb {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_021_R_EN_LG.png';
+}
+
 export class WallyArt extends Wally {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_094_R_EN_LG.png';  
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_094_R_EN_LG.png';
 }
 
 export class WinonaArt extends Winona {

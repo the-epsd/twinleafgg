@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.VigorothArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SylveonVMAXArt = exports.SylveonVArt = exports.SwitchingCupsArt = exports.SwabluArt = exports.SuicuneVArt = exports.StormyMountainsArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVMAXArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FullFaceGuardArt = exports.FlappleArt = exports.FlaaffyArt = exports.EspeonVMAXArt = exports.EspeonVArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DrampaArt = exports.DragoniteVArt = exports.CopycatArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.VigorothArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SylveonVMAXArt = exports.SylveonVArt = exports.SwitchingCupsArt = exports.SwabluArt = exports.SuicuneVArt = exports.StormyMountainsArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVMAXArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianZapdosArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FullFaceGuardArt = exports.FlappleArt = exports.FlaaffyArt = exports.EspeonVMAXArt = exports.EspeonVArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DrampaArt = exports.DragoniteVArt = exports.CopycatArt = void 0;
 const copycat_1 = require("./copycat");
 const dragonite_v_1 = require("./dragonite-v");
 const drampa_1 = require("./drampa");
@@ -9,6 +9,7 @@ const duraludon_vmax_1 = require("./duraludon-vmax");
 const espeon_v_1 = require("./espeon-v");
 const espeon_vmax_1 = require("./espeon-vmax");
 const EVS_130_Vigoroth_1 = require("./EVS_130_Vigoroth");
+const EVS_82_Galarian_Zapdos_1 = require("./EVS_82_Galarian_Zapdos");
 const flaaffy_1 = require("./flaaffy");
 const flapple_1 = require("./flapple");
 const full_face_guard_1 = require("./full-face-guard");
@@ -123,6 +124,13 @@ class GalarianMoltresArt extends galarian_moltres_1.GalarianMoltres {
     }
 }
 exports.GalarianMoltresArt = GalarianMoltresArt;
+class GalarianZapdosArt extends EVS_82_Galarian_Zapdos_1.GalarianZapdos {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_082_R_EN_LG.png';
+    }
+}
+exports.GalarianZapdosArt = GalarianZapdosArt;
 class GyaradosVArt extends gyarados_v_1.GyaradosV {
     constructor() {
         super(...arguments);
