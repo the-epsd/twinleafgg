@@ -2,6 +2,7 @@ import { Cynthia } from './cynthia';
 import { EscapeBoard } from './escape-board';
 import { Gardenia } from './gardenia';
 import { Gible } from './gible';
+import { Magnemite } from './magnemite';
 import { Magnezone } from './magnezone';
 import { MtCoronet } from './mt-coronet';
 import { PokemonFanClub } from './pokemon-fan-club';
@@ -24,6 +25,10 @@ export class GardeniaArt extends Gardenia {
 
 export class GibleArt extends Gible {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_096_R_EN.png';
+}
+
+export class MagnemiteArt extends Magnemite {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_081_R_EN.png';
 }
 
 export class MagnezoneArt extends Magnezone {

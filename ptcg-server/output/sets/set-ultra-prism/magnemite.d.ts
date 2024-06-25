@@ -1,20 +1,23 @@
-import { State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Swampert extends PokemonCard {
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
+export declare class Magnemite extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
+    resistance: {
+        type: CardType;
+        value: number;
+    }[];
     retreat: CardType[];
-    evolvesFrom: string;
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];
@@ -22,14 +25,12 @@ export declare class Swampert extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
-        damageCalculation: string;
         text: string;
     }[];
     set: string;
-    cardImage: string;
-    setNumber: string;
     name: string;
     fullName: string;
-    readonly POWER_DRAW_MARKER = "POWER_DRAW_MARKER";
+    cardImage: string;
+    setNumber: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

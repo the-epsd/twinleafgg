@@ -7,12 +7,19 @@ export declare class Lucario extends PokemonCard {
     cardType: CardType;
     hp: number;
     retreat: CardType[];
-    attacks: {
+    attacks: ({
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    } | {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    })[];
     set: string;
     regulationMark: string;
     cardImage: string;

@@ -5,6 +5,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Swampert extends PokemonCard {
@@ -26,6 +27,7 @@ export class Swampert extends PokemonCard {
     name: 'Hydro Pump',
     cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 80,
+    damageCalculation: '+',    
     text: 'This attack does 20 more damage times the amount of [W] Energy attached to this Pokémon.'
   }];
 
@@ -81,7 +83,16 @@ export class Swampert extends PokemonCard {
 
       return state;
     }
-
+    
+    if (effect instanceof EndTurnEffect) {
+      state.players.forEach(player => {
+        if (!player.marker.hasMarker(this.POWER_DRAW_MARKER)) {
+          return;
+        }
+        player.marker.removeMarker(this.POWER_DRAW_MARKER);
+      });
+    }
+    
     if (effect instanceof AttackEffect && effect.attack == this.attacks[0]) {
       const player = effect.player;
 

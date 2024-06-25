@@ -7,6 +7,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Swampert extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -27,6 +28,7 @@ class Swampert extends pokemon_card_1.PokemonCard {
                 name: 'Hydro Pump',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 80,
+                damageCalculation: '+',
                 text: 'This attack does 20 more damage times the amount of [W] Energy attached to this Pokémon.'
             }];
         this.set = 'CES';
@@ -64,6 +66,14 @@ class Swampert extends pokemon_card_1.PokemonCard {
                 player.deck.moveTo(player.hand, 3);
             });
             return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            state.players.forEach(player => {
+                if (!player.marker.hasMarker(this.POWER_DRAW_MARKER)) {
+                    return;
+                }
+                player.marker.removeMarker(this.POWER_DRAW_MARKER);
+            });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack == this.attacks[0]) {
             const player = effect.player;

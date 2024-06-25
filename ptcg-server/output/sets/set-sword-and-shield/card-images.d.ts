@@ -1,6 +1,7 @@
 import { AirBalloon } from './air-balloon';
 import { AuroraEnergy } from './aurora-energy';
 import { Cinccino } from './cinccino';
+import { Copperajah } from './copperajah';
 import { Drizzile } from './drizzile';
 import { EvolutionIncense } from './evolution-incense';
 import { GiantHearth } from './giant-hearth';
@@ -21,6 +22,9 @@ export declare class AuroraEnergyArt extends AuroraEnergy {
     cardImage: string;
 }
 export declare class CinccinoArt extends Cinccino {
+    cardImage: string;
+}
+export declare class CopperajahArt extends Copperajah {
     cardImage: string;
 }
 export declare class DrizzileArt extends Drizzile {

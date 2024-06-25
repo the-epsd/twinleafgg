@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setSwordAndShield = [
     new card_images_1.AirBalloonArt(),
     new card_images_1.AuroraEnergyArt(),
+    new card_images_1.CopperajahArt(),
     new card_images_1.DrizzileArt(),
     new card_images_1.EvolutionIncenseArt(),
     new card_images_1.GiantHearthArt(),

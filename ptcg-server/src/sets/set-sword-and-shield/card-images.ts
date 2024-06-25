@@ -1,6 +1,7 @@
 import { AirBalloon } from './air-balloon';
 import { AuroraEnergy } from './aurora-energy';
 import { Cinccino } from './cinccino';
+import { Copperajah } from './copperajah';
 import { Drizzile } from './drizzile';
 import { EvolutionIncense } from './evolution-incense';
 import { GiantHearth } from './giant-hearth';
@@ -25,6 +26,10 @@ export class AuroraEnergyArt extends AuroraEnergy {
 
 export class CinccinoArt extends Cinccino {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_147_R_EN_LG.png';
+}
+
+export class CopperajahArt extends Copperajah {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_137_R_EN.png';
 }
 
 export class DrizzileArt extends Drizzile {

@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VolknerArt = exports.UnitEnergyLPMArt = exports.UnitEnergyGRWArt = exports.TurtwigArt = exports.PokemonFanClubArt = exports.MtCoronetArt = exports.MagnezoneArt = exports.GibleArt = exports.GardeniaArt = exports.EscapeBoardArt = exports.CynthiaArt = void 0;
+exports.VolknerArt = exports.UnitEnergyLPMArt = exports.UnitEnergyGRWArt = exports.TurtwigArt = exports.PokemonFanClubArt = exports.MtCoronetArt = exports.MagnezoneArt = exports.MagnemiteArt = exports.GibleArt = exports.GardeniaArt = exports.EscapeBoardArt = exports.CynthiaArt = void 0;
 const cynthia_1 = require("./cynthia");
 const escape_board_1 = require("./escape-board");
 const gardenia_1 = require("./gardenia");
 const gible_1 = require("./gible");
+const magnemite_1 = require("./magnemite");
 const magnezone_1 = require("./magnezone");
 const mt_coronet_1 = require("./mt-coronet");
 const pokemon_fan_club_1 = require("./pokemon-fan-club");
@@ -40,6 +41,13 @@ class GibleArt extends gible_1.Gible {
     }
 }
 exports.GibleArt = GibleArt;
+class MagnemiteArt extends magnemite_1.Magnemite {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_081_R_EN.png';
+    }
+}
+exports.MagnemiteArt = MagnemiteArt;
 class MagnezoneArt extends magnezone_1.Magnezone {
     constructor() {
         super(...arguments);

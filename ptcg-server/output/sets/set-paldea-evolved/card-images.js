@@ -1,47 +1,48 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WingullArt = exports.TinkatonArt = exports.TinkatuffArt = exports.TinkatinkArt = exports.TingLuexArt = exports.TheraputicEnergyArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.NoivernexArt = exports.NoibatArt = exports.MurkrowArt = exports.MimikyuArt = exports.LuminousEnergyArt = exports.JetEnergyArt = exports.IonoArt = exports.GrushaArt = exports.GreatBallArt = exports.GiacomoArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.ChiYuexArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
+exports.WingullArt = exports.TinkatonArt = exports.TinkatuffArt = exports.TinkatinkArt = exports.TingLuexArt = exports.TheraputicEnergyArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.NoivernexArt = exports.NoibatArt = exports.MurkrowArt = exports.MimikyuArt = exports.LuminousEnergyArt = exports.JetEnergyArt = exports.IonoArt = exports.GrushaArt = exports.GreatBallArt = exports.GiacomoArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.CufantArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.ChiYuexArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
 const arctibax_1 = require("./arctibax");
 const artazon_1 = require("./artazon");
 const baxcalibur_1 = require("./baxcalibur");
 const boss_orders_1 = require("./boss-orders");
 const bravery_charm_1 = require("./bravery-charm");
+const cetitan_1 = require("./cetitan");
+const chi_yu_ex_1 = require("./chi-yu-ex");
 const chien_pao_ex_1 = require("./chien-pao-ex");
 const choice_belt_1 = require("./choice-belt");
+const cufant_1 = require("./cufant");
 const delivery_drone_1 = require("./delivery-drone");
 const dudunsparce_1 = require("./dudunsparce");
 const fighting_au_lait_1 = require("./fighting-au-lait");
 const flamigo_1 = require("./flamigo");
 const frigibax_1 = require("./frigibax");
 const frigibax2_1 = require("./frigibax2");
+const giacomo_1 = require("./giacomo");
 const great_ball_1 = require("./great-ball");
+const grusha_1 = require("./grusha");
 const iono_1 = require("./iono");
 const jet_energy_1 = require("./jet-energy");
 const luminous_energy_1 = require("./luminous-energy");
+const luxray_1 = require("./luxray");
 const mimikyu_1 = require("./mimikyu");
 const murkrow_1 = require("./murkrow");
-const reversal_energy_1 = require("./reversal-energy");
-const spiritomb_1 = require("./spiritomb");
-const squawkabilly_ex_1 = require("./squawkabilly-ex");
-const superior_energy_retrieval_1 = require("./superior-energy-retrieval");
-const super_rod_1 = require("./super-rod");
-const wattrel_1 = require("./wattrel");
-const luxray_1 = require("./luxray");
-const wo_chien_ex_1 = require("./wo-chien-ex");
-const shinx_1 = require("./shinx");
-const tadbulb_1 = require("./tadbulb");
-const ting_lu_ex_1 = require("./ting-lu-ex");
-const cetitan_1 = require("./cetitan");
-const grusha_1 = require("./grusha");
-const giacomo_1 = require("./giacomo");
-const theraputic_energy_1 = require("./theraputic-energy");
 const noibat_1 = require("./noibat");
 const noivern_ex_1 = require("./noivern-ex");
-const chi_yu_ex_1 = require("./chi-yu-ex");
+const reversal_energy_1 = require("./reversal-energy");
+const shinx_1 = require("./shinx");
+const spiritomb_1 = require("./spiritomb");
+const squawkabilly_ex_1 = require("./squawkabilly-ex");
+const super_rod_1 = require("./super-rod");
+const superior_energy_retrieval_1 = require("./superior-energy-retrieval");
+const tadbulb_1 = require("./tadbulb");
+const theraputic_energy_1 = require("./theraputic-energy");
+const ting_lu_ex_1 = require("./ting-lu-ex");
 const tinkatink_1 = require("./tinkatink");
-const tinkatuff_1 = require("./tinkatuff");
 const tinkaton_1 = require("./tinkaton");
+const tinkatuff_1 = require("./tinkatuff");
+const wattrel_1 = require("./wattrel");
 const wingull_1 = require("./wingull");
+const wo_chien_ex_1 = require("./wo-chien-ex");
 class ArctibaxArt extends arctibax_1.Arctibax {
     constructor() {
         super(...arguments);
@@ -105,6 +106,13 @@ class ChoiceBeltArt extends choice_belt_1.ChoiceBelt {
     }
 }
 exports.ChoiceBeltArt = ChoiceBeltArt;
+class CufantArt extends cufant_1.Cufant {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_149_R_EN.png';
+    }
+}
+exports.CufantArt = CufantArt;
 class DeliveryDroneArt extends delivery_drone_1.DeliveryDrone {
     constructor() {
         super(...arguments);

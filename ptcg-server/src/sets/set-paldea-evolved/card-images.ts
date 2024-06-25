@@ -3,42 +3,43 @@ import { Artazon } from './artazon';
 import { Baxcalibur } from './baxcalibur';
 import { BossOrders } from './boss-orders';
 import { BraveyCharm } from './bravery-charm';
+import { Cetitan } from './cetitan';
+import { ChiYuex } from './chi-yu-ex';
 import { ChienPaoex } from './chien-pao-ex';
 import { ChoiceBelt } from './choice-belt';
+import { Cufant } from './cufant';
 import { DeliveryDrone } from './delivery-drone';
 import { Dudunsparce } from './dudunsparce';
 import { FightingAuLait } from './fighting-au-lait';
 import { Flamigo } from './flamigo';
 import { Frigibax } from './frigibax';
 import { Frigibax2 } from './frigibax2';
+import { Giacomo } from './giacomo';
 import { GreatBall } from './great-ball';
+import { Grusha } from './grusha';
 import { Iono } from './iono';
 import { JetEnergy } from './jet-energy';
 import { LuminousEnergy } from './luminous-energy';
+import { Luxray } from './luxray';
 import { Mimikyu } from './mimikyu';
 import { Murkrow } from './murkrow';
-import { ReversalEnergy } from './reversal-energy';
-import { Spiritomb } from './spiritomb';
-import { Squawkabillyex } from './squawkabilly-ex';
-import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
-import { SuperRod } from './super-rod';
-import { Wattrel } from './wattrel';
-import { Luxray } from './luxray';
-import { WoChienex } from './wo-chien-ex';
-import { Shinx } from './shinx';
-import { Tadbulb } from './tadbulb';
-import { TingLuex } from './ting-lu-ex';
-import { Cetitan } from './cetitan';
-import { Grusha } from './grusha';
-import { Giacomo } from './giacomo';
-import { TheraputicEnergy } from './theraputic-energy';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
-import { ChiYuex } from './chi-yu-ex';
+import { ReversalEnergy } from './reversal-energy';
+import { Shinx } from './shinx';
+import { Spiritomb } from './spiritomb';
+import { Squawkabillyex } from './squawkabilly-ex';
+import { SuperRod } from './super-rod';
+import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
+import { Tadbulb } from './tadbulb';
+import { TheraputicEnergy } from './theraputic-energy';
+import { TingLuex } from './ting-lu-ex';
 import { Tinkatink } from './tinkatink';
-import { Tinkatuff } from './tinkatuff';
 import { Tinkaton } from './tinkaton';
+import { Tinkatuff } from './tinkatuff';
+import { Wattrel } from './wattrel';
 import { Wingull } from './wingull';
+import { WoChienex } from './wo-chien-ex';
 
 export class ArctibaxArt extends Arctibax {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_059_R_EN_LG.png';
@@ -76,6 +77,10 @@ export class ChoiceBeltArt extends ChoiceBelt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_176_R_EN_LG.png';
 }
   
+export class CufantArt extends Cufant {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_149_R_EN.png';
+}
+
 export class DeliveryDroneArt extends DeliveryDrone {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_178_R_EN_LG.png';
 }

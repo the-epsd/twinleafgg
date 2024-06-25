@@ -41,6 +41,7 @@ exports.setPaldeaEvolved = [
     new card_images_1.ChiYuexArt(),
     new card_images_5.ChienPaoexArt(),
     new card_images_6.ChoiceBeltArt(),
+    new card_images_1.CufantArt(),
     new card_images_7.DeliveryDroneArt(),
     new card_images_8.DudunsparceArt(),
     new card_images_9.FightingAuLaitArt(),

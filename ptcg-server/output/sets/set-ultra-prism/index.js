@@ -8,6 +8,7 @@ exports.setUltraPrism = [
     new card_images_1.EscapeBoardArt(),
     new card_images_1.GardeniaArt(),
     new card_images_2.GibleArt(),
+    new card_images_1.MagnemiteArt(),
     new card_images_1.MagnezoneArt(),
     new card_images_1.MtCoronetArt(),
     new card_images_1.PokemonFanClubArt(),

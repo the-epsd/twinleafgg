@@ -2,6 +2,7 @@ import { Cynthia } from './cynthia';
 import { EscapeBoard } from './escape-board';
 import { Gardenia } from './gardenia';
 import { Gible } from './gible';
+import { Magnemite } from './magnemite';
 import { Magnezone } from './magnezone';
 import { MtCoronet } from './mt-coronet';
 import { PokemonFanClub } from './pokemon-fan-club';
@@ -19,6 +20,9 @@ export declare class GardeniaArt extends Gardenia {
     cardImage: string;
 }
 export declare class GibleArt extends Gible {
+    cardImage: string;
+}
+export declare class MagnemiteArt extends Magnemite {
     cardImage: string;
 }
 export declare class MagnezoneArt extends Magnezone {
