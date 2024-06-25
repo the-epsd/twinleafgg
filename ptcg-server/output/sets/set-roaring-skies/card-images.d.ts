@@ -1,6 +1,7 @@
 import { Articuno } from './articuno';
 import { Beautifly } from './beautifly';
 import { DoubleDragonEnergy } from './double-dragon-energy';
+import { Voltorb } from './ROS_21_Voltorb';
 import { ShayminEx } from './shaymin-ex';
 import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
@@ -31,6 +32,9 @@ export declare class SkyFieldArt extends SkyField {
     cardImage: string;
 }
 export declare class TrainersMailArt extends TrainersMail {
+    cardImage: string;
+}
+export declare class VoltorbArt extends Voltorb {
     cardImage: string;
 }
 export declare class WallyArt extends Wally {

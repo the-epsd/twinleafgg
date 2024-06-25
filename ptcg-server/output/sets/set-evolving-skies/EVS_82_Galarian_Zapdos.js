@@ -30,6 +30,7 @@ class GalarianZapdos extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'EVS';
         this.regulationMark = 'E';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '82';
         this.name = 'Galarian Zapdos';
         this.fullName = 'Galarian Zapdos EVS';

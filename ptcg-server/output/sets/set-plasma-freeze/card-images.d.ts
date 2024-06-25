@@ -2,7 +2,11 @@ import { SuperiorEnergyRetrieval } from '../set-paldea-evolved/superior-energy-r
 import { Exeggcute } from './exeggcute';
 import { FloatStone } from './float-stone';
 import { MrMime } from './mr-mime';
+import { Electrode } from './PLF_33_Electrode';
 import { RockGuard } from './rock-guard';
+export declare class ElectrodeArt extends Electrode {
+    cardImage: string;
+}
 export declare class ExeggcuteArt extends Exeggcute {
     cardImage: string;
 }
