@@ -1,17 +1,19 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, PokemonCardList, Card,
-  StateUtils, GameMessage, PowerType, GameError, ConfirmPrompt} from '../../game';
+import {
+  StoreLike, State, ChooseCardsPrompt, PokemonCardList, Card,
+  StateUtils, GameMessage, PowerType, GameError, ConfirmPrompt
+} from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 export class LugiaVSTAR extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VSTAR ];
+  public tags = [CardTag.POKEMON_VSTAR];
 
   public regulationMark = 'F';
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VSTAR;
 
   public evolvesFrom = 'Lugia V';
 
@@ -25,7 +27,7 @@ export class LugiaVSTAR extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [
     {
@@ -39,7 +41,7 @@ export class LugiaVSTAR extends PokemonCard {
   public attacks = [
     {
       name: 'Tempest Dive',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 220,
       text: 'You may discard a Stadium in play.'
     }
@@ -84,7 +86,7 @@ export class LugiaVSTAR extends PokemonCard {
       ), selected => {
         cards = selected || [];
 
-      
+
         cards.forEach((card, index) => {
           player.discard.moveCardTo(card, slots[index]);
           slots[index].pokemonPlayedTurn = state.turn;
@@ -102,7 +104,7 @@ export class LugiaVSTAR extends PokemonCard {
           GameMessage.WANT_TO_DISCARD_STADIUM,
         ), wantToUse => {
           if (wantToUse) {
-    
+
             // Discard Stadium
             const cardList = StateUtils.findCardList(state, stadiumCard);
             const player = StateUtils.findOwner(state, cardList);
