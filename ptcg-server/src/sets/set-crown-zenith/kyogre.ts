@@ -1,11 +1,11 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, ChoosePokemonPrompt, ChooseEnergyPrompt } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AttachEnergyPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { GameMessage } from '../../game/game-message';
+import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 
 export class Kyogre extends PokemonCard {
@@ -51,7 +51,6 @@ export class Kyogre extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       const player = effect.player;
-      const opponent = effect.opponent;
   
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
@@ -80,13 +79,12 @@ export class Kyogre extends PokemonCard {
           { min: max, max, allowCancel: false }
         ), selected => {
           const targets = selected || [];
-          if (targets.includes(opponent.active)) {
-            targets.forEach(target => {
-              const damageEffect = new PutDamageEffect(effect, 180);
-              damageEffect.target = target;
-              store.reduceEffect(state, damageEffect);
-            });
-          }
+          targets.forEach(target => {
+            const damageEffect = new PutDamageEffect(effect, 180);
+            damageEffect.target = target;
+            store.reduceEffect(state, damageEffect);
+          });
+          
           return state;
         });
       });

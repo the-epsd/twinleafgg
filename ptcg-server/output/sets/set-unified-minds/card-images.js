@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.StadiumNavArt = exports.ResetStampArt = exports.PurrloinArt = exports.NecrozmaArt = exports.KarateBeltArt = void 0;
+exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.PurrloinArt = exports.NecrozmaArt = exports.KarateBeltArt = void 0;
 const karate_belt_1 = require("./karate-belt");
 const necrozma_1 = require("./necrozma");
 const purrloin_1 = require("./purrloin");
 const reset_stamp_1 = require("./reset-stamp");
+const riolu_1 = require("./riolu");
 const stadium_nav_1 = require("./stadium-nav");
 const u_turn_board_1 = require("./u-turn-board");
 const weakness_guard_energy_1 = require("./weakness-guard-energy");
@@ -36,6 +37,13 @@ class ResetStampArt extends reset_stamp_1.ResetStamp {
     }
 }
 exports.ResetStampArt = ResetStampArt;
+class RioluArt extends riolu_1.Riolu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_115_R_EN.png';
+    }
+}
+exports.RioluArt = RioluArt;
 class StadiumNavArt extends stadium_nav_1.StadiumNav {
     constructor() {
         super(...arguments);

@@ -29,6 +29,7 @@ function* playCard(next, store, state, effect) {
             }
             opponent.active.clearEffects();
             opponent.switchPokemon(targets[0]);
+            store.log(state, game_message_1.GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, { name: player.name, card: targets[0].getPokemonCard().name });
             next();
             // Do not discard the card yet
             effect.preventDefault = true;
@@ -46,6 +47,7 @@ function* playCard(next, store, state, effect) {
                 }
                 player.active.clearEffects();
                 player.switchPokemon(target[0]);
+                store.log(state, game_message_1.GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, { name: player.name, card: target[0].getPokemonCard().name });
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 return state;
             });

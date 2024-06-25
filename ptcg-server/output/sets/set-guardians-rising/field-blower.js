@@ -52,6 +52,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                             const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
                             const stadiumPlayer = game_1.StateUtils.findOwner(state, cardList);
                             cardList.moveTo(stadiumPlayer.discard);
+                            store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name });
                             let targets = [];
                             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 0, max: 1, allowCancel: true, blocked }), results => {
                                 targets = results || [];
@@ -62,6 +63,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                                     const owner = game_1.StateUtils.findOwner(state, target);
                                     if (target.tool !== undefined) {
                                         target.moveCardTo(target.tool, owner.discard);
+                                        store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name });
                                         target.tool = undefined;
                                     }
                                     return state;
@@ -84,6 +86,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                                     const owner = game_1.StateUtils.findOwner(state, target);
                                     if (target.tool !== undefined) {
                                         target.moveCardTo(target.tool, owner.discard);
+                                        store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name });
                                         target.tool = undefined;
                                     }
                                     return state;
@@ -107,6 +110,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                 const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
                 const player = game_1.StateUtils.findOwner(state, cardList);
                 cardList.moveTo(player.discard);
+                store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name });
                 player.supporter.moveCardTo(this, player.discard);
                 return state;
             }
@@ -124,6 +128,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                         const owner = game_1.StateUtils.findOwner(state, target);
                         if (target.tool !== undefined) {
                             target.moveCardTo(target.tool, owner.discard);
+                            store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name });
                             target.tool = undefined;
                         }
                         player.supporter.moveCardTo(this, player.discard);

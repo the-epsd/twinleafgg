@@ -11,7 +11,7 @@ class Rabsca extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
-        this.evolvesFrom = 'Rabsca';
+        this.evolvesFrom = 'Rellor';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 70;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];

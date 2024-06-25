@@ -4,6 +4,7 @@ import { AlolanVulpix } from './alolan-vulpix';
 import { AquaPatch } from './aqua-patch';
 import { BrookletHill } from './brooklet-hill';
 import { FieldBlower } from './field-blower';
+import { Machoke } from './machoke';
 import { Mallow } from './mallow';
 import { Mimikyu } from './mimikyu';
 import { RescueStretcher } from './rescue-stretcher';
@@ -23,6 +24,9 @@ export declare class EnhancedHammerArt extends EnhancedHammer {
     cardImage: string;
 }
 export declare class FieldBlowerArt extends FieldBlower {
+    cardImage: string;
+}
+export declare class MachokeArt extends Machoke {
     cardImage: string;
 }
 export declare class MallowArt extends Mallow {

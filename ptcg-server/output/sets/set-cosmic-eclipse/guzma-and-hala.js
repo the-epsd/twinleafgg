@@ -51,6 +51,7 @@ class GuzmaAndHala extends trainer_card_1.TrainerCard {
                             if ((card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.SPECIAL) ||
                                 (card instanceof trainer_card_1.TrainerCard && card.trainerType === card_types_1.TrainerType.TOOL) ||
                                 (card instanceof trainer_card_1.TrainerCard && card.trainerType === card_types_1.TrainerType.STADIUM)) {
+                                /**/
                             }
                             else {
                                 blocked.push(index);

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Manaphy = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
-const game_effects_1 = require("../../game/store/effects/game-effects");
-const pokemon_types_1 = require("../../game/store/card/pokemon-types");
-const state_utils_1 = require("../../game/store/state-utils");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
+const state_utils_1 = require("../../game/store/state-utils");
 class Manaphy extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);

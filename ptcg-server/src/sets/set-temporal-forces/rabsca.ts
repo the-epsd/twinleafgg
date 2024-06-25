@@ -12,7 +12,7 @@ export class Rabsca extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Rabsca';
+  public evolvesFrom = 'Rellor';
 
   public cardType: CardType = CardType.GRASS;
 

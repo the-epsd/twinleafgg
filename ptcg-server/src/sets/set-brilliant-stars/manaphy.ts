@@ -1,13 +1,13 @@
+import { PlayerType } from '../../game/store/actions/play-card-action';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { PowerType } from '../../game/store/card/pokemon-types';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
-import { PlayerType } from '../../game/store/actions/play-card-action';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class Manaphy extends PokemonCard {
 

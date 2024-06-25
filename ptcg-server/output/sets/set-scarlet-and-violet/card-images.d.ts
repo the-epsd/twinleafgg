@@ -24,6 +24,7 @@ import { Judge } from './judge';
 import { Katy } from './katy';
 import { Klefki } from './klefki';
 import { Koraidonex } from './koraidon-ex';
+import { Lucario } from './lucario';
 import { Magikarp } from './magikarp';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
@@ -133,6 +134,9 @@ export declare class KlefkiArt extends Klefki {
     cardImage: string;
 }
 export declare class KoraidonexArt extends Koraidonex {
+    cardImage: string;
+}
+export declare class LucarioArt extends Lucario {
     cardImage: string;
 }
 export declare class MagikarpArt extends Magikarp {

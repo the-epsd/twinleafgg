@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.ViridianForestArt = exports.PokemonCommunicationArt = exports.LaprasArt = exports.JirachiArt = exports.DragoniteArt = void 0;
+exports.ZapdosArt = exports.ViridianForestArt = exports.PokemonCommunicationArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.DragoniteArt = void 0;
 const dragonite_1 = require("./dragonite");
+const hitmonchan_1 = require("./hitmonchan");
 const jirachi_1 = require("./jirachi");
 const lapras_1 = require("./lapras");
 const pokemon_communication_1 = require("./pokemon-communication");
@@ -14,6 +15,20 @@ class DragoniteArt extends dragonite_1.Dragonite {
     }
 }
 exports.DragoniteArt = DragoniteArt;
+class HitmonchanArt extends hitmonchan_1.Hitmonchan {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_074_R_EN.png';
+    }
+}
+exports.HitmonchanArt = HitmonchanArt;
+class HitmonleeArt extends hitmonchan_1.Hitmonchan {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_073_R_EN.png';
+    }
+}
+exports.HitmonleeArt = HitmonleeArt;
 class JirachiArt extends jirachi_1.Jirachi {
     constructor() {
         super(...arguments);

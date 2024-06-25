@@ -2,6 +2,7 @@ import { KarateBelt } from './karate-belt';
 import { Necrozma } from './necrozma';
 import { Purrloin } from './purrloin';
 import { ResetStamp } from './reset-stamp';
+import { Riolu } from './riolu';
 import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
@@ -20,6 +21,10 @@ export class PurrloinArt extends Purrloin {
 
 export class ResetStampArt extends ResetStamp {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_206_R_EN_LG.png';
+}
+
+export class RioluArt extends Riolu {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_115_R_EN.png';
 }
 
 export class StadiumNavArt extends StadiumNav {

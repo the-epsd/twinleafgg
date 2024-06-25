@@ -73,6 +73,7 @@ exports.setScarletAndViolet = [
     new card_images_17.KatyArt(),
     new card_images_18.KlefkiArt(),
     new card_images_19.KoraidonexArt(),
+    new card_images_1.LucarioArt(),
     new card_images_1.MagikarpArt(),
     new card_images_20.MagnemiteArt(),
     new card_images_21.MagnetonArt(),

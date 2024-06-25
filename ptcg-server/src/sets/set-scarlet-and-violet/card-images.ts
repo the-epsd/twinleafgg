@@ -24,6 +24,7 @@ import { Judge } from './judge';
 import { Katy } from './katy';
 import { Klefki } from './klefki';
 import { Koraidonex } from './koraidon-ex';
+import { Lucario } from './lucario';
 import { Magikarp } from './magikarp';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
@@ -160,6 +161,10 @@ export class KlefkiArt extends Klefki {
 
 export class KoraidonexArt extends Koraidonex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_125_R_EN_LG.png';
+}
+
+export class LucarioArt extends Lucario {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_114_R_EN.png';
 }
 
 export class MagikarpArt extends Magikarp {

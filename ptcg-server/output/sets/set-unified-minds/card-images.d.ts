@@ -2,6 +2,7 @@ import { KarateBelt } from './karate-belt';
 import { Necrozma } from './necrozma';
 import { Purrloin } from './purrloin';
 import { ResetStamp } from './reset-stamp';
+import { Riolu } from './riolu';
 import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
@@ -15,6 +16,9 @@ export declare class PurrloinArt extends Purrloin {
     cardImage: string;
 }
 export declare class ResetStampArt extends ResetStamp {
+    cardImage: string;
+}
+export declare class RioluArt extends Riolu {
     cardImage: string;
 }
 export declare class StadiumNavArt extends StadiumNav {

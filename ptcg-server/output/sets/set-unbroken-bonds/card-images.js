@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewArt = exports.MartialArtsDojoArt = exports.GreensExplorationArt = exports.CleffaArt = exports.ArcanineArt = void 0;
+exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewArt = exports.MartialArtsDojoArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.CleffaArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
 const greens_exploration_1 = require("./greens-exploration");
+const hitmontop_1 = require("./hitmontop");
 const martial_arts_dojo_1 = require("./martial-arts-dojo");
 const mew_1 = require("./mew");
 const pokegear_30_1 = require("./pokegear-30");
@@ -31,6 +32,13 @@ class GreensExplorationArt extends greens_exploration_1.GreensExploration {
     }
 }
 exports.GreensExplorationArt = GreensExplorationArt;
+class HitmontopArt extends hitmontop_1.Hitmontop {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_101_R_EN.png';
+    }
+}
+exports.HitmontopArt = HitmontopArt;
 class MartialArtsDojoArt extends martial_arts_dojo_1.MartialArtsDojo {
     constructor() {
         super(...arguments);

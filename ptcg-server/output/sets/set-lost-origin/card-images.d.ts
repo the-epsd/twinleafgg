@@ -26,6 +26,7 @@ import { KyuremVMAX } from './kyurem-vmax';
 import { Lady } from './lady';
 import { LostCity } from './lost-city';
 import { LostVacuum } from './lost-vacuum';
+import { Machamp } from './machamp';
 import { Machop } from './machop';
 import { MagnezoneV } from './magnezone-v';
 import { MagnezoneVSTAR } from './magnezone-vstar';
@@ -127,6 +128,9 @@ export declare class LostVacuumArt extends LostVacuum {
     cardImage: string;
 }
 export declare class MachopArt extends Machop {
+    cardImage: string;
+}
+export declare class MachampArt extends Machamp {
     cardImage: string;
 }
 export declare class MagnezoneVArt extends MagnezoneV {

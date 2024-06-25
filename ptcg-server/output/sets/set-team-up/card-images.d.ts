@@ -1,10 +1,17 @@
 import { Dragonite } from './dragonite';
+import { Hitmonchan } from './hitmonchan';
 import { Jirachi } from './jirachi';
 import { Lapras } from './lapras';
 import { PokemonCommunication } from './pokemon-communication';
 import { ViridianForest } from './viridian-forest';
 import { Zapdos } from './zapdos';
 export declare class DragoniteArt extends Dragonite {
+    cardImage: string;
+}
+export declare class HitmonchanArt extends Hitmonchan {
+    cardImage: string;
+}
+export declare class HitmonleeArt extends Hitmonchan {
     cardImage: string;
 }
 export declare class JirachiArt extends Jirachi {

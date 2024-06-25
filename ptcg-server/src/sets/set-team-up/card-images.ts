@@ -1,4 +1,5 @@
 import { Dragonite } from './dragonite';
+import { Hitmonchan } from './hitmonchan';
 import { Jirachi } from './jirachi';
 import { Lapras } from './lapras';
 import { PokemonCommunication } from './pokemon-communication';
@@ -7,6 +8,14 @@ import { Zapdos } from './zapdos';
 
 export class DragoniteArt extends Dragonite {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_119_R_EN_LG.png';
+}
+
+export class HitmonchanArt extends Hitmonchan {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_074_R_EN.png';
+}
+
+export class HitmonleeArt extends Hitmonchan {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_073_R_EN.png';
 }
 
 export class JirachiArt extends Jirachi {
