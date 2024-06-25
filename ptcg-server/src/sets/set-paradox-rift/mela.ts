@@ -21,16 +21,23 @@ function* playCard(next: Function, store: StoreLike, state: State,
   if (supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
-  
+
   // No Pokemon KO last turn
   if (!player.marker.hasMarker(self.MELA_MARKER)) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
+  const hasEnergyInDiscard = player.discard.cards.some(c => {
+    return c instanceof EnergyCard && c.name === 'Fire Energy';
+  });
+  if (!hasEnergyInDiscard) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
     const isBasicEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.FIRE);
@@ -38,19 +45,19 @@ function* playCard(next: Function, store: StoreLike, state: State,
       blocked.push(index);
     }
   });
-  
+
   // We will discard this card after prompt confirmation
   // This will prevent unblocked supporter to appear in the discard pile
   effect.preventDefault = true;
-  
+
   return store.prompt(state, new AttachEnergyPrompt(
     player.id,
     GameMessage.ATTACH_ENERGY_TO_BENCH,
     player.discard,
     PlayerType.BOTTOM_PLAYER,
     [SlotType.ACTIVE, SlotType.BENCH],
-    {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy'},
-    {allowCancel: false, min: 1, max: 1}
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+    { allowCancel: false, min: 1, max: 1 }
   ), transfers => {
     if (transfers && transfers.length > 0) {
       for (const transfer of transfers) {
@@ -70,7 +77,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     return state;
   });
 }
-    
+
 export class Mela extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;

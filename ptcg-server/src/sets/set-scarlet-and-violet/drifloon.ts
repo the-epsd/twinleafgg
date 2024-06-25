@@ -18,20 +18,20 @@ export class Drifloon extends PokemonCard {
 
   public weakness = [{ type: CardType.DARK }];
 
-  public resistance = [ { type: CardType.FIGHTING, value: -30 } ];
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Gust',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 10,
       text: ''
     },
     {
       name: 'Balloon Burst',
-      cost: [ CardType.PSYCHIC, CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC, CardType.PSYCHIC],
       damage: 30,
       text: 'This attack does 30 damage for each damage counter on this Pokémon.'
     }
@@ -56,7 +56,7 @@ export class Drifloon extends PokemonCard {
 
       // Calculate 30 damage per counter
       const damagePerCounter = 30;
-      effect.damage += (drifloonDamage * damagePerCounter / 10);
+      effect.damage = (drifloonDamage * damagePerCounter / 10);
 
       return state;
     }

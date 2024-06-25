@@ -14,12 +14,12 @@ export class ElesasSparkle extends TrainerCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.FUSION_STRIKE ];
+  public tags = [CardTag.FUSION_STRIKE];
 
   public set: string = 'FST';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '233';
 
   public name: string = 'Elesa\'s Sparkle';
@@ -40,6 +40,8 @@ export class ElesasSparkle extends TrainerCard {
         }
       });
 
+
+
       // return store.prompt(state, new ChoosePokemonPrompt(
       //   player.id,
       //   GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -53,14 +55,14 @@ export class ElesasSparkle extends TrainerCard {
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_ACTIVE,
-        player.discard,
+        player.deck,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, name: 'Fusion Strike Energy' },
-        { allowCancel: false, min: 1, max: 2, blockedTo: blocked2, differentTargets: true  }
+        { allowCancel: false, min: 0, max: 2, blockedTo: blocked2, differentTargets: true }
       ), transfers => {
         transfers = transfers || [];
-  
+
         if (transfers.length === 0) {
           return;
         }

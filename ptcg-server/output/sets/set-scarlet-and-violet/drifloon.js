@@ -41,7 +41,7 @@ class Drifloon extends pokemon_card_1.PokemonCard {
             const drifloonDamage = effect.player.active.damage;
             // Calculate 30 damage per counter
             const damagePerCounter = 30;
-            effect.damage += (drifloonDamage * damagePerCounter / 10);
+            effect.damage = (drifloonDamage * damagePerCounter / 10);
             return state;
         }
         return state;

@@ -6,10 +6,10 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class MewV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V, CardTag.FUSION_STRIKE ];
+  public tags = [CardTag.POKEMON_V, CardTag.FUSION_STRIKE];
 
   public regulationMark = 'E';
-  
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.PSYCHIC;
@@ -18,15 +18,15 @@ export class MewV extends PokemonCard {
 
   public weakness = [{ type: CardType.DARK }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public attacks = [
     {
       name: 'Energy Mix',
       cost: [CardType.PSYCHIC],
-      damage: 30,
+      damage: 0,
       text: 'Search your deck for an Energy card and attach it to 1 of  ' +
-      'your Fusion Strike Pokémon. Then, shuffle your deck.'
+        'your Fusion Strike Pokémon. Then, shuffle your deck.'
     }, {
       name: 'Psychic Leap',
       cost: [CardType.PSYCHIC, CardType.COLORLESS],
@@ -70,36 +70,36 @@ export class MewV extends PokemonCard {
         GameMessage.ATTACH_ENERGY_CARDS,
         player.deck,
         PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE], 
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY },
         { min: 0, max: 1, allowCancel: false, blockedTo: blocked }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target); 
+          player.deck.moveCardTo(transfer.card, target);
         }
         return state;
       });
     }
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-  
+
       return store.prompt(state, new ConfirmPrompt(
         player.id,
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-  
+
           player.active.moveTo(player.deck);
           player.active.clearEffects();
-  
+
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
             return state;
           });
-  
+
         } else {
           return state;
         }

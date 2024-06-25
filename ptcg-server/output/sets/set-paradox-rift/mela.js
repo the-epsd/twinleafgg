@@ -25,6 +25,12 @@ function* playCard(next, store, state, self, effect) {
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    const hasEnergyInDiscard = player.discard.cards.some(c => {
+        return c instanceof energy_card_1.EnergyCard && c.name === 'Fire Energy';
+    });
+    if (!hasEnergyInDiscard) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
     const blocked = [];
     player.discard.cards.forEach((c, index) => {
         const isBasicEnergy = c instanceof energy_card_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.provides.includes(card_types_1.CardType.FIRE);
