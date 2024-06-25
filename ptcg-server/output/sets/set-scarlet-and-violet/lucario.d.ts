@@ -17,6 +17,7 @@ export declare class Lucario extends PokemonCard {
     regulationMark: string;
     cardImage: string;
     setNumber: string;
+    evolvesFrom: string;
     name: string;
     fullName: string;
     readonly REVENGE_MARKER = "REVENGE_MARKER";

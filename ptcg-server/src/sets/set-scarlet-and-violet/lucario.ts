@@ -38,7 +38,9 @@ export class Lucario extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '113';
-
+  
+  public evolvesFrom = 'Riolu';
+  
   public name: string = 'Lucario';
 
   public fullName: string = 'Lucario SVI';
