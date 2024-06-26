@@ -34,6 +34,7 @@ import { Nacli } from './nacli';
 import { Naclstack } from './naclstack';
 import { Natu } from './natu';
 import { Zacian } from './PAR_136_Zacian';
+import { Flittle } from './PAR_80_Flittle';
 import { Porygon } from './porygon';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
@@ -61,7 +62,7 @@ export class AncientBoosterEnergyCapsuleArt extends AncientBoosterEnergyCapsule 
 export class BombirdierexArt extends Bombirdierex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_156_R_EN_LG.png';
 }
-    
+
 export class BounsweetArt extends Bounsweet {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_008_R_EN_LG.png';
 }
@@ -92,6 +93,10 @@ export class EarthenVesselArt extends EarthenVessel {
 
 export class ElekidArt extends Elekid {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_059_R_EN_LG.png';
+}
+
+export class FlittleArt extends Flittle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_080_R_EN_LG.png';
 }
 
 export class FroslassexArt extends Froslassex {

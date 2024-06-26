@@ -25,6 +25,7 @@ import { Mimikyu } from './mimikyu';
 import { Murkrow } from './murkrow';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
+import { Magnemite } from './PAL_65_Magnemite';
 import { ReversalEnergy } from './reversal-energy';
 import { Shinx } from './shinx';
 import { Spiritomb } from './spiritomb';
@@ -104,6 +105,9 @@ export declare class JetEnergyArt extends JetEnergy {
     cardImage: string;
 }
 export declare class LuminousEnergyArt extends LuminousEnergy {
+    cardImage: string;
+}
+export declare class MagnemiteArt extends Magnemite {
     cardImage: string;
 }
 export declare class MimikyuArt extends Mimikyu {

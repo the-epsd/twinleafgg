@@ -25,6 +25,7 @@ import { Mimikyu } from './mimikyu';
 import { Murkrow } from './murkrow';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
+import { Magnemite } from './PAL_65_Magnemite';
 import { ReversalEnergy } from './reversal-energy';
 import { Shinx } from './shinx';
 import { Spiritomb } from './spiritomb';
@@ -64,7 +65,7 @@ export class BraveyCharmArt extends BraveyCharm {
 export class CetitanArt extends Cetitan {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_055_R_EN_LG.png';
 }
-  
+
 export class ChiYuexArt extends ChiYuex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_040_R_EN_LG.png';
 }
@@ -72,11 +73,11 @@ export class ChiYuexArt extends ChiYuex {
 export class ChienPaoexArt extends ChienPaoex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_061_R_EN_LG.png';
 }
-  
+
 export class ChoiceBeltArt extends ChoiceBelt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_176_R_EN_LG.png';
 }
-  
+
 export class CufantArt extends Cufant {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_149_R_EN.png';
 }
@@ -84,23 +85,23 @@ export class CufantArt extends Cufant {
 export class DeliveryDroneArt extends DeliveryDrone {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_178_R_EN_LG.png';
 }
-  
+
 export class DudunsparceArt extends Dudunsparce {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_157_R_EN_LG.png';
 }
-  
+
 export class FightingAuLaitArt extends FightingAuLait {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_181_R_EN_LG.png';
 }
-  
+
 export class FlamigoArt extends Flamigo {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_170_R_EN_LG.png';
 }
-  
+
 export class FrigibaxArt extends Frigibax {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_057_R_EN_LG.png';
 }
-  
+
 export class Frigibax2Art extends Frigibax2 {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_058_R_EN_LG.png';
 }
@@ -108,7 +109,7 @@ export class Frigibax2Art extends Frigibax2 {
 export class GiacomoArt extends Giacomo {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_182_R_EN_LG.png';
 }
-  
+
 export class GreatBallArt extends GreatBall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_183_R_EN_LG.png';
 }
@@ -116,23 +117,27 @@ export class GreatBallArt extends GreatBall {
 export class GrushaArt extends Grusha {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_184_R_EN_LG.png';
 }
-  
+
 export class IonoArt extends Iono {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_185_R_EN_LG.png';
 }
-  
+
 export class JetEnergyArt extends JetEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_190_R_EN_LG.png';
 }
-  
+
 export class LuminousEnergyArt extends LuminousEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_191_R_EN_LG.png';
 }
-  
+
+export class MagnemiteArt extends Magnemite {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_065_R_EN_LG.png';
+}
+
 export class MimikyuArt extends Mimikyu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_097_R_EN_LG.png';
 }
-  
+
 export class MurkrowArt extends Murkrow {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_131_R_EN_LG.png';
 }
@@ -144,19 +149,19 @@ export class NoibatArt extends Noibat {
 export class NoivernexArt extends Noivernex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_153_R_EN_LG.png';
 }
-  
+
 export class ReversalEnergyArt extends ReversalEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_192_R_EN_LG.png';
 }
-  
+
 export class SpiritombArt extends Spiritomb {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_089_R_EN_LG.png';
 }
-  
+
 export class SquawkabillyexArt extends Squawkabillyex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_169_R_EN_LG.png';
 }
-  
+
 export class SuperRodArt extends SuperRod {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_188_R_EN_LG.png';
 }
@@ -164,23 +169,23 @@ export class SuperRodArt extends SuperRod {
 export class SuperiorEnergyRetrievalArt extends SuperiorEnergyRetrieval {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_189_R_EN_LG.png';
 }
-  
+
 export class WattrelArt extends Wattrel {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_080_R_EN_LG.png';
 }
-  
+
 export class LuxrayArt extends Luxray {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_071_R_EN_LG.png';
 }
-  
+
 export class WoChienexArt extends WoChienex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_027_R_EN_LG.png';
 }
-  
+
 export class ShinxArt extends Shinx {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_068_R_EN_LG.png';
 }
-  
+
 export class TadbulbArt extends Tadbulb {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_077_R_EN_LG.png';
 }
@@ -188,7 +193,7 @@ export class TadbulbArt extends Tadbulb {
 export class TheraputicEnergyArt extends TheraputicEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_057_R_EN_LG.png';
 }
-  
+
 export class TingLuexArt extends TingLuex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_127_R_EN_LG.png';
 }

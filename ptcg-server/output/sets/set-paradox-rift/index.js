@@ -12,6 +12,7 @@ exports.setParadoxRift = [
     new card_images_1.DeoxysArt(),
     new card_images_1.EarthenVesselArt(),
     new card_images_1.ElekidArt(),
+    new card_images_1.FlittleArt(),
     new card_images_1.FroslassexArt(),
     new card_images_1.FutureBoosterEnergyCapsuleArt(),
     new card_images_1.GabiteArt(),

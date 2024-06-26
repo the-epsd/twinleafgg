@@ -10,7 +10,7 @@ export class Voltorb extends PokemonCard {
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 60;
   public weakness = [{ type: CardType.FIGHTING }];
-  public resistance = [{ type: CardType.METAL, value: -20 }]
+  public resistance = [{ type: CardType.METAL, value: -20 }];
   public retreat = [CardType.COLORLESS];
 
   public attacks = [{

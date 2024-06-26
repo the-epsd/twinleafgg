@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WingullArt = exports.TinkatonArt = exports.TinkatuffArt = exports.TinkatinkArt = exports.TingLuexArt = exports.TheraputicEnergyArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.NoivernexArt = exports.NoibatArt = exports.MurkrowArt = exports.MimikyuArt = exports.LuminousEnergyArt = exports.JetEnergyArt = exports.IonoArt = exports.GrushaArt = exports.GreatBallArt = exports.GiacomoArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.CufantArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.ChiYuexArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
+exports.WingullArt = exports.TinkatonArt = exports.TinkatuffArt = exports.TinkatinkArt = exports.TingLuexArt = exports.TheraputicEnergyArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.NoivernexArt = exports.NoibatArt = exports.MurkrowArt = exports.MimikyuArt = exports.MagnemiteArt = exports.LuminousEnergyArt = exports.JetEnergyArt = exports.IonoArt = exports.GrushaArt = exports.GreatBallArt = exports.GiacomoArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.CufantArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.ChiYuexArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
 const arctibax_1 = require("./arctibax");
 const artazon_1 = require("./artazon");
 const baxcalibur_1 = require("./baxcalibur");
@@ -28,6 +28,7 @@ const mimikyu_1 = require("./mimikyu");
 const murkrow_1 = require("./murkrow");
 const noibat_1 = require("./noibat");
 const noivern_ex_1 = require("./noivern-ex");
+const PAL_65_Magnemite_1 = require("./PAL_65_Magnemite");
 const reversal_energy_1 = require("./reversal-energy");
 const shinx_1 = require("./shinx");
 const spiritomb_1 = require("./spiritomb");
@@ -197,6 +198,13 @@ class LuminousEnergyArt extends luminous_energy_1.LuminousEnergy {
     }
 }
 exports.LuminousEnergyArt = LuminousEnergyArt;
+class MagnemiteArt extends PAL_65_Magnemite_1.Magnemite {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_065_R_EN_LG.png';
+    }
+}
+exports.MagnemiteArt = MagnemiteArt;
 class MimikyuArt extends mimikyu_1.Mimikyu {
     constructor() {
         super(...arguments);

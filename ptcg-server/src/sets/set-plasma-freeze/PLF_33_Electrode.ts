@@ -77,7 +77,6 @@ export class Electrode extends PokemonCard {
 
     }
 
-
     return state;
   }
 }

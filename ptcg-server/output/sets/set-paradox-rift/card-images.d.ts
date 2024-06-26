@@ -34,6 +34,7 @@ import { Nacli } from './nacli';
 import { Naclstack } from './naclstack';
 import { Natu } from './natu';
 import { Zacian } from './PAR_136_Zacian';
+import { Flittle } from './PAR_80_Flittle';
 import { Porygon } from './porygon';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
@@ -81,6 +82,9 @@ export declare class EarthenVesselArt extends EarthenVessel {
     cardImage: string;
 }
 export declare class ElekidArt extends Elekid {
+    cardImage: string;
+}
+export declare class FlittleArt extends Flittle {
     cardImage: string;
 }
 export declare class FroslassexArt extends Froslassex {
