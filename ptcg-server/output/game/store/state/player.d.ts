@@ -52,6 +52,7 @@ export declare class Player {
     pecharuntexIsInPlay: boolean;
     usedJewelHunt: boolean;
     usedFanCall: boolean;
+    canEvolve: boolean;
     getPrizeLeft(): number;
     forEachPokemon(player: PlayerType, handler: (cardList: PokemonCardList, pokemonCard: PokemonCard, target: CardTarget) => void): void;
     removePokemonEffects(target: PokemonCardList): void;

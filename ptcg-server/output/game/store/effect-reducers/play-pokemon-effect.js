@@ -21,6 +21,7 @@ function playPokemonReducer(store, state, effect) {
             effect.target.pokemonPlayedTurn = state.turn;
             return state;
         }
+        const player = effect.player;
         const isEvolved = stage === card_types_1.Stage.STAGE_1 || card_types_1.Stage.STAGE_2;
         const evolvesFrom = effect.pokemonCard.evolvesFrom;
         const pokemonCard = effect.target.getPokemonCard();
@@ -30,13 +31,13 @@ function playPokemonReducer(store, state, effect) {
         if (isEvolved && pokemonCard.stage < stage && pokemonCard.name === evolvesFrom) {
             const playedTurnEffect = new check_effects_1.CheckPokemonPlayedTurnEffect(effect.player, effect.target);
             store.reduceEffect(state, playedTurnEffect);
-            if (state.turn == 0) {
+            if (state.turn == 0 && player.canEvolve === false) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_EVOLVE_ON_YOUR_FIRST_TURN);
             }
-            if (state.turn == 1) {
+            if (state.turn == 1 && player.canEvolve === false) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_EVOLVE_ON_YOUR_FIRST_TURN);
             }
-            if (state.turn == 2) {
+            if (state.turn == 2 && player.canEvolve === false) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_EVOLVE_ON_YOUR_FIRST_TURN);
             }
             if (playedTurnEffect.pokemonPlayedTurn >= state.turn) {

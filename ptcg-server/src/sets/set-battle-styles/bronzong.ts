@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, PowerType, StateUtils,
-  CardTarget, PlayerType, MoveEnergyPrompt, SlotType} from '../../game';
+import {
+  StoreLike, State, Card, PowerType, StateUtils,
+  CardTarget, PlayerType, MoveEnergyPrompt, SlotType
+} from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -39,7 +41,7 @@ function* useMetalTransfer(next: Function, store: StoreLike, state: State, effec
     effect.player.id,
     GameMessage.MOVE_ENERGY_CARDS,
     PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH, SlotType.ACTIVE], 
+    [SlotType.BENCH, SlotType.ACTIVE],
     { superType: SuperType.ENERGY },
     { allowCancel: true, blockedMap }
   ), transfers => {
@@ -58,25 +60,27 @@ function* useMetalTransfer(next: Function, store: StoreLike, state: State, effec
 
 export class Bronzong extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
+
+  public evolvesFrom = 'Bronzor';
 
   public regulationMark = 'E';
 
   public cardType: CardType = CardType.METAL;
-  
+
   public hp: number = 110;
-  
+
   public weakness = [{ type: CardType.FIRE }];
-  
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Metal Transfer',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'As often as you like during your turn, you may move a ' +
-                    'M Energy from 1 of your Pokémon to another of your ' +
-                    'Pokémon.'
+      'M Energy from 1 of your Pokémon to another of your ' +
+      'Pokémon.'
   }];
   public attacks = [{
     name: 'Zen Headbutt',

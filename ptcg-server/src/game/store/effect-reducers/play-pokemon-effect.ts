@@ -6,7 +6,7 @@ import { Stage } from '../card/card-types';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { CheckPokemonPlayedTurnEffect } from '../effects/check-effects';
-import {EvolveEffect} from '../effects/game-effects';
+import { EvolveEffect } from '../effects/game-effects';
 
 
 export function playPokemonReducer(store: StoreLike, state: State, effect: Effect): State {
@@ -25,7 +25,7 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       effect.target.pokemonPlayedTurn = state.turn;
       return state;
     }
-
+    const player = effect.player;
     const isEvolved = stage === Stage.STAGE_1 || Stage.STAGE_2;
     const evolvesFrom = effect.pokemonCard.evolvesFrom;
     const pokemonCard = effect.target.getPokemonCard();
@@ -37,14 +37,14 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       const playedTurnEffect = new CheckPokemonPlayedTurnEffect(effect.player, effect.target);
       store.reduceEffect(state, playedTurnEffect);
 
-      if (state.turn == 0) {
+      if (state.turn == 0 && player.canEvolve === false) {
         throw new GameError(GameMessage.CANNOT_EVOLVE_ON_YOUR_FIRST_TURN);
       }
 
-      if (state.turn == 1) {
+      if (state.turn == 1 && player.canEvolve === false) {
         throw new GameError(GameMessage.CANNOT_EVOLVE_ON_YOUR_FIRST_TURN);
       }
-      if (state.turn == 2) {
+      if (state.turn == 2 && player.canEvolve === false) {
         throw new GameError(GameMessage.CANNOT_EVOLVE_ON_YOUR_FIRST_TURN);
       }
 

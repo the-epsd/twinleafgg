@@ -49,6 +49,7 @@ class Player {
         this.pecharuntexIsInPlay = false;
         this.usedJewelHunt = false;
         this.usedFanCall = false;
+        this.canEvolve = false;
     }
     getPrizeLeft() {
         return this.prizes.reduce((left, p) => left + p.cards.length, 0);
@@ -110,6 +111,7 @@ class Player {
             this.active.clearEffects();
             this.active = this.bench[benchIndex];
             this.bench[benchIndex] = temp;
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             this.active.getPokemonCard().movedToActiveThisTurn = true;
         }
     }

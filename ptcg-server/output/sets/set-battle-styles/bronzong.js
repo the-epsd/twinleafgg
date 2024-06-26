@@ -44,7 +44,8 @@ function* useMetalTransfer(next, store, state, effect) {
 class Bronzong extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
+        this.evolvesFrom = 'Bronzor';
         this.regulationMark = 'E';
         this.cardType = card_types_1.CardType.METAL;
         this.hp = 110;

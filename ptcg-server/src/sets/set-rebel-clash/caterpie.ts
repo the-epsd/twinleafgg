@@ -5,42 +5,42 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
-export class Bronzor extends PokemonCard {
+export class Caterpie extends PokemonCard {
+
+  public regulationMark = 'D';
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType = CardType.GRASS;
 
   public hp: number = 50;
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
-
   public retreat = [CardType.COLORLESS];
 
   public powers = [{
-    name: 'Evolutionary Advantage',
-    text: 'If you go second, this Pokémon can evolve during your first turn.',
+    name: 'Adaptive Evolution',
+    text: 'This Pokémon can evolve during your first turn or the turn you play it.',
     powerType: PowerType.ABILITY
   }];
 
   public attacks = [{
-    name: 'Tackle',
-    cost: [CardType.METAL, CardType.COLORLESS],
-    damage: 20,
+    name: 'Gnaw',
+    cost: [CardType.COLORLESS],
+    damage: 10,
     text: ''
   }];
 
-  public set: string = 'TEU';
+  public set: string = 'RCL';
 
-  public name: string = 'Bronzor';
+  public name: string = 'Caterpie';
 
-  public fullName: string = 'Bronzor TEU';
+  public fullName: string = 'Caterpie RCL';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '100';
+  public setNumber: string = '1';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -51,21 +51,19 @@ export class Bronzor extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect) {
       const player = effect.player;
-      if (state.turn === 2) {
-        try {
-          const powerEffect = new PowerEffect(player, this.powers[0], this);
-          store.reduceEffect(state, powerEffect);
-        } catch {
-          return state;
-        }
-        player.canEvolve = true;
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.pokemonPlayedTurn = state.turn - 1;
-          }
-        });
+
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
       }
-      return state;
+      player.canEvolve = true;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.pokemonPlayedTurn = state.turn - 1;
+        }
+      });
     }
     return state;
   }

@@ -32,7 +32,7 @@ export class Player {
   retreatedTurn: number = 0;
 
   energyPlayedTurn: number = 0;
-  
+
   stadiumPlayedTurn: number = 0;
 
   stadiumUsedTurn: number = 0;
@@ -68,7 +68,7 @@ export class Player {
   public readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
   public readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
   public readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES';
-  
+
   usedRapidStrikeSearchThisTurn: any;
   usedExcitingStageThisTurn: any;
   usedSquawkAndSeizeThisTurn: any;
@@ -79,6 +79,7 @@ export class Player {
   pecharuntexIsInPlay = false;
   usedJewelHunt = false;
   usedFanCall = false;
+  canEvolve = false;
 
   getPrizeLeft(): number {
     return this.prizes.reduce((left, p) => left + p.cards.length, 0);
@@ -126,7 +127,7 @@ export class Player {
 
     target.clearEffects();
   }
-  
+
 
   switchPokemon(target: PokemonCardList) {
     const benchIndex = this.bench.indexOf(target);
@@ -153,9 +154,9 @@ export class Player {
       this.active.clearEffects();
       this.active = this.bench[benchIndex];
       this.bench[benchIndex] = temp;
-      
-      this.active.getPokemonCard()!.movedToActiveThisTurn = true;
-  }
-  }
 
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      this.active.getPokemonCard()!.movedToActiveThisTurn = true;
+    }
+  }
 }

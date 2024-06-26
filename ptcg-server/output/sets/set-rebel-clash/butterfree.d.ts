@@ -1,23 +1,17 @@
+import { StoreLike, State } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Bronzong extends PokemonCard {
+export declare class Butterfree extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
     evolvesFrom: string;
-    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
     retreat: CardType[];
-    powers: {
-        name: string;
-        useWhenInPlay: boolean;
-        powerType: PowerType;
-        text: string;
-    }[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -25,9 +19,9 @@ export declare class Bronzong extends PokemonCard {
         text: string;
     }[];
     set: string;
-    cardImage: string;
-    setNumber: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
