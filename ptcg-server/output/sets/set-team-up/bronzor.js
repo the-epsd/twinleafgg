@@ -4,6 +4,7 @@ exports.Bronzor = void 0;
 const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Bronzor extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -31,9 +32,11 @@ class Bronzor extends pokemon_card_1.PokemonCard {
         this.setNumber = '100';
     }
     reduceEffect(store, state, effect) {
-        // if (effect instanceof EvolveEffect && effect.target === this && state.turn === 2) {
-        //   const player = effect.player;
-        // }
+        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this && state.turn === 2) {
+            const cardList = game_1.StateUtils.findCardList(state, effect.pokemonCard);
+            cardList.pokemonPlayedTurn = 0;
+            return state;
+        }
         return state;
     }
 }

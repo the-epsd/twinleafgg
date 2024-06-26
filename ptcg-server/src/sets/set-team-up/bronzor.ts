@@ -1,7 +1,8 @@
-import { PowerType, State, StoreLike } from '../../game';
+import { PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Bronzor extends PokemonCard {
 
@@ -42,10 +43,11 @@ export class Bronzor extends PokemonCard {
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
    
-    // if (effect instanceof EvolveEffect && effect.target === this && state.turn === 2) {
-    //   const player = effect.player;
-      
-    // }
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this && state.turn === 2) {
+      const cardList = StateUtils.findCardList(state, effect.pokemonCard) as PokemonCardList;
+      cardList.pokemonPlayedTurn = 0;
+      return state;
+    }
     
     return state;
   }
