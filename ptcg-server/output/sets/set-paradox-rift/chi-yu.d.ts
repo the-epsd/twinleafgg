@@ -1,6 +1,6 @@
+import { State, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class ChiYu extends PokemonCard {
     regulationMark: string;
@@ -30,5 +30,6 @@ export declare class ChiYu extends PokemonCard {
     name: string;
     fullName: string;
     readonly RETALIATE_MARKER = "RETALIATE_MARKER";
+    damageDealt: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

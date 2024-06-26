@@ -50,6 +50,8 @@ function* playCard(next, store, state, self, effect) {
                 next();
                 player.hand.moveCardTo(self, player.supporter);
                 player.deck.moveCardsTo(cards, player.hand);
+                player.supporterTurn = 1;
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
                 });

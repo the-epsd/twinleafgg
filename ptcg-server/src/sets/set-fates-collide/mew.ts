@@ -140,7 +140,7 @@ export class Mew extends PokemonCard {
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_DECK,
-        player.discard,
+        player.deck,
         { superType: SuperType.POKEMON },
         { min: 0, max: 1, allowCancel: false }
       ), selected => {

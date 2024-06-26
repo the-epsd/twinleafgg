@@ -1,16 +1,20 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, 
-  StateUtils, 
-  GamePhase,
+import {
   AttachEnergyPrompt,
   EnergyCard,
   GameError,
   GameMessage,
+  GamePhase,
   PlayerType,
-  SlotType} from '../../game';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+  SlotType,
+  State,
+  StateUtils,
+  StoreLike
+} from '../../game';
+import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class ChiYu extends PokemonCard {
@@ -54,11 +58,33 @@ export class ChiYu extends PokemonCard {
   public fullName: string = 'Chi-Yu PAR';
 
   public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
+
+  public damageDealt = false;
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
+      const player = StateUtils.getOpponent(state, effect.player);
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+
+      if (player !== owner) {
+        this.damageDealt = true;
+      }
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+      
+      if (owner === effect.player) {
+        this.damageDealt = false;
+      }
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+      this.damageDealt = false;
   
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
@@ -94,12 +120,12 @@ export class ChiYu extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-  
-      if (player.marker.hasMarker(this.RETALIATE_MARKER)) {
+      if (this.damageDealt) {
         effect.damage += 90;
       }
   
+      this.damageDealt = false;
+
       return state;
     }
   
