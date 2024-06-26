@@ -1,3 +1,4 @@
+import { AlolanGrimer } from './alolan-grimer';
 import { KarateBelt } from './karate-belt';
 import { Necrozma } from './necrozma';
 import { Purrloin } from './purrloin';
@@ -6,6 +7,9 @@ import { Riolu } from './riolu';
 import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
+export declare class AlolanGrimerArt extends AlolanGrimer {
+    cardImage: string;
+}
 export declare class KarateBeltArt extends KarateBelt {
     cardimage: string;
 }

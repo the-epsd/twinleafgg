@@ -4,6 +4,7 @@ import { Bounsweet } from './bounsweet';
 import { BruteBonnet } from './brute-bonnet';
 import { ChiYu } from './chi-yu';
 import { CounterCatcher } from './counter-catcher';
+import { Crobat } from './crobat';
 import { DefianceVest } from './defiance-vest';
 import { Deoxys } from './deoxys';
 import { EarthenVessel } from './earthen-vessel';
@@ -70,6 +71,9 @@ export declare class ChiYuArt extends ChiYu {
     cardImage: string;
 }
 export declare class CounterCatcherArt extends CounterCatcher {
+    cardImage: string;
+}
+export declare class CrobatArt extends Crobat {
     cardImage: string;
 }
 export declare class DefianceVestArt extends DefianceVest {

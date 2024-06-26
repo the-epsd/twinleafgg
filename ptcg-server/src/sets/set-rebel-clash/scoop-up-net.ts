@@ -15,7 +15,8 @@ export class ScoopUpNet extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
+      const player = effect.player;
+      
       return store.prompt(
         state,
         new ChoosePokemonPrompt(
@@ -28,6 +29,19 @@ export class ScoopUpNet extends TrainerCard {
         (results) => {
           if (results && results.length > 0) {
             const targetPokemon = results[0];
+            
+            if (targetPokemon === effect.player.active) {
+              return store.prompt(state, new ChoosePokemonPrompt(
+                player.id,
+                GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+                PlayerType.BOTTOM_PLAYER,
+                [SlotType.BENCH],
+                { allowCancel: false }
+              ), result => {
+                const cardList = result[0];
+                player.switchPokemon(cardList);
+              });
+            }
             
             targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => c instanceof PokemonCard), effect.player.hand);
             targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => !(c instanceof PokemonCard)), effect.player.discard);

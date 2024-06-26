@@ -18,7 +18,7 @@ class Golbat extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.evolvesFrom = 'Zubat';
         this.powers = [{
-                name: 'Descreet Draw',
+                name: 'Discreet Draw',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'When you play this Pokemon from your hand to evolve 1 of your Pokemon during your turn, you may draw 2 cards.'
             }];

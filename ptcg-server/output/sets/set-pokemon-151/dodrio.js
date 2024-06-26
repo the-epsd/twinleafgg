@@ -29,6 +29,7 @@ class Dodrio extends pokemon_card_1.PokemonCard {
                 name: 'Balliastic Beak',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 10,
+                damageCalculation: '+',
                 text: 'This attack does 30 more damage for each damage counter on this Pokémon.'
             }
         ];

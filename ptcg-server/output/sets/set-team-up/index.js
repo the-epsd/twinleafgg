@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTeamUp = void 0;
+const alolan_muk_1 = require("./alolan-muk");
 const card_images_1 = require("./card-images");
 exports.setTeamUp = [
+    new alolan_muk_1.AlolanMuk(),
     new card_images_1.BronzorArt(),
     new card_images_1.DragoniteArt(),
     new card_images_1.HitmonchanArt(),

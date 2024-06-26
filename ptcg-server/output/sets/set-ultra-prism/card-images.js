@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VolknerArt = exports.UnitEnergyLPMArt = exports.UnitEnergyGRWArt = exports.TurtwigArt = exports.PokemonFanClubArt = exports.MtCoronetArt = exports.MagnezoneArt = exports.MagnemiteArt = exports.GibleArt = exports.GardeniaArt = exports.EscapeBoardArt = exports.CynthiaArt = void 0;
+exports.WeavileArt = exports.VolknerArt = exports.UnitEnergyLPMArt = exports.UnitEnergyGRWArt = exports.TurtwigArt = exports.SneaselArt = exports.PokemonFanClubArt = exports.MtCoronetArt = exports.MagnezoneArt = exports.MagnemiteArt = exports.GibleArt = exports.GardeniaArt = exports.EscapeBoardArt = exports.CynthiaArt = void 0;
 const cynthia_1 = require("./cynthia");
 const escape_board_1 = require("./escape-board");
 const gardenia_1 = require("./gardenia");
@@ -9,10 +9,12 @@ const magnemite_1 = require("./magnemite");
 const magnezone_1 = require("./magnezone");
 const mt_coronet_1 = require("./mt-coronet");
 const pokemon_fan_club_1 = require("./pokemon-fan-club");
+const sneasel_1 = require("./sneasel");
 const turtwig_1 = require("./turtwig");
 const unit_energy_grw_1 = require("./unit-energy-grw");
 const unit_energy_lpm_1 = require("./unit-energy-lpm");
 const volkner_1 = require("./volkner");
+const weavile_1 = require("./weavile");
 class CynthiaArt extends cynthia_1.Cynthia {
     constructor() {
         super(...arguments);
@@ -69,6 +71,13 @@ class PokemonFanClubArt extends pokemon_fan_club_1.PokemonFanClub {
     }
 }
 exports.PokemonFanClubArt = PokemonFanClubArt;
+class SneaselArt extends sneasel_1.Sneasel {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_073_R_EN.png';
+    }
+}
+exports.SneaselArt = SneaselArt;
 class TurtwigArt extends turtwig_1.Turtwig {
     constructor() {
         super(...arguments);
@@ -97,3 +106,10 @@ class VolknerArt extends volkner_1.Volkner {
     }
 }
 exports.VolknerArt = VolknerArt;
+class WeavileArt extends weavile_1.Weavile {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_074_R_EN.png';
+    }
+}
+exports.WeavileArt = WeavileArt;

@@ -1,6 +1,7 @@
 import { BallGuy } from './ball-guy';
 import { Buizel } from './buizel';
 import { Frosmoth } from './frosmoth';
+import { GalarianWeezing } from './galarian-weezing';
 import { Koffing } from './koffing';
 import { Rillaboom } from './rillaboom';
 import { Thwackey } from './thwackey';
@@ -11,6 +12,9 @@ export declare class BuizelArt extends Buizel {
     cardImage: string;
 }
 export declare class FrosmothArt extends Frosmoth {
+    cardImage: string;
+}
+export declare class GalarianWeezingArt extends GalarianWeezing {
     cardImage: string;
 }
 export declare class KoffingArt extends Koffing {

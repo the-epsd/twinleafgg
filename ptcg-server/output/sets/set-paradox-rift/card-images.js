@@ -1,13 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TechnicalMachineEvolutionArt = exports.TechnicalMachineDevolutionArt = exports.TechnicalMachineBlindsideArt = exports.TapuKokoexArt = exports.SteeneeArt = exports.SnoruntArt = exports.SlitherWingArt = exports.ScreamTailArt = exports.SandyShocksexArt = exports.RoaringMoonexArt = exports.RemoraidArt = exports.ProfessorTurosScenarioArt = exports.ProfessorSadasVitalityArt = exports.PorygonArt = exports.NatuArt = exports.NaclstackArt = exports.NacliArt = exports.MorpekoArt = exports.MiniorArt = exports.MewtwoexArt = exports.MelaArt = exports.LuxuriousCapeArt = exports.LatiosArt = exports.KlawfArt = exports.JirachiArt = exports.IronValiantexArt = exports.IronJugulisArt = exports.IronHandsexArt = exports.IronBundleArt = exports.HoopaexArt = exports.GroudonArt = exports.GimmighoulArt = exports.GibleArt = exports.GholdengoexArt = exports.GarganaclArt = exports.GarchompexArt = exports.GabiteArt = exports.FutureBoosterEnergyCapsuleArt = exports.FroslassexArt = exports.FlittleArt = exports.ElekidArt = exports.EarthenVesselArt = exports.DeoxysArt = exports.DefianceVestArt = exports.CounterCatcherArt = exports.ChiYuArt = exports.BruteBonnetArt = exports.BounsweetArt = exports.BombirdierexArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
-exports.ZacianArt = exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TechnoRadarArt = exports.TechnicalMachineTurboEnergizeArt = void 0;
+exports.TechnicalMachineDevolutionArt = exports.TechnicalMachineBlindsideArt = exports.TapuKokoexArt = exports.SteeneeArt = exports.SnoruntArt = exports.SlitherWingArt = exports.ScreamTailArt = exports.SandyShocksexArt = exports.RoaringMoonexArt = exports.RemoraidArt = exports.ProfessorTurosScenarioArt = exports.ProfessorSadasVitalityArt = exports.PorygonArt = exports.NatuArt = exports.NaclstackArt = exports.NacliArt = exports.MorpekoArt = exports.MiniorArt = exports.MewtwoexArt = exports.MelaArt = exports.LuxuriousCapeArt = exports.LatiosArt = exports.KlawfArt = exports.JirachiArt = exports.IronValiantexArt = exports.IronJugulisArt = exports.IronHandsexArt = exports.IronBundleArt = exports.HoopaexArt = exports.GroudonArt = exports.GimmighoulArt = exports.GibleArt = exports.GholdengoexArt = exports.GarganaclArt = exports.GarchompexArt = exports.GabiteArt = exports.FutureBoosterEnergyCapsuleArt = exports.FroslassexArt = exports.FlittleArt = exports.ElekidArt = exports.EarthenVesselArt = exports.DeoxysArt = exports.DefianceVestArt = exports.CrobatArt = exports.CounterCatcherArt = exports.ChiYuArt = exports.BruteBonnetArt = exports.BounsweetArt = exports.BombirdierexArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
+exports.ZacianArt = exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TechnoRadarArt = exports.TechnicalMachineTurboEnergizeArt = exports.TechnicalMachineEvolutionArt = void 0;
 const ancient_booster_energy_capsule_1 = require("./ancient-booster-energy-capsule");
 const bombirdier_1 = require("./bombirdier");
 const bounsweet_1 = require("./bounsweet");
 const brute_bonnet_1 = require("./brute-bonnet");
 const chi_yu_1 = require("./chi-yu");
 const counter_catcher_1 = require("./counter-catcher");
+const crobat_1 = require("./crobat");
 const defiance_vest_1 = require("./defiance-vest");
 const deoxys_1 = require("./deoxys");
 const earthen_vessel_1 = require("./earthen-vessel");
@@ -100,6 +101,13 @@ class CounterCatcherArt extends counter_catcher_1.CounterCatcher {
     }
 }
 exports.CounterCatcherArt = CounterCatcherArt;
+class CrobatArt extends crobat_1.Crobat {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_112_R_EN.png';
+    }
+}
+exports.CrobatArt = CrobatArt;
 class DefianceVestArt extends defiance_vest_1.DefianceVest {
     constructor() {
         super(...arguments);

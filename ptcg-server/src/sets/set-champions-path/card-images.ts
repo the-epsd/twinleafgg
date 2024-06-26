@@ -1,7 +1,12 @@
+import { GalarianObstagoon } from './galarian-obstagoon';
 import { Piers } from './piers';
 import { RotomPhone } from './rotom-phone';
 import { Sonia } from './sonia';
 import { TurffieldStadium } from './turffield-stadium';
+
+export class GalarianObstagoonArt extends GalarianObstagoon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CPA/CPA_037_R_EN.png';
+}
 
 export class PiersArt extends Piers {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CPA/CPA_058_R_EN_LG.png';

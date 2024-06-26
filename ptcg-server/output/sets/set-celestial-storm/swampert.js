@@ -72,7 +72,7 @@ class Swampert extends pokemon_card_1.PokemonCard {
                 if (!player.marker.hasMarker(this.POWER_DRAW_MARKER)) {
                     return;
                 }
-                player.marker.removeMarker(this.POWER_DRAW_MARKER);
+                player.marker.removeMarker(this.POWER_DRAW_MARKER, this);
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack == this.attacks[0]) {

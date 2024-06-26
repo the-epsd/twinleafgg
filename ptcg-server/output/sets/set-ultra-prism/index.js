@@ -12,8 +12,10 @@ exports.setUltraPrism = [
     new card_images_1.MagnezoneArt(),
     new card_images_1.MtCoronetArt(),
     new card_images_1.PokemonFanClubArt(),
+    new card_images_1.SneaselArt(),
     new card_images_1.TurtwigArt(),
     new card_images_1.UnitEnergyGRWArt(),
     new card_images_1.UnitEnergyLPMArt(),
-    new card_images_1.VolknerArt()
+    new card_images_1.VolknerArt(),
+    new card_images_1.WeavileArt()
 ];

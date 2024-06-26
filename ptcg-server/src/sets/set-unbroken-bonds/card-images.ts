@@ -6,6 +6,7 @@ import { MartialArtsDojo } from './martial-arts-dojo';
 import { Mew } from './mew';
 import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
+import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
 import { Volcanion } from './volcanion';
 
@@ -39,6 +40,10 @@ export class Pokegear30Art extends Pokegear30 {
 
 export class PorygonZArt extends PorygonZ {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_157_R_EN_LG.png';
+}
+
+export class SpiritombArt extends Spiritomb {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_112_R_EN.png';
 }
 
 export class TripleAccelerationEnergyArt extends TripleAccelerationEnergy {

@@ -6,10 +6,12 @@ import { Magnemite } from './magnemite';
 import { Magnezone } from './magnezone';
 import { MtCoronet } from './mt-coronet';
 import { PokemonFanClub } from './pokemon-fan-club';
+import { Sneasel } from './sneasel';
 import { Turtwig } from './turtwig';
 import { UnitEnergyGRW } from './unit-energy-grw';
 import { UnitEnergyLPM } from './unit-energy-lpm';
 import { Volkner } from './volkner';
+import { Weavile } from './weavile';
 export declare class CynthiaArt extends Cynthia {
     cardImage: string;
 }
@@ -34,6 +36,9 @@ export declare class MtCoronetArt extends MtCoronet {
 export declare class PokemonFanClubArt extends PokemonFanClub {
     cardImage: string;
 }
+export declare class SneaselArt extends Sneasel {
+    cardImage: string;
+}
 export declare class TurtwigArt extends Turtwig {
     cardImage: string;
 }
@@ -44,5 +49,8 @@ export declare class UnitEnergyLPMArt extends UnitEnergyLPM {
     cardImage: string;
 }
 export declare class VolknerArt extends Volkner {
+    cardImage: string;
+}
+export declare class WeavileArt extends Weavile {
     cardImage: string;
 }

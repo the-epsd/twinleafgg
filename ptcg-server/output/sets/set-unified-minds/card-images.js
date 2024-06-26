@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.PurrloinArt = exports.NecrozmaArt = exports.KarateBeltArt = void 0;
+exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.PurrloinArt = exports.NecrozmaArt = exports.KarateBeltArt = exports.AlolanGrimerArt = void 0;
+const alolan_grimer_1 = require("./alolan-grimer");
 const karate_belt_1 = require("./karate-belt");
 const necrozma_1 = require("./necrozma");
 const purrloin_1 = require("./purrloin");
@@ -9,6 +10,13 @@ const riolu_1 = require("./riolu");
 const stadium_nav_1 = require("./stadium-nav");
 const u_turn_board_1 = require("./u-turn-board");
 const weakness_guard_energy_1 = require("./weakness-guard-energy");
+class AlolanGrimerArt extends alolan_grimer_1.AlolanGrimer {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_127_R_EN.png';
+    }
+}
+exports.AlolanGrimerArt = AlolanGrimerArt;
 class KarateBeltArt extends karate_belt_1.KarateBelt {
     constructor() {
         super(...arguments);

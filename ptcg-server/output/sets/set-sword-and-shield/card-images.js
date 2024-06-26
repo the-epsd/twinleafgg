@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinccinoArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
+exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinccinoArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
 const air_balloon_1 = require("./air-balloon");
 const aurora_energy_1 = require("./aurora-energy");
 const cinccino_1 = require("./cinccino");
 const copperajah_1 = require("./copperajah");
 const drizzile_1 = require("./drizzile");
 const evolution_incense_1 = require("./evolution-incense");
+const galarian_zigzagoon_1 = require("./galarian-zigzagoon");
 const giant_hearth_1 = require("./giant-hearth");
 const inteleon_1 = require("./inteleon");
 const marnie_1 = require("./marnie");
@@ -60,6 +61,13 @@ class EvolutionIncenseArt extends evolution_incense_1.EvolutionIncense {
     }
 }
 exports.EvolutionIncenseArt = EvolutionIncenseArt;
+class GalarianZigzagoonArt extends galarian_zigzagoon_1.GalarianZigzagoon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_117_R_EN.png';
+    }
+}
+exports.GalarianZigzagoonArt = GalarianZigzagoonArt;
 class GiantHearthArt extends giant_hearth_1.GiantHearth {
     constructor() {
         super(...arguments);

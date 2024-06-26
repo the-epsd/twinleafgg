@@ -16,7 +16,7 @@ export class Golbat extends PokemonCard {
   public evolvesFrom = 'Zubat';
 
   public powers = [{
-    name: 'Descreet Draw',
+    name: 'Discreet Draw',
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokemon from your hand to evolve 1 of your Pokemon during your turn, you may draw 2 cards.'
   }];

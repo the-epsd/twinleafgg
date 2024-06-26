@@ -1,3 +1,4 @@
+import { AlolanMuk } from './alolan-muk';
 import { Bronzor } from './bronzor';
 import { Dragonite } from './dragonite';
 import { Hitmonchan } from './hitmonchan';
@@ -7,6 +8,9 @@ import { Lapras } from './lapras';
 import { PokemonCommunication } from './pokemon-communication';
 import { ViridianForest } from './viridian-forest';
 import { Zapdos } from './zapdos';
+export declare class AlolanMukArt extends AlolanMuk {
+    cardImage: string;
+}
 export declare class BronzorArt extends Bronzor {
     cardImage: string;
 }

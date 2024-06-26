@@ -6,6 +6,7 @@ exports.setShiningFates = [
     new card_images_1.BallGuyArt(),
     new card_images_1.BuizelArt(),
     new card_images_1.FrosmothArt(),
+    new card_images_1.GalarianWeezingArt(),
     new card_images_1.KoffingArt(),
     new card_images_1.RillaboomArt(),
     new card_images_1.ThwackeyArt(),

@@ -89,7 +89,7 @@ export class Swampert extends PokemonCard {
         if (!player.marker.hasMarker(this.POWER_DRAW_MARKER)) {
           return;
         }
-        player.marker.removeMarker(this.POWER_DRAW_MARKER);
+        player.marker.removeMarker(this.POWER_DRAW_MARKER, this);
       });
     }
     

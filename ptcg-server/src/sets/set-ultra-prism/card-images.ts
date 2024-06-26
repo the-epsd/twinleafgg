@@ -6,10 +6,12 @@ import { Magnemite } from './magnemite';
 import { Magnezone } from './magnezone';
 import { MtCoronet } from './mt-coronet';
 import { PokemonFanClub } from './pokemon-fan-club';
+import { Sneasel } from './sneasel';
 import { Turtwig } from './turtwig';
 import { UnitEnergyGRW } from './unit-energy-grw';
 import { UnitEnergyLPM } from './unit-energy-lpm';
 import { Volkner } from './volkner';
+import { Weavile } from './weavile';
 
 export class CynthiaArt extends Cynthia {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_119_R_EN_LG.png';
@@ -43,6 +45,10 @@ export class PokemonFanClubArt extends PokemonFanClub {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_133_R_EN.png';
 }
 
+export class SneaselArt extends Sneasel {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_073_R_EN.png';
+}
+
 export class TurtwigArt extends Turtwig {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_006_R_EN_LG.png';
 }
@@ -57,4 +63,8 @@ export class UnitEnergyLPMArt extends UnitEnergyLPM {
 
 export class VolknerArt extends Volkner {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_135_R_EN_LG.png';  
+}
+
+export class WeavileArt extends Weavile {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_074_R_EN.png';
 }

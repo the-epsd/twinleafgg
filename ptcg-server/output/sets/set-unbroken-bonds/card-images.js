@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewArt = exports.MartialArtsDojoArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.CleffaArt = exports.ArcanineArt = void 0;
+exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewArt = exports.MartialArtsDojoArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.CleffaArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
 const greens_exploration_1 = require("./greens-exploration");
@@ -9,6 +9,7 @@ const martial_arts_dojo_1 = require("./martial-arts-dojo");
 const mew_1 = require("./mew");
 const pokegear_30_1 = require("./pokegear-30");
 const porygon_z_1 = require("./porygon-z");
+const spiritomb_1 = require("./spiritomb");
 const triple_acceleration_energy_1 = require("./triple-acceleration-energy");
 const volcanion_1 = require("./volcanion");
 class ArcanineArt extends arcanine_1.Arcanine {
@@ -67,6 +68,13 @@ class PorygonZArt extends porygon_z_1.PorygonZ {
     }
 }
 exports.PorygonZArt = PorygonZArt;
+class SpiritombArt extends spiritomb_1.Spiritomb {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_112_R_EN.png';
+    }
+}
+exports.SpiritombArt = SpiritombArt;
 class TripleAccelerationEnergyArt extends triple_acceleration_energy_1.TripleAccelerationEnergy {
     constructor() {
         super(...arguments);

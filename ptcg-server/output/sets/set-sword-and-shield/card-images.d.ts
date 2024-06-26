@@ -4,6 +4,7 @@ import { Cinccino } from './cinccino';
 import { Copperajah } from './copperajah';
 import { Drizzile } from './drizzile';
 import { EvolutionIncense } from './evolution-incense';
+import { GalarianZigzagoon } from './galarian-zigzagoon';
 import { GiantHearth } from './giant-hearth';
 import { Inteleon } from './inteleon';
 import { Marnie } from './marnie';
@@ -31,6 +32,9 @@ export declare class DrizzileArt extends Drizzile {
     cardImage: string;
 }
 export declare class EvolutionIncenseArt extends EvolutionIncense {
+    cardImage: string;
+}
+export declare class GalarianZigzagoonArt extends GalarianZigzagoon {
     cardImage: string;
 }
 export declare class GiantHearthArt extends GiantHearth {

@@ -1,6 +1,7 @@
 import { BallGuy } from './ball-guy';
 import { Buizel } from './buizel';
 import { Frosmoth } from './frosmoth';
+import { GalarianWeezing } from './galarian-weezing';
 import { Koffing } from './koffing';
 import { Rillaboom } from './rillaboom';
 import { Thwackey } from './thwackey';
@@ -15,6 +16,10 @@ export class BuizelArt extends Buizel {
 
 export class FrosmothArt extends Frosmoth {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_030_R_EN_LG.png';
+}
+
+export class GalarianWeezingArt extends GalarianWeezing {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_042_R_EN.png';
 }
 
 export class KoffingArt extends Koffing {

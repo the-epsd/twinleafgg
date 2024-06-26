@@ -1,3 +1,4 @@
+import { AlolanMuk } from './alolan-muk';
 import { Bronzor } from './bronzor';
 import { Dragonite } from './dragonite';
 import { Hitmonchan } from './hitmonchan';
@@ -7,6 +8,10 @@ import { Lapras } from './lapras';
 import { PokemonCommunication } from './pokemon-communication';
 import { ViridianForest } from './viridian-forest';
 import { Zapdos } from './zapdos';
+
+export class AlolanMukArt extends AlolanMuk {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_084_R_EN.png';
+}
 
 export class BronzorArt extends Bronzor {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_100_R_EN.png';

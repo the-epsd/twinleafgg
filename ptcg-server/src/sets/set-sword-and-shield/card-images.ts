@@ -4,6 +4,7 @@ import { Cinccino } from './cinccino';
 import { Copperajah } from './copperajah';
 import { Drizzile } from './drizzile';
 import { EvolutionIncense } from './evolution-incense';
+import { GalarianZigzagoon } from './galarian-zigzagoon';
 import { GiantHearth } from './giant-hearth';
 import { Inteleon } from './inteleon';
 import { Marnie } from './marnie';
@@ -38,6 +39,10 @@ export class DrizzileArt extends Drizzile {
 
 export class EvolutionIncenseArt extends EvolutionIncense {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_163_R_EN_LG.png';
+}
+
+export class GalarianZigzagoonArt extends GalarianZigzagoon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_117_R_EN.png';
 }
 
 export class GiantHearthArt extends GiantHearth {

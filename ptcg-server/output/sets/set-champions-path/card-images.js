@@ -1,10 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TuriffieldStadiumArt = exports.SoniaArt = exports.RotomPhoneArt = exports.PiersArt = void 0;
+exports.TuriffieldStadiumArt = exports.SoniaArt = exports.RotomPhoneArt = exports.PiersArt = exports.GalarianObstagoonArt = void 0;
+const galarian_obstagoon_1 = require("./galarian-obstagoon");
 const piers_1 = require("./piers");
 const rotom_phone_1 = require("./rotom-phone");
 const sonia_1 = require("./sonia");
 const turffield_stadium_1 = require("./turffield-stadium");
+class GalarianObstagoonArt extends galarian_obstagoon_1.GalarianObstagoon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CPA/CPA_037_R_EN.png';
+    }
+}
+exports.GalarianObstagoonArt = GalarianObstagoonArt;
 class PiersArt extends piers_1.Piers {
     constructor() {
         super(...arguments);
