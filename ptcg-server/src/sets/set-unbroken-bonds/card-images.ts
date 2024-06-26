@@ -1,9 +1,11 @@
 import { Arcanine } from './arcanine';
 import { Cleffa } from './cleffa';
+import { Espurr } from './espurr';
 import { GreensExploration } from './greens-exploration';
 import { Hitmontop } from './hitmontop';
 import { MartialArtsDojo } from './martial-arts-dojo';
 import { Mew } from './mew';
+import { Mewtwo } from './mewtwo';
 import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Spiritomb } from './spiritomb';
@@ -16,6 +18,10 @@ export class ArcanineArt extends Arcanine {
 
 export class CleffaArt extends Cleffa {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_131_R_EN.png';
+}
+
+export class EspurrArt extends Espurr {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_079_R_EN.png';
 }
 
 export class GreensExplorationArt extends GreensExploration {
@@ -32,6 +38,10 @@ export class MartialArtsDojoArt extends MartialArtsDojo {
 
 export class MewArt extends Mew {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_076_R_EN_LG.png';
+}
+
+export class MewtwoArt extends Mewtwo {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_075_R_EN.png';
 }
 
 export class Pokegear30Art extends Pokegear30 {

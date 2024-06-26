@@ -1,12 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewArt = exports.MartialArtsDojoArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.CleffaArt = exports.ArcanineArt = void 0;
+exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MartialArtsDojoArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.EspurrArt = exports.CleffaArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
+const espurr_1 = require("./espurr");
 const greens_exploration_1 = require("./greens-exploration");
 const hitmontop_1 = require("./hitmontop");
 const martial_arts_dojo_1 = require("./martial-arts-dojo");
 const mew_1 = require("./mew");
+const mewtwo_1 = require("./mewtwo");
 const pokegear_30_1 = require("./pokegear-30");
 const porygon_z_1 = require("./porygon-z");
 const spiritomb_1 = require("./spiritomb");
@@ -26,6 +28,13 @@ class CleffaArt extends cleffa_1.Cleffa {
     }
 }
 exports.CleffaArt = CleffaArt;
+class EspurrArt extends espurr_1.Espurr {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_079_R_EN.png';
+    }
+}
+exports.EspurrArt = EspurrArt;
 class GreensExplorationArt extends greens_exploration_1.GreensExploration {
     constructor() {
         super(...arguments);
@@ -54,6 +63,13 @@ class MewArt extends mew_1.Mew {
     }
 }
 exports.MewArt = MewArt;
+class MewtwoArt extends mewtwo_1.Mewtwo {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_075_R_EN.png';
+    }
+}
+exports.MewtwoArt = MewtwoArt;
 class Pokegear30Art extends pokegear_30_1.Pokegear30 {
     constructor() {
         super(...arguments);

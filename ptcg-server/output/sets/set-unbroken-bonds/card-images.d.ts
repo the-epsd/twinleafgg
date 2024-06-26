@@ -1,9 +1,11 @@
 import { Arcanine } from './arcanine';
 import { Cleffa } from './cleffa';
+import { Espurr } from './espurr';
 import { GreensExploration } from './greens-exploration';
 import { Hitmontop } from './hitmontop';
 import { MartialArtsDojo } from './martial-arts-dojo';
 import { Mew } from './mew';
+import { Mewtwo } from './mewtwo';
 import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Spiritomb } from './spiritomb';
@@ -13,6 +15,9 @@ export declare class ArcanineArt extends Arcanine {
     cardImage: string;
 }
 export declare class CleffaArt extends Cleffa {
+    cardImage: string;
+}
+export declare class EspurrArt extends Espurr {
     cardImage: string;
 }
 export declare class GreensExplorationArt extends GreensExploration {
@@ -25,6 +30,9 @@ export declare class MartialArtsDojoArt extends MartialArtsDojo {
     cardImage: string;
 }
 export declare class MewArt extends Mew {
+    cardImage: string;
+}
+export declare class MewtwoArt extends Mewtwo {
     cardImage: string;
 }
 export declare class Pokegear30Art extends Pokegear30 {

@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setFatesCollide = [
     new card_images_1.FennekinArt(),
     new card_images_1.LucarioArt(),
+    new card_images_1.MewArt(),
     new card_images_1.NArt(),
     new card_images_1.RioluArt(),
 ];
