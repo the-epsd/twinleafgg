@@ -1,7 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { DragoniteArt, HitmonchanArt, HitmonleeArt, JirachiArt, LaprasArt, PokemonCommunicationArt, ViridianForestArt, ZapdosArt } from './card-images';
+import { BronzorArt, DragoniteArt, HitmonchanArt, HitmonleeArt, JirachiArt, LaprasArt, PokemonCommunicationArt, ViridianForestArt, ZapdosArt } from './card-images';
 
 export const setTeamUp: Card[] = [
+  new BronzorArt(),
   new DragoniteArt(),
   new HitmonchanArt(),
   new HitmonleeArt(),

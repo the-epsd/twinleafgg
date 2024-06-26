@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTeamUp = void 0;
 const card_images_1 = require("./card-images");
 exports.setTeamUp = [
+    new card_images_1.BronzorArt(),
     new card_images_1.DragoniteArt(),
     new card_images_1.HitmonchanArt(),
     new card_images_1.HitmonleeArt(),
