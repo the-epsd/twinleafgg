@@ -39,7 +39,6 @@ class TimerBall extends trainer_card_1.TrainerCard {
                 results.forEach(r => { heads += r ? 1 : 0; });
                 if (heads === 0) {
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                    player.supporterTurn = 1;
                     return state;
                 }
                 let cards = [];

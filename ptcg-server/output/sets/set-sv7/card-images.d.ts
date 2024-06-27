@@ -35,6 +35,7 @@ import { NightTimeAcademy } from './night-time-academy';
 import { NightlyStretcher } from './nightly-stretcher';
 import { Noctowl } from './noctowl';
 import { Okidogiex } from './okidogi-ex';
+import { Orthwormex } from './orthworm-ex';
 import { Pecharuntex } from './pecharunt-ex';
 import { PokeVitalA } from './pokevital-a';
 import { PowerHourglass } from './power-hourglass';
@@ -156,6 +157,9 @@ export declare class NoctowlArt extends Noctowl {
     cardImage: string;
 }
 export declare class OkidogiexArt extends Okidogiex {
+    cardImage: string;
+}
+export declare class OrthwormexArt extends Orthwormex {
     cardImage: string;
 }
 export declare class PecharuntexArt extends Pecharuntex {

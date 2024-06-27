@@ -41,7 +41,8 @@
 
   ptcg-player-bar {
     .ptcg-player-bar.active {
-      background-color: #323d50;
+      background-color: #449058;
+
       &:before {
         background-color: #2D3748;
       }
@@ -52,15 +53,19 @@
     .ptcg-system {
       color: green;
     }
+
     .ptcg-player1 {
       color: blue;
     }
+
     .ptcg-player2 {
       color: red;
     }
+
     .ptcg-spectator {
       color: mat.get-color-from-palette($foreground, hint-text);
     }
+
     // .ptcg-game-logs-header {
     //   background-color: $table-sidebar-header-background-color;
     // }
@@ -90,8 +95,8 @@
 
   ptcg-replay-controls {
     .ptcg-replay-controls-header {
-      backdrop-filter: blur( 20px );
-      -webkit-backdrop-filter: blur( 20px );
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
     }
   }
 
@@ -114,6 +119,7 @@
     .ptcg-card-damage {
       @include mat.typography-level($config, headline);
     }
+
     .ptcg-card-marker {
       @include mat.typography-level($config, headline);
     }
@@ -123,6 +129,7 @@
     .ptcg-game-logs-header mat-icon {
       font-size: mat.font-size($config, input);
     }
+
     .ptcg-game-logs-content {
       @include mat.typography-level($config, caption);
     }

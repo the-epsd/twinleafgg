@@ -2,7 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
@@ -36,13 +36,13 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let energies = 0;
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
-    if (c instanceof PokemonCard) {
+    if (c instanceof PokemonCard && c.cardType === CardType.ANY) {
       pokemon += 1;
     } else if (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL) {
       tools += 1;
     } else if (c instanceof TrainerCard && c.trainerType === TrainerType.STADIUM) {
       stadiums += 1;
-    } else if (c instanceof EnergyCard) {
+    } else if (c instanceof EnergyCard && c.provides.includes(CardType.ANY)) {
       energies += 1;
     } else {
       blocked.push(index);

@@ -1,5 +1,7 @@
-import { AttachPokemonToolEffect, TrainerEffect, PlaySupporterEffect,
-  PlayItemEffect, PlayStadiumEffect } from '../effects/play-card-effects';
+import {
+  AttachPokemonToolEffect, TrainerEffect, PlaySupporterEffect,
+  PlayItemEffect, PlayStadiumEffect
+} from '../effects/play-card-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { Effect } from '../effects/effect';
@@ -76,6 +78,8 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
       name: effect.player.name,
       card: effect.trainerCard.name
     });
+    // const player = effect.player;
+    // player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
   }
 
@@ -91,6 +95,5 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
     }
     return state;
   }
-
   return state;
 }

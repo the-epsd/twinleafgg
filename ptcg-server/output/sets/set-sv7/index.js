@@ -40,6 +40,7 @@ exports.setSV7 = [
     new card_images_1.NightlyStretcherArt(),
     new card_images_1.NoctowlArt(),
     new card_images_1.OkidogiexArt(),
+    // new OrthwormexArt(),
     new card_images_1.PecharuntexArt(),
     new card_images_1.PokeVitalAArt(),
     new card_images_1.PowerHourglassArt(),
