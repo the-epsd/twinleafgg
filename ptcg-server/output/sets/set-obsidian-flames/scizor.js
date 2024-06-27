@@ -10,6 +10,7 @@ class Scizor extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.stage = card_types_1.Stage.STAGE_1;
+        this.evolvesFrom = 'Scyther';
         this.cardType = card_types_1.CardType.METAL;
         this.hp = 140;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];

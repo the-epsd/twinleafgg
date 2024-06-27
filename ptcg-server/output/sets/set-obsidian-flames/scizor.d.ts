@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class Scizor extends PokemonCard {
     regulationMark: string;
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
