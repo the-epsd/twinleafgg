@@ -10,6 +10,7 @@ import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
+import { Zeraora } from './UNB_60_Zeraora';
 import { Volcanion } from './volcanion';
 export declare class ArcanineArt extends Arcanine {
     cardImage: string;
@@ -48,5 +49,8 @@ export declare class TripleAccelerationEnergyArt extends TripleAccelerationEnerg
     cardImage: string;
 }
 export declare class VolcanionArt extends Volcanion {
+    cardImage: string;
+}
+export declare class ZeraoraArt extends Zeraora {
     cardImage: string;
 }

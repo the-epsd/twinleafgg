@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UnitEnergyFDYArt = exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.InkayArt = exports.BeastRingArt = void 0;
+exports.UnitEnergyFDYArt = exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.MagnezoneArt = exports.InkayArt = exports.BeastRingArt = void 0;
 const beast_ring_1 = require("./beast-ring");
+const FLI_36_Magnezone_1 = require("./FLI_36_Magnezone");
 const inkay_1 = require("./inkay");
 const malamar_1 = require("./malamar");
 const metal_frying_pan_1 = require("./metal-frying-pan");
@@ -21,6 +22,13 @@ class InkayArt extends inkay_1.Inkay {
     }
 }
 exports.InkayArt = InkayArt;
+class MagnezoneArt extends FLI_36_Magnezone_1.Magnezone {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_036_R_EN_LG.png';
+    }
+}
+exports.MagnezoneArt = MagnezoneArt;
 class MalamarArt extends malamar_1.Malamar {
     constructor() {
         super(...arguments);

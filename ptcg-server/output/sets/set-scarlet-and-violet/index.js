@@ -64,6 +64,7 @@ exports.setScarletAndViolet = [
     new card_images_10.EnergySearchArt(),
     new card_images_11.EnergySwitchArt(),
     new card_images_12.ExpShareArt(),
+    new card_images_1.FlittleArt(),
     new card_images_13.GardevoirexArt(),
     new card_images_1.GrowlitheArt(),
     new card_images_1.GyaradosexArt(),

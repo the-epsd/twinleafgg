@@ -6,6 +6,7 @@ import { ResetStamp } from './reset-stamp';
 import { Riolu } from './riolu';
 import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
+import { AlolanRaichu } from './UNM_57_Alolan_Raichu';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
 
 export class AlolanGrimerArt extends AlolanGrimer {
@@ -22,6 +23,10 @@ export class NecrozmaArt extends Necrozma {
 
 export class PurrloinArt extends Purrloin {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_135_R_EN_LG.png';
+}
+
+export class AlolanRaichuArt extends AlolanRaichu {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_057_R_EN_LG.png';
 }
 
 export class ResetStampArt extends ResetStamp {

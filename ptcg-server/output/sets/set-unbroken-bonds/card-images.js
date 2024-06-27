@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MartialArtsDojoArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.EspurrArt = exports.CleffaArt = exports.ArcanineArt = void 0;
+exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MartialArtsDojoArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.EspurrArt = exports.CleffaArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
 const espurr_1 = require("./espurr");
@@ -13,6 +13,7 @@ const pokegear_30_1 = require("./pokegear-30");
 const porygon_z_1 = require("./porygon-z");
 const spiritomb_1 = require("./spiritomb");
 const triple_acceleration_energy_1 = require("./triple-acceleration-energy");
+const UNB_60_Zeraora_1 = require("./UNB_60_Zeraora");
 const volcanion_1 = require("./volcanion");
 class ArcanineArt extends arcanine_1.Arcanine {
     constructor() {
@@ -105,3 +106,10 @@ class VolcanionArt extends volcanion_1.Volcanion {
     }
 }
 exports.VolcanionArt = VolcanionArt;
+class ZeraoraArt extends UNB_60_Zeraora_1.Zeraora {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_060_R_EN_LG.png';
+    }
+}
+exports.ZeraoraArt = ZeraoraArt;

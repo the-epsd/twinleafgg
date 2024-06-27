@@ -53,6 +53,7 @@ import { RockyHelmet } from './rocky-helmet';
 import { Scovillain } from './scovillain';
 import { Shuppet } from './shuppet';
 import { Skwovet } from './skwovet';
+import { Flittle } from './SVI_100_Flittle';
 import { Switch } from './switch';
 import { TeamStarGrunt } from './team-star-grunt';
 import { UltraBall } from './ultra-ball';
@@ -125,6 +126,10 @@ export class EnergySwitchArt extends EnergySwitch {
 
 export class ExpShareArt extends ExpShare {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_174_R_EN_LG.png';
+}
+
+export class FlittleArt extends Flittle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_100_R_EN_LG.png';
 }
 
 export class GardevoirexArt extends Gardevoirex {

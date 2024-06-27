@@ -4,6 +4,7 @@ exports.setUnifiedMinds = void 0;
 const card_images_1 = require("./card-images");
 exports.setUnifiedMinds = [
     new card_images_1.AlolanGrimerArt(),
+    new card_images_1.AlolanRaichuArt(),
     new card_images_1.KarateBeltArt(),
     new card_images_1.NecrozmaArt(),
     new card_images_1.PurrloinArt(),

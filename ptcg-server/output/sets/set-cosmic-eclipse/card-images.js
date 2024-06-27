@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TagCallArt = exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BlacephalonArt = void 0;
+exports.TagCallArt = exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BlacephalonArt = void 0;
 const blacephalon_1 = require("./blacephalon");
+const CEC_66_Pikachu_1 = require("./CEC_66_Pikachu");
 const chaotic_swell_1 = require("./chaotic-swell");
 const cynthia_and_caitlin_1 = require("./cynthia-and-caitlin");
 const draw_energy_1 = require("./draw-energy");
@@ -84,6 +85,13 @@ class LilliesPokeDollArt extends lillies_poke_doll_1.LilliesPokeDoll {
     }
 }
 exports.LilliesPokeDollArt = LilliesPokeDollArt;
+class PikachuArt extends CEC_66_Pikachu_1.Pikachu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_066_R_EN_LG.png';
+    }
+}
+exports.PikachuArt = PikachuArt;
 class ProfessorOaksSetupArt extends professor_oaks_setup_1.ProfessorOaksSetup {
     constructor() {
         super(...arguments);

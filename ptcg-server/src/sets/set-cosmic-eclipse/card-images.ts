@@ -1,4 +1,5 @@
 import { Blacephalon } from './blacephalon';
+import { Pikachu } from './CEC_66_Pikachu';
 import { ChaoticSwell } from './chaotic-swell';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
 import { DrawEnergy } from './draw-energy';
@@ -50,6 +51,10 @@ export class LanasFishingRodArt extends LanasFishingRod {
 
 export class LilliesPokeDollArt extends LilliesPokeDoll {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_197_R_EN.png';
+}
+
+export class PikachuArt extends Pikachu {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_066_R_EN_LG.png';
 }
 
 export class ProfessorOaksSetupArt extends ProfessorOaksSetup {

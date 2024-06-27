@@ -25,16 +25,16 @@ export class Magnezone extends PokemonCard {
 
   public attacks = [{
     name: 'Zap Cannon',
-    cost: [CardType.METAL, CardType.METAL, CardType.METAL, CardType.COLORLESS],
+    cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
     damage: 130,
     text: 'This Poekmon can\'t use Zap Cannon during your next turn.'
   }];
 
-  public set: string = 'UPR';
+  public set: string = 'FLI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '83';
+  public setNumber: string = '36';
   public name: string = 'Magnezone';
-  public fullName: string = 'Magnezone UPR';
+  public fullName: string = 'Magnezone FLI';
 
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
@@ -48,7 +48,7 @@ export class Magnezone extends PokemonCard {
       const hasEnergyInHand = player.hand.cards.some(c => {
         return c instanceof EnergyCard
           && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.METAL);
+          && c.provides.includes(CardType.LIGHTNING);
       });
 
       if (!hasEnergyInHand) {
@@ -61,7 +61,7 @@ export class Magnezone extends PokemonCard {
         player.hand,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
         { allowCancel: true }
       ), transfers => {
         transfers = transfers || [];

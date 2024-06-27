@@ -1,4 +1,5 @@
 import { Blacephalon } from './blacephalon';
+import { Pikachu } from './CEC_66_Pikachu';
 import { ChaoticSwell } from './chaotic-swell';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
 import { DrawEnergy } from './draw-energy';
@@ -39,6 +40,9 @@ export declare class LanasFishingRodArt extends LanasFishingRod {
     cardImage: string;
 }
 export declare class LilliesPokeDollArt extends LilliesPokeDoll {
+    cardImage: string;
+}
+export declare class PikachuArt extends Pikachu {
     cardImage: string;
 }
 export declare class ProfessorOaksSetupArt extends ProfessorOaksSetup {

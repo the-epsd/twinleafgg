@@ -1,4 +1,5 @@
 import { BeastRing } from './beast-ring';
+import { Magnezone } from './FLI_36_Magnezone';
 import { Inkay } from './inkay';
 import { Malamar } from './malamar';
 import { MetalFryingPan } from './metal-frying-pan';
@@ -11,6 +12,10 @@ export class BeastRingArt extends BeastRing {
 
 export class InkayArt extends Inkay {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_050_R_EN_LG.png';
+}
+
+export class MagnezoneArt extends Magnezone {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_036_R_EN_LG.png';
 }
 
 export class MalamarArt extends Malamar {

@@ -1,3 +1,4 @@
+import { Magneton } from './BKT_53_Magneton';
 import { Brigette } from './brigette';
 import { BuddyBuddyRescue } from './buddy-buddy-rescue';
 import { Florges } from './florges';
@@ -8,6 +9,9 @@ export declare class BrigetteArt extends Brigette {
     cardImage: string;
 }
 export declare class BuddyBuddyRescueArt extends BuddyBuddyRescue {
+    cardImage: string;
+}
+export declare class MagnetonArt extends Magneton {
     cardImage: string;
 }
 export declare class TownMapArt extends TownMap {

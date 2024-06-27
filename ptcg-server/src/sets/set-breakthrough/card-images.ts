@@ -1,3 +1,4 @@
+import { Magneton } from './BKT_53_Magneton';
 import { Brigette } from './brigette';
 import { BuddyBuddyRescue } from './buddy-buddy-rescue';
 import { Florges } from './florges';
@@ -11,6 +12,10 @@ export class BrigetteArt extends Brigette {
 
 export class BuddyBuddyRescueArt extends BuddyBuddyRescue {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKT/BKT_135_R_EN_LG.png';
+}
+
+export class MagnetonArt extends Magneton {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKT/BKT_053_R_EN_LG.png';
 }
 
 export class TownMapArt extends TownMap {
