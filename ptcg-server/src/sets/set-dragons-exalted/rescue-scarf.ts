@@ -30,33 +30,33 @@ export class RescueScarf extends TrainerCard {
     'attached to that Pokemon.)';
 
   public readonly RESCUE_SCARF_MAREKER = 'RESCUE_SCARF_MAREKER';
-  
+
   public damageDealt = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof AttackEffect && effect.player.active.tool === this) {
       this.damageDealt = false;
     }
 
     if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
-        effect.target.tool === this) {
+      effect.target.tool === this) {
       const player = StateUtils.getOpponent(state, effect.player);
 
       if (player.active.tool === this) {
         this.damageDealt = true;
       }
     }
-    
+
     if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
-      
+
       if (owner === effect.player) {
         this.damageDealt = false;
       }
     }
-    
+
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && this.damageDealt) {
       const player = effect.player;
 
@@ -95,7 +95,9 @@ export class RescueScarf extends TrainerCard {
 
         const rescued: Card[] = player.marker.markers
           .filter(m => m.name === this.RESCUE_SCARF_MAREKER)
-          .map(m => m.source);
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          .map(m => m.source!)
+          .filter((card): card is Card => card !== undefined);
 
         player.discard.moveCardsTo(rescued, player.hand);
         player.marker.removeMarker(this.RESCUE_SCARF_MAREKER);

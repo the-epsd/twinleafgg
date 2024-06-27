@@ -20,11 +20,11 @@ export class Lapras extends PokemonCard {
     type: CardType.LIGHTNING
   }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Retaliate',
-    cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
+    cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
     damage: 110,
     text:
       'If any of your Pokémon were Knocked Out by damage from an attack from your opponent\'s Pokémon during their last turn, your opponent\'s Active Pokémon is now Paralyzed.'
@@ -68,7 +68,7 @@ export class Lapras extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
-        effect.player.marker.addMarker(this.RETALIATE_MARKER, this);
+        effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
       }
       return state;
     }

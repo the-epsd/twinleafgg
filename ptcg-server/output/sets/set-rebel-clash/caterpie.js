@@ -5,6 +5,7 @@ const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Caterpie extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -33,6 +34,10 @@ class Caterpie extends pokemon_card_1.PokemonCard {
         this.setNumber = '1';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.canEvolve = false;
+        }
         // if (effect instanceof EvolveEffect && effect.target === this && state.turn === 2) {
         //   const player = effect.player;
         // }

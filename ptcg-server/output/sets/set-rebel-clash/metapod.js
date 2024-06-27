@@ -5,6 +5,7 @@ const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Metapod extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -34,9 +35,10 @@ class Metapod extends pokemon_card_1.PokemonCard {
         this.setNumber = '2';
     }
     reduceEffect(store, state, effect) {
-        // if (effect instanceof EvolveEffect && effect.target === this && state.turn === 2) {
-        //   const player = effect.player;
-        // }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.canEvolve = false;
+        }
         if (effect instanceof play_card_effects_1.PlayPokemonEffect) {
             const player = effect.player;
             try {

@@ -3,6 +3,7 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Metapod extends PokemonCard {
@@ -46,10 +47,10 @@ export class Metapod extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // if (effect instanceof EvolveEffect && effect.target === this && state.turn === 2) {
-    //   const player = effect.player;
-
-    // }
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.canEvolve = false;
+    }
 
     if (effect instanceof PlayPokemonEffect) {
       const player = effect.player;

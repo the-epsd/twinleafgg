@@ -35,12 +35,12 @@ class Fezandipitiex extends pokemon_card_1.PokemonCard {
         this.setNumber = '38';
         this.name = 'Fezandipiti ex';
         this.fullName = 'Fezandipiti ex SV6a';
-        this.RETALIATE_MARKER = 'RETALIATE_MARKER';
+        this.TABLE_TURNER_MARKER = 'TABLE_TURNER_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            if (!player.marker.hasMarker(this.RETALIATE_MARKER, this)) {
+            if (!player.marker.hasMarker(this.TABLE_TURNER_MARKER)) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             if (player.usedTableTurner == true) {
@@ -67,14 +67,14 @@ class Fezandipitiex extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                player.marker.addMarker(this.RETALIATE_MARKER, this);
+                effect.player.marker.addMarkerToState(this.TABLE_TURNER_MARKER);
                 console.log('player pokemon was knocked out last turn');
             }
             return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
-            player.marker.removeMarker(this.RETALIATE_MARKER);
+            player.marker.removeMarker(this.TABLE_TURNER_MARKER);
             player.usedTableTurner = false;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

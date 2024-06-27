@@ -42,7 +42,7 @@ export class TapuKokoex extends PokemonCard {
   public set: string = 'PAR';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '68';
 
   public name: string = 'Tapu Koko ex';
@@ -55,48 +55,48 @@ export class TapuKokoex extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       if (player.marker.hasMarker(this.RETALIATE_MARKER)) {
         effect.damage += 90;
         const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
         store.reduceEffect(state, specialConditionEffect);
       }
-  
+
       return state;
     }
-  
+
     if (effect instanceof KnockOutEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       // Do not activate between turns, or when it's not opponents turn.
       if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
         return state;
       }
-  
+
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
-        effect.player.marker.addMarker(this.RETALIATE_MARKER, this);
+        effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
       }
       return state;
     }
-  
+
     if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.RETALIATE_MARKER);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      
+
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
-      
+
       return store.prompt(state, new ChooseEnergyPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.COLORLESS ],
+        [CardType.COLORLESS],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);

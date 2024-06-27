@@ -19,6 +19,7 @@ export interface ChooseCardsOptions {
     maxTrainers: number | undefined;
     maxTools: number | undefined;
     maxStadiums: number | undefined;
+    maxSupporters: number | undefined;
     maxSpecialEnergies: number | undefined;
     maxItems: number | undefined;
     allowDifferentSuperTypes: boolean;

@@ -59,5 +59,6 @@ exports.setTwilightMasquerade = [
     new card_images_1.ApplinArt2(),
     new card_images_1.JammingTowerArt(),
     new card_images_1.InfernapeArt(),
-    new card_images_1.WalkingWakeArt()
+    new card_images_1.WalkingWakeArt(),
+    new card_images_1.SecretBoxArt(),
 ];

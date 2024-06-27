@@ -19,18 +19,18 @@ export class Terrakion extends PokemonCard {
     type: CardType.GRASS
   }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Retaliate',
-    cost: [ CardType.FIGHTING, CardType.COLORLESS ],
+    cost: [CardType.FIGHTING, CardType.COLORLESS],
     damage: 30,
     text:
       'If any of your Pokemon were Knocked Out by damage from an opponent\'s ' +
       'attack during his or her last turn, this attack does 60 more damage.'
   }, {
     name: 'Land Crush',
-    cost: [ CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS ],
+    cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
     damage: 90,
     text: ''
   }];
@@ -70,7 +70,7 @@ export class Terrakion extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
-        effect.player.marker.addMarker(this.RETALIATE_MARKER, this);
+        effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
       }
       return state;
     }

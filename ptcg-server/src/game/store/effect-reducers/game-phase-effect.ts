@@ -144,7 +144,7 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
 
   if (effect instanceof EndTurnEffect) {
     const player = state.players[state.activePlayer];
-
+    player.canEvolve = false;
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
       const pokemonCard = cardList.getPokemonCard();
       if (pokemonCard && player.active.cards.includes(pokemonCard)) {
@@ -158,7 +158,7 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       }
       cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
     });
-  
+
 
     player.supporterTurn = 0;
     console.log('player.supporterTurn', player.supporterTurn);

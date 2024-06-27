@@ -10,7 +10,7 @@ import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class RescueEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -63,8 +63,9 @@ export class RescueEnergy extends EnergyCard {
         }
 
         const rescued: Card[] = player.marker.markers
-          .filter(m => m.name === this.RESCUE_ENERGY_MAREKER)
-          .map(m => m.source);
+          .filter(m => m.name === this.RESCUE_ENERGY_MAREKER && m.source !== undefined)
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          .map(m => m.source!);
 
         player.discard.moveCardsTo(rescued, player.hand);
         player.marker.removeMarker(this.RESCUE_ENERGY_MAREKER);

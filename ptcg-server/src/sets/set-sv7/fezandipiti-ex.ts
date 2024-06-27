@@ -12,7 +12,7 @@ export class Fezandipitiex extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public regulationMark = 'H';
 
@@ -22,7 +22,7 @@ export class Fezandipitiex extends PokemonCard {
 
   public hp: number = 210;
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Table Turner',
@@ -33,7 +33,7 @@ export class Fezandipitiex extends PokemonCard {
 
   public attacks = [{
     name: 'Dirty Headbutt',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 0,
     text: 'This attack does 100 damage to 1 of your opponent\'s Pokémon.'
   }];
@@ -43,33 +43,33 @@ export class Fezandipitiex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '38';
-  
+
   public name: string = 'Fezandipiti ex';
-  
+
   public fullName: string = 'Fezandipiti ex SV6a';
 
-  public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
+  public readonly TABLE_TURNER_MARKER = 'TABLE_TURNER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      if (!player.marker.hasMarker(this.RETALIATE_MARKER, this)) {
+      if (!player.marker.hasMarker(this.TABLE_TURNER_MARKER)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-  
+
       if (player.usedTableTurner == true) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-        
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      
+
       player.deck.moveTo(player.hand, 3);
       player.usedTableTurner = true;
-      
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {
           cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
@@ -89,26 +89,26 @@ export class Fezandipitiex extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
-        player.marker.addMarker(this.RETALIATE_MARKER, this);
+        effect.player.marker.addMarkerToState(this.TABLE_TURNER_MARKER);
         console.log('player pokemon was knocked out last turn');
       }
       return state;
     }
-  
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      player.marker.removeMarker(this.RETALIATE_MARKER);
+      player.marker.removeMarker(this.TABLE_TURNER_MARKER);
       player.usedTableTurner = false;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];
@@ -117,10 +117,10 @@ export class Fezandipitiex extends PokemonCard {
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });
-        return state; 
+        return state;
       });
     }
-  
+
     return state;
   }
 }

@@ -29,18 +29,18 @@ export class ChiYu extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Flaire Bringer',
-      cost: [ CardType.FIRE ],
+      cost: [CardType.FIRE],
       damage: 0,
       text: 'Attach up to 2 Basic [R] Energy cards from your discard pile to 1 of your Pokémon.'
     },
     {
       name: 'Megafire of Envy',
-      cost: [ CardType.FIRE, CardType.FIRE ],
+      cost: [CardType.FIRE, CardType.FIRE],
       damage: 50,
       damageCalculation: '+',
       text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 90 more damage.'
@@ -60,7 +60,7 @@ export class ChiYu extends PokemonCard {
   public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
 
   public damageDealt = false;
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
@@ -76,7 +76,7 @@ export class ChiYu extends PokemonCard {
     if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
-      
+
       if (owner === effect.player) {
         this.damageDealt = false;
       }
@@ -85,22 +85,22 @@ export class ChiYu extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       this.damageDealt = false;
-  
+
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
-            && c.energyType === EnergyType.BASIC
-            && c.provides.includes(CardType.FIRE);
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.FIRE);
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
-  
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
         { allowCancel: false, min: 1, max: 2 }
       ), transfers => {
@@ -115,7 +115,7 @@ export class ChiYu extends PokemonCard {
           player.discard.moveCardTo(transfer.card, target);
         }
       });
-  
+
       return state;
     }
 
@@ -123,29 +123,29 @@ export class ChiYu extends PokemonCard {
       if (this.damageDealt) {
         effect.damage += 90;
       }
-  
+
       this.damageDealt = false;
 
       return state;
     }
-  
+
     if (effect instanceof KnockOutEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       // Do not activate between turns, or when it's not opponents turn.
       if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
         return state;
       }
-  
+
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
-        effect.player.marker.addMarker(this.RETALIATE_MARKER, this);
+        effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
       }
       return state;
     }
-  
+
     if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.RETALIATE_MARKER);
     }

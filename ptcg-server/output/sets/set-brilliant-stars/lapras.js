@@ -51,7 +51,7 @@ class Lapras extends pokemon_card_1.PokemonCard {
             const cardList = state_utils_1.StateUtils.findCardList(state, this);
             const owner = state_utils_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                effect.player.marker.addMarker(this.RETALIATE_MARKER, this);
+                effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
             }
             return state;
         }

@@ -31,6 +31,6 @@ export declare class Fezandipitiex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly RETALIATE_MARKER = "RETALIATE_MARKER";
+    readonly TABLE_TURNER_MARKER = "TABLE_TURNER_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

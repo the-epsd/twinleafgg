@@ -2,11 +2,12 @@ import { PlayPokemonEffect } from '../effects/play-card-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { Effect } from '../effects/effect';
-import { Stage } from '../card/card-types';
+import { SpecialCondition, Stage } from '../card/card-types';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { CheckPokemonPlayedTurnEffect } from '../effects/check-effects';
 import { EvolveEffect } from '../effects/game-effects';
+import { PlayerType } from '../actions/play-card-action';
 
 
 export function playPokemonReducer(store: StoreLike, state: State, effect: Effect): State {
@@ -56,6 +57,21 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       store.reduceEffect(state, evolveEffect);
       effect.target.clearEffects();
       effect.player.removePokemonEffects(effect.target);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        const pokemonCard = cardList.getPokemonCard();
+        if (pokemonCard && player.active.cards.includes(pokemonCard)) {
+          cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (cardList === player.active) {
+          return;
+        }
+        cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+      });
+
       return state;
     }
 

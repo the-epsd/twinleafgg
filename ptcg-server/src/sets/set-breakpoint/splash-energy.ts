@@ -12,7 +12,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class SplashEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -29,12 +29,12 @@ export class SplashEnergy extends EnergyCard {
   public text =
     'This card can only be attached to [W] Pokémon. This card provides [W] Energy only while this card is attached to a [W] Pokémon.' +
     '' +
-    'If the [W] Pokémon this card is attached to is Knocked Out by damage from an opponent\'s attack, put that Pokémon into your hand. (Discard all cards attached to it.)' + 
+    'If the [W] Pokémon this card is attached to is Knocked Out by damage from an opponent\'s attack, put that Pokémon into your hand. (Discard all cards attached to it.)' +
     '' +
     '(If this card is attached to anything other than a [W] Pokémon, discard this card.)';
-    
+
   public damageDealt = false;
-  
+
   public SPLASH_ENERGY_MARKER = 'SPLASH_ENERGY_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -53,19 +53,19 @@ export class SplashEnergy extends EnergyCard {
     }
 
     if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
-         effect.target.cards.includes(this)) {
+      effect.target.cards.includes(this)) {
       this.damageDealt = true;
     }
-    
+
     if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
-      
+
       if (owner === effect.player) {
         this.damageDealt = false;
       }
     }
-    
+
     // Discard card when not attached to Water Pokemon
     if (effect instanceof CheckTableStateEffect) {
       state.players.forEach(player => {
@@ -89,7 +89,7 @@ export class SplashEnergy extends EnergyCard {
       });
       return state;
     }
-    
+
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
 
@@ -100,11 +100,11 @@ export class SplashEnergy extends EnergyCard {
         return state;
       }
 
-      effect.energyMap.push({ card: this, provides: [ CardType.WATER ] });
-      
+      effect.energyMap.push({ card: this, provides: [CardType.WATER] });
+
       return state;
     }
-    
+
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && this.damageDealt) {
       const player = effect.player;
 
@@ -119,14 +119,14 @@ export class SplashEnergy extends EnergyCard {
       } catch {
         return state;
       }
-      
+
       const target = effect.target;
       const cards = target.getPokemons();
       cards.forEach(card => {
         player.marker.addMarker(this.SPLASH_ENERGY_MARKER, card);
       });
     }
-    
+
     if (effect instanceof BetweenTurnsEffect) {
       state.players.forEach(player => {
 
@@ -143,15 +143,15 @@ export class SplashEnergy extends EnergyCard {
 
         const rescued: Card[] = player.marker.markers
           .filter(m => m.name === this.SPLASH_ENERGY_MARKER)
-          .map(m => m.source);
+          .map(m => m.source)
+          .filter((card): card is Card => !!card);
 
         player.discard.moveCardsTo(rescued, player.hand);
         player.marker.removeMarker(this.SPLASH_ENERGY_MARKER);
       });
     }
-      
+
     return state;
   }
-      
+
 }
-      

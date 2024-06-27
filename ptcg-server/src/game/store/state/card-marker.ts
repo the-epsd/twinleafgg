@@ -1,7 +1,7 @@
 import { Card } from '../card/card';
 
 interface MarkerItem {
-  source: Card;
+  source?: Card;
   name: string;
 }
 
@@ -32,5 +32,12 @@ export class Marker {
       return;
     }
     this.markers.push({ name, source });
+  }
+
+  addMarkerToState(name: string) {
+    if (this.hasMarker(name)) {
+      return;
+    }
+    this.markers.push({ name });
   }
 }

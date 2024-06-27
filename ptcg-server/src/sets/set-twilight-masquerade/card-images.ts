@@ -64,6 +64,7 @@ import { BoomerangEnergy } from './boomerang-energy';
 import { Infernape } from './infernape';
 import { WalkingWake } from './walking-wake';
 import { Okidogi } from './okidogi';
+import { SecretBox } from './secret-box';
 
 
 export class AggronArt extends Aggron {
@@ -324,4 +325,8 @@ export class WalkingWakeArt extends WalkingWake {
 
 export class WellspringMaskOgerponexArt extends WellspringMaskOgerponex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_064_R_EN_LG.png';
+}
+
+export class SecretBoxArt extends SecretBox {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_163_R_EN_LG.png';
 }

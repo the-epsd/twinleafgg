@@ -48,7 +48,8 @@ class RescueEnergy extends energy_card_1.EnergyCard {
                     return state;
                 }
                 const rescued = player.marker.markers
-                    .filter(m => m.name === this.RESCUE_ENERGY_MAREKER)
+                    .filter(m => m.name === this.RESCUE_ENERGY_MAREKER && m.source !== undefined)
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     .map(m => m.source);
                 player.discard.moveCardsTo(rescued, player.hand);
                 player.marker.removeMarker(this.RESCUE_ENERGY_MAREKER);

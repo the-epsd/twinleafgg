@@ -7,6 +7,7 @@ const game_message_1 = require("../../game-message");
 const card_types_1 = require("../card/card-types");
 const check_effects_1 = require("../effects/check-effects");
 const game_effects_1 = require("../effects/game-effects");
+const play_card_action_1 = require("../actions/play-card-action");
 function playPokemonReducer(store, state, effect) {
     /* Play pokemon card */
     if (effect instanceof play_card_effects_1.PlayPokemonEffect) {
@@ -47,6 +48,18 @@ function playPokemonReducer(store, state, effect) {
             store.reduceEffect(state, evolveEffect);
             effect.target.clearEffects();
             effect.player.removePokemonEffects(effect.target);
+            player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                const pokemonCard = cardList.getPokemonCard();
+                if (pokemonCard && player.active.cards.includes(pokemonCard)) {
+                    cardList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            });
+            player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (cardList === player.active) {
+                    return;
+                }
+                cardList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+            });
             return state;
         }
         throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_TARGET);

@@ -20,10 +20,10 @@ class Drakloak extends game_1.PokemonCard {
         this.weakness = [];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Telling Spirit',
+                name: 'Recon Directive',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your turn, you may look at the top 2 cards of your deck. Put 1 of them into your hand and put the other 1 on the bottom of your deck.'
+                text: 'Once during your turn, you may look at the top 2 cards of your deck and put 1 of them into your hand. Put the other card on the bottom of your deck.'
             }];
         this.attacks = [
             {

@@ -75,7 +75,9 @@ class RescueScarf extends trainer_card_1.TrainerCard {
                 }
                 const rescued = player.marker.markers
                     .filter(m => m.name === this.RESCUE_SCARF_MAREKER)
-                    .map(m => m.source);
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    .map(m => m.source)
+                    .filter((card) => card !== undefined);
                 player.discard.moveCardsTo(rescued, player.hand);
                 player.marker.removeMarker(this.RESCUE_SCARF_MAREKER);
             });

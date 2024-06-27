@@ -11,12 +11,13 @@ import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
+import { PokemonCard } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
-  
+
   const supporterTurn = player.supporterTurn;
 
   if (supporterTurn > 0) {
@@ -31,12 +32,19 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  const blocked: number[] = [];
+  player.deck.cards.forEach((card, index) => {
+    if (card instanceof PokemonCard && card.stage == Stage.BASIC) {
+      blocked.push(index);
+    }
+  });
+
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { superType: SuperType.POKEMON, stage: (Stage.STAGE_1, Stage.STAGE_2, Stage.VMAX, Stage.VSTAR) } as any,
-    { min: 0, max: 2, allowCancel: true }
+    { superType: SuperType.POKEMON } as any,
+    { min: 0, max: 2, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();

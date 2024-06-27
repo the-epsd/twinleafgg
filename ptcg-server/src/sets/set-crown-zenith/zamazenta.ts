@@ -18,10 +18,10 @@ export class Zamazenta extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public resistance = [ { type: CardType.GRASS, value: -30 } ];
+  public resistance = [{ type: CardType.GRASS, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
-  
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+
   public powers = [{
     name: 'Battle Sense',
     powerType: PowerType.ABILITY,
@@ -31,7 +31,7 @@ export class Zamazenta extends PokemonCard {
   public attacks = [
     {
       name: 'Retaliate',
-      cost: [ CardType.METAL, CardType.METAL, CardType.COLORLESS ],
+      cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
       damage: 100,
       text: 'If any of your Pokémon were Knocked Out during your opponent\'s last turn, this attack does 120 more damage.'
     },
@@ -74,7 +74,7 @@ export class Zamazenta extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
-        effect.player.marker.addMarker(this.RETALIATE_MARKER, this);
+        effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
       }
       return state;
     }
@@ -107,15 +107,16 @@ export class Zamazenta extends PokemonCard {
       } catch {
         return state;
       }
-      
+
       // Check attached energy 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
 
       // Look for Lightning energy
-      checkProvidedEnergy.energyMap.some(e => { 
+      checkProvidedEnergy.energyMap.some(e => {
         if (e.provides.includes(CardType.ANY)) {
           effect.damage = Math.max(0, effect.damage - 30);
-        }});
+        }
+      });
       return state;
     }
     return state;

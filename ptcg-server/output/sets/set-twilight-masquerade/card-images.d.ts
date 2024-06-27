@@ -63,6 +63,7 @@ import { BoomerangEnergy } from './boomerang-energy';
 import { Infernape } from './infernape';
 import { WalkingWake } from './walking-wake';
 import { Okidogi } from './okidogi';
+import { SecretBox } from './secret-box';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -256,5 +257,8 @@ export declare class WalkingWakeArt extends WalkingWake {
     cardImage: string;
 }
 export declare class WellspringMaskOgerponexArt extends WellspringMaskOgerponex {
+    cardImage: string;
+}
+export declare class SecretBoxArt extends SecretBox {
     cardImage: string;
 }

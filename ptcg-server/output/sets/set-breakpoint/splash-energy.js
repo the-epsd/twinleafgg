@@ -119,7 +119,8 @@ class SplashEnergy extends energy_card_1.EnergyCard {
                 }
                 const rescued = player.marker.markers
                     .filter(m => m.name === this.SPLASH_ENERGY_MARKER)
-                    .map(m => m.source);
+                    .map(m => m.source)
+                    .filter((card) => !!card);
                 player.discard.moveCardsTo(rescued, player.hand);
                 player.marker.removeMarker(this.SPLASH_ENERGY_MARKER);
             });

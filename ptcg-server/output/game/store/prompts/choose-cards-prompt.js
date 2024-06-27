@@ -25,6 +25,7 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
             maxTrainers: undefined,
             maxTools: undefined,
             maxStadiums: undefined,
+            maxSupporters: undefined,
             maxSpecialEnergies: undefined,
             maxItems: undefined,
         }, options);
@@ -76,12 +77,13 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
                 countMap[`${card.superType}-${card.energyType}`] = energyTypeCount + 1;
             }
         }
-        const { maxPokemons, maxEnergies, maxTrainers, maxItems, maxTools, maxStadiums, maxSpecialEnergies } = this.options;
+        const { maxPokemons, maxEnergies, maxTrainers, maxItems, maxTools, maxStadiums, maxSupporters, maxSpecialEnergies } = this.options;
         if ((maxPokemons !== undefined && maxPokemons < countMap[`${card_types_1.SuperType.POKEMON}`])
             || (maxEnergies !== undefined && maxEnergies < countMap[`${card_types_1.SuperType.ENERGY}-${card_types_1.EnergyType.BASIC}`])
             || (maxTrainers !== undefined && maxTrainers < countMap[`${card_types_1.SuperType.TRAINER}-${card_types_1.SuperType.TRAINER}`])
             || (maxItems !== undefined && maxItems < countMap[`${card_types_1.SuperType.TRAINER}-${card_types_1.TrainerType.ITEM}`])
             || (maxStadiums !== undefined && maxStadiums < countMap[`${card_types_1.SuperType.TRAINER}-${card_types_1.TrainerType.STADIUM}`])
+            || (maxSupporters !== undefined && maxSupporters < countMap[`${card_types_1.SuperType.TRAINER}-${card_types_1.TrainerType.SUPPORTER}`])
             || (maxSpecialEnergies !== undefined && maxSpecialEnergies < countMap[`${card_types_1.SuperType.ENERGY}-${card_types_1.EnergyType.SPECIAL}`])
             || (maxTools !== undefined && maxTools < countMap[`${card_types_1.SuperType.TRAINER}-${card_types_1.TrainerType.TOOL}`])) {
             return false;

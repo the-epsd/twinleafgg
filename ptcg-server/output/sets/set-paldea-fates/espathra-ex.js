@@ -47,32 +47,31 @@ class Espathraex extends pokemon_card_1.PokemonCard {
             if (effect instanceof check_effects_1.CheckAttackCostEffect) {
                 effect.cost.push(card_types_1.CardType.COLORLESS);
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                const playerProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
-                store.reduceEffect(state, playerProvidedEnergy);
-                const playerEnergyCount = playerProvidedEnergy.energyMap
-                    .reduce((left, p) => left + p.provides.length, 0);
-                const opponentProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(opponent);
-                store.reduceEffect(state, opponentProvidedEnergy);
-                const opponentEnergyCount = opponentProvidedEnergy.energyMap
-                    .reduce((left, p) => left + p.provides.length, 0);
-                effect.damage += (playerEnergyCount + opponentEnergyCount) * 30;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const playerProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+            store.reduceEffect(state, playerProvidedEnergy);
+            const playerEnergyCount = playerProvidedEnergy.energyMap
+                .reduce((left, p) => left + p.provides.length, 0);
+            const opponentProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(opponent);
+            store.reduceEffect(state, opponentProvidedEnergy);
+            const opponentEnergyCount = opponentProvidedEnergy.energyMap
+                .reduce((left, p) => left + p.provides.length, 0);
+            effect.damage += (playerEnergyCount + opponentEnergyCount) * 30;
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Target is not Active
+            if (effect.target === player.active || effect.target === opponent.active) {
+                return state;
             }
-            if (effect instanceof attack_effects_1.PutDamageEffect) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                // Target is not Active
-                if (effect.target === player.active || effect.target === opponent.active) {
-                    return state;
-                }
-                // Target is this Pokemon
-                if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-                    effect.preventDefault = true;
-                }
+            // Target is this Pokemon
+            if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+                effect.preventDefault = true;
             }
-            return state;
         }
         return state;
     }

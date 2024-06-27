@@ -34,7 +34,7 @@ export const config = {
 
 
     // Wait till next hour before running tasks
-    schedulerStartNextHour: false,
+    schedulerStartNextHour: true,
 
     // Decrease players' ranking every day by 0.95
     // If you wish to disable this feature set IntervalCount to 0
@@ -61,7 +61,7 @@ export const config = {
 
     // Simulate matches every X ticks of the scheduler
     // If set to 0, the bot matches are disabled
-    botGamesIntervalCount: 1
+    botGamesIntervalCount: 0,
   },
   sets: {
     scansDir: '',

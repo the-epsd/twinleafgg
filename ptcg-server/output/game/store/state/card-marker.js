@@ -27,5 +27,11 @@ class Marker {
         }
         this.markers.push({ name, source });
     }
+    addMarkerToState(name) {
+        if (this.hasMarker(name)) {
+            return;
+        }
+        this.markers.push({ name });
+    }
 }
 exports.Marker = Marker;
