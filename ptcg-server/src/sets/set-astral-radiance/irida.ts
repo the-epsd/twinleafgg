@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { GameMessage } from '../../game/game-message';
+import { GameLog, GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, CardType } from '../../game/store/card/card-types';
@@ -29,37 +29,46 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
+  // Count pokemons and items separately
   let pokemons = 0;
-  let trainers = 0;
+  let items = 0;
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
-    if (c instanceof TrainerCard && c.trainerType === TrainerType.ITEM) {
-      trainers += 1;
-    } else if (c instanceof PokemonCard && c.cardType === CardType.WATER) {
+    if (c instanceof PokemonCard && c.cardType === CardType.WATER) {
       pokemons += 1;
+    } else if (c instanceof TrainerCard && c.trainerType === TrainerType.ITEM) {
+      items += 1;
     } else {
       blocked.push(index);
     }
   });
 
+  // Limit max for each type to 1
   const maxPokemons = Math.min(pokemons, 1);
-  const maxTrainers = Math.min(trainers, 1);
-  const count = maxPokemons + maxTrainers;
+  const maxItems = Math.min(items, 1);
 
+  // Total max is sum of max for each 
+  const count = maxPokemons + maxItems;
+
+  // Pass max counts to prompt options
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
-    GameMessage.CHOOSE_CARD_TO_HAND,
+    GameMessage.CHOOSE_ONE_ITEM_AND_ONE_TOOL_TO_HAND,
     player.deck,
-    { },
-    { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTrainers }
+    {},
+    { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxItems }
   ), selected => {
     cards = selected || [];
     next();
   });
-  
+
   player.deck.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
   player.supporterTurn = 1;
+
+  cards.forEach((card, index) => {
+    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+  });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

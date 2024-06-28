@@ -1,11 +1,11 @@
+import { EnergyCard, GameError, GameMessage, PlayerType, State, StateUtils, StoreLike } from '../../game';
+import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameError, GameMessage, PlayerType, EnergyCard, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Oranguru extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -52,7 +52,7 @@ export class Oranguru extends PokemonCard {
       if (player.marker.hasMarker(this.INSTRUCT_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-
+      
       while (player.hand.cards.length < 3) {
         player.deck.moveTo(player.hand, 1);
       }

@@ -64,7 +64,7 @@ class ParallelCity extends trainer_card_1.TrainerCard {
             const stadiumCardList = state_utils_1.StateUtils.findCardList(state, this);
             const owner = state_utils_1.StateUtils.findOwner(state, stadiumCardList);
             const benchSizes = [0, 0];
-            if (game_1.StadiumDirection.UP) {
+            if (stadiumCardList.stadiumDirection === game_1.StadiumDirection.UP) {
                 state.players.forEach((p, index) => {
                     if (p === owner) {
                         benchSizes[index] = 5;
@@ -75,7 +75,7 @@ class ParallelCity extends trainer_card_1.TrainerCard {
                 });
                 effect.benchSizes = benchSizes;
             }
-            if (game_1.StadiumDirection.DOWN) {
+            if (stadiumCardList.stadiumDirection === game_1.StadiumDirection.DOWN) {
                 state.players.forEach((p, index) => {
                     if (p === owner) {
                         benchSizes[index] = 3;
@@ -90,13 +90,13 @@ class ParallelCity extends trainer_card_1.TrainerCard {
         if (effect instanceof attack_effects_1.DealDamageEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
             const stadiumCardList = state_utils_1.StateUtils.findCardList(state, this);
             const owner = state_utils_1.StateUtils.findOwner(state, stadiumCardList);
-            if (effect.player === owner && game_1.StadiumDirection.UP &&
+            if (effect.player === owner && stadiumCardList.stadiumDirection === game_1.StadiumDirection.UP &&
                 (((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === card_types_1.CardType.FIRE ||
                     ((_b = effect.player.active.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.cardType) === card_types_1.CardType.WATER ||
                     ((_c = effect.player.active.getPokemonCard()) === null || _c === void 0 ? void 0 : _c.cardType) === card_types_1.CardType.GRASS)) {
                 effect.damage -= 20;
             }
-            else if (effect.player !== owner && game_1.StadiumDirection.DOWN &&
+            else if (effect.player !== owner && stadiumCardList.stadiumDirection === game_1.StadiumDirection.DOWN &&
                 (((_d = effect.player.active.getPokemonCard()) === null || _d === void 0 ? void 0 : _d.cardType) === card_types_1.CardType.FIRE ||
                     ((_e = effect.player.active.getPokemonCard()) === null || _e === void 0 ? void 0 : _e.cardType) === card_types_1.CardType.WATER ||
                     ((_f = effect.player.active.getPokemonCard()) === null || _f === void 0 ? void 0 : _f.cardType) === card_types_1.CardType.GRASS)) {

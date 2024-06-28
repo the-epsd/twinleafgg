@@ -140,7 +140,7 @@ export class LostVacuum extends TrainerCard {
               player.supporter.moveCardTo(this, player.discard);
               return state;
             }
-          
+
           }
         ];
         return store.prompt(state, new SelectPrompt(
@@ -200,7 +200,7 @@ export class LostVacuum extends TrainerCard {
               target.tool = undefined;
               player.supporter.moveCardTo(this, player.discard);
             }
-      
+
             player.supporter.moveCardTo(this, player.discard);
             return state;
           });

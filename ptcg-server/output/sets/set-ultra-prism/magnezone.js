@@ -44,7 +44,7 @@ class Magnezone extends pokemon_card_1.PokemonCard {
             const hasEnergyInHand = player.hand.cards.some(c => {
                 return c instanceof game_1.EnergyCard
                     && c.energyType === card_types_1.EnergyType.BASIC
-                    && c.provides.includes(card_types_1.CardType.WATER);
+                    && c.provides.includes(card_types_1.CardType.METAL);
             });
             if (!hasEnergyInHand) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);

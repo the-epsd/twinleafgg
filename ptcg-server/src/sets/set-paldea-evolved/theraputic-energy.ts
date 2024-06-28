@@ -5,7 +5,7 @@ import { CheckTableStateEffect, CheckPokemonTypeEffect, CheckProvidedEnergyEffec
 import { Effect } from '../../game/store/effects/effect';
 import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
-export class TheraputicEnergy extends EnergyCard {
+export class TherapeuticEnergy extends EnergyCard {
 
   public provides: CardType[] = [ CardType.COLORLESS ];
 
@@ -19,9 +19,9 @@ export class TheraputicEnergy extends EnergyCard {
 
   public regulationMark = 'G';
 
-  public name = 'Theraputic Energy';
+  public name = 'Therapeutic Energy';
 
-  public fullName = 'Theraputic Energy PAL';
+  public fullName = 'Therapeutic Energy PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

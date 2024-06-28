@@ -48,7 +48,7 @@ export class Magnezone extends PokemonCard {
       const hasEnergyInHand = player.hand.cards.some(c => {
         return c instanceof EnergyCard
           && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.WATER);
+          && c.provides.includes(CardType.METAL);
       });
 
       if (!hasEnergyInHand) {
@@ -71,9 +71,7 @@ export class Magnezone extends PokemonCard {
           const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
           store.reduceEffect(state, attachEnergyEffect);
         }
-        
       });
-
     }
 
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {

@@ -35,6 +35,7 @@ import { NightTimeAcademy } from './night-time-academy';
 import { NightlyStretcher } from './nightly-stretcher';
 import { Noctowl } from './noctowl';
 import { Okidogiex } from './okidogi-ex';
+import { Orthwormex } from './orthworm-ex';
 import { Pecharuntex } from './pecharunt-ex';
 import { PokeVitalA } from './pokevital-a';
 import { PowerHourglass } from './power-hourglass';
@@ -194,6 +195,10 @@ export class NoctowlArt extends Noctowl {
 
 export class OkidogiexArt extends Okidogiex {
   public cardImage = 'https://pokemonproxies.com/static/media/Okidogi_ex-036-6a.d3f8cbc4dc12fa960846.png';
+}
+
+export class OrthwormexArt extends Orthwormex {
+  public cardImage = 'https://pbs.twimg.com/media/GQ_vyZVXAAAeHKT?format=png&name=small';
 }
 
 export class PecharuntexArt extends Pecharuntex {

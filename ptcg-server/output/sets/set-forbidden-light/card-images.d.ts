@@ -1,4 +1,5 @@
 import { BeastRing } from './beast-ring';
+import { Magnezone } from './FLI_36_Magnezone';
 import { Inkay } from './inkay';
 import { Malamar } from './malamar';
 import { MetalFryingPan } from './metal-frying-pan';
@@ -8,6 +9,9 @@ export declare class BeastRingArt extends BeastRing {
     cardImage: string;
 }
 export declare class InkayArt extends Inkay {
+    cardImage: string;
+}
+export declare class MagnezoneArt extends Magnezone {
     cardImage: string;
 }
 export declare class MalamarArt extends Malamar {

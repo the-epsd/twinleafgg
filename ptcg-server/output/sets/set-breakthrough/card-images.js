@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ParallelCityArt = exports.OctilleryArt = exports.FlorgesArt = exports.TownMapArt = exports.BuddyBuddyRescueArt = exports.BrigetteArt = void 0;
+exports.ParallelCityArt = exports.OctilleryArt = exports.FlorgesArt = exports.TownMapArt = exports.MagnetonArt = exports.BuddyBuddyRescueArt = exports.BrigetteArt = void 0;
+const BKT_53_Magneton_1 = require("./BKT_53_Magneton");
 const brigette_1 = require("./brigette");
 const buddy_buddy_rescue_1 = require("./buddy-buddy-rescue");
 const florges_1 = require("./florges");
@@ -21,6 +22,13 @@ class BuddyBuddyRescueArt extends buddy_buddy_rescue_1.BuddyBuddyRescue {
     }
 }
 exports.BuddyBuddyRescueArt = BuddyBuddyRescueArt;
+class MagnetonArt extends BKT_53_Magneton_1.Magneton {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKT/BKT_053_R_EN_LG.png';
+    }
+}
+exports.MagnetonArt = MagnetonArt;
 class TownMapArt extends town_map_1.TownMap {
     constructor() {
         super(...arguments);

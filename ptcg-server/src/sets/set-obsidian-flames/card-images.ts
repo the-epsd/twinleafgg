@@ -18,6 +18,7 @@ import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
+import { Ryme } from './ryme';
 import { Scizor } from './scizor';
 import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
@@ -106,6 +107,10 @@ export class PokemonLeagueHeadquartersArt extends PokemonLeagueHeadquarters {
   
 export class PoppyArt extends Poppy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_193_R_EN_LG.png';
+}
+
+export class RymeArt extends Ryme {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_194_R_EN_LG.png';
 }
 
 export class ScizorArt extends Scizor {

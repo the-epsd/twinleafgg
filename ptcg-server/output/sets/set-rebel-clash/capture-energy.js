@@ -21,8 +21,7 @@ class CaptureEnergy extends energy_card_1.EnergyCard {
             'When you attach this card from your hand to a Pokémon, search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {
-        var _a, _b;
-        if (effect instanceof play_card_effects_1.AttachEnergyEffect && ((_b = (_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards) === null || _b === void 0 ? void 0 : _b.includes(this))) {
+        if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard === this) {
             const player = effect.player;
             const slots = player.bench.filter(b => b.cards.length === 0).length;
             if (slots === 0) {
@@ -32,7 +31,7 @@ class CaptureEnergy extends energy_card_1.EnergyCard {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_c) {
+            catch (_a) {
                 return state;
             }
             let cards = [];
@@ -42,6 +41,11 @@ class CaptureEnergy extends energy_card_1.EnergyCard {
                 if (cards.length === 0) {
                     return state;
                 }
+                const openSlots = player.bench.filter(b => b.cards.length === 0);
+                cards.forEach((card, index) => {
+                    player.deck.moveCardTo(card, openSlots[index]);
+                    openSlots[index].pokemonPlayedTurn = state.turn;
+                });
             });
         }
         return state;

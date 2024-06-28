@@ -24,6 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
@@ -50,6 +51,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   player.deck.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(self, player.discard);
+  player.supporterTurn = 1;
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

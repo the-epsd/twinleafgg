@@ -5,6 +5,7 @@ import { BruteBonnet } from './brute-bonnet';
 import { ChiYu } from './chi-yu';
 import { CounterCatcher } from './counter-catcher';
 import { Crobat } from './crobat';
+import { Cyclizar } from './cyclizar';
 import { DefianceVest } from './defiance-vest';
 import { Deoxys } from './deoxys';
 import { EarthenVessel } from './earthen-vessel';
@@ -82,6 +83,10 @@ export class CounterCatcherArt extends CounterCatcher {
 
 export class CrobatArt extends Crobat {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_112_R_EN.png';
+}
+
+export class CyclizarArt extends Cyclizar {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_157_R_EN.png';
 }
 
 export class DefianceVestArt extends DefianceVest {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VengefulPunchArt = exports.VaroomArt = exports.TownStoreArt = exports.ThundurusArt = exports.ScizorArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalafinArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.ArvenArt = exports.AbsolexArt = void 0;
+exports.VengefulPunchArt = exports.VaroomArt = exports.TownStoreArt = exports.ThundurusArt = exports.ScizorArt = exports.RymeArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalafinArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.ArvenArt = exports.AbsolexArt = void 0;
 const arven_1 = require("../set-scarlet-and-violet/arven");
 const absol_ex_1 = require("./absol-ex");
 const bellibolt_1 = require("./bellibolt");
@@ -21,6 +21,7 @@ const pidgeotto_1 = require("./pidgeotto");
 const pidgey_1 = require("./pidgey");
 const pokemon_league_headquarters_1 = require("./pokemon-league-headquarters");
 const poppy_1 = require("./poppy");
+const ryme_1 = require("./ryme");
 const scizor_1 = require("./scizor");
 const thundurus_1 = require("./thundurus");
 const town_store_1 = require("./town-store");
@@ -169,6 +170,13 @@ class PoppyArt extends poppy_1.Poppy {
     }
 }
 exports.PoppyArt = PoppyArt;
+class RymeArt extends ryme_1.Ryme {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_194_R_EN_LG.png';
+    }
+}
+exports.RymeArt = RymeArt;
 class ScizorArt extends scizor_1.Scizor {
     constructor() {
         super(...arguments);

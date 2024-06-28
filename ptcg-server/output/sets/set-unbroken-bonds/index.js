@@ -15,5 +15,6 @@ exports.setUnbrokenBonds = [
     new card_images_1.PorygonZArt(),
     new card_images_1.SpiritombArt(),
     new card_images_1.TripleAccelerationEnergyArt(),
-    new card_images_1.VolcanionArt()
+    new card_images_1.VolcanionArt(),
+    new card_images_1.ZeraoraArt()
 ];

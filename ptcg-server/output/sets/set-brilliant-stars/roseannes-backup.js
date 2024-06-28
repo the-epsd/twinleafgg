@@ -29,7 +29,7 @@ function* playCard(next, store, state, self, effect) {
     let energies = 0;
     const blocked = [];
     player.deck.cards.forEach((c, index) => {
-        if (c instanceof pokemon_card_1.PokemonCard) {
+        if (c instanceof pokemon_card_1.PokemonCard && c.cardType === card_types_1.CardType.ANY) {
             pokemon += 1;
         }
         else if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL) {
@@ -38,7 +38,7 @@ function* playCard(next, store, state, self, effect) {
         else if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.STADIUM) {
             stadiums += 1;
         }
-        else if (c instanceof game_1.EnergyCard) {
+        else if (c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.ANY)) {
             energies += 1;
         }
         else {

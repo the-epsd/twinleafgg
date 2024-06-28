@@ -33,7 +33,7 @@ import { Squawkabillyex } from './squawkabilly-ex';
 import { SuperRod } from './super-rod';
 import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
 import { Tadbulb } from './tadbulb';
-import { TheraputicEnergy } from './theraputic-energy';
+import { TherapeuticEnergy } from './theraputic-energy';
 import { TingLuex } from './ting-lu-ex';
 import { Tinkatink } from './tinkatink';
 import { Tinkaton } from './tinkaton';
@@ -190,8 +190,8 @@ export class TadbulbArt extends Tadbulb {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_077_R_EN_LG.png';
 }
 
-export class TheraputicEnergyArt extends TheraputicEnergy {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_057_R_EN_LG.png';
+export class TherapeuticEnergyArt extends TherapeuticEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_193_R_EN_LG.png';
 }
 
 export class TingLuexArt extends TingLuex {

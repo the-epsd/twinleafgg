@@ -5,6 +5,7 @@ import { BruteBonnet } from './brute-bonnet';
 import { ChiYu } from './chi-yu';
 import { CounterCatcher } from './counter-catcher';
 import { Crobat } from './crobat';
+import { Cyclizar } from './cyclizar';
 import { DefianceVest } from './defiance-vest';
 import { Deoxys } from './deoxys';
 import { EarthenVessel } from './earthen-vessel';
@@ -74,6 +75,9 @@ export declare class CounterCatcherArt extends CounterCatcher {
     cardImage: string;
 }
 export declare class CrobatArt extends Crobat {
+    cardImage: string;
+}
+export declare class CyclizarArt extends Cyclizar {
     cardImage: string;
 }
 export declare class DefianceVestArt extends DefianceVest {

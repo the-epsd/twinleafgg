@@ -10,6 +10,7 @@ import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
+import { Zeraora } from './UNB_60_Zeraora';
 import { Volcanion } from './volcanion';
 
 export class ArcanineArt extends Arcanine {
@@ -25,7 +26,7 @@ export class EspurrArt extends Espurr {
 }
 
 export class GreensExplorationArt extends GreensExploration {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_175_R_EN_LG.png';  
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_175_R_EN_LG.png';
 }
 
 export class HitmontopArt extends Hitmontop {
@@ -62,4 +63,8 @@ export class TripleAccelerationEnergyArt extends TripleAccelerationEnergy {
 
 export class VolcanionArt extends Volcanion {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_025_R_EN_LG.png';
+}
+
+export class ZeraoraArt extends Zeraora {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_060_R_EN_LG.png';
 }

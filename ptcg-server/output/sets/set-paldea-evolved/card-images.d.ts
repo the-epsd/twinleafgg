@@ -33,7 +33,7 @@ import { Squawkabillyex } from './squawkabilly-ex';
 import { SuperRod } from './super-rod';
 import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
 import { Tadbulb } from './tadbulb';
-import { TheraputicEnergy } from './theraputic-energy';
+import { TherapeuticEnergy } from './theraputic-energy';
 import { TingLuex } from './ting-lu-ex';
 import { Tinkatink } from './tinkatink';
 import { Tinkaton } from './tinkaton';
@@ -152,7 +152,7 @@ export declare class ShinxArt extends Shinx {
 export declare class TadbulbArt extends Tadbulb {
     cardImage: string;
 }
-export declare class TheraputicEnergyArt extends TheraputicEnergy {
+export declare class TherapeuticEnergyArt extends TherapeuticEnergy {
     cardImage: string;
 }
 export declare class TingLuexArt extends TingLuex {

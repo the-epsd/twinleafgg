@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AnnihilapeArt, ArcanineexArt, ArmarougeArt, BanetteexArt, CharcadetArt, GrowlitheArt, GyaradosexArt, LucarioArt, MagikarpArt, MankeyArt, NemonaArt, NestBallArt2, PrimeapeArt, RevavroomArt, RockyHelmetArt, ShuppetArt } from './card-images';
+import { AnnihilapeArt, ArcanineexArt, ArmarougeArt, BanetteexArt, CharcadetArt, FlittleArt, GrowlitheArt, GyaradosexArt, LucarioArt, MagikarpArt, MankeyArt, NemonaArt, NestBallArt2, PrimeapeArt, RevavroomArt, RockyHelmetArt, ShuppetArt } from './card-images';
 import { ArvenArt } from './card-images';
 import { BeachCourtArt } from './card-images';
 import { CrushingHammerArt } from './card-images';
@@ -64,6 +64,7 @@ export const setScarletAndViolet: Card[] = [
   new EnergySearchArt(),
   new EnergySwitchArt(),
   new ExpShareArt(),
+  new FlittleArt(),
   new GardevoirexArt(),
   new GrowlitheArt(),
   new GyaradosexArt(),
@@ -142,4 +143,3 @@ export const setScarletAndViolet: Card[] = [
 
   new NestBallArt2(),
 ];
-  

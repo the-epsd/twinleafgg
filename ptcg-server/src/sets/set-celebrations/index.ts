@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { DialgaArt, FlyingPikachuVArt, FlyingPikachuVMAXArt, KyogreArt, MewArt, YVeltalArt, ZacianVArt } from './card-images';
+import { DialgaArt, FlyingPikachuVArt, FlyingPikachuVMAXArt, KyogreArt, LugiaArt, MewArt, YVeltalArt, ZacianVArt } from './card-images';
 
 export const setCelebrations: Card[] = [
   
@@ -7,6 +7,7 @@ export const setCelebrations: Card[] = [
   new FlyingPikachuVArt(),
   new FlyingPikachuVMAXArt(),
   new KyogreArt(),
+  new LugiaArt(),
   new MewArt(),
   new YVeltalArt(),
   new ZacianVArt(),

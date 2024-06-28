@@ -29,6 +29,7 @@ class BetweenTurnsEffect {
         this.player = player;
         this.poisonDamage = player.active.poisonDamage;
         this.burnDamage = player.active.burnDamage;
+        this.flipsForSleep = undefined;
         this.burnFlipResult = undefined;
         this.asleepFlipResult = undefined;
     }

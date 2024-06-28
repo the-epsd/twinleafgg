@@ -22,6 +22,7 @@ export declare class BetweenTurnsEffect implements Effect {
     preventDefault: boolean;
     player: Player;
     poisonDamage: number;
+    flipsForSleep: number | undefined;
     burnDamage: number;
     burnFlipResult: boolean | undefined;
     asleepFlipResult: boolean | undefined;

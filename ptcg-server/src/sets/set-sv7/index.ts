@@ -39,6 +39,7 @@ export const setSV7: Card[] = [
   new NightlyStretcherArt(),
   new NoctowlArt(),
   new OkidogiexArt(),
+  // new OrthwormexArt(),
   new PecharuntexArt(),
   new PokeVitalAArt(),
   new PowerHourglassArt(),

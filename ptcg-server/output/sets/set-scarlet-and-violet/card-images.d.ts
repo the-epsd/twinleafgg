@@ -53,6 +53,7 @@ import { RockyHelmet } from './rocky-helmet';
 import { Scovillain } from './scovillain';
 import { Shuppet } from './shuppet';
 import { Skwovet } from './skwovet';
+import { Flittle } from './SVI_100_Flittle';
 import { Switch } from './switch';
 import { TeamStarGrunt } from './team-star-grunt';
 import { UltraBall } from './ultra-ball';
@@ -107,6 +108,9 @@ export declare class EnergySwitchArt extends EnergySwitch {
     cardImage: string;
 }
 export declare class ExpShareArt extends ExpShare {
+    cardImage: string;
+}
+export declare class FlittleArt extends Flittle {
     cardImage: string;
 }
 export declare class GardevoirexArt extends Gardevoirex {

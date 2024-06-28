@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Delinquent = void 0;
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const trainer_card_1 = require("../../game/store/card/trainer-card");
-const card_types_1 = require("../../game/store/card/card-types");
-const state_utils_1 = require("../../game/store/state-utils");
 const game_1 = require("../../game");
+const card_types_1 = require("../../game/store/card/card-types");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const state_utils_1 = require("../../game/store/state-utils");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
@@ -32,18 +32,13 @@ function* playCard(next, store, state, self, effect) {
         opponent.hand.moveCardsTo(opponentCards, opponent.discard);
     }
     if (opponentCards.length > 3) {
-        // Set discard amount to reach hand size of 5
-        const discardAmount = opponentCards.length - 3;
-        // Opponent discards first
-        if (opponent.hand.cards.length > 5) {
-            store.prompt(state, new game_1.ChooseCardsPrompt(opponent.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: discardAmount, max: discardAmount, allowCancel: false }), selected => {
-                const cards = selected || [];
-                opponent.hand.moveCardsTo(cards, opponent.discard);
-            });
-        }
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        player.supporterTurn = 1;
+        store.prompt(state, new game_1.ChooseCardsPrompt(opponent.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: 3, max: 3, allowCancel: false }), selected => {
+            const cards = selected || [];
+            opponent.hand.moveCardsTo(cards, opponent.discard);
+        });
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn = 1;
 }
 class Delinquent extends trainer_card_1.TrainerCard {
     constructor() {

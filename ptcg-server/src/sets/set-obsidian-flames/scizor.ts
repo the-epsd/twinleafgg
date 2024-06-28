@@ -11,29 +11,31 @@ export class Scizor extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public evolvesFrom = 'Scyther';
+
   public cardType: CardType = CardType.METAL;
 
   public hp: number = 140;
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public resistance = [{ type: CardType.GRASS, value: -30 }];
 
   public attacks = [
-    { 
-      name: 'Punishing Scissors', 
-      cost: [CardType.METAL], 
-      damage: 10, 
-      text: 'This attack does 50 more damage for each of your opponent\'s Pokémon in play that has an Ability.' 
+    {
+      name: 'Punishing Scissors',
+      cost: [CardType.METAL],
+      damage: 10,
+      text: 'This attack does 50 more damage for each of your opponent\'s Pokémon in play that has an Ability.'
     },
-    { 
-      name: 'Cut', 
-      cost: [CardType.METAL, CardType.METAL], 
-      damage: 70, 
-      text: '' 
-    },   
+    {
+      name: 'Cut',
+      cost: [CardType.METAL, CardType.METAL],
+      damage: 70,
+      text: ''
+    },
   ];
 
   public set: string = 'OBF';
@@ -51,7 +53,7 @@ export class Scizor extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
       const vPokemons = benchPokemon.filter(card => card.powers.length);
       const opponentActive = opponent.active.getPokemonCard();

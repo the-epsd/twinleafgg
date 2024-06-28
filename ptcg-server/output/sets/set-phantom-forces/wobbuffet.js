@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Wobbuffet = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
-const game_effects_1 = require("../../game/store/effects/game-effects");
-const pokemon_types_1 = require("../../game/store/card/pokemon-types");
-const state_utils_1 = require("../../game/store/state-utils");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
-const pokemon_card_list_1 = require("../../game/store/state/pokemon-card-list");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
+const state_utils_1 = require("../../game/store/state-utils");
+const pokemon_card_list_1 = require("../../game/store/state/pokemon-card-list");
 class Wobbuffet extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -64,8 +64,12 @@ class Wobbuffet extends pokemon_card_1.PokemonCard {
             }
             // Try to reduce PowerEffect, to check if something is blocking our ability
             try {
-                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                store.reduceEffect(state, powerEffect);
+                const stub = new game_effects_1.PowerEffect(opponent, {
+                    name: 'test',
+                    powerType: pokemon_types_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
             }
             catch (_a) {
                 return state;

@@ -18,6 +18,7 @@ import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
+import { Ryme } from './ryme';
 import { Scizor } from './scizor';
 import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
@@ -84,6 +85,9 @@ export declare class PokemonLeagueHeadquartersArt extends PokemonLeagueHeadquart
     cardImage: string;
 }
 export declare class PoppyArt extends Poppy {
+    cardImage: string;
+}
+export declare class RymeArt extends Ryme {
     cardImage: string;
 }
 export declare class ScizorArt extends Scizor {
