@@ -94,6 +94,9 @@ function handleSpecialConditions(store, state, effect) {
                 });
                 break;
             case SpecialCondition.ASLEEP:
+                if (effect.preventDefault) {
+                    break;
+                }
                 if (effect.asleepFlipResult === true) {
                     player.active.removeSpecialCondition(SpecialCondition.ASLEEP);
                     break;

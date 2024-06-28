@@ -66,6 +66,13 @@ export class Skwovet extends PokemonCard {
       if (player.marker.hasMarker(this.NEST_STASH_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
+      
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch (Exception) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
     
       // Create deckBottom and move hand into it
       const deckBottom = new CardList();

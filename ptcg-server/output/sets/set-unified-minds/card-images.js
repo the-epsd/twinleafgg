@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.AlolanRaichuArt = exports.PurrloinArt = exports.NecrozmaArt = exports.KarateBeltArt = exports.AlolanGrimerArt = void 0;
+exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.RecycleEnergyArt = exports.AlolanRaichuArt = exports.PurrloinArt = exports.NecrozmaArt = exports.KarateBeltArt = exports.AlolanGrimerArt = void 0;
 const alolan_grimer_1 = require("./alolan-grimer");
 const karate_belt_1 = require("./karate-belt");
 const necrozma_1 = require("./necrozma");
 const purrloin_1 = require("./purrloin");
+const recycle_energy_1 = require("./recycle-energy");
 const reset_stamp_1 = require("./reset-stamp");
 const riolu_1 = require("./riolu");
 const stadium_nav_1 = require("./stadium-nav");
@@ -46,6 +47,13 @@ class AlolanRaichuArt extends UNM_57_Alolan_Raichu_1.AlolanRaichu {
     }
 }
 exports.AlolanRaichuArt = AlolanRaichuArt;
+class RecycleEnergyArt extends recycle_energy_1.RecycleEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_212_R_EN.png';
+    }
+}
+exports.RecycleEnergyArt = RecycleEnergyArt;
 class ResetStampArt extends reset_stamp_1.ResetStamp {
     constructor() {
         super(...arguments);

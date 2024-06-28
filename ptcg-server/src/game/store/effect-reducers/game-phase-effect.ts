@@ -119,6 +119,10 @@ function handleSpecialConditions(store: StoreLike, state: State, effect: Between
         });
         break;
       case SpecialCondition.ASLEEP:
+        if (effect.preventDefault) {
+          break;
+        }
+        
         if (effect.asleepFlipResult === true) {
           player.active.removeSpecialCondition(SpecialCondition.ASLEEP);
           break;

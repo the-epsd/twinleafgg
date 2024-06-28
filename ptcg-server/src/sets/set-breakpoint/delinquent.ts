@@ -1,11 +1,11 @@
+import { ChooseCardsPrompt, GameError, GameMessage } from '../../game';
+import { TrainerType } from '../../game/store/card/card-types';
+import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
-import { StateUtils } from '../../game/store/state-utils';
-import { ChooseCardsPrompt, GameError, GameMessage } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Delinquent, effect: TrainerEffect): IterableIterator<State> {
@@ -27,7 +27,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   if (stadiumCard !== undefined) {
-
     // Discard Stadium
     const cardList = StateUtils.findCardList(state, stadiumCard);
     const player = StateUtils.findOwner(state, cardList);
@@ -45,26 +44,20 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   if (opponentCards.length > 3) {
-
-    // Set discard amount to reach hand size of 5
-    const discardAmount = opponentCards.length - 3;
-
-    // Opponent discards first
-    if (opponent.hand.cards.length > 5) {
-      store.prompt(state, new ChooseCardsPrompt(
-        opponent.id,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.hand,
-        {},
-        { min: discardAmount, max: discardAmount, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        opponent.hand.moveCardsTo(cards, opponent.discard);
-      });
-    }
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn = 1;
+    store.prompt(state, new ChooseCardsPrompt(
+      opponent.id,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      opponent.hand,
+      {},
+      { min: 3, max: 3, allowCancel: false }
+    ), selected => {
+      const cards = selected || [];
+      opponent.hand.moveCardsTo(cards, opponent.discard);
+    });
   }
+  
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  player.supporterTurn = 1;
 }
 
 export class Delinquent extends TrainerCard {

@@ -1,22 +1,6 @@
 import { Card } from '../../game/store/card/card';
 
-import { AbsolexArt, ArvenArt, BelliboltArt, EnteiArt, FinizenArt, PalafinArt, ScizorArt, ThundurusArt, VaroomArt } from './card-images';
-import { CharizardexArt } from './card-images';
-import { CharmanderArt } from './card-images';
-import { CharmeleonArt } from './card-images';
-import { CleffaArt } from './card-images';
-import { DragonairArt } from './card-images';
-import { DragoniteexArt } from './card-images';
-import { DratiniArt } from './card-images';
-import { LetterOfEncouragementArt } from './card-images';
-import { LunatoneArt } from './card-images';
-import { PidgeotexArt } from './card-images';
-import { PidgeottoArt } from './card-images';
-import { PidgeyArt } from './card-images';
-import { PokemonLeagueHeadquartersArt } from './card-images';
-import { PoppyArt } from './card-images';
-import { TownStoreArt } from './card-images';
-import { VengefulPunchArt } from './card-images';
+import { AbsolexArt, ArvenArt, BelliboltArt, CharizardexArt, CharmanderArt, CharmeleonArt, CleffaArt, DragonairArt, DragoniteexArt, DratiniArt, EnteiArt, FinizenArt, LetterOfEncouragementArt, LunatoneArt, PalafinArt, PidgeotexArt, PidgeottoArt, PidgeyArt, PokemonLeagueHeadquartersArt, PoppyArt, RymeArt, ScizorArt, ThundurusArt, TownStoreArt, VaroomArt, VengefulPunchArt } from './card-images';
 import { ArtazonHR, BelliboltIR, CharizardexFA, CharizardexHR, CharizardexSIR, CleffaIR, FireEnergyHR, PidgeotexFA, PidgeotexSIR, PidgeottoIR, PidgeyIR, PoppyFA, PoppySIR, ScizorIR, VaroomIR } from './full-arts';
 
 
@@ -41,6 +25,7 @@ export const setObsidianFlames: Card[] = [
   new PidgeyArt(),
   new PokemonLeagueHeadquartersArt(),
   new PoppyArt(),
+  new RymeArt(),
   new ScizorArt(),
   new ThundurusArt(),
   new TownStoreArt(),

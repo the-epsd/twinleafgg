@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArctibaxArt, ArtazonArt, CetitanArt, ChiYuexArt, CufantArt, GiacomoArt, GrushaArt, MagnemiteArt, NoibatArt, NoivernexArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WingullArt } from './card-images';
+import { ArctibaxArt, ArtazonArt, CetitanArt, ChiYuexArt, CufantArt, GiacomoArt, GrushaArt, MagnemiteArt, NoibatArt, NoivernexArt, TherapeuticEnergyArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WingullArt } from './card-images';
 import { BaxcaliburArt } from './card-images';
 import { BossOrdersArt } from './card-images';
 import { BraveyCharmArt } from './card-images';
@@ -68,6 +68,7 @@ export const setPaldeaEvolved: Card[] = [
   new SuperRodArt(),
   new SuperiorEnergyRetrievalArt(),
   new TadbulbArt(),
+  new TherapeuticEnergyArt(),
   new TingLuexArt(),
   new TinkatinkArt(),
   new TinkatuffArt(),

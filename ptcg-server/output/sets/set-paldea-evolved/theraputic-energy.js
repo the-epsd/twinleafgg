@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TheraputicEnergy = void 0;
+exports.TherapeuticEnergy = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-class TheraputicEnergy extends energy_card_1.EnergyCard {
+class TherapeuticEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
         this.provides = [card_types_1.CardType.COLORLESS];
@@ -14,8 +14,8 @@ class TheraputicEnergy extends energy_card_1.EnergyCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '193';
         this.regulationMark = 'G';
-        this.name = 'Theraputic Energy';
-        this.fullName = 'Theraputic Energy PAL';
+        this.name = 'Therapeutic Energy';
+        this.fullName = 'Therapeutic Energy PAL';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
@@ -50,4 +50,4 @@ class TheraputicEnergy extends energy_card_1.EnergyCard {
         return state;
     }
 }
-exports.TheraputicEnergy = TheraputicEnergy;
+exports.TherapeuticEnergy = TherapeuticEnergy;

@@ -1,13 +1,14 @@
+import { CoinFlipPrompt, GameMessage } from '../../game';
+import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { PowerType } from '../../game/store/card/pokemon-types';
+import { AbstractAttackEffect, AddSpecialConditionsEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { AbstractAttackEffect, AddSpecialConditionsEffect, DealDamageEffect, PutDamageEffect, RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { PowerType } from '../../game/store/card/pokemon-types';
+import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { CoinFlipPrompt, GameMessage } from '../../game';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 
 export class Snorlax extends PokemonCard {
@@ -49,30 +50,28 @@ export class Snorlax extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof BetweenTurnsEffect && effect.player.active.cards.includes(this)) {
+      // we will handle sleep here
+      effect.preventDefault = true;
+      
+      const player = effect.player;
+      
+      store.prompt(state, [
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+      ], results => {
+        if (results.every(r => r)) {
+          effect.player.active.removeSpecialCondition(SpecialCondition.ASLEEP);
+        }
+      });
+      
+      return state;
+    }
+    
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
-      const player = effect.player;
       specialConditionEffect.target = effect.player.active;
       store.reduceEffect(state, specialConditionEffect);
-
-      let coin1Result = false;
-      let coin2Result = false;
-      store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
-        coin1Result = result;
-      });
-      store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
-        coin2Result = result;
-      });
-      if (coin1Result && coin2Result) {
-
-        // Create effect to remove Asleep
-        const removeAsleep = new RemoveSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
-        removeAsleep.target = player.active;
-  
-        // Reduce effect to remove Asleep
-        state = store.reduceEffect(state, removeAsleep);
-        return state;
-      }
     }
 
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Oranguru = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
-const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Oranguru extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -48,6 +48,13 @@ class Oranguru extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             if (player.marker.hasMarker(this.INSTRUCT_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+            }
+            try {
+                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                store.reduceEffect(state, powerEffect);
+            }
+            catch (Exception) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             while (player.hand.cards.length < 3) {
                 player.deck.moveTo(player.hand, 1);

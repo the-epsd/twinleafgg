@@ -30,7 +30,7 @@ export class CaptureEnergy extends EnergyCard {
     'When you attach this card from your hand to a Pokémon, search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttachEnergyEffect && effect.target?.cards?.includes(this)) {
+    if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;
       
       const slots = player.bench.filter(b => b.cards.length === 0).length;
