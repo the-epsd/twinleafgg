@@ -40,19 +40,25 @@ export class ScoopUpNet extends TrainerCard {
               ), result => {
                 const cardList = result[0];
                 player.switchPokemon(cardList);
+                targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => c instanceof PokemonCard), effect.player.hand);
+                targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => !(c instanceof PokemonCard)), effect.player.discard);
+                targetPokemon.clearEffects();
+                targetPokemon.cards.forEach((card, index) => {
+                  if (card instanceof PokemonCard) {
+                    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: card.name });
+                  }
+                });
+              });
+            } else {
+              targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => c instanceof PokemonCard), effect.player.hand);
+              targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => !(c instanceof PokemonCard)), effect.player.discard);
+              targetPokemon.clearEffects();
+              targetPokemon.cards.forEach((card, index) => {
+                if (card instanceof PokemonCard) {
+                  store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: card.name });
+                }
               });
             }
-            
-            targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => c instanceof PokemonCard), effect.player.hand);
-            targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => !(c instanceof PokemonCard)), effect.player.discard);
-            
-            targetPokemon.cards.forEach((card, index) => {
-              if (card instanceof PokemonCard) {
-                store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: card.name });
-              }
-            });
-            
-            targetPokemon.clearEffects();
           }
           
           return state;
