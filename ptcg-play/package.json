@@ -1,7 +1,7 @@
 {
   "name": "ptcg-play",
   "engines": {
-    "node": ">=12.14.1 <=18.19.1"
+    "node": ">=12.14.1 <=18.19.2"
   },
   "version": "0.0.3",
   "scripts": {
