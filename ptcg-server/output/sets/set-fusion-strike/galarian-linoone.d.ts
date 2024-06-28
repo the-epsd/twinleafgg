@@ -5,6 +5,7 @@ export declare class GalarianLinoone extends PokemonCard {
     regulationMark: string;
     cardType: CardType;
     hp: number;
+    evolvesFrom: string;
     weakness: {
         type: CardType;
     }[];

@@ -10,6 +10,7 @@ class GalarianLinoone extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'E';
         this.cardType = card_types_1.CardType.DARK;
         this.hp = 60;
+        this.evolvesFrom = 'Galarian Zigzagoon';
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
