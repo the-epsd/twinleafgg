@@ -23,15 +23,17 @@ class ScoopUpNet extends game_1.TrainerCard {
                     if (targetPokemon === effect.player.active) {
                         return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
                             const cardList = result[0];
-                            player.switchPokemon(cardList);
-                            targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => c instanceof game_1.PokemonCard), effect.player.hand);
-                            targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => !(c instanceof game_1.PokemonCard)), effect.player.discard);
                             targetPokemon.clearEffects();
                             targetPokemon.cards.forEach((card, index) => {
                                 if (card instanceof game_1.PokemonCard) {
                                     store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: card.name });
                                 }
                             });
+                            player.switchPokemon(cardList);
+                            const scoopedPokemon = targetPokemon.cards.filter(c => c instanceof game_1.PokemonCard)[0];
+                            const benchedCardList = player.bench.find(b => b.cards.includes(scoopedPokemon));
+                            benchedCardList.moveCardsTo(benchedCardList.cards.filter(c => c instanceof game_1.PokemonCard), effect.player.hand);
+                            benchedCardList.moveCardsTo(benchedCardList.cards.filter(c => !(c instanceof game_1.PokemonCard)), effect.player.discard);
                         });
                     }
                     else {

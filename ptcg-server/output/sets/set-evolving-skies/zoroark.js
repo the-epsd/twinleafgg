@@ -36,6 +36,9 @@ class Zoroark extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+            if (!effect.player.discard.cards.some(b => b instanceof pokemon_card_1.PokemonCard && b.stage === card_types_1.Stage.STAGE_1 && b.name !== this.name)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             const getBenchIndex = (player, card) => {
                 for (let i = 0; i < player.bench.length; i++) {
                     const bench = player.bench[i];
@@ -46,13 +49,13 @@ class Zoroark extends pokemon_card_1.PokemonCard {
                 return -1;
             };
             const index = getBenchIndex(effect.player, this);
-            if (index >= 0) {
-                effect.player.bench[index].moveCardTo(this, effect.player.discard);
-            }
-            else {
-                effect.player.active.moveCardTo(this, effect.player.discard);
-            }
             return store.prompt(state, new game_1.ChooseCardsPrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD, effect.player.discard, { stage: card_types_1.Stage.STAGE_1 }, { min: 1, max: 1 }), selected => {
+                if (index >= 0) {
+                    effect.player.bench[index].moveCardTo(this, effect.player.discard);
+                }
+                else {
+                    effect.player.active.moveCardTo(this, effect.player.discard);
+                }
                 const replacement = selected[0];
                 if (index >= 0) {
                     effect.player.discard.moveCardTo(replacement, effect.player.bench[index]);

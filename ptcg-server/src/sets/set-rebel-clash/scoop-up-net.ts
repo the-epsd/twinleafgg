@@ -39,15 +39,20 @@ export class ScoopUpNet extends TrainerCard {
                 { allowCancel: false }
               ), result => {
                 const cardList = result[0];
-                player.switchPokemon(cardList);
-                targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => c instanceof PokemonCard), effect.player.hand);
-                targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => !(c instanceof PokemonCard)), effect.player.discard);
                 targetPokemon.clearEffects();
                 targetPokemon.cards.forEach((card, index) => {
                   if (card instanceof PokemonCard) {
                     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: card.name });
                   }
                 });
+                
+                player.switchPokemon(cardList);
+                
+                const scoopedPokemon = targetPokemon.cards.filter(c => c instanceof PokemonCard)[0];
+                const benchedCardList = player.bench.find(b => b.cards.includes(scoopedPokemon));
+                
+                benchedCardList!.moveCardsTo(benchedCardList!.cards.filter(c => c instanceof PokemonCard), effect.player.hand);
+                benchedCardList!.moveCardsTo(benchedCardList!.cards.filter(c => !(c instanceof PokemonCard)), effect.player.discard);  
               });
             } else {
               targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => c instanceof PokemonCard), effect.player.hand);

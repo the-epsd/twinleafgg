@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { Card, ChooseCardsPrompt, GameMessage, Player } from '../../game';
+import { Card, ChooseCardsPrompt, GameError, GameMessage, Player } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Zoroark extends PokemonCard {
@@ -46,12 +46,14 @@ export class Zoroark extends PokemonCard {
   public name: string = 'Zoroark';
 
   public fullName: string = 'Zoroark EVS';
-
-
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
+      if (!effect.player.discard.cards.some(b => b instanceof PokemonCard && b.stage === Stage.STAGE_1 && b.name!== this.name)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);        
+      }
+      
       const getBenchIndex = (player: Player, card: Card) => {
         for (let i = 0; i < player.bench.length; i++) {
           const bench = player.bench[i];
@@ -64,12 +66,6 @@ export class Zoroark extends PokemonCard {
 
       const index = getBenchIndex(effect.player, this);
 
-      if (index >= 0) {
-        effect.player.bench[index].moveCardTo(this, effect.player.discard);
-      } else {
-        effect.player.active.moveCardTo(this, effect.player.discard);
-      }
-
       return store.prompt(state, new ChooseCardsPrompt(
         effect.player.id,
         GameMessage.CHOOSE_POKEMON_TO_DISCARD,
@@ -78,6 +74,12 @@ export class Zoroark extends PokemonCard {
         { min: 1, max: 1 }
       ), selected => {
 
+        if (index >= 0) {
+          effect.player.bench[index].moveCardTo(this, effect.player.discard);
+        } else {
+          effect.player.active.moveCardTo(this, effect.player.discard);
+        }
+        
         const replacement = selected[0];
 
         if (index >= 0) {

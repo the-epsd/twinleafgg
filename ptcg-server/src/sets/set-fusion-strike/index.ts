@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { AccelgorArt, AdventurersDiscoveryArt, BasculinArt, BattleVIPPassArt, CookArt, CreamomaticArt, CroagunkArt, CrossSwitcherArt, DeoxysArt, DreepyArt, DunsparceArt, ElesasSparkleArt, FusionStrikeEnergyArt, GenesectVArt, GengarVArt, GengarVMAXArt, HeatmorArt, InteleonVArt, InteleonVMAXArt, JudgeArt, MeloettaArt, MewVArt, MewVMAXArt, OricorioArt, PowerTabletArt, SchoolboyArt, SchoolgirlArt, ShaunaArt, ShelmetArt, YveltalArt } from './card-images';
+import { GalarianLinoone } from './galarian-linoone';
 
 
 export const setFusionStrike: Card[] = [
@@ -16,6 +17,7 @@ export const setFusionStrike: Card[] = [
   new DunsparceArt(),
   new ElesasSparkleArt(),
   new FusionStrikeEnergyArt(),
+  new GalarianLinoone(),
   new GenesectVArt(),
   new GengarVArt(),
   new GengarVMAXArt(),

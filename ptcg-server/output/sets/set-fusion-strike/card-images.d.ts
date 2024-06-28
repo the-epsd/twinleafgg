@@ -11,6 +11,7 @@ import { Dunsparce } from './dunsparce';
 import { ElesasSparkle } from './elesas-sparkle';
 import { Croagunk } from './FST_165_Croagunk';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
+import { GalarianLinoone } from './galarian-linoone';
 import { GenesectV } from './genesect-v';
 import { GengarV } from './gengar-v';
 import { GengarVMAX } from './gengar-vmax';
@@ -66,6 +67,9 @@ export declare class ElesasSparkleArt extends ElesasSparkle {
     cardImage: string;
 }
 export declare class FusionStrikeEnergyArt extends FusionStrikeEnergy {
+    cardImage: string;
+}
+export declare class GalarianLinooneArt extends GalarianLinoone {
     cardImage: string;
 }
 export declare class GenesectVArt extends GenesectV {
