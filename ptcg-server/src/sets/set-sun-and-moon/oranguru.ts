@@ -53,13 +53,6 @@ export class Oranguru extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
       
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch (Exception) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
       while (player.hand.cards.length < 3) {
         player.deck.moveTo(player.hand, 1);
       }
