@@ -41,6 +41,11 @@ class CaptureEnergy extends energy_card_1.EnergyCard {
                 if (cards.length === 0) {
                     return state;
                 }
+                const openSlots = player.bench.filter(b => b.cards.length === 0);
+                cards.forEach((card, index) => {
+                    player.deck.moveCardTo(card, openSlots[index]);
+                    openSlots[index].pokemonPlayedTurn = state.turn;
+                });
             });
         }
         return state;

@@ -99,9 +99,6 @@ function handleSpecialConditions(store, state, effect) {
                 });
                 break;
             case card_types_1.SpecialCondition.ASLEEP:
-                if (effect.preventDefault) {
-                    break;
-                }
                 if (effect.asleepFlipResult === true) {
                     player.active.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
                     break;

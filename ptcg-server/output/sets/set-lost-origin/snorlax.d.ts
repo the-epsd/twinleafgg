@@ -29,5 +29,6 @@ export declare class Snorlax extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    THUMPING_SNORE_MARKER: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

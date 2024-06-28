@@ -30,6 +30,7 @@ export class BetweenTurnsEffect implements Effect {
   public preventDefault = false;
   public player: Player;
   public poisonDamage: number;
+  public flipsForSleep: number | undefined;
   public burnDamage: number;
   public burnFlipResult: boolean | undefined;
   public asleepFlipResult: boolean | undefined;
@@ -38,6 +39,7 @@ export class BetweenTurnsEffect implements Effect {
     this.player = player;
     this.poisonDamage = player.active.poisonDamage;
     this.burnDamage = player.active.burnDamage;
+    this.flipsForSleep = undefined;
     this.burnFlipResult = undefined;
     this.asleepFlipResult = undefined;
   }

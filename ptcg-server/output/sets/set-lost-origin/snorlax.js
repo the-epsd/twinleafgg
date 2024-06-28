@@ -34,26 +34,31 @@ class Snorlax extends pokemon_card_1.PokemonCard {
         this.setNumber = '143';
         this.name = 'Snorlax';
         this.fullName = 'Snorlax LOR';
+        this.THUMPING_SNORE_MARKER = 'THUMPING_SNORE_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_phase_effects_1.BetweenTurnsEffect && effect.player.active.cards.includes(this)) {
-            // we will handle sleep here
-            effect.preventDefault = true;
+            if (!effect.player.marker.hasMarker(this.THUMPING_SNORE_MARKER, this) ||
+                !effect.player.active.specialConditions.includes(card_types_1.SpecialCondition.ASLEEP)) {
+                return state;
+            }
             const player = effect.player;
+            store.log(state, game_1.GameLog.LOG_FLIP_ASLEEP, { name: player.name });
             store.prompt(state, [
                 new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP),
                 new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
             ], results => {
-                if (results.every(r => r)) {
-                    effect.player.active.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
+                const wakesUp = results.every(r => r);
+                if (wakesUp) {
+                    player.marker.removeMarker(this.THUMPING_SNORE_MARKER);
                 }
+                effect.asleepFlipResult = wakesUp;
             });
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.ASLEEP]);
-            specialConditionEffect.target = effect.player.active;
-            store.reduceEffect(state, specialConditionEffect);
+            effect.player.active.addSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
+            effect.player.marker.addMarker(this.THUMPING_SNORE_MARKER, this);
         }
         if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this)) {
             const pokemonCard = effect.target.getPokemonCard();
