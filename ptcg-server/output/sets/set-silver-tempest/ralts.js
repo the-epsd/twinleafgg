@@ -25,7 +25,7 @@ class Ralts extends pokemon_card_1.PokemonCard {
         this.setNumber = '67';
         this.name = 'Ralts';
         this.fullName = 'Ralts SIT';
-        this.MEAN_LOOK_MARKER = 'MEAN_LOOK_MARKER';
+        this.MEMORY_SKIP_MARKER = 'MEMORY_SKIP_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -39,7 +39,7 @@ class Ralts extends pokemon_card_1.PokemonCard {
             store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, [pokemonCard], { allowCancel: false }), result => {
                 selected = result;
             });
-            opponent.active.marker.addMarker(this.MEAN_LOOK_MARKER, this);
+            opponent.active.marker.addMarker(this.MEMORY_SKIP_MARKER, this);
             if (selected === null) {
                 return state;
             }
@@ -48,7 +48,7 @@ class Ralts extends pokemon_card_1.PokemonCard {
                 attack: selected.name
             });
             if (effect instanceof game_effects_1.AttackEffect && effect.attack === selected) {
-                if (effect.opponent.active.marker.hasMarker(this.MEAN_LOOK_MARKER, this)) {
+                if (effect.opponent.active.marker.hasMarker(this.MEMORY_SKIP_MARKER, this)) {
                     throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
                 }
             }

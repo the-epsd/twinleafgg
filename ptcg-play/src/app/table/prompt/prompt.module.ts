@@ -25,6 +25,7 @@ import { PromptPutDamageComponent } from './prompt-put-damage/prompt-put-damage.
 import { TranslateModule } from '@ngx-translate/core';
 import { PromptRemoveDamageComponent } from './prompt-remove-damage/prompt-remove-damage.component';
 import { PromptDiscardEnergyComponent } from './prompt-discard-energy/prompt-discard-energy.component';
+import { PromptConfirmCardsComponent } from './prompt-confirm-card/prompt-confirm-cards.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { PromptDiscardEnergyComponent } from './prompt-discard-energy/prompt-dis
     PromptPutDamageComponent,
     PromptRemoveDamageComponent,
     PromptDiscardEnergyComponent,
+    PromptConfirmCardsComponent,
   ],
   imports: [
     BoardModule,

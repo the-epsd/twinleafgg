@@ -33,10 +33,10 @@ export class PokemonData {
   private buildRow(cardLists: PokemonCardList[], player: PlayerType, slot: SlotType): PokemonRow {
     const target = { player, slot, index: 0 };
     const items = cardLists.map((cardList, index) => (
-      {cardList, selected: false, target: {...target, index}}
+      { cardList, selected: false, target: { ...target, index } }
     ));
     items.forEach(item => item.cardList.cards.forEach((card, index) => {
-      this.cardIndexes.push({card, index});
+      this.cardIndexes.push({ card, index });
     }));
     return { items, playerType: player };
   }
@@ -101,6 +101,19 @@ export class PokemonData {
         && t.index === item.target.index;
     });
   }
+
+  getItemByTarget(target: CardTarget): PokemonItem | undefined {
+    const rows = this.getRows();
+    for (const row of rows) {
+      for (const item of row.items) {
+        if (this.matchesTarget(item, [target])) {
+          return item;
+        }
+      }
+    }
+    return undefined;
+  }
+
 
   public getCardIndex(card: Card): number {
     const cardIndex = this.cardIndexes.find(c => c.card === card);

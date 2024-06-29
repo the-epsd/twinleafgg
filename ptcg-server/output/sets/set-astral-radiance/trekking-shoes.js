@@ -7,7 +7,7 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 const card_list_1 = require("../../game/store/state/card-list");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
-const __1 = require("../..");
+const confirm_cards_prompt_1 = require("../../game/store/prompts/confirm-cards-prompt");
 class TrekkingShoes extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -30,23 +30,21 @@ class TrekkingShoes extends trainer_card_1.TrainerCard {
             effect.preventDefault = true;
             const deckTop = new card_list_1.CardList();
             player.deck.moveTo(deckTop, 1);
-            return store.prompt(state, new __1.ShowCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop.cards // Fix error by changing toArray() to cards
-            ), selected => {
-                return store.prompt(state, new __1.ConfirmPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND), yes => {
-                    if (yes) {
-                        // Add card to hand
-                        deckTop.moveCardsTo(deckTop.cards, player.hand);
-                        player.supporter.moveCardTo(this, player.discard);
-                    }
-                    else {
-                        // Discard card
-                        deckTop.moveTo(player.discard);
-                        // Draw a card
-                        player.deck.moveTo(player.hand, 1);
-                        player.supporter.moveCardTo(this, player.discard);
-                    }
-                    return state;
-                });
+            return store.prompt(state, new confirm_cards_prompt_1.ConfirmCardsPrompt(player.id, game_message_1.GameMessage.TREKKING_SHOES, deckTop.cards, // Fix error by changing toArray() to cards
+            { allowCancel: true }), selected => {
+                if (selected !== null) {
+                    // Add card to hand
+                    deckTop.moveCardsTo(deckTop.cards, player.hand);
+                    player.supporter.moveCardTo(this, player.discard);
+                }
+                else {
+                    // Discard card
+                    deckTop.moveTo(player.discard);
+                    // Draw a card
+                    player.deck.moveTo(player.hand, 1);
+                    player.supporter.moveCardTo(this, player.discard);
+                }
+                return state;
             });
         }
         return state;

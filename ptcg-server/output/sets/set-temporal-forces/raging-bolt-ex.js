@@ -6,7 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_message_1 = require("../../game/game-message");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const discard_energy_prompt_1 = require("../../game/store/prompts/discard-energy-prompt");
 class RagingBoltex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -27,7 +27,7 @@ class RagingBoltex extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Bellowing Thunder',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.FIGHTING],
+                cost: [],
                 damage: 70,
                 damageCalculation: 'x',
                 text: 'You may discard any amount of Basic Energy from your Pokémon. This attack does 70 damage for each card you discarded in this way.'
@@ -51,25 +51,28 @@ class RagingBoltex extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 6, allowCancel: true }), targets => {
-                targets.forEach(target => {
-                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, target, // Card source is target Pokemon
-                    { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, allowCancel: true }), selected => {
-                        const cards = selected || [];
-                        if (cards.length > 0) {
-                            let totalDiscarded = 0;
-                            const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
-                            discardEnergy.target = target;
-                            totalDiscarded += discardEnergy.cards.length;
-                            store.reduceEffect(state, discardEnergy);
-                            console.log('Total discarded:' + totalDiscarded);
-                            effect.damage += totalDiscarded * 70;
-                            console.log('Total Damage: ' + effect.damage);
-                            return state;
-                        }
-                    });
-                });
-                effect.damage -= 70;
+            // return store.prompt(state, new ChoosePokemonPrompt(
+            //   player.id,
+            //   GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+            //   PlayerType.BOTTOM_PLAYER,
+            //   [SlotType.ACTIVE, SlotType.BENCH],
+            //   { min: 1, max: 6, allowCancel: true }
+            // ), targets => {
+            //   targets.forEach(target => {
+            return store.prompt(state, new discard_energy_prompt_1.DiscardEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], // Card source is target Pokemon
+            { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, allowCancel: false }), transfers => {
+                if (transfers === null) {
+                    return;
+                }
+                for (const transfer of transfers) {
+                    let totalDiscarded = 0;
+                    const source = game_1.StateUtils.getTarget(state, player, transfer.from);
+                    const target = player.discard;
+                    source.moveCardTo(transfer.card, target);
+                    totalDiscarded = transfers.length;
+                    effect.damage = totalDiscarded * 70;
+                }
+                console.log('Total Damage: ' + effect.damage);
                 return state;
             });
         }
@@ -77,3 +80,12 @@ class RagingBoltex extends pokemon_card_1.PokemonCard {
     }
 }
 exports.RagingBoltex = RagingBoltex;
+// let totalDiscarded = 0;
+// const discardEnergy = new DiscardCardsEffect(effect, cards);
+// discardEnergy.target = target;
+// totalDiscarded += discardEnergy.cards.length;
+// store.reduceEffect(state, discardEnergy);
+// console.log('Total discarded:' + totalDiscarded);
+// effect.damage += totalDiscarded * 70;
+// console.log('Total Damage: ' + effect.damage);
+// return state;

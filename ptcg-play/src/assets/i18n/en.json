@@ -9,6 +9,7 @@
   "BUTTON_ALL": "All",
   "BUTTON_CANCEL": "Cancel",
   "BUTTON_NO": "No",
+  "BUTTON_YES": "Yes",
   "BUTTON_CHOOSE": "Choose",
   "BUTTON_CLEAR_FILTER": "Clear filter",
   "BUTTON_CLOSE": "Close",
@@ -446,7 +447,8 @@
     "MULLIGAN_CARDS": "Draw {{value}} card(s)",
     "DRAW": "Draw",
     "CARD": "Card",
-    "CARDS": "Cards"
+    "CARDS": "Cards",
+    "TREKKING_SHOES": "Would you like to put this card into your hand?"
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.",
@@ -473,7 +475,7 @@
     "LOG_PLAYER_NO_CARDS_IN_DECK": "{{name}} has no more cards in their deck.",
     "LOG_PLAYER_NO_PRIZE_CARD": "{{name}} has no more Prize cards left.",
     "LOG_PLAYER_PLAYS_BASIC_POKEMON": "{{name}} puts {{card}} on their Bench.",
-    "LOG_PLAYER_PLACES_DAMAGE_COUNTERS": "{{ name }} places {{ damage }} on {{ target }} with {{ effect }}.", 
+    "LOG_PLAYER_PLACES_DAMAGE_COUNTERS": "{{ name }} places {{ damage }} on {{ target }} with {{ effect }}.",
     "LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD": "{{name}} returns {{card}} from their Discard Pile into their Deck.",
     "LOG_PLAYER_PLAYS_ITEM": "{{name}} plays {{card}}.",
     "LOG_PLAYER_PLAYS_STADIUM": "{{name}} puts {{card}} in play.",

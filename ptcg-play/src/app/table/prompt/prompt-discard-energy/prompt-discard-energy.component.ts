@@ -1,15 +1,17 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { Card, CardTarget, FilterType, MoveEnergyPrompt, PokemonCardList } from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { PokemonData, PokemonItem } from '../choose-pokemons-pane/pokemon-data';
+import { CardsContainerComponent } from '../cards-container/cards-container.component';
 
 interface DiscardEnergyResult {
   from: PokemonItem;
-  to: PokemonItem;
   card: Card;
+  container: CardsContainerComponent;
 }
+
 
 @Component({
   selector: 'ptcg-prompt-discard-energy',
@@ -55,13 +57,16 @@ export class PromptDiscardEnergyComponent implements OnChanges {
   public confirm() {
     const gameId = this.gameState.gameId;
     const id = this.promptId;
-    const results = this.results.map(r => ({
-      from: r.from.target,
-      to: r.to.target,
-      index: this.pokemonData.getCardIndex(r.card)
+    const results = this.results.map(result => ({
+      from: result.from.target,
+      index: result.from.cardList.cards.indexOf(result.card),
+      container: result.container
     }));
+
     this.gameService.resolvePrompt(gameId, id, results);
   }
+
+
 
   public onCardClick(item: PokemonItem) {
     if (this.pokemonData.matchesTarget(item, this.blockedFrom)) {
@@ -73,71 +78,108 @@ export class PromptDiscardEnergyComponent implements OnChanges {
     this.blocked = this.buildBlocked(item);
   }
 
-  public onCardDrop([item, card]: [PokemonItem, Card]) {
-    if (item === this.selectedItem) {
-      return;
+  // Assuming you have a reference to the ptcg-cards-container component
+  @ViewChild('cardsContainer') cardsContainer: CardsContainerComponent;
+
+  public onCardDrop(event: [PokemonItem, Card]) {
+    const [item, card] = event;
+    const index = item.cardList.cards.indexOf(card);
+    if (index !== -1) {
+      if (this.selectedItem) {
+        // Move the card from the previously selected Pokemon
+        this.moveCard(this.selectedItem, card);
+        const result: DiscardEnergyResult = {
+          from: this.selectedItem,
+          card: card,
+          container: this.cardsContainer
+        };
+        this.appendMoveResult(result);
+      }
+
+      // Select the new Pokemon and move the card
+      this.pokemonData.unselectAll();
+      item.selected = true;
+      this.selectedItem = item;
+      this.moveCard(item, card);
+      const newResult: DiscardEnergyResult = {
+        from: item,
+        card: card,
+        container: this.cardsContainer
+      };
+      this.appendMoveResult(newResult);
+      this.blocked = this.buildBlocked(item);
     }
-    if (this.pokemonData.matchesTarget(item, this.blockedTo)) {
-      return;
+  }
+
+
+  public onCardsDropped(indices: number[]) {
+    if (this.selectedItem) {
+      const cards = indices.map(index => this.selectedItem.cardList.cards[index]);
+      this.results = []; // Initialize the results array
+      cards.forEach(card => {
+        const result: DiscardEnergyResult = {
+          from: this.selectedItem,
+          card: card,
+          container: this.cardsContainer
+        };
+        this.appendMoveResult(result); // Add the result to the results array
+      });
+      this.updateIsInvalid(this.results);
     }
-    const index = this.selectedItem.cardList.cards.indexOf(card);
-    if (index === -1) {
-      return;
-    }
-    const result: DiscardEnergyResult = {
-      from: this.selectedItem,
-      to: item,
-      card
-    };
-    this.moveCard(result.from, result.to, card);
-    this.appendMoveResult(result);
-    this.updateIsInvalid(this.results);
   }
 
   public reset() {
     this.results.forEach(r => {
-      this.moveCard(r.to, r.from, r.card);
+      this.moveCardBack(r.from, r.card);
     });
     this.results = [];
     this.updateIsInvalid(this.results);
   }
 
-  private moveCard(from: PokemonItem, to: PokemonItem, card: Card) {
-    from.cardList = Object.assign(new PokemonCardList(), from.cardList);
-    from.cardList.cards = [...from.cardList.cards];
 
-    to.cardList = Object.assign(new PokemonCardList(), to.cardList);
-    to.cardList.cards = [...to.cardList.cards];
-
-    const index = from.cardList.cards.indexOf(card);
-    from.cardList.cards.splice(index, 1);
-    to.cardList.cards.push(card);
+  private moveCardBack(from: PokemonItem, card: Card) {
+    const index = this.results.findIndex(r => r.card === card && r.from === from && r.container === this.cardsContainer);
+    if (index !== -1) {
+      this.results.splice(index, 1);
+      from.cardList.cards.push(card);
+    }
   }
+
+
+  private moveCard(from: PokemonItem, card: Card) {
+    const index = from.cardList.cards.indexOf(card);
+    if (index !== -1) {
+      from.cardList.cards.splice(index, 1);
+    }
+  }
+
 
   private appendMoveResult(result: DiscardEnergyResult) {
-    const index = this.results.findIndex(r => r.card === result.card);
-    if (index === -1) {
-      this.results.push(result);
-      return;
+    const existingIndex = this.results.findIndex(r => r.card === result.card && r.from === result.from && r.container === result.container);
+    if (existingIndex !== -1) {
+      this.results.splice(existingIndex, 1);
     }
-    const prevResult = this.results[index];
-    if (prevResult.from === result.to) {
-      this.results.splice(index, 1);
-      return;
-    }
-    prevResult.to = result.to;
+    this.results.push(result);
+    this.updateIsInvalid(this.results);
   }
+
+
 
   private updateIsInvalid(results: DiscardEnergyResult[]) {
     let isInvalid = false;
-    if (this.min > results.length) {
-      isInvalid = true;
-    }
-    if (this.max !== undefined && this.max < results.length) {
-      isInvalid = true;
+    if (results.length === 0) {
+      isInvalid = this.min > 0;
+    } else {
+      if (this.min > results.length) {
+        isInvalid = true;
+      }
+      if (this.max !== undefined && this.max < results.length) {
+        isInvalid = true;
+      }
     }
     this.isInvalid = isInvalid;
   }
+
 
   private buildBlocked(item: PokemonItem) {
     const blocked: number[] = [];

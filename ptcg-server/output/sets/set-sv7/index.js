@@ -26,6 +26,7 @@ exports.setSV7 = [
     new card_images_1.FraxureArt,
     // new GenesectArt(),
     new card_images_1.GlisteningCrystalArt(),
+    new card_images_1.GreatTreeArt(),
     new card_images_1.HaxorusArt(),
     new card_images_1.HoothootArt(),
     new card_images_1.HorseaArt(),

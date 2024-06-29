@@ -10,7 +10,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class ReversalEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -46,12 +46,12 @@ export class ReversalEnergy extends EnergyCard {
         return state;
       }
 
-      if (!!attachedTo && attachedTo instanceof PokemonCard && player.getPrizeLeft() < opponent.getPrizeLeft() &&
-         attachedTo.stage !== Stage.BASIC && attachedTo.stage !== Stage.RESTORED &&
-         !attachedTo.cardTag.includes(CardTag.POKEMON_V || CardTag.POKEMON_ex || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.RADIANT)) {
-        effect.energyMap.push({ card: this, provides: [ CardType.ANY, CardType.ANY, CardType.ANY ] });
+      if (!!attachedTo && attachedTo instanceof PokemonCard && player.getPrizeLeft() > opponent.getPrizeLeft() &&
+        attachedTo.stage !== Stage.BASIC && attachedTo.stage !== Stage.RESTORED &&
+        !attachedTo.cardTag.includes(CardTag.POKEMON_V || CardTag.POKEMON_ex || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.RADIANT)) {
+        effect.energyMap.push({ card: this, provides: [CardType.ANY, CardType.ANY, CardType.ANY] });
       } else {
-        effect.energyMap.push({ card: this, provides: [ CardType.COLORLESS ] });
+        effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
       }
       return state;
     }

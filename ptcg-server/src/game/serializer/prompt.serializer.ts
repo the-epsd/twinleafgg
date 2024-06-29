@@ -22,6 +22,7 @@ import { ShuffleDeckPrompt } from '../store/prompts/shuffle-prompt';
 import { ShuffleHandPrompt } from '../store/prompts/shuffle-hand-prompt';
 import { RemoveDamagePrompt } from '../store/prompts/remove-damage-prompt';
 import { DiscardEnergyPrompt } from '../store/prompts/discard-energy-prompt';
+import { ConfirmCardsPrompt } from '../store/prompts/confirm-cards-prompt';
 
 export class PromptSerializer implements Serializer<Prompt<any>> {
 
@@ -49,9 +50,10 @@ export class PromptSerializer implements Serializer<Prompt<any>> {
     { classValue: ShuffleHandPrompt, type: 'ShuffleHandPrompt' },
     { classValue: RemoveDamagePrompt, type: 'RemoveDamagePrompt' },
     { classValue: DiscardEnergyPrompt, type: 'DiscardEnergyPrompt' },
+    { classValue: ConfirmCardsPrompt, type: 'ConfirmCardsPrompt' },
   ];
 
-  constructor () {
+  constructor() {
     this.types = this.rows.map(p => p.type);
     this.classes = this.rows.map(p => p.classValue);
   }

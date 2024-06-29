@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AbsolArt, AreaZeroUnderdepthsArt, AxewArt, BindingMochiArt, BloodmoonUrsalunaArt, BriarArt, CassiopeiaArt, ColresssObsessionArt, CopperajahArt, CresseliaArt, CufantArt, DangerousLaserArt, DartrixArt, DecidueyeArt, DusclopsArt, DusknoirArt, DuskullArt, FanRotomArt, FezandipitiexArt, FraxureArt, GlisteningCrystalArt, HaxorusArt, HoothootArt, HorseaArt, HoundoomArt, HoundourArt, JaninesSecretTechniqueArt, KingdraexArt, KyuremArt, MunkidoriexArt, NeutralCenterArt, NightTimeAcademyArt, NightlyStretcherArt, NoctowlArt, OkidogiexArt, PecharuntexArt, PokeVitalAArt, PowerHourglassArt, RevavroomexArt, RowlettArt, SeadraArt, SlitherWingArt, TapuBuluArt, TerapagosexArt, XerosicsSchemeArt, ZoroarkArt, ZoruaArt } from './card-images';
+import { AbsolArt, AreaZeroUnderdepthsArt, AxewArt, BindingMochiArt, BloodmoonUrsalunaArt, BriarArt, CassiopeiaArt, ColresssObsessionArt, CopperajahArt, CresseliaArt, CufantArt, DangerousLaserArt, DartrixArt, DecidueyeArt, DusclopsArt, DusknoirArt, DuskullArt, FanRotomArt, FezandipitiexArt, FraxureArt, GlisteningCrystalArt, GreatTreeArt, HaxorusArt, HoothootArt, HorseaArt, HoundoomArt, HoundourArt, JaninesSecretTechniqueArt, KingdraexArt, KyuremArt, MunkidoriexArt, NeutralCenterArt, NightTimeAcademyArt, NightlyStretcherArt, NoctowlArt, OkidogiexArt, PecharuntexArt, PokeVitalAArt, PowerHourglassArt, RevavroomexArt, RowlettArt, SeadraArt, SlitherWingArt, TapuBuluArt, TerapagosexArt, XerosicsSchemeArt, ZoroarkArt, ZoruaArt } from './card-images';
 
 export const setSV7: Card[] = [
   new AbsolArt(),
@@ -25,6 +25,7 @@ export const setSV7: Card[] = [
   new FraxureArt,
   // new GenesectArt(),
   new GlisteningCrystalArt(),
+  new GreatTreeArt(),
   new HaxorusArt(),
   new HoothootArt(),
   new HorseaArt(),
