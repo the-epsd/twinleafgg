@@ -50,6 +50,7 @@ class LostVacuum extends trainer_card_1.TrainerCard {
             cards = player.hand.cards;
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
             // prepare card list without Junk Arm
             const handTemp = new game_1.CardList();
             handTemp.cards = player.hand.cards;
@@ -98,8 +99,8 @@ class LostVacuum extends trainer_card_1.TrainerCard {
                             }
                             // Discard Stadium
                             const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-                            const player = game_1.StateUtils.findOwner(state, cardList);
-                            cardList.moveTo(player.lostzone);
+                            const owner = game_1.StateUtils.findOwner(state, cardList);
+                            cardList.moveTo(owner.lostzone);
                             player.supporter.moveCardTo(this, player.discard);
                             return state;
                         }
@@ -121,8 +122,8 @@ class LostVacuum extends trainer_card_1.TrainerCard {
                 }
                 // Discard Stadium
                 const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-                const player = game_1.StateUtils.findOwner(state, cardList);
-                cardList.moveTo(player.lostzone);
+                const owner = game_1.StateUtils.findOwner(state, cardList);
+                cardList.moveTo(owner.lostzone);
                 player.supporter.moveCardTo(this, player.discard);
                 return state;
             }

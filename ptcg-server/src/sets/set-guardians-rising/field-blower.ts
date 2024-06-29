@@ -54,6 +54,7 @@ export class FieldBlower extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       if (pokemonsWithTool >= 1 && stadiumCard !== undefined) {
 
@@ -150,8 +151,8 @@ export class FieldBlower extends TrainerCard {
       } else if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
         // Discard Stadium
         const cardList = StateUtils.findCardList(state, stadiumCard);
-        const player = StateUtils.findOwner(state, cardList);
-        cardList.moveTo(player.discard);
+        const owner = StateUtils.findOwner(state, cardList);
+        cardList.moveTo(owner.discard);
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name });
         
         player.supporter.moveCardTo(this, player.discard);
