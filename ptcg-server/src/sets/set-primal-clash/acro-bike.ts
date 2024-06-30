@@ -1,13 +1,13 @@
-import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CardList } from '../../game/store/state/card-list';
-import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
+import { TrainerType } from '../../game/store/card/card-types';
+import { TrainerCard } from '../../game/store/card/trainer-card';
+import { Effect } from '../../game/store/effects/effect';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { CardList } from '../../game/store/state/card-list';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class AcroBike extends TrainerCard {
 
@@ -35,6 +35,8 @@ export class AcroBike extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 2);
 
@@ -47,6 +49,7 @@ export class AcroBike extends TrainerCard {
       ), selected => {
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.discard);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
       });
     }
 

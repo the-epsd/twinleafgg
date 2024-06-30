@@ -44,16 +44,7 @@ class Arcanine extends pokemon_card_1.PokemonCard {
             }
             const min = Math.min(2, energyInDiscardPile.length);
             const max = Math.min(2, energyInDiscardPile.length);
-            const blocked = [];
-            player.discard.cards.forEach((c, index) => {
-                if (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.provides.includes(card_types_1.CardType.FIRE)) {
-                    /**/
-                }
-                else {
-                    blocked.push(index);
-                }
-            });
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], {}, { allowCancel: false, min, max, blocked, sameTarget: true }), transfers => {
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min, max, sameTarget: true }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {
