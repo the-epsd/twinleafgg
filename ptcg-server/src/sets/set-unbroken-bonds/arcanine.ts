@@ -57,6 +57,15 @@ export class Arcanine extends PokemonCard {
       const min = Math.min(2, energyInDiscardPile.length);
       const max = Math.min(2, energyInDiscardPile.length);
       
+      const blocked: number[] = [];
+      player.discard.cards.forEach((c, index) => {
+        if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.FIRE)) {
+          /**/
+        } else {
+          blocked.push(index);
+        }
+      });
+      
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -64,7 +73,7 @@ export class Arcanine extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { allowCancel: false, min, max, sameTarget: true },
+        { allowCancel: false, min, max, blocked, sameTarget: true },
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
