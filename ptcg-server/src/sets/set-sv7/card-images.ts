@@ -28,6 +28,7 @@ import { Horsea } from './horsea';
 import { Houndoom } from './houndoom';
 import { Houndour } from './houndour';
 import { JaninesSecretTechnique } from './janines-secret-technique';
+import { Joltik } from './joltik';
 import { Kingdraex } from './kingdra-ex';
 import { Kyurem } from './kyurem';
 import { Munkidoriex } from './munkidori-ex';
@@ -168,6 +169,10 @@ export class HoundourArt extends Houndour {
 
 export class JaninesSecretTechniqueArt extends JaninesSecretTechnique {
   public cardImage = 'https://pokemonproxies.com/static/media/Janine\'s_Secret_Technique-060-6a.2bec4428050ea9899e49.png';
+}
+
+export class JoltikArt extends Joltik {
+  public cardImage = 'https://pokemonproxies.com/static/media/Joltik-032-7i.72977d64e8063deef95c.png';
 }
 
 export class KingdraexArt extends Kingdraex {
