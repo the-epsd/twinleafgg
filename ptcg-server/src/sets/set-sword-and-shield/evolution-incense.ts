@@ -22,6 +22,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
     // eslint-disable-next-line no-empty
@@ -51,6 +53,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       cards
     ), () => next());
   }
+
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });

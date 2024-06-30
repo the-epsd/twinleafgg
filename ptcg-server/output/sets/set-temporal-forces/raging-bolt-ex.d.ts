@@ -19,7 +19,7 @@ export declare class RagingBoltex extends PokemonCard {
         damageCalculation?: undefined;
     } | {
         name: string;
-        cost: never[];
+        cost: CardType[];
         damage: number;
         damageCalculation: string;
         text: string;

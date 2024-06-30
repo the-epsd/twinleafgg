@@ -32,6 +32,8 @@ export class PromptDiscardEnergyComponent implements OnChanges {
   public isInvalid = false;
   public blocked: number[] = [];
   public results: DiscardEnergyResult[] = [];
+  public selectedCardsByPokemon: Map<PokemonItem, Card[]> = new Map();
+  public currentPokemonCards: Card[] = [];
 
   private min: number;
   private max: number | undefined;
@@ -66,15 +68,24 @@ export class PromptDiscardEnergyComponent implements OnChanges {
     this.gameService.resolvePrompt(gameId, id, results);
   }
 
-
-
   public onCardClick(item: PokemonItem) {
     if (this.pokemonData.matchesTarget(item, this.blockedFrom)) {
       return;
     }
-    this.pokemonData.unselectAll();
-    item.selected = true;
+
+    // Deselect the previously selected item
+    if (this.selectedItem) {
+      this.selectedItem.selected = false;
+    }
+
+    // Select the new item
     this.selectedItem = item;
+    this.selectedItem.selected = true;
+
+    if (!this.selectedCardsByPokemon.has(item)) {
+      this.selectedCardsByPokemon.set(item, []);
+    }
+    this.currentPokemonCards = item.cardList.cards;
     this.blocked = this.buildBlocked(item);
   }
 
@@ -111,39 +122,32 @@ export class PromptDiscardEnergyComponent implements OnChanges {
     }
   }
 
+  public getAllCards(): Card[] {
+    return this.selectedItem ? this.selectedItem.cardList.cards : [];
+  }
 
   public onCardsDropped(indices: number[]) {
     if (this.selectedItem) {
-      const cards = indices.map(index => this.selectedItem.cardList.cards[index]);
-      this.results = []; // Initialize the results array
-      cards.forEach(card => {
-        const result: DiscardEnergyResult = {
-          from: this.selectedItem,
-          card: card,
-          container: this.cardsContainer
-        };
-        this.appendMoveResult(result); // Add the result to the results array
-      });
-      this.updateIsInvalid(this.results);
+      const allCards = this.getAllCards();
+      const selectedCards = indices.map(index => allCards[index]);
+      this.updateSelectedCards(this.selectedItem, selectedCards);
     }
   }
 
   public reset() {
-    this.results.forEach(r => {
-      this.moveCardBack(r.from, r.card);
-    });
+    this.selectedCardsByPokemon.clear();
     this.results = [];
     this.updateIsInvalid(this.results);
   }
 
 
-  private moveCardBack(from: PokemonItem, card: Card) {
-    const index = this.results.findIndex(r => r.card === card && r.from === from && r.container === this.cardsContainer);
-    if (index !== -1) {
-      this.results.splice(index, 1);
-      from.cardList.cards.push(card);
-    }
-  }
+  // private moveCardBack(from: PokemonItem, card: Card) {
+  //   const index = this.results.findIndex(r => r.card === card && r.from === from && r.container === this.cardsContainer);
+  //   if (index !== -1) {
+  //     this.results.splice(index, 1);
+  //     from.cardList.cards.push(card);
+  //   }
+  // }
 
 
   private moveCard(from: PokemonItem, card: Card) {
@@ -180,6 +184,45 @@ export class PromptDiscardEnergyComponent implements OnChanges {
     this.isInvalid = isInvalid;
   }
 
+  private updateSelectedCards(pokemonItem: PokemonItem, selectedCards: Card[]) {
+    this.selectedCardsByPokemon.set(pokemonItem, selectedCards);
+    this.updateResults();
+  }
+
+  private updateResults() {
+    this.results = [];
+    for (const [pokemonItem, cards] of this.selectedCardsByPokemon.entries()) {
+      cards.forEach(card => {
+        this.results.push({
+          from: pokemonItem,
+          card: card,
+          container: this.cardsContainer
+        });
+      });
+    }
+    this.updateIsInvalid(this.results);
+  }
+
+  public onCardMove(event: { card: Card, from: PokemonItem, to: PokemonItem }) {
+    const { card, from, to } = event;
+
+    // Remove the card from the 'from' Pokemon
+    const fromCards = this.selectedCardsByPokemon.get(from) || [];
+    const updatedFromCards = fromCards.filter(c => c !== card);
+    this.updateSelectedCards(from, updatedFromCards);
+
+    // Add the card to the 'to' Pokemon
+    const toCards = this.selectedCardsByPokemon.get(to) || [];
+    toCards.push(card);
+    this.updateSelectedCards(to, toCards);
+
+    // If the current selected item is involved, update currentPokemonCards
+    if (this.selectedItem === from || this.selectedItem === to) {
+      this.currentPokemonCards = this.selectedItem.cardList.cards.filter(c =>
+        !this.selectedCardsByPokemon.get(this.selectedItem).includes(c)
+      );
+    }
+  }
 
   private buildBlocked(item: PokemonItem) {
     const blocked: number[] = [];
@@ -217,6 +260,7 @@ export class PromptDiscardEnergyComponent implements OnChanges {
     return cards;
   }
 
+
   ngOnChanges() {
     if (this.prompt && this.gameState && !this.promptId) {
       const state = this.gameState.state;
@@ -238,7 +282,11 @@ export class PromptDiscardEnergyComponent implements OnChanges {
       this.min = prompt.options.min;
       this.max = prompt.options.max;
       this.updateIsInvalid(this.results);
+      this.pokemonData.getRows().forEach(row => {
+        row.items.forEach(item => {
+          item.selected = false;
+        });
+      });
     }
   }
-
 }
