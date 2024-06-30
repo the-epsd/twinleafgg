@@ -95,7 +95,6 @@ export function playCardReducer(store, state, action) {
                 }
                 return store.reduceEffect(state, effect);
             }
-            player.hand.moveCardTo(handCard, player.supporter);
         }
     }
     return state;
