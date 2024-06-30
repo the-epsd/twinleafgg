@@ -57,7 +57,7 @@ class GalarianWeezing extends pokemon_card_1.PokemonCard {
             }
             // Try reducing ability for opponent
             try {
-                const stub = new game_effects_1.PowerEffect(opponent, {
+                const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
                     powerType: pokemon_types_1.PowerType.ABILITY,
                     text: ''

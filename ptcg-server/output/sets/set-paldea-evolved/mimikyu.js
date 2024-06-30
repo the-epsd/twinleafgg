@@ -56,8 +56,12 @@ class Mimikyu extends pokemon_card_1.PokemonCard {
             if (sourceCard.tags.includes(card_types_1.CardTag.POKEMON_ex) || sourceCard.tags.includes(card_types_1.CardTag.POKEMON_V) || sourceCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || sourceCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR)) {
                 // Try to reduce PowerEffect, to check if something is blocking our ability
                 try {
-                    const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                    store.reduceEffect(state, powerEffect);
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: pokemon_types_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
                 }
                 catch (_a) {
                     return state;

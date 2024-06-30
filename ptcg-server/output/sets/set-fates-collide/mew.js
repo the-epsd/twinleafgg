@@ -88,8 +88,12 @@ class Mew extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             try {
-                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                state = store.reduceEffect(state, powerEffect);
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: pokemon_types_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
             }
             catch (_a) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);

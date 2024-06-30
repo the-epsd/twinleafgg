@@ -42,8 +42,12 @@ class Froslass extends game_1.PokemonCard {
             if (state.phase === state_1.GamePhase.BETWEEN_TURNS) {
                 const player = effect.player;
                 try {
-                    const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                    store.reduceEffect(state, powerEffect);
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: game_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
                 }
                 catch (_a) {
                     return state;

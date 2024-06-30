@@ -55,8 +55,12 @@ class Machamp extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = __1.StateUtils.getOpponent(state, effect.player);
             try {
-                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                store.reduceEffect(state, powerEffect);
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: __1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
             }
             catch (_a) {
                 return state;

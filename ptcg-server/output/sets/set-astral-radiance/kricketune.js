@@ -38,8 +38,12 @@ class Kricketune extends game_1.PokemonCard {
         if (effect instanceof check_effects_1.CheckHpEffect && effect.player.bench.some(b => b.cards.includes(this))) {
             const player = effect.player;
             try {
-                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                store.reduceEffect(state, powerEffect);
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
             }
             catch (_a) {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {

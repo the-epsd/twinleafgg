@@ -52,8 +52,12 @@ class Dipplin extends game_1.PokemonCard {
                     const dealDamage = new attack_effects_1.DealDamageEffect(effect, effect.damage);
                     state = store.reduceEffect(state, dealDamage);
                     try {
-                        const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                        store.reduceEffect(state, powerEffect);
+                        const stub = new game_effects_1.PowerEffect(player, {
+                            name: 'test',
+                            powerType: game_1.PowerType.ABILITY,
+                            text: ''
+                        }, this);
+                        store.reduceEffect(state, stub);
                     }
                     catch (_a) {
                         return state;

@@ -41,8 +41,12 @@ export class Kricketune extends PokemonCard {
       const player = effect.player;
       
       try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
+       const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
       } catch {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
           cardList.marker.removeMarker(this.SWELLING_TUNE_MARKER, this);
