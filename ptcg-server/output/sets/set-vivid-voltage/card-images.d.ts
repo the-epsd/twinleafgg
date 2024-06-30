@@ -9,6 +9,7 @@ import { Raikou } from './raikou';
 import { Snorlax } from './snorlax';
 import { StoneFightingEnergy } from './stone-fighting-energy';
 import { Magearna } from './VIV_128_Magearna';
+import { Zekrom } from './VIV_60_Zekrom';
 import { WashWaterEnergy } from './wash-water-energy';
 export declare class CharizardArt extends Charizard {
     cardImage: string;
@@ -44,5 +45,8 @@ export declare class StoneFightingEnergyArt extends StoneFightingEnergy {
     cardImage: string;
 }
 export declare class WashWaterEnergyArt extends WashWaterEnergy {
+    cardImage: string;
+}
+export declare class ZekromArt extends Zekrom {
     cardImage: string;
 }

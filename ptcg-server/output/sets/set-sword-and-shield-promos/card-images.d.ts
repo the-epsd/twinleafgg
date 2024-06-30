@@ -6,6 +6,7 @@ import { HisuianElectrodeV } from './hisuian-electrode-v';
 import { LeafeonVSTAR } from './leafeon-vstar';
 import { LucarioVSTAR } from './lucario-vstar';
 import { Manaphy } from './manaphy';
+import { Oricorio } from './oricorio';
 import { ProfessorBurnet } from './professor-burnett';
 import { Tepig } from './tepig';
 import { VenusaurV } from './venusaur-v';
@@ -29,6 +30,9 @@ export declare class LucarioVSTARArt extends LucarioVSTAR {
     cardImage: string;
 }
 export declare class ManaphyArt extends Manaphy {
+    cardImage: string;
+}
+export declare class OricorioArt extends Oricorio {
     cardImage: string;
 }
 export declare class ProfessorBurnettArt extends ProfessorBurnet {

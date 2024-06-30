@@ -39,6 +39,7 @@ export * from './set-fates-collide';
 export * from './set-generations';
 export * from './set-roaring-skies';
 export * from './set-steam-siege';
+export * from './set-x-and-y-promos';
 export * from './set-champions-path';
 export * from './set-burning-shadows';
 export * from './set-celestial-storm';

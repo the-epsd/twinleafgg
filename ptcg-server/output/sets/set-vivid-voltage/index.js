@@ -14,5 +14,6 @@ exports.setVividVoltage = [
     new card_images_1.RaikouArt(),
     new card_images_1.SnorlaxArt(),
     new card_images_1.StoneFightingEnergyArt(),
-    new card_images_1.WashWaterEnergyArt()
+    new card_images_1.WashWaterEnergyArt(),
+    new card_images_1.ZekromArt()
 ];

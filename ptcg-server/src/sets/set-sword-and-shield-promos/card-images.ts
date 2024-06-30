@@ -6,6 +6,7 @@ import { HisuianElectrodeV } from './hisuian-electrode-v';
 import { LeafeonVSTAR } from './leafeon-vstar';
 import { LucarioVSTAR } from './lucario-vstar';
 import { Manaphy } from './manaphy';
+import { Oricorio } from './oricorio';
 import { ProfessorBurnet } from './professor-burnett';
 import { Tepig } from './tepig';
 import { VenusaurV } from './venusaur-v';
@@ -41,6 +42,10 @@ export class LucarioVSTARArt extends LucarioVSTAR {
 
 export class ManaphyArt extends Manaphy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_275_R_EN_LG.png';
+}
+
+export class OricorioArt extends Oricorio {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_210_R_EN_LG.png';
 }
 
 export class ProfessorBurnettArt extends ProfessorBurnet {

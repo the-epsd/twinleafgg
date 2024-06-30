@@ -50,6 +50,7 @@ export * from './set-fates-collide';
 export * from './set-generations';
 export * from './set-roaring-skies';
 export * from './set-steam-siege';
+export * from './set-x-and-y-promos';
 //export
 
 

@@ -57,6 +57,7 @@ __exportStar(require("./set-fates-collide"), exports);
 __exportStar(require("./set-generations"), exports);
 __exportStar(require("./set-roaring-skies"), exports);
 __exportStar(require("./set-steam-siege"), exports);
+__exportStar(require("./set-x-and-y-promos"), exports);
 //export
 //SM Era
 __exportStar(require("./set-champions-path"), exports);
