@@ -23,6 +23,6 @@ export declare class Ralts extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly MEAN_LOOK_MARKER = "MEAN_LOOK_MARKER";
+    readonly MEMORY_SKIP_MARKER = "MEMORY_SKIP_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

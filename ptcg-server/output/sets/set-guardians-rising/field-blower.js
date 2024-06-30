@@ -44,6 +44,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
             }
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
             if (pokemonsWithTool >= 1 && stadiumCard !== undefined) {
                 const options = [
                     {
@@ -108,8 +109,8 @@ class FieldBlower extends trainer_card_1.TrainerCard {
             else if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
                 // Discard Stadium
                 const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-                const player = game_1.StateUtils.findOwner(state, cardList);
-                cardList.moveTo(player.discard);
+                const owner = game_1.StateUtils.findOwner(state, cardList);
+                cardList.moveTo(owner.discard);
                 store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name });
                 player.supporter.moveCardTo(this, player.discard);
                 return state;

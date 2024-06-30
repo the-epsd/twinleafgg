@@ -73,8 +73,12 @@ class GalarianObstagoon extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
             try {
-                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                store.reduceEffect(state, powerEffect);
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
             }
             catch (_a) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);

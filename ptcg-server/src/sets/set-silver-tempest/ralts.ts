@@ -18,11 +18,11 @@ export class Ralts extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Memory Skip',
-    cost: [ CardType.PSYCHIC ],
+    cost: [CardType.PSYCHIC],
     damage: 10,
     text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. During your opponent\'s next turn, that Pokémon can\'t use that attack.'
   }];
@@ -37,43 +37,43 @@ export class Ralts extends PokemonCard {
 
   public fullName: string = 'Ralts SIT';
 
-  public readonly MEAN_LOOK_MARKER = 'MEAN_LOOK_MARKER';
+  public readonly MEMORY_SKIP_MARKER = 'MEMORY_SKIP_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const pokemonCard = opponent.active.getPokemonCard();
-        
+
       if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
         return state;
       }
-        
+
       let selected: any;
       store.prompt(state, new ChooseAttackPrompt(
         player.id,
         GameMessage.CHOOSE_ATTACK_TO_COPY,
-        [ pokemonCard ],
+        [pokemonCard],
         { allowCancel: false }
       ), result => {
         selected = result;
       });
-      
-      opponent.active.marker.addMarker(this.MEAN_LOOK_MARKER, this);
-        
+
+      opponent.active.marker.addMarker(this.MEMORY_SKIP_MARKER, this);
+
       if (selected === null) {
         return state;
       }
-        
+
       store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
         name: player.name,
         attack: selected.name
       });
-      
+
       if (effect instanceof AttackEffect && effect.attack === selected) {
-        if (effect.opponent.active.marker.hasMarker(this.MEAN_LOOK_MARKER, this)) {
-      
+        if (effect.opponent.active.marker.hasMarker(this.MEMORY_SKIP_MARKER, this)) {
+
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
         }
       }
@@ -82,4 +82,3 @@ export class Ralts extends PokemonCard {
     return state;
   }
 }
-      

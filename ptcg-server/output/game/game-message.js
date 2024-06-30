@@ -159,6 +159,7 @@ var GameCardMessage;
     GameCardMessage["DRAW"] = "DRAW";
     GameCardMessage["CARD"] = "CARD";
     GameCardMessage["CARDS"] = "CARDS";
+    GameCardMessage["TREKKING_SHOES"] = "TREKKING_SHOES";
 })(GameCardMessage = exports.GameCardMessage || (exports.GameCardMessage = {}));
 var GameLog;
 (function (GameLog) {

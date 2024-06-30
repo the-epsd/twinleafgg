@@ -16,7 +16,7 @@ export class Cyclizar extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ ];
+  public retreat = [ CardType.COLORLESS ];
 
   public attacks = [
     {

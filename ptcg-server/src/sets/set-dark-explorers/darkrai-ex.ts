@@ -101,8 +101,12 @@ export class DarkraiEx extends PokemonCard {
       if (hasDarknessEnergy) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
-          const powerEffect = new PowerEffect(player, this.powers[0], this);
-          store.reduceEffect(state, powerEffect);
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
         } catch {
           return state;
         }

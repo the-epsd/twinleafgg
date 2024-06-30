@@ -21,6 +21,7 @@ import { Fezandipitiex } from './fezandipiti-ex';
 import { Fraxure } from './fraxure';
 import { Genesect } from './genesect';
 import { GlisteningCrystal } from './glistening-crystal';
+import { GreatTree } from './great-tree';
 import { Haxorus } from './haxorus';
 import { Hoothoot } from './hoothoot';
 import { Horsea } from './horsea';
@@ -115,6 +116,9 @@ export declare class GenesectArt extends Genesect {
     cardImage: string;
 }
 export declare class GlisteningCrystalArt extends GlisteningCrystal {
+    cardImage: string;
+}
+export declare class GreatTreeArt extends GreatTree {
     cardImage: string;
 }
 export declare class HaxorusArt extends Haxorus {

@@ -10,7 +10,7 @@ export declare class Cyclizar extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    retreat: never[];
+    retreat: CardType[];
     attacks: ({
         name: string;
         cost: CardType[];

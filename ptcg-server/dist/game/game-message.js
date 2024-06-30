@@ -156,6 +156,7 @@ export var GameCardMessage;
     GameCardMessage["DRAW"] = "DRAW";
     GameCardMessage["CARD"] = "CARD";
     GameCardMessage["CARDS"] = "CARDS";
+    GameCardMessage["TREKKING_SHOES"] = "TREKKING_SHOES";
 })(GameCardMessage || (GameCardMessage = {}));
 export var GameLog;
 (function (GameLog) {

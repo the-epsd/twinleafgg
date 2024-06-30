@@ -12,7 +12,7 @@ class Cyclizar extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.COLORLESS;
         this.hp = 120;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [];
+        this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
                 name: 'Ram',

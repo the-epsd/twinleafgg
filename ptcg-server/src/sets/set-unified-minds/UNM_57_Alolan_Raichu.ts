@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, ChooseCardsPrompt, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -43,7 +43,7 @@ export class AlolanRaichu extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         player.active, // Card source is target Pokemon
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
+        { superType: SuperType.ENERGY, provides: [CardType.LIGHTNING] },
         { allowCancel: false }
       ), selected => {
         const cards = selected || [];
@@ -72,7 +72,7 @@ export class AlolanRaichu extends PokemonCard {
                 store.reduceEffect(state, damageEffect);
               });
             });
-          })
+          });
         }
 
         return state;

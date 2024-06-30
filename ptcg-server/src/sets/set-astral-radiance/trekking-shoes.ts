@@ -7,7 +7,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CardList } from '../../game/store/state/card-list';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { ConfirmPrompt, ShowCardsPrompt } from '../..';
+import { ConfirmCardsPrompt } from '../../game/store/prompts/confirm-cards-prompt';
 
 export class TrekkingShoes extends TrainerCard {
 
@@ -42,34 +42,29 @@ export class TrekkingShoes extends TrainerCard {
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 1);
 
-      return store.prompt(state, new ShowCardsPrompt(
+      return store.prompt(state, new ConfirmCardsPrompt(
         player.id,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        deckTop.cards // Fix error by changing toArray() to cards
+        GameMessage.TREKKING_SHOES,
+        deckTop.cards, // Fix error by changing toArray() to cards
+        { allowCancel: true },
       ), selected => {
 
-        return store.prompt(state, new ConfirmPrompt(
-          player.id, 
-          GameMessage.CHOOSE_CARD_TO_HAND
-        ), yes => {
-          
-          if (yes) {
-            // Add card to hand
-            deckTop.moveCardsTo(deckTop.cards, player.hand);
+        if (selected !== null) {
+          // Add card to hand
+          deckTop.moveCardsTo(deckTop.cards, player.hand);
 
-            player.supporter.moveCardTo(this, player.discard);
-          } else {
-            // Discard card
-            deckTop.moveTo(player.discard);
+          player.supporter.moveCardTo(this, player.discard);
+        } else {
+          // Discard card
+          deckTop.moveTo(player.discard);
 
-            // Draw a card
+          // Draw a card
 
-            player.deck.moveTo(player.hand, 1);
+          player.deck.moveTo(player.hand, 1);
 
-            player.supporter.moveCardTo(this, player.discard);
-          }
-          return state;
-        });
+          player.supporter.moveCardTo(this, player.discard);
+        }
+        return state;
       });
     }
     return state;

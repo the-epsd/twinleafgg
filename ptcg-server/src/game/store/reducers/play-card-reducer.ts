@@ -1,6 +1,8 @@
 import { Action } from '../actions/action';
-import { AttachEnergyEffect, PlayPokemonEffect, PlayStadiumEffect,
-  PlaySupporterEffect, AttachPokemonToolEffect, PlayItemEffect } from '../effects/play-card-effects';
+import {
+  AttachEnergyEffect, PlayPokemonEffect, PlayStadiumEffect,
+  PlaySupporterEffect, AttachPokemonToolEffect, PlayItemEffect
+} from '../effects/play-card-effects';
 import { CardList } from '../state/card-list';
 import { EnergyCard } from '../card/energy-card';
 import { GameError } from '../../game-error';
@@ -113,6 +115,7 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
         }
         return store.reduceEffect(state, effect);
       }
+      player.hand.moveCardTo(handCard, player.supporter);
     }
 
   }

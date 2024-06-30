@@ -57,8 +57,12 @@ export class Feebas extends PokemonCard {
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
       } catch {
         return state;
       }
@@ -67,8 +71,12 @@ export class Feebas extends PokemonCard {
       if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
-          const powerEffect = new PowerEffect(player, this.powers[0], this);
-          store.reduceEffect(state, powerEffect);
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
         } catch {
           return state;
         }

@@ -18,7 +18,7 @@ class Miraidon extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Accelerating Peak',
+                name: 'Peak Acceleration',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 40,
                 text: 'Search your deck for up to 2 Basic Energy cards and attach them to your Future Pokémon in any way you like. Then, shuffle your deck.'

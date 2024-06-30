@@ -21,6 +21,7 @@ import { Fezandipitiex } from './fezandipiti-ex';
 import { Fraxure } from './fraxure';
 import { Genesect } from './genesect';
 import { GlisteningCrystal } from './glistening-crystal';
+import { GreatTree } from './great-tree';
 import { Haxorus } from './haxorus';
 import { Hoothoot } from './hoothoot';
 import { Horsea } from './horsea';
@@ -139,6 +140,10 @@ export class GenesectArt extends Genesect {
 
 export class GlisteningCrystalArt extends GlisteningCrystal {
   public cardImage = 'https://pokemonproxies.com/static/media/Sparkling_Crystal-094-7i.22d199d348f9a7578ee3.png';
+}
+
+export class GreatTreeArt extends GreatTree {
+  public cardImage = 'https://pokemonproxies.com/static/media/Great_Tree-101-7i.30a0a0139bc637f873c1.png';
 }
 
 export class HaxorusArt extends Haxorus {

@@ -103,8 +103,12 @@ export class EmpoleonV extends PokemonCard {
 
       // Try reducing ability for each player  
       try {
-        const playerPowerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, playerPowerEffect);
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
 
       } catch {
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);

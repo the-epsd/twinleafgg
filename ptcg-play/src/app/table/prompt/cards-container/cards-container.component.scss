@@ -11,12 +11,12 @@ $ptcg-cards-container-min-width: 3 * map-get($ptcg-size, card) + 4 * map-get($pa
 :host {
   display: block;
 
-  background: rgba( 26, 32, 44, 0.5 );
-  backdrop-filter: blur( 20px );
-  -webkit-backdrop-filter: blur( 20px );
+  background: rgba(26, 32, 44, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 10px;
-  
-  
+
+
 
   &:not(:last-child) {
     margin-bottom: map-get($padding, normal);

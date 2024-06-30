@@ -152,7 +152,8 @@ export declare enum GameCardMessage {
     MULLIGAN_CARDS = "MULLIGAN_CARDS",
     DRAW = "DRAW",
     CARD = "CARD",
-    CARDS = "CARDS"
+    CARDS = "CARDS",
+    TREKKING_SHOES = "TREKKING_SHOES"
 }
 export declare enum GameLog {
     LOG_BANNED_BY_ARBITER = "LOG_BANNED_BY_ARBITER",
@@ -302,6 +303,7 @@ export declare const GameMessage: {
     DRAW: GameCardMessage.DRAW;
     CARD: GameCardMessage.CARD;
     CARDS: GameCardMessage.CARDS;
+    TREKKING_SHOES: GameCardMessage.TREKKING_SHOES;
     ACTION_IN_PROGRESS: GameStoreMessage.ACTION_IN_PROGRESS;
     ALREADY_PLAYING: GameStoreMessage.ALREADY_PLAYING;
     BLOCKED_BY_ABILITY: GameStoreMessage.BLOCKED_BY_ABILITY;

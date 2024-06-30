@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setFusionStrike = void 0;
 const card_images_1 = require("./card-images");
+const galarian_linoone_1 = require("./galarian-linoone");
 exports.setFusionStrike = [
     new card_images_1.BasculinArt(),
     new card_images_1.BattleVIPPassArt(),
@@ -14,6 +15,7 @@ exports.setFusionStrike = [
     new card_images_1.DunsparceArt(),
     new card_images_1.ElesasSparkleArt(),
     new card_images_1.FusionStrikeEnergyArt(),
+    new galarian_linoone_1.GalarianLinoone(),
     new card_images_1.GenesectVArt(),
     new card_images_1.GengarVArt(),
     new card_images_1.GengarVMAXArt(),

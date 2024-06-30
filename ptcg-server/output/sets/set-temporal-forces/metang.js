@@ -61,24 +61,27 @@ class Metang extends pokemon_card_1.PokemonCard {
             });
             // If no energy cards were drawn, move all cards to deck & shuffle
             if (energyCardsDrawn.length == 0) {
-                store.prompt(state, [new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, temp.cards)], () => {
-                    temp.cards.forEach(card => {
-                        store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                            temp.applyOrder(order);
-                            temp.moveCardTo(card, deckBottom);
-                            deckBottom.applyOrder(order);
-                            deckBottom.moveTo(player.deck);
-                            player.marker.addMarker(this.METAL_MAKER_MARKER, this);
-                            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                                if (cardList.getPokemonCard() === this) {
-                                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
-                                }
-                            });
+                // store.prompt(state, [new ShowCardsPrompt(
+                //   player.id,
+                //   GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+                //   temp.cards
+                // )], () => {
+                temp.cards.forEach(card => {
+                    store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                        temp.applyOrder(order);
+                        temp.moveCardTo(card, deckBottom);
+                        deckBottom.applyOrder(order);
+                        deckBottom.moveTo(player.deck);
+                        player.marker.addMarker(this.METAL_MAKER_MARKER, this);
+                        player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                            if (cardList.getPokemonCard() === this) {
+                                cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                            }
                         });
-                        return state;
                     });
                     return state;
                 });
+                return state;
             }
             if (energyCardsDrawn.length >= 1) {
                 // Prompt to attach energy if any were drawn

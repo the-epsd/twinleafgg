@@ -11,6 +11,7 @@ import { Dunsparce } from './dunsparce';
 import { ElesasSparkle } from './elesas-sparkle';
 import { Croagunk } from './FST_165_Croagunk';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
+import { GalarianLinoone } from './galarian-linoone';
 import { GenesectV } from './genesect-v';
 import { GengarV } from './gengar-v';
 import { GengarVMAX } from './gengar-vmax';
@@ -80,6 +81,10 @@ export class ElesasSparkleArt extends ElesasSparkle {
 
 export class FusionStrikeEnergyArt extends FusionStrikeEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_244_R_EN_LG.png';
+}
+
+export class GalarianLinooneArt extends GalarianLinoone {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_160_R_EN.png';
 }
 
 export class GenesectVArt extends GenesectV {

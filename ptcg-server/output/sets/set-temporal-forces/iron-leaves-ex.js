@@ -55,8 +55,12 @@ class IronLeavesex extends pokemon_card_1.PokemonCard {
                 if (wantToUse) {
                     // Try to reduce PowerEffect, to check if something is blocking our ability
                     try {
-                        const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                        store.reduceEffect(state, powerEffect);
+                        const stub = new game_effects_1.PowerEffect(player, {
+                            name: 'test',
+                            powerType: game_1.PowerType.ABILITY,
+                            text: ''
+                        }, this);
+                        store.reduceEffect(state, stub);
                     }
                     catch (_a) {
                         return state;
