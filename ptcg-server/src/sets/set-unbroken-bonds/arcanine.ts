@@ -1,5 +1,5 @@
 import { AttachEnergyPrompt, EnergyCard, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
-import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { CardType, EnergyType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -59,7 +59,7 @@ export class Arcanine extends PokemonCard {
       
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
-        if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fire Energy') {
+        if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.FIRE)) {
           /**/
         } else {
           blocked.push(index);
@@ -72,7 +72,7 @@ export class Arcanine extends PokemonCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [ SlotType.BENCH ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+        { },
         { allowCancel: false, min, max, blocked, sameTarget: true },
       ), transfers => {
         transfers = transfers || [];
