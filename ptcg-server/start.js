@@ -54,7 +54,7 @@ cardManager.defineSet(sets.setFuriousFists);
 cardManager.defineSet(sets.setPhantomForces);
 cardManager.defineSet(sets.setBurningShadows);
 cardManager.defineSet(sets.setPrimalClash);
-
+cardManager.defineSet(sets.setXYPromos);
 cardManager.defineSet(sets.setRoaringSkies);
 cardManager.defineSet(sets.setAncientOrigins);
 cardManager.defineSet(sets.setBreakpoint);

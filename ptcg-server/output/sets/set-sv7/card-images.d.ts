@@ -28,6 +28,7 @@ import { Horsea } from './horsea';
 import { Houndoom } from './houndoom';
 import { Houndour } from './houndour';
 import { JaninesSecretTechnique } from './janines-secret-technique';
+import { Joltik } from './joltik';
 import { Kingdraex } from './kingdra-ex';
 import { Kyurem } from './kyurem';
 import { Munkidoriex } from './munkidori-ex';
@@ -137,6 +138,9 @@ export declare class HoundourArt extends Houndour {
     cardImage: string;
 }
 export declare class JaninesSecretTechniqueArt extends JaninesSecretTechnique {
+    cardImage: string;
+}
+export declare class JoltikArt extends Joltik {
     cardImage: string;
 }
 export declare class KingdraexArt extends Kingdraex {

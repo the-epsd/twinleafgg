@@ -1,115 +1,115 @@
- import { Card, CardTag, EnergyType, Format, PokemonCard, SuperType } from "ptcg-server";
+import { Card, CardTag, EnergyType, Format, PokemonCard, SuperType } from "ptcg-server";
 
 export class FormatValidator {
-  
+
   static getValidFormatsForCardList(cards: Card[]): Format[] {
-    
+
     if (!cards || cards.length === 0) {
       return [];
     }
-    
+
     let formats = [];
-    
+
     cards.filter(c => !!c && c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC).forEach(card => {
       formats.push(this.getValidFormats(card));
     });
-    
+
     let formatList = formats.reduce((a, b) => a.filter(c => b.includes(c)))
-    
+
     if (formatList.includes(Format.GLC)) {
-      
+
       // check for singleton violation
       const nonBasicEnergyCards = cards.filter(c => c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC);
-      
+
       const set = new Set(nonBasicEnergyCards.map(c => c.name));
-      
+
       if (set.size < nonBasicEnergyCards.length) {
-        formatList = formatList.filter(f => f !== Format.GLC);        
+        formatList = formatList.filter(f => f !== Format.GLC);
         return formatList;
       }
-      
+
       if ((set.has('Professor Sycamore') && set.has('Professor Juniper')) ||
-          (set.has('Professor Juniper') && set.has('Professor\'s Research')) ||
-          (set.has('Professor Sycamore') && set.has('Professor\'s Research')) ||
-          (set.has('Lysandre') && set.has('Boss\'s Orders'))) {
-            formatList = formatList.filter(f => f!== Format.GLC);
-        return formatList;        
+        (set.has('Professor Juniper') && set.has('Professor\'s Research')) ||
+        (set.has('Professor Sycamore') && set.has('Professor\'s Research')) ||
+        (set.has('Lysandre') && set.has('Boss\'s Orders'))) {
+        formatList = formatList.filter(f => f !== Format.GLC);
+        return formatList;
       }
-      
+
       // check for different type violation
       const pokemonCards = cards.filter(c => c.superType === SuperType.POKEMON);
-      
+
       const pokemonSet = new Set(pokemonCards.map(c => (<PokemonCard>c).cardType));
-      
+
       if (pokemonSet.size > 1) {
-        formatList = formatList.filter(f => f !== Format.GLC);        
-        return formatList;        
+        formatList = formatList.filter(f => f !== Format.GLC);
+        return formatList;
       }
     }
-    
+
     return formatList
   }
-  
+
   static getValidFormats(card: Card): Format[] {
     const formats = [Format.UNLIMITED];
-    
+
     [
-      Format.GLC, 
-      Format.EXPANDED, 
-      Format.STANDARD, 
+      Format.GLC,
+      Format.EXPANDED,
+      Format.STANDARD,
       Format.RETRO
     ].forEach(format => {
       this.isValid(card, format) ? formats.push(format) : null;
     });
-    
+
     return formats;
   }
-  
-  static isValid(card: Card, format: Format): boolean {    
-    
+
+  static isValid(card: Card, format: Format): boolean {
+
     if (card.superType === SuperType.ENERGY && (<any>card).energyType === EnergyType.BASIC) {
       return true;
     }
-    
+
     switch (format) {
       case Format.UNLIMITED:
         return true;
-        
+
       case Format.STANDARD:
-        var banList = BanLists[format];      
-        return card.regulationMark === 'F' || 
-               card.regulationMark === 'G' || 
-               card.regulationMark === 'H';
-               
+        var banList = BanLists[format];
+        return card.regulationMark === 'F' ||
+          card.regulationMark === 'G' ||
+          card.regulationMark === 'H';
+
       case Format.EXPANDED:
-        var banList = BanLists[format];        
+        var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
-        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && 
-               !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
-               
+        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') &&
+          !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
+
       case Format.GLC:
-        var banList = BanLists[format];        
+        var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
         return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
-               !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
-               !card.tags.some(t => [
-                CardTag.ACE_SPEC.toString(),
-                CardTag.POKEMON_EX.toString(),
-                CardTag.POKEMON_ex.toString(),
-                CardTag.POKEMON_V.toString(),
-                CardTag.POKEMON_VMAX.toString(),
-                CardTag.POKEMON_VSTAR.toString(),
-                CardTag.RADIANT.toString(),
-                CardTag.POKEMON_GX.toString()
-              ].includes(t));
-              
+          !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
+          !card.tags.some(t => [
+            CardTag.ACE_SPEC.toString(),
+            CardTag.POKEMON_EX.toString(),
+            CardTag.POKEMON_ex.toString(),
+            CardTag.POKEMON_V.toString(),
+            CardTag.POKEMON_VMAX.toString(),
+            CardTag.POKEMON_VSTAR.toString(),
+            CardTag.RADIANT.toString(),
+            CardTag.POKEMON_GX.toString()
+          ].includes(t));
+
       case Format.RETRO:
-        return card.set === 'BS' || 
-               card.set === 'JU' || 
-               card.set === 'FO' || 
-               card.set === 'PR';
+        return card.set === 'BS' ||
+          card.set === 'JU' ||
+          card.set === 'FO' ||
+          card.set === 'PR';
     }
-    
+
     if (banList.includes(`${card.name} ${card.set} ${card.setNumber}`)) {
       return false;
     }
@@ -134,10 +134,10 @@ export const BanLists: { [key: number]: string[] } = {
     'Archeops NVI 67',
     'Archeops DEX 110',
     'Chip-Chip Ice Axe UNB 165',
-    'Delinquent BKP 98', 
-    'Delinquent BKP 98a', 
-    'Delinquent BKP 98b', 
-    'Flabébé FLI 83', 
+    'Delinquent BKP 98',
+    'Delinquent BKP 98a',
+    'Delinquent BKP 98b',
+    'Flabébé FLI 83',
     'Forest of Giant Plants AOR 74',
     'Ghetsis PLF 101',
     'Ghetsis PLF 115',
@@ -259,6 +259,7 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'FCO': new Date('2016-05-02'),
   'STS': new Date('2016-08-03'),
   'EVO': new Date('2016-11-02'),
+  'XYP': new Date('2016-03-19'),
   // SUN & MOON
   'SUM': new Date('2017-02-03'),
   'SMP': new Date('2017-02-03'),
