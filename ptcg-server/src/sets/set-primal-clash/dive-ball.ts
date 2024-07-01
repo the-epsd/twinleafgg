@@ -19,6 +19,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
@@ -36,6 +39,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  
   cards.forEach((card, index) => {
     player.deck.moveCardTo(card, player.hand);
   });

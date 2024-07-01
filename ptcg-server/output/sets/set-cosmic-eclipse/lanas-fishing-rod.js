@@ -28,6 +28,7 @@ function* playCard(next, store, state, self, effect) {
     });
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
+    player.discard.moveCardTo(effect.trainerCard, player.hand);
     const min = Math.min(2, pokemonAndTools);
     let cards = [];
     yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min, max: 2, allowCancel: false, blocked }), selected => {

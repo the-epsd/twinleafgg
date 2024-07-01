@@ -23,6 +23,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Speical
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   const min = Math.min(2, specialEnergyCards);
   

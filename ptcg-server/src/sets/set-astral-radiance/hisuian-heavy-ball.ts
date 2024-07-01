@@ -46,6 +46,7 @@ export class HisuianHeavyBall extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       player.prizes.map(p => p.cards[0]).forEach((c, index) => {
         if (!(c instanceof PokemonCard && c.stage === Stage.BASIC) && !blocked.includes(index)) {

@@ -33,6 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: LanasFi
   
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
+  player.discard.moveCardTo(effect.trainerCard, player.hand);
 
   const min = Math.min(2, pokemonAndTools);
   

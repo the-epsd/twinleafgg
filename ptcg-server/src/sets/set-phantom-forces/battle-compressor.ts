@@ -18,6 +18,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);  
+  
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
@@ -30,7 +33,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   player.deck.moveCardsTo(cards, player.discard);
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);  
+  
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

@@ -23,6 +23,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   const deckTop = new CardList();
   player.deck.moveTo(deckTop, 7);

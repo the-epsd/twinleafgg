@@ -19,6 +19,7 @@ function* playCard(next, store, state, effect) {
     }
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     const deckTop = new card_list_1.CardList();
     player.deck.moveTo(deckTop, 7);
     let cards = [];

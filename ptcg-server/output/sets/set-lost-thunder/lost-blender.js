@@ -29,6 +29,7 @@ class LostBlender extends trainer_card_1.TrainerCard {
             cards = player.hand.cards;
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
             // prepare card list without Junk Arm
             const handTemp = new game_1.CardList();
             handTemp.cards = player.hand.cards;
@@ -42,6 +43,7 @@ class LostBlender extends trainer_card_1.TrainerCard {
                     store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, { name: player.name, card: card.name });
                 });
                 player.deck.moveTo(player.hand, 1);
+                player.supporter.moveCardTo(this, player.discard);
                 store.log(state, game_1.GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
             });
             return state;

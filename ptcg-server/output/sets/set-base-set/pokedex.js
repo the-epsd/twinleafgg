@@ -26,6 +26,7 @@ class Pokedex extends trainer_card_1.TrainerCard {
             player.deck.moveCardsTo(cards, deckTop);
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
             return store.prompt(state, new game_1.OrderCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARDS_ORDER, deckTop, { allowCancel: false }), (rearrangedCards) => {
                 if (rearrangedCards === null) {
                     return state;

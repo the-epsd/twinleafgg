@@ -31,6 +31,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);    
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
