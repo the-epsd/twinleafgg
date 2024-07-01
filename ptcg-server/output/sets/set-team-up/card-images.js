@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.ViridianForestArt = exports.PokemonCommunicationArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.DragoniteArt = exports.BronzorArt = exports.AlolanMukArt = void 0;
+exports.ZapdosArt = exports.ViridianForestArt = exports.PokemonCommunicationArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.DragoniteArt = exports.BronzorArt = exports.AlolanMukArt = void 0;
 const alolan_muk_1 = require("./alolan-muk");
 const bronzor_1 = require("./bronzor");
 const dragonite_1 = require("./dragonite");
@@ -8,6 +8,7 @@ const hitmonchan_1 = require("./hitmonchan");
 const hitmonlee_1 = require("./hitmonlee");
 const jirachi_1 = require("./jirachi");
 const lapras_1 = require("./lapras");
+const mareep_1 = require("./mareep");
 const pokemon_communication_1 = require("./pokemon-communication");
 const viridian_forest_1 = require("./viridian-forest");
 const zapdos_1 = require("./zapdos");
@@ -60,6 +61,13 @@ class LaprasArt extends lapras_1.Lapras {
     }
 }
 exports.LaprasArt = LaprasArt;
+class MareepArt extends mareep_1.Mareep {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_041_R_EN.png';
+    }
+}
+exports.MareepArt = MareepArt;
 class PokemonCommunicationArt extends pokemon_communication_1.PokemonCommunication {
     constructor() {
         super(...arguments);

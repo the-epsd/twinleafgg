@@ -5,6 +5,7 @@ import { Hitmonchan } from './hitmonchan';
 import { Hitmonlee } from './hitmonlee';
 import { Jirachi } from './jirachi';
 import { Lapras } from './lapras';
+import { Mareep } from './mareep';
 import { PokemonCommunication } from './pokemon-communication';
 import { ViridianForest } from './viridian-forest';
 import { Zapdos } from './zapdos';
@@ -35,6 +36,10 @@ export class JirachiArt extends Jirachi {
 
 export class LaprasArt extends Lapras {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_031_R_EN.png';
+}
+
+export class MareepArt extends Mareep {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_041_R_EN.png';
 }
 
 export class PokemonCommunicationArt extends PokemonCommunication {
