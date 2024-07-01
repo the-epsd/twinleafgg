@@ -44,6 +44,7 @@ class Arcanine extends pokemon_card_1.PokemonCard {
             }
             const min = Math.min(2, energyInDiscardPile.length);
             const max = Math.min(2, energyInDiscardPile.length);
+
             state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min, max, sameTarget: true }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
