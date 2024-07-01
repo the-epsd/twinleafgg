@@ -14,12 +14,13 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const playerHasBench = player.bench.some(b => b.cards.length > 0);
   const opponentHasBench = opponent.bench.some(b => b.cards.length > 0);
 
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
-
   if (!playerHasBench && !opponentHasBench) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
+  
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   let targets: PokemonCardList[] = [];
   if (opponentHasBench) {

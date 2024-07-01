@@ -57,7 +57,7 @@ export class Revive extends TrainerCard {
           slot.damage = damage;
           slot.pokemonPlayedTurn = state.turn;
 
-          player.hand.moveCardTo(effect.trainerCard, player.discard);
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
           
           return state;
         }

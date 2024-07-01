@@ -28,6 +28,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   let targets: PokemonCardList[] = [];
   yield store.prompt(state, new ChoosePokemonPrompt(
@@ -60,7 +61,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   if (cards.length > 0) {
     // Discard trainer only when user selected a Pokemon
-    player.hand.moveCardTo(effect.trainerCard, player.discard);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     // Discard selected special energy card
     target.moveCardsTo(cards, opponent.discard);
   }

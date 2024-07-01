@@ -3,7 +3,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect, CheckPokemonTypeEffect,
   CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { PlayerType } from '../../game/store/actions/play-card-action';
@@ -103,7 +103,7 @@ export class StrongEnergy extends EnergyCard {
       return state;
     }
 
-    if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
+    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) && effect.source.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       

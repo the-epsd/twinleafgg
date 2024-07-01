@@ -14,6 +14,8 @@ function* playCard(next, store, state, effect) {
     if (!playerHasBench && !opponentHasBench) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    effect.preventDefault = true;
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     let targets = [];
     if (opponentHasBench) {
         yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(opponent.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), results => {
@@ -35,6 +37,7 @@ function* playCard(next, store, state, effect) {
             player.switchPokemon(targets[0]);
         }
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class EscapeRope extends trainer_card_1.TrainerCard {

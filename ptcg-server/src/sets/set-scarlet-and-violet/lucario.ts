@@ -19,7 +19,7 @@ export class Lucario extends PokemonCard {
   public attacks = [
     {
       name: 'Avenging Knuckle',
-      cost: [CardType.FIRE, CardType.WATER],
+      cost: [CardType.FIGHTING],
       damage: 30,
       damageCalculation: '+',      
       text: 'If any of your [F] Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 120 more damage.'

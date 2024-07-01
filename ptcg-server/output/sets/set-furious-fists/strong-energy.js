@@ -86,7 +86,7 @@ class StrongEnergy extends energy_card_1.EnergyCard {
             });
             return state;
         }
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
+        if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) && effect.source.cards.includes(this)) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             if (effect.target !== opponent.active) {
