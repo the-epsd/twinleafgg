@@ -1,4 +1,4 @@
-import { PokemonCard, CardType, Stage, PowerType, State, StoreLike } from '../../game';
+import { CardType, PokemonCard, PowerType, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class WyrdeerV extends PokemonCard {
     cardType: CardType;
@@ -25,5 +25,6 @@ export declare class WyrdeerV extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    ABILITY_USED_MARKER: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

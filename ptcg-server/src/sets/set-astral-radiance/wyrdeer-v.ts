@@ -1,7 +1,8 @@
-import { PokemonCard, CardType, Stage, PowerType, Card, CardTarget, GameMessage, MoveEnergyPrompt, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { Card, CardType, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 
@@ -41,6 +42,8 @@ export class WyrdeerV extends PokemonCard {
   public name: string = 'Wyrdeer V';
 
   public fullName: string = 'Wyrdeer V ASR';
+  
+  public ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     
@@ -48,71 +51,55 @@ export class WyrdeerV extends PokemonCard {
       this.movedToActiveThisTurn = false;
     }
 
+    const cardList = StateUtils.findCardList(state, this);
+    const owner = StateUtils.findOwner(state, cardList);
+    
     const player = state.players[state.activePlayer];
-
-    if (this.movedToActiveThisTurn == true) {
-
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
-        store.reduceEffect(state, checkProvidedEnergy);
-        const blockedCards: Card[] = [];
-
-        checkProvidedEnergy.energyMap.forEach(em => {
-          if (!em.provides.includes(CardType.ANY)) {
-            blockedCards.push(em.card);
-          }
-        });
-
-        const blocked: number[] = [];
-        blockedCards.forEach(bc => {
-          const index = cardList.cards.indexOf(bc);
-          if (index !== -1 && !blocked.includes(index)) {
-            blocked.push(index);
-          }
-        });
-
-        if (blocked.length !== 0) {
-          blockedMap.push({ source: target, blocked });
-        }
-      });
-
-      return store.prompt(state, new MoveEnergyPrompt(
-        player.id, 
-        GameMessage.MOVE_ENERGY_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH], // Only allow moving to active
-        { superType: SuperType.ENERGY }, 
-        { allowCancel: true, blockedMap }
-      ), transfers => {
-
-        if (!transfers) {
-          return;
-        }
-
-        for (const transfer of transfers) {
-      
-          // Can only move energy to the active Pokemon
-          const target = player.active;  
-          const source = StateUtils.getTarget(state, player, transfer.from);
-
-          source.moveCardTo(transfer.card, target);
+    
+    if (effect instanceof EndTurnEffect && effect.player === owner) {
+      player.marker.removeMarker(this.ABILITY_USED_MARKER, this);
+    }
+    
+    if (player === owner && !player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
+      if (this.movedToActiveThisTurn == true) {
+        player.marker.addMarker(this.ABILITY_USED_MARKER, this);
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
           return state;
         }
-        return state;
-      });
+
+        return store.prompt(state, new MoveEnergyPrompt(
+          player.id, 
+          GameMessage.MOVE_ENERGY_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH], // Only allow moving to active
+          { superType: SuperType.ENERGY }, 
+          { allowCancel: true }
+        ), transfers => {
+
+          if (!transfers) {
+            return;
+          }
+
+          for (const transfer of transfers) {
+        
+            // Can only move energy to the active Pokemon
+            const target = player.active;  
+            const source = StateUtils.getTarget(state, player, transfer.from);
+
+            source.moveCardTo(transfer.card, target);
+            return state;
+          }
+          return state;
+        });
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

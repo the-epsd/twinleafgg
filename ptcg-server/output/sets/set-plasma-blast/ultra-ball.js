@@ -24,6 +24,7 @@ function* playCard(next, store, state, self, effect) {
     }
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     // prepare card list without Junk Arm
     const handTemp = new card_list_1.CardList();
     handTemp.cards = player.hand.cards.filter(c => c !== self);
@@ -38,7 +39,6 @@ function* playCard(next, store, state, self, effect) {
     if (cards.length === 0) {
         return state;
     }
-    player.hand.moveCardTo(self, player.discard);
     player.hand.moveCardsTo(cards, player.discard);
     yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: true }), selected => {
         cards = selected || [];
@@ -48,6 +48,7 @@ function* playCard(next, store, state, self, effect) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
     }
     player.deck.moveCardsTo(cards, player.hand);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
     });
