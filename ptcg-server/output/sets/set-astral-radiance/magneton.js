@@ -12,8 +12,9 @@ class Magneton extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
-        this.regulationMark = 'F';
+        this.evolvesFrom = 'Magnemite';
         this.cardType = card_types_1.CardType.METAL;
+        this.regulationMark = 'F';
         this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
@@ -25,8 +26,8 @@ class Magneton extends pokemon_card_1.PokemonCard {
                 text: 'Your opponent switches their Active Pokemon wtih 1 of their Benched Pokemon.'
             }];
         this.set = 'ASR';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '106';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Magneton';
         this.fullName = 'Magneton ASR';
     }

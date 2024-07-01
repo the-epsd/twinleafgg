@@ -5,8 +5,9 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Magneton extends PokemonCard {
     stage: Stage;
-    regulationMark: string;
+    evolvesFrom: string;
     cardType: CardType;
+    regulationMark: string;
     hp: number;
     weakness: {
         type: CardType;
@@ -23,8 +24,8 @@ export declare class Magneton extends PokemonCard {
         text: string;
     }[];
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

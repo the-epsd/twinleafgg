@@ -13,10 +13,10 @@ class Magnezone extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Magneton';
-        this.cardType = card_types_1.CardType.METAL;
+        this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 150;
-        this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.resistance = [{ type: card_types_1.CardType.PSYCHIC, value: -20 }];
+        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
+        this.resistance = [{ type: card_types_1.CardType.METAL, value: -20 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Magnetic Circuit',

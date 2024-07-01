@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Trevenant extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -32,16 +33,37 @@ class Trevenant extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.name = 'Trevenant';
         this.fullName = 'Trevenant XY';
+        this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayItemEffect) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY && effect.power.name === 'Forest\'s Curse') {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            console.log(player.active.getPokemonCard() !== this
+                && opponent.active.getPokemonCard() !== this);
+            //Trevenant isn't active poke
             if (player.active.getPokemonCard() !== this
                 && opponent.active.getPokemonCard() !== this) {
+                opponent.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
                 return state;
             }
-            else {
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: pokemon_types_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
+            opponent.marker.addMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
+        }
+        if (effect instanceof play_card_effects_1.PlayItemEffect) {
+            const player = effect.player;
+            if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
         }

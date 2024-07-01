@@ -75,7 +75,6 @@ export class Trevenant extends PokemonCard {
       }
     }
 
-
     return state;
   }
 
