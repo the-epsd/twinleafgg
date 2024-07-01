@@ -30,6 +30,7 @@ function* playCard(next, store, state, self, effect) {
     }
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     // prepare card list without Junk Arm
     const handTemp = new game_1.CardList();
     handTemp.cards = player.hand.cards.filter(c => c !== self);

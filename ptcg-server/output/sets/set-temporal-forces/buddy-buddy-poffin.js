@@ -44,6 +44,7 @@ class BuddyBuddyPoffin extends trainer_card_1.TrainerCard {
                 const maxPokemons = Math.min(openSlots.length, 2);
                 // We will discard this card after prompt confirmation
                 effect.preventDefault = true;
+                player.hand.moveCardTo(effect.trainerCard, player.supporter);
                 let cards = [];
                 return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: maxPokemons, allowCancel: false, blocked, maxPokemons }), selectedCards => {
                     cards = selectedCards || [];

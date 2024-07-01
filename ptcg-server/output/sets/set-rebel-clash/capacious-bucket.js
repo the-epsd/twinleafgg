@@ -29,6 +29,8 @@ class CapaciousBucket extends trainer_card_1.TrainerCard {
             if (player.deck.cards.length === 0) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+            effect.preventDefault = true;
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
             let cards = [];
             store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { min: 0, max: 2, allowCancel: false }), selected => {
                 cards = selected || [];
@@ -36,6 +38,7 @@ class CapaciousBucket extends trainer_card_1.TrainerCard {
                     store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => { });
                 }
                 player.deck.moveCardsTo(cards, player.hand);
+                player.supporter.moveCardTo(this, player.discard);
                 store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
                 });

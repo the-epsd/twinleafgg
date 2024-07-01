@@ -41,6 +41,9 @@ export class CapaciousBucket extends TrainerCard {
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
+      
+      effect.preventDefault = true;
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(
@@ -61,6 +64,7 @@ export class CapaciousBucket extends TrainerCard {
         }
 
         player.deck.moveCardsTo(cards, player.hand);
+        player.supporter.moveCardTo(this, player.discard);
 
         store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

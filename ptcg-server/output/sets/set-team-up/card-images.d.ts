@@ -5,6 +5,7 @@ import { Hitmonchan } from './hitmonchan';
 import { Hitmonlee } from './hitmonlee';
 import { Jirachi } from './jirachi';
 import { Lapras } from './lapras';
+import { Mareep } from './mareep';
 import { PokemonCommunication } from './pokemon-communication';
 import { ViridianForest } from './viridian-forest';
 import { Zapdos } from './zapdos';
@@ -27,6 +28,9 @@ export declare class JirachiArt extends Jirachi {
     cardImage: string;
 }
 export declare class LaprasArt extends Lapras {
+    cardImage: string;
+}
+export declare class MareepArt extends Mareep {
     cardImage: string;
 }
 export declare class PokemonCommunicationArt extends PokemonCommunication {

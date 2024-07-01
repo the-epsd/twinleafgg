@@ -57,6 +57,7 @@ export class BuddyBuddyPoffin extends TrainerCard {
 
         // We will discard this card after prompt confirmation
         effect.preventDefault = true;
+        player.hand.moveCardTo(effect.trainerCard, player.supporter);
            
         let cards: Card[] = [];
         return store.prompt(state, new ChooseCardsPrompt(

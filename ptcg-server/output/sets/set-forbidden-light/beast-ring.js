@@ -26,6 +26,8 @@ class BeastRing extends trainer_card_1.TrainerCard {
             if (opponent.getPrizeLeft() !== 3 && opponent.getPrizeLeft() !== 4) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+            effect.preventDefault = true;
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
             let ultraBeastCount = 0;
             const blocked = [];
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
@@ -45,6 +47,7 @@ class BeastRing extends trainer_card_1.TrainerCard {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.deck.moveCardTo(transfer.card, target);
                 }
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 return state;
             });
         }

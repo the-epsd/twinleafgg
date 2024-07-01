@@ -35,6 +35,7 @@ export class Pokedex extends TrainerCard {
       
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       return store.prompt(state, new OrderCardsPrompt(
         player.id,

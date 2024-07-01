@@ -37,6 +37,9 @@ export class BeastRing extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
       
+      effect.preventDefault = true;
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      
       let ultraBeastCount = 0;
       const blocked: number[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
@@ -65,7 +68,9 @@ export class BeastRing extends TrainerCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.deck.moveCardTo(transfer.card, target);
         }
-
+        
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);  
+        
         return state;
       });
     }

@@ -23,6 +23,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: PalPad,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(

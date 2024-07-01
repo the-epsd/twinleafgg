@@ -41,6 +41,7 @@ export class LostBlender extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       // prepare card list without Junk Arm
       const handTemp = new CardList();
@@ -64,6 +65,7 @@ export class LostBlender extends TrainerCard {
         });
         
         player.deck.moveTo(player.hand, 1);
+        player.supporter.moveCardTo(this, player.discard);
 
         store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });        
       });
