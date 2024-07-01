@@ -65,8 +65,8 @@ function playTrainerReducer(store, state, effect) {
             name: effect.player.name,
             card: effect.trainerCard.name
         });
-        const player = effect.player;
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        // const player = effect.player;
+        // player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
     }
     // Process trainer effect

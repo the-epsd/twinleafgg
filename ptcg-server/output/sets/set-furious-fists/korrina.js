@@ -31,6 +31,7 @@ function* playCard(next, store, state, self, effect) {
     // We will discard this card after prompt confirmation
     // This will prevent unblocked supporter to appear in the discard pile
     effect.preventDefault = true;
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     const maxPokemons = Math.min(pokemons, 1);
     const maxTrainers = Math.min(trainers, 1);
     const count = maxPokemons + maxTrainers;
@@ -38,11 +39,11 @@ function* playCard(next, store, state, self, effect) {
         cards = selected || [];
         next();
     });
-    player.hand.moveCardTo(self, player.supporter);
     player.deck.moveCardsTo(cards, player.hand);
     if (cards.length > 0) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
     });

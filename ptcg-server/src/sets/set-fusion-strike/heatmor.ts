@@ -1,10 +1,10 @@
+import { AttachEnergyPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { Effect } from '../../game/store/effects/effect';
-import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Heatmor extends PokemonCard {
 
@@ -50,15 +50,6 @@ export class Heatmor extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
-                    && c.energyType === EnergyType.BASIC
-                    && c.provides.includes(CardType.FIRE);
-      });
-      if (!hasEnergyInDiscard) {
-        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
-      }
-
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -66,7 +57,7 @@ export class Heatmor extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { allowCancel: false, min: 1, max: 1 }
+        { allowCancel: false, min: 0, max: 1 }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
