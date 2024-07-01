@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PokemonCardList = void 0;
-const card_list_1 = require("./card-list");
-const card_marker_1 = require("./card-marker");
 const card_types_1 = require("../card/card-types");
 const pokemon_card_1 = require("../card/pokemon-card");
+const card_list_1 = require("./card-list");
+const card_marker_1 = require("./card-marker");
 class PokemonCardList extends card_list_1.CardList {
     constructor() {
         super(...arguments);
@@ -23,6 +23,9 @@ class PokemonCardList extends card_list_1.CardList {
         const result = [];
         for (const card of this.cards) {
             if (card.superType === card_types_1.SuperType.POKEMON && card !== this.tool) {
+                result.push(card);
+            }
+            else if (card.name === "Lillie's Poké Doll") {
                 result.push(card);
             }
         }

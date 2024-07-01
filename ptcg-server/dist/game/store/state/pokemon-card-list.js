@@ -1,7 +1,7 @@
-import { CardList } from './card-list';
-import { Marker } from './card-marker';
 import { CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
+import { CardList } from './card-list';
+import { Marker } from './card-marker';
 export class PokemonCardList extends CardList {
     constructor() {
         super(...arguments);
@@ -20,6 +20,9 @@ export class PokemonCardList extends CardList {
         const result = [];
         for (const card of this.cards) {
             if (card.superType === SuperType.POKEMON && card !== this.tool) {
+                result.push(card);
+            }
+            else if (card.name === "Lillie's Poké Doll") {
                 result.push(card);
             }
         }

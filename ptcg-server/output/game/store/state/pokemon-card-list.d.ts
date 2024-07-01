@@ -1,9 +1,9 @@
-import { CardList } from './card-list';
-import { Marker } from './card-marker';
+import { Card } from '../card/card';
 import { SpecialCondition, Stage } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { Card } from '../card/card';
-import { Power, Attack } from '../card/pokemon-types';
+import { Attack, Power } from '../card/pokemon-types';
+import { CardList } from './card-list';
+import { Marker } from './card-marker';
 export declare class PokemonCardList extends CardList {
     damage: number;
     hp: number;

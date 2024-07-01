@@ -21,17 +21,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  let supporterInDiscard = 0;
-  player.discard.cards.forEach(c => {
-    if (c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER) {
-      supporterInDiscard += 1;
-    }
-  });
-
-  if (supporterInDiscard === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
   const supporterTurn = player.supporterTurn;
   
   if (supporterTurn > 0) {
