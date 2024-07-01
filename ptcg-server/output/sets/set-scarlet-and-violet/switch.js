@@ -14,6 +14,7 @@ function* playCard(next, store, state, effect) {
     }
     // Do not discard the card yet
     effect.preventDefault = true;
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     let targets = [];
     yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), results => {
         targets = results || [];

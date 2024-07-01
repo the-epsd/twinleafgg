@@ -15,15 +15,6 @@ function* playCard(next, store, state, self, effect) {
     if (cards.length < 2) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    let supporterInDiscard = 0;
-    player.discard.cards.forEach(c => {
-        if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.SUPPORTER) {
-            supporterInDiscard += 1;
-        }
-    });
-    if (supporterInDiscard === 0) {
-        throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-    }
     const supporterTurn = player.supporterTurn;
     if (supporterTurn > 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);

@@ -78,8 +78,8 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
       card: effect.trainerCard.name
     });
     
-    const player = effect.player;
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    // const player = effect.player;
+    // player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
   }
 

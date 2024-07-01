@@ -28,7 +28,6 @@ export class Pokedex extends TrainerCard {
 
       const deckTop = new CardList();
       
-      
       // Get up to 5 cards from the top of the deck
       const cards = deck.cards.slice(0, 5);
       player.deck.moveCardsTo(cards, deckTop);

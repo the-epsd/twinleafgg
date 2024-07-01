@@ -1,9 +1,9 @@
-import { CardList } from './card-list';
-import { Marker } from './card-marker';
+import { Card } from '../card/card';
 import { CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { Card } from '../card/card';
-import { Power, Attack } from '../card/pokemon-types';
+import { Attack, Power } from '../card/pokemon-types';
+import { CardList } from './card-list';
+import { Marker } from './card-marker';
 
 export class PokemonCardList extends CardList {
 
@@ -58,8 +58,11 @@ export class PokemonCardList extends CardList {
     for (const card of this.cards) {
       if (card.superType === SuperType.POKEMON && card !== this.tool) {
         result.push(card as PokemonCard);
+      } else if (card.name === "Lillie's Poké Doll") {
+        result.push(card as PokemonCard);
       }
     }
+    
     return result;
   }
 

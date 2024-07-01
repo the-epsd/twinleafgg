@@ -18,6 +18,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  
   let targets: PokemonCardList[] = [];
   if (opponentHasBench) {
     yield store.prompt(state, new ChoosePokemonPrompt(
@@ -54,6 +57,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.switchPokemon(targets[0]);
     }
   }
+  
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   return state;
 }

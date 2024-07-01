@@ -39,6 +39,9 @@ export class Welder extends TrainerCard {
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
+      
+      effect.preventDefault = true;
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
@@ -59,6 +62,8 @@ export class Welder extends TrainerCard {
         if (transfers.length > 0) {
           player.deck.moveTo(player.hand, 3);
         }
+        
+        player.supporter.moveCardTo(this, player.discard);
       });
     }
 

@@ -32,6 +32,8 @@ class Welder extends trainer_card_1.TrainerCard {
             if (!hasEnergyInHand) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+            effect.preventDefault = true;
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
             return store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_CARDS, player.hand, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH, play_card_action_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { min: 1, max: 2, allowCancel: true, sameTarget: true }), transfers => {
                 transfers = transfers || [];
                 for (const transfer of transfers) {
@@ -43,6 +45,7 @@ class Welder extends trainer_card_1.TrainerCard {
                 if (transfers.length > 0) {
                     player.deck.moveTo(player.hand, 3);
                 }
+                player.supporter.moveCardTo(this, player.discard);
             });
         }
         return state;

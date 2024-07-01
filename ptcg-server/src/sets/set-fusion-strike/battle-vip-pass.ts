@@ -36,9 +36,10 @@ export class BattleVIPPass extends TrainerCard {
       if (turn > 2) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       } else {
-      
-        
         const player = effect.player;
+        effect.preventDefault = true;
+        player.hand.moveCardTo(effect.trainerCard, player.supporter);      
+        
         // Allow player to search deck and choose up to 2 Basic Pokemon
         const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
     
