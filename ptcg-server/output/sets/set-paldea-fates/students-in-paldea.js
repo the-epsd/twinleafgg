@@ -46,7 +46,7 @@ class StudentsInPaldea extends trainer_card_1.TrainerCard {
                         return state;
                     });
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                    player.supporterTurn = 1;
+                    player.supporterTurn += 1;
                 });
                 return state;
             });

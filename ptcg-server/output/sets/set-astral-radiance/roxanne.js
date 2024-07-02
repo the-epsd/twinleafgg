@@ -36,7 +36,7 @@ function* playCard(next, store, state, self, effect) {
         player.deck.moveTo(player.hand, 6);
         opponent.deck.moveTo(opponent.hand, 2);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        player.supporterTurn = 1;
+        player.supporterTurn += 1;
     });
 }
 class Roxanne extends trainer_card_1.TrainerCard {

@@ -1,16 +1,16 @@
+import { GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
+import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CardList } from '../../game/store/state/card-list';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { GameMessage } from '../../game/game-message';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
-import { StateUtils } from '../../game/store/state-utils';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { StateUtils } from '../../game/store/state-utils';
+import { CardList } from '../../game/store/state/card-list';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -19,6 +19,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const deckTop = new CardList();
   player.deck.moveTo(deckTop, 4);
 
+  effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  
   const blocked: number[] = [];
   deckTop.cards.forEach((card, index) => {
     if (card instanceof TrainerCard && card.name === 'Trainers\' Mail') {
@@ -40,6 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   deckTop.moveCardsTo(cards, player.hand);
   deckTop.moveTo(player.deck);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

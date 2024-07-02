@@ -68,7 +68,7 @@ export class Acerola extends TrainerCard {
           cardList.moveTo(player.hand);
           cardList.clearEffects();
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          player.supporterTurn = 1;
+          player.supporterTurn += 1;
         }
       });
     }

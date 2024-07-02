@@ -58,6 +58,7 @@ import { RoaringMoon } from './roaring-moon';
 import { Sableye } from './sableye';
 import { Salvatore } from './salvatore';
 import { SandyShocks } from './sandy-shocks';
+import { Skitty } from './skitty';
 import { Solosis } from './solosis';
 import { Torterraex } from './torterra-ex';
 import { Totodile } from './totodile';
@@ -310,6 +311,10 @@ export class SalvatoreArt extends Salvatore {
 
 export class SandyShocksArt extends SandyShocks {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_098_R_EN_LG.png';
+}
+
+export class SkittyArt extends Skitty {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_130_R_EN.png';
 }
 
 export class SolosisArt extends Solosis {

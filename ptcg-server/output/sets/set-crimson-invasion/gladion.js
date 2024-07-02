@@ -47,7 +47,7 @@ class Gladion extends game_1.TrainerCard {
                 player.supporter.moveCardTo(gladion, player.prizes[chosenPrizeIndex]);
                 prizes.forEach(p => { p.isSecret = true; });
                 player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
-                player.supporterTurn = 1;
+                player.supporterTurn += 1;
             });
             return state;
         }

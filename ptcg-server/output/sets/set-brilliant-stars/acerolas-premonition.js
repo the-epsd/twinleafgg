@@ -36,7 +36,7 @@ class AcerolasPremonition extends trainer_card_1.TrainerCard {
                 const cardsToMove = opponent.hand.cards.slice(0, cardsInOpponentHand.length * 1);
                 player.deck.moveCardsTo(cardsToMove, player.hand);
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                player.supporterTurn = 1;
+                player.supporterTurn += 1;
             });
         }
         return state;

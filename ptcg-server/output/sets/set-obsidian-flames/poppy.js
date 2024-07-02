@@ -51,7 +51,7 @@ class Poppy extends trainer_card_1.TrainerCard {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     source.moveCardTo(transfer.card, target);
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                    player.supporterTurn = 1;
+                    player.supporterTurn += 1;
                 }
             });
         }

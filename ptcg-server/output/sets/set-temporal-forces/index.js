@@ -63,6 +63,7 @@ exports.setTemporalForces = [
     new card_images_1.SableyeArt(),
     new card_images_1.SalvatoreArt(),
     new card_images_1.SandyShocksArt(),
+    new card_images_1.SkittyArt(),
     new card_images_1.SolosisArt(),
     new card_images_1.TorterraexArt(),
     new card_images_1.TotodileArt(),

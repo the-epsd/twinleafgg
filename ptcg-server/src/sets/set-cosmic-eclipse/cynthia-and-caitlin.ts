@@ -31,6 +31,13 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // Do not discard the card yet
   effect.preventDefault = true;
+  
+  if (!player.discard.cards.some(c => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER)) {
+    player.deck.moveTo(player.hand, 3);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    player.supporterTurn += 1;
+    return state;
+  }
 
   // prepare card list without Self
   const handTemp = new CardList();
@@ -75,7 +82,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   player.deck.moveTo(player.hand, 3);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  player.supporterTurn = 1;
+  player.supporterTurn += 1;
   return state;
 }
 

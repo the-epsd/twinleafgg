@@ -49,7 +49,7 @@ export class Ryme extends TrainerCard {
 
       if (!opponent.bench.some(c => c.cards.length > 0)) {
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        player.supporterTurn = 1;
+        player.supporterTurn += 1;
         return state;
       }
       
@@ -66,7 +66,7 @@ export class Ryme extends TrainerCard {
         }
         
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        player.supporterTurn = 1;
+        player.supporterTurn += 1;
         return state;
       });
     }

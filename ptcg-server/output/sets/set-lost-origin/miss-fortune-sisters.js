@@ -35,7 +35,7 @@ class MissFortuneSisters extends trainer_card_1.TrainerCard {
                 deckTop.moveCardsTo(selected, opponent.discard);
                 deckTop.moveTo(opponent.deck);
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                player.supporterTurn = 1;
+                player.supporterTurn += 1;
                 store.prompt(state, new game_1.ShuffleDeckPrompt(opponent.id), order => {
                     opponent.deck.applyOrder(order);
                 });

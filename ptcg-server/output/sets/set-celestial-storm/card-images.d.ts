@@ -1,10 +1,14 @@
 import { Copycat } from './copycat';
+import { Delcatty } from './delcatty';
 import { Magcargo } from './magcargo';
 import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
 import { Swampert } from './swampert';
 import { TateAndLiza } from './tate-and-liza';
 export declare class CopycatArt extends Copycat {
+    cardImage: string;
+}
+export declare class DelcattyArt extends Delcatty {
     cardImage: string;
 }
 export declare class MagcargoArt extends Magcargo {

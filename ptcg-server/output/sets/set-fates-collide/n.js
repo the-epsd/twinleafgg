@@ -44,7 +44,7 @@ class N extends trainer_card_1.TrainerCard {
             player.deck.moveTo(player.hand, Math.min(player.getPrizeLeft(), player.deck.cards.length));
             opponent.deck.moveTo(opponent.hand, Math.min(opponent.getPrizeLeft(), opponent.deck.cards.length));
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            player.supporterTurn = 1;
+            player.supporterTurn += 1;
         }
         return state;
     }

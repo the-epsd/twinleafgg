@@ -44,7 +44,7 @@ class Atticus extends trainer_card_1.TrainerCard {
             }
             player.deck.moveTo(player.hand, 7);
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            player.supporterTurn = 1;
+            player.supporterTurn += 1;
             return state;
         }
         return state;

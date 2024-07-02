@@ -10,6 +10,10 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
   const max = Math.min(slots.length, 2);
   
+  if (slots.length === 0) {
+    return state;
+  }
+  
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,

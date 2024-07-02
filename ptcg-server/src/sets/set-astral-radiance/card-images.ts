@@ -49,6 +49,7 @@ import { SupereffectiveGlasses } from './supereffective-glasses';
 import { SwitchCart } from './switch-cart';
 import { TempleofSinnoh } from './temple-of-sinnoh';
 import { TrekkingShoes } from './trekking-shoes';
+import { Ursaluna } from './ursaluna';
 import { WyrdeerV } from './wyrdeer-v';
 
 export class AdamanArt extends Adaman {
@@ -253,6 +254,10 @@ export class TempleofSinnohArt extends TempleofSinnoh {
 
 export class TrekkingShoesArt extends TrekkingShoes {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_156_R_EN_LG.png';
+}
+
+export class UrsalunaArt extends Ursaluna {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_124_R_EN_LG.png';
 }
 
 export class WyrdeerVArt extends WyrdeerV {

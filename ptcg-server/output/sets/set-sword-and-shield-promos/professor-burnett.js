@@ -27,7 +27,7 @@ function* playCard(next, store, state, effect) {
     });
     player.deck.moveCardsTo(cards, player.discard);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn = 1;
+    player.supporterTurn += 1;
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
     });

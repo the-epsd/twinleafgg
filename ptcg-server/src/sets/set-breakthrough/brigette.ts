@@ -80,7 +80,7 @@ export class Brigette extends TrainerCard {
           });
 
           player.supporter.moveCardTo(this, player.discard);
-          player.supporterTurn = 1;
+          player.supporterTurn += 1;
           
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);

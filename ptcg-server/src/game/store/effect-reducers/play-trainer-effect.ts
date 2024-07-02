@@ -22,7 +22,7 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
       name: effect.player.name,
       card: effect.trainerCard.name
     });
-    player.supporterTurn = 1;
+    player.supporterTurn += 1;
     return state;
   }
 
@@ -91,7 +91,7 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
       const isSupporter = effect.trainerCard.trainerType === TrainerType.SUPPORTER;
       const target = isSupporter ? effect.player.supporter : effect.player.discard;
       effect.player.hand.moveCardTo(effect.trainerCard, target);
-      // effect.player.supporterTurn = 1;
+      // effect.player.supporterTurn += 1;
       // effect.player.supporter.moveCardTo(effect.trainerCard, effect.player.discard);
     }
     return state;

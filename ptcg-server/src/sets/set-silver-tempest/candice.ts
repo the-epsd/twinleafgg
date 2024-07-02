@@ -72,7 +72,7 @@ export class Candice extends TrainerCard {
           deckTop.moveCardsTo(selected, player.hand);
           deckTop.moveTo(player.deck);
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          player.supporterTurn = 1;
+          player.supporterTurn += 1;
 
         }
 

@@ -1,16 +1,17 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { PlayerType } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
-import { CardList } from '../../game/store/state/card-list';
+import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { PowerType } from '../../game/store/card/pokemon-types';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { CardList } from '../../game/store/state/card-list';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 function* useSmoothOver(next: Function, store: StoreLike, state: State,
   self: Magcargo, effect: PowerEffect): IterableIterator<State> {
@@ -36,6 +37,12 @@ function* useSmoothOver(next: Function, store: StoreLike, state: State,
 
   player.deck.moveCardsTo(cards, deckTop);
 
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+    if (cardList.getPokemonCard() === self) {
+      cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+    }
+  });
+  
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
     if (order === null) {

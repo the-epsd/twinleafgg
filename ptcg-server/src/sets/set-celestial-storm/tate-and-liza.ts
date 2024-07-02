@@ -56,7 +56,7 @@ export class TateAndLiza extends TrainerCard {
               const cardList = result[0];
               player.switchPokemon(cardList);
               player.supporter.moveCardTo(effect.trainerCard, player.discard);
-              player.supporterTurn = 1;
+              player.supporterTurn += 1;
             });
           }
         },
@@ -74,7 +74,7 @@ export class TateAndLiza extends TrainerCard {
           
             player.deck.moveTo(player.hand, 5);
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            player.supporterTurn = 1;
+            player.supporterTurn += 1;
           }
         }
       ];

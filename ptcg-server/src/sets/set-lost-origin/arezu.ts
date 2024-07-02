@@ -72,7 +72,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.deck.moveCardsTo(cards, player.hand);
     player.hand.moveCardTo(self, player.discard);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn = 1;
+    player.supporterTurn += 1;
 
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,

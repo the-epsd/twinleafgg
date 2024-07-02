@@ -51,7 +51,7 @@ export class Carmine extends TrainerCard {
       player.hand.moveCardsTo(cards, player.discard);
       player.deck.moveTo(player.hand, 5);
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      player.supporterTurn = 1;
+      player.supporterTurn += 1;
     }
 
     return state;

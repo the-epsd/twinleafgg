@@ -53,7 +53,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   
   player.discard.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  player.supporterTurn = 1;
+  player.supporterTurn += 1;
   
 }
 

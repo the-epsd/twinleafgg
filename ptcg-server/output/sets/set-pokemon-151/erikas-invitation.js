@@ -38,7 +38,7 @@ function* playCard(next, store, state, effect) {
         return state;
     }
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn = 1;
+    player.supporterTurn += 1;
     cards.forEach((card, index) => {
         opponent.hand.moveCardTo(card, slots[index]);
         slots[index].pokemonPlayedTurn = state.turn;

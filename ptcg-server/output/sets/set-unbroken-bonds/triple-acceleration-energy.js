@@ -44,7 +44,7 @@ class TripleAccelerationEnergy extends energy_card_1.EnergyCard {
                 return state;
             }
             if (!!attachedTo && attachedTo instanceof pokemon_card_1.PokemonCard && attachedTo.stage !== card_types_1.Stage.BASIC && attachedTo.stage !== card_types_1.Stage.RESTORED) {
-                effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY, card_types_1.CardType.ANY, card_types_1.CardType.ANY] });
+                effect.energyMap.push({ card: this, provides: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS] });
             }
             return state;
         }

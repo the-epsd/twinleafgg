@@ -40,7 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
     opponent.active.moveCardTo(card, opponent.hand);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn = 1;
+    player.supporterTurn += 1;
     return state;
   });
 }

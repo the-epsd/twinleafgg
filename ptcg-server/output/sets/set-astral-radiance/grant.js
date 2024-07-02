@@ -39,7 +39,7 @@ class Grant extends trainer_card_1.TrainerCard {
                 if (marker.hasMarker(this.GRANT_MARKER, this) && effect.damage > 0) {
                     effect.damage += 30;
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                    player.supporterTurn = 1;
+                    player.supporterTurn += 1;
                 }
                 // Check if card is in the discard
                 if (player.discard.cards.includes(this) === false) {

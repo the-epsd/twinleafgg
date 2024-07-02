@@ -41,7 +41,7 @@ class MallowAndLana extends trainer_card_1.TrainerCard {
                 player.switchPokemon(cardList);
                 if (player.hand.cards.length < 2) {
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                    player.supporterTurn = 1;
+                    player.supporterTurn += 1;
                     return state;
                 }
                 state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_message_1.GameMessage.WANT_TO_HEAL_POKEMON), wantToUse => {
@@ -58,7 +58,7 @@ class MallowAndLana extends trainer_card_1.TrainerCard {
                         });
                     }
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                    player.supporterTurn = 1;
+                    player.supporterTurn += 1;
                 });
             });
         }

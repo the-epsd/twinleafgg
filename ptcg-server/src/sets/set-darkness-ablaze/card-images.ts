@@ -6,6 +6,8 @@ import { Lugia } from './lugia';
 import { PowerfulColorlessEnergy } from './powerful-colorless-energy';
 import { RoseTower } from './rose-tower';
 import { TapuKoko } from './tapu-koko';
+import { Teddiursa } from './teddiursa';
+import { Ursaring } from './ursaring';
 
 export class BirdKeeperArt extends BirdKeeper {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_159_R_EN_LG.png';
@@ -37,4 +39,12 @@ export class RoseTowerArt extends RoseTower {
 
 export class TapuKokoArt extends TapuKoko {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_061_R_EN_LG.png';
+}
+
+export class TeddiursaArt extends Teddiursa {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_138_R_EN.png';
+}
+
+export class UrsaringArt extends Ursaring {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_139_R_EN_LG.png';
 }

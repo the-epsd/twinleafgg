@@ -52,7 +52,7 @@ export class Clive extends TrainerCard {
         const cardsToMove = opponent.hand.cards.slice(0, cardsInOpponentHand.length * 2);
         player.deck.moveCardsTo(cardsToMove, player.hand);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        player.supporterTurn = 1;
+        player.supporterTurn += 1;
 
       });
     }

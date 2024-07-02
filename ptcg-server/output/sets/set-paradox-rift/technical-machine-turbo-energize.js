@@ -29,20 +29,21 @@ class TechnicalMachineTurboEnergize extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         var _a;
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
-            const tool = effect.player.active.tool;
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_b) {
-                return state;
-            }
-            if (tool.name === this.name) {
-                player.active.moveCardTo(tool, player.discard);
-                player.active.tool = undefined;
-            }
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
+                if (cardList.cards.includes(this)) {
+                    try {
+                        const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                        store.reduceEffect(state, toolEffect);
+                    }
+                    catch (_a) {
+                        return state;
+                    }
+                    cardList.moveCardTo(this, player.discard);
+                    cardList.tool = undefined;
+                }
+            });
             return state;
         }
         if (effect instanceof check_effects_1.CheckPokemonAttacksEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tools.includes(this)) &&
@@ -52,7 +53,7 @@ class TechnicalMachineTurboEnergize extends trainer_card_1.TrainerCard {
                 const toolEffect = new play_card_effects_1.ToolEffect(player, this);
                 store.reduceEffect(state, toolEffect);
             }
-            catch (_c) {
+            catch (_b) {
                 return state;
             }
             effect.attacks.push(this.attacks[0]);
@@ -63,7 +64,7 @@ class TechnicalMachineTurboEnergize extends trainer_card_1.TrainerCard {
                 const toolEffect = new play_card_effects_1.ToolEffect(player, this);
                 store.reduceEffect(state, toolEffect);
             }
-            catch (_d) {
+            catch (_c) {
                 return state;
             }
             state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { max: 2, allowCancel: true }), transfers => {

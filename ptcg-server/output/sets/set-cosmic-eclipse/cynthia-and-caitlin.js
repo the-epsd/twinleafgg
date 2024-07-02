@@ -22,6 +22,12 @@ function* playCard(next, store, state, self, effect) {
     player.hand.moveCardTo(effect.trainerCard, player.supporter);
     // Do not discard the card yet
     effect.preventDefault = true;
+    if (!player.discard.cards.some(c => c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.SUPPORTER)) {
+        player.deck.moveTo(player.hand, 3);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        player.supporterTurn += 1;
+        return state;
+    }
     // prepare card list without Self
     const handTemp = new card_list_1.CardList();
     handTemp.cards = player.hand.cards.filter(c => c !== self);
@@ -46,7 +52,7 @@ function* playCard(next, store, state, self, effect) {
     player.discard.moveCardsTo(recovered, player.hand);
     player.deck.moveTo(player.hand, 3);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn = 1;
+    player.supporterTurn += 1;
     return state;
 }
 class CynthiaAndCaitlin extends trainer_card_1.TrainerCard {

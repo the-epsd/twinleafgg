@@ -1,20 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TrainersMail = void 0;
-const trainer_card_1 = require("../../game/store/card/trainer-card");
-const card_types_1 = require("../../game/store/card/card-types");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const card_list_1 = require("../../game/store/state/card-list");
-const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const game_message_1 = require("../../game/game-message");
+const card_types_1 = require("../../game/store/card/card-types");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const show_cards_prompt_1 = require("../../game/store/prompts/show-cards-prompt");
-const state_utils_1 = require("../../game/store/state-utils");
 const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
+const state_utils_1 = require("../../game/store/state-utils");
+const card_list_1 = require("../../game/store/state/card-list");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     const deckTop = new card_list_1.CardList();
     player.deck.moveTo(deckTop, 4);
+    effect.preventDefault = true;
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     const blocked = [];
     deckTop.cards.forEach((card, index) => {
         if (card instanceof trainer_card_1.TrainerCard && card.name === 'Trainers\' Mail') {
@@ -28,6 +30,7 @@ function* playCard(next, store, state, effect) {
     });
     deckTop.moveCardsTo(cards, player.hand);
     deckTop.moveTo(player.deck);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     if (cards.length > 0) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
     }
