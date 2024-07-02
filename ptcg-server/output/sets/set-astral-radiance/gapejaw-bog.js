@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GapejawBog = void 0;
-const trainer_card_1 = require("../../game/store/card/trainer-card");
+const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class GapejawBog extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -19,10 +19,14 @@ class GapejawBog extends trainer_card_1.TrainerCard {
         this.text = 'Whenever either player puts a Basic Pokémon from their hand onto their Bench, put 2 damage counters on that Pokémon.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect) {
-            const damageEffect = new attack_effects_1.PutDamageEffect(effect, 20);
-            damageEffect.target = effect.target;
-            store.reduceEffect(state, damageEffect);
+        if (effect instanceof play_card_effects_1.PlayPokemonEffect && game_1.StateUtils.getStadiumCard(state) === this) {
+            if (effect.target.cards.length > 0) {
+                return state;
+            }
+            const owner = game_1.StateUtils.findOwner(state, effect.target);
+            store.log(state, game_1.GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, { name: owner.name, damage: 20, target: effect.pokemonCard.name, effect: this.name });
+            effect.target.damage += 20;
+            return state;
         }
         return state;
     }

@@ -1,6 +1,6 @@
-import { TrainerCard } from '../../game/store/card/trainer-card';
+import { State, StoreLike } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 export declare class GapejawBog extends TrainerCard {
     regulationMark: string;

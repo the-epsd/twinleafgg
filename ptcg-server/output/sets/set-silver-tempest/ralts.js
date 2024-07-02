@@ -40,23 +40,23 @@ class Ralts extends pokemon_card_1.PokemonCard {
                 if (!result) {
                     return state;
                 }
+                this.MEMORY_SKIPPED_ATTACK = result;
                 store.log(state, game_1.GameLog.LOG_PLAYER_DISABLES_ATTACK, {
                     name: player.name,
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     attack: this.MEMORY_SKIPPED_ATTACK.name
                 });
-                this.MEMORY_SKIPPED_ATTACK = result;
                 opponent.active.marker.addMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
                 return state;
             });
             return state;
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.player.marker.hasMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.player.active.marker.hasMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
             if (effect.attack === this.MEMORY_SKIPPED_ATTACK) {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.marker.hasMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
             effect.player.marker.removeMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
             this.MEMORY_SKIPPED_ATTACK = undefined;
         }
