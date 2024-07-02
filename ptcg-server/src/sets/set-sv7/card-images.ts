@@ -104,7 +104,7 @@ export class DangerousLaserArt extends DangerousLaser {
 }
 
 export class DartrixArt extends Dartrix {
-  public cardImage = 'https://pokemonproxies.com/static/media/Dartrix-004-6a.d8af3208dd3d3ad1f73c.png';
+  public cardImage = 'https://pokemonproxies.com/static/media/Dartrix-004-6a.ccb07ffcccff8b76c863.png';
 }
 
 export class DecidueyeArt extends Decidueye {

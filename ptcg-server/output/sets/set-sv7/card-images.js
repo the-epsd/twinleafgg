@@ -148,7 +148,7 @@ exports.DangerousLaserArt = DangerousLaserArt;
 class DartrixArt extends dartrix_1.Dartrix {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Dartrix-004-6a.d8af3208dd3d3ad1f73c.png';
+        this.cardImage = 'https://pokemonproxies.com/static/media/Dartrix-004-6a.ccb07ffcccff8b76c863.png';
     }
 }
 exports.DartrixArt = DartrixArt;

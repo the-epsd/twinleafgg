@@ -7,7 +7,6 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const energy_card_1 = require("../../game/store/card/energy-card");
-const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
 const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon-prompt");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
@@ -25,10 +24,8 @@ function* playCard(next, store, state, effect) {
         }
     });
     if (!hasPokemonWithEnergy) {
-        throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+        return state;
     }
-    // We will discard this card after prompt confirmation
-    effect.preventDefault = true;
     let targets = [];
     yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], { allowCancel: true, blocked }), results => {
         targets = results || [];
@@ -39,7 +36,7 @@ function* playCard(next, store, state, effect) {
     }
     const target = targets[0];
     let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { min: 1, max: 1, allowCancel: true }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { min: 1, max: 1, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });
@@ -60,7 +57,7 @@ class Shuppet extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [{
                 name: 'Bleh',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.PSYCHIC],
                 damage: 0,
                 text: 'Discard a Special Energy attached to 1 of your opponent\'s Pokemon.'
             }];

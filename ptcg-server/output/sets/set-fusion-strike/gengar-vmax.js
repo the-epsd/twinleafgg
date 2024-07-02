@@ -10,6 +10,7 @@ class GengarVMAX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.VMAX;
+        this.tags = [card_types_1.CardTag.POKEMON_VMAX];
         this.evolvesFrom = 'Gengar V';
         this.cardType = card_types_1.CardType.DARK;
         this.hp = 320;

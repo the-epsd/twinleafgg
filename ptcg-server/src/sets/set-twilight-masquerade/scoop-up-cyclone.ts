@@ -13,7 +13,7 @@ export class ScoopUpCyclone extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags = [ CardTag.ACE_SPEC ];
+  public tags = [CardTag.ACE_SPEC];
 
   public regulationMark = 'H';
 
@@ -41,7 +41,7 @@ export class ScoopUpCyclone extends TrainerCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: true }
       ), result => {
         const targets = result || [];
@@ -52,7 +52,7 @@ export class ScoopUpCyclone extends TrainerCard {
         }
 
         // Discard trainer card
-        player.supporter.moveCardTo(this, player.discard);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
         targets.forEach(target => {
           target.moveTo(player.hand);

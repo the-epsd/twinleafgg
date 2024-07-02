@@ -24,7 +24,7 @@ class Banetteex extends pokemon_card_1.PokemonCard {
                 name: 'Everlasting Darkness',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 30,
-                text: 'Flip a coin. If heads, during your opponent\'s next turn, they can\'t play any Item cards from their hand.',
+                text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.',
             },
             {
                 name: 'Poltergeist',

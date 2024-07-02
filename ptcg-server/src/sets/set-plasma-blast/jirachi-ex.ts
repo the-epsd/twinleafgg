@@ -3,9 +3,11 @@ import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, TrainerType, SpecialCondition } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt,
-  ShuffleDeckPrompt } from '../../game';
-import {AddSpecialConditionsEffect} from '../../game/store/effects/attack-effects';
+import {
+  PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt,
+  ShuffleDeckPrompt
+} from '../../game';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 
 function* useStellarGuidance(next: Function, store: StoreLike, state: State,
@@ -18,8 +20,12 @@ function* useStellarGuidance(next: Function, store: StoreLike, state: State,
 
   // Try to reduce PowerEffect, to check if something is blocking our ability
   try {
-    const powerEffect = new PowerEffect(player, self.powers[0], self);
-    store.reduceEffect(state, powerEffect);
+    const stub = new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.ABILITY,
+      text: ''
+    }, self);
+    store.reduceEffect(state, stub);
   } catch {
     return state;
   }
@@ -43,7 +49,7 @@ function* useStellarGuidance(next: Function, store: StoreLike, state: State,
 
 export class JirachiEx extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_EX ];
+  public tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
@@ -55,7 +61,7 @@ export class JirachiEx extends PokemonCard {
 
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Stellar Guidance',
@@ -68,7 +74,7 @@ export class JirachiEx extends PokemonCard {
   public attacks = [
     {
       name: 'Hypnostrike',
-      cost: [ CardType.METAL, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
       text: 'Both this Pokemon and the Defending Pokemon are now Asleep.'
     }

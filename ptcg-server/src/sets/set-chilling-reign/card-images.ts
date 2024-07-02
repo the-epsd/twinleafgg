@@ -85,7 +85,7 @@ export class DrizzileArt extends Drizzile {
 }
 
 export class DynaTreeHillArt extends DynaTreeHill {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_042_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_135_R_EN_LG.png';
 }
 
 export class EchoingHornArt extends EchoingHorn {
