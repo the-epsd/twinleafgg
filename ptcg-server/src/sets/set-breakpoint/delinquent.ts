@@ -31,7 +31,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     const cardList = StateUtils.findCardList(state, stadiumCard);
     const player = StateUtils.findOwner(state, cardList);
     cardList.moveTo(player.discard);
-    return state;
   }
 
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
@@ -41,6 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   if (opponentCards.length <= 3) {
     opponent.hand.moveCardsTo(opponentCards, opponent.discard);
+    return state;
   }
 
   if (opponentCards.length > 3) {
@@ -53,11 +53,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
     ), selected => {
       const cards = selected || [];
       opponent.hand.moveCardsTo(cards, opponent.discard);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      return state;
     });
-  }
-  
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+  } 
 }
 
 export class Delinquent extends TrainerCard {

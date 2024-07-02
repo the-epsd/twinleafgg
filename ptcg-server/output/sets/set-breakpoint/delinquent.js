@@ -23,21 +23,22 @@ function* playCard(next, store, state, self, effect) {
         const cardList = state_utils_1.StateUtils.findCardList(state, stadiumCard);
         const player = state_utils_1.StateUtils.findOwner(state, cardList);
         cardList.moveTo(player.discard);
-        return state;
     }
     player.hand.moveCardTo(effect.trainerCard, player.supporter);
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
     if (opponentCards.length <= 3) {
         opponent.hand.moveCardsTo(opponentCards, opponent.discard);
+        return state;
     }
     if (opponentCards.length > 3) {
         store.prompt(state, new game_1.ChooseCardsPrompt(opponent.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: 3, max: 3, allowCancel: false }), selected => {
             const cards = selected || [];
             opponent.hand.moveCardsTo(cards, opponent.discard);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            return state;
         });
     }
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
 }
 class Delinquent extends trainer_card_1.TrainerCard {
     constructor() {

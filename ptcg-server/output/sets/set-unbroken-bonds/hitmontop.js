@@ -23,13 +23,13 @@ class Hitmontop extends pokemon_card_1.PokemonCard {
             {
                 name: 'Special Combo',
                 cost: [card_types_1.CardType.FIGHTING],
-                damage: 60,
+                damage: 0,
                 text: 'You can use this attack only if your Hitmonlee used Special Combo during your last turn. This attack does 60 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             },
             {
                 name: 'Spinning Attack',
-                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
-                damage: 0,
+                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                damage: 50,
                 text: ''
             }
         ];
