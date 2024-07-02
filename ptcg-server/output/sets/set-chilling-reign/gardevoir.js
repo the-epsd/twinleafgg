@@ -11,7 +11,7 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 class Gardevoir extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Kirlia';
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 140;
