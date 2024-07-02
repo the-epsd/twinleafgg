@@ -53,7 +53,7 @@ class RegidragoV extends pokemon_card_1.PokemonCard {
             else {
                 // Prompt to attach energy if any were drawn
                 return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, temp, // Only show drawn energies
-                game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: energyCardsDrawn.length, allowCancel: false }), transfers => {
+                game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: energyCardsDrawn.length, max: energyCardsDrawn.length, allowCancel: false }), transfers => {
                     // Attach energy based on prompt selection
                     if (transfers) {
                         for (const transfer of transfers) {

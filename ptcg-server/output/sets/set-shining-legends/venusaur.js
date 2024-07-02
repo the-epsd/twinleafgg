@@ -46,18 +46,18 @@ class Venusaur extends pokemon_card_1.PokemonCard {
             if (!hasVenusaurInPlay) {
                 return state;
             }
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
             if (hasVenusaurInPlay) {
+                try {
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: game_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
+                }
+                catch (_a) {
+                    return state;
+                }
                 effect.source.cards.forEach(c => {
                     if (c instanceof game_1.EnergyCard && !effect.energyMap.some(e => e.card === c)) {
                         const providedTypes = c.provides.filter(type => type === card_types_1.CardType.GRASS);

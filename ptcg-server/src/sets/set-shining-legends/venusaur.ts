@@ -6,7 +6,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Venusaur extends PokemonCard {
-  
+
   public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Ivysaur';
@@ -43,12 +43,14 @@ export class Venusaur extends PokemonCard {
   public name: string = 'Venusaur';
 
   public fullName: string = 'Venusaur SLG';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckProvidedEnergyEffect) {
       const player = effect.player;
+
       let hasVenusaurInPlay = false;
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
           hasVenusaurInPlay = true;
@@ -59,18 +61,19 @@ export class Venusaur extends PokemonCard {
         return state;
       }
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
       if (hasVenusaurInPlay) {
+
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
+        }
+
         effect.source.cards.forEach(c => {
           if (c instanceof EnergyCard && !effect.energyMap.some(e => e.card === c)) {
             const providedTypes = c.provides.filter(type => type === CardType.GRASS);

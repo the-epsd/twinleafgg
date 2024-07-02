@@ -9,10 +9,10 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class IronValiantex extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.FUTURE ];
+  public tags = [CardTag.POKEMON_ex, CardTag.FUTURE];
 
   public regulationMark = 'G';
-  
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.PSYCHIC;
@@ -21,7 +21,7 @@ export class IronValiantex extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [
     {
@@ -43,7 +43,7 @@ export class IronValiantex extends PokemonCard {
   public set: string = 'PAR';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '38';
 
   public name: string = 'Iron Valiant ex';
@@ -75,11 +75,15 @@ export class IronValiantex extends PokemonCard {
   //       // }
 
   //       try {
-  //         const powerEffect = new PowerEffect(opponent, this.powers[0], this);
-  //         store.reduceEffect(state, powerEffect);
-  //       } catch {
-  //         return state;
-  //       }
+  //   const stub = new PowerEffect(player, {
+  //     name: 'test',
+  //     powerType: PowerType.ABILITY,
+  //     text: ''
+  //   }, this);
+  //   store.reduceEffect(state, stub);
+  // } catch {
+  //   return state;
+  // }
 
   //       if (player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
   //         console.log('attack blocked');

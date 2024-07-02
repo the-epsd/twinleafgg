@@ -67,7 +67,6 @@ export class RegidragoV extends PokemonCard {
         });
       } else {
 
-
         // Prompt to attach energy if any were drawn
         return store.prompt(state, new AttachEnergyPrompt(
           player.id,
@@ -76,7 +75,7 @@ export class RegidragoV extends PokemonCard {
           PlayerType.BOTTOM_PLAYER,
           [SlotType.ACTIVE],
           { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { min: 0, max: energyCardsDrawn.length, allowCancel: false }
+          { min: energyCardsDrawn.length, max: energyCardsDrawn.length, allowCancel: false }
         ), transfers => {
 
           // Attach energy based on prompt selection

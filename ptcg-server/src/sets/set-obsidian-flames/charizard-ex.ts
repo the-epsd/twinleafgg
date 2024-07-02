@@ -1,17 +1,19 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils,
-  GameMessage, PlayerType, SlotType, ConfirmPrompt, ShuffleDeckPrompt } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils,
+  GameMessage, PlayerType, SlotType, ConfirmPrompt, ShuffleDeckPrompt
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import {AttachEnergyPrompt} from '../../game/store/prompts/attach-energy-prompt';
+import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Charizardex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public stage: Stage = Stage.STAGE_2;
 
@@ -25,7 +27,7 @@ export class Charizardex extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Infernal Reign',
@@ -40,11 +42,11 @@ export class Charizardex extends PokemonCard {
   public attacks = [
     {
       name: 'Burning Darkness',
-      cost: [ CardType.FIRE, CardType.FIRE ],
+      cost: [CardType.FIRE, CardType.FIRE],
       damage: 180,
       damageCalculation: '+',
       text: 'This attack does 30 more damage for each Prize card your ' +
-      'opponent has taken.'
+        'opponent has taken.'
     }
   ];
 
@@ -62,7 +64,7 @@ export class Charizardex extends PokemonCard {
 
     if ((effect instanceof EvolveEffect) && effect.pokemonCard === this) {
 
-    
+
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
@@ -85,10 +87,10 @@ export class Charizardex extends PokemonCard {
           const player = effect.player;
           return store.prompt(state, new AttachEnergyPrompt(
             player.id,
-            GameMessage.ATTACH_ENERGY_TO_BENCH,
+            GameMessage.ATTACH_ENERGY_CARDS,
             player.deck,
             PlayerType.BOTTOM_PLAYER,
-            [ SlotType.BENCH, SlotType.ACTIVE ],
+            [SlotType.BENCH, SlotType.ACTIVE],
             { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
             { allowCancel: true, min: 0, max: 3 },
           ), transfers => {
@@ -114,11 +116,11 @@ export class Charizardex extends PokemonCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       const prizesTaken = 6 - opponent.getPrizeLeft();
-    
+
       const damagePerPrize = 30;
-    
+
       effect.damage = this.attacks[0].damage + (prizesTaken * damagePerPrize);
     }
 

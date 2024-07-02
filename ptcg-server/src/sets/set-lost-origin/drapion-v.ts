@@ -9,7 +9,7 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class DrapionV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
@@ -21,7 +21,7 @@ export class DrapionV extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Wild Style',
@@ -32,7 +32,7 @@ export class DrapionV extends PokemonCard {
   public attacks = [
     {
       name: 'Dynamic Tail',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 190,
       text: 'This attack also does 60 damage to 1 of your Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
@@ -66,29 +66,33 @@ export class DrapionV extends PokemonCard {
       }
 
       try {
-        const powerEffect = new PowerEffect(opponent, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
       } catch {
         return state;
       }
 
-            // Check opponent's benched Pokemon
-            opponent.bench.forEach(cardList => {
-              cardList.cards.forEach(card => {
-                if (card instanceof PokemonCard &&
-                  (card.tags.includes(CardTag.FUSION_STRIKE) ||
-                    card.tags.includes(CardTag.RAPID_STRIKE) ||
-                    card.tags.includes(CardTag.SINGLE_STRIKE))) {
-                  wildStyleCount += 1;
-                }
-              });
-            });
-      
-            // Reduce attack cost by removing 1 Colorless energy for each counted Pokemon
-            const attackCost = this.attacks[0].cost;
-            const colorlessToRemove = wildStyleCount;
-            this.attacks[0].cost = attackCost.filter(c => c !== CardType.COLORLESS).slice(0, -colorlessToRemove);
+      // Check opponent's benched Pokemon
+      opponent.bench.forEach(cardList => {
+        cardList.cards.forEach(card => {
+          if (card instanceof PokemonCard &&
+            (card.tags.includes(CardTag.FUSION_STRIKE) ||
+              card.tags.includes(CardTag.RAPID_STRIKE) ||
+              card.tags.includes(CardTag.SINGLE_STRIKE))) {
+            wildStyleCount += 1;
           }
-          return state;
-        }
-      }
+        });
+      });
+
+      // Reduce attack cost by removing 1 Colorless energy for each counted Pokemon
+      const attackCost = this.attacks[0].cost;
+      const colorlessToRemove = wildStyleCount;
+      this.attacks[0].cost = attackCost.filter(c => c !== CardType.COLORLESS).slice(0, -colorlessToRemove);
+    }
+    return state;
+  }
+}

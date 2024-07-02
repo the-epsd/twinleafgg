@@ -82,7 +82,7 @@ class RegidragoVSTAR extends pokemon_card_1.PokemonCard {
             player.usedVSTAR = true;
             player.deck.moveTo(player.discard, 7);
             let cards = [];
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 1, max: 2, allowCancel: true }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 1, max: 2, allowCancel: false }), selected => {
                 cards = selected || [];
                 cards.forEach((card, index) => {
                     player.discard.moveCardTo(card, player.hand);

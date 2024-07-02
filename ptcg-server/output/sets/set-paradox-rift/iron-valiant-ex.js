@@ -59,11 +59,15 @@ class IronValiantex extends pokemon_card_1.PokemonCard {
     //       //   throw new GameError(GameMessage.CANNOT_USE_ATTACK);
     //       // }
     //       try {
-    //         const powerEffect = new PowerEffect(opponent, this.powers[0], this);
-    //         store.reduceEffect(state, powerEffect);
-    //       } catch {
-    //         return state;
-    //       }
+    //   const stub = new PowerEffect(player, {
+    //     name: 'test',
+    //     powerType: PowerType.ABILITY,
+    //     text: ''
+    //   }, this);
+    //   store.reduceEffect(state, stub);
+    // } catch {
+    //   return state;
+    // }
     //       if (player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
     //         console.log('attack blocked');
     //         return state;
