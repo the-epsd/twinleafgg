@@ -100,7 +100,7 @@ export class Blacksmith extends TrainerCard {
           player.discard.moveCardTo(transfer.card, target);
         }
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        player.supporterTurn = 1;
+        
       });
     }
 

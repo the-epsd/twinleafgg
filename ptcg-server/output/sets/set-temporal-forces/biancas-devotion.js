@@ -38,7 +38,6 @@ class BiancasDevotion extends trainer_card_1.TrainerCard {
                 const cards = cardList.cards.filter(c => c instanceof __1.EnergyCard);
                 cardList.moveCardsTo(cards, player.discard);
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                player.supporterTurn = 1;
             });
             return state;
         }

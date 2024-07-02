@@ -25,7 +25,6 @@ function* playCard(next, store, state, self, effect) {
     }
     player.deck.moveTo(player.hand, 6);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn = 1;
     return state;
 }
 class Cynthia extends trainer_card_1.TrainerCard {

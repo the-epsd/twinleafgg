@@ -39,7 +39,7 @@ function* playCard(next, store, state, self, effect) {
     });
     player.discard.moveCardsTo(cards, player.hand);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn = 1;
+    
 }
 class LanasAssistance extends trainer_card_1.TrainerCard {
     constructor() {

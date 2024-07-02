@@ -41,7 +41,6 @@ class TeamStarGrunt extends trainer_card_1.TrainerCard {
                     target.moveCardsTo(energy, deckTop);
                     deckTop.moveToTopOfDestination(opponent.deck);
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                    player.supporterTurn = 1;
                 }
             });
             return state;

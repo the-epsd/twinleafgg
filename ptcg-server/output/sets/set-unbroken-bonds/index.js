@@ -8,6 +8,7 @@ exports.setUnbrokenBonds = [
     new card_images_1.EspurrArt(),
     new card_images_1.GreensExplorationArt(),
     new card_images_1.HitmontopArt(),
+    new card_images_1.LtSurgesStrategyArt(),
     new card_images_1.MartialArtsDojoArt(),
     new card_images_1.MewArt(),
     new card_images_1.MewtwoArt(),

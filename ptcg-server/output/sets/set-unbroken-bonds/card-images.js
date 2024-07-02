@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MartialArtsDojoArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.EspurrArt = exports.CleffaArt = exports.ArcanineArt = void 0;
+exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MartialArtsDojoArt = exports.LtSurgesStrategyArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.EspurrArt = exports.CleffaArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
 const espurr_1 = require("./espurr");
 const greens_exploration_1 = require("./greens-exploration");
 const hitmontop_1 = require("./hitmontop");
+const lt_surges_strategy_1 = require("./lt-surges-strategy");
 const martial_arts_dojo_1 = require("./martial-arts-dojo");
 const mew_1 = require("./mew");
 const mewtwo_1 = require("./mewtwo");
@@ -50,6 +51,13 @@ class HitmontopArt extends hitmontop_1.Hitmontop {
     }
 }
 exports.HitmontopArt = HitmontopArt;
+class LtSurgesStrategyArt extends lt_surges_strategy_1.LtSurgesStrategy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_178_R_EN.png';
+    }
+}
+exports.LtSurgesStrategyArt = LtSurgesStrategyArt;
 class MartialArtsDojoArt extends martial_arts_dojo_1.MartialArtsDojo {
     constructor() {
         super(...arguments);

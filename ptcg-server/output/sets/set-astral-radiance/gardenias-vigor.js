@@ -43,7 +43,6 @@ class GardeniasVigor extends trainer_card_1.TrainerCard {
                     const attachEnergyEffect = new play_card_effects_1.AttachEnergyEffect(player, energyCard, target);
                     store.reduceEffect(state, attachEnergyEffect);
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                    player.supporterTurn = 1;
                 }
             });
         }

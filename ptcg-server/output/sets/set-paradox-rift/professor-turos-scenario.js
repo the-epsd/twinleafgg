@@ -39,7 +39,6 @@ class ProfessorTurosScenario extends trainer_card_1.TrainerCard {
                     cardList.clearEffects();
                     cardList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                    player.supporterTurn = 1;
                 }
             });
         }

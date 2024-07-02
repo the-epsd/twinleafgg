@@ -49,6 +49,7 @@ import { SupereffectiveGlasses } from './supereffective-glasses';
 import { SwitchCart } from './switch-cart';
 import { TempleofSinnoh } from './temple-of-sinnoh';
 import { TrekkingShoes } from './trekking-shoes';
+import { Ursaluna } from './ursaluna';
 import { WyrdeerV } from './wyrdeer-v';
 export declare class AdamanArt extends Adaman {
     cardImage: string;
@@ -201,6 +202,9 @@ export declare class TempleofSinnohArt extends TempleofSinnoh {
     cardImage: string;
 }
 export declare class TrekkingShoesArt extends TrekkingShoes {
+    cardImage: string;
+}
+export declare class UrsalunaArt extends Ursaluna {
     cardImage: string;
 }
 export declare class WyrdeerVArt extends WyrdeerV {

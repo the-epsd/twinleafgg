@@ -52,7 +52,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     deckTop.moveCardsTo(selected, player.hand);
     deckTop.moveTo(player.deck);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn = 1;
+    
     
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);

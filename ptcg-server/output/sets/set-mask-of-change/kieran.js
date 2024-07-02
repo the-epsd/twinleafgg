@@ -53,7 +53,7 @@ function* playCard(next, store, state, self, effect) {
                     return state;
                 }
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                player.supporterTurn = 1;
+                
             }
         }
     ];

@@ -54,21 +54,22 @@ export class TechnicalMachineBlindside extends TrainerCard {
       effect.attacks.push(this.attacks[0]);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.active.tool) {
+    if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      const tool = effect.player.active.tool;
+      
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
+        if (cardList.cards.includes(this)) {
+          try {
+            const toolEffect = new ToolEffect(player, this);
+            store.reduceEffect(state, toolEffect);
+          } catch {
+            return state;
+          }
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
-
-      if (tool.name === this.name) {
-        player.active.moveCardTo(tool, player.discard);
-        player.active.tool = undefined;
-      }
+          cardList.moveCardTo(this, player.discard);
+          cardList.tool = undefined;
+        }
+      });
 
       return state;
     }

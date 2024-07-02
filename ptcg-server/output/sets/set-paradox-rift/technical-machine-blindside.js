@@ -42,20 +42,21 @@ class TechnicalMachineBlindside extends trainer_card_1.TrainerCard {
             }
             effect.attacks.push(this.attacks[0]);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
-            const tool = effect.player.active.tool;
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_c) {
-                return state;
-            }
-            if (tool.name === this.name) {
-                player.active.moveCardTo(tool, player.discard);
-                player.active.tool = undefined;
-            }
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
+                if (cardList.cards.includes(this)) {
+                    try {
+                        const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                        store.reduceEffect(state, toolEffect);
+                    }
+                    catch (_a) {
+                        return state;
+                    }
+                    cardList.moveCardTo(this, player.discard);
+                    cardList.tool = undefined;
+                }
+            });
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -65,7 +66,7 @@ class TechnicalMachineBlindside extends trainer_card_1.TrainerCard {
                 const toolEffect = new play_card_effects_1.ToolEffect(player, this);
                 store.reduceEffect(state, toolEffect);
             }
-            catch (_d) {
+            catch (_c) {
                 return state;
             }
             const blocked = [];

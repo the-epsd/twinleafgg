@@ -6,6 +6,8 @@ import { Lugia } from './lugia';
 import { PowerfulColorlessEnergy } from './powerful-colorless-energy';
 import { RoseTower } from './rose-tower';
 import { TapuKoko } from './tapu-koko';
+import { Teddiursa } from './teddiursa';
+import { Ursaring } from './ursaring';
 export declare class BirdKeeperArt extends BirdKeeper {
     cardImage: string;
 }
@@ -28,5 +30,11 @@ export declare class RoseTowerArt extends RoseTower {
     cardImage: string;
 }
 export declare class TapuKokoArt extends TapuKoko {
+    cardImage: string;
+}
+export declare class TeddiursaArt extends Teddiursa {
+    cardImage: string;
+}
+export declare class UrsaringArt extends Ursaring {
     cardImage: string;
 }

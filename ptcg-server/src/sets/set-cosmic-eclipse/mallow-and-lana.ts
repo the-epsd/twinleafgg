@@ -65,7 +65,7 @@ export class MallowAndLana extends TrainerCard {
         
         if (player.hand.cards.length < 2) {
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          player.supporterTurn = 1;
+          
           return state;
         }
         
@@ -97,7 +97,7 @@ export class MallowAndLana extends TrainerCard {
           } 
           
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          player.supporterTurn = 1;
+          
         });
       });
     }

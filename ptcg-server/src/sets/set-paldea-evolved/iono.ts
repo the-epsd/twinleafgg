@@ -73,7 +73,7 @@ export class Iono extends TrainerCard {
       opponent.deck.moveTo(opponent.hand, opponent.getPrizeLeft());
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      player.supporterTurn = 1;
+      
 
     }
     

@@ -26,7 +26,6 @@ function* playCard(next, store, state, self, effect) {
     }
     player.deck.moveTo(player.hand, 8);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn = 1;
     const endTurnEffect = new game_phase_effects_1.EndTurnEffect(player);
     store.reduceEffect(state, endTurnEffect);
     return state;

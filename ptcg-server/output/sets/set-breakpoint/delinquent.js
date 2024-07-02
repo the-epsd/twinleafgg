@@ -38,7 +38,6 @@ function* playCard(next, store, state, self, effect) {
         });
     }
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn = 1;
 }
 class Delinquent extends trainer_card_1.TrainerCard {
     constructor() {

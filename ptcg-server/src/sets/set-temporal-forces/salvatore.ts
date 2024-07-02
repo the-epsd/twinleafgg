@@ -109,7 +109,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   targets[0].pokemonPlayedTurn = state.turn;
 
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  player.supporterTurn = 1;
+  
   
   return state;
 }

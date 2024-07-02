@@ -6,6 +6,7 @@ import { Hitmonlee } from './hitmonlee';
 import { Jirachi } from './jirachi';
 import { Lapras } from './lapras';
 import { Mareep } from './mareep';
+import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
 import { ViridianForest } from './viridian-forest';
 import { Zapdos } from './zapdos';
@@ -31,6 +32,9 @@ export declare class LaprasArt extends Lapras {
     cardImage: string;
 }
 export declare class MareepArt extends Mareep {
+    cardImage: string;
+}
+export declare class PidgeottoArt extends Pidgeotto {
     cardImage: string;
 }
 export declare class PokemonCommunicationArt extends PokemonCommunication {

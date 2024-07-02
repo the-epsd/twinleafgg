@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TateAndLizaArt = exports.SwampertArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.CopycatArt = void 0;
+exports.TateAndLizaArt = exports.SwampertArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.DelcattyArt = exports.CopycatArt = void 0;
 const copycat_1 = require("./copycat");
+const delcatty_1 = require("./delcatty");
 const magcargo_1 = require("./magcargo");
 const marshtomp_1 = require("./marshtomp");
 const mudkip_1 = require("./mudkip");
@@ -14,6 +15,13 @@ class CopycatArt extends copycat_1.Copycat {
     }
 }
 exports.CopycatArt = CopycatArt;
+class DelcattyArt extends delcatty_1.Delcatty {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_121_R_EN.png';
+    }
+}
+exports.DelcattyArt = DelcattyArt;
 class MagcargoArt extends magcargo_1.Magcargo {
     constructor() {
         super(...arguments);

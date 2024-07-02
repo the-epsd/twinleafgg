@@ -57,7 +57,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
   
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  player.supporterTurn = 1;
+  
 }
 
 export class Delinquent extends TrainerCard {

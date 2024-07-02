@@ -78,7 +78,7 @@ export class NinjaBoy extends TrainerCard {
           });
         
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          player.supporterTurn = 1;
+          
           
           store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_WITH_POKEMON_FROM_DECK, { name: player.name, card: target[0].getPokemonCard()!.name, secondCard: cards[0].name });
           

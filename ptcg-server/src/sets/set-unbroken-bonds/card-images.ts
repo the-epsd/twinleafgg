@@ -3,6 +3,7 @@ import { Cleffa } from './cleffa';
 import { Espurr } from './espurr';
 import { GreensExploration } from './greens-exploration';
 import { Hitmontop } from './hitmontop';
+import { LtSurgesStrategy } from './lt-surges-strategy';
 import { MartialArtsDojo } from './martial-arts-dojo';
 import { Mew } from './mew';
 import { Mewtwo } from './mewtwo';
@@ -31,6 +32,10 @@ export class GreensExplorationArt extends GreensExploration {
 
 export class HitmontopArt extends Hitmontop {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_101_R_EN.png';
+}
+
+export class LtSurgesStrategyArt extends LtSurgesStrategy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_178_R_EN.png';
 }
 
 export class MartialArtsDojoArt extends MartialArtsDojo {

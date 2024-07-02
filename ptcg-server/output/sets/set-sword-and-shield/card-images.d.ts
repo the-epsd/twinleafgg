@@ -9,6 +9,7 @@ import { GiantHearth } from './giant-hearth';
 import { Inteleon } from './inteleon';
 import { Marnie } from './marnie';
 import { MetalSaucer } from './metal-saucer';
+import { Oranguru } from './oranguru';
 import { OrdinaryRod } from './ordinary-rod';
 import { QuickBall } from './quick-ball';
 import { Sizzlipede } from './sizzlipede';
@@ -47,6 +48,9 @@ export declare class MarnieArt extends Marnie {
     cardImage: string;
 }
 export declare class MetalSaucerArt extends MetalSaucer {
+    cardImage: string;
+}
+export declare class OranguruArt extends Oranguru {
     cardImage: string;
 }
 export declare class OrdinaryRodArt extends OrdinaryRod {

@@ -36,7 +36,6 @@ class Eri extends trainer_card_1.TrainerCard {
                 player.supporter.moveCardTo(this, player.discard);
                 cards.forEach(card => {
                     opponent.hand.moveCardTo(card, opponent.discard);
-                    player.supporterTurn = 1;
                 });
             });
         }

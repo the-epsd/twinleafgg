@@ -3,6 +3,7 @@ import { Cleffa } from './cleffa';
 import { Espurr } from './espurr';
 import { GreensExploration } from './greens-exploration';
 import { Hitmontop } from './hitmontop';
+import { LtSurgesStrategy } from './lt-surges-strategy';
 import { MartialArtsDojo } from './martial-arts-dojo';
 import { Mew } from './mew';
 import { Mewtwo } from './mewtwo';
@@ -25,6 +26,9 @@ export declare class GreensExplorationArt extends GreensExploration {
     cardImage: string;
 }
 export declare class HitmontopArt extends Hitmontop {
+    cardImage: string;
+}
+export declare class LtSurgesStrategyArt extends LtSurgesStrategy {
     cardImage: string;
 }
 export declare class MartialArtsDojoArt extends MartialArtsDojo {

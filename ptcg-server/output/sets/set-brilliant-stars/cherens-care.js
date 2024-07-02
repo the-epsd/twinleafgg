@@ -36,7 +36,6 @@ function* playCard(next, store, state, effect) {
             targets[0].damage = 0;
             targets[0].clearEffects();
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            player.supporterTurn = 1;
         }
     });
 }

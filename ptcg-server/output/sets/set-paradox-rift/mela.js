@@ -51,7 +51,6 @@ function* playCard(next, store, state, self, effect) {
         while (player.hand.cards.length < 6) {
             player.deck.moveTo(player.hand, 1);
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            player.supporterTurn = 1;
         }
         return state;
     });

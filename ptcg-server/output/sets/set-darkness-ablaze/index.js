@@ -11,4 +11,6 @@ exports.setDarknessAblaze = [
     new card_images_1.PowerfulColorlessEnergyArt(),
     new card_images_1.RoseTowerArt(),
     new card_images_1.TapuKokoArt(),
+    new card_images_1.TeddiursaArt(),
+    new card_images_1.UrsaringArt()
 ];

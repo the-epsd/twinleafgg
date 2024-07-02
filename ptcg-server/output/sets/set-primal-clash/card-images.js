@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WailordExArt = exports.TeammatesArt = exports.SilentLabArt = exports.ShieldEnergArt = exports.ScorchedEarthArt = exports.RoughSeasArt = exports.MiloticArt = exports.MaxiesHiddenBallTrickArt = exports.DiveBallArt = exports.ArchiesAceInTheHoleArt = exports.AcroBikeArt = void 0;
+exports.WailordExArt = exports.TeammatesArt = exports.SilentLabArt = exports.ShieldEnergArt = exports.ScorchedEarthArt = exports.RoughSeasArt = exports.MiloticArt = exports.MaxiesHiddenBallTrickArt = exports.DiveBallArt = exports.BunnelbyArt = exports.ArchiesAceInTheHoleArt = exports.AcroBikeArt = void 0;
 const acro_bike_1 = require("./acro-bike");
 const archies_ace_in_the_hole_1 = require("./archies-ace-in-the hole");
+const bunnelby_1 = require("./bunnelby");
 const dive_ball_1 = require("./dive-ball");
 const maxies_hidden_ball_trick_1 = require("./maxies-hidden-ball-trick");
 const milotic_1 = require("./milotic");
@@ -26,6 +27,13 @@ class ArchiesAceInTheHoleArt extends archies_ace_in_the_hole_1.ArchiesAceInTheHo
     }
 }
 exports.ArchiesAceInTheHoleArt = ArchiesAceInTheHoleArt;
+class BunnelbyArt extends bunnelby_1.Bunnelby {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_121_R_EN.png';
+    }
+}
+exports.BunnelbyArt = BunnelbyArt;
 class DiveBallArt extends dive_ball_1.DiveBall {
     constructor() {
         super(...arguments);

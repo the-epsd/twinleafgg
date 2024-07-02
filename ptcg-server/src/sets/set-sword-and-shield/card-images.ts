@@ -9,6 +9,7 @@ import { GiantHearth } from './giant-hearth';
 import { Inteleon } from './inteleon';
 import { Marnie } from './marnie';
 import { MetalSaucer } from './metal-saucer';
+import { Oranguru } from './oranguru';
 import { OrdinaryRod } from './ordinary-rod';
 import { QuickBall } from './quick-ball';
 import { Sizzlipede } from './sizzlipede';
@@ -59,6 +60,10 @@ export class MarnieArt extends Marnie {
 
 export class MetalSaucerArt extends MetalSaucer {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_170_R_EN_LG.png';
+}
+
+export class OranguruArt extends Oranguru {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_148_R_EN.png';
 }
 
 export class OrdinaryRodArt extends OrdinaryRod {

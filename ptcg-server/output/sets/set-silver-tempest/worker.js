@@ -34,7 +34,6 @@ class Worker extends trainer_card_1.TrainerCard {
             }
             player.deck.moveTo(player.hand, 3);
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            player.supporterTurn = 1;
             const stadiumCard = game_1.StateUtils.getStadiumCard(state);
             if (stadiumCard !== undefined) {
                 // Discard Stadium

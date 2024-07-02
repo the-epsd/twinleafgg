@@ -58,7 +58,7 @@ export class TripleAccelerationEnergy extends EnergyCard {
       }
 
       if (!!attachedTo && attachedTo instanceof PokemonCard && attachedTo.stage !== Stage.BASIC && attachedTo.stage !== Stage.RESTORED) {
-        effect.energyMap.push({ card: this, provides: [ CardType.ANY, CardType.ANY, CardType.ANY ] });
+        effect.energyMap.push({ card: this, provides: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS] });
       }
       
       return state;

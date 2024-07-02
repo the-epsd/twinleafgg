@@ -79,7 +79,6 @@ function* playCard(next, store, state, effect) {
     targets[0].clearEffects();
     targets[0].pokemonPlayedTurn = state.turn;
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn = 1;
     return state;
 }
 class Salvatore extends trainer_card_1.TrainerCard {

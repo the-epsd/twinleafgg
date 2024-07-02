@@ -1,15 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Magcargo = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
-const pokemon_types_1 = require("../../game/store/card/pokemon-types");
-const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_1 = require("../../game");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
-const card_list_1 = require("../../game/store/state/card-list");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const pokemon_types_1 = require("../../game/store/card/pokemon-types");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
+const card_list_1 = require("../../game/store/state/card-list");
 function* useSmoothOver(next, store, state, self, effect) {
     const player = effect.player;
     let cards = [];
@@ -22,6 +23,11 @@ function* useSmoothOver(next, store, state, self, effect) {
         next();
     });
     player.deck.moveCardsTo(cards, deckTop);
+    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === self) {
+            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+        }
+    });
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
         if (order === null) {

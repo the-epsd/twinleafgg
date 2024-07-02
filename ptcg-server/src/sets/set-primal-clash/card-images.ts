@@ -1,5 +1,6 @@
 import { AcroBike } from './acro-bike';
 import { ArchiesAceInTheHole } from './archies-ace-in-the hole';
+import { Bunnelby } from './bunnelby';
 import { DiveBall } from './dive-ball';
 import { MaxiesHiddenBallTrick } from './maxies-hidden-ball-trick';
 import { Milotic } from './milotic';
@@ -16,6 +17,10 @@ export class AcroBikeArt extends AcroBike {
 
 export class ArchiesAceInTheHoleArt extends ArchiesAceInTheHole {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_124_R_EN.png';
+}
+
+export class BunnelbyArt extends Bunnelby {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_121_R_EN.png'; 
 }
 
 export class DiveBallArt extends DiveBall {

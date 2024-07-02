@@ -11,6 +11,7 @@ exports.setTeamUp = [
     new card_images_1.JirachiArt(),
     new card_images_1.LaprasArt(),
     new card_images_1.MareepArt(),
+    new card_images_1.PidgeottoArt(),
     new card_images_1.PokemonCommunicationArt(),
     new card_images_1.ViridianForestArt(),
     new card_images_1.ZapdosArt(),

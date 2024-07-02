@@ -43,7 +43,6 @@ class Judge extends trainer_card_1.TrainerCard {
                 player.deck.moveTo(player.hand, 4);
                 opponent.deck.moveTo(opponent.hand, 4);
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                player.supporterTurn = 1;
             });
         }
         return state;

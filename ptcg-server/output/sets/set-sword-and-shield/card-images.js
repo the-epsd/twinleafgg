@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinccinoArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
+exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.OranguruArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinccinoArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
 const air_balloon_1 = require("./air-balloon");
 const aurora_energy_1 = require("./aurora-energy");
 const cinccino_1 = require("./cinccino");
@@ -12,6 +12,7 @@ const giant_hearth_1 = require("./giant-hearth");
 const inteleon_1 = require("./inteleon");
 const marnie_1 = require("./marnie");
 const metal_saucer_1 = require("./metal-saucer");
+const oranguru_1 = require("./oranguru");
 const ordinary_rod_1 = require("./ordinary-rod");
 const quick_ball_1 = require("./quick-ball");
 const sizzlipede_1 = require("./sizzlipede");
@@ -96,6 +97,13 @@ class MetalSaucerArt extends metal_saucer_1.MetalSaucer {
     }
 }
 exports.MetalSaucerArt = MetalSaucerArt;
+class OranguruArt extends oranguru_1.Oranguru {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_148_R_EN.png';
+    }
+}
+exports.OranguruArt = OranguruArt;
 class OrdinaryRodArt extends ordinary_rod_1.OrdinaryRod {
     constructor() {
         super(...arguments);

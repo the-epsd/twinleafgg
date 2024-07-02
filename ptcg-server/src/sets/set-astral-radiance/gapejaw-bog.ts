@@ -1,10 +1,8 @@
-import { TrainerCard } from '../../game/store/card/trainer-card';
+import { GameLog, State, StateUtils, StoreLike } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class GapejawBog extends TrainerCard {
 
@@ -26,12 +24,18 @@ export class GapejawBog extends TrainerCard {
 
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlayPokemonEffect) {
-      const damageEffect = new PutDamageEffect(effect as unknown as AttackEffect, 20);
-      damageEffect.target = effect.target;
-      store.reduceEffect(state, damageEffect);
+    if (effect instanceof PlayPokemonEffect && StateUtils.getStadiumCard(state) === this) {
+      if (effect.target.cards.length > 0) {
+        return state;
+      }
+      
+      const owner = StateUtils.findOwner(state, effect.target);
+      
+      store.log(state, GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, { name: owner.name, damage: 20, target: effect.pokemonCard.name, effect: this.name });
+      
+      effect.target.damage += 20;
+      return state;
     }
-
 
     return state;
   }

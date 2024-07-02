@@ -1,4 +1,5 @@
 import { Copycat } from './copycat';
+import { Delcatty } from './delcatty';
 import { Magcargo } from './magcargo';
 import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
@@ -7,6 +8,10 @@ import { TateAndLiza } from './tate-and-liza';
 
 export class CopycatArt extends Copycat {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_127_R_EN_LG.png';
+}
+
+export class DelcattyArt extends Delcatty {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_121_R_EN.png';
 }
 
 export class MagcargoArt extends Magcargo {
