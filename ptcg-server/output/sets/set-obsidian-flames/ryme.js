@@ -33,7 +33,6 @@ class Ryme extends trainer_card_1.TrainerCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             if (!opponent.bench.some(c => c.cards.length > 0)) {
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                player.supporterTurn += 1;
                 return state;
             }
             return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), results => {
@@ -42,7 +41,6 @@ class Ryme extends trainer_card_1.TrainerCard {
                     opponent.switchPokemon(results[0]);
                 }
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                player.supporterTurn += 1;
                 return state;
             });
         }

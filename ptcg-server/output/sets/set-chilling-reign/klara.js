@@ -49,7 +49,6 @@ function* playCard(next, store, state, self, effect) {
         store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
     });
     player.discard.moveCardsTo(cards, player.hand);
-    player.supporterTurn += 1;
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     if (cards.length > 0) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());

@@ -73,7 +73,6 @@ class GreensExploration extends trainer_card_1.TrainerCard {
                     state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
                 }
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                player.supporterTurn += 1;
                 return state;
             });
         }

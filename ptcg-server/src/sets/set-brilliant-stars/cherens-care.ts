@@ -51,7 +51,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       targets[0].damage = 0;
       targets[0].clearEffects();
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      player.supporterTurn += 1;
+      
     }
   });
 }

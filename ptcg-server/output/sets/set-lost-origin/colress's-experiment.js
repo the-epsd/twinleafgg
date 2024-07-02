@@ -37,7 +37,6 @@ class ColresssExperiment extends trainer_card_1.TrainerCard {
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.lostzone);
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                player.supporterTurn += 1;
                 return state;
             });
         }

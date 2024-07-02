@@ -91,7 +91,7 @@ export class Giacomo extends TrainerCard {
       }
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      player.supporterTurn += 1;
+      
       
       return state;
     }

@@ -30,7 +30,6 @@ function* playCard(next, store, state, effect) {
     player.switchPokemon(targets[0]);
     player.deck.moveTo(player.hand, 3);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn += 1;
     return state;
 }
 class BirdKeeper extends trainer_card_1.TrainerCard {

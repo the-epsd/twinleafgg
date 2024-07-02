@@ -46,7 +46,7 @@ export class Nemona extends TrainerCard {
 
       player.deck.moveTo(player.hand, 3);
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      player.supporterTurn += 1;
+      
     }
 
     return state;

@@ -45,7 +45,6 @@ class Marnie extends trainer_card_1.TrainerCard {
             player.deck.moveTo(player.hand, Math.min(5, player.deck.cards.length));
             opponent.deck.moveTo(opponent.hand, Math.min(4, opponent.deck.cards.length));
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            player.supporterTurn += 1;
         }
         return state;
     }

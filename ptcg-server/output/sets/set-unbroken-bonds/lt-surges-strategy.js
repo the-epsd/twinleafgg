@@ -26,10 +26,10 @@ class LtSurgesStrategy extends trainer_card_1.TrainerCard {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             if (this.playedSurgeThisTurn) {
-                player.supporterTurn += 1;
             }
             else {
-                player.supporterTurn = -1;
+                // going to be increased by one in the play-trainer file
+                player.supporterTurn = -2;
                 player.hand.moveCardTo(this, player.discard);
                 this.playedSurgeThisTurn = true;
             }

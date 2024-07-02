@@ -35,7 +35,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   if (!player.discard.cards.some(c => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER)) {
     player.deck.moveTo(player.hand, 3);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn += 1;
+    
     return state;
   }
 
@@ -82,7 +82,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   player.deck.moveTo(player.hand, 3);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  player.supporterTurn += 1;
+  
   return state;
 }
 

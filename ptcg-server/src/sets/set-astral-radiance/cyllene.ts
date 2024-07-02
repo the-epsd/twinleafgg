@@ -85,7 +85,7 @@ export class Cyllene extends TrainerCard {
             deckTop.applyOrder(order);
             deckTop.moveToTopOfDestination(player.deck);
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            player.supporterTurn += 1;
+            
     
             if (cards.length > 0) {
               return store.prompt(state, new ShowCardsPrompt(

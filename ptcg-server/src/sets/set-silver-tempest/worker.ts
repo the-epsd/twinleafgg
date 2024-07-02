@@ -47,7 +47,7 @@ export class Worker extends TrainerCard {
 
       player.deck.moveTo(player.hand, 3);
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      player.supporterTurn += 1;
+      
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard !== undefined) {
   

@@ -48,7 +48,7 @@ export class GuzmaAndHala extends TrainerCard {
       effect.preventDefault = true;
         
       if (player.hand.cards.length < 2) {
-        player.supporterTurn += 1;
+        
       } 
         
       state = store.prompt(state, new ConfirmPrompt(
@@ -128,7 +128,7 @@ export class GuzmaAndHala extends TrainerCard {
         });
 
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        player.supporterTurn += 1;
+        
       });
     }
     

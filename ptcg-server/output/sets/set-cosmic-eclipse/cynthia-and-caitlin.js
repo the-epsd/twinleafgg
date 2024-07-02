@@ -25,7 +25,6 @@ function* playCard(next, store, state, self, effect) {
     if (!player.discard.cards.some(c => c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.SUPPORTER)) {
         player.deck.moveTo(player.hand, 3);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        player.supporterTurn += 1;
         return state;
     }
     // prepare card list without Self
@@ -52,7 +51,6 @@ function* playCard(next, store, state, self, effect) {
     player.discard.moveCardsTo(recovered, player.hand);
     player.deck.moveTo(player.hand, 3);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    player.supporterTurn += 1;
     return state;
 }
 class CynthiaAndCaitlin extends trainer_card_1.TrainerCard {

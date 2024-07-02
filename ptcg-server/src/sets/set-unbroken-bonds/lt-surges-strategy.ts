@@ -37,9 +37,10 @@ export class LtSurgesStrategy extends TrainerCard {
       }
       
       if (this.playedSurgeThisTurn) {
-        player.supporterTurn += 1;
+        
       } else {
-        player.supporterTurn = -1;
+        // going to be increased by one in the play-trainer file
+        player.supporterTurn = -2;
         player.hand.moveCardTo(this, player.discard);
         
         this.playedSurgeThisTurn = true;        

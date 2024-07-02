@@ -39,7 +39,6 @@ class Volo extends game_1.TrainerCard {
                     const cardsToDiscard = pokemonToDiscard.cards;
                     pokemonToDiscard.moveCardsTo(cardsToDiscard, player.discard);
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                    player.supporterTurn += 1;
                 }
             }
         }

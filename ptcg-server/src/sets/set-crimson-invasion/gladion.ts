@@ -69,7 +69,7 @@ export class Gladion extends TrainerCard {
         prizes.forEach(p => { p.isSecret = true; });  
         player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);                  
         
-        player.supporterTurn += 1;
+        
       });
 
       return state;

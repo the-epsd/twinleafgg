@@ -35,7 +35,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   player.deck.moveTo(player.hand, 8);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  player.supporterTurn += 1;
+  
   const endTurnEffect = new EndTurnEffect(player);
   store.reduceEffect(state, endTurnEffect);
   return state;

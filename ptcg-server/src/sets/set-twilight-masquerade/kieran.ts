@@ -60,7 +60,7 @@ export class Kieran extends TrainerCard {
               const cardList = result[0];
               player.switchPokemon(cardList);
               player.supporter.moveCardTo(effect.trainerCard, player.discard);
-              player.supporterTurn += 1;
+              
             });
           }
         },

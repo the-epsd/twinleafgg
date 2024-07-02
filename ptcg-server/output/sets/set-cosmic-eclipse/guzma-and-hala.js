@@ -33,7 +33,6 @@ class GuzmaAndHala extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             if (player.hand.cards.length < 2) {
-                player.supporterTurn += 1;
             }
             state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_message_1.GameMessage.WANT_TO_DISCARD_CARDS), wantToUse => {
                 // taking stadium + special energy + tool
@@ -76,7 +75,6 @@ class GuzmaAndHala extends trainer_card_1.TrainerCard {
                     return state;
                 });
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                player.supporterTurn += 1;
             });
         }
         return state;

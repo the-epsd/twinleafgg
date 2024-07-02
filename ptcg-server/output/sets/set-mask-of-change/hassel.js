@@ -37,7 +37,7 @@ function* playCard(next, store, state, self, effect) {
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.deck);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        player.supporterTurn += 1;
+        
         return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
             return state;
