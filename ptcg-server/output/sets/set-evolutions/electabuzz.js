@@ -15,6 +15,7 @@ class Electabuzz extends pokemon_card_1.PokemonCard {
         this.hp = 70;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.resistance = [{ type: card_types_1.CardType.METAL, value: -20 }];
         this.attacks = [
             {
                 name: 'Thundershock',

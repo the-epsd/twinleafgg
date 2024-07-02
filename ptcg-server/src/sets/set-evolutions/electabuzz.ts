@@ -18,6 +18,8 @@ export class Electabuzz extends PokemonCard {
   public weakness = [{ type: CardType.FIGHTING }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  
+  public resistance = [{ type: CardType.METAL, value: -20 }];
 
   public attacks = [
     {

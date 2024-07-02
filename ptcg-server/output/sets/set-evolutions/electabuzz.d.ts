@@ -11,6 +11,10 @@ export declare class Electabuzz extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
+    resistance: {
+        type: CardType;
+        value: number;
+    }[];
     attacks: {
         name: string;
         cost: CardType[];
