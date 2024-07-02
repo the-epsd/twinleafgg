@@ -32,16 +32,12 @@ function* playCard(next, store, state, effect) {
         transfers = result || [];
         next();
     });
-    // Cancelled by the user
-    if (transfers.length === 0) {
-        return state;
-    }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     transfers.forEach(transfer => {
         const source = state_utils_1.StateUtils.getTarget(state, player, transfer.from);
         const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
         source.moveCardTo(transfer.card, target);
     });
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class EnergySwitch extends trainer_card_1.TrainerCard {

@@ -17,8 +17,12 @@ function* useLeParfum(next: Function, store: StoreLike, state: State,
 
   // Try to reduce PowerEffect, to check if something is blocking our ability
   try {
-    const powerEffect = new PowerEffect(player, self.powers[0], self);
-    store.reduceEffect(state, powerEffect);
+    const stub = new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.ABILITY,
+      text: ''
+    }, self);
+    store.reduceEffect(state, stub);
   } catch {
     return state;
   }
@@ -27,7 +31,7 @@ function* useLeParfum(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { },
+    {},
     { min: 1, max: 1, allowCancel: true }
   ), selected => {
     const cards = selected || [];
@@ -55,7 +59,7 @@ export class Roserade extends PokemonCard {
 
   public resistance = [{ type: CardType.WATER, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Le Parfum',
@@ -68,7 +72,7 @@ export class Roserade extends PokemonCard {
   public attacks = [
     {
       name: 'Squeeze',
-      cost: [ CardType.GRASS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.COLORLESS],
       damage: 30,
       text: 'Flip a coin. If heads, this attack does 20 more damage and ' +
         'the Defending Pokemon is now Paralyzed.'

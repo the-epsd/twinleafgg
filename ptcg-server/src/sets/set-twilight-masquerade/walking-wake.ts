@@ -11,7 +11,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class WalkingWake extends PokemonCard {
 
-  public tags = [ CardTag.ANCIENT ];
+  public tags = [CardTag.ANCIENT];
 
   public regulationMark = 'H';
 
@@ -21,21 +21,21 @@ export class WalkingWake extends PokemonCard {
 
   public hp: number = 130;
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Aurora Gain',
-      cost: [ CardType.WATER ],
+      cost: [CardType.WATER],
       damage: 20,
       text: 'Heal 20 damage from this Pokémon.'
     },
     {
-        name: 'Undulating Slice',
-        cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
-        damage: 0,
-        text: 'Put up to 9 damage counters on this Pokémon. This attack does 20 damage for each damage counter you placed in this way.'
-      }
+      name: 'Undulating Slice',
+      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+      damage: 0,
+      text: 'Put up to 9 damage counters on this Pokémon. This attack does 20 damage for each damage counter you placed in this way.'
+    }
   ];
 
   public set: string = 'TWM';
@@ -49,40 +49,40 @@ export class WalkingWake extends PokemonCard {
   public fullName: string = 'Walking Wake TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      
+
       const healEffect = new HealEffect(player, effect.player.active, 20);
       state = store.reduceEffect(state, healEffect);
-      
+
       return state;
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const generator = attack(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-    
+
     return state;
   }
 }
 
 function* attack(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
-    
+
   const maxAllowedDamage: DamageMap[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
     const checkHpEffect = new CheckHpEffect(player, cardList);
     store.reduceEffect(state, checkHpEffect);
     maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 90 });
   });
-    
+
   return store.prompt(state, new PutDamagePrompt(
     effect.player.id,
     GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE ],
+    [SlotType.ACTIVE],
     90,
     maxAllowedDamage,
     { allowCancel: false, allowPlacePartialDamage: true }

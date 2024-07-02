@@ -41,11 +41,14 @@ class CastformSunnyForm extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckAttackCostEffect) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
             if (player.discard.cards.filter(c => c instanceof game_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL).length >= 8) {
                 try {
-                    const powerEffect = new game_effects_1.PowerEffect(opponent, this.powers[0], this);
-                    store.reduceEffect(state, powerEffect);
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: game_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
                 }
                 catch (_a) {
                     return state;

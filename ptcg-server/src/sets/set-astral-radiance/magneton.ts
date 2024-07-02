@@ -11,8 +11,9 @@ import { PlayerType, SlotType } from '../../game/store/actions/play-card-action'
 
 export class Magneton extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public regulationMark = 'F';
+  public evolvesFrom: string = 'Magnemite';
   public cardType: CardType = CardType.METAL;
+  public regulationMark = 'F';
   public hp: number = 90;
   public weakness = [{ type: CardType.FIRE }];
   public resistance = [{ type: CardType.GRASS, value: -30 }];
@@ -26,8 +27,8 @@ export class Magneton extends PokemonCard {
   }];
 
   public set: string = 'ASR';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '106';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magneton';
   public fullName: string = 'Magneton ASR';
 

@@ -29,6 +29,7 @@ export class TrekkingShoes extends TrainerCard {
     'Look at the top card of your deck. You may put that card into your hand. If you don\'t, discard that card and draw a card.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
@@ -52,19 +53,16 @@ export class TrekkingShoes extends TrainerCard {
         if (selected !== null) {
           // Add card to hand
           deckTop.moveCardsTo(deckTop.cards, player.hand);
-
-          player.supporter.moveCardTo(this, player.discard);
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
         } else {
+
           // Discard card
           deckTop.moveTo(player.discard);
 
           // Draw a card
-
           player.deck.moveTo(player.hand, 1);
-
-          player.supporter.moveCardTo(this, player.discard);
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
-        return state;
       });
     }
     return state;

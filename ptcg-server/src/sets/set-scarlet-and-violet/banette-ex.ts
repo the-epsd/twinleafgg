@@ -10,8 +10,8 @@ export class Banetteex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
-  
+  public tags = [CardTag.POKEMON_ex];
+
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Shuppet';
@@ -31,7 +31,7 @@ export class Banetteex extends PokemonCard {
       name: 'Everlasting Darkness',
       cost: [CardType.PSYCHIC],
       damage: 30,
-      text: 'Flip a coin. If heads, during your opponent\'s next turn, they can\'t play any Item cards from their hand.',
+      text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.',
     },
     {
       name: 'Poltergeist',
@@ -51,7 +51,7 @@ export class Banetteex extends PokemonCard {
   public name: string = 'Banette ex';
 
   public fullName: string = 'Banette ex SVI';
-  
+
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -80,18 +80,18 @@ export class Banetteex extends PokemonCard {
 
       });
     }
-      
+
     if (effect instanceof PlayItemEffect) {
       const player = effect.player;
       if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
-  
+
     if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
     }
     return state;
   }
 }
-  
+

@@ -18,7 +18,7 @@ export class Marshadow extends PokemonCard {
   public weakness = [{ type: CardType.DARK }];
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Let Loose',
@@ -28,7 +28,7 @@ export class Marshadow extends PokemonCard {
 
   public attacks = [{
     name: 'Shadow Punch',
-    cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.COLORLESS],
     damage: 30,
     text: 'This attack\'s damage isn\'t affected by Resistance.'
   }];
@@ -41,12 +41,16 @@ export class Marshadow extends PokemonCard {
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
-        const powerEffect = new PowerEffect(player, effect.pokemonCard.powers[0], effect.pokemonCard);
-        store.reduceEffect(state, powerEffect);
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
       } catch {
         return state;
       }
-      
+
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_USE_ABILITY,

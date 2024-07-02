@@ -119,7 +119,7 @@ exports.DrizzileArt = DrizzileArt;
 class DynaTreeHillArt extends dyna_tree_hill_1.DynaTreeHill {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_042_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_135_R_EN_LG.png';
     }
 }
 exports.DynaTreeHillArt = DynaTreeHillArt;

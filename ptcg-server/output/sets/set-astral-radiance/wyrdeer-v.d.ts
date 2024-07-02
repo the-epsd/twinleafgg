@@ -1,7 +1,8 @@
-import { CardType, PokemonCard, PowerType, Stage, State, StoreLike } from '../../game';
+import { CardTag, CardType, PokemonCard, PowerType, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class WyrdeerV extends PokemonCard {
     cardType: CardType;
+    tags: CardTag[];
     hp: number;
     stage: Stage;
     weakness: {

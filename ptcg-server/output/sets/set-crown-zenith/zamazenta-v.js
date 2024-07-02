@@ -10,6 +10,7 @@ class ZamazentaV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.tags = [card_types_1.CardTag.POKEMON_V];
         this.cardType = card_types_1.CardType.METAL;
         this.hp = 220;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];

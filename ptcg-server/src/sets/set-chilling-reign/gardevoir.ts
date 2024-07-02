@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, GameMessage, AttachEnergyPrompt, EnergyCard, SlotType, StateUtils, CardList, GameError } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -9,7 +9,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class Gardevoir extends PokemonCard {
 
-  public stage: Stage = Stage.STAGE_2;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Kirlia';
 
@@ -19,25 +19,25 @@ export class Gardevoir extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Shining Arcana',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, you may look at the top 2 cards ' +
-    'of your deck and attach any number of basic Energy ' +
-    'cards you find there to your Pokémon in any way you' +
-    'like. Put the other cards into your hand.'
+      'of your deck and attach any number of basic Energy ' +
+      'cards you find there to your Pokémon in any way you' +
+      'like. Put the other cards into your hand.'
   }];
 
   public attacks = [
     {
       name: 'Brainwave',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
       text: 'This attack does 30 more damage for each [P] Energy ' +
-      'attached to this Pokémon.'
+        'attached to this Pokémon.'
     }
   ];
 
@@ -63,6 +63,12 @@ export class Gardevoir extends PokemonCard {
       player.marker.removeMarker(this.SHINING_ARCANA_MARKER, this);
     }
 
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.SHINING_ARCANA_MARKER, this);
+      return state;
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
@@ -77,10 +83,10 @@ export class Gardevoir extends PokemonCard {
       });
       effect.damage += energyCount * 30;
     }
-    
+
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      
+
       const player = effect.player;
       const temp = new CardList();
 
@@ -97,21 +103,23 @@ export class Gardevoir extends PokemonCard {
 
       // If no energy cards were drawn, move all cards to hand
       if (energyCardsDrawn.length == 0) {
+        player.marker.addMarker(this.SHINING_ARCANA_MARKER, this);
         temp.cards.slice(0, 2).forEach(card => {
-          temp.moveCardTo(card, player.hand); 
+          temp.moveCardTo(card, player.hand);
         });
-      } else {
-      
+      }
+
+      if (energyCardsDrawn.length > 0) {
 
         // Prompt to attach energy if any were drawn
         return store.prompt(state, new AttachEnergyPrompt(
           player.id,
-          GameMessage.ATTACH_ENERGY_CARDS, 
+          GameMessage.ATTACH_ENERGY_CARDS,
           temp, // Only show drawn energies
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH, SlotType.ACTIVE],
-          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC},
-          {min: 0, max: energyCardsDrawn.length}
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { min: 0, max: energyCardsDrawn.length, allowCancel: false }
         ), transfers => {
 
           //if transfers = 0, put both in hand
@@ -122,7 +130,7 @@ export class Gardevoir extends PokemonCard {
               player.marker.addMarker(this.SHINING_ARCANA_MARKER, this);
             });
           }
-    
+
           // Attach energy based on prompt selection
           if (transfers) {
             for (const transfer of transfers) {
@@ -136,18 +144,11 @@ export class Gardevoir extends PokemonCard {
           }
         });
       }
-
-      if (effect instanceof EndTurnEffect) {
-
-        effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-          if (player instanceof Gardevoir) {
-            player.marker.removeMarker(this.SHINING_ARCANA_MARKER);
-          }
-          return state;
-        });
-        return state;
-      }
-      return state;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
     }
     return state;
   }

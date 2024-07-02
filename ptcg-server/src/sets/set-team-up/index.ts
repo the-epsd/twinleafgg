@@ -1,9 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { AlolanMuk } from './alolan-muk';
-import { BronzorArt, DragoniteArt, HitmonchanArt, HitmonleeArt, JirachiArt, LaprasArt, MareepArt, PokemonCommunicationArt, ViridianForestArt, ZapdosArt } from './card-images';
+import { AlolanMukArt, BronzorArt, DragoniteArt, HitmonchanArt, HitmonleeArt, JirachiArt, LaprasArt, MareepArt, PokemonCommunicationArt, ViridianForestArt, ZapdosArt } from './card-images';
 
 export const setTeamUp: Card[] = [
-  new AlolanMuk(),
+  new AlolanMukArt(),
   new BronzorArt(),
   new DragoniteArt(),
   new HitmonchanArt(),

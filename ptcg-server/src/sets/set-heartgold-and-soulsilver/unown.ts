@@ -3,9 +3,11 @@ import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { PowerType, StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType,
-  PokemonCardList } from '../../game';
-import {PowerEffect} from '../../game/store/effects/game-effects';
+import {
+  PowerType, StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType,
+  PokemonCardList
+} from '../../game';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 function* useReturn(next: Function, store: StoreLike, state: State,
   self: Unown, effect: PlayPokemonEffect): IterableIterator<State> {
@@ -13,8 +15,12 @@ function* useReturn(next: Function, store: StoreLike, state: State,
 
   // Try to reduce PowerEffect, to check if something is blocking our ability
   try {
-    const powerEffect = new PowerEffect(player, self.powers[0], self);
-    store.reduceEffect(state, powerEffect);
+    const stub = new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.ABILITY,
+      text: ''
+    }, self);
+    store.reduceEffect(state, stub);
   } catch {
     return state;
   }
@@ -24,7 +30,7 @@ function* useReturn(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: true }
   ), selection => {
     targets = selection || [];
@@ -50,7 +56,7 @@ export class Unown extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Return',
@@ -63,7 +69,7 @@ export class Unown extends PokemonCard {
   public attacks = [
     {
       name: 'Hidden Power',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 10,
       text: ''
     }

@@ -4,39 +4,6 @@ import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-function* useLostMine(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
-  const player = effect.player;
-    
-  const maxAllowedDamage: DamageMap[] = [];
-  let damageLeft = 0;
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    const checkHpEffect = new CheckHpEffect(player, cardList);
-    store.reduceEffect(state, checkHpEffect);
-    damageLeft += checkHpEffect.hp - cardList.damage;
-    maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
-  });
-    
-  const damage = Math.min(10, 20, 30, 40, 50, 60, 70, damageLeft);
-
-  return store.prompt(state, new PutDamagePrompt(
-    effect.player.id,
-    GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-    PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE ],
-    damage,
-    maxAllowedDamage,
-    { allowCancel: false }
-  ), targets => {
-    const results = targets || [];
-    for (const result of results) {
-      const target = StateUtils.getTarget(state, player, result.target);
-      const putCountersEffect = new PutCountersEffect(effect, result.damage);
-      putCountersEffect.target = target;
-      store.reduceEffect(state, putCountersEffect);
-      effect.damage = damageLeft * 2;
-    }
-  });
-}
 export class Banette extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
@@ -44,17 +11,17 @@ export class Banette extends PokemonCard {
   public regulationMark = 'E';
 
   public tags = [CardTag.SINGLE_STRIKE];
-  
+
   public evolvesFrom = 'Shuppet';
-  
+
   public cardType: CardType = CardType.PSYCHIC;
-  
+
   public hp: number = 80;
 
   public weakness = [{ type: CardType.DARK }];
-  
+
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-  
+
   public retreat = [CardType.COLORLESS];
 
   public attacks = [{
@@ -62,11 +29,11 @@ export class Banette extends PokemonCard {
     cost: [CardType.PSYCHIC],
     damage: 0,
     text: 'Put up to 7 damage counters on this Pokémon. This attack does 20 damage for each damage counter you placed in this way.'
-  }, {  
+  }, {
     name: 'Eerie Light',
     cost: [CardType.PSYCHIC, CardType.COLORLESS],
     damage: 50,
-    text: 'Your opponent\'s Active Pokémon is now Confused.'    
+    text: 'Your opponent\'s Active Pokémon is now Confused.'
   }];
 
   public set: string = 'CRE';
@@ -81,11 +48,41 @@ export class Banette extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useLostMine(() => generator.next(), store, state, effect);
+      const generator = attack(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
 
-
     return state;
   }
+}
+
+function* attack(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+  const player = effect.player;
+
+  const maxAllowedDamage: DamageMap[] = [];
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+    const checkHpEffect = new CheckHpEffect(player, cardList);
+    store.reduceEffect(state, checkHpEffect);
+    maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 70 });
+  });
+
+  return store.prompt(state, new PutDamagePrompt(
+    effect.player.id,
+    GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.ACTIVE],
+    70,
+    maxAllowedDamage,
+    { allowCancel: false, allowPlacePartialDamage: true }
+  ), targets => {
+    const results = targets || [];
+    for (const result of results) {
+      const target = StateUtils.getTarget(state, player, result.target);
+      const putCountersEffect = new PutCountersEffect(effect, result.damage);
+      putCountersEffect.target = target;
+      store.reduceEffect(state, putCountersEffect);
+      effect.damage = result.damage * 2;
+      console.log(effect.damage);
+    }
+  });
 }

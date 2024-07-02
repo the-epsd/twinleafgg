@@ -53,7 +53,7 @@ class RegidragoV extends pokemon_card_1.PokemonCard {
             else {
                 // Prompt to attach energy if any were drawn
                 return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, temp, // Only show drawn energies
-                game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: energyCardsDrawn.length, allowCancel: false }), transfers => {
+                game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: energyCardsDrawn.length, max: energyCardsDrawn.length, allowCancel: false }), transfers => {
                     // Attach energy based on prompt selection
                     if (transfers) {
                         for (const transfer of transfers) {
@@ -66,23 +66,22 @@ class RegidragoV extends pokemon_card_1.PokemonCard {
                     }
                 });
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-                if (!hasBenched) {
-                    return state;
-                }
-                state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
-                    if (!targets || targets.length === 0) {
-                        return;
-                    }
-                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 30);
-                    damageEffect.target = targets[0];
-                    store.reduceEffect(state, damageEffect);
-                });
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+            if (!hasBenched) {
                 return state;
             }
+            state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
+                if (!targets || targets.length === 0) {
+                    return;
+                }
+                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 30);
+                damageEffect.target = targets[0];
+                store.reduceEffect(state, damageEffect);
+            });
             return state;
         }
         return state;

@@ -10,26 +10,26 @@ export class CastformSunnyForm extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'E';
-  
+
   public cardType: CardType = CardType.FIRE;
-  
+
   public hp = 70;
-  
+
   public weakness = [{ type: CardType.WATER }];
-  
+
   public resistance = [];
-  
-  public retreat = [ ];
+
+  public retreat = [];
 
   public powers = [
-    { 
+    {
       name: 'Weather Reading',
       text: 'If you have 8 or more Stadium cards in your discard pile, ignore all Energy in this Pokémon\'s attack costs.',
       powerType: PowerType.ABILITY,
       useWhenInPlay: false,
     }
   ];
-  
+
   public attacks = [
     {
       name: 'High-Pressure Blast',
@@ -50,19 +50,22 @@ export class CastformSunnyForm extends PokemonCard {
   public fullName: string = 'Castform Sunny Form CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       if (player.discard.cards.filter(c => c instanceof TrainerCard && (<TrainerCard>c).trainerType === TrainerType.TOOL).length >= 8) {
         try {
-          const powerEffect = new PowerEffect(opponent, this.powers[0], this);
-          store.reduceEffect(state, powerEffect);
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
         } catch {
           return state;
         }
-        
+
         this.attacks.forEach(attack => {
           attack.cost = [];
         });
@@ -71,9 +74,9 @@ export class CastformSunnyForm extends PokemonCard {
         return state;
       }
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      
+
       const player = effect.player;
       // Check attack cost
       const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
@@ -82,9 +85,9 @@ export class CastformSunnyForm extends PokemonCard {
       // Check attached energy
       const checkEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkEnergy);
-      
+
       const stadiumCard = StateUtils.getStadiumCard(state);
-      
+
       if (stadiumCard !== undefined) {
         const cardList = StateUtils.findCardList(state, stadiumCard);
         const player = StateUtils.findOwner(state, cardList);
@@ -93,7 +96,7 @@ export class CastformSunnyForm extends PokemonCard {
       } else {
         effect.damage = 0;
       }
-      
+
     }
     return state;
   }

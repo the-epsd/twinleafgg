@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ralts = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
-const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Ralts extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -25,7 +26,6 @@ class Ralts extends pokemon_card_1.PokemonCard {
         this.setNumber = '67';
         this.name = 'Ralts';
         this.fullName = 'Ralts SIT';
-        this.MEMORY_SKIP_MARKER = 'MEMORY_SKIP_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -35,24 +35,30 @@ class Ralts extends pokemon_card_1.PokemonCard {
             if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
                 return state;
             }
-            let selected;
-            store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, [pokemonCard], { allowCancel: false }), result => {
-                selected = result;
-            });
-            opponent.active.marker.addMarker(this.MEMORY_SKIP_MARKER, this);
-            if (selected === null) {
-                return state;
-            }
-            store.log(state, game_1.GameLog.LOG_PLAYER_COPIES_ATTACK, {
-                name: player.name,
-                attack: selected.name
-            });
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === selected) {
-                if (effect.opponent.active.marker.hasMarker(this.MEMORY_SKIP_MARKER, this)) {
-                    throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+            store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_DISABLE, [pokemonCard], { allowCancel: false }), result => {
+                result;
+                if (!result) {
+                    return state;
                 }
-            }
+                store.log(state, game_1.GameLog.LOG_PLAYER_DISABLES_ATTACK, {
+                    name: player.name,
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    attack: this.MEMORY_SKIPPED_ATTACK.name
+                });
+                this.MEMORY_SKIPPED_ATTACK = result;
+                opponent.active.marker.addMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
+                return state;
+            });
             return state;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.player.marker.hasMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
+            if (effect.attack === this.MEMORY_SKIPPED_ATTACK) {
+                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+            }
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
+            effect.player.marker.removeMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
+            this.MEMORY_SKIPPED_ATTACK = undefined;
         }
         return state;
     }

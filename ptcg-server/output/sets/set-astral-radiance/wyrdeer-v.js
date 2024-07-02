@@ -10,6 +10,7 @@ class WyrdeerV extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.cardType = game_1.CardType.COLORLESS;
+        this.tags = [game_1.CardTag.POKEMON_V];
         this.hp = 220;
         this.stage = game_1.Stage.BASIC;
         this.weakness = [{ type: game_1.CardType.FIGHTING }];

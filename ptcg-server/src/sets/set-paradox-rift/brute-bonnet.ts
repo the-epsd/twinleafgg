@@ -17,7 +17,7 @@ export class BruteBonnet extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [
     {
@@ -31,7 +31,7 @@ export class BruteBonnet extends PokemonCard {
   public attacks = [
     {
       name: 'Rampaging Hammer',
-      cost: [ CardType.DARK, CardType.DARK, CardType.COLORLESS ],
+      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 120,
       text: 'During your next turn, this Pokémon can\'t attack.'
     }
@@ -85,22 +85,37 @@ export class BruteBonnet extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.marker.hasMarker(this.TOXIC_POWDER_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      let isGarbodorWithToolInPlay = false;
+
+      if (isGarbodorWithToolInPlay == false) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      const active = opponent.active;
-
-      active.addSpecialCondition(SpecialCondition.POISONED);
-      player.active.addSpecialCondition(SpecialCondition.POISONED);
-
-      player.marker.addMarker(this.TOXIC_POWDER_MARKER, this);
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this && cardList.tool && cardList.tool.name === 'Ancient Booster Energy Capsule') {
+          isGarbodorWithToolInPlay = true;
         }
       });
+
+      if (!isGarbodorWithToolInPlay) {
+
+        if (player.marker.hasMarker(this.TOXIC_POWDER_MARKER, this)) {
+          throw new GameError(GameMessage.POWER_ALREADY_USED);
+        }
+
+        const active = opponent.active;
+
+        active.addSpecialCondition(SpecialCondition.POISONED);
+        player.active.addSpecialCondition(SpecialCondition.POISONED);
+
+        player.marker.addMarker(this.TOXIC_POWDER_MARKER, this);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

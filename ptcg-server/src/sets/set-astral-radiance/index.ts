@@ -4,7 +4,7 @@ import { AdamanArt, CancelingCologneArt, CylleneArt, DarkPatchArt, DarkraiVArt, 
 
 
 export const setAstralRadiance: Card[] = [
-  
+
   new AdamanArt(),
   new CancelingCologneArt(),
   new CylleneArt(),
@@ -57,5 +57,5 @@ export const setAstralRadiance: Card[] = [
   new TempleofSinnohArt(),
   new TrekkingShoesArt(),
   new WyrdeerVArt(),
-  
+
 ];

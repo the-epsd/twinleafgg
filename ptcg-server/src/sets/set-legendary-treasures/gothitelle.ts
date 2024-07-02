@@ -23,7 +23,7 @@ export class Gothitelle extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Magic Room',
@@ -34,7 +34,7 @@ export class Gothitelle extends PokemonCard {
 
   public attacks = [{
     name: 'Madkinesis',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 30,
     text: 'Does 20 more damage for each P Energy attached to this Pokemon.'
   }];
@@ -80,8 +80,12 @@ export class Gothitelle extends PokemonCard {
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
-        const powerEffect = new PowerEffect(opponent, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
       } catch {
         return state;
       }

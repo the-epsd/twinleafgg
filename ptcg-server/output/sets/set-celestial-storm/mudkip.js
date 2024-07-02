@@ -29,7 +29,7 @@ class Mudkip extends game_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC, name: 'Water Energy' }, { min: 0, max: 3, allowCancel: false }), cards => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC, name: 'Water Energy' }, { min: 0, max: 3, allowCancel: false }), cards => {
                 cards = cards || [];
                 if (cards.length > 0) {
                     player.deck.moveCardsTo(cards, player.hand);

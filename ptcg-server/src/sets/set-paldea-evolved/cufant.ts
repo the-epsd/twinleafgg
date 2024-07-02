@@ -8,20 +8,20 @@ export class Cufant extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = CardType.METAL;
 
   public hp: number = 90;
 
   public weakness = [{ type: CardType.FIRE }];
-  
-  public resistance: Resistance[] = [{ type: CardType.GRASS, value: -30 }];  
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public resistance: Resistance[] = [{ type: CardType.GRASS, value: -30 }];
+
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Stampede',
-      cost: [ CardType.METAL, CardType.COLORLESS ],
+      cost: [CardType.METAL, CardType.COLORLESS],
       damage: 50,
       text: ''
     }

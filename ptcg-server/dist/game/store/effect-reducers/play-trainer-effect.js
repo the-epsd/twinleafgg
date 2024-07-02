@@ -57,6 +57,7 @@ export function playTrainerReducer(store, state, effect) {
     // Play item card
     if (effect instanceof PlayItemEffect) {
         const playTrainer = new TrainerEffect(effect.player, effect.trainerCard, effect.target);
+        effect.player.hand.moveCardTo(effect.trainerCard, effect.player.supporter);
         state = store.reduceEffect(state, playTrainer);
         store.log(state, GameLog.LOG_PLAYER_PLAYS_ITEM, {
             name: effect.player.name,

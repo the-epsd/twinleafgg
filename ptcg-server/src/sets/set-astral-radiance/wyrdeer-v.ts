@@ -1,4 +1,4 @@
-import { Card, CardType, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { Card, CardTag, CardType, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -10,14 +10,16 @@ export class WyrdeerV extends PokemonCard {
 
   public cardType = CardType.COLORLESS;
 
+  public tags = [CardTag.POKEMON_V];
+
   public hp = 220;
 
   public stage = Stage.BASIC;
-  
+
   public weakness = [{ type: CardType.FIGHTING }];
-  
+
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-  
+
   public powers = [{
     name: 'Frontier Road',
     powerType: PowerType.ABILITY,
@@ -26,7 +28,7 @@ export class WyrdeerV extends PokemonCard {
 
   public attacks = [{
     name: 'Psyshield Bash',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS], 
+    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 40,
     text: 'This attack does 40 damage for each Energy attached to this Pokémon.'
   }];
@@ -42,24 +44,24 @@ export class WyrdeerV extends PokemonCard {
   public name: string = 'Wyrdeer V';
 
   public fullName: string = 'Wyrdeer V ASR';
-  
+
   public ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       this.movedToActiveThisTurn = false;
     }
 
     const cardList = StateUtils.findCardList(state, this);
     const owner = StateUtils.findOwner(state, cardList);
-    
+
     const player = state.players[state.activePlayer];
-    
+
     if (effect instanceof EndTurnEffect && effect.player === owner) {
       player.marker.removeMarker(this.ABILITY_USED_MARKER, this);
     }
-    
+
     if (player === owner && !player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
       if (this.movedToActiveThisTurn == true) {
         player.marker.addMarker(this.ABILITY_USED_MARKER, this);
@@ -76,11 +78,11 @@ export class WyrdeerV extends PokemonCard {
         }
 
         return store.prompt(state, new MoveEnergyPrompt(
-          player.id, 
+          player.id,
           GameMessage.MOVE_ENERGY_CARDS,
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH], // Only allow moving to active
-          { superType: SuperType.ENERGY }, 
+          { superType: SuperType.ENERGY },
           { allowCancel: true }
         ), transfers => {
 
@@ -89,9 +91,9 @@ export class WyrdeerV extends PokemonCard {
           }
 
           for (const transfer of transfers) {
-        
+
             // Can only move energy to the active Pokemon
-            const target = player.active;  
+            const target = player.active;
             const source = StateUtils.getTarget(state, player, transfer.from);
 
             source.moveCardTo(transfer.card, target);

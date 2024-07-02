@@ -24,7 +24,7 @@ export class Dragalge extends PokemonCard {
 
   public weakness = [{ type: CardType.FAIRY }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Poison Barrier',
@@ -34,7 +34,7 @@ export class Dragalge extends PokemonCard {
 
   public attacks = [{
     name: 'Poison Breath',
-    cost: [ CardType.WATER, CardType.PSYCHIC, CardType.COLORLESS ],
+    cost: [CardType.WATER, CardType.PSYCHIC, CardType.COLORLESS],
     damage: 60,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokemon ' +
       'is now Poisoned.'
@@ -45,7 +45,7 @@ export class Dragalge extends PokemonCard {
   public name: string = 'Dragalge';
 
   public fullName: string = 'Dragalge FLF';
-  
+
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '71';
@@ -87,8 +87,12 @@ export class Dragalge extends PokemonCard {
       if (isDragalgeInPlay) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
-          const powerEffect = new PowerEffect(opponent, this.powers[0], this);
-          store.reduceEffect(state, powerEffect);
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
         } catch {
           return state;
         }

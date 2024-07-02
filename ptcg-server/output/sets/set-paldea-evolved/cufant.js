@@ -8,7 +8,7 @@ class Cufant extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.WATER;
+        this.cardType = card_types_1.CardType.METAL;
         this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];

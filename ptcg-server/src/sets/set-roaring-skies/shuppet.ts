@@ -6,7 +6,6 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { CardTarget, PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
@@ -29,18 +28,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
   });
 
   if (!hasPokemonWithEnergy) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+    return state;
   }
-
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
 
   let targets: PokemonCardList[] = [];
   yield store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
     PlayerType.TOP_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: true, blocked }
   ), results => {
     targets = results || [];
@@ -58,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     target,
     { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-    { min: 1, max: 1, allowCancel: true }
+    { min: 1, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
@@ -82,7 +78,7 @@ export class Shuppet extends PokemonCard {
 
   public attacks = [{
     name: 'Bleh',
-    cost: [CardType.COLORLESS],
+    cost: [CardType.PSYCHIC],
     damage: 0,
     text: 'Discard a Special Energy attached to 1 of your opponent\'s Pokemon.'
   }];
@@ -94,8 +90,8 @@ export class Shuppet extends PokemonCard {
   public setNumber: string = '30';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
-    if(effect instanceof AttackEffect && effect.attack == this.attacks[0]) {
+
+    if (effect instanceof AttackEffect && effect.attack == this.attacks[0]) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

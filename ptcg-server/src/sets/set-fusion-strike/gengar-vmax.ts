@@ -8,8 +8,11 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class GengarVMAX extends PokemonCard {
 
   public stage: Stage = Stage.VMAX;
+
+  public tags = [CardTag.POKEMON_VMAX];
+
   public evolvesFrom = 'Gengar V';
-  public cardType: CardType = CardType.DARK;  
+  public cardType: CardType = CardType.DARK;
   public hp = 320;
   public weakness = [{ type: CardType.FIGHTING }];
   public resistance = [];
@@ -35,11 +38,11 @@ export class GengarVMAX extends PokemonCard {
   public regulationMark = 'E';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '157';
-  
+
   public name: string = 'Gengar VMAX';
-  
+
   public fullName: string = 'Gengar VMAX FST';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
@@ -53,14 +56,14 @@ export class GengarVMAX extends PokemonCard {
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
-  
+
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -75,7 +78,7 @@ export class GengarVMAX extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-  
+
       // Check marker
       if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');

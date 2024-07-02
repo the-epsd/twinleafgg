@@ -12,7 +12,7 @@ export class Mudkip extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
@@ -38,23 +38,23 @@ export class Mudkip extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
-        player.discard,
+        player.deck,
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
         { min: 0, max: 3, allowCancel: false }
       ), cards => {
         cards = cards || [];
-        
+
         if (cards.length > 0) {
           player.deck.moveCardsTo(cards, player.hand);
-          
+
           cards.forEach((card, index) => {
             store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
           });
-          
+
           if (cards.length > 0) {
             state = store.prompt(state, new ShowCardsPrompt(
               opponent.id,

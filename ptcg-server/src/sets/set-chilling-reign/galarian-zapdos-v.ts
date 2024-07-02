@@ -10,7 +10,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class GalarianZapdosV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'E';
 
@@ -22,7 +22,7 @@ export class GalarianZapdosV extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Fighting Instinct',
@@ -33,7 +33,7 @@ export class GalarianZapdosV extends PokemonCard {
   public attacks = [
     {
       name: 'Thunderous Kick',
-      cost: [ CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 170,
       text: 'Before doing damage, discard a Special Energy from your opponent\'s Active Pokémon.'
     }
@@ -67,63 +67,67 @@ export class GalarianZapdosV extends PokemonCard {
       }
 
       try {
-        const powerEffect = new PowerEffect(opponent, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
       } catch {
         return state;
       }
 
-            // Check opponent's benched Pokemon
-            opponent.bench.forEach(cardList => {
-              cardList.cards.forEach(card => {
-                if (card instanceof PokemonCard &&
-                  (card.tags.includes(CardTag.POKEMON_V) ||
-                    card.tags.includes(CardTag.POKEMON_VMAX) ||
-                    card.tags.includes(CardTag.POKEMON_VSTAR))) {
-                  fightingInstinctCount += 1;
-                }
-              });
-            });
-      
-            // Reduce attack cost by removing 1 Colorless energy for each counted Pokemon
-            const attackCost = this.attacks[0].cost;
-            const colorlessToRemove = fightingInstinctCount;
-            this.attacks[0].cost = attackCost.filter(c => c !== CardType.COLORLESS).slice(0, -colorlessToRemove);
+      // Check opponent's benched Pokemon
+      opponent.bench.forEach(cardList => {
+        cardList.cards.forEach(card => {
+          if (card instanceof PokemonCard &&
+            (card.tags.includes(CardTag.POKEMON_V) ||
+              card.tags.includes(CardTag.POKEMON_VMAX) ||
+              card.tags.includes(CardTag.POKEMON_VSTAR))) {
+            fightingInstinctCount += 1;
           }
+        });
+      });
 
-          if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      // Reduce attack cost by removing 1 Colorless energy for each counted Pokemon
+      const attackCost = this.attacks[0].cost;
+      const colorlessToRemove = fightingInstinctCount;
+      this.attacks[0].cost = attackCost.filter(c => c !== CardType.COLORLESS).slice(0, -colorlessToRemove);
+    }
 
-            const player = effect.player;
-            const opponent = StateUtils.getOpponent(state, player);
-      
-            const oppActive = opponent.active;
-      
-            const checkEnergy = new CheckProvidedEnergyEffect(player, oppActive);
-            store.reduceEffect(state, checkEnergy);
-      
-            checkEnergy.energyMap.forEach(em => {
-              const energyCard = em.card;
-              if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL) {
-      
-                let cards: Card[] = [];
-                store.prompt(state, new ChooseCardsPrompt(
-                  player.id,
-                  GameMessage.CHOOSE_CARD_TO_DISCARD,
-                  oppActive,
-                  { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-                  { min: 1, max: 1, allowCancel: false }
-                ), selected => {
-                  cards = selected;
-                });
-                oppActive.moveCardsTo(cards, opponent.discard);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
-                const damageEffect = new PutDamageEffect(effect, 20);
-                damageEffect.target = opponent.active;
-                store.reduceEffect(state, damageEffect);
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-              }
-            });
-          }
-          return state; 
+      const oppActive = opponent.active;
+
+      const checkEnergy = new CheckProvidedEnergyEffect(player, oppActive);
+      store.reduceEffect(state, checkEnergy);
+
+      checkEnergy.energyMap.forEach(em => {
+        const energyCard = em.card;
+        if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL) {
+
+          let cards: Card[] = [];
+          store.prompt(state, new ChooseCardsPrompt(
+            player.id,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            oppActive,
+            { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+            { min: 1, max: 1, allowCancel: false }
+          ), selected => {
+            cards = selected;
+          });
+          oppActive.moveCardsTo(cards, opponent.discard);
+
+          const damageEffect = new PutDamageEffect(effect, 20);
+          damageEffect.target = opponent.active;
+          store.reduceEffect(state, damageEffect);
+
         }
-      }
+      });
+    }
+    return state;
+  }
+}

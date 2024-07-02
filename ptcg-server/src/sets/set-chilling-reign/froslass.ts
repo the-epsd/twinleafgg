@@ -17,8 +17,12 @@ function* useLeParfum(next: Function, store: StoreLike, state: State,
 
   // Try to reduce PowerEffect, to check if something is blocking our ability
   try {
-    const powerEffect = new PowerEffect(player, self.powers[0], self);
-    store.reduceEffect(state, powerEffect);
+    const stub = new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.ABILITY,
+      text: ''
+    }, self);
+    store.reduceEffect(state, stub);
   } catch {
     return state;
   }
@@ -28,7 +32,7 @@ function* useLeParfum(next: Function, store: StoreLike, state: State,
     GameMessage.ATTACH_ENERGY_TO_BENCH,
     player.discard,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.BENCH ],
+    [SlotType.BENCH],
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
     { allowCancel: true, min: 0, max: 1 }
   ), transfers => {
@@ -40,7 +44,8 @@ function* useLeParfum(next: Function, store: StoreLike, state: State,
     for (const transfer of transfers) {
       const target = StateUtils.getTarget(state, player, transfer.to);
       player.discard.moveCardTo(transfer.card, target);
-    }});
+    }
+  });
 }
 
 
@@ -58,7 +63,7 @@ export class Froslass extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Frost Over',
@@ -69,7 +74,7 @@ export class Froslass extends PokemonCard {
   public attacks = [
     {
       name: 'Crystal Breath',
-      cost: [ CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.COLORLESS],
       damage: 90,
       text: 'During your next turn, this Pokémon can\'t attack.'
     }
@@ -99,13 +104,13 @@ export class Froslass extends PokemonCard {
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
-  
+
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-  
+
       // Check marker
       if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');

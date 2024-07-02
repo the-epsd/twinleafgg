@@ -38,8 +38,6 @@ export class ChooseAttackPrompt extends Prompt<Attack> {
 
   }
 
-
-
   public decode(result: ChooseAttackResultType | null, state: State): Attack | null {
     if (result === null) {
       return result;  // operation cancelled

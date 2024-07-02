@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage,
-  ChooseAttackPrompt, Attack, GameLog, PowerType, Card, ChooseCardsPrompt, GameError } from '../../game';
+import {
+  StoreLike, State, StateUtils, GameMessage,
+  ChooseAttackPrompt, Attack, GameLog, PowerType, Card, ChooseCardsPrompt, GameError
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
@@ -10,7 +12,7 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  
+
   const discardPokemon = player.discard.cards.filter(card => card.superType === SuperType.POKEMON) as PokemonCard[];
   const dragonTypePokemon = discardPokemon.filter(card => card.cardType === CardType.DRAGON);
 
@@ -25,37 +27,37 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
     selected = result;
     next();
   });
-  
+
   const attack: Attack | null = selected;
-  
+
   if (attack === null) {
     return state;
   }
-  
+
   store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
     name: player.name,
     attack: attack.name
   });
-  
+
   // Perform attack
   const attackEffect = new AttackEffect(player, opponent, attack);
   store.reduceEffect(state, attackEffect);
-  
+
   if (store.hasPrompts()) {
     yield store.waitPrompt(state, () => next());
   }
-  
+
   if (attackEffect.damage > 0) {
     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
     state = store.reduceEffect(state, dealDamage);
   }
-  
+
   return state;
 }
 
 export class RegidragoVSTAR extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VSTAR ];
+  public tags = [CardTag.POKEMON_VSTAR];
 
   public regulationMark = 'F';
 
@@ -67,14 +69,14 @@ export class RegidragoVSTAR extends PokemonCard {
 
   public hp: number = 280;
 
-  public weakness = [ ];
+  public weakness = [];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Apex Dragon',
-      cost: [ CardType.GRASS, CardType.GRASS, CardType.FIRE ],
+      cost: [CardType.GRASS, CardType.GRASS, CardType.FIRE],
       damage: 0,
       text: 'Choose an attack from a [N] Pokémon in your discard pile and use it as this attack.'
     }];
@@ -120,8 +122,8 @@ export class RegidragoVSTAR extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.discard,
-        { },
-        { min: 1, max: 2, allowCancel: true }
+        {},
+        { min: 1, max: 2, allowCancel: false }
       ), selected => {
         cards = selected || [];
 

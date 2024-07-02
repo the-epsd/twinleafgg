@@ -72,7 +72,7 @@ export class Necrozma extends PokemonCard {
         }
       });
 
-      if(specialEnergyCount > 0) {
+      if (specialEnergyCount > 0) {
         effect.damage += 60;
       }
 

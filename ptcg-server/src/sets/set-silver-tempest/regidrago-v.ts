@@ -67,7 +67,6 @@ export class RegidragoV extends PokemonCard {
         });
       } else {
 
-
         // Prompt to attach energy if any were drawn
         return store.prompt(state, new AttachEnergyPrompt(
           player.id,
@@ -76,7 +75,7 @@ export class RegidragoV extends PokemonCard {
           PlayerType.BOTTOM_PLAYER,
           [SlotType.ACTIVE],
           { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { min: 0, max: energyCardsDrawn.length, allowCancel: false }
+          { min: energyCardsDrawn.length, max: energyCardsDrawn.length, allowCancel: false }
         ), transfers => {
 
           // Attach energy based on prompt selection
@@ -92,33 +91,32 @@ export class RegidragoV extends PokemonCard {
           }
         });
       }
+    }
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-        const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-        if (!hasBenched) {
-          return state;
-        }
-
-        state = store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { allowCancel: false }
-        ), targets => {
-          if (!targets || targets.length === 0) {
-            return;
-          }
-          const damageEffect = new PutDamageEffect(effect, 30);
-          damageEffect.target = targets[0];
-          store.reduceEffect(state, damageEffect);
-        });
-
+      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      if (!hasBenched) {
         return state;
       }
+
+      state = store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.BENCH],
+        { allowCancel: false }
+      ), targets => {
+        if (!targets || targets.length === 0) {
+          return;
+        }
+        const damageEffect = new PutDamageEffect(effect, 30);
+        damageEffect.target = targets[0];
+        store.reduceEffect(state, damageEffect);
+      });
+
       return state;
     }
     return state;

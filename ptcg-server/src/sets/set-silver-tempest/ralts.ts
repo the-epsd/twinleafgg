@@ -1,10 +1,11 @@
+import { Attack, ChooseAttackPrompt, GameError, GameLog, GameMessage, PokemonCardList, StateUtils } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ChooseAttackPrompt, GameError, GameLog, GameMessage, StateUtils } from '../../game';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class Ralts extends PokemonCard {
 
@@ -37,7 +38,7 @@ export class Ralts extends PokemonCard {
 
   public fullName: string = 'Ralts SIT';
 
-  public readonly MEMORY_SKIP_MARKER = 'MEMORY_SKIP_MARKER';
+  public MEMORY_SKIPPED_ATTACK: Attack | undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -50,35 +51,44 @@ export class Ralts extends PokemonCard {
         return state;
       }
 
-      let selected: any;
       store.prompt(state, new ChooseAttackPrompt(
         player.id,
-        GameMessage.CHOOSE_ATTACK_TO_COPY,
+        GameMessage.CHOOSE_ATTACK_TO_DISABLE,
         [pokemonCard],
         { allowCancel: false }
       ), result => {
-        selected = result;
-      });
-
-      opponent.active.marker.addMarker(this.MEMORY_SKIP_MARKER, this);
-
-      if (selected === null) {
-        return state;
-      }
-
-      store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-        name: player.name,
-        attack: selected.name
-      });
-
-      if (effect instanceof AttackEffect && effect.attack === selected) {
-        if (effect.opponent.active.marker.hasMarker(this.MEMORY_SKIP_MARKER, this)) {
-
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+        result;
+        
+        if (!result) {
+          return state;
         }
-      }
+        
+        store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
+          name: player.name,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          attack: this.MEMORY_SKIPPED_ATTACK!.name
+        });
+        
+        this.MEMORY_SKIPPED_ATTACK = result;
+        opponent.active.marker.addMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
+        
+        return state;
+      });
+
       return state;
     }
+    
+    if (effect instanceof AttackEffect && effect.player.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
+      if (effect.attack === this.MEMORY_SKIPPED_ATTACK) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+    }
+    
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
+      effect.player.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
+      this.MEMORY_SKIPPED_ATTACK = undefined;
+    }
+    
     return state;
   }
 }
