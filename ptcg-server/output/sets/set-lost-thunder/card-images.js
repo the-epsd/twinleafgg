@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.SpellTagArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt = exports.AdventureBagArt = void 0;
+exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.SpellTagArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt = exports.AdventureBagArt = void 0;
 const adventure_bag_1 = require("./adventure-bag");
 const chikorita_1 = require("./chikorita");
 const counter_gain_1 = require("./counter-gain");
@@ -8,6 +8,7 @@ const custom_catcher_1 = require("./custom-catcher");
 const electropower_1 = require("./electropower");
 const grovyle_1 = require("./grovyle");
 const lost_blender_1 = require("./lost-blender");
+const LOT_97_Giratina_1 = require("./LOT_97_Giratina");
 const mareep_1 = require("./mareep");
 const meganium_1 = require("./meganium");
 const net_ball_1 = require("./net-ball");
@@ -51,6 +52,13 @@ class ElectropowerArt extends electropower_1.Electropower {
     }
 }
 exports.ElectropowerArt = ElectropowerArt;
+class GiratinaArt extends LOT_97_Giratina_1.Giratina {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_097_R_EN_LG.png';
+    }
+}
+exports.GiratinaArt = GiratinaArt;
 class GrovleArt extends grovyle_1.Grovyle {
     constructor() {
         super(...arguments);
