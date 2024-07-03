@@ -39,6 +39,7 @@ function* playCard(next, store, state, self, effect) {
             return state;
         });
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
 }
 class Delinquent extends trainer_card_1.TrainerCard {
     constructor() {
