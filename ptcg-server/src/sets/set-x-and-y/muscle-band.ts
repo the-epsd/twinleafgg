@@ -1,11 +1,11 @@
-import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { TrainerCard } from '../../game/store/card/trainer-card';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { StateUtils } from '../../game/store/state-utils';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
+import { StateUtils } from '../../game/store/state-utils';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class MuscleBand extends TrainerCard {
 
@@ -27,7 +27,7 @@ export class MuscleBand extends TrainerCard {
     'and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) && effect.source.cards.includes(this)) {
+    if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StrongEnergy = void 0;
+const game_error_1 = require("../../game/game-error");
+const game_message_1 = require("../../game/game-message");
+const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const game_error_1 = require("../../game/game-error");
-const game_message_1 = require("../../game/game-message");
 const state_utils_1 = require("../../game/store/state-utils");
 class StrongEnergy extends energy_card_1.EnergyCard {
     constructor() {
@@ -86,7 +86,7 @@ class StrongEnergy extends energy_card_1.EnergyCard {
             });
             return state;
         }
-        if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) && effect.source.cards.includes(this)) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             if (effect.target !== opponent.active) {

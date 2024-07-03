@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MuscleBand = void 0;
-const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const state_utils_1 = require("../../game/store/state-utils");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const state_utils_1 = require("../../game/store/state-utils");
 class MuscleBand extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,7 +20,7 @@ class MuscleBand extends trainer_card_1.TrainerCard {
             'and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) && effect.source.cards.includes(this)) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
             try {

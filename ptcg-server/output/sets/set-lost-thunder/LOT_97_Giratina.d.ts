@@ -3,9 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Trevenant extends PokemonCard {
+export declare class Giratina extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
@@ -18,6 +17,8 @@ export declare class Trevenant extends PokemonCard {
     retreat: CardType[];
     powers: {
         name: string;
+        preventDefault: boolean;
+        useFromDiscard: boolean;
         powerType: PowerType;
         text: string;
     }[];
@@ -32,5 +33,6 @@ export declare class Trevenant extends PokemonCard {
     cardImage: string;
     name: string;
     fullName: string;
+    readonly DISTORTION_DOOR_MARKER = "DISTORTION_DOOR_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

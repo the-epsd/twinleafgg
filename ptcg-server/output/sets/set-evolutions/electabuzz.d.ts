@@ -1,25 +1,19 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State } from '../../game';
+import { State } from '../../game';
+import { StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Trevenant extends PokemonCard {
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { CardType, Stage } from '../../game/store/card/card-types';
+export declare class Electabuzz extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
+    retreat: CardType[];
     resistance: {
         type: CardType;
         value: number;
-    }[];
-    retreat: CardType[];
-    powers: {
-        name: string;
-        powerType: PowerType;
-        text: string;
     }[];
     attacks: {
         name: string;
@@ -28,8 +22,8 @@ export declare class Trevenant extends PokemonCard {
         text: string;
     }[];
     set: string;
-    setNumber: string;
     cardImage: string;
+    setNumber: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

@@ -2,10 +2,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
+import { StoreLike, State, StateUtils, GameError, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Trevenant extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,24 +36,17 @@ export class Trevenant extends PokemonCard {
   public name: string = 'Trevenant';
   public fullName: string = 'Trevenant XY';
 
-  public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name === 'Forest\'s Curse') {
+    if (effect instanceof PlayItemEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      console.log(player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this);
-      //Trevenant isn't active poke
-      if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
-        opponent.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
+      if (player.active.getPokemonCard() !== this && opponent.active.getPokemonCard() !== this) {
         return state;
       }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
+      // Checking to see if ability is being blocked
       try {
         const stub = new PowerEffect(player, {
           name: 'test',
@@ -64,15 +58,37 @@ export class Trevenant extends PokemonCard {
         return state;
       }
 
-      opponent.marker.addMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
+      if (opponent.active.getPokemonCard() === this) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
 
     }
 
-    if (effect instanceof PlayItemEffect) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      const opponent = StateUtils.getOpponent(state, player);
+      const opponentHasBench = opponent.bench.some(b => b.cards.length > 0);
+
+      if (!opponentHasBench) {
+        return state;
       }
+
+      const max = Math.min(2);
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.BENCH],
+        { min: 1, max: max, allowCancel: false }
+      ), selected => {
+        const targets = selected || [];
+        targets.forEach(target => {
+          const damageEffect = new PutDamageEffect(effect, 20);
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
+        });
+        return state;
+      });
     }
 
     return state;

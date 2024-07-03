@@ -52,7 +52,7 @@ export class AquaPatch extends TrainerCard {
         const checkPokemonTypeEffect = new CheckPokemonTypeEffect(bench);
         store.reduceEffect(state, checkPokemonTypeEffect);
 
-        if (checkPokemonTypeEffect.cardTypes.includes(CardType.DARK)) {
+        if (checkPokemonTypeEffect.cardTypes.includes(CardType.WATER)) {
           hasWaterPokemonOnBench = true;
         } else {
           const target: CardTarget = {

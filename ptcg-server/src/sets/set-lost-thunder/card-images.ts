@@ -5,6 +5,7 @@ import { CustomCatcher } from './custom-catcher';
 import { Electropower } from './electropower';
 import { Grovyle } from './grovyle';
 import { LostBlender } from './lost-blender';
+import { Giratina } from './LOT_97_Giratina';
 import { Mareep } from './mareep';
 import { Meganium } from './meganium';
 import { NetBall } from './net-ball';
@@ -32,6 +33,10 @@ export class CustomCatcherArt extends CustomCatcher {
 
 export class ElectropowerArt extends Electropower {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_172_R_EN_LG.png';
+}
+
+export class GiratinaArt extends Giratina {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_097_R_EN_LG.png';
 }
 
 export class GrovleArt extends Grovyle {

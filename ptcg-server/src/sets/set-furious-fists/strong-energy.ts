@@ -1,16 +1,19 @@
-import { CardType, EnergyType } from '../../game/store/card/card-types';
-import { EnergyCard } from '../../game/store/card/energy-card';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckProvidedEnergyEffect, CheckPokemonTypeEffect,
-  CheckTableStateEffect } from '../../game/store/effects/check-effects';
-import { PlayerType } from '../../game/store/actions/play-card-action';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import {StateUtils} from '../../game/store/state-utils';
+import { PlayerType } from '../../game/store/actions/play-card-action';
+import { CardType, EnergyType } from '../../game/store/card/card-types';
+import { EnergyCard } from '../../game/store/card/energy-card';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import {
+  CheckPokemonTypeEffect,
+  CheckProvidedEnergyEffect,
+  CheckTableStateEffect
+} from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { StateUtils } from '../../game/store/state-utils';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class StrongEnergy extends EnergyCard {
 
@@ -103,7 +106,7 @@ export class StrongEnergy extends EnergyCard {
       return state;
     }
 
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) && effect.source.cards.includes(this)) {
+    if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       
