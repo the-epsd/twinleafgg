@@ -1,4 +1,4 @@
-import { EndTurnEffect, BetweenTurnsEffect } from '../effects/game-phase-effects';
+import { EndTurnEffect, BetweenTurnsEffect, BeginTurnEffect } from '../effects/game-phase-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { SpecialCondition } from '../card/card-types';
@@ -56,7 +56,17 @@ export function initNextTurn(store, state) {
         state = endGame(store, state, winner);
         return state;
     }
+    try {
+        const beginTurn = new BeginTurnEffect(player);
+        store.reduceEffect(state, beginTurn);
+    }
+    catch (_a) {
+        return state;
+    }
     player.deck.moveTo(player.hand, 1);
+    // const dealDamage = new BeginTurnEffect(player);
+    // dealDamage.player = player;
+    // return store.reduceEffect(state, dealDamage);
     return state;
 }
 function startNextTurn(store, state) {

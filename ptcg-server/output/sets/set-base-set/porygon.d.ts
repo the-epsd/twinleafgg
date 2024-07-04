@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Giratina extends PokemonCard {
+export declare class Porygon extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
@@ -14,13 +13,7 @@ export declare class Giratina extends PokemonCard {
         type: CardType;
         value: number;
     }[];
-    retreat: CardType[];
-    powers: {
-        name: string;
-        useFromDiscard: boolean;
-        powerType: PowerType;
-        text: string;
-    }[];
+    retreat: never[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -28,10 +21,9 @@ export declare class Giratina extends PokemonCard {
         text: string;
     }[];
     set: string;
-    setNumber: string;
     cardImage: string;
+    setNumber: string;
     name: string;
     fullName: string;
-    readonly DISTORTION_DOOR_MARKER = "DISTORTION_DOOR_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

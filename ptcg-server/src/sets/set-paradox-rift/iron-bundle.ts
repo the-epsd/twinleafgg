@@ -10,7 +10,7 @@ export class IronBundle extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.FUTURE ];
+  public tags = [CardTag.FUTURE];
 
   public cardType: CardType = CardType.WATER;
 
@@ -18,7 +18,7 @@ export class IronBundle extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [
     {
@@ -32,7 +32,7 @@ export class IronBundle extends PokemonCard {
   public attacks = [
     {
       name: 'Refrigerated Stream',
-      cost: [ CardType.WATER, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
       text: 'If the Defending Pokémon is an Evolution Pokémon, it can\'t attack during your opponent\'s next turn.'
     }
@@ -62,7 +62,7 @@ export class IronBundle extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this);
 
       if (player.active.cards[0] == this) {
-        return state; // Not active
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       if (hasBench === false) {
@@ -95,16 +95,16 @@ export class IronBundle extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       opponent.active.marker.addMarker(this.REFRIGERATED_STREAM_MARKER, this);
     }
-      
+
     if (effect instanceof UseAttackEffect && effect.player.active.marker.hasMarker(this.REFRIGERATED_STREAM_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
-      
+
     if (effect instanceof EndTurnEffect) {
       effect.player.active.marker.removeMarker(this.REFRIGERATED_STREAM_MARKER, this);
     }
-      
+
     return state;
   }
-      
+
 }
