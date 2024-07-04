@@ -15,47 +15,47 @@ function* useGenomeHacking(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   const pokemonCard = opponent.active.getPokemonCard();
-  
+
   if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
     return state;
   }
-  
+
 
   let selected: any;
   yield store.prompt(state, new ChooseAttackPrompt(
     player.id,
     GameMessage.CHOOSE_ATTACK_TO_COPY,
-    [ pokemonCard ],
+    [pokemonCard],
     { allowCancel: false }
   ), result => {
     selected = result;
     next();
   });
-  
+
   const attack: Attack | null = selected;
-  
+
   if (attack === null) {
     return state;
   }
-  
+
   store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
     name: player.name,
     attack: attack.name
   });
-  
+
   // Perform attack
   const attackEffect = new AttackEffect(player, opponent, attack);
   store.reduceEffect(state, attackEffect);
-  
+
   if (store.hasPrompts()) {
     yield store.waitPrompt(state, () => next());
   }
-  
+
   if (attackEffect.damage > 0) {
     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
     state = store.reduceEffect(state, dealDamage);
   }
-  
+
   return state;
 }
 
@@ -65,7 +65,7 @@ export class Mewex extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public cardType: CardType = CardType.PSYCHIC;
 
@@ -75,22 +75,22 @@ export class Mewex extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public powers = [{
     name: 'Restart',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, you may draw cards until you ' +
-    'have 3 cards in your hand.'
+      'have 3 cards in your hand.'
   }];
 
   public attacks = [{
     name: 'Genome Hacking',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 0,
     text: 'Choose 1 of the Defending Pokemon\'s attacks and use it ' +
-    'as this attack.'
+      'as this attack.'
   }];
 
   public set: string = 'MEW';
@@ -111,18 +111,22 @@ export class Mewex extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.RESTART_MARKER, this);
     }
-    
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.RESTART_MARKER, this);
     }
-    
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       if (player.marker.hasMarker(this.RESTART_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-  
+
+      if (player.hand.cards.length >= 3) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       while (player.hand.cards.length < 3) {
         player.deck.moveTo(player.hand, 1);
       }
@@ -143,16 +147,15 @@ export class Mewex extends PokemonCard {
           player.marker.removeMarker(this.RESTART_MARKER);
         }
       });
-  
+
     }
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const generator = useGenomeHacking(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-  
+
     return state;
   }
-  
+
 }
-  
