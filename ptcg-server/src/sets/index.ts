@@ -22,6 +22,7 @@ export * from './set-undaunted';
 export * from './set-unleashed';
 
 //BW Era
+export * from './set-black-and-white-promos';
 export * from './set-black-and-white';
 export * from './set-boundaries-crossed';
 export * from './set-dark-explorers';

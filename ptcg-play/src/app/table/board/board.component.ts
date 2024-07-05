@@ -70,7 +70,7 @@ export class BoardComponent implements OnDestroy {
     player: PlayerType,
     slot: SlotType,
     index: number = 0
-  ): [DropTargetType, Observable<boolean>]  {
+  ): [DropTargetType, Observable<boolean>] {
 
     const target = { player, slot, index };
     let dropTarget: DropTargetType;
@@ -118,7 +118,7 @@ export class BoardComponent implements OnDestroy {
 
     highlight$ = dropState.pipe(map(state => state.canDrop && state.isOver));
 
-    return [ dropTarget, highlight$ ];
+    return [dropTarget, highlight$];
   }
 
   private handlePlayFromHand(item: HandItem, target: CardTarget): void {
@@ -287,7 +287,7 @@ export class BoardComponent implements OnDestroy {
         if (result.ability) {
           this.gameService.ability(gameId, result.ability, target);
 
-        // Use attack from the card
+          // Use attack from the card
         } else if (result.attack) {
           this.gameService.attack(gameId, result.attack);
         }
@@ -314,31 +314,31 @@ export class BoardComponent implements OnDestroy {
             return;
           }
           const gameId = this.gameState.gameId;
-  
+
           // Use ability from the card
           if (result.ability) {
             this.gameService.ability(gameId, result.ability, target);
-  
-          // Use attack from the card
+
+            // Use attack from the card
           } else if (result.attack) {
             this.gameService.attack(gameId, result.attack);
           }
         });
-      }
-      else {
+    }
+    else {
 
-    const options = { enableAbility: { useWhenInPlay: true }, enableAttack: false };
-    this.cardsBaseService.showCardInfo({ card, cardList, options })
-      .then(result => {
-        if (!result) {
-          return;
-        }
+      const options = { enableAbility: { useWhenInPlay: true }, enableAttack: false };
+      this.cardsBaseService.showCardInfo({ card, cardList, options })
+        .then(result => {
+          if (!result) {
+            return;
+          }
 
-        // Use ability from the card
-        if (result.ability) {
-          this.gameService.ability(this.gameState.gameId, result.ability, target);
-        }
-      });
+          // Use ability from the card
+          if (result.ability) {
+            this.gameService.ability(this.gameState.gameId, result.ability, target);
+          }
+        });
     }
   }
 
@@ -347,7 +347,7 @@ export class BoardComponent implements OnDestroy {
     const isDeleted = this.gameState.deleted;
 
     if (!isBottomOwner || isDeleted) {
-    return this.onCardClick(card, cardList);
+      return this.onCardClick(card, cardList);
     }
 
     const player = PlayerType.BOTTOM_PLAYER;
@@ -355,26 +355,26 @@ export class BoardComponent implements OnDestroy {
     const target: CardTarget = { player, slot, index };
 
     if (card.name === 'Alakazam ex') {
-    const options = { enableAbility: { useWhenInPlay: true }, enableAttack: true };
-    this.cardsBaseService.showCardInfo({ card, cardList, options })
-      .then(result => {
-      if (!result) {
-        return;
-      }
-      const gameId = this.gameState.gameId;
+      const options = { enableAbility: { useWhenInPlay: true }, enableAttack: true };
+      this.cardsBaseService.showCardInfo({ card, cardList, options })
+        .then(result => {
+          if (!result) {
+            return;
+          }
+          const gameId = this.gameState.gameId;
 
-      // Use second attack from the card 
-      if (result.attack[1]) {
-        this.gameService.attack(gameId, result.attack[1]);
-      }
-      });
+          // Use second attack from the card 
+          if (result.attack[1]) {
+            this.gameService.attack(gameId, result.attack[1]);
+          }
+        });
     }
   }
 
   public onStadiumClick(card: Card) {
     const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
     const isDeleted = this.gameState.deleted;
-    
+
     console.log(this.bottomPlayer);
     console.log(this.topPlayer);
 
@@ -396,28 +396,28 @@ export class BoardComponent implements OnDestroy {
       });
   }
 
-public onLostZoneClick(card: Card, cardList: CardList) {
-  const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
-  const isDeleted = this.gameState.deleted;
+  public onLostZoneClick(card: Card, cardList: CardList) {
+    const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
+    const isDeleted = this.gameState.deleted;
 
-  if (isDeleted) {
-    return this.onCardListClick(card, cardList);
-  }
-
-  const player = PlayerType.BOTTOM_PLAYER;
-  const slot = SlotType.LOSTZONE;
-
-  const options = { enableAbility: { useFromDiscard: true }, enableAttack: false };
-  this.cardsBaseService.showCardInfoList({ card, cardList, options })
-  .then(result => {
-    if (!result) {
-      return;
+    if (isDeleted) {
+      return this.onCardListClick(card, cardList);
     }
-    const gameId = this.gameState.gameId;
 
-    const index = cardList.cards.indexOf(result.card);
-    const target: CardTarget = { player, slot, index };
-});
+    const player = PlayerType.BOTTOM_PLAYER;
+    const slot = SlotType.LOSTZONE;
 
-}
+    const options = { enableAbility: { useFromDiscard: false }, enableAttack: false };
+    this.cardsBaseService.showCardInfoList({ card, cardList, options })
+      .then(result => {
+        if (!result) {
+          return;
+        }
+        const gameId = this.gameState.gameId;
+
+        const index = cardList.cards.indexOf(result.card);
+        const target: CardTarget = { player, slot, index };
+      });
+
+  }
 }

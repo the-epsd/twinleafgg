@@ -40,6 +40,9 @@ class ChiYu extends pokemon_card_1.PokemonCard {
         this.damageDealt = false;
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.marker.removeMarker(this.RETALIATE_MARKER);
+        }
         if (effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) {
             const player = game_1.StateUtils.getOpponent(state, effect.player);
             const cardList = game_1.StateUtils.findCardList(state, this);
@@ -57,7 +60,7 @@ class ChiYu extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            this.damageDealt = false;
+            // this.damageDealt = false;
             const hasEnergyInDiscard = player.discard.cards.some(c => {
                 return c instanceof game_1.EnergyCard
                     && c.energyType === card_types_1.EnergyType.BASIC
@@ -80,12 +83,18 @@ class ChiYu extends pokemon_card_1.PokemonCard {
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            if (this.damageDealt) {
+            const player = effect.player;
+            if (player.marker.hasMarker(this.RETALIATE_MARKER) && this.damageDealt) {
                 effect.damage += 90;
             }
-            this.damageDealt = false;
-            return state;
         }
+        // if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+        //   if (this.damageDealt) {
+        //     effect.damage += 90;
+        //   }
+        //   this.damageDealt = false;
+        //   return state;
+        // }
         if (effect instanceof game_effects_1.KnockOutEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
@@ -99,9 +108,6 @@ class ChiYu extends pokemon_card_1.PokemonCard {
                 effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
             }
             return state;
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.RETALIATE_MARKER);
         }
         return state;
     }

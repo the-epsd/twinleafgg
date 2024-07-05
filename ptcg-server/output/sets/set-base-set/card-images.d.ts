@@ -92,6 +92,7 @@ import { Pokedex } from './pokedex';
 import { PokemonFlute } from './pokemon-flute';
 import { Potion } from './potion';
 import { Revive } from './revive';
+import { Porygon } from './porygon';
 export declare class AbraArt extends Abra {
     cardImage: string;
 }
@@ -306,6 +307,9 @@ export declare class PoliwrathArt extends Poliwrath {
     cardImage: string;
 }
 export declare class PonytaArt extends Ponyta {
+    cardImage: string;
+}
+export declare class PorygonArt extends Porygon {
     cardImage: string;
 }
 export declare class PotionArt extends Potion {

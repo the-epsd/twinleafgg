@@ -47,7 +47,7 @@ class IronBundle extends pokemon_card_1.PokemonCard {
             const hasBench = opponent.bench.some(b => b.cards.length > 0);
             const cardList = game_1.StateUtils.findCardList(state, this);
             if (player.active.cards[0] == this) {
-                return state; // Not active
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
             if (hasBench === false) {
                 return state;

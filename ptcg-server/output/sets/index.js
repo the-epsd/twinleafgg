@@ -30,6 +30,7 @@ __exportStar(require("./set-triumphant"), exports);
 __exportStar(require("./set-undaunted"), exports);
 __exportStar(require("./set-unleashed"), exports);
 //BW Era
+__exportStar(require("./set-black-and-white-promos"), exports);
 __exportStar(require("./set-black-and-white"), exports);
 __exportStar(require("./set-boundaries-crossed"), exports);
 __exportStar(require("./set-dark-explorers"), exports);

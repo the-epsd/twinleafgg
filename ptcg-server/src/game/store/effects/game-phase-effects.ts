@@ -2,9 +2,31 @@ import { Effect } from './effect';
 import { Player } from '../state/player';
 
 export enum GamePhaseEffects {
+  BEGIN_TURN_EFFECT = 'BEGIN_TURN_EFFECT',
   END_TURN_EFFECT = 'END_TURN_EFFECT',
   WHO_BEGINS_EFFECT = 'WHO_BEGINS_EFFECT',
-  BETWEEN_TURNS_EFFECT = 'BETWEEN_TURNS_EFFECT'
+  BETWEEN_TURNS_EFFECT = 'BETWEEN_TURNS_EFFECT',
+  CHOOSE_STARTING_POKEMON_EFFECT = 'CHOOSE_STARTING_POKEMON_EFFECT'
+}
+
+export class BeginTurnEffect implements Effect {
+  readonly type: string = GamePhaseEffects.BEGIN_TURN_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+
+  constructor(player: Player) {
+    this.player = player;
+  }
+}
+
+export class ChooseStartingPokemonEffect implements Effect {
+  readonly type: string = GamePhaseEffects.CHOOSE_STARTING_POKEMON_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+
+  constructor(player: Player) {
+    this.player = player;
+  }
 }
 
 export class EndTurnEffect implements Effect {

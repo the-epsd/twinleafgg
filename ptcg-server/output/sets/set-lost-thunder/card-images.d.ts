@@ -6,6 +6,7 @@ import { CustomCatcher } from './custom-catcher';
 import { Electropower } from './electropower';
 import { Grovyle } from './grovyle';
 import { LostBlender } from './lost-blender';
+import { Giratina } from './LOT_97_Giratina';
 import { Mareep } from './mareep';
 import { Meganium } from './meganium';
 import { NetBall } from './net-ball';
@@ -30,6 +31,9 @@ export declare class CustomCatcherArt extends CustomCatcher {
     cardImage: string;
 }
 export declare class ElectropowerArt extends Electropower {
+    cardImage: string;
+}
+export declare class GiratinaArt extends Giratina {
     cardImage: string;
 }
 export declare class GrovleArt extends Grovyle {

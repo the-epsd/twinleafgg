@@ -32,6 +32,5 @@ export declare class Trevenant extends PokemonCard {
     cardImage: string;
     name: string;
     fullName: string;
-    readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = "OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

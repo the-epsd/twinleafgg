@@ -25,7 +25,7 @@ export class Gengar extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Netherworld Gate',
@@ -36,7 +36,7 @@ export class Gengar extends PokemonCard {
 
   public attacks = [{
     name: 'Screaming Circle',
-    cost: [ CardType.PSYCHIC ],
+    cost: [CardType.PSYCHIC],
     damage: 0,
     text: 'Put 2 damage counters on your opponent\'s Active Pokémon for each of your opponent\'s Benched Pokémon.'
   }];
@@ -61,6 +61,7 @@ export class Gengar extends PokemonCard {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
+      console.log('Number of bench slots open: ' + slots.length);
       // Check if card is in the discard
       if (!player.discard.cards.includes(this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -95,7 +96,7 @@ export class Gengar extends PokemonCard {
         const damageEffect = new PutDamageEffect(attackEffect, opponentBenched * 20);
         return store.reduceEffect(state, damageEffect);
       }
-  
+
       return state;
     }
     return state;

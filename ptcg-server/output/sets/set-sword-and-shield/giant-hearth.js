@@ -43,7 +43,7 @@ class GiantHearth extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
-        this.set = 'SSH';
+        this.set = 'UNM';
         this.name = 'Giant Hearth';
         this.fullName = 'Giant Hearth UNM';
         this.setNumber = '197';

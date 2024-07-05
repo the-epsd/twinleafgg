@@ -70,6 +70,7 @@ exports.setBaseSet = [
     new card_images_1.PoliwhirlArt(),
     new card_images_1.PoliwrathArt(),
     new card_images_1.PonytaArt(),
+    new card_images_1.PorygonArt(),
     new card_images_1.PotionArt(),
     new card_images_1.ProfessorOakArt(),
     new card_images_1.RaichuArt(),

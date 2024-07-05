@@ -26,7 +26,7 @@ class Bibarel extends pokemon_card_1.PokemonCard {
                 text: 'Once during your turn, you may draw cards until you have 5 cards in your hand.'
             }];
         this.attacks = [{
-                name: 'Hyper Fang',
+                name: 'Tail Smash',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 100,
                 text: 'Flip a coin. If tails, this attack does nothing.'
@@ -59,13 +59,6 @@ class Bibarel extends pokemon_card_1.PokemonCard {
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {
                     cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
-                }
-            });
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
-                if (player instanceof Bibarel) {
-                    player.marker.removeMarker(this.INDUSTRIOUS_INCISORS_MARKER);
                 }
             });
         }

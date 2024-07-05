@@ -87,6 +87,9 @@ class Mewex extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.RESTART_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
+            if (player.hand.cards.length >= 3) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             while (player.hand.cards.length < 3) {
                 player.deck.moveTo(player.hand, 1);
             }

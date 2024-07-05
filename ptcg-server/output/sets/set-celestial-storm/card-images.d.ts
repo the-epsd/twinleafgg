@@ -1,3 +1,4 @@
+import { Sableye } from './CES_88_Sableye';
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
 import { HustleBelt } from './hustle-belt';
@@ -22,6 +23,9 @@ export declare class MudkipArt extends Mudkip {
     cardImage: string;
 }
 export declare class MarshtompArt extends Marshtomp {
+    cardImage: string;
+}
+export declare class SableyeArt extends Sableye {
     cardImage: string;
 }
 export declare class SwampertArt extends Swampert {

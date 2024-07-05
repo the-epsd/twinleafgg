@@ -60,7 +60,17 @@ function initNextTurn(store, state) {
         state = check_effect_1.endGame(store, state, winner);
         return state;
     }
+    try {
+        const beginTurn = new game_phase_effects_1.BeginTurnEffect(player);
+        store.reduceEffect(state, beginTurn);
+    }
+    catch (_a) {
+        return state;
+    }
     player.deck.moveTo(player.hand, 1);
+    // const dealDamage = new BeginTurnEffect(player);
+    // dealDamage.player = player;
+    // return store.reduceEffect(state, dealDamage);
     return state;
 }
 exports.initNextTurn = initNextTurn;

@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const confirm_cards_prompt_1 = require("../../game/store/prompts/confirm-cards-prompt");
 class Morpeko extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -66,16 +67,16 @@ class Morpeko extends pokemon_card_1.PokemonCard {
                     cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
                 }
             });
-            return store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, deckTop.cards), () => {
-                state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
-                    if (wantToUse) {
-                        deckTop.moveTo(player.discard);
-                    }
-                    else {
-                        deckTop.moveToTopOfDestination(player.deck);
-                    }
-                });
-                return state;
+            return store.prompt(state, new confirm_cards_prompt_1.ConfirmCardsPrompt(player.id, game_1.GameMessage.DISCARD_FROM_TOP_OF_DECK, deckTop.cards, // Fix error by changing toArray() to cards
+            { allowCancel: true }), selected => {
+                if (selected !== null) {
+                    // Discard card
+                    deckTop.moveCardsTo(deckTop.cards, player.discard);
+                }
+                else {
+                    // Move back to the top of your deck
+                    deckTop.moveToTopOfDestination(player.deck);
+                }
             });
         }
         return state;

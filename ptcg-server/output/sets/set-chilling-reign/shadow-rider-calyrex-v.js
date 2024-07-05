@@ -35,7 +35,7 @@ class ShadowRiderCalyrexV extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'CRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '74';
+        this.setNumber = '75';
         this.name = 'Shadow Rider Calyrex V';
         this.fullName = 'Shadow Rider Calyrex V CRE';
         this.ASTRAL_BARRAGE_MARKER = 'ASTRAL_BARRAGE_MARKER';

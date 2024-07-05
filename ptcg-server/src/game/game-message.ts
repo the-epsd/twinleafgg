@@ -158,6 +158,7 @@ export enum GameCardMessage {
   CARD = 'CARD',
   CARDS = 'CARDS',
   TREKKING_SHOES = 'TREKKING_SHOES',
+  DISCARD_FROM_TOP_OF_DECK = 'DISCARD_FROM_TOP_OF_DECK',
 }
 
 export enum GameLog {

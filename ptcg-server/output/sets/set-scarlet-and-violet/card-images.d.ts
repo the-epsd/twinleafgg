@@ -51,6 +51,7 @@ import { Revavroom } from './revavroom';
 import { RockChestplate } from './rock-chestplate';
 import { RockyHelmet } from './rocky-helmet';
 import { Scovillain } from './scovillain';
+import { Seviper } from './seviper';
 import { Shuppet } from './shuppet';
 import { Skwovet } from './skwovet';
 import { Flittle } from './SVI_100_Flittle';
@@ -224,6 +225,9 @@ export declare class RockyHelmetArt extends RockyHelmet {
     cardImage: string;
 }
 export declare class ScovillainArt extends Scovillain {
+    cardImage: string;
+}
+export declare class SeviperArt extends Seviper {
     cardImage: string;
 }
 export declare class ShuppetArt extends Shuppet {

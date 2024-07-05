@@ -31,7 +31,7 @@ cardManager.defineSet(sets.setTriumphant);
 cardManager.defineSet(sets.setUndaunted);
 cardManager.defineSet(sets.setUnleashed);
 
-
+cardManager.defineSet(sets.setBlackAndWhitePromos);
 cardManager.defineSet(sets.setBlackAndWhite);
 cardManager.defineSet(sets.setEmergingPowers);
 cardManager.defineSet(sets.setNobleVictories);

@@ -20,7 +20,7 @@ export class Klefki extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Mischievous Lock',
@@ -32,7 +32,7 @@ export class Klefki extends PokemonCard {
 
   public attacks = [{
     name: 'Joust',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 10,
     text: 'Before doing damage, discard all Pokémon Tools from your opponent\'s Active Pokémon.'
   }];
@@ -88,34 +88,31 @@ export class Klefki extends PokemonCard {
         // const pokemonCard = effect.card;
         // pokemonCard.powers.length -= 1;
         if (!effect.power.exemptFromAbilityLock) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
+          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
         }
         return state;
       }
     }
-    
-
-
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       // Discard active Pokemon's tool first
       const activePokemon = opponent.active;
       if (activePokemon.tool) {
         activePokemon.moveCardTo(activePokemon.tool, opponent.discard);
         activePokemon.tool = undefined;
       }
-      
+
       // Then deal damage
       effect.damage = 30;
-      
+
       return state;
-      
+
     }
-      
+
     return state;
-  }  
+  }
 }

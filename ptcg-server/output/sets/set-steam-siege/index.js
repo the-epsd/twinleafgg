@@ -5,5 +5,6 @@ const card_images_1 = require("./card-images");
 exports.setSteamSiege = [
     new card_images_1.CobalionArt(),
     new card_images_1.NinjaBoyArt(),
+    new card_images_1.PokemonRangerArt(),
     new card_images_1.SpecialChargeArt()
 ];

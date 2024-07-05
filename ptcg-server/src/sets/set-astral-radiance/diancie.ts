@@ -1,15 +1,15 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, State, StateUtils, StoreLike } from '../../game';
+import { GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
+import { SupporterEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Diancie extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;  
+  public cardType: CardType = CardType.PSYCHIC;
 
   public hp: number = 90;
 
@@ -40,20 +40,20 @@ export class Diancie extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlaySupporterEffect && effect.target == effect.player.bench[0]) {
+    if (effect instanceof SupporterEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       let isDiancieInPlay = false;
-  
+
       if (player.active.cards[0] == this) {
         isDiancieInPlay = true;
       }
-  
+
       if (opponent.active.cards[0] == this) {
         isDiancieInPlay = true;
       }
-        
+
       if (!isDiancieInPlay) {
         return state;
       }
@@ -69,13 +69,8 @@ export class Diancie extends PokemonCard {
       } catch {
         return state;
       }
-
-      // if (opponent.bench && player.bench) {
-      //   return state;
-      // }
-
       effect.preventDefault = true;
-      
+      throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     return state;
   }

@@ -450,7 +450,8 @@
     "DRAW": "Draw",
     "CARD": "Card",
     "CARDS": "Cards",
-    "TREKKING_SHOES": "Would you like to put this card into your hand?"
+    "TREKKING_SHOES": "Would you like to put this card into your hand?",
+    "DISCARD_FROM_TOP_OF_DECK": "Would you like to discard this card?"
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.",

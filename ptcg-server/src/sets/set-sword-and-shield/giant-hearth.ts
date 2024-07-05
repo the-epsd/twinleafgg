@@ -26,7 +26,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     player.id,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     player.hand,
-    { },
+    {},
     { min: 1, max: 1, allowCancel: true }
   ), selected => {
     cards = selected || [];
@@ -70,12 +70,12 @@ export class GiantHearth extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
 
-  public set: string = 'SSH';
+  public set: string = 'UNM';
 
   public name: string = 'Giant Hearth';
 
   public fullName: string = 'Giant Hearth UNM';
-  
+
   public setNumber = '197';
 
   public text: string =

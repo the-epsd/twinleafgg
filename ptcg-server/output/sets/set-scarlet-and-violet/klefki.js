@@ -71,7 +71,7 @@ class Klefki extends pokemon_card_1.PokemonCard {
                 // const pokemonCard = effect.card;
                 // pokemonCard.powers.length -= 1;
                 if (!effect.power.exemptFromAbilityLock) {
-                    throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                    throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
                 }
                 return state;
             }
