@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, CardList, GameError, GameMessage, ShowCardsPrompt, ConfirmPrompt, PlayerType } from '../../game';
+import { StoreLike, State, PowerType, CardList, GameError, GameMessage, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { ConfirmCardsPrompt } from '../../game/store/prompts/confirm-cards-prompt';
 
 export class Morpeko extends PokemonCard {
 
@@ -18,9 +19,9 @@ export class Morpeko extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public resistance = [ ];
+  public resistance = [];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [
     {
@@ -34,7 +35,7 @@ export class Morpeko extends PokemonCard {
   public attacks = [
     {
       name: 'Pick and Stick',
-      cost: [ CardType.LIGHTNING ],
+      cost: [CardType.LIGHTNING],
       damage: 0,
       text: 'Attach up to 2 Basic Energy cards from your discard pile to your Pokémon in any way you like.'
     }
@@ -65,14 +66,14 @@ export class Morpeko extends PokemonCard {
       player.marker.removeMarker(this.SNACK_SEARCH_MARKER, this);
       return state;
     }
-  
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-    
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-    
+
       if (player.marker.hasMarker(this.SNACK_SEARCH_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -87,27 +88,22 @@ export class Morpeko extends PokemonCard {
         }
       });
 
-    
-      return store.prompt(state, new ShowCardsPrompt(
+      return store.prompt(state, new ConfirmCardsPrompt(
         player.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        deckTop.cards
-      ), () => {
+        GameMessage.DISCARD_FROM_TOP_OF_DECK,
+        deckTop.cards, // Fix error by changing toArray() to cards
+        { allowCancel: true },
+      ), selected => {
 
-        state = store.prompt(state, new ConfirmPrompt(
-          effect.player.id,
-          GameMessage.WANT_TO_USE_ABILITY,
-        ), wantToUse => {
-          if (wantToUse) {
+        if (selected !== null) {
+          // Discard card
+          deckTop.moveCardsTo(deckTop.cards, player.discard);
+        } else {
 
-            deckTop.moveTo(player.discard);
+          // Move back to the top of your deck
+          deckTop.moveToTopOfDestination(player.deck);
 
-          } else {
-
-            deckTop.moveToTopOfDestination(player.deck);
-          }
-        });
-        return state;
+        }
       });
     }
     return state;

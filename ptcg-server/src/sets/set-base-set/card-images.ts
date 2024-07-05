@@ -92,6 +92,7 @@ import { Pokedex } from './pokedex';
 import { PokemonFlute } from './pokemon-flute';
 import { Potion } from './potion';
 import { Revive } from './revive';
+import { Porygon } from './porygon';
 
 export class AbraArt extends Abra {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/abra-base-set-bs-43.jpg?fit=600%2C825&ssl=1';
@@ -379,6 +380,10 @@ export class PoliwrathArt extends Poliwrath {
 
 export class PonytaArt extends Ponyta {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/ponyta-base-set-bs-60.jpg?fit=600%2C825&ssl=1';
+}
+
+export class PorygonArt extends Porygon {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/porygon-base-set-bs-39.jpg';
 }
 
 export class PotionArt extends Potion {

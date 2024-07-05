@@ -53,7 +53,7 @@ class Perrin extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'H';
-        this.trainerType = card_types_1.TrainerType.ITEM;
+        this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'TWM';
         this.name = 'Perrin';
         this.fullName = 'Perrin TWM';

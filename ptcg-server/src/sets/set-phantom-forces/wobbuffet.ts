@@ -21,7 +21,7 @@ export class Wobbuffet extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Bide Barricade',
@@ -33,7 +33,7 @@ export class Wobbuffet extends PokemonCard {
 
   public attacks = [{
     name: 'Psychic Assault',
-    cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.COLORLESS],
     damage: 10,
     text: 'This attack does 10 more damage for each damage counter on ' +
       'your opponent\'s Active Pokemon.'
@@ -66,7 +66,7 @@ export class Wobbuffet extends PokemonCard {
         return state;
       }
 
-      let cardTypes = [ effect.card.cardType ];
+      let cardTypes = [effect.card.cardType];
 
       const cardList = StateUtils.findCardList(state, effect.card);
       if (cardList instanceof PokemonCardList) {
@@ -91,11 +91,12 @@ export class Wobbuffet extends PokemonCard {
       } catch {
         return state;
       }
+      if (!effect.power.exemptFromAbilityLock) {
+        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      }
 
-      throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      return state;
     }
-
     return state;
   }
-
 }

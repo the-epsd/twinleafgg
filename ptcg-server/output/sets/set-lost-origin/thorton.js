@@ -34,14 +34,30 @@ class Thorton extends trainer_card_1.TrainerCard {
             if (!hasBasicInDiscard) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            let cards = [];
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 1, max: 1, allowCancel: false }), selectedCards => {
-                cards = selectedCards || [];
-                cards.forEach((card, index) => {
-                    player.active.moveCardTo(card, player.discard);
-                    player.discard.moveCardTo(card, player.active);
+            const blocked = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card.stage !== card_types_1.Stage.BASIC) {
+                    blocked.push();
+                }
+            });
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false, blocked }), selected => {
+                const targets = selected || [];
+                if (targets.length === 0) {
+                    throw new game_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
+                }
+                let cards = [];
+                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 1, max: 1, allowCancel: false }), selectedCards => {
+                    cards = selectedCards || [];
+                    cards.forEach((card, index) => {
+                        effect.player.removePokemonEffects(targets[index]);
+                        targets[index].clearEffects();
+                        targets[index].moveCardTo(card, player.discard);
+                        player.discard.moveCardTo(card, targets[index]);
+                        effect.player.removePokemonEffects(targets[index]);
+                        targets[index].clearEffects();
+                    });
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 });
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
             });
         }
         return state;

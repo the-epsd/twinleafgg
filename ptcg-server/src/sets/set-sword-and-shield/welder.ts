@@ -15,12 +15,12 @@ export class Welder extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'SSH';
+  public set: string = 'UNB';
 
   public name: string = 'Welder';
 
   public fullName: string = 'Welder UNB';
-  
+
   public setNumber = '189';
 
   public text: string =
@@ -39,7 +39,7 @@ export class Welder extends TrainerCard {
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       effect.preventDefault = true;
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
@@ -48,7 +48,7 @@ export class Welder extends TrainerCard {
         GameMessage.ATTACH_ENERGY_CARDS,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
         { min: 1, max: 2, allowCancel: true, sameTarget: true }
       ), transfers => {
@@ -62,7 +62,7 @@ export class Welder extends TrainerCard {
         if (transfers.length > 0) {
           player.deck.moveTo(player.hand, 3);
         }
-        
+
         player.supporter.moveCardTo(this, player.discard);
       });
     }

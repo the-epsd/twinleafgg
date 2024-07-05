@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TateAndLizaArt = exports.SwampertArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.DelcattyArt = exports.CopycatArt = void 0;
+exports.TateAndLizaArt = exports.SwampertArt = exports.SableyeArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.DelcattyArt = exports.CopycatArt = void 0;
+const CES_88_Sableye_1 = require("./CES_88_Sableye");
 const copycat_1 = require("./copycat");
 const delcatty_1 = require("./delcatty");
 const magcargo_1 = require("./magcargo");
@@ -43,6 +44,13 @@ class MarshtompArt extends marshtomp_1.Marshtomp {
     }
 }
 exports.MarshtompArt = MarshtompArt;
+class SableyeArt extends CES_88_Sableye_1.Sableye {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_088_R_EN_LG.png';
+    }
+}
+exports.SableyeArt = SableyeArt;
 class SwampertArt extends swampert_1.Swampert {
     constructor() {
         super(...arguments);

@@ -26,7 +26,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
-  
+
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
@@ -70,7 +70,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   player.deck.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -89,7 +89,7 @@ export class Perrin extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public trainerType: TrainerType = TrainerType.ITEM;
+  public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'TWM';
 

@@ -14,7 +14,8 @@ export declare enum PlayCardEffects {
     PLAY_ITEM_EFFECT = "PLAY_ITEM_EFFECT",
     TRAINER_EFFECT = "TRAINER_EFFECT",
     ENERGY_EFFECT = "ENERGY_EFFECT",
-    TOOL_EFFECT = "TOOL_EFFECT"
+    TOOL_EFFECT = "TOOL_EFFECT",
+    SUPPORTER_EFFECT = "SUPPORTER_EFFECT"
 }
 export declare class AttachEnergyEffect implements Effect {
     readonly type: string;
@@ -83,5 +84,13 @@ export declare class ToolEffect implements Effect {
     preventDefault: boolean;
     player: Player;
     card: TrainerCard;
+    constructor(player: Player, card: TrainerCard);
+}
+export declare class SupporterEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    player: Player;
+    card: TrainerCard;
+    target: CardList | undefined;
     constructor(player: Player, card: TrainerCard);
 }

@@ -7,7 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 function* useFindAFriend(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
-  
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
@@ -19,11 +19,11 @@ function* useFindAFriend(next: Function, store: StoreLike, state: State,
     cards = selected || [];
     next();
   });
-  
+
   cards.forEach((card, index) => {
     player.deck.moveCardTo(card, player.hand);
   });
-  
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
@@ -43,18 +43,18 @@ export class Applin extends PokemonCard {
 
   public resistance = [];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Find a Friend',
-      cost: [CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
     },
     {
       name: 'Rolling Tackle',
-      cost: [CardType.GRASS, CardType.FIRE ],
+      cost: [CardType.GRASS, CardType.FIRE],
       damage: 30,
       text: ''
     }
@@ -64,11 +64,11 @@ export class Applin extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '126';
+  public setNumber: string = '';
 
   public name: string = 'Applin';
 
-  public fullName: string = 'Applin TWM';
+  public fullName: string = 'Applin TWM 126';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

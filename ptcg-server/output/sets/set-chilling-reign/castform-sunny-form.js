@@ -34,7 +34,7 @@ class CastformSunnyForm extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'CRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '022';
+        this.setNumber = '22';
         this.name = 'Castform Sunny Form';
         this.fullName = 'Castform Sunny Form CRE';
     }

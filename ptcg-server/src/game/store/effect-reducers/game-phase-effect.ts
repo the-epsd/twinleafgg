@@ -1,5 +1,5 @@
 import { Effect } from '../effects/effect';
-import { EndTurnEffect, BetweenTurnsEffect } from '../effects/game-phase-effects';
+import { EndTurnEffect, BetweenTurnsEffect, BeginTurnEffect } from '../effects/game-phase-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { Player } from '../state/player';
@@ -72,7 +72,18 @@ export function initNextTurn(store: StoreLike, state: State): State {
     return state;
   }
 
+  try {
+    const beginTurn = new BeginTurnEffect(player);
+    store.reduceEffect(state, beginTurn);
+  } catch {
+    return state;
+  }
+
+
   player.deck.moveTo(player.hand, 1);
+  // const dealDamage = new BeginTurnEffect(player);
+  // dealDamage.player = player;
+  // return store.reduceEffect(state, dealDamage);
   return state;
 }
 
@@ -86,6 +97,7 @@ function startNextTurn(store: StoreLike, state: State): State {
 
   // Move supporter cards to discard
   player.supporter.moveTo(player.discard);
+
 
   return betweenTurns(store, state, () => {
     if (state.phase !== GamePhase.FINISHED) {

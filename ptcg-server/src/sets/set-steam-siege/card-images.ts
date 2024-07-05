@@ -1,5 +1,6 @@
 import { Cobalion } from './cobalion';
 import { NinjaBoy } from './ninja-boy';
+import { PokemonRanger } from './pokemon-ranger';
 import { SpeicalCharge } from './special-charge';
 
 export class CobalionArt extends Cobalion {
@@ -8,6 +9,10 @@ export class CobalionArt extends Cobalion {
 
 export class NinjaBoyArt extends NinjaBoy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/STS/STS_103_R_EN.png';
+}
+
+export class PokemonRangerArt extends PokemonRanger {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/STS/STS_104_R_EN_LG.png';
 }
 
 export class SpecialChargeArt extends SpeicalCharge {

@@ -9,6 +9,7 @@ export var PlayCardEffects;
     PlayCardEffects["TRAINER_EFFECT"] = "TRAINER_EFFECT";
     PlayCardEffects["ENERGY_EFFECT"] = "ENERGY_EFFECT";
     PlayCardEffects["TOOL_EFFECT"] = "TOOL_EFFECT";
+    PlayCardEffects["SUPPORTER_EFFECT"] = "SUPPORTER_EFFECT";
 })(PlayCardEffects || (PlayCardEffects = {}));
 export class AttachEnergyEffect {
     constructor(player, energyCard, target) {
@@ -83,6 +84,14 @@ export class EnergyEffect {
 export class ToolEffect {
     constructor(player, card) {
         this.type = PlayCardEffects.TOOL_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.card = card;
+    }
+}
+export class SupporterEffect {
+    constructor(player, card) {
+        this.type = PlayCardEffects.SUPPORTER_EFFECT;
         this.preventDefault = false;
         this.player = player;
         this.card = card;

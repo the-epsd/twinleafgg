@@ -14,16 +14,16 @@ export class Applin2 extends PokemonCard {
 
   public hp: number = 40;
 
-  public weakness = [ {type: CardType.FIRE} ];
+  public weakness = [{ type: CardType.FIRE }];
 
   public resistance = [];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Tumbling Attack',
-      cost: [CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 10,
       damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
@@ -34,17 +34,17 @@ export class Applin2 extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '17';
+  public setNumber: string = '';
 
   public name: string = 'Applin';
 
-  public fullName: string = 'Applin TWM';
+  public fullName: string = 'Applin TWM 17';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {

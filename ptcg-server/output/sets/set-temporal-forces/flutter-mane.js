@@ -88,12 +88,15 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
                 // if (opponent.bench && player.bench) {
                 //   return state;
                 // }
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                if (!effect.power.exemptFromAbilityLock) {
+                    throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
+                }
             }
-        }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const generator = useHexHurl(() => generator.next(), store, state, effect);
-            return generator.next().value;
+            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+                const generator = useHexHurl(() => generator.next(), store, state, effect);
+                return generator.next().value;
+            }
+            return state;
         }
         return state;
     }

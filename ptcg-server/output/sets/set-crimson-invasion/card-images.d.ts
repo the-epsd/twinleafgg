@@ -1,8 +1,12 @@
+import { Chimecho } from './chimecho';
 import { CounterEnergy } from './counter-energy';
 import { DevouredField } from './devoured-field';
 import { Gladion } from './gladion';
 import { Lusamine } from './lusamine';
 import { Misdreavus } from './misdreavus';
+export declare class ChimechoArt extends Chimecho {
+    cardImage: string;
+}
 export declare class CounterEnergyArt extends CounterEnergy {
     cardImage: string;
 }

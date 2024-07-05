@@ -4,7 +4,7 @@ import { Player } from '../state/player';
 import { PokemonCard } from '../card/pokemon-card';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { TrainerCard } from '../card/trainer-card';
-import {CardList} from '../state/card-list';
+import { CardList } from '../state/card-list';
 
 export enum PlayCardEffects {
   ATTACH_ENERGY_EFFECT = 'ATTACH_ENERGY_EFFECT',
@@ -15,7 +15,8 @@ export enum PlayCardEffects {
   PLAY_ITEM_EFFECT = 'PLAY_ITEM_EFFECT',
   TRAINER_EFFECT = 'TRAINER_EFFECT',
   ENERGY_EFFECT = 'ENERGY_EFFECT',
-  TOOL_EFFECT = 'TOOL_EFFECT'
+  TOOL_EFFECT = 'TOOL_EFFECT',
+  SUPPORTER_EFFECT = 'SUPPORTER_EFFECT',
 }
 
 export class AttachEnergyEffect implements Effect {
@@ -131,6 +132,19 @@ export class ToolEffect implements Effect {
   public preventDefault = false;
   public player: Player;
   public card: TrainerCard;
+
+  constructor(player: Player, card: TrainerCard) {
+    this.player = player;
+    this.card = card;
+  }
+}
+
+export class SupporterEffect implements Effect {
+  readonly type: string = PlayCardEffects.SUPPORTER_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public card: TrainerCard;
+  public target: CardList | undefined;
 
   constructor(player: Player, card: TrainerCard) {
     this.player = player;

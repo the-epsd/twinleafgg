@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MagnemiteArt = exports.MagmarArt = exports.MagikarpArt = exports.MachopArt = exports.MachokeArt = exports.MachampArt = exports.LassArt = exports.KoffingArt = exports.KakunaArt = exports.KadabraArt = exports.JynxArt = exports.IvysaurArt = exports.ItemFinderArt = exports.ImpostorProfessorOakArt = exports.HitmonchanArt = exports.HaunterArt = exports.GyaradosArt = exports.GustOfWindArt = exports.GrowlitheArt = exports.FullHealArt = exports.FarfetchdArt = exports.EnergyRetrievalArt = exports.EnergyRemovalArt = exports.ElectrodeArt = exports.ElectabuzzArt = exports.DugtrioArt = exports.DrowzeeArt = exports.DratiniArt = exports.DragonairArt = exports.DoubleColorlessEnergyArt = exports.DoduoArt = exports.DiglettArt = exports.DewgongArt = exports.DevolutionSprayArt = exports.DefenderArt = exports.ComputerSearchArt = exports.ClefairyDollArt = exports.ClefairyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = exports.ChanseyArt = exports.CaterpieArt = exports.BulbasaurArt = exports.BlastoiseArt = exports.BillArt = exports.BeedrillArt = exports.ArcanineArt = exports.AlakazamArt = exports.AbraArt = void 0;
-exports.ZapdosArt = exports.WeedleArt = exports.WartortleArt = exports.VulpixArt = exports.VoltorbArt = exports.VenusaurArt = exports.TangelaArt = exports.SwitchArt = exports.SuperPotionArt = exports.SuperEnergyRemovalArt = exports.SquirtleArt = exports.StaryuArt = exports.StarmieArt = exports.SeelArt = exports.ScoopUpArt = exports.SandshrewArt = exports.ReviveArt = exports.RattataArt = exports.RaticateArt = exports.RaichuArt = exports.ProfessorOakArt = exports.PotionArt = exports.PonytaArt = exports.PoliwrathArt = exports.PoliwhirlArt = exports.PoliwagArt = exports.PokemonTraderArt = exports.PokemonFluteArt = exports.PokemonCenterArt = exports.PokemonBreederArt = exports.PokedexArt = exports.PlusPowerArt = exports.PikachuArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OnixArt = exports.NinetalesArt = exports.NidorinoArt = exports.NidoranMaleArt = exports.NidokingArt = exports.MewtwoArt = exports.MetapodArt = exports.MaintenanceArt = exports.MagnetonArt = void 0;
+exports.ZapdosArt = exports.WeedleArt = exports.WartortleArt = exports.VulpixArt = exports.VoltorbArt = exports.VenusaurArt = exports.TangelaArt = exports.SwitchArt = exports.SuperPotionArt = exports.SuperEnergyRemovalArt = exports.SquirtleArt = exports.StaryuArt = exports.StarmieArt = exports.SeelArt = exports.ScoopUpArt = exports.SandshrewArt = exports.ReviveArt = exports.RattataArt = exports.RaticateArt = exports.RaichuArt = exports.ProfessorOakArt = exports.PotionArt = exports.PorygonArt = exports.PonytaArt = exports.PoliwrathArt = exports.PoliwhirlArt = exports.PoliwagArt = exports.PokemonTraderArt = exports.PokemonFluteArt = exports.PokemonCenterArt = exports.PokemonBreederArt = exports.PokedexArt = exports.PlusPowerArt = exports.PikachuArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OnixArt = exports.NinetalesArt = exports.NidorinoArt = exports.NidoranMaleArt = exports.NidokingArt = exports.MewtwoArt = exports.MetapodArt = exports.MaintenanceArt = exports.MagnetonArt = void 0;
 const magnemite_1 = require("./magnemite");
 const abra_1 = require("./abra");
 const alakazam_1 = require("./alakazam");
@@ -96,6 +96,7 @@ const pokedex_1 = require("./pokedex");
 const pokemon_flute_1 = require("./pokemon-flute");
 const potion_1 = require("./potion");
 const revive_1 = require("./revive");
+const porygon_1 = require("./porygon");
 class AbraArt extends abra_1.Abra {
     constructor() {
         super(...arguments);
@@ -600,6 +601,13 @@ class PonytaArt extends ponyta_1.Ponyta {
     }
 }
 exports.PonytaArt = PonytaArt;
+class PorygonArt extends porygon_1.Porygon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/porygon-base-set-bs-39.jpg';
+    }
+}
+exports.PorygonArt = PorygonArt;
 class PotionArt extends potion_1.Potion {
     constructor() {
         super(...arguments);

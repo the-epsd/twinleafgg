@@ -1,11 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MysteriousFossilArt = exports.MrFujiArt = exports.LaprasArt = exports.EnergySearchArt = exports.ArticunoArt = void 0;
+exports.MysteriousFossilArt = exports.MrFujiArt = exports.LaprasArt = exports.EnergySearchArt = exports.ArticunoArt = exports.AerodactylArt = void 0;
+const aerodactyl_1 = require("./aerodactyl");
 const articuno_1 = require("./articuno");
 const energy_search_1 = require("./energy-search");
 const lapras_1 = require("./lapras");
 const mr_fuji_1 = require("./mr-fuji");
 const mysterious_fossil_1 = require("./mysterious-fossil");
+class AerodactylArt extends aerodactyl_1.Aerodactyl {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/aerodactyl-fossil-fo-1.jpg';
+    }
+}
+exports.AerodactylArt = AerodactylArt;
 class ArticunoArt extends articuno_1.Articuno {
     constructor() {
         super(...arguments);

@@ -12,12 +12,12 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
 
   public evolvesFrom = 'Shadow Rider Calyrex V';
-  
+
   public regulationMark = 'E';
-  
+
   public cardType: CardType = CardType.PSYCHIC;
-  
-  public tags = [ CardTag.POKEMON_VMAX ];
+
+  public tags = [CardTag.POKEMON_VMAX];
 
   public hp: number = 320;
 
@@ -25,7 +25,7 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Underworld Door',
@@ -37,7 +37,7 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
   public attacks = [
     {
       name: 'Max Geist',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 10,
       text: 'This attack does 30 more damage for each [P] Energy attached to all of your Pokémon.'
     }
@@ -49,9 +49,9 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
 
   public setNumber: string = '74';
 
-  public name: string = 'Shadow Rider Calyrex V';
+  public name: string = 'Shadow Rider Calyrex VMAX';
 
-  public fullName: string = 'Shadow Rider Calyrex V CRE';
+  public fullName: string = 'Shadow Rider Calyrex VMAX CRE';
 
   public readonly UNDERWORLD_DOOR_MARKER = 'UNDERWORLD_DOOR_MARKER';
 
@@ -70,8 +70,8 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
       }
       const hasEnergyInHand = player.hand.cards.some(c => {
         return c instanceof EnergyCard
-            && c.energyType === EnergyType.BASIC
-            && c.provides.includes(CardType.PSYCHIC);
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.PSYCHIC);
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -92,7 +92,7 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
         { allowCancel: true, min: 1, max: 1, blocked: blocked },
       ), transfers => {
@@ -114,12 +114,12 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       const cardList = StateUtils.findCardList(state, this);
       if (cardList === undefined) {
         return state;
       }
-    
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
@@ -134,10 +134,10 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
         return state;
       });
     }
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-  
+
       let energies = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
@@ -146,12 +146,11 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
           energies += energy.provides.length;
         });
       });
-  
+
       effect.damage = 10 + energies * 30;
     }
-  
+
     return state;
   }
-  
+
 }
-  

@@ -31,9 +31,9 @@ class Dipplin extends game_1.PokemonCard {
         ];
         this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '18';
+        this.setNumber = '';
         this.name = 'Dipplin';
-        this.fullName = 'Dipplin TWM';
+        this.fullName = 'Dipplin TWM 18';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

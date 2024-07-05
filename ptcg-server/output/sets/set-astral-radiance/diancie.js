@@ -31,7 +31,7 @@ class Diancie extends pokemon_card_1.PokemonCard {
         this.fullName = 'Diancie ASR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlaySupporterEffect && effect.target == effect.player.bench[0]) {
+        if (effect instanceof play_card_effects_1.SupporterEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let isDiancieInPlay = false;
@@ -56,10 +56,8 @@ class Diancie extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            // if (opponent.bench && player.bench) {
-            //   return state;
-            // }
             effect.preventDefault = true;
+            throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
         }
         return state;
     }

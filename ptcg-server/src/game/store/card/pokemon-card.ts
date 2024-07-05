@@ -29,7 +29,7 @@ export abstract class PokemonCard extends Card {
   public hp: number = 0;
 
   public weakness: Weakness[] = [];
-  
+
   public resistance: Resistance[] = [];
 
   public powers: Power[] = [];
@@ -47,26 +47,26 @@ export abstract class PokemonCard extends Card {
   public archetype: CardType[] = [];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect){
+    if (effect instanceof AttackEffect) {
       for (let i = 0; i < this.attacks.length; i++) {
         const attackEffect = this.attacks[i].effect;
         console.log(this.attacks[i].name);
-        if (effect.attack === this.attacks[i] && attackEffect !== undefined && typeof attackEffect === 'function'){
-          console.log(attackEffect);
-          console.log('we made it to handling!');
+        if (effect.attack === this.attacks[i] && attackEffect !== undefined && typeof attackEffect === 'function') {
+          // console.log(attackEffect);
+          // console.log('we made it to handling!');
           attackEffect(store, state, effect);
         }
       }
     }
-    else if (effect instanceof PowerEffect){
-      for (let i = 0; i < this.powers.length; i++){
-        if (effect.power === this.powers[i] && effect.power.effect !== undefined){
+    else if (effect instanceof PowerEffect) {
+      for (let i = 0; i < this.powers.length; i++) {
+        if (effect.power === this.powers[i] && effect.power.effect !== undefined) {
           return effect.power.effect(store, state, effect);
         }
       }
 
       for (let i = 0; i < this.tools.length; i++) {
-        if (effect.power === this.powers[i] && effect.power.effect !== undefined){
+        if (effect.power === this.powers[i] && effect.power.effect !== undefined) {
           return effect.power.effect(store, state, effect);
         }
       }

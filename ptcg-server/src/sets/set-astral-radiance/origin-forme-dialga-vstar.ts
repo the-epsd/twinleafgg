@@ -2,9 +2,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, 
+import {
+  StoreLike, State,
   GameError,
-  GameMessage} from '../../game';
+  GameMessage
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -12,7 +14,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class OriginFormeDialgaVSTAR extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VSTAR ];
+  public tags = [CardTag.POKEMON_VSTAR];
 
   public regulationMark = 'F';
 
@@ -26,18 +28,18 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [  ];
+  public retreat = [];
 
   public attacks = [
     {
       name: 'Metal Blast',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 40,
       text: 'This attack does 40 more damage for each [M] Energy attached to this Pokémon.'
     },
     {
       name: 'Star Chronos',
-      cost: [ CardType.METAL, CardType.METAL, CardType.METAL, CardType.METAL, CardType.COLORLESS ],
+      cost: [CardType.METAL, CardType.METAL, CardType.METAL, CardType.METAL, CardType.COLORLESS],
       damage: 220,
       text: 'Take another turn after this one. (Skip Pokémon Checkup.) (You can\'t use more than 1 VSTAR Power in a game.)'
     }
@@ -64,6 +66,10 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
       effect.player.marker.removeMarker(this.STAR_CHRONOS_MARKER_2, this);
       effect.player.usedTurnSkip = false;
       console.log('marker cleared');
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.usedTurnSkip === true) {
+      effect.player.usedTurnSkip = false;
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.STAR_CHRONOS_MARKER, this)) {
@@ -94,7 +100,7 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
       }
       player.usedVSTAR = true;
       player.marker.addMarker(this.STAR_CHRONOS_MARKER, this);
-      player.usedTurnSkip = true;
+      effect.player.usedTurnSkip = true;
     }
 
     return state;

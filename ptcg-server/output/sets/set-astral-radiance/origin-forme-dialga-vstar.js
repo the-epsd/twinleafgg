@@ -47,6 +47,9 @@ class OriginFormeDialgaVSTAR extends pokemon_card_1.PokemonCard {
             effect.player.usedTurnSkip = false;
             console.log('marker cleared');
         }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.usedTurnSkip === true) {
+            effect.player.usedTurnSkip = false;
+        }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.STAR_CHRONOS_MARKER, this)) {
             effect.player.marker.addMarker(this.STAR_CHRONOS_MARKER_2, this);
             console.log('marker added');
@@ -70,7 +73,7 @@ class OriginFormeDialgaVSTAR extends pokemon_card_1.PokemonCard {
             }
             player.usedVSTAR = true;
             player.marker.addMarker(this.STAR_CHRONOS_MARKER, this);
-            player.usedTurnSkip = true;
+            effect.player.usedTurnSkip = true;
         }
         return state;
     }

@@ -63,6 +63,10 @@ export class ChiYu extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof EndTurnEffect) {
+      effect.player.marker.removeMarker(this.RETALIATE_MARKER);
+    }
+
     if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
       const player = StateUtils.getOpponent(state, effect.player);
       const cardList = StateUtils.findCardList(state, this);
@@ -84,7 +88,7 @@ export class ChiYu extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      this.damageDealt = false;
+      // this.damageDealt = false;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
@@ -120,14 +124,22 @@ export class ChiYu extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      if (this.damageDealt) {
+      const player = effect.player;
+
+      if (player.marker.hasMarker(this.RETALIATE_MARKER) && this.damageDealt) {
         effect.damage += 90;
       }
-
-      this.damageDealt = false;
-
-      return state;
     }
+
+    // if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    //   if (this.damageDealt) {
+    //     effect.damage += 90;
+    //   }
+
+    //   this.damageDealt = false;
+
+    //   return state;
+    // }
 
     if (effect instanceof KnockOutEffect) {
       const player = effect.player;
@@ -146,9 +158,6 @@ export class ChiYu extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.RETALIATE_MARKER);
-    }
     return state;
   }
 }

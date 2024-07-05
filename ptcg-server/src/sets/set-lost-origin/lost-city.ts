@@ -1,5 +1,5 @@
 import { CardList, StateUtils } from '../../game';
-import { CardTag, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
@@ -30,17 +30,21 @@ export class LostCity extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof KnockOutEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
-  
       const target = effect.target;
       const cards = target.getPokemons();
-      
-      const removedCards = [];
+
+      const attachedCards = new CardList();
+      const lostZoned = new CardList();
 
       const pokemonIndices = effect.target.cards.map((card, index) => index);
-      
+
       for (let i = pokemonIndices.length - 1; i >= 0; i--) {
         const removedCard = target.cards.splice(pokemonIndices[i], 1)[0];
-        removedCards.push(removedCard);
+        if (removedCard.superType === SuperType.POKEMON) {
+          lostZoned.cards.push(removedCard);
+        } else {
+          attachedCards.cards.push(removedCard);
+        }
         target.damage = 0;
       }
 
@@ -51,18 +55,12 @@ export class LostCity extends TrainerCard {
         effect.prizeCount += 2;
       }
 
-      const attachedCards = new CardList();
-      attachedCards.cards = removedCards;
-
-      const lostZoned = new CardList();
-      lostZoned.cards = cards;
-
       lostZoned.moveTo(player.lostzone);
       attachedCards.moveTo(player.discard);
     }
-    
+
     return state;
   }
-  
+
+
 }
-  

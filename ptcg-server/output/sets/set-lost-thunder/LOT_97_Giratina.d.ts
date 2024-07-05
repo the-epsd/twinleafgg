@@ -17,8 +17,7 @@ export declare class Giratina extends PokemonCard {
     retreat: CardType[];
     powers: {
         name: string;
-        preventDefault: boolean;
-        useFromDiscard: boolean;
+useFromDiscard: boolean;
         powerType: PowerType;
         text: string;
     }[];
