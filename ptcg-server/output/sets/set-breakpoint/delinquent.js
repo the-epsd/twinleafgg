@@ -28,7 +28,10 @@ function* playCard(next, store, state, self, effect) {
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
     if (opponentCards.length <= 3) {
-        opponent.hand.moveCardsTo(opponentCards, opponent.discard);
+        opponentCards.forEach(c => {
+            opponent.hand.moveCardTo(c, opponent.discard);
+        });
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
     }
     if (opponentCards.length > 3) {

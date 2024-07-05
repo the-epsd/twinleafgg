@@ -18,7 +18,7 @@ class Giratina extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Distortion Door',
- useFromDiscard: true,
+                useFromDiscard: true,
                 powerType: pokemon_types_1.PowerType.ABILITY,
                 text: 'Once during your turn (before your attack), if this Pokémon is in your discard pile, you may put it onto your Bench. If you do, put 1 damage counter on 2 of your opponent\'s Benched Pokémon.'
             }];
