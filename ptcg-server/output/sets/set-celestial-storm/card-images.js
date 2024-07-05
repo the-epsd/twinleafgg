@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TateAndLizaArt = exports.SwampertArt = exports.SableyeArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.DelcattyArt = exports.CopycatArt = void 0;
+exports.TateAndLizaArt = exports.SwampertArt = exports.SableyeArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.HustleBeltArt = exports.DelcattyArt = exports.CopycatArt = void 0;
 const CES_88_Sableye_1 = require("./CES_88_Sableye");
 const copycat_1 = require("./copycat");
 const delcatty_1 = require("./delcatty");
+const hustle_belt_1 = require("./hustle-belt");
 const magcargo_1 = require("./magcargo");
 const marshtomp_1 = require("./marshtomp");
 const mudkip_1 = require("./mudkip");
@@ -23,6 +24,13 @@ class DelcattyArt extends delcatty_1.Delcatty {
     }
 }
 exports.DelcattyArt = DelcattyArt;
+class HustleBeltArt extends hustle_belt_1.HustleBelt {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_134_R_EN.png';
+    }
+}
+exports.HustleBeltArt = HustleBeltArt;
 class MagcargoArt extends magcargo_1.Magcargo {
     constructor() {
         super(...arguments);

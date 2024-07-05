@@ -17,4 +17,5 @@ exports.setNobleVictories = [
     new card_images_1.VanillishArt(),
     new card_images_1.VanilliteArt(),
     new card_images_1.VanilluxeArt(),
+    new card_images_1.XtransceiverArt()
 ];

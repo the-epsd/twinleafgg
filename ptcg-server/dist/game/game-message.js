@@ -159,6 +159,7 @@ export var GameCardMessage;
     GameCardMessage["CARD"] = "CARD";
     GameCardMessage["CARDS"] = "CARDS";
     GameCardMessage["TREKKING_SHOES"] = "TREKKING_SHOES";
+    GameCardMessage["DISCARD_FROM_TOP_OF_DECK"] = "DISCARD_FROM_TOP_OF_DECK";
 })(GameCardMessage || (GameCardMessage = {}));
 export var GameLog;
 (function (GameLog) {

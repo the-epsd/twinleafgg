@@ -8,7 +8,7 @@ export class GapejawBog extends TrainerCard {
 
   public regulationMark = 'F';
 
-  public cardImage: string = 'assets/cardback.png'; string = 'astralradiance';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '142';
   

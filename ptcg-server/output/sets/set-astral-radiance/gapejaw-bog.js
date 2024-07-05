@@ -10,7 +10,6 @@ class GapejawBog extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
-        this.string = 'astralradiance';
         this.setNumber = '142';
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'ASR';

@@ -1,9 +1,9 @@
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Giratina extends PokemonCard {
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
+export declare class AlolanMeowth extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
@@ -15,23 +15,17 @@ export declare class Giratina extends PokemonCard {
         value: number;
     }[];
     retreat: CardType[];
-    powers: {
-        name: string;
-        useFromDiscard: boolean;
-        powerType: PowerType;
-        text: string;
-    }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: never[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;
-    setNumber: string;
     cardImage: string;
+    setNumber: string;
     name: string;
     fullName: string;
-    readonly DISTORTION_DOOR_MARKER = "DISTORTION_DOOR_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

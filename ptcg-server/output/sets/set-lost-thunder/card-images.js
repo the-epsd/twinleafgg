@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.SpellTagArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt = exports.AdventureBagArt = void 0;
+exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.SpellTagArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
 const adventure_bag_1 = require("./adventure-bag");
+const alolan_meowth_1 = require("./alolan-meowth");
 const chikorita_1 = require("./chikorita");
 const counter_gain_1 = require("./counter-gain");
 const custom_catcher_1 = require("./custom-catcher");
@@ -24,6 +25,13 @@ class AdventureBagArt extends adventure_bag_1.AdventureBag {
     }
 }
 exports.AdventureBagArt = AdventureBagArt;
+class AlolanMeowthArt extends alolan_meowth_1.AlolanMeowth {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_118_R_EN.png';
+    }
+}
+exports.AlolanMeowthArt = AlolanMeowthArt;
 class ChikoritaArt extends chikorita_1.Chikorita {
     constructor() {
         super(...arguments);
