@@ -1,3 +1,4 @@
+import { Sableye } from './CES_88_Sableye';
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
 import { Magcargo } from './magcargo';
@@ -19,15 +20,19 @@ export class MagcargoArt extends Magcargo {
 }
 
 export class MudkipArt extends Mudkip {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_032_R_EN_LG.png';  
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_032_R_EN_LG.png';
 }
 
 export class MarshtompArt extends Marshtomp {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_034_R_EN_LG.png';  
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_034_R_EN_LG.png';
+}
+
+export class SableyeArt extends Sableye {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_088_R_EN_LG.png';
 }
 
 export class SwampertArt extends Swampert {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_035_R_EN_LG.png';  
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_035_R_EN_LG.png';
 }
 
 export class TateAndLizaArt extends TateAndLiza {
