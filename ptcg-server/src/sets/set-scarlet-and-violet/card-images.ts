@@ -51,6 +51,7 @@ import { Revavroom } from './revavroom';
 import { RockChestplate } from './rock-chestplate';
 import { RockyHelmet } from './rocky-helmet';
 import { Scovillain } from './scovillain';
+import { Seviper } from './seviper';
 import { Shuppet } from './shuppet';
 import { Skwovet } from './skwovet';
 import { Flittle } from './SVI_100_Flittle';
@@ -280,6 +281,10 @@ export class RockyHelmetArt extends RockyHelmet {
 
 export class ScovillainArt extends Scovillain {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_029_R_EN_LG.png';
+}
+
+export class SeviperArt extends Seviper {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_128_R_EN_LG.png';
 }
 
 export class ShuppetArt extends Shuppet {

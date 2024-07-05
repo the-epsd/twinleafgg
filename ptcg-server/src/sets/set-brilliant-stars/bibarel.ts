@@ -25,7 +25,7 @@ export class Bibarel extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Industrious Incisors',
@@ -35,8 +35,8 @@ export class Bibarel extends PokemonCard {
   }];
 
   public attacks = [{
-    name: 'Hyper Fang',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+    name: 'Tail Smash',
+    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 100,
     text: 'Flip a coin. If tails, this attack does nothing.'
   }];
@@ -59,18 +59,18 @@ export class Bibarel extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.INDUSTRIOUS_INCISORS_MARKER, this);
     }
-    
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.INDUSTRIOUS_INCISORS_MARKER, this);
     }
-    
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       if (player.marker.hasMarker(this.INDUSTRIOUS_INCISORS_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-  
+
       while (player.hand.cards.length < 5) {
         player.deck.moveTo(player.hand, 1);
       }
@@ -84,19 +84,9 @@ export class Bibarel extends PokemonCard {
 
     }
 
-    if (effect instanceof EndTurnEffect) {
-
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player instanceof Bibarel) {
-          player.marker.removeMarker(this.INDUSTRIOUS_INCISORS_MARKER);
-        }
-      });
-  
-    }
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {

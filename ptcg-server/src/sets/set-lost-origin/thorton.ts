@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, GameError, PokemonCard } from '../../game';
+import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SlotType } from '../../game';
 
 export class Thorton extends TrainerCard {
 
@@ -39,7 +39,7 @@ export class Thorton extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-  
+
       const hasBasicInDiscard = player.discard.cards.some(c => {
         return c instanceof PokemonCard && Stage.BASIC;
       });
@@ -47,29 +47,50 @@ export class Thorton extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
+      const blocked: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card.stage !== Stage.BASIC) {
+          blocked.push();
+        }
+      });
+
+      return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.discard,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 1, max: 1, allowCancel: false }
-      ), selectedCards => {
-        cards = selectedCards || [];
-        
-    
-        cards.forEach((card, index) => {
-          player.active.moveCardTo(card, player.discard);
-          player.discard.moveCardTo(card, player.active);
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { min: 1, max: 1, allowCancel: false, blocked }
+      ), selected => {
+
+        const targets = selected || [];
+        if (targets.length === 0) {
+          throw new GameError(GameMessage.INVALID_TARGET);
+        }
+
+        let cards: Card[] = [];
+        return store.prompt(state, new ChooseCardsPrompt(
+          player.id,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.discard,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { min: 1, max: 1, allowCancel: false }
+        ), selectedCards => {
+          cards = selectedCards || [];
+
+
+          cards.forEach((card, index) => {
+            effect.player.removePokemonEffects(targets[index]);
+            targets[index].clearEffects();
+            targets[index].moveCardTo(card, player.discard);
+            player.discard.moveCardTo(card, targets[index]);
+            effect.player.removePokemonEffects(targets[index]);
+            targets[index].clearEffects();
+          });
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
         });
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        
-      }
-      );
-  
+      });
     }
     return state;
   }
-
 }

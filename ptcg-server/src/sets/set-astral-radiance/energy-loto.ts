@@ -28,50 +28,49 @@ export class EnergyLoto extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const temp = new CardList();
-      
+
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-  
-      player.deck.moveTo(temp, 7); 
-  
+
+      player.deck.moveTo(temp, 7);
+
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,  
+        player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
         temp,
         { superType: SuperType.ENERGY },
         { allowCancel: false, min: 0, max: 1 }
       ), chosenCards => {
-  
-        if (chosenCards.length <= 0) {
+
+        if (chosenCards.length == 0) {
           // No Energy chosen, shuffle all back
           temp.cards.forEach(card => {
             temp.moveCardTo(card, player.deck);
-            player.supporter.moveCardTo(this, player.discard);
-          });  
+          });
           player.supporter.moveCardTo(this, player.discard);
         }
-      
+
         if (chosenCards.length > 0) {
           // Move chosen Energy to hand
-          const energyCard = chosenCards[0]; 
+          const energyCard = chosenCards[0];
           temp.moveCardTo(energyCard, player.hand);
           player.supporter.moveCardTo(this, player.discard);
-            
+
           chosenCards.forEach((card, index) => {
             store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
           });
-            
+
           if (chosenCards.length > 0) {
             state = store.prompt(state, new ShowCardsPrompt(
               opponent.id,
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
               chosenCards), () => state);
           }
-  
+
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
             return state;

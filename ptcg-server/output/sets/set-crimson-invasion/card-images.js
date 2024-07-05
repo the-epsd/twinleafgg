@@ -1,11 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MisdreavusArt = exports.LusamineArt = exports.GladionArt = exports.DevouredFieldArt = exports.CounterEnergyArt = void 0;
+exports.MisdreavusArt = exports.LusamineArt = exports.GladionArt = exports.DevouredFieldArt = exports.CounterEnergyArt = exports.ChimechoArt = void 0;
+const chimecho_1 = require("./chimecho");
 const counter_energy_1 = require("./counter-energy");
 const devoured_field_1 = require("./devoured-field");
 const gladion_1 = require("./gladion");
 const lusamine_1 = require("./lusamine");
 const misdreavus_1 = require("./misdreavus");
+class ChimechoArt extends chimecho_1.Chimecho {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CIN/CIN_043_R_EN_LG.png';
+    }
+}
+exports.ChimechoArt = ChimechoArt;
 class CounterEnergyArt extends counter_energy_1.CounterEnergy {
     constructor() {
         super(...arguments);

@@ -11,7 +11,7 @@ import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 function* useHexHurl(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-    
+
   const hasBenched = opponent.bench.some(b => b.cards.length > 0);
   if (!hasBenched) {
     return state;
@@ -28,7 +28,7 @@ function* useHexHurl(next: Function, store: StoreLike, state: State, effect: Att
     effect.player.id,
     GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
     PlayerType.TOP_PLAYER,
-    [ SlotType.BENCH ],
+    [SlotType.BENCH],
     damage,
     maxAllowedDamage,
     { allowCancel: false }
@@ -49,7 +49,7 @@ export class FlutterMane extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public tags = [ CardTag.ANCIENT ];
+  public tags = [CardTag.ANCIENT];
 
   public cardType: CardType = CardType.PSYCHIC;
 
@@ -57,7 +57,7 @@ export class FlutterMane extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Midnight Fluttering',
@@ -67,7 +67,7 @@ export class FlutterMane extends PokemonCard {
 
   public attacks = [{
     name: 'Hex Hurl',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 90,
     text: 'Put 2 damage counters on your opponent\'s Benched Pokémon in any way you like.'
   }];
@@ -117,21 +117,22 @@ export class FlutterMane extends PokemonCard {
         } catch {
           return state;
         }
-
         // if (opponent.bench && player.bench) {
         //   return state;
         // }
-
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+        if (!effect.power.exemptFromAbilityLock) {
+          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+        }
       }
+
+
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+        const generator = useHexHurl(() => generator.next(), store, state, effect);
+        return generator.next().value;
+      }
+
+      return state;
     }
-
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useHexHurl(() => generator.next(), store, state, effect);
-      return generator.next().value;
-    }
-
     return state;
   }
 }

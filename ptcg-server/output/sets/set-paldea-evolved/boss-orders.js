@@ -20,6 +20,14 @@ function* playCard(next, store, state, effect) {
     player.hand.moveCardTo(effect.trainerCard, player.supporter);
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
+    try {
+        const supporterEffect = new play_card_effects_1.SupporterEffect(player, effect.trainerCard);
+        store.reduceEffect(state, supporterEffect);
+    }
+    catch (_a) {
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
+    }
     return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
         const cardList = result[0];
         opponent.switchPokemon(cardList);

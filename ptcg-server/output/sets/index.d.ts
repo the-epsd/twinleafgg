@@ -13,6 +13,7 @@ export * from './set-heartgold-and-soulsilver-promos';
 export * from './set-triumphant';
 export * from './set-undaunted';
 export * from './set-unleashed';
+export * from './set-black-and-white-promos';
 export * from './set-black-and-white';
 export * from './set-boundaries-crossed';
 export * from './set-dark-explorers';

@@ -13,11 +13,15 @@ export class TropicalBeach extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
 
-  public set: string = 'BW3';
+  public set: string = 'BWP';
 
   public name: string = 'Tropical Beach';
 
-  public fullName: string = 'Tropical Beach BW';
+  public fullName: string = 'Tropical Beach BWP';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '28';
 
   public text: string =
     'Once during each player\'s turn, that player may draw cards ' +

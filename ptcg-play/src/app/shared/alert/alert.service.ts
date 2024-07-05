@@ -22,7 +22,7 @@ export class AlertService {
     const dialog = this.dialog.open(AlertPopupComponent, {
       maxWidth: '100%',
       width: '350px',
-      data: { message, title }
+      data: { message, title },
     });
 
     return dialog.afterClosed().toPromise()
@@ -34,7 +34,7 @@ export class AlertService {
   }
 
   public toast(message: string, duration: number = 3000) {
-    this.snackBar.open(message, '', { duration, horizontalPosition: 'right', verticalPosition: 'top' });
+    this.snackBar.open(message, '', { duration, horizontalPosition: 'center', verticalPosition: 'top' });
   }
 
   public confirm(message: string, title?: string): Promise<boolean> {
