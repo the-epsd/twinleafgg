@@ -1,5 +1,6 @@
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
+import { HustleBelt } from './hustle-belt';
 import { Magcargo } from './magcargo';
 import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
@@ -12,6 +13,10 @@ export class CopycatArt extends Copycat {
 
 export class DelcattyArt extends Delcatty {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_121_R_EN.png';
+}
+
+export class HustleBeltArt extends HustleBelt {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_134_R_EN.png';
 }
 
 export class MagcargoArt extends Magcargo {

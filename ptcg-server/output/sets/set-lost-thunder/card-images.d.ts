@@ -1,4 +1,5 @@
 import { AdventureBag } from './adventure-bag';
+import { AlolanMeowth } from './alolan-meowth';
 import { Chikorita } from './chikorita';
 import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
@@ -14,6 +15,9 @@ import { Treecko } from './treecko';
 import { Wurmple } from './wurmple';
 import { Zebstrika } from './zebstrika';
 export declare class AdventureBagArt extends AdventureBag {
+    cardImage: string;
+}
+export declare class AlolanMeowthArt extends AlolanMeowth {
     cardImage: string;
 }
 export declare class ChikoritaArt extends Chikorita {

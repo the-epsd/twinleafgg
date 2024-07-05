@@ -13,6 +13,7 @@ import { Tynamo } from './tynamo';
 import { Vanillish } from './vanillish';
 import { Vanillite } from './vanillite';
 import { Vanilluxe } from './vanilluxe';
+import { Xtransceiver } from './xtransceiver';
 
 export class ArchenArt extends Archen {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_066_R_EN.png';
@@ -74,4 +75,8 @@ export class VanilliteArt extends Vanillite {
 
 export class VanilluxeArt extends Vanilluxe {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_029_R_EN.png';
+}
+
+export class XtransceiverArt extends Xtransceiver {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_096_R_EN.png';
 }

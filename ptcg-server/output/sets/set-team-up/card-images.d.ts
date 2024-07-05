@@ -9,6 +9,7 @@ import { Mareep } from './mareep';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
 import { ViridianForest } from './viridian-forest';
+import { Yveltal } from './yveltal';
 import { Zapdos } from './zapdos';
 export declare class AlolanMukArt extends AlolanMuk {
     cardImage: string;
@@ -41,6 +42,9 @@ export declare class PokemonCommunicationArt extends PokemonCommunication {
     cardImage: string;
 }
 export declare class ViridianForestArt extends ViridianForest {
+    cardImage: string;
+}
+export declare class YveltalArt extends Yveltal {
     cardImage: string;
 }
 export declare class ZapdosArt extends Zapdos {

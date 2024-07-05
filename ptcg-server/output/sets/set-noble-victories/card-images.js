@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VanilluxeArt = exports.VanilliteArt = exports.VanillishArt = exports.TynamoArt = exports.TrubbishArt = exports.TerrakionArt = exports.SuperRodArt = exports.PlumeFossilArt = exports.KyuremArt = exports.EelektrikArt = exports.DurantArt = exports.ChandelureArt = exports.BlitzleArt = exports.ArcheopsArt = exports.ArchenArt = void 0;
+exports.XtransceiverArt = exports.VanilluxeArt = exports.VanilliteArt = exports.VanillishArt = exports.TynamoArt = exports.TrubbishArt = exports.TerrakionArt = exports.SuperRodArt = exports.PlumeFossilArt = exports.KyuremArt = exports.EelektrikArt = exports.DurantArt = exports.ChandelureArt = exports.BlitzleArt = exports.ArcheopsArt = exports.ArchenArt = void 0;
 const super_rod_1 = require("../set-paldea-evolved/super-rod");
 const archen_1 = require("./archen");
 const archeops_1 = require("./archeops");
@@ -16,6 +16,7 @@ const tynamo_1 = require("./tynamo");
 const vanillish_1 = require("./vanillish");
 const vanillite_1 = require("./vanillite");
 const vanilluxe_1 = require("./vanilluxe");
+const xtransceiver_1 = require("./xtransceiver");
 class ArchenArt extends archen_1.Archen {
     constructor() {
         super(...arguments);
@@ -123,3 +124,10 @@ class VanilluxeArt extends vanilluxe_1.Vanilluxe {
     }
 }
 exports.VanilluxeArt = VanilluxeArt;
+class XtransceiverArt extends xtransceiver_1.Xtransceiver {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_096_R_EN.png';
+    }
+}
+exports.XtransceiverArt = XtransceiverArt;

@@ -13,6 +13,7 @@ import { Tynamo } from './tynamo';
 import { Vanillish } from './vanillish';
 import { Vanillite } from './vanillite';
 import { Vanilluxe } from './vanilluxe';
+import { Xtransceiver } from './xtransceiver';
 export declare class ArchenArt extends Archen {
     cardImage: string;
 }
@@ -58,5 +59,8 @@ export declare class VanilliteArt extends Vanillite {
     cardImage: string;
 }
 export declare class VanilluxeArt extends Vanilluxe {
+    cardImage: string;
+}
+export declare class XtransceiverArt extends Xtransceiver {
     cardImage: string;
 }

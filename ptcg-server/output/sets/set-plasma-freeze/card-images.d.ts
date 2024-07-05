@@ -1,6 +1,7 @@
 import { SuperiorEnergyRetrieval } from '../set-paldea-evolved/superior-energy-retrieval';
 import { Exeggcute } from './exeggcute';
 import { FloatStone } from './float-stone';
+import { FrozenCity } from './frozen-city';
 import { MrMime } from './mr-mime';
 import { Electrode } from './PLF_33_Electrode';
 import { RockGuard } from './rock-guard';
@@ -11,6 +12,9 @@ export declare class ExeggcuteArt extends Exeggcute {
     cardImage: string;
 }
 export declare class FloatStoneArt extends FloatStone {
+    cardImage: string;
+}
+export declare class FrozenCityArt extends FrozenCity {
     cardImage: string;
 }
 export declare class MrMimeArt extends MrMime {

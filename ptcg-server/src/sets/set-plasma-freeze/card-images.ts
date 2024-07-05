@@ -1,6 +1,7 @@
 import { SuperiorEnergyRetrieval } from '../set-paldea-evolved/superior-energy-retrieval';
 import { Exeggcute } from './exeggcute';
 import { FloatStone } from './float-stone';
+import { FrozenCity } from './frozen-city';
 import { MrMime } from './mr-mime';
 import { Electrode } from './PLF_33_Electrode';
 import { RockGuard } from './rock-guard';
@@ -15,6 +16,10 @@ export class ExeggcuteArt extends Exeggcute {
 
 export class FloatStoneArt extends FloatStone {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLF/PLF_099_R_EN.png';
+}
+
+export class FrozenCityArt extends FrozenCity {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLF/PLF_100_R_EN.png';
 }
 
 export class MrMimeArt extends MrMime {
