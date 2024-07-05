@@ -1,8 +1,12 @@
+import { Aerodactyl } from './aerodactyl';
 import { Articuno } from './articuno';
 import { EnergySearch } from './energy-search';
 import { Lapras } from './lapras';
 import { MrFuji } from './mr-fuji';
 import { MysteriousFossil } from './mysterious-fossil';
+export declare class AerodactylArt extends Aerodactyl {
+    cardImage: string;
+}
 export declare class ArticunoArt extends Articuno {
     cardImage: string;
 }

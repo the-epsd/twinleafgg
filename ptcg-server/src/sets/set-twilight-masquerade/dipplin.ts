@@ -18,7 +18,7 @@ export class Dipplin extends PokemonCard {
 
   public hp: number = 80;
 
-  public weakness = [ {type: CardType.FIRE}];
+  public weakness = [{ type: CardType.FIRE }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
@@ -41,11 +41,11 @@ export class Dipplin extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '18';
+  public setNumber: string = '';
 
   public name: string = 'Dipplin';
 
-  public fullName: string = 'Dipplin TWM';
+  public fullName: string = 'Dipplin TWM 18';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -65,7 +65,7 @@ export class Dipplin extends PokemonCard {
         if (effect.damage > 0) {
           const dealDamage = new DealDamageEffect(effect, effect.damage);
           state = store.reduceEffect(state, dealDamage);
-  
+
           try {
             const stub = new PowerEffect(player, {
               name: 'test',
@@ -76,7 +76,7 @@ export class Dipplin extends PokemonCard {
           } catch {
             return state;
           }
-  
+
           state = store.prompt(state, new ConfirmPrompt(
             effect.player.id,
             GameMessage.WANT_TO_USE_FESTIVAL_FEVER,

@@ -15,7 +15,7 @@ export class ShadowRiderCalyrexV extends PokemonCard {
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public hp: number = 210;
 
@@ -23,18 +23,18 @@ export class ShadowRiderCalyrexV extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Shadow Mist',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 10,
       text: 'During your opponent\'s next turn, they can\'t play any Special Energy or Stadium cards from their hand.'
     },
     {
       name: 'Astral Barrage',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
       text: 'Choose 2 of your opponent\'s Pokémon and put 5 damage counters on each of them.'
     },
@@ -44,7 +44,7 @@ export class ShadowRiderCalyrexV extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '74';
+  public setNumber: string = '75';
 
   public name: string = 'Shadow Rider Calyrex V';
 
@@ -89,7 +89,7 @@ export class ShadowRiderCalyrexV extends PokemonCard {
 
     if (effect instanceof AttachEnergyEffect && effect.energyCard.energyType === EnergyType.SPECIAL) {
       const player = effect.player;
-            
+
       if (player.marker.hasMarker(this.ASTRAL_BARRAGE_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
@@ -97,7 +97,7 @@ export class ShadowRiderCalyrexV extends PokemonCard {
 
     if (effect instanceof PlayStadiumEffect) {
       const player = effect.player;
-              
+
       if (player.marker.hasMarker(this.ASTRAL_BARRAGE_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }

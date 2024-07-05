@@ -43,7 +43,7 @@ export class CastformSunnyForm extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '022';
+  public setNumber: string = '22';
 
   public name: string = 'Castform Sunny Form';
 

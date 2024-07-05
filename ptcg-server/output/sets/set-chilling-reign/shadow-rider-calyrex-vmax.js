@@ -37,8 +37,8 @@ class ShadowRiderCalyrexVMAX extends pokemon_card_1.PokemonCard {
         this.set = 'CRE';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '74';
-        this.name = 'Shadow Rider Calyrex V';
-        this.fullName = 'Shadow Rider Calyrex V CRE';
+        this.name = 'Shadow Rider Calyrex VMAX';
+        this.fullName = 'Shadow Rider Calyrex VMAX CRE';
         this.UNDERWORLD_DOOR_MARKER = 'UNDERWORLD_DOOR_MARKER';
     }
     reduceEffect(store, state, effect) {

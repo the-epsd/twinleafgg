@@ -34,15 +34,15 @@ export class ForestSealStone extends TrainerCard {
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
       text: 'During your turn, you may search your deck for up to ' +
-    '2 cards and put them into your hand. Then, shuffle your ' +
-    'deck. (You can\'t use more than 1 VSTAR Power in a game.)'
+        '2 cards and put them into your hand. Then, shuffle your ' +
+        'deck. (You can\'t use more than 1 VSTAR Power in a game.)'
     }
   ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckPokemonPowersEffect && effect.target.cards.includes(this) &&
-        !effect.powers.find(p => p.name === this.powers[0].name)) {
+      !effect.powers.find(p => p.name === this.powers[0].name)) {
       const player = effect.player;
       try {
         const toolEffect = new ToolEffect(player, this);
@@ -52,7 +52,7 @@ export class ForestSealStone extends TrainerCard {
       }
 
       if (!effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);       
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
       effect.powers.push(this.powers[0]);
     }
@@ -72,7 +72,7 @@ export class ForestSealStone extends TrainerCard {
       }
 
       player.usedVSTAR = true;
-      
+
       state = store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
@@ -91,7 +91,7 @@ export class ForestSealStone extends TrainerCard {
 
       return state;
     }
-    
+
     return state;
   }
 }

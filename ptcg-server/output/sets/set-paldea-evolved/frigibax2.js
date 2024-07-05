@@ -28,7 +28,7 @@ class Frigibax2 extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PAL';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '58';
+        this.setNumber = '';
         this.name = 'Frigibax';
         this.fullName = 'Frigibax PAL 58';
     }

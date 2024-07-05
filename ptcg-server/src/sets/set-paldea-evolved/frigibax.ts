@@ -13,12 +13,12 @@ export class Frigibax extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Tackle',
-      cost: [ CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.COLORLESS],
       damage: 30,
       text: ''
     }
@@ -28,7 +28,7 @@ export class Frigibax extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '57';
+  public setNumber: string = '';
 
   public name: string = 'Frigibax';
 
