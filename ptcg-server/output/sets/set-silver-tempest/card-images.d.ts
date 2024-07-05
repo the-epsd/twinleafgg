@@ -10,6 +10,7 @@ import { CapturingAroma } from './capturing-aroma';
 import { Cobalion } from './cobalion';
 import { Crobat } from './crobat';
 import { Dragonite } from './dragonite';
+import { Drakloak } from './drakloak';
 import { Elgyem } from './elgyem';
 import { EmergencyJelly } from './emergency-jelly';
 import { Feebas } from './feebas';
@@ -82,6 +83,9 @@ export declare class CrobatArt extends Crobat {
     cardImage: string;
 }
 export declare class DragoniteArt extends Dragonite {
+    cardImage: string;
+}
+export declare class DrakloakArt extends Drakloak {
     cardImage: string;
 }
 export declare class ElgyemArt extends Elgyem {

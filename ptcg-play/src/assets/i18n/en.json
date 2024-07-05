@@ -456,6 +456,7 @@
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.",
     "LOG_FLIP_ASLEEP": "{{name}} flips a coin for Status Condition: Asleep.",
+    "LOG_ABILITY_BLOCKS_DAMGE": "{{ name }} prevents damage with {{ pokemon }}'s ability.",
     "LOG_FLIP_CONFUSION": "{{name}} a coin for Status Condition: Confusion.",
     "LOG_GAME_FINISHED": "Game finished.",
     "LOG_GAME_FINISHED_BEFORE_STARTED": "Game finished before it has started.",
