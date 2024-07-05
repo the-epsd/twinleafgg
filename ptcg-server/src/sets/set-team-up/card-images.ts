@@ -8,6 +8,7 @@ import { Lapras } from './lapras';
 import { Mareep } from './mareep';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
+import { Moltres } from './TEU_19_Moltres';
 import { ViridianForest } from './viridian-forest';
 import { Yveltal } from './yveltal';
 import { Zapdos } from './zapdos';
@@ -42,6 +43,10 @@ export class LaprasArt extends Lapras {
 
 export class MareepArt extends Mareep {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_041_R_EN.png';
+}
+
+export class MoltresArt extends Moltres {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_019_R_EN_LG.png';
 }
 
 export class PidgeottoArt extends Pidgeotto {

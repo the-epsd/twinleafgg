@@ -16,11 +16,15 @@ import { Sizzlipede } from './sizzlipede';
 import { Snom } from './snom';
 import { Sobble } from './sobble';
 import { Toxicroak } from './SSH_124_Toxicroak';
+import { Centiskorch } from './SSH_39_Centiskorch';
 import { Welder } from './welder';
 export declare class AirBalloonArt extends AirBalloon {
     cardImage: string;
 }
 export declare class AuroraEnergyArt extends AuroraEnergy {
+    cardImage: string;
+}
+export declare class CentiskorchArt extends Centiskorch {
     cardImage: string;
 }
 export declare class CinccinoArt extends Cinccino {

@@ -11,7 +11,6 @@ class Sizzlipede extends pokemon_card_1.PokemonCard {
         this.hp = 70;
         this.weakness = [{ type: card_types_1.CardType.WATER }];
         this.retreat = [card_types_1.CardType.COLORLESS];
-        this.evolvesInto = 'Centiskorch';
         this.attacks = [{
                 name: 'Bite',
                 cost: [card_types_1.CardType.FIRE],
