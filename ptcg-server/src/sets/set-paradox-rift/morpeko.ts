@@ -30,7 +30,7 @@ export class Morpeko extends PokemonCard {
   public attacks = [{
     name: 'Energizer Wheel',
     cost: [CardType.DARK, CardType.DARK],
-    damage: 20,
+    damage: 70,
     text: 'Move 2 D Energy from this Pokémon to 1 of your Benched Pokémon.'
   }];
 

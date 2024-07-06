@@ -24,7 +24,7 @@ class Morpeko extends pokemon_card_1.PokemonCard {
         this.attacks = [{
                 name: 'Energizer Wheel',
                 cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK],
-                damage: 20,
+                damage: 70,
                 text: 'Move 2 D Energy from this Pokémon to 1 of your Benched Pokémon.'
             }];
         this.regulationMark = 'G';
