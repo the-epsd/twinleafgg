@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.OranguruArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinccinoArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
+exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.OranguruArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinccinoArt = exports.CentiskorchArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
 const air_balloon_1 = require("./air-balloon");
 const aurora_energy_1 = require("./aurora-energy");
 const cinccino_1 = require("./cinccino");
@@ -19,6 +19,7 @@ const sizzlipede_1 = require("./sizzlipede");
 const snom_1 = require("./snom");
 const sobble_1 = require("./sobble");
 const SSH_124_Toxicroak_1 = require("./SSH_124_Toxicroak");
+const SSH_39_Centiskorch_1 = require("./SSH_39_Centiskorch");
 const welder_1 = require("./welder");
 class AirBalloonArt extends air_balloon_1.AirBalloon {
     constructor() {
@@ -34,6 +35,13 @@ class AuroraEnergyArt extends aurora_energy_1.AuroraEnergy {
     }
 }
 exports.AuroraEnergyArt = AuroraEnergyArt;
+class CentiskorchArt extends SSH_39_Centiskorch_1.Centiskorch {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_039_R_EN_LG.png';
+    }
+}
+exports.CentiskorchArt = CentiskorchArt;
 class CinccinoArt extends cinccino_1.Cinccino {
     constructor() {
         super(...arguments);

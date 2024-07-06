@@ -16,7 +16,6 @@ import { ComputerSearch } from './computer-search';
 import { Dewgong } from './dewgong';
 import { Diglett } from './diglett';
 import { Doduo } from './doduo';
-import { DoubleColorlessEnergy } from './double-colorless-energy';
 import { Dragonair } from './dragonair';
 import { Dratini } from './dratini';
 import { Drowzee } from './drowzee';
@@ -93,6 +92,7 @@ import { PokemonFlute } from './pokemon-flute';
 import { Potion } from './potion';
 import { Revive } from './revive';
 import { Porygon } from './porygon';
+import { DoubleColorlessEnergy } from '../set-x-and-y/double-colorless-energy';
 export declare class AbraArt extends Abra {
     cardImage: string;
 }
@@ -155,6 +155,9 @@ export declare class DoduoArt extends Doduo {
 }
 export declare class DoubleColorlessEnergyArt extends DoubleColorlessEnergy {
     cardImage: string;
+    set: string;
+    setNumber: string;
+    fullName: string;
 }
 export declare class DragonairArt extends Dragonair {
     cardImage: string;

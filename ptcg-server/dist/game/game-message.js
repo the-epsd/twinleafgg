@@ -164,6 +164,7 @@ export var GameCardMessage;
 export var GameLog;
 (function (GameLog) {
     GameLog["LOG_BANNED_BY_ARBITER"] = "LOG_BANNED_BY_ARBITER";
+    GameLog["LOG_ABILITY_BLOCKS_DAMGE"] = "LOG_ABILITY_BLOCKS_DAMAGE";
     GameLog["LOG_FLIP_ASLEEP"] = "LOG_FLIP_ASLEEP";
     GameLog["LOG_FLIP_CONFUSION"] = "LOG_FLIP_CONFUSION";
     GameLog["LOG_GAME_FINISHED"] = "LOG_GAME_FINISHED";

@@ -1,4 +1,5 @@
 import { Blacephalon } from './blacephalon';
+import { Wishiwashi } from './CEC_62_Wishiwashi';
 import { Pikachu } from './CEC_66_Pikachu';
 import { ChaoticSwell } from './chaotic-swell';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
@@ -67,4 +68,8 @@ export class SlugmaArt extends Slugma {
 
 export class TagCallArt extends TagCall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_206_R_EN_LG.png';
+}
+
+export class WishiwashiArt extends Wishiwashi {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_062_R_EN_LG.png';
 }

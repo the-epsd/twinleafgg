@@ -224,7 +224,7 @@ export class PowerHourglassArt extends PowerHourglass {
 }
 
 export class RevavroomexArt extends Revavroomex {
-  public cardImage = 'https://pokemonproxies.com/static/media/Revaroom_ex-015-6a.e094cc4e38ef86d6c590.png';
+  public cardImage = 'https://pokemonproxies.com/static/media/Revavroom_ex-015-6a.00156a2092b7eb5fd0d6.png';
 }
 
 export class RowlettArt extends Rowlett {
@@ -248,7 +248,7 @@ export class TerapagosexArt extends Terapagosex {
 }
 
 export class XerosicsSchemeArt extends XerosicsScheme {
-  public cardImage = 'https://pokemonproxies.com/static/media/Xerosic\'s_Scheme-062-6a.32170f7efa394e7bfd35.png';
+  public cardImage = 'https://pokemonproxies.com/static/media/Xerosic\'s_Machinations-062 - 6a.106ba5c1c488278fc7ab.png';
 }
 
 export class ZoroarkArt extends Zoroark {

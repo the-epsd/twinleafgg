@@ -3,11 +3,13 @@ import { GameMessage } from '../../game-message';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
-import { PutDamageEffect, DealDamageEffect, DiscardCardsEffect,
+import {
+  PutDamageEffect, DealDamageEffect, DiscardCardsEffect,
   AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect,
   RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect,
-  PutCountersEffect, CardsToHandEffect, 
-  KnockOutOpponentEffect} from '../effects/attack-effects';
+  PutCountersEffect, CardsToHandEffect,
+  KnockOutOpponentEffect
+} from '../effects/attack-effects';
 import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
 
@@ -18,6 +20,19 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     const pokemonCard = target.getPokemonCard();
     if (pokemonCard === undefined) {
       throw new GameError(GameMessage.ILLEGAL_ACTION);
+    }
+
+    // Check if the target is the opponent's active Pokemon
+    const opponent = StateUtils.getOpponent(state, effect.player);
+    if (target === opponent.active) {
+      // Apply weakness
+      const applyWeakness = new ApplyWeaknessEffect(effect.attackEffect, effect.damage);
+      applyWeakness.target = effect.target;
+      applyWeakness.ignoreWeakness = effect.attackEffect.ignoreWeakness;
+      applyWeakness.ignoreResistance = effect.attackEffect.ignoreResistance;
+      state = store.reduceEffect(state, applyWeakness);
+
+      effect.damage = applyWeakness.damage;
     }
 
     const damage = Math.max(0, effect.damage);

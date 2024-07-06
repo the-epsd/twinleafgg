@@ -1,14 +1,16 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils,
+  GameError, GameMessage, EnergyCard, PlayerType, SlotType
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import {AttachEnergyPrompt} from '../../game/store/prompts/attach-energy-prompt';
+import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 
 export class OriginFormePalkiaVSTAR extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VSTAR ];
+  public tags = [CardTag.POKEMON_VSTAR];
 
   public regulationMark = 'F';
 
@@ -24,7 +26,7 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Star Portal',
@@ -36,11 +38,11 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
   public attacks = [
     {
       name: 'Subspace Swell',
-      cost: [ CardType.WATER, CardType.WATER ],
+      cost: [CardType.WATER, CardType.WATER],
       damage: 60,
       damageCalculation: '+',
       text: 'This attack does 20 more damage for each Benched ' +
-      'Pokémon (both yours and your opponent\'s).'
+        'Pokémon (both yours and your opponent\'s).'
     }
   ];
 
@@ -82,9 +84,9 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { allowCancel: true, min: 0, max: 3 }
+        { allowCancel: false, min: 1, max: 3 }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
@@ -100,18 +102,18 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
 
       return state;
     }
-    
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       const playerBenched = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
       const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-    
+
       const totalBenched = playerBenched + opponentBenched;
-  
+
       effect.damage = 60 + totalBenched * 20;
     }
     return state;

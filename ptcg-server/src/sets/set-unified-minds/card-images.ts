@@ -15,11 +15,11 @@ export class AlolanGrimerArt extends AlolanGrimer {
 }
 
 export class KarateBeltArt extends KarateBelt {
-  public cardimage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_201_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_201_R_EN_LG.png';
 }
 
 export class NecrozmaArt extends Necrozma {
-  public cardimage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_101_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_101_R_EN_LG.png';
 }
 
 export class PurrloinArt extends Purrloin {

@@ -10,11 +10,13 @@ import { CapturingAroma } from './capturing-aroma';
 import { Cobalion } from './cobalion';
 import { Crobat } from './crobat';
 import { Dragonite } from './dragonite';
+import { Drakloak } from './drakloak';
 import { Elgyem } from './elgyem';
 import { EmergencyJelly } from './emergency-jelly';
 import { Feebas } from './feebas';
 import { ForestSealStone } from './forest-seal-stone';
 import { FurisodeGirl } from './furisode-girl';
+import { Gardevoir } from './gardevoir';
 import { HisuianBraviary } from './hisuian-braviary';
 import { Kirlia } from './kirlia';
 import { LugiaV } from './lugia-v';
@@ -84,6 +86,9 @@ export declare class CrobatArt extends Crobat {
 export declare class DragoniteArt extends Dragonite {
     cardImage: string;
 }
+export declare class DrakloakArt extends Drakloak {
+    cardImage: string;
+}
 export declare class ElgyemArt extends Elgyem {
     cardImage: string;
 }
@@ -97,6 +102,9 @@ export declare class ForestSealStoneArt extends ForestSealStone {
     cardImage: string;
 }
 export declare class FurisodeGirlArt extends FurisodeGirl {
+    cardImage: string;
+}
+export declare class GardevoirArt extends Gardevoir {
     cardImage: string;
 }
 export declare class HisuianBraviaryArt extends HisuianBraviary {

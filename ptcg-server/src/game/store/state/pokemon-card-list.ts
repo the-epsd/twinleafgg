@@ -58,11 +58,13 @@ export class PokemonCardList extends CardList {
     for (const card of this.cards) {
       if (card.superType === SuperType.POKEMON && card !== this.tool) {
         result.push(card as PokemonCard);
-      } else if (card.name === "Lillie's Poké Doll") {
+      } else if (card.name === 'Lillie\'s Poké Doll') {
+        result.push(card as PokemonCard);
+      } else if (card.name === 'Mysterious Fossil') {
         result.push(card as PokemonCard);
       }
     }
-    
+
     return result;
   }
 
@@ -181,7 +183,7 @@ export class PokemonCardList extends CardList {
     if (!this.tool) {
       return;
     }
-    
+
     const toolCard = this.tool.cards;
 
     if (toolCard instanceof PokemonCard) {

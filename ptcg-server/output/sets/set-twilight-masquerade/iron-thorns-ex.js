@@ -50,47 +50,48 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
             if (!isIronThornsexInPlay) {
                 return state;
             }
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
-            const pokemonCard = effect.card;
-            if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex && card_types_1.CardTag.FUTURE)) {
-                return state;
-            }
-            if (!effect.power.exemptFromAbilityLock) {
-                if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V) ||
-                    pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX) ||
-                    pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||
-                    pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex) ||
-                    pokemonCard.tags.includes(card_types_1.CardTag.RADIANT)) {
-                    // pokemonCard.powers.length = 0;
-                    throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
+            if (isIronThornsexInPlay) {
+                // Try to reduce PowerEffect, to check if something is blocking our ability
+                try {
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: game_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
                 }
-            }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                const player = effect.player;
-                const hasBench = player.bench.some(b => b.cards.length > 0);
-                if (hasBench === false) {
+                catch (_a) {
                     return state;
                 }
-                return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.active, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 1, max: 1 }), transfers => {
-                    transfers = transfers || [];
-                    for (const transfer of transfers) {
-                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                        player.active.moveCardTo(transfer.card, target);
+                const pokemonCard = effect.card;
+                if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex && card_types_1.CardTag.FUTURE)) {
+                    return state;
+                }
+                if (!effect.power.exemptFromAbilityLock) {
+                    if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V) ||
+                        pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX) ||
+                        pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||
+                        pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex) ||
+                        pokemonCard.tags.includes(card_types_1.CardTag.RADIANT)) {
+                        // pokemonCard.powers.length = 0;
+                        throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
                     }
-                });
+                }
             }
-            return state;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const hasBench = player.bench.some(b => b.cards.length > 0);
+            if (hasBench === false) {
+                return state;
+            }
+            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.active, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 1, max: 1 }), transfers => {
+                transfers = transfers || [];
+                for (const transfer of transfers) {
+                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                    player.active.moveCardTo(transfer.card, target);
+                }
+            });
         }
         return state;
     }

@@ -67,60 +67,61 @@ export class IronThornsex extends PokemonCard {
         return state;
       }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      const pokemonCard = effect.card;
-
-      if (pokemonCard.tags.includes(CardTag.POKEMON_ex && CardTag.FUTURE)) {
-        return state;
-      }
-
-      if (!effect.power.exemptFromAbilityLock) {
-        if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
-          pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
-          pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
-          pokemonCard.tags.includes(CardTag.POKEMON_ex) ||
-          pokemonCard.tags.includes(CardTag.RADIANT)) {
-          // pokemonCard.powers.length = 0;
-          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-        }
-      }
-
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const player = effect.player;
-        const hasBench = player.bench.some(b => b.cards.length > 0);
-
-        if (hasBench === false) {
+      if (isIronThornsexInPlay) {
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
           return state;
         }
 
-        return store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          player.active,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH],
-          { superType: SuperType.ENERGY },
-          { allowCancel: false, min: 1, max: 1 }
-        ), transfers => {
-          transfers = transfers || [];
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.active.moveCardTo(transfer.card, target);
+        const pokemonCard = effect.card;
+
+        if (pokemonCard.tags.includes(CardTag.POKEMON_ex && CardTag.FUTURE)) {
+          return state;
+        }
+
+        if (!effect.power.exemptFromAbilityLock) {
+          if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
+            pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
+            pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
+            pokemonCard.tags.includes(CardTag.POKEMON_ex) ||
+            pokemonCard.tags.includes(CardTag.RADIANT)) {
+            // pokemonCard.powers.length = 0;
+            throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
           }
-        });
+        }
       }
-      return state;
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const hasBench = player.bench.some(b => b.cards.length > 0);
+
+      if (hasBench === false) {
+        return state;
+      }
+
+      return store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        player.active,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH],
+        { superType: SuperType.ENERGY },
+        { allowCancel: false, min: 1, max: 1 }
+      ), transfers => {
+        transfers = transfers || [];
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.active.moveCardTo(transfer.card, target);
+        }
+      });
     }
     return state;
   }

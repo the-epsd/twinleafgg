@@ -40,6 +40,12 @@ class Garchomp extends pokemon_card_1.PokemonCard {
         this.CLEAR_SONIC_SLIP_MARKER = 'CLEAR_SONIC_SLIP_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            // Discard 2 cards from your deck 
+            player.deck.moveTo(player.discard, 2);
+            return state;
+        }
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
@@ -62,13 +68,6 @@ class Garchomp extends pokemon_card_1.PokemonCard {
                     cardList.marker.removeMarker(this.SONIC_SLIP_MARKER, this);
                 }
             });
-            return state;
-        }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            const player = effect.player;
-            // Discard 2 cards from your deck 
-            player.deck.moveTo(player.discard, 2);
-            return state;
         }
         return state;
     }

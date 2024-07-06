@@ -4,9 +4,11 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { StateUtils, 
-  GameMessage, ChooseCardsPrompt, 
-  GameError} from '../../game';
+import {
+  StateUtils,
+  GameMessage, ChooseCardsPrompt,
+  GameError
+} from '../../game';
 
 
 export class Eri extends TrainerCard {
@@ -34,18 +36,18 @@ export class Eri extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const supporterTurn = player.supporterTurn;
-    
+
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-    
+
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-    
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
-        GameMessage.CHOOSE_CARD_TO_DECK,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
         opponent.hand,
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
         { allowCancel: false, min: 0, max: 2 }
@@ -57,7 +59,7 @@ export class Eri extends TrainerCard {
         player.supporter.moveCardTo(this, player.discard);
         cards.forEach(card => {
           opponent.hand.moveCardTo(card, opponent.discard);
-          
+
         });
       });
     }

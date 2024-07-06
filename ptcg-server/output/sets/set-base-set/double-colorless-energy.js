@@ -14,7 +14,7 @@ class DoubleColorlessEnergy extends energy_card_1.EnergyCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '48';
         this.name = 'Double Colorless Energy';
-        this.fullName = 'Double Colorless Energy XY';
+        this.fullName = 'Double Colorless Energy BS';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {

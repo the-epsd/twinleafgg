@@ -50,8 +50,8 @@ class CryptomaniacsDeciphering extends trainer_card_1.TrainerCard {
         this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '145';
-        this.name = 'Ciphermaniac\'s Deciphering';
-        this.fullName = 'Ciphermaniac\'s Deciphering TEF';
+        this.name = 'Ciphermaniac\'s Codebreaking';
+        this.fullName = 'Ciphermaniac\'s Codebreaking TEF';
         this.text = 'Search your deck for 2 cards, shuffle your deck, then put those cards on top of it in any order.';
     }
     reduceEffect(store, state, effect) {

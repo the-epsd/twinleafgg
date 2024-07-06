@@ -1,4 +1,5 @@
 import { Blacephalon } from './blacephalon';
+import { Wishiwashi } from './CEC_62_Wishiwashi';
 import { Pikachu } from './CEC_66_Pikachu';
 import { ChaoticSwell } from './chaotic-swell';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
@@ -52,5 +53,8 @@ export declare class SlugmaArt extends Slugma {
     cardImage: string;
 }
 export declare class TagCallArt extends TagCall {
+    cardImage: string;
+}
+export declare class WishiwashiArt extends Wishiwashi {
     cardImage: string;
 }

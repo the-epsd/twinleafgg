@@ -57,6 +57,11 @@ class Drizzile extends game_1.PokemonCard {
                 if (wantToUse) {
                     state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: game_1.SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false }), selected => {
                         const cards = selected || [];
+                        player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                            if (cardList.getPokemonCard() === this) {
+                                cardList.addSpecialCondition(game_1.SpecialCondition.ABILITY_USED);
+                            }
+                        });
                         store.prompt(state, [new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {
                             player.deck.moveCardsTo(cards, player.hand);
                         });

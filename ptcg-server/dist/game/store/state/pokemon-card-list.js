@@ -22,7 +22,10 @@ export class PokemonCardList extends CardList {
             if (card.superType === SuperType.POKEMON && card !== this.tool) {
                 result.push(card);
             }
-            else if (card.name === "Lillie's Poké Doll") {
+            else if (card.name === 'Lillie\'s Poké Doll') {
+                result.push(card);
+            }
+            else if (card.name === 'Mysterious Fossil') {
                 result.push(card);
             }
         }

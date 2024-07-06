@@ -67,7 +67,7 @@ class RegidragoVSTAR extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '136';
         this.name = 'Regidrago VSTAR';
-        this.fullName = 'Regidrago VSTAR SIT 114';
+        this.fullName = 'Regidrago VSTAR SIT';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -98,7 +98,7 @@ export class RegidragoVSTAR extends PokemonCard {
 
   public name: string = 'Regidrago VSTAR';
 
-  public fullName: string = 'Regidrago VSTAR SIT 114';
+  public fullName: string = 'Regidrago VSTAR SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

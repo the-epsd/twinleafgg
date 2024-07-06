@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TwinEnergyArt = exports.TrainingCourtArt = exports.SpeedLightningEnergyArt = exports.ScoopUpNetArt = exports.MetapodArt = exports.HorrorPsychicEnergyArt = exports.CoalossalArt = exports.CaterpieArt = exports.CaptureEnergyArt = exports.CapaciousBucketArt = exports.ButterfreeArt = void 0;
+exports.TwinEnergyArt = exports.TrainingCourtArt = exports.SpeedLightningEnergyArt = exports.ScoopUpNetArt = exports.MetapodArt = exports.HorrorPsychicEnergyArt = exports.DragapultArt = exports.CoalossalArt = exports.CaterpieArt = exports.CaptureEnergyArt = exports.CapaciousBucketArt = exports.ButterfreeArt = void 0;
 const butterfree_1 = require("./butterfree");
 const capacious_bucket_1 = require("./capacious-bucket");
 const capture_energy_1 = require("./capture-energy");
 const caterpie_1 = require("./caterpie");
 const coalossal_1 = require("./coalossal");
+const dragapult_1 = require("./dragapult");
 const horror_psychic_energy_1 = require("./horror-psychic-energy");
 const metapod_1 = require("./metapod");
 const scoop_up_net_1 = require("./scoop-up-net");
@@ -47,6 +48,13 @@ class CoalossalArt extends coalossal_1.Coalossal {
     }
 }
 exports.CoalossalArt = CoalossalArt;
+class DragapultArt extends dragapult_1.Dragapult {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_091_R_EN.png';
+    }
+}
+exports.DragapultArt = DragapultArt;
 class HorrorPsychicEnergyArt extends horror_psychic_energy_1.HorrorPsychicEnergy {
     constructor() {
         super(...arguments);

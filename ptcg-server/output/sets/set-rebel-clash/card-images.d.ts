@@ -3,6 +3,7 @@ import { CapaciousBucket } from './capacious-bucket';
 import { CaptureEnergy } from './capture-energy';
 import { Caterpie } from './caterpie';
 import { Coalossal } from './coalossal';
+import { Dragapult } from './dragapult';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
 import { ScoopUpNet } from './scoop-up-net';
@@ -22,6 +23,9 @@ export declare class CaterpieArt extends Caterpie {
     cardImage: string;
 }
 export declare class CoalossalArt extends Coalossal {
+    cardImage: string;
+}
+export declare class DragapultArt extends Dragapult {
     cardImage: string;
 }
 export declare class HorrorPsychicEnergyArt extends HorrorPsychicEnergy {

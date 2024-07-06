@@ -20,7 +20,6 @@ const computer_search_1 = require("./computer-search");
 const dewgong_1 = require("./dewgong");
 const diglett_1 = require("./diglett");
 const doduo_1 = require("./doduo");
-const double_colorless_energy_1 = require("./double-colorless-energy");
 const dragonair_1 = require("./dragonair");
 const dratini_1 = require("./dratini");
 const drowzee_1 = require("./drowzee");
@@ -97,6 +96,7 @@ const pokemon_flute_1 = require("./pokemon-flute");
 const potion_1 = require("./potion");
 const revive_1 = require("./revive");
 const porygon_1 = require("./porygon");
+const double_colorless_energy_1 = require("../set-x-and-y/double-colorless-energy");
 class AbraArt extends abra_1.Abra {
     constructor() {
         super(...arguments);
@@ -241,6 +241,9 @@ class DoubleColorlessEnergyArt extends double_colorless_energy_1.DoubleColorless
     constructor() {
         super(...arguments);
         this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/double-colorless-energy-base-set-bs-96.jpg?fit=600%2C825&ssl=1';
+        this.set = 'BS';
+        this.setNumber = '48';
+        this.fullName = 'Double Colorless Energy BS';
     }
 }
 exports.DoubleColorlessEnergyArt = DoubleColorlessEnergyArt;
@@ -646,7 +649,7 @@ exports.RattataArt = RattataArt;
 class ReviveArt extends revive_1.Revive {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/revive-base-set-bs-94.jpg?fit=600%2C825&ssl=1';
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/revive-base-set-bs-89.jpg';
     }
 }
 exports.ReviveArt = ReviveArt;

@@ -90,7 +90,9 @@ export class Yveltal extends PokemonCard {
           player.id,
           GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
           PlayerType.TOP_PLAYER,
-          [ SlotType.ACTIVE, SlotType.BENCH ],
+          
+          [SlotType.ACTIVE],
+
           { allowCancel: false, blocked }
         ), results => {
           targets = results || [];
@@ -108,19 +110,22 @@ export class Yveltal extends PokemonCard {
           GameMessage.CHOOSE_CARD_TO_DISCARD,
           target,
           { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-          { min: 1, max: 1, allowCancel: true }
+
+          { min: 1, max: 1, allowCancel: false }
         ), selected => {
           cards = selected || [];
           
+          if (cards.length > 0) {
+            // Discard selected special energy card
+            target.moveCardsTo(cards, opponent.discard);
+          }
         });
-      
-        if (cards.length > 0) {
-          // Discard selected special energy card
-          target.moveCardsTo(cards, opponent.discard);
-        }}
-      
+        
+        return state;
+      }
       return state;
     }
+    
     return state;
   }
 }

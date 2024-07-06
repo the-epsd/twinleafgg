@@ -10,7 +10,6 @@ class Marshadow extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.format = card_types_1.Format.EXPANDED;
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 70;
         this.weakness = [{ type: card_types_1.CardType.DARK }];
@@ -27,11 +26,11 @@ class Marshadow extends pokemon_card_1.PokemonCard {
                 damage: 30,
                 text: 'This attack\'s damage isn\'t affected by Resistance.'
             }];
-        this.set = 'SHL';
+        this.set = 'SLG';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '45';
         this.name = 'Marshadow';
-        this.fullName = 'Marshadow SHL';
+        this.fullName = 'Marshadow SLG';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

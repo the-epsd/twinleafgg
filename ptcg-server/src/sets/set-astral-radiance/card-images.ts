@@ -161,7 +161,7 @@ export class LuxrayVArt extends LuxrayV {
 }
 
 export class MagnetonArt extends Magneton {
-  public cardIMage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_106_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_106_R_EN_LG.png';
 }
 
 export class MantineArt extends Mantine {

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { PowerType } from '../../game/store/card/pokemon-types';
@@ -18,7 +18,7 @@ export class Morpeko extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'In A Hungry Hurry',
@@ -29,8 +29,8 @@ export class Morpeko extends PokemonCard {
 
   public attacks = [{
     name: 'Energizer Wheel',
-    cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
-    damage: 20,
+    cost: [CardType.DARK, CardType.DARK],
+    damage: 70,
     text: 'Move 2 D Energy from this Pokémon to 1 of your Benched Pokémon.'
   }];
 
@@ -39,7 +39,7 @@ export class Morpeko extends PokemonCard {
   public set: string = 'PAR';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '121';
 
   public name: string = 'Morpeko';
@@ -77,7 +77,7 @@ export class Morpeko extends PokemonCard {
       }
     }
 
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
@@ -91,8 +91,8 @@ export class Morpeko extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.active,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
-        { superType: SuperType.ENERGY },
+        [SlotType.BENCH],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
         { allowCancel: false, min: 2, max: 2 }
       ), transfers => {
         transfers = transfers || [];

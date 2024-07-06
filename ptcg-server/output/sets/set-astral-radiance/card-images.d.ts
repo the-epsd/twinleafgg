@@ -133,7 +133,7 @@ export declare class LuxrayVArt extends LuxrayV {
     cardImage: string;
 }
 export declare class MagnetonArt extends Magneton {
-    cardIMage: string;
+    cardImage: string;
 }
 export declare class MantineArt extends Mantine {
     cardImage: string;

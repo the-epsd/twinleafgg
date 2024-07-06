@@ -7,7 +7,7 @@ import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class DoubleColorlessEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -19,7 +19,7 @@ export class DoubleColorlessEnergy extends EnergyCard {
 
   public name = 'Double Colorless Energy';
 
-  public fullName = 'Double Colorless Energy XY';
+  public fullName = 'Double Colorless Energy BS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -32,7 +32,7 @@ export class DoubleColorlessEnergy extends EnergyCard {
       } catch {
         return state;
       }
-      
+
     }
     return state;
   }

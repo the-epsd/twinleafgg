@@ -7,7 +7,6 @@ export class Sizzlipede extends PokemonCard {
   public hp: number = 70;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS];
-  public evolvesInto = 'Centiskorch';
 
   public attacks = [{
     name: 'Bite',

@@ -16,6 +16,7 @@ import { Sizzlipede } from './sizzlipede';
 import { Snom } from './snom';
 import { Sobble } from './sobble';
 import { Toxicroak } from './SSH_124_Toxicroak';
+import { Centiskorch } from './SSH_39_Centiskorch';
 import { Welder } from './welder';
 
 export class AirBalloonArt extends AirBalloon {
@@ -24,6 +25,10 @@ export class AirBalloonArt extends AirBalloon {
 
 export class AuroraEnergyArt extends AuroraEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_186_R_EN_LG.png';
+}
+
+export class CentiskorchArt extends Centiskorch {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_039_R_EN_LG.png';
 }
 
 export class CinccinoArt extends Cinccino {

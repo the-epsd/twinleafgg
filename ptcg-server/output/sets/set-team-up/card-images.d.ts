@@ -8,6 +8,7 @@ import { Lapras } from './lapras';
 import { Mareep } from './mareep';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
+import { Moltres } from './TEU_19_Moltres';
 import { ViridianForest } from './viridian-forest';
 import { Yveltal } from './yveltal';
 import { Zapdos } from './zapdos';
@@ -33,6 +34,9 @@ export declare class LaprasArt extends Lapras {
     cardImage: string;
 }
 export declare class MareepArt extends Mareep {
+    cardImage: string;
+}
+export declare class MoltresArt extends Moltres {
     cardImage: string;
 }
 export declare class PidgeottoArt extends Pidgeotto {

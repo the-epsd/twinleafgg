@@ -23,18 +23,18 @@ export class Spiritomb extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Fettered in Misfortune',
     powerType: PowerType.ABILITY,
     text: 'Basic Pokémon V in play (both yours and your opponent\'s) have ' +
-      'no Abilities. ' 
+      'no Abilities. '
   }];
 
   public attacks = [{
     name: 'Fade Out',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 10,
     text: 'Put this Pokémon and all attached cards into your hand. '
   }];
@@ -86,12 +86,9 @@ export class Spiritomb extends PokemonCard {
       }
 
       const pokemonCard = effect.card;
-      
-      if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
-        pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
-        pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
-        pokemonCard.tags.includes(CardTag.POKEMON_ex)) {
-      
+
+      if (pokemonCard.tags.includes(CardTag.POKEMON_V)) {
+
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }
 

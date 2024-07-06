@@ -3,6 +3,7 @@ import { CapaciousBucket } from './capacious-bucket';
 import { CaptureEnergy } from './capture-energy';
 import { Caterpie } from './caterpie';
 import { Coalossal } from './coalossal';
+import { Dragapult } from './dragapult';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
 import { ScoopUpNet } from './scoop-up-net';
@@ -28,6 +29,10 @@ export class CaterpieArt extends Caterpie {
 
 export class CoalossalArt extends Coalossal {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_107_R_EN_LG.png';
+}
+
+export class DragapultArt extends Dragapult {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_091_R_EN.png';
 }
 
 export class HorrorPsychicEnergyArt extends HorrorPsychicEnergy {

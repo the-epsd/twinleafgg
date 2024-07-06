@@ -22,14 +22,14 @@ exports.AlolanGrimerArt = AlolanGrimerArt;
 class KarateBeltArt extends karate_belt_1.KarateBelt {
     constructor() {
         super(...arguments);
-        this.cardimage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_201_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_201_R_EN_LG.png';
     }
 }
 exports.KarateBeltArt = KarateBeltArt;
 class NecrozmaArt extends necrozma_1.Necrozma {
     constructor() {
         super(...arguments);
-        this.cardimage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_101_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_101_R_EN_LG.png';
     }
 }
 exports.NecrozmaArt = NecrozmaArt;

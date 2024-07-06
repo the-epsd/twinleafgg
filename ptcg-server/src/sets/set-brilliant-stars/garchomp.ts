@@ -19,7 +19,7 @@ export class Garchomp extends PokemonCard {
 
   public hp: number = 160;
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Sonic Slip',
@@ -31,7 +31,7 @@ export class Garchomp extends PokemonCard {
   public attacks = [
     {
       name: 'Dragonblade',
-      cost: [ CardType.WATER, CardType.FIGHTING ],
+      cost: [CardType.WATER, CardType.FIGHTING],
       damage: 160,
       text: 'Discard the top 2 cards of your deck.'
     }
@@ -54,6 +54,14 @@ export class Garchomp extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+
+      // Discard 2 cards from your deck 
+      player.deck.moveTo(player.discard, 2);
+      return state;
+    }
+
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -61,17 +69,17 @@ export class Garchomp extends PokemonCard {
       opponent.marker.addMarker(this.CLEAR_SONIC_SLIP_MARKER, this);
       return state;
     }
-  
+
     if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.SONIC_SLIP_MARKER)) {
 
       const sourcePokemon = effect.source.getPokemonCard();
-    
+
       if (sourcePokemon !== this) {
-        effect.preventDefault = true; 
+        effect.preventDefault = true;
       }
-    
+
       return state;
-    
+
     }
 
     if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
@@ -82,19 +90,9 @@ export class Garchomp extends PokemonCard {
           cardList.marker.removeMarker(this.SONIC_SLIP_MARKER, this);
         }
       });
-      return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-        
-      // Discard 2 cards from your deck 
-      player.deck.moveTo(player.discard, 2);
-      return state;
-    }
-  
     return state;
   }
-  
+
 }
-  

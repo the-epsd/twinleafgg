@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { Card} from '../../game/store/card/card';
+import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../game/store/state/card-list';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
@@ -27,7 +27,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
@@ -38,7 +38,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { },
+    {},
     { min: 2, max: 2, allowCancel: false }
   ), selected => {
     cards = selected || [];
@@ -64,18 +64,18 @@ function* playCard(next: Function, store: StoreLike, state: State,
       deckTop.moveToTopOfDestination(player.deck);
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
     });
   });
 }
-      
+
 export class CryptomaniacsDeciphering extends TrainerCard {
 
   public regulationMark = 'H';
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public tags = [ CardTag.FUTURE ];
+  public tags = [CardTag.FUTURE];
 
   public set: string = 'TEF';
 
@@ -83,9 +83,9 @@ export class CryptomaniacsDeciphering extends TrainerCard {
 
   public setNumber: string = '145';
 
-  public name: string = 'Ciphermaniac\'s Deciphering';
+  public name: string = 'Ciphermaniac\'s Codebreaking';
 
-  public fullName: string = 'Ciphermaniac\'s Deciphering TEF';
+  public fullName: string = 'Ciphermaniac\'s Codebreaking TEF';
 
   public text: string =
     'Search your deck for 2 cards, shuffle your deck, then put those cards on top of it in any order.';

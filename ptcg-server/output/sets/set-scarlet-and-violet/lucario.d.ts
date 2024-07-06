@@ -27,7 +27,7 @@ export declare class Lucario extends PokemonCard {
     evolvesFrom: string;
     name: string;
     fullName: string;
-    readonly REVENGE_MARKER = "REVENGE_MARKER";
+    readonly RETALIATE_MARKER = "RETALIATE_MARKER";
     readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     damageDealt: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

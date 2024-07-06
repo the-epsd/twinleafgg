@@ -8,7 +8,6 @@ export declare class Sizzlipede extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    evolvesInto: string;
     attacks: {
         name: string;
         cost: CardType[];
