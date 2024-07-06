@@ -358,7 +358,7 @@ exports.PowerHourglassArt = PowerHourglassArt;
 class RevavroomexArt extends revavroom_ex_1.Revavroomex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Revaroom_ex-015-6a.e094cc4e38ef86d6c590.png';
+        this.cardImage = 'https://pokemonproxies.com/static/media/Revavroom_ex-015-6a.00156a2092b7eb5fd0d6.png';
     }
 }
 exports.RevavroomexArt = RevavroomexArt;
@@ -400,7 +400,7 @@ exports.TerapagosexArt = TerapagosexArt;
 class XerosicsSchemeArt extends xerosics_scheme_1.XerosicsScheme {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Xerosic\'s_Scheme-062-6a.32170f7efa394e7bfd35.png';
+        this.cardImage = 'https://pokemonproxies.com/static/media/Xerosic\'s_Machinations-062 - 6a.106ba5c1c488278fc7ab.png';
     }
 }
 exports.XerosicsSchemeArt = XerosicsSchemeArt;

@@ -13,10 +13,10 @@ export declare class AlolanGrimerArt extends AlolanGrimer {
     cardImage: string;
 }
 export declare class KarateBeltArt extends KarateBelt {
-    cardimage: string;
+    cardImage: string;
 }
 export declare class NecrozmaArt extends Necrozma {
-    cardimage: string;
+    cardImage: string;
 }
 export declare class PurrloinArt extends Purrloin {
     cardImage: string;

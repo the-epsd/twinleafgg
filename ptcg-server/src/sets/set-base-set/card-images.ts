@@ -410,7 +410,7 @@ export class RattataArt extends Rattata {
 }
 
 export class ReviveArt extends Revive {
-  public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/revive-base-set-bs-94.jpg?fit=600%2C825&ssl=1';
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/revive-base-set-bs-89.jpg';
 }
 
 export class SandshrewArt extends Sandshrew {

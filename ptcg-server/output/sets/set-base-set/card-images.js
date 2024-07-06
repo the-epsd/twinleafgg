@@ -649,7 +649,7 @@ exports.RattataArt = RattataArt;
 class ReviveArt extends revive_1.Revive {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/revive-base-set-bs-94.jpg?fit=600%2C825&ssl=1';
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/revive-base-set-bs-89.jpg';
     }
 }
 exports.ReviveArt = ReviveArt;

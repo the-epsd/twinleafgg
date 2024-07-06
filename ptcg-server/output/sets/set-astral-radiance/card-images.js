@@ -247,7 +247,7 @@ exports.LuxrayVArt = LuxrayVArt;
 class MagnetonArt extends magneton_1.Magneton {
     constructor() {
         super(...arguments);
-        this.cardIMage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_106_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_106_R_EN_LG.png';
     }
 }
 exports.MagnetonArt = MagnetonArt;
