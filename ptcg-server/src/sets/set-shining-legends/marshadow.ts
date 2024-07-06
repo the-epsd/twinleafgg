@@ -1,5 +1,5 @@
 import { ConfirmPrompt, GameMessage, PowerType, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../game';
-import { CardType, Format, Stage } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -9,13 +9,12 @@ export class Marshadow extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public format: Format = Format.EXPANDED;
-
   public cardType: CardType = CardType.PSYCHIC;
 
   public hp: number = 70;
 
   public weakness = [{ type: CardType.DARK }];
+
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
   public retreat = [CardType.COLORLESS];
@@ -32,6 +31,16 @@ export class Marshadow extends PokemonCard {
     damage: 30,
     text: 'This attack\'s damage isn\'t affected by Resistance.'
   }];
+
+  public set: string = 'SLG';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '45';
+
+  public name: string = 'Marshadow';
+
+  public fullName: string = 'Marshadow SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -83,14 +92,4 @@ export class Marshadow extends PokemonCard {
 
     return state;
   }
-
-  public set: string = 'SHL';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '45';
-
-  public name: string = 'Marshadow';
-
-  public fullName: string = 'Marshadow SHL';
 }

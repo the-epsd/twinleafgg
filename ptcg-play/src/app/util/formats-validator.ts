@@ -231,6 +231,7 @@ export const SetReleaseDates: { [key: string]: Date } = {
   // CALL OF LEGENDS
   'CL': new Date('2011-02-09'),
   // BLACK & WHITE
+  'BWP': new Date('2011-04-25'),
   'BLW': new Date('2011-04-25'),
   'EPO': new Date('2011-08-31'),
   'NVI': new Date('2011-11-16'),
