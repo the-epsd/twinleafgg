@@ -69,10 +69,7 @@ class Spiritomb extends pokemon_card_1.PokemonCard {
                 return state;
             }
             const pokemonCard = effect.card;
-            if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V) ||
-                pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX) ||
-                pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||
-                pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex)) {
+            if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V)) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
             }
             return state;
