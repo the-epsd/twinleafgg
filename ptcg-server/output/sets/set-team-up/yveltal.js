@@ -66,9 +66,7 @@ class Yveltal extends pokemon_card_1.PokemonCard {
             });
             if (hasPokemonWithEnergy) {
                 let targets = [];
-
                 store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE], { allowCancel: false, blocked }), results => {
-
                     targets = results || [];
                 });
                 if (targets.length === 0) {
@@ -76,14 +74,14 @@ class Yveltal extends pokemon_card_1.PokemonCard {
                 }
                 const target = targets[0];
                 let cards = [];
-
-                store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { min: 1, max: 1, allowCancel: true }), selected => {
+                store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { min: 1, max: 1, allowCancel: false }), selected => {
                     cards = selected || [];
+                    if (cards.length > 0) {
+                        // Discard selected special energy card
+                        target.moveCardsTo(cards, opponent.discard);
+                    }
                 });
-                if (cards.length > 0) {
-                    // Discard selected special energy card
-                    target.moveCardsTo(cards, opponent.discard);
-                }
+                return state;
             }
             return state;
         }

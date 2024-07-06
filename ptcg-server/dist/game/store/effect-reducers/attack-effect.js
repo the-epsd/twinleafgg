@@ -10,6 +10,17 @@ export function attackReducer(store, state, effect) {
         if (pokemonCard === undefined) {
             throw new GameError(GameMessage.ILLEGAL_ACTION);
         }
+        // Check if the target is the opponent's active Pokemon
+        const opponent = StateUtils.getOpponent(state, effect.player);
+        if (target === opponent.active) {
+            // Apply weakness
+            const applyWeakness = new ApplyWeaknessEffect(effect.attackEffect, effect.damage);
+            applyWeakness.target = effect.target;
+            applyWeakness.ignoreWeakness = effect.attackEffect.ignoreWeakness;
+            applyWeakness.ignoreResistance = effect.attackEffect.ignoreResistance;
+            state = store.reduceEffect(state, applyWeakness);
+            effect.damage = applyWeakness.damage;
+        }
         const damage = Math.max(0, effect.damage);
         target.damage += damage;
         if (damage > 0) {
