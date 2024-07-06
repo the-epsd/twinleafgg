@@ -1,17 +1,17 @@
-import { GameError, GameMessage, State, StateUtils, StoreLike } from '../../game';
+import { GameError, GameMessage, GamePhase, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Lucario extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
-  
+
   public cardType: CardType = CardType.FIGHTING;
-  
+
   public hp: number = 130;
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
@@ -21,7 +21,7 @@ export class Lucario extends PokemonCard {
       name: 'Avenging Knuckle',
       cost: [CardType.FIGHTING],
       damage: 30,
-      damageCalculation: '+',      
+      damageCalculation: '+',
       text: 'If any of your [F] Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 120 more damage.'
     },
     {
@@ -39,14 +39,14 @@ export class Lucario extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '113';
-  
+
   public evolvesFrom = 'Riolu';
-  
+
   public name: string = 'Lucario';
 
   public fullName: string = 'Lucario SVI';
 
-  public readonly REVENGE_MARKER = 'REVENGE_MARKER';
+  public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
 
   public damageDealt = false;
@@ -55,7 +55,7 @@ export class Lucario extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(this.REVENGE_MARKER) && this.damageDealt) {
+      if (player.marker.hasMarker(this.RETALIATE_MARKER) && this.damageDealt) {
         effect.damage += 120;
       }
 
@@ -64,31 +64,54 @@ export class Lucario extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      if (player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      if (player.marker.hasMarker(this.ATTACK_USED_MARKER)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
-
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
     }
 
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
-        effect.target.tool === this) {
+    if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
       const player = StateUtils.getOpponent(state, effect.player);
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
 
-      if (player.active.tool === this) {
+      if (player !== owner) {
         this.damageDealt = true;
+      }
+    }
+
+    if (effect instanceof KnockOutEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const targetPokemon = effect.target.getPokemonCard();
+
+      if (targetPokemon && targetPokemon.cardType === CardType.FIGHTING) {
+        player.marker.addMarkerToState(this.RETALIATE_MARKER);
+      }
+      // Do not activate between turns, or when it's not opponents turn.
+      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+        return state;
+      }
+
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+      if (owner === player) {
+        if (targetPokemon && targetPokemon.cardType === CardType.FIGHTING) {
+          player.marker.addMarkerToState(this.RETALIATE_MARKER);
+        }
+        return state;
       }
     }
 
     if (effect instanceof EndTurnEffect) {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
-      
+
       if (owner === effect.player) {
         this.damageDealt = false;
       }
 
-      effect.player.marker.removeMarker(this.REVENGE_MARKER);
+      effect.player.marker.removeMarker(this.RETALIATE_MARKER);
       effect.player.marker.removeMarker(this.ATTACK_USED_MARKER);
     }
 

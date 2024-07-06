@@ -4,15 +4,15 @@
 
   <form #form="ngForm" autocomplete="off">
 
-  <!-- Format -->
-  <mat-form-field>
-    <mat-label translate>GAMES_FORMAT</mat-label>
-    <mat-select [(value)]="settings.format" (selectionChange)="onFormatSelected($event.value)">
-      <mat-option *ngFor="let option of formats" [value]="option.value">
-        {{ option.label | translate }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>  
+    <!-- Format -->
+    <mat-form-field>
+      <mat-label translate>GAMES_FORMAT</mat-label>
+      <mat-select [(value)]="settings.format" (selectionChange)="onFormatSelected($event.value)">
+        <mat-option *ngFor="let option of formats" [value]="option.value">
+          {{ option.label | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
     <!-- Deck -->
     <mat-form-field>
@@ -37,17 +37,15 @@
     <h4 translate>LABEL_RANKING</h4>
 
     <section class="ptcg-game-rule-checkbox">
-      <mat-checkbox color="primary" name="rule1"
-        [(ngModel)]="settings.recordingEnabled">
+      <mat-checkbox color="primary" name="rule1" [(ngModel)]="settings.recordingEnabled">
         {{ 'GAMES_RECORD_GAME' | translate }}
       </mat-checkbox>
     </section>
 
     <h4 translate>GAMES_GAME_RULES</h4>
 
-<section class="ptcg-game-rule-checkbox">
-      <mat-checkbox color="primary" name="rule2"
-        [(ngModel)]="settings.rules.unlimitedEnergyAttachments">
+    <section class="ptcg-game-rule-checkbox">
+      <mat-checkbox color="primary" name="rule2" [(ngModel)]="settings.rules.unlimitedEnergyAttachments">
         {{ 'GAMES_UNLIMITED_ENERGY' | translate }}
       </mat-checkbox>
     </section>
@@ -66,7 +64,7 @@
   <button mat-raised-button (click)="cancel()">
     {{ 'BUTTON_CANCEL' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="confirm()" [disabled]="form.invalid">
+  <button mat-raised-button color="primary" (click)="confirm()" [disabled]="!hasValidDeck()">
     {{ 'BUTTON_OK' | translate }}
   </button>
 </mat-dialog-actions>

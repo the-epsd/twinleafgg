@@ -17,25 +17,28 @@ function* useStadium(next, store, state, effect) {
     if (slots.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    else {
-        // handle no open slots
-        let cards = [];
-        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC, cardType: card_types_1.CardType.LIGHTNING || card_types_1.CardType.DRAGON }, { min: 0, max: 1, allowCancel: false }), selectedCards => {
-            cards = selectedCards || [];
-            // Operation canceled by the user
-            if (cards.length === 0) {
-                return state;
-            }
-            cards.forEach((card, index) => {
-                player.deck.moveCardTo(card, slots[index]);
-                slots[index].pokemonPlayedTurn = state.turn;
-            });
-            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                player.deck.applyOrder(order);
-                return state;
-            });
+    const blocked = [];
+    player.deck.cards.forEach((card, index) => {
+        if (!(card instanceof game_1.PokemonCard && (card.cardType === card_types_1.CardType.DRAGON || card.cardType === card_types_1.CardType.LIGHTNING))) {
+            blocked.push(index);
+        }
+    });
+    let cards = [];
+    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false }), selectedCards => {
+        cards = selectedCards || [];
+        // Operation canceled by the user
+        if (cards.length === 0) {
+            return state;
+        }
+        cards.forEach((card, index) => {
+            player.deck.moveCardTo(card, slots[index]);
+            slots[index].pokemonPlayedTurn = state.turn;
         });
-    }
+        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+            return state;
+        });
+    });
 }
 class StormyMountains extends trainer_card_1.TrainerCard {
     constructor() {

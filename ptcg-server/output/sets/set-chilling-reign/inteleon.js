@@ -65,6 +65,11 @@ class Inteleon extends pokemon_card_1.PokemonCard {
                     target.damage += 20;
                     player.marker.addMarker(this.DOUBLE_GUNNER_MARKER, this);
                 });
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
             });
         }
         return state;

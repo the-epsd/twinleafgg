@@ -63,17 +63,17 @@ export class ChienPaoex extends PokemonCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
       if (player.active.cards[0] !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-
 
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { min: 0, max: 2, allowCancel: true }
+        { min: 0, max: 2, allowCancel: false }
       ), cards => {
 
         if (cards.length === 0) {

@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, StateUtils, SuperType } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, StateUtils, SuperType, PlayerType, SpecialCondition } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -33,17 +33,17 @@ export class Drizzile extends PokemonCard {
       text: ''
     }
   ];
-  
+
   public regulationMark = 'D';
 
   public set: string = 'SSH';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '42';
-  
+
   public name: string = 'Drizzile';
-  
+
   public fullName: string = 'Drizzile SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -51,11 +51,11 @@ export class Drizzile extends PokemonCard {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       if (player.deck.cards.length === 0) {
         return state;
       }
-      
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {
@@ -72,7 +72,7 @@ export class Drizzile extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-      
+
           state = store.prompt(state, new ChooseCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARD_TO_HAND,
@@ -81,7 +81,13 @@ export class Drizzile extends PokemonCard {
             { min: 0, max: 1, allowCancel: false }
           ), selected => {
             const cards = selected || [];
-  
+
+            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+              if (cardList.getPokemonCard() === this) {
+                cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+              }
+            });
+
             store.prompt(state, [new ShowCardsPrompt(
               opponent.id,
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,

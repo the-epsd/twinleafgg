@@ -24,8 +24,8 @@ export class Serena extends TrainerCard {
   public fullName: string = 'Serena SIT';
 
   public text: string =
-    'Choose 1:'+
-    '• Discard up to 3 cards from your hand. (You must discard at least 1 card.) If you do, draw cards until you have 5 cards in your hand.'+
+    'Choose 1:' +
+    '• Discard up to 3 cards from your hand. (You must discard at least 1 card.) If you do, draw cards until you have 5 cards in your hand.' +
     '• Switch 1 of your opponent\'s Benched Pokémon V with their Active Pokémon.. Shuffle the other cards back into your deck.';
 
 
@@ -66,7 +66,7 @@ export class Serena extends TrainerCard {
               while (player.hand.cards.length < 5) {
                 player.deck.moveTo(player.hand, 1);
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                
+
               }
               return state;
             });
@@ -78,8 +78,8 @@ export class Serena extends TrainerCard {
 
             const blocked: CardTarget[] = [];
             opponent.bench.forEach((card, index) => {
-              if (card instanceof PokemonCard && card.tags.includes(CardTag.POKEMON_V)) {
-                blocked.push({ index, player: opponent.id, slot: SlotType.BENCH });
+              if (card instanceof PokemonCard && !(card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.POKEMON_VSTAR))) {
+                blocked.push({ player: PlayerType.TOP_PLAYER, slot: SlotType.BENCH, index });
               }
             });
 
@@ -93,7 +93,7 @@ export class Serena extends TrainerCard {
               const cardList = result[0];
               opponent.switchPokemon(cardList);
               player.supporter.moveCardTo(effect.trainerCard, player.discard);
-              
+              return state;
             });
           }
         }

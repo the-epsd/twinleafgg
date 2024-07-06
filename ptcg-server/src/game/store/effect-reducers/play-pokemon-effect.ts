@@ -58,12 +58,10 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       effect.target.clearEffects();
       effect.player.removePokemonEffects(effect.target);
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        const pokemonCard = cardList.getPokemonCard();
-        if (pokemonCard && player.active.cards.includes(pokemonCard)) {
-          cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
-        }
-      });
+      const pokemonCard = effect.target;
+      if (pokemonCard.specialConditions.includes(SpecialCondition.ABILITY_USED)) {
+        pokemonCard.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+      }
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (cardList === player.active) {

@@ -220,7 +220,7 @@ export class NoibatArt extends Noibat {
 
 export class NoivernexArt extends Noivernex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_069_R_EN_LG.png';
-  public fullName = 'Novern ex PAF';
+  public fullName = 'Noivern ex PAF';
   public set = 'PAF';
   public setNumber = '69';
 }

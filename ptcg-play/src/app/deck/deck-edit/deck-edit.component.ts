@@ -58,6 +58,9 @@ export class DeckEditComponent implements OnInit {
         this.router.navigate(['/decks']);
       });
   }
+  public clearDeck() {
+    this.deckItems = [];
+  }
 
   private loadDeckItems(cardNames: string[]): DeckItem[] {
     const itemMap: { [name: string]: DeckItem } = {};
@@ -81,25 +84,25 @@ export class DeckEditComponent implements OnInit {
         }
       }
     }
-    
+
     deckItems = this.sortByPokemonEvolution(deckItems);
 
     return deckItems;
   }
-  
+
   sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {
     const firstTrainerIndex = cards.findIndex((d) => d.card.superType === SuperType.TRAINER);
-    
+
     for (let i = firstTrainerIndex - 1; i >= 0; i--) {
       if ((<PokemonCard>cards[i].card).evolvesFrom) {
         const indexOfPrevolution = this.findLastIndex(cards, c => c.card.name === (<PokemonCard>cards[i].card).evolvesFrom);
-        
+
         if (cards[indexOfPrevolution]?.card.superType !== SuperType.POKEMON) {
           continue;
         }
-        
+
         const currentPokemon = { ...cards.splice(i, 1)[0] };
-        
+
         cards = [
           ...cards.slice(0, indexOfPrevolution + 1),
           { ...currentPokemon },
@@ -107,10 +110,10 @@ export class DeckEditComponent implements OnInit {
         ];
       }
     }
-    
+
     return cards;
   }
-  
+
   findLastIndex<T>(array: Array<T>, predicate: (value: T, index: number, obj: T[]) => boolean): number {
     for (let i = array.length - 1; i >= 0; i--) {
       if (predicate(array[i], i, array))
@@ -118,7 +121,7 @@ export class DeckEditComponent implements OnInit {
     }
     return -1;
   }
-  
+
 
   importFromClipboard() {
     navigator.clipboard.readText()
@@ -128,25 +131,25 @@ export class DeckEditComponent implements OnInit {
           .filter(line => !!line)
           .flatMap(line => {
             const parts = line.split(' ');
-  
+
             // Check if the first part is a number
             const count = parseInt(parts[0], 10);
             if (isNaN(count)) {
               return []; // Ignore lines that don't start with a number
             }
-  
+
             const cardDetails = parts.slice(1);
             const cardName = cardDetails.slice(0, -1).join(' ');
             const setNumber = cardDetails.slice(-1)[0];
-  
+
             return new Array(count).fill({ cardName, setNumber });
           });
-  
+
         // Call import deck method
         this.importDeck(cardNames);
       });
   }
-  
+
 
   public importDeck(cardDetails: { cardName: string, setNumber?: string }[]) {
     this.deckItems = this.loadDeckItems(cardDetails.map(card => card.cardName));
@@ -159,11 +162,11 @@ export class DeckEditComponent implements OnInit {
       const fullCardName = `${item.count} ${fullNameWithSetNumber}`;
 
       if (!cardNames.includes(fullCardName)) {
-          cardNames.push(fullCardName);
+        cardNames.push(fullCardName);
       }
     }
     const data = cardNames.join('\n') + '\n';
-    
+
     try {
       await navigator.clipboard.writeText(data);
       this.alertService.toast(this.translate.instant('DECK_EXPORTED_TO_CLIPBOARD'));

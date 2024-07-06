@@ -131,16 +131,6 @@ export class ChiYu extends PokemonCard {
       }
     }
 
-    // if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-    //   if (this.damageDealt) {
-    //     effect.damage += 90;
-    //   }
-
-    //   this.damageDealt = false;
-
-    //   return state;
-    // }
-
     if (effect instanceof KnockOutEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

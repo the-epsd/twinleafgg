@@ -124,15 +124,14 @@ export class FlutterMane extends PokemonCard {
           throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
         }
       }
-
-
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const generator = useHexHurl(() => generator.next(), store, state, effect);
-        return generator.next().value;
-      }
-
-      return state;
     }
+
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const generator = useHexHurl(() => generator.next(), store, state, effect);
+      return generator.next().value;
+    }
+
     return state;
   }
 }

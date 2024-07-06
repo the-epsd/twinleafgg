@@ -16,6 +16,7 @@ import { EmergencyJelly } from './emergency-jelly';
 import { Feebas } from './feebas';
 import { ForestSealStone } from './forest-seal-stone';
 import { FurisodeGirl } from './furisode-girl';
+import { Gardevoir } from './gardevoir';
 import { HisuianBraviary } from './hisuian-braviary';
 import { Kirlia } from './kirlia';
 import { LugiaV } from './lugia-v';
@@ -101,6 +102,9 @@ export declare class ForestSealStoneArt extends ForestSealStone {
     cardImage: string;
 }
 export declare class FurisodeGirlArt extends FurisodeGirl {
+    cardImage: string;
+}
+export declare class GardevoirArt extends Gardevoir {
     cardImage: string;
 }
 export declare class HisuianBraviaryArt extends HisuianBraviary {

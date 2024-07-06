@@ -16,7 +16,6 @@ import { ComputerSearch } from './computer-search';
 import { Dewgong } from './dewgong';
 import { Diglett } from './diglett';
 import { Doduo } from './doduo';
-import { DoubleColorlessEnergy } from './double-colorless-energy';
 import { Dragonair } from './dragonair';
 import { Dratini } from './dratini';
 import { Drowzee } from './drowzee';
@@ -93,6 +92,7 @@ import { PokemonFlute } from './pokemon-flute';
 import { Potion } from './potion';
 import { Revive } from './revive';
 import { Porygon } from './porygon';
+import { DoubleColorlessEnergy } from '../set-x-and-y/double-colorless-energy';
 
 export class AbraArt extends Abra {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/abra-base-set-bs-43.jpg?fit=600%2C825&ssl=1';
@@ -176,6 +176,9 @@ export class DoduoArt extends Doduo {
 
 export class DoubleColorlessEnergyArt extends DoubleColorlessEnergy {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/double-colorless-energy-base-set-bs-96.jpg?fit=600%2C825&ssl=1';
+  public set = 'BS';
+  public setNumber = '48';
+  public fullName = 'Double Colorless Energy BS';
 }
 
 export class DragonairArt extends Dragonair {

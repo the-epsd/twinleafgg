@@ -25,9 +25,9 @@ class Lugia extends pokemon_card_1.PokemonCard {
                 damageCalculation: '+',
                 text: 'This attack does 20 damage for each Energy attached to both Active Pokémon.'
             }, {
-                name: 'Y Cyclone',
+                name: 'Deep Crush',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 90,
+                damage: 160,
                 text: ''
             },
         ];

@@ -27,11 +27,11 @@ export class CreateGamePopupComponent {
   public settings = new GameSettings();
 
   public formats = [
-    {value: Format.STANDARD, label: 'LABEL_STANDARD' },
-    {value: Format.GLC, label: 'LABEL_GLC' },
-    {value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
-    {value: Format.RETRO, label: 'LABEL_RETRO' },
-    {value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
+    { value: Format.STANDARD, label: 'LABEL_STANDARD' },
+    { value: Format.GLC, label: 'LABEL_GLC' },
+    { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
+    { value: Format.RETRO, label: 'LABEL_RETRO' },
+    { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
   ];
 
   public formatValidDecks: SelectPopupOption<number>[];
@@ -59,7 +59,21 @@ export class CreateGamePopupComponent {
     this.onFormatSelected(this.settings.format);
   }
 
+  hasValidDeck(): boolean {
+    const selectedDeck = this.decks.find(d => d.value.id === this.deckId);
+    return selectedDeck && selectedDeck.value.format.includes(this.settings.format);
+  }
+
+
   public confirm() {
+    // Check if the selected deck is valid for the chosen format
+    const selectedDeck = this.decks.find(d => d.value.id === this.deckId);
+    if (selectedDeck && !selectedDeck.value.format.includes(this.settings.format)) {
+      // Show an error message or alert
+      console.error('Selected deck is not valid for the chosen format.');
+      return;
+    }
+
     this.dialogRef.close({
       deckId: this.deckId,
       gameSettings: this.settings
@@ -71,7 +85,7 @@ export class CreateGamePopupComponent {
   }
 
   onFormatSelected(format: Format) {
-    this.formatValidDecks = this.decks.filter(d => 
+    this.formatValidDecks = this.decks.filter(d =>
       d.value.format.includes(format)
     ).map(d => ({ value: d.value.id, viewValue: d.value.name }));
 

@@ -17,9 +17,6 @@ class Noivernex extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'G';
         this.cardType = card_types_1.CardType.DRAGON;
         this.hp = 260;
-        this.weakness = [];
-        this.resistance = [];
-        this.retreat = [];
         this.attacks = [
             {
                 name: 'Covert Flight',

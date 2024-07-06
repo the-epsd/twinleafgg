@@ -88,13 +88,6 @@ class ChiYu extends pokemon_card_1.PokemonCard {
                 effect.damage += 90;
             }
         }
-        // if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        //   if (this.damageDealt) {
-        //     effect.damage += 90;
-        //   }
-        //   this.damageDealt = false;
-        //   return state;
-        // }
         if (effect instanceof game_effects_1.KnockOutEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);

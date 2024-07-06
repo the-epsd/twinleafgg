@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils, GameError, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -9,10 +9,10 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Inteleon extends PokemonCard {
 
-  public tags = [ CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.RAPID_STRIKE];
 
   public regulationMark = 'E';
-  
+
   public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Drizzile';
@@ -23,7 +23,7 @@ export class Inteleon extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Quick Shooting',
@@ -59,7 +59,7 @@ export class Inteleon extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
     }
-      
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
@@ -72,7 +72,7 @@ export class Inteleon extends PokemonCard {
       if (player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      
+
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
@@ -82,7 +82,7 @@ export class Inteleon extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false },
       ), selected => {
         const targets = selected || [];
@@ -90,6 +90,13 @@ export class Inteleon extends PokemonCard {
           target.damage += 20;
           player.marker.addMarker(this.DOUBLE_GUNNER_MARKER, this);
         });
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
       });
     }
     return state;

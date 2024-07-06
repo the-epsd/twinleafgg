@@ -36,30 +36,51 @@ class Lucario extends pokemon_card_1.PokemonCard {
         this.evolvesFrom = 'Riolu';
         this.name = 'Lucario';
         this.fullName = 'Lucario SVI';
-        this.REVENGE_MARKER = 'REVENGE_MARKER';
+        this.RETALIATE_MARKER = 'RETALIATE_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.damageDealt = false;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            if (player.marker.hasMarker(this.REVENGE_MARKER) && this.damageDealt) {
+            if (player.marker.hasMarker(this.RETALIATE_MARKER) && this.damageDealt) {
                 effect.damage += 120;
             }
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            if (player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            if (player.marker.hasMarker(this.ATTACK_USED_MARKER)) {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
-            effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
         }
-        if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) &&
-            effect.target.tool === this) {
+        if (effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) {
             const player = game_1.StateUtils.getOpponent(state, effect.player);
-            if (player.active.tool === this) {
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            if (player !== owner) {
                 this.damageDealt = true;
+            }
+        }
+        if (effect instanceof game_effects_1.KnockOutEffect) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const targetPokemon = effect.target.getPokemonCard();
+            if (targetPokemon && targetPokemon.cardType === card_types_1.CardType.FIGHTING) {
+                player.marker.addMarkerToState(this.RETALIATE_MARKER);
+            }
+            // Do not activate between turns, or when it's not opponents turn.
+            if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+                return state;
+            }
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            if (owner === player) {
+                if (targetPokemon && targetPokemon.cardType === card_types_1.CardType.FIGHTING) {
+                    player.marker.addMarkerToState(this.RETALIATE_MARKER);
+                }
+                return state;
             }
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
@@ -68,7 +89,7 @@ class Lucario extends pokemon_card_1.PokemonCard {
             if (owner === effect.player) {
                 this.damageDealt = false;
             }
-            effect.player.marker.removeMarker(this.REVENGE_MARKER);
+            effect.player.marker.removeMarker(this.RETALIATE_MARKER);
             effect.player.marker.removeMarker(this.ATTACK_USED_MARKER);
         }
         return state;

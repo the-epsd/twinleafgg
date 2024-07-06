@@ -9,9 +9,6 @@ export declare class Noivernex extends PokemonCard {
     regulationMark: string;
     cardType: CardType;
     hp: number;
-    weakness: never[];
-    resistance: never[];
-    retreat: never[];
     attacks: {
         name: string;
         cost: CardType[];

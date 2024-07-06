@@ -71,6 +71,10 @@ export class Bibarel extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
+      if (player.hand.cards.length >= 5) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       while (player.hand.cards.length < 5) {
         player.deck.moveTo(player.hand, 1);
       }

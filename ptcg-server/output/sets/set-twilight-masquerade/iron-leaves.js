@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_message_1 = require("../../game/game-message");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class IronLeaves extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -28,7 +29,8 @@ class IronLeaves extends pokemon_card_1.PokemonCard {
                 name: 'Vengeful Edge',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 100,
-                text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, +60 damage.'
+                damageCalculation: '+',
+                text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 60 more damage.'
             }
         ];
         this.set = 'TWM';
@@ -36,7 +38,8 @@ class IronLeaves extends pokemon_card_1.PokemonCard {
         this.fullName = 'Iron Leaves TWM';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '19';
-        this.VENGEFUL_EDGE_MARKER = 'VENGEFUL_EDGE_MARKER';
+        this.RETALIATE_MARKER = 'RETALIATE_MARKER';
+        this.damageDealt = false;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -55,12 +58,29 @@ class IronLeaves extends pokemon_card_1.PokemonCard {
                 player.discard.moveCardsTo(cards, player.hand);
             });
         }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.marker.removeMarker(this.RETALIATE_MARKER);
+        }
+        if (effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) {
+            const player = game_1.StateUtils.getOpponent(state, effect.player);
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            if (player !== owner) {
+                this.damageDealt = true;
+            }
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player === game_1.StateUtils.getOpponent(state, effect.player)) {
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            if (owner === effect.player) {
+                this.damageDealt = false;
+            }
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            if (player.marker.hasMarker(this.VENGEFUL_EDGE_MARKER)) {
+            if (player.marker.hasMarker(this.RETALIATE_MARKER) && this.damageDealt) {
                 effect.damage += 60;
             }
-            return state;
         }
         if (effect instanceof game_effects_1.KnockOutEffect) {
             const player = effect.player;
@@ -72,12 +92,9 @@ class IronLeaves extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                effect.player.marker.addMarker(this.VENGEFUL_EDGE_MARKER, this);
+                effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
             }
             return state;
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.VENGEFUL_EDGE_MARKER);
         }
         return state;
     }

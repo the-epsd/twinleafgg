@@ -12,17 +12,25 @@ export declare class IronLeaves extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    })[];
     set: string;
     name: string;
     fullName: string;
     cardImage: string;
     setNumber: string;
-    readonly VENGEFUL_EDGE_MARKER = "VENGEFUL_EDGE_MARKER";
+    readonly RETALIATE_MARKER = "RETALIATE_MARKER";
+    damageDealt: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

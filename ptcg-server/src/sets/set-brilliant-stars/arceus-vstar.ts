@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, 
-  PlayerType, SlotType, GameMessage, ShuffleDeckPrompt, PowerType, ChooseCardsPrompt, GameError, AttachEnergyPrompt, StateUtils, CardTarget } from '../../game';
+import { Stage, CardType, CardTag, SuperType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
+import {
+  StoreLike, State,
+  PlayerType, SlotType, GameMessage, ShuffleDeckPrompt, PowerType, ChooseCardsPrompt, GameError, AttachEnergyPrompt, StateUtils, CardTarget
+} from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -33,11 +35,11 @@ function* useTrinityNova(next: Function, store: StoreLike, state: State,
     transfers = transfers || [];
     for (const transfer of transfers) {
       const target = StateUtils.getTarget(state, player, transfer.to);
-      player.deck.moveCardTo(transfer.card, target); 
+      player.deck.moveCardTo(transfer.card, target);
       next();
     }
   });
-  
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
 
@@ -47,7 +49,7 @@ function* useTrinityNova(next: Function, store: StoreLike, state: State,
 
 export class ArceusVSTAR extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VSTAR ];
+  public tags = [CardTag.POKEMON_VSTAR];
 
   public regulationMark = 'F';
 
@@ -63,12 +65,12 @@ export class ArceusVSTAR extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Trinity Nova',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 200,
       text: 'Search your deck for up to 3 basic energies and attach ' +
         'them to your Pokémon V in any way you like. Then, shuffle ' +
@@ -115,6 +117,12 @@ export class ArceusVSTAR extends PokemonCard {
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);
 
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
@@ -130,11 +138,11 @@ export class ArceusVSTAR extends PokemonCard {
     //         GameMessage.ATTACH_ENERGY_TO_BENCH,
     //         player.deck,
     //         PlayerType.BOTTOM_PLAYER,
-        
+
     //         [ SlotType.BENCH, SlotType.ACTIVE ],
     //         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
     //         { allowCancel: true, min: 0, max: 3 },
-  
+
     //       ), transfers => {
     //         transfers = transfers || [ ];
     //         // cancelled by user
@@ -144,7 +152,7 @@ export class ArceusVSTAR extends PokemonCard {
     //         for (const transfer of transfers) {
 
     //           const target = StateUtils.getTarget(state, player, transfer.to);
-        
+
     //           if (!target.cards[0].tags.includes(CardTag.POKEMON_V) ||
     //           !target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
     //           !target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
@@ -154,12 +162,12 @@ export class ArceusVSTAR extends PokemonCard {
     //           if (target.cards[0].tags.includes(CardTag.POKEMON_V) || 
     //               target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
     //               target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
-        
+
     //             player.deck.moveCardTo(transfer.card, target); 
     //           }
-        
+
     //         }
-        
+
     //         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     //           player.deck.applyOrder(order);
     //         });

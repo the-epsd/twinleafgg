@@ -22,10 +22,10 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
             }];
         this.attacks = [
             {
-                name: 'Raging Flames',
+                name: 'Combustion',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE],
-                damage: 60,
-                text: 'Discard the top 3 cards of your deck.'
+                damage: 50,
+                text: ''
             }
         ];
         this.regulationMark = 'G';

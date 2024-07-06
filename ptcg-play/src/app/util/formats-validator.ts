@@ -279,6 +279,7 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'HIF': new Date('2019-08-23'),
   'CEC': new Date('2019-11-01'),
   // SWORD & SHIELD
+  'SWSH': new Date('2020-02-07'),
   'SSH': new Date('2020-02-07'),
   'RCL': new Date('2020-05-01'),
   'DAA': new Date('2020-08-14'),
@@ -297,6 +298,7 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'SIT': new Date('2022-11-11'),
   'CRZ': new Date('2023-01-20'),
   // SCARLET & VIOLET
+  'SVP': new Date('2023-03-31'),
   'SVI': new Date('2023-03-31'),
   'PAL': new Date('2023-06-09'),
   'OBF': new Date('2023-08-11'),
@@ -305,5 +307,6 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'PAF': new Date('2024-01-26'),
   'TEF': new Date('2024-03-22'),
   'TWM': new Date('2024-05-24'),
-  'SV6a': new Date('2024-05-24')
+  'SV6a': new Date('2024-05-24'),
+  'SV7': new Date('2024-05-24'),
 }

@@ -20,6 +20,7 @@ exports.setSilverTempest = [
     new card_images_1.FeebasArt(),
     new card_images_1.ForestSealStoneArt(),
     new card_images_1.FurisodeGirlArt(),
+    new card_images_1.GardevoirArt(),
     new card_images_1.HisuianBraviaryArt(),
     new card_images_1.KirliaArt(),
     new card_images_1.KlangArt(),

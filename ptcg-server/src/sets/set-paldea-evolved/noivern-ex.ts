@@ -1,10 +1,12 @@
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, 
-  StateUtils, 
+import {
+  StoreLike, State, PlayerType,
+  StateUtils,
   GameError,
-  GameMessage} from '../../game';
+  GameMessage
+} from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -17,30 +19,24 @@ export class Noivernex extends PokemonCard {
 
   public evolvesFrom = 'Noibat';
 
-  public tags = [ CardTag.POKEMON_ex ];
-  
+  public tags = [CardTag.POKEMON_ex];
+
   public regulationMark = 'G';
-  
+
   public cardType: CardType = CardType.DRAGON;
-  
+
   public hp: number = 260;
-  
-  public weakness = [ ];
-  
-  public resistance = [ ];
-  
-  public retreat = [ ];
 
   public attacks = [
     {
       name: 'Covert Flight',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 70,
       text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon.'
     },
     {
       name: 'Dominating Echo',
-      cost: [ CardType.PSYCHIC, CardType.DARK ],
+      cost: [CardType.PSYCHIC, CardType.DARK],
       damage: 140,
       text: 'During your opponent\'s next turn, they can\'t play any Special Energy or Stadium cards from their hand.'
     },

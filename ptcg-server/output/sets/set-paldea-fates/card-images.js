@@ -323,7 +323,7 @@ class NoivernexArt extends noivern_ex_1.Noivernex {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_069_R_EN_LG.png';
-        this.fullName = 'Novern ex PAF';
+        this.fullName = 'Noivern ex PAF';
         this.set = 'PAF';
         this.setNumber = '69';
     }

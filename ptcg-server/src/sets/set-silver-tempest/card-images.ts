@@ -16,6 +16,7 @@ import { EmergencyJelly } from './emergency-jelly';
 import { Feebas } from './feebas';
 import { ForestSealStone } from './forest-seal-stone';
 import { FurisodeGirl } from './furisode-girl';
+import { Gardevoir } from './gardevoir';
 import { HisuianBraviary } from './hisuian-braviary';
 import { Kirlia } from './kirlia';
 import { LugiaV } from './lugia-v';
@@ -53,11 +54,11 @@ import { Zubat } from './zubat';
 export class AlolanVulpixVArt extends AlolanVulpixV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_033_R_EN_LG.png';
 }
-  
+
 export class AlolanVulpixVSTARArt extends AlolanVulpixVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_034_R_EN_LG.png';
 }
-  
+
 export class ArcheopsArt extends Archeops {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_147_R_EN_LG.png';
 }
@@ -120,6 +121,10 @@ export class ForestSealStoneArt extends ForestSealStone {
 
 export class FurisodeGirlArt extends FurisodeGirl {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_157_R_EN_LG.png';
+}
+
+export class GardevoirArt extends Gardevoir {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_069_R_EN_LG.png';
 }
 
 export class HisuianBraviaryArt extends HisuianBraviary {

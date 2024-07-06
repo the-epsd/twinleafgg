@@ -5,7 +5,6 @@ const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const future_booster_energy_capsule_1 = require("./future-booster-energy-capsule");
 class IronJugulis extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -41,44 +40,40 @@ class IronJugulis extends game_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const blocked = [];
-            const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-            if (!hasBenched) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
-            }
+            const damagedPokemon = [];
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
                 if (cardList.damage > 0) {
-                    return state;
+                    damagedPokemon.push(cardList);
                 }
-                else {
-                    blocked.push(target);
+                if (damagedPokemon.length == 0) {
+                    throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
+                }
+                // Opponent has damaged Pokemon
+                if (damagedPokemon.length > 0) {
+                    state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 3, allowCancel: false }), target => {
+                        if (!target || target.length === 0) {
+                            return;
+                        }
+                        const damageEffect = new attack_effects_1.PutDamageEffect(effect, 50);
+                        damageEffect.target = target[0];
+                        store.reduceEffect(state, damageEffect);
+                    });
                 }
             });
-            if (!blocked.length) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
-            }
-            if (blocked.length) {
-                // Opponent has damaged benched Pokemon
-                state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 3, allowCancel: false, blocked: blocked }), target => {
-                    if (!target || target.length === 0) {
-                        return;
+        }
+        if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            let isAncientBoosterAttached = false;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card === this && cardList.tool !== undefined) {
+                    if (cardList.tool.name === 'Ancient Booster Energy Capsule') {
+                        isAncientBoosterAttached = true;
                     }
-                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 50);
-                    damageEffect.target = target[0];
-                    store.reduceEffect(state, damageEffect);
-                });
+                }
+            });
+            if (isAncientBoosterAttached) {
+                this.attacks[1].cost = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
             }
-            if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[1]) {
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                    if (cardList === effect.target) {
-                        return;
-                    }
-                    if (card === this && cardList.tool instanceof future_booster_energy_capsule_1.FutureBoosterEnergyCapsule) {
-                        this.attacks[1].cost = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
-                    }
-                });
-            }
-            return state;
         }
         return state;
     }

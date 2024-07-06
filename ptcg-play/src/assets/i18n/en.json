@@ -16,6 +16,7 @@
   "BUTTON_DELETE": "Delete",
   "BUTTON_EDIT": "Edit",
   "BUTTON_EXPORT": "Export",
+  "BUTTON_CLEAR_DECK": "Remove All Cards",
   "BUTTON_FILE_UPLOAD": "Upload",
   "BUTTON_IMPORT": "Import",
   "BUTTON_IMPORT_FROM_FILE": "Import from file",
