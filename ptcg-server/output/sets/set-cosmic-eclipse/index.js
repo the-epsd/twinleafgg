@@ -16,5 +16,6 @@ exports.setCosmicEclipse = [
     new card_images_1.PikachuArt(),
     new card_images_1.ProfessorOaksSetupArt(),
     new card_images_1.SlugmaArt(),
-    new card_images_1.TagCallArt()
+    new card_images_1.TagCallArt(),
+    new card_images_1.WishiwashiArt()
 ];

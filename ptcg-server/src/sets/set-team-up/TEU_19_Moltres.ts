@@ -11,6 +11,8 @@ export class Moltres extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.FIRE;
   public hp: number = 120;
+  public weakness = [{ type: CardType.LIGHTNING }];
+  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
