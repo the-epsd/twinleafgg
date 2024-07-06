@@ -90,7 +90,9 @@ export class Yveltal extends PokemonCard {
           player.id,
           GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
           PlayerType.TOP_PLAYER,
+          
           [SlotType.ACTIVE],
+
           { allowCancel: false, blocked }
         ), results => {
           targets = results || [];
@@ -108,6 +110,7 @@ export class Yveltal extends PokemonCard {
           GameMessage.CHOOSE_CARD_TO_DISCARD,
           target,
           { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+
           { min: 1, max: 1, allowCancel: false }
         ), selected => {
           cards = selected || [];
