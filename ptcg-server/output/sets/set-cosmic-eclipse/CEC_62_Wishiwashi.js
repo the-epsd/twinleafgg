@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class Wishiwashi extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -33,28 +34,43 @@ class Wishiwashi extends pokemon_card_1.PokemonCard {
         this.SCATTER_MARKER = 'SCATTER_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.BeginTurnEffect) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            opponent.marker.addMarker(this.SCATTER_MARKER, this);
+        }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const cardList = game_1.StateUtils.findCardList(state, this);
-            const owner = game_1.StateUtils.findOwner(state, cardList);
-            opponent.marker.addMarker(this.SCATTER_MARKER, this);
-            if (effect.player.marker.hasMarker(this.SCATTER_MARKER, this)) {
-                owner.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                    var _a;
-                    if (((_a = cardList.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.fullName) === this.fullName && cardList.damage > 0) {
-                        return store.prompt(state, [
-                            new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
-                        ], result => {
-                            if (result === false) {
-                                cardList.moveTo(owner.deck);
-                            }
-                        });
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: pokemon_types_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
+            if (opponent.marker.hasMarker(this.SCATTER_MARKER, this)) {
+                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        if (cardList.damage > 0) {
+                            return store.prompt(state, [
+                                new game_1.CoinFlipPrompt(opponent.id, game_1.GameMessage.COIN_FLIP)
+                            ], result => {
+                                if (result === false) {
+                                    cardList.moveTo(opponent.deck);
+                                    cardList.clearEffects();
+                                }
+                            });
+                        }
                     }
                 });
-                return store.prompt(state, new game_1.ShuffleDeckPrompt(owner.id), order => {
-                    owner.deck.applyOrder(order);
-                    player.marker.removeMarker(this.SCATTER_MARKER, this);
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(opponent.id), order => {
+                    opponent.deck.applyOrder(order);
+                    opponent.marker.removeMarker(this.SCATTER_MARKER, this);
                     return state;
                 });
             }
