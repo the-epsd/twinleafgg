@@ -119,7 +119,7 @@ export class Coalossal extends PokemonCard {
 
           const blocked: number[] = [];
           player.discard.cards.forEach((card, index) => {
-            if(card instanceof EnergyCard && card.energyType === EnergyType.BASIC && !card.provides.includes(CardType.FIGHTING) && !card.provides.includes(CardType.FIRE)) {
+            if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && !card.provides.includes(CardType.FIGHTING) && !card.provides.includes(CardType.FIRE)) {
               blocked.push(index);
             }
           });
@@ -134,19 +134,19 @@ export class Coalossal extends PokemonCard {
               PlayerType.BOTTOM_PLAYER,
               [SlotType.BENCH, SlotType.ACTIVE],
               { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-              { allowCancel: false, min: 0, max: 2, blocked}
+              { allowCancel: false, min: 0, max: 2, blocked }
             ), transfers => {
               transfers = transfers || [];
               for (const transfer of transfers) {
 
                 if (transfers.length > 1) {
                   if (transfers[0].card.name === transfers[1].card.name) {
-                    throw new GameError (GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);  
+                    throw new GameError(GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
                   }
                 }
-                
+
                 const target = StateUtils.getTarget(state, player, transfer.to);
-                player.discard.moveCardTo(transfer.card, target); 
+                player.discard.moveCardTo(transfer.card, target);
               }
             });
           }

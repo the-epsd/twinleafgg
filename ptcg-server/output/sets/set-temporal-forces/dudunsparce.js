@@ -38,6 +38,9 @@ class Dudunsparce extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             player.deck.moveTo(player.hand, 3);
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 if (card === this) {
@@ -47,9 +50,6 @@ class Dudunsparce extends pokemon_card_1.PokemonCard {
                         player.deck.applyOrder(order);
                         return state;
                     });
-                }
-                else {
-                    return state;
                 }
             });
         }

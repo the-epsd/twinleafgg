@@ -88,7 +88,7 @@ class Gholdengoex extends pokemon_card_1.PokemonCard {
                     }
                 });
             }
-            else {
+            if (player.active.cards[0] === this) {
                 player.deck.moveTo(player.hand, 2);
                 player.marker.addMarker(this.MAKE_IT_RAIN_MARKER, this);
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {

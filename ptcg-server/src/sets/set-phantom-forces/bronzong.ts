@@ -28,19 +28,19 @@ export class Bronzong extends PokemonCard {
 
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Metal Links',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn (before your attack), you may attach ' +
-    'a M Energy card from your discard pile to 1 of your Benched Pokemon.'
+      'a M Energy card from your discard pile to 1 of your Benched Pokemon.'
   }];
 
   public attacks = [{
     name: 'Hammer In',
-    cost: [ CardType.METAL, CardType.METAL, CardType.COLORLESS ],
+    cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
     damage: 60,
     text: ''
   }];
@@ -80,6 +80,7 @@ export class Bronzong extends PokemonCard {
       if (player.marker.hasMarker(this.METAL_LINKS_MAREKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
+
       player.marker.addMarker(this.METAL_LINKS_MAREKER, this);
 
       const blocked: number[] = [];
@@ -94,7 +95,7 @@ export class Bronzong extends PokemonCard {
         GameMessage.ATTACH_ENERGY_CARDS,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY },
         { allowCancel: false, min: 1, max: 1, blocked }
       ), transfers => {

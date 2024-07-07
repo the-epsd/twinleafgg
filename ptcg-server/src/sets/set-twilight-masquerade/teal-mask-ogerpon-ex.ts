@@ -10,7 +10,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class TealMaskOgerponex extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public regulationMark = 'H';
 
@@ -24,7 +24,7 @@ export class TealMaskOgerponex extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Teal Dance',
@@ -60,29 +60,28 @@ export class TealMaskOgerponex extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.TEAL_DANCE_MARKER, this);
     }
-    
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-    
+
       if (player.marker.hasMarker(this.TEAL_DANCE_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-    
+
       const hasEnergyInHand = player.hand.cards.some(c => {
         return c instanceof EnergyCard
-              && c.energyType === EnergyType.BASIC
-              && c.provides.includes(CardType.GRASS);
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.GRASS);
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-    
+
       const cardList = StateUtils.findCardList(state, this);
       if (cardList === undefined) {
         return state;
       }
-          
-    
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
@@ -110,7 +109,7 @@ export class TealMaskOgerponex extends PokemonCard {
         }
       });
     }
-    
+
     if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.TEAL_DANCE_MARKER, this);
     }
@@ -118,20 +117,20 @@ export class TealMaskOgerponex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-          
+
       const playerProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, playerProvidedEnergy);
       const playerEnergyCount = playerProvidedEnergy.energyMap
         .reduce((left, p) => left + p.provides.length, 0);
-          
+
       const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, opponentProvidedEnergy);
       const opponentEnergyCount = opponentProvidedEnergy.energyMap
         .reduce((left, p) => left + p.provides.length, 0);
-          
+
       effect.damage += (playerEnergyCount + opponentEnergyCount) * 30;
     }
-    
+
     if (effect instanceof PutDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

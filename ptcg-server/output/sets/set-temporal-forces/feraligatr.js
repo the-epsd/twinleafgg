@@ -65,20 +65,24 @@ class Feraligatr extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            const slots = player.bench.filter(b => b.cards.length === 0);
             if (effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this)) {
                 console.log('power blocked');
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
-            const cards = player.discard.cards.filter(c => c === this);
-            cards.forEach(card => {
-                slots[0].damage += 10; // Add 10 damage
-                effect.player.marker.addMarker(this.TORRENTIAL_HEART_MARKER, this);
-                if (effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this)) {
-                    effect.damage += 120;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.damage += 50;
                 }
             });
-            return state;
+            effect.player.marker.addMarker(this.TORRENTIAL_HEART_MARKER, this);
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            });
+            if (effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this)) {
+                effect.damage += 120;
+            }
         }
         return state;
     }

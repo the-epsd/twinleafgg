@@ -19,7 +19,7 @@ function* useDreamyRevelation(next: Function, store: StoreLike, state: State, ef
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     deckTop,
-    {  },
+    {},
     { min: 1, max: 1, allowCancel: true }
   ), selected => {
     cards = selected || [];
@@ -79,11 +79,11 @@ export class Jirachi extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-  
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-  
+
       if (player.marker.hasMarker(this.DREAMY_REVELATION_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -93,16 +93,16 @@ export class Jirachi extends PokemonCard {
       }
 
       player.marker.addMarker(this.DREAMY_REVELATION_MARKER, this);
-      
+
       const generator = useDreamyRevelation(() => generator.next(), store, state, effect);
       return generator.next().value;
-      
+
 
     }
 
-    if(effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,

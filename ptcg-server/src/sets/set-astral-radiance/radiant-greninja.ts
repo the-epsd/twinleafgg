@@ -13,7 +13,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class RadiantGreninja extends PokemonCard {
 
-  public tags = [ CardTag.RADIANT ];
+  public tags = [CardTag.RADIANT];
 
   public regulationMark = 'F';
 
@@ -25,15 +25,15 @@ export class RadiantGreninja extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Concealed Cards',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'You must discard an Energy card from your hand in order ' +
-    'to use this ability. Once during your turn, you may draw ' +
-    '2 cards.'
+      'to use this ability. Once during your turn, you may draw ' +
+      '2 cards.'
   }];
 
   public attacks = [
@@ -42,8 +42,8 @@ export class RadiantGreninja extends PokemonCard {
       cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
       damage: 0,
       text: 'Discard 2 energy from this Pokémon. This attack does ' +
-      '90 damage to 2 of your opponent\'s Pokémon. (Don\'t apply ' +
-      'Weakness and Resistance for Benched Pokémon.)'
+        '90 damage to 2 of your opponent\'s Pokémon. (Don\'t apply ' +
+        'Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 
@@ -60,11 +60,12 @@ export class RadiantGreninja extends PokemonCard {
   public readonly CONCEALED_CARDS_MARKER = 'CONCEALED_CARDS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.CONCEALED_CARDS_MARKER, this);
     }
-    
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.CONCEALED_CARDS_MARKER, this);
@@ -110,7 +111,7 @@ export class RadiantGreninja extends PokemonCard {
       });
       return state;
     }
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
@@ -121,7 +122,7 @@ export class RadiantGreninja extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.COLORLESS, CardType.COLORLESS ],
+        [CardType.COLORLESS, CardType.COLORLESS],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);
@@ -134,7 +135,7 @@ export class RadiantGreninja extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: max, allowCancel: false }
       ), selected => {
         const targets = selected || [];
@@ -143,10 +144,10 @@ export class RadiantGreninja extends PokemonCard {
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });
-        return state; 
+        return state;
       });
     }
-    return state; 
+    return state;
   }
 }
 

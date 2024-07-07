@@ -22,7 +22,7 @@ export class Meowscaradaex extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Bouquet Magic',
@@ -33,7 +33,7 @@ export class Meowscaradaex extends PokemonCard {
 
   public attacks = [{
     name: 'Scratching Nails',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 100,
     damageCalculation: '+',
     text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 120 more damage.'
@@ -59,7 +59,7 @@ export class Meowscaradaex extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
     }
-      
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
@@ -72,7 +72,7 @@ export class Meowscaradaex extends PokemonCard {
       if (player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      
+
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
@@ -103,7 +103,7 @@ export class Meowscaradaex extends PokemonCard {
           player.id,
           GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
           PlayerType.TOP_PLAYER,
-          [ SlotType.BENCH ],
+          [SlotType.BENCH],
           { min: 1, max: 1, allowCancel: false },
         ), selected => {
           const targets = selected || [];

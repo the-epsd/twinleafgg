@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ConfirmPrompt, PowerType, ChooseCardsPrompt, ShuffleDeckPrompt, GameError, PlayerType} from '../../game';
+import { StoreLike, State, StateUtils, ConfirmPrompt, PowerType, ChooseCardsPrompt, ShuffleDeckPrompt, GameError, PlayerType } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -13,7 +13,7 @@ export class Pidgeotex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.STAGE_2;
 
@@ -29,7 +29,7 @@ export class Pidgeotex extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [  ];
+  public retreat = [];
 
   public powers = [{
     name: 'Quick Search',
@@ -44,7 +44,7 @@ export class Pidgeotex extends PokemonCard {
   public attacks = [
     {
       name: 'Blustery Wind',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 120,
       text: 'You may discard a Stadium in play.'
     }
@@ -67,12 +67,12 @@ export class Pidgeotex extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.QUICK_SEARCH_MARKER, this);
     }
-    
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.QUICK_SEARCH_MARKER, this);
     }
-    
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       if (player.marker.hasMarker(this.QUICK_SEARCH_MARKER)) {
@@ -82,7 +82,7 @@ export class Pidgeotex extends PokemonCard {
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-  
+
       player.marker.addMarker(this.QUICK_SEARCH_MARKER, this);
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {

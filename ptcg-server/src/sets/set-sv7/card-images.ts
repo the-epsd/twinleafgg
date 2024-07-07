@@ -42,7 +42,7 @@ import { Pecharuntex } from './pecharunt-ex';
 import { PokeVitalA } from './pokevital-a';
 import { PowerHourglass } from './power-hourglass';
 import { Revavroomex } from './revavroom-ex';
-import { Rowlett } from './rowlett';
+import { Rowlet } from './rowlet';
 import { Seadra } from './seadra';
 import { SlitherWing } from './slither-wing';
 import { TapuBulu } from './tapu-bulu';
@@ -227,7 +227,7 @@ export class RevavroomexArt extends Revavroomex {
   public cardImage = 'https://pokemonproxies.com/static/media/Revavroom_ex-015-6a.00156a2092b7eb5fd0d6.png';
 }
 
-export class RowlettArt extends Rowlett {
+export class RowletArt extends Rowlet {
   public cardImage = 'https://pokemonproxies.com/static/media/Rowlet-003-6a.7f5ef22d0a924de25052.png';
 }
 

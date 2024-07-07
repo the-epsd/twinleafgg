@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, AttachEnergyPrompt, CardList, EnergyCard, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt, GameError } from '../../game';
+import { PowerType, StoreLike, State, StateUtils, AttachEnergyPrompt, CardList, EnergyCard, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt, GameError, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -82,29 +82,30 @@ export class Metang extends PokemonCard {
       // If no energy cards were drawn, move all cards to deck & shuffle
       if (energyCardsDrawn.length == 0) {
 
-        // store.prompt(state, [new ShowCardsPrompt(
-        //   player.id,
-        //   GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        //   temp.cards
-        // )], () => {
-        temp.cards.forEach(card => {
-          store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            temp.applyOrder(order);
-            temp.moveCardTo(card, deckBottom);
-            deckBottom.applyOrder(order);
-            deckBottom.moveTo(player.deck);
-            player.marker.addMarker(this.METAL_MAKER_MARKER, this);
+        store.prompt(state, [new ShowCardsPrompt(
+          player.id,
+          GameMessage.CARDS_SHOWED_BY_EFFECT,
+          temp.cards
+        )], () => {
+          temp.cards.forEach(card => {
+            store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              temp.applyOrder(order);
+              temp.moveCardTo(card, deckBottom);
+              deckBottom.applyOrder(order);
+              deckBottom.moveTo(player.deck);
+              player.marker.addMarker(this.METAL_MAKER_MARKER, this);
 
-            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-              if (cardList.getPokemonCard() === this) {
-                cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
-              }
+              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                  cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                }
+              });
+
             });
-
+            return state;
           });
           return state;
         });
-        return state;
       }
 
       if (energyCardsDrawn.length >= 1) {

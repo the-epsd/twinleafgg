@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PokemonCardList, GameError,
-  GameMessage, CoinFlipPrompt, ChooseCardsPrompt, TrainerCard} from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils, PokemonCardList, GameError,
+  GameMessage, CoinFlipPrompt, ChooseCardsPrompt, TrainerCard
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
@@ -17,7 +19,7 @@ export class Smeargle extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Portrait',
@@ -33,7 +35,7 @@ export class Smeargle extends PokemonCard {
   public attacks = [
     {
       name: 'Tail Rap',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
       text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
     }
@@ -78,7 +80,7 @@ export class Smeargle extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_COPY_EFFECT,
         opponent.hand,
         { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-        { allowCancel: true , min: 1, max: 1}
+        { allowCancel: true, min: 1, max: 1 }
       ), cards => {
         if (cards === null || cards.length === 0) {
           return;

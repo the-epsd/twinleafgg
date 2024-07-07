@@ -52,7 +52,7 @@ class JaninesSecretTechnique extends trainer_card_1.TrainerCard {
             //   { min: 0, max: 2, blocked: blocked2 }
             // ), chosen => {
             //   chosen.forEach(target => {
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.deck, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH, play_card_action_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Darkness Energy' }, { allowCancel: false, min: 1, max: 2, blockedTo: blocked2, differentTargets: true }), transfers => {
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.deck, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH, play_card_action_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Darkness Energy' }, { allowCancel: false, min: 0, max: 2, blockedTo: blocked2, differentTargets: true }), transfers => {
                 transfers = transfers || [];
                 if (transfers.length === 0) {
                     return;

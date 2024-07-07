@@ -1,21 +1,22 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, AttachEnergyPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StateUtils
+import {
+  PowerType, StoreLike, State, AttachEnergyPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StateUtils
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
-import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 function* useVitalitySpring(next: Function, store: StoreLike, state: State,
   effect: PowerEffect): IterableIterator<State> {
-  
+
   const player = effect.player;
-  
+
   if (player.deck.cards.length === 0) {
     return state;
   }
-  
+
   yield store.prompt(state, new AttachEnergyPrompt(
     player.id,
     GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -28,18 +29,18 @@ function* useVitalitySpring(next: Function, store: StoreLike, state: State,
     transfers = transfers || [];
     for (const transfer of transfers) {
       const target = StateUtils.getTarget(state, player, transfer.to);
-      player.deck.moveCardTo(transfer.card, target); 
+      player.deck.moveCardTo(transfer.card, target);
       next();
     }
   });
-    
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
     const endTurnEffect = new EndTurnEffect(player);
     store.reduceEffect(state, endTurnEffect);
     return state;
   });
-} 
+}
 
 export class Blastoise extends PokemonCard {
 
@@ -53,7 +54,7 @@ export class Blastoise extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Vitality Spring',
@@ -65,7 +66,7 @@ export class Blastoise extends PokemonCard {
   public attacks = [
     {
       name: 'Hydro Pump',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 90,
       text: 'This attack does 30 more damage for each [W] Energy attached to this Pokémon.'
     }

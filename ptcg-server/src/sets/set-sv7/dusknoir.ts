@@ -32,7 +32,7 @@ export class Dusknoir extends PokemonCard {
   public attacks = [
     {
       name: 'Will-o-Wisp',
-      cost: [ CardType.PSYCHIC, CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC, CardType.PSYCHIC],
       damage: 50,
       text: ''
     }
@@ -52,12 +52,12 @@ export class Dusknoir extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-  
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { min: 1, max: 1, allowCancel: false },
       ), selected => {
         const targets = selected || [];
@@ -69,6 +69,5 @@ export class Dusknoir extends PokemonCard {
     }
     return state;
   }
-  
+
 }
-  

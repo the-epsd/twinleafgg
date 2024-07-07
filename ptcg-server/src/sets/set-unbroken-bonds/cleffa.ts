@@ -43,7 +43,7 @@ export class Cleffa extends PokemonCard {
 
   public hp: number = 60;
 
-  public retreat = [ ];
+  public retreat = [];
 
   public powers = [{
     name: 'Excitable Draw',

@@ -7,8 +7,8 @@ import { Effect } from '../../game/store/effects/effect';
 export class Venusaurex extends PokemonCard {
 
   public regulationMark = 'G';
-  
-  public tags = [ CardTag.POKEMON_ex ];
+
+  public tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Ivysaur';
   public cardType: CardType = CardType.GRASS;
@@ -34,12 +34,12 @@ export class Venusaurex extends PokemonCard {
   public setNumber: string = '3';
   public name: string = 'Venusaur ex';
   public fullName: string = 'Venusaur ex MEW';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      
+
       const player = effect.player;
 
       const blocked: CardTarget[] = [];
@@ -56,22 +56,19 @@ export class Venusaurex extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // Do not discard the card yet
-      effect.preventDefault = true;
-
       let targets: PokemonCardList[] = [];
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_HEAL,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: true, blocked }
       ), results => {
         targets = results || [];
         if (targets.length === 0) {
-          return state; 
+          return state;
         }
-        
+
         targets.forEach(target => {
           // Heal Pokemon
           const healEffect = new HealEffect(player, target, 60);
@@ -83,7 +80,7 @@ export class Venusaurex extends PokemonCard {
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = StateUtils.findOwner(state, effect.target);
-          
+
       const opponent = StateUtils.getOpponent(state, player);
       opponent.active.specialConditions.push(SpecialCondition.CONFUSED);
       opponent.active.specialConditions.push(SpecialCondition.POISONED);

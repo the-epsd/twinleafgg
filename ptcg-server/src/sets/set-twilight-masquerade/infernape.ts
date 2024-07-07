@@ -10,7 +10,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../game/
 
 export class Infernape extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom: string = 'Monferno';
 

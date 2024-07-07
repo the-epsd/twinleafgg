@@ -10,7 +10,7 @@ import { ChooseCardsPrompt, CoinFlipPrompt, GameMessage, ShuffleDeckPrompt, Stat
 
 export class RadiantJirachi extends PokemonCard {
 
-  public tags = [ CardTag.RADIANT ];
+  public tags = [CardTag.RADIANT];
 
   public regulationMark = 'F';
 
@@ -24,7 +24,7 @@ export class RadiantJirachi extends PokemonCard {
 
   public resistance = [{ type: CardType.GRASS, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Entrusted Wishes',
@@ -34,7 +34,7 @@ export class RadiantJirachi extends PokemonCard {
 
   public attacks = [{
     name: 'Astral Misfortune',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 0,
     text: 'Flip 2 coins. If both of them are heads, your opponent\'s Active Pokémon is Knocked Out.'
   }];
@@ -56,30 +56,26 @@ export class RadiantJirachi extends PokemonCard {
 
       const player = effect.player;
 
-      if (player.active.cards[0] !== this) {
-        return state; // Not active
-      }
-
       if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
         // This Pokemon was knocked out
 
         let cards: any[] = [];
         return store.prompt(state, new ChooseCardsPrompt(
-          player.id, 
-          GameMessage.CHOOSE_CARD_TO_HAND, 
-          player.deck, 
-          {}, 
-          { min: 0, max: 3, allowCancel: true }), 
-        (selected: any[]) => {
-          cards = selected || [];
-          if (cards.length > 0) {
-            player.deck.moveCardsTo(cards, player.hand);
-          }
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
-            player.deck.applyOrder(order);
-            return state;
+          player.id,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          {},
+          { min: 0, max: 3, allowCancel: true }),
+          (selected: any[]) => {
+            cards = selected || [];
+            if (cards.length > 0) {
+              player.deck.moveCardsTo(cards, player.hand);
+            }
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
+              player.deck.applyOrder(order);
+              return state;
+            });
           });
-        });
       }
 
       if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -95,8 +91,8 @@ export class RadiantJirachi extends PokemonCard {
 
           return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
             coin2Result = result;
-        
-            if (coin1Result && coin2Result) { 
+
+            if (coin1Result && coin2Result) {
               // Both heads
 
               const activePokemon = opponent.active.getPokemonCard();

@@ -57,13 +57,16 @@ export class Espathraex extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       if (player.active.cards[0] !== this) {
         return state; // Not active
       }
 
-      if (effect instanceof CheckAttackCostEffect) {
-        effect.cost.push(CardType.COLORLESS);
+      if (opponent.active) {
+        if (effect instanceof CheckAttackCostEffect) {
+          effect.cost.push(CardType.COLORLESS);
+        }
       }
     }
 

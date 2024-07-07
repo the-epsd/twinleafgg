@@ -50,7 +50,7 @@
   display: flex;
 }
 
-.ptcg-prompt-title > h2 {
+.ptcg-prompt-title>h2 {
   align-self: center;
 }
 
@@ -59,6 +59,15 @@
   margin: 0 $ptcg-prompt-padding * -1;
   padding: 0 $ptcg-prompt-padding;
   max-height: $ptcg-prompt-max-height;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ptcg-damage-prompt-content {
+  display: block;
+  margin: 0 $ptcg-prompt-padding * -1;
+  padding: 0 $ptcg-prompt-padding;
+  max-height: 30%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -74,8 +83,8 @@
   // Pull the actions down to avoid their padding stacking with the dialog's padding.
   margin-bottom: -$ptcg-prompt-padding;
 
-  .mat-button-base + .mat-button-base,
-  .mat-mdc-button-base + .mat-mdc-button-base {
+  .mat-button-base+.mat-button-base,
+  .mat-mdc-button-base+.mat-mdc-button-base {
     margin-left: $ptcg-prompt-button-margin;
   }
 }

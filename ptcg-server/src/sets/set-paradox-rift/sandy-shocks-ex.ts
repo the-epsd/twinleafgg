@@ -12,17 +12,17 @@ export class SandyShocksex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.ANCIENT ];
-  
+  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
+
   public stage = Stage.BASIC;
 
-  public  cardType = CardType.FIGHTING;
+  public cardType = CardType.FIGHTING;
 
   public cardTypez: CardType = CardType.SANDY_SHOCKS_EX;
 
   public hp = 220;
 
-  public weakness = [{type: CardType.GRASS}];
+  public weakness = [{ type: CardType.GRASS }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
@@ -36,7 +36,7 @@ export class SandyShocksex extends PokemonCard {
   public attacks = [
     {
       name: 'Earthen Spike',
-      cost: [ CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS ],
+      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
       damage: 200,
       text: 'During your next turn, this Pokémon can\'t attack.'
     }
@@ -62,24 +62,24 @@ export class SandyShocksex extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.MAGNETIC_ABSORPTION_MARKER, this);
     }
-  
+
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.MAGNETIC_ABSORPTION_MARKER, this)) {
       effect.player.attackMarker.removeMarker(this.MAGNETIC_ABSORPTION_MARKER, this);
       console.log('marker cleared');
     }
-    
+
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
-  
+
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-  
+
       // Check marker
       if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');
@@ -108,13 +108,13 @@ export class SandyShocksex extends PokemonCard {
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-    
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
         { allowCancel: false, min: 1, max: 1 },
       ), transfers => {
@@ -132,7 +132,7 @@ export class SandyShocksex extends PokemonCard {
           player.discard.moveCardTo(transfer.card, target);
           player.marker.addMarker(this.MAGNETIC_ABSORPTION_MARKER, this);
         }
-    
+
         return state;
       });
       return state;

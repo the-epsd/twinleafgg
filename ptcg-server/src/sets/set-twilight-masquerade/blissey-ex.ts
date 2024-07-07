@@ -8,25 +8,25 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Blisseyex extends PokemonCard {
-  
+
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom: string = 'Chansey';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public regulationMark = 'H';
-  
+
   public cardType: CardType = CardType.COLORLESS;
 
   public cardTypez: CardType = CardType.BLISSEY_EX;
-  
+
   public weakness = [{ type: CardType.FIGHTING }];
 
   public hp: number = 310;
-  
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
-  
+
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+
   public powers = [{
     name: 'Happy Switch',
     useWhenInPlay: true,
@@ -37,20 +37,20 @@ export class Blisseyex extends PokemonCard {
   public attacks = [
     {
       name: 'Return',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 180,
       text: 'You may draw until you have 6 cards in hand.'
     }
   ];
-  
+
   public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '134';
-  
+
   public name: string = 'Blissey ex';
-  
+
   public fullName: string = 'Blissey ex TWM';
 
   public readonly BLISSFUL_SWAP_MARKER = 'BLISSFUL_SWAP_MARKER';
@@ -79,23 +79,23 @@ export class Blisseyex extends PokemonCard {
         });
         hasBasicEnergy = hasBasicEnergy || basicEnergyAttached;
       });
-    
+
       if (!hasBasicEnergy || pokemonCount <= 1) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-    
+
       return store.prompt(state, new MoveEnergyPrompt(
         effect.player.id,
         GameMessage.MOVE_ENERGY_CARDS,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { min: 1, max: 1, allowCancel: false }
       ), transfers => {
         if (transfers === null) {
           return;
         }
-    
+
         for (const transfer of transfers) {
           player.marker.addMarker(this.BLISSFUL_SWAP_MARKER, this);
 
@@ -109,7 +109,7 @@ export class Blisseyex extends PokemonCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           source.moveCardTo(transfer.card, target);
         }
-    
+
         return state;
       });
     }

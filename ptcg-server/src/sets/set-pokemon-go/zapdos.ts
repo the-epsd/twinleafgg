@@ -36,31 +36,28 @@ export class Zapdos extends PokemonCard {
   public regulationMark = 'F';
 
   public set: string = 'PGO';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '29';
-  
+
   public name: string = 'Zapdos';
-  
+
   public fullName: string = 'Zapdos PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const legendaryBird = player.active.getPokemonCard();
-      
+
       if (legendaryBird && legendaryBird.stage == Stage.BASIC && legendaryBird.cardType == CardType.LIGHTNING) {
         if (effect instanceof DealDamageEffect) {
           if (effect.card.name !== 'Zapdos') {
             // exclude Zapdos
             effect.damage += 10;
           }
-          return state;
         }
-        return state;
       }
-      return state;
     }
     return state;
   }

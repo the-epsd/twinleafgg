@@ -36,20 +36,20 @@ export class Articuno extends PokemonCard {
   public regulationMark = 'F';
 
   public set: string = 'PGO';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '24';
-  
+
   public name: string = 'Articuno';
-  
+
   public fullName: string = 'Articuno PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const legendaryBird = player.active.getPokemonCard();
-      
+
       if (legendaryBird && legendaryBird.stage == Stage.BASIC && legendaryBird.cardType == CardType.WATER) {
         if (effect instanceof DealDamageEffect) {
           if (effect.card.name !== 'Articuno') {

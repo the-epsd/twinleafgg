@@ -26,23 +26,23 @@ function* useChainsOfControl(next: Function, store: StoreLike, state: State,
       blocked.push(target);
     }
   });
-  
+
   if (hasBench === false) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   let target: PokemonCardList[] = [];
   yield store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_SWITCH,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.BENCH ],
+    [SlotType.BENCH],
     { allowCancel: false, blocked }
   ), results => {
     target = results || [];
     next();
   });
-  
+
   if (target.length > 0) {
     player.active.clearEffects();
     player.switchPokemon(target[0]);
@@ -55,7 +55,7 @@ export class Pecharuntex extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public regulationMark = 'H';
 
@@ -65,7 +65,7 @@ export class Pecharuntex extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Chains of Control',
@@ -76,7 +76,7 @@ export class Pecharuntex extends PokemonCard {
 
   public attacks = [{
     name: 'Irritating Burst',
-    cost: [ CardType.DARK, CardType.DARK ],
+    cost: [CardType.DARK, CardType.DARK],
     damage: 60,
     text: 'This attack does 60 damage for each Prize card your opponent has taken.'
   }];
@@ -86,9 +86,9 @@ export class Pecharuntex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '39';
-  
+
   public name: string = 'Pecharunt ex';
-  
+
   public fullName: string = 'Pecharunt ex SV6a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -113,11 +113,11 @@ export class Pecharuntex extends PokemonCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       const prizesTaken = 6 - opponent.getPrizeLeft();
-      
+
       const damagePerPrize = 60;
-      
+
       effect.damage = prizesTaken * damagePerPrize;
     }
 

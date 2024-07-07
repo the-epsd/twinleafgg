@@ -31,6 +31,8 @@ class Oranguru extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'SSH';
+        this.setNumber = '148';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Oranguru';
         this.fullName = 'Oranguru SSH';
         this.PRIMATE_WISDOM_MARKER = 'PRIMATE_WISDOM_MARKER';

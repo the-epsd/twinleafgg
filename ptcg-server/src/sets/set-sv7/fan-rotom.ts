@@ -13,7 +13,7 @@ export class FanRotom extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public resistance = [ {type: CardType.FIGHTING, value: -30}];
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
   public retreat = [CardType.COLORLESS];
 
@@ -32,17 +32,17 @@ export class FanRotom extends PokemonCard {
       text: 'If there\'s no Stadium in play, this attack does nothing.'
     }
   ];
-  
+
   public regulationMark = 'H';
 
   public set: string = 'SV7';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '80';
-  
+
   public name: string = 'Fan Rotom';
-  
+
   public fullName: string = 'Fan Rotom SV7';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -110,7 +110,7 @@ export class FanRotom extends PokemonCard {
           }
         });
       }
-  
+
       if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
         const stadiumCard = StateUtils.getStadiumCard(state);
         if (stadiumCard == undefined) {

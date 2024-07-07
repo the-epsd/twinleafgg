@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, ChooseCardsPrompt, ShuffleDeckPrompt, GameError, PlayerType} from '../../game';
+import { StoreLike, State, PowerType, ChooseCardsPrompt, ShuffleDeckPrompt, GameError, PlayerType } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -26,7 +26,7 @@ export class Thwackey extends PokemonCard {
 
   public resistance = [];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Boom Boom Groove',
@@ -39,7 +39,7 @@ export class Thwackey extends PokemonCard {
   public attacks = [
     {
       name: 'Beat',
-      cost: [ CardType.GRASS, CardType.GRASS ],
+      cost: [CardType.GRASS, CardType.GRASS],
       damage: 50,
       text: ''
     }
@@ -62,12 +62,12 @@ export class Thwackey extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.BOOM_BOOM_DRUM_MARKER, this);
     }
-    
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.BOOM_BOOM_DRUM_MARKER, this);
     }
-    
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
@@ -84,7 +84,13 @@ export class Thwackey extends PokemonCard {
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-  
+
+      const festivalActive = player.active.getPokemonCard();
+
+      if (festivalActive && festivalActive.powers[0].name !== 'Fesival Lead') {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       player.marker.addMarker(this.BOOM_BOOM_DRUM_MARKER, this);
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {

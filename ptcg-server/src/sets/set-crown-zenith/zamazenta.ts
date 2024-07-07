@@ -23,7 +23,7 @@ export class Zamazenta extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
-    name: 'Battle Sense',
+    name: 'Metal Shield',
     powerType: PowerType.ABILITY,
     text: 'If this Pokémon has any Energy attached, it takes 30 less damage from attacks (after applying Weakness and Resistance).'
   }];

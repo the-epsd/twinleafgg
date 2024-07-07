@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils,
+  GameError, GameMessage, EnergyCard, PlayerType, SlotType
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
@@ -21,7 +23,7 @@ export class Frosmoth extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Ice Dance',
@@ -34,7 +36,7 @@ export class Frosmoth extends PokemonCard {
   public attacks = [
     {
       name: 'Aurora Beam',
-      cost: [ CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.COLORLESS],
       damage: 30,
       text: ''
     }
@@ -69,7 +71,7 @@ export class Frosmoth extends PokemonCard {
         GameMessage.ATTACH_ENERGY_CARDS,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
         { allowCancel: true }
       ), transfers => {

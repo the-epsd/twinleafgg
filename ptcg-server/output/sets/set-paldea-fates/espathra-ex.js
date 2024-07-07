@@ -41,11 +41,14 @@ class Espathraex extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             if (player.active.cards[0] !== this) {
                 return state; // Not active
             }
-            if (effect instanceof check_effects_1.CheckAttackCostEffect) {
-                effect.cost.push(card_types_1.CardType.COLORLESS);
+            if (opponent.active) {
+                if (effect instanceof check_effects_1.CheckAttackCostEffect) {
+                    effect.cost.push(card_types_1.CardType.COLORLESS);
+                }
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -51,8 +51,6 @@ class RadiantAlakazam extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, checkHpEffect);
                 maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
             });
-            // We will discard this card after prompt confirmation
-            effect.preventDefault = true;
             return store.prompt(state, new move_damage_prompt_1.MoveDamagePrompt(effect.player.id, game_message_1.GameMessage.MOVE_DAMAGE, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 2, allowCancel: false }), transfers => {
                 if (transfers === null) {
                     return;
@@ -60,6 +58,10 @@ class RadiantAlakazam extends pokemon_card_1.PokemonCard {
                 for (const transfer of transfers) {
                     const source = state_utils_1.StateUtils.getTarget(state, player, transfer.from);
                     const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
+                    if (source.damage == 10) {
+                        source.damage -= 10;
+                        target.damage += 10;
+                    }
                     if (source.damage >= 10) {
                         source.damage -= 20;
                         target.damage += 20;

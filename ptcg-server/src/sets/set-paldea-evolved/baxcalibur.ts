@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils,
+  GameError, GameMessage, EnergyCard, PlayerType, SlotType
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
@@ -23,7 +25,7 @@ export class Baxcalibur extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Super Cold',
@@ -36,7 +38,7 @@ export class Baxcalibur extends PokemonCard {
   public attacks = [
     {
       name: 'Buster Tail',
-      cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
       damage: 130,
       text: ''
     }
@@ -71,7 +73,7 @@ export class Baxcalibur extends PokemonCard {
         GameMessage.ATTACH_ENERGY_CARDS,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
         { allowCancel: true }
       ), transfers => {

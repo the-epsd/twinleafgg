@@ -84,48 +84,30 @@ export class FlutterMane extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect
-      && effect.power.powerType === PowerType.ABILITY
-      && effect.power.name !== 'Midnight Fluttering' && effect.card === effect.player.active.cards[0] && !effect.power.exemptFromAbilityLock) {
+    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let isFlutterManeInPlay = false;
-
-      if (player.active.cards[0] === this) {
-        isFlutterManeInPlay = true;
-      }
-
-      if (opponent.active.cards[0] === this) {
-        isFlutterManeInPlay = true;
-      }
-
-      if (!isFlutterManeInPlay) {
+      if (player.active.getPokemonCard() !== this
+        && opponent.active.getPokemonCard() !== this) {
         return state;
       }
 
-      if (isFlutterManeInPlay) {
-
-        // Try reducing ability for opponent
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-        // if (opponent.bench && player.bench) {
-        //   return state;
-        // }
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
         if (!effect.power.exemptFromAbilityLock) {
+
           throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
         }
+        return state;
       }
     }
-
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const generator = useHexHurl(() => generator.next(), store, state, effect);

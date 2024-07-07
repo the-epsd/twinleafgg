@@ -1,8 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PokemonCardList, GameError,
+import {
+  PowerType, StoreLike, State, StateUtils, PokemonCardList, GameError,
   GameMessage, ChoosePrizePrompt, ChoosePokemonPrompt, PlayerType, SlotType,
-  EnergyCard } from '../../game';
+  EnergyCard
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
@@ -21,7 +23,7 @@ export class Rotom extends PokemonCard {
 
   public resistance = [{ type: CardType.COLORLESS, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Mischievous Trick',
@@ -35,7 +37,7 @@ export class Rotom extends PokemonCard {
   public attacks = [
     {
       name: 'Plasma Arrow',
-      cost: [ CardType.LIGHTNING ],
+      cost: [CardType.LIGHTNING],
       damage: 0,
       text: 'Choose 1 of your opponent\'s Pokemon. This attack does 20 ' +
         'damage for each Energy attached to that Pokemon. This attack\'s ' +
@@ -95,7 +97,7 @@ export class Rotom extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {

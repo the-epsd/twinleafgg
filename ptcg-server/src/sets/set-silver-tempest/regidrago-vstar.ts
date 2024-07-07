@@ -113,6 +113,11 @@ export class RegidragoVSTAR extends PokemonCard {
       if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       player.usedVSTAR = true;
 
       player.deck.moveTo(player.discard, 7);

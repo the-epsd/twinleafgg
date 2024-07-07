@@ -49,6 +49,9 @@ class Gardevoir extends pokemon_card_1.PokemonCard {
             if (player.hand.cards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             if (player.marker.hasMarker(this.REFINEMENT_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }

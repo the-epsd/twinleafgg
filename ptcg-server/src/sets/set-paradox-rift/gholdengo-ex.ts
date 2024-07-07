@@ -13,7 +13,7 @@ export class Gholdengoex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.STAGE_1;
 
@@ -29,7 +29,7 @@ export class Gholdengoex extends PokemonCard {
 
   public resistance = [{ type: CardType.GRASS, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Coin Bonus',
@@ -42,7 +42,7 @@ export class Gholdengoex extends PokemonCard {
   public attacks = [
     {
       name: 'Make It Rain',
-      cost: [CardType.METAL ],
+      cost: [CardType.METAL],
       damage: 0,
       text: 'Discard any number of Basic Energy cards from your ' +
         'hand. This attack does 50 damage for each card discarded ' +
@@ -63,11 +63,11 @@ export class Gholdengoex extends PokemonCard {
   public readonly MAKE_IT_RAIN_MARKER = 'MAKE_IT_RAIN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-        
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
-      
+
       // Prompt player to choose cards to discard 
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
@@ -84,7 +84,7 @@ export class Gholdengoex extends PokemonCard {
         discardEnergy.target = player.active;
         store.reduceEffect(state, discardEnergy);
         player.hand.moveCardsTo(cards, player.discard);
-    
+
         // Calculate damage
         const damage = cards.length * 50;
         effect.damage = damage;
@@ -96,20 +96,20 @@ export class Gholdengoex extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.MAKE_IT_RAIN_MARKER, this);
     }
-        
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.MAKE_IT_RAIN_MARKER, this);
     }
-  
-  
+
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-        
+
       const player = effect.player;
       if (player.marker.hasMarker(this.MAKE_IT_RAIN_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-  
+
       if (player.active.cards[0] !== this) {
         // Draw a card
         player.deck.moveTo(player.hand, 1);
@@ -120,8 +120,9 @@ export class Gholdengoex extends PokemonCard {
             cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
           }
         });
+      }
 
-      } else {
+      if (player.active.cards[0] === this) {
         player.deck.moveTo(player.hand, 2);
         player.marker.addMarker(this.MAKE_IT_RAIN_MARKER, this);
 
@@ -130,7 +131,6 @@ export class Gholdengoex extends PokemonCard {
             cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
           }
         });
-
       }
 
       if (effect instanceof EndTurnEffect) {

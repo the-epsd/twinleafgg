@@ -17,22 +17,22 @@ export class Dragapult extends PokemonCard {
 
   public weakness = [{ type: CardType.DARK }];
 
-  public resistance = [ {type: CardType.FIGHTING, value: -30} ];
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [  ];
+  public retreat = [];
 
   public powers: Power[] = [{
     name: 'Infiltrator',
     useWhenInPlay: false,
     powerType: PowerType.ABILITY,
     text: 'If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage.'
-  }]
-  
-  public attacks = 
+  }];
+
+  public attacks =
     [
       {
         name: 'Phantom Force',
-        cost: [ CardType.PSYCHIC ],
+        cost: [CardType.PSYCHIC],
         damage: 120,
         text: 'Put 3 damage counters on your opponent\'s Benched Pokémon in any way you like.'
       }
@@ -45,17 +45,17 @@ export class Dragapult extends PokemonCard {
   public setNumber: string = '91';
 
   public evolvesFrom: string = 'Drakloak';
-  
+
   public name: string = 'Dragapult';
 
   public fullName: string = 'Dragapult RCL';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       try {
         const stub = new PowerEffect(player, {
           name: 'test',
@@ -66,27 +66,27 @@ export class Dragapult extends PokemonCard {
       } catch {
         return state;
       }
-      
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
         if (result === true) {
           effect.preventDefault = true;
-          store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMGE, { name: opponent.name, pokemon: this.name });          
+          store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMGE, { name: opponent.name, pokemon: this.name });
           return state;
         }
       });
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const maxAllowedDamage: DamageMap[] = [];
-      
+
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         maxAllowedDamage.push({ target, damage: card.hp + 30 });
       });
-      
+
       return store.prompt(state, new PutDamagePrompt(
         effect.player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
@@ -105,7 +105,7 @@ export class Dragapult extends PokemonCard {
         }
       });
     }
-    
+
     return state;
   }
 }

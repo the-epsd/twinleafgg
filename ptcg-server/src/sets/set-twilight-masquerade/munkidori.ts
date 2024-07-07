@@ -17,9 +17,9 @@ export class Munkidori extends PokemonCard {
 
   public weakness = [{ type: CardType.DARK }];
 
-  public resistance = [{type: CardType.FIGHTING, value: -30}];
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Adrena-Brain',
@@ -31,7 +31,7 @@ export class Munkidori extends PokemonCard {
   public attacks = [
     {
       name: 'Mind Bend',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 60,
       text: 'Your opponent\'s Active Pokémon is now Confused.'
     }
@@ -80,7 +80,7 @@ export class Munkidori extends PokemonCard {
       //       hasPokemonWithDamage = true;
       //     }
       //   });
-    
+
       //   if (hasPokemonWithDamage === false) {
       //     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       //   }
@@ -91,9 +91,9 @@ export class Munkidori extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         maxAllowedDamage.push({ target, damage: card.hp + 10 });
       });
-    
+
       const damage = 10;
-    
+
       return store.prompt(
         state,
         new RemoveDamagePrompt(
@@ -112,12 +112,12 @@ export class Munkidori extends PokemonCard {
             const healEffect = new HealEffect(player, target, result.damage);
             state = store.reduceEffect(state, healEffect);
             healEffect.target = target;
-            
+
             return store.prompt(state, new ChoosePokemonPrompt(
               player.id,
               GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
               PlayerType.TOP_PLAYER,
-              [ SlotType.BENCH, SlotType.ACTIVE ],
+              [SlotType.BENCH, SlotType.ACTIVE],
               { min: 1, max: 1, allowCancel: false },
             ), selected => {
               const targets = selected || [];

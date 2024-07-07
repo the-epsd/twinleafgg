@@ -79,6 +79,9 @@ class RegidragoVSTAR extends pokemon_card_1.PokemonCard {
             if (player.usedVSTAR === true) {
                 throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             player.usedVSTAR = true;
             player.deck.moveTo(player.discard, 7);
             let cards = [];

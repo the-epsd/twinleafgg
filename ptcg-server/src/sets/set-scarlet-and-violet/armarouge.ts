@@ -1,12 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, PowerType, StateUtils,
-  CardTarget, PlayerType, MoveEnergyPrompt, SlotType} from '../../game';
+import {
+  StoreLike, State, Card, PowerType, StateUtils,
+  CardTarget, PlayerType, MoveEnergyPrompt, SlotType
+} from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import {AddSpecialConditionsEffect} from '../../game/store/effects/attack-effects';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 function* useFireOff(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -47,7 +49,7 @@ function* useFireOff(next: Function, store: StoreLike, state: State, effect: Pow
     effect.player.id,
     GameMessage.MOVE_ENERGY_CARDS,
     PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH, SlotType.ACTIVE], 
+    [SlotType.BENCH, SlotType.ACTIVE],
     { superType: SuperType.ENERGY },
     { allowCancel: true, blockedMap, blockedTo: blocked2 }
   ), transfers => {
@@ -72,20 +74,20 @@ export class Armarouge extends PokemonCard {
   public evolvesFrom = 'Charcadet';
 
   public cardType: CardType = CardType.FIRE;
-  
+
   public hp: number = 130;
-  
+
   public weakness = [{ type: CardType.WATER }];
-  
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Fire Off',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'As often as you like during your turn, you may move a ' +
-                    'R Energy from 1 of your Benched Pokémon to your Active ' +
-                    'Pokémon.'
+      'R Energy from 1 of your Benched Pokémon to your Active ' +
+      'Pokémon.'
   }];
   public attacks = [{
     name: 'Dragonblast',

@@ -53,6 +53,7 @@ export class Rillaboom extends PokemonCard {
       if (player.marker.hasMarker(this.VOLTAGE_BEAT_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -75,7 +76,7 @@ export class Rillaboom extends PokemonCard {
           player.deck.applyOrder(order);
         });
       });
-      
+
     }
 
     if (effect instanceof EndTurnEffect) {

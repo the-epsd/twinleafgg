@@ -23,6 +23,8 @@ export declare class Oranguru extends PokemonCard {
         text: string;
     }[];
     set: string;
+    setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     readonly PRIMATE_WISDOM_MARKER = "PRIMATE_WISDOM_MARKER";

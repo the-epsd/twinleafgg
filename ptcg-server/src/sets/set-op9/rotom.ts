@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, ShowCardsPrompt, StateUtils, PowerType, GameError,
-  GameMessage, PokemonCardList, PlayerType, TrainerCard } from '../../game';
+import {
+  StoreLike, State, ShowCardsPrompt, StateUtils, PowerType, GameError,
+  GameMessage, PokemonCardList, PlayerType, TrainerCard
+} from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -20,7 +22,7 @@ export class Rotom extends PokemonCard {
 
   public resistance = [{ type: CardType.COLORLESS, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Type Shift',
@@ -33,7 +35,7 @@ export class Rotom extends PokemonCard {
   public attacks = [
     {
       name: 'Poltergeist',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 30,
       text: 'Look at your opponent\'s hand. This attack does 30 damage plus ' +
         '10 more damage for each Trainer, Supporter, and Stadium card in ' +
@@ -83,7 +85,7 @@ export class Rotom extends PokemonCard {
     }
 
     if (effect instanceof CheckPokemonTypeEffect && effect.target.marker.hasMarker(this.TYPE_SHIFT_MARKER, this)) {
-      effect.cardTypes = [ CardType.PSYCHIC ];
+      effect.cardTypes = [CardType.PSYCHIC];
       return state;
     }
 

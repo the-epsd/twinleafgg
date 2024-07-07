@@ -45,11 +45,8 @@ class Zapdos extends pokemon_card_1.PokemonCard {
                         // exclude Zapdos
                         effect.damage += 10;
                     }
-                    return state;
                 }
-                return state;
             }
-            return state;
         }
         return state;
     }

@@ -85,19 +85,19 @@ export class BruteBonnet extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let isGarbodorWithToolInPlay = false;
+      let isBruteBonnetWithAncientBoosterInPlay = false;
 
-      if (isGarbodorWithToolInPlay == false) {
+      if (isBruteBonnetWithAncientBoosterInPlay == false) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this && cardList.tool && cardList.tool.name === 'Ancient Booster Energy Capsule') {
-          isGarbodorWithToolInPlay = true;
+          isBruteBonnetWithAncientBoosterInPlay = true;
         }
       });
 
-      if (!isGarbodorWithToolInPlay) {
+      if (!isBruteBonnetWithAncientBoosterInPlay) {
 
         if (player.marker.hasMarker(this.TOXIC_POWDER_MARKER, this)) {
           throw new GameError(GameMessage.POWER_ALREADY_USED);

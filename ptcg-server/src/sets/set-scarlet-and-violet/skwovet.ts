@@ -21,7 +21,7 @@ export class Skwovet extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Nest Stash',
@@ -34,7 +34,7 @@ export class Skwovet extends PokemonCard {
 
   public attacks = [{
     name: 'Bite',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 20,
     text: ''
   }];
@@ -59,20 +59,20 @@ export class Skwovet extends PokemonCard {
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-    
+
       const player = effect.player;
       const cards = player.hand.cards.filter(c => c !== this);
 
       if (player.marker.hasMarker(this.NEST_STASH_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      
+
       // Create deckBottom and move hand into it
       const deckBottom = new CardList();
       player.hand.moveTo(deckBottom, cards.length);
-    
+
       // Later, move deckBottom to player's deck
-    
+
       deckBottom.moveTo(player.deck, cards.length);
       player.marker.addMarker(this.NEST_STASH_MARKER, this);
 
@@ -83,7 +83,7 @@ export class Skwovet extends PokemonCard {
       });
 
       player.deck.moveTo(player.hand, 1);
-  
+
       return state;
     }
     if (effect instanceof EndTurnEffect) {

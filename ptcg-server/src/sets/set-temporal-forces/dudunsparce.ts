@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, ShuffleDeckPrompt, PowerType, PlayerType } from '../../game';
+import { StoreLike, State, ShuffleDeckPrompt, PowerType, PlayerType, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Dudunsparce extends PokemonCard {
-  
+
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Dunsparce';
@@ -16,7 +16,7 @@ export class Dudunsparce extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Run Away Draw',
@@ -52,21 +52,22 @@ export class Dudunsparce extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       player.deck.moveTo(player.hand, 3);
-      
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
 
           cardList.moveTo(player.deck);
           cardList.clearEffects();
-  
+
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
             return state;
           });
-  
-        } else {
-          return state;
         }
       });
     }
