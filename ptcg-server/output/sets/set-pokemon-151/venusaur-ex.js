@@ -52,8 +52,6 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
             if (player.active.cards[0] !== this || hasPokemonWithDamage === false) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            // Do not discard the card yet
-            effect.preventDefault = true;
             let targets = [];
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_HEAL, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: true, blocked }), results => {
                 targets = results || [];

@@ -18,7 +18,7 @@ class Zamazenta extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Battle Sense',
+                name: 'Metal Shield',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'If this Pokémon has any Energy attached, it takes 30 less damage from attacks (after applying Weakness and Resistance).'
             }];

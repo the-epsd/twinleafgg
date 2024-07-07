@@ -12,7 +12,7 @@ export class Squawkabillyex extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public regulationMark = 'G';
 
@@ -26,7 +26,7 @@ export class Squawkabillyex extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Squawk and Seize',
@@ -38,7 +38,7 @@ export class Squawkabillyex extends PokemonCard {
 
   public attacks = [{
     name: 'Motivate',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 20,
     text: 'Attach up to 2 Basic Energy cards from your discard pile to 1 of your Benched Pokémon.'
   }];
@@ -60,7 +60,7 @@ export class Squawkabillyex extends PokemonCard {
       const player = effect.player;
       // Get current turn
       const turn = state.turn;
-      
+
       // Check if it is player's first turn
       if (turn > 2) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -88,21 +88,21 @@ export class Squawkabillyex extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
-            && c.energyType === EnergyType.BASIC;
+          && c.energyType === EnergyType.BASIC;
       });
       if (!hasEnergyInDiscard) {
         return state;
       }
-  
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { allowCancel: false, min: 1, max: 2, sameTarget: true }
       ), transfers => {
@@ -117,7 +117,7 @@ export class Squawkabillyex extends PokemonCard {
           player.discard.moveCardTo(transfer.card, target);
         }
       });
-  
+
       return state;
     }
     return state;

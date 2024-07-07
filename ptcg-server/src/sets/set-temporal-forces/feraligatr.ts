@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, PokemonCardList, GameError, GameMessage } from '../../game';
+import { StoreLike, State, GameError, GameMessage, PlayerType } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
@@ -20,7 +20,7 @@ export class Feraligatr extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Torrential Heart',
@@ -60,7 +60,7 @@ export class Feraligatr extends PokemonCard {
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
-  
+
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
@@ -72,7 +72,7 @@ export class Feraligatr extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-  
+
       // Check marker
       if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');
@@ -85,23 +85,29 @@ export class Feraligatr extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
       const player = effect.player;
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
       if (effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this)) {
         console.log('power blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
-      const cards = player.discard.cards.filter(c => c === this);
-      cards.forEach(card => {
-        slots[0].damage += 10; // Add 10 damage
-
-        effect.player.marker.addMarker(this.TORRENTIAL_HEART_MARKER, this);
-        if (effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this)) {
-          effect.damage += 120;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.damage += 50;
         }
       });
-      return state;
+
+      effect.player.marker.addMarker(this.TORRENTIAL_HEART_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
+
+      if (effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this)) {
+        effect.damage += 120;
+      }
     }
     return state;
   }

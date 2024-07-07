@@ -3,7 +3,7 @@ import { Stage, CardType, EnergyType, SuperType, SpecialCondition } from '../../
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameMessage, GameError, AttachEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import {  PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 

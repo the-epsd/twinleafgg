@@ -19,7 +19,7 @@ export class Cobalion extends PokemonCard {
 
   public resistance = [{ type: CardType.GRASS, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Justified Law',
@@ -30,7 +30,7 @@ export class Cobalion extends PokemonCard {
   public attacks = [
     {
       name: 'Follow-Up',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
       text: 'Choose up to 2 of your Benched Pokémon. For each of those Pokémon, search your deck for a basic Energy card and attach it to that Pokémon. Then, shuffle your deck.'
     }
@@ -52,7 +52,7 @@ export class Cobalion extends PokemonCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       if (player.active.getPokemonCard()?.stage == Stage.BASIC && opponent.active.getPokemonCard()?.cardType == CardType.DARK) {
         if (effect instanceof DealDamageEffect) {
           effect.damage += 30;

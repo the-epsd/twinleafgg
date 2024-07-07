@@ -37,9 +37,6 @@ class RadiantJirachi extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            if (player.active.cards[0] !== this) {
-                return state; // Not active
-            }
             if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
                 // This Pokemon was knocked out
                 let cards = [];

@@ -21,7 +21,7 @@ export class Exeggcute extends PokemonCard {
 
   public resistance = [{ type: CardType.WATER, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Propagation',
@@ -33,7 +33,7 @@ export class Exeggcute extends PokemonCard {
 
   public attacks = [{
     name: 'Seed Bomb',
-    cost: [ CardType.GRASS, CardType.COLORLESS ],
+    cost: [CardType.GRASS, CardType.COLORLESS],
     damage: 20,
     text: ''
   }];

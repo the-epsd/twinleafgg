@@ -14,7 +14,7 @@ export class Oranguru extends PokemonCard {
 
   public hp: number = 120;
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public weakness = [{ type: CardType.FIGHTING }];
 
@@ -29,13 +29,17 @@ export class Oranguru extends PokemonCard {
   public attacks = [
     {
       name: 'Whap Down',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 70,
       text: ''
     }
   ];
 
   public set: string = 'SSH';
+
+  public setNumber: string = '148';
+
+  public cardImage: string = 'assets/cardback.png';
 
   public name: string = 'Oranguru';
 
@@ -64,7 +68,7 @@ export class Oranguru extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_DECK,
         player.hand,
-        { },
+        {},
         { min: 1, max: 1, allowCancel: true }
       ), selected => {
         const cards = selected || [];

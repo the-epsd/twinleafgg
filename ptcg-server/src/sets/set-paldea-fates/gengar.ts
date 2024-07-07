@@ -13,27 +13,27 @@ function* useNightGate(next: Function, store: StoreLike, state: State,
   effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
   const hasBench = player.bench.some(b => b.cards.length > 0);
-  
+
   if (hasBench === false) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   let targets: PokemonCardList[] = [];
   yield store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_SWITCH,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.BENCH ],
+    [SlotType.BENCH],
     { allowCancel: false }
   ), results => {
     targets = results || [];
     next();
   });
-  
+
   if (targets.length > 0) {
     player.active.clearEffects();
     player.switchPokemon(targets[0]);
-    
+
   }
 }
 
@@ -49,7 +49,7 @@ export class Gengar extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Night Gate',
@@ -60,17 +60,17 @@ export class Gengar extends PokemonCard {
 
   public attacks = [{
     name: 'Nightmare',
-    cost: [ CardType.DARK, CardType.COLORLESS ],
+    cost: [CardType.DARK, CardType.COLORLESS],
     damage: 100,
     text: 'Your opponent\'s Active Pokémon is now Asleep.'
   }];
 
   public regulationMark = 'G';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '57';
-  
+
   public set = 'PAF';
 
   public name: string = 'Gengar';

@@ -1,4 +1,4 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card'; 
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -9,17 +9,17 @@ export class Ditto extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.COLORLESS;  
+  public cardType: CardType = CardType.COLORLESS;
 
   public hp: number = 60;
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Transformative Start',
-    powerType: PowerType.ABILITY, 
+    powerType: PowerType.ABILITY,
     useWhenInPlay: true,
     text: 'Once during your first turn, if this Pokémon is in the Active Spot, you may search your deck and choose a Basic Pokémon you find there, except any Ditto. If you do, discard this Pokémon and all attached cards, and put the chosen Pokémon in its place. Then, shuffle your deck.'
   }];
@@ -49,7 +49,7 @@ export class Ditto extends PokemonCard {
       const player = effect.player;
       // Get current turn
       const turn = state.turn;
-      
+
       // Check if it is player's first turn
       if (turn > 2) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -64,7 +64,7 @@ export class Ditto extends PokemonCard {
           { min: 0, max: 1, allowCancel: true }
         ), selectedCards => {
           cards = selectedCards || [];
-  
+
           cards.forEach((card) => {
             effect.player.removePokemonEffects(player.active);
             player.active.moveTo(player.discard);
@@ -74,10 +74,10 @@ export class Ditto extends PokemonCard {
             player.active.pokemonPlayedTurn = state.turn;
             effect.player.removePokemonEffects(player.active);
           });
-      
+
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
-            
+
             return state;
           });
         }

@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, 
-  GameMessage, GameError } from '../../game';
+import {
+  PowerType, StoreLike, State,
+  GameMessage, GameError
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -13,7 +15,7 @@ export class RegielekiVMAX extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public tags = [ CardTag.POKEMON_VMAX ];
+  public tags = [CardTag.POKEMON_VMAX];
 
   public stage: Stage = Stage.VMAX;
 
@@ -25,7 +27,7 @@ export class RegielekiVMAX extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Transistor',
@@ -36,7 +38,7 @@ export class RegielekiVMAX extends PokemonCard {
   public attacks = [
     {
       name: 'Max Thunder and Lightning',
-      cost: [ CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 220,
       text: 'During your next turn, this Pokémon can\'t attack.'
     }
@@ -46,7 +48,7 @@ export class RegielekiVMAX extends PokemonCard {
   public set: string = 'SIT';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '58';
 
   public name: string = 'Regieleki VMAX';
@@ -82,12 +84,13 @@ export class RegielekiVMAX extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
       const player = effect.player;
-      
-      if (player.active.getPokemonCard()?.stage == Stage.BASIC && player.active.getPokemonCard()?.cardType == CardType.LIGHTNING) {
+
+      const activePokemon = player.active.getPokemonCard();
+
+      if (activePokemon && activePokemon.stage == Stage.BASIC && activePokemon.cardType == CardType.LIGHTNING) {
         if (effect instanceof DealDamageEffect) {
           effect.damage += 30;
         }
-        return state;
       }
       return state;
     }

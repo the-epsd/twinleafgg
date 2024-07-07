@@ -12,7 +12,7 @@ import { RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-e
 
 export class RadiantTsareena extends PokemonCard {
 
-  public tags = [ CardTag.RADIANT ];
+  public tags = [CardTag.RADIANT];
 
   public regulationMark = 'F';
 
@@ -24,7 +24,7 @@ export class RadiantTsareena extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Elegant Heal',
@@ -35,7 +35,7 @@ export class RadiantTsareena extends PokemonCard {
 
   public attacks = [{
     name: 'Aroma Shot',
-    cost: [ CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 90,
     text: 'This Pokémon recovers from all Special Conditions.'
   }];
@@ -55,6 +55,7 @@ export class RadiantTsareena extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList) => {
         const healEffect = new HealEffect(player, cardList, 20);
         state = store.reduceEffect(state, healEffect);
@@ -62,7 +63,7 @@ export class RadiantTsareena extends PokemonCard {
       });
       if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
         const player = effect.player;
-          
+
         const removeSpecialCondition = new RemoveSpecialConditionsEffect(effect, undefined);
         removeSpecialCondition.target = player.active;
         state = store.reduceEffect(state, removeSpecialCondition);

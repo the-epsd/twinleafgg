@@ -41,7 +41,6 @@ class RegielekiVMAX extends pokemon_card_1.PokemonCard {
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
-        var _a, _b;
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
@@ -62,11 +61,11 @@ class RegielekiVMAX extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            if (((_a = player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.stage) == card_types_1.Stage.BASIC && ((_b = player.active.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.cardType) == card_types_1.CardType.LIGHTNING) {
+            const activePokemon = player.active.getPokemonCard();
+            if (activePokemon && activePokemon.stage == card_types_1.Stage.BASIC && activePokemon.cardType == card_types_1.CardType.LIGHTNING) {
                 if (effect instanceof attack_effects_1.DealDamageEffect) {
                     effect.damage += 30;
                 }
-                return state;
             }
             return state;
         }

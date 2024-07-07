@@ -9,6 +9,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { GameMessage } from '../../game/game-message';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
+import { GameError } from '../../game';
 
 export class Dragonite extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -23,7 +24,7 @@ export class Dragonite extends PokemonCard {
     name: 'Fast Call',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, (before your attack),  you may search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.'
+    text: 'Once during your turn, (before your attack), you may search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.'
   }];
   public attacks = [{
     name: 'Dragon Claw',
@@ -42,6 +43,10 @@ export class Dragonite extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
       state = store.prompt(state, new ChooseCardsPrompt(
         player.id,

@@ -4,7 +4,7 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-export class Rowlett extends PokemonCard {
+export class Rowlet extends PokemonCard {
 
   public regulationMark = 'H';
 
@@ -39,9 +39,9 @@ export class Rowlett extends PokemonCard {
 
   public setNumber: string = '3';
 
-  public name: string = 'Rowlett';
+  public name: string = 'Rowlet';
 
-  public fullName: string = 'Rowlett SV6a';
+  public fullName: string = 'Rowlet SV6a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -51,9 +51,8 @@ export class Rowlett extends PokemonCard {
       player.deck.moveTo(player.hand, 1);
       return state;
     }
-    
+
     return state;
   }
-    
+
 }
-    

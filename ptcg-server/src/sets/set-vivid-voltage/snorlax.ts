@@ -4,7 +4,7 @@ import { PowerType, StoreLike, State, GameError, GameMessage, CoinFlipPrompt } f
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import {AddSpecialConditionsEffect} from '../../game/store/effects/attack-effects';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 
 export class Snorlax extends PokemonCard {
@@ -15,7 +15,7 @@ export class Snorlax extends PokemonCard {
 
   public hp: number = 130;
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public weakness = [{ type: CardType.FIGHTING }];
 
@@ -31,7 +31,7 @@ export class Snorlax extends PokemonCard {
   public attacks = [
     {
       name: 'Body Slam',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 100,
       text: 'Flip a coin. If heads, your opponent\'s Active Pokemon is now Paralyzed.'
     }

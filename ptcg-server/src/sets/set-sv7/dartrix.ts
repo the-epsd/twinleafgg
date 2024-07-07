@@ -11,7 +11,7 @@ export class Dartrix extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Rowlett';
+  public evolvesFrom = 'Rowlet';
 
   public cardType: CardType = CardType.GRASS;
 
@@ -19,12 +19,12 @@ export class Dartrix extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'United Wings',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 20,
       damageCalculation: 'x',
       text: 'This attack does 20 damage for each Pokémon in your ' +
@@ -32,7 +32,7 @@ export class Dartrix extends PokemonCard {
     },
     {
       name: 'Cutting Wind',
-      cost: [ CardType.GRASS ],
+      cost: [CardType.GRASS],
       damage: 30,
       text: ''
     }

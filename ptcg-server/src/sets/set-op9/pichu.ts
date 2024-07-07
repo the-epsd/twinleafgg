@@ -1,8 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, Card, ShuffleDeckPrompt,
+import {
+  StoreLike, State, ChooseCardsPrompt, Card, ShuffleDeckPrompt,
   CoinFlipPrompt, ShowCardsPrompt, StateUtils, PowerType, GameError,
-  GameMessage, PokemonCardList } from '../../game';
+  GameMessage, PokemonCardList
+} from '../../game';
 import { AttackEffect, PowerEffect, EvolveEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -24,7 +26,7 @@ function* useBabyEvolution(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
     player.hand,
     { superType: SuperType.POKEMON, name: 'Pikachu' },
-    { min:1, max: 1, allowCancel: true }
+    { min: 1, max: 1, allowCancel: true }
   ), selected => {
     cards = selected || [];
 
@@ -100,7 +102,7 @@ export class Pichu extends PokemonCard {
 
   public resistance = [{ type: CardType.METAL, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Baby Evolution',
@@ -114,7 +116,7 @@ export class Pichu extends PokemonCard {
   public attacks = [
     {
       name: 'Find a Friend',
-      cost: [ ],
+      cost: [],
       damage: 0,
       text: 'Flip a coin. If heads, search your deck for a Pokemon, ' +
         'show it to your opponent, and put it into your hand. ' +

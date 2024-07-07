@@ -56,7 +56,7 @@ export class Tinkaton extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
-        { },
+        {},
         { allowCancel: true, min: 1, max: 1 }
       ), cards => {
         cards = cards || [];
@@ -91,7 +91,7 @@ export class Tinkaton extends PokemonCard {
         }
       });
 
-      if(specialEnergyCount > 0) {
+      if (specialEnergyCount > 0) {
         effect.damage += 90;
       }
 
@@ -100,7 +100,7 @@ export class Tinkaton extends PokemonCard {
     if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.GATHER_MATERIALS_MARKER, this);
     }
-    
+
     return state;
   }
 

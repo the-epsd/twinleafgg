@@ -1,8 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage,
+import {
+  PowerType, StoreLike, State, GameError, GameMessage,
   ChooseCardsPrompt,
-  PlayerType} from '../../game';
+  PlayerType
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -22,7 +24,7 @@ export class Kirlia extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Refinement',
@@ -35,7 +37,7 @@ export class Kirlia extends PokemonCard {
   public attacks = [
     {
       name: 'Slap',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 30,
       text: '   '
     }
@@ -64,14 +66,18 @@ export class Kirlia extends PokemonCard {
       if (player.hand.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
       if (player.marker.hasMarker(this.REFINEMENT_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
+
       state = store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
-        { },
+        {},
         { allowCancel: true, min: 1, max: 1 }
       ), cards => {
         cards = cards || [];

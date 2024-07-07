@@ -11,7 +11,7 @@ import { ApplyWeaknessEffect, AfterDamageEffect } from '../../game/store/effects
 
 export class Koraidon extends PokemonCard {
 
-  public tags = [ CardTag.ANCIENT ];
+  public tags = [CardTag.ANCIENT];
 
   public regulationMark = 'H';
 
@@ -23,72 +23,71 @@ export class Koraidon extends PokemonCard {
 
   public hp: number = 140;
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Primeval Battering',
-      cost: [ CardType.FIGHTING, CardType.COLORLESS ],
+      cost: [CardType.FIGHTING, CardType.COLORLESS],
       damage: 30,
       text: 'This attack does 30 damage for each of your Ancient Pokémon in play.'
     },
     {
-        name: 'Shred',
-        cost: [ CardType.FIRE, CardType.FIGHTING, CardType.COLORLESS ],
-        damage: 130,
-        text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-      }
+      name: 'Shred',
+      cost: [CardType.FIRE, CardType.FIGHTING, CardType.COLORLESS],
+      damage: 130,
+      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
+    }
   ];
 
-    public set: string = 'TEF';
+  public set: string = 'TEF';
 
-    public cardImage: string = 'assets/cardback.png';
+  public cardImage: string = 'assets/cardback.png';
 
-    public setNumber: string = '119';
+  public setNumber: string = '119';
 
-    public name: string = 'Koraidon';
+  public name: string = 'Koraidon';
 
-    public fullName: string = 'Koraidon TEF';
+  public fullName: string = 'Koraidon TEF';
 
-    public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-    
-        const player = effect.player;
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
-        let ancientPokemonCount = 0;
+      const player = effect.player;
 
-        if (player.active?.getPokemonCard()?.tags.includes(CardTag.ANCIENT)) {
-            ancientPokemonCount++;
-                }
+      let ancientPokemonCount = 0;
 
-            player.bench.forEach(benchSpot => {
-                if (benchSpot.getPokemonCard()?.tags.includes(CardTag.ANCIENT)) {
-                    ancientPokemonCount++;
-                        }
-                            });
+      if (player.active?.getPokemonCard()?.tags.includes(CardTag.ANCIENT)) {
+        ancientPokemonCount++;
+      }
 
-             effect.damage = 30 * ancientPokemonCount;
+      player.bench.forEach(benchSpot => {
+        if (benchSpot.getPokemonCard()?.tags.includes(CardTag.ANCIENT)) {
+          ancientPokemonCount++;
+        }
+      });
 
-                }
-                
-                if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-                    const player = effect.player;
-                    const opponent = StateUtils.getOpponent(state, player);
-                      
-                    const applyWeakness = new ApplyWeaknessEffect(effect, 130);
-                    store.reduceEffect(state, applyWeakness);
-                    const damage = applyWeakness.damage;
-                      
-                    effect.damage = 0;
-                      
-                    if (damage > 0) {
-                      opponent.active.damage += damage;
-                      const afterDamage = new AfterDamageEffect(effect, damage);
-                      state = store.reduceEffect(state, afterDamage);
-                    }
-                  }
-                  return state;
-                }
-              }
-              
+      effect.damage = 30 * ancientPokemonCount;
+
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const applyWeakness = new ApplyWeaknessEffect(effect, 130);
+      store.reduceEffect(state, applyWeakness);
+      const damage = applyWeakness.damage;
+
+      effect.damage = 0;
+
+      if (damage > 0) {
+        opponent.active.damage += damage;
+        const afterDamage = new AfterDamageEffect(effect, damage);
+        state = store.reduceEffect(state, afterDamage);
+      }
+    }
+    return state;
+  }
+}

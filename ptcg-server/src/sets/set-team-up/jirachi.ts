@@ -87,11 +87,11 @@ export class Jirachi extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-  
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-  
+
       if (player.marker.hasMarker(this.STELLAR_WISH_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -100,14 +100,13 @@ export class Jirachi extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      
       player.active.addSpecialCondition(SpecialCondition.ABILITY_USED);
       player.active.addSpecialCondition(SpecialCondition.ASLEEP);
       player.marker.addMarker(this.STELLAR_WISH_MARKER, this);
-      
+
       const generator = useStellarWish(() => generator.next(), store, state, effect);
       return generator.next().value;
-      
+
 
     }
 

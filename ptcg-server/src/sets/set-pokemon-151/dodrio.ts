@@ -22,7 +22,7 @@ export class Dodrio extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Zooming Draw',
@@ -36,7 +36,7 @@ export class Dodrio extends PokemonCard {
       name: 'Balliastic Beak',
       cost: [CardType.COLORLESS],
       damage: 10,
-      damageCalculation: '+',      
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each damage counter on this Pokémon.'
     }
   ];

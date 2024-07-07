@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils,
-  GameMessage, PlayerType, SlotType, GameError} from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils,
+  GameMessage, PlayerType, SlotType, GameError
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
@@ -12,7 +14,7 @@ export class Gardevoirex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.STAGE_2;
 
@@ -28,7 +30,7 @@ export class Gardevoirex extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Psychic Embrace',
@@ -41,7 +43,7 @@ export class Gardevoirex extends PokemonCard {
   public attacks = [
     {
       name: 'Miracle Force',
-      cost: [ CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
       damage: 190,
       text: 'This Pokémon recovers from all Special Conditions.'
     }
@@ -80,7 +82,7 @@ export class Gardevoirex extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
         { allowCancel: true, min: 0 },
       ), transfers => {
@@ -110,7 +112,7 @@ export class Gardevoirex extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       const removeSpecialCondition = new RemoveSpecialConditionsEffect(effect, undefined);
       removeSpecialCondition.target = player.active;
       state = store.reduceEffect(state, removeSpecialCondition);

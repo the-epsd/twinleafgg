@@ -42,7 +42,7 @@ import { Pecharuntex } from './pecharunt-ex';
 import { PokeVitalA } from './pokevital-a';
 import { PowerHourglass } from './power-hourglass';
 import { Revavroomex } from './revavroom-ex';
-import { Rowlett } from './rowlett';
+import { Rowlet } from './rowlet';
 import { Seadra } from './seadra';
 import { SlitherWing } from './slither-wing';
 import { TapuBulu } from './tapu-bulu';
@@ -182,7 +182,7 @@ export declare class PowerHourglassArt extends PowerHourglass {
 export declare class RevavroomexArt extends Revavroomex {
     cardImage: string;
 }
-export declare class RowlettArt extends Rowlett {
+export declare class RowletArt extends Rowlet {
     cardImage: string;
 }
 export declare class SeadraArt extends Seadra {

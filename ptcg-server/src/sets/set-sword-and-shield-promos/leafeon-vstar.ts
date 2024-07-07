@@ -71,7 +71,7 @@ export class LeafeonVSTAR extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), result => {
         const cardList = result[0];
@@ -89,12 +89,12 @@ export class LeafeonVSTAR extends PokemonCard {
       opponent.marker.addMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
 
       if (effect instanceof PutDamageEffect
-                    && effect.target.marker.hasMarker(this.LEAF_GUARD_MARKER)) {
+        && effect.target.marker.hasMarker(this.LEAF_GUARD_MARKER)) {
         effect.damage -= 30;
         return state;
       }
       if (effect instanceof EndTurnEffect
-                    && effect.player.marker.hasMarker(this.CLEAR_LEAF_GUARD_MARKER, this)) {
+        && effect.player.marker.hasMarker(this.CLEAR_LEAF_GUARD_MARKER, this)) {
         effect.player.marker.removeMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
         const opponent = StateUtils.getOpponent(state, effect.player);
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

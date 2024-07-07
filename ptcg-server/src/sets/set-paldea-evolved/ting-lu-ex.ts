@@ -15,7 +15,7 @@ export class TingLuex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public cardType: CardType = CardType.FIGHTING;
 
@@ -23,7 +23,7 @@ export class TingLuex extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Cursed Land',
@@ -33,7 +33,7 @@ export class TingLuex extends PokemonCard {
 
   public attacks = [{
     name: 'Land Scoop',
-    cost: [ CardType.FIGHTING, CardType.FIGHTING, CardType.FIGHTING ],
+    cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.FIGHTING],
     damage: 150,
     text: 'Put 2 damage counters on 1 of your opponent\'s Benched Pokémon.'
   }];
@@ -54,19 +54,19 @@ export class TingLuex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const source = opponent.bench;
-    
+
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
       const damagedBenched = source.filter(b => b.damage > 0);
-      
+
       if (damagedBenched) {
         // Opponent has damaged benched Pokemon
 
         // Ting-Lu ex is not active Pokemon
         if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
+          && opponent.active.getPokemonCard() !== this) {
           return state;
         }
 
@@ -89,33 +89,28 @@ export class TingLuex extends PokemonCard {
         }
         return state;
       }
+    }
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const player = effect.player;
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
 
-        state = store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [ SlotType.BENCH ],
-          { max: 1, allowCancel: false }
-        ), targets => {
-          if (!targets || targets.length === 0) {
-            return;
-          }
-          const damageEffect = new PutDamageEffect(effect, 20);
-          damageEffect.target = targets[0];
-          store.reduceEffect(state, damageEffect);
-        });
-    
-        return state;
-      }
-    
+      state = store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.BENCH],
+        { max: 1, allowCancel: false }
+      ), targets => {
+        if (!targets || targets.length === 0) {
+          return;
+        }
+        const damageEffect = new PutDamageEffect(effect, 20);
+        damageEffect.target = targets[0];
+        store.reduceEffect(state, damageEffect);
+      });
+
       return state;
     }
-    
     return state;
-    
   }
-    
 }

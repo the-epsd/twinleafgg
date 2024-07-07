@@ -4,7 +4,6 @@ import { GameMessage, GameLog } from '../../game-message';
 import { SpecialCondition, Stage } from '../card/card-types';
 import { CheckPokemonPlayedTurnEffect } from '../effects/check-effects';
 import { EvolveEffect } from '../effects/game-effects';
-import { PlayerType } from '../actions/play-card-action';
 export function playPokemonReducer(store, state, effect) {
     /* Play pokemon card */
     if (effect instanceof PlayPokemonEffect) {
@@ -49,12 +48,12 @@ export function playPokemonReducer(store, state, effect) {
             if (pokemonCard.specialConditions.includes(SpecialCondition.ABILITY_USED)) {
                 pokemonCard.removeSpecialCondition(SpecialCondition.ABILITY_USED);
             }
-            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (cardList === player.active) {
-                    return;
-                }
-                cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
-            });
+            // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+            //   if (cardList === player.active) {
+            //     return;
+            //   }
+            //   cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+            // });
             return state;
         }
         throw new GameError(GameMessage.INVALID_TARGET);

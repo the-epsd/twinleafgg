@@ -1,9 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType, SlotType,
-  MoveEnergyPrompt, CardTarget, 
+import {
+  StoreLike, State, StateUtils, PlayerType, SlotType,
+  MoveEnergyPrompt, CardTarget,
   PowerType,
-  GameError} from '../../game';
+  GameError
+} from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -21,7 +23,7 @@ export class ShiningGenesect extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Energy Reload',
@@ -33,7 +35,7 @@ export class ShiningGenesect extends PokemonCard {
   public attacks = [
     {
       name: 'Gaia Blaster',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 50,
       text: 'This attack does 20 more damage times the amount of [G] Energy attached to this Pokémon.'
     },
@@ -79,7 +81,7 @@ export class ShiningGenesect extends PokemonCard {
         effect.player.id,
         GameMessage.MOVE_ENERGY_TO_ACTIVE,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
         { min: 1, max: 1, allowCancel: false, blockedFrom, blockedTo }
       ), result => {
@@ -106,10 +108,10 @@ export class ShiningGenesect extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-  
+
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergyEffect);
-  
+
       let energyCount = 0;
       checkProvidedEnergyEffect.energyMap.forEach(em => {
         energyCount += em.provides.filter(cardType => {
@@ -121,4 +123,3 @@ export class ShiningGenesect extends PokemonCard {
     return state;
   }
 }
-  

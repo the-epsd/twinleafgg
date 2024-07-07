@@ -10,7 +10,7 @@ class Dartrix extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.stage = card_types_1.Stage.STAGE_1;
-        this.evolvesFrom = 'Rowlett';
+        this.evolvesFrom = 'Rowlet';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];

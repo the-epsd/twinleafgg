@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
-import { PowerType, 
-  GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, State, StoreLike, GameError } from '../../game';
+import {
+  PowerType,
+  GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, State, StoreLike, GameError
+} from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -59,7 +61,7 @@ export class Archeops extends PokemonCard {
   public readonly PRIMAL_TURBO_MARKER = 'PRIMAL_TURBO_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.abilityMarker.removeMarker(this.PRIMAL_TURBO_MARKER, this);
@@ -77,7 +79,7 @@ export class Archeops extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.deck,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
         { allowCancel: false, min: 0, max: 2, sameTarget: true }
       ), transfers => {

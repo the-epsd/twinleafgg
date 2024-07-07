@@ -36,20 +36,20 @@ export class Moltres extends PokemonCard {
   public regulationMark = 'F';
 
   public set: string = 'PGO';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '12';
-  
+
   public name: string = 'Moltres';
-  
+
   public fullName: string = 'Moltres PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const legendaryBird = player.active.getPokemonCard();
-      
+
       if (legendaryBird && legendaryBird.stage == Stage.BASIC && legendaryBird.cardType == CardType.FIRE) {
         if (effect instanceof DealDamageEffect) {
           if (effect.card.name !== 'Moltres') {

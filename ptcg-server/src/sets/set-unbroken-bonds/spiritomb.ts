@@ -14,7 +14,7 @@ export class Spiritomb extends PokemonCard {
 
   public hp: number = 60;
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Building Spite',

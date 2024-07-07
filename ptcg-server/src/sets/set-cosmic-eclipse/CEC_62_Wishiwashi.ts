@@ -3,7 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, StateUtils, PlayerType, CoinFlipPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { BeginTurnEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Wishiwashi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -35,31 +36,45 @@ export class Wishiwashi extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof BeginTurnEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      opponent.marker.addMarker(this.SCATTER_MARKER, this);
+    }
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
-      opponent.marker.addMarker(this.SCATTER_MARKER, this);
-
-      if (effect.player.marker.hasMarker(this.SCATTER_MARKER, this)) {
-        owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-          if (cardList.getPokemonCard()?.fullName === this.fullName && cardList.damage > 0) {
-            return store.prompt(state, [
-              new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-            ], result => {
-              if (result === false) {
-                cardList.moveTo(owner.deck);
-              }
-            });
+      if (opponent.marker.hasMarker(this.SCATTER_MARKER, this)) {
+        opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            if (cardList.damage > 0) {
+              return store.prompt(state, [
+                new CoinFlipPrompt(opponent.id, GameMessage.COIN_FLIP)
+              ], result => {
+                if (result === false) {
+                  cardList.moveTo(opponent.deck);
+                  cardList.clearEffects();
+                }
+              });
+            }
           }
         });
-
-        return store.prompt(state, new ShuffleDeckPrompt(owner.id), order => {
-          owner.deck.applyOrder(order);
-          player.marker.removeMarker(this.SCATTER_MARKER, this);
+        return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+          opponent.deck.applyOrder(order);
+          opponent.marker.removeMarker(this.SCATTER_MARKER, this);
           return state;
         });
       }

@@ -3,8 +3,10 @@ import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { PowerType, StoreLike, State, PlayerType, SlotType,
-  StateUtils, PokemonCardList, EnergyCard, GameError, AttachEnergyPrompt } from '../../game';
+import {
+  PowerType, StoreLike, State, PlayerType, SlotType,
+  StateUtils, PokemonCardList, EnergyCard, GameError, AttachEnergyPrompt
+} from '../../game';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -20,7 +22,7 @@ export class Celebi extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Forest Breath',
@@ -35,7 +37,7 @@ export class Celebi extends PokemonCard {
   public attacks = [
     {
       name: 'Time Circle',
-      cost: [ CardType.GRASS, CardType.PSYCHIC, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.PSYCHIC, CardType.COLORLESS],
       damage: 30,
       text: 'During your opponent\'s next turn, prevent all damage done to ' +
         'Celebi by attacks from your opponent\'s Stage 1 or Stage 2 Pokemon.'
@@ -89,7 +91,7 @@ export class Celebi extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY, name: 'Grass Energy' },
         { allowCancel: true, min: 1, max: 1 }
       ), transfers => {

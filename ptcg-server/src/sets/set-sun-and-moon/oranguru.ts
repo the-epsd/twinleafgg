@@ -52,7 +52,7 @@ export class Oranguru extends PokemonCard {
       if (player.marker.hasMarker(this.INSTRUCT_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      
+
       while (player.hand.cards.length < 3) {
         player.deck.moveTo(player.hand, 1);
       }

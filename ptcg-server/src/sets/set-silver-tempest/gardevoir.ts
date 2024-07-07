@@ -66,9 +66,15 @@ export class Gardevoir extends PokemonCard {
       if (player.hand.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       if (player.marker.hasMarker(this.REFINEMENT_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
+
       state = store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_DISCARD,

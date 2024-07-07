@@ -26,7 +26,7 @@ export class Xatu extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Akashic Sense',
@@ -37,7 +37,7 @@ export class Xatu extends PokemonCard {
 
   public attacks = [{
     name: 'Super Psy Bolt',
-    cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
     damage: 80,
     text: ''
   }
@@ -46,7 +46,7 @@ export class Xatu extends PokemonCard {
   public set: string = 'PAR';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '5';
 
   public name: string = 'Xatu';
@@ -70,8 +70,8 @@ export class Xatu extends PokemonCard {
       }
       const hasEnergyInHand = player.hand.cards.some(c => {
         return c instanceof EnergyCard
-            && c.energyType === EnergyType.BASIC
-            && c.provides.includes(CardType.PSYCHIC);
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.PSYCHIC);
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -79,13 +79,13 @@ export class Xatu extends PokemonCard {
       if (player.marker.hasMarker(this.AKASHIC_SENSE_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
         { allowCancel: true, min: 1, max: 1 },
       ), transfers => {

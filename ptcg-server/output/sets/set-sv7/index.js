@@ -47,7 +47,7 @@ exports.setSV7 = [
     new card_images_1.PokeVitalAArt(),
     new card_images_1.PowerHourglassArt(),
     new card_images_1.RevavroomexArt(),
-    new card_images_1.RowlettArt(),
+    new card_images_1.RowletArt(),
     new card_images_1.SeadraArt(),
     new card_images_1.SlitherWingArt(),
     new card_images_1.TapuBuluArt(),

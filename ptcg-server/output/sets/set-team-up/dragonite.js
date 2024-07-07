@@ -9,6 +9,7 @@ const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-pro
 const game_message_1 = require("../../game/game-message");
 const show_cards_prompt_1 = require("../../game/store/prompts/show-cards-prompt");
 const state_utils_1 = require("../../game/store/state-utils");
+const game_1 = require("../../game");
 class Dragonite extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -23,7 +24,7 @@ class Dragonite extends pokemon_card_1.PokemonCard {
                 name: 'Fast Call',
                 useWhenInPlay: true,
                 powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'Once during your turn, (before your attack),  you may search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.'
+                text: 'Once during your turn, (before your attack), you may search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.'
             }];
         this.attacks = [{
                 name: 'Dragon Claw',
@@ -41,6 +42,9 @@ class Dragonite extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
+            }
             state = store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 0, max: 1, allowCancel: false }), selected => {
                 const cards = selected || [];
                 store.prompt(state, [new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {

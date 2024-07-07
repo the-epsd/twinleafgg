@@ -17,7 +17,7 @@ export class JaninesSecretTechnique extends TrainerCard {
   public set: string = 'SV6a';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '60';
 
   public name: string = 'Jenine\'s Secret Technique';
@@ -38,11 +38,11 @@ export class JaninesSecretTechnique extends TrainerCard {
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-      
+
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      
+
       let darkPokemonInPlay = false;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
@@ -61,7 +61,7 @@ export class JaninesSecretTechnique extends TrainerCard {
           blocked2.push(target);
         }
       });
-  
+
       // return store.prompt(state, new ChoosePokemonPrompt(
       //   player.id,
       //   GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -69,9 +69,9 @@ export class JaninesSecretTechnique extends TrainerCard {
       //   [SlotType.BENCH, SlotType.ACTIVE],
       //   { min: 0, max: 2, blocked: blocked2 }
       // ), chosen => {
-  
+
       //   chosen.forEach(target => {
-  
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_ACTIVE,
@@ -79,14 +79,14 @@ export class JaninesSecretTechnique extends TrainerCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
-        { allowCancel: false, min: 1, max: 2, blockedTo: blocked2, differentTargets: true  }
+        { allowCancel: false, min: 0, max: 2, blockedTo: blocked2, differentTargets: true }
       ), transfers => {
         transfers = transfers || [];
-  
+
         if (transfers.length === 0) {
           return;
         }
-  
+
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.deck.moveCardTo(transfer.card, target);
@@ -98,7 +98,7 @@ export class JaninesSecretTechnique extends TrainerCard {
         }
       });
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
     }
     return state;
   }

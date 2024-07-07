@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, ChooseCardsPrompt,
-  CardList } from '../../game';
+import {
+  PowerType, StoreLike, State, GameError, GameMessage, ChooseCardsPrompt,
+  CardList
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -20,7 +22,7 @@ export class Charizard extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Battle Sense',
@@ -33,7 +35,7 @@ export class Charizard extends PokemonCard {
   public attacks = [
     {
       name: 'Royal Blaze',
-      cost: [ CardType.FIRE, CardType.FIRE ],
+      cost: [CardType.FIRE, CardType.FIRE],
       damage: 100,
       text: 'This attack does 50 more damage for each Leon card ' +
         'in your discard pile.'
@@ -83,7 +85,7 @@ export class Charizard extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
-        { },
+        {},
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         player.marker.addMarker(this.BATTLE_SENSE_MARKER, this);

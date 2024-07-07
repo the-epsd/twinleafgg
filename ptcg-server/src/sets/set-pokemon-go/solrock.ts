@@ -20,7 +20,7 @@ export class Solrock extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Sun Energy',
@@ -32,7 +32,7 @@ export class Solrock extends PokemonCard {
   public attacks = [
     {
       name: 'Spinning Attack',
-      cost: [ CardType.FIGHTING, CardType.COLORLESS ],
+      cost: [CardType.FIGHTING, CardType.COLORLESS],
       damage: 50,
       text: ''
     }];
@@ -55,10 +55,10 @@ export class Solrock extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.SUN_ENERGY_MARKER, this);
     }
-    
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-    
+
       const hasBench = player.bench.some(b => b.cards.length > 0);
       if (!hasBench) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -66,8 +66,8 @@ export class Solrock extends PokemonCard {
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
-              && c.energyType === EnergyType.BASIC
-              && c.provides.includes(CardType.PSYCHIC);
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.PSYCHIC);
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -75,7 +75,7 @@ export class Solrock extends PokemonCard {
       if (player.marker.hasMarker(this.SUN_ENERGY_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-    
+
       const blocked: number[] = [];
       player.bench.forEach((card, index) => {
         if (!(card instanceof PokemonCard && card.name === 'Lunatone')) {
@@ -85,7 +85,7 @@ export class Solrock extends PokemonCard {
       player.active.cards.forEach((card, index) => {
         if (!(card instanceof PokemonCard && card.name === 'Lunatone')) {
           blocked.push(index);
-        } 
+        }
       });
 
       state = store.prompt(state, new AttachEnergyPrompt(
@@ -93,7 +93,7 @@ export class Solrock extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
         { allowCancel: true, min: 1, max: 1, blocked: blocked }
       ), transfers => {
@@ -126,7 +126,7 @@ export class Solrock extends PokemonCard {
         effect.player.marker.removeMarker(this.SUN_ENERGY_MARKER, this);
       }
       return state;
-    // END: ed8c6549bwf9
+      // END: ed8c6549bwf9
     }
     return state;
   }
