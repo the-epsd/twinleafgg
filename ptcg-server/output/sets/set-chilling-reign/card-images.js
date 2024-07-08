@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZarudeArt = exports.TaurosArt = exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.Porygon2Art = exports.PeonyArt = exports.PeoniaArt = exports.PathToThePeakArt = exports.OldCemeteryArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GolurkArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianZapdosVArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.FlanneryArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DynaTreeHillArt = exports.DrizzileArt = exports.CastformSunnyFormArt = exports.CaitlinArt = exports.BlisseyVArt = exports.BlazikenVMAXArt = exports.BlazikenVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = exports.AgathaArt = void 0;
+exports.ZarudeArt = exports.TaurosArt = exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.Porygon2Art = exports.PeonyArt = exports.PeoniaArt = exports.PathToThePeakArt = exports.OldCemeteryArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GolurkArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianZapdosVArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.FlanneryArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DynaTreeHillArt = exports.DrizzileArt = exports.CastformSunnyFormArt = exports.CastformSnowyFormArt = exports.CastformRainyFormArt = exports.CaitlinArt = exports.BlisseyVArt = exports.BlazikenVMAXArt = exports.BlazikenVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = exports.AgathaArt = void 0;
 const agatha_1 = require("./agatha");
 const avery_1 = require("./avery");
 const banette_1 = require("./banette");
@@ -9,6 +9,8 @@ const blaziken_v_1 = require("./blaziken-v");
 const blaziken_vmax_1 = require("./blaziken-vmax");
 const blissey_v_1 = require("./blissey-v");
 const caitlin_1 = require("./caitlin");
+const castform_rainy_form_1 = require("./castform-rainy-form");
+const castform_snowy_form_1 = require("./castform-snowy-form");
 const castform_sunny_form_1 = require("./castform-sunny-form");
 const CRE_115_Tauros_1 = require("./CRE_115_Tauros");
 const drizzile_1 = require("./drizzile");
@@ -102,6 +104,20 @@ class CaitlinArt extends caitlin_1.Caitlin {
     }
 }
 exports.CaitlinArt = CaitlinArt;
+class CastformRainyFormArt extends castform_rainy_form_1.CastformRainyForm {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_033_R_EN_LG.png';
+    }
+}
+exports.CastformRainyFormArt = CastformRainyFormArt;
+class CastformSnowyFormArt extends castform_snowy_form_1.CastformSnowyForm {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_034_R_EN_LG.png';
+    }
+}
+exports.CastformSnowyFormArt = CastformSnowyFormArt;
 class CastformSunnyFormArt extends castform_sunny_form_1.CastformSunnyForm {
     constructor() {
         super(...arguments);

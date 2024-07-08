@@ -1,19 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CastformSunnyForm = void 0;
-const game_1 = require("../../game");
-const card_types_1 = require("../../game/store/card/card-types");
+exports.CastformRainyForm = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const card_types_1 = require("../../game/store/card/card-types");
+const game_1 = require("../../game");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class CastformSunnyForm extends pokemon_card_1.PokemonCard {
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
+class CastformRainyForm extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.regulationMark = 'E';
-        this.cardType = card_types_1.CardType.FIRE;
+        this.cardType = card_types_1.CardType.WATER;
         this.hp = 70;
-        this.weakness = [{ type: card_types_1.CardType.WATER }];
+        this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.resistance = [];
         this.retreat = [];
         this.powers = [
@@ -24,19 +25,17 @@ class CastformSunnyForm extends pokemon_card_1.PokemonCard {
                 useWhenInPlay: false,
             }
         ];
-        this.attacks = [
-            {
-                name: 'High-Pressure Blast',
-                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
-                damage: 150,
-                text: 'Discard a Stadium in play. If you can\'t, this attack does nothing.'
-            }
-        ];
+        this.attacks = [{
+                name: 'Rainfall',
+                cost: [card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
+                damage: 0,
+                text: 'This attack does 20 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+            }];
         this.set = 'CRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '22';
-        this.name = 'Castform Sunny Form';
-        this.fullName = 'Castform Sunny Form CRE';
+        this.setNumber = '33';
+        this.name = 'Castform Rainy Form';
+        this.fullName = 'Castform Rainy Form CRE';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckAttackCostEffect) {
@@ -64,25 +63,17 @@ class CastformSunnyForm extends pokemon_card_1.PokemonCard {
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            // Check attack cost
-            const checkCost = new check_effects_1.CheckAttackCostEffect(player, this.attacks[0]);
-            state = store.reduceEffect(state, checkCost);
-            // Check attached energy
-            const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
-            state = store.reduceEffect(state, checkEnergy);
-            const stadiumCard = game_1.StateUtils.getStadiumCard(state);
-            if (stadiumCard !== undefined) {
-                const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-                const player = game_1.StateUtils.findOwner(state, cardList);
-                cardList.moveTo(player.discard);
-                return state;
-            }
-            else {
-                effect.damage = 0;
-            }
+            const opponent = effect.opponent;
+            const benched = opponent.bench.filter(b => b.cards.length > 0);
+            const activeDamageEffect = new attack_effects_1.DealDamageEffect(effect, 20);
+            store.reduceEffect(state, activeDamageEffect);
+            benched.forEach(target => {
+                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 20);
+                damageEffect.target = target;
+                store.reduceEffect(state, damageEffect);
+            });
         }
         return state;
     }
 }
-exports.CastformSunnyForm = CastformSunnyForm;
+exports.CastformRainyForm = CastformRainyForm;

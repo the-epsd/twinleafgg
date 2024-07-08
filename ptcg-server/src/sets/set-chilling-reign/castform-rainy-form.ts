@@ -1,24 +1,18 @@
-import { PowerType, State, StateUtils, StoreLike, TrainerCard } from '../../game';
-import { CardType, Stage, TrainerType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Stage, CardType, TrainerType } from '../../game/store/card/card-types';
+import { StoreLike, State, TrainerCard, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
-export class CastformSunnyForm extends PokemonCard {
-
+export class CastformRainyForm extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-
   public regulationMark = 'E';
-
-  public cardType: CardType = CardType.FIRE;
-
+  public cardType: CardType = CardType.WATER;
   public hp = 70;
-
-  public weakness = [{ type: CardType.WATER }];
-
+  public weakness = [{ type: CardType.LIGHTNING }];
   public resistance = [];
-
   public retreat = [];
 
   public powers = [
@@ -30,24 +24,18 @@ export class CastformSunnyForm extends PokemonCard {
     }
   ];
 
-  public attacks = [
-    {
-      name: 'High-Pressure Blast',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
-      damage: 150,
-      text: 'Discard a Stadium in play. If you can\'t, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rainfall',
+    cost: [CardType.WATER, CardType.COLORLESS],
+    damage: 0,
+    text: 'This attack does 20 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'CRE';
-
   public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '22';
-
-  public name: string = 'Castform Sunny Form';
-
-  public fullName: string = 'Castform Sunny Form CRE';
+  public setNumber: string = '33';
+  public name: string = 'Castform Rainy Form';
+  public fullName: string = 'Castform Rainy Form CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -77,28 +65,19 @@ export class CastformSunnyForm extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const opponent = effect.opponent;
+      const benched = opponent.bench.filter(b => b.cards.length > 0);
 
-      const player = effect.player;
-      // Check attack cost
-      const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
-      state = store.reduceEffect(state, checkCost);
+      const activeDamageEffect = new DealDamageEffect(effect, 20);
+      store.reduceEffect(state, activeDamageEffect);
 
-      // Check attached energy
-      const checkEnergy = new CheckProvidedEnergyEffect(player);
-      state = store.reduceEffect(state, checkEnergy);
-
-      const stadiumCard = StateUtils.getStadiumCard(state);
-
-      if (stadiumCard !== undefined) {
-        const cardList = StateUtils.findCardList(state, stadiumCard);
-        const player = StateUtils.findOwner(state, cardList);
-        cardList.moveTo(player.discard);
-        return state;
-      } else {
-        effect.damage = 0;
-      }
-
+      benched.forEach(target => {
+        const damageEffect = new PutDamageEffect(effect, 20);
+        damageEffect.target = target;
+        store.reduceEffect(state, damageEffect);
+      });
     }
+
     return state;
   }
 }
