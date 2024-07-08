@@ -11,5 +11,6 @@ exports.setBreakpoint = [
     new card_images_1.ReverseValleyArt(),
     new card_images_1.SplashEnergyArt(),
     new card_images_1.StaryuArt(),
+    new card_images_1.SudowoodoArt(),
     new card_images_1.ZoroarkArt()
 ];

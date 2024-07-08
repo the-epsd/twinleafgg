@@ -1,4 +1,5 @@
 import { Bayleef } from './bayleef';
+import { Sudowoodo } from './BKP_67_Sudowoodo';
 import { Zoroark } from './BKT_91_Zoroark';
 import { Delinquent } from './delinquent';
 import { FightingFuryBelt } from './fighting-fury-belt';
@@ -29,6 +30,9 @@ export declare class SplashEnergyArt extends SplashEnergy {
     cardImage: string;
 }
 export declare class StaryuArt extends Staryu {
+    cardImage: string;
+}
+export declare class SudowoodoArt extends Sudowoodo {
     cardImage: string;
 }
 export declare class ZoroarkArt extends Zoroark {

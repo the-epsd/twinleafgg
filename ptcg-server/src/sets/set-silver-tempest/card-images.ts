@@ -19,6 +19,7 @@ import { FurisodeGirl } from './furisode-girl';
 import { Gardevoir } from './gardevoir';
 import { HisuianBraviary } from './hisuian-braviary';
 import { Kirlia } from './kirlia';
+import { Lance } from './lance';
 import { LugiaV } from './lugia-v';
 import { LugiaVSTAR } from './lugia-vstar';
 import { Meowstic } from './meowstic';
@@ -145,6 +146,10 @@ export class KlinkArt extends Klink {
 
 export class KlinklangArt extends Klinklang {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_125_R_EN_LG.png';
+}
+
+export class LanceArt extends Lance {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_159_R_EN_LG.png';
 }
 
 export class LugiaVArt extends LugiaV {

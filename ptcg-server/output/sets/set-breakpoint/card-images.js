@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoroarkArt = exports.StaryuArt = exports.SplashEnergyArt = exports.ReverseValleyArt = exports.PhantumpArt = exports.KricketotArt = exports.FightingFuryBeltArt = exports.DelinquentArt = exports.BayleefArt = void 0;
+exports.ZoroarkArt = exports.SudowoodoArt = exports.StaryuArt = exports.SplashEnergyArt = exports.ReverseValleyArt = exports.PhantumpArt = exports.KricketotArt = exports.FightingFuryBeltArt = exports.DelinquentArt = exports.BayleefArt = void 0;
 const bayleef_1 = require("./bayleef");
+const BKP_67_Sudowoodo_1 = require("./BKP_67_Sudowoodo");
 const BKT_91_Zoroark_1 = require("./BKT_91_Zoroark");
 const delinquent_1 = require("./delinquent");
 const fighting_fury_belt_1 = require("./fighting-fury-belt");
@@ -66,6 +67,13 @@ class StaryuArt extends staryu_1.Staryu {
     }
 }
 exports.StaryuArt = StaryuArt;
+class SudowoodoArt extends BKP_67_Sudowoodo_1.Sudowoodo {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_067_R_EN_LG.png';
+    }
+}
+exports.SudowoodoArt = SudowoodoArt;
 class ZoroarkArt extends BKT_91_Zoroark_1.Zoroark {
     constructor() {
         super(...arguments);
