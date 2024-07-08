@@ -26,6 +26,7 @@ exports.setSilverTempest = [
     new card_images_1.KlangArt(),
     new card_images_1.KlinkArt(),
     new card_images_1.KlinklangArt(),
+    new card_images_1.LanceArt(),
     new card_images_1.LugiaVArt(),
     new card_images_1.LugiaVSTARArt(),
     new card_images_1.MeowsticArt(),

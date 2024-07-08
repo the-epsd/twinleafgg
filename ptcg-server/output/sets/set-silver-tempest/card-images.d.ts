@@ -19,6 +19,7 @@ import { FurisodeGirl } from './furisode-girl';
 import { Gardevoir } from './gardevoir';
 import { HisuianBraviary } from './hisuian-braviary';
 import { Kirlia } from './kirlia';
+import { Lance } from './lance';
 import { LugiaV } from './lugia-v';
 import { LugiaVSTAR } from './lugia-vstar';
 import { Meowstic } from './meowstic';
@@ -120,6 +121,9 @@ export declare class KlinkArt extends Klink {
     cardImage: string;
 }
 export declare class KlinklangArt extends Klinklang {
+    cardImage: string;
+}
+export declare class LanceArt extends Lance {
     cardImage: string;
 }
 export declare class LugiaVArt extends LugiaV {
