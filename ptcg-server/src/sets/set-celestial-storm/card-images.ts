@@ -1,3 +1,5 @@
+import { Slakoth } from './CES_113_Slakoth';
+import { Slaking } from './CES_115_Slaking';
 import { Sableye } from './CES_88_Sableye';
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
@@ -34,6 +36,14 @@ export class MarshtompArt extends Marshtomp {
 
 export class SableyeArt extends Sableye {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_088_R_EN_LG.png';
+}
+
+export class SlakingArt extends Slaking {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_115_R_EN_LG.png';
+}
+
+export class SlakothArt extends Slakoth {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_113_R_EN_LG.png';
 }
 
 export class SwampertArt extends Swampert {

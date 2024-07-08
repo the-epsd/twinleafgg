@@ -163,6 +163,8 @@ var GameCardMessage;
     GameCardMessage["CARDS"] = "CARDS";
     GameCardMessage["TREKKING_SHOES"] = "TREKKING_SHOES";
     GameCardMessage["DISCARD_FROM_TOP_OF_DECK"] = "DISCARD_FROM_TOP_OF_DECK";
+    GameCardMessage["CHOOSE_SUPPORTER_FROM_DECK"] = "CHOOSE_SUPPORTER_FROM_DECK";
+    GameCardMessage["CHOOSE_SUPPORTER_FROM_DISCARD"] = "CHOOSE_SUPPORTER_FROM_DISCARD";
 })(GameCardMessage = exports.GameCardMessage || (exports.GameCardMessage = {}));
 var GameLog;
 (function (GameLog) {
