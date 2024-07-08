@@ -1,4 +1,4 @@
-import { Card, CardType, ChooseCardsPrompt, GameMessage, PokemonCard, ShuffleDeckPrompt, Stage, State, StoreLike, SuperType } from '../../game';
+import { Card, CardType, ChooseCardsPrompt, GameLog, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -40,9 +40,9 @@ export class AlolanVulpix extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       let cards: Card[] = [];
-
     
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
@@ -55,12 +55,20 @@ export class AlolanVulpix extends PokemonCard {
           
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, player.hand);
+          
+          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+          
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
             return state;
           });
         });
-        return state;
+        
+        return store.prompt(state, new ShowCardsPrompt(
+          opponent.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          cards), () => state
+        );
       });
     }
     return state;

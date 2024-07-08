@@ -62,7 +62,6 @@ export class Hitmonchan extends PokemonCard {
         }
         const target = selected[0];
         player.switchPokemon(target);
-    
       });
     }
     return state;
