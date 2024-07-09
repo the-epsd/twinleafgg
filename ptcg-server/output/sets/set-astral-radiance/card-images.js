@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TempleofSinnohArt = exports.SwitchCartArt = exports.SupereffectiveGlassesArt = exports.StarmieVArt = exports.SpicySeasonedCurryArt = exports.RoxanneArt = exports.RegisteelArt = exports.RegirockArt = exports.RegigigasArt = exports.RegielekiArt = exports.RegidragoArt = exports.RegiceArt = exports.RaltsArt = exports.RadiantHawluchaArt = exports.RadiantGreninjaArt = exports.OriginFormePalkiaVSTARArt = exports.OriginFormePalkiaVArt = exports.OriginFormeDialgaVSTARArt = exports.OriginFormeDialgaVArt = exports.MiltankArt = exports.MightyenaArt = exports.MantineArt = exports.MagnetonArt = exports.LuxrayVArt = exports.LucarioVArt = exports.KricketuneArt = exports.KleavorArt = exports.KeldeoArt = exports.JubilifeVillageArt = exports.IridaArt = exports.HisuianSamurottVSTARArt = exports.HisuianSamurottVArt = exports.HisuianHeavyBallArt = exports.HisuianGrowlitheArt = exports.HisuianBasculinArt = exports.HisuianArcanineArt = exports.GutsyPickaxeArt = exports.GrantArt = exports.GardeniasVigorArt = exports.GapejawBogArt = exports.GalladeArt = exports.FeatherBallArt = exports.EnergyLotoArt = exports.DiancieArt = exports.DarkraiVSTARArt = exports.DarkraiVArt = exports.DarkPatchArt = exports.CylleneArt = exports.CancelingCologneArt = exports.AdamanArt = void 0;
-exports.WyrdeerVArt = exports.UrsalunaArt = exports.TrekkingShoesArt = void 0;
+exports.SupereffectiveGlassesArt = exports.StarmieVArt = exports.SpicySeasonedCurryArt = exports.RoxanneArt = exports.RegisteelArt = exports.RegirockArt = exports.RegigigasArt = exports.RegielekiArt = exports.RegidragoArt = exports.RegiceArt = exports.RaltsArt = exports.RadiantHawluchaArt = exports.RadiantGreninjaArt = exports.OriginFormePalkiaVSTARArt = exports.OriginFormePalkiaVArt = exports.OriginFormeDialgaVSTARArt = exports.OriginFormeDialgaVArt = exports.MiltankArt = exports.MightyenaArt = exports.MantineArt = exports.MagnetonArt = exports.LuxrayVArt = exports.LucarioVArt = exports.KricketuneArt = exports.KleavorArt = exports.KeldeoArt = exports.JubilifeVillageArt = exports.IridaArt = exports.HisuianSamurottVSTARArt = exports.HisuianSamurottVArt = exports.HisuianQwilfishArt = exports.HisuianOverqwilArt = exports.HisuianHeavyBallArt = exports.HisuianGrowlitheArt = exports.HisuianBasculinArt = exports.HisuianArcanineArt = exports.GutsyPickaxeArt = exports.GrantArt = exports.GardeniasVigorArt = exports.GapejawBogArt = exports.GalladeArt = exports.FeatherBallArt = exports.EnergyLotoArt = exports.DiancieArt = exports.DarkraiVSTARArt = exports.DarkraiVArt = exports.DarkPatchArt = exports.CylleneArt = exports.CancelingCologneArt = exports.AdamanArt = void 0;
+exports.WyrdeerVArt = exports.UrsalunaArt = exports.TrekkingShoesArt = exports.TempleofSinnohArt = exports.SwitchCartArt = void 0;
 const adaman_1 = require("./adaman");
 const ASR_70_Hisuian_Growlithe_1 = require("./ASR_70_Hisuian_Growlithe");
+const ASR_89_Hisuian_Qwilfish_1 = require("./ASR_89_Hisuian_Qwilfish");
+const ASR_90_Hisuian_Overqwil_1 = require("./ASR_90_Hisuian_Overqwil");
 const canceling_cologne_1 = require("./canceling-cologne");
 const cyllene_1 = require("./cyllene");
 const dark_patch_1 = require("./dark-patch");
@@ -181,6 +183,20 @@ class HisuianHeavyBallArt extends hisuian_heavy_ball_1.HisuianHeavyBall {
     }
 }
 exports.HisuianHeavyBallArt = HisuianHeavyBallArt;
+class HisuianOverqwilArt extends ASR_90_Hisuian_Overqwil_1.HisuianOverqwil {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_090_R_EN_LG.png';
+    }
+}
+exports.HisuianOverqwilArt = HisuianOverqwilArt;
+class HisuianQwilfishArt extends ASR_89_Hisuian_Qwilfish_1.HisuianQwilfish {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_089_R_EN_LG.png';
+    }
+}
+exports.HisuianQwilfishArt = HisuianQwilfishArt;
 class HisuianSamurottVArt extends hisuian_samurott_v_1.HisuianSamurottV {
     constructor() {
         super(...arguments);

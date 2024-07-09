@@ -51,8 +51,27 @@ class Octillery extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.ABYSSAL_HAND_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
-            while (player.hand.cards.length < 5) {
-                player.deck.moveTo(player.hand, 1);
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
+            //If deck size is greater than 5, draw till hand has 5 cards via while loop
+            if (player.deck.cards.length > 5) {
+                while (player.hand.cards.length < 5) {
+                    player.deck.moveTo(player.hand, 1);
+                }
+            }
+            else {
+                //Deck size is less than 5 so we have to check the hand size and draw as many as we can allow
+                //If hand size is less than 5, find how many cards until we have 5 in our hand
+                let handToFive = 5 - player.hand.cards.length;
+                //If the amount of cards until 5 in hand is greater than the deck size, draw the rest of the deck
+                if (handToFive > player.deck.cards.length) {
+                    player.deck.moveTo(player.hand, player.deck.cards.length);
+                }
+                else {
+                    // Distance to 5 cards in hand is less than cards left in deck so draw that amount.
+                    player.deck.moveTo(player.hand, handToFive);
+                }
             }
             player.marker.addMarker(this.ABYSSAL_HAND_MARKER, this);
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {

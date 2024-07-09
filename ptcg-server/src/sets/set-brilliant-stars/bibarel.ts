@@ -75,8 +75,29 @@ export class Bibarel extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      while (player.hand.cards.length < 5) {
-        player.deck.moveTo(player.hand, 1);
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      //If deck size is greater than 5, draw till hand has 5 cards via while loop
+      if (player.deck.cards.length > 5) {
+        while (player.hand.cards.length < 5) {
+          player.deck.moveTo(player.hand, 1);
+        }
+      } else {
+        //Deck size is less than 5 so we have to check the hand size and draw as many as we can allow
+
+        //If hand size is less than 5, find how many cards until we have 5 in our hand
+        let handToFive = 5 - player.hand.cards.length;
+
+        //If the amount of cards until 5 in hand is greater than the deck size, draw the rest of the deck
+        if (handToFive > player.deck.cards.length) {
+          player.deck.moveTo(player.hand, player.deck.cards.length);
+        } else {
+
+          // Distance to 5 cards in hand is less than cards left in deck so draw that amount.
+          player.deck.moveTo(player.hand, handToFive);
+        }
       }
       player.marker.addMarker(this.INDUSTRIOUS_INCISORS_MARKER, this);
 

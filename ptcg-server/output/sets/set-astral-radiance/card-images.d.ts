@@ -1,5 +1,7 @@
 import { Adaman } from './adaman';
 import { HisuianGrowlithe } from './ASR_70_Hisuian_Growlithe';
+import { HisuianQwilfish } from './ASR_89_Hisuian_Qwilfish';
+import { HisuianOverqwil } from './ASR_90_Hisuian_Overqwil';
 import { CancelingCologne } from './canceling-cologne';
 import { Cyllene } from './cyllene';
 import { DarkPatch } from './dark-patch';
@@ -103,6 +105,12 @@ export declare class HisuianGrowlitheArt extends HisuianGrowlithe {
     cardImage: string;
 }
 export declare class HisuianHeavyBallArt extends HisuianHeavyBall {
+    cardImage: string;
+}
+export declare class HisuianOverqwilArt extends HisuianOverqwil {
+    cardImage: string;
+}
+export declare class HisuianQwilfishArt extends HisuianQwilfish {
     cardImage: string;
 }
 export declare class HisuianSamurottVArt extends HisuianSamurottV {

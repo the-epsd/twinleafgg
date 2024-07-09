@@ -21,7 +21,7 @@ export class Octillery extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Abyssal Hand',
@@ -32,7 +32,7 @@ export class Octillery extends PokemonCard {
 
   public attacks = [{
     name: 'Hug',
-    cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
+    cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
     damage: 40,
     text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
   }];
@@ -57,21 +57,47 @@ export class Octillery extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.ABYSSAL_HAND_MARKER, this);
     }
-    
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.ABYSSAL_HAND_MARKER, this);
     }
-    
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       if (player.marker.hasMarker(this.ABYSSAL_HAND_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-  
-      while (player.hand.cards.length < 5) {
-        player.deck.moveTo(player.hand, 1);
+
+      if (player.hand.cards.length >= 5) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      //If deck size is greater than 5, draw till hand has 5 cards via while loop
+      if (player.deck.cards.length > 5) {
+        while (player.hand.cards.length < 5) {
+          player.deck.moveTo(player.hand, 1);
+        }
+      } else {
+        //Deck size is less than 5 so we have to check the hand size and draw as many as we can allow
+
+        //If hand size is less than 5, find how many cards until we have 5 in our hand
+        let handToFive = 5 - player.hand.cards.length;
+
+        //If the amount of cards until 5 in hand is greater than the deck size, draw the rest of the deck
+        if (handToFive > player.deck.cards.length) {
+          player.deck.moveTo(player.hand, player.deck.cards.length);
+        } else {
+
+          // Distance to 5 cards in hand is less than cards left in deck so draw that amount.
+          player.deck.moveTo(player.hand, handToFive);
+        }
+      }
+
       player.marker.addMarker(this.ABYSSAL_HAND_MARKER, this);
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
@@ -89,19 +115,19 @@ export class Octillery extends PokemonCard {
           player.marker.removeMarker(this.ABYSSAL_HAND_MARKER);
         }
       });
-  
+
     }
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
-          
+
     if (effect instanceof RetreatEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
-          
+
     if (effect instanceof EndTurnEffect) {
       effect.player.active.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
