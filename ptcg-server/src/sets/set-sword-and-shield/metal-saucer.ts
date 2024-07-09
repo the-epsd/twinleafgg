@@ -71,6 +71,7 @@ export class MetalSaucer extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
@@ -92,7 +93,7 @@ export class MetalSaucer extends TrainerCard {
           player.discard.moveCardTo(transfer.card, target);
         }
 
-        player.hand.moveCardTo(this, player.discard);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
       });
     }
 

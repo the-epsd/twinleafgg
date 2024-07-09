@@ -1,6 +1,7 @@
 import { Blacephalon } from './blacephalon';
 import { Wishiwashi } from './CEC_62_Wishiwashi';
 import { Pikachu } from './CEC_66_Pikachu';
+import { Duskull } from './CEC_83_Duskull';
 import { ChaoticSwell } from './chaotic-swell';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
 import { DrawEnergy } from './draw-energy';
@@ -23,6 +24,9 @@ export declare class CynthiaAndCaitlinArt extends CynthiaAndCaitlin {
     cardImage: string;
 }
 export declare class DrawEnergyArt extends DrawEnergy {
+    cardImage: string;
+}
+export declare class DuskullArt extends Duskull {
     cardImage: string;
 }
 export declare class GolettArt extends Golett {

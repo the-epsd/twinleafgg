@@ -32,6 +32,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   const maxPokemons = Math.min(pokemons, 1);
   const maxTrainers = Math.min(trainers, 1);

@@ -30,7 +30,7 @@ export class WeaknessGuardEnergy extends EnergyCard {
     'The Pokémon this card is attached to has no Weakness.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.target?.cards?.includes(this)) {
+    if (effect instanceof AttackEffect && effect.target && effect.target.cards.includes(this)) {
       const player = effect.player;
       
       try {

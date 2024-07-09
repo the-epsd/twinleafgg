@@ -1,11 +1,11 @@
-import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { GamePhase, State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
-import { StateUtils } from '../../game/store/state-utils';
+import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
+import { StateUtils } from '../../game/store/state-utils';
+import { GamePhase, State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class PotHelmet extends TrainerCard {
 
@@ -27,8 +27,8 @@ export class PotHelmet extends TrainerCard {
     'If the Pokémon this card is attached to doesn\'t have a Rule Box, it takes 30 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance). (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PutDamageEffect && effect.source.cards.includes(this)) {
-      const sourceCard = effect.source.getPokemonCard();
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+      const sourceCard = effect.target.getPokemonCard();
 
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {

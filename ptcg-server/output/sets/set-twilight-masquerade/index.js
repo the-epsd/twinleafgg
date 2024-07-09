@@ -16,6 +16,7 @@ exports.setTwilightMasquerade = [
     new card_images_1.FroslassArt(),
     new card_images_1.HandyFanArt(),
     new card_images_1.HasselArt(),
+    new card_images_1.HeatranArt(),
     new card_images_1.LaironArt(),
     new card_images_1.LegacyEnergyArt(),
     new card_images_1.LuxioArt(),

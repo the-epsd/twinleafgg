@@ -29,6 +29,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       blocked.push(index);
     }
   });
+  
+  effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -63,6 +66,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     ), () => next());
   }
 
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

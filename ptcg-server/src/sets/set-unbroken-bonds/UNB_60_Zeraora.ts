@@ -92,9 +92,6 @@ export class Zeraora extends PokemonCard {
       store.reduceEffect(state, discardEnergy);
 
       effect.damage += (totalDiscarded - 1) * 50;
-
-
-
     }
 
     return state;

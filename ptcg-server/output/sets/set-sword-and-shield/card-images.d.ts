@@ -12,6 +12,7 @@ import { MetalSaucer } from './metal-saucer';
 import { Oranguru } from './oranguru';
 import { OrdinaryRod } from './ordinary-rod';
 import { QuickBall } from './quick-ball';
+import { Rosa } from './rosa';
 import { Sizzlipede } from './sizzlipede';
 import { Snom } from './snom';
 import { Sobble } from './sobble';
@@ -61,6 +62,9 @@ export declare class OrdinaryRodArt extends OrdinaryRod {
     cardImage: string;
 }
 export declare class QuickBallArt extends QuickBall {
+    cardImage: string;
+}
+export declare class RosaArt extends Rosa {
     cardImage: string;
 }
 export declare class SizzlipedeArt extends Sizzlipede {

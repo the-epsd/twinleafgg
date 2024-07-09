@@ -1,9 +1,10 @@
+import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType, PowerType } from '../../game';
+import { DealDamageEffect, PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Mismagius extends PokemonCard {
 
@@ -33,7 +34,7 @@ export class Mismagius extends PokemonCard {
   public attacks = [{
     name: 'Eerie Voice',
     cost: [ CardType.PSYCHIC ],
-    damage: 140,
+    damage: 0,
     text: 'Put 2 damage counters on each of your opponent\'s Pokémon.'
   }
   ];
@@ -47,10 +48,37 @@ export class Mismagius extends PokemonCard {
   public name: string = 'Mismagius';
 
   public fullName: string = 'Mismagius SIT';
+  
+  public damageDealt = false;
+  
+  public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof EndTurnEffect) {
+      effect.player.marker.removeMarker(this.RETALIATE_MARKER);
+    }
+    
+    if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
+      const player = StateUtils.getOpponent(state, effect.player);
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+
+      if (player !== owner) {
+        this.damageDealt = true;
+      }
+    }
+    
+     if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+
+      if (owner === effect.player) {
+        this.damageDealt = false;
+      }
+    }
+    
+    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && this.damageDealt) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -62,13 +90,9 @@ export class Mismagius extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      effect.damage = 10;
   
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (cardList === opponent.active) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 10);
+        const damageEffect = new PutCountersEffect(effect, 20);
         damageEffect.target = cardList;
         store.reduceEffect(state, damageEffect);
       });

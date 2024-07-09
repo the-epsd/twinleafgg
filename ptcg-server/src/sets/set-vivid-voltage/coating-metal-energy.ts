@@ -46,7 +46,7 @@ export class CoatingMetalEnergy extends EnergyCard {
     }
 
     // Prevent effects of attacks
-    if (effect instanceof AbstractAttackEffect && effect.target?.cards?.includes(this)) {
+    if (effect instanceof AbstractAttackEffect && effect.target && effect.target.cards.includes(this)) {
       const player = effect.player;
 
       try {
@@ -70,8 +70,6 @@ export class CoatingMetalEnergy extends EnergyCard {
           effect.attackEffect.ignoreWeakness = true;
           return state; 
         }
-        
-        effect.preventDefault = true;
       }
     }
 

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AlolanVulpixVArt, AlolanVulpixVSTARArt, ArcheopsArt, ArticunoArt, BeheeyemArt, BeldumArt, BraixenArt, CandiceArt, CapturingAromaArt, CobalionArt, CrobatArt, DragoniteArt, DrakloakArt, ElgyemArt, EmergencyJellyArt, FeebasArt, ForestSealStoneArt, FurisodeGirlArt, GardevoirArt, HisuianBraviaryArt, KirliaArt, KlangArt, KlinkArt, KlinklangArt, LanceArt, LugiaVArt, LugiaVSTARArt, MeowsticArt, MetagrossArt, PalossandArt, PrimordialAltarArt, RadiantAlakazamArt, RadiantJirachiArt, RadiantTsareenaArt, RaichuArt, RaltsArt, RegenerativeEnergyArt, RegidragoVArt, RegidragoVSTARArt, RegielekiVArt, RegielekiVMAXArt, RuffletArt, SandygastArt, SerenaArt, SerperiorVArt, SerperiorVSTARArt, UrsalunaVArt, VGuardEnergyArt, WailordArt, WorkerArt, ZeraoraArt, ZubatArt } from './card-images';
+import { AlolanVulpixVArt, AlolanVulpixVSTARArt, ArcheopsArt, ArticunoArt, BeheeyemArt, BeldumArt, BraixenArt, CandiceArt, CapturingAromaArt, CobalionArt, CrobatArt, DragoniteArt, DrakloakArt, ElgyemArt, EmergencyJellyArt, FeebasArt, ForestSealStoneArt, FurisodeGirlArt, GardevoirArt, HisuianBraviaryArt, KirliaArt, KlangArt, KlinkArt, KlinklangArt, LanceArt, LugiaVArt, LugiaVSTARArt, MeowsticArt, MetagrossArt, MismagiusArt, PalossandArt, PrimordialAltarArt, RadiantAlakazamArt, RadiantJirachiArt, RadiantTsareenaArt, RaichuArt, RaltsArt, RegenerativeEnergyArt, RegidragoVArt, RegidragoVSTARArt, RegielekiVArt, RegielekiVMAXArt, RuffletArt, SandygastArt, SerenaArt, SerperiorVArt, SerperiorVSTARArt, UrsalunaVArt, VGuardEnergyArt, WailordArt, WorkerArt, ZeraoraArt, ZubatArt } from './card-images';
 
 export const setSilverTempest: Card[] = [
   new AlolanVulpixVArt(),
@@ -30,6 +30,7 @@ export const setSilverTempest: Card[] = [
   new LugiaVSTARArt(),
   new MeowsticArt(),
   new MetagrossArt(),
+  new MismagiusArt(),
   new PalossandArt(),
   new PrimordialAltarArt(),
   new RadiantAlakazamArt(),

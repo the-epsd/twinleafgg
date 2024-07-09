@@ -6,8 +6,6 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const state_utils_1 = require("../../game/store/state-utils");
-const state_1 = require("../../game/store/state/state");
 class MetalFryingPan extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,33 +18,29 @@ class MetalFryingPan extends trainer_card_1.TrainerCard {
         this.text = 'The [M] Pokémon this card is attached to takes 30 less damage from your opponent\'s attacks (after applying Weakness and Resistance) and has no Weakness.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target && effect.target.cards.includes(this)) {
+            const player = effect.player;
             const sourceCard = effect.target.getPokemonCard();
             // It's not an attack
             if (state.phase !== state_1.GamePhase.ATTACK) {
                 return state;
             }
-            const player = state_utils_1.StateUtils.findOwner(state, effect.target);
+          
             try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
+                const energyEffect = new play_card_effects_1.ToolEffect(player, this);
+                store.reduceEffect(state, energyEffect);
             }
             catch (_a) {
                 return state;
             }
-            if (sourceCard) {
-                const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(effect.source);
-                store.reduceEffect(state, checkPokemonTypeEffect);
-                if (checkPokemonTypeEffect.cardTypes.includes(card_types_1.CardType.METAL)) {
-                    // Check if damage target is owned by this card's owner 
-                    const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
-                    if (targetPlayer === player) {
-                        effect.damage = Math.max(0, effect.damage - 30);
-                        effect.damageReduced = true;
-                    }
-                    effect.attackEffect.ignoreWeakness = true;
-                    return state;
-                }
+            const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
+            store.reduceEffect(state, checkPokemonType);
+            if (checkPokemonType.cardTypes.includes(card_types_1.CardType.METAL)) {
+                // Allow damage
+                effect.attackEffect.ignoreWeakness = true;
+                effect.damage = Math.max(0, effect.damage - 30);
+                effect.damageReduced = true;
+                return state;
             }
         }
         return state;

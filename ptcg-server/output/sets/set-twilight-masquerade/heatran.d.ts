@@ -2,10 +2,8 @@ import { PowerType, State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Mismagius extends PokemonCard {
+export declare class Heatran extends PokemonCard {
     stage: Stage;
-    regulationMark: string;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
@@ -15,24 +13,24 @@ export declare class Mismagius extends PokemonCard {
         type: CardType;
         value: number;
     }[];
-    retreat: CardType[];
     powers: {
-        name: string;
         powerType: PowerType;
         text: string;
+        useWhenInPlay: boolean;
+        name: string;
     }[];
     attacks: {
         name: string;
         cost: CardType[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;
+    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;
-    damageDealt: boolean;
-    readonly RETALIATE_MARKER = "RETALIATE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

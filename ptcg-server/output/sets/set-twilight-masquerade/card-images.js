@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PerformanceFluteArt = exports.OkidogiArt = exports.MunkidoriArt = exports.MorpekoArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.LegacyEnergyArt = exports.LanasAssistanceArt = exports.LaironArt = exports.KieranArt = exports.JammingTowerArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.InfernapeArt = exports.HyperAromaArt = exports.HearthflameMaskOgerponexArt = exports.HasselArt = exports.HandyFanArt = exports.GrookeyArt = exports.GreninjaexArt = exports.FroslassArt = exports.FrogadierArt = exports.FroakieArt = exports.FestivalGroundsArt = exports.FarfetchdArt = exports.EnhancedHammerArt = exports.EmolgaArt = exports.DreepyArt = exports.DrakloakArt = exports.DragapultexArt = exports.DipplinArt = exports.CornerstoneMaskOgerponexArt = exports.CommunityCenterArt = exports.ClefairyArt = exports.ClefableArt = exports.ChiYuArt = exports.ChanseyArt = exports.CarmineArt = exports.CaretakerArt = exports.BugCatchingSetArt = exports.BoomerangEnergyArt = exports.BloodmoonUrsalunaexArt = exports.BlisseyexArt = exports.AronArt = exports.ApplinArt2 = exports.ApplinArt = exports.AggronArt = void 0;
-exports.SecretBoxArt = exports.WellspringMaskOgerponexArt = exports.WalkingWakeArt = exports.UnfairStampArt = exports.TingLuArt = exports.ThwackeyArt = exports.TealMaskOgerponexArt = exports.TatsugiriArt = exports.SurvivalCastArt = exports.ShinxArt = exports.ScoopUpCycloneArt = exports.ScreamTailexArt = exports.RotoStickArt = exports.PoochyenaArt = exports.PhioneArt = exports.PerrinArt = void 0;
+exports.OkidogiArt = exports.MunkidoriArt = exports.MorpekoArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.LegacyEnergyArt = exports.LanasAssistanceArt = exports.LaironArt = exports.KieranArt = exports.JammingTowerArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.InfernapeArt = exports.HyperAromaArt = exports.HeatranArt = exports.HearthflameMaskOgerponexArt = exports.HasselArt = exports.HandyFanArt = exports.GrookeyArt = exports.GreninjaexArt = exports.FroslassArt = exports.FrogadierArt = exports.FroakieArt = exports.FestivalGroundsArt = exports.FarfetchdArt = exports.EnhancedHammerArt = exports.EmolgaArt = exports.DreepyArt = exports.DrakloakArt = exports.DragapultexArt = exports.DipplinArt = exports.CornerstoneMaskOgerponexArt = exports.CommunityCenterArt = exports.ClefairyArt = exports.ClefableArt = exports.ChiYuArt = exports.ChanseyArt = exports.CarmineArt = exports.CaretakerArt = exports.BugCatchingSetArt = exports.BoomerangEnergyArt = exports.BloodmoonUrsalunaexArt = exports.BlisseyexArt = exports.AronArt = exports.ApplinArt2 = exports.ApplinArt = exports.AggronArt = void 0;
+exports.SecretBoxArt = exports.WellspringMaskOgerponexArt = exports.WalkingWakeArt = exports.UnfairStampArt = exports.TingLuArt = exports.ThwackeyArt = exports.TealMaskOgerponexArt = exports.TatsugiriArt = exports.SurvivalCastArt = exports.ShinxArt = exports.ScoopUpCycloneArt = exports.ScreamTailexArt = exports.RotoStickArt = exports.PoochyenaArt = exports.PhioneArt = exports.PerrinArt = exports.PerformanceFluteArt = void 0;
 const aggron_1 = require("./aggron");
 const aron_1 = require("./aron");
 const blissey_ex_1 = require("./blissey-ex");
@@ -68,6 +68,7 @@ const infernape_1 = require("./infernape");
 const walking_wake_1 = require("./walking-wake");
 const okidogi_1 = require("./okidogi");
 const secret_box_1 = require("./secret-box");
+const heatran_1 = require("./heatran");
 class AggronArt extends aggron_1.Aggron {
     constructor() {
         super(...arguments);
@@ -292,6 +293,13 @@ class HearthflameMaskOgerponexArt extends hearthflame_mask_ogerpon_ex_1.Hearthfl
     }
 }
 exports.HearthflameMaskOgerponexArt = HearthflameMaskOgerponexArt;
+class HeatranArt extends heatran_1.Heatran {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_123_R_EN_LG.png';
+    }
+}
+exports.HeatranArt = HeatranArt;
 class HyperAromaArt extends hyper_aroma_1.HyperAroma {
     constructor() {
         super(...arguments);

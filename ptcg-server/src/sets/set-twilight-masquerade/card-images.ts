@@ -65,6 +65,7 @@ import { Infernape } from './infernape';
 import { WalkingWake } from './walking-wake';
 import { Okidogi } from './okidogi';
 import { SecretBox } from './secret-box';
+import { Heatran } from './heatran';
 
 
 export class AggronArt extends Aggron {
@@ -193,6 +194,10 @@ export class HasselArt extends Hassel {
 
 export class HearthflameMaskOgerponexArt extends HearthflameMaskOgerponex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_040_R_EN_LG.png';
+}
+
+export class HeatranArt extends Heatran {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_123_R_EN_LG.png';
 }
 
 export class HyperAromaArt extends HyperAroma {
