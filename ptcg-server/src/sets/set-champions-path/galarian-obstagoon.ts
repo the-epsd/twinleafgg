@@ -1,6 +1,7 @@
 import {
   ChooseCardsPrompt,
   GameError, PlayerType,
+  PokemonCardList,
   PowerType,
   ShowCardsPrompt,
   State,
@@ -56,37 +57,33 @@ export class GalarianObstagoon extends PokemonCard {
   
   public evolvesFrom = 'Galarian Linoone';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
   public readonly WICKED_RULER_MARKER = 'WICKED_RULER_MARKER';
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.active.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.active.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.active.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.active.attackMarker.hasMarker(PokemonCardList.ATTACK_USED_2_MARKER, this)) {
+      effect.player.active.attackMarker.removeMarker(PokemonCardList.ATTACK_USED_MARKER, this);
+      effect.player.active.attackMarker.removeMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
     }
   
-    if (effect instanceof EndTurnEffect && effect.player.active.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.active.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.active.attackMarker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
+      effect.player.active.attackMarker.addMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
     }
     
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker
-      if (effect.player.active.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
+      if (effect.player.active.attackMarker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
-      effect.player.active.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
+      
+      effect.player.active.attackMarker.addMarker(PokemonCardList.ATTACK_USED_MARKER, this);
     }
     
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.attackMarker.removeMarker(this.WICKED_RULER_MARKER, this);
-    }
-      
+    }      
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;

@@ -72,7 +72,7 @@ export class Revavroom extends PokemonCard {
           return;
         }
 
-        while (player.hand.cards.length < 6) {
+        while (player.hand.cards.length < 7) {
           player.deck.moveTo(player.hand, 1);
         }
         player.marker.addMarker(this.RUMBLING_ENGINE_MARKER, this);

@@ -6,6 +6,7 @@ import { Hitmonlee } from './hitmonlee';
 import { Jirachi } from './jirachi';
 import { Lapras } from './lapras';
 import { Mareep } from './mareep';
+import { MetalGoggles } from './metal-goggles';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
 import { Moltres } from './TEU_19_Moltres';
@@ -43,6 +44,10 @@ export class LaprasArt extends Lapras {
 
 export class MareepArt extends Mareep {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_041_R_EN.png';
+}
+
+export class MetalGogglesArt extends MetalGoggles {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_148_R_EN.png';
 }
 
 export class MoltresArt extends Moltres {

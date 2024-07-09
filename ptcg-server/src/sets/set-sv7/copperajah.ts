@@ -55,6 +55,7 @@ export class Copperajah extends PokemonCard {
   public readonly OPPONENT_CANNOT_PLAY_STADIUMS_MARKER = 'OPPONENT_CANNOT_PLAY_STADIUMS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    
 
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);

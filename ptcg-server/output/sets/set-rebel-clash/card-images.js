@@ -1,18 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TwinEnergyArt = exports.TrainingCourtArt = exports.SpeedLightningEnergyArt = exports.ScoopUpNetArt = exports.MetapodArt = exports.HorrorPsychicEnergyArt = exports.DragapultArt = exports.CoalossalArt = exports.CaterpieArt = exports.CaptureEnergyArt = exports.CapaciousBucketArt = exports.ButterfreeArt = void 0;
+exports.TwinEnergyArt = exports.TrainingCourtArt = exports.SpeedLightningEnergyArt = exports.ScoopUpNetArt = exports.MetapodArt = exports.HorrorPsychicEnergyArt = exports.DuraludonArt = exports.DragapultArt = exports.CoalossalArt = exports.CaterpieArt = exports.CaptureEnergyArt = exports.CapaciousBucketArt = exports.ButterfreeArt = exports.AegislashArt = void 0;
+const aegislash_1 = require("./aegislash");
 const butterfree_1 = require("./butterfree");
 const capacious_bucket_1 = require("./capacious-bucket");
 const capture_energy_1 = require("./capture-energy");
 const caterpie_1 = require("./caterpie");
 const coalossal_1 = require("./coalossal");
 const dragapult_1 = require("./dragapult");
+const duraludon_1 = require("./duraludon");
 const horror_psychic_energy_1 = require("./horror-psychic-energy");
 const metapod_1 = require("./metapod");
 const scoop_up_net_1 = require("./scoop-up-net");
 const speed_lightning_energy_1 = require("./speed-lightning-energy");
 const training_court_1 = require("./training-court");
 const twin_energy_1 = require("./twin-energy");
+class AegislashArt extends aegislash_1.Aegislash {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_135_R_EN.png';
+    }
+}
+exports.AegislashArt = AegislashArt;
 class ButterfreeArt extends butterfree_1.Butterfree {
     constructor() {
         super(...arguments);
@@ -55,6 +64,13 @@ class DragapultArt extends dragapult_1.Dragapult {
     }
 }
 exports.DragapultArt = DragapultArt;
+class DuraludonArt extends duraludon_1.Duraludon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_138_R_EN.png';
+    }
+}
+exports.DuraludonArt = DuraludonArt;
 class HorrorPsychicEnergyArt extends horror_psychic_energy_1.HorrorPsychicEnergy {
     constructor() {
         super(...arguments);

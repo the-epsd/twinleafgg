@@ -1,18 +1,18 @@
-import { Card } from '../../game/store/card/card';
+import { AttachEnergyPrompt, ChooseCardsPrompt, PlayerType, SlotType } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { Effect } from '../../game/store/effects/effect';
-import { TrainerCard } from '../../game/store/card/trainer-card';
-import { EnergyCard } from '../../game/store/card/energy-card';
+import { Card } from '../../game/store/card/card';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { GamePhase, State } from '../../game/store/state/state';
-import { StateUtils } from '../../game/store/state-utils';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { EnergyCard } from '../../game/store/card/energy-card';
+import { TrainerCard } from '../../game/store/card/trainer-card';
+import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AttachEnergyPrompt, ChooseCardsPrompt, PlayerType, SlotType } from '../../game';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { StateUtils } from '../../game/store/state-utils';
+import { GamePhase, State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Raihan, effect: TrainerEffect): IterableIterator<State> {
@@ -138,7 +138,13 @@ export class Raihan extends TrainerCard {
     }
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.RAIHAN_MARKER);
+      const player = effect.player;
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+      
+      if (owner === player) {
+        effect.player.marker.removeMarker(this.RAIHAN_MARKER);        
+      }
     }
 
     return state;

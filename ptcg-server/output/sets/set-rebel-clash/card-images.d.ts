@@ -1,15 +1,20 @@
+import { Aegislash } from './aegislash';
 import { Butterfree } from './butterfree';
 import { CapaciousBucket } from './capacious-bucket';
 import { CaptureEnergy } from './capture-energy';
 import { Caterpie } from './caterpie';
 import { Coalossal } from './coalossal';
 import { Dragapult } from './dragapult';
+import { Duraludon } from './duraludon';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
 import { ScoopUpNet } from './scoop-up-net';
 import { SpeedLightningEnergy } from './speed-lightning-energy';
 import { TrainingCourt } from './training-court';
 import { TwinEnergy } from './twin-energy';
+export declare class AegislashArt extends Aegislash {
+    cardImage: string;
+}
 export declare class ButterfreeArt extends Butterfree {
     cardImage: string;
 }
@@ -26,6 +31,9 @@ export declare class CoalossalArt extends Coalossal {
     cardImage: string;
 }
 export declare class DragapultArt extends Dragapult {
+    cardImage: string;
+}
+export declare class DuraludonArt extends Duraludon {
     cardImage: string;
 }
 export declare class HorrorPsychicEnergyArt extends HorrorPsychicEnergy {

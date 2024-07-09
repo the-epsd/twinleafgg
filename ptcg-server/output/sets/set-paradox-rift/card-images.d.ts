@@ -8,6 +8,7 @@ import { Crobat } from './crobat';
 import { Cyclizar } from './cyclizar';
 import { DefianceVest } from './defiance-vest';
 import { Deoxys } from './deoxys';
+import { Doublade } from './doublade';
 import { EarthenVessel } from './earthen-vessel';
 import { Elekid } from './elekid';
 import { Froslassex } from './froslass-ex';
@@ -19,6 +20,7 @@ import { Gholdengoex } from './gholdengo-ex';
 import { Gible } from './gible';
 import { Gimmighoul } from './gimmighoul';
 import { Groudon } from './groudon';
+import { Honedge } from './honedge';
 import { Hoopaex } from './hoopa-ex';
 import { IronBundle } from './iron-bundle';
 import { IronHandsex } from './iron-hands-ex';
@@ -86,6 +88,9 @@ export declare class DefianceVestArt extends DefianceVest {
 export declare class DeoxysArt extends Deoxys {
     cardImage: string;
 }
+export declare class DoubladeArt extends Doublade {
+    cardImage: string;
+}
 export declare class EarthenVesselArt extends EarthenVessel {
     cardImage: string;
 }
@@ -120,6 +125,9 @@ export declare class GimmighoulArt extends Gimmighoul {
     cardImage: string;
 }
 export declare class GroudonArt extends Groudon {
+    cardImage: string;
+}
+export declare class HonedgeArt extends Honedge {
     cardImage: string;
 }
 export declare class HoopaexArt extends Hoopaex {

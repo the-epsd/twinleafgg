@@ -69,6 +69,7 @@ export class CastformSunnyForm extends PokemonCard {
         this.attacks.forEach(attack => {
           attack.cost = [];
         });
+        
         return state;
       } else {
         return state;

@@ -38,6 +38,7 @@ class MallowAndLana extends trainer_card_1.TrainerCard {
             effect.preventDefault = true;
             state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
                 const cardList = result[0];
+                const previousActiveCardList = player.active;
                 player.switchPokemon(cardList);
                 if (player.hand.cards.length < 2) {
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
@@ -51,9 +52,9 @@ class MallowAndLana extends trainer_card_1.TrainerCard {
                             cards.forEach((card, index) => {
                                 store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
                             });
-                            const healEffect = new game_effects_1.HealEffect(player, cardList, 120);
+                            const healEffect = new game_effects_1.HealEffect(player, previousActiveCardList, 120);
                             state = store.reduceEffect(state, healEffect);
-                            store.log(state, game_message_1.GameLog.LOG_PLAYER_HEALS_POKEMON, { name: player.name, pokemon: cardList.getPokemonCard().name, healingAmount: 120 });
+                            store.log(state, game_message_1.GameLog.LOG_PLAYER_HEALS_POKEMON, { name: player.name, pokemon: previousActiveCardList.getPokemonCard().name, healingAmount: 120 });
                         });
                     }
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);

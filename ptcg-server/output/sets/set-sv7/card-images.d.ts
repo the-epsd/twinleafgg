@@ -1,4 +1,5 @@
 import { Absol } from './absol';
+import { Archaludon } from './archaludon';
 import { AreaZeroUnderdepths } from './area-zero-underdepths';
 import { Axew } from './axew';
 import { BindingMochi } from './binding-mochi';
@@ -51,6 +52,9 @@ import { XerosicsScheme } from './xerosics-scheme';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 export declare class AbsolArt extends Absol {
+    cardImage: string;
+}
+export declare class ArchaludonArt extends Archaludon {
     cardImage: string;
 }
 export declare class AreaZeroUnderdepthsArt extends AreaZeroUnderdepths {

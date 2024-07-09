@@ -12,6 +12,7 @@ import { MetalSaucer } from './metal-saucer';
 import { Oranguru } from './oranguru';
 import { OrdinaryRod } from './ordinary-rod';
 import { QuickBall } from './quick-ball';
+import { Rosa } from './rosa';
 import { Sizzlipede } from './sizzlipede';
 import { Snom } from './snom';
 import { Sobble } from './sobble';
@@ -77,6 +78,10 @@ export class OrdinaryRodArt extends OrdinaryRod {
 
 export class QuickBallArt extends QuickBall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_179_R_EN_LG.png';
+}
+
+export class RosaArt extends Rosa {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_204_R_EN_LG.png';
 }
 
 export class SizzlipedeArt extends Sizzlipede {

@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Raihan = void 0;
+const game_1 = require("../../game");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
-const trainer_card_1 = require("../../game/store/card/trainer-card");
-const energy_card_1 = require("../../game/store/card/energy-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const state_1 = require("../../game/store/state/state");
-const state_utils_1 = require("../../game/store/state-utils");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
+const energy_card_1 = require("../../game/store/card/energy-card");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const game_1 = require("../../game");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
+const state_utils_1 = require("../../game/store/state-utils");
+const state_1 = require("../../game/store/state/state");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     // No Pokemon KO last turn
@@ -96,7 +96,12 @@ class Raihan extends trainer_card_1.TrainerCard {
             return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.RAIHAN_MARKER);
+            const player = effect.player;
+            const cardList = state_utils_1.StateUtils.findCardList(state, this);
+            const owner = state_utils_1.StateUtils.findOwner(state, cardList);
+            if (owner === player) {
+                effect.player.marker.removeMarker(this.RAIHAN_MARKER);
+            }
         }
         return state;
     }

@@ -4,6 +4,7 @@ exports.setSV7 = void 0;
 const card_images_1 = require("./card-images");
 exports.setSV7 = [
     new card_images_1.AbsolArt(),
+    new card_images_1.ArchaludonArt(),
     new card_images_1.AreaZeroUnderdepthsArt(),
     new card_images_1.AxewArt(),
     new card_images_1.BindingMochiArt(),
