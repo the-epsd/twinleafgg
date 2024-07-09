@@ -15,5 +15,6 @@ exports.setRebelClash = [
     new card_images_1.MetapodArt(),
     new card_images_1.ScoopUpNetArt(),
     new card_images_1.SpeedLightningEnergyArt(),
+    new card_images_1.TrainingCourtArt(),
     new card_images_1.TwinEnergyArt()
 ];

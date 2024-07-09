@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.OranguruArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinccinoArt = exports.CentiskorchArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
+exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.RosaArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.OranguruArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinccinoArt = exports.CentiskorchArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
 const air_balloon_1 = require("./air-balloon");
 const aurora_energy_1 = require("./aurora-energy");
 const cinccino_1 = require("./cinccino");
@@ -15,6 +15,7 @@ const metal_saucer_1 = require("./metal-saucer");
 const oranguru_1 = require("./oranguru");
 const ordinary_rod_1 = require("./ordinary-rod");
 const quick_ball_1 = require("./quick-ball");
+const rosa_1 = require("./rosa");
 const sizzlipede_1 = require("./sizzlipede");
 const snom_1 = require("./snom");
 const sobble_1 = require("./sobble");
@@ -126,6 +127,13 @@ class QuickBallArt extends quick_ball_1.QuickBall {
     }
 }
 exports.QuickBallArt = QuickBallArt;
+class RosaArt extends rosa_1.Rosa {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_204_R_EN_LG.png';
+    }
+}
+exports.RosaArt = RosaArt;
 class SizzlipedeArt extends sizzlipede_1.Sizzlipede {
     constructor() {
         super(...arguments);
