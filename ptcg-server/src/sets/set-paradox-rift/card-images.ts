@@ -8,6 +8,7 @@ import { Crobat } from './crobat';
 import { Cyclizar } from './cyclizar';
 import { DefianceVest } from './defiance-vest';
 import { Deoxys } from './deoxys';
+import { Doublade } from './doublade';
 import { EarthenVessel } from './earthen-vessel';
 import { Elekid } from './elekid';
 import { Froslassex } from './froslass-ex';
@@ -19,6 +20,7 @@ import { Gholdengoex } from './gholdengo-ex';
 import { Gible } from './gible';
 import { Gimmighoul } from './gimmighoul';
 import { Groudon } from './groudon';
+import { Honedge } from './honedge';
 import { Hoopaex } from './hoopa-ex';
 import { IronBundle } from './iron-bundle';
 import { IronHandsex } from './iron-hands-ex';
@@ -97,6 +99,10 @@ export class DeoxysArt extends Deoxys {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_074_R_EN_LG.png';
 }
 
+export class DoubladeArt extends Doublade {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_132_R_EN.png';
+}
+
 export class EarthenVesselArt extends EarthenVessel {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_163_R_EN_LG.png';
 }
@@ -143,6 +149,10 @@ export class GimmighoulArt extends Gimmighoul {
 
 export class GroudonArt extends Groudon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_093_R_EN_LG.png';
+}
+
+export class HonedgeArt extends Honedge {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_130_R_EN.png';
 }
 
 export class HoopaexArt extends Hoopaex {

@@ -61,6 +61,8 @@ export class MallowAndLana extends TrainerCard {
         { allowCancel: false }
       ), result => {
         const cardList = result[0];
+        const previousActiveCardList = player.active;
+        
         player.switchPokemon(cardList);
         
         if (player.hand.cards.length < 2) {
@@ -89,10 +91,10 @@ export class MallowAndLana extends TrainerCard {
                 store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
               });            
               
-              const healEffect = new HealEffect(player, cardList, 120);
+              const healEffect = new HealEffect(player, previousActiveCardList, 120);
               state = store.reduceEffect(state, healEffect);
               
-              store.log(state, GameLog.LOG_PLAYER_HEALS_POKEMON, { name: player.name, pokemon: cardList.getPokemonCard()!.name, healingAmount: 120 });
+              store.log(state, GameLog.LOG_PLAYER_HEALS_POKEMON, { name: player.name, pokemon: previousActiveCardList.getPokemonCard()!.name, healingAmount: 120 });
             });
           } 
           

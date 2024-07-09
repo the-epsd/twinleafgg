@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, ChoosePokemonPrompt, EnergyCard, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -50,9 +50,19 @@ export class Heatmor extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
+      const hasEnergyInDiscard = player.discard.cards.some(c => {
+        return c instanceof EnergyCard
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.FIRE);
+      });
+      
+      if (!hasEnergyInDiscard) {
+        return state;
+      }
+      
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE],

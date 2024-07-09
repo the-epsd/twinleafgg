@@ -90,7 +90,8 @@ export class FormatValidator {
       case Format.GLC:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
-        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
+        // return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
+        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && 
           !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
           !card.tags.some(t => [
             CardTag.ACE_SPEC.toString(),

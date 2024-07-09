@@ -1,15 +1,21 @@
+import { Aegislash } from './aegislash';
 import { Butterfree } from './butterfree';
 import { CapaciousBucket } from './capacious-bucket';
 import { CaptureEnergy } from './capture-energy';
 import { Caterpie } from './caterpie';
 import { Coalossal } from './coalossal';
 import { Dragapult } from './dragapult';
+import { Duraludon } from './duraludon';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
 import { ScoopUpNet } from './scoop-up-net';
 import { SpeedLightningEnergy } from './speed-lightning-energy';
 import { TrainingCourt } from './training-court';
 import { TwinEnergy } from './twin-energy';
+
+export class AegislashArt extends Aegislash {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_135_R_EN.png';
+}
 
 export class ButterfreeArt extends Butterfree {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_003_R_EN_LG.png';
@@ -33,6 +39,10 @@ export class CoalossalArt extends Coalossal {
 
 export class DragapultArt extends Dragapult {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_091_R_EN.png';
+}
+
+export class DuraludonArt extends Duraludon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_138_R_EN.png';
 }
 
 export class HorrorPsychicEnergyArt extends HorrorPsychicEnergy {

@@ -1,4 +1,5 @@
 import { Absol } from './absol';
+import { Archaludon } from './archaludon';
 import { AreaZeroUnderdepths } from './area-zero-underdepths';
 import { Axew } from './axew';
 import { BindingMochi } from './binding-mochi';
@@ -53,6 +54,10 @@ import { Zorua } from './zorua';
 
 export class AbsolArt extends Absol {
   public cardImage = 'https://pokemonproxies.com/static/media/Absol-030-6a.17ae9a4e96251e1bf464.png';
+}
+
+export class ArchaludonArt extends Archaludon {
+  public cardImage = 'https://www.pokemonproxies.com/static/media/Archaludon-073-7i.a607ae18f6db80594379.png';
 }
 
 export class AreaZeroUnderdepthsArt extends AreaZeroUnderdepths {

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AncientBoosterEnergyCapsuleArt, BounsweetArt, BruteBonnetArt, ChiYuArt, CounterCatcherArt, CrobatArt, CyclizarArt, DefianceVestArt, DeoxysArt, EarthenVesselArt, ElekidArt, FlittleArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GarganaclArt, GholdengoexArt, GibleArt, GimmighoulArt, GroudonArt, HoopaexArt, IronBundleArt, IronHandsexArt, IronJugulisArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MelaArt, MewtwoexArt, MiniorArt, MorpekoArt, NacliArt, NaclstackArt, NatuArt, PorygonArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RemoraidArt, RoaringMoonexArt, SandyShocksexArt, ScreamTailArt, SlitherWingArt, SnoruntArt, SteeneeArt, TapuKokoexArt, TechnicalMachineBlindsideArt, TechnicalMachineDevolutionArt, TechnicalMachineEvolutionArt, TechnicalMachineTurboEnergizeArt, TechnoRadarArt, TsareenaexArt, TulipArt, XatuArt, ZacianArt } from './card-images';
+import { AncientBoosterEnergyCapsuleArt, BounsweetArt, BruteBonnetArt, ChiYuArt, CounterCatcherArt, CrobatArt, CyclizarArt, DefianceVestArt, DeoxysArt, DoubladeArt, EarthenVesselArt, ElekidArt, FlittleArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GarganaclArt, GholdengoexArt, GibleArt, GimmighoulArt, GroudonArt, HonedgeArt, HoopaexArt, IronBundleArt, IronHandsexArt, IronJugulisArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MelaArt, MewtwoexArt, MiniorArt, MorpekoArt, NacliArt, NaclstackArt, NatuArt, PorygonArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RemoraidArt, RoaringMoonexArt, SandyShocksexArt, ScreamTailArt, SlitherWingArt, SnoruntArt, SteeneeArt, TapuKokoexArt, TechnicalMachineBlindsideArt, TechnicalMachineDevolutionArt, TechnicalMachineEvolutionArt, TechnicalMachineTurboEnergizeArt, TechnoRadarArt, TsareenaexArt, TulipArt, XatuArt, ZacianArt } from './card-images';
 
 export const setParadoxRift: Card[] = [
 
@@ -12,6 +12,7 @@ export const setParadoxRift: Card[] = [
   new CyclizarArt(),
   new DefianceVestArt(),
   new DeoxysArt(),
+  new DoubladeArt(),
   new EarthenVesselArt(),
   new ElekidArt(),
   new FlittleArt(),
@@ -23,6 +24,7 @@ export const setParadoxRift: Card[] = [
   new GholdengoexArt(),
   new GibleArt(),
   new GimmighoulArt(),
+  new HonedgeArt(),
   new HoopaexArt(),
   new IronBundleArt(),
   new IronHandsexArt(),

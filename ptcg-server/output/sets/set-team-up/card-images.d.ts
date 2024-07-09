@@ -6,6 +6,7 @@ import { Hitmonlee } from './hitmonlee';
 import { Jirachi } from './jirachi';
 import { Lapras } from './lapras';
 import { Mareep } from './mareep';
+import { MetalGoggles } from './metal-goggles';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
 import { Moltres } from './TEU_19_Moltres';
@@ -34,6 +35,9 @@ export declare class LaprasArt extends Lapras {
     cardImage: string;
 }
 export declare class MareepArt extends Mareep {
+    cardImage: string;
+}
+export declare class MetalGogglesArt extends MetalGoggles {
     cardImage: string;
 }
 export declare class MoltresArt extends Moltres {

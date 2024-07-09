@@ -1,17 +1,17 @@
-import { Card } from '../../game/store/card/card';
-import { Effect } from '../../game/store/effects/effect';
 import { GameError } from '../../game/game-error';
 import { GameLog, GameMessage } from '../../game/game-message';
+import { Card } from '../../game/store/card/card';
+import { SuperType, TrainerType } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { StateUtils } from '../../game/store/state-utils';
+import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { StateUtils } from '../../game/store/state-utils';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -29,6 +29,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     }
   });
 
+  effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
@@ -53,6 +56,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       cards
     ), () => next());
   }
+  
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

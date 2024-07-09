@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.YveltalArt = exports.ViridianForestArt = exports.PokemonCommunicationArt = exports.PidgeottoArt = exports.MoltresArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.DragoniteArt = exports.BronzorArt = exports.AlolanMukArt = void 0;
+exports.ZapdosArt = exports.YveltalArt = exports.ViridianForestArt = exports.PokemonCommunicationArt = exports.PidgeottoArt = exports.MoltresArt = exports.MetalGogglesArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.DragoniteArt = exports.BronzorArt = exports.AlolanMukArt = void 0;
 const alolan_muk_1 = require("./alolan-muk");
 const bronzor_1 = require("./bronzor");
 const dragonite_1 = require("./dragonite");
@@ -9,6 +9,7 @@ const hitmonlee_1 = require("./hitmonlee");
 const jirachi_1 = require("./jirachi");
 const lapras_1 = require("./lapras");
 const mareep_1 = require("./mareep");
+const metal_goggles_1 = require("./metal-goggles");
 const pidgeotto_1 = require("./pidgeotto");
 const pokemon_communication_1 = require("./pokemon-communication");
 const TEU_19_Moltres_1 = require("./TEU_19_Moltres");
@@ -71,6 +72,13 @@ class MareepArt extends mareep_1.Mareep {
     }
 }
 exports.MareepArt = MareepArt;
+class MetalGogglesArt extends metal_goggles_1.MetalGoggles {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_148_R_EN.png';
+    }
+}
+exports.MetalGogglesArt = MetalGogglesArt;
 class MoltresArt extends TEU_19_Moltres_1.Moltres {
     constructor() {
         super(...arguments);

@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.XerosicsSchemeArt = exports.TerapagosexArt = exports.TapuBuluArt = exports.SlitherWingArt = exports.SeadraArt = exports.RowletArt = exports.RevavroomexArt = exports.PowerHourglassArt = exports.PokeVitalAArt = exports.PecharuntexArt = exports.OrthwormexArt = exports.OkidogiexArt = exports.NoctowlArt = exports.NightlyStretcherArt = exports.NightTimeAcademyArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.KingdraexArt = exports.JoltikArt = exports.JaninesSecretTechniqueArt = exports.HoundourArt = exports.HoundoomArt = exports.HorseaArt = exports.HoothootArt = exports.HaxorusArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GenesectArt = exports.FraxureArt = exports.FezandipitiexArt = exports.FanRotomArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.CufantArt = exports.CrispinArt = exports.CresseliaArt = exports.CopperajahArt = exports.ColresssObsessionArt = exports.CassiopeiaArt = exports.BriarArt = exports.BloodmoonUrsalunaArt = exports.BindingMochiArt = exports.AxewArt = exports.AreaZeroUnderdepthsArt = exports.AbsolArt = void 0;
-exports.ZoruaArt = exports.ZoroarkArt = void 0;
+exports.TerapagosexArt = exports.TapuBuluArt = exports.SlitherWingArt = exports.SeadraArt = exports.RowletArt = exports.RevavroomexArt = exports.PowerHourglassArt = exports.PokeVitalAArt = exports.PecharuntexArt = exports.OrthwormexArt = exports.OkidogiexArt = exports.NoctowlArt = exports.NightlyStretcherArt = exports.NightTimeAcademyArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.KyuremArt = exports.KingdraexArt = exports.JoltikArt = exports.JaninesSecretTechniqueArt = exports.HoundourArt = exports.HoundoomArt = exports.HorseaArt = exports.HoothootArt = exports.HaxorusArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GenesectArt = exports.FraxureArt = exports.FezandipitiexArt = exports.FanRotomArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.CufantArt = exports.CrispinArt = exports.CresseliaArt = exports.CopperajahArt = exports.ColresssObsessionArt = exports.CassiopeiaArt = exports.BriarArt = exports.BloodmoonUrsalunaArt = exports.BindingMochiArt = exports.AxewArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = exports.AbsolArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.XerosicsSchemeArt = void 0;
 const absol_1 = require("./absol");
+const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
 const axew_1 = require("./axew");
 const binding_mochi_1 = require("./binding-mochi");
@@ -61,6 +62,13 @@ class AbsolArt extends absol_1.Absol {
     }
 }
 exports.AbsolArt = AbsolArt;
+class ArchaludonArt extends archaludon_1.Archaludon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokemonproxies.com/static/media/Archaludon-073-7i.a607ae18f6db80594379.png';
+    }
+}
+exports.ArchaludonArt = ArchaludonArt;
 class AreaZeroUnderdepthsArt extends area_zero_underdepths_1.AreaZeroUnderdepths {
     constructor() {
         super(...arguments);

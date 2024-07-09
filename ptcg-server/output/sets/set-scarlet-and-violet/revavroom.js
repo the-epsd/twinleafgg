@@ -61,7 +61,7 @@ class Revavroom extends pokemon_card_1.PokemonCard {
                 if (cards.length === 0) {
                     return;
                 }
-                while (player.hand.cards.length < 6) {
+                while (player.hand.cards.length < 7) {
                     player.deck.moveTo(player.hand, 1);
                 }
                 player.marker.addMarker(this.RUMBLING_ENGINE_MARKER, this);
