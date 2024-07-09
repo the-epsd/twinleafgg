@@ -1,8 +1,8 @@
-import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 export declare class PotHelmet extends TrainerCard {
     trainerType: TrainerType;
     regulationMark: string;

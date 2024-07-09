@@ -3,7 +3,7 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike, State, StateUtils, PlayerType, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { AddSpecialConditionsEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
 
 export class Azelf extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -46,10 +46,10 @@ export class Azelf extends PokemonCard {
         }
 
         if (damagedPokemon.length > 0) {
-          // Opponent has damaged benched Pokemon
-
           damagedPokemon.forEach(target => {
-            target.damage += 20;
+            const damageEffect = new PutCountersEffect(effect, 20);
+            damageEffect.target = cardList;
+            store.reduceEffect(state, damageEffect);
           });
         }
       });

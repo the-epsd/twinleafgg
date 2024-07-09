@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PotHelmet = void 0;
-const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const state_1 = require("../../game/store/state/state");
-const state_utils_1 = require("../../game/store/state-utils");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const state_utils_1 = require("../../game/store/state-utils");
+const state_1 = require("../../game/store/state/state");
 class PotHelmet extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,8 +20,8 @@ class PotHelmet extends trainer_card_1.TrainerCard {
         this.text = 'If the Pokémon this card is attached to doesn\'t have a Rule Box, it takes 30 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance). (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.cards.includes(this)) {
-            const sourceCard = effect.source.getPokemonCard();
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
+            const sourceCard = effect.target.getPokemonCard();
             // It's not an attack
             if (state.phase !== state_1.GamePhase.ATTACK) {
                 return state;

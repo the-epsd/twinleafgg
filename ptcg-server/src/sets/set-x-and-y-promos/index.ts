@@ -1,7 +1,8 @@
 import { Card } from "../../game/store/card/card";
-import { AzelfArt } from "./card-images";
+import { AzelfArt, MeloettaArt } from "./card-images";
 
 
 export const setXYPromos: Card[] = [
-  new AzelfArt()
+  new AzelfArt(), 
+  new MeloettaArt()
 ];

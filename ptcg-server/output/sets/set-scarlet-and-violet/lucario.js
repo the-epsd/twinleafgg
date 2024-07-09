@@ -41,17 +41,12 @@ class Lucario extends pokemon_card_1.PokemonCard {
         this.damageDealt = false;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            if (player.marker.hasMarker(this.RETALIATE_MARKER) && this.damageDealt) {
-                effect.damage += 120;
-            }
-            return state;
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.marker.removeMarker(this.RETALIATE_MARKER);
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            if (player.marker.hasMarker(this.ATTACK_USED_MARKER)) {
-                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
             }
             effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
         }
@@ -62,14 +57,26 @@ class Lucario extends pokemon_card_1.PokemonCard {
             if (player !== owner) {
                 this.damageDealt = true;
             }
+            else {
+                effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+            }
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player === game_1.StateUtils.getOpponent(state, effect.player)) {
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            if (owner === effect.player) {
+                this.damageDealt = false;
+            }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            if (player.marker.hasMarker(this.RETALIATE_MARKER) && this.damageDealt) {
+                effect.damage += 120;
+            }
         }
         if (effect instanceof game_effects_1.KnockOutEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const targetPokemon = effect.target.getPokemonCard();
-            if (targetPokemon && targetPokemon.cardType === card_types_1.CardType.FIGHTING) {
-                player.marker.addMarkerToState(this.RETALIATE_MARKER);
-            }
             // Do not activate between turns, or when it's not opponents turn.
             if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
                 return state;
@@ -77,20 +84,9 @@ class Lucario extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                if (targetPokemon && targetPokemon.cardType === card_types_1.CardType.FIGHTING) {
-                    player.marker.addMarkerToState(this.RETALIATE_MARKER);
-                }
-                return state;
+                effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
             }
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const cardList = game_1.StateUtils.findCardList(state, this);
-            const owner = game_1.StateUtils.findOwner(state, cardList);
-            if (owner === effect.player) {
-                this.damageDealt = false;
-            }
-            effect.player.marker.removeMarker(this.RETALIATE_MARKER);
-            effect.player.marker.removeMarker(this.ATTACK_USED_MARKER);
+            return state;
         }
         return state;
     }

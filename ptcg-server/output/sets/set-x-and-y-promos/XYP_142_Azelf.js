@@ -42,9 +42,10 @@ class Azelf extends pokemon_card_1.PokemonCard {
                     damagedPokemon.push(cardList);
                 }
                 if (damagedPokemon.length > 0) {
-                    // Opponent has damaged benched Pokemon
                     damagedPokemon.forEach(target => {
-                        target.damage += 20;
+                        const damageEffect = new attack_effects_1.PutCountersEffect(effect, 20);
+                        damageEffect.target = cardList;
+                        store.reduceEffect(state, damageEffect);
                     });
                 }
             });

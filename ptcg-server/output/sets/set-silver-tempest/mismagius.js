@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Mismagius = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
-const game_effects_1 = require("../../game/store/effects/game-effects");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Mismagius extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -26,7 +27,7 @@ class Mismagius extends pokemon_card_1.PokemonCard {
         this.attacks = [{
                 name: 'Eerie Voice',
                 cost: [card_types_1.CardType.PSYCHIC],
-                damage: 140,
+                damage: 0,
                 text: 'Put 2 damage counters on each of your opponent\'s Pokémon.'
             }
         ];
@@ -35,9 +36,29 @@ class Mismagius extends pokemon_card_1.PokemonCard {
         this.setNumber = '64';
         this.name = 'Mismagius';
         this.fullName = 'Mismagius SIT';
+        this.damageDealt = false;
+        this.RETALIATE_MARKER = 'RETALIATE_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.marker.removeMarker(this.RETALIATE_MARKER);
+        }
+        if (effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) {
+            const player = game_1.StateUtils.getOpponent(state, effect.player);
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            if (player !== owner) {
+                this.damageDealt = true;
+            }
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player === game_1.StateUtils.getOpponent(state, effect.player)) {
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            if (owner === effect.player) {
+                this.damageDealt = false;
+            }
+        }
+        if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this) && this.damageDealt) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             if (this.hp == this.hp) {
@@ -47,12 +68,8 @@ class Mismagius extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            effect.damage = 10;
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
-                if (cardList === opponent.active) {
-                    return;
-                }
-                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 10);
+                const damageEffect = new attack_effects_1.PutCountersEffect(effect, 20);
                 damageEffect.target = cardList;
                 store.reduceEffect(state, damageEffect);
             });

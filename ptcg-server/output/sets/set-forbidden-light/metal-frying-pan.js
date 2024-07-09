@@ -18,7 +18,7 @@ class MetalFryingPan extends trainer_card_1.TrainerCard {
         this.text = 'The [M] Pokémon this card is attached to takes 30 less damage from your opponent\'s attacks (after applying Weakness and Resistance) and has no Weakness.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target && effect.target.cards.includes(this)) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target && effect.target.cards.includes(this)) {
             const player = effect.player;
             try {
                 const energyEffect = new play_card_effects_1.ToolEffect(player, this);
@@ -31,16 +31,10 @@ class MetalFryingPan extends trainer_card_1.TrainerCard {
             store.reduceEffect(state, checkPokemonType);
             if (checkPokemonType.cardTypes.includes(card_types_1.CardType.METAL)) {
                 // Allow damage
-                if (effect instanceof attack_effects_1.PutDamageEffect) {
-                    effect.attackEffect.ignoreWeakness = true;
-                    effect.damage = Math.max(0, effect.damage - 30);
-                    return state;
-                }
-                if (effect instanceof attack_effects_1.DealDamageEffect) {
-                    effect.attackEffect.ignoreWeakness = true;
-                    effect.damage = Math.max(0, effect.damage - 30);
-                    return state;
-                }
+                effect.attackEffect.ignoreWeakness = true;
+                effect.damage = Math.max(0, effect.damage - 30);
+                effect.damageReduced = true;
+                return state;
             }
         }
         return state;
