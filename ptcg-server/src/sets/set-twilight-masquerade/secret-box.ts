@@ -66,6 +66,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
+  player.hand.moveCardsTo(cards, player.discard);
+
   // Pass max counts to prompt options
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
