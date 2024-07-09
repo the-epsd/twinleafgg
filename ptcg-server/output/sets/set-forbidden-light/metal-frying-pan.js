@@ -20,6 +20,12 @@ class MetalFryingPan extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target && effect.target.cards.includes(this)) {
             const player = effect.player;
+            const sourceCard = effect.target.getPokemonCard();
+            // It's not an attack
+            if (state.phase !== state_1.GamePhase.ATTACK) {
+                return state;
+            }
+          
             try {
                 const energyEffect = new play_card_effects_1.ToolEffect(player, this);
                 store.reduceEffect(state, energyEffect);
