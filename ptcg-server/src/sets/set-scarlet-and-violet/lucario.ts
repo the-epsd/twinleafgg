@@ -71,6 +71,8 @@ export class Lucario extends PokemonCard {
 
       if (player !== owner) {
         this.damageDealt = true;
+      } else {
+        effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
       }
     }
 
@@ -106,15 +108,6 @@ export class Lucario extends PokemonCard {
         effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
       }
       return state;
-    }
-    
-    if (effect instanceof EndTurnEffect) {
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
-
-      if (owner !== effect.player) {
-        effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      }
     }
 
     return state;
