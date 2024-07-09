@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, GameError } from '../../game';
+import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -11,13 +11,23 @@ function* useKingsOrder(next: Function, store: StoreLike, state: State,
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
   const max = Math.min(slots.length, 3);
 
-  const hasWaterPokemonInDiscard = player.hand.cards.some(c => {
-    return c instanceof PokemonCard && c.cardType === CardType.WATER;
+  // const hasWaterPokemonInDiscard = player.discard.cards.some(c => {
+  //   return c instanceof PokemonCard && c.cardType === CardType.WATER;
+  // });
+  // if (!hasWaterPokemonInDiscard) {
+  //   throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+  // }
+
+  const hasWaterPokemonInDiscard = player.discard.cards.some(c => {
+    const discardPokemon = player.discard.cards.filter(card => card.superType === SuperType.POKEMON) as PokemonCard[];
+    const waterDiscardPokemon = discardPokemon.filter(card => card.cardType === CardType.WATER);
+    return waterDiscardPokemon.length > 0;
   });
-  if (!hasWaterPokemonInDiscard) {
-    throw new GameError(GameMessage.CANNOT_USE_POWER);
+
+  if (!hasWaterPokemonInDiscard || slots.length === 0) {
+    throw new GameError(GameMessage.CANNOT_USE_ATTACK);
   }
-    
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
@@ -29,18 +39,14 @@ function* useKingsOrder(next: Function, store: StoreLike, state: State,
     cards = selected || [];
     next();
   });
-    
+
   if (cards.length > slots.length) {
     cards.length = slots.length;
   }
-    
+
   cards.forEach((card, index) => {
     player.discard.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
-  });
-    
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
   });
 }
 
@@ -48,7 +54,7 @@ export class Kingdraex extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.STAGE_2;
 
@@ -65,12 +71,12 @@ export class Kingdraex extends PokemonCard {
   public attacks = [
     {
       name: 'King\'s Order',
-      cost: [ CardType.WATER ],
+      cost: [CardType.WATER],
       damage: 0,
       text: 'Put up to 3 [W] Pokémon from your discard pile onto your Bench.'
     },
     {
-      name: 'Fin Cutter',
+      name: 'Hydro Pump',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 50,
       damageCalculation: '+',
@@ -96,10 +102,10 @@ export class Kingdraex extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-  
+
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergyEffect);
-  
+
       let energyCount = 0;
       checkProvidedEnergyEffect.energyMap.forEach(em => {
         energyCount += em.provides.filter(cardType => {

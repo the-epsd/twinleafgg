@@ -37,10 +37,10 @@ class Seadra extends pokemon_card_1.PokemonCard {
                 name: 'Call for Backup',
                 cost: [card_types_1.CardType.WATER],
                 damage: 0,
-                text: 'Heal 30 damage from this Pokémon.'
+                text: 'Search your deck for up to 3 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.'
             },
             {
-                name: 'Fin Cutter',
+                name: 'Sharp Fin',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 40,
                 text: ''

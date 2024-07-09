@@ -452,7 +452,9 @@
     "CARD": "Card",
     "CARDS": "Cards",
     "TREKKING_SHOES": "Would you like to put this card into your hand?",
-    "DISCARD_FROM_TOP_OF_DECK": "Would you like to discard this card?"
+    "DISCARD_FROM_TOP_OF_DECK": "Would you like to discard this card?",
+    "CHOOSE_SUPPORTER_FROM_DECK": "Choose a Supporter card from your deck",
+    "CHOOSE_SUPPORTER_FROM_DISCARD": "Choose a Supporter card from your discard pile"
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.",

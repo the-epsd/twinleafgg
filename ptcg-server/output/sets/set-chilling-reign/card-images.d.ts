@@ -6,6 +6,8 @@ import { BlazikenV } from './blaziken-v';
 import { BlazikenVMAX } from './blaziken-vmax';
 import { BlisseyV } from './blissey-v';
 import { Caitlin } from './caitlin';
+import { CastformRainyForm } from './castform-rainy-form';
+import { CastformSnowyForm } from './castform-snowy-form';
 import { CastformSunnyForm } from './castform-sunny-form';
 import { Tauros } from './CRE_115_Tauros';
 import { Drizzile } from './drizzile';
@@ -65,6 +67,12 @@ export declare class BlisseyVArt extends BlisseyV {
     cardImage: string;
 }
 export declare class CaitlinArt extends Caitlin {
+    cardImage: string;
+}
+export declare class CastformRainyFormArt extends CastformRainyForm {
+    cardImage: string;
+}
+export declare class CastformSnowyFormArt extends CastformSnowyForm {
     cardImage: string;
 }
 export declare class CastformSunnyFormArt extends CastformSunnyForm {

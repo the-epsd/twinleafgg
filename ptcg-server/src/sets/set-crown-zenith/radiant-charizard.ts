@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class RadiantCharizard extends PokemonCard {
@@ -67,8 +67,6 @@ export class RadiantCharizard extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      new CheckPokemonAttacksEffect(player);
-
       try {
         const stub = new PowerEffect(player, {
           name: 'test',
@@ -81,29 +79,30 @@ export class RadiantCharizard extends PokemonCard {
       }
 
       const prizesTaken = 6 - opponent.getPrizeLeft();
-      const index = effect.attack.cost.findIndex(c => c === CardType.COLORLESS);
+      const attackCost = [...this.attacks[0].cost]; // Create a copy of the attack cost array
+      const colorlessCount = attackCost.filter(cardType => cardType === CardType.COLORLESS).length;
 
-      if (index !== -1) {
-        this.attacks.forEach(attack => {
-          attack.cost.splice(index, prizesTaken);
-        });
-
-
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-          // Check marker
-          if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            console.log('attack blocked');
-            throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-          }
-          effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-          console.log('marker added');
+      // Remove the appropriate number of CardType.COLORLESS instances from the attack cost
+      const colorlessToRemove = Math.min(colorlessCount, prizesTaken);
+      this.attacks[0].cost = attackCost.filter((cardType, index) => {
+        if (cardType !== CardType.COLORLESS) {
+          return true;
         }
-        return state;
+        const shouldRemove = index < colorlessToRemove;
+        return !shouldRemove;
+      });
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      // Check marker
+      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        console.log('attack blocked');
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+      console.log('marker added');
     }
     return state;
   }
-
-
 }

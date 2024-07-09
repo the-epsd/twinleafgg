@@ -51,7 +51,6 @@ class RadiantCharizard extends pokemon_card_1.PokemonCard {
         if (effect instanceof check_effects_1.CheckAttackCostEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            new check_effects_1.CheckPokemonAttacksEffect(player);
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
@@ -64,22 +63,26 @@ class RadiantCharizard extends pokemon_card_1.PokemonCard {
                 return state;
             }
             const prizesTaken = 6 - opponent.getPrizeLeft();
-            const index = effect.attack.cost.findIndex(c => c === card_types_1.CardType.COLORLESS);
-            if (index !== -1) {
-                this.attacks.forEach(attack => {
-                    attack.cost.splice(index, prizesTaken);
-                });
-                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                    // Check marker
-                    if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                        console.log('attack blocked');
-                        throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
-                    }
-                    effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-                    console.log('marker added');
+            const attackCost = [...this.attacks[0].cost]; // Create a copy of the attack cost array
+            const colorlessCount = attackCost.filter(cardType => cardType === card_types_1.CardType.COLORLESS).length;
+            // Remove the appropriate number of CardType.COLORLESS instances from the attack cost
+            const colorlessToRemove = Math.min(colorlessCount, prizesTaken);
+            this.attacks[0].cost = attackCost.filter((cardType, index) => {
+                if (cardType !== card_types_1.CardType.COLORLESS) {
+                    return true;
                 }
-                return state;
+                const shouldRemove = index < colorlessToRemove;
+                return !shouldRemove;
+            });
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            // Check marker
+            if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+                console.log('attack blocked');
+                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+            console.log('marker added');
         }
         return state;
     }

@@ -1,3 +1,5 @@
+import { Slakoth } from './CES_113_Slakoth';
+import { Slaking } from './CES_115_Slaking';
 import { Sableye } from './CES_88_Sableye';
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
@@ -26,6 +28,12 @@ export declare class MarshtompArt extends Marshtomp {
     cardImage: string;
 }
 export declare class SableyeArt extends Sableye {
+    cardImage: string;
+}
+export declare class SlakingArt extends Slaking {
+    cardImage: string;
+}
+export declare class SlakothArt extends Slakoth {
     cardImage: string;
 }
 export declare class SwampertArt extends Swampert {

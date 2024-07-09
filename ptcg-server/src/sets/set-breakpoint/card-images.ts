@@ -1,4 +1,5 @@
 import { Bayleef } from './bayleef';
+import { Sudowoodo } from './BKP_67_Sudowoodo';
 import { Zoroark } from './BKT_91_Zoroark';
 import { Delinquent } from './delinquent';
 import { FightingFuryBelt } from './fighting-fury-belt';
@@ -33,11 +34,15 @@ export class ReverseValleyArt extends ReverseValley {
 }
 
 export class SplashEnergyArt extends SplashEnergy {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_113_R_EN_LG.png';  
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_113_R_EN_LG.png';
 }
 
 export class StaryuArt extends Staryu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_025_R_EN_LG.png';
+}
+
+export class SudowoodoArt extends Sudowoodo {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_067_R_EN_LG.png';
 }
 
 export class ZoroarkArt extends Zoroark {

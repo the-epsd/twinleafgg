@@ -11,7 +11,7 @@ export class Wishiwashi extends PokemonCard {
   public cardType: CardType = CardType.WATER;
   public hp: number = 180;
   public weakness = [{ type: CardType.LIGHTNING }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Scatter',

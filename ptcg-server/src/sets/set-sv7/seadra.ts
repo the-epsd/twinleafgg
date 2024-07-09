@@ -7,7 +7,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 function* useCallForBackup(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
-    
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
@@ -19,15 +19,15 @@ function* useCallForBackup(next: Function, store: StoreLike, state: State,
     cards = selected || [];
     next();
   });
-    
+
   if (cards.length === 0) {
     return state;
   }
-    
+
   cards.forEach((card, index) => {
     player.deck.moveCardTo(card, player.hand);
   });
-    
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
@@ -52,12 +52,12 @@ export class Seadra extends PokemonCard {
   public attacks = [
     {
       name: 'Call for Backup',
-      cost: [ CardType.WATER ],
+      cost: [CardType.WATER],
       damage: 0,
-      text: 'Heal 30 damage from this Pokémon.'
+      text: 'Search your deck for up to 3 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.'
     },
     {
-      name: 'Fin Cutter',
+      name: 'Sharp Fin',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 40,
       text: ''

@@ -37,8 +37,6 @@ export class Player {
 
   stadiumUsedTurn: number = 0;
 
-  usedDragonsWish: boolean = false;
-
   marker = new Marker();
 
   attackMarker = new Marker();
@@ -46,8 +44,6 @@ export class Player {
   abilityMarker = new Marker();
 
   avatarName: string = '';
-
-  specialEnergyBlocked: boolean = false;
 
   usedVSTAR: boolean = false;
 
@@ -75,7 +71,7 @@ export class Player {
   usedTurnSkip: any;
   usedTableTurner: any;
   chainsOfControlUsed: any;
-
+  usedDragonsWish = false;
   pecharuntexIsInPlay = false;
   usedJewelHunt = false;
   usedFanCall = false;
@@ -108,7 +104,7 @@ export class Player {
 
   removePokemonEffects(target: PokemonCardList) {
 
-    //breakdown of markers to be removed on switchPokemon()
+    //breakdown of markers to be removed
     this.attackMarker.removeMarker(this.ATTACK_USED_MARKER);
     this.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER);
     this.attackMarker.removeMarker(this.KNOCKOUT_MARKER);
@@ -135,23 +131,23 @@ export class Player {
       const temp = this.active;
 
       //breakdown of markers to be removed on switchPokemon()
-      this.attackMarker.removeMarker(this.ATTACK_USED_MARKER);
-      this.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER);
-      this.attackMarker.removeMarker(this.KNOCKOUT_MARKER);
-      this.attackMarker.removeMarker(this.CLEAR_KNOCKOUT_MARKER);
-      this.attackMarker.removeMarker(this.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER);
-      this.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER);
-      this.attackMarker.removeMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER);
-      this.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER);
-      this.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER);
-      this.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER);
-      this.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER);
-      this.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER);
-      this.attackMarker.removeMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
-      this.attackMarker.removeMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
-      this.attackMarker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES);
+      // this.attackMarker.removeMarker(this.ATTACK_USED_MARKER);
+      // this.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER);
+      // this.attackMarker.removeMarker(this.KNOCKOUT_MARKER);
+      // this.attackMarker.removeMarker(this.CLEAR_KNOCKOUT_MARKER);
+      // this.attackMarker.removeMarker(this.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER);
+      // this.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER);
+      // this.attackMarker.removeMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER);
+      // this.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER);
+      // this.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER);
+      // this.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER);
+      // this.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER);
+      // this.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER);
+      // this.attackMarker.removeMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
+      // this.attackMarker.removeMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
+      // this.attackMarker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES);
 
-      this.active.clearEffects();
+      // this.active.clearEffects();
       this.active = this.bench[benchIndex];
       this.bench[benchIndex] = temp;
 

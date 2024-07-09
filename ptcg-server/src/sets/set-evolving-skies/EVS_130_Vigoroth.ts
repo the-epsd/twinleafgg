@@ -6,6 +6,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Vigoroth extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom = 'Slakoth';
   public cardType: CardType = CardType.COLORLESS;
   public hp: number = 90;
   public weakness = [{ type: CardType.FIGHTING }];
@@ -32,8 +33,8 @@ export class Vigoroth extends PokemonCard {
   public fullName: string = 'Vigoroth EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
-    if(effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard !== undefined) {
 

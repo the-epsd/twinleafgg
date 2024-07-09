@@ -6,6 +6,8 @@ import { BlazikenV } from './blaziken-v';
 import { BlazikenVMAX } from './blaziken-vmax';
 import { BlisseyV } from './blissey-v';
 import { Caitlin } from './caitlin';
+import { CastformRainyForm } from './castform-rainy-form';
+import { CastformSnowyForm } from './castform-snowy-form';
 import { CastformSunnyForm } from './castform-sunny-form';
 import { Tauros } from './CRE_115_Tauros';
 import { Drizzile } from './drizzile';
@@ -74,6 +76,14 @@ export class BlisseyVArt extends BlisseyV {
 
 export class CaitlinArt extends Caitlin {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_132_R_EN_LG.png';
+}
+
+export class CastformRainyFormArt extends CastformRainyForm {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_033_R_EN_LG.png';
+}
+
+export class CastformSnowyFormArt extends CastformSnowyForm {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_034_R_EN_LG.png';
 }
 
 export class CastformSunnyFormArt extends CastformSunnyForm {

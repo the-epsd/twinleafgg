@@ -1,3 +1,4 @@
+import { Judge } from '../set-scarlet-and-violet/judge';
 import { Accelgor } from './accelgor';
 import { AdventurersDiscovery } from './adventurers-discovery';
 import { Basculin } from './basculin';
@@ -18,7 +19,6 @@ import { GengarVMAX } from './gengar-vmax';
 import { Heatmor } from './heatmor';
 import { InteleonV } from './inteleon-v';
 import { InteleonVMAX } from './inteleon-vmax';
-import { Judge } from './judge';
 import { Meloetta } from './meloetta';
 import { MewV } from './mew-v';
 import { MewVMAX } from './mew-vmax';
@@ -113,6 +113,9 @@ export class InteleonVMAXArt extends InteleonVMAX {
 
 export class JudgeArt extends Judge {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_235_R_EN_LG.png';
+  public set = 'FST';
+  public setNumber = '235';
+  public fullName = 'Judge FST';
 }
 
 export class MeloettaArt extends Meloetta {

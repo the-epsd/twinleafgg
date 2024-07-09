@@ -1,15 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, Card, CardTarget, ConfirmPrompt, MoveEnergyPrompt, PlayerType, SlotType, StateUtils, GameError, PowerType } from '../../game';
+import { StoreLike, State, GameMessage, ConfirmPrompt, MoveEnergyPrompt, PlayerType, SlotType, StateUtils, GameError, PowerType, PokemonCardList, EnergyCard, CardTarget } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class IronLeavesex extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.FUTURE ];
+  public tags = [CardTag.POKEMON_ex, CardTag.FUTURE];
 
   public regulationMark = 'H';
 
@@ -21,7 +20,7 @@ export class IronLeavesex extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Rapid Vernier',
@@ -32,7 +31,7 @@ export class IronLeavesex extends PokemonCard {
   public attacks = [
     {
       name: 'Prismatic Edge',
-      cost: [ CardType.GRASS, CardType.GRASS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
       damage: 180,
       text: GameMessage.MOVE_ENERGY_CARDS,
     }
@@ -58,7 +57,7 @@ export class IronLeavesex extends PokemonCard {
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
-  
+
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
@@ -86,35 +85,29 @@ export class IronLeavesex extends PokemonCard {
             return state;
           }
 
-          const target = effect.target;
+          const cardList = StateUtils.findCardList(state, this);
+          const benchIndex = player.bench.indexOf(cardList as PokemonCardList);
 
-          player.switchPokemon(target);
+          player.switchPokemon(player.bench[benchIndex]);
 
+          const blockedFrom: CardTarget[] = [];
+          const blockedTo: CardTarget[] = [];
 
-          const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+          let hasEnergyOnBench = false;
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-            const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
-            store.reduceEffect(state, checkProvidedEnergy);
-            const blockedCards: Card[] = [];
-
-            checkProvidedEnergy.energyMap.forEach(em => {
-              if (!em.provides.includes(CardType.ANY)) {
-                blockedCards.push(em.card);
-              }
-            });
-
-            const blocked: number[] = [];
-            blockedCards.forEach(bc => {
-              const index = cardList.cards.indexOf(bc);
-              if (index !== -1 && !blocked.includes(index)) {
-                blocked.push(index);
-              }
-            });
-
-            if (blocked.length !== 0) {
-              blockedMap.push({ source: target, blocked });
+            if (cardList === player.active) {
+              blockedFrom.push(target);
+              return;
+            }
+            blockedTo.push(target);
+            if (cardList.cards.some(c => c instanceof EnergyCard)) {
+              hasEnergyOnBench = true;
             }
           });
+
+          if (hasEnergyOnBench === false) {
+            return state;
+          }
 
           return store.prompt(state, new MoveEnergyPrompt(
             player.id,
@@ -122,7 +115,7 @@ export class IronLeavesex extends PokemonCard {
             PlayerType.BOTTOM_PLAYER,
             [SlotType.BENCH, SlotType.ACTIVE], // Only allow moving to active
             { superType: SuperType.ENERGY },
-            { allowCancel: true }
+            { allowCancel: false, blockedFrom, blockedTo }
           ), transfers => {
 
             if (!transfers) {
@@ -134,29 +127,25 @@ export class IronLeavesex extends PokemonCard {
               // Can only move energy to the active Pokemon
               const target = player.active;
               const source = StateUtils.getTarget(state, player, transfer.from);
-
-              source.moveCardTo(transfer.card, target);
-              return state;
+              transfers.forEach(transfer => {
+                source.moveCardTo(transfer.card, target);
+                return state;
+              });
             }
-
-            if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-              // Check marker
-              if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                console.log('attack blocked');
-                throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-              }
-              effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-              console.log('marker added');
-            }
-
-
-            return state;
           });
         }
-        return state;
       });
-      return state;
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      // Check marker
+      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        console.log('attack blocked');
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+      console.log('marker added');
     }
     return state;
   }
