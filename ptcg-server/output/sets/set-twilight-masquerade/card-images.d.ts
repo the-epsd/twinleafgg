@@ -64,6 +64,7 @@ import { Infernape } from './infernape';
 import { WalkingWake } from './walking-wake';
 import { Okidogi } from './okidogi';
 import { SecretBox } from './secret-box';
+import { Heatran } from './heatran';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -158,6 +159,9 @@ export declare class HasselArt extends Hassel {
     cardImage: string;
 }
 export declare class HearthflameMaskOgerponexArt extends HearthflameMaskOgerponex {
+    cardImage: string;
+}
+export declare class HeatranArt extends Heatran {
     cardImage: string;
 }
 export declare class HyperAromaArt extends HyperAroma {

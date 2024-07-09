@@ -21,27 +21,26 @@ class CoatingMetalEnergy extends energy_card_1.EnergyCard {
             'The [M] Pokémon this card is attached to has no Weakness.';
     }
     reduceEffect(store, state, effect) {
-        var _a, _b;
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             try {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_c) {
+            catch (_a) {
                 return state;
             }
             effect.energyMap.push({ card: this, provides: [card_types_1.CardType.METAL] });
             return state;
         }
         // Prevent effects of attacks
-        if (effect instanceof attack_effects_1.AbstractAttackEffect && ((_b = (_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards) === null || _b === void 0 ? void 0 : _b.includes(this))) {
+        if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target && effect.target.cards.includes(this)) {
             const player = effect.player;
             try {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_d) {
+            catch (_b) {
                 return state;
             }
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
@@ -56,7 +55,6 @@ class CoatingMetalEnergy extends energy_card_1.EnergyCard {
                     effect.attackEffect.ignoreWeakness = true;
                     return state;
                 }
-                effect.preventDefault = true;
             }
         }
         return state;
