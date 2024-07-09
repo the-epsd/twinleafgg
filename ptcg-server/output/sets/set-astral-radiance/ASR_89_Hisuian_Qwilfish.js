@@ -30,41 +30,20 @@ class HisuianQwilfish extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            let numFlips = 0;
-            while (!this.COIN_FLIP_TAILS) {
-                store.prompt(state, [
-                    new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
-                ], result => {
-                    result === true ? numFlips++ : this.COIN_FLIP_TAILS = false;
-                });
-            }
-            effect.damage = 10 * numFlips;
-            /*return store.prompt(state, new CoinFlipPrompt(
-              player.id,
-              GameMessage.COIN_FLIP
-            ), results => {
-              let numFlips = 0;
-              let trackerNum = 0;
-              if (results === true) {
-                numFlips++;
-                while (trackerNum === 0) {
-                  store.prompt(state, [
-                    new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-                  ], result => {
-                    if (result === true) {
-                      numFlips++;
-                    }
-      
-                    if (result === false) {
-                      console.log('incrementing trackerNum');
-                      trackerNum++;
-                    }
-                  });
+            return store.prompt(state, new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP), results => {
+                let numFlips = 0;
+                if (results === true) {
+                    numFlips++;
+                    store.prompt(state, [
+                        new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
+                    ], result => {
+                        if (result === true) {
+                            numFlips++;
+                        }
+                    });
                 }
-              }
-      
-              effect.damage = 10 * numFlips;
-            });*/
+                effect.damage = 10 * numFlips;
+            });
         }
         return state;
     }

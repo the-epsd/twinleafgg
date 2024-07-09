@@ -51,6 +51,9 @@ class Octillery extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.ABYSSAL_HAND_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
+            if (player.hand.cards.length >= 5) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
