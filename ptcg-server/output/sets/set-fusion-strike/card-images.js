@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.YveltalArt = exports.ShelmetArt = exports.ShaunaArt = exports.SchoolgirlArt = exports.SchoolboyArt = exports.PyukumukuArt = exports.PowerTabletArt = exports.OricorioArt = exports.MewVMAXArt = exports.MewVArt = exports.MeloettaArt = exports.JudgeArt = exports.InteleonVMAXArt = exports.InteleonVArt = exports.HeatmorArt = exports.GengarVMAXArt = exports.GengarVArt = exports.GenesectVArt = exports.GalarianLinooneArt = exports.FusionStrikeEnergyArt = exports.ElesasSparkleArt = exports.DunsparceArt = exports.DreepyArt = exports.DeoxysArt = exports.CrossSwitcherArt = exports.CroagunkArt = exports.CreamomaticArt = exports.CookArt = exports.BattleVIPPassArt = exports.BasculinArt = exports.AdventurersDiscoveryArt = exports.AccelgorArt = void 0;
+const judge_1 = require("../set-scarlet-and-violet/judge");
 const accelgor_1 = require("./accelgor");
 const adventurers_discovery_1 = require("./adventurers-discovery");
 const basculin_1 = require("./basculin");
@@ -21,7 +22,6 @@ const gengar_vmax_1 = require("./gengar-vmax");
 const heatmor_1 = require("./heatmor");
 const inteleon_v_1 = require("./inteleon-v");
 const inteleon_vmax_1 = require("./inteleon-vmax");
-const judge_1 = require("./judge");
 const meloetta_1 = require("./meloetta");
 const mew_v_1 = require("./mew-v");
 const mew_vmax_1 = require("./mew-vmax");
@@ -177,6 +177,9 @@ class JudgeArt extends judge_1.Judge {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_235_R_EN_LG.png';
+        this.set = 'FST';
+        this.setNumber = '235';
+        this.fullName = 'Judge FST';
     }
 }
 exports.JudgeArt = JudgeArt;

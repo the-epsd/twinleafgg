@@ -54,6 +54,7 @@ function* playCard(next, store, state, self, effect) {
         cards = selected || [];
         next();
     });
+    player.hand.moveCardsTo(cards, player.discard);
     // Pass max counts to prompt options
     yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ONE_ITEM_AND_ONE_TOOL_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked, maxTools, maxItems, maxStadiums, maxSupporters }), selected => {
         cards = selected || [];

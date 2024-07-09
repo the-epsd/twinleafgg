@@ -53,8 +53,9 @@ export class CastformSunnyForm extends PokemonCard {
 
     if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
+      console.log('Number of stadiums in discard pile: ' + player.discard.cards.filter(c => c instanceof TrainerCard && (<TrainerCard>c).trainerType === TrainerType.STADIUM).length);
 
-      if (player.discard.cards.filter(c => c instanceof TrainerCard && (<TrainerCard>c).trainerType === TrainerType.TOOL).length >= 8) {
+      if (player.discard.cards.filter(c => c instanceof TrainerCard && (<TrainerCard>c).trainerType === TrainerType.STADIUM).length >= 8) {
         try {
           const stub = new PowerEffect(player, {
             name: 'test',

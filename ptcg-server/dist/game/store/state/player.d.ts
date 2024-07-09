@@ -20,12 +20,10 @@ export declare class Player {
     energyPlayedTurn: number;
     stadiumPlayedTurn: number;
     stadiumUsedTurn: number;
-    usedDragonsWish: boolean;
     marker: Marker;
     attackMarker: Marker;
     abilityMarker: Marker;
     avatarName: string;
-    specialEnergyBlocked: boolean;
     usedVSTAR: boolean;
     usedGX: boolean;
     readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
@@ -49,6 +47,7 @@ export declare class Player {
     usedTurnSkip: any;
     usedTableTurner: any;
     chainsOfControlUsed: any;
+    usedDragonsWish: boolean;
     pecharuntexIsInPlay: boolean;
     usedJewelHunt: boolean;
     usedFanCall: boolean;

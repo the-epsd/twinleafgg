@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TateAndLizaArt = exports.SwampertArt = exports.SableyeArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.HustleBeltArt = exports.DelcattyArt = exports.CopycatArt = void 0;
+exports.TateAndLizaArt = exports.SwampertArt = exports.SlakothArt = exports.SlakingArt = exports.SableyeArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.HustleBeltArt = exports.DelcattyArt = exports.CopycatArt = void 0;
+const CES_113_Slakoth_1 = require("./CES_113_Slakoth");
+const CES_115_Slaking_1 = require("./CES_115_Slaking");
 const CES_88_Sableye_1 = require("./CES_88_Sableye");
 const copycat_1 = require("./copycat");
 const delcatty_1 = require("./delcatty");
@@ -59,6 +61,20 @@ class SableyeArt extends CES_88_Sableye_1.Sableye {
     }
 }
 exports.SableyeArt = SableyeArt;
+class SlakingArt extends CES_115_Slaking_1.Slaking {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_115_R_EN_LG.png';
+    }
+}
+exports.SlakingArt = SlakingArt;
+class SlakothArt extends CES_113_Slakoth_1.Slakoth {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_113_R_EN_LG.png';
+    }
+}
+exports.SlakothArt = SlakothArt;
 class SwampertArt extends swampert_1.Swampert {
     constructor() {
         super(...arguments);

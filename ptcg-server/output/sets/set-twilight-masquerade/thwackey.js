@@ -62,10 +62,6 @@ class Thwackey extends pokemon_card_1.PokemonCard {
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            const festivalActive = player.active.getPokemonCard();
-            if (festivalActive && festivalActive.powers[0].name !== 'Fesival Lead') {
-                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
-            }
             player.marker.addMarker(this.BOOM_BOOM_DRUM_MARKER, this);
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {

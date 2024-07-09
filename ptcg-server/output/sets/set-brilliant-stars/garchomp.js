@@ -40,7 +40,7 @@ class Garchomp extends pokemon_card_1.PokemonCard {
         this.CLEAR_SONIC_SLIP_MARKER = 'CLEAR_SONIC_SLIP_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             // Discard 2 cards from your deck 
             player.deck.moveTo(player.discard, 2);

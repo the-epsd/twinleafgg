@@ -11,6 +11,8 @@ exports.setChillingReign = [
     new card_images_1.BlazikenVMAXArt(),
     new card_images_1.BlisseyVArt(),
     new card_images_1.CaitlinArt(),
+    new card_images_1.CastformRainyFormArt(),
+    new card_images_1.CastformSnowyFormArt(),
     new card_images_1.CastformSunnyFormArt(),
     new card_images_1.DrizzileArt(),
     new card_images_1.DynaTreeHillArt(),

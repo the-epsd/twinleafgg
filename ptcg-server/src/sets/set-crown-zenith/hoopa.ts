@@ -38,8 +38,6 @@ export class Hoopa extends PokemonCard {
 
   public fullName: string = 'Hoopa CRZ';
 
-
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof EndTurnEffect) {

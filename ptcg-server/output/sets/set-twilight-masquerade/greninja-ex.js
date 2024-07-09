@@ -42,6 +42,7 @@ class Greninjaex extends pokemon_card_1.PokemonCard {
         this.setNumber = '106';
         this.name = 'Greninja ex';
         this.fullName = 'Greninja ex TWM';
+        this.usedMirageBarrage = false;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -68,11 +69,11 @@ class Greninjaex extends pokemon_card_1.PokemonCard {
                         const damageEffect = new attack_effects_1.PutDamageEffect(effect, 120);
                         damageEffect.target = target;
                         store.reduceEffect(state, damageEffect);
-                        const cards = (energy || []).map(e => e.card);
-                        const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
-                        discardEnergy.target = player.active;
-                        store.reduceEffect(state, discardEnergy);
                     });
+                    const cards = (energy || []).map(e => e.card);
+                    const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+                    discardEnergy.target = player.active;
+                    store.reduceEffect(state, discardEnergy);
                 });
             });
         }

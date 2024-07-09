@@ -36,12 +36,15 @@ class WyrdeerV extends game_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+            const player = state.players[state.activePlayer];
+            player.marker.removeMarker(this.ABILITY_USED_MARKER, this);
             this.movedToActiveThisTurn = false;
         }
         const cardList = game_1.StateUtils.findCardList(state, this);
         const owner = game_1.StateUtils.findOwner(state, cardList);
         const player = state.players[state.activePlayer];
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player === owner) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            this.movedToActiveThisTurn = false;
             player.marker.removeMarker(this.ABILITY_USED_MARKER, this);
         }
         if (player === owner && !player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
@@ -59,8 +62,24 @@ class WyrdeerV extends game_1.PokemonCard {
                 catch (_a) {
                     return state;
                 }
-                return store.prompt(state, new game_1.MoveEnergyPrompt(player.id, game_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], // Only allow moving to active
-                { superType: game_1.SuperType.ENERGY }, { allowCancel: true }), transfers => {
+                const blockedFrom = [];
+                const blockedTo = [];
+                let hasEnergyOnBench = false;
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                    if (cardList === player.active) {
+                        blockedFrom.push(target);
+                        return;
+                    }
+                    blockedTo.push(target);
+                    if (cardList.cards.some(c => c instanceof game_1.EnergyCard)) {
+                        hasEnergyOnBench = true;
+                    }
+                });
+                if (hasEnergyOnBench === false) {
+                    return state;
+                }
+                return store.prompt(state, new game_1.MoveEnergyPrompt(player.id, game_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], // Only allow moving to active
+                { superType: game_1.SuperType.ENERGY }, { allowCancel: false, blockedTo: blockedTo, blockedFrom: blockedFrom }), transfers => {
                     if (!transfers) {
                         return;
                     }
@@ -68,10 +87,11 @@ class WyrdeerV extends game_1.PokemonCard {
                         // Can only move energy to the active Pokemon
                         const target = player.active;
                         const source = game_1.StateUtils.getTarget(state, player, transfer.from);
-                        source.moveCardTo(transfer.card, target);
-                        return state;
+                        transfers.forEach(transfer => {
+                            source.moveCardTo(transfer.card, target);
+                            return state;
+                        });
                     }
-                    return state;
                 });
             }
         }

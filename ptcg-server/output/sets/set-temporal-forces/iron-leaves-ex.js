@@ -5,7 +5,6 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class IronLeavesex extends pokemon_card_1.PokemonCard {
@@ -65,31 +64,27 @@ class IronLeavesex extends pokemon_card_1.PokemonCard {
                     catch (_a) {
                         return state;
                     }
-                    const target = effect.target;
-                    player.switchPokemon(target);
-                    const blockedMap = [];
+                    const cardList = game_1.StateUtils.findCardList(state, this);
+                    const benchIndex = player.bench.indexOf(cardList);
+                    player.switchPokemon(player.bench[benchIndex]);
+                    const blockedFrom = [];
+                    const blockedTo = [];
+                    let hasEnergyOnBench = false;
                     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                        const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
-                        store.reduceEffect(state, checkProvidedEnergy);
-                        const blockedCards = [];
-                        checkProvidedEnergy.energyMap.forEach(em => {
-                            if (!em.provides.includes(card_types_1.CardType.ANY)) {
-                                blockedCards.push(em.card);
-                            }
-                        });
-                        const blocked = [];
-                        blockedCards.forEach(bc => {
-                            const index = cardList.cards.indexOf(bc);
-                            if (index !== -1 && !blocked.includes(index)) {
-                                blocked.push(index);
-                            }
-                        });
-                        if (blocked.length !== 0) {
-                            blockedMap.push({ source: target, blocked });
+                        if (cardList === player.active) {
+                            blockedFrom.push(target);
+                            return;
+                        }
+                        blockedTo.push(target);
+                        if (cardList.cards.some(c => c instanceof game_1.EnergyCard)) {
+                            hasEnergyOnBench = true;
                         }
                     });
+                    if (hasEnergyOnBench === false) {
+                        return state;
+                    }
                     return store.prompt(state, new game_1.MoveEnergyPrompt(player.id, game_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], // Only allow moving to active
-                    { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true }), transfers => {
+                    { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, blockedFrom, blockedTo }), transfers => {
                         if (!transfers) {
                             return;
                         }
@@ -97,24 +92,23 @@ class IronLeavesex extends pokemon_card_1.PokemonCard {
                             // Can only move energy to the active Pokemon
                             const target = player.active;
                             const source = game_1.StateUtils.getTarget(state, player, transfer.from);
-                            source.moveCardTo(transfer.card, target);
-                            return state;
+                            transfers.forEach(transfer => {
+                                source.moveCardTo(transfer.card, target);
+                                return state;
+                            });
                         }
-                        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                            // Check marker
-                            if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                                console.log('attack blocked');
-                                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
-                            }
-                            effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-                            console.log('marker added');
-                        }
-                        return state;
                     });
                 }
-                return state;
             });
-            return state;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            // Check marker
+            if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+                console.log('attack blocked');
+                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+            }
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+            console.log('marker added');
         }
         return state;
     }

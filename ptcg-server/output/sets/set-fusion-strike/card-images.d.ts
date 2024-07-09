@@ -1,3 +1,4 @@
+import { Judge } from '../set-scarlet-and-violet/judge';
 import { Accelgor } from './accelgor';
 import { AdventurersDiscovery } from './adventurers-discovery';
 import { Basculin } from './basculin';
@@ -18,7 +19,6 @@ import { GengarVMAX } from './gengar-vmax';
 import { Heatmor } from './heatmor';
 import { InteleonV } from './inteleon-v';
 import { InteleonVMAX } from './inteleon-vmax';
-import { Judge } from './judge';
 import { Meloetta } from './meloetta';
 import { MewV } from './mew-v';
 import { MewVMAX } from './mew-vmax';
@@ -92,6 +92,9 @@ export declare class InteleonVMAXArt extends InteleonVMAX {
 }
 export declare class JudgeArt extends Judge {
     cardImage: string;
+    set: string;
+    setNumber: string;
+    fullName: string;
 }
 export declare class MeloettaArt extends Meloetta {
     cardImage: string;
