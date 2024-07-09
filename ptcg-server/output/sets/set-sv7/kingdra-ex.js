@@ -10,11 +10,19 @@ function* useKingsOrder(next, store, state, effect) {
     const player = effect.player;
     const slots = player.bench.filter(b => b.cards.length === 0);
     const max = Math.min(slots.length, 3);
-    const hasWaterPokemonInDiscard = player.hand.cards.some(c => {
-        return c instanceof pokemon_card_1.PokemonCard && c.cardType === card_types_1.CardType.WATER;
+    // const hasWaterPokemonInDiscard = player.discard.cards.some(c => {
+    //   return c instanceof PokemonCard && c.cardType === CardType.WATER;
+    // });
+    // if (!hasWaterPokemonInDiscard) {
+    //   throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+    // }
+    const hasWaterPokemonInDiscard = player.discard.cards.some(c => {
+        const discardPokemon = player.discard.cards.filter(card => card.superType === card_types_1.SuperType.POKEMON);
+        const waterDiscardPokemon = discardPokemon.filter(card => card.cardType === card_types_1.CardType.WATER);
+        return waterDiscardPokemon.length > 0;
     });
-    if (!hasWaterPokemonInDiscard) {
-        throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+    if (!hasWaterPokemonInDiscard || slots.length === 0) {
+        throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
     }
     let cards = [];
     yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.WATER }, { min: 1, max, allowCancel: false }), selected => {
@@ -27,9 +35,6 @@ function* useKingsOrder(next, store, state, effect) {
     cards.forEach((card, index) => {
         player.discard.moveCardTo(card, slots[index]);
         slots[index].pokemonPlayedTurn = state.turn;
-    });
-    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
     });
 }
 class Kingdraex extends pokemon_card_1.PokemonCard {
@@ -51,7 +56,7 @@ class Kingdraex extends pokemon_card_1.PokemonCard {
                 text: 'Put up to 3 [W] Pokémon from your discard pile onto your Bench.'
             },
             {
-                name: 'Fin Cutter',
+                name: 'Hydro Pump',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 50,
                 damageCalculation: '+',

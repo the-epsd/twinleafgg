@@ -24,5 +24,6 @@ export declare class Mimikyuex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    voidReturn: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

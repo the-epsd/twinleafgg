@@ -25,5 +25,6 @@ export declare class Greninjaex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    usedMirageBarrage: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -11,6 +11,7 @@ export declare class ElectricGenerator extends TrainerCard {
     setNumber: string;
     name: string;
     fullName: string;
+    hasLightningPokemonOnBench: boolean;
     text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

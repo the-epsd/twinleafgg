@@ -24,6 +24,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
   if (cards.length < 1) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
+  if (cards.length === 1) {
+    player.hand.moveCardTo(cards[0], player.discard);
+  }
 
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -31,27 +34,28 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);  
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   // prepare card list without Junk Arm
   const handTemp = new CardList();
   handTemp.cards = player.hand.cards.filter(c => c !== self);
+  if (cards.length > 1) {
+    yield store.prompt(state, new ChooseCardsPrompt(
+      player.id,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      handTemp,
+      {},
+      { min: 1, max: 1, allowCancel: false }
+    ), selected => {
+      cards = selected || [];
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    handTemp,
-    { },
-    { min: 1, max: 1, allowCancel: true }
-  ), selected => {
-    cards = selected || [];
-    
-    cards.forEach((card, index) => {
-      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
+      cards.forEach((card, index) => {
+        store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
+      });
+
+      next();
     });
-    
-    next();
-  });
+  }
 
   // Operation canceled by the user
   if (cards.length === 0) {
