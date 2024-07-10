@@ -21,6 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       energyInDiscard += 1;
     }
   });
+
   if (energyInDiscard === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
@@ -29,13 +30,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   return store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
-    {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy'},
-    {min: max, max, allowCancel: true}
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+    { min: max, max, allowCancel: false }
   ), selected => {
     if (selected && selected.length > 0) {
       // Discard trainer only when user selected some cards
@@ -43,6 +45,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       // Recover discarded energies
       player.discard.moveCardsTo(selected, player.hand);
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   });
 }
 
@@ -50,7 +53,11 @@ export class FireCrystal extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SSH';
+  public set: string = 'UNB';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '173';
 
   public name: string = 'Fire Crystal';
 

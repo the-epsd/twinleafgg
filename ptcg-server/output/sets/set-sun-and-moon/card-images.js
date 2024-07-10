@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TimerBallArt = exports.RareCandyArt = exports.RainbowEnergyArt = exports.OranguruArt = exports.NestBallArt = exports.ExpShareArt = exports.EnergyRetrievalArt = exports.DragonairArt = exports.AlolanRattataArt = void 0;
+exports.TimerBallArt = exports.RareCandyArt = exports.RainbowEnergyArt = exports.OranguruArt = exports.NestBallArt = exports.HerdierArt = exports.ExpShareArt = exports.EnergyRetrievalArt = exports.DragonairArt = exports.AlolanRattataArt = void 0;
 const energy_retrieval_1 = require("../set-scarlet-and-violet/energy-retrieval");
 const exp_share_1 = require("../set-scarlet-and-violet/exp-share");
 const nest_ball_1 = require("../set-scarlet-and-violet/nest-ball");
 const rare_candy_1 = require("../set-scarlet-and-violet/rare-candy");
 const dragonair_1 = require("./dragonair");
+const herdier_1 = require("./herdier");
 const oranguru_1 = require("./oranguru");
 const rainbow_energy_1 = require("./rainbow-energy");
 const SUM_76_Alolan_Rattata_1 = require("./SUM_76_Alolan_Rattata");
@@ -42,6 +43,13 @@ class ExpShareArt extends exp_share_1.ExpShare {
     }
 }
 exports.ExpShareArt = ExpShareArt;
+class HerdierArt extends herdier_1.Herdier {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_104_R_EN.png';
+    }
+}
+exports.HerdierArt = HerdierArt;
 class NestBallArt extends nest_ball_1.NestBall {
     constructor() {
         super(...arguments);

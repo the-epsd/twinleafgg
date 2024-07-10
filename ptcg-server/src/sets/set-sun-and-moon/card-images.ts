@@ -3,6 +3,7 @@ import { ExpShare } from '../set-scarlet-and-violet/exp-share';
 import { NestBall } from '../set-scarlet-and-violet/nest-ball';
 import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 import { Dragonair } from './dragonair';
+import { Herdier } from './herdier';
 import { Oranguru } from './oranguru';
 import { RainbowEnergy } from './rainbow-energy';
 import { AlolanRattata } from './SUM_76_Alolan_Rattata';
@@ -23,9 +24,13 @@ export class EnergyRetrievalArt extends EnergyRetrieval {
 }
 
 export class ExpShareArt extends ExpShare {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_118_R_EN.png'; 
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_118_R_EN.png';
   public setNumber = '118';
   public fullName: string = 'Exp. Share SUM';
+}
+
+export class HerdierArt extends Herdier {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_104_R_EN.png';
 }
 
 export class NestBallArt extends NestBall {

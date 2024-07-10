@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZubatArt = exports.VirbankCityGymArt = exports.ScrambleSwitchArt = exports.RaltsArt = exports.PlasmaEnergyArt = exports.PhanpyArt = exports.LugiaExArt = exports.KirliaArt = exports.HypnotoxicLaserArt = exports.GalladeArt = exports.EscapeRopeArt = exports.DowsingMachineArt = exports.DonphanArt = exports.ColressArt = exports.BicycleArt = void 0;
+const escape_rope_1 = require("../set-battle-styles/escape-rope");
 const bicycle_1 = require("./bicycle");
 const colress_1 = require("./colress");
 const donphan_1 = require("./donphan");
 const dowsing_machine_1 = require("./dowsing-machine");
-const escape_rope_1 = require("./escape-rope");
 const gallade_1 = require("./gallade");
 const hypnotoxic_laser_1 = require("./hypnotoxic-laser");
 const kirlia_1 = require("./kirlia");
@@ -48,6 +48,9 @@ class EscapeRopeArt extends escape_rope_1.EscapeRope {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLS/PLS_120_R_EN.png';
+        this.set = 'PLS';
+        this.setNumber = '120';
+        this.fullName = 'Escape Rope PLS';
     }
 }
 exports.EscapeRopeArt = EscapeRopeArt;

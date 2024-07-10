@@ -22,7 +22,7 @@ function* useKingsOrder(next, store, state, effect) {
         return waterDiscardPokemon.length > 0;
     });
     if (!hasWaterPokemonInDiscard || slots.length === 0) {
-        throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
+        return state;
     }
     let cards = [];
     yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.WATER }, { min: 1, max, allowCancel: false }), selected => {

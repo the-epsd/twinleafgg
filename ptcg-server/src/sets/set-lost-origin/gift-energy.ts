@@ -9,7 +9,7 @@ import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class GiftEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -61,8 +61,11 @@ export class GiftEnergy extends EnergyCard {
         } catch {
           return state;
         }
-        
+
         while (player.hand.cards.length < 7) {
+          if (player.deck.cards.length === 0) {
+            break;
+          }
           player.deck.moveTo(player.hand, 1);
         }
         player.marker.removeMarker(this.GIFT_ENERGY_MARKER);

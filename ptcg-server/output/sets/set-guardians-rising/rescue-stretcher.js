@@ -12,11 +12,11 @@ class RescueStretcher extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'SSH';
+        this.set = 'GRI';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '130';
         this.name = 'Rescue Stretcher';
-        this.fullName = 'Rescue Stretcher SSH';
+        this.fullName = 'Rescue Stretcher GRI';
         this.text = 'Choose 1:' +
             '' +
             'Put a Pokémon from your discard pile into your hand.' +

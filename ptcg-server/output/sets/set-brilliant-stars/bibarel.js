@@ -55,7 +55,13 @@ class Bibarel extends pokemon_card_1.PokemonCard {
             if (player.hand.cards.length >= 5) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             while (player.hand.cards.length < 5) {
+                if (player.deck.cards.length === 0) {
+                    break;
+                }
                 player.deck.moveTo(player.hand, 1);
             }
             player.marker.addMarker(this.INDUSTRIOUS_INCISORS_MARKER, this);

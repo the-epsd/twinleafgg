@@ -14,7 +14,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class KricketuneV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'E';
 
@@ -26,7 +26,7 @@ export class KricketuneV extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Exciting Stage',
@@ -42,10 +42,10 @@ export class KricketuneV extends PokemonCard {
   public attacks = [
     {
       name: 'X-Scissor',
-      cost: [ CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
       text: 'Flip a coin. If heads, this attack does 80 more damage.' +
-      ''
+        ''
     }
   ];
 
@@ -66,34 +66,40 @@ export class KricketuneV extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
     }
-    
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
     }
-    
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       if (player.marker.hasMarker(this.EXCITING_STAGE_MARKER)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-  
+
       player.marker.addMarker(this.EXCITING_STAGE_MARKER, this);
       if (player.active.getPokemonCard() === this) {
         while (player.hand.cards.length < 4) {
+          if (player.deck.cards.length === 0) {
+            break;
+          }
           player.deck.moveTo(player.hand, 1);
         }
       } else {
         while (player.hand.cards.length < 3) {
+          if (player.deck.cards.length === 0) {
+            break;
+          }
           player.deck.moveTo(player.hand, 1);
         }
       }
-  
+
       return state;
     }
 
 
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       return store.prompt(state, [
@@ -104,8 +110,8 @@ export class KricketuneV extends PokemonCard {
         effect.damage += 80 * heads;
         return state;
       });
-    } 
-    
+    }
+
     return state;
   }
 }

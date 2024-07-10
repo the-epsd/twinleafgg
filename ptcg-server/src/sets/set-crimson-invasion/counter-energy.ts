@@ -9,7 +9,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class CounterEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -17,7 +17,7 @@ export class CounterEnergy extends EnergyCard {
 
   public name = 'Counter Energy';
 
-  public fullName = 'Counter Energy SUM';
+  public fullName = 'Counter Energy CIN';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -31,11 +31,11 @@ export class CounterEnergy extends EnergyCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const attachedTo = effect.source;
-      
+
       const attachedToExOrGx = attachedTo.cards.some(card => {
         return card instanceof PokemonCard && (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_GX));
       });
-      
+
       try {
         const energyEffect = new EnergyEffect(player, this);
         store.reduceEffect(state, energyEffect);
@@ -44,12 +44,12 @@ export class CounterEnergy extends EnergyCard {
       }
 
       if (!!attachedTo.getPokemonCard() && player.getPrizeLeft() > opponent.getPrizeLeft() && !attachedToExOrGx) {
-        effect.energyMap.push({ card: this, provides: [ CardType.ANY, CardType.ANY ] });
+        effect.energyMap.push({ card: this, provides: [CardType.ANY, CardType.ANY] });
       } else {
-        effect.energyMap.push({ card: this, provides: [ CardType.COLORLESS ] });
+        effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
       }
     }
-  
+
     return state;
   }
 

@@ -1,8 +1,8 @@
+import { EscapeRope } from '../set-battle-styles/escape-rope';
 import { Bicycle } from './bicycle';
 import { Colress } from './colress';
 import { Donphan } from './donphan';
 import { DowsingMachine } from './dowsing-machine';
-import { EscapeRope } from './escape-rope';
 import { Gallade } from './gallade';
 import { HypnotoxicLaser } from './hypnotoxic-laser';
 import { Kirlia } from './kirlia';
@@ -32,6 +32,9 @@ export class DowsingMachineArt extends DowsingMachine {
 
 export class EscapeRopeArt extends EscapeRope {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLS/PLS_120_R_EN.png';
+  public set = 'PLS';
+  public setNumber = '120';
+  public fullName = 'Escape Rope PLS';
 }
 
 export class GalladeArt extends Gallade {

@@ -10,6 +10,7 @@ exports.setNobleVictories = [
     new card_images_1.DurantArt(),
     new card_images_1.EelektrikArt(),
     new card_images_1.KyuremArt(),
+    new card_images_1.LampentArt(),
     new card_images_1.PlumeFossilArt(),
     new card_images_1.SuperRodArt(),
     new card_images_1.TerrakionArt(),

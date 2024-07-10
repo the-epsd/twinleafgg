@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WishiwashiArt = exports.TagCallArt = exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BlacephalonArt = void 0;
+exports.WishiwashiArt = exports.TagCallArt = exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BlacephalonArt = void 0;
 const blacephalon_1 = require("./blacephalon");
 const CEC_62_Wishiwashi_1 = require("./CEC_62_Wishiwashi");
 const CEC_66_Pikachu_1 = require("./CEC_66_Pikachu");
 const CEC_83_Duskull_1 = require("./CEC_83_Duskull");
+const CEC_84_Dusclops_1 = require("./CEC_84_Dusclops");
 const chaotic_swell_1 = require("./chaotic-swell");
 const cynthia_and_caitlin_1 = require("./cynthia-and-caitlin");
 const draw_energy_1 = require("./draw-energy");
@@ -13,6 +14,7 @@ const guzma_and_hala_1 = require("./guzma-and-hala");
 const guzzlord_1 = require("./guzzlord");
 const lanas_fishing_rod_1 = require("./lanas-fishing-rod");
 const lillies_poke_doll_1 = require("./lillies-poke-doll");
+const lillipup_1 = require("./lillipup");
 const mallow_and_lana_1 = require("./mallow-and-lana");
 const professor_oaks_setup_1 = require("./professor-oaks-setup");
 const slugma_1 = require("./slugma");
@@ -45,6 +47,13 @@ class DrawEnergyArt extends draw_energy_1.DrawEnergy {
     }
 }
 exports.DrawEnergyArt = DrawEnergyArt;
+
+class DusclopsArt extends CEC_84_Dusclops_1.Dusclops {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_084_R_EN_LG.png';
+    }
+}
 class DuskullArt extends CEC_83_Duskull_1.Duskull {
     constructor() {
         super(...arguments);
@@ -94,6 +103,13 @@ class LilliesPokeDollArt extends lillies_poke_doll_1.LilliesPokeDoll {
     }
 }
 exports.LilliesPokeDollArt = LilliesPokeDollArt;
+class LillipupArt extends lillipup_1.Lillipup {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_174_R_EN_LG.png';
+    }
+}
+exports.LillipupArt = LillipupArt;
 class PikachuArt extends CEC_66_Pikachu_1.Pikachu {
     constructor() {
         super(...arguments);

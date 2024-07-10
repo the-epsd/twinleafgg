@@ -1,12 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage,
+import {
+  PowerType, StoreLike, State, GameError, GameMessage,
   ChooseCardsPrompt,
   PlayerType,
   AttachEnergyPrompt,
   EnergyCard,
   SlotType,
-  StateUtils} from '../../game';
+  StateUtils
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -26,7 +28,7 @@ export class Cinccino extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Make Do',
@@ -38,21 +40,21 @@ export class Cinccino extends PokemonCard {
   public attacks = [
     {
       name: 'Energy Assist',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 40,
       text: 'Attach a basic Energy card from your discard pile to 1 of your Benched Pokémon.'
     }
   ];
 
-  public set: string = 'SIT';
+  public set: string = 'SSH';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '68';
+  public setNumber: string = '147';
 
   public name: string = 'Cinccino';
 
-  public fullName: string = 'Cinccino SIT';
+  public fullName: string = 'Cinccino SSH';
 
   public readonly REFINEMENT_MARKER = 'REFINEMENT_MARKER';
 
@@ -74,7 +76,7 @@ export class Cinccino extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
-        { },
+        {},
         { allowCancel: true, min: 1, max: 1 }
       ), cards => {
         cards = cards || [];
@@ -106,17 +108,17 @@ export class Cinccino extends PokemonCard {
       const hasBasicEnergy = player.active.cards.some(c => {
         return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
       });
-    
+
       if (hasBench === false || hasBasicEnergy === false) {
         return state;
       }
-    
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.active,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { allowCancel: false, min: 0, max: 1 }
       ), transfers => {
@@ -127,8 +129,8 @@ export class Cinccino extends PokemonCard {
         }
       });
     }
-    
+
     return state;
   }
-    
+
 }

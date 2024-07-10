@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Golett extends PokemonCard {
-  
+
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.PSYCHIC;
   public hp: number = 90;
@@ -15,7 +15,7 @@ export class Golett extends PokemonCard {
 
   public attacks = [{
     name: 'Return',
-    cost: [ CardType.PSYCHIC ],
+    cost: [CardType.PSYCHIC],
     damage: 10,
     text: 'You may draw cards until you have 5 cards in your hand.'
   }];
@@ -27,11 +27,14 @@ export class Golett extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
-    if(effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
       while (player.hand.cards.length < 5) {
+        if (player.deck.cards.length === 0) {
+          break;
+        }
         player.deck.moveTo(player.hand, 1);
       }
     }

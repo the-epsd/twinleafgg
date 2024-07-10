@@ -12,8 +12,8 @@ export class Pelipper extends PokemonCard {
   public cardType: CardType = CardType.COLORLESS;
   public hp: number = 120;
   public weakness = [{ type: CardType.LIGHTNING }];
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }]
-  public retreat = [CardType.COLORLESS];
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Hearsay',
@@ -41,9 +41,9 @@ export class Pelipper extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.deck.cards.length === 0) {
-        return state;
-      }
+      // if (player.deck.cards.length === 0) {
+      //   return state;
+      // }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {

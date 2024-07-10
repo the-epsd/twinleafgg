@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, GameError } from '../../game';
+import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -25,7 +25,7 @@ function* useKingsOrder(next: Function, store: StoreLike, state: State,
   });
 
   if (!hasWaterPokemonInDiscard || slots.length === 0) {
-    throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+    return state;
   }
 
   let cards: Card[] = [];

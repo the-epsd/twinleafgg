@@ -1,6 +1,7 @@
 import { Arcanine } from './arcanine';
 import { Cleffa } from './cleffa';
 import { Espurr } from './espurr';
+import { FireCrystal } from './fire-crystal';
 import { GreensExploration } from './greens-exploration';
 import { Hitmontop } from './hitmontop';
 import { LtSurgesStrategy } from './lt-surges-strategy';
@@ -24,6 +25,10 @@ export class CleffaArt extends Cleffa {
 
 export class EspurrArt extends Espurr {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_079_R_EN.png';
+}
+
+export class FireCrystalArt extends FireCrystal {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_173_R_EN_LG.png';
 }
 
 export class GreensExplorationArt extends GreensExploration {

@@ -73,6 +73,7 @@ export * from './set-team-up';
 export * from './set-ultra-prism';
 export * from './set-unbroken-bonds';
 export * from './set-unified-minds';
+export * from './set-detective-pikachu';
 
 
 //SWSH Era

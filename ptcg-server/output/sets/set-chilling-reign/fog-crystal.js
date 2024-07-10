@@ -30,6 +30,7 @@ function* playCard(next, store, state, effect) {
     });
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     const maxPokemons = Math.min(pokemons, 1);
     const maxTrainers = Math.min(trainers, 1);
     const count = maxPokemons || maxTrainers;

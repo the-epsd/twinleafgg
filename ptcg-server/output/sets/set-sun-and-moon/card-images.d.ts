@@ -3,6 +3,7 @@ import { ExpShare } from '../set-scarlet-and-violet/exp-share';
 import { NestBall } from '../set-scarlet-and-violet/nest-ball';
 import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 import { Dragonair } from './dragonair';
+import { Herdier } from './herdier';
 import { Oranguru } from './oranguru';
 import { RainbowEnergy } from './rainbow-energy';
 import { AlolanRattata } from './SUM_76_Alolan_Rattata';
@@ -22,6 +23,9 @@ export declare class ExpShareArt extends ExpShare {
     cardImage: string;
     setNumber: string;
     fullName: string;
+}
+export declare class HerdierArt extends Herdier {
+    cardImage: string;
 }
 export declare class NestBallArt extends NestBall {
     cardImage: string;

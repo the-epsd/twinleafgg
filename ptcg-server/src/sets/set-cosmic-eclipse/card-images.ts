@@ -2,6 +2,9 @@ import { Blacephalon } from './blacephalon';
 import { Wishiwashi } from './CEC_62_Wishiwashi';
 import { Pikachu } from './CEC_66_Pikachu';
 import { Duskull } from './CEC_83_Duskull';
+
+import { Dusclops } from './CEC_84_Dusclops';
+
 import { ChaoticSwell } from './chaotic-swell';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
 import { DrawEnergy } from './draw-energy';
@@ -10,6 +13,7 @@ import { GuzmaAndHala } from './guzma-and-hala';
 import { Guzzlord } from './guzzlord';
 import { LanasFishingRod } from './lanas-fishing-rod';
 import { LilliesPokeDoll } from './lillies-poke-doll';
+import { Lillipup } from './lillipup';
 import { MallowAndLana } from './mallow-and-lana';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
@@ -29,6 +33,10 @@ export class CynthiaAndCaitlinArt extends CynthiaAndCaitlin {
 
 export class DrawEnergyArt extends DrawEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_209_R_EN.png';
+}
+
+export class DusclopsArt extends Dusclops {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_084_R_EN_LG.png';
 }
 
 export class DuskullArt extends Duskull {
@@ -57,6 +65,10 @@ export class LanasFishingRodArt extends LanasFishingRod {
 
 export class LilliesPokeDollArt extends LilliesPokeDoll {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_197_R_EN.png';
+}
+
+export class LillipupArt extends Lillipup {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_174_R_EN_LG.png';
 }
 
 export class PikachuArt extends Pikachu {

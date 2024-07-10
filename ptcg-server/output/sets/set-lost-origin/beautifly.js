@@ -52,7 +52,10 @@ class Beautifly extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.STOKED_STRAW_MARKER, this)) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
-            while (player.hand.cards.length < 5) {
+            while (player.hand.cards.length < 6) {
+                if (player.deck.cards.length === 0) {
+                    break;
+                }
                 player.deck.moveTo(player.hand, 1);
             }
             player.marker.addMarker(this.STOKED_STRAW_MARKER, this);

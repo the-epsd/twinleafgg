@@ -2,6 +2,7 @@ import { Blacephalon } from './blacephalon';
 import { Wishiwashi } from './CEC_62_Wishiwashi';
 import { Pikachu } from './CEC_66_Pikachu';
 import { Duskull } from './CEC_83_Duskull';
+import { Dusclops } from './CEC_84_Dusclops';
 import { ChaoticSwell } from './chaotic-swell';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
 import { DrawEnergy } from './draw-energy';
@@ -10,6 +11,7 @@ import { GuzmaAndHala } from './guzma-and-hala';
 import { Guzzlord } from './guzzlord';
 import { LanasFishingRod } from './lanas-fishing-rod';
 import { LilliesPokeDoll } from './lillies-poke-doll';
+import { Lillipup } from './lillipup';
 import { MallowAndLana } from './mallow-and-lana';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
@@ -24,6 +26,10 @@ export declare class CynthiaAndCaitlinArt extends CynthiaAndCaitlin {
     cardImage: string;
 }
 export declare class DrawEnergyArt extends DrawEnergy {
+    cardImage: string;
+}
+
+export declare class DusclopsArt extends Dusclops {
     cardImage: string;
 }
 export declare class DuskullArt extends Duskull {
@@ -45,6 +51,9 @@ export declare class LanasFishingRodArt extends LanasFishingRod {
     cardImage: string;
 }
 export declare class LilliesPokeDollArt extends LilliesPokeDoll {
+    cardImage: string;
+}
+export declare class LillipupArt extends Lillipup {
     cardImage: string;
 }
 export declare class PikachuArt extends Pikachu {

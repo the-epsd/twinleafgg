@@ -49,6 +49,9 @@ class GiftEnergy extends energy_card_1.EnergyCard {
                     return state;
                 }
                 while (player.hand.cards.length < 7) {
+                    if (player.deck.cards.length === 0) {
+                        break;
+                    }
                     player.deck.moveTo(player.hand, 1);
                 }
                 player.marker.removeMarker(this.GIFT_ENERGY_MARKER);

@@ -89,6 +89,9 @@ class GenesectV extends pokemon_card_1.PokemonCard {
                 }
             });
             while (player.hand.cards.length < fusionStrikeCount) {
+                if (player.deck.cards.length === 0) {
+                    break;
+                }
                 player.deck.moveTo(player.hand, 1);
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                     if (cardList.getPokemonCard() === this) {

@@ -57,12 +57,12 @@ export class Regidrago extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.DRAGONS_HOARD_MARKER, this);
     }
-      
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.DRAGONS_HOARD_MARKER, this);
     }
-      
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
@@ -73,7 +73,7 @@ export class Regidrago extends PokemonCard {
       if (player.marker.hasMarker(this.DRAGONS_HOARD_MARKER)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-    
+
       player.marker.addMarker(this.DRAGONS_HOARD_MARKER, this);
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
@@ -84,11 +84,14 @@ export class Regidrago extends PokemonCard {
 
       if (player.active.getPokemonCard() === this) {
         while (player.hand.cards.length < 4) {
+          if (player.deck.cards.length === 0) {
+            break;
+          }
           player.deck.moveTo(player.hand, 1);
         }
       }
     }
-    
+
     return state;
   }
 }

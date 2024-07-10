@@ -47,19 +47,22 @@ export class Beautifly extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.STOKED_STRAW_MARKER, this);
     }
-    
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.STOKED_STRAW_MARKER, this);
     }
-    
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       if (player.marker.hasMarker(this.STOKED_STRAW_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-  
-      while (player.hand.cards.length < 5) {
+
+      while (player.hand.cards.length < 6) {
+        if (player.deck.cards.length === 0) {
+          break;
+        }
         player.deck.moveTo(player.hand, 1);
       }
       player.marker.addMarker(this.STOKED_STRAW_MARKER, this);
@@ -78,7 +81,7 @@ export class Beautifly extends PokemonCard {
           player.marker.removeMarker(this.STOKED_STRAW_MARKER);
         }
       });
-  
+
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

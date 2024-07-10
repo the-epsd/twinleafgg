@@ -1,5 +1,8 @@
 import { Adaman } from './adaman';
 import { HisuianGrowlithe } from './ASR_70_Hisuian_Growlithe';
+import { HisuianQwilfish2 } from './ASR_88_Hisuian_Qwilfish';
+import { HisuianQwilfish } from './ASR_89_Hisuian_Qwilfish';
+import { HisuianOverqwil } from './ASR_90_Hisuian_Overqwil';
 import { CancelingCologne } from './canceling-cologne';
 import { Cyllene } from './cyllene';
 import { DarkPatch } from './dark-patch';
@@ -122,6 +125,18 @@ export class HisuianGrowlitheArt extends HisuianGrowlithe {
 
 export class HisuianHeavyBallArt extends HisuianHeavyBall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_146_R_EN_LG.png';
+}
+
+export class HisuianOverqwilArt extends HisuianOverqwil {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_090_R_EN_LG.png';
+}
+
+export class HisuianQwilfishArt extends HisuianQwilfish {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_089_R_EN_LG.png';
+}
+
+export class HisuianQwilfishArt2 extends HisuianQwilfish2 {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_088_R_EN_LG.png';
 }
 
 export class HisuianSamurottVArt extends HisuianSamurottV {

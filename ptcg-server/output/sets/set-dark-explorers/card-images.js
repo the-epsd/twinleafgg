@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoruaArt = exports.TynamoArt = exports.TwistMountainArt = exports.TornadusExArt = exports.ShelmetArt = exports.SableyeArt = exports.RandomReceiverArt = exports.RaikouExArt = exports.PrinplupArt = exports.PiplupArt = exports.EnhancedHammerArt = exports.EmpoleonArt = exports.DarkraiExArt = exports.DarkPatchArt = exports.DarkClawArt = exports.AccelgorArt = void 0;
+exports.ZoruaArt = exports.TynamoArt = exports.TwistMountainArt = exports.TornadusExArt = exports.ShelmetArt = exports.SableyeArt = exports.RandomReceiverArt = exports.RaikouExArt = exports.PrinplupArt = exports.PiplupArt = exports.GardevoirArt = exports.EnhancedHammerArt = exports.EmpoleonArt = exports.DarkraiExArt = exports.DarkPatchArt = exports.DarkClawArt = exports.AccelgorArt = void 0;
 const dark_patch_1 = require("../set-astral-radiance/dark-patch");
 const enhanced_hammer_1 = require("../set-twilight-masquerade/enhanced-hammer");
 const accelgor_1 = require("./accelgor");
 const dark_claw_1 = require("./dark-claw");
 const darkrai_ex_1 = require("./darkrai-ex");
+const DEX_109_Gardevoir_1 = require("./DEX_109_Gardevoir");
 const empoleon_1 = require("./empoleon");
 const piplup_1 = require("./piplup");
 const prinplup_1 = require("./prinplup");
@@ -63,6 +64,13 @@ class EnhancedHammerArt extends enhanced_hammer_1.EnhancedHammer {
     }
 }
 exports.EnhancedHammerArt = EnhancedHammerArt;
+class GardevoirArt extends DEX_109_Gardevoir_1.Gardevoir {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DEX/DEX_109_R_EN_LG.png';
+    }
+}
+exports.GardevoirArt = GardevoirArt;
 class PiplupArt extends piplup_1.Piplup {
     constructor() {
         super(...arguments);

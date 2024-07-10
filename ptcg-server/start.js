@@ -82,6 +82,7 @@ cardManager.defineSet(sets.setUnifiedMinds);
 cardManager.defineSet(sets.setHiddenFates);
 cardManager.defineSet(sets.setCosmicEclipse);
 cardManager.defineSet(sets.setEvolutions);
+cardManager.defineSet(sets.setDetectivePikachu);
 
 
 cardManager.defineSet(sets.setSwordAndShield);
