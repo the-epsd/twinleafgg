@@ -26,6 +26,7 @@ class MetalFryingPan extends trainer_card_1.TrainerCard {
             if (state.phase !== state_1.GamePhase.ATTACK) {
                 return state;
             }
+
             try {
                 const energyEffect = new play_card_effects_1.ToolEffect(player, this);
                 store.reduceEffect(state, energyEffect);

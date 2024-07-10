@@ -28,6 +28,7 @@ export declare class CynthiaAndCaitlinArt extends CynthiaAndCaitlin {
 export declare class DrawEnergyArt extends DrawEnergy {
     cardImage: string;
 }
+
 export declare class DusclopsArt extends Dusclops {
     cardImage: string;
 }

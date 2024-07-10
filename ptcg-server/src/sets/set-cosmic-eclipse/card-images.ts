@@ -2,7 +2,9 @@ import { Blacephalon } from './blacephalon';
 import { Wishiwashi } from './CEC_62_Wishiwashi';
 import { Pikachu } from './CEC_66_Pikachu';
 import { Duskull } from './CEC_83_Duskull';
+
 import { Dusclops } from './CEC_84_Dusclops';
+
 import { ChaoticSwell } from './chaotic-swell';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
 import { DrawEnergy } from './draw-energy';

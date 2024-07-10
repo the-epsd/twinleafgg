@@ -4,7 +4,11 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 import { GamePhase, State } from '../../game/store/state/state';
+
+import { State } from '../../game/store/state/state';
+
 import { StoreLike } from '../../game/store/store-like';
 
 export class MetalFryingPan extends TrainerCard {
@@ -27,6 +31,7 @@ export class MetalFryingPan extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.target && effect.target.cards.includes(this)) {
       const player = effect.player;
+
       //const sourceCard = effect.target.getPokemonCard();
 
       // It's not an attack
