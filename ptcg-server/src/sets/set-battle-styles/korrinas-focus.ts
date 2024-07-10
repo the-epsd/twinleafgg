@@ -9,7 +9,7 @@ export class KorrinasFocus extends TrainerCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.RAPID_STRIKE];
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
@@ -31,7 +31,10 @@ export class KorrinasFocus extends TrainerCard {
 
       const player = effect.player;
 
-      while (player.hand.cards.length < 5) {
+      while (player.hand.cards.length < 6) {
+        if (player.deck.cards.length === 0) {
+          break;
+        }
         player.deck.moveTo(player.hand, 1);
       }
       return state;

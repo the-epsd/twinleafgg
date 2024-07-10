@@ -20,7 +20,10 @@ class KorrinasFocus extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
-            while (player.hand.cards.length < 5) {
+            while (player.hand.cards.length < 6) {
+                if (player.deck.cards.length === 0) {
+                    break;
+                }
                 player.deck.moveTo(player.hand, 1);
             }
             return state;

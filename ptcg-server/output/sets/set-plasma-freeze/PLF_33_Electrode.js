@@ -51,6 +51,9 @@ class Electrode extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             while (player.hand.cards.length < 4) {
+                if (player.deck.cards.length === 0) {
+                    break;
+                }
                 player.deck.moveTo(player.hand, 1);
             }
             player.marker.addMarker(this.MAGNETIC_DRAW_MARKER, this);

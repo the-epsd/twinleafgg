@@ -48,17 +48,23 @@ export class Grusha extends TrainerCard {
       if (energyCount === 0) {
 
         while (player.hand.cards.length < 7) {
+          if (player.deck.cards.length === 0) {
+            break;
+          }
           player.deck.moveTo(player.hand, 1);
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          
+
         }
       }
       else {
 
         while (player.hand.cards.length < 5) {
+          if (player.deck.cards.length === 0) {
+            break;
+          }
           player.deck.moveTo(player.hand, 1);
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          
+
         }
         return state;
       }

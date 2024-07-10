@@ -43,6 +43,9 @@ class RadiantVenusaur extends game_1.PokemonCard {
                 if (wantToUse) {
                     const player = effect.player;
                     while (player.hand.cards.length < 4) {
+                        if (player.deck.cards.length === 0) {
+                            break;
+                        }
                         player.deck.moveTo(player.hand, 1);
                     }
                     return state;

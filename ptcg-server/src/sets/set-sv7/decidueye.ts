@@ -18,18 +18,18 @@ export class Decidueye extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Feather Stock',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Draw cards until you have 7 cards in your hand.'
     },
     {
       name: 'Strong Shot',
-      cost: [ CardType.GRASS ],
+      cost: [CardType.GRASS],
       damage: 170,
       text: 'Discard 1 Basic Grass Energy from your hand. If you can\'t, this attack does nothing.'
     }
@@ -51,13 +51,16 @@ export class Decidueye extends PokemonCard {
       const player = effect.player;
 
       while (player.hand.cards.length < 7) {
+        if (player.deck.cards.length === 0) {
+          break;
+        }
         player.deck.moveTo(player.hand, 1);
       }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-  
+
       // Prompt player to choose cards to discard 
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,

@@ -49,6 +49,9 @@ function* playCard(next, store, state, self, effect) {
             }
         }
         while (player.hand.cards.length < 6) {
+            if (player.deck.cards.length === 0) {
+                break;
+            }
             player.deck.moveTo(player.hand, 1);
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }

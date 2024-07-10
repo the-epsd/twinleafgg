@@ -117,6 +117,9 @@ export class GenesectV extends PokemonCard {
       });
 
       while (player.hand.cards.length < fusionStrikeCount) {
+        if (player.deck.cards.length === 0) {
+          break;
+        }
         player.deck.moveTo(player.hand, 1);
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {

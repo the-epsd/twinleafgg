@@ -58,6 +58,9 @@ export class Delphox extends PokemonCard {
       }
 
       while (player.hand.cards.length < 6) {
+        if (player.deck.cards.length === 0) {
+          break;
+        }
         player.deck.moveTo(player.hand, 1);
       }
       player.marker.addMarker(this.MYSTICAL_FIRE_MARKER, this);

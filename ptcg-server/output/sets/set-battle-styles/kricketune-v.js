@@ -64,11 +64,17 @@ class KricketuneV extends pokemon_card_1.PokemonCard {
             player.marker.addMarker(this.EXCITING_STAGE_MARKER, this);
             if (player.active.getPokemonCard() === this) {
                 while (player.hand.cards.length < 4) {
+                    if (player.deck.cards.length === 0) {
+                        break;
+                    }
                     player.deck.moveTo(player.hand, 1);
                 }
             }
             else {
                 while (player.hand.cards.length < 3) {
+                    if (player.deck.cards.length === 0) {
+                        break;
+                    }
                     player.deck.moveTo(player.hand, 1);
                 }
             }
