@@ -47,13 +47,13 @@ class DrawEnergyArt extends draw_energy_1.DrawEnergy {
     }
 }
 exports.DrawEnergyArt = DrawEnergyArt;
-
 class DusclopsArt extends CEC_84_Dusclops_1.Dusclops {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_084_R_EN_LG.png';
     }
 }
+exports.DusclopsArt = DusclopsArt;
 class DuskullArt extends CEC_83_Duskull_1.Duskull {
     constructor() {
         super(...arguments);
