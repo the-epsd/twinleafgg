@@ -51,12 +51,19 @@ export class Revavroom extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+      
+      if (player.hand.cards.length >= 7) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+      
       const hasEnergyInHand = player.hand.cards.some(c => {
         return c instanceof EnergyCard;
       });
+      
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+      
       if (player.marker.hasMarker(this.RUMBLING_ENGINE_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -72,12 +79,15 @@ export class Revavroom extends PokemonCard {
           return;
         }
 
+        player.hand.moveCardsTo(cards, player.discard);
+        
         while (player.hand.cards.length < 6) {
           if (player.deck.cards.length === 0) {
             break;
           }
           player.deck.moveTo(player.hand, 1);
         }
+        
         player.marker.addMarker(this.RUMBLING_ENGINE_MARKER, this);
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
@@ -85,7 +95,6 @@ export class Revavroom extends PokemonCard {
             cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
           }
         });
-        player.hand.moveCardsTo(cards, player.discard);
       });
       return state;
     }
