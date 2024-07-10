@@ -1,6 +1,7 @@
 import { Arcanine } from './arcanine';
 import { Cleffa } from './cleffa';
 import { Espurr } from './espurr';
+import { FireCrystal } from './fire-crystal';
 import { GreensExploration } from './greens-exploration';
 import { Hitmontop } from './hitmontop';
 import { LtSurgesStrategy } from './lt-surges-strategy';
@@ -20,6 +21,9 @@ export declare class CleffaArt extends Cleffa {
     cardImage: string;
 }
 export declare class EspurrArt extends Espurr {
+    cardImage: string;
+}
+export declare class FireCrystalArt extends FireCrystal {
     cardImage: string;
 }
 export declare class GreensExplorationArt extends GreensExploration {

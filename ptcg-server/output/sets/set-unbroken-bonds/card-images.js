@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MartialArtsDojoArt = exports.LtSurgesStrategyArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.EspurrArt = exports.CleffaArt = exports.ArcanineArt = void 0;
+exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MartialArtsDojoArt = exports.LtSurgesStrategyArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.FireCrystalArt = exports.EspurrArt = exports.CleffaArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
 const espurr_1 = require("./espurr");
+const fire_crystal_1 = require("./fire-crystal");
 const greens_exploration_1 = require("./greens-exploration");
 const hitmontop_1 = require("./hitmontop");
 const lt_surges_strategy_1 = require("./lt-surges-strategy");
@@ -37,6 +38,13 @@ class EspurrArt extends espurr_1.Espurr {
     }
 }
 exports.EspurrArt = EspurrArt;
+class FireCrystalArt extends fire_crystal_1.FireCrystal {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_173_R_EN_LG.png';
+    }
+}
+exports.FireCrystalArt = FireCrystalArt;
 class GreensExplorationArt extends greens_exploration_1.GreensExploration {
     constructor() {
         super(...arguments);

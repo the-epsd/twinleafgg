@@ -31,11 +31,11 @@ class Cinccino extends pokemon_card_1.PokemonCard {
                 text: 'Attach a basic Energy card from your discard pile to 1 of your Benched Pokémon.'
             }
         ];
-        this.set = 'SIT';
+        this.set = 'SSH';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '68';
+        this.setNumber = '147';
         this.name = 'Cinccino';
-        this.fullName = 'Cinccino SIT';
+        this.fullName = 'Cinccino SSH';
         this.REFINEMENT_MARKER = 'REFINEMENT_MARKER';
     }
     reduceEffect(store, state, effect) {

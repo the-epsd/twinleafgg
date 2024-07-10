@@ -14,7 +14,7 @@ export class RescueStretcher extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SSH';
+  public set: string = 'GRI';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -22,7 +22,7 @@ export class RescueStretcher extends TrainerCard {
 
   public name: string = 'Rescue Stretcher';
 
-  public fullName: string = 'Rescue Stretcher SSH';
+  public fullName: string = 'Rescue Stretcher GRI';
 
   public text: string =
     'Choose 1:' +
@@ -52,7 +52,7 @@ export class RescueStretcher extends TrainerCard {
       if (pokemonInDiscard === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
@@ -75,10 +75,10 @@ export class RescueStretcher extends TrainerCard {
               cards.forEach((card, index) => {
                 store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
               });
-  
+
               player.discard.moveCardsTo(cards, player.deck);
               player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
               return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
               });
@@ -98,16 +98,16 @@ export class RescueStretcher extends TrainerCard {
               { min: 1, max: 1, allowCancel: false, blocked }
             ), selected => {
               cards = selected || [];
-              
+
               cards.forEach((card, index) => {
                 store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
               });
-  
+
               player.discard.moveCardsTo(cards, player.hand);
               player.supporter.moveCardTo(effect.trainerCard, player.discard);
-              
+
               return state;
-            });            
+            });
           }
         }
       ];
@@ -124,5 +124,5 @@ export class RescueStretcher extends TrainerCard {
     }
     return state;
   }
-      
+
 }

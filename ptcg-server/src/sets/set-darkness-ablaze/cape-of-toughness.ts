@@ -18,9 +18,9 @@ export class CapeOfToughness extends TrainerCard {
 
   public setNumber: string = '160';
 
-  public name: string = 'Cape Of Toughness';
+  public name: string = 'Cape of Toughness';
 
-  public fullName: string = 'Cape Of Toughness DAA';
+  public fullName: string = 'Cape of Toughness DAA';
 
   public text: string =
     'The Basic Pokémon this card is attached to gets +50 HP, except Pokémon-GX.';
@@ -41,7 +41,7 @@ export class CapeOfToughness extends TrainerCard {
       if (card === undefined) {
         return state;
       }
-  
+
       if (card.stage === Stage.BASIC && !card.tags.includes(CardTag.POKEMON_GX)) {
         effect.hp += 50;
       }

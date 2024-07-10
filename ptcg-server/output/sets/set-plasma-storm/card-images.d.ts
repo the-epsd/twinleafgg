@@ -1,8 +1,8 @@
+import { EscapeRope } from '../set-battle-styles/escape-rope';
 import { Bicycle } from './bicycle';
 import { Colress } from './colress';
 import { Donphan } from './donphan';
 import { DowsingMachine } from './dowsing-machine';
-import { EscapeRope } from './escape-rope';
 import { Gallade } from './gallade';
 import { HypnotoxicLaser } from './hypnotoxic-laser';
 import { Kirlia } from './kirlia';
@@ -27,6 +27,9 @@ export declare class DowsingMachineArt extends DowsingMachine {
 }
 export declare class EscapeRopeArt extends EscapeRope {
     cardImage: string;
+    set: string;
+    setNumber: string;
+    fullName: string;
 }
 export declare class GalladeArt extends Gallade {
     cardImage: string;

@@ -13,7 +13,7 @@ class CounterEnergy extends energy_card_1.EnergyCard {
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'CIN';
         this.name = 'Counter Energy';
-        this.fullName = 'Counter Energy SUM';
+        this.fullName = 'Counter Energy CIN';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '137';
         this.text = 'This card provides [C] Energy. If you have more Prize cards remaining than your opponent, and if this card is attached to a Pokémon that isn\'t a Pokémon-GX or Pokémon-EX, this card provides every type of Energy but provides only 2 Energy at a time.';

@@ -13,8 +13,8 @@ class CapeOfToughness extends trainer_card_1.TrainerCard {
         this.set = 'DAA';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '160';
-        this.name = 'Cape Of Toughness';
-        this.fullName = 'Cape Of Toughness DAA';
+        this.name = 'Cape of Toughness';
+        this.fullName = 'Cape of Toughness DAA';
         this.text = 'The Basic Pokémon this card is attached to gets +50 HP, except Pokémon-GX.';
     }
     reduceEffect(store, state, effect) {

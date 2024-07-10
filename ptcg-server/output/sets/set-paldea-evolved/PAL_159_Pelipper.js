@@ -16,7 +16,7 @@ class Pelipper extends pokemon_card_1.PokemonCard {
         this.hp = 120;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Hearsay',
                 powerType: pokemon_types_1.PowerType.ABILITY,
@@ -39,9 +39,9 @@ class Pelipper extends pokemon_card_1.PokemonCard {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (player.deck.cards.length === 0) {
-                return state;
-            }
+            // if (player.deck.cards.length === 0) {
+            //   return state;
+            // }
             // Try to reduce PowerEffect, to check if something is blocking our ability
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
