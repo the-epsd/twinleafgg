@@ -60,6 +60,7 @@ exports.setPaldeaEvolved = [
     new card_images_18.MurkrowArt(),
     new card_images_1.NoibatArt(),
     new card_images_1.NoivernexArt(),
+    new card_images_1.OrthwormArt(),
     new card_images_1.PelipperArt(),
     new card_images_19.ReversalEnergyArt(),
     new card_images_27.ShinxArt(),

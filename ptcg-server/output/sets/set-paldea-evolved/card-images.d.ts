@@ -25,6 +25,7 @@ import { Mimikyu } from './mimikyu';
 import { Murkrow } from './murkrow';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
+import { Orthworm } from './orthworm';
 import { Pelipper } from './PAL_159_Pelipper';
 import { Magnemite } from './PAL_65_Magnemite';
 import { ReversalEnergy } from './reversal-energy';
@@ -121,6 +122,9 @@ export declare class NoibatArt extends Noibat {
     cardImage: string;
 }
 export declare class NoivernexArt extends Noivernex {
+    cardImage: string;
+}
+export declare class OrthwormArt extends Orthworm {
     cardImage: string;
 }
 export declare class PelipperArt extends Pelipper {
