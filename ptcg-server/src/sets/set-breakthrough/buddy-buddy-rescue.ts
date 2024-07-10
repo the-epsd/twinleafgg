@@ -43,7 +43,7 @@ export class BuddyBuddyRescue extends TrainerCard {
 
       let pokemonInOpponentsDiscard: number = 0;
       const blockedOpponent: number[] = [];
-      player.discard.cards.forEach((c, index) => {
+      opponent.discard.cards.forEach((c, index) => {
         const isPokemon = c instanceof PokemonCard;
         if (isPokemon) {
           pokemonInOpponentsDiscard += 1;
