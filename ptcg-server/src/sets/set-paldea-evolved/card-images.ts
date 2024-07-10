@@ -25,6 +25,7 @@ import { Mimikyu } from './mimikyu';
 import { Murkrow } from './murkrow';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
+import { Orthworm } from './orthworm';
 import { Pelipper } from './PAL_159_Pelipper';
 import { Magnemite } from './PAL_65_Magnemite';
 import { ReversalEnergy } from './reversal-energy';
@@ -149,6 +150,10 @@ export class NoibatArt extends Noibat {
 
 export class NoivernexArt extends Noivernex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_153_R_EN_LG.png';
+}
+
+export class OrthwormArt extends Orthworm {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_151_R_EN_LG.png';
 }
 
 export class PelipperArt extends Pelipper {
