@@ -9,6 +9,7 @@ exports.setDarkExplorers = [
     new card_images_1.DarkraiExArt(),
     new card_images_1.EmpoleonArt(),
     new card_images_1.EnhancedHammerArt(),
+    new card_images_1.GardevoirArt(),
     new card_images_1.PiplupArt(),
     new card_images_1.PrinplupArt(),
     new card_images_1.RaikouExArt(),

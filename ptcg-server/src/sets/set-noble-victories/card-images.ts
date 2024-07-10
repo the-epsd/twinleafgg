@@ -6,6 +6,7 @@ import { Chandelure } from './chandelure';
 import { Durant } from './durant';
 import { Eelektrik } from './eelektrik';
 import { Kyurem } from './kyurem';
+import { Lampent } from './NVI_59_Lampent';
 import { PlumeFossil } from './plume-fossil';
 import { Terrakion } from './terrakion';
 import { Trubbish } from './trubbish';
@@ -41,6 +42,10 @@ export class EelektrikArt extends Eelektrik {
 
 export class KyuremArt extends Kyurem {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_034_R_EN.png';
+}
+
+export class LampentArt extends Lampent {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_059_R_EN_LG.png';
 }
 
 export class PlumeFossilArt extends PlumeFossil {

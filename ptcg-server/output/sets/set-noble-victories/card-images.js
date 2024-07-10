@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.XtransceiverArt = exports.VanilluxeArt = exports.VanilliteArt = exports.VanillishArt = exports.TynamoArt = exports.TrubbishArt = exports.TerrakionArt = exports.SuperRodArt = exports.PlumeFossilArt = exports.KyuremArt = exports.EelektrikArt = exports.DurantArt = exports.ChandelureArt = exports.BlitzleArt = exports.ArcheopsArt = exports.ArchenArt = void 0;
+exports.XtransceiverArt = exports.VanilluxeArt = exports.VanilliteArt = exports.VanillishArt = exports.TynamoArt = exports.TrubbishArt = exports.TerrakionArt = exports.SuperRodArt = exports.PlumeFossilArt = exports.LampentArt = exports.KyuremArt = exports.EelektrikArt = exports.DurantArt = exports.ChandelureArt = exports.BlitzleArt = exports.ArcheopsArt = exports.ArchenArt = void 0;
 const super_rod_1 = require("../set-paldea-evolved/super-rod");
 const archen_1 = require("./archen");
 const archeops_1 = require("./archeops");
@@ -9,6 +9,7 @@ const chandelure_1 = require("./chandelure");
 const durant_1 = require("./durant");
 const eelektrik_1 = require("./eelektrik");
 const kyurem_1 = require("./kyurem");
+const NVI_59_Lampent_1 = require("./NVI_59_Lampent");
 const plume_fossil_1 = require("./plume-fossil");
 const terrakion_1 = require("./terrakion");
 const trubbish_1 = require("./trubbish");
@@ -66,6 +67,13 @@ class KyuremArt extends kyurem_1.Kyurem {
     }
 }
 exports.KyuremArt = KyuremArt;
+class LampentArt extends NVI_59_Lampent_1.Lampent {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_059_R_EN_LG.png';
+    }
+}
+exports.LampentArt = LampentArt;
 class PlumeFossilArt extends plume_fossil_1.PlumeFossil {
     constructor() {
         super(...arguments);

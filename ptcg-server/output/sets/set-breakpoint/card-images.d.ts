@@ -1,4 +1,5 @@
 import { Bayleef } from './bayleef';
+import { Froakie } from './BKP_38_Froakie';
 import { Sudowoodo } from './BKP_67_Sudowoodo';
 import { Zoroark } from './BKT_91_Zoroark';
 import { Delinquent } from './delinquent';
@@ -15,6 +16,9 @@ export declare class DelinquentArt extends Delinquent {
     cardImage: string;
 }
 export declare class FightingFuryBeltArt extends FightingFuryBelt {
+    cardImage: string;
+}
+export declare class FroakieArt extends Froakie {
     cardImage: string;
 }
 export declare class KricketotArt extends Kricketot {

@@ -78,6 +78,7 @@ __exportStar(require("./set-team-up"), exports);
 __exportStar(require("./set-ultra-prism"), exports);
 __exportStar(require("./set-unbroken-bonds"), exports);
 __exportStar(require("./set-unified-minds"), exports);
+__exportStar(require("./set-detective-pikachu"), exports);
 //SWSH Era
 __exportStar(require("./set-astral-radiance"), exports);
 __exportStar(require("./set-battle-styles"), exports);

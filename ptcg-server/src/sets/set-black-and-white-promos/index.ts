@@ -1,8 +1,9 @@
 import { Card } from '../../game/store/card/card';
-import { KyuremArt, TropicalBeachArt } from './card-images';
+import { KyuremArt, LitwickArt, TropicalBeachArt } from './card-images';
 
 export const setBlackAndWhitePromos: Card[] = [
 
   new KyuremArt(),
+  new LitwickArt(),
   new TropicalBeachArt(),
 ];

@@ -1,4 +1,5 @@
 import { Bayleef } from './bayleef';
+import { Froakie } from './BKP_38_Froakie';
 import { Sudowoodo } from './BKP_67_Sudowoodo';
 import { Zoroark } from './BKT_91_Zoroark';
 import { Delinquent } from './delinquent';
@@ -19,6 +20,10 @@ export class DelinquentArt extends Delinquent {
 
 export class FightingFuryBeltArt extends FightingFuryBelt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_099_R_EN_LG.png';
+}
+
+export class FroakieArt extends Froakie {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_038_R_EN_LG.png';
 }
 
 export class KricketotArt extends Kricketot {

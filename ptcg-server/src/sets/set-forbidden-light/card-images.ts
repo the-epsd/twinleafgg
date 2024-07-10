@@ -1,4 +1,5 @@
 import { BeastRing } from './beast-ring';
+import { Frogadier } from './FLI_23_Frogadier';
 import { Magnezone } from './FLI_36_Magnezone';
 import { Inkay } from './inkay';
 import { Malamar } from './malamar';
@@ -8,6 +9,10 @@ import { UnitEnergyFDY } from './unit-energy-fdy';
 
 export class BeastRingArt extends BeastRing {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_102_R_EN_LG.png';
+}
+
+export class FrogadierArt extends Frogadier {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_023_R_EN_LG.png';
 }
 
 export class InkayArt extends Inkay {
