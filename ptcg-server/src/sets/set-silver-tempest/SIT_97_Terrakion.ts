@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage } from '../../game';
+import { StoreLike, State, GameError, GameMessage, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -52,7 +52,7 @@ export class Terrakion extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      //const opponent = StateUtils.getOpponent(state, player);
+      const opponent = StateUtils.getOpponent(state, player);
 
       // Check marker
       if (player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
@@ -62,8 +62,8 @@ export class Terrakion extends PokemonCard {
 
       player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
 
-      /*player.active.marker.addMarker(this.CAVERN_TACKLE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this);*/
+      player.active.marker.addMarker(this.CAVERN_TACKLE_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this);
 
     }
 
@@ -73,7 +73,7 @@ export class Terrakion extends PokemonCard {
       return state;
     }
 
-    /*if (effect instanceof EndTurnEffect
+    if (effect instanceof EndTurnEffect
       && effect.player.marker.hasMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this)) {
 
       effect.player.marker.removeMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this);
@@ -82,7 +82,7 @@ export class Terrakion extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.CAVERN_TACKLE_MARKER, this);
       });
-    }*/
+    }
 
     return state;
   }

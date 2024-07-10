@@ -3,6 +3,7 @@ import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
 import { Accelgor } from './accelgor';
 import { DarkClaw } from './dark-claw';
 import { DarkraiEx } from './darkrai-ex';
+import { Gardevoir } from './DEX_109_Gardevoir';
 import { Empoleon } from './empoleon';
 import { Piplup } from './piplup';
 import { Prinplup } from './prinplup';
@@ -35,6 +36,9 @@ export declare class EnhancedHammerArt extends EnhancedHammer {
     cardImage: string;
     setNumber: string;
     fullName: string;
+}
+export declare class GardevoirArt extends Gardevoir {
+    cardImage: string;
 }
 export declare class PiplupArt extends Piplup {
     cardImage: string;

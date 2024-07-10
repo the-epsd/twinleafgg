@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TropicalBeachArt = exports.KyuremArt = void 0;
+exports.TropicalBeachArt = exports.LitwickArt = exports.KyuremArt = void 0;
+const BWP_27_Litwick_1 = require("./BWP_27_Litwick");
 const kyurem_1 = require("./kyurem");
 const tropical_beach_1 = require("./tropical-beach");
 class KyuremArt extends kyurem_1.Kyurem {
@@ -10,6 +11,13 @@ class KyuremArt extends kyurem_1.Kyurem {
     }
 }
 exports.KyuremArt = KyuremArt;
+class LitwickArt extends BWP_27_Litwick_1.Litwick {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BWP/BWP_027_R_EN_LG.png';
+    }
+}
+exports.LitwickArt = LitwickArt;
 class TropicalBeachArt extends tropical_beach_1.TropicalBeach {
     constructor() {
         super(...arguments);

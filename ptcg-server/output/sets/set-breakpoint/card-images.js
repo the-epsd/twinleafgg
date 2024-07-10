@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoroarkArt = exports.SudowoodoArt = exports.StaryuArt = exports.SplashEnergyArt = exports.ReverseValleyArt = exports.PhantumpArt = exports.KricketotArt = exports.FightingFuryBeltArt = exports.DelinquentArt = exports.BayleefArt = void 0;
+exports.ZoroarkArt = exports.SudowoodoArt = exports.StaryuArt = exports.SplashEnergyArt = exports.ReverseValleyArt = exports.PhantumpArt = exports.KricketotArt = exports.FroakieArt = exports.FightingFuryBeltArt = exports.DelinquentArt = exports.BayleefArt = void 0;
 const bayleef_1 = require("./bayleef");
+const BKP_38_Froakie_1 = require("./BKP_38_Froakie");
 const BKP_67_Sudowoodo_1 = require("./BKP_67_Sudowoodo");
 const BKT_91_Zoroark_1 = require("./BKT_91_Zoroark");
 const delinquent_1 = require("./delinquent");
@@ -32,6 +33,13 @@ class FightingFuryBeltArt extends fighting_fury_belt_1.FightingFuryBelt {
     }
 }
 exports.FightingFuryBeltArt = FightingFuryBeltArt;
+class FroakieArt extends BKP_38_Froakie_1.Froakie {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_038_R_EN_LG.png';
+    }
+}
+exports.FroakieArt = FroakieArt;
 class KricketotArt extends kricketot_1.Kricketot {
     constructor() {
         super(...arguments);

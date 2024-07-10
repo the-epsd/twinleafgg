@@ -44,31 +44,29 @@ class Terrakion extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            //const opponent = StateUtils.getOpponent(state, player);
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             // Check marker
             if (player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 console.log('attack blocked');
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
             player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-            /*player.active.marker.addMarker(this.CAVERN_TACKLE_MARKER, this);
-            opponent.marker.addMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this);*/
+            player.active.marker.addMarker(this.CAVERN_TACKLE_MARKER, this);
+            opponent.marker.addMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this);
         }
         if (effect instanceof attack_effects_1.PutDamageEffect
             && effect.target.marker.hasMarker(this.CAVERN_TACKLE_MARKER)) {
             effect.preventDefault = true;
             return state;
         }
-        /*if (effect instanceof EndTurnEffect
-          && effect.player.marker.hasMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this)) {
-    
-          effect.player.marker.removeMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this);
-    
-          const opponent = StateUtils.getOpponent(state, effect.player);
-          opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-            cardList.marker.removeMarker(this.CAVERN_TACKLE_MARKER, this);
-          });
-        }*/
+        if (effect instanceof game_phase_effects_1.EndTurnEffect
+            && effect.player.marker.hasMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this)) {
+            effect.player.marker.removeMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this);
+            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                cardList.marker.removeMarker(this.CAVERN_TACKLE_MARKER, this);
+            });
+        }
         return state;
     }
 }

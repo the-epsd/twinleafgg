@@ -1,8 +1,9 @@
 import { Card } from '../../game/store/card/card';
-import { BeastRingArt, InkayArt, MagnezoneArt, MalamarArt, MetalFryingPanArt, MysteriousTreasureArt, UnitEnergyFDYArt } from './card-images';
+import { BeastRingArt, FrogadierArt, InkayArt, MagnezoneArt, MalamarArt, MetalFryingPanArt, MysteriousTreasureArt, UnitEnergyFDYArt } from './card-images';
 
 export const setForbiddenLight: Card[] = [
   new BeastRingArt(),
+  new FrogadierArt(),
   new InkayArt(),
   new MagnezoneArt(),
   new MalamarArt(),
