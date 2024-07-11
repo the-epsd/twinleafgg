@@ -57,7 +57,7 @@ class SpellTag extends trainer_card_1.TrainerCard {
                 opponent.forEachPokemon(play_card_action_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
                     maxAllowedDamage.push({ target, damage: card.hp + 40 });
                 });
-                return store.prompt(state, new game_1.PutDamagePrompt(effect.player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], 40, maxAllowedDamage, { allowCancel: false }), targets => {
+                return store.prompt(state, new game_1.PutDamagePrompt(effect.player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], 40, maxAllowedDamage, { allowCancel: false }), targets => {
                     const results = targets || [];
                     for (const result of results) {
                         const target = state_utils_1.StateUtils.getTarget(state, player, result.target);

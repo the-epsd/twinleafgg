@@ -14,6 +14,7 @@ function* playCard(next, store, state, effect) {
         throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     // Do not discard the card yet
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     effect.preventDefault = true;
     let targets = [];
     yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: true }), results => {
@@ -33,7 +34,7 @@ function* playCard(next, store, state, effect) {
         });
     }
     // Discard trainer only when user selected a Pokemon
-    player.hand.moveCardTo(effect.trainerCard, player.discard);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     player.switchPokemon(targets[0]);
     return state;
 }

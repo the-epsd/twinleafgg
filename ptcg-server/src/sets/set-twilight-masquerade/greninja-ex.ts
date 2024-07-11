@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, Card, State, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType, ShuffleDeckPrompt, GameError, StateUtils } from '../../game';
+import { StoreLike, Card, State, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType, ShuffleDeckPrompt, GameError, StateUtils, ConfirmPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -30,7 +30,7 @@ export class Greninjaex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Ninja Blade',
+      name: 'Shinobi Blade',
       cost: [CardType.WATER],
       damage: 170,
       text: 'You may search your deck for any 1 card and put it into your hand. Then, shuffle your deck.'
@@ -67,19 +67,27 @@ export class Greninjaex extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), cards => {
-        player.deck.moveCardsTo(cards, player.hand);
+      state = store.prompt(state, new ConfirmPrompt(
+        effect.player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (wantToUse) {
 
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
+          return store.prompt(state, new ChooseCardsPrompt(
+            player.id,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.deck,
+            {},
+            { min: 1, max: 1, allowCancel: false }
+          ), cards => {
+            player.deck.moveCardsTo(cards, player.hand);
 
-        });
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+
+            });
+          });
+        }
       });
     }
 

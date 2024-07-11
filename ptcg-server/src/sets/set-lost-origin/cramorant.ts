@@ -3,8 +3,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard, PowerType } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 
 export class Cramorant extends PokemonCard {
 
@@ -48,7 +47,7 @@ export class Cramorant extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
 
-    if (effect instanceof CheckAttackCostEffect) {
+    if (effect instanceof UseAttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
       if (player.lostzone.cards.length <= 3) {

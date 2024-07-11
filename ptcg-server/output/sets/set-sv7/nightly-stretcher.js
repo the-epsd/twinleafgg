@@ -30,6 +30,9 @@ function* playCard(next, store, state, self, effect) {
     });
     const maxPokemons = Math.min(pokemons, 1);
     const maxEnergies = Math.min(energies, 1);
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 0, max: 1, allowCancel: false, blocked, maxPokemons, maxEnergies }), selected => {
         cards = selected || [];
         next();
@@ -38,6 +41,7 @@ function* playCard(next, store, state, self, effect) {
     if (cards.length > 0) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
     });

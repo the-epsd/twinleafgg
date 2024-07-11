@@ -47,8 +47,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   // We will discard this card after prompt confirmation
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // This will prevent unblocked supporter to appear in the discard pile
   effect.preventDefault = true;
+
 
   return store.prompt(state, new AttachEnergyPrompt(
     player.id,
@@ -66,16 +68,13 @@ function* playCard(next: Function, store: StoreLike, state: State,
       }
     }
 
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
     while (player.hand.cards.length < 6) {
       if (player.deck.cards.length === 0) {
         break;
       }
       player.deck.moveTo(player.hand, 1);
-
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
-
     }
     return state;
   });

@@ -75,11 +75,11 @@ function handleBenchSizeChange(store: StoreLike, state: State, benchSizes: numbe
       player.id,
       GameMessage.CHOOSE_POKEMON_TO_DISCARD,
       PlayerType.BOTTOM_PLAYER,
-      [ SlotType.BENCH ],
+      [SlotType.BENCH],
       { min: count, max: count, allowCancel: false }
     ), results => {
       results = results || [];
-      const selected = [ ...empty, ...results ];
+      const selected = [...empty, ...results];
 
       // Discard all empty slots and selected Pokemons
       for (let i = player.bench.length - 1; i >= 0; i--) {
@@ -106,7 +106,7 @@ function chooseActivePokemons(state: State): ChoosePokemonPrompt[] {
         player.id,
         GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { min: 1, allowCancel: false }
       );
       prompts.push(choose);

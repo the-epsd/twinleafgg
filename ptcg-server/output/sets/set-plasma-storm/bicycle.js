@@ -22,10 +22,12 @@ class Bicycle extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const cards = player.hand.cards.filter(c => c !== this);
             const cardsToDraw = Math.max(0, 4 - cards.length);
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
             if (cardsToDraw === 0 || player.deck.cards.length === 0) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             player.deck.moveTo(player.hand, cardsToDraw);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
         return state;
     }

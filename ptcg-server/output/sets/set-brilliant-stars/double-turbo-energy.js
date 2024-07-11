@@ -21,7 +21,7 @@ class DoubleTurboEnergy extends energy_card_1.EnergyCard {
             'The attacks of the Pokémon this card is attached to do 20 less damage to your opponent\'s Pokémon (before applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect && effect.source.cards.includes(this)) {
+        if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) && effect.source.cards.includes(this)) {
             const player = effect.player;
             try {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);

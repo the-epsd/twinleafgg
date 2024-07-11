@@ -17,6 +17,18 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   align-items: center;
 }
 
+// .board-center-image {
+//   z-index: 3;
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   width: 100%;
+//   background-image: url('~src/assets/824565.png');
+//   background-size: contain;
+//   background-repeat: no-repeat;
+// }
+
 .text {
   font-family: "forma-djr-display", sans-serif;
   font-weight: 500;
@@ -92,12 +104,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   display: grid;
   border-radius: 0px;
   padding: 0px;
-  grid-template-columns:
-    2fr
-    #{math.div($ptcg-bench-slots, 3)}fr
-    #{math.div($ptcg-bench-slots, 3)}fr
-    #{math.div($ptcg-bench-slots, 3)}fr
-    2fr;
+  grid-template-columns: 2fr #{math.div($ptcg-bench-slots, 3)}fr #{math.div($ptcg-bench-slots, 3)}fr #{math.div($ptcg-bench-slots, 3)}fr 2fr;
   grid-template-rows: auto;
   grid-template-areas:
     "prizes stadium active supporter deck"
@@ -115,8 +122,8 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   height: 100%;
   justify-content: space-evenly;
 
-  > ptcg-board-card,
-  > .ptcg-board-drop-target {
+  >ptcg-board-card,
+  >.ptcg-board-drop-target {
     width: 75px;
   }
 }
@@ -127,20 +134,21 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   width: 98px;
 }
 
-.ptcg-board-active > ptcg-board-card,
-.ptcg-board-active > .ptcg-board-drop-target {
+.ptcg-board-active>ptcg-board-card,
+.ptcg-board-active>.ptcg-board-drop-target {
   transform: scale(1.25); // Inverse of the scale value (1 / 1.2)
 }
 
 .ptcg-board-supporter,
 .ptcg-board-stadium {
-  > ptcg-board-card,
-  > .ptcg-board-drop-target {
+
+  >ptcg-board-card,
+  >.ptcg-board-drop-target {
     width: 75px;
   }
 }
 
-.ptcg-board-drop-target > ptcg-board-card {
+.ptcg-board-drop-target>ptcg-board-card {
   display: block;
   width: 100%;
 }

@@ -24,6 +24,7 @@ function* playCard(next, store, state, self, effect) {
     if (trainersInDiscard === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
     // prepare card list without Junk Arm
@@ -50,6 +51,7 @@ function* playCard(next, store, state, self, effect) {
     player.hand.moveCardTo(self, player.discard);
     player.hand.moveCardsTo(cards, player.discard);
     player.discard.moveCardsTo(recovered, player.hand);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class DowsingMachine extends trainer_card_1.TrainerCard {

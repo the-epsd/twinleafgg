@@ -9,7 +9,6 @@ export declare class MallowAndLana extends TrainerCard {
     tags: CardTag[];
     cardImage: string;
     setNumber: string;
-    regulationMark: string;
     name: string;
     fullName: string;
     text: string;

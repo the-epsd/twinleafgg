@@ -15,13 +15,13 @@ export class Elekid extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public attacks = [
     {
       name: 'Crackling Shot',
-      cost: [ ],
-      damage: 30,
+      cost: [],
+      damage: 0,
       text: 'This attack does 30 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
@@ -47,7 +47,7 @@ export class Elekid extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];
@@ -56,7 +56,7 @@ export class Elekid extends PokemonCard {
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });
-        return state; 
+        return state;
       });
     }
     return state;
