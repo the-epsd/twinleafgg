@@ -5,6 +5,7 @@ import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 import { Dragonair } from './dragonair';
 import { Herdier } from './herdier';
 import { Oranguru } from './oranguru';
+import { ProfessorKukui } from './professor-kukui';
 import { RainbowEnergy } from './rainbow-energy';
 import { AlolanRattata } from './SUM_76_Alolan_Rattata';
 import { TimerBall } from './timer-ball';
@@ -33,6 +34,9 @@ export declare class NestBallArt extends NestBall {
     fullName: string;
 }
 export declare class OranguruArt extends Oranguru {
+    cardImage: string;
+}
+export declare class ProfessorKukuiArt extends ProfessorKukui {
     cardImage: string;
 }
 export declare class RainbowEnergyArt extends RainbowEnergy {
