@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
+import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils, GamePhase } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class RadiantCharizard extends PokemonCard {
 
@@ -63,34 +62,51 @@ export class RadiantCharizard extends PokemonCard {
       console.log('second marker added');
     }
 
-    if (effect instanceof CheckAttackCostEffect) {
+    if (effect instanceof KnockOutEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const duringTurn = [GamePhase.PLAYER_TURN, GamePhase.ATTACK].includes(state.phase);
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      // Do not activate between turns, or when it's not opponents turn.
+      if (!duringTurn || state.players[state.activePlayer] !== opponent) {
         return state;
       }
 
-      const prizesTaken = 6 - opponent.getPrizeLeft();
-      const attackCost = [...this.attacks[0].cost]; // Create a copy of the attack cost array
-      const colorlessCount = attackCost.filter(cardType => cardType === CardType.COLORLESS).length;
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+      if (owner === player) {
 
-      // Remove the appropriate number of CardType.COLORLESS instances from the attack cost
-      const colorlessToRemove = Math.min(colorlessCount, prizesTaken);
-      this.attacks[0].cost = attackCost.filter((cardType, index) => {
-        if (cardType !== CardType.COLORLESS) {
-          return true;
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
         }
-        const shouldRemove = index < colorlessToRemove;
-        return !shouldRemove;
-      });
+
+        const card = effect.target.getPokemonCard();
+        if (card !== undefined) {
+
+          let costToReduce = 1;
+
+          if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex)) {
+            costToReduce += 1;
+          }
+
+          if (card.tags.includes(CardTag.POKEMON_VMAX)) {
+            costToReduce += 2;
+          }
+
+          const index = this.attacks[0].cost.indexOf(CardType.COLORLESS);
+          if (index !== -1) {
+            this.attacks[0].cost.splice(index, costToReduce);
+            console.log(this.attacks[0].cost);
+          }
+        }
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

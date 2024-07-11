@@ -1,18 +1,13 @@
-
-<video autoplay muted loop id="myVideo">
+<!-- <video autoplay muted loop id="myVideo">
   <source src="assets/star-bg.mp4" type="video/mp4">
-</video>
+</video> -->
 
 <ptcg-sidebar-container>
 
   <!-- Table sidebar -->
   <ptcg-sidebar>
-    <ptcg-table-sidebar
-      [clientId]="clientId"
-      [gameState]="gameState"
-      [topPlayer]="topPlayer"
-      [bottomPlayer]="bottomPlayer"
-      (join)="play()">
+    <ptcg-table-sidebar [clientId]="clientId" [gameState]="gameState" [topPlayer]="topPlayer"
+      [bottomPlayer]="bottomPlayer" (join)="play()">
     </ptcg-table-sidebar>
   </ptcg-sidebar>
 
@@ -22,34 +17,23 @@
 
       <!-- Table board -->
 
-            <!-- Player's hand -->
-<div class="opp-hand">
-            <ptcg-hand
-            [gameState]="gameState"
-            [player]="topPlayer">
-          </ptcg-hand>
-          </div>
-      <ptcg-board
-        [clientId]="clientId"
-        [gameState]="gameState"
-        [topPlayer]="topPlayer"
-        [bottomPlayer]="bottomPlayer">
+      <!-- Player's hand -->
+      <div class="opp-hand">
+        <ptcg-hand [gameState]="gameState" [player]="topPlayer">
+        </ptcg-hand>
+      </div>
+      <ptcg-board [clientId]="clientId" [gameState]="gameState" [topPlayer]="topPlayer" [bottomPlayer]="bottomPlayer">
       </ptcg-board>
 
       <!-- Player's hand -->
-      
-      <ptcg-hand
-        [clientId]="clientId"
-        [gameState]="gameState"
-        [player]="bottomPlayer">
+
+      <ptcg-hand [clientId]="clientId" [gameState]="gameState" [player]="bottomPlayer">
       </ptcg-hand>
 
 
 
       <!-- Player prompt -->
-      <ptcg-prompt
-        [gameState]="gameState"
-        [clientId]="clientId">
+      <ptcg-prompt [gameState]="gameState" [clientId]="clientId">
       </ptcg-prompt>
     </div>
   </ptcg-content>

@@ -18,7 +18,7 @@ class Elekid extends pokemon_card_1.PokemonCard {
             {
                 name: 'Crackling Shot',
                 cost: [],
-                damage: 30,
+                damage: 0,
                 text: 'This attack does 30 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }
         ];

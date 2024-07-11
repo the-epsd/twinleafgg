@@ -4,7 +4,6 @@ exports.Cramorant = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 class Cramorant extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -34,7 +33,7 @@ class Cramorant extends game_1.PokemonCard {
         this.fullName = 'Cramorant LOR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckAttackCostEffect) {
+        if (effect instanceof game_effects_1.UseAttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             if (player.lostzone.cards.length <= 3) {
                 return state;

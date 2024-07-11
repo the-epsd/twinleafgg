@@ -39,6 +39,7 @@ function* playCard(next, store, state, self, effect) {
         }
     });
     // We will discard this card after prompt confirmation
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     // This will prevent unblocked supporter to appear in the discard pile
     effect.preventDefault = true;
     return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min: 1, max: 1 }), transfers => {
@@ -48,12 +49,12 @@ function* playCard(next, store, state, self, effect) {
                 player.discard.moveCardTo(transfer.card, target);
             }
         }
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         while (player.hand.cards.length < 6) {
             if (player.deck.cards.length === 0) {
                 break;
             }
             player.deck.moveTo(player.hand, 1);
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
         return state;
     });

@@ -28,10 +28,12 @@ class Colress extends trainer_card_1.TrainerCard {
             if (cards.length === 0 && player.deck.cards.length === 0) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
             let benchCount = 0;
             player.bench.forEach(b => benchCount += b.cards.length > 0 ? 1 : 0);
             opponent.bench.forEach(b => benchCount += b.cards.length > 0 ? 1 : 0);
             player.hand.moveCardsTo(cards, player.deck);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
             return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
                 player.deck.moveTo(player.hand, benchCount);

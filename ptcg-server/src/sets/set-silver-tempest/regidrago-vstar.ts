@@ -16,13 +16,16 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
   const discardPokemon = player.discard.cards.filter(card => card.superType === SuperType.POKEMON) as PokemonCard[];
   const dragonTypePokemon = discardPokemon.filter(card => card.cardType === CardType.DRAGON);
 
+  if (!dragonTypePokemon) {
+    throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+  }
 
   let selected: any;
   yield store.prompt(state, new ChooseAttackPrompt(
     player.id,
     GameMessage.CHOOSE_ATTACK_TO_COPY,
     dragonTypePokemon,
-    { allowCancel: true }
+    { allowCancel: false }
   ), result => {
     selected = result;
     next();
@@ -135,7 +138,6 @@ export class RegidragoVSTAR extends PokemonCard {
         cards.forEach((card, index) => {
           player.discard.moveCardTo(card, player.hand);
         });
-        return state;
       });
     }
     return state;

@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const __1 = require("../..");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class CancelingCologne extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -26,6 +27,16 @@ class CancelingCologne extends trainer_card_1.TrainerCard {
             if (opponent.marker.hasMarker(this.CANCELING_COLOGNE_MARKER)) {
                 opponent.marker.removeMarker(this.CANCELING_COLOGNE_MARKER);
             }
+        }
+        if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
+            const player = effect.player;
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            setTimeout(() => {
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            }, 2000); // Wait for 2 seconds before moving the card to the discard pile
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
         if (effect instanceof game_effects_1.PowerEffect && !effect.power.exemptFromAbilityLock) {
             const player = effect.player;

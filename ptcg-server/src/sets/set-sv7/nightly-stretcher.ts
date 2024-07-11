@@ -34,12 +34,15 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const maxPokemons = Math.min(pokemons, 1);
   const maxEnergies = Math.min(energies, 1);
 
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
-    { },
+    {},
     { min: 0, max: 1, allowCancel: false, blocked, maxPokemons, maxEnergies }
   ), selected => {
     cards = selected || [];
@@ -55,6 +58,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
+
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -87,8 +92,8 @@ export class NightlyStretcher extends TrainerCard {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
-      
+
     return state;
   }
-      
+
 }

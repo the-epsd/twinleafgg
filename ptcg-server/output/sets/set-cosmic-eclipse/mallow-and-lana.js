@@ -15,7 +15,6 @@ class MallowAndLana extends trainer_card_1.TrainerCard {
         this.tags = [card_types_1.CardTag.TAG_TEAM];
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '198';
-        this.regulationMark = 'F';
         this.name = 'Mallow & Lana';
         this.fullName = 'Mallow & Lana CEC';
         this.text = 'Switch your Active Pokémon with 1 of your Benched Pokémon.' +

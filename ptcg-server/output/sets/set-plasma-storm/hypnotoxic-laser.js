@@ -17,6 +17,7 @@ function* playCard(next, store, state, effect) {
     if (isPoisoned && isAsleep) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     active.addSpecialCondition(card_types_1.SpecialCondition.POISONED);
     let coinResult = false;
     yield store.prompt(state, [
@@ -28,6 +29,7 @@ function* playCard(next, store, state, effect) {
     if (coinResult === false) {
         return state;
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     active.addSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
     return state;
 }

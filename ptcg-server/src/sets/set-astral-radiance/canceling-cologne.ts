@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage, StateUtils } from '../..';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class CancelingCologne extends TrainerCard {
 
@@ -18,7 +19,7 @@ export class CancelingCologne extends TrainerCard {
   public name: string = 'Canceling Cologne';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '136';
 
   public fullName: string = 'Canceling Cologne ASR';
@@ -37,6 +38,20 @@ export class CancelingCologne extends TrainerCard {
       if (opponent.marker.hasMarker(this.CANCELING_COLOGNE_MARKER)) {
         opponent.marker.removeMarker(this.CANCELING_COLOGNE_MARKER);
       }
+    }
+
+    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+      const player = effect.player;
+
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+
+      setTimeout(() => {
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      }, 2000); // Wait for 2 seconds before moving the card to the discard pile
+
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
 
     if (effect instanceof PowerEffect && !effect.power.exemptFromAbilityLock) {

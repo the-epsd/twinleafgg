@@ -23,7 +23,7 @@ class Greninjaex extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Ninja Blade',
+                name: 'Shinobi Blade',
                 cost: [card_types_1.CardType.WATER],
                 damage: 170,
                 text: 'You may search your deck for any 1 card and put it into your hand. Then, shuffle your deck.'
@@ -50,11 +50,15 @@ class Greninjaex extends pokemon_card_1.PokemonCard {
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: false }), cards => {
-                player.deck.moveCardsTo(cards, player.hand);
-                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                    player.deck.applyOrder(order);
-                });
+            state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_message_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+                if (wantToUse) {
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: false }), cards => {
+                        player.deck.moveCardsTo(cards, player.hand);
+                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                            player.deck.applyOrder(order);
+                        });
+                    });
+                }
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

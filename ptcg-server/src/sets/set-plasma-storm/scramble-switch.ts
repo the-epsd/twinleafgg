@@ -18,6 +18,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Do not discard the card yet
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
   effect.preventDefault = true;
 
   let targets: PokemonCardList[] = [];
@@ -25,7 +26,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_SWITCH,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.BENCH ],
+    [SlotType.BENCH],
     { allowCancel: true }
   ), results => {
     targets = results || [];
@@ -54,15 +55,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Discard trainer only when user selected a Pokemon
-  player.hand.moveCardTo(effect.trainerCard, player.discard);
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   player.switchPokemon(targets[0]);
   return state;
 }
 
 export class ScrambleSwitch extends TrainerCard {
 
-  public tags = [ CardTag.ACE_SPEC ];
+  public tags = [CardTag.ACE_SPEC];
 
   public trainerType: TrainerType = TrainerType.ITEM;
 

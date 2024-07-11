@@ -3,6 +3,7 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+  background-color: #091624;
 
   #myVideo {
     position: fixed;
@@ -26,9 +27,21 @@
 ptcg-board {
   overflow: hidden;
   flex: 1 1 auto;
+
   // margin-top: -3%;
   // margin-right: -50%;
+}
 
+.board-center-image {
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  background-image: url('~src/assets/824565.png');
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 ptcg-hand {
@@ -43,7 +56,10 @@ ptcg-hand {
   width: 60%;
   transform: rotate(180deg);
   z-index: 1;
-  margin: 0 auto; /* Add this line to center horizontally */
-  display: flex; /* Add this line to enable centering */
-  justify-content: center; /* Add this line to center horizontally */
+  margin: 0 auto;
+  /* Add this line to center horizontally */
+  display: flex;
+  /* Add this line to enable centering */
+  justify-content: center;
+  /* Add this line to center horizontally */
 }

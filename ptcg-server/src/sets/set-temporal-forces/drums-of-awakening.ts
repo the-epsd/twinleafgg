@@ -9,7 +9,7 @@ export class DrumsOfAwakening extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags = [ CardTag.ACE_SPEC ];
+  public tags = [CardTag.ACE_SPEC];
 
   public regulationMark = 'H';
 
@@ -44,7 +44,7 @@ export class DrumsOfAwakening extends TrainerCard {
         }
       });
       player.deck.moveTo(player.hand, ancientPokemonCount);
-
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
     return state;
   }

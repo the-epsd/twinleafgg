@@ -218,6 +218,7 @@ class StateUtils {
             cardLists.push(player.deck);
             cardLists.push(player.discard);
             cardLists.push(player.hand);
+            cardLists.push(player.lostzone);
             cardLists.push(player.stadium);
             cardLists.push(player.supporter);
             player.bench.forEach(item => cardLists.push(item));

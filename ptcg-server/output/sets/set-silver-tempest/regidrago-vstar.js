@@ -11,8 +11,11 @@ function* useApexDragon(next, store, state, effect) {
     const opponent = game_1.StateUtils.getOpponent(state, player);
     const discardPokemon = player.discard.cards.filter(card => card.superType === card_types_1.SuperType.POKEMON);
     const dragonTypePokemon = discardPokemon.filter(card => card.cardType === card_types_1.CardType.DRAGON);
+    if (!dragonTypePokemon) {
+        throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
+    }
     let selected;
-    yield store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, dragonTypePokemon, { allowCancel: true }), result => {
+    yield store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, dragonTypePokemon, { allowCancel: false }), result => {
         selected = result;
         next();
     });
@@ -90,7 +93,6 @@ class RegidragoVSTAR extends pokemon_card_1.PokemonCard {
                 cards.forEach((card, index) => {
                     player.discard.moveCardTo(card, player.hand);
                 });
-                return state;
             });
         }
         return state;

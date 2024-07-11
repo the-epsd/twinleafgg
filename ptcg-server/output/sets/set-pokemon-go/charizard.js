@@ -17,7 +17,7 @@ class Charizard extends pokemon_card_1.PokemonCard {
         this.name = 'Charizard';
         this.cardType = card_types_1.CardType.FIRE;
         this.evolvesFrom = 'Charmeleon';
-        this.stage = card_types_1.Stage.STAGE_2;
+        this.stage = card_types_1.Stage.BASIC;
         this.hp = 170;
         this.weakness = [{ type: card_types_1.CardType.WATER }];
         this.resistance = [];
@@ -66,18 +66,18 @@ class Charizard extends pokemon_card_1.PokemonCard {
             if (!hasCharizardInPlay) {
                 return state;
             }
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
             if (hasCharizardInPlay) {
+                try {
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: game_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
+                }
+                catch (_a) {
+                    return state;
+                }
                 effect.source.cards.forEach(c => {
                     if (c instanceof game_1.EnergyCard && !effect.energyMap.some(e => e.card === c)) {
                         const providedTypes = c.provides.filter(type => type === card_types_1.CardType.FIRE);

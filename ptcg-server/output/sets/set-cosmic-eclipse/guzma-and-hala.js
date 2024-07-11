@@ -33,6 +33,7 @@ class GuzmaAndHala extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             if (player.hand.cards.length < 2) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_message_1.GameMessage.WANT_TO_DISCARD_CARDS), wantToUse => {
                 // taking stadium + special energy + tool

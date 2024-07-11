@@ -21,6 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
   active.addSpecialCondition(SpecialCondition.POISONED);
 
   let coinResult: boolean = false;
@@ -34,7 +35,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (coinResult === false) {
     return state;
   }
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   active.addSpecialCondition(SpecialCondition.ASLEEP);
   return state;
 }
