@@ -17,18 +17,6 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   align-items: center;
 }
 
-// .board-center-image {
-//   z-index: 3;
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   width: 100%;
-//   background-image: url('~src/assets/824565.png');
-//   background-size: contain;
-//   background-repeat: no-repeat;
-// }
-
 .text {
   font-family: "forma-djr-display", sans-serif;
   font-weight: 500;
