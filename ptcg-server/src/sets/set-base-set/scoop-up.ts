@@ -13,13 +13,13 @@ export class ScoopUp extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'BS';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '78';
-  
+
   public name: string = 'Scoop Up';
-  
+
   public fullName: string = 'Scoop Up BS';
 
   public text: string =
@@ -42,6 +42,7 @@ export class ScoopUp extends TrainerCard {
           cardList.moveCardsTo(basics, player.hand);
           cardList.moveTo(player.hand);
           cardList.clearEffects();
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
       });
     }

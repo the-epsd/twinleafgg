@@ -49,7 +49,7 @@ const SIT_100_Palossand_1 = require("./SIT_100_Palossand");
 const SIT_123_Klink_1 = require("./SIT_123_Klink");
 const SIT_124_Klang_1 = require("./SIT_124_Klang");
 const SIT_125_Klinklang_1 = require("./SIT_125_Klinklang");
-const SIT_41_Snowrunt_1 = require("./SIT_41_Snowrunt");
+const SIT_41_Snorunt_1 = require("./SIT_41_Snorunt");
 const SIT_97_Terrakion_1 = require("./SIT_97_Terrakion");
 const ursaluna_v_1 = require("./ursaluna-v");
 const v_guard_energy_1 = require("./v-guard-energy");
@@ -386,7 +386,7 @@ class SerperiorVSTARArt extends serperior_vstar_1.SerperiorVSTAR {
     }
 }
 exports.SerperiorVSTARArt = SerperiorVSTARArt;
-class SnowruntArt extends SIT_41_Snowrunt_1.Snowrunt {
+class SnowruntArt extends SIT_41_Snorunt_1.Snorunt {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_041_R_EN_LG.png';

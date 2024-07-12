@@ -26,6 +26,7 @@ class ProfessorOak extends trainer_card_1.TrainerCard {
             const cards = player.hand.cards.filter(c => c !== this);
             player.hand.moveCardsTo(cards, player.discard);
             player.deck.moveTo(player.hand, 7);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
         return state;
     }

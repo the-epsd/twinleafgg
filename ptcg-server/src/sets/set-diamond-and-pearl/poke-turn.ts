@@ -35,12 +35,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: true, blocked }
   ), targets => {
     if (targets && targets.length > 0) {
       // Discard trainer only when user selected a Pokemon
-      player.hand.moveCardTo(effect.trainerCard, player.discard);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
       targets[0].moveTo(player.hand);
       targets[0].damage = 0;

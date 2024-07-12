@@ -35,6 +35,7 @@ class Lass extends trainer_card_1.TrainerCard {
                                 opponentHandTrainers.forEach(cards => {
                                     opponent.hand.moveCardTo(cards, opponent.deck);
                                 });
+                                player.supporter.moveCardTo(effect.trainerCard, player.discard);
                                 return store.prompt(state, new game_1.ShuffleDeckPrompt(opponent.id), order => {
                                     opponent.deck.applyOrder(order);
                                     return state;

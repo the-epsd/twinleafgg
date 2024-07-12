@@ -34,14 +34,14 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Pokemon
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_SWITCH,
     PlayerType.TOP_PLAYER,
-    [ SlotType.BENCH ],
+    [SlotType.BENCH],
     { allowCancel: false }
   ), result => {
     const cardList = result[0];
     opponent.switchPokemon(cardList);
   });
 
-  player.supporter.moveCardTo(self, player.discard);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 }
 
 export class PokemonCatcher extends TrainerCard {
@@ -66,7 +66,7 @@ export class PokemonCatcher extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, this,  effect);
+      const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
     return state;

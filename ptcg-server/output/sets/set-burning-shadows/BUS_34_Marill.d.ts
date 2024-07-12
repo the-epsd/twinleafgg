@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Froslass extends PokemonCard {
+export declare class Marill extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
@@ -10,7 +10,6 @@ export declare class Froslass extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    evolvesFrom: string;
     attacks: {
         name: string;
         cost: CardType[];

@@ -9,7 +9,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class FullFaceGuard extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
-        this.trainerType = card_types_1.TrainerType.ITEM;
+        this.trainerType = card_types_1.TrainerType.TOOL;
         this.set = 'EVS';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';

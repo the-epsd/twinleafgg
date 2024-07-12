@@ -49,6 +49,7 @@ class LureModule extends trainer_card_1.TrainerCard {
                 temp.cards.forEach(card => {
                     temp.moveCardTo(card, player.deck);
                 });
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
                     return state;

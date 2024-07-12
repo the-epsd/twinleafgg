@@ -5,8 +5,10 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, StateUtils, CardTarget, GameError, GameMessage,
-  PokemonCardList, ChooseCardsPrompt, Card, EnergyCard } from '../../game';
+import {
+  PlayerType, SlotType, StateUtils, CardTarget, GameError, GameMessage,
+  PokemonCardList, ChooseCardsPrompt, Card, EnergyCard
+} from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -44,7 +46,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
     PlayerType.TOP_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: true, blocked }
   ), results => {
     targets = results || [];
@@ -70,13 +72,13 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   if (cards.length > 0) {
     // Discard trainer only when user selected a Pokemon
-    player.hand.moveCardTo(effect.trainerCard, player.discard);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     // Discard selected special energy card
     target.moveCardsTo(cards, opponent.discard);
   }
 
-  if (stadiumCard!== undefined) {
-  // Discard Stadium
+  if (stadiumCard !== undefined) {
+    // Discard Stadium
     const cardList = StateUtils.findCardList(state, stadiumCard);
     const playerStadium = StateUtils.findOwner(state, cardList);
     cardList.moveTo(playerStadium.discard);
@@ -88,15 +90,15 @@ export class Flannery extends TrainerCard {
   public regulationMark = 'E';
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  
+
   public set: string = 'CRE';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '139';
-  
+
   public name: string = 'Flannery';
-  
+
   public fullName: string = 'Flannery CRE';
 
   public text: string =

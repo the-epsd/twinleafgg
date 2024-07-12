@@ -29,7 +29,7 @@ export class DamagePump extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-        
+
       const maxAllowedDamage: DamageMap[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         const checkHpEffect = new CheckHpEffect(player, cardList);
@@ -39,19 +39,20 @@ export class DamagePump extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-        
+
       return store.prompt(state, new MoveDamagePrompt(
         effect.player.id,
         GameMessage.MOVE_DAMAGE,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         maxAllowedDamage,
         { min: 1, max: 2, allowCancel: false }
       ), transfers => {
         if (transfers === null) {
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
           return;
         }
-        
+
         for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);

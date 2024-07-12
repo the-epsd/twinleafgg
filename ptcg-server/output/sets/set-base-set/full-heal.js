@@ -23,7 +23,7 @@ class FullHeal extends trainer_card_1.TrainerCard {
                 throw new game_1.GameError(game_1.GameStoreMessage.CANNOT_PLAY_THIS_CARD);
             }
             player.active.specialConditions = [];
-            player.hand.moveCardTo(effect.trainerCard, player.discard);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
         return state;
     }

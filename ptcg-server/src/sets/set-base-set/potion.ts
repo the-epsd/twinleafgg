@@ -9,25 +9,25 @@ import { StoreLike } from '../../game/store/store-like';
 
 function* usePotion(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
-  
+
   const maxAllowedHealing: DamageMap[] = [];
-  
+
   const healingLeft = 0;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
     maxAllowedHealing.push({ target, damage: cardList.damage });
   });
-  
+
   const healing = Math.min(20, healingLeft);
 
   if (maxAllowedHealing.filter(m => m.damage > 0).length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);  
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   return store.prompt(state, new PutDamagePrompt(
     effect.player.id,
     GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
     PlayerType.TOP_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     healing,
     maxAllowedHealing,
     { allowCancel: false }
@@ -39,6 +39,7 @@ function* usePotion(next: Function, store: StoreLike, state: State, effect: Trai
       healEffect.target = target;
       store.reduceEffect(state, healEffect);
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   });
 }
 
@@ -62,7 +63,7 @@ export class Potion extends TrainerCard {
       const generator = usePotion(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-    
+
     return state;
   }
 }

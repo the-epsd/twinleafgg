@@ -12,13 +12,13 @@ export class DevolutionSpray extends TrainerCard {
   public fullName = 'Devolution Spray EVO';
   public superType = SuperType.TRAINER;
   public trainerType = TrainerType.ITEM;
-  
+
   public text = 'Devolve 1 of your evolved Pokémon and put the highest Stage Evolution card on it into your hand. (That Pokémon can\'t evolve this turn.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       let canDevolve = false;
-
+      const player = effect.player;
       const blocked: CardTarget[] = [];
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
         if (list.getPokemons().length > 1) {
@@ -44,12 +44,13 @@ export class DevolutionSpray extends TrainerCard {
         (results) => {
           if (results && results.length > 0) {
             const targetPokemon = results[0];
-            
+
             targetPokemon.moveCardsTo([targetPokemon.cards[targetPokemon.cards.length - 1]], effect.player.hand);
             targetPokemon.clearEffects();
             targetPokemon.pokemonPlayedTurn = state.turn;
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
           }
-          
+
           return state;
         }
       );

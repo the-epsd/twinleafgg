@@ -28,7 +28,7 @@ function* playCard(next, store, state, self, effect) {
         const cardList = result[0];
         opponent.switchPokemon(cardList);
     });
-    player.supporter.moveCardTo(self, player.discard);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
 }
 class PokemonCatcher extends trainer_card_1.TrainerCard {
     constructor() {

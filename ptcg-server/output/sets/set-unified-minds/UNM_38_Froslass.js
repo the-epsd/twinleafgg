@@ -34,6 +34,7 @@ class Froslass extends pokemon_card_1.PokemonCard {
         this.hp = 80;
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.weakness = [{ type: card_types_1.CardType.METAL }];
+        this.evolvesFrom = 'Snorunt';
         this.attacks = [{
                 name: 'Spitful Sigh',
                 cost: [card_types_1.CardType.WATER],

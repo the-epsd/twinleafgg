@@ -28,7 +28,7 @@ class ImpostorProfessorOak extends trainer_card_1.TrainerCard {
             // Draw 7 cards for the opponent
             opponent.deck.moveTo(opponent.hand, 7);
             // Discard the played Trainer card
-            player.hand.moveCardTo(effect.trainerCard, player.discard);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
             return state;
         }
         return state;

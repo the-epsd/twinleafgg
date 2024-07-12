@@ -12,6 +12,7 @@ class Golduck extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
+        this.evolvesFrom = 'Psyduck';
         this.attacks = [{
                 name: 'Scratch',
                 cost: [card_types_1.CardType.COLORLESS],

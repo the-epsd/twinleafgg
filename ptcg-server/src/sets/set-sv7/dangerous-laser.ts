@@ -10,7 +10,7 @@ export class DangerousLaser extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags = [ CardTag.ACE_SPEC ];
+  public tags = [CardTag.ACE_SPEC];
 
   public set: string = 'SV6a';
 
@@ -32,11 +32,11 @@ export class DangerousLaser extends TrainerCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       const active = opponent.active;
       active.addSpecialCondition(SpecialCondition.BURNED);
       active.addSpecialCondition(SpecialCondition.CONFUSED);
-
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
     return state;
   }

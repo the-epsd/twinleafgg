@@ -23,6 +23,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   if (coinResult === false) {
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
   }
 
@@ -30,11 +31,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_SWITCH,
     PlayerType.TOP_PLAYER,
-    [ SlotType.BENCH ],
+    [SlotType.BENCH],
     { allowCancel: false }
   ), result => {
     const cardList = result[0];
     opponent.switchPokemon(cardList);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   });
 }
 

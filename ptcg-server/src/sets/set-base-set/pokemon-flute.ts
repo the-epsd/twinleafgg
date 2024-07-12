@@ -29,7 +29,7 @@ export class PokemonFlute extends TrainerCard {
 
       // Check if opponent's bench is full
       const openSlots = opponent.bench.filter(b => b.cards.length === 0);
-      
+
       if (openSlots.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -45,16 +45,16 @@ export class PokemonFlute extends TrainerCard {
         { superType: SuperType.POKEMON, stage: Stage.BASIC },
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
-        
+
         cards = selected || [];
-        
+
         if (cards.length > 0) {
           const card = cards[0];
           const slot = openSlots[0];
           opponent.discard.moveCardTo(card, slot);
           slot.pokemonPlayedTurn = state.turn;
 
-          player.hand.moveCardTo(effect.trainerCard, player.discard);
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
       });
     }

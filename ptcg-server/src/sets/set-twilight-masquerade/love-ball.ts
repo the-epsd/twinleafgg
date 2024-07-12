@@ -43,7 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       cards
     ), () => next());
   }
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
@@ -51,7 +51,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 
 export class LoveBall extends TrainerCard {
-  
+
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public regulationMark = 'H';
@@ -65,19 +65,18 @@ export class LoveBall extends TrainerCard {
   public name: string = 'Love Ball';
 
   public fullName: string = 'Love Ball TWM';
-  
-  public text = 
+
+  public text =
     'Search your deck for a Pokémon with the same name as one of your opponent\'s Pokémon in play, reveal it, and put it into your hand. Then shuffle your deck.';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-    
+
     return state;
   }
-    
+
 }
-    

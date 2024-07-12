@@ -44,14 +44,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       cards
     ), () => next());
   }
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
 }
 
 export class FeatherBall extends TrainerCard {
-  
+
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public regulationMark = 'F';
@@ -65,21 +65,20 @@ export class FeatherBall extends TrainerCard {
   public name: string = 'Feather Ball';
 
   public fullName: string = 'Feather Ball ASR';
-  
-  public text = 
+
+  public text =
     'Search your deck for 1 Pokemon with no retreat cost, ' +
-      'show it to your opponent, and put it into your hand. ' + 
-      'Shuffle your deck afterward.';
-  
+    'show it to your opponent, and put it into your hand. ' +
+    'Shuffle your deck afterward.';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-    
+
     return state;
   }
-    
+
 }
-    

@@ -22,6 +22,7 @@ class PlusPower extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             player.marker.addMarker(this.PLUS_POWER_MARKER, this);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
         if (effect instanceof attack_effects_1.DealDamageEffect) {
             const marker = effect.player.marker;

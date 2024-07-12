@@ -23,11 +23,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     deckTop,
-    { },
+    {},
     { min: 1, max: 1, allowCancel: false }
   ), selected => {
     deckTop.moveCardsTo(selected, player.hand);
     deckTop.moveTo(player.deck);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   });
 }
 

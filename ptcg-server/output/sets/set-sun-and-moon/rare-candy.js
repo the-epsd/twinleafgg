@@ -81,7 +81,7 @@ function* playCard(next, store, state, effect) {
             const evolveEffect = new game_effects_1.EvolveEffect(player, targets[0], pokemonCard);
             store.reduceEffect(state, evolveEffect);
             // Discard trainer only when user selected a Pokemon
-            player.hand.moveCardTo(effect.trainerCard, player.discard);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
     });
 }

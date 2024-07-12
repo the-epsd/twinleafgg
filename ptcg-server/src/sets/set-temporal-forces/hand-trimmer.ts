@@ -12,15 +12,15 @@ export class HandTrimmer extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public regulationMark = 'H';
-  
+
   public set: string = 'TEF';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '150';
-  
+
   public name: string = 'Hand Trimmer';
-  
+
   public fullName: string = 'Hand Trimmer TEF';
 
   public text: string =
@@ -75,7 +75,7 @@ export class HandTrimmer extends TrainerCard {
         });
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
       }
-
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
       return state;
     }
     return state;

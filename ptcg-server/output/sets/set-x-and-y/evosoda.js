@@ -77,6 +77,7 @@ function* playCard(next, store, state, effect) {
     player.deck.moveCardTo(evolution, targets[0]);
     targets[0].clearEffects();
     targets[0].pokemonPlayedTurn = state.turn;
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class Evosoda extends trainer_card_1.TrainerCard {

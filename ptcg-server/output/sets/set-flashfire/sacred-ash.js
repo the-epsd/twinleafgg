@@ -34,7 +34,7 @@ function* playCard(next, store, state, self, effect) {
     if (cards.length === 0) {
         return state;
     }
-    player.hand.moveCardTo(self, player.discard);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     player.discard.moveCardsTo(cards, player.deck);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);

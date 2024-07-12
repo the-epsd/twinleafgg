@@ -18,10 +18,11 @@ function* playCard(next, store, state, effect) {
     return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: true }), selected => {
         if (selected && selected.length > 0) {
             // Discard trainer only when user selected a Pokemon
-            player.hand.moveCardTo(effect.trainerCard, player.discard);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
             // Recover discarded Pokemon
             player.discard.moveCardsTo(selected, player.hand);
         }
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
 }
 class PokemonRescue extends trainer_card_1.TrainerCard {

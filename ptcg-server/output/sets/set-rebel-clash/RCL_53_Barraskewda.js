@@ -13,6 +13,7 @@ class Barraskewda extends pokemon_card_1.PokemonCard {
         this.hp = 120;
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
+        this.evolvesFrom = 'Arrokuda';
         this.attacks = [{
                 name: 'Peck',
                 cost: [card_types_1.CardType.COLORLESS],

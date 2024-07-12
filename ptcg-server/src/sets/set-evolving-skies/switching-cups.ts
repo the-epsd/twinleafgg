@@ -24,14 +24,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.hand,
-    { },
+    {},
     { min: 1, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
   });
 
-  player.hand.moveCardsTo(cards, deckTop);
+  cards.forEach(c => c.cards.moveToTopOfDestination(player.deck));
   deckTop.moveTo(player.hand, 1);
 
   player.supporter.moveCardTo(effect.trainerCard, player.discard);

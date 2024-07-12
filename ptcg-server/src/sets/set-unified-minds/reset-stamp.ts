@@ -43,6 +43,7 @@ export class ResetStamp extends TrainerCard {
       });
 
       opponent.deck.moveTo(opponent.hand, Math.min(opponent.getPrizeLeft(), opponent.deck.cards.length));
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
 
     return state;

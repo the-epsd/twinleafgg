@@ -41,12 +41,11 @@ function* playCard(next, store, state, effect) {
     if (cards.length === 0) {
         return state;
     }
-    // Discard trainer only when user selected a Pokemon
-    player.hand.moveCardTo(effect.trainerCard, player.discard);
     target.moveCardsTo(cards, player.discard);
     // Heal Pokemon
     const healEffect = new game_effects_1.HealEffect(player, target, 60);
     store.reduceEffect(state, healEffect);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class SuperPotion extends trainer_card_1.TrainerCard {

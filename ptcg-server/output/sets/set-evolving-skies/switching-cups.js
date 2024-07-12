@@ -19,7 +19,7 @@ function* playCard(next, store, state, effect) {
         cards = selected || [];
         next();
     });
-    player.hand.moveCardsTo(cards, deckTop);
+    cards.forEach(c => c.cards.moveToTopOfDestination(player.deck));
     deckTop.moveTo(player.hand, 1);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {

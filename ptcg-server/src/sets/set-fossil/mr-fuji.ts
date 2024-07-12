@@ -26,7 +26,7 @@ export class MrFuji extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-        
+
       const player = effect.player;
 
       const hasBenched = player.bench.some(b => b.cards.length > 0);
@@ -44,7 +44,8 @@ export class MrFuji extends TrainerCard {
 
         target.moveTo(player.deck);
         target.clearEffects();
-  
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
 

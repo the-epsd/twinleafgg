@@ -13,6 +13,7 @@ class Azumarill extends pokemon_card_1.PokemonCard {
         this.hp = 120;
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
+        this.evolvesFrom = 'Marill';
         this.attacks = [{
                 name: 'Dive and Rescue',
                 cost: [card_types_1.CardType.WATER],
@@ -26,7 +27,7 @@ class Azumarill extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'FST';
-        this.setNumber = '59  ';
+        this.setNumber = '59';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Azumarill';

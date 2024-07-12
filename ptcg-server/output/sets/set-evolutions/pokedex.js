@@ -32,7 +32,7 @@ class Pokedex extends trainer_card_1.TrainerCard {
                 }
                 deckTop.applyOrder(rearrangedCards);
                 deckTop.moveTo(player.deck);
-                player.hand.moveCardTo(effect.trainerCard, player.discard);
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
             });
         }
         return state;

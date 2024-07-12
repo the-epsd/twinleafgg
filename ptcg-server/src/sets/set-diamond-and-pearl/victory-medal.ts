@@ -33,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.id,
       GameMessage.CHOOSE_CARD_TO_HAND,
       player.deck,
-      { },
+      {},
       { min: 1, max: 1, allowCancel: false }
     ), selected => {
       cards = selected;
@@ -42,7 +42,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
     // Get selected cards
     player.deck.moveCardsTo(cards, player.hand);
-
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     // Shuffle the deck
     yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);
@@ -55,6 +55,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (coinResults.some(r => r === true)) {
     // Get selected cards
     player.deck.moveTo(player.hand, 1);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
   }
 
