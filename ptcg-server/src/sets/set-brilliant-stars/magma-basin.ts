@@ -5,7 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
-import { PokemonCard, AttachEnergyPrompt, PlayerType, SlotType, EnergyCard, GameError } from '../../game';
+import { PokemonCard, AttachEnergyPrompt, PlayerType, SlotType, EnergyCard, GameError, CardTarget } from '../../game';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 
 export class MagmaBasin extends TrainerCard {
@@ -33,12 +33,13 @@ export class MagmaBasin extends TrainerCard {
 
       const player = effect.player;
 
-      const blocked: number[] = [];
+      const blocked: CardTarget[] = [];
       player.bench.forEach((card, index) => {
-        if (card instanceof PokemonCard && card.cardType === CardType.FIRE) {
-          blocked.push(index);
+        if (card instanceof PokemonCard && card.cardType !== CardType.FIRE) {
+          blocked.push({ player: PlayerType.BOTTOM_PLAYER, slot: SlotType.BENCH, index });
         }
       });
+
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard && c.name == 'Fire Energy';
@@ -52,9 +53,9 @@ export class MagmaBasin extends TrainerCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { allowCancel: false, min: 1, max: 1, blocked: blocked },
+        { allowCancel: false, min: 1, max: 1, blockedTo: blocked },
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user

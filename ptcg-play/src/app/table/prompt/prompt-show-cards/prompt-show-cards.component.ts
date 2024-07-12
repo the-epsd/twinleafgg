@@ -20,20 +20,20 @@ export class PromptShowCardsComponent {
     private gameService: GameService
   ) { }
 
-  ngOnInit() {
-    const gameId = this.gameState.gameId;
-    const id = this.prompt.id;
+  // ngOnInit() {
+  //   const gameId = this.gameState.gameId;
+  //   const id = this.prompt.id;
 
-    if (GamePhase.SETUP || GamePhase.WAITING_FOR_PLAYERS) {
-      setTimeout(() => {
-        this.gameService.resolvePrompt(gameId, id, null);
-      }, 3000);
-    } else {
-      setTimeout(() => {
-        this.gameService.resolvePrompt(gameId, id, null);
-      }, 5000);
-    }
-  }
+  //   if (GamePhase.SETUP || GamePhase.WAITING_FOR_PLAYERS) {
+  //     setTimeout(() => {
+  //       this.gameService.resolvePrompt(gameId, id, null);
+  //     }, 3000);
+  //   } else {
+  //     setTimeout(() => {
+  //       this.gameService.resolvePrompt(gameId, id, null);
+  //     }, 5000);
+  //   }
+  // }
 
   public minimize() {
     this.gameService.setPromptMinimized(this.gameState.localId, true);

@@ -3,9 +3,6 @@
     <ng-container *ngFor="let i of createRange(deck.cards.length); let idx = index">
       <ptcg-board-card (click)="onDeckClick()" [cardList]="deck" [owner]="isOwner" class="deck-card"
         [style.transform]="isOwner ? 'translate(' + (idx * 0.25) + 'px, ' + (idx * -0.25) + 'px)' : 'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'"></ptcg-board-card>
-      <ptcg-info [visible]="cardsCount > 0">
-        {{ 'DECK_EDIT_CARDS_COUNT' | translate:{count: cardsCount} }}
-      </ptcg-info>
     </ng-container>
   </div>
 
