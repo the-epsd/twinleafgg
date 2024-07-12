@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TwinEnergyArt = exports.TrainingCourtArt = exports.SpeedLightningEnergyArt = exports.ScoopUpNetArt = exports.MetapodArt = exports.HorrorPsychicEnergyArt = exports.DuraludonArt = exports.DragapultArt = exports.CoalossalArt = exports.CaterpieArt = exports.CaptureEnergyArt = exports.CapaciousBucketArt = exports.ButterfreeArt = exports.AegislashArt = void 0;
+exports.TwinEnergyArt = exports.TrainingCourtArt = exports.SpeedLightningEnergyArt = exports.ScoopUpNetArt = exports.MetapodArt = exports.HorrorPsychicEnergyArt = exports.DuraludonArt = exports.DragapultArt = exports.CoalossalArt = exports.CaterpieArt = exports.CaptureEnergyArt = exports.CapaciousBucketArt = exports.ButterfreeArt = exports.BarraskewdaArt = exports.ArrokudaArt = exports.AegislashArt = void 0;
 const aegislash_1 = require("./aegislash");
 const butterfree_1 = require("./butterfree");
 const capacious_bucket_1 = require("./capacious-bucket");
@@ -11,6 +11,8 @@ const dragapult_1 = require("./dragapult");
 const duraludon_1 = require("./duraludon");
 const horror_psychic_energy_1 = require("./horror-psychic-energy");
 const metapod_1 = require("./metapod");
+const RCL_52_Arrokuda_1 = require("./RCL_52_Arrokuda");
+const RCL_53_Barraskewda_1 = require("./RCL_53_Barraskewda");
 const scoop_up_net_1 = require("./scoop-up-net");
 const speed_lightning_energy_1 = require("./speed-lightning-energy");
 const training_court_1 = require("./training-court");
@@ -22,6 +24,20 @@ class AegislashArt extends aegislash_1.Aegislash {
     }
 }
 exports.AegislashArt = AegislashArt;
+class ArrokudaArt extends RCL_52_Arrokuda_1.Arrokuda {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_052_R_EN_LG.png';
+    }
+}
+exports.ArrokudaArt = ArrokudaArt;
+class BarraskewdaArt extends RCL_53_Barraskewda_1.Barraskewda {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_053_R_EN_LG.png';
+    }
+}
+exports.BarraskewdaArt = BarraskewdaArt;
 class ButterfreeArt extends butterfree_1.Butterfree {
     constructor() {
         super(...arguments);

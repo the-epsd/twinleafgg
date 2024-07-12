@@ -4,6 +4,8 @@ exports.setRebelClash = void 0;
 const card_images_1 = require("./card-images");
 exports.setRebelClash = [
     new card_images_1.AegislashArt(),
+    new card_images_1.ArrokudaArt(),
+    new card_images_1.BarraskewdaArt(),
     new card_images_1.ButterfreeArt(),
     new card_images_1.CapaciousBucketArt(),
     new card_images_1.CaptureEnergyArt(),

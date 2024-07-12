@@ -28,6 +28,5 @@ export declare class Greninja extends PokemonCard {
     fullName: string;
     cardImage: string;
     setNumber: string;
-    readonly EVASION_JUTSU_MARKER = "EVASION_JUTSU_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

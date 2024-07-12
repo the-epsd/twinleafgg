@@ -1,4 +1,5 @@
 import { Blacephalon } from './blacephalon';
+import { Phione } from './CEC_57_Phione';
 import { Wishiwashi } from './CEC_62_Wishiwashi';
 import { Pikachu } from './CEC_66_Pikachu';
 import { Duskull } from './CEC_83_Duskull';
@@ -53,6 +54,9 @@ export declare class LilliesPokeDollArt extends LilliesPokeDoll {
     cardImage: string;
 }
 export declare class LillipupArt extends Lillipup {
+    cardImage: string;
+}
+export declare class PhioneArt extends Phione {
     cardImage: string;
 }
 export declare class PikachuArt extends Pikachu {

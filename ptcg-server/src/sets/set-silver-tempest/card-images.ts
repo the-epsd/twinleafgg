@@ -45,6 +45,7 @@ import { Palossand } from './SIT_100_Palossand';
 import { Klink } from './SIT_123_Klink';
 import { Klang } from './SIT_124_Klang';
 import { Klinklang } from './SIT_125_Klinklang';
+import { Snorunt } from './SIT_41_Snorunt';
 import { Terrakion } from './SIT_97_Terrakion';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
@@ -239,6 +240,10 @@ export class SerperiorVArt extends SerperiorV {
 
 export class SerperiorVSTARArt extends SerperiorVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_008_R_EN_LG.png';
+}
+
+export class SnowruntArt extends Snorunt {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_041_R_EN_LG.png';
 }
 
 export class TerrakionArt extends Terrakion {

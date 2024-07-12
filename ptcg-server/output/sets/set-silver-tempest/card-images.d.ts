@@ -45,6 +45,7 @@ import { Palossand } from './SIT_100_Palossand';
 import { Klink } from './SIT_123_Klink';
 import { Klang } from './SIT_124_Klang';
 import { Klinklang } from './SIT_125_Klinklang';
+import { Snowrunt } from './SIT_41_Snowrunt';
 import { Terrakion } from './SIT_97_Terrakion';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
@@ -191,6 +192,9 @@ export declare class SerperiorVArt extends SerperiorV {
     cardImage: string;
 }
 export declare class SerperiorVSTARArt extends SerperiorVSTAR {
+    cardImage: string;
+}
+export declare class SnowruntArt extends Snowrunt {
     cardImage: string;
 }
 export declare class TerrakionArt extends Terrakion {

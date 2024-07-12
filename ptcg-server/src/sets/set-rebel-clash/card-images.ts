@@ -8,6 +8,8 @@ import { Dragapult } from './dragapult';
 import { Duraludon } from './duraludon';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
+import { Arrokuda } from './RCL_52_Arrokuda';
+import { Barraskewda } from './RCL_53_Barraskewda';
 import { ScoopUpNet } from './scoop-up-net';
 import { SpeedLightningEnergy } from './speed-lightning-energy';
 import { TrainingCourt } from './training-court';
@@ -15,6 +17,14 @@ import { TwinEnergy } from './twin-energy';
 
 export class AegislashArt extends Aegislash {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_135_R_EN.png';
+}
+
+export class ArrokudaArt extends Arrokuda {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_052_R_EN_LG.png';
+}
+
+export class BarraskewdaArt extends Barraskewda {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_053_R_EN_LG.png';
 }
 
 export class ButterfreeArt extends Butterfree {

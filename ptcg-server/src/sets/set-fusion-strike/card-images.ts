@@ -11,6 +11,7 @@ import { Dreepy } from './dreepy';
 import { Dunsparce } from './dunsparce';
 import { ElesasSparkle } from './elesas-sparkle';
 import { Croagunk } from './FST_165_Croagunk';
+import { Azumarill } from './FST_59_Azumarill';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
 import { GalarianLinoone } from './galarian-linoone';
 import { GenesectV } from './genesect-v';
@@ -37,6 +38,10 @@ export class AccelgorArt extends Accelgor {
 
 export class AdventurersDiscoveryArt extends AdventurersDiscovery {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_224_R_EN_LG.png';
+}
+
+export class AzumarillArt extends Azumarill {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_059_R_EN_LG.png';
 }
 
 export class BasculinArt extends Basculin {

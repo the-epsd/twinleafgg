@@ -6,6 +6,7 @@ const full_art_1 = require("./full-art");
 exports.setHiddenFates = [
     new card_images_1.CharmanderArt(),
     new card_images_1.ErikasHospitalityArt(),
+    new card_images_1.PsyduckArt(),
     // Full Arts/Shiny Vault
     new full_art_1.AlolanVulpixArt(),
 ];

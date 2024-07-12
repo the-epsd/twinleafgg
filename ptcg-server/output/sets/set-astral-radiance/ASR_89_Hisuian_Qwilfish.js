@@ -34,13 +34,21 @@ class HisuianQwilfish extends pokemon_card_1.PokemonCard {
                 let numFlips = 0;
                 if (results === true) {
                     numFlips++;
-                    store.prompt(state, [
-                        new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
-                    ], result => {
-                        if (result === true) {
-                            numFlips++;
+                    while (!this.COIN_FLIP_TAILS) {
+                        store.prompt(state, [
+                            new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
+                        ], result => {
+                            if (result === true) {
+                                numFlips++;
+                            }
+                            else {
+                                this.COIN_FLIP_TAILS = true;
+                            }
+                        });
+                        if (this.COIN_FLIP_TAILS) {
+                            break;
                         }
-                    });
+                    }
                 }
                 effect.damage = 10 * numFlips;
             });

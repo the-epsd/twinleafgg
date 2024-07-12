@@ -24,6 +24,7 @@ import { Jynx } from './jynx';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
 import { Lady } from './lady';
+import { HisuianBasculegion } from './LOR_45_Hisuian_Basculegion';
 import { LostCity } from './lost-city';
 import { LostVacuum } from './lost-vacuum';
 import { Machamp } from './machamp';
@@ -89,6 +90,9 @@ export declare class GiratinaVArt extends GiratinaV {
     cardImage: string;
 }
 export declare class GiratinaVSTARArt extends GiratinaVSTAR {
+    cardImage: string;
+}
+export declare class HisuianBasculegionArt extends HisuianBasculegion {
     cardImage: string;
 }
 export declare class HisuianGoodraVArt extends HisuianGoodraV {
