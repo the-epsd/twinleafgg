@@ -6,6 +6,7 @@ import { Ditto } from './ditto';
 import { Lunatone } from './lunatone';
 import { LureModule } from './lure-module';
 import { Moltres } from './moltres';
+import { Camerupt } from './PGO_14_Camerupt';
 import { Slowpoke } from './PGO_19_Slowpoke';
 import { AlolanRaticate } from './PGO_42_Alolan_Raticate';
 import { Pokestop } from './pokestop';
@@ -26,6 +27,10 @@ export class ArticunoArt extends Articuno {
 
 export class BlastoiseArt extends Blastoise {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_017_R_EN_LG.png';
+}
+
+export class CameruptArt extends Camerupt {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_014_R_EN_LG.png';
 }
 
 export class CharmanderArt extends Charmander {

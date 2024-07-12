@@ -2,6 +2,7 @@ import { LostVacuum } from '../set-lost-origin/lost-vacuum';
 import { RotomV } from '../set-lost-origin/rotom-v';
 import { Absol } from './absol';
 import { Bidoof } from './bidoof';
+import { Salandit } from './CRZ_27_Salandit';
 import { Hoopa } from './hoopa';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
@@ -67,6 +68,10 @@ export class RotomVArt extends RotomV {
   public fullName = 'Rotom V CRZ';
   public set = 'CRZ';
   public setNumber = '45';
+}
+
+export class SalanditArt extends Salandit {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_027_R_EN_LG.png';
 }
 
 export class WailmerArt extends Wailmer {

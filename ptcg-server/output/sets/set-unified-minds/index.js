@@ -8,6 +8,7 @@ exports.setUnifiedMinds = [
     new card_images_1.FroslassArt(),
     new card_images_1.KarateBeltArt(),
     new card_images_1.NecrozmaArt(),
+    new card_images_1.NumelArt(),
     new card_images_1.PurrloinArt(),
     new card_images_1.RecycleEnergyArt(),
     new card_images_1.ResetStampArt(),

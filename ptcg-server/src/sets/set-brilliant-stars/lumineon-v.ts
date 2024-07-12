@@ -3,15 +3,17 @@ import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt,
-  ShuffleDeckPrompt, 
+import {
+  PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt,
+  ShuffleDeckPrompt,
   ConfirmPrompt,
   ShowCardsPrompt,
-  StateUtils} from '../../game';
+  StateUtils
+} from '../../game';
 
 export class LumineonV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
@@ -23,7 +25,7 @@ export class LumineonV extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Luminous Sign',
@@ -37,7 +39,7 @@ export class LumineonV extends PokemonCard {
   public attacks = [
     {
       name: 'Aqua Return',
-      cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
       damage: 120,
       text: 'Shuffle this Pokémon and all attached cards into your deck.'
     }
@@ -62,7 +64,7 @@ export class LumineonV extends PokemonCard {
       if (player.deck.cards.length === 0) {
         return state;
       }
-    
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {
@@ -79,7 +81,7 @@ export class LumineonV extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-    
+
           state = store.prompt(state, new ChooseCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARD_TO_HAND,
@@ -104,7 +106,7 @@ export class LumineonV extends PokemonCard {
 
           player.active.clearEffects();
           player.active.moveTo(player.deck);
-  
+
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
           });

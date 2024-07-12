@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VengefulPunchArt = exports.VaroomArt = exports.TownStoreArt = exports.ThundurusArt = exports.ScizorArt = exports.RymeArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalafinArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.ArvenArt = exports.AbsolexArt = void 0;
+exports.VengefulPunchArt = exports.VaroomArt = exports.TownStoreArt = exports.ThundurusArt = exports.ScizorArt = exports.RymeArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalafinArt = exports.NinetalesArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.ArvenArt = exports.AbsolexArt = void 0;
 const arven_1 = require("../set-scarlet-and-violet/arven");
 const absol_ex_1 = require("./absol-ex");
 const bellibolt_1 = require("./bellibolt");
@@ -15,6 +15,7 @@ const entei_1 = require("./entei");
 const finizen_1 = require("./finizen");
 const letter_of_encouragement_1 = require("./letter-of-encouragement");
 const lunatone_1 = require("./lunatone");
+const OBF_29_Ninetales_1 = require("./OBF_29_Ninetales");
 const palafin_1 = require("./palafin");
 const pidgeot_ex_1 = require("./pidgeot-ex");
 const pidgeotto_1 = require("./pidgeotto");
@@ -128,6 +129,13 @@ class LunatoneArt extends lunatone_1.Lunatone {
     }
 }
 exports.LunatoneArt = LunatoneArt;
+class NinetalesArt extends OBF_29_Ninetales_1.Ninetales {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_029_R_EN_LG.png';
+    }
+}
+exports.NinetalesArt = NinetalesArt;
 class PalafinArt extends palafin_1.Palafin {
     constructor() {
         super(...arguments);

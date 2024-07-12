@@ -4,6 +4,7 @@ import { Bunnelby } from './bunnelby';
 import { DiveBall } from './dive-ball';
 import { MaxiesHiddenBallTrick } from './maxies-hidden-ball-trick';
 import { Milotic } from './milotic';
+import { Slugma } from './PRC_22_Slugma';
 import { RoughSeas } from './rough-seas';
 import { ScorchedEarth } from './scorched-earth';
 import { ShieldEnergy } from './shield-energy';
@@ -20,7 +21,7 @@ export class ArchiesAceInTheHoleArt extends ArchiesAceInTheHole {
 }
 
 export class BunnelbyArt extends Bunnelby {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_121_R_EN.png'; 
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_121_R_EN.png';
 }
 
 export class DiveBallArt extends DiveBall {
@@ -49,6 +50,10 @@ export class ShieldEnergArt extends ShieldEnergy {
 
 export class SilentLabArt extends SilentLab {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_140_R_EN.png';
+}
+
+export class SlugmaArt extends Slugma {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_022_R_EN_LG.png';
 }
 
 export class TeammatesArt extends Teammates {

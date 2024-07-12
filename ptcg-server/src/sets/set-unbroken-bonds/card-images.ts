@@ -12,6 +12,7 @@ import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
+import { Salazzle } from './UNB_31_Salazzle';
 import { Poliwag } from './UNB_37_Poliwag';
 import { Zeraora } from './UNB_60_Zeraora';
 import { Volcanion } from './volcanion';
@@ -66,6 +67,10 @@ export class PoliwagArt extends Poliwag {
 
 export class PorygonZArt extends PorygonZ {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_157_R_EN_LG.png';
+}
+
+export class SalazzleArt extends Salazzle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_031_R_EN_LG.png';
 }
 
 export class SpiritombArt extends Spiritomb {

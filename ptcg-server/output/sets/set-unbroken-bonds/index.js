@@ -16,6 +16,7 @@ exports.setUnbrokenBonds = [
     new card_images_1.Pokegear30Art(),
     new card_images_1.PoliwagArt(),
     new card_images_1.PorygonZArt(),
+    new card_images_1.SalazzleArt(),
     new card_images_1.SpiritombArt(),
     new card_images_1.TripleAccelerationEnergyArt(),
     new card_images_1.VolcanionArt(),

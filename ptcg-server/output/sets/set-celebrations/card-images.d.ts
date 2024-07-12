@@ -1,3 +1,4 @@
+import { Reshiram } from './CEL_2_Reshiram';
 import { Dialga } from './dialga';
 import { FlyingPikachuV } from './flying-pikachu-v';
 import { FlyingPikachuVMAX } from './flying-pikachu-vmax';
@@ -22,6 +23,9 @@ export declare class LugiaArt extends Lugia {
     cardImage: string;
 }
 export declare class MewArt extends Mew {
+    cardImage: string;
+}
+export declare class ReshiramArt extends Reshiram {
     cardImage: string;
 }
 export declare class YVeltalArt extends Yveltal {

@@ -8,12 +8,17 @@ import { LucarioVSTAR } from './lucario-vstar';
 import { Manaphy } from './manaphy';
 import { Oricorio } from './oricorio';
 import { ProfessorBurnet } from './professor-burnett';
+import { Charmander } from './SSP_92_Charmander';
 import { Tepig } from './tepig';
 import { VenusaurV } from './venusaur-v';
 import { VenusaurVMAX } from './venusaur-vmax';
 
 export class ChampionsFestivalArt extends ChampionsFestival {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_296_R_EN_LG.png';
+}
+
+export class CharmanderArt extends Charmander {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_092_R_EN_LG.png';
 }
 
 export class DeoxysVArt extends DeoxysV {

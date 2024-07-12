@@ -8,6 +8,7 @@ import { Dragapult } from './dragapult';
 import { Duraludon } from './duraludon';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
+import { Vulpix } from './RCL_24_Vulpix';
 import { Arrokuda } from './RCL_52_Arrokuda';
 import { Barraskewda } from './RCL_53_Barraskewda';
 import { ScoopUpNet } from './scoop-up-net';
@@ -77,4 +78,8 @@ export class TrainingCourtArt extends TrainingCourt {
 
 export class TwinEnergyArt extends TwinEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_174_R_EN.png';
+}
+
+export class VulpixArt extends Vulpix {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_024_R_EN_LG.png';
 }

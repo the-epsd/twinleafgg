@@ -8,6 +8,7 @@ import { Dragapult } from './dragapult';
 import { Duraludon } from './duraludon';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
+import { Vulpix } from './RCL_24_Vulpix';
 import { Arrokuda } from './RCL_52_Arrokuda';
 import { Barraskewda } from './RCL_53_Barraskewda';
 import { ScoopUpNet } from './scoop-up-net';
@@ -60,5 +61,8 @@ export declare class TrainingCourtArt extends TrainingCourt {
     cardImage: string;
 }
 export declare class TwinEnergyArt extends TwinEnergy {
+    cardImage: string;
+}
+export declare class VulpixArt extends Vulpix {
     cardImage: string;
 }

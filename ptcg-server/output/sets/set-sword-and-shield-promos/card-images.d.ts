@@ -8,10 +8,14 @@ import { LucarioVSTAR } from './lucario-vstar';
 import { Manaphy } from './manaphy';
 import { Oricorio } from './oricorio';
 import { ProfessorBurnet } from './professor-burnett';
+import { Charmander } from './SSP_92_Charmander';
 import { Tepig } from './tepig';
 import { VenusaurV } from './venusaur-v';
 import { VenusaurVMAX } from './venusaur-vmax';
 export declare class ChampionsFestivalArt extends ChampionsFestival {
+    cardImage: string;
+}
+export declare class CharmanderArt extends Charmander {
     cardImage: string;
 }
 export declare class DeoxysVArt extends DeoxysV {

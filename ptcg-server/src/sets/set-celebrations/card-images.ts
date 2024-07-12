@@ -1,3 +1,4 @@
+import { Reshiram } from './CEL_2_Reshiram';
 import { Dialga } from './dialga';
 import { FlyingPikachuV } from './flying-pikachu-v';
 import { FlyingPikachuVMAX } from './flying-pikachu-vmax';
@@ -29,6 +30,10 @@ export class LugiaArt extends Lugia {
 
 export class MewArt extends Mew {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEL/CEL_011_R_EN_LG.png';
+}
+
+export class ReshiramArt extends Reshiram {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEL/CEL_002_R_EN_LG.png';
 }
 
 export class YVeltalArt extends Yveltal {
