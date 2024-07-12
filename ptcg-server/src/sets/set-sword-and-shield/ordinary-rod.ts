@@ -18,15 +18,15 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Ordinar
   let cards: Card[] = [];
 
   const pokemonAndEnergyInDiscardPile = player.discard.cards.filter(c => c instanceof PokemonCard || (c instanceof EnergyCard && c.energyType === EnergyType.BASIC)).length;
-  
+
   if (pokemonAndEnergyInDiscardPile === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  
+
   let pokemons = 0;
   let energies = 0;
   const blocked: number[] = [];
@@ -48,7 +48,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Ordinar
     player.id,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
-    { },
+    {},
     { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies }
   ), selected => {
     cards = selected || [];
@@ -57,11 +57,11 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Ordinar
 
   player.discard.moveCardsTo(cards, player.deck);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
   });
-  
+
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,
@@ -69,7 +69,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Ordinar
       cards
     ), () => next());
   }
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
@@ -104,8 +104,8 @@ export class OrdinaryRod extends TrainerCard {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
-      
+
     return state;
   }
-      
+
 }

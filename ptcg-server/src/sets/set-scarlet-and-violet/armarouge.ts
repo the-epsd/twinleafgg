@@ -20,7 +20,7 @@ function* useFireOff(next: Function, store: StoreLike, state: State, effect: Pow
     const blockedCards: Card[] = [];
 
     checkProvidedEnergy.energyMap.forEach(em => {
-      if (!em.provides.includes(CardType.FIRE)) {
+      if (!em.provides.includes(CardType.FIRE) && !em.provides.includes(CardType.ANY)) {
         blockedCards.push(em.card);
       }
     });
@@ -33,15 +33,8 @@ function* useFireOff(next: Function, store: StoreLike, state: State, effect: Pow
       }
     });
 
-    if (blocked.length !== 0) {
-      blockedMap.push({ source: target, blocked });
-    }
-  });
-
-  const blocked2: CardTarget[] = [];
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-    if (!player.active) {
-      blocked2.push(target);
+    if (blocked.length !== 0 || target.slot === SlotType.ACTIVE) {
+      blockedMap.push({ source: target, blocked: target.slot === SlotType.ACTIVE ? cardList.cards.map((_, i) => i) : blocked });
     }
   });
 
@@ -49,9 +42,9 @@ function* useFireOff(next: Function, store: StoreLike, state: State, effect: Pow
     effect.player.id,
     GameMessage.MOVE_ENERGY_CARDS,
     PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH, SlotType.ACTIVE],
+    [SlotType.BENCH, SlotType.ACTIVE], // Only allow moving from bench
     { superType: SuperType.ENERGY },
-    { allowCancel: true, blockedMap, blockedTo: blocked2 }
+    { allowCancel: false, min: 0, blockedMap }
   ), transfers => {
     if (transfers === null) {
       return;
@@ -59,7 +52,7 @@ function* useFireOff(next: Function, store: StoreLike, state: State, effect: Pow
 
     for (const transfer of transfers) {
       const source = StateUtils.getTarget(state, player, transfer.from);
-      const target = StateUtils.getTarget(state, player, transfer.to);
+      const target = player.active; // Always move to active Pokémon
       source.moveCardTo(transfer.card, target);
     }
   });
@@ -69,7 +62,7 @@ export class Armarouge extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public stage: Stage = Stage.STAGE_1;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Charcadet';
 

@@ -30,21 +30,21 @@ export class Electropower extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       player.marker.addMarker(this.ELECTROPOWER_MARKER, this);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
-  
+
     if (effect instanceof DealDamageEffect && effect.player.active.getPokemonCard()?.cardType === CardType.LIGHTNING) {
       const marker = effect.player.marker;
       if (marker.hasMarker(this.ELECTROPOWER_MARKER, this) && effect.damage > 0) {
         effect.damage += 30;
       }
     }
-  
+
     if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.ELECTROPOWER_MARKER, this);
     }
-  
+
     return state;
   }
-  
+
 }
-  

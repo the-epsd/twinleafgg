@@ -28,7 +28,7 @@ export class ImpostorProfessorOak extends TrainerCard {
 
       // Shuffle opponent's hand into their deck
       opponent.hand.moveCardsTo(opponent.hand.cards, opponent.deck);
-      
+
       store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
       });
@@ -37,8 +37,8 @@ export class ImpostorProfessorOak extends TrainerCard {
       opponent.deck.moveTo(opponent.hand, 7);
 
       // Discard the played Trainer card
-      player.hand.moveCardTo(effect.trainerCard, player.discard);
-      
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       return state;
     }
 

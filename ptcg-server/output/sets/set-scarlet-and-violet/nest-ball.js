@@ -22,7 +22,6 @@ function* playCard(next, store, state, effect) {
     }
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
-    player.hand.moveCardTo(effect.trainerCard, player.discard);
     let cards = [];
     yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false }), selected => {
         cards = selected || [];
@@ -37,8 +36,8 @@ function* playCard(next, store, state, effect) {
         player.deck.moveCardTo(card, slots[index]);
         slots[index].pokemonPlayedTurn = state.turn;
         store.log(state, game_message_1.GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: card.name });
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
     });

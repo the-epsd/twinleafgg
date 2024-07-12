@@ -21,6 +21,7 @@ function* playCard(next, store, state, effect) {
     yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(player.id, game_message_1.GameMessage.CARDS_SHOWED_BY_EFFECT, cards), () => { next(); });
     // Prizes are secret once again.
     prizes.forEach(p => { p.isSecret = true; });
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class AlphLithograph extends trainer_card_1.TrainerCard {

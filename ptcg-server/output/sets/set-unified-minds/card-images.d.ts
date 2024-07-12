@@ -7,9 +7,13 @@ import { ResetStamp } from './reset-stamp';
 import { Riolu } from './riolu';
 import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
+import { Froslass } from './UNM_38_Froslass';
 import { AlolanRaichu } from './UNM_57_Alolan_Raichu';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
 export declare class AlolanGrimerArt extends AlolanGrimer {
+    cardImage: string;
+}
+export declare class FroslassArt extends Froslass {
     cardImage: string;
 }
 export declare class KarateBeltArt extends KarateBelt {

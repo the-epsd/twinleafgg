@@ -42,12 +42,14 @@ class FanOfWaves extends trainer_card_1.TrainerCard {
                 targets = results || [];
             });
             if (targets.length === 0) {
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 return state;
             }
             const target = targets[0];
             state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { min: 1, max: 1, allowCancel: false }), selected => {
                 const cards = selected;
                 const opponentDeckBottom = new game_1.CardList();
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 cards.forEach(card => {
                     opponentDeckBottom.moveCardTo(card, opponent.deck);
                     player.supporter.moveCardTo(this, player.discard);

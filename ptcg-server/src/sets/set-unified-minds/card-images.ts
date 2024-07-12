@@ -7,11 +7,16 @@ import { ResetStamp } from './reset-stamp';
 import { Riolu } from './riolu';
 import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
+import { Froslass } from './UNM_38_Froslass';
 import { AlolanRaichu } from './UNM_57_Alolan_Raichu';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
 
 export class AlolanGrimerArt extends AlolanGrimer {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_127_R_EN.png';
+}
+
+export class FroslassArt extends Froslass {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_038_R_EN_LG.png';
 }
 
 export class KarateBeltArt extends KarateBelt {

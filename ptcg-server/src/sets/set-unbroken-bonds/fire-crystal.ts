@@ -40,8 +40,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     { min: max, max, allowCancel: false }
   ), selected => {
     if (selected && selected.length > 0) {
-      // Discard trainer only when user selected some cards
-      player.hand.moveCardTo(effect.trainerCard, player.discard);
       // Recover discarded energies
       player.discard.moveCardsTo(selected, player.hand);
     }

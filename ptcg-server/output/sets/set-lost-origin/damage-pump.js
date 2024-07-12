@@ -31,6 +31,7 @@ class DamagePump extends trainer_card_1.TrainerCard {
             effect.preventDefault = true;
             return store.prompt(state, new game_1.MoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 2, allowCancel: false }), transfers => {
                 if (transfers === null) {
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
                     return;
                 }
                 for (const transfer of transfers) {

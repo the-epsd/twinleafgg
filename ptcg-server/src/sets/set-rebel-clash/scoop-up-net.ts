@@ -16,7 +16,7 @@ export class ScoopUpNet extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      
+
       return store.prompt(
         state,
         new ChoosePokemonPrompt(
@@ -29,7 +29,7 @@ export class ScoopUpNet extends TrainerCard {
         (results) => {
           if (results && results.length > 0) {
             const targetPokemon = results[0];
-            
+
             if (targetPokemon === effect.player.active) {
               return store.prompt(state, new ChoosePokemonPrompt(
                 player.id,
@@ -45,19 +45,20 @@ export class ScoopUpNet extends TrainerCard {
                     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: card.name });
                   }
                 });
-                
+
                 player.switchPokemon(cardList);
-                
+
                 const scoopedPokemon = targetPokemon.cards.filter(c => c instanceof PokemonCard)[0];
                 const benchedCardList = player.bench.find(b => b.cards.includes(scoopedPokemon));
-                
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 benchedCardList!.moveCardsTo(benchedCardList!.cards.filter(c => c instanceof PokemonCard), effect.player.hand);
-                benchedCardList!.moveCardsTo(benchedCardList!.cards.filter(c => !(c instanceof PokemonCard)), effect.player.discard);  
+                benchedCardList!.moveCardsTo(benchedCardList!.cards.filter(c => !(c instanceof PokemonCard)), effect.player.discard);
               });
             } else {
               targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => c instanceof PokemonCard), effect.player.hand);
               targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => !(c instanceof PokemonCard)), effect.player.discard);
               targetPokemon.clearEffects();
+              player.supporter.moveCardTo(effect.trainerCard, player.discard);
               targetPokemon.cards.forEach((card, index) => {
                 if (card instanceof PokemonCard) {
                   store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: card.name });
@@ -65,7 +66,7 @@ export class ScoopUpNet extends TrainerCard {
               });
             }
           }
-          
+
           return state;
         }
       );

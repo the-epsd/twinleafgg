@@ -5,8 +5,10 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, CardTarget, GameError, GameMessage,
-  PokemonCardList, Card, ChooseCardsPrompt, EnergyCard} from '../../game';
+import {
+  PlayerType, SlotType, CardTarget, GameError, GameMessage,
+  PokemonCardList, Card, ChooseCardsPrompt, EnergyCard
+} from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -34,7 +36,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_HEAL,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: true, blocked }
   ), results => {
     targets = results || [];
@@ -63,7 +65,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Discard trainer only when user selected a Pokemon
-  player.hand.moveCardTo(effect.trainerCard, player.discard);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   target.moveCardsTo(cards, player.discard);
 
   // Heal Pokemon
@@ -77,13 +79,13 @@ export class SuperPotion extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'BS';
-    
+
   public cardImage: string = 'assets/cardback.png';
-    
+
   public setNumber: string = '90';
-    
+
   public name: string = 'Super Potion';
-    
+
   public fullName: string = 'Super Potion BS';
 
   public text: string =

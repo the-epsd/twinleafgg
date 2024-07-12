@@ -11,6 +11,7 @@ import { Dreepy } from './dreepy';
 import { Dunsparce } from './dunsparce';
 import { ElesasSparkle } from './elesas-sparkle';
 import { Croagunk } from './FST_165_Croagunk';
+import { Azumarill } from './FST_59_Azumarill';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
 import { GalarianLinoone } from './galarian-linoone';
 import { GenesectV } from './genesect-v';
@@ -34,6 +35,9 @@ export declare class AccelgorArt extends Accelgor {
     cardImage: string;
 }
 export declare class AdventurersDiscoveryArt extends AdventurersDiscovery {
+    cardImage: string;
+}
+export declare class AzumarillArt extends Azumarill {
     cardImage: string;
 }
 export declare class BasculinArt extends Basculin {

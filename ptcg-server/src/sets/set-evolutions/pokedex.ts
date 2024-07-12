@@ -27,11 +27,11 @@ export class Pokedex extends TrainerCard {
       const deck = player.deck;
 
       const deckTop = new CardList();
-      
+
       // Get up to 5 cards from the top of the deck
       const cards = deck.cards.slice(0, 5);
       player.deck.moveCardsTo(cards, deckTop);
-      
+
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -44,11 +44,10 @@ export class Pokedex extends TrainerCard {
         if (rearrangedCards === null) {
           return state;
         }
-  
+
         deckTop.applyOrder(rearrangedCards);
         deckTop.moveTo(player.deck);
-  
-        player.hand.moveCardTo(effect.trainerCard, player.discard);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
       });
     }
 

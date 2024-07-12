@@ -35,6 +35,7 @@ export class PokemonCenter extends TrainerCard {
         cardList.moveCardsTo(cards, player.discard);
 
       });
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
       return state;
     }
     return state;

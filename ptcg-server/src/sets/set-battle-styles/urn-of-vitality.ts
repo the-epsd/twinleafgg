@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { Card} from '../../game/store/card/card';
+import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard, ShuffleDeckPrompt } from '../../game';
 
@@ -40,6 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: UrnOfVi
     player.discard.moveCardsTo(cards, player.deck);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
   }
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
@@ -49,7 +50,7 @@ export class UrnOfVitality extends TrainerCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.SINGLE_STRIKE ];
+  public tags = [CardTag.SINGLE_STRIKE];
 
   public trainerType: TrainerType = TrainerType.ITEM;
 

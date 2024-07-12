@@ -73,6 +73,8 @@ export class LureModule extends TrainerCard {
           temp.moveCardTo(card, player.deck);
         });
 
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
           return state;
@@ -84,43 +86,43 @@ export class LureModule extends TrainerCard {
 
     const opponent = StateUtils.getOpponent(state, player);
     const tempOpp = new CardList();
-  
+
     opponent.deck.moveTo(tempOpp, 3);
-  
+
     const pokemonDrawnOpp = tempOpp.cards.filter(card => {
       return card instanceof PokemonCard;
     });
-  
+
     // If no energy cards were drawn, move all cards to deck
     if (pokemonDrawnOpp.length == 0) {
-  
+
       return store.prompt(state, new ShowCardsPrompt(
         player.id && opponent.id,
         GameMessage.CARDS_SHOWED_BY_EFFECT,
         tempOpp.cards
       ), () => {
-  
+
         tempOpp.cards.forEach(card => {
           tempOpp.moveCardTo(card, opponent.deck);
         });
-  
+
         return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
           opponent.deck.applyOrder(order);
           return state;
         });
-  
+
       });
-  
+
     } else {
-  
+
       pokemonDrawnOpp.forEach(pokemon => {
         tempOpp.moveCardTo(pokemon, opponent.deck);
       });
-  
+
       tempOpp.cards.forEach(card => {
         tempOpp.moveCardTo(card, opponent.deck);
       });
-  
+
       return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
         opponent.deck.applyOrder(order);
         return state;

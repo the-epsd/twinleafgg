@@ -1,4 +1,5 @@
 import { Blacephalon } from './blacephalon';
+import { Phione } from './CEC_57_Phione';
 import { Wishiwashi } from './CEC_62_Wishiwashi';
 import { Pikachu } from './CEC_66_Pikachu';
 import { Duskull } from './CEC_83_Duskull';
@@ -69,6 +70,10 @@ export class LilliesPokeDollArt extends LilliesPokeDoll {
 
 export class LillipupArt extends Lillipup {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_174_R_EN_LG.png';
+}
+
+export class PhioneArt extends Phione {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_057_R_EN_LG.png';
 }
 
 export class PikachuArt extends Pikachu {

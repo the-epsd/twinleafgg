@@ -5,7 +5,9 @@ import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 import { Dragonair } from './dragonair';
 import { Herdier } from './herdier';
 import { Oranguru } from './oranguru';
+import { ProfessorKukui } from './professor-kukui';
 import { RainbowEnergy } from './rainbow-energy';
+import { Golduck } from './SUM_29_Golduck';
 import { AlolanRattata } from './SUM_76_Alolan_Rattata';
 import { TimerBall } from './timer-ball';
 
@@ -29,6 +31,10 @@ export class ExpShareArt extends ExpShare {
   public fullName: string = 'Exp. Share SUM';
 }
 
+export class GolduckArt extends Golduck {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_029_R_EN_LG.png';
+}
+
 export class HerdierArt extends Herdier {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_104_R_EN.png';
 }
@@ -41,6 +47,10 @@ export class NestBallArt extends NestBall {
 
 export class OranguruArt extends Oranguru {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_113_R_EN_LG.png';
+}
+
+export class ProfessorKukuiArt extends ProfessorKukui {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_128_R_EN.png';
 }
 
 export class RainbowEnergyArt extends RainbowEnergy {

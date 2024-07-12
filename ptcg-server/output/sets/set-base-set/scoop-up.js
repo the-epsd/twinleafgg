@@ -29,6 +29,7 @@ class ScoopUp extends trainer_card_1.TrainerCard {
                     cardList.moveCardsTo(basics, player.hand);
                     cardList.moveTo(player.hand);
                     cardList.clearEffects();
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 }
             });
         }

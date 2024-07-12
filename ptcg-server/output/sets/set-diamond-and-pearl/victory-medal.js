@@ -30,6 +30,7 @@ function* playCard(next, store, state, effect) {
         });
         // Get selected cards
         player.deck.moveCardsTo(cards, player.hand);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         // Shuffle the deck
         yield store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
@@ -40,6 +41,7 @@ function* playCard(next, store, state, effect) {
     if (coinResults.some(r => r === true)) {
         // Get selected cards
         player.deck.moveTo(player.hand, 1);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
     }
     return state;

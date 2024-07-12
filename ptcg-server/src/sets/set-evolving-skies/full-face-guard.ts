@@ -8,7 +8,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class FullFaceGuard extends TrainerCard {
 
-  public trainerType: TrainerType = TrainerType.ITEM;
+  public trainerType: TrainerType = TrainerType.TOOL;
 
   public set: string = 'EVS';
 
@@ -54,4 +54,3 @@ export class FullFaceGuard extends TrainerCard {
   }
 }
 
-  

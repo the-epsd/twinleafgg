@@ -20,7 +20,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
   // Check if bench has open slots
   const openSlots = player.bench.filter(b => b.cards.length === 0);
-      
+
   if (openSlots.length === 0) {
     // No open slots, throw error
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -28,7 +28,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.discard);
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -52,9 +51,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.deck.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
     store.log(state, GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: card.name });
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   });
 
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

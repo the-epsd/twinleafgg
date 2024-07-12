@@ -10,7 +10,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Greninja extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 140;
         this.retreat = [card_types_1.CardType.COLORLESS];
@@ -32,14 +32,12 @@ class Greninja extends pokemon_card_1.PokemonCard {
         this.fullName = 'Greninja DET';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '9';
-        this.EVASION_JUTSU_MARKER = 'EVASION_JUTSU_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
-            const player = game_1.StateUtils.findOwner(state, effect.target);
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.cards.includes(this)) {
             // Try to reduce PowerEffect, to check if something is blocking our ability
             try {
-                const stub = new game_effects_1.PowerEffect(player, {
+                const stub = new game_effects_1.PowerEffect(game_1.StateUtils.findOwner(state, effect.target), {
                     name: 'test',
                     powerType: pokemon_types_1.PowerType.ABILITY,
                     text: ''
@@ -50,9 +48,9 @@ class Greninja extends pokemon_card_1.PokemonCard {
                 return state;
             }
             return store.prompt(state, [
-                new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
+                new game_1.CoinFlipPrompt(game_1.StateUtils.findOwner(state, effect.target).id, game_1.GameMessage.COIN_FLIP)
             ], result => {
-                if (result === true) {
+                if (result) {
                     effect.preventDefault = true;
                     return state;
                 }

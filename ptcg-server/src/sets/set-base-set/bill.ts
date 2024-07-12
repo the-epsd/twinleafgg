@@ -33,6 +33,7 @@ export class Bill extends TrainerCard {
       }
 
       player.deck.moveTo(player.hand, 2);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
 
     return state;

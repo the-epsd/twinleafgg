@@ -45,8 +45,6 @@ export class Lass extends TrainerCard {
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
 
-      
-        
 
             if (opponent.hand.cards.length > 0) {
               return store.prompt(state, new ShowCardsPrompt(
@@ -54,17 +52,17 @@ export class Lass extends TrainerCard {
                 GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
                 opponent.hand.cards
               ), () => {
-            
+
                 const opponentHandTrainers = opponent.hand.cards.filter(c => c.superType === SuperType.TRAINER);
-            
+
                 opponentHandTrainers.forEach(cards => {
                   opponent.hand.moveCardTo(cards, opponent.deck);
                 });
-            
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
                   opponent.deck.applyOrder(order);
                   return state;
-          
+
                 });
               });
 

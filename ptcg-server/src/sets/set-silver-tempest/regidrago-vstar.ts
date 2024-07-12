@@ -17,7 +17,7 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
   const dragonTypePokemon = discardPokemon.filter(card => card.cardType === CardType.DRAGON);
 
   if (!dragonTypePokemon) {
-    throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+    return state;
   }
 
   let selected: any;

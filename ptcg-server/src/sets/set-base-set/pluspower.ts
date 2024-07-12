@@ -30,21 +30,21 @@ export class PlusPower extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       player.marker.addMarker(this.PLUS_POWER_MARKER, this);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
-  
+
     if (effect instanceof DealDamageEffect) {
       const marker = effect.player.marker;
       if (marker.hasMarker(this.PLUS_POWER_MARKER, this) && effect.damage > 0) {
         effect.damage += 10;
       }
     }
-  
+
     if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.PLUS_POWER_MARKER, this);
     }
-  
+
     return state;
   }
-  
+
 }
-  

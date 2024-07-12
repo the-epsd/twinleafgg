@@ -11,7 +11,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardManager } from '../../game/cards/card-manager';
-import { PokemonCardList} from '../../game/store/state/pokemon-card-list';
+import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -85,7 +85,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: false, blocked: blocked2 }
   ), selection => {
     targets = selection || [];
@@ -104,7 +104,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   player.deck.moveCardTo(evolution, targets[0]);
   targets[0].clearEffects();
   targets[0].pokemonPlayedTurn = state.turn;
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return state;
 }
 

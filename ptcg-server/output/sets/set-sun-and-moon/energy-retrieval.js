@@ -26,11 +26,10 @@ function* playCard(next, store, state, effect) {
     return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min, max: min, allowCancel: true }), cards => {
         cards = cards || [];
         if (cards.length > 0) {
-            // Discard trainer only when user selected a Pokemon
-            player.hand.moveCardTo(effect.trainerCard, player.discard);
             // Recover discarded Pokemon
             player.discard.moveCardsTo(cards, player.hand);
         }
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
 }
 class EnergyRetrieval extends trainer_card_1.TrainerCard {

@@ -32,7 +32,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Prizes are secret once again.
   prizes.forEach(p => { p.isSecret = true; });
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return state;
 }
 

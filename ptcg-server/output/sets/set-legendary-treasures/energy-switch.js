@@ -37,7 +37,7 @@ function* playCard(next, store, state, effect) {
         return state;
     }
     // Discard trainer only when user selected a Pokemon
-    player.hand.moveCardTo(effect.trainerCard, player.discard);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     transfers.forEach(transfer => {
         const source = state_utils_1.StateUtils.getTarget(state, player, transfer.from);
         const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);

@@ -8,11 +8,19 @@ import { Dragapult } from './dragapult';
 import { Duraludon } from './duraludon';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
+import { Arrokuda } from './RCL_52_Arrokuda';
+import { Barraskewda } from './RCL_53_Barraskewda';
 import { ScoopUpNet } from './scoop-up-net';
 import { SpeedLightningEnergy } from './speed-lightning-energy';
 import { TrainingCourt } from './training-court';
 import { TwinEnergy } from './twin-energy';
 export declare class AegislashArt extends Aegislash {
+    cardImage: string;
+}
+export declare class ArrokudaArt extends Arrokuda {
+    cardImage: string;
+}
+export declare class BarraskewdaArt extends Barraskewda {
     cardImage: string;
 }
 export declare class ButterfreeArt extends Butterfree {

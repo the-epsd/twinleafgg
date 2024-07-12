@@ -24,6 +24,7 @@ import { Jynx } from './jynx';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
 import { Lady } from './lady';
+import { HisuianBasculegion } from './LOR_45_Hisuian_Basculegion';
 import { LostCity } from './lost-city';
 import { LostVacuum } from './lost-vacuum';
 import { Machamp } from './machamp';
@@ -51,11 +52,11 @@ export class ArezuArt extends Arezu {
 export class BanetteArt extends Banette {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_073_R_EN_LG.png';
 }
-  
+
 export class BouffalantArt extends Bouffalant {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_148_R_EN_LG.png';
 }
-  
+
 export class BoxOfDisasterArt extends BoxOfDisaster {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_154_R_EN_LG.png';
 }
@@ -106,6 +107,10 @@ export class GiratinaVArt extends GiratinaV {
 
 export class GiratinaVSTARArt extends GiratinaVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_131_R_EN_LG.png';
+}
+
+export class HisuianBasculegionArt extends HisuianBasculegion {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_045_R_EN_LG.png';
 }
 
 export class HisuianGoodraVArt extends HisuianGoodraV {

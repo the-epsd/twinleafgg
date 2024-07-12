@@ -15,6 +15,7 @@ exports.setLostOrigin = [
     new card_images_1.GiftEnergyArt(),
     new card_images_1.GiratinaVArt(),
     new card_images_1.GiratinaVSTARArt(),
+    new card_images_1.HisuianBasculegionArt(),
     new card_images_1.HisuianGoodraVArt(),
     new card_images_1.HisuianGoodraVSTARArt(),
     new card_images_1.HisuianZoroarkVArt(),

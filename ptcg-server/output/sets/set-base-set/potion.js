@@ -25,6 +25,7 @@ function* usePotion(next, store, state, effect) {
             healEffect.target = target;
             store.reduceEffect(state, healEffect);
         }
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
 }
 class Potion extends trainer_card_1.TrainerCard {

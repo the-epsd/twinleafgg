@@ -12,7 +12,7 @@ function* useApexDragon(next, store, state, effect) {
     const discardPokemon = player.discard.cards.filter(card => card.superType === card_types_1.SuperType.POKEMON);
     const dragonTypePokemon = discardPokemon.filter(card => card.cardType === card_types_1.CardType.DRAGON);
     if (!dragonTypePokemon) {
-        throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
+        return state;
     }
     let selected;
     yield store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, dragonTypePokemon, { allowCancel: false }), result => {

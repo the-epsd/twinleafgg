@@ -1,10 +1,11 @@
 import { Card } from '../../game/store/card/card';
-import { AlolanGrimerArt, AlolanRaichuArt, KarateBeltArt, NecrozmaArt, PurrloinArt, RecycleEnergyArt, ResetStampArt, RioluArt, StadiumNavArt, UTurnBoardArt, WeaknessGuardEnergyArt } from './card-images';
+import { AlolanGrimerArt, AlolanRaichuArt, FroslassArt, KarateBeltArt, NecrozmaArt, PurrloinArt, RecycleEnergyArt, ResetStampArt, RioluArt, StadiumNavArt, UTurnBoardArt, WeaknessGuardEnergyArt } from './card-images';
 
 
 export const setUnifiedMinds: Card[] = [
   new AlolanGrimerArt(),
   new AlolanRaichuArt(),
+  new FroslassArt(),
   new KarateBeltArt(),
   new NecrozmaArt(),
   new PurrloinArt(),

@@ -28,6 +28,7 @@ class MrFuji extends trainer_card_1.TrainerCard {
                 const target = selected[0];
                 target.moveTo(player.deck);
                 target.clearEffects();
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
                     return state;

@@ -8,7 +8,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-      
+
   if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
@@ -21,33 +21,33 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       hasPokemonWithDamage = true;
     }
   });
-      
+
   if (hasPokemonWithDamage === false) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-      
+
   // Do not discard the card yet
   effect.preventDefault = true;
-      
+
   let targets: PokemonCardList[] = [];
   yield store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_HEAL,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: true, blocked }
   ), results => {
     targets = results || [];
     next();
   });
-      
+
   if (targets.length === 0) {
     return state;
   }
-      
+
   // Discard trainer only when user selected a Pokemon
-  player.hand.moveCardTo(effect.trainerCard, player.discard);
-      
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   targets.forEach(target => {
     // Heal Pokemon
     const healEffect = new HealEffect(player, target, 60);
@@ -84,5 +84,5 @@ export class FightingAuLait extends TrainerCard {
     }
     return state;
   }
-    
+
 }

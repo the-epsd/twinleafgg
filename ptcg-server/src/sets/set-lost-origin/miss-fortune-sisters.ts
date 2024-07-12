@@ -43,7 +43,7 @@ export class MissFortuneSisters extends TrainerCard {
 
       const deckTop = new CardList();
       opponent.deck.moveTo(deckTop, 5);
-    
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
@@ -54,7 +54,6 @@ export class MissFortuneSisters extends TrainerCard {
         deckTop.moveCardsTo(selected, opponent.discard);
         deckTop.moveTo(opponent.deck);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        
 
         store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
           opponent.deck.applyOrder(order);

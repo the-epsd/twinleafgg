@@ -47,10 +47,6 @@ export class CancelingCologne extends TrainerCard {
       effect.preventDefault = true;
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      setTimeout(() => {
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      }, 2000); // Wait for 2 seconds before moving the card to the discard pile
-
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
 

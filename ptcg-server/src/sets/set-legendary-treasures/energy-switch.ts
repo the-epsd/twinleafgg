@@ -37,7 +37,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.MOVE_ENERGY_CARDS,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
     { min: 1, max: 1, allowCancel: true }
   ), result => {
@@ -51,7 +51,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Discard trainer only when user selected a Pokemon
-  player.hand.moveCardTo(effect.trainerCard, player.discard);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   transfers.forEach(transfer => {
     const source = StateUtils.getTarget(state, player, transfer.from);

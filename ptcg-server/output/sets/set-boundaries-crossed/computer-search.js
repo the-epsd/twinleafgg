@@ -31,13 +31,13 @@ function* playCard(next, store, state, self, effect) {
     if (cards.length === 0) {
         return state;
     }
-    player.hand.moveCardTo(self, player.discard);
     player.hand.moveCardsTo(cards, player.discard);
     yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });
     player.deck.moveCardsTo(cards, player.hand);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class ComputerSearch extends trainer_card_1.TrainerCard {

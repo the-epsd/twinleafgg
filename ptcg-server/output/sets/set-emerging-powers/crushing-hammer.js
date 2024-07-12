@@ -36,6 +36,7 @@ function* playCard(next, store, state, effect) {
         next();
     });
     if (targets.length === 0) {
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
     }
     const target = targets[0];
@@ -44,6 +45,7 @@ function* playCard(next, store, state, effect) {
         cards = selected;
         next();
     });
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     target.moveCardsTo(cards, opponent.discard);
     return state;
 }

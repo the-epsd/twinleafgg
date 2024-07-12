@@ -18,6 +18,7 @@ function* playCard(next, store, state, effect) {
     return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1, allowCancel: false }), selected => {
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.deck);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
 }
 class PokedexHandy extends trainer_card_1.TrainerCard {

@@ -16,7 +16,7 @@ function* useFireOff(next, store, state, effect) {
         store.reduceEffect(state, checkProvidedEnergy);
         const blockedCards = [];
         checkProvidedEnergy.energyMap.forEach(em => {
-            if (!em.provides.includes(card_types_1.CardType.FIRE)) {
+            if (!em.provides.includes(card_types_1.CardType.FIRE) && !em.provides.includes(card_types_1.CardType.ANY)) {
                 blockedCards.push(em.card);
             }
         });
@@ -27,23 +27,18 @@ function* useFireOff(next, store, state, effect) {
                 blocked.push(index);
             }
         });
-        if (blocked.length !== 0) {
-            blockedMap.push({ source: target, blocked });
+        if (blocked.length !== 0 || target.slot === game_1.SlotType.ACTIVE) {
+            blockedMap.push({ source: target, blocked: target.slot === game_1.SlotType.ACTIVE ? cardList.cards.map((_, i) => i) : blocked });
         }
     });
-    const blocked2 = [];
-    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (!player.active) {
-            blocked2.push(target);
-        }
-    });
-    return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, blockedMap, blockedTo: blocked2 }), transfers => {
+    return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], // Only allow moving from bench
+    { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 0, blockedMap }), transfers => {
         if (transfers === null) {
             return;
         }
         for (const transfer of transfers) {
             const source = game_1.StateUtils.getTarget(state, player, transfer.from);
-            const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+            const target = player.active; // Always move to active Pokémon
             source.moveCardTo(transfer.card, target);
         }
     });
@@ -52,7 +47,7 @@ class Armarouge extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'G';
-        this.stage = card_types_1.Stage.STAGE_1;
+        this.stage = card_types_1.Stage.BASIC;
         this.evolvesFrom = 'Charcadet';
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 130;
