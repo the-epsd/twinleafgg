@@ -18,5 +18,6 @@ exports.setPokemonGO = [
     new card_images_1.ArticunoArt(),
     new card_images_1.MoltresArt(),
     new card_images_1.SlowbroArt(),
+    new card_images_1.SlowpokeArt(),
     new card_images_1.LureModuleArt(),
 ];

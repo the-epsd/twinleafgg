@@ -6,6 +6,7 @@ import { Ditto } from './ditto';
 import { Lunatone } from './lunatone';
 import { LureModule } from './lure-module';
 import { Moltres } from './moltres';
+import { Slowpoke } from './PGO_19_Slowpoke';
 import { AlolanRaticate } from './PGO_42_Alolan_Raticate';
 import { Pokestop } from './pokestop';
 import { RadiantVenusaur } from './radiant-venusaur';
@@ -51,6 +52,9 @@ export declare class SlakingVArt extends SlakingV {
     cardImage: string;
 }
 export declare class SlowbroArt extends Slowbro {
+    cardImage: string;
+}
+export declare class SlowpokeArt extends Slowpoke {
     cardImage: string;
 }
 export declare class SnorlaxArt extends Snorlax {

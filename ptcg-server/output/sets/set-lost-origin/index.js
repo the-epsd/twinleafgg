@@ -23,6 +23,7 @@ exports.setLostOrigin = [
     new card_images_1.HisuianZoruaArt(),
     new card_images_1.HisuianZoroarkArt(),
     new card_images_1.JynxArt(),
+    new card_images_1.KingdraArt(),
     new card_images_1.KyuremVArt(),
     new card_images_1.KyuremVMAXArt(),
     new card_images_1.LadyArt(),

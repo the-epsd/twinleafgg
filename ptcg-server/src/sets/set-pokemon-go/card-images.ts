@@ -6,6 +6,7 @@ import { Ditto } from './ditto';
 import { Lunatone } from './lunatone';
 import { LureModule } from './lure-module';
 import { Moltres } from './moltres';
+import { Slowpoke } from './PGO_19_Slowpoke';
 import { AlolanRaticate } from './PGO_42_Alolan_Raticate';
 import { Pokestop } from './pokestop';
 import { RadiantVenusaur } from './radiant-venusaur';
@@ -65,6 +66,10 @@ export class SlakingVArt extends SlakingV {
 
 export class SlowbroArt extends Slowbro {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_020_R_EN_LG.png';
+}
+
+export class SlowpokeArt extends Slowpoke {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_019_R_EN_LG.png';
 }
 
 export class SnorlaxArt extends Snorlax {

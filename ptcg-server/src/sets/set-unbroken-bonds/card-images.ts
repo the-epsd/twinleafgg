@@ -12,6 +12,7 @@ import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
+import { Poliwag } from './UNB_37_Poliwag';
 import { Zeraora } from './UNB_60_Zeraora';
 import { Volcanion } from './volcanion';
 
@@ -57,6 +58,10 @@ export class MewtwoArt extends Mewtwo {
 
 export class Pokegear30Art extends Pokegear30 {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_182_R_EN.png';
+}
+
+export class PoliwagArt extends Poliwag {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_037_R_EN_LG.png';
 }
 
 export class PorygonZArt extends PorygonZ {

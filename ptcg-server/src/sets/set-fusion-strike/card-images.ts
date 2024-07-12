@@ -12,6 +12,7 @@ import { Dunsparce } from './dunsparce';
 import { ElesasSparkle } from './elesas-sparkle';
 import { Croagunk } from './FST_165_Croagunk';
 import { Azumarill } from './FST_59_Azumarill';
+import { Swampert } from './FST_64_Swampert';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
 import { GalarianLinoone } from './galarian-linoone';
 import { GenesectV } from './genesect-v';
@@ -161,6 +162,10 @@ export class ShaunaArt extends Shauna {
 
 export class ShelmetArt extends Shelmet {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_013_R_EN_LG.png';
+}
+
+export class SwampertArt extends Swampert {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_064_R_EN_LG.png';
 }
 
 export class YveltalArt extends Yveltal {

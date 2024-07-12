@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.SpellTagArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
+exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
 const adventure_bag_1 = require("./adventure-bag");
 const alolan_meowth_1 = require("./alolan-meowth");
 const chikorita_1 = require("./chikorita");
@@ -9,6 +9,7 @@ const custom_catcher_1 = require("./custom-catcher");
 const electropower_1 = require("./electropower");
 const grovyle_1 = require("./grovyle");
 const lost_blender_1 = require("./lost-blender");
+const LOT_55_Slowking_1 = require("./LOT_55_Slowking");
 const LOT_97_Giratina_1 = require("./LOT_97_Giratina");
 const mareep_1 = require("./mareep");
 const meganium_1 = require("./meganium");
@@ -109,6 +110,13 @@ class NihilegoArt extends nihilego_1.Nihilego {
     }
 }
 exports.NihilegoArt = NihilegoArt;
+class SlowkingArt extends LOT_55_Slowking_1.Slowking {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_055_R_EN_LG.png';
+    }
+}
+exports.SlowkingArt = SlowkingArt;
 class SpellTagArt extends spell_tag_1.SpellTag {
     constructor() {
         super(...arguments);

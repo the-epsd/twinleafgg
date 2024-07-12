@@ -6,6 +6,7 @@ import { CustomCatcher } from './custom-catcher';
 import { Electropower } from './electropower';
 import { Grovyle } from './grovyle';
 import { LostBlender } from './lost-blender';
+import { Slowking } from './LOT_55_Slowking';
 import { Giratina } from './LOT_97_Giratina';
 import { Mareep } from './mareep';
 import { Meganium } from './meganium';
@@ -66,6 +67,10 @@ export class NetBallArt extends NetBall {
 
 export class NihilegoArt extends Nihilego {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_106_R_EN_LG.png';
+}
+
+export class SlowkingArt extends Slowking {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_055_R_EN_LG.png';
 }
 
 export class SpellTagArt extends SpellTag {

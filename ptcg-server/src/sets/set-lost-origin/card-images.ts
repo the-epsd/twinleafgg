@@ -24,6 +24,7 @@ import { Jynx } from './jynx';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
 import { Lady } from './lady';
+import { Kingdra } from './LOR_37_Kingdra';
 import { HisuianBasculegion } from './LOR_45_Hisuian_Basculegion';
 import { LostCity } from './lost-city';
 import { LostVacuum } from './lost-vacuum';
@@ -139,6 +140,10 @@ export class HisuianZoroarkArt extends HisuianZoroark {
 
 export class JynxArt extends Jynx {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_068_R_EN_LG.png';
+}
+
+export class KingdraArt extends Kingdra {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_037_R_EN_LG.png';
 }
 
 export class KyuremVArt extends KyuremV {

@@ -12,6 +12,7 @@ import { Dunsparce } from './dunsparce';
 import { ElesasSparkle } from './elesas-sparkle';
 import { Croagunk } from './FST_165_Croagunk';
 import { Azumarill } from './FST_59_Azumarill';
+import { Swampert } from './FST_64_Swampert';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
 import { GalarianLinoone } from './galarian-linoone';
 import { GenesectV } from './genesect-v';
@@ -128,6 +129,9 @@ export declare class ShaunaArt extends Shauna {
     cardImage: string;
 }
 export declare class ShelmetArt extends Shelmet {
+    cardImage: string;
+}
+export declare class SwampertArt extends Swampert {
     cardImage: string;
 }
 export declare class YveltalArt extends Yveltal {

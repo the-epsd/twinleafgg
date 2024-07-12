@@ -14,6 +14,7 @@ exports.setUnbrokenBonds = [
     new card_images_1.MewArt(),
     new card_images_1.MewtwoArt(),
     new card_images_1.Pokegear30Art(),
+    new card_images_1.PoliwagArt(),
     new card_images_1.PorygonZArt(),
     new card_images_1.SpiritombArt(),
     new card_images_1.TripleAccelerationEnergyArt(),
