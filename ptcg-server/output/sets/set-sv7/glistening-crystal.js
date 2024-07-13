@@ -4,7 +4,6 @@ exports.GlisteningCrystal = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class GlisteningCrystal extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -19,28 +18,11 @@ class GlisteningCrystal extends trainer_card_1.TrainerCard {
         this.text = 'Attacks of the Terastal Pokémon this card is attached to cost 1 Energy less of any type.';
     }
     reduceEffect(store, state, effect) {
-        var _a;
-        if (effect instanceof check_effects_1.CheckAttackCostEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tools.includes(this))) {
-            const player = effect.player;
-            const pokemonCard = player.active.getPokemonCard();
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_b) {
-                return state;
-            }
+        if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.player.active.tool === this) {
+            const pokemonCard = effect.player.active.getPokemonCard();
             if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_TERA)) {
-                const index = effect.cost.indexOf(card_types_1.CardType.ANY);
-                if (index > -1) {
-                    effect.cost.splice(index, 0, card_types_1.CardType.ANY);
-                }
-                else {
-                    effect.cost.splice(card_types_1.CardType.ANY);
-                }
-                return state;
+                effect.cost = effect.cost.filter((c, i) => i !== effect.cost.findIndex(t => t !== card_types_1.CardType.NONE));
             }
-            return state;
         }
         return state;
     }

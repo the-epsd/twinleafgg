@@ -38,7 +38,7 @@ function putStartingPokemonsAndPrizes(player: Player, cards: Card[]): void {
 }
 
 function* setupGame(next: Function, store: StoreLike, state: State): IterableIterator<State> {
-  const basicPokemon = {superType: SuperType.POKEMON, stage: Stage.BASIC};
+  const basicPokemon = { superType: SuperType.POKEMON, stage: Stage.BASIC };
   const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
   const player = state.players[0];
   const opponent = state.players[1];
@@ -100,9 +100,7 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
           opponent.hand.cards, { allowCancel: false }),
         new AlertPrompt(opponent.id, GameMessage.SETUP_PLAYER_NO_BASIC)
       ], results => {
-        if (results[0]) {
-          playerCardsToDraw++;
-        }
+        playerCardsToDraw++;
         next();
       });
     }
@@ -113,9 +111,7 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
           player.hand.cards, { allowCancel: false }),
         new AlertPrompt(player.id, GameMessage.SETUP_PLAYER_NO_BASIC)
       ], results => {
-        if (results[0]) {
-          opponentCardsToDraw++;
-        }
+        opponentCardsToDraw++;
         next();
       });
     }
@@ -142,7 +138,7 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
   // opponent.deck.moveTo(opponent.hand, opponentCardsToDraw);
 
   if (playerCardsToDraw > 0) {
-    
+
     const options: { message: string, value: number }[] = [];
     for (let i = playerCardsToDraw; i >= 0; i--) {
       options.push({ message: `Draw ${i} card(s)`, value: i });

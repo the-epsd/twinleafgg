@@ -87,9 +87,7 @@ function* setupGame(next, store, state) {
                 new show_cards_prompt_1.ShowCardsPrompt(player.id, game_message_1.GameMessage.SETUP_OPPONENT_NO_BASIC, opponent.hand.cards, { allowCancel: false }),
                 new alert_prompt_1.AlertPrompt(opponent.id, game_message_1.GameMessage.SETUP_PLAYER_NO_BASIC)
             ], results => {
-                if (results[0]) {
-                    playerCardsToDraw++;
-                }
+                playerCardsToDraw++;
                 next();
             });
         }
@@ -99,9 +97,7 @@ function* setupGame(next, store, state) {
                 new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.SETUP_OPPONENT_NO_BASIC, player.hand.cards, { allowCancel: false }),
                 new alert_prompt_1.AlertPrompt(player.id, game_message_1.GameMessage.SETUP_PLAYER_NO_BASIC)
             ], results => {
-                if (results[0]) {
-                    opponentCardsToDraw++;
-                }
+                opponentCardsToDraw++;
                 next();
             });
         }
