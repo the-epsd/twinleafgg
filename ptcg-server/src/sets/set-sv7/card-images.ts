@@ -149,7 +149,7 @@ export class GlisteningCrystalArt extends GlisteningCrystal {
 }
 
 export class GreatTreeArt extends GreatTree {
-  public cardImage = 'https://pokemonproxies.com/static/media/Great_Tree-101-7i.30a0a0139bc637f873c1.png';
+  public cardImage = 'https://pokemonproxies.com/static/media/Great_Tree-101-7i.29adf81d5e6860389921.png';
 }
 
 export class HaxorusArt extends Haxorus {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ShowCardsPrompt, Card, GamePhase } from 'ptcg-server';
 
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
@@ -10,7 +10,7 @@ import { LocalGameState } from '../../../shared/session/session.interface';
   templateUrl: './prompt-show-cards.component.html',
   styleUrls: ['./prompt-show-cards.component.scss']
 })
-export class PromptShowCardsComponent {
+export class PromptShowCardsComponent implements OnInit {
 
   @Input() prompt: ShowCardsPrompt;
   @Input() gameState: LocalGameState;
@@ -20,39 +20,31 @@ export class PromptShowCardsComponent {
     private gameService: GameService
   ) { }
 
-  // ngOnInit() {
-  //   const gameId = this.gameState.gameId;
-  //   const id = this.prompt.id;
-
-  //   if (GamePhase.SETUP || GamePhase.WAITING_FOR_PLAYERS) {
-  //     setTimeout(() => {
-  //       this.gameService.resolvePrompt(gameId, id, null);
-  //     }, 3000);
-  //   } else {
-  //     setTimeout(() => {
-  //       this.gameService.resolvePrompt(gameId, id, null);
-  //     }, 5000);
-  //   }
-  // }
+  ngOnInit() {
+    setTimeout(() => {
+      this.resolvePrompt();
+    }, 3000);
+  }
 
   public minimize() {
     this.gameService.setPromptMinimized(this.gameState.localId, true);
   }
 
-  public confirm() {
-    const gameId = this.gameState.gameId;
-    const id = this.prompt.id;
-    this.gameService.resolvePrompt(gameId, id, true);
-  }
-
-  public cancel() {
+  private resolvePrompt() {
     const gameId = this.gameState.gameId;
     const id = this.prompt.id;
     this.gameService.resolvePrompt(gameId, id, null);
   }
 
+  public confirm() {
+    this.resolvePrompt();
+  }
+
+  public cancel() {
+    this.resolvePrompt();
+  }
+
   public onCardClick(card: Card) {
     this.cardsBaseService.showCardInfo({ card });
   }
-
 }

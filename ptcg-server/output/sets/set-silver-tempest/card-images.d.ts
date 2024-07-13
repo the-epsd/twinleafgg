@@ -1,5 +1,6 @@
 import { AlolanVulpixV } from './alolan-vulpix-v';
 import { AlolanVulpixVSTAR } from './alolan-vulpix-vstar';
+import { Archen } from './archen';
 import { Archeops } from './archeops';
 import { Articuno } from './articuno';
 import { Beheeyem } from './beheeyem';
@@ -47,6 +48,7 @@ import { Klang } from './SIT_124_Klang';
 import { Klinklang } from './SIT_125_Klinklang';
 import { Snorunt } from './SIT_41_Snorunt';
 import { Terrakion } from './SIT_97_Terrakion';
+import { UnidentifiedFossil } from './unidentified-fossil';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
 import { Wailord } from './wailord';
@@ -57,6 +59,9 @@ export declare class AlolanVulpixVArt extends AlolanVulpixV {
     cardImage: string;
 }
 export declare class AlolanVulpixVSTARArt extends AlolanVulpixVSTAR {
+    cardImage: string;
+}
+export declare class ArchenArt extends Archen {
     cardImage: string;
 }
 export declare class ArcheopsArt extends Archeops {
@@ -198,6 +203,9 @@ export declare class SnowruntArt extends Snorunt {
     cardImage: string;
 }
 export declare class TerrakionArt extends Terrakion {
+    cardImage: string;
+}
+export declare class UnidentifiedFossilArt extends UnidentifiedFossil {
     cardImage: string;
 }
 export declare class UrsalunaVArt extends UrsalunaV {

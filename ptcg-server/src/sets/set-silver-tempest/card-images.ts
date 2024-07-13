@@ -1,5 +1,6 @@
 import { AlolanVulpixV } from './alolan-vulpix-v';
 import { AlolanVulpixVSTAR } from './alolan-vulpix-vstar';
+import { Archen } from './archen';
 import { Archeops } from './archeops';
 import { Articuno } from './articuno';
 import { Beheeyem } from './beheeyem';
@@ -47,6 +48,7 @@ import { Klang } from './SIT_124_Klang';
 import { Klinklang } from './SIT_125_Klinklang';
 import { Snorunt } from './SIT_41_Snorunt';
 import { Terrakion } from './SIT_97_Terrakion';
+import { UnidentifiedFossil } from './unidentified-fossil';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
 import { Wailord } from './wailord';
@@ -60,6 +62,10 @@ export class AlolanVulpixVArt extends AlolanVulpixV {
 
 export class AlolanVulpixVSTARArt extends AlolanVulpixVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_034_R_EN_LG.png';
+}
+
+export class ArchenArt extends Archen {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_146_R_EN_LG.png';
 }
 
 export class ArcheopsArt extends Archeops {
@@ -248,6 +254,10 @@ export class SnowruntArt extends Snorunt {
 
 export class TerrakionArt extends Terrakion {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_097_R_EN_LG.png';
+}
+
+export class UnidentifiedFossilArt extends UnidentifiedFossil {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_165_R_EN_LG.png';
 }
 
 export class UrsalunaVArt extends UrsalunaV {

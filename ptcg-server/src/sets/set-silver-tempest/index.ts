@@ -1,10 +1,11 @@
 import { Card } from '../../game/store/card/card';
 
-import { AlolanVulpixVArt, AlolanVulpixVSTARArt, ArcheopsArt, ArticunoArt, BeheeyemArt, BeldumArt, BraixenArt, CandiceArt, CapturingAromaArt, CobalionArt, CrobatArt, DragoniteArt, DrakloakArt, ElgyemArt, EmergencyJellyArt, FeebasArt, ForestSealStoneArt, FurisodeGirlArt, GardevoirArt, HisuianBraviaryArt, KirliaArt, KlangArt, KlinkArt, KlinklangArt, LanceArt, LugiaVArt, LugiaVSTARArt, MeowsticArt, MetagrossArt, MismagiusArt, PalossandArt, PrimordialAltarArt, RadiantAlakazamArt, RadiantJirachiArt, RadiantTsareenaArt, RaichuArt, RaltsArt, RegenerativeEnergyArt, RegidragoVArt, RegidragoVSTARArt, RegielekiVArt, RegielekiVMAXArt, RuffletArt, SandygastArt, SerenaArt, SerperiorVArt, SerperiorVSTARArt, SnowruntArt, UrsalunaVArt, VGuardEnergyArt, WailordArt, WorkerArt, ZeraoraArt, ZubatArt } from './card-images';
+import { AlolanVulpixVArt, AlolanVulpixVSTARArt, ArchenArt, ArcheopsArt, ArticunoArt, BeheeyemArt, BeldumArt, BraixenArt, CandiceArt, CapturingAromaArt, CobalionArt, CrobatArt, DragoniteArt, DrakloakArt, ElgyemArt, EmergencyJellyArt, FeebasArt, ForestSealStoneArt, FurisodeGirlArt, GardevoirArt, HisuianBraviaryArt, KirliaArt, KlangArt, KlinkArt, KlinklangArt, LanceArt, LugiaVArt, LugiaVSTARArt, MeowsticArt, MetagrossArt, MismagiusArt, PalossandArt, PrimordialAltarArt, RadiantAlakazamArt, RadiantJirachiArt, RadiantTsareenaArt, RaichuArt, RaltsArt, RegenerativeEnergyArt, RegidragoVArt, RegidragoVSTARArt, RegielekiVArt, RegielekiVMAXArt, RuffletArt, SandygastArt, SerenaArt, SerperiorVArt, SerperiorVSTARArt, SnowruntArt, UnidentifiedFossilArt, UrsalunaVArt, VGuardEnergyArt, WailordArt, WorkerArt, ZeraoraArt, ZubatArt } from './card-images';
 
 export const setSilverTempest: Card[] = [
   new AlolanVulpixVArt(),
   new AlolanVulpixVSTARArt(),
+  new ArchenArt(),
   new ArcheopsArt(),
   new ArticunoArt(),
   new BeheeyemArt(),
@@ -51,6 +52,7 @@ export const setSilverTempest: Card[] = [
   new SerperiorVSTARArt(),
   new SnowruntArt(),
   //new TerrakionArt(),
+  new UnidentifiedFossilArt(),
   new UrsalunaVArt(),
   new VGuardEnergyArt(),
   new WailordArt(),

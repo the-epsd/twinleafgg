@@ -31,6 +31,9 @@ class PokemonCardList extends card_list_1.CardList {
             else if (card.name === 'Mysterious Fossil') {
                 result.push(card);
             }
+            else if (card.name === 'Unidentified Fossil') {
+                result.push(card);
+            }
         }
         return result;
     }
