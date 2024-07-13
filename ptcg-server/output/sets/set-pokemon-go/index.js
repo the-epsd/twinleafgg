@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setPokemonGO = [
     new card_images_1.AlolanRaticateArt(),
     new card_images_1.BlastoiseArt(),
+    new card_images_1.CameruptArt(),
     new card_images_1.CharmanderArt(),
     new card_images_1.CharizardArt(),
     // new DittoArt(),
@@ -18,5 +19,6 @@ exports.setPokemonGO = [
     new card_images_1.ArticunoArt(),
     new card_images_1.MoltresArt(),
     new card_images_1.SlowbroArt(),
+    new card_images_1.SlowpokeArt(),
     new card_images_1.LureModuleArt(),
 ];

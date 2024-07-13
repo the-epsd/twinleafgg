@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class BadgeComponent {
 
-  public colorClass: {[key: string]: boolean} = {};
+  public colorClass: { [key: string]: boolean } = {};
 
   @Input() set color(value: string) {
     const knownColors = ['primary', 'accent', 'warn'];

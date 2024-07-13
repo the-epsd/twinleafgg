@@ -22,9 +22,9 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       throw new GameError(GameMessage.ILLEGAL_ACTION);
     }
 
-    // Check if the target is the opponent's active Pokemon
+    // Check if the effect is part of an attack and the target is the opponent's active Pokemon
     const opponent = StateUtils.getOpponent(state, effect.player);
-    if (target === opponent.active) {
+    if (effect.attackEffect && target === opponent.active) {
       // Apply weakness
       const applyWeakness = new ApplyWeaknessEffect(effect.attackEffect, effect.damage);
       applyWeakness.target = effect.target;
@@ -48,18 +48,13 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
   if (effect instanceof DealDamageEffect) {
     const base = effect.attackEffect;
 
-    const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
-    applyWeakness.target = effect.target;
-    applyWeakness.ignoreWeakness = base.ignoreWeakness;
-    applyWeakness.ignoreResistance = base.ignoreResistance;
-    state = store.reduceEffect(state, applyWeakness);
-
-    const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
+    const dealDamage = new PutDamageEffect(base, effect.damage);
     dealDamage.target = effect.target;
     state = store.reduceEffect(state, dealDamage);
 
     return state;
   }
+
 
   if (effect instanceof KnockOutOpponentEffect) {
     const base = effect.attackEffect;

@@ -4,6 +4,7 @@ exports.setSwordAndShieldPromos = void 0;
 const card_images_1 = require("./card-images");
 exports.setSwordAndShieldPromos = [
     new card_images_1.ChampionsFestivalArt(),
+    new card_images_1.CharmanderArt(),
     new card_images_1.DeoxysVArt(),
     new card_images_1.DeoxysVSTARArt(),
     new card_images_1.HisuianElectrodeVArt(),

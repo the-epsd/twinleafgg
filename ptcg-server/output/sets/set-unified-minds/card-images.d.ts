@@ -7,6 +7,7 @@ import { ResetStamp } from './reset-stamp';
 import { Riolu } from './riolu';
 import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
+import { Numel } from './UNM_23_Numel';
 import { Froslass } from './UNM_38_Froslass';
 import { AlolanRaichu } from './UNM_57_Alolan_Raichu';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
@@ -20,6 +21,9 @@ export declare class KarateBeltArt extends KarateBelt {
     cardImage: string;
 }
 export declare class NecrozmaArt extends Necrozma {
+    cardImage: string;
+}
+export declare class NumelArt extends Numel {
     cardImage: string;
 }
 export declare class PurrloinArt extends Purrloin {

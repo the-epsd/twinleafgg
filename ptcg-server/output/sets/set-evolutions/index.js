@@ -6,5 +6,6 @@ exports.setEvolutions = [
     new card_images_1.DevolutionSprayArt(),
     new card_images_1.ElectabuzzArt(),
     new card_images_1.PokedexArt(),
+    new card_images_1.PoliwhirlArt(),
     new card_images_1.StarmieArt(),
 ];

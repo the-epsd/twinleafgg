@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.YveltalArt = exports.ShelmetArt = exports.ShaunaArt = exports.SchoolgirlArt = exports.SchoolboyArt = exports.PyukumukuArt = exports.PowerTabletArt = exports.OricorioArt = exports.MewVMAXArt = exports.MewVArt = exports.MeloettaArt = exports.JudgeArt = exports.InteleonVMAXArt = exports.InteleonVArt = exports.HeatmorArt = exports.GengarVMAXArt = exports.GengarVArt = exports.GenesectVArt = exports.GalarianLinooneArt = exports.FusionStrikeEnergyArt = exports.ElesasSparkleArt = exports.DunsparceArt = exports.DreepyArt = exports.DeoxysArt = exports.CrossSwitcherArt = exports.CroagunkArt = exports.CreamomaticArt = exports.CookArt = exports.BattleVIPPassArt = exports.BasculinArt = exports.AzumarillArt = exports.AdventurersDiscoveryArt = exports.AccelgorArt = void 0;
+exports.YveltalArt = exports.SwampertArt = exports.ShelmetArt = exports.ShaunaArt = exports.SchoolgirlArt = exports.SchoolboyArt = exports.PyukumukuArt = exports.PowerTabletArt = exports.OricorioArt = exports.MewVMAXArt = exports.MewVArt = exports.MeloettaArt = exports.JudgeArt = exports.InteleonVMAXArt = exports.InteleonVArt = exports.HeatmorArt = exports.GengarVMAXArt = exports.GengarVArt = exports.GenesectVArt = exports.GalarianLinooneArt = exports.FusionStrikeEnergyArt = exports.ElesasSparkleArt = exports.DunsparceArt = exports.DreepyArt = exports.DeoxysArt = exports.CrossSwitcherArt = exports.CroagunkArt = exports.CreamomaticArt = exports.CookArt = exports.BattleVIPPassArt = exports.BasculinArt = exports.AzumarillArt = exports.AdventurersDiscoveryArt = exports.AccelgorArt = void 0;
 const judge_1 = require("../set-scarlet-and-violet/judge");
 const accelgor_1 = require("./accelgor");
 const adventurers_discovery_1 = require("./adventurers-discovery");
@@ -15,6 +15,7 @@ const dunsparce_1 = require("./dunsparce");
 const elesas_sparkle_1 = require("./elesas-sparkle");
 const FST_165_Croagunk_1 = require("./FST_165_Croagunk");
 const FST_59_Azumarill_1 = require("./FST_59_Azumarill");
+const FST_64_Swampert_1 = require("./FST_64_Swampert");
 const fusion_strike_energy_1 = require("./fusion-strike-energy");
 const galarian_linoone_1 = require("./galarian-linoone");
 const genesect_v_1 = require("./genesect-v");
@@ -261,6 +262,13 @@ class ShelmetArt extends shelmet_1.Shelmet {
     }
 }
 exports.ShelmetArt = ShelmetArt;
+class SwampertArt extends FST_64_Swampert_1.Swampert {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_064_R_EN_LG.png';
+    }
+}
+exports.SwampertArt = SwampertArt;
 class YveltalArt extends yveltal_1.Yveltal {
     constructor() {
         super(...arguments);

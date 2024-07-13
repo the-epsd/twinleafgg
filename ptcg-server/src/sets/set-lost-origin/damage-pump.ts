@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { DamageMap, GameMessage, MoveDamagePrompt, PlayerType, SlotType, StateUtils } from '../../game';
+import { DamageMap, GameError, GameMessage, MoveDamagePrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 export class DamagePump extends TrainerCard {
@@ -30,6 +30,20 @@ export class DamagePump extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
+      // Check if any Pokémon have damage
+      let hasDamagedPokemon = false;
+      const damagedPokemon: DamageMap[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (cardList.damage > 0) {
+          hasDamagedPokemon = true;
+          damagedPokemon.push({ target, damage: cardList.damage });
+        }
+      });
+
+      if (!hasDamagedPokemon) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       const maxAllowedDamage: DamageMap[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         const checkHpEffect = new CheckHpEffect(player, cardList);
@@ -37,7 +51,6 @@ export class DamagePump extends TrainerCard {
         maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
       });
 
-      // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
       return store.prompt(state, new MoveDamagePrompt(
@@ -46,26 +59,33 @@ export class DamagePump extends TrainerCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
         maxAllowedDamage,
-        { min: 1, max: 2, allowCancel: false }
+        { min: 1, max: 2, allowCancel: false, blockedFrom: [], blockedTo: [] }
       ), transfers => {
         if (transfers === null) {
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          return;
+          player.hand.moveCardTo(effect.trainerCard, player.discard);
+          return state;
         }
 
+        let totalDamageMoved = 0;
         for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
-          if (source.damage >= 10) {
-            source.damage -= 20;
-            target.damage += 20;
+
+          const damageToMove = Math.min(20 - totalDamageMoved, Math.min(10, source.damage));
+          if (damageToMove > 0) {
+            source.damage -= damageToMove;
+            target.damage += damageToMove;
+            totalDamageMoved += damageToMove;
           }
-          player.supporter.moveCardTo(this, player.discard);
-          return state;
+
+          if (totalDamageMoved >= 20) break;
         }
+
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
       });
     }
     return state;
   }
+
 }

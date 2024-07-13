@@ -60,6 +60,7 @@ import { Salvatore } from './salvatore';
 import { SandyShocks } from './sandy-shocks';
 import { Skitty } from './skitty';
 import { Solosis } from './solosis';
+import { Palafin } from './TEF_49_Palafin';
 import { Torterraex } from './torterra-ex';
 import { Totodile } from './totodile';
 import { Turtwig } from './turtwig';
@@ -263,6 +264,10 @@ export class MrMimeArt extends MrMime {
 
 export class NeoUpperEnergyArt extends NeoUpperEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_162_R_EN.png';
+}
+
+export class PalafinArt extends Palafin {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_049_R_EN_LG.png';
 }
 
 export class PikachuArt extends Pikachu {

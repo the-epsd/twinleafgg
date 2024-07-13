@@ -24,6 +24,7 @@ import { Jynx } from './jynx';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
 import { Lady } from './lady';
+import { Kingdra } from './LOR_37_Kingdra';
 import { HisuianBasculegion } from './LOR_45_Hisuian_Basculegion';
 import { LostCity } from './lost-city';
 import { LostVacuum } from './lost-vacuum';
@@ -114,6 +115,9 @@ export declare class HisuianZoroarkArt extends HisuianZoroark {
     cardImage: string;
 }
 export declare class JynxArt extends Jynx {
+    cardImage: string;
+}
+export declare class KingdraArt extends Kingdra {
     cardImage: string;
 }
 export declare class KyuremVArt extends KyuremV {

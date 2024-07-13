@@ -2,6 +2,7 @@ import { LostVacuum } from '../set-lost-origin/lost-vacuum';
 import { RotomV } from '../set-lost-origin/rotom-v';
 import { Absol } from './absol';
 import { Bidoof } from './bidoof';
+import { Salandit } from './CRZ_27_Salandit';
 import { Hoopa } from './hoopa';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
@@ -55,6 +56,9 @@ export declare class RotomVArt extends RotomV {
     fullName: string;
     set: string;
     setNumber: string;
+}
+export declare class SalanditArt extends Salandit {
+    cardImage: string;
 }
 export declare class WailmerArt extends Wailmer {
     cardImage: string;

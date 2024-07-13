@@ -12,6 +12,8 @@ import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
+import { Salazzle } from './UNB_31_Salazzle';
+import { Poliwag } from './UNB_37_Poliwag';
 import { Zeraora } from './UNB_60_Zeraora';
 import { Volcanion } from './volcanion';
 export declare class ArcanineArt extends Arcanine {
@@ -47,7 +49,13 @@ export declare class MewtwoArt extends Mewtwo {
 export declare class Pokegear30Art extends Pokegear30 {
     cardImage: string;
 }
+export declare class PoliwagArt extends Poliwag {
+    cardImage: string;
+}
 export declare class PorygonZArt extends PorygonZ {
+    cardImage: string;
+}
+export declare class SalazzleArt extends Salazzle {
     cardImage: string;
 }
 export declare class SpiritombArt extends Spiritomb {

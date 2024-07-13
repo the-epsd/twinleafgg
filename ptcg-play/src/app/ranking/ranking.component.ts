@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { RankingInfo } from 'ptcg-server';
+import { Rank, RankingInfo } from 'ptcg-server';
 import { Subject, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -68,9 +68,9 @@ export class RankingComponent implements OnInit {
         this.loading = false;
         this.searchValue = search.query;
         this.pageIndex = search.page;
-        this.ranking = response.ranking;
+        this.ranking = response.ranking.filter(user => user.user.rank !== Rank.BANNED);
         this.rankingTotal = response.total;
-        this.updateSessionUsers(response.ranking);
+        this.updateSessionUsers(this.ranking);
       },
       error: (error: ApiError) => {
         this.loading = false;
@@ -100,7 +100,7 @@ export class RankingComponent implements OnInit {
     if (this.sessionService.session.config) {
       pageSize = this.sessionService.session.config.defaultPageSize;
     }
-    this.pageSizeOptions = [ pageSize ];
+    this.pageSizeOptions = [pageSize];
     this.pageSize = pageSize;
   }
 

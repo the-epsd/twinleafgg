@@ -4,6 +4,7 @@ import { Bunnelby } from './bunnelby';
 import { DiveBall } from './dive-ball';
 import { MaxiesHiddenBallTrick } from './maxies-hidden-ball-trick';
 import { Milotic } from './milotic';
+import { Slugma } from './PRC_22_Slugma';
 import { RoughSeas } from './rough-seas';
 import { ScorchedEarth } from './scorched-earth';
 import { ShieldEnergy } from './shield-energy';
@@ -38,6 +39,9 @@ export declare class ShieldEnergArt extends ShieldEnergy {
     cardImage: string;
 }
 export declare class SilentLabArt extends SilentLab {
+    cardImage: string;
+}
+export declare class SlugmaArt extends Slugma {
     cardImage: string;
 }
 export declare class TeammatesArt extends Teammates {

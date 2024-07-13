@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.SolrockArt = exports.SnorlaxArt = exports.SlowbroArt = exports.SlakingVArt = exports.RadiantVenusaurArt = exports.PokestopArt = exports.MoltresArt = exports.LureModuleArt = exports.LunatoneArt = exports.DittoArt = exports.CharizardArt = exports.CharmanderArt = exports.BlastoiseArt = exports.ArticunoArt = exports.AlolanRaticateArt = void 0;
+exports.ZapdosArt = exports.SolrockArt = exports.SnorlaxArt = exports.SlowpokeArt = exports.SlowbroArt = exports.SlakingVArt = exports.RadiantVenusaurArt = exports.PokestopArt = exports.MoltresArt = exports.LureModuleArt = exports.LunatoneArt = exports.DittoArt = exports.CharizardArt = exports.CharmanderArt = exports.CameruptArt = exports.BlastoiseArt = exports.ArticunoArt = exports.AlolanRaticateArt = void 0;
 const articuno_1 = require("./articuno");
 const blastoise_1 = require("./blastoise");
 const charizard_1 = require("./charizard");
@@ -9,6 +9,8 @@ const ditto_1 = require("./ditto");
 const lunatone_1 = require("./lunatone");
 const lure_module_1 = require("./lure-module");
 const moltres_1 = require("./moltres");
+const PGO_14_Camerupt_1 = require("./PGO_14_Camerupt");
+const PGO_19_Slowpoke_1 = require("./PGO_19_Slowpoke");
 const PGO_42_Alolan_Raticate_1 = require("./PGO_42_Alolan_Raticate");
 const pokestop_1 = require("./pokestop");
 const radiant_venusaur_1 = require("./radiant-venusaur");
@@ -38,6 +40,13 @@ class BlastoiseArt extends blastoise_1.Blastoise {
     }
 }
 exports.BlastoiseArt = BlastoiseArt;
+class CameruptArt extends PGO_14_Camerupt_1.Camerupt {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_014_R_EN_LG.png';
+    }
+}
+exports.CameruptArt = CameruptArt;
 class CharmanderArt extends charmander_1.Charmander {
     constructor() {
         super(...arguments);
@@ -108,6 +117,13 @@ class SlowbroArt extends slowbro_1.Slowbro {
     }
 }
 exports.SlowbroArt = SlowbroArt;
+class SlowpokeArt extends PGO_19_Slowpoke_1.Slowpoke {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_019_R_EN_LG.png';
+    }
+}
+exports.SlowpokeArt = SlowpokeArt;
 class SnorlaxArt extends snorlax_1.Snorlax {
     constructor() {
         super(...arguments);

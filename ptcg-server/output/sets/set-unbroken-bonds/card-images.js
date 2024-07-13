@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.PorygonZArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MartialArtsDojoArt = exports.LtSurgesStrategyArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.FireCrystalArt = exports.EspurrArt = exports.CleffaArt = exports.ArcanineArt = void 0;
+exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MartialArtsDojoArt = exports.LtSurgesStrategyArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.FireCrystalArt = exports.EspurrArt = exports.CleffaArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
 const espurr_1 = require("./espurr");
@@ -15,6 +15,8 @@ const pokegear_30_1 = require("./pokegear-30");
 const porygon_z_1 = require("./porygon-z");
 const spiritomb_1 = require("./spiritomb");
 const triple_acceleration_energy_1 = require("./triple-acceleration-energy");
+const UNB_31_Salazzle_1 = require("./UNB_31_Salazzle");
+const UNB_37_Poliwag_1 = require("./UNB_37_Poliwag");
 const UNB_60_Zeraora_1 = require("./UNB_60_Zeraora");
 const volcanion_1 = require("./volcanion");
 class ArcanineArt extends arcanine_1.Arcanine {
@@ -94,6 +96,13 @@ class Pokegear30Art extends pokegear_30_1.Pokegear30 {
     }
 }
 exports.Pokegear30Art = Pokegear30Art;
+class PoliwagArt extends UNB_37_Poliwag_1.Poliwag {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_037_R_EN_LG.png';
+    }
+}
+exports.PoliwagArt = PoliwagArt;
 class PorygonZArt extends porygon_z_1.PorygonZ {
     constructor() {
         super(...arguments);
@@ -101,6 +110,13 @@ class PorygonZArt extends porygon_z_1.PorygonZ {
     }
 }
 exports.PorygonZArt = PorygonZArt;
+class SalazzleArt extends UNB_31_Salazzle_1.Salazzle {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_031_R_EN_LG.png';
+    }
+}
+exports.SalazzleArt = SalazzleArt;
 class SpiritombArt extends spiritomb_1.Spiritomb {
     constructor() {
         super(...arguments);

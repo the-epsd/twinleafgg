@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard, Card } from '../../game';
+import { StoreLike, State, EnergyCard, Card, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/prefabs';
@@ -57,6 +57,10 @@ export class HisuianBasculegion extends PokemonCard {
           player.discard.moveCardsTo(basicEnergyCards, player.deck);
         }
 
+      });
+
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        player.deck.applyOrder(order);
       });
 
 

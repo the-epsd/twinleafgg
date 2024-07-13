@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ShowCardsPrompt, Card, GamePhase } from 'ptcg-server';
 
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
@@ -10,49 +10,53 @@ import { LocalGameState } from '../../../shared/session/session.interface';
   templateUrl: './prompt-show-cards.component.html',
   styleUrls: ['./prompt-show-cards.component.scss']
 })
-export class PromptShowCardsComponent {
+export class PromptShowCardsComponent implements OnInit, OnDestroy {
 
   @Input() prompt: ShowCardsPrompt;
   @Input() gameState: LocalGameState;
+
+  private isResolved = false;
+  private timeoutId: any;
 
   constructor(
     private cardsBaseService: CardsBaseService,
     private gameService: GameService
   ) { }
 
-  // ngOnInit() {
-  //   const gameId = this.gameState.gameId;
-  //   const id = this.prompt.id;
+  ngOnInit() {
+    this.timeoutId = setTimeout(() => {
+      this.resolvePrompt();
+    }, 3000);
+  }
 
-  //   if (GamePhase.SETUP || GamePhase.WAITING_FOR_PLAYERS) {
-  //     setTimeout(() => {
-  //       this.gameService.resolvePrompt(gameId, id, null);
-  //     }, 3000);
-  //   } else {
-  //     setTimeout(() => {
-  //       this.gameService.resolvePrompt(gameId, id, null);
-  //     }, 5000);
-  //   }
-  // }
+  ngOnDestroy() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+  }
 
   public minimize() {
     this.gameService.setPromptMinimized(this.gameState.localId, true);
   }
 
+  private resolvePrompt() {
+    if (!this.isResolved) {
+      this.isResolved = true;
+      const gameId = this.gameState.gameId;
+      const id = this.prompt.id;
+      this.gameService.resolvePrompt(gameId, id, null);
+    }
+  }
+
   public confirm() {
-    const gameId = this.gameState.gameId;
-    const id = this.prompt.id;
-    this.gameService.resolvePrompt(gameId, id, true);
+    this.resolvePrompt();
   }
 
   public cancel() {
-    const gameId = this.gameState.gameId;
-    const id = this.prompt.id;
-    this.gameService.resolvePrompt(gameId, id, null);
+    this.resolvePrompt();
   }
 
   public onCardClick(card: Card) {
     this.cardsBaseService.showCardInfo({ card });
   }
-
 }

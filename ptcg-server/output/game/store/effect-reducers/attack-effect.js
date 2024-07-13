@@ -13,9 +13,9 @@ function attackReducer(store, state, effect) {
         if (pokemonCard === undefined) {
             throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
         }
-        // Check if the target is the opponent's active Pokemon
+        // Check if the effect is part of an attack and the target is the opponent's active Pokemon
         const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
-        if (target === opponent.active) {
+        if (effect.attackEffect && target === opponent.active) {
             // Apply weakness
             const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect.attackEffect, effect.damage);
             applyWeakness.target = effect.target;
@@ -34,12 +34,7 @@ function attackReducer(store, state, effect) {
     }
     if (effect instanceof attack_effects_1.DealDamageEffect) {
         const base = effect.attackEffect;
-        const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(base, effect.damage);
-        applyWeakness.target = effect.target;
-        applyWeakness.ignoreWeakness = base.ignoreWeakness;
-        applyWeakness.ignoreResistance = base.ignoreResistance;
-        state = store.reduceEffect(state, applyWeakness);
-        const dealDamage = new attack_effects_1.PutDamageEffect(base, applyWeakness.damage);
+        const dealDamage = new attack_effects_1.PutDamageEffect(base, effect.damage);
         dealDamage.target = effect.target;
         state = store.reduceEffect(state, dealDamage);
         return state;

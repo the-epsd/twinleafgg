@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PrimeCatcherArt = exports.PikachuArt = exports.NeoUpperEnergyArt = exports.MrMimeArt = exports.MortysConvictionArt = exports.MistEnergyArt = exports.MiraidonArt = exports.MiraidonexArt = exports.MinccinoArt = exports.MetagrossArt = exports.MetangArt = exports.MasterBallArt = exports.MaximumBeltArt = exports.KoraidonArt = exports.KoraidonexArt = exports.IronThornsArt = exports.IronLeavesexArt = exports.IronHandsArt = exports.IronCrownexArt = exports.HerosCapeArt = exports.HeavyBatonArt = exports.HaunterArt = exports.HandTrimmerArt = exports.GrotleArt = exports.GougingFireexArt = exports.GengarexArt = exports.GastlyArt = exports.GreatTuskArt = exports.FutureBoosterEnergyCapsuleArt = exports.FullMetalLabArt = exports.FlutterManeArt = exports.FeraligatrArt = exports.ExplorersGuidanceArt = exports.EriArt = exports.EmergencyBoardArt = exports.DuosionArt = exports.DunsparceArt = exports.DudunsparceArt = exports.DrumsOfAwakeningArt = exports.DrilburArt = exports.DeliveryBoxArt = exports.CryptomaniacsDecipheringArt = exports.CroconawArt = exports.CinccinoArt = exports.ChatotArt = exports.CharjabugArt = exports.BuddyBuddyPoffinArt = exports.BiancasDevotionArt = exports.BeldumArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
-exports.WalkingWakeexArt = exports.VikavoltArt = exports.VictiniArt = exports.TurtwigArt = exports.TotodileArt = exports.TorterraexArt = exports.SolosisArt = exports.SkittyArt = exports.SandyShocksArt = exports.SalvatoreArt = exports.SableyeArt = exports.RoaringMoonArt = exports.ReuniclusArt = exports.RellorArt = exports.RebootPodArt = exports.RaichuArt = exports.RagingBoltexArt = exports.RabscaArt = void 0;
+exports.PikachuArt = exports.PalafinArt = exports.NeoUpperEnergyArt = exports.MrMimeArt = exports.MortysConvictionArt = exports.MistEnergyArt = exports.MiraidonArt = exports.MiraidonexArt = exports.MinccinoArt = exports.MetagrossArt = exports.MetangArt = exports.MasterBallArt = exports.MaximumBeltArt = exports.KoraidonArt = exports.KoraidonexArt = exports.IronThornsArt = exports.IronLeavesexArt = exports.IronHandsArt = exports.IronCrownexArt = exports.HerosCapeArt = exports.HeavyBatonArt = exports.HaunterArt = exports.HandTrimmerArt = exports.GrotleArt = exports.GougingFireexArt = exports.GengarexArt = exports.GastlyArt = exports.GreatTuskArt = exports.FutureBoosterEnergyCapsuleArt = exports.FullMetalLabArt = exports.FlutterManeArt = exports.FeraligatrArt = exports.ExplorersGuidanceArt = exports.EriArt = exports.EmergencyBoardArt = exports.DuosionArt = exports.DunsparceArt = exports.DudunsparceArt = exports.DrumsOfAwakeningArt = exports.DrilburArt = exports.DeliveryBoxArt = exports.CryptomaniacsDecipheringArt = exports.CroconawArt = exports.CinccinoArt = exports.ChatotArt = exports.CharjabugArt = exports.BuddyBuddyPoffinArt = exports.BiancasDevotionArt = exports.BeldumArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
+exports.WalkingWakeexArt = exports.VikavoltArt = exports.VictiniArt = exports.TurtwigArt = exports.TotodileArt = exports.TorterraexArt = exports.SolosisArt = exports.SkittyArt = exports.SandyShocksArt = exports.SalvatoreArt = exports.SableyeArt = exports.RoaringMoonArt = exports.ReuniclusArt = exports.RellorArt = exports.RebootPodArt = exports.RaichuArt = exports.RagingBoltexArt = exports.RabscaArt = exports.PrimeCatcherArt = void 0;
 const ancient_booster_energy_capsule_1 = require("../set-paradox-rift/ancient-booster-energy-capsule");
 const future_booster_energy_capsule_1 = require("../set-paradox-rift/future-booster-energy-capsule");
 const beldum_1 = require("./beldum");
@@ -64,6 +64,7 @@ const salvatore_1 = require("./salvatore");
 const sandy_shocks_1 = require("./sandy-shocks");
 const skitty_1 = require("./skitty");
 const solosis_1 = require("./solosis");
+const TEF_49_Palafin_1 = require("./TEF_49_Palafin");
 const torterra_ex_1 = require("./torterra-ex");
 const totodile_1 = require("./totodile");
 const turtwig_1 = require("./turtwig");
@@ -412,6 +413,13 @@ class NeoUpperEnergyArt extends neo_upper_energy_1.NeoUpperEnergy {
     }
 }
 exports.NeoUpperEnergyArt = NeoUpperEnergyArt;
+class PalafinArt extends TEF_49_Palafin_1.Palafin {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_049_R_EN_LG.png';
+    }
+}
+exports.PalafinArt = PalafinArt;
 class PikachuArt extends pikachu_1.Pikachu {
     constructor() {
         super(...arguments);

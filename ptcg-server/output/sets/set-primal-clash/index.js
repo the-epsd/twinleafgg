@@ -13,6 +13,7 @@ exports.setPrimalClash = [
     new card_images_1.ScorchedEarthArt(),
     new card_images_1.ShieldEnergArt(),
     new card_images_1.SilentLabArt(),
+    new card_images_1.SlugmaArt(),
     new card_images_1.TeammatesArt(),
     new card_images_1.WailordExArt()
 ];

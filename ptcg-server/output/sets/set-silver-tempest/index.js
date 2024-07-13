@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setSilverTempest = [
     new card_images_1.AlolanVulpixVArt(),
     new card_images_1.AlolanVulpixVSTARArt(),
+    new card_images_1.ArchenArt(),
     new card_images_1.ArcheopsArt(),
     new card_images_1.ArticunoArt(),
     new card_images_1.BeheeyemArt(),
@@ -51,6 +52,7 @@ exports.setSilverTempest = [
     new card_images_1.SerperiorVSTARArt(),
     new card_images_1.SnowruntArt(),
     //new TerrakionArt(),
+    new card_images_1.UnidentifiedFossilArt(),
     new card_images_1.UrsalunaVArt(),
     new card_images_1.VGuardEnergyArt(),
     new card_images_1.WailordArt(),

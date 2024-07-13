@@ -7,6 +7,7 @@ import { ResetStamp } from './reset-stamp';
 import { Riolu } from './riolu';
 import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
+import { Numel } from './UNM_23_Numel';
 import { Froslass } from './UNM_38_Froslass';
 import { AlolanRaichu } from './UNM_57_Alolan_Raichu';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
@@ -25,6 +26,10 @@ export class KarateBeltArt extends KarateBelt {
 
 export class NecrozmaArt extends Necrozma {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_101_R_EN_LG.png';
+}
+
+export class NumelArt extends Numel {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_023_R_EN_LG.png';
 }
 
 export class PurrloinArt extends Purrloin {

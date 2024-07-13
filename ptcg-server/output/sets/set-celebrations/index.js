@@ -9,6 +9,7 @@ exports.setCelebrations = [
     new card_images_1.KyogreArt(),
     new card_images_1.LugiaArt(),
     new card_images_1.MewArt(),
+    new card_images_1.ReshiramArt(),
     new card_images_1.YVeltalArt(),
     new card_images_1.ZacianVArt(),
 ];
