@@ -12,11 +12,15 @@ $avatar-size: map-get($ptcg-size, avatar);
   &.marked .ptcg-user-name {
     text-decoration: none;
   }
-  
+
   &.clickable ptcg-avatar,
   &.clickable .ptcg-user-name-text {
     cursor: pointer;
   }
+}
+
+.ptcg-badge {
+  background-color: red;
 }
 
 ptcg-avatar {

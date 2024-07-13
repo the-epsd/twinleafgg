@@ -1,5 +1,24 @@
 @use '~@angular/material' as mat;
 
+@mixin ptcg-rank-colors {
+  $rank-colors: (
+    'master': #a836f4,
+    'ultra': #eeb300,
+    'great': #0055ff,
+    'poke': #e13131,
+    'banned': #4e1a19,
+    'bot': rgb(57, 80, 105),
+    'admin': #459058,
+  );
+
+@each $rank, $color in $rank-colors {
+  ptcg-badge[color="#{$rank}"] {
+    background-color: $color;
+    // color: white;
+    border-radius: 4px;
+  }
+}
+}
 
 @mixin ptcg-user-info-theme($theme) {
   $background: map-get($theme, background);
@@ -31,12 +50,13 @@
     }
   }
 
+  @include ptcg-rank-colors;
 }
 
 @mixin ptcg-user-info-typography($config) {
   ptcg-user-bar {
     @include mat.typography-level($config, caption);
-    
+
     .ptcg-user-name {
       @include mat.typography-level($config, body-2);
     }
