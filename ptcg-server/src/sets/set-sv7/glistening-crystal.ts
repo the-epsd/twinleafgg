@@ -4,13 +4,12 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class GlisteningCrystal extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
 
-  public tags = [ CardTag.ACE_SPEC ];
+  public tags = [CardTag.ACE_SPEC];
 
   public set: string = 'SV7';
 
@@ -29,27 +28,11 @@ export class GlisteningCrystal extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckAttackCostEffect && effect.player.active.getPokemonCard()?.tools.includes(this)) {
-      const player = effect.player;
-      const pokemonCard = player.active.getPokemonCard();
-
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
-
+    if (effect instanceof CheckAttackCostEffect && effect.player.active.tool === this) {
+      const pokemonCard = effect.player.active.getPokemonCard();
       if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_TERA)) {
-        const index = effect.cost.indexOf(CardType.ANY);
-        if (index > -1) {
-          effect.cost.splice(index, 0, CardType.ANY);
-        } else {
-          effect.cost.splice(CardType.ANY);
-        }
-        return state;
+        effect.cost = effect.cost.filter((c, i) => i !== effect.cost.findIndex(t => t !== CardType.NONE));
       }
-      return state;
     }
     return state;
   }
