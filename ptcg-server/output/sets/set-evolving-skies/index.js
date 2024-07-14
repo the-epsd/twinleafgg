@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 const full_arts_1 = require("./full-arts");
 exports.setEvolvingSkies = [
     new card_images_1.CopycatArt(),
+    new card_images_1.CrystalCaveArt(),
     new card_images_1.DragoniteVArt(),
     new card_images_1.DrampaArt(),
     new card_images_1.DuraludonVArt(),

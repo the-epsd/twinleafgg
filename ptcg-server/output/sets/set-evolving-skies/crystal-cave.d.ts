@@ -1,8 +1,8 @@
-import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { UseStadiumEffect } from '../../game/store/effects/game-effects';
-import { StoreLike } from '../../game/store/store-like';
+import { TrainerCard } from '../../game/store/card/trainer-card';
+import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 export declare class CrystalCave extends TrainerCard {
     regulationMark: string;
     cardImage: string;
@@ -12,5 +12,5 @@ export declare class CrystalCave extends TrainerCard {
     name: string;
     fullName: string;
     text: string;
-    useStadium(store: StoreLike, state: State, effect: UseStadiumEffect): State;
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
