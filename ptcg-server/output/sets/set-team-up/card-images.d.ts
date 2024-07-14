@@ -10,9 +10,13 @@ import { MetalGoggles } from './metal-goggles';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
 import { Moltres } from './TEU_19_Moltres';
+import { Absol } from './TEU_88_Absol';
 import { ViridianForest } from './viridian-forest';
 import { Yveltal } from './yveltal';
 import { Zapdos } from './zapdos';
+export declare class AbsolArt extends Absol {
+    cardImage: string;
+}
 export declare class AlolanMukArt extends AlolanMuk {
     cardImage: string;
 }

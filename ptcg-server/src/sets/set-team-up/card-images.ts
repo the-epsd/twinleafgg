@@ -10,9 +10,14 @@ import { MetalGoggles } from './metal-goggles';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
 import { Moltres } from './TEU_19_Moltres';
+import { Absol } from './TEU_88_Absol';
 import { ViridianForest } from './viridian-forest';
 import { Yveltal } from './yveltal';
 import { Zapdos } from './zapdos';
+
+export class AbsolArt extends Absol {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_088_R_EN_LG.png';
+}
 
 export class AlolanMukArt extends AlolanMuk {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_084_R_EN.png';

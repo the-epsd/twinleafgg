@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.YveltalArt = exports.ViridianForestArt = exports.PokemonCommunicationArt = exports.PidgeottoArt = exports.MoltresArt = exports.MetalGogglesArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.DragoniteArt = exports.BronzorArt = exports.AlolanMukArt = void 0;
+exports.ZapdosArt = exports.YveltalArt = exports.ViridianForestArt = exports.PokemonCommunicationArt = exports.PidgeottoArt = exports.MoltresArt = exports.MetalGogglesArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.DragoniteArt = exports.BronzorArt = exports.AlolanMukArt = exports.AbsolArt = void 0;
 const alolan_muk_1 = require("./alolan-muk");
 const bronzor_1 = require("./bronzor");
 const dragonite_1 = require("./dragonite");
@@ -13,9 +13,17 @@ const metal_goggles_1 = require("./metal-goggles");
 const pidgeotto_1 = require("./pidgeotto");
 const pokemon_communication_1 = require("./pokemon-communication");
 const TEU_19_Moltres_1 = require("./TEU_19_Moltres");
+const TEU_88_Absol_1 = require("./TEU_88_Absol");
 const viridian_forest_1 = require("./viridian-forest");
 const yveltal_1 = require("./yveltal");
 const zapdos_1 = require("./zapdos");
+class AbsolArt extends TEU_88_Absol_1.Absol {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_088_R_EN_LG.png';
+    }
+}
+exports.AbsolArt = AbsolArt;
 class AlolanMukArt extends alolan_muk_1.AlolanMuk {
     constructor() {
         super(...arguments);

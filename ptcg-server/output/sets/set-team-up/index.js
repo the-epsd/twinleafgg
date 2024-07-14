@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTeamUp = void 0;
 const card_images_1 = require("./card-images");
 exports.setTeamUp = [
+    // new AbsolArt(), something weird is going on with checking retreat cost and adding retreat cost; attack works though
     new card_images_1.AlolanMukArt(),
     new card_images_1.BronzorArt(),
     new card_images_1.DragoniteArt(),

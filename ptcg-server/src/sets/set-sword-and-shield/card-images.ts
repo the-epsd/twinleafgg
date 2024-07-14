@@ -17,6 +17,8 @@ import { Sizzlipede } from './sizzlipede';
 import { Snom } from './snom';
 import { Sobble } from './sobble';
 import { Toxicroak } from './SSH_124_Toxicroak';
+import { Raboot } from './SSH_32_Raboot';
+import { Cinderace } from './SSH_34_Cinderace';
 import { Centiskorch } from './SSH_39_Centiskorch';
 import { Welder } from './welder';
 
@@ -34,6 +36,10 @@ export class CentiskorchArt extends Centiskorch {
 
 export class CinccinoArt extends Cinccino {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_147_R_EN_LG.png';
+}
+
+export class CinderaceArt extends Cinderace {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_034_R_EN_LG.png';
 }
 
 export class CopperajahArt extends Copperajah {
@@ -78,6 +84,10 @@ export class OrdinaryRodArt extends OrdinaryRod {
 
 export class QuickBallArt extends QuickBall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_179_R_EN_LG.png';
+}
+
+export class RabootArt extends Raboot {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_032_R_EN_LG.png';
 }
 
 export class RosaArt extends Rosa {

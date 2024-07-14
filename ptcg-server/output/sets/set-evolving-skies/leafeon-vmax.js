@@ -45,13 +45,13 @@ class LeafeonVMAX extends game_1.PokemonCard {
                 effect.damage = retreatCost * 60;
                 return state;
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                const healTargetEffect = new attack_effects_1.HealTargetEffect(effect, 30);
-                healTargetEffect.target = player.active;
-                state = store.reduceEffect(state, healTargetEffect);
-                return state;
-            }
+            return state;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const healTargetEffect = new attack_effects_1.HealTargetEffect(effect, 30);
+            healTargetEffect.target = player.active;
+            state = store.reduceEffect(state, healTargetEffect);
             return state;
         }
         return state;

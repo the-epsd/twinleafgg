@@ -17,6 +17,8 @@ import { Sizzlipede } from './sizzlipede';
 import { Snom } from './snom';
 import { Sobble } from './sobble';
 import { Toxicroak } from './SSH_124_Toxicroak';
+import { Raboot } from './SSH_32_Raboot';
+import { Cinderace } from './SSH_34_Cinderace';
 import { Centiskorch } from './SSH_39_Centiskorch';
 import { Welder } from './welder';
 export declare class AirBalloonArt extends AirBalloon {
@@ -29,6 +31,9 @@ export declare class CentiskorchArt extends Centiskorch {
     cardImage: string;
 }
 export declare class CinccinoArt extends Cinccino {
+    cardImage: string;
+}
+export declare class CinderaceArt extends Cinderace {
     cardImage: string;
 }
 export declare class CopperajahArt extends Copperajah {
@@ -62,6 +67,9 @@ export declare class OrdinaryRodArt extends OrdinaryRod {
     cardImage: string;
 }
 export declare class QuickBallArt extends QuickBall {
+    cardImage: string;
+}
+export declare class RabootArt extends Raboot {
     cardImage: string;
 }
 export declare class RosaArt extends Rosa {

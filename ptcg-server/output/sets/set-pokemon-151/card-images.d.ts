@@ -32,6 +32,7 @@ import { Magmar } from './magmar';
 import { Oddish } from './oddish';
 import { AntiqueHelixFossil } from './antique-helix-fossil';
 import { EnergySticker } from './energy-sticker';
+import { Moltres } from './MEW_146_Moltres';
 export declare class AntiqueHelixFossilArt extends AntiqueHelixFossil {
     cardImage: string;
 }
@@ -99,6 +100,9 @@ export declare class MagmarArt extends Magmar {
     cardImage: string;
 }
 export declare class MewexArt extends Mewex {
+    cardImage: string;
+}
+export declare class MoltresArt extends Moltres {
     cardImage: string;
 }
 export declare class OddishArt extends Oddish {

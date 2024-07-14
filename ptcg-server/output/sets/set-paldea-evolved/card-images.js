@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WingullArt = exports.TinkatonArt = exports.TinkatuffArt = exports.TinkatinkArt = exports.TingLuexArt = exports.TherapeuticEnergyArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.PelipperArt = exports.OrthwormArt = exports.NoivernexArt = exports.NoibatArt = exports.MurkrowArt = exports.MimikyuArt = exports.MagnemiteArt = exports.LuminousEnergyArt = exports.JetEnergyArt = exports.IonoArt = exports.GrushaArt = exports.GreatBallArt = exports.GiacomoArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.CufantArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.ChiYuexArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
+exports.ZweilousArt = exports.WingullArt = exports.TinkatonArt = exports.TinkatuffArt = exports.TinkatinkArt = exports.TingLuexArt = exports.TherapeuticEnergyArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.PelipperArt = exports.OrthwormArt = exports.NoivernexArt = exports.NoibatArt = exports.MurkrowArt = exports.MimikyuArt = exports.MagnemiteArt = exports.LuminousEnergyArt = exports.JetEnergyArt = exports.IonoArt = exports.HydreigonArt = exports.GrushaArt = exports.GreatBallArt = exports.GiacomoArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.DeinoArt = exports.CufantArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.ChiYuexArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
 const arctibax_1 = require("./arctibax");
 const artazon_1 = require("./artazon");
 const baxcalibur_1 = require("./baxcalibur");
@@ -29,6 +29,9 @@ const murkrow_1 = require("./murkrow");
 const noibat_1 = require("./noibat");
 const noivern_ex_1 = require("./noivern-ex");
 const orthworm_1 = require("./orthworm");
+const PAL_138_Deino_1 = require("./PAL_138_Deino");
+const PAL_139_Zweilous_1 = require("./PAL_139_Zweilous");
+const PAL_140_Hydreigon_1 = require("./PAL_140_Hydreigon");
 const PAL_159_Pelipper_1 = require("./PAL_159_Pelipper");
 const PAL_65_Magnemite_1 = require("./PAL_65_Magnemite");
 const reversal_energy_1 = require("./reversal-energy");
@@ -116,6 +119,13 @@ class CufantArt extends cufant_1.Cufant {
     }
 }
 exports.CufantArt = CufantArt;
+class DeinoArt extends PAL_138_Deino_1.Deino {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_138_R_EN_LG.png';
+    }
+}
+exports.DeinoArt = DeinoArt;
 class DeliveryDroneArt extends delivery_drone_1.DeliveryDrone {
     constructor() {
         super(...arguments);
@@ -179,6 +189,13 @@ class GrushaArt extends grusha_1.Grusha {
     }
 }
 exports.GrushaArt = GrushaArt;
+class HydreigonArt extends PAL_140_Hydreigon_1.Hydreigon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_140_R_EN_LG.png';
+    }
+}
+exports.HydreigonArt = HydreigonArt;
 class IonoArt extends iono_1.Iono {
     constructor() {
         super(...arguments);
@@ -361,3 +378,10 @@ class WingullArt extends wingull_1.Wingull {
     }
 }
 exports.WingullArt = WingullArt;
+class ZweilousArt extends PAL_139_Zweilous_1.Zweilous {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_139_R_EN_LG.png';
+    }
+}
+exports.ZweilousArt = ZweilousArt;

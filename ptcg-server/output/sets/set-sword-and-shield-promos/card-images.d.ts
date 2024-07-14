@@ -8,6 +8,7 @@ import { LucarioVSTAR } from './lucario-vstar';
 import { Manaphy } from './manaphy';
 import { Oricorio } from './oricorio';
 import { ProfessorBurnet } from './professor-burnett';
+import { Scorbunny } from './SSP_71_Scorbunny';
 import { Charmander } from './SSP_92_Charmander';
 import { Tepig } from './tepig';
 import { VenusaurV } from './venusaur-v';
@@ -47,6 +48,9 @@ export declare class EscapeRopeArt extends EscapeRope {
     set: string;
     setNumber: string;
     fullName: string;
+}
+export declare class ScorbunnyArt extends Scorbunny {
+    cardImage: string;
 }
 export declare class TepigArt extends Tepig {
     cardImage: string;

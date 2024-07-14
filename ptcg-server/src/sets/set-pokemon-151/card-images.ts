@@ -32,6 +32,7 @@ import { Magmar } from './magmar';
 import { Oddish } from './oddish';
 import { AntiqueHelixFossil } from './antique-helix-fossil';
 import { EnergySticker } from './energy-sticker';
+import { Moltres } from './MEW_146_Moltres';
 
 export class AntiqueHelixFossilArt extends AntiqueHelixFossil {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_153_R_EN.png';
@@ -123,6 +124,10 @@ export class MagmarArt extends Magmar {
 
 export class MewexArt extends Mewex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_151_R_EN_LG.png';
+}
+
+export class MoltresArt extends Moltres {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_146_R_EN_LG.png';
 }
 
 export class OddishArt extends Oddish {
