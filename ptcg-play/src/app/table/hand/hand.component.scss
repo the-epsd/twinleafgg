@@ -55,9 +55,9 @@ ptcg-card {
   &.draggable {
     touch-action: none;
   }
-  
+
   transition: transform .2s;
-  
+
   &:hover {
     transform: scale(1.15) translateY(-12.5px); // Add translateY(-10px) to slide up 10px
     z-index: 10;
@@ -65,11 +65,12 @@ ptcg-card {
 }
 
 .ptcg-card-preview {
+  border-radius: $card-border-radius;
   position: absolute;
-  width: 175px;
+  width: 98px;
 }
 
 .ptcg-card-marker {
   position: absolute;
-  width: 175px;
+  width: 98px;
 }

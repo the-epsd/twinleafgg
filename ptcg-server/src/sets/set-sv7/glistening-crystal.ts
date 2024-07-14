@@ -3,7 +3,7 @@ import { TrainerType, CardTag, CardType } from '../../game/store/card/card-types
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class GlisteningCrystal extends TrainerCard {
 
@@ -31,7 +31,14 @@ export class GlisteningCrystal extends TrainerCard {
     if (effect instanceof CheckAttackCostEffect && effect.player.active.tool === this) {
       const pokemonCard = effect.player.active.getPokemonCard();
       if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_TERA)) {
-        effect.cost = effect.cost.filter((c, i) => i !== effect.cost.findIndex(t => t !== CardType.NONE));
+        const checkEnergy = new CheckProvidedEnergyEffect(effect.player);
+        store.reduceEffect(state, checkEnergy);
+
+        const availableEnergy = checkEnergy.energyMap.flatMap(e => e.provides);
+
+        effect.cost = effect.cost.filter(costType =>
+          costType === CardType.NONE || availableEnergy.includes(costType)
+        );
       }
     }
     return state;

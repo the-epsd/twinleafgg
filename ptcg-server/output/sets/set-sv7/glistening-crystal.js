@@ -21,7 +21,10 @@ class GlisteningCrystal extends trainer_card_1.TrainerCard {
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.player.active.tool === this) {
             const pokemonCard = effect.player.active.getPokemonCard();
             if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_TERA)) {
-                effect.cost = effect.cost.filter((c, i) => i !== effect.cost.findIndex(t => t !== card_types_1.CardType.NONE));
+                const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(effect.player);
+                store.reduceEffect(state, checkEnergy);
+                const availableEnergy = checkEnergy.energyMap.flatMap(e => e.provides);
+                effect.cost = effect.cost.filter(costType => costType === card_types_1.CardType.NONE || availableEnergy.includes(costType));
             }
         }
         return state;

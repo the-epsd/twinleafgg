@@ -3,17 +3,17 @@
 .ptcg-board-deck {
   display: flex;
   flex-direction: column;
-  height: 337px;
+  height: 338px;
   justify-content: space-around;
   margin: 0 auto;
   width: 50%;
 }
 
 ptcg-board-card {
-width: 75px;
+  width: 75px;
   // max-width: 4.5vw;
   // min-width: 4.5vw;
-  margin-top: -34%;
+  margin-top: -35%;
 }
 
 .deck-container,
