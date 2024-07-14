@@ -23,7 +23,7 @@ export class MetalGoggles extends TrainerCard {
   public fullName: string = 'Metal Goggles TEU';
 
   public text: string =
-    'The [M] Pokémon this card is attached to takes 30 less damage from your opponent\'s attacks (after applying Weakness and Resistance) and has no Weakness.';
+    'The [M] Pokémon this card is attached to takes 30 less damage from your opponent\'s attacks (after applying Weakness and Resistance), and your opponent\'s attacks and Abilities can\'t put damage counters on it.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
@@ -73,7 +73,7 @@ export class MetalGoggles extends TrainerCard {
       }
 
       if (sourceCard) {
-        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.source);
+        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.target);
         store.reduceEffect(state, checkPokemonTypeEffect);
   
         if (checkPokemonTypeEffect.cardTypes.includes(CardType.METAL)) {
