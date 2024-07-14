@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.VigorothArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SylveonVMAXArt = exports.SylveonVArt = exports.SwitchingCupsArt = exports.SwabluArt = exports.SuicuneVArt = exports.StormyMountainsArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVMAXArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianZapdosArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FullFaceGuardArt = exports.FlappleArt = exports.FlaaffyArt = exports.EspeonVMAXArt = exports.EspeonVArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DrampaArt = exports.DragoniteVArt = exports.CopycatArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.VigorothArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SylveonVMAXArt = exports.SylveonVArt = exports.SwitchingCupsArt = exports.SwabluArt = exports.SuicuneVArt = exports.StormyMountainsArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVMAXArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianZapdosArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FullFaceGuardArt = exports.FlappleArt = exports.FlaaffyArt = exports.EspeonVMAXArt = exports.EspeonVArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DrampaArt = exports.DragoniteVArt = exports.CrystalCaveArt = exports.CopycatArt = void 0;
 const copycat_1 = require("./copycat");
+const crystal_cave_1 = require("./crystal-cave");
 const dragonite_v_1 = require("./dragonite-v");
 const drampa_1 = require("./drampa");
 const duraludon_v_1 = require("./duraludon-v");
@@ -47,6 +48,13 @@ class CopycatArt extends copycat_1.Copycat {
     }
 }
 exports.CopycatArt = CopycatArt;
+class CrystalCaveArt extends crystal_cave_1.CrystalCave {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_144_R_EN_LG.png';
+    }
+}
+exports.CrystalCaveArt = CrystalCaveArt;
 class DragoniteVArt extends dragonite_v_1.DragoniteV {
     constructor() {
         super(...arguments);

@@ -7,6 +7,7 @@ exports.setSwordAndShield = [
     new card_images_1.AuroraEnergyArt(),
     new card_images_1.CentiskorchArt(),
     new card_images_1.CinccinoArt(),
+    new card_images_1.CinderaceArt(),
     new card_images_1.CopperajahArt(),
     new card_images_1.DrizzileArt(),
     new card_images_1.EvolutionIncenseArt(),
@@ -21,6 +22,7 @@ exports.setSwordAndShield = [
     new card_images_1.OranguruArt(),
     new card_images_1.OrdinaryRodArt(),
     new card_images_1.QuickBallArt(),
+    new card_images_1.RabootArt(),
     new card_images_1.RosaArt(),
     new card_images_1.ToxicroakArt(),
     new card_images_1.WelderArt()

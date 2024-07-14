@@ -8,6 +8,7 @@ import { LucarioVSTAR } from './lucario-vstar';
 import { Manaphy } from './manaphy';
 import { Oricorio } from './oricorio';
 import { ProfessorBurnet } from './professor-burnett';
+import { Scorbunny } from './SSP_71_Scorbunny';
 import { Charmander } from './SSP_92_Charmander';
 import { Tepig } from './tepig';
 import { VenusaurV } from './venusaur-v';
@@ -62,6 +63,10 @@ export class EscapeRopeArt extends EscapeRope {
   public set = 'SM10a';
   public setNumber = '51';
   public fullName = 'Escape Rope SM10a';
+}
+
+export class ScorbunnyArt extends Scorbunny {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_071_R_EN_LG.png'
 }
 
 export class TepigArt extends Tepig {

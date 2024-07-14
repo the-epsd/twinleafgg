@@ -1,4 +1,4 @@
-import { CoinFlipPrompt, DamageMap, GameLog, GameMessage, PlayerType, Power, PowerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
+  import { CoinFlipPrompt, DamageMap, GameLog, GameMessage, PlayerType, Power, PowerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';

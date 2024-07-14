@@ -26,6 +26,9 @@ import { Murkrow } from './murkrow';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
 import { Orthworm } from './orthworm';
+import { Deino } from './PAL_138_Deino';
+import { Zweilous } from './PAL_139_Zweilous';
+import { Hydreigon } from './PAL_140_Hydreigon';
 import { Pelipper } from './PAL_159_Pelipper';
 import { Magnemite } from './PAL_65_Magnemite';
 import { ReversalEnergy } from './reversal-energy';
@@ -84,6 +87,10 @@ export class CufantArt extends Cufant {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_149_R_EN.png';
 }
 
+export class DeinoArt extends Deino {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_138_R_EN_LG.png';
+}
+
 export class DeliveryDroneArt extends DeliveryDrone {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_178_R_EN_LG.png';
 }
@@ -118,6 +125,10 @@ export class GreatBallArt extends GreatBall {
 
 export class GrushaArt extends Grusha {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_184_R_EN_LG.png';
+}
+
+export class HydreigonArt extends Hydreigon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_140_R_EN_LG.png';
 }
 
 export class IonoArt extends Iono {
@@ -222,4 +233,8 @@ export class TinkatonArt extends Tinkaton {
 
 export class WingullArt extends Wingull {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_158_R_EN_LG.png';
+}
+
+export class ZweilousArt extends Zweilous {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_139_R_EN_LG.png';
 }

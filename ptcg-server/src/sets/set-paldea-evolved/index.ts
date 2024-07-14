@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArctibaxArt, ArtazonArt, CetitanArt, ChiYuexArt, CufantArt, GiacomoArt, GrushaArt, MagnemiteArt, NoibatArt, NoivernexArt, OrthwormArt, PelipperArt, TherapeuticEnergyArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WingullArt } from './card-images';
+import { ArctibaxArt, ArtazonArt, CetitanArt, ChiYuexArt, CufantArt, DeinoArt, GiacomoArt, GrushaArt, HydreigonArt, MagnemiteArt, NoibatArt, NoivernexArt, OrthwormArt, PelipperArt, TherapeuticEnergyArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WingullArt, ZweilousArt } from './card-images';
 import { BaxcaliburArt } from './card-images';
 import { BossOrdersArt } from './card-images';
 import { BraveyCharmArt } from './card-images';
@@ -43,6 +43,7 @@ export const setPaldeaEvolved: Card[] = [
   new ChienPaoexArt(),
   new ChoiceBeltArt(),
   new CufantArt(),
+  new DeinoArt(),
   new DeliveryDroneArt(),
   new DudunsparceArt(),
   new FightingAuLaitArt(),
@@ -52,6 +53,7 @@ export const setPaldeaEvolved: Card[] = [
   new GiacomoArt(),
   new GreatBallArt(),
   new GrushaArt(),
+  new HydreigonArt(),
   new IonoArt(),
   new JetEnergyArt(),
   new LuminousEnergyArt(),
@@ -77,6 +79,7 @@ export const setPaldeaEvolved: Card[] = [
   new TinkatonArt(),
   new WattrelArt(),
   new WingullArt(),
-  new WoChienexArt()
+  new WoChienexArt(),
+  new ZweilousArt()
 
 ];

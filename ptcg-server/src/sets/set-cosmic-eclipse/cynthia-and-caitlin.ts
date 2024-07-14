@@ -1,12 +1,12 @@
+import { ConfirmPrompt } from '../../game';
 import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
+import { GameLog, GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
 import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { CardList } from '../../game/store/state/card-list';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -15,11 +15,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   self: CynthiaAndCaitlin, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
-  
-  cards = player.hand.cards.filter(c => c !== self);
-  if (cards.length < 2) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
 
   const supporterTurn = player.supporterTurn;
   
@@ -27,62 +22,74 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  cards = player.hand.cards.filter(c => c !== self);
 
+  if (!player.discard.cards.some(c => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER) &&
+      cards.length === 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+  
   // Do not discard the card yet
   effect.preventDefault = true;
-  
-  if (!player.discard.cards.some(c => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER)) {
-    player.deck.moveTo(player.hand, 3);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    
-    return state;
-  }
-
-  // prepare card list without Self
-  const handTemp = new CardList();
-  handTemp.cards = player.hand.cards.filter(c => c !== self);
-
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    handTemp,
-    { },
-    { min: 1, max: 1, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
-
-  // Operation canceled by the user
-  if (cards.length === 0) {
-    return state;
-  }
-
-
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
   let recovered: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.discard,
-    { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-    { min: 1, max: 1, allowCancel: false }
-  ), selected => {
-    recovered = selected || [];
-    next();
-  });
 
-  // Operation canceled by the user
-  if (recovered.length === 0) {
+  // first effect, recover supporter
+  if (!player.discard.cards.some(c => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER)) {
+    // not recovering a supporter
+  } else {
+    yield store.prompt(state, new ChooseCardsPrompt(
+      player.id,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.discard,
+      { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+      { min: 1, max: 1, allowCancel: false }
+    ), selected => {
+      recovered = selected || [];
+
+      recovered.forEach(c => {
+        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: c.name });
+      });
+
+      next();
+    });
+  }
+
+  // only recovering supporter
+  if (cards.length === 0) {
+    player.discard.moveCardsTo(recovered, player.hand);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
   }
 
-  player.hand.moveCardsTo(cards, player.discard);
-  player.discard.moveCardsTo(recovered, player.hand);
+  state = store.prompt(state, new ConfirmPrompt(
+    effect.player.id,
+    GameMessage.WANT_TO_DRAW_CARDS,
+  ), wantToUse => {
+    if (wantToUse) {
+      state = store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        player.hand,
+        {},
+        { allowCancel: false, min: 1, max: 1 }
+      ), cards => {
+        cards = cards || [];
 
-  player.deck.moveTo(player.hand, 3);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+        player.hand.moveCardsTo(cards, player.discard);
+
+        cards.forEach((card, index) => {
+          store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
+        });
+
+        player.deck.moveTo(player.hand, 3);
+      });
+    }
+
+    player.discard.moveCardsTo(recovered, player.hand);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  });
+    
   return state;
 }
 

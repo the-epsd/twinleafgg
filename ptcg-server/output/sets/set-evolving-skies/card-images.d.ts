@@ -1,4 +1,5 @@
 import { Copycat } from './copycat';
+import { CrystalCave } from './crystal-cave';
 import { DragoniteV } from './dragonite-v';
 import { Drampa } from './drampa';
 import { DuraludonV } from './duraludon-v';
@@ -38,6 +39,9 @@ import { ZinniasResolve } from './zinnias-resolve';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 export declare class CopycatArt extends Copycat {
+    cardImage: string;
+}
+export declare class CrystalCaveArt extends CrystalCave {
     cardImage: string;
 }
 export declare class DragoniteVArt extends DragoniteV {

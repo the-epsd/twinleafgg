@@ -4,6 +4,7 @@ import { AlolanMukArt, BronzorArt, DragoniteArt, HitmonchanArt, HitmonleeArt, Ji
 
 
 export const setTeamUp: Card[] = [
+  // new AbsolArt(), something weird is going on with checking retreat cost and adding retreat cost; attack works though
   new AlolanMukArt(),
   new BronzorArt(),
   new DragoniteArt(),

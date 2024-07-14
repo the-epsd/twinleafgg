@@ -1,10 +1,9 @@
-import { GameError, GameMessage, State, StateUtils, StoreLike } from '../../game';
+import { GameError, GameLog, GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, UseStadiumEffect } from '../../game/store/effects/game-effects';
+import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class OldCemetery extends TrainerCard {
@@ -30,7 +29,7 @@ export class OldCemetery extends TrainerCard {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
 
-    if (effect instanceof AttachEnergyEffect) {
+    if (effect instanceof AttachEnergyEffect && StateUtils.getStadiumCard(state) === this) {
       
       const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonTypeEffect);
@@ -38,23 +37,12 @@ export class OldCemetery extends TrainerCard {
       if (checkPokemonTypeEffect.cardTypes.includes(CardType.PSYCHIC)) {
         return state;
       }
+
+      const owner = StateUtils.findOwner(state, effect.target);
       
-      const target = effect.target as unknown as AttackEffect;
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
-
-      if (player === targetPlayer) {
-        const damageEffect = new PutDamageEffect(target, 20);
-        damageEffect.player = player;
-        store.reduceEffect(state, damageEffect);
-      }
-
-      if (opponent === targetPlayer) {
-        const damageEffect = new PutDamageEffect(target, 20);
-        damageEffect.player = player;
-        store.reduceEffect(state, damageEffect);
-      }
+      store.log(state, GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, { name: owner.name, damage: 20, target: effect.target.getPokemonCard()!.name, effect: this.name });
+      
+      effect.target.damage += 20;
     }
 
     return state;

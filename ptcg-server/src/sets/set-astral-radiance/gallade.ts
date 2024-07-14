@@ -1,13 +1,21 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, 
-  GameMessage, 
+import {
+  CardTarget,
   ChooseCardsPrompt,
-  ShuffleDeckPrompt,
   GameError,
-  PlayerType} from '../../game';
+  GameMessage,
+  MoveEnergyPrompt,
+  PlayerType,
+  PowerType,
+  ShuffleDeckPrompt,
+  SlotType,
+  State,
+  StateUtils,
+  StoreLike
+} from '../../game';
+import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
@@ -61,6 +69,41 @@ export class Gallade extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
   
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      const blockedFrom: CardTarget[] = [];
+      const blockedTo: CardTarget[] = [];
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (cardList === player.active) {
+          blockedTo.push(target);
+          return;
+        }
+
+        blockedFrom.push(target);
+      });
+
+      return store.prompt(state, new MoveEnergyPrompt(
+        effect.player.id,
+        GameMessage.MOVE_ENERGY_CARDS,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE],
+        { superType: SuperType.ENERGY },
+        { allowCancel: false, blockedFrom, blockedTo }
+      ), transfers => {
+        if (transfers === null) {
+          return;
+        }
+
+        for (const transfer of transfers) {
+          const source = StateUtils.getTarget(state, player, transfer.from);
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          source.moveCardTo(transfer.card, target);
+        }
+      });
+    }
+
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.BUDDY_CATCH_MARKER, this);

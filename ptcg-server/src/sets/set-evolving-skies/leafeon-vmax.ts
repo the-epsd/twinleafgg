@@ -16,7 +16,7 @@ export class LeafeonVMAX extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public tags = [CardTag.POKEMON_VMAX];
 
@@ -52,25 +52,25 @@ export class LeafeonVMAX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       const opponentActiveCard = opponent.active.getPokemonCard();
       if (opponentActiveCard) {
         const retreatCost = opponentActiveCard.retreat.filter(c => c === CardType.COLORLESS).length;
-    
+
         effect.damage = retreatCost * 60;
-    
+
         return state;
       }
+      return state;
+    }
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        const player = effect.player;
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
 
-        const healTargetEffect = new HealTargetEffect(effect, 30);
-        healTargetEffect.target = player.active;
-        state = store.reduceEffect(state, healTargetEffect);
-    
-        return state;
-      }
+      const healTargetEffect = new HealTargetEffect(effect, 30);
+      healTargetEffect.target = player.active;
+      state = store.reduceEffect(state, healTargetEffect);
+
       return state;
     }
     return state;

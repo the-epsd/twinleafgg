@@ -1,11 +1,11 @@
-import { HealEffect } from '../../game/store/effects/game-effects';
-import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardType, TrainerType } from '../../game/store/card/card-types';
-import { UseStadiumEffect } from '../../game/store/effects/game-effects';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { GameError, GameMessage, PokemonCardList, StateUtils } from '../..';
 import { PlayerType } from '../../game/store/actions/play-card-action';
-import { PokemonCard } from '../..';
+import { CardType, TrainerType } from '../../game/store/card/card-types';
+import { TrainerCard } from '../../game/store/card/trainer-card';
+import { Effect } from '../../game/store/effects/effect';
+import { HealEffect, UseStadiumEffect } from '../../game/store/effects/game-effects';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class CrystalCave extends TrainerCard {
 
@@ -25,19 +25,28 @@ export class CrystalCave extends TrainerCard {
     
   public  text = 'Once during each player\'s turn, that player may heal 30 damage from each of their [M] Pokémon and [N] Pokémon.';
         
-  useStadium(store: StoreLike, state: State, effect: UseStadiumEffect): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
+      const player = effect.player;
 
-    const player = effect.player;
+      const targets: PokemonCardList[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if ([CardType.WATER, CardType.LIGHTNING].includes(card.cardType) && cardList.damage > 0) {
+          targets.push(cardList);
+        }
+      });
 
-    // Heal each Pokemon by 10 damage
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-      const pokemonCard = cardList as unknown as PokemonCard;
-      if (pokemonCard.cardType === CardType.METAL || CardType.DRAGON) {
-        const healEffect = new HealEffect(player, cardList, 10);
-        state = store.reduceEffect(state, healEffect);
+      if (targets.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
-      return state;
-    });
+
+      targets.forEach(target => {
+        // Heal Pokemon
+        const healEffect = new HealEffect(player, target, 30);
+        store.reduceEffect(state, healEffect);
+      });
+    }
+
     return state;
   }
 }

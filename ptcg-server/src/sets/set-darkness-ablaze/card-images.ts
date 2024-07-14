@@ -1,5 +1,6 @@
 import { BirdKeeper } from './bird-keeper';
 import { CapeOfToughness } from './cape-of-toughness';
+import { Combusken } from './DAA_23_Combusken';
 import { HidingDarknessEnergy } from './hiding-darkness-energy';
 import { Kangaskhan } from './kangaskhan';
 import { Lugia } from './lugia';
@@ -15,6 +16,10 @@ export class BirdKeeperArt extends BirdKeeper {
 
 export class CapeOfToughnessArt extends CapeOfToughness {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_160_R_EN_LG.png';
+}
+
+export class CombuskenArt extends Combusken {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_023_R_EN_LG.png'
 }
 
 export class HidingDarknessEnergyArt extends HidingDarknessEnergy {

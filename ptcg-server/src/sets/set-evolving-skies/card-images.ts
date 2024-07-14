@@ -1,4 +1,5 @@
 import { Copycat } from './copycat';
+import { CrystalCave } from './crystal-cave';
 import { DragoniteV } from './dragonite-v';
 import { Drampa } from './drampa';
 import { DuraludonV } from './duraludon-v';
@@ -40,6 +41,10 @@ import { Zorua } from './zorua';
 
 export class CopycatArt extends Copycat {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_143_R_EN_LG.png';
+}
+
+export class CrystalCaveArt extends CrystalCave {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_144_R_EN_LG.png';
 }
 
 export class DragoniteVArt extends DragoniteV {

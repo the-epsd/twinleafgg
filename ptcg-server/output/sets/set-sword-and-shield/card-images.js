@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.RosaArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.OranguruArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinccinoArt = exports.CentiskorchArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
+exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.RosaArt = exports.RabootArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.OranguruArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinderaceArt = exports.CinccinoArt = exports.CentiskorchArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
 const air_balloon_1 = require("./air-balloon");
 const aurora_energy_1 = require("./aurora-energy");
 const cinccino_1 = require("./cinccino");
@@ -20,6 +20,8 @@ const sizzlipede_1 = require("./sizzlipede");
 const snom_1 = require("./snom");
 const sobble_1 = require("./sobble");
 const SSH_124_Toxicroak_1 = require("./SSH_124_Toxicroak");
+const SSH_32_Raboot_1 = require("./SSH_32_Raboot");
+const SSH_34_Cinderace_1 = require("./SSH_34_Cinderace");
 const SSH_39_Centiskorch_1 = require("./SSH_39_Centiskorch");
 const welder_1 = require("./welder");
 class AirBalloonArt extends air_balloon_1.AirBalloon {
@@ -50,6 +52,13 @@ class CinccinoArt extends cinccino_1.Cinccino {
     }
 }
 exports.CinccinoArt = CinccinoArt;
+class CinderaceArt extends SSH_34_Cinderace_1.Cinderace {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_034_R_EN_LG.png';
+    }
+}
+exports.CinderaceArt = CinderaceArt;
 class CopperajahArt extends copperajah_1.Copperajah {
     constructor() {
         super(...arguments);
@@ -127,6 +136,13 @@ class QuickBallArt extends quick_ball_1.QuickBall {
     }
 }
 exports.QuickBallArt = QuickBallArt;
+class RabootArt extends SSH_32_Raboot_1.Raboot {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_032_R_EN_LG.png';
+    }
+}
+exports.RabootArt = RabootArt;
 class RosaArt extends rosa_1.Rosa {
     constructor() {
         super(...arguments);

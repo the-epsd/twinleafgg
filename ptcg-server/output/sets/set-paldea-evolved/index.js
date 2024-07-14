@@ -42,6 +42,7 @@ exports.setPaldeaEvolved = [
     new card_images_5.ChienPaoexArt(),
     new card_images_6.ChoiceBeltArt(),
     new card_images_1.CufantArt(),
+    new card_images_1.DeinoArt(),
     new card_images_7.DeliveryDroneArt(),
     new card_images_8.DudunsparceArt(),
     new card_images_9.FightingAuLaitArt(),
@@ -51,6 +52,7 @@ exports.setPaldeaEvolved = [
     new card_images_1.GiacomoArt(),
     new card_images_13.GreatBallArt(),
     new card_images_1.GrushaArt(),
+    new card_images_1.HydreigonArt(),
     new card_images_14.IonoArt(),
     new card_images_15.JetEnergyArt(),
     new card_images_16.LuminousEnergyArt(),
@@ -76,5 +78,6 @@ exports.setPaldeaEvolved = [
     new card_images_1.TinkatonArt(),
     new card_images_24.WattrelArt(),
     new card_images_1.WingullArt(),
-    new card_images_26.WoChienexArt()
+    new card_images_26.WoChienexArt(),
+    new card_images_1.ZweilousArt()
 ];

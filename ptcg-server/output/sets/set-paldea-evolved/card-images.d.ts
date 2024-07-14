@@ -26,6 +26,9 @@ import { Murkrow } from './murkrow';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
 import { Orthworm } from './orthworm';
+import { Deino } from './PAL_138_Deino';
+import { Zweilous } from './PAL_139_Zweilous';
+import { Hydreigon } from './PAL_140_Hydreigon';
 import { Pelipper } from './PAL_159_Pelipper';
 import { Magnemite } from './PAL_65_Magnemite';
 import { ReversalEnergy } from './reversal-energy';
@@ -73,6 +76,9 @@ export declare class ChoiceBeltArt extends ChoiceBelt {
 export declare class CufantArt extends Cufant {
     cardImage: string;
 }
+export declare class DeinoArt extends Deino {
+    cardImage: string;
+}
 export declare class DeliveryDroneArt extends DeliveryDrone {
     cardImage: string;
 }
@@ -98,6 +104,9 @@ export declare class GreatBallArt extends GreatBall {
     cardImage: string;
 }
 export declare class GrushaArt extends Grusha {
+    cardImage: string;
+}
+export declare class HydreigonArt extends Hydreigon {
     cardImage: string;
 }
 export declare class IonoArt extends Iono {
@@ -176,5 +185,8 @@ export declare class TinkatonArt extends Tinkaton {
     cardImage: string;
 }
 export declare class WingullArt extends Wingull {
+    cardImage: string;
+}
+export declare class ZweilousArt extends Zweilous {
     cardImage: string;
 }

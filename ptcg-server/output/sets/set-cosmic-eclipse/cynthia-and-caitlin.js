@@ -1,56 +1,62 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CynthiaAndCaitlin = void 0;
+const game_1 = require("../../game");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
-const card_list_1 = require("../../game/store/state/card-list");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     let cards = [];
-    cards = player.hand.cards.filter(c => c !== self);
-    if (cards.length < 2) {
-        throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-    }
     const supporterTurn = player.supporterTurn;
     if (supporterTurn > 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
     }
-    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    cards = player.hand.cards.filter(c => c !== self);
+    if (!player.discard.cards.some(c => c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.SUPPORTER) &&
+        cards.length === 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
     // Do not discard the card yet
     effect.preventDefault = true;
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    let recovered = [];
+    // first effect, recover supporter
     if (!player.discard.cards.some(c => c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.SUPPORTER)) {
-        player.deck.moveTo(player.hand, 3);
+        // not recovering a supporter
+    }
+    else {
+        yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 1, max: 1, allowCancel: false }), selected => {
+            recovered = selected || [];
+            recovered.forEach(c => {
+                store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: c.name });
+            });
+            next();
+        });
+    }
+    // only recovering supporter
+    if (cards.length === 0) {
+        player.discard.moveCardsTo(recovered, player.hand);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
     }
-    // prepare card list without Self
-    const handTemp = new card_list_1.CardList();
-    handTemp.cards = player.hand.cards.filter(c => c !== self);
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 1, max: 1, allowCancel: false }), selected => {
-        cards = selected || [];
-        next();
+    state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_message_1.GameMessage.WANT_TO_DRAW_CARDS), wantToUse => {
+        if (wantToUse) {
+            state = store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: false, min: 1, max: 1 }), cards => {
+                cards = cards || [];
+                player.hand.moveCardsTo(cards, player.discard);
+                cards.forEach((card, index) => {
+                    store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
+                });
+                player.deck.moveTo(player.hand, 3);
+            });
+        }
+        player.discard.moveCardsTo(recovered, player.hand);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
-    // Operation canceled by the user
-    if (cards.length === 0) {
-        return state;
-    }
-    let recovered = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 1, max: 1, allowCancel: false }), selected => {
-        recovered = selected || [];
-        next();
-    });
-    // Operation canceled by the user
-    if (recovered.length === 0) {
-        return state;
-    }
-    player.hand.moveCardsTo(cards, player.discard);
-    player.discard.moveCardsTo(recovered, player.hand);
-    player.deck.moveTo(player.hand, 3);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class CynthiaAndCaitlin extends trainer_card_1.TrainerCard {
