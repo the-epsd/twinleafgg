@@ -97,6 +97,23 @@ class Stoutland extends pokemon_card_1.PokemonCard {
                 opponent.active.moveCardsTo(cards, opponent.discard);
             });
         }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+            if (!hasBenched) {
+                return state;
+            }
+            state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
+                if (!targets || targets.length === 0) {
+                    return;
+                }
+                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 30);
+                damageEffect.target = targets[0];
+                store.reduceEffect(state, damageEffect);
+            });
+            return state;
+        }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player === game_1.StateUtils.getOpponent(state, effect.player)) {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);

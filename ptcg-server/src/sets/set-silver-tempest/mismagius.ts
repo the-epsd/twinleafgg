@@ -63,11 +63,8 @@ export class Mismagius extends PokemonCard {
       effect.target.cards.includes(this)) {
       const player = StateUtils.getOpponent(state, effect.player);
 
-      console.log('Entered check for DealDamageEffect/PutDamageEffect');
-
       if (player.active.getPokemonCard() === this) {
         this.damageDealt = true;
-        console.log('this.damageDealt inside the DealDamageEffect/PutDamageEffect check: ' + this.damageDealt);
       }
     }
 

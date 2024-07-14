@@ -46,10 +46,8 @@ class Mismagius extends pokemon_card_1.PokemonCard {
         if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) &&
             effect.target.cards.includes(this)) {
             const player = game_1.StateUtils.getOpponent(state, effect.player);
-            console.log('Entered check for DealDamageEffect/PutDamageEffect');
             if (player.active.getPokemonCard() === this) {
                 this.damageDealt = true;
-                console.log('this.damageDealt inside the DealDamageEffect/PutDamageEffect check: ' + this.damageDealt);
             }
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player === game_1.StateUtils.getOpponent(state, effect.player)) {
