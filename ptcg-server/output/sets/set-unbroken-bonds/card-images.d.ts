@@ -12,6 +12,7 @@ import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
+import { Lickitung } from './UNB_152_Lickitung';
 import { Salazzle } from './UNB_31_Salazzle';
 import { Poliwag } from './UNB_37_Poliwag';
 import { Zeraora } from './UNB_60_Zeraora';
@@ -32,6 +33,9 @@ export declare class GreensExplorationArt extends GreensExploration {
     cardImage: string;
 }
 export declare class HitmontopArt extends Hitmontop {
+    cardImage: string;
+}
+export declare class LickitungArt extends Lickitung {
     cardImage: string;
 }
 export declare class LtSurgesStrategyArt extends LtSurgesStrategy {

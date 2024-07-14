@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArticunoArt, BeautiflyArt, DoubleDragonEnergyArt, ShayminExArt, ShuppetArt, SilcoonArt, SkyFieldArt, TrainersMailArt, VoltorbArt, WallyArt, WinonaArt, WurmpleArt } from './card-images';
+import { ArticunoArt, BeautiflyArt, DoubleDragonEnergyArt, ShayminExArt, ShuppetArt, SilcoonArt, SkyFieldArt, SwellowArt, TrainersMailArt, VoltorbArt, WallyArt, WinonaArt, WurmpleArt } from './card-images';
 
 export const setRoaringSkies: Card[] = [
   new ArticunoArt(),
@@ -9,6 +9,7 @@ export const setRoaringSkies: Card[] = [
   new ShuppetArt(),
   new SilcoonArt(),
   new SkyFieldArt(),
+  new SwellowArt(),
   new TrainersMailArt(),
   new VoltorbArt(),
   new WallyArt(),

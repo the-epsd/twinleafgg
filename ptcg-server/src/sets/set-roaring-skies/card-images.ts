@@ -2,6 +2,7 @@ import { Articuno } from './articuno';
 import { Beautifly } from './beautifly';
 import { DoubleDragonEnergy } from './double-dragon-energy';
 import { Voltorb } from './ROS_21_Voltorb';
+import { Swellow } from './ROS_72_Swellow';
 import { ShayminEx } from './shaymin-ex';
 import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
@@ -37,6 +38,10 @@ export class SilcoonArt extends Silcoon {
 
 export class SkyFieldArt extends SkyField {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_089_R_EN.png';
+}
+
+export class SwellowArt extends Swellow {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_072_R_EN_LG.png';
 }
 
 export class TrainersMailArt extends TrainersMail {

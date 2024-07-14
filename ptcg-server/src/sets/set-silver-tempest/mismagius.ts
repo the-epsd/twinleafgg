@@ -22,7 +22,7 @@ export class Mismagius extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Spiteful Magic',
@@ -33,7 +33,7 @@ export class Mismagius extends PokemonCard {
 
   public attacks = [{
     name: 'Eerie Voice',
-    cost: [ CardType.PSYCHIC ],
+    cost: [CardType.PSYCHIC],
     damage: 0,
     text: 'Put 2 damage counters on each of your opponent\'s Pokémon.'
   }
@@ -48,28 +48,30 @@ export class Mismagius extends PokemonCard {
   public name: string = 'Mismagius';
 
   public fullName: string = 'Mismagius SIT';
-  
+
   public damageDealt = false;
-  
+
   public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.RETALIATE_MARKER);
     }
-    
-    if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
-      const player = StateUtils.getOpponent(state, effect.player);
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
 
-      if (player !== owner) {
+    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+      effect.target.cards.includes(this)) {
+      const player = StateUtils.getOpponent(state, effect.player);
+
+      console.log('Entered check for DealDamageEffect/PutDamageEffect');
+
+      if (player.active.getPokemonCard() === this) {
         this.damageDealt = true;
+        console.log('this.damageDealt inside the DealDamageEffect/PutDamageEffect check: ' + this.damageDealt);
       }
     }
-    
-     if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
+
+    if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
 
@@ -77,7 +79,7 @@ export class Mismagius extends PokemonCard {
         this.damageDealt = false;
       }
     }
-    
+
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && this.damageDealt) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -90,7 +92,7 @@ export class Mismagius extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         const damageEffect = new PutCountersEffect(effect, 20);
         damageEffect.target = cardList;

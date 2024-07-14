@@ -7,7 +7,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Hydreigon extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
   public cardType: CardType = CardType.DARK;
   public hp: number = 180;
   public weakness = [{ type: CardType.GRASS }];

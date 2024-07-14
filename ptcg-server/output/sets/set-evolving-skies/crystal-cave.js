@@ -23,7 +23,7 @@ class CrystalCave extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const targets = [];
             player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                if ([card_types_1.CardType.WATER, card_types_1.CardType.LIGHTNING].includes(card.cardType) && cardList.damage > 0) {
+                if ([card_types_1.CardType.METAL, card_types_1.CardType.DRAGON].includes(card.cardType) && cardList.damage > 0) {
                     targets.push(cardList);
                 }
             });

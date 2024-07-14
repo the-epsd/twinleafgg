@@ -7,6 +7,7 @@ import { ResetStamp } from './reset-stamp';
 import { Riolu } from './riolu';
 import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
+import { Lickilicky } from './UNM_162_Lickilicky';
 import { Numel } from './UNM_23_Numel';
 import { Froslass } from './UNM_38_Froslass';
 import { AlolanRaichu } from './UNM_57_Alolan_Raichu';
@@ -22,6 +23,10 @@ export class FroslassArt extends Froslass {
 
 export class KarateBeltArt extends KarateBelt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_201_R_EN_LG.png';
+}
+
+export class LickilickyArt extends Lickilicky {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_162_R_EN_LG.png';
 }
 
 export class NecrozmaArt extends Necrozma {

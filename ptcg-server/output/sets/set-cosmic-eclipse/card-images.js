@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WishiwashiArt = exports.TagCallArt = exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BlacephalonArt = void 0;
+exports.WishiwashiArt = exports.TagCallArt = exports.StoutlandArt = exports.SlugmaArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BlacephalonArt = void 0;
 const blacephalon_1 = require("./blacephalon");
+const CEC_176_Stoutland_1 = require("./CEC_176_Stoutland");
 const CEC_57_Phione_1 = require("./CEC_57_Phione");
 const CEC_62_Wishiwashi_1 = require("./CEC_62_Wishiwashi");
 const CEC_66_Pikachu_1 = require("./CEC_66_Pikachu");
@@ -139,6 +140,13 @@ class SlugmaArt extends slugma_1.Slugma {
     }
 }
 exports.SlugmaArt = SlugmaArt;
+class StoutlandArt extends CEC_176_Stoutland_1.Stoutland {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_176_R_EN_LG.png';
+    }
+}
+exports.StoutlandArt = StoutlandArt;
 class TagCallArt extends tag_call_1.TagCall {
     constructor() {
         super(...arguments);

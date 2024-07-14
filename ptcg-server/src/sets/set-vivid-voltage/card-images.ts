@@ -9,6 +9,7 @@ import { Raikou } from './raikou';
 import { Snorlax } from './snorlax';
 import { StoneFightingEnergy } from './stone-fighting-energy';
 import { Magearna } from './VIV_128_Magearna';
+import { Taillow } from './VIV_133_Taillow';
 import { Zekrom } from './VIV_60_Zekrom';
 import { WashWaterEnergy } from './wash-water-energy';
 
@@ -54,6 +55,10 @@ export class SnorlaxArt extends Snorlax {
 
 export class StoneFightingEnergyArt extends StoneFightingEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_164_R_EN.png';
+}
+
+export class TaillowArt extends Taillow {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_133_R_EN_LG.png';
 }
 
 export class WashWaterEnergyArt extends WashWaterEnergy {
