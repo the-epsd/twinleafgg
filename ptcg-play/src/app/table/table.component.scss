@@ -4,6 +4,7 @@
   width: 100%;
   overflow: hidden;
   background-color: #091624;
+  zoom: 85%;
 
   #myVideo {
     position: fixed;
@@ -45,6 +46,7 @@ ptcg-hand {
   transform: rotate(180deg);
   z-index: 1;
   margin: 0 auto;
+  margin-top: -2%;
   /* Add this line to center horizontally */
   display: flex;
   /* Add this line to enable centering */

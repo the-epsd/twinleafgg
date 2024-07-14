@@ -44,6 +44,9 @@ export declare class ProfessorBurnettArt extends ProfessorBurnet {
 }
 export declare class EscapeRopeArt extends EscapeRope {
     cardImage: string;
+    set: string;
+    setNumber: string;
+    fullName: string;
 }
 export declare class TepigArt extends Tepig {
     cardImage: string;

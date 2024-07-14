@@ -1,10 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, TrainerType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PokemonCardList, GameError,
-  GameMessage, ChooseCardsPrompt, TrainerCard} from '../../game';
+import {
+  StoreLike, State, StateUtils, PokemonCardList, GameError,
+  GameMessage, ChooseCardsPrompt, TrainerCard
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 export class MrMime extends PokemonCard {
 
@@ -18,19 +21,19 @@ export class MrMime extends PokemonCard {
 
   public resistance = [{ type: CardType.DARK, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
-  public attacks = 
+  public attacks =
     [
       {
         name: 'Mime Show',
-        cost: [ CardType.COLORLESS ],
+        cost: [CardType.COLORLESS],
         damage: 0,
         text: 'Your opponent reveals their hand. You may use the effect of a Supporter card you find there as the effect of this attack.'
       },
       {
         name: 'Tail Rap',
-        cost: [ CardType.PSYCHIC ],
+        cost: [CardType.PSYCHIC],
         damage: 20,
         text: 'Your opponent\'s Active Pokémon is now Confused.'
       }
@@ -67,7 +70,7 @@ export class MrMime extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_COPY_EFFECT,
         opponent.hand,
         { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-        { allowCancel: false , min: 0, max: 1}
+        { allowCancel: false, min: 0, max: 1 }
       ), cards => {
         if (cards === null || cards.length === 0) {
           return;
@@ -79,11 +82,9 @@ export class MrMime extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.specialConditions.push(SpecialCondition.CONFUSED);
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
+      store.reduceEffect(state, specialConditionEffect);
     }
-
     return state;
   }
 }

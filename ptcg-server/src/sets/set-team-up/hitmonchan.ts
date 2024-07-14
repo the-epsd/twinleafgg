@@ -55,6 +55,7 @@ export class Hitmonchan extends PokemonCard {
       const hasBenched = player.bench.some(b => b.cards.length > 0);
 
       if (!hasBenched) {
+        this.hitAndRun = false;
         return state;
       }
 
@@ -62,6 +63,10 @@ export class Hitmonchan extends PokemonCard {
         effect.player.id,
         GameMessage.WANT_TO_SWITCH_POKEMON,
       ), wantToUse => {
+        if (!wantToUse) {
+          this.hitAndRun = false;
+          return state;
+        }
         if (wantToUse) {
 
           return state = store.prompt(state, new ChoosePokemonPrompt(
@@ -72,11 +77,12 @@ export class Hitmonchan extends PokemonCard {
             { allowCancel: false },
           ), selected => {
             if (!selected || selected.length === 0) {
+              this.hitAndRun = false;
               return state;
             }
+            this.hitAndRun = false;
             const target = selected[0];
             player.switchPokemon(target);
-            this.hitAndRun = false;
           });
         }
         return state;

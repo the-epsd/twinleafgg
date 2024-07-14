@@ -51,12 +51,20 @@ class Nihilego extends pokemon_card_1.PokemonCard {
         this.tag = [card_types_1.CardTag.ULTRA_BEAST];
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [card_types_1.CardType.COLORLESS];
-        this.attacks = [{
+        this.attacks = [
+            {
                 name: 'Nightcap',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 0,
                 text: 'You can use this attack only if your opponent has exactly 2 Prize cards remaining. Choose 1 of your opponent\'s Pokemon\'s attacks and use it as this attack.'
-            }];
+            },
+            {
+                name: 'Void Tentacles',
+                cost: [card_types_1.CardType.PSYCHIC],
+                damage: 0,
+                text: 'Your opponent\'s Active Pokémon is now Confused and Poisoned.'
+            },
+        ];
         this.set = 'LOT';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '106';
@@ -74,6 +82,10 @@ class Nihilego extends pokemon_card_1.PokemonCard {
                 const generator = useNightcap(() => generator.next(), store, state, effect);
                 return generator.next().value;
             }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.CONFUSED, card_types_1.SpecialCondition.POISONED]);
+            store.reduceEffect(state, specialConditionEffect);
         }
         return state;
     }
