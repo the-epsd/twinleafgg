@@ -43,17 +43,23 @@ class Hitmonchan extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const hasBenched = player.bench.some(b => b.cards.length > 0);
             if (!hasBenched) {
+                this.hitAndRun = false;
                 return state;
             }
             state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_SWITCH_POKEMON), wantToUse => {
+                if (!wantToUse) {
+                    this.hitAndRun = false;
+                    return state;
+                }
                 if (wantToUse) {
                     return state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_NEW_ACTIVE_POKEMON, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), selected => {
                         if (!selected || selected.length === 0) {
+                            this.hitAndRun = false;
                             return state;
                         }
+                        this.hitAndRun = false;
                         const target = selected[0];
                         player.switchPokemon(target);
-                        this.hitAndRun = false;
                     });
                 }
                 return state;

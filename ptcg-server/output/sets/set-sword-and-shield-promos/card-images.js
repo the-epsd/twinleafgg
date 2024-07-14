@@ -92,6 +92,9 @@ class EscapeRopeArt extends escape_rope_1.EscapeRope {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://www.serebii.net/card/ggend/51.jpg';
+        this.set = 'SM10a';
+        this.setNumber = '51';
+        this.fullName = 'Escape Rope SM10a';
     }
 }
 exports.EscapeRopeArt = EscapeRopeArt;

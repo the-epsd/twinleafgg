@@ -59,6 +59,9 @@ export class ProfessorBurnettArt extends ProfessorBurnet {
 
 export class EscapeRopeArt extends EscapeRope {
   public cardImage = 'https://www.serebii.net/card/ggend/51.jpg';
+  public set = 'SM10a';
+  public setNumber = '51';
+  public fullName = 'Escape Rope SM10a';
 }
 
 export class TepigArt extends Tepig {

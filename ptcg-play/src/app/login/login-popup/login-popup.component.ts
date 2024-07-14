@@ -49,17 +49,17 @@ export class LoginPopupComponent implements OnDestroy {
       .subscribe({
         next: response => {
           const removedUsernames = [''];
-          const bannedUsernames = ['Joacotaco24', 'leofanax', 'RedditKarmaGold'];
+          const bannedUsernames = ['Joacotaco24', 'leofanax', 'RedditKarmaGold', '10types'];
           if (bannedUsernames.includes(this.name)) {
-            this.alertService.toast(this.translate.instant('User has been banned'));
+            this.alertService.toast(this.translate.instant('User has been removed from the Beta Program for breach of Terms of Service'));
             this.dialogRef.close();
             this.loginRememberService.rememberToken();
             this.loginService.logout(); // Disconnect the user
             this.router.navigate(['/login']); // Navigate to the login page
-          } 
-          
+          }
+
           if (removedUsernames.includes(this.name)) {
-            this.alertService.toast(this.translate.instant('This account has been removed from the Closed Beta'));
+            this.alertService.toast(this.translate.instant('User has been removed from the Beta Program for breach of Terms of Service'));
             this.dialogRef.close();
             this.loginRememberService.rememberToken();
             this.loginService.logout(); // Disconnect the user
@@ -84,7 +84,7 @@ export class LoginPopupComponent implements OnDestroy {
         }
       });
   }
-  
+
 
 
   changeServer(): Promise<void> {
