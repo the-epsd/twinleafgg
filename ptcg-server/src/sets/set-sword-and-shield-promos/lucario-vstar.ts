@@ -10,9 +10,9 @@ import { PlayerType, EnergyCard, GameError, GameMessage } from '../../game';
 
 export class LucarioVSTAR extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VSTAR;
 
-  public tags = [ CardTag.POKEMON_VSTAR ];
+  public tags = [CardTag.POKEMON_VSTAR];
 
   public evolvesFrom = 'Lucario V';
 
@@ -24,18 +24,18 @@ export class LucarioVSTAR extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Fighting Knuckle',
-      cost: [ CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 50,
       text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 120 more damage.'
     },
     {
       name: 'Aura Star',
-      cost: [ CardType.FIGHTING, CardType.COLORLESS ],
+      cost: [CardType.FIGHTING, CardType.COLORLESS],
       damage: 70,
       text: 'This attack does 70 damage for each Energy attached to all of your opponent\'s Pokémon. (You can\'t use more than 1 VSTAR Power in a game.)'
     }
@@ -56,7 +56,7 @@ export class LucarioVSTAR extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       const defending = opponent.active.getPokemonCard();
       if (!defending || defending.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX)) {
         effect.damage += 120;
@@ -70,7 +70,7 @@ export class LucarioVSTAR extends PokemonCard {
         if (player.usedVSTAR === true) {
           throw new GameError(GameMessage.LABEL_VSTAR_USED);
         }
-    
+
         let totalEnergy = 0;
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
           totalEnergy += cardList.cards.filter(c => c instanceof EnergyCard).length;

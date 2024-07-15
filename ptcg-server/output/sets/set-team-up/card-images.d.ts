@@ -9,6 +9,8 @@ import { Mareep } from './mareep';
 import { MetalGoggles } from './metal-goggles';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
+import { Pawniard } from './TEU_104_Pawniard';
+import { Persian } from './TEU_126_Persian';
 import { Moltres } from './TEU_19_Moltres';
 import { Absol } from './TEU_88_Absol';
 import { ViridianForest } from './viridian-forest';
@@ -45,6 +47,12 @@ export declare class MetalGogglesArt extends MetalGoggles {
     cardImage: string;
 }
 export declare class MoltresArt extends Moltres {
+    cardImage: string;
+}
+export declare class PawniardArt extends Pawniard {
+    cardImage: string;
+}
+export declare class PersianArt extends Persian {
     cardImage: string;
 }
 export declare class PidgeottoArt extends Pidgeotto {

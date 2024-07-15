@@ -1,5 +1,6 @@
 import { RockyHelmet } from '../set-scarlet-and-violet/rocky-helmet';
 import { AspertiaCityGym } from './aspertia-city-gym';
+import { Stoutland } from './BCR_122_Stoutland';
 import { Blastoise } from './blastoise';
 import { ComputerSearch } from './computer-search';
 import { Dusclops } from './dusclops';
@@ -55,6 +56,9 @@ export declare class SkylaArt extends Skyla {
     cardImage: string;
 }
 export declare class SquirtleArt extends Squirtle {
+    cardImage: string;
+}
+export declare class StoutlandArt extends Stoutland {
     cardImage: string;
 }
 export declare class WartortleArt extends Wartortle {

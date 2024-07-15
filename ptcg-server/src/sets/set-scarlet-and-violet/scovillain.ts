@@ -10,7 +10,7 @@ import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effe
 
 export class Scovillain extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public regulationMark = 'G';
 
@@ -20,18 +20,18 @@ export class Scovillain extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Hot Bite 20',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 20,
       text: 'Your opponent\'s Active Pokémon is now Burned.'
     },
     {
       name: 'Super Spicy Breath',
-      cost: [ CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 90,
       text: 'If this Pokémon has any [R] Energy attached, this attack does 90 more damage.'
     }

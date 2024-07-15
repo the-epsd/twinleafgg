@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AlolanGrimerArt, AlolanRaichuArt, FroslassArt, KarateBeltArt, LickilickyArt, NecrozmaArt, NumelArt, PurrloinArt, RecycleEnergyArt, ResetStampArt, RioluArt, StadiumNavArt, UTurnBoardArt, WeaknessGuardEnergyArt } from './card-images';
+import { AlolanGrimerArt, AlolanRaichuArt, FroslassArt, KarateBeltArt, LickilickyArt, MunchlaxArt, NecrozmaArt, NumelArt, PurrloinArt, RecycleEnergyArt, ResetStampArt, RioluArt, StadiumNavArt, UTurnBoardArt, WeaknessGuardEnergyArt } from './card-images';
 
 
 export const setUnifiedMinds: Card[] = [
@@ -8,6 +8,7 @@ export const setUnifiedMinds: Card[] = [
   new FroslassArt(),
   new KarateBeltArt(),
   new LickilickyArt(),
+  new MunchlaxArt(),
   new NecrozmaArt(),
   new NumelArt(),
   new PurrloinArt(),

@@ -8,6 +8,7 @@ import { Dragapult } from './dragapult';
 import { Duraludon } from './duraludon';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
+import { GalarianMeowth } from './RCL_126_Galarian_Meowth';
 import { Vulpix } from './RCL_24_Vulpix';
 import { Arrokuda } from './RCL_52_Arrokuda';
 import { Barraskewda } from './RCL_53_Barraskewda';
@@ -54,6 +55,10 @@ export class DragapultArt extends Dragapult {
 
 export class DuraludonArt extends Duraludon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_138_R_EN.png';
+}
+
+export class GalarianMeowthArt extends GalarianMeowth {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_126_R_EN_LG.png';
 }
 
 export class HorrorPsychicEnergyArt extends HorrorPsychicEnergy {

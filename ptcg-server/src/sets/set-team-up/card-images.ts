@@ -9,6 +9,8 @@ import { Mareep } from './mareep';
 import { MetalGoggles } from './metal-goggles';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
+import { Pawniard } from './TEU_104_Pawniard';
+import { Persian } from './TEU_126_Persian';
 import { Moltres } from './TEU_19_Moltres';
 import { Absol } from './TEU_88_Absol';
 import { ViridianForest } from './viridian-forest';
@@ -57,6 +59,14 @@ export class MetalGogglesArt extends MetalGoggles {
 
 export class MoltresArt extends Moltres {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_019_R_EN_LG.png';
+}
+
+export class PawniardArt extends Pawniard {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_104_R_EN_LG.png';
+}
+
+export class PersianArt extends Persian {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_126_R_EN_LG.png';
 }
 
 export class PidgeottoArt extends Pidgeotto {

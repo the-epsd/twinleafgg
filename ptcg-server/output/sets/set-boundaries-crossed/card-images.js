@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WartortleArt = exports.SquirtleArt = exports.SkylaArt = exports.RockyHelmetArt = exports.PotionArt = exports.PigniteArt = exports.MunnaArt = exports.LandorusExArt = exports.KeldeoExArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.ComputerSearchArt = exports.BlastoiseArt = exports.AspertiaCityGymArt = void 0;
+exports.WartortleArt = exports.StoutlandArt = exports.SquirtleArt = exports.SkylaArt = exports.RockyHelmetArt = exports.PotionArt = exports.PigniteArt = exports.MunnaArt = exports.LandorusExArt = exports.KeldeoExArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.ComputerSearchArt = exports.BlastoiseArt = exports.AspertiaCityGymArt = void 0;
 const rocky_helmet_1 = require("../set-scarlet-and-violet/rocky-helmet");
 const aspertia_city_gym_1 = require("./aspertia-city-gym");
+const BCR_122_Stoutland_1 = require("./BCR_122_Stoutland");
 const blastoise_1 = require("./blastoise");
 const computer_search_1 = require("./computer-search");
 const dusclops_1 = require("./dusclops");
@@ -116,6 +117,13 @@ class SquirtleArt extends squirtle_1.Squirtle {
     }
 }
 exports.SquirtleArt = SquirtleArt;
+class StoutlandArt extends BCR_122_Stoutland_1.Stoutland {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BCR/BCR_122_R_EN_LG.png';
+    }
+}
+exports.StoutlandArt = StoutlandArt;
 class WartortleArt extends wartortle_1.Wartortle {
     constructor() {
         super(...arguments);

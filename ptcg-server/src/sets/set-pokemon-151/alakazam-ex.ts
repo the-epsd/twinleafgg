@@ -6,9 +6,9 @@ export class Alakazamex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
 
   public cardType: CardType = CardType.PSYCHIC;
 
@@ -16,18 +16,18 @@ export class Alakazamex extends PokemonCard {
 
   public weakness = [{ type: CardType.DARK }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Mind Jack',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 90,
       text: ''
     },
     {
       name: 'Dimensional Manipulation',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 120,
       text: 'You may use this attack even if this Pokemon is on the Bench.'
     }

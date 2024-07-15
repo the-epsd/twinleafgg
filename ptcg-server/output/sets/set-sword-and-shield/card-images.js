@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.RosaArt = exports.RabootArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.OranguruArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinderaceArt = exports.CinccinoArt = exports.CentiskorchArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
+exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.RosaArt = exports.RabootArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.OranguruArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.GalarianPerrserkerArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinderaceArt = exports.CinccinoArt = exports.CentiskorchArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
 const air_balloon_1 = require("./air-balloon");
 const aurora_energy_1 = require("./aurora-energy");
 const cinccino_1 = require("./cinccino");
@@ -20,6 +20,7 @@ const sizzlipede_1 = require("./sizzlipede");
 const snom_1 = require("./snom");
 const sobble_1 = require("./sobble");
 const SSH_124_Toxicroak_1 = require("./SSH_124_Toxicroak");
+const SSH_128_Galarian_Perrserker_1 = require("./SSH_128_Galarian_Perrserker");
 const SSH_32_Raboot_1 = require("./SSH_32_Raboot");
 const SSH_34_Cinderace_1 = require("./SSH_34_Cinderace");
 const SSH_39_Centiskorch_1 = require("./SSH_39_Centiskorch");
@@ -80,6 +81,13 @@ class EvolutionIncenseArt extends evolution_incense_1.EvolutionIncense {
     }
 }
 exports.EvolutionIncenseArt = EvolutionIncenseArt;
+class GalarianPerrserkerArt extends SSH_128_Galarian_Perrserker_1.GalarianPerrserker {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_128_R_EN_LG.png';
+    }
+}
+exports.GalarianPerrserkerArt = GalarianPerrserkerArt;
 class GalarianZigzagoonArt extends galarian_zigzagoon_1.GalarianZigzagoon {
     constructor() {
         super(...arguments);

@@ -7,7 +7,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Metagross extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
 
   //   public evolvesFrom = 'Metang';
 
@@ -21,7 +21,7 @@ export class Metagross extends PokemonCard {
 
   public resistance = [{ type: CardType.GRASS, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Emergency Entry',
@@ -32,7 +32,7 @@ export class Metagross extends PokemonCard {
   public attacks = [
     {
       name: 'Meteor Mash',
-      cost: [ CardType.METAL, CardType.COLORLESS ],
+      cost: [CardType.METAL, CardType.COLORLESS],
       damage: 100,
       text: 'During your next turn, this Pokémon\'s Meteor Mash attack does 100 more damage (before applying Weakness and Resistance).'
     }
@@ -52,7 +52,7 @@ export class Metagross extends PokemonCard {
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  
+
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);

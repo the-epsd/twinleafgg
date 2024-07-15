@@ -12,6 +12,7 @@ exports.setUnbrokenBonds = [
     new card_images_1.LickitungArt(),
     new card_images_1.LtSurgesStrategyArt(),
     new card_images_1.MartialArtsDojoArt(),
+    new card_images_1.MeowthArt(),
     new card_images_1.MewArt(),
     new card_images_1.MewtwoArt(),
     new card_images_1.Pokegear30Art(),

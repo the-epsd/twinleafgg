@@ -17,5 +17,6 @@ exports.setBoundariesCrossed = [
     new card_images_1.RockyHelmetArt(),
     new card_images_1.SkylaArt(),
     new card_images_1.SquirtleArt(),
+    new card_images_1.StoutlandArt(),
     new card_images_1.WartortleArt(),
 ];
