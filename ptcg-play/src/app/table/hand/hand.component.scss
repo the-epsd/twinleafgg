@@ -7,8 +7,11 @@ $ptcg-hand-max-margin: map-get($padding, normal);
 .ptcg-hand {
   margin-bottom: -60px;
   display: flex;
-  height: 170px;
+  height: 190px;
   overflow: auto;
+  /* Add this line to center horizontally */
+  justify-content: center;
+  /* Add this line to center horizontally */
 }
 
 .ptcg-hand-container {
@@ -49,7 +52,7 @@ ptcg-badge {
 
 ptcg-card {
   flex: 0 0 auto;
-  width: 92px;
+  width: 98px;
   padding: 3px;
 
   &.draggable {
@@ -61,6 +64,31 @@ ptcg-card {
   &:hover {
     transform: scale(1.15) translateY(-12.5px); // Add translateY(-10px) to slide up 10px
     z-index: 10;
+  }
+}
+
+.ptcg-hand.opponent {
+  position: static;
+  z-index: 1;
+  transform: rotate(180deg);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  height: 170px; // Add this line to set a fixed height
+  overflow: hidden; // Add this to prevent overflow
+  align-items: flex-end; // Add this to align cards to the bottom of the container
+
+  // ptcg-hand.opponent ptcg-card {
+  //   width: 80px;
+  // }
+
+  ptcg-card {
+    width: 76px;
+    margin-bottom: -70px; // Add this to give some space at the bottom
+
+    &:hover {
+      transform: scale(1.075) translateY(-8.5px); // Change to positive value
+    }
   }
 }
 

@@ -10,6 +10,7 @@ exports.setRoaringSkies = [
     new card_images_1.ShuppetArt(),
     new card_images_1.SilcoonArt(),
     new card_images_1.SkyFieldArt(),
+    new card_images_1.SwellowArt(),
     new card_images_1.TrainersMailArt(),
     new card_images_1.VoltorbArt(),
     new card_images_1.WallyArt(),

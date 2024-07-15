@@ -52,7 +52,7 @@ class Haxorus extends pokemon_card_1.PokemonCard {
             });
             if (specialEnergyCount > 0) {
                 if (pokemon) {
-                    const dealDamage = new attack_effects_1.KnockOutOpponentEffect(effect, 999);
+                    const dealDamage = new attack_effects_1.KnockOutOpponentEffect(effect, opponent.active);
                     dealDamage.target = opponent.active;
                     store.reduceEffect(state, dealDamage);
                 }

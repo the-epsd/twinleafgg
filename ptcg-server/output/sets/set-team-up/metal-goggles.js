@@ -17,7 +17,7 @@ class MetalGoggles extends trainer_card_1.TrainerCard {
         this.setNumber = '148';
         this.name = 'Metal Goggles';
         this.fullName = 'Metal Goggles TEU';
-        this.text = 'The [M] Pokémon this card is attached to takes 30 less damage from your opponent\'s attacks (after applying Weakness and Resistance) and has no Weakness.';
+        this.text = 'The [M] Pokémon this card is attached to takes 30 less damage from your opponent\'s attacks (after applying Weakness and Resistance), and your opponent\'s attacks and Abilities can\'t put damage counters on it.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
@@ -59,7 +59,7 @@ class MetalGoggles extends trainer_card_1.TrainerCard {
                 return state;
             }
             if (sourceCard) {
-                const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(effect.source);
+                const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(effect.target);
                 store.reduceEffect(state, checkPokemonTypeEffect);
                 if (checkPokemonTypeEffect.cardTypes.includes(card_types_1.CardType.METAL)) {
                     // Check if damage target is owned by this card's owner 

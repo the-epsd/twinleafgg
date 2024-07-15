@@ -9,8 +9,6 @@ export class EnergySticker extends TrainerCard {
 
   public regulationMark = 'G';
 
-  public text = 'Play this card as if it were a 60-HP Basic [C] Pokémon. This card can\'t be affected by any Special Conditions and can\'t retreat.';
-
   public set: string = 'MEW';
 
   public cardImage: string = 'assets/cardback.png';
@@ -20,6 +18,8 @@ export class EnergySticker extends TrainerCard {
   public name: string = 'Energy Sticker';
 
   public fullName: string = 'Energy Sticker MEW';
+
+  public text = 'Flip a coin. If heads, attach a Basic Energy card from your discard pile to 1 of your Benched Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -40,8 +40,8 @@ export class EnergySticker extends TrainerCard {
           }
           const hasEnergyInDiscard = player.discard.cards.some(c => {
             return c instanceof EnergyCard
-          && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.LIGHTNING);
+              && c.energyType === EnergyType.BASIC
+              && c.provides.includes(CardType.LIGHTNING);
           });
           if (!hasEnergyInDiscard) {
             throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -52,7 +52,7 @@ export class EnergySticker extends TrainerCard {
             GameMessage.ATTACH_ENERGY_TO_BENCH,
             player.discard,
             PlayerType.BOTTOM_PLAYER,
-            [ SlotType.BENCH ],
+            [SlotType.BENCH],
             { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
             { allowCancel: true, min: 1, max: 1 }
           ), transfers => {

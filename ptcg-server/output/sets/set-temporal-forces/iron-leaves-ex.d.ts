@@ -21,7 +21,7 @@ export declare class IronLeavesex extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
-        text: import("../../game").GameCardMessage;
+        text: string;
     }[];
     set: string;
     cardImage: string;

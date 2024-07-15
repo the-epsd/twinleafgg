@@ -40,15 +40,18 @@ function attackReducer(store, state, effect) {
         return state;
     }
     if (effect instanceof attack_effects_1.KnockOutOpponentEffect) {
-        const base = effect.attackEffect;
-        const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(base, effect.damage);
-        applyWeakness.target = effect.target;
-        applyWeakness.ignoreWeakness = base.ignoreWeakness;
-        applyWeakness.ignoreResistance = base.ignoreResistance;
-        state = store.reduceEffect(state, applyWeakness);
-        const dealDamage = new attack_effects_1.PutDamageEffect(base, applyWeakness.damage);
-        dealDamage.target = effect.target;
-        state = store.reduceEffect(state, dealDamage);
+        const base = effect.player;
+        const knockOutOpp = new game_effects_1.KnockOutEffect(base, effect.target);
+        knockOutOpp.target = effect.target;
+        state = store.reduceEffect(state, knockOutOpp);
+        // const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
+        // applyWeakness.target = effect.target;
+        // applyWeakness.ignoreWeakness = base.ignoreWeakness;
+        // applyWeakness.ignoreResistance = base.ignoreResistance;
+        // state = store.reduceEffect(state, applyWeakness);
+        // const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
+        // dealDamage.target = effect.target;
+        // state = store.reduceEffect(state, dealDamage);
         return state;
     }
     if (effect instanceof attack_effects_1.PutCountersEffect) {

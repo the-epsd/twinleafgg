@@ -39,18 +39,33 @@ class RadiantVenusaur extends game_1.PokemonCard {
             store.reduceEffect(state, specialCondition);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
-                if (wantToUse) {
-                    const player = effect.player;
-                    while (player.hand.cards.length < 4) {
-                        if (player.deck.cards.length === 0) {
-                            break;
-                        }
-                        player.deck.moveTo(player.hand, 1);
-                    }
-                    return state;
+            const player = effect.player;
+            let hasVenusaurInPlay = false;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card === this) {
+                    hasVenusaurInPlay = true;
                 }
             });
+            if (!hasVenusaurInPlay) {
+                return state;
+            }
+            if (hasVenusaurInPlay) {
+                if (player.hand.cards.length < 4) {
+                    state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+                        if (wantToUse) {
+                            const player = effect.player;
+                            while (player.hand.cards.length < 4) {
+                                if (player.deck.cards.length === 0) {
+                                    break;
+                                }
+                                player.deck.moveTo(player.hand, 1);
+                            }
+                            return state;
+                        }
+                    });
+                }
+                return state;
+            }
         }
         return state;
     }

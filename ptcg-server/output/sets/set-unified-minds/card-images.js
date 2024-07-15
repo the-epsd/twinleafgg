@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.RecycleEnergyArt = exports.AlolanRaichuArt = exports.PurrloinArt = exports.NumelArt = exports.NecrozmaArt = exports.KarateBeltArt = exports.FroslassArt = exports.AlolanGrimerArt = void 0;
+exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.RecycleEnergyArt = exports.AlolanRaichuArt = exports.PurrloinArt = exports.NumelArt = exports.NecrozmaArt = exports.MunchlaxArt = exports.LickilickyArt = exports.KarateBeltArt = exports.FroslassArt = exports.AlolanGrimerArt = void 0;
 const alolan_grimer_1 = require("./alolan-grimer");
 const karate_belt_1 = require("./karate-belt");
 const necrozma_1 = require("./necrozma");
@@ -10,6 +10,8 @@ const reset_stamp_1 = require("./reset-stamp");
 const riolu_1 = require("./riolu");
 const stadium_nav_1 = require("./stadium-nav");
 const u_turn_board_1 = require("./u-turn-board");
+const UNM_162_Lickilicky_1 = require("./UNM_162_Lickilicky");
+const UNM_173_Munchlax_1 = require("./UNM_173_Munchlax");
 const UNM_23_Numel_1 = require("./UNM_23_Numel");
 const UNM_38_Froslass_1 = require("./UNM_38_Froslass");
 const UNM_57_Alolan_Raichu_1 = require("./UNM_57_Alolan_Raichu");
@@ -35,6 +37,20 @@ class KarateBeltArt extends karate_belt_1.KarateBelt {
     }
 }
 exports.KarateBeltArt = KarateBeltArt;
+class LickilickyArt extends UNM_162_Lickilicky_1.Lickilicky {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_162_R_EN_LG.png';
+    }
+}
+exports.LickilickyArt = LickilickyArt;
+class MunchlaxArt extends UNM_173_Munchlax_1.Munchlax {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_173_R_EN_LG.png';
+    }
+}
+exports.MunchlaxArt = MunchlaxArt;
 class NecrozmaArt extends necrozma_1.Necrozma {
     constructor() {
         super(...arguments);

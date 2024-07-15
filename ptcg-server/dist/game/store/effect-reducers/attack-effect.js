@@ -1,7 +1,7 @@
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
 import { PutDamageEffect, DealDamageEffect, DiscardCardsEffect, AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect, RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect, PutCountersEffect, CardsToHandEffect, KnockOutOpponentEffect } from '../effects/attack-effects';
-import { HealEffect } from '../effects/game-effects';
+import { HealEffect, KnockOutEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
 export function attackReducer(store, state, effect) {
     if (effect instanceof PutDamageEffect) {
@@ -37,15 +37,18 @@ export function attackReducer(store, state, effect) {
         return state;
     }
     if (effect instanceof KnockOutOpponentEffect) {
-        const base = effect.attackEffect;
-        const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
-        applyWeakness.target = effect.target;
-        applyWeakness.ignoreWeakness = base.ignoreWeakness;
-        applyWeakness.ignoreResistance = base.ignoreResistance;
-        state = store.reduceEffect(state, applyWeakness);
-        const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
-        dealDamage.target = effect.target;
-        state = store.reduceEffect(state, dealDamage);
+        const base = effect.player;
+        const knockOutOpp = new KnockOutEffect(base, effect.target);
+        knockOutOpp.target = effect.target;
+        state = store.reduceEffect(state, knockOutOpp);
+        // const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
+        // applyWeakness.target = effect.target;
+        // applyWeakness.ignoreWeakness = base.ignoreWeakness;
+        // applyWeakness.ignoreResistance = base.ignoreResistance;
+        // state = store.reduceEffect(state, applyWeakness);
+        // const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
+        // dealDamage.target = effect.target;
+        // state = store.reduceEffect(state, dealDamage);
         return state;
     }
     if (effect instanceof PutCountersEffect) {

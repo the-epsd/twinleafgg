@@ -46,6 +46,7 @@ import { Palossand } from './SIT_100_Palossand';
 import { Klink } from './SIT_123_Klink';
 import { Klang } from './SIT_124_Klang';
 import { Klinklang } from './SIT_125_Klinklang';
+import { Spinda } from './SIT_141_Spinda';
 import { Snorunt } from './SIT_41_Snorunt';
 import { Terrakion } from './SIT_97_Terrakion';
 import { UnidentifiedFossil } from './unidentified-fossil';
@@ -200,6 +201,9 @@ export declare class SerperiorVSTARArt extends SerperiorVSTAR {
     cardImage: string;
 }
 export declare class SnowruntArt extends Snorunt {
+    cardImage: string;
+}
+export declare class SpindaArt extends Spinda {
     cardImage: string;
 }
 export declare class TerrakionArt extends Terrakion {

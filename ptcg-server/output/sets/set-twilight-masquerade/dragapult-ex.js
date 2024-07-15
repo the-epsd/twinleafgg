@@ -35,7 +35,7 @@ class Dragapultex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
-        this.tags = [card_types_1.CardTag.POKEMON_ex];
+        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
         this.evolvesFrom = 'Drakloak';
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.DRAGON;

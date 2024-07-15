@@ -10,7 +10,7 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 class DeoxysVSTAR extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.VSTAR;
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.evolvesFrom = 'Deoxys V';
         this.hp = 270;
@@ -66,21 +66,20 @@ class DeoxysVSTAR extends pokemon_card_1.PokemonCard {
                 damageEffect.target = targets[0];
                 store.reduceEffect(state, damageEffect);
             });
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                if (player.usedVSTAR === true) {
-                    throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
-                }
-                player.usedVSTAR = true;
-                const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(opponent);
-                const checkProvidedEnergyEffect2 = new check_effects_1.CheckProvidedEnergyEffect(player);
-                store.reduceEffect(state, checkProvidedEnergyEffect);
-                const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
-                const energyCount2 = checkProvidedEnergyEffect2.energyMap.reduce((left, p) => left + p.provides.length, 0);
-                effect.damage += energyCount + energyCount2 * 60;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (player.usedVSTAR === true) {
+                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
-            return state;
+            player.usedVSTAR = true;
+            const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(opponent);
+            const checkProvidedEnergyEffect2 = new check_effects_1.CheckProvidedEnergyEffect(player);
+            store.reduceEffect(state, checkProvidedEnergyEffect);
+            const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
+            const energyCount2 = checkProvidedEnergyEffect2.energyMap.reduce((left, p) => left + p.provides.length, 0);
+            effect.damage += energyCount + energyCount2 * 60;
         }
         return state;
     }

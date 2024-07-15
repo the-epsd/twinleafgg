@@ -1,4 +1,5 @@
 import { Blacephalon } from './blacephalon';
+import { Stoutland } from './CEC_176_Stoutland';
 import { Phione } from './CEC_57_Phione';
 import { Wishiwashi } from './CEC_62_Wishiwashi';
 import { Pikachu } from './CEC_66_Pikachu';
@@ -66,6 +67,9 @@ export declare class ProfessorOaksSetupArt extends ProfessorOaksSetup {
     cardImage: string;
 }
 export declare class SlugmaArt extends Slugma {
+    cardImage: string;
+}
+export declare class StoutlandArt extends Stoutland {
     cardImage: string;
 }
 export declare class TagCallArt extends TagCall {

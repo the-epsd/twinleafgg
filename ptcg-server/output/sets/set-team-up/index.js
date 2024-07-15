@@ -14,6 +14,8 @@ exports.setTeamUp = [
     new card_images_1.MareepArt(),
     new card_images_1.MetalGogglesArt(),
     new card_images_1.MoltresArt(),
+    // new PawniardArt(),
+    new card_images_1.PersianArt(),
     new card_images_1.PidgeottoArt(),
     new card_images_1.PokemonCommunicationArt(),
     new card_images_1.ViridianForestArt(),

@@ -42,7 +42,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   height: calc(var(--card-size) * #{$ptcg-bench-slots} + #{($ptcg-bench-slots + 1) * map-get($padding, small)});
 
   position: absolute;
-  top: 32.5%;
+  top: 38%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
@@ -112,13 +112,17 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 
   >ptcg-board-card,
   >.ptcg-board-drop-target {
+    // border: solid 1px;
+    // border-color: #283d5b;
+    border-radius: $card-border-radius;
+    // background-color: rgb(55, 61, 88);
     width: 75px;
   }
 }
 
 .ptcg-board-active {
   grid-area: active;
-  margin-left: 22.25%;
+  margin-left: 27.25%;
   width: 98px;
 }
 
@@ -169,16 +173,16 @@ ptcg-board-deck {
   grid-area: supporter;
 }
 
-.stadium-card {
-  align-self: flex-start;
+// .stadium-card {
+//   align-self: flex-start;
 
-  margin-top: -28.75%;
-  margin-left: 50%;
+//   margin-top: -28.75%;
+//   margin-left: 30%;
 
-  &.stadium-card-down {
-    transform: rotate(180deg);
-  }
-}
+//   &.stadium-card-down {
+//     transform: rotate(180deg);
+//   }
+// }
 
 .lost-zone {
   align-self: flex-start;
@@ -194,7 +198,7 @@ ptcg-board-deck {
 
 .stadium-card {
   align-self: flex-start;
-  margin-top: -29%;
+  margin-top: -24.50%;
   margin-left: 50%;
 
   &.stadium-card-down {

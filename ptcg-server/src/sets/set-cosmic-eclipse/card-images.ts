@@ -1,4 +1,5 @@
 import { Blacephalon } from './blacephalon';
+import { Stoutland } from './CEC_176_Stoutland';
 import { Phione } from './CEC_57_Phione';
 import { Wishiwashi } from './CEC_62_Wishiwashi';
 import { Pikachu } from './CEC_66_Pikachu';
@@ -86,6 +87,10 @@ export class ProfessorOaksSetupArt extends ProfessorOaksSetup {
 
 export class SlugmaArt extends Slugma {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_026_R_EN_LG.png';
+}
+
+export class StoutlandArt extends Stoutland {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_176_R_EN_LG.png';
 }
 
 export class TagCallArt extends TagCall {

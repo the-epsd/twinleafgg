@@ -4,6 +4,7 @@ import { PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Metagross extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     regulationMark: string;
     cardType: CardType;
     hp: number;
@@ -18,6 +19,7 @@ export declare class Metagross extends PokemonCard {
     powers: {
         name: string;
         powerType: PowerType;
+        useFromHand: boolean;
         text: string;
     }[];
     attacks: {

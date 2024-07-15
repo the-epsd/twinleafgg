@@ -14,6 +14,7 @@ import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-fi
 import { DeckService } from '../../api/services/deck.service';
 import { FileDownloadService } from '../../shared/file-download/file-download.service';
 import { Card, PokemonCard, SuperType } from 'ptcg-server';
+import { cardReplacements } from './card-replacements';
 
 
 @UntilDestroy()
@@ -122,38 +123,40 @@ export class DeckEditComponent implements OnInit {
     return -1;
   }
 
-
   importFromClipboard() {
     navigator.clipboard.readText()
       .then(text => {
         const cardNames = text.split('\n')
-          .map(line => line.trim().replace(/é/gi, 'e')) // Replace 'é' with 'e' (case-insensitive)
           .filter(line => !!line)
           .flatMap(line => {
             const parts = line.split(' ');
-
-            // Check if the first part is a number
             const count = parseInt(parts[0], 10);
             if (isNaN(count)) {
-              return []; // Ignore lines that don't start with a number
+              return [];
             }
-
             const cardDetails = parts.slice(1);
             const cardName = cardDetails.slice(0, -1).join(' ');
             const setNumber = cardDetails.slice(-1)[0];
+            const fullCardName = `${cardName} ${setNumber}`;
 
-            return new Array(count).fill({ cardName, setNumber });
+            // Apply card replacements
+            const replacement = cardReplacements.find(r => r.from === fullCardName);
+            const finalCardName = replacement ? replacement.to : fullCardName;
+
+            return new Array(count).fill({ cardName: finalCardName });
           });
 
-        // Call import deck method
         this.importDeck(cardNames);
       });
   }
 
-
-  public importDeck(cardDetails: { cardName: string, setNumber?: string }[]) {
-    this.deckItems = this.loadDeckItems(cardDetails.map(card => card.cardName));
+  public importDeck(cardDetails: { cardName: string }[]) {
+    this.deckItems = this.loadDeckItems(cardDetails.map(card => {
+      const parts = card.cardName.split(' ');
+      return parts.slice(0, -1).join(' '); // Remove set number for loadDeckItems
+    }));
   }
+
 
   public async exportDeck() {
     const cardNames = [];

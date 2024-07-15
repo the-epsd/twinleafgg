@@ -15,7 +15,7 @@ import { PutDamagePrompt } from '../..';
 function* usePhantomDive(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  
+
   const hasBenched = opponent.bench.some(b => b.cards.length > 0);
   if (!hasBenched) {
     return state;
@@ -32,7 +32,7 @@ function* usePhantomDive(next: Function, store: StoreLike, state: State, effect:
     effect.player.id,
     GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
     PlayerType.TOP_PLAYER,
-    [ SlotType.BENCH ],
+    [SlotType.BENCH],
     damage,
     maxAllowedDamage,
     { allowCancel: false }
@@ -51,7 +51,7 @@ export class Dragapultex extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public evolvesFrom = 'Drakloak';
 
@@ -63,20 +63,20 @@ export class Dragapultex extends PokemonCard {
 
   public hp: number = 320;
 
-  public weakness = [ ];
+  public weakness = [];
 
-  public resistance = [ ];
+  public resistance = [];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Jet Headbutt',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 70,
     text: ''
   }, {
     name: 'Phantom Dive',
-    cost: [ CardType.FIRE, CardType.PSYCHIC ],
+    cost: [CardType.FIRE, CardType.PSYCHIC],
     damage: 200,
     text: 'Put 6 damage counters on your opponent\'s Benched Pokemon in any way you like.'
   }];

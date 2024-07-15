@@ -7,6 +7,8 @@ import { ResetStamp } from './reset-stamp';
 import { Riolu } from './riolu';
 import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
+import { Lickilicky } from './UNM_162_Lickilicky';
+import { Munchlax } from './UNM_173_Munchlax';
 import { Numel } from './UNM_23_Numel';
 import { Froslass } from './UNM_38_Froslass';
 import { AlolanRaichu } from './UNM_57_Alolan_Raichu';
@@ -18,6 +20,12 @@ export declare class FroslassArt extends Froslass {
     cardImage: string;
 }
 export declare class KarateBeltArt extends KarateBelt {
+    cardImage: string;
+}
+export declare class LickilickyArt extends Lickilicky {
+    cardImage: string;
+}
+export declare class MunchlaxArt extends Munchlax {
     cardImage: string;
 }
 export declare class NecrozmaArt extends Necrozma {

@@ -10,7 +10,7 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 class Hydreigon extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
         this.cardType = card_types_1.CardType.DARK;
         this.hp = 180;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];

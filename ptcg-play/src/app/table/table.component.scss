@@ -36,18 +36,18 @@ ptcg-hand {
   // background-color: #1a202c00;
   position: static;
   // flex: 0 0 auto;
-  margin-top: -7%;
+  margin-top: -9%;
   z-index: 1;
 }
 
-.opp-hand {
-  width: 60%;
-  transform: rotate(180deg);
-  z-index: 1;
-  margin: 0 auto;
-  /* Add this line to center horizontally */
-  display: flex;
-  /* Add this line to enable centering */
-  justify-content: center;
-  /* Add this line to center horizontally */
-}
+// .opp-hand {
+//   width: 60%;
+//   transform: rotate(180deg);
+//   z-index: 1;
+//   margin: 0 auto;
+//   /* Add this line to center horizontally */
+//   display: flex;
+//   /* Add this line to enable centering */
+//   justify-content: center;
+//   /* Add this line to center horizontally */
+// }

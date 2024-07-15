@@ -20,6 +20,7 @@ class Torterraex extends pokemon_card_1.PokemonCard {
                 name: 'Forest March',
                 cost: [card_types_1.CardType.GRASS],
                 damage: 30,
+                damageCalculation: 'x',
                 text: 'This attack does 30 damage for each [G] Pokémon you have in play.'
             },
             {
@@ -39,11 +40,19 @@ class Torterraex extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            const grassPokemon = player.bench.filter(card => card instanceof pokemon_card_1.PokemonCard && card.cardType === card_types_1.CardType.GRASS);
-            const grassPokemon2 = player.active.getPokemons().filter(card => card.cardType === card_types_1.CardType.GRASS);
-            const vPokes = grassPokemon.length + grassPokemon2.length;
-            const damage = 30 * vPokes;
-            effect.damage = damage;
+            const playerBench = player.bench;
+            let grassPokemon = 0;
+            playerBench.forEach(c => {
+                var _a, _b;
+                if (c.getPokemonCard() instanceof pokemon_card_1.PokemonCard) {
+                    if (((_a = c.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) == card_types_1.CardType.GRASS) {
+                        console.log((_b = c.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.stage);
+                        grassPokemon++;
+                    }
+                }
+            });
+            effect.damage = (grassPokemon + 1) * 30;
+            return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;

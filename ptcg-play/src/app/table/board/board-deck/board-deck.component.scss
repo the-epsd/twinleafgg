@@ -3,18 +3,45 @@
 .ptcg-board-deck {
   display: flex;
   flex-direction: column;
-  height: 338px;
+  height: 220px;
   justify-content: space-around;
   margin: 0 auto;
-  width: 50%;
+  width: 100%;
 }
 
 ptcg-board-card {
   width: 75px;
   // max-width: 4.5vw;
   // min-width: 4.5vw;
-  margin-top: -35%;
+  // margin-top: -40%;
 }
+
+.deck-wrapper {
+  position: relative;
+  margin-top: -43%;
+  transform: translateX(5%);
+}
+
+.discard-wrapper {
+  position: relative;
+  // margin-top: 10%;
+  transform: translateX(5%);
+}
+
+// .deck-count {
+//   position: absolute;
+//   bottom: 125px; // Adjust this value as needed
+//   right: 7%;
+//   transform: translateX(-50%);
+// }
+
+// .discard-count {
+//   position: absolute;
+//   bottom: -px; // Adjust this value as needed
+//   right: 6.25%;
+//   transform: translateX(-50%);
+//   size: 70%;
+// }
 
 .deck-container,
 .discard-container {

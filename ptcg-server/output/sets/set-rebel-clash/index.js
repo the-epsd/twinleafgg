@@ -13,6 +13,7 @@ exports.setRebelClash = [
     new card_images_1.CoalossalArt(),
     new card_images_1.DragapultArt(),
     new card_images_1.DuraludonArt(),
+    new card_images_1.GalarianMeowthArt(),
     new card_images_1.HorrorPsychicEnergyArt(),
     new card_images_1.MetapodArt(),
     new card_images_1.ScoopUpNetArt(),

@@ -13,28 +13,28 @@ export class RoaringMoonex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.ANCIENT ];
-  
+  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
+
   public stage = Stage.BASIC;
 
-  public  cardType = CardType.DARK;
+  public cardType = CardType.DARK;
 
   public hp = 230;
 
-  public weakness = [{type: CardType.GRASS}];
+  public weakness = [{ type: CardType.GRASS }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Frenzied Gouging',
-      cost: [ CardType.DARK, CardType.DARK, CardType.COLORLESS ],
+      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 0,
       text: 'Knock Out your opponent\'s Active Pokémon. If your opponent\'s Active Pokémon is Knocked Out in this way, this Pokémon does 200 damage to itself.'
     },
     {
       name: 'Calamity Storm',
-      cost: [ CardType.DARK, CardType.DARK, CardType.COLORLESS ],
+      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 100,
       text: 'You may discard a Stadium in play. If you do, this attack does 120 more damage.'
     }
@@ -59,7 +59,7 @@ export class RoaringMoonex extends PokemonCard {
       const activePokemon = opponent.active.getPokemonCard();
 
       if (activePokemon) {
-        const dealDamage = new KnockOutOpponentEffect(effect, 999);
+        const dealDamage = new KnockOutOpponentEffect(effect, opponent.active);
         dealDamage.target = opponent.active;
         store.reduceEffect(state, dealDamage);
       }

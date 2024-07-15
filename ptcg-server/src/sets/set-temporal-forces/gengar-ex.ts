@@ -8,9 +8,9 @@ export class Gengarex extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Haunter';
 
@@ -20,13 +20,13 @@ export class Gengarex extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Gnawing Curse',
     powerType: PowerType.ABILITY,
     text: 'Whenever your opponent attaches an Energy card from their hand to 1 of their Pokémon, put 2 damage counters on that Pokémon.'
-  }]; 
+  }];
 
   public attacks = [
     {

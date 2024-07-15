@@ -5,7 +5,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Slowbro extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom: string = 'Slowpoke';
 
@@ -20,13 +20,13 @@ export class Slowbro extends PokemonCard {
   public attacks = [
     {
       name: 'Tumbling Tackle',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 20,
       text: 'Both Active Pokémon are now Asleep.'
     },
     {
       name: 'Twilight Inspiration',
-      cost: [  ],
+      cost: [],
       damage: 0,
       text: 'You can use this attack only if your opponent has exactly 1 Prize card remaining. Take 2 Prize cards.'
     }
@@ -63,26 +63,26 @@ export class Slowbro extends PokemonCard {
       const prizesTaken = 6 - opponent.getPrizeLeft();
 
       if (prizesTaken === 1) {
-        
+
         const prizes = player.prizes as unknown as CardList;
-        
+
         let cards: Card[] = [];
-        
+
         state = store.prompt(state, new ChooseCardsPrompt(
           player.id,
           GameMessage.CHOOSE_CARD_TO_HAND,
-          prizes, 
+          prizes,
           {},
           { min: 2, allowCancel: true }
         ), selected => {
           cards = selected || [];
         });
-        
+
         prizes.moveCardsTo(cards, player.hand);
-        
+
         return state;
       }
-    
+
       return state;
     }
     return state;

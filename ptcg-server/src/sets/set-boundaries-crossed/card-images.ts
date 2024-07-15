@@ -1,5 +1,6 @@
 import { RockyHelmet } from '../set-scarlet-and-violet/rocky-helmet';
 import { AspertiaCityGym } from './aspertia-city-gym';
+import { Stoutland } from './BCR_122_Stoutland';
 import { Blastoise } from './blastoise';
 import { ComputerSearch } from './computer-search';
 import { Dusclops } from './dusclops';
@@ -70,6 +71,10 @@ export class SkylaArt extends Skyla {
 
 export class SquirtleArt extends Squirtle {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BCR/BCR_029_R_EN.png';
+}
+
+export class StoutlandArt extends Stoutland {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BCR/BCR_122_R_EN_LG.png';
 }
 
 export class WartortleArt extends Wartortle {

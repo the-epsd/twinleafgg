@@ -5,11 +5,11 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class MagnezoneVSTAR extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VSTAR;
 
-  public cardType: CardType = CardType.LIGHTNING;  
+  public cardType: CardType = CardType.LIGHTNING;
 
-  public tags = [ CardTag.POKEMON_VSTAR ];
+  public tags = [CardTag.POKEMON_VSTAR];
 
   public hp: number = 270;
 
@@ -49,16 +49,16 @@ export class MagnezoneVSTAR extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
-  
+
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id, 
+        player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck, 
+        player.deck,
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
         { min: 0, max: 2, allowCancel: true }
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);
-  
+
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
@@ -68,7 +68,7 @@ export class MagnezoneVSTAR extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -77,14 +77,14 @@ export class MagnezoneVSTAR extends PokemonCard {
       if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
-      
+
       player.usedVSTAR = true;
-  
+
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { min: 1, max: 2, allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {
@@ -95,7 +95,7 @@ export class MagnezoneVSTAR extends PokemonCard {
         store.reduceEffect(state, damageEffect);
 
       });
-  
+
       return state;
     }
     return state;

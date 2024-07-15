@@ -8,7 +8,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class DeoxysVSTAR extends PokemonCard {
 
-  public stage = Stage.BASIC;
+  public stage = Stage.VSTAR;
 
   public cardType = CardType.PSYCHIC;
 
@@ -56,7 +56,7 @@ export class DeoxysVSTAR extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-          
+
       let opponentPokemonVInPlay = false;
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (list, card) => {
@@ -64,23 +64,23 @@ export class DeoxysVSTAR extends PokemonCard {
           opponentPokemonVInPlay = true;
         }
       });
-  
+
       if (!opponentPokemonVInPlay) {
         return state;
       }
-  
+
       const blocked2: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (list, card, target) => {
         if (card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
           blocked2.push(target);
         }
       });
-          
+
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false, blocked: blocked2 }
       ), targets => {
         if (!targets || targets.length === 0) {
@@ -90,26 +90,25 @@ export class DeoxysVSTAR extends PokemonCard {
         damageEffect.target = targets[0];
         store.reduceEffect(state, damageEffect);
       });
+    }
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-        if (player.usedVSTAR === true) {
-          throw new GameError(GameMessage.LABEL_VSTAR_USED);
-        }
-    
-        player.usedVSTAR = true;
-  
-        const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
-        const checkProvidedEnergyEffect2 = new CheckProvidedEnergyEffect(player);
-        store.reduceEffect(state, checkProvidedEnergyEffect);
-        const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
-        const energyCount2 = checkProvidedEnergyEffect2.energyMap.reduce((left, p) => left + p.provides.length, 0);
-        
-        effect.damage += energyCount + energyCount2 * 60;
+      if (player.usedVSTAR === true) {
+        throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
-      return state;
+
+      player.usedVSTAR = true;
+
+      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
+      const checkProvidedEnergyEffect2 = new CheckProvidedEnergyEffect(player);
+      store.reduceEffect(state, checkProvidedEnergyEffect);
+      const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
+      const energyCount2 = checkProvidedEnergyEffect2.energyMap.reduce((left, p) => left + p.provides.length, 0);
+
+      effect.damage += energyCount + energyCount2 * 60;
     }
     return state;
   }

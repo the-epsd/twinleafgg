@@ -19,6 +19,8 @@ export class HandComponent implements OnChanges {
   @Input() player: Player;
   @Input() gameState: LocalGameState;
   @Input() clientId: number;
+  @Input() isOpponent: boolean = false;
+
 
   public cards: Card[] = [];
   public isFaceDown: boolean;

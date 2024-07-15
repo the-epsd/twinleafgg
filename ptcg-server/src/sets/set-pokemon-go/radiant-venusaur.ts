@@ -1,4 +1,4 @@
-import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, SpecialCondition } from '../../game';
+import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, SpecialCondition, PlayerType } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -54,23 +54,44 @@ export class RadiantVenusaur extends PokemonCard {
 
     if (effect instanceof EndTurnEffect) {
 
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
+      const player = effect.player;
 
-          const player = effect.player;
+      let hasVenusaurInPlay = false;
 
-          while (player.hand.cards.length < 4) {
-            if (player.deck.cards.length === 0) {
-              break;
-            }
-            player.deck.moveTo(player.hand, 1);
-          }
-          return state;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          hasVenusaurInPlay = true;
         }
       });
+
+      if (!hasVenusaurInPlay) {
+        return state;
+      }
+
+      if (hasVenusaurInPlay) {
+
+        if (player.hand.cards.length < 4) {
+
+          state = store.prompt(state, new ConfirmPrompt(
+            effect.player.id,
+            GameMessage.WANT_TO_USE_ABILITY,
+          ), wantToUse => {
+            if (wantToUse) {
+
+              const player = effect.player;
+
+              while (player.hand.cards.length < 4) {
+                if (player.deck.cards.length === 0) {
+                  break;
+                }
+                player.deck.moveTo(player.hand, 1);
+              }
+              return state;
+            }
+          });
+        }
+        return state;
+      }
     }
     return state;
   }
