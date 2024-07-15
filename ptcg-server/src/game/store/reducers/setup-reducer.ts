@@ -46,12 +46,11 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
   const whoBeginsEffect = new WhoBeginsEffect();
   store.reduceEffect(state, whoBeginsEffect);
 
-
   if (whoBeginsEffect.player) {
     state.activePlayer = state.players.indexOf(whoBeginsEffect.player);
   } else {
     const coinFlipPrompt = new CoinFlipPrompt(player.id, GameMessage.SETUP_WHO_BEGINS_FLIP);
-    store.prompt(state, coinFlipPrompt, whoBegins => {
+    yield store.prompt(state, coinFlipPrompt, whoBegins => {
       const goFirstPrompt = new SelectPrompt(
         whoBegins ? player.id : opponent.id,
         GameMessage.GO_FIRST,
@@ -63,6 +62,8 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
         } else {
           state.activePlayer = whoBegins ? 1 : 0;
         }
+        
+        next();
       });
     });
   }
