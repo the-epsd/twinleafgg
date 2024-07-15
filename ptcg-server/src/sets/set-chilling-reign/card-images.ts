@@ -26,6 +26,7 @@ import { Golurk } from './golurk';
 import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
 import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
 import { ImpactEnergy } from './impact-energy';
+import { Inkay } from './inkay';
 import { Inteleon } from './inteleon';
 import { JustifiedGloves } from './justified-gloves';
 import { KarensConviction } from './karens-conviction';
@@ -152,6 +153,10 @@ export class IceRiderCalyrexVMAXArt extends IceRiderCalyrexVMAX {
 
 export class ImpactEnergyArt extends ImpactEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_157_R_EN.png';
+}
+
+export class InkayArt extends Inkay {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_069_R_EN.png';
 }
 
 export class InteleonArt extends Inteleon {
