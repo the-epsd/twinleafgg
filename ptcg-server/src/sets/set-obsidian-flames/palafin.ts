@@ -52,15 +52,16 @@ export class Palafin extends PokemonCard {
       console.log('movedToActiveThisTurn = false');
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       if (!this.movedToActiveThisTurn) {
         effect.damage = 0;
         return state;
       }
+      
       effect.damage = 210;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
         
