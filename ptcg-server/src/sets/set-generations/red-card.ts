@@ -7,7 +7,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-export class ResetStamp extends TrainerCard {
+export class RedCard extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
