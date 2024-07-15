@@ -5,12 +5,12 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class Charizard extends PokemonCard {
     set: string;
     setNumber: string;
+    stage: Stage;
     cardImage: string;
     fullName: string;
     name: string;
     cardType: CardType;
     evolvesFrom: string;
-    stage: Stage;
     hp: number;
     weakness: Weakness[];
     resistance: Resistance[];

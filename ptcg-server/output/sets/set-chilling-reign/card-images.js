@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZarudeArt = exports.TaurosArt = exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.Porygon2Art = exports.PeonyArt = exports.PeoniaArt = exports.PathToThePeakArt = exports.OldCemeteryArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GolurkArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianZapdosVArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.FlanneryArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DynaTreeHillArt = exports.DrizzileArt = exports.CastformSunnyFormArt = exports.CastformSnowyFormArt = exports.CastformRainyFormArt = exports.CaitlinArt = exports.BlisseyVArt = exports.BlazikenVMAXArt = exports.BlazikenVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = exports.AgathaArt = void 0;
+exports.ZarudeArt = exports.TaurosArt = exports.SpiralEnergyArt = exports.SobbleArt = exports.SnoruntArt = exports.SneaselArt = exports.ShadowRiderCalyrexVMAXArt = exports.ShadowRiderCalyrexVArt = exports.Porygon2Art = exports.PeonyArt = exports.PeoniaArt = exports.PathToThePeakArt = exports.OldCemeteryArt = exports.MelonyArt = exports.LuckyEnergyArt = exports.KlaraArt = exports.KirliaArt = exports.KarensConvictionArt = exports.JustifiedGlovesArt = exports.InteleonArt = exports.InkayArt = exports.ImpactEnergyArt = exports.IceRiderCalyrexVMAXArt = exports.IceRiderCalyrexVArt = exports.GolurkArt = exports.GalladeArt = exports.GardevoirArt = exports.GalarianZapdosVArt = exports.GalarianMoltresVArt = exports.GalarianArticunoVArt = exports.FroslassArt = exports.FogCrystalArt = exports.FlanneryArt = exports.ExpeditionUniformArt = exports.EchoingHornArt = exports.DynaTreeHillArt = exports.DrizzileArt = exports.CastformSunnyFormArt = exports.CastformSnowyFormArt = exports.CastformRainyFormArt = exports.CaitlinArt = exports.BlisseyVArt = exports.BlazikenVMAXArt = exports.BlazikenVArt = exports.BeedrillArt = exports.BanetteArt = exports.AveryArt = exports.AgathaArt = void 0;
 const agatha_1 = require("./agatha");
 const avery_1 = require("./avery");
 const banette_1 = require("./banette");
@@ -29,6 +29,7 @@ const golurk_1 = require("./golurk");
 const ice_rider_calyrex_v_1 = require("./ice-rider-calyrex-v");
 const ice_rider_calyrex_vmax_1 = require("./ice-rider-calyrex-vmax");
 const impact_energy_1 = require("./impact-energy");
+const inkay_1 = require("./inkay");
 const inteleon_1 = require("./inteleon");
 const justified_gloves_1 = require("./justified-gloves");
 const karens_conviction_1 = require("./karens-conviction");
@@ -237,6 +238,13 @@ class ImpactEnergyArt extends impact_energy_1.ImpactEnergy {
     }
 }
 exports.ImpactEnergyArt = ImpactEnergyArt;
+class InkayArt extends inkay_1.Inkay {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_069_R_EN.png';
+    }
+}
+exports.InkayArt = InkayArt;
 class InteleonArt extends inteleon_1.Inteleon {
     constructor() {
         super(...arguments);

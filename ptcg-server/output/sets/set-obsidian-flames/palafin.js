@@ -39,14 +39,14 @@ class Palafin extends pokemon_card_1.PokemonCard {
             this.movedToActiveThisTurn = false;
             console.log('movedToActiveThisTurn = false');
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             if (!this.movedToActiveThisTurn) {
                 effect.damage = 0;
                 return state;
             }
             effect.damage = 210;
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const hasBenched = opponent.bench.some(b => b.cards.length > 0);

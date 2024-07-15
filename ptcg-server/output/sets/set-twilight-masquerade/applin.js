@@ -1,20 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Applin = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 function* useFindAFriend(next, store, state, effect) {
     const player = effect.player;
+    const opponent = game_1.StateUtils.getOpponent(state, player);
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 1, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });
     cards.forEach((card, index) => {
         player.deck.moveCardTo(card, player.hand);
     });
+    state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
     });
@@ -34,7 +36,7 @@ class Applin extends pokemon_card_1.PokemonCard {
                 name: 'Find a Friend',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 0,
-                text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
+                text: 'Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.'
             },
             {
                 name: 'Rolling Tackle',

@@ -26,6 +26,7 @@ import { Golurk } from './golurk';
 import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
 import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
 import { ImpactEnergy } from './impact-energy';
+import { Inkay } from './inkay';
 import { Inteleon } from './inteleon';
 import { JustifiedGloves } from './justified-gloves';
 import { KarensConviction } from './karens-conviction';
@@ -124,6 +125,9 @@ export declare class IceRiderCalyrexVMAXArt extends IceRiderCalyrexVMAX {
     cardImage: string;
 }
 export declare class ImpactEnergyArt extends ImpactEnergy {
+    cardImage: string;
+}
+export declare class InkayArt extends Inkay {
     cardImage: string;
 }
 export declare class InteleonArt extends Inteleon {

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Tulip = void 0;
+const game_1 = require("../../game");
 const game_message_1 = require("../../game/game-message");
-const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const state_utils_1 = require("../../game/store/state-utils");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const show_cards_prompt_1 = require("../../game/store/prompts/show-cards-prompt");
 const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
-const game_1 = require("../../game");
+const state_utils_1 = require("../../game/store/state-utils");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
@@ -28,7 +28,7 @@ function* playCard(next, store, state, self, effect) {
         if (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Psychic Energy') {
             energies += 1;
         }
-        else if (c instanceof game_1.PokemonCard && c.cardType === card_types_1.CardType.PSYCHIC && c.stage === card_types_1.Stage.BASIC) {
+        else if (c instanceof game_1.PokemonCard && c.cardType === card_types_1.CardType.PSYCHIC) {
             pokemons += 1;
         }
         else {

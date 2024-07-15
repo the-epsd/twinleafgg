@@ -2,13 +2,18 @@ import { State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Applin extends PokemonCard {
-    regulationMark: string;
+export declare class Dreepy extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     cardType: CardType;
     hp: number;
-    weakness: never[];
-    resistance: never[];
+    weakness: {
+        type: CardType;
+    }[];
+    resistance: {
+        type: CardType;
+        value: number;
+    }[];
     retreat: CardType[];
     attacks: {
         name: string;
@@ -21,5 +26,6 @@ export declare class Applin extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly INFESTATION_MARKER = "INFESTATION_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

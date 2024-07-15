@@ -16,6 +16,7 @@ exports.setSilverTempest = [
     new card_images_1.CrobatArt(),
     new card_images_1.DragoniteArt(),
     new card_images_1.DrakloakArt(),
+    new card_images_1.DreepyArt(),
     new card_images_1.ElgyemArt(),
     new card_images_1.EmergencyJellyArt(),
     new card_images_1.FeebasArt(),

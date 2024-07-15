@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class Starmie extends PokemonCard {
     name: string;
     set: string;
+    evolvesFrom: string;
     fullName: string;
     setNumber: string;
     cardType: CardType;

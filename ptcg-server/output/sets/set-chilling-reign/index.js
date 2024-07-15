@@ -28,6 +28,7 @@ exports.setChillingReign = [
     new card_images_1.GolurkArt(),
     new card_images_1.IceRiderCalyrexVArt(),
     new card_images_1.IceRiderCalyrexVMAXArt(),
+    new card_images_1.InkayArt(),
     new card_images_1.InteleonArt(),
     new card_images_1.JustifiedGlovesArt(),
     new card_images_1.KarensConvictionArt(),
