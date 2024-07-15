@@ -34,7 +34,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.discard.cards.forEach((c, index) => {
     if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Psychic Energy') {
       energies += 1;
-    } else if (c instanceof PokemonCard && c.cardType === CardType.PSYCHIC && c.stage === Stage.BASIC) {
+    } else if (c instanceof PokemonCard && c.cardType === CardType.PSYCHIC) {
       pokemons += 1;
     } else {
       blocked.push(index);
