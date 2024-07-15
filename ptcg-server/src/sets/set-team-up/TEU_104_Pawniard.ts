@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Pawniard extends PokemonCard {
@@ -11,7 +11,7 @@ export class Pawniard extends PokemonCard {
   public cardType: CardType = CardType.METAL;
   public hp: number = 60;
   public weakness = [{ type: CardType.FIRE }];
-  public resistance = [{ type: CardType.PSYCHIC, value: -30 }];
+  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
   public retreat = [CardType.COLORLESS];
 
   public attacks = [{
@@ -48,7 +48,7 @@ export class Pawniard extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof DealDamageEffect
+    if (effect instanceof PutDamageEffect
       && effect.target.attackMarker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
       effect.damage -= 30;
       return state;

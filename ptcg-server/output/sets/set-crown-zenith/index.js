@@ -19,5 +19,6 @@ exports.setCrownZenith = [
     new card_images_1.RotomVArt(),
     new card_images_1.SalanditArt(),
     new card_images_1.WailmerArt(),
+    new card_images_1.ZacianArt(),
     new card_images_1.ZacianVSTARArt(),
 ];

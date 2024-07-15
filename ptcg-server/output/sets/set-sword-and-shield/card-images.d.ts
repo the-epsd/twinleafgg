@@ -18,6 +18,7 @@ import { Snom } from './snom';
 import { Sobble } from './sobble';
 import { Toxicroak } from './SSH_124_Toxicroak';
 import { GalarianPerrserker } from './SSH_128_Galarian_Perrserker';
+import { Ferroseed } from './SSH_130_Ferroseed';
 import { Raboot } from './SSH_32_Raboot';
 import { Cinderace } from './SSH_34_Cinderace';
 import { Centiskorch } from './SSH_39_Centiskorch';
@@ -44,6 +45,9 @@ export declare class DrizzileArt extends Drizzile {
     cardImage: string;
 }
 export declare class EvolutionIncenseArt extends EvolutionIncense {
+    cardImage: string;
+}
+export declare class FerroseedArt extends Ferroseed {
     cardImage: string;
 }
 export declare class GalarianPerrserkerArt extends GalarianPerrserker {

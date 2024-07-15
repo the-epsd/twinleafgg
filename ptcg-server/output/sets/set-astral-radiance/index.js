@@ -4,6 +4,7 @@ exports.setAstralRadiance = void 0;
 const card_images_1 = require("./card-images");
 exports.setAstralRadiance = [
     new card_images_1.AdamanArt(),
+    new card_images_1.BronzorArt(),
     new card_images_1.CancelingCologneArt(),
     new card_images_1.CylleneArt(),
     new card_images_1.DarkPatchArt(),
@@ -51,6 +52,7 @@ exports.setAstralRadiance = [
     new card_images_1.RegirockArt(),
     new card_images_1.RegisteelArt(),
     new card_images_1.RoxanneArt(),
+    new card_images_1.ShieldonArt(),
     new card_images_1.SpicySeasonedCurryArt(),
     new card_images_1.StarmieVArt(),
     new card_images_1.SupereffectiveGlassesArt(),

@@ -1,9 +1,9 @@
 import { Card } from '../../game/store/card/card';
-import { AcerolasPremonitionArt, AggronVArt, AggronVMAXArt, ArceusVArt, ArceusVSTARArt, AxewArt, BibarelArt, BidoofArt, CherensCareArt, CleansingGlovesArt, CollapsedStadiumArt, CynthiasAmbitionArt, DoubleTurboEnergyArt, DruddigonArt, ElectabuzzArt, ElectivireArt, EmpoleonArt, EnteiVArt, FloatzelArt, GarchompArt, GloriaArt, GrotleArt, HeatranArt, KindlerArt, LaprasArt, LiepardArt, LumineonVArt, MagmaBasinArt, MagmortarArt, ManaphyArt, MinccinoArt, MoltresArt, PotHelmetArt, PurrloinArt, RaichuVArt, RaikouVArt, RoseannesBackupArt, ShayminVArt, ShayminVSTARArt, TeamYellsCheerArt, TorterraArt } from './card-images';
+import { AcerolasPremonitionArt, AggronVArt, AggronVMAXArt, ArceusVArt, ArceusVSTARArt, AxewArt, BibarelArt, BidoofArt, CherensCareArt, CleansingGlovesArt, CollapsedStadiumArt, CynthiasAmbitionArt, DoubleTurboEnergyArt, DruddigonArt, ElectabuzzArt, ElectivireArt, EmpoleonArt, EnteiVArt, FloatzelArt, GarchompArt, GloriaArt, GrotleArt, HaxorusArt, HeatranArt, KindlerArt, LaprasArt, LiepardArt, LumineonVArt, MagmaBasinArt, MagmortarArt, ManaphyArt, MinccinoArt, MoltresArt, PotHelmetArt, PurrloinArt, RaichuVArt, RaikouVArt, RoseannesBackupArt, ShayminVArt, ShayminVSTARArt, TeamYellsCheerArt, TorterraArt } from './card-images';
 
 
 export const setBrilliantStars: Card[] = [
-  
+
   new AcerolasPremonitionArt(),
   new AggronVArt(),
   new AggronVMAXArt(),
@@ -26,6 +26,7 @@ export const setBrilliantStars: Card[] = [
   new GarchompArt(),
   new GloriaArt(),
   new GrotleArt(),
+  new HaxorusArt(),
   new HeatranArt(),
   new KindlerArt(),
   new LaprasArt(),
@@ -45,5 +46,5 @@ export const setBrilliantStars: Card[] = [
   new PotHelmetArt(),
   new TeamYellsCheerArt(),
   new TorterraArt()
-  
+
 ];

@@ -7,6 +7,7 @@ exports.setDarknessAblaze = [
     new card_images_1.CapeOfToughnessArt(),
     new card_images_1.HidingDarknessEnergyArt(),
     new card_images_1.KangaskhanArt(),
+    new card_images_1.KlangArt(),
     new card_images_1.LugiaArt(),
     new card_images_1.PowerfulColorlessEnergyArt(),
     new card_images_1.RoseTowerArt(),

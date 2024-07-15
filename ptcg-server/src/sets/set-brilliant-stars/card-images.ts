@@ -7,6 +7,7 @@ import { Axew } from './axew';
 import { Bibarel } from './bibarel';
 import { Bidoof } from './bidoof';
 import { Heatran } from './BRS_100_Heatran';
+import { Haxorus } from './BRS_112_Haxorus';
 import { CherensCare } from './cherens-care';
 import { CleansingGloves } from './cleansing-gloves';
 import { CollapsedStadium } from './collapsed-stadium';
@@ -128,12 +129,16 @@ export class GrotleArt extends Grotle {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_007_R_EN_LG.png';
 }
 
+export class HaxorusArt extends Haxorus {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_112_R_EN_LG.png';
+}
+
 export class HeatranArt extends Heatran {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_100_R_EN_LG.png';
 }
 
 export class KindlerArt extends Kindler {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_143_R_EN_LG.png';  
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_143_R_EN_LG.png';
 }
 
 export class LaprasArt extends Lapras {

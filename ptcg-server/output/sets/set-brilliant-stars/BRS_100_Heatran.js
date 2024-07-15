@@ -62,6 +62,7 @@ class Heatran extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof attack_effects_1.PutDamageEffect
             && effect.target.attackMarker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
+            console.log('effect.damage before redux: ' + effect.damage);
             effect.damage -= 30;
             return state;
         }

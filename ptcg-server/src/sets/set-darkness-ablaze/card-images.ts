@@ -1,5 +1,6 @@
 import { BirdKeeper } from './bird-keeper';
 import { CapeOfToughness } from './cape-of-toughness';
+import { Klang } from './DAA_126_Klang';
 import { Combusken } from './DAA_23_Combusken';
 import { HidingDarknessEnergy } from './hiding-darkness-energy';
 import { Kangaskhan } from './kangaskhan';
@@ -28,6 +29,10 @@ export class HidingDarknessEnergyArt extends HidingDarknessEnergy {
 
 export class KangaskhanArt extends Kangaskhan {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_133_R_EN_LG.png';
+}
+
+export class KlangArt extends Klang {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_126_R_EN_LG.png';
 }
 
 export class LugiaArt extends Lugia {

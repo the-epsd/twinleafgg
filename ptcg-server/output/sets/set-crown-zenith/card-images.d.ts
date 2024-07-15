@@ -3,6 +3,7 @@ import { RotomV } from '../set-lost-origin/rotom-v';
 import { Absol } from './absol';
 import { Bidoof } from './bidoof';
 import { Salandit } from './CRZ_27_Salandit';
+import { Zacian } from './CRZ_94_Zacian';
 import { Hoopa } from './hoopa';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
@@ -61,6 +62,9 @@ export declare class SalanditArt extends Salandit {
     cardImage: string;
 }
 export declare class WailmerArt extends Wailmer {
+    cardImage: string;
+}
+export declare class ZacianArt extends Zacian {
     cardImage: string;
 }
 export declare class ZacianVSTARArt extends ZacianVSTAR {

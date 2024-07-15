@@ -33,12 +33,12 @@ export class Heatran extends PokemonCard {
   public name: string = 'Heatran';
   public fullName: string = 'Heatran BRS';
 
-  
+
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -49,7 +49,7 @@ export class Heatran extends PokemonCard {
       return state;
     }
 
-    if(effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const pokemon = player.active;
 
@@ -62,19 +62,21 @@ export class Heatran extends PokemonCard {
         }
       });
 
-      if(fireEnergyCount > 0) {
+      if (fireEnergyCount > 0) {
         effect.damage += 80;
       }
 
       return state;
     }
 
-    if (effect instanceof PutDamageEffect 
+    if (effect instanceof PutDamageEffect
       && effect.target.attackMarker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
+      console.log('effect.damage before redux: ' + effect.damage);
       effect.damage -= 30;
       return state;
     }
-    if (effect instanceof EndTurnEffect 
+
+    if (effect instanceof EndTurnEffect
       && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
       effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
