@@ -9,12 +9,12 @@ class EnergySticker extends game_1.TrainerCard {
         super(...arguments);
         this.superType = card_types_1.SuperType.TRAINER;
         this.regulationMark = 'G';
-        this.text = 'Play this card as if it were a 60-HP Basic [C] Pokémon. This card can\'t be affected by any Special Conditions and can\'t retreat.';
         this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '159';
         this.name = 'Energy Sticker';
         this.fullName = 'Energy Sticker MEW';
+        this.text = 'Flip a coin. If heads, attach a Basic Energy card from your discard pile to 1 of your Benched Pokémon.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

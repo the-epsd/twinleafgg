@@ -1,9 +1,10 @@
 import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { DealDamageEffect, PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Mismagius extends PokemonCard {
@@ -51,20 +52,24 @@ export class Mismagius extends PokemonCard {
 
   public damageDealt = false;
 
-  public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.RETALIATE_MARKER);
-    }
 
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
-      effect.target.cards.includes(this)) {
-      const player = StateUtils.getOpponent(state, effect.player);
+    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
+      const player = StateUtils.findOwner(state, effect.target);
+      const opponent = StateUtils.getOpponent(state, player);
+      const pokemonCard = effect.target.getPokemonCard();
 
-      if (player.active.getPokemonCard() === this) {
-        this.damageDealt = true;
+
+      this.damageDealt = true;
+
+      if (pokemonCard === this && this.damageDealt === true) {
+        const checkHpEffect = new CheckHpEffect(player, effect.target);
+        store.reduceEffect(state, checkHpEffect);
+
+        if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
+          opponent.active.damage += 80;
+        }
       }
     }
 
@@ -74,15 +79,6 @@ export class Mismagius extends PokemonCard {
 
       if (owner === effect.player) {
         this.damageDealt = false;
-      }
-    }
-
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && this.damageDealt) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      if (this.hp == this.hp) {
-        opponent.active.damage += 80;
       }
     }
 

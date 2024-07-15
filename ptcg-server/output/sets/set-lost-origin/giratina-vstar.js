@@ -50,7 +50,7 @@ class GiratinaVSTAR extends game_1.PokemonCard {
             if (player.lostzone.cards.length >= 10) {
                 const activePokemon = opponent.active.getPokemonCard();
                 if (activePokemon) {
-                    const dealDamage = new attack_effects_1.KnockOutOpponentEffect(effect, 999);
+                    const dealDamage = new attack_effects_1.KnockOutOpponentEffect(effect, opponent.active);
                     dealDamage.target = opponent.active;
                     store.reduceEffect(state, dealDamage);
                 }

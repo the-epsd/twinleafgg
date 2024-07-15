@@ -8,7 +8,7 @@ import { HealTargetEffect } from '../../game/store/effects/attack-effects';
 
 export class Torterraex extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.STAGE_2;
 
@@ -20,18 +20,19 @@ export class Torterraex extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Forest March',
-      cost: [ CardType.GRASS ],
+      cost: [CardType.GRASS],
       damage: 30,
+      damageCalculation: 'x',
       text: 'This attack does 30 damage for each [G] Pokémon you have in play.'
     },
     {
       name: 'Leafage',
-      cost: [ CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 150,
       text: 'Heal 50 damage from this Pokémon.'
     }
@@ -53,14 +54,22 @@ export class Torterraex extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+      const playerBench = player.bench;
 
-      const grassPokemon = player.bench.filter(card => card instanceof PokemonCard && card.cardType === CardType.GRASS);
-      const grassPokemon2 = player.active.getPokemons().filter(card => card.cardType === CardType.GRASS);
-  
-      const vPokes = grassPokemon.length + grassPokemon2.length;
-      const damage = 30 * vPokes;
-  
-      effect.damage = damage;
+      let grassPokemon = 0;
+
+      playerBench.forEach(c => {
+        if (c.getPokemonCard() instanceof PokemonCard) {
+          if (c.getPokemonCard()?.cardType == CardType.GRASS) {
+            console.log(c.getPokemonCard()?.stage);
+            grassPokemon++;
+          }
+        }
+      });
+
+      effect.damage = (grassPokemon + 1) * 30;
+
+      return state;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

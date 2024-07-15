@@ -10,7 +10,7 @@ import {
   PutCountersEffect, CardsToHandEffect,
   KnockOutOpponentEffect
 } from '../effects/attack-effects';
-import { HealEffect } from '../effects/game-effects';
+import { HealEffect, KnockOutEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
 
 export function attackReducer(store: StoreLike, state: State, effect: Effect): State {
@@ -57,17 +57,21 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
 
 
   if (effect instanceof KnockOutOpponentEffect) {
-    const base = effect.attackEffect;
+    const base = effect.player;
 
-    const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
-    applyWeakness.target = effect.target;
-    applyWeakness.ignoreWeakness = base.ignoreWeakness;
-    applyWeakness.ignoreResistance = base.ignoreResistance;
-    state = store.reduceEffect(state, applyWeakness);
+    const knockOutOpp = new KnockOutEffect(base, effect.target);
+    knockOutOpp.target = effect.target;
+    state = store.reduceEffect(state, knockOutOpp);
 
-    const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
-    dealDamage.target = effect.target;
-    state = store.reduceEffect(state, dealDamage);
+    // const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
+    // applyWeakness.target = effect.target;
+    // applyWeakness.ignoreWeakness = base.ignoreWeakness;
+    // applyWeakness.ignoreResistance = base.ignoreResistance;
+    // state = store.reduceEffect(state, applyWeakness);
+
+    // const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
+    // dealDamage.target = effect.target;
+    // state = store.reduceEffect(state, dealDamage);
 
     return state;
   }

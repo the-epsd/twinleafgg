@@ -5,6 +5,7 @@ const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Mismagius extends pokemon_card_1.PokemonCard {
@@ -37,17 +38,19 @@ class Mismagius extends pokemon_card_1.PokemonCard {
         this.name = 'Mismagius';
         this.fullName = 'Mismagius SIT';
         this.damageDealt = false;
-        this.RETALIATE_MARKER = 'RETALIATE_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.RETALIATE_MARKER);
-        }
-        if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) &&
-            effect.target.cards.includes(this)) {
-            const player = game_1.StateUtils.getOpponent(state, effect.player);
-            if (player.active.getPokemonCard() === this) {
-                this.damageDealt = true;
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.cards.includes(this)) {
+            const player = game_1.StateUtils.findOwner(state, effect.target);
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const pokemonCard = effect.target.getPokemonCard();
+            this.damageDealt = true;
+            if (pokemonCard === this && this.damageDealt === true) {
+                const checkHpEffect = new check_effects_1.CheckHpEffect(player, effect.target);
+                store.reduceEffect(state, checkHpEffect);
+                if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
+                    opponent.active.damage += 80;
+                }
             }
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player === game_1.StateUtils.getOpponent(state, effect.player)) {
@@ -55,13 +58,6 @@ class Mismagius extends pokemon_card_1.PokemonCard {
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === effect.player) {
                 this.damageDealt = false;
-            }
-        }
-        if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this) && this.damageDealt) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (this.hp == this.hp) {
-                opponent.active.damage += 80;
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

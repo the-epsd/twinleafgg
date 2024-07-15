@@ -57,7 +57,7 @@ export class Haxorus extends PokemonCard {
 
       if (specialEnergyCount > 0) {
         if (pokemon) {
-          const dealDamage = new KnockOutOpponentEffect(effect, 999);
+          const dealDamage = new KnockOutOpponentEffect(effect, opponent.active);
           dealDamage.target = opponent.active;
           store.reduceEffect(state, dealDamage);
         }

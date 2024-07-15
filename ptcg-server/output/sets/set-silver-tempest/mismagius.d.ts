@@ -33,6 +33,5 @@ export declare class Mismagius extends PokemonCard {
     name: string;
     fullName: string;
     damageDealt: boolean;
-    readonly RETALIATE_MARKER = "RETALIATE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

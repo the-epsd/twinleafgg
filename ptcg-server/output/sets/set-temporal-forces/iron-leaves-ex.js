@@ -27,7 +27,7 @@ class IronLeavesex extends pokemon_card_1.PokemonCard {
                 name: 'Prismatic Edge',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS],
                 damage: 180,
-                text: game_1.GameMessage.MOVE_ENERGY_CARDS,
+                text: 'During your next turn, this Pokémon can\'t attack.',
             }
         ];
         this.set = 'TEF';
