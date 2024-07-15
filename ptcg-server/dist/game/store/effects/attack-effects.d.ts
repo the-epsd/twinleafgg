@@ -64,8 +64,9 @@ export declare class PutCountersEffect extends AbstractAttackEffect implements E
 export declare class KnockOutOpponentEffect extends AbstractAttackEffect implements Effect {
     readonly type: string;
     preventDefault: boolean;
-    damage: number;
-    constructor(base: AttackEffect, damage: number);
+    target: PokemonCardList;
+    prizeCount: number;
+    constructor(base: AttackEffect, target: PokemonCardList);
 }
 export declare class DiscardCardsEffect extends AbstractAttackEffect implements Effect {
     readonly type: string;

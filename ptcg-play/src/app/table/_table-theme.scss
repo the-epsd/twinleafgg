@@ -28,7 +28,7 @@
   ptcg-board-card,
   ptcg-board-card-list {
     .empty {
-      fill: red;
+      // fill: $table-border;
       outline: $table-border;
     }
   }

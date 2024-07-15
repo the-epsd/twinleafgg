@@ -1,15 +1,27 @@
 <div class="ptcg-board-deck">
-  <div class="deck-container">
-    <ng-container *ngFor="let i of createRange(deck.cards.length); let idx = index">
-      <ptcg-board-card (click)="onDeckClick()" [cardList]="deck" [owner]="isOwner" class="deck-card"
-        [style.transform]="isOwner ? 'translate(' + (idx * 0.25) + 'px, ' + (idx * -0.25) + 'px)' : 'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'"></ptcg-board-card>
-    </ng-container>
+  <div class="deck-wrapper">
+    <div class="deck-container">
+      <ng-container *ngFor="let i of createRange(deck.cards.length); let idx = index">
+        <ptcg-board-card (click)="onDeckClick()" [cardList]="deck" [owner]="isOwner" class="deck-card"
+          [style.transform]="isOwner ? 'translate(' + (idx * 0.25) + 'px, ' + (idx * -0.25) + 'px)' : 'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'"></ptcg-board-card>
+      </ng-container>
+    </div>
+    <!-- <div class="deck-count">
+      <ptcg-badge>
+        {{ 'TABLE_DECK_COUNT' | translate: { count: deck.cards.length } }}
+      </ptcg-badge> -->
   </div>
-
-  <div class="discard-container">
-    <ng-container *ngFor="let i of createRange(discard.cards.length); let idx = index">
-      <ptcg-board-card (cardClick)="onDiscardClick($event)" [cardList]="discard" [owner]="isOwner" class="discard-card"
-        [style.transform]="isOwner ? 'translate(' + (idx * 0.25) + 'px, ' + (idx * -0.25) + 'px)' : 'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'"></ptcg-board-card>
-    </ng-container>
+  <div class="discard-wrapper">
+    <div class="discard-container">
+      <ng-container *ngFor="let i of createRange(discard.cards.length); let idx = index">
+        <ptcg-board-card (cardClick)="onDiscardClick($event)" [cardList]="discard" [owner]="isOwner"
+          class="discard-card"
+          [style.transform]="isOwner ? 'translate(' + (idx * 0.25) + 'px, ' + (idx * -0.25) + 'px)' : 'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'"></ptcg-board-card>
+      </ng-container>
+    </div>
+    <!-- <div class="discard-count">
+      <ptcg-badge>
+        {{ 'TABLE_DISCARD_COUNT' | translate: { count: discard.cards.length } }}
+      </ptcg-badge> -->
   </div>
 </div>

@@ -10,7 +10,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Scovillain extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.regulationMark = 'G';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 110;

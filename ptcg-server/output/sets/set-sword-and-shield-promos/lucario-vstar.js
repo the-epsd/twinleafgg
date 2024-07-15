@@ -9,7 +9,7 @@ const game_1 = require("../../game");
 class LucarioVSTAR extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.VSTAR;
         this.tags = [card_types_1.CardTag.POKEMON_VSTAR];
         this.evolvesFrom = 'Lucario V';
         this.cardType = card_types_1.CardType.FIGHTING;
@@ -46,20 +46,19 @@ class LucarioVSTAR extends pokemon_card_1.PokemonCard {
                 effect.damage += 120;
                 return state;
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-                if (player.usedVSTAR === true) {
-                    throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
-                }
-                let totalEnergy = 0;
-                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
-                    totalEnergy += cardList.cards.filter(c => c instanceof game_1.EnergyCard).length;
-                });
-                effect.damage += totalEnergy * 70;
-                player.usedVSTAR = true;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            if (player.usedVSTAR === true) {
+                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
-            return state;
+            let totalEnergy = 0;
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
+                totalEnergy += cardList.cards.filter(c => c instanceof game_1.EnergyCard).length;
+            });
+            effect.damage += totalEnergy * 70;
+            player.usedVSTAR = true;
         }
         return state;
     }

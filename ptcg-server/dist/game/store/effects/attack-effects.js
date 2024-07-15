@@ -68,11 +68,12 @@ export class PutCountersEffect extends AbstractAttackEffect {
     }
 }
 export class KnockOutOpponentEffect extends AbstractAttackEffect {
-    constructor(base, damage) {
+    constructor(base, target) {
         super(base);
         this.type = AttackEffects.KNOCK_OUT_OPPONENT_EFFECT;
         this.preventDefault = false;
-        this.damage = damage;
+        this.target = target;
+        this.prizeCount = 1;
     }
 }
 export class DiscardCardsEffect extends AbstractAttackEffect {

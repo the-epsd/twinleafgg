@@ -7,7 +7,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Slowbro extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.BASIC;
+        this.stage = game_1.Stage.STAGE_1;
         this.evolvesFrom = 'Slowpoke';
         this.cardType = game_1.CardType.WATER;
         this.hp = 120;

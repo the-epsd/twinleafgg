@@ -19,8 +19,7 @@
 
       <!-- Player's hand -->
       <div class="opp-hand">
-        <ptcg-hand [gameState]="gameState" [player]="topPlayer">
-        </ptcg-hand>
+        <ptcg-hand [player]="topPlayer" [gameState]="gameState" [clientId]="clientId" [isOpponent]="true"></ptcg-hand>
       </div>
       <ptcg-board [clientId]="clientId" [gameState]="gameState" [topPlayer]="topPlayer" [bottomPlayer]="bottomPlayer">
       </ptcg-board>

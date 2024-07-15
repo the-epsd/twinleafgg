@@ -60,7 +60,6 @@ export class Mismagius extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const pokemonCard = effect.target.getPokemonCard();
 
-
       this.damageDealt = true;
 
       if (pokemonCard === this && this.damageDealt === true) {

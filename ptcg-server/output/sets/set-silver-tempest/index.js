@@ -31,7 +31,7 @@ exports.setSilverTempest = [
     new card_images_1.LugiaVArt(),
     new card_images_1.LugiaVSTARArt(),
     new card_images_1.MeowsticArt(),
-    new card_images_1.MetagrossArt(),
+    // new MetagrossArt(),
     new card_images_1.MismagiusArt(),
     new card_images_1.PalossandArt(),
     new card_images_1.PrimordialAltarArt(),

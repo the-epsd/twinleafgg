@@ -65,7 +65,6 @@ export function initNextTurn(store: StoreLike, state: State): State {
   // Draw card at the beginning
   store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
   if (player.deck.cards.length === 0) {
-
     store.log(state, GameLog.LOG_PLAYER_NO_CARDS_IN_DECK, { name: player.name });
     const winner = state.activePlayer ? GameWinner.PLAYER_1 : GameWinner.PLAYER_2;
     state = endGame(store, state, winner);
@@ -79,11 +78,15 @@ export function initNextTurn(store: StoreLike, state: State): State {
     return state;
   }
 
-
   player.deck.moveTo(player.hand, 1);
-  // const dealDamage = new BeginTurnEffect(player);
-  // dealDamage.player = player;
-  // return store.reduceEffect(state, dealDamage);
+
+  // Check the drawn card
+  //   const drawnCard = player.hand.cards[player.hand.cards.length - 1];
+  //   if (drawnCard.name === 'CARD NAME') {
+  // EFFECT HERE
+  //     console.log('DREW CARD');
+  //   }
+
   return state;
 }
 

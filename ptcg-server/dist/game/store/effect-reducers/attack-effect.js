@@ -10,8 +10,6 @@ export function attackReducer(store, state, effect) {
         if (pokemonCard === undefined) {
             throw new GameError(GameMessage.ILLEGAL_ACTION);
         }
-        const wasFullHP = target.damage === 0;
-        const maxHP = pokemonCard.hp;
         // Check if the effect is part of an attack and the target is the opponent's active Pokemon
         const opponent = StateUtils.getOpponent(state, effect.player);
         if (effect.attackEffect && target === opponent.active) {
@@ -25,9 +23,6 @@ export function attackReducer(store, state, effect) {
         }
         const damage = Math.max(0, effect.damage);
         target.damage += damage;
-        if (wasFullHP && target.damage >= maxHP) {
-            effect.wasKnockedOutFromFullHP = true;
-        }
         if (damage > 0) {
             const afterDamageEffect = new AfterDamageEffect(effect.attackEffect, damage);
             afterDamageEffect.target = effect.target;
@@ -42,10 +37,10 @@ export function attackReducer(store, state, effect) {
         return state;
     }
     if (effect instanceof KnockOutOpponentEffect) {
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        const dealDamage = new KnockOutEffect(opponent, effect.target);
-        dealDamage.target = effect.target;
-        state = store.reduceEffect(state, dealDamage);
+        const base = effect.player;
+        const knockOutOpp = new KnockOutEffect(base, effect.target);
+        knockOutOpp.target = effect.target;
+        state = store.reduceEffect(state, knockOutOpp);
         // const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
         // applyWeakness.target = effect.target;
         // applyWeakness.ignoreWeakness = base.ignoreWeakness;

@@ -68,9 +68,12 @@ function initNextTurn(store, state) {
         return state;
     }
     player.deck.moveTo(player.hand, 1);
-    // const dealDamage = new BeginTurnEffect(player);
-    // dealDamage.player = player;
-    // return store.reduceEffect(state, dealDamage);
+    // Check the drawn card
+    //   const drawnCard = player.hand.cards[player.hand.cards.length - 1];
+    //   if (drawnCard.name === 'CARD NAME') {
+    // EFFECT HERE
+    //     console.log('DREW CARD');
+    //   }
     return state;
 }
 exports.initNextTurn = initNextTurn;

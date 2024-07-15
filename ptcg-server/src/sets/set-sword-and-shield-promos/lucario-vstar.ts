@@ -62,23 +62,22 @@ export class LucarioVSTAR extends PokemonCard {
         effect.damage += 120;
         return state;
       }
+    }
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-        if (player.usedVSTAR === true) {
-          throw new GameError(GameMessage.LABEL_VSTAR_USED);
-        }
-
-        let totalEnergy = 0;
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-          totalEnergy += cardList.cards.filter(c => c instanceof EnergyCard).length;
-        });
-        effect.damage += totalEnergy * 70;
-        player.usedVSTAR = true;
+      if (player.usedVSTAR === true) {
+        throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
-      return state;
+
+      let totalEnergy = 0;
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        totalEnergy += cardList.cards.filter(c => c instanceof EnergyCard).length;
+      });
+      effect.damage += totalEnergy * 70;
+      player.usedVSTAR = true;
     }
     return state;
   }

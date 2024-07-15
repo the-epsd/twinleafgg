@@ -9,7 +9,7 @@ export class Metagross extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 
-  //   public evolvesFrom = 'Metang';
+  public evolvesFrom = 'Metang';
 
   public regulationMark = 'F';
 
@@ -26,6 +26,7 @@ export class Metagross extends PokemonCard {
   public powers = [{
     name: 'Emergency Entry',
     powerType: PowerType.ABILITY,
+    useFromHand: true,
     text: 'Once during your turn, if you drew this Pokémon from your deck at the beginning of your turn and your Bench isn\'t full, before you put it into your hand, you may put it onto your Bench. If you do, draw 3 cards.'
   }];
 
@@ -63,6 +64,42 @@ export class Metagross extends PokemonCard {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
+
+    // const player = state.players[state.activePlayer];
+
+    // if (player.drewMetagross == true) {
+    //   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+
+    //   // No open slots, throw error
+    //   if (slots.length === 0) {
+    //     return state;
+    //   }
+
+    //   // Try to reduce PowerEffect, to check if something is blocking our ability
+    //   try {
+    //     const stub = new PowerEffect(player, {
+    //       name: 'test',
+    //       powerType: PowerType.ABILITY,
+    //       text: ''
+    //     }, this);
+    //     store.reduceEffect(state, stub);
+    //   } catch {
+    //     return state;
+    //   }
+    //   state = store.prompt(state, new ConfirmPrompt(
+    //     player.id,
+    //     GameMessage.WANT_TO_USE_ABILITY,
+    //   ), wantToUse => {
+    //     if (wantToUse) {
+
+    //       const cards = player.hand.cards.filter(c => c === this);
+    //       cards.forEach(card => {
+    //         player.hand.moveCardTo(card, slots[0]); // Move to Bench
+    //       });
+    //     }
+    //   });
+    // }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker

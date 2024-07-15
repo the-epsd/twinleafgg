@@ -90,26 +90,25 @@ export class DeoxysVSTAR extends PokemonCard {
         damageEffect.target = targets[0];
         store.reduceEffect(state, damageEffect);
       });
+    }
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-        if (player.usedVSTAR === true) {
-          throw new GameError(GameMessage.LABEL_VSTAR_USED);
-        }
-
-        player.usedVSTAR = true;
-
-        const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
-        const checkProvidedEnergyEffect2 = new CheckProvidedEnergyEffect(player);
-        store.reduceEffect(state, checkProvidedEnergyEffect);
-        const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
-        const energyCount2 = checkProvidedEnergyEffect2.energyMap.reduce((left, p) => left + p.provides.length, 0);
-
-        effect.damage += energyCount + energyCount2 * 60;
+      if (player.usedVSTAR === true) {
+        throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
-      return state;
+
+      player.usedVSTAR = true;
+
+      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
+      const checkProvidedEnergyEffect2 = new CheckProvidedEnergyEffect(player);
+      store.reduceEffect(state, checkProvidedEnergyEffect);
+      const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
+      const energyCount2 = checkProvidedEnergyEffect2.energyMap.reduce((left, p) => left + p.provides.length, 0);
+
+      effect.damage += energyCount + energyCount2 * 60;
     }
     return state;
   }
