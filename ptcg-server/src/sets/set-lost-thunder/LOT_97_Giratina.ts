@@ -62,6 +62,25 @@ export class Giratina extends PokemonCard {
 
       // Add Marker
       player.marker.addMarker(this.DISTORTION_DOOR_MARKER, this);
+
+      const cards = player.discard.cards.filter(c => c === this);
+      cards.forEach(card => {
+        player.discard.moveCardTo(card, slots[0]); // Move to Bench
+      });
+
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.BENCH],
+        { min: 1, max: 2, allowCancel: false },
+      ), selected => {
+        const targets = selected || [];
+        targets.forEach(target => {
+          target.damage += 10;
+        });
+      });
+
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
