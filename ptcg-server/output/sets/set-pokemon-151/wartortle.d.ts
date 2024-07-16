@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class Wartortle extends PokemonCard {
     regulationMark: string;
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {

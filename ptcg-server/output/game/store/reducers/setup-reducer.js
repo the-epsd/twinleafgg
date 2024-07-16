@@ -46,7 +46,7 @@ function* setupGame(next, store, state) {
     }
     else {
         const coinFlipPrompt = new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.SETUP_WHO_BEGINS_FLIP);
-        store.prompt(state, coinFlipPrompt, whoBegins => {
+        yield store.prompt(state, coinFlipPrompt, whoBegins => {
             const goFirstPrompt = new select_prompt_1.SelectPrompt(whoBegins ? player.id : opponent.id, game_message_1.GameMessage.GO_FIRST, [game_message_1.GameMessage.YES, game_message_1.GameMessage.NO]);
             store.prompt(state, goFirstPrompt, choice => {
                 if (choice === 0) {
@@ -55,6 +55,7 @@ function* setupGame(next, store, state) {
                 else {
                     state.activePlayer = whoBegins ? 1 : 0;
                 }
+                next();
             });
         });
     }

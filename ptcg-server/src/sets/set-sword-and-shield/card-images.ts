@@ -18,6 +18,7 @@ import { Snom } from './snom';
 import { Sobble } from './sobble';
 import { Toxicroak } from './SSH_124_Toxicroak';
 import { GalarianPerrserker } from './SSH_128_Galarian_Perrserker';
+import { Ferroseed } from './SSH_130_Ferroseed';
 import { Raboot } from './SSH_32_Raboot';
 import { Cinderace } from './SSH_34_Cinderace';
 import { Centiskorch } from './SSH_39_Centiskorch';
@@ -53,6 +54,10 @@ export class DrizzileArt extends Drizzile {
 
 export class EvolutionIncenseArt extends EvolutionIncense {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_163_R_EN_LG.png';
+}
+
+export class FerroseedArt extends Ferroseed {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_130_R_EN_LG.png';
 }
 
 export class GalarianPerrserkerArt extends GalarianPerrserker {

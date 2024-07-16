@@ -48,6 +48,7 @@ class Starmie extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.name = 'Starmie';
         this.set = 'EVO';
+        this.evolvesFrom = 'Staryu';
         this.fullName = 'Starmie EVO';
         this.setNumber = '31';
         this.cardType = card_types_1.CardType.WATER;

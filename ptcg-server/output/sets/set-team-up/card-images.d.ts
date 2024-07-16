@@ -10,6 +10,7 @@ import { MetalGoggles } from './metal-goggles';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
 import { Pawniard } from './TEU_104_Pawniard';
+import { Bisharp } from './TEU_105_Bisharp';
 import { Persian } from './TEU_126_Persian';
 import { Moltres } from './TEU_19_Moltres';
 import { Absol } from './TEU_88_Absol';
@@ -20,6 +21,9 @@ export declare class AbsolArt extends Absol {
     cardImage: string;
 }
 export declare class AlolanMukArt extends AlolanMuk {
+    cardImage: string;
+}
+export declare class BisharpArt extends Bisharp {
     cardImage: string;
 }
 export declare class BronzorArt extends Bronzor {

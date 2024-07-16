@@ -60,10 +60,6 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            const hasBench = player.bench.some(b => b.cards.length > 0);
-            if (!hasBench) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-            }
             const hasEnergyInDiscard = player.discard.cards.some(c => {
                 return c instanceof game_1.EnergyCard
                     && c.energyType === card_types_1.EnergyType.BASIC
@@ -72,10 +68,23 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
             if (!hasEnergyInDiscard) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (player.attackMarker.hasMarker(this.DINO_CRY_MARKER, this)) {
-                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+            let fightingPokemonOnBench = false;
+            player.bench.forEach(benchSpot => {
+                const card = benchSpot.getPokemonCard();
+                if (card && card.cardType === card_types_1.CardType.FIRE && card.stage === card_types_1.Stage.BASIC) {
+                    fightingPokemonOnBench = true;
+                }
+            });
+            if (!fightingPokemonOnBench) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { allowCancel: false, min: 1, max: 2 }), transfers => {
+            const blocked2 = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+                if (card.cardType !== card_types_1.CardType.FIRE) {
+                    blocked2.push(target);
+                }
+            });
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { allowCancel: false, min: 1, max: 2, blockedTo: blocked2 }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {
@@ -90,7 +99,6 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
                     return state;
                 }
             });
-            return state;
         }
         return state;
     }

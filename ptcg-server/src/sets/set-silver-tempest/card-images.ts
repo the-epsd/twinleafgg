@@ -12,6 +12,7 @@ import { Cobalion } from './cobalion';
 import { Crobat } from './crobat';
 import { Dragonite } from './dragonite';
 import { Drakloak } from './drakloak';
+import { Dreepy } from './dreepy';
 import { Elgyem } from './elgyem';
 import { EmergencyJelly } from './emergency-jelly';
 import { Feebas } from './feebas';
@@ -111,6 +112,10 @@ export class DragoniteArt extends Dragonite {
 
 export class DrakloakArt extends Drakloak {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_088_R_EN.png';
+}
+
+export class DreepyArt extends Dreepy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_087_R_EN.png';
 }
 
 export class ElgyemArt extends Elgyem {

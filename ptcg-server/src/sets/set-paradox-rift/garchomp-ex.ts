@@ -12,30 +12,30 @@ export class Garchompex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
-  
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+
   public stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Gabite';
 
-  public  cardType = CardType.WATER;
+  public cardType = CardType.WATER;
 
   public hp = 320;
 
-  public weakness = [{type: CardType.LIGHTNING}];
+  public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public attacks = [
     {
       name: 'Hydro Lander',
-      cost: [ CardType.FIGHTING ],
+      cost: [CardType.FIGHTING],
       damage: 160,
       text: 'You may attach up to 3 Basic F Energy from your discard pile to your Benched Pokémon in any way you like.'
     },
     {
       name: 'Sonic Dive',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
       text: 'Discard 2 Energy from this Pokémon. This attack does 120 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
@@ -43,11 +43,37 @@ export class Garchompex extends PokemonCard {
 
   public set: string = 'PAR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '6';
+  public setNumber: string = '38';
   public name: string = 'Garchomp ex';
   public fullName: string = 'Garchomp ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      const player = effect.player;
+
+      state = store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        player.discard,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
+        { allowCancel: false, min: 0, max: 3 },
+      ), transfers => {
+        transfers = transfers || [];
+        // cancelled by user
+        if (transfers.length === 0) {
+          return state;
+        }
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.discard.moveCardTo(transfer.card, target);
+        }
+      });
+      return state;
+    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
@@ -59,7 +85,7 @@ export class Garchompex extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.COLORLESS, CardType.COLORLESS],
+        [CardType.COLORLESS, CardType.COLORLESS],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);
@@ -72,7 +98,7 @@ export class Garchompex extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];
@@ -81,35 +107,8 @@ export class Garchompex extends PokemonCard {
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });
-        return state; 
+        return state;
       });
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      const player = effect.player;
-  
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
-        { allowCancel: true, min: 0, max: 3 },
-      ), transfers => {
-        transfers = transfers || [];
-        // cancelled by user
-        if (transfers.length === 0) {
-          return state;
-        }
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-        }
-      });
-
-      return state; 
     }
     return state;
   }

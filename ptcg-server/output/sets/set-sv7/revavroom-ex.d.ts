@@ -31,5 +31,6 @@ export declare class Revavroomex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    discardRevavroom: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

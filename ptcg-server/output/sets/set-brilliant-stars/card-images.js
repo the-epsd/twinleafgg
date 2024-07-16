@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TorterraArt = exports.TeamYellsCheerArt = exports.ShayminVSTARArt = exports.ShayminVArt = exports.RoseannesBackupArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.MinccinoArt = exports.ManaphyArt = exports.MagmortarArt = exports.MagmaBasinArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.KindlerArt = exports.HeatranArt = exports.GrotleArt = exports.GloriaArt = exports.GarchompArt = exports.FloatzelArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.ElectabuzzArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BidoofArt = exports.BibarelArt = exports.AxewArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = exports.AcerolasPremonitionArt = void 0;
+exports.TorterraArt = exports.TeamYellsCheerArt = exports.ShayminVSTARArt = exports.ShayminVArt = exports.RoseannesBackupArt = exports.RaikouVArt = exports.RaichuVArt = exports.PurrloinArt = exports.PotHelmetArt = exports.MoltresArt = exports.MinccinoArt = exports.ManaphyArt = exports.MagmortarArt = exports.MagmaBasinArt = exports.LumineonVArt = exports.LiepardArt = exports.LaprasArt = exports.KindlerArt = exports.HeatranArt = exports.HaxorusArt = exports.GrotleArt = exports.GloriaArt = exports.GarchompArt = exports.FloatzelArt = exports.EnteiVArt = exports.EmpoleonArt = exports.ElectivireArt = exports.ElectabuzzArt = exports.DruddigonArt = exports.DoubleTurboEnergyArt = exports.CynthiasAmbitionArt = exports.CollapsedStadiumArt = exports.CleansingGlovesArt = exports.CherensCareArt = exports.BidoofArt = exports.BibarelArt = exports.AxewArt = exports.ArceusVSTARArt = exports.ArceusVArt = exports.AggronVMAXArt = exports.AggronVArt = exports.AcerolasPremonitionArt = void 0;
 const acerolas_premonition_1 = require("./acerolas-premonition");
 const aggron_v_1 = require("./aggron-v");
 const aggron_vmax_1 = require("./aggron-vmax");
@@ -10,6 +10,7 @@ const axew_1 = require("./axew");
 const bibarel_1 = require("./bibarel");
 const bidoof_1 = require("./bidoof");
 const BRS_100_Heatran_1 = require("./BRS_100_Heatran");
+const BRS_112_Haxorus_1 = require("./BRS_112_Haxorus");
 const cherens_care_1 = require("./cherens-care");
 const cleansing_gloves_1 = require("./cleansing-gloves");
 const collapsed_stadium_1 = require("./collapsed-stadium");
@@ -196,6 +197,13 @@ class GrotleArt extends grotle_1.Grotle {
     }
 }
 exports.GrotleArt = GrotleArt;
+class HaxorusArt extends BRS_112_Haxorus_1.Haxorus {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_112_R_EN_LG.png';
+    }
+}
+exports.HaxorusArt = HaxorusArt;
 class HeatranArt extends BRS_100_Heatran_1.Heatran {
     constructor() {
         super(...arguments);

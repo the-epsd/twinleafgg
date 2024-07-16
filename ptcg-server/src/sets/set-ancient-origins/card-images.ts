@@ -1,5 +1,10 @@
+import { EcoArm } from './eco-arm';
 import { HexManiac } from './hex-maniac';
 import { Unown } from './unown';
+
+export class EcoArmArt extends EcoArm {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/AOR/AOR_071_R_EN_LG.png';
+}
 
 export class HexManiacArt extends HexManiac {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/AOR/AOR_075_R_EN_LG.png';

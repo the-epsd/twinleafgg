@@ -80,9 +80,9 @@ export class Gengar extends PokemonCard {
       player.marker.addMarker(this.NETHERWORLD_GATE_MARKER, this);
 
       const cards = player.discard.cards.filter(c => c === this);
-      cards.forEach(card => {
-        player.discard.moveCardTo(card, slots[0]); // Move to Bench
-        slots[0].damage += 30; // Add 30 damage
+      cards.forEach((card, index) => {
+        player.discard.moveCardTo(card, slots[index]);
+        slots[index].damage += 30; // Add 30 damage
       });
 
       if (effect instanceof EndTurnEffect) {

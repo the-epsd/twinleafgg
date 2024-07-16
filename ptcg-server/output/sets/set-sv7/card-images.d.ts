@@ -28,6 +28,7 @@ import { Hoothoot } from './hoothoot';
 import { Horsea } from './horsea';
 import { Houndoom } from './houndoom';
 import { Houndour } from './houndour';
+import { Hydrappleex } from './hydrapple-ex';
 import { JaninesSecretTechnique } from './janines-secret-technique';
 import { Joltik } from './joltik';
 import { Kingdraex } from './kingdra-ex';
@@ -139,6 +140,9 @@ export declare class HoundoomArt extends Houndoom {
     cardImage: string;
 }
 export declare class HoundourArt extends Houndour {
+    cardImage: string;
+}
+export declare class HydrappleexArt extends Hydrappleex {
     cardImage: string;
 }
 export declare class JaninesSecretTechniqueArt extends JaninesSecretTechnique {

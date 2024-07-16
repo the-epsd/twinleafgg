@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StarmieVArt = exports.SpicySeasonedCurryArt = exports.RoxanneArt = exports.RegisteelArt = exports.RegirockArt = exports.RegigigasArt = exports.RegielekiArt = exports.RegidragoArt = exports.RegiceArt = exports.RaltsArt = exports.RadiantHawluchaArt = exports.RadiantGreninjaArt = exports.OriginFormePalkiaVSTARArt = exports.OriginFormePalkiaVArt = exports.OriginFormeDialgaVSTARArt = exports.OriginFormeDialgaVArt = exports.MiltankArt = exports.MightyenaArt = exports.MantineArt = exports.MagnetonArt = exports.LuxrayVArt = exports.LucarioVArt = exports.KricketuneArt = exports.KleavorArt = exports.KeldeoArt = exports.JubilifeVillageArt = exports.IridaArt = exports.HisuianSamurottVSTARArt = exports.HisuianSamurottVArt = exports.HisuianQwilfishArt2 = exports.HisuianQwilfishArt = exports.HisuianOverqwilArt = exports.HisuianHeavyBallArt = exports.HisuianGrowlitheArt = exports.HisuianBasculinArt = exports.HisuianArcanineArt = exports.GutsyPickaxeArt = exports.GrantArt = exports.GardeniasVigorArt = exports.GapejawBogArt = exports.GalladeArt = exports.FeatherBallArt = exports.EnergyLotoArt = exports.DiancieArt = exports.DarkraiVSTARArt = exports.DarkraiVArt = exports.DarkPatchArt = exports.CylleneArt = exports.CancelingCologneArt = exports.AdamanArt = void 0;
-exports.WyrdeerVArt = exports.UrsalunaArt = exports.TrekkingShoesArt = exports.TempleofSinnohArt = exports.SwitchCartArt = exports.SupereffectiveGlassesArt = void 0;
+exports.ShieldonArt = exports.RoxanneArt = exports.RegisteelArt = exports.RegirockArt = exports.RegigigasArt = exports.RegielekiArt = exports.RegidragoArt = exports.RegiceArt = exports.RaltsArt = exports.RadiantHawluchaArt = exports.RadiantGreninjaArt = exports.OriginFormePalkiaVSTARArt = exports.OriginFormePalkiaVArt = exports.OriginFormeDialgaVSTARArt = exports.OriginFormeDialgaVArt = exports.MiltankArt = exports.MightyenaArt = exports.MantineArt = exports.MagnetonArt = exports.LuxrayVArt = exports.LucarioVArt = exports.KricketuneArt = exports.KleavorArt = exports.KeldeoArt = exports.JubilifeVillageArt = exports.IridaArt = exports.HisuianSamurottVSTARArt = exports.HisuianSamurottVArt = exports.HisuianQwilfishArt2 = exports.HisuianQwilfishArt = exports.HisuianOverqwilArt = exports.HisuianHeavyBallArt = exports.HisuianGrowlitheArt = exports.HisuianBasculinArt = exports.HisuianArcanineArt = exports.GutsyPickaxeArt = exports.GrantArt = exports.GardeniasVigorArt = exports.GapejawBogArt = exports.GalladeArt = exports.FeatherBallArt = exports.EnergyLotoArt = exports.DiancieArt = exports.DarkraiVSTARArt = exports.DarkraiVArt = exports.DarkPatchArt = exports.CylleneArt = exports.CancelingCologneArt = exports.BronzorArt = exports.AdamanArt = void 0;
+exports.WyrdeerVArt = exports.UrsalunaArt = exports.TrekkingShoesArt = exports.TempleofSinnohArt = exports.SwitchCartArt = exports.SupereffectiveGlassesArt = exports.StarmieVArt = exports.SpicySeasonedCurryArt = void 0;
 const adaman_1 = require("./adaman");
+const ASR_109_Shieldon_1 = require("./ASR_109_Shieldon");
+const ASR_111_Bronzor_1 = require("./ASR_111_Bronzor");
 const ASR_70_Hisuian_Growlithe_1 = require("./ASR_70_Hisuian_Growlithe");
 const ASR_88_Hisuian_Qwilfish_1 = require("./ASR_88_Hisuian_Qwilfish");
 const ASR_89_Hisuian_Qwilfish_1 = require("./ASR_89_Hisuian_Qwilfish");
@@ -65,6 +67,13 @@ class AdamanArt extends adaman_1.Adaman {
     }
 }
 exports.AdamanArt = AdamanArt;
+class BronzorArt extends ASR_111_Bronzor_1.Bronzor {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_111_R_EN_LG.png';
+    }
+}
+exports.BronzorArt = BronzorArt;
 class CancelingCologneArt extends canceling_cologne_1.CancelingCologne {
     constructor() {
         super(...arguments);
@@ -394,6 +403,13 @@ class RoxanneArt extends roxanne_1.Roxanne {
     }
 }
 exports.RoxanneArt = RoxanneArt;
+class ShieldonArt extends ASR_109_Shieldon_1.Shieldon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_109_R_EN_LG.png';
+    }
+}
+exports.ShieldonArt = ShieldonArt;
 class SpicySeasonedCurryArt extends spicy_seasoned_curry_1.SpicySeasonedCurry {
     constructor() {
         super(...arguments);

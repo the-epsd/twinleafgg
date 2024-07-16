@@ -11,7 +11,7 @@ class Espathraex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
-        this.stage = card_types_1.Stage.STAGE_1;
+        this.stage = card_types_1.Stage.BASIC;
         this.evolvesFrom = 'Flittle';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 260;
@@ -39,17 +39,29 @@ class Espathraex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Espathra ex PAF';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        if (effect instanceof check_effects_1.CheckAttackCostEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (player.active.cards[0] !== this) {
-                return state; // Not active
+            // const isEspathraexInActive = player.active.cards[0] === this;
+            // if (!isEspathraexInActive) {
+            //   return state;
+            // }
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
             }
-            if (opponent.active) {
-                if (effect instanceof check_effects_1.CheckAttackCostEffect) {
-                    effect.cost.push(card_types_1.CardType.COLORLESS);
-                }
+            catch (_a) {
+                return state;
             }
+            const opponentActive = opponent.active.getPokemonCard();
+            if (opponentActive && !state.activePlayer) {
+                effect.cost.push(card_types_1.CardType.COLORLESS);
+            }
+            return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;

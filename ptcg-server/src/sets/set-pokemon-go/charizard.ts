@@ -22,6 +22,8 @@ export class Charizard extends PokemonCard {
   public set = 'PGO';
 
   public setNumber = '53';
+  
+  public stage: Stage = Stage.STAGE_2;
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -32,8 +34,6 @@ export class Charizard extends PokemonCard {
   public cardType: CardType = CardType.FIRE;
 
   public evolvesFrom: string = 'Charmeleon';
-
-  public stage: Stage = Stage.BASIC;
 
   public hp: number = 170;
 

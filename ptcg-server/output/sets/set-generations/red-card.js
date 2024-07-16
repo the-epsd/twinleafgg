@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ResetStamp = void 0;
+exports.RedCard = void 0;
 const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const state_utils_1 = require("../../game/store/state-utils");
-class ResetStamp extends trainer_card_1.TrainerCard {
+class RedCard extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
@@ -35,4 +35,4 @@ class ResetStamp extends trainer_card_1.TrainerCard {
         return state;
     }
 }
-exports.ResetStamp = ResetStamp;
+exports.RedCard = RedCard;

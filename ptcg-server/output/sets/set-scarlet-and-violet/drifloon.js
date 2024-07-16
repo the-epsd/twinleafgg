@@ -23,7 +23,7 @@ class Drifloon extends pokemon_card_1.PokemonCard {
                 text: ''
             },
             {
-                name: 'Balloon Burst',
+                name: 'Balloon Blast',
                 cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC],
                 damage: 30,
                 text: 'This attack does 30 damage for each damage counter on this Pokémon.'

@@ -10,7 +10,7 @@ export class Feraligatr extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public stage: Stage = Stage.STAGE_2;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Croconaw';
 
@@ -72,7 +72,9 @@ export class Feraligatr extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
+      if (effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this)) {
+        effect.damage += 120;
+      }
       // Check marker
       if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');
@@ -104,10 +106,6 @@ export class Feraligatr extends PokemonCard {
           cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
         }
       });
-
-      if (effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this)) {
-        effect.damage += 120;
-      }
     }
     return state;
   }

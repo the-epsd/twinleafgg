@@ -1,16 +1,16 @@
-import { Card } from '../../game/store/card/card';
+import { EnergyCard, GameError, PokemonCard } from '../../game';
 import { GameMessage } from '../../game/game-message';
-import { Effect } from '../../game/store/effects/effect';
+import { Card } from '../../game/store/card/card';
+import { CardType, EnergyType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardType, EnergyType, Stage } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { StateUtils } from '../../game/store/state-utils';
+import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { EnergyCard, GameError, PokemonCard } from '../../game';
+import { StateUtils } from '../../game/store/state-utils';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Tulip, effect: TrainerEffect): IterableIterator<State> {
@@ -34,7 +34,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.discard.cards.forEach((c, index) => {
     if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Psychic Energy') {
       energies += 1;
-    } else if (c instanceof PokemonCard && c.cardType === CardType.PSYCHIC && c.stage === Stage.BASIC) {
+    } else if (c instanceof PokemonCard && c.cardType === CardType.PSYCHIC) {
       pokemons += 1;
     } else {
       blocked.push(index);

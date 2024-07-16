@@ -13,6 +13,8 @@ export class Wartortle extends PokemonCard {
   
   public stage = Stage.STAGE_1;
   
+  public evolvesFrom = 'Squirtle';
+  
   public cardType = CardType.WATER;
 
   public hp = 100;

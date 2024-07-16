@@ -9,6 +9,7 @@ import { Duraludon } from './duraludon';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
 import { GalarianMeowth } from './RCL_126_Galarian_Meowth';
+import { Honedge } from './RCL_133_Honedge';
 import { Vulpix } from './RCL_24_Vulpix';
 import { Arrokuda } from './RCL_52_Arrokuda';
 import { Barraskewda } from './RCL_53_Barraskewda';
@@ -47,6 +48,9 @@ export declare class DuraludonArt extends Duraludon {
     cardImage: string;
 }
 export declare class GalarianMeowthArt extends GalarianMeowth {
+    cardImage: string;
+}
+export declare class HonedgeArt extends Honedge {
     cardImage: string;
 }
 export declare class HorrorPsychicEnergyArt extends HorrorPsychicEnergy {

@@ -1,5 +1,9 @@
+import { EcoArm } from './eco-arm';
 import { HexManiac } from './hex-maniac';
 import { Unown } from './unown';
+export declare class EcoArmArt extends EcoArm {
+    cardImage: string;
+}
 export declare class HexManiacArt extends HexManiac {
     cardImage: string;
 }
