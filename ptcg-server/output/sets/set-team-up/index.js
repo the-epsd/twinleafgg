@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setTeamUp = [
     // new AbsolArt(), something weird is going on with checking retreat cost and adding retreat cost; attack works though
     new card_images_1.AlolanMukArt(),
+    new card_images_1.BisharpArt(),
     new card_images_1.BronzorArt(),
     new card_images_1.DragoniteArt(),
     new card_images_1.HitmonchanArt(),
@@ -14,7 +15,7 @@ exports.setTeamUp = [
     new card_images_1.MareepArt(),
     new card_images_1.MetalGogglesArt(),
     new card_images_1.MoltresArt(),
-    // new PawniardArt(),
+    new card_images_1.PawniardArt(),
     new card_images_1.PersianArt(),
     new card_images_1.PidgeottoArt(),
     new card_images_1.PokemonCommunicationArt(),

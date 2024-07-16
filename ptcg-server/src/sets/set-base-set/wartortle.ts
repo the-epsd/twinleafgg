@@ -1,8 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils,
-  GameMessage, PlayerType, CoinFlipPrompt, 
-  PokemonCardList} from '../../game';
+import {
+  StoreLike, State, StateUtils,
+  GameMessage, PlayerType, CoinFlipPrompt,
+  PokemonCardList
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -20,16 +22,16 @@ export class Wartortle extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Withdraw',
-    cost: [ CardType.WATER, CardType.COLORLESS ],
+    cost: [CardType.WATER, CardType.COLORLESS],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all damage done to Wartortle during your opponent\'s next turn. (Any other effects of attacks still happen.)'
   }, {
     name: 'Bite',
-    cost: [ CardType.WATER, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
     damage: 40,
     text: ''
   }];
@@ -55,10 +57,11 @@ export class Wartortle extends PokemonCard {
       });
     }
 
-    if (effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
-      effect.preventDefault = true;
-      return state;
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+      if (effect.target.marker.hasMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+        effect.preventDefault = true;
+        return state;
+      }
     }
 
     if (effect instanceof EndTurnEffect

@@ -1,4 +1,6 @@
 import { Adaman } from './adaman';
+import { Shieldon } from './ASR_109_Shieldon';
+import { Bronzor } from './ASR_111_Bronzor';
 import { HisuianGrowlithe } from './ASR_70_Hisuian_Growlithe';
 import { HisuianQwilfish2 } from './ASR_88_Hisuian_Qwilfish';
 import { HisuianQwilfish } from './ASR_89_Hisuian_Qwilfish';
@@ -57,6 +59,10 @@ import { WyrdeerV } from './wyrdeer-v';
 
 export class AdamanArt extends Adaman {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_135_R_EN_LG.png';
+}
+
+export class BronzorArt extends Bronzor {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_111_R_EN_LG.png';
 }
 
 export class CancelingCologneArt extends CancelingCologne {
@@ -245,6 +251,10 @@ export class RegisteelArt extends Registeel {
 
 export class RoxanneArt extends Roxanne {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_150_R_EN_LG.png';
+}
+
+export class ShieldonArt extends Shieldon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_109_R_EN_LG.png';
 }
 
 export class SpicySeasonedCurryArt extends SpicySeasonedCurry {

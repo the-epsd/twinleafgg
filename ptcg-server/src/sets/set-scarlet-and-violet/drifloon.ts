@@ -30,7 +30,7 @@ export class Drifloon extends PokemonCard {
       text: ''
     },
     {
-      name: 'Balloon Burst',
+      name: 'Balloon Blast',
       cost: [CardType.PSYCHIC, CardType.PSYCHIC],
       damage: 30,
       text: 'This attack does 30 damage for each damage counter on this Pokémon.'

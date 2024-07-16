@@ -11,7 +11,7 @@ class Feraligatr extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'H';
-        this.stage = card_types_1.Stage.STAGE_2;
+        this.stage = card_types_1.Stage.BASIC;
         this.evolvesFrom = 'Croconaw';
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 180;
@@ -55,6 +55,9 @@ class Feraligatr extends pokemon_card_1.PokemonCard {
             console.log('torrential heart marker cleared');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            if (effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this)) {
+                effect.damage += 120;
+            }
             // Check marker
             if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 console.log('attack blocked');
@@ -80,9 +83,6 @@ class Feraligatr extends pokemon_card_1.PokemonCard {
                     cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
                 }
             });
-            if (effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this)) {
-                effect.damage += 120;
-            }
         }
         return state;
     }

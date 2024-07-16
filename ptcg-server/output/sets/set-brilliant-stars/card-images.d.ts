@@ -7,6 +7,7 @@ import { Axew } from './axew';
 import { Bibarel } from './bibarel';
 import { Bidoof } from './bidoof';
 import { Heatran } from './BRS_100_Heatran';
+import { Haxorus } from './BRS_112_Haxorus';
 import { CherensCare } from './cherens-care';
 import { CleansingGloves } from './cleansing-gloves';
 import { CollapsedStadium } from './collapsed-stadium';
@@ -103,6 +104,9 @@ export declare class GloriaArt extends Gloria {
     cardImage: string;
 }
 export declare class GrotleArt extends Grotle {
+    cardImage: string;
+}
+export declare class HaxorusArt extends Haxorus {
     cardImage: string;
 }
 export declare class HeatranArt extends Heatran {

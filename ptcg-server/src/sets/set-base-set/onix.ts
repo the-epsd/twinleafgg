@@ -12,13 +12,13 @@ import { StoreLike } from '../../game/store/store-like';
 export class Onix extends PokemonCard {
 
   public name = 'Onix';
-  
+
   public set = 'BS';
-  
+
   public cardType = CardType.FIGHTING;
-  
+
   public setNumber = '56';
-  
+
   public fullName = 'Onix BS';
 
   public stage = Stage.BASIC;
@@ -56,6 +56,7 @@ export class Onix extends PokemonCard {
       const player = effect.player;
       if (player.marker.hasMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
         effect.preventDefault = true;
+        return state;
       }
     }
 

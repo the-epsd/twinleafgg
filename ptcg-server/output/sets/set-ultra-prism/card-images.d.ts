@@ -10,8 +10,13 @@ import { Sneasel } from './sneasel';
 import { Turtwig } from './turtwig';
 import { UnitEnergyGRW } from './unit-energy-grw';
 import { UnitEnergyLPM } from './unit-energy-lpm';
+import { Riolu } from './UPR_66_Riolu';
+import { Bastiodon } from './UPR_85_Bastiodon';
 import { Volkner } from './volkner';
 import { Weavile } from './weavile';
+export declare class BastiodonArt extends Bastiodon {
+    cardImage: string;
+}
 export declare class CynthiaArt extends Cynthia {
     cardImage: string;
 }
@@ -34,6 +39,9 @@ export declare class MtCoronetArt extends MtCoronet {
     cardImage: string;
 }
 export declare class PokemonFanClubArt extends PokemonFanClub {
+    cardImage: string;
+}
+export declare class RioluArt extends Riolu {
     cardImage: string;
 }
 export declare class SneaselArt extends Sneasel {

@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State,
-  GameMessage, GameError, PlayerType, AttachEnergyPrompt, EnergyCard, SlotType, StateUtils
+  GameMessage, GameError, PlayerType, AttachEnergyPrompt, EnergyCard, SlotType, StateUtils,
+  CardTarget
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -80,10 +81,6 @@ export class Koraidonex extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      const hasBench = player.bench.some(b => b.cards.length > 0);
-      if (!hasBench) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
           && c.energyType === EnergyType.BASIC
@@ -92,18 +89,35 @@ export class Koraidonex extends PokemonCard {
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      if (player.attackMarker.hasMarker(this.DINO_CRY_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
+
+      let fightingPokemonOnBench = false;
+
+      player.bench.forEach(benchSpot => {
+        const card = benchSpot.getPokemonCard();
+        if (card && card.cardType === CardType.FIRE && card.stage === Stage.BASIC) {
+          fightingPokemonOnBench = true;
+        }
+      });
+
+      if (!fightingPokemonOnBench) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
+
+      const blocked2: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        if (card.cardType !== CardType.FIRE) {
+          blocked2.push(target);
+        }
+      });
 
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
-        { allowCancel: false, min: 1, max: 2 }
+        { allowCancel: false, min: 1, max: 2, blockedTo: blocked2 }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
@@ -119,8 +133,6 @@ export class Koraidonex extends PokemonCard {
           return state;
         }
       });
-
-      return state;
     }
     return state;
   }

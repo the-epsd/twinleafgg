@@ -11,7 +11,7 @@ class Garchompex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'G';
-        this.tags = [card_types_1.CardTag.POKEMON_ex];
+        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Gabite';
         this.cardType = card_types_1.CardType.WATER;
@@ -34,11 +34,26 @@ class Garchompex extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '6';
+        this.setNumber = '38';
         this.name = 'Garchomp ex';
         this.fullName = 'Garchomp ex PAR';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { allowCancel: false, min: 0, max: 3 }), transfers => {
+                transfers = transfers || [];
+                // cancelled by user
+                if (transfers.length === 0) {
+                    return state;
+                }
+                for (const transfer of transfers) {
+                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                    player.discard.moveCardTo(transfer.card, target);
+                }
+            });
+            return state;
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
@@ -58,21 +73,6 @@ class Garchompex extends pokemon_card_1.PokemonCard {
                 });
                 return state;
             });
-        }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { allowCancel: true, min: 0, max: 3 }), transfers => {
-                transfers = transfers || [];
-                // cancelled by user
-                if (transfers.length === 0) {
-                    return state;
-                }
-                for (const transfer of transfers) {
-                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    player.discard.moveCardTo(transfer.card, target);
-                }
-            });
-            return state;
         }
         return state;
     }

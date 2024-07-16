@@ -1,11 +1,12 @@
 import { Card } from '../../game/store/card/card';
-import { AdamanArt, CancelingCologneArt, CylleneArt, DarkPatchArt, DarkraiVArt, DarkraiVSTARArt, DiancieArt, EnergyLotoArt, FeatherBallArt, GalladeArt, GapejawBogArt, GardeniasVigorArt, GrantArt, GutsyPickaxeArt, HisuianArcanineArt, HisuianBasculinArt, HisuianGrowlitheArt, HisuianHeavyBallArt, HisuianOverqwilArt, HisuianQwilfishArt2, HisuianSamurottVArt, HisuianSamurottVSTARArt, IridaArt, JubilifeVillageArt, KeldeoArt, KleavorArt, KricketuneArt, LucarioVArt, LuxrayVArt, MagnetonArt, MantineArt, MightyenaArt, MiltankArt, OriginFormeDialgaVArt, OriginFormeDialgaVSTARArt, OriginFormePalkiaVArt, OriginFormePalkiaVSTARArt, RadiantGreninjaArt, RadiantHawluchaArt, RaltsArt, RegiceArt, RegidragoArt, RegielekiArt, RegigigasArt, RegirockArt, RegisteelArt, RoxanneArt, SpicySeasonedCurryArt, StarmieVArt, SupereffectiveGlassesArt, SwitchCartArt, TempleofSinnohArt, TrekkingShoesArt, UrsalunaArt, WyrdeerVArt } from './card-images';
+import { AdamanArt, BronzorArt, CancelingCologneArt, CylleneArt, DarkPatchArt, DarkraiVArt, DarkraiVSTARArt, DiancieArt, EnergyLotoArt, FeatherBallArt, GalladeArt, GapejawBogArt, GardeniasVigorArt, GrantArt, GutsyPickaxeArt, HisuianArcanineArt, HisuianBasculinArt, HisuianGrowlitheArt, HisuianHeavyBallArt, HisuianOverqwilArt, HisuianQwilfishArt2, HisuianSamurottVArt, HisuianSamurottVSTARArt, IridaArt, JubilifeVillageArt, KeldeoArt, KleavorArt, KricketuneArt, LucarioVArt, LuxrayVArt, MagnetonArt, MantineArt, MightyenaArt, MiltankArt, OriginFormeDialgaVArt, OriginFormeDialgaVSTARArt, OriginFormePalkiaVArt, OriginFormePalkiaVSTARArt, RadiantGreninjaArt, RadiantHawluchaArt, RaltsArt, RegiceArt, RegidragoArt, RegielekiArt, RegigigasArt, RegirockArt, RegisteelArt, RoxanneArt, ShieldonArt, SpicySeasonedCurryArt, StarmieVArt, SupereffectiveGlassesArt, SwitchCartArt, TempleofSinnohArt, TrekkingShoesArt, UrsalunaArt, WyrdeerVArt } from './card-images';
 
 
 
 export const setAstralRadiance: Card[] = [
 
   new AdamanArt(),
+  new BronzorArt(),
   new CancelingCologneArt(),
   new CylleneArt(),
   new DarkPatchArt(),
@@ -53,6 +54,7 @@ export const setAstralRadiance: Card[] = [
   new RegirockArt(),
   new RegisteelArt(),
   new RoxanneArt(),
+  new ShieldonArt(),
   new SpicySeasonedCurryArt(),
   new StarmieVArt(),
   new SupereffectiveGlassesArt(),

@@ -39,41 +39,43 @@ class TingLuex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const source = opponent.bench;
-            const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-            if (!hasBenched) {
+            // Ting-Lu ex is not active Pokemon
+            if (player.active.getPokemonCard() !== this
+                && opponent.active.getPokemonCard() !== this) {
                 return state;
             }
-            const damagedBenched = source.filter(b => b.damage > 0);
-            if (damagedBenched) {
-                // Opponent has damaged benched Pokemon
-                // Ting-Lu ex is not active Pokemon
-                if (player.active.getPokemonCard() !== this
-                    && opponent.active.getPokemonCard() !== this) {
+            const cardList = game_1.StateUtils.findCardList(state, effect.card);
+            if (cardList instanceof game_1.PokemonCardList) {
+                const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(cardList);
+                store.reduceEffect(state, checkPokemonType);
+                // Block abilities for non-Pokémon-ex that have damage
+                if (!effect.card.tags.includes(card_types_1.CardTag.POKEMON_ex) && cardList.damage > 0) {
+                    // Try reducing ability
+                    try {
+                        const stub = new game_effects_1.PowerEffect(player, {
+                            name: 'test',
+                            powerType: pokemon_types_1.PowerType.ABILITY,
+                            text: ''
+                        }, this);
+                        store.reduceEffect(state, stub);
+                    }
+                    catch (_a) {
+                        if (!effect.power.exemptFromAbilityLock) {
+                            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
+                        }
+                        return state;
+                    }
                     return state;
                 }
-                const cardList = game_1.StateUtils.findCardList(state, effect.card);
-                if (cardList instanceof game_1.PokemonCardList) {
-                    const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(cardList);
-                    store.reduceEffect(state, checkPokemonType);
-                }
-                // Try reducing ability for each player  
-                try {
-                    const stub = new game_effects_1.PowerEffect(player, {
-                        name: 'test',
-                        powerType: pokemon_types_1.PowerType.ABILITY,
-                        text: ''
-                    }, this);
-                    store.reduceEffect(state, stub);
-                }
-                catch (_a) {
-                    throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-                }
-                return state;
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+            if (!hasBenched) {
+                return state;
+            }
             state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { max: 1, allowCancel: false }), targets => {
                 if (!targets || targets.length === 0) {
                     return;

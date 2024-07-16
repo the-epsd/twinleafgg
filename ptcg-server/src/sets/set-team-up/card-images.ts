@@ -10,6 +10,7 @@ import { MetalGoggles } from './metal-goggles';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
 import { Pawniard } from './TEU_104_Pawniard';
+import { Bisharp } from './TEU_105_Bisharp';
 import { Persian } from './TEU_126_Persian';
 import { Moltres } from './TEU_19_Moltres';
 import { Absol } from './TEU_88_Absol';
@@ -23,6 +24,10 @@ export class AbsolArt extends Absol {
 
 export class AlolanMukArt extends AlolanMuk {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_084_R_EN.png';
+}
+
+export class BisharpArt extends Bisharp {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_105_R_EN_LG.png';
 }
 
 export class BronzorArt extends Bronzor {

@@ -22,10 +22,10 @@ class MagmaBasin extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
             const player = effect.player;
-            const blocked = [];
-            player.bench.forEach((card, index) => {
-                if (card instanceof game_1.PokemonCard && card.cardType !== card_types_1.CardType.FIRE) {
-                    blocked.push({ player: game_1.PlayerType.BOTTOM_PLAYER, slot: game_1.SlotType.BENCH, index });
+            const blocked2 = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+                if (card.cardType !== card_types_1.CardType.FIRE) {
+                    blocked2.push(target);
                 }
             });
             const hasEnergyInDiscard = player.discard.cards.some(c => {
@@ -34,7 +34,7 @@ class MagmaBasin extends trainer_card_1.TrainerCard {
             if (!hasEnergyInDiscard) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_STADIUM);
             }
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min: 1, max: 1, blockedTo: blocked }), transfers => {
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min: 1, max: 1, blockedTo: blocked2 }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {

@@ -10,8 +10,14 @@ import { Sneasel } from './sneasel';
 import { Turtwig } from './turtwig';
 import { UnitEnergyGRW } from './unit-energy-grw';
 import { UnitEnergyLPM } from './unit-energy-lpm';
+import { Riolu } from './UPR_66_Riolu';
+import { Bastiodon } from './UPR_85_Bastiodon';
 import { Volkner } from './volkner';
 import { Weavile } from './weavile';
+
+export class BastiodonArt extends Bastiodon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_085_R_EN_LG.png';
+}
 
 export class CynthiaArt extends Cynthia {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_119_R_EN_LG.png';
@@ -45,6 +51,10 @@ export class PokemonFanClubArt extends PokemonFanClub {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_133_R_EN.png';
 }
 
+export class RioluArt extends Riolu {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_066_R_EN_LG.png';
+}
+
 export class SneaselArt extends Sneasel {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_073_R_EN.png';
 }
@@ -62,7 +72,7 @@ export class UnitEnergyLPMArt extends UnitEnergyLPM {
 }
 
 export class VolknerArt extends Volkner {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_135_R_EN_LG.png';  
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_135_R_EN_LG.png';
 }
 
 export class WeavileArt extends Weavile {

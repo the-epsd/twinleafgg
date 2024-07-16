@@ -25,16 +25,16 @@ export class Squirtle extends PokemonCard {
     type: CardType.LIGHTNING
   }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Bubble',
-    cost: [ CardType.WATER ],
+    cost: [CardType.WATER],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
   }, {
     name: 'Withdraw',
-    cost: [ CardType.WATER, CardType.COLORLESS ],
+    cost: [CardType.WATER, CardType.COLORLESS],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all damage done to Squirtle during your opponent\'s next turn. (Any other effects of attacks still happen.)'
   }];
@@ -49,7 +49,7 @@ export class Squirtle extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
@@ -73,10 +73,11 @@ export class Squirtle extends PokemonCard {
       });
     }
 
-    if (effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
-      effect.preventDefault = true;
-      return state;
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+      if (effect.target.marker.hasMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+        effect.preventDefault = true;
+        return state;
+      }
     }
 
     if (effect instanceof EndTurnEffect

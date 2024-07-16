@@ -33,6 +33,7 @@ exports.setSV7 = [
     new card_images_1.HorseaArt(),
     new card_images_1.HoundoomArt(),
     new card_images_1.HoundourArt(),
+    new card_images_1.HydrappleexArt(),
     new card_images_1.JaninesSecretTechniqueArt(),
     new card_images_1.JoltikArt(),
     new card_images_1.KingdraexArt(),

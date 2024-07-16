@@ -7,7 +7,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Slowbro extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.STAGE_1;
+        this.stage = game_1.Stage.BASIC;
         this.evolvesFrom = 'Slowpoke';
         this.cardType = game_1.CardType.WATER;
         this.hp = 120;
@@ -44,17 +44,15 @@ class Slowbro extends game_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const prizesTaken = 6 - opponent.getPrizeLeft();
-            if (prizesTaken === 1) {
-                const prizes = player.prizes;
-                let cards = [];
-                state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, prizes, {}, { min: 2, allowCancel: true }), selected => {
-                    cards = selected || [];
-                });
-                prizes.moveCardsTo(cards, player.hand);
-                return state;
-            }
+            // const opponent = StateUtils.getOpponent(state, player);
+            // const prizesTaken = 6 - opponent.getPrizeLeft();
+            // if (prizesTaken === 1) {
+            const prizes = player.prizes;
+            let cards = [];
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, prizes, {}, { min: 2, allowCancel: true }), selected => {
+                cards = selected || [];
+            });
+            prizes.moveCardsTo(cards, player.hand);
             return state;
         }
         return state;

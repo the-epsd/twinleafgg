@@ -1,4 +1,6 @@
 import { Adaman } from './adaman';
+import { Shieldon } from './ASR_109_Shieldon';
+import { Bronzor } from './ASR_111_Bronzor';
 import { HisuianGrowlithe } from './ASR_70_Hisuian_Growlithe';
 import { HisuianQwilfish2 } from './ASR_88_Hisuian_Qwilfish';
 import { HisuianQwilfish } from './ASR_89_Hisuian_Qwilfish';
@@ -55,6 +57,9 @@ import { TrekkingShoes } from './trekking-shoes';
 import { Ursaluna } from './ursaluna';
 import { WyrdeerV } from './wyrdeer-v';
 export declare class AdamanArt extends Adaman {
+    cardImage: string;
+}
+export declare class BronzorArt extends Bronzor {
     cardImage: string;
 }
 export declare class CancelingCologneArt extends CancelingCologne {
@@ -196,6 +201,9 @@ export declare class RegisteelArt extends Registeel {
     cardImage: string;
 }
 export declare class RoxanneArt extends Roxanne {
+    cardImage: string;
+}
+export declare class ShieldonArt extends Shieldon {
     cardImage: string;
 }
 export declare class SpicySeasonedCurryArt extends SpicySeasonedCurry {

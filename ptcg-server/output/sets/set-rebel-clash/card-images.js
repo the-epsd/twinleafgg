@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VulpixArt = exports.TwinEnergyArt = exports.TrainingCourtArt = exports.SpeedLightningEnergyArt = exports.ScoopUpNetArt = exports.MetapodArt = exports.HorrorPsychicEnergyArt = exports.GalarianMeowthArt = exports.DuraludonArt = exports.DragapultArt = exports.CoalossalArt = exports.CaterpieArt = exports.CaptureEnergyArt = exports.CapaciousBucketArt = exports.ButterfreeArt = exports.BarraskewdaArt = exports.ArrokudaArt = exports.AegislashArt = void 0;
+exports.VulpixArt = exports.TwinEnergyArt = exports.TrainingCourtArt = exports.SpeedLightningEnergyArt = exports.ScoopUpNetArt = exports.MetapodArt = exports.HorrorPsychicEnergyArt = exports.HonedgeArt = exports.GalarianMeowthArt = exports.DuraludonArt = exports.DragapultArt = exports.CoalossalArt = exports.CaterpieArt = exports.CaptureEnergyArt = exports.CapaciousBucketArt = exports.ButterfreeArt = exports.BarraskewdaArt = exports.ArrokudaArt = exports.AegislashArt = void 0;
 const aegislash_1 = require("./aegislash");
 const butterfree_1 = require("./butterfree");
 const capacious_bucket_1 = require("./capacious-bucket");
@@ -12,6 +12,7 @@ const duraludon_1 = require("./duraludon");
 const horror_psychic_energy_1 = require("./horror-psychic-energy");
 const metapod_1 = require("./metapod");
 const RCL_126_Galarian_Meowth_1 = require("./RCL_126_Galarian_Meowth");
+const RCL_133_Honedge_1 = require("./RCL_133_Honedge");
 const RCL_24_Vulpix_1 = require("./RCL_24_Vulpix");
 const RCL_52_Arrokuda_1 = require("./RCL_52_Arrokuda");
 const RCL_53_Barraskewda_1 = require("./RCL_53_Barraskewda");
@@ -96,6 +97,13 @@ class GalarianMeowthArt extends RCL_126_Galarian_Meowth_1.GalarianMeowth {
     }
 }
 exports.GalarianMeowthArt = GalarianMeowthArt;
+class HonedgeArt extends RCL_133_Honedge_1.Honedge {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_133_R_EN_LG.png';
+    }
+}
+exports.HonedgeArt = HonedgeArt;
 class HorrorPsychicEnergyArt extends horror_psychic_energy_1.HorrorPsychicEnergy {
     constructor() {
         super(...arguments);

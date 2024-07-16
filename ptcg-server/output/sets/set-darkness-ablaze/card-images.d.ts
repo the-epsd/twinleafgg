@@ -1,5 +1,6 @@
 import { BirdKeeper } from './bird-keeper';
 import { CapeOfToughness } from './cape-of-toughness';
+import { Klang } from './DAA_126_Klang';
 import { Combusken } from './DAA_23_Combusken';
 import { HidingDarknessEnergy } from './hiding-darkness-energy';
 import { Kangaskhan } from './kangaskhan';
@@ -22,6 +23,9 @@ export declare class HidingDarknessEnergyArt extends HidingDarknessEnergy {
     cardImage: string;
 }
 export declare class KangaskhanArt extends Kangaskhan {
+    cardImage: string;
+}
+export declare class KlangArt extends Klang {
     cardImage: string;
 }
 export declare class LugiaArt extends Lugia {

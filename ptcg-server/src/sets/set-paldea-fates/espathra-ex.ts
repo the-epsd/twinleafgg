@@ -11,7 +11,7 @@ export class Espathraex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
-  public stage: Stage = Stage.STAGE_1;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Flittle';
 
@@ -54,21 +54,36 @@ export class Espathraex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-
+    if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.active.cards[0] !== this) {
-        return state; // Not active
+      // const isEspathraexInActive = player.active.cards[0] === this;
+
+      // if (!isEspathraexInActive) {
+      //   return state;
+      // }
+
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
       }
 
-      if (opponent.active) {
-        if (effect instanceof CheckAttackCostEffect) {
-          effect.cost.push(CardType.COLORLESS);
-        }
+      const opponentActive = opponent.active.getPokemonCard();
+
+      if (opponentActive && !state.activePlayer) {
+        effect.cost.push(CardType.COLORLESS);
       }
+
+      return state;
     }
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
