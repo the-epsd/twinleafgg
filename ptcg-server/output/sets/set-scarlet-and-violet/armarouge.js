@@ -47,7 +47,7 @@ class Armarouge extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'G';
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Charcadet';
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 130;

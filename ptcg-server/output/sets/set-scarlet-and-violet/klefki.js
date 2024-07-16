@@ -42,9 +42,6 @@ class Klefki extends pokemon_card_1.PokemonCard {
             // Klefki is not active Pokemon
             if (player.active.getPokemonCard() !== this
                 && opponent.active.getPokemonCard() !== this) {
-                // const pokemonCard = effect.card;
-                // pokemonCard.powers.length = 1; 
-                // pokemonCard.powers.push();
                 return state;
             }
             const cardList = game_1.StateUtils.findCardList(state, effect.card);
@@ -67,9 +64,6 @@ class Klefki extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, stub);
             }
             catch (_a) {
-                // pokemonCard.powers = [ ];
-                // const pokemonCard = effect.card;
-                // pokemonCard.powers.length -= 1;
                 if (!effect.power.exemptFromAbilityLock) {
                     throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
                 }

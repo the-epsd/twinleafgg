@@ -46,19 +46,31 @@ class ChiYuex extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { min: 0, max: 3, allowCancel: false }), chosen => {
-                chosen.forEach(target => {
-                    state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min: 0, max: 1 }), transfers => {
-                        transfers = transfers || [];
-                        if (transfers.length === 0) {
-                            return;
-                        }
-                        for (const transfer of transfers) {
-                            const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                            player.deck.moveCardTo(transfer.card, target);
-                        }
-                    });
-                });
+            let firePokemonOnBench = false;
+            player.bench.forEach(benchSpot => {
+                const card = benchSpot.getPokemonCard();
+                if (card && card.cardType === card_types_1.CardType.FIRE) {
+                    firePokemonOnBench = true;
+                }
+            });
+            if (!firePokemonOnBench) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            const blocked2 = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+                if (card.cardType !== card_types_1.CardType.FIRE) {
+                    blocked2.push(target);
+                }
+            });
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min: 0, max: 3, differentTargets: true, blockedTo: blocked2 }), transfers => {
+                transfers = transfers || [];
+                if (transfers.length === 0) {
+                    return;
+                }
+                for (const transfer of transfers) {
+                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                    player.deck.moveCardTo(transfer.card, target);
+                }
             });
         }
         return state;

@@ -1,11 +1,11 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, SpecialCondition, GameMessage, ChooseCardsPrompt, Card, CardList, StateUtils } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, SpecialCondition, GameMessage, ChooseCardsPrompt, Card, CardList } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Slowbro extends PokemonCard {
 
-  public stage: Stage = Stage.STAGE_1;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom: string = 'Slowpoke';
 
@@ -58,35 +58,33 @@ export class Slowbro extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      // const opponent = StateUtils.getOpponent(state, player);
 
-      const prizesTaken = 6 - opponent.getPrizeLeft();
+      // const prizesTaken = 6 - opponent.getPrizeLeft();
 
-      if (prizesTaken === 1) {
+      // if (prizesTaken === 1) {
 
-        const prizes = player.prizes as unknown as CardList;
+      const prizes = player.prizes as unknown as CardList;
 
-        let cards: Card[] = [];
+      let cards: Card[] = [];
 
-        state = store.prompt(state, new ChooseCardsPrompt(
-          player.id,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          prizes,
-          {},
-          { min: 2, allowCancel: true }
-        ), selected => {
-          cards = selected || [];
-        });
+      state = store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        prizes,
+        {},
+        { min: 2, allowCancel: true }
+      ), selected => {
+        cards = selected || [];
+      });
 
-        prizes.moveCardsTo(cards, player.hand);
-
-        return state;
-      }
+      prizes.moveCardsTo(cards, player.hand);
 
       return state;
     }
-    return state;
 
+    return state;
   }
 
 }
+

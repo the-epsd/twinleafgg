@@ -16,6 +16,12 @@ class HisuianGoodraVSTAR extends game_1.PokemonCard {
         this.cardType = card_types_1.CardType.DRAGON;
         this.hp = 270;
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.powers = [{
+                name: 'Moisture Star',
+                useWhenInPlay: true,
+                powerType: game_1.PowerType.ABILITY,
+                text: 'During your turn, you may heal all damage from this Pokémon. (You can\'t use more than 1 VSTAR Power in a game.) '
+            }];
         this.attacks = [
             {
                 name: 'Rolling Iron',
@@ -34,32 +40,40 @@ class HisuianGoodraVSTAR extends game_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
-            // Get reference to player and target Pokemon
-            if (effect instanceof game_effects_1.HealEffect && effect.card === this) {
-                const healEffect = new game_effects_1.HealEffect(effect.player, effect.target, effect.damage);
-                store.reduceEffect(state, healEffect);
+            const player = effect.player;
+            if (player.usedVSTAR) {
+                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                player.active.attackMarker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-                opponent.attackMarker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-                if (effect instanceof attack_effects_1.PutDamageEffect
-                    && effect.target.attackMarker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
-                    effect.damage -= 80;
-                    return state;
+            player.usedVSTAR = true;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    const healEffect = new game_effects_1.HealEffect(player, cardList, 999);
+                    store.reduceEffect(state, healEffect);
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
                 }
-                if (effect instanceof game_phase_effects_1.EndTurnEffect
-                    && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-                    effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-                    const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-                    opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                        cardList.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-                    });
-                }
+            });
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            console.log('marker added');
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
+            if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+                effect.damage -= 80;
                 return state;
             }
-            return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect
+            && effect.player.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+            effect.player.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            });
+            console.log('marker removed');
         }
         return state;
     }

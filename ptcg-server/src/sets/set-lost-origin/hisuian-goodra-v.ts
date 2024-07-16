@@ -9,42 +9,42 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class HisuianGoodraV extends PokemonCard {
-  
+
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
-  
+
   public cardType: CardType = CardType.DRAGON;
-  
+
   public hp: number = 220;
-  
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
-  
+
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+
   public attacks = [
     {
       name: 'Slip-\'n\'-Trip',
-      cost: [ CardType.WATER, CardType.METAL ],
+      cost: [CardType.WATER, CardType.METAL],
       damage: 60,
       text: 'Your opponent switches their Active Pokémon with 1 of their Benched Pokémon.'
     },
     {
       name: 'Rolling Shell',
-      cost: [ CardType.WATER, CardType.METAL, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.METAL, CardType.COLORLESS],
       damage: 140,
       text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
     }
   ];
-  
+
   public set: string = 'LOR';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '135';
-  
+
   public name: string = 'Hisuian Goodra V';
-  
+
   public fullName: string = 'Hisuian Goodra V LOR';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
@@ -63,7 +63,7 @@ export class HisuianGoodraV extends PokemonCard {
         opponent.id,
         GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false },
       ), selected => {
         if (!selected || selected.length === 0) {
@@ -78,23 +78,26 @@ export class HisuianGoodraV extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      player.active.attackMarker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      opponent.attackMarker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      console.log('marker added');
+    }
 
-      if (effect instanceof PutDamageEffect 
-        && effect.target.attackMarker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+      if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
         effect.damage -= 30;
         return state;
       }
-      if (effect instanceof EndTurnEffect 
-        && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-        effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-        });
-      }
-      return state;
+    }
+
+    if (effect instanceof EndTurnEffect
+      && effect.player.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+      effect.player.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      });
+      console.log('marker removed');
     }
     return state;
   }

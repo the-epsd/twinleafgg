@@ -42,10 +42,11 @@ class Wartortle extends pokemon_card_1.PokemonCard {
                 }
             });
         }
-        if (effect instanceof attack_effects_1.PutDamageEffect
-            && effect.target.marker.hasMarker(game_1.PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
-            effect.preventDefault = true;
-            return state;
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
+            if (effect.target.marker.hasMarker(game_1.PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+                effect.preventDefault = true;
+                return state;
+            }
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect
             && effect.player.marker.hasMarker(game_1.PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {

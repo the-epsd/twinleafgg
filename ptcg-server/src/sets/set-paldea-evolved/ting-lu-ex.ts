@@ -53,46 +53,49 @@ export class TingLuex extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const source = opponent.bench;
+
+      // Ting-Lu ex is not active Pokemon
+      if (player.active.getPokemonCard() !== this
+        && opponent.active.getPokemonCard() !== this) {
+        return state;
+      }
+
+      const cardList = StateUtils.findCardList(state, effect.card);
+      if (cardList instanceof PokemonCardList) {
+        const checkPokemonType = new CheckPokemonTypeEffect(cardList);
+        store.reduceEffect(state, checkPokemonType);
+
+        // Block abilities for non-Pokémon-ex that have damage
+        if (!effect.card.tags.includes(CardTag.POKEMON_ex) && cardList.damage > 0) {
+          // Try reducing ability
+          try {
+            const stub = new PowerEffect(player, {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: ''
+            }, this);
+            store.reduceEffect(state, stub);
+          } catch {
+            if (!effect.power.exemptFromAbilityLock) {
+              throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+            }
+            return state;
+          }
+          return state;
+        }
+      }
+    }
+
+
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
-      const damagedBenched = source.filter(b => b.damage > 0);
-
-      if (damagedBenched) {
-        // Opponent has damaged benched Pokemon
-
-        // Ting-Lu ex is not active Pokemon
-        if (player.active.getPokemonCard() !== this
-          && opponent.active.getPokemonCard() !== this) {
-          return state;
-        }
-
-        const cardList = StateUtils.findCardList(state, effect.card);
-        if (cardList instanceof PokemonCardList) {
-          const checkPokemonType = new CheckPokemonTypeEffect(cardList);
-          store.reduceEffect(state, checkPokemonType);
-        }
-
-        // Try reducing ability for each player  
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
-        }
-        return state;
-      }
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
 
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,

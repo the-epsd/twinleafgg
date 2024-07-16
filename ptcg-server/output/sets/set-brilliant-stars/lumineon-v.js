@@ -66,17 +66,15 @@ class LumineonV extends pokemon_card_1.PokemonCard {
                         });
                     });
                 }
-                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                    const player = effect.player;
-                    player.active.clearEffects();
-                    player.active.moveTo(player.deck);
-                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                        player.deck.applyOrder(order);
-                    });
-                }
-                return state;
             });
-            return state;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            player.active.clearEffects();
+            player.active.moveTo(player.deck);
+            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+            });
         }
         return state;
     }

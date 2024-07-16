@@ -100,20 +100,18 @@ export class LumineonV extends PokemonCard {
             });
           });
         }
-
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-          const player = effect.player;
-
-          player.active.clearEffects();
-          player.active.moveTo(player.deck);
-
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
-        }
-        return state;
       });
-      return state;
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      player.active.clearEffects();
+      player.active.moveTo(player.deck);
+
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        player.deck.applyOrder(order);
+      });
     }
     return state;
   }

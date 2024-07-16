@@ -38,22 +38,24 @@ class Necrozma extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            player.active.attackMarker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-            opponent.attackMarker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-            if (effect instanceof attack_effects_1.PutDamageEffect
-                && effect.target.attackMarker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
+            player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            console.log('marker added');
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
+            if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
                 effect.damage -= 30;
+                console.log('damage reduced');
                 return state;
             }
-            if (effect instanceof game_phase_effects_1.EndTurnEffect
-                && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-                effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-                const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                    cardList.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-                });
-            }
-            return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect
+            && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+            effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                cardList.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+            });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack == this.attacks[1]) {
             const player = effect.player;
@@ -69,7 +71,6 @@ class Necrozma extends pokemon_card_1.PokemonCard {
             if (specialEnergyCount > 0) {
                 effect.damage += 60;
             }
-            return state;
         }
         return state;
     }

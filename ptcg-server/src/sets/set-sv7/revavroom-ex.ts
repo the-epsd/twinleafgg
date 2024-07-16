@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -10,9 +10,9 @@ export class Revavroomex extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
-  public stage: Stage = Stage.STAGE_1;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Varoom';
 
@@ -27,7 +27,7 @@ export class Revavroomex extends PokemonCard {
   public attacks = [
     {
       name: 'Accelerating Flash',
-      cost: [ CardType.METAL ],
+      cost: [CardType.METAL],
       damage: 20,
       damageCalculation: '+',
       text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 120 more damage.'
@@ -50,25 +50,34 @@ export class Revavroomex extends PokemonCard {
 
   public fullName: string = 'Revavroom ex SV6a';
 
+  public discardRevavroom: boolean = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof EndTurnEffect) {
       this.movedToActiveThisTurn = false;
-      console.log('movedToActiveThisTurn = false');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       if (!this.movedToActiveThisTurn) {
-        effect.damage = 0;
+        effect.damage = 20;
         return state;
       }
+
       effect.damage += 120;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      this.discardRevavroom == true;
+    }
+
+    if (effect instanceof EndTurnEffect && this.discardRevavroom == true) {
       const player = effect.player;
-      player.active.moveCardsTo(this.cards.cards, player.discard);
-      return state;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.moveCardsTo(player.discard.cards, cardList);
+        }
+      });
     }
 
     if (effect instanceof PutDamageEffect) {
