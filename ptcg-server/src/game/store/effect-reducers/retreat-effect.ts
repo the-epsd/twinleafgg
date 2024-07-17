@@ -56,6 +56,7 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
     state = store.reduceEffect(state, checkRetreatCost);
 
     if (checkRetreatCost.cost.length === 0) {
+      player.active.clearEffects();
       retreatPokemon(store, state, effect);
       return state;
     }
