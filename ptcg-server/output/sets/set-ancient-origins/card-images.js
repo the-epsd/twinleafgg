@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UnownArt = exports.HexManiacArt = exports.EcoArmArt = void 0;
+exports.VileplumeArt = exports.UnownArt = exports.HexManiacArt = exports.EcoArmArt = void 0;
+const AOR_3_Vileplume_1 = require("./AOR_3_Vileplume");
 const eco_arm_1 = require("./eco-arm");
 const hex_maniac_1 = require("./hex-maniac");
 const unown_1 = require("./unown");
@@ -25,3 +26,10 @@ class UnownArt extends unown_1.Unown {
     }
 }
 exports.UnownArt = UnownArt;
+class VileplumeArt extends AOR_3_Vileplume_1.Vileplume {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/AOR/AOR_003_R_EN_LG.png';
+    }
+}
+exports.VileplumeArt = VileplumeArt;

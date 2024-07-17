@@ -1,7 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { FennekinArt, LucarioArt, MewArt, NArt, RioluArt } from './card-images';
+import { DeerlingArt, FennekinArt, LucarioArt, MewArt, NArt, RioluArt } from './card-images';
 
 export const setFatesCollide: Card[] = [
+  new DeerlingArt(),
   new FennekinArt(),
   new LucarioArt(),
   new MewArt(),

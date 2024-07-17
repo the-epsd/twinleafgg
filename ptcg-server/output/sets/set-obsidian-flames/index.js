@@ -18,6 +18,7 @@ exports.setObsidianFlames = [
     new card_images_1.LetterOfEncouragementArt(),
     new card_images_1.LunatoneArt(),
     new card_images_1.NinetalesArt(),
+    new card_images_1.OddishArt(),
     new card_images_1.PalafinArt(),
     new card_images_1.PidgeottoArt(),
     new card_images_1.PidgeotexArt(),

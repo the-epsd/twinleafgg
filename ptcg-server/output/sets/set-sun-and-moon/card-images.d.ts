@@ -7,6 +7,7 @@ import { Herdier } from './herdier';
 import { Oranguru } from './oranguru';
 import { ProfessorKukui } from './professor-kukui';
 import { RainbowEnergy } from './rainbow-energy';
+import { Fomantis } from './SUM_14_Fomantis';
 import { Golduck } from './SUM_29_Golduck';
 import { AlolanRattata } from './SUM_76_Alolan_Rattata';
 import { TimerBall } from './timer-ball';
@@ -25,6 +26,9 @@ export declare class ExpShareArt extends ExpShare {
     cardImage: string;
     setNumber: string;
     fullName: string;
+}
+export declare class FomantisArt extends Fomantis {
+    cardImage: string;
 }
 export declare class GolduckArt extends Golduck {
     cardImage: string;

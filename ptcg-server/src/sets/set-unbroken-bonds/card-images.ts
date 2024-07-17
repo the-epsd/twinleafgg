@@ -17,6 +17,7 @@ import { Lickitung } from './UNB_152_Lickitung';
 import { Salazzle } from './UNB_31_Salazzle';
 import { Poliwag } from './UNB_37_Poliwag';
 import { Zeraora } from './UNB_60_Zeraora';
+import { Gloom } from './UNB_7_Gloom';
 import { Volcanion } from './volcanion';
 
 export class ArcanineArt extends Arcanine {
@@ -33,6 +34,10 @@ export class EspurrArt extends Espurr {
 
 export class FireCrystalArt extends FireCrystal {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_173_R_EN_LG.png';
+}
+
+export class GloomArt extends Gloom {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_007_R_EN_LG.png';
 }
 
 export class GreensExplorationArt extends GreensExploration {

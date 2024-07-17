@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TateAndLizaArt = exports.SwampertArt = exports.SlakothArt = exports.SlakingArt = exports.SableyeArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.HustleBeltArt = exports.DelcattyArt = exports.CopycatArt = void 0;
+exports.TateAndLizaArt = exports.SwampertArt = exports.SlakothArt = exports.SlakingArt = exports.SableyeArt = exports.NuzleafArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.HustleBeltArt = exports.DelcattyArt = exports.CopycatArt = void 0;
 const CES_113_Slakoth_1 = require("./CES_113_Slakoth");
 const CES_115_Slaking_1 = require("./CES_115_Slaking");
+const CES_13_Nuzleaf_1 = require("./CES_13_Nuzleaf");
 const CES_88_Sableye_1 = require("./CES_88_Sableye");
 const copycat_1 = require("./copycat");
 const delcatty_1 = require("./delcatty");
@@ -54,6 +55,13 @@ class MarshtompArt extends marshtomp_1.Marshtomp {
     }
 }
 exports.MarshtompArt = MarshtompArt;
+class NuzleafArt extends CES_13_Nuzleaf_1.Nuzleaf {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_013_R_EN_LG.png';
+    }
+}
+exports.NuzleafArt = NuzleafArt;
 class SableyeArt extends CES_88_Sableye_1.Sableye {
     constructor() {
         super(...arguments);

@@ -12,6 +12,7 @@ import { Entei } from './entei';
 import { Finizen } from './finizen';
 import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Lunatone } from './lunatone';
+import { Oddish } from './OBF_1_Oddish';
 import { Ninetales } from './OBF_29_Ninetales';
 import { Palafin } from './palafin';
 import { Pidgeotex } from './pidgeot-ex';
@@ -71,6 +72,9 @@ export declare class LunatoneArt extends Lunatone {
     cardImage: string;
 }
 export declare class NinetalesArt extends Ninetales {
+    cardImage: string;
+}
+export declare class OddishArt extends Oddish {
     cardImage: string;
 }
 export declare class PalafinArt extends Palafin {

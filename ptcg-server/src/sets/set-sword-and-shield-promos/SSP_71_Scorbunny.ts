@@ -36,6 +36,11 @@ export class Scorbunny extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+
+      if (player.deck.cards.length === 0) {
+        return state;
+      }
+
       player.deck.moveTo(player.hand, 1);
     }
 

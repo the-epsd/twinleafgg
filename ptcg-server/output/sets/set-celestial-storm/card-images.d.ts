@@ -1,5 +1,6 @@
 import { Slakoth } from './CES_113_Slakoth';
 import { Slaking } from './CES_115_Slaking';
+import { Nuzleaf } from './CES_13_Nuzleaf';
 import { Sableye } from './CES_88_Sableye';
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
@@ -25,6 +26,9 @@ export declare class MudkipArt extends Mudkip {
     cardImage: string;
 }
 export declare class MarshtompArt extends Marshtomp {
+    cardImage: string;
+}
+export declare class NuzleafArt extends Nuzleaf {
     cardImage: string;
 }
 export declare class SableyeArt extends Sableye {

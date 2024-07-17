@@ -17,6 +17,7 @@ import { Lickitung } from './UNB_152_Lickitung';
 import { Salazzle } from './UNB_31_Salazzle';
 import { Poliwag } from './UNB_37_Poliwag';
 import { Zeraora } from './UNB_60_Zeraora';
+import { Gloom } from './UNB_7_Gloom';
 import { Volcanion } from './volcanion';
 export declare class ArcanineArt extends Arcanine {
     cardImage: string;
@@ -28,6 +29,9 @@ export declare class EspurrArt extends Espurr {
     cardImage: string;
 }
 export declare class FireCrystalArt extends FireCrystal {
+    cardImage: string;
+}
+export declare class GloomArt extends Gloom {
     cardImage: string;
 }
 export declare class GreensExplorationArt extends GreensExploration {

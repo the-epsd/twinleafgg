@@ -1,5 +1,6 @@
 import { Blacksmith } from './blacksmith';
 import { Dragalge } from './dragalge';
+import { Seedot } from './FLF_5_Seedot';
 import { Litleo } from './litleo';
 import { Lysandre } from './lysandre';
 import { Miltank } from './miltank';
@@ -35,6 +36,10 @@ export class PyroarArt extends Pyroar {
 
 export class SacredAshArt extends SacredAsh {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_096_R_EN.png';
+}
+
+export class SeedotArt extends Seedot {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_005_R_EN_LG.png';
 }
 
 export class SkrelpArt extends Skrelp {

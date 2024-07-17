@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArezuArt, BanetteArt, BouffalantArt, BoxOfDisasterArt, ColresssExperimentArt, ComfeyArt, CramorantArt, CresseliaArt, DamagePumpArt, DelphoxVArt, DrapionVArt, DrapionVSTARArt, GengarArt, GiftEnergyArt, GiratinaVArt, GiratinaVSTARArt, HisuianBasculegionArt, HisuianGoodraVArt, HisuianGoodraVSTARArt, HisuianZoroarkArt, HisuianZoroarkVArt, HisuianZoroarkVSTARArt, HisuianZoruaArt, JynxArt, KingdraArt, KyuremVArt, KyuremVMAXArt, LadyArt, LostCityArt, LostVacuumArt, MachampArt, MachopArt, MagnezoneVArt, MagnezoneVSTARArt, MawileArt, MirageGateArt, MissFortuneSistersArt, PanicMaskArt, PidgeotVArt, RadiantGardevoirArt, RadiantHisuianSneaslerArt, RotomVArt, SableyeArt, SilcoonArt, SnorlaxArt, ThortonArt, VoloArt } from './card-images';
+import { ArezuArt, BanetteArt, BouffalantArt, BoxOfDisasterArt, ColresssExperimentArt, ComfeyArt, CramorantArt, CresseliaArt, DamagePumpArt, DelphoxVArt, DrapionVArt, DrapionVSTARArt, GengarArt, GiftEnergyArt, GiratinaVArt, GiratinaVSTARArt, HisuianBasculegionArt, HisuianGoodraVArt, HisuianGoodraVSTARArt, HisuianZoroarkArt, HisuianZoroarkVArt, HisuianZoroarkVSTARArt, HisuianZoruaArt, JynxArt, KingdraArt, KyuremVArt, KyuremVMAXArt, LadyArt, LostCityArt, LostVacuumArt, MachampArt, MachopArt, MagnezoneVArt, MagnezoneVSTARArt, MawileArt, MirageGateArt, MissFortuneSistersArt, PanicMaskArt, PidgeotVArt, RadiantGardevoirArt, RadiantHisuianSneaslerArt, RoseliaArt, RotomVArt, SableyeArt, SilcoonArt, SnorlaxArt, ThortonArt, VoloArt } from './card-images';
 
 
 export const setLostOrigin: Card[] = [
@@ -37,6 +37,7 @@ export const setLostOrigin: Card[] = [
   new PidgeotVArt(),
   new RadiantHisuianSneaslerArt(),
   new RadiantGardevoirArt(),
+  new RoseliaArt(),
   new RotomVArt(),
   new SableyeArt(),
   new SilcoonArt(),

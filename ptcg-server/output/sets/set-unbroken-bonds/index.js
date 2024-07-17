@@ -7,6 +7,7 @@ exports.setUnbrokenBonds = [
     new card_images_1.CleffaArt(),
     new card_images_1.EspurrArt(),
     new card_images_1.FireCrystalArt(),
+    new card_images_1.GloomArt(),
     new card_images_1.GreensExplorationArt(),
     new card_images_1.HitmontopArt(),
     new card_images_1.LickitungArt(),
