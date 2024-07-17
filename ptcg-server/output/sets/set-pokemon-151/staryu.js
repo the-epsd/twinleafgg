@@ -23,6 +23,7 @@ class Staryu extends pokemon_card_1.PokemonCard {
                 text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
             },
         ];
+        this.regulationMark = 'G';
         this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '120';

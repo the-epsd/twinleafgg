@@ -52,6 +52,8 @@ export declare class Player {
     usedJewelHunt: boolean;
     usedFanCall: boolean;
     canEvolve: boolean;
+    usedAlteredCreation: boolean;
+    alteredCreationDamage: boolean;
     getPrizeLeft(): number;
     forEachPokemon(player: PlayerType, handler: (cardList: PokemonCardList, pokemonCard: PokemonCard, target: CardTarget) => void): void;
     removePokemonEffects(target: PokemonCardList): void;

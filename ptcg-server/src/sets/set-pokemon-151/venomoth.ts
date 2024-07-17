@@ -9,7 +9,6 @@ import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
 export class Venomoth extends PokemonCard {
 
   public regulationMark = 'G';
-  
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Venonat';
   public cardType: CardType = CardType.GRASS;
@@ -35,7 +34,7 @@ export class Venomoth extends PokemonCard {
   public setNumber: string = '49';
   public name: string = 'Venomoth';
   public fullName: string = 'Venomoth MEW';
-  
+
   public readonly PERPLEXING_POWDER_MARKER = 'PERPLEXING_POWDER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -16,6 +16,7 @@ export class DeckAnalyser {
     }
     isValid() {
         const countMap = {};
+        const prismStarCards = new Set();
         let hasBasicPokemon = false;
         let hasAceSpec = false;
         let hasRadiant = false;
@@ -46,6 +47,12 @@ export class DeckAnalyser {
                     return false;
                 }
                 hasRadiant = true;
+            }
+            if (card.tags.includes(CardTag.PRISM_STAR)) {
+                if (prismStarCards.has(card.name)) {
+                    return false;
+                }
+                prismStarCards.add(card.name);
             }
         }
         return hasBasicPokemon;

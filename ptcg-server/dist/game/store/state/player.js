@@ -46,6 +46,9 @@ export class Player {
         this.usedJewelHunt = false;
         this.usedFanCall = false;
         this.canEvolve = false;
+        //GX-Attack Dedicated Section
+        this.usedAlteredCreation = false;
+        this.alteredCreationDamage = false;
     }
     getPrizeLeft() {
         return this.prizes.reduce((left, p) => left + p.cards.length, 0);

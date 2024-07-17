@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TapuKokoArt = exports.PikachuZekromGXArt = exports.LurantisArt = void 0;
+exports.TapuKokoArt = exports.PikachuZekromGXArt = exports.PalaceBookArt = exports.LurantisArt = void 0;
+const palace_book_1 = require("./palace-book");
 const SMP_168_Pikachu_ZekromGX_1 = require("./SMP_168_Pikachu&ZekromGX");
 const SMP_25_Lurantis_1 = require("./SMP_25_Lurantis");
 const tapu_koko_1 = require("./tapu-koko");
@@ -11,6 +12,13 @@ class LurantisArt extends SMP_25_Lurantis_1.Lurantis {
     }
 }
 exports.LurantisArt = LurantisArt;
+class PalaceBookArt extends palace_book_1.PalaceBook {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SMP/SMP_NAN25_R_JP_LG.png';
+    }
+}
+exports.PalaceBookArt = PalaceBookArt;
 class PikachuZekromGXArt extends SMP_168_Pikachu_ZekromGX_1.PikachuZekromGX {
     constructor() {
         super(...arguments);
