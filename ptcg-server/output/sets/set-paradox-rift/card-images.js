@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SteeneeArt = exports.SnoruntArt = exports.SlitherWingArt = exports.ScreamTailArt = exports.SandyShocksexArt = exports.RoaringMoonexArt = exports.RemoraidArt = exports.ProfessorTurosScenarioArt = exports.ProfessorSadasVitalityArt = exports.PorygonArt = exports.NatuArt = exports.NaclstackArt = exports.NacliArt = exports.MorpekoArt = exports.MiniorArt = exports.MewtwoexArt = exports.MelaArt = exports.LuxuriousCapeArt = exports.LatiosArt = exports.KlawfArt = exports.JirachiArt = exports.IronValiantexArt = exports.IronJugulisArt = exports.IronHandsexArt = exports.IronBundleArt = exports.HoopaexArt = exports.HonedgeArt = exports.GroudonArt = exports.GimmighoulArt = exports.GibleArt = exports.GholdengoexArt = exports.GarganaclArt = exports.GarchompexArt = exports.GabiteArt = exports.FutureBoosterEnergyCapsuleArt = exports.FroslassexArt = exports.FlittleArt = exports.ElekidArt = exports.EarthenVesselArt = exports.DoubladeArt = exports.DeoxysArt = exports.DefianceVestArt = exports.CyclizarArt = exports.CrobatArt = exports.CounterCatcherArt = exports.ChiYuArt = exports.BruteBonnetArt = exports.BounsweetArt = exports.BombirdierexArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
-exports.ZacianArt = exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TechnoRadarArt = exports.TechnicalMachineTurboEnergizeArt = exports.TechnicalMachineEvolutionArt = exports.TechnicalMachineDevolutionArt = exports.TechnicalMachineBlindsideArt = exports.TapuKokoexArt = void 0;
+exports.ZacianArt = exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TinkatuffArt = exports.TechnoRadarArt = exports.TechnicalMachineTurboEnergizeArt = exports.TechnicalMachineEvolutionArt = exports.TechnicalMachineDevolutionArt = exports.TechnicalMachineBlindsideArt = exports.TapuKokoexArt = void 0;
 const ancient_booster_energy_capsule_1 = require("./ancient-booster-energy-capsule");
 const bombirdier_1 = require("./bombirdier");
 const bounsweet_1 = require("./bounsweet");
@@ -59,6 +59,7 @@ const technical_machine_devolution_1 = require("./technical-machine-devolution")
 const technical_machine_evolution_1 = require("./technical-machine-evolution");
 const technical_machine_turbo_energize_1 = require("./technical-machine-turbo-energize");
 const techno_radar_1 = require("./techno-radar");
+const tinkatuff_1 = require("./tinkatuff");
 const tsareena_ex_1 = require("./tsareena-ex");
 const tulip_1 = require("./tulip");
 const xatu_1 = require("./xatu");
@@ -454,6 +455,13 @@ class TechnoRadarArt extends techno_radar_1.TechnoRadar {
     }
 }
 exports.TechnoRadarArt = TechnoRadarArt;
+class TinkatuffArt extends tinkatuff_1.Tinkatuff {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_084_R_EN.png';
+    }
+}
+exports.TinkatuffArt = TinkatuffArt;
 class TsareenaexArt extends tsareena_ex_1.Tsareenaex {
     constructor() {
         super(...arguments);

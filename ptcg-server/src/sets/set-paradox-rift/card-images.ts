@@ -55,6 +55,7 @@ import { TechnicalMachineDevolution } from './technical-machine-devolution';
 import { TechnicalMachineEvolution } from './technical-machine-evolution';
 import { TechnicalMachineTurboEnergize } from './technical-machine-turbo-energize';
 import { TechnoRadar } from './techno-radar';
+import { Tinkatuff } from './tinkatuff';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
 import { Xatu } from './xatu';
@@ -281,6 +282,10 @@ export class TechnicalMachineTurboEnergizeArt extends TechnicalMachineTurboEnerg
 
 export class TechnoRadarArt extends TechnoRadar {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_180_R_EN_LG.png';
+}
+
+export class TinkatuffArt extends Tinkatuff {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_084_R_EN.png';
 }
 
 export class TsareenaexArt extends Tsareenaex {

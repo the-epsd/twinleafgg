@@ -55,6 +55,7 @@ import { TechnicalMachineDevolution } from './technical-machine-devolution';
 import { TechnicalMachineEvolution } from './technical-machine-evolution';
 import { TechnicalMachineTurboEnergize } from './technical-machine-turbo-energize';
 import { TechnoRadar } from './techno-radar';
+import { Tinkatuff } from './tinkatuff';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
 import { Xatu } from './xatu';
@@ -224,6 +225,9 @@ export declare class TechnicalMachineTurboEnergizeArt extends TechnicalMachineTu
     cardImage: string;
 }
 export declare class TechnoRadarArt extends TechnoRadar {
+    cardImage: string;
+}
+export declare class TinkatuffArt extends Tinkatuff {
     cardImage: string;
 }
 export declare class TsareenaexArt extends Tsareenaex {

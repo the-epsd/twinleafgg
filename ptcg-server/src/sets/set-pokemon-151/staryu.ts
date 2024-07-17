@@ -29,6 +29,8 @@ export class Staryu extends PokemonCard {
     },
   ];
 
+  public regulationMark = 'G';
+
   public set: string = 'MEW';
 
   public cardImage: string = 'assets/cardback.png';
