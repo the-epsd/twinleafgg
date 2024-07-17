@@ -458,7 +458,8 @@
     "CHOOSE_SUPPORTER_FROM_DISCARD": "Choose a Supporter card from your discard pile",
     "SHUFFLE_OPPONENT_HAND": "Shuffle your opponent's hand",
     "SHUFFLE_YOUR_HAND": "Shuffle your hand",
-    "CHOOSE_CARD_TO_SHUFFLE": "Choose card to shuffle back into deck."
+    "CHOOSE_CARD_TO_SHUFFLE": "Choose card to shuffle back into deck.",
+    "LABEL_GX_USED": "GX Attack used."
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.",

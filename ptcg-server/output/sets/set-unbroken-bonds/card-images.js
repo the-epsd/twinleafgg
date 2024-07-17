@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.CleffaArt = exports.ArcanineArt = void 0;
+exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.DedenneGXArt = exports.CleffaArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
 const espurr_1 = require("./espurr");
@@ -17,6 +17,7 @@ const spiritomb_1 = require("./spiritomb");
 const triple_acceleration_energy_1 = require("./triple-acceleration-energy");
 const UNB_147_Meowth_1 = require("./UNB_147_Meowth");
 const UNB_152_Lickitung_1 = require("./UNB_152_Lickitung");
+const UNB_195_DedenneGX_1 = require("./UNB_195_DedenneGX");
 const UNB_31_Salazzle_1 = require("./UNB_31_Salazzle");
 const UNB_37_Poliwag_1 = require("./UNB_37_Poliwag");
 const UNB_60_Zeraora_1 = require("./UNB_60_Zeraora");
@@ -36,6 +37,13 @@ class CleffaArt extends cleffa_1.Cleffa {
     }
 }
 exports.CleffaArt = CleffaArt;
+class DedenneGXArt extends UNB_195_DedenneGX_1.DedenneGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_195_R_EN_LG.png';
+    }
+}
+exports.DedenneGXArt = DedenneGXArt;
 class EspurrArt extends espurr_1.Espurr {
     constructor() {
         super(...arguments);

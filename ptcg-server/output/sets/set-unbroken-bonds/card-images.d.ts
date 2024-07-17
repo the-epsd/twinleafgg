@@ -14,6 +14,7 @@ import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
 import { Meowth } from './UNB_147_Meowth';
 import { Lickitung } from './UNB_152_Lickitung';
+import { DedenneGX } from './UNB_195_DedenneGX';
 import { Salazzle } from './UNB_31_Salazzle';
 import { Poliwag } from './UNB_37_Poliwag';
 import { Zeraora } from './UNB_60_Zeraora';
@@ -23,6 +24,9 @@ export declare class ArcanineArt extends Arcanine {
     cardImage: string;
 }
 export declare class CleffaArt extends Cleffa {
+    cardImage: string;
+}
+export declare class DedenneGXArt extends DedenneGX {
     cardImage: string;
 }
 export declare class EspurrArt extends Espurr {

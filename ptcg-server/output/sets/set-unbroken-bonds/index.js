@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setUnbrokenBonds = [
     new card_images_1.ArcanineArt(),
     new card_images_1.CleffaArt(),
+    new card_images_1.DedenneGXArt(),
     new card_images_1.EspurrArt(),
     new card_images_1.FireCrystalArt(),
     new card_images_1.GloomArt(),

@@ -88,10 +88,10 @@ function gameReducer(store, state, effect) {
         const card = effect.target.getPokemonCard();
         if (card !== undefined) {
             // Pokemon ex rule
-            if (card.tags.includes(card_types_1.CardTag.POKEMON_EX) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_ex)) {
+            if (card.tags.includes(card_types_1.CardTag.POKEMON_EX) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_ex) || card.tags.includes(card_types_1.CardTag.POKEMON_GX)) {
                 effect.prizeCount += 1;
             }
-            if (card.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
+            if (card.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || card.tags.includes(card_types_1.CardTag.TAG_TEAM)) {
                 effect.prizeCount += 2;
             }
             store.log(state, game_message_1.GameLog.LOG_POKEMON_KO, { name: card.name });
