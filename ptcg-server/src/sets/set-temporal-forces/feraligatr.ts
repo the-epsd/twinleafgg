@@ -10,7 +10,7 @@ export class Feraligatr extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public stage: Stage = Stage.STAGE_2;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Croconaw';
 

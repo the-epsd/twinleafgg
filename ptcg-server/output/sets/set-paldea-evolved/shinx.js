@@ -64,9 +64,11 @@ class Shinx extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const generator = useBigRoar(() => generator.next(), store, state, effect);
             const player = effect.player;
+
             if (player.active.cards[0] !== this) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
+
             if (player.marker.hasMarker(this.BIG_ROAR_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }

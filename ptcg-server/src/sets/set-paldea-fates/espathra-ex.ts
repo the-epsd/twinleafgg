@@ -6,12 +6,11 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
-
 export class Espathraex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
-  public stage: Stage = Stage.STAGE_1;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Flittle';
 
@@ -83,7 +82,8 @@ export class Espathraex extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

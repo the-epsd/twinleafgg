@@ -95,6 +95,7 @@ export class Shinx extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
+
       if (player.marker.hasMarker(this.BIG_ROAR_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }

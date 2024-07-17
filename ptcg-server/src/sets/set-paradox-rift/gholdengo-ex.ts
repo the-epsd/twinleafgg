@@ -15,7 +15,7 @@ export class Gholdengoex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex];
 
-  public stage: Stage = Stage.STAGE_1;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Gimmighoul';
 

@@ -117,6 +117,8 @@ export class Hydrappleex extends PokemonCard {
             return cardType === CardType.GRASS || cardType === CardType.ANY;
           }).length;
 
+          console.log('Num grass energies: ' + energyCount);
+
         });
 
       });
