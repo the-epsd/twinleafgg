@@ -6,4 +6,5 @@ exports.setAncientOrigins = [
     new card_images_1.EcoArmArt(),
     new card_images_1.HexManiacArt(),
     new card_images_1.UnownArt(),
+    new card_images_1.VileplumeArt()
 ];

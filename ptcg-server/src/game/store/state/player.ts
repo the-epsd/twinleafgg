@@ -77,6 +77,11 @@ export class Player {
   usedFanCall = false;
   canEvolve = false;
 
+
+  //GX-Attack Dedicated Section
+  public usedAlteredCreation: boolean = false;
+  public alteredCreationDamage: boolean = false;
+
   getPrizeLeft(): number {
     return this.prizes.reduce((left, p) => left + p.cards.length, 0);
   }

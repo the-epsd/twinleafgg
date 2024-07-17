@@ -24,6 +24,7 @@ import { Jynx } from './jynx';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
 import { Lady } from './lady';
+import { Roselia } from './LOR_14_Roselia';
 import { Kingdra } from './LOR_37_Kingdra';
 import { HisuianBasculegion } from './LOR_45_Hisuian_Basculegion';
 import { LostCity } from './lost-city';
@@ -166,6 +167,9 @@ export declare class RadiantGardevoirArt extends RadiantGardevoir {
     cardImage: string;
 }
 export declare class RadiantHisuianSneaslerArt extends RadiantHisuianSneasler {
+    cardImage: string;
+}
+export declare class RoseliaArt extends Roselia {
     cardImage: string;
 }
 export declare class RotomVArt extends RotomV {

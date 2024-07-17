@@ -10,6 +10,7 @@ exports.setFlashfire = [
     new card_images_1.MiltankArt(),
     new card_images_1.PyroarArt(),
     new card_images_1.SacredAshArt(),
+    new card_images_1.SeedotArt(),
     new card_images_1.SkrelpArt(),
     new card_images_1.StartlingMegaphoneArt(),
     new card_images_1.ToxicroakExArt(),

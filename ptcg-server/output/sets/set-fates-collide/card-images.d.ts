@@ -1,8 +1,12 @@
+import { Deerling } from './FCO_8_Deerling';
 import { Fennekin } from './fennekin';
 import { Lucario } from './lucario';
 import { Mew } from './mew';
 import { N } from './n';
 import { Riolu } from './riolu';
+export declare class DeerlingArt extends Deerling {
+    cardImage: string;
+}
 export declare class FennekinArt extends Fennekin {
     cardImage: string;
 }

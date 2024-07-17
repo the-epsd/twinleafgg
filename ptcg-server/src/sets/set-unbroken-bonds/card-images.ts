@@ -14,9 +14,11 @@ import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
 import { Meowth } from './UNB_147_Meowth';
 import { Lickitung } from './UNB_152_Lickitung';
+import { DedenneGX } from './UNB_195_DedenneGX';
 import { Salazzle } from './UNB_31_Salazzle';
 import { Poliwag } from './UNB_37_Poliwag';
 import { Zeraora } from './UNB_60_Zeraora';
+import { Gloom } from './UNB_7_Gloom';
 import { Volcanion } from './volcanion';
 
 export class ArcanineArt extends Arcanine {
@@ -27,12 +29,20 @@ export class CleffaArt extends Cleffa {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_131_R_EN.png';
 }
 
+export class DedenneGXArt extends DedenneGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_195_R_EN_LG.png';
+}
+
 export class EspurrArt extends Espurr {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_079_R_EN.png';
 }
 
 export class FireCrystalArt extends FireCrystal {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_173_R_EN_LG.png';
+}
+
+export class GloomArt extends Gloom {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_007_R_EN_LG.png';
 }
 
 export class GreensExplorationArt extends GreensExploration {

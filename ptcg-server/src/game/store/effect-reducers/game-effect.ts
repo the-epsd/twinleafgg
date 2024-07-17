@@ -5,15 +5,20 @@ import { Effect } from '../effects/effect';
 import { State, GamePhase } from '../state/state';
 import { StoreLike } from '../store-like';
 import { StateUtils } from '../state-utils';
-import { CheckPokemonTypeEffect, CheckPokemonStatsEffect,
-  CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../effects/check-effects';
+import {
+  CheckPokemonTypeEffect, CheckPokemonStatsEffect,
+  CheckProvidedEnergyEffect, CheckAttackCostEffect
+} from '../effects/check-effects';
 import { Weakness, Resistance } from '../card/pokemon-types';
 import { CardType, SpecialCondition, CardTag, TrainerType, Format } from '../card/card-types';
-import { AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect,
-  UsePowerEffect, PowerEffect, UseStadiumEffect, EvolveEffect } from '../effects/game-effects';
+import {
+  AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect,
+  UsePowerEffect, PowerEffect, UseStadiumEffect, EvolveEffect
+} from '../effects/game-effects';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { DealDamageEffect, ApplyWeaknessEffect } from '../effects/attack-effects';
 import { TrainerEffect } from '../effects/play-card-effects';
+import { PlayerType } from '../actions/play-card-action';
 
 function applyWeaknessAndResistance(
   damage: number,
@@ -48,7 +53,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   const opponent = StateUtils.getOpponent(state, player);
 
   if (Format.STANDARD) {
-  //Skip attack on first turn
+    //Skip attack on first turn
     if (state.turn === 1) {
       throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
     }
@@ -57,6 +62,14 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   const sp = player.active.specialConditions;
   if (sp.includes(SpecialCondition.PARALYZED) || sp.includes(SpecialCondition.ASLEEP)) {
     throw new GameError(GameMessage.BLOCKED_BY_SPECIAL_CONDITION);
+  }
+
+  if (player.alteredCreationDamage == true) {
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      if (effect instanceof DealDamageEffect && effect.source === cardList) {
+        effect.damage += 20;
+      }
+    });
   }
 
   const attack = effect.attack;
@@ -77,10 +90,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.prompt(state, new CoinFlipPrompt(
       player.id,
       GameMessage.FLIP_CONFUSION),
-    result => {
-      flip = result;
-      next();
-    });
+      result => {
+        flip = result;
+        next();
+      });
 
     if (flip === false) {
       store.log(state, GameLog.LOG_HURTS_ITSELF);
@@ -114,14 +127,20 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
 export function gameReducer(store: StoreLike, state: State, effect: Effect): State {
 
   if (effect instanceof KnockOutEffect) {
+    const player = effect.player;
     const card = effect.target.getPokemonCard();
     if (card !== undefined) {
 
-      // Pokemon ex rule
-      if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex)) {
+      //Altered Creation GX
+      if (player.usedAlteredCreation == true) {
         effect.prizeCount += 1;
       }
-      if (card.tags.includes(CardTag.POKEMON_VMAX)) {
+
+      // Pokemon ex rule
+      if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.POKEMON_GX)) {
+        effect.prizeCount += 1;
+      }
+      if (card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.TAG_TEAM)) {
         effect.prizeCount += 2;
       }
 

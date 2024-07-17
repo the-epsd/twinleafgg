@@ -1,11 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RioluArt = exports.NArt = exports.MewArt = exports.LucarioArt = exports.FennekinArt = void 0;
+exports.RioluArt = exports.NArt = exports.MewArt = exports.LucarioArt = exports.FennekinArt = exports.DeerlingArt = void 0;
+const FCO_8_Deerling_1 = require("./FCO_8_Deerling");
 const fennekin_1 = require("./fennekin");
 const lucario_1 = require("./lucario");
 const mew_1 = require("./mew");
 const n_1 = require("./n");
 const riolu_1 = require("./riolu");
+class DeerlingArt extends FCO_8_Deerling_1.Deerling {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_008_R_EN_LG.png';
+    }
+}
+exports.DeerlingArt = DeerlingArt;
 class FennekinArt extends fennekin_1.Fennekin {
     constructor() {
         super(...arguments);

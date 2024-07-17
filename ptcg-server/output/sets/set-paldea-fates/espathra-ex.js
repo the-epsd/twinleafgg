@@ -41,12 +41,10 @@ class Espathraex extends pokemon_card_1.PokemonCard {
         if (effect instanceof check_effects_1.CheckAttackCostEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-
             const isEspathraexInActive = player.active.cards[0] === this;
             if (!isEspathraexInActive) {
                 return state;
             }
-
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
@@ -54,19 +52,17 @@ class Espathraex extends pokemon_card_1.PokemonCard {
                     text: ''
                 }, this);
                 store.reduceEffect(state, stub);
-
             }
             catch (_a) {
                 return state;
             }
-
             const opponentActive = opponent.active.getPokemonCard();
             if (opponentActive && !state.activePlayer) {
                 effect.cost.push(card_types_1.CardType.COLORLESS);
             }
             return state;
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const playerProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);

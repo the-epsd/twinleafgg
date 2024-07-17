@@ -24,6 +24,7 @@ import { Jynx } from './jynx';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
 import { Lady } from './lady';
+import { Roselia } from './LOR_14_Roselia';
 import { Kingdra } from './LOR_37_Kingdra';
 import { HisuianBasculegion } from './LOR_45_Hisuian_Basculegion';
 import { LostCity } from './lost-city';
@@ -208,6 +209,10 @@ export class RadiantGardevoirArt extends RadiantGardevoir {
 
 export class RadiantHisuianSneaslerArt extends RadiantHisuianSneasler {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_123_R_EN_LG.png';
+}
+
+export class RoseliaArt extends Roselia {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_014_R_EN_LG.png';
 }
 
 export class RotomVArt extends RotomV {

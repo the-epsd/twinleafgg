@@ -7,6 +7,7 @@ import { Herdier } from './herdier';
 import { Oranguru } from './oranguru';
 import { ProfessorKukui } from './professor-kukui';
 import { RainbowEnergy } from './rainbow-energy';
+import { Fomantis } from './SUM_14_Fomantis';
 import { Golduck } from './SUM_29_Golduck';
 import { AlolanRattata } from './SUM_76_Alolan_Rattata';
 import { TimerBall } from './timer-ball';
@@ -29,6 +30,10 @@ export class ExpShareArt extends ExpShare {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_118_R_EN.png';
   public setNumber = '118';
   public fullName: string = 'Exp. Share SUM';
+}
+
+export class FomantisArt extends Fomantis {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_014_R_EN_LG.png';
 }
 
 export class GolduckArt extends Golduck {

@@ -12,6 +12,7 @@ const game_effects_1 = require("../effects/game-effects");
 const coin_flip_prompt_1 = require("../prompts/coin-flip-prompt");
 const attack_effects_1 = require("../effects/attack-effects");
 const play_card_effects_1 = require("../effects/play-card-effects");
+const play_card_action_1 = require("../actions/play-card-action");
 function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
     let multiply = 1;
     let modifier = 0;
@@ -44,6 +45,13 @@ function* useAttack(next, store, state, effect) {
     const sp = player.active.specialConditions;
     if (sp.includes(card_types_1.SpecialCondition.PARALYZED) || sp.includes(card_types_1.SpecialCondition.ASLEEP)) {
         throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_SPECIAL_CONDITION);
+    }
+    if (player.alteredCreationDamage == true) {
+        player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, cardList => {
+            if (effect instanceof attack_effects_1.DealDamageEffect && effect.source === cardList) {
+                effect.damage += 20;
+            }
+        });
     }
     const attack = effect.attack;
     const checkAttackCost = new check_effects_1.CheckAttackCostEffect(player, attack);
@@ -85,13 +93,18 @@ function* useAttack(next, store, state, effect) {
 }
 function gameReducer(store, state, effect) {
     if (effect instanceof game_effects_1.KnockOutEffect) {
+        const player = effect.player;
         const card = effect.target.getPokemonCard();
         if (card !== undefined) {
-            // Pokemon ex rule
-            if (card.tags.includes(card_types_1.CardTag.POKEMON_EX) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_ex)) {
+            //Altered Creation GX
+            if (player.usedAlteredCreation == true) {
                 effect.prizeCount += 1;
             }
-            if (card.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
+            // Pokemon ex rule
+            if (card.tags.includes(card_types_1.CardTag.POKEMON_EX) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_ex) || card.tags.includes(card_types_1.CardTag.POKEMON_GX)) {
+                effect.prizeCount += 1;
+            }
+            if (card.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || card.tags.includes(card_types_1.CardTag.TAG_TEAM)) {
                 effect.prizeCount += 2;
             }
             store.log(state, game_message_1.GameLog.LOG_POKEMON_KO, { name: card.name });

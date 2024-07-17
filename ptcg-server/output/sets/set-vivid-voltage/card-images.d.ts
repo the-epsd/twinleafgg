@@ -11,6 +11,7 @@ import { StoneFightingEnergy } from './stone-fighting-energy';
 import { Magearna } from './VIV_128_Magearna';
 import { Taillow } from './VIV_133_Taillow';
 import { Zekrom } from './VIV_60_Zekrom';
+import { Wailord } from './wailord';
 import { WashWaterEnergy } from './wash-water-energy';
 export declare class CharizardArt extends Charizard {
     cardImage: string;
@@ -46,6 +47,9 @@ export declare class StoneFightingEnergyArt extends StoneFightingEnergy {
     cardImage: string;
 }
 export declare class TaillowArt extends Taillow {
+    cardImage: string;
+}
+export declare class WailordArt extends Wailord {
     cardImage: string;
 }
 export declare class WashWaterEnergyArt extends WashWaterEnergy {

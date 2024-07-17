@@ -1,4 +1,6 @@
+import { ArceusDialgaPalkiaGX } from './arceus-dialga-palkia-gx';
 import { Blacephalon } from './blacephalon';
+import { Sawsbuck } from './CEC_16_Sawsbuck';
 import { Stoutland } from './CEC_176_Stoutland';
 import { Phione } from './CEC_57_Phione';
 import { Wishiwashi } from './CEC_62_Wishiwashi';
@@ -18,6 +20,9 @@ import { MallowAndLana } from './mallow-and-lana';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
 import { TagCall } from './tag-call';
+export declare class ArceusDialgaPalkiaGXArt extends ArceusDialgaPalkiaGX {
+    cardImage: string;
+}
 export declare class BlacephalonArt extends Blacephalon {
     cardImage: string;
 }
@@ -64,6 +69,9 @@ export declare class PikachuArt extends Pikachu {
     cardImage: string;
 }
 export declare class ProfessorOaksSetupArt extends ProfessorOaksSetup {
+    cardImage: string;
+}
+export declare class SawsbuckArt extends Sawsbuck {
     cardImage: string;
 }
 export declare class SlugmaArt extends Slugma {

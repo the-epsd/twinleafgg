@@ -1,4 +1,6 @@
+import { ArceusDialgaPalkiaGX } from './arceus-dialga-palkia-gx';
 import { Blacephalon } from './blacephalon';
+import { Sawsbuck } from './CEC_16_Sawsbuck';
 import { Stoutland } from './CEC_176_Stoutland';
 import { Phione } from './CEC_57_Phione';
 import { Wishiwashi } from './CEC_62_Wishiwashi';
@@ -20,6 +22,10 @@ import { MallowAndLana } from './mallow-and-lana';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
 import { TagCall } from './tag-call';
+
+export class ArceusDialgaPalkiaGXArt extends ArceusDialgaPalkiaGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_156_R_EN.png';
+}
 
 export class BlacephalonArt extends Blacephalon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_104_R_EN_LG.png';
@@ -83,6 +89,10 @@ export class PikachuArt extends Pikachu {
 
 export class ProfessorOaksSetupArt extends ProfessorOaksSetup {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_201_R_EN.png';
+}
+
+export class SawsbuckArt extends Sawsbuck {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_016_R_EN_LG.png';
 }
 
 export class SlugmaArt extends Slugma {

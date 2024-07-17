@@ -168,6 +168,8 @@ var GameCardMessage;
     GameCardMessage["CHOOSE_SUPPORTER_FROM_DISCARD"] = "CHOOSE_SUPPORTER_FROM_DISCARD";
     GameCardMessage["SHUFFLE_OPPONENT_HAND"] = "SHUFFLE_OPPONENT_HAND";
     GameCardMessage["SHUFFLE_YOUR_HAND"] = "SHUFFLE_YOUR_HAND";
+    GameCardMessage["CHOOSE_CARD_TO_SHUFFLE"] = "CHOOSE_CARD_TO_SHUFFLE";
+    GameCardMessage["LABEL_GX_USED"] = "LABEL_GX_USED";
 })(GameCardMessage = exports.GameCardMessage || (exports.GameCardMessage = {}));
 var GameLog;
 (function (GameLog) {

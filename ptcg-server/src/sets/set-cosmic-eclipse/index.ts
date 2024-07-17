@@ -1,8 +1,9 @@
 import { Card } from '../../game/store/card/card';
 
-import { BlacephalonArt, ChaoticSwellArt, CynthiaAndCaitlinArt, DrawEnergyArt, DusclopsArt, DuskullArt, GolettArt, GuzmaAndHalaArt, GuzzlordArt, LanasFishingRodArt, LilliesPokeDollArt, LillipupArt, MallowAndLanaArt, PhioneArt, PikachuArt, ProfessorOaksSetupArt, SlugmaArt, StoutlandArt, TagCallArt, WishiwashiArt } from './card-images';
+import { BlacephalonArt, ChaoticSwellArt, CynthiaAndCaitlinArt, DrawEnergyArt, DusclopsArt, DuskullArt, GolettArt, GuzmaAndHalaArt, GuzzlordArt, LanasFishingRodArt, LilliesPokeDollArt, LillipupArt, MallowAndLanaArt, PhioneArt, PikachuArt, ProfessorOaksSetupArt, SawsbuckArt, SlugmaArt, StoutlandArt, TagCallArt, WishiwashiArt } from './card-images';
 
 export const setCosmicEclipse: Card[] = [
+  // new ArceusDialgaPalkiaGXArt(),
   new BlacephalonArt(),
   new ChaoticSwellArt(),
   new CynthiaAndCaitlinArt(),
@@ -19,6 +20,7 @@ export const setCosmicEclipse: Card[] = [
   new PhioneArt(),
   new PikachuArt(),
   new ProfessorOaksSetupArt(),
+  new SawsbuckArt(),
   new SlugmaArt(),
   new StoutlandArt(),
   new TagCallArt(),
