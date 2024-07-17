@@ -6,6 +6,7 @@ import { CustomCatcher } from './custom-catcher';
 import { Electropower } from './electropower';
 import { Grovyle } from './grovyle';
 import { LostBlender } from './lost-blender';
+import { ZeraoraGX } from './LOT_201_ZeraoraGX';
 import { Slowking } from './LOT_55_Slowking';
 import { Giratina } from './LOT_97_Giratina';
 import { Mareep } from './mareep';
@@ -68,5 +69,8 @@ export declare class WurmpleArt extends Wurmple {
     cardImage: string;
 }
 export declare class ZebstrikaArt extends Zebstrika {
+    cardImage: string;
+}
+export declare class ZeraoraGXArt extends ZeraoraGX {
     cardImage: string;
 }

@@ -9,6 +9,7 @@ import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
 import { Lickilicky } from './UNM_162_Lickilicky';
 import { Munchlax } from './UNM_173_Munchlax';
+import { RaichuAlolanRaichuGX } from './UNM_221_RaichuAlolanRaichuGX';
 import { Numel } from './UNM_23_Numel';
 import { Froslass } from './UNM_38_Froslass';
 import { AlolanRaichu } from './UNM_57_Alolan_Raichu';
@@ -48,6 +49,10 @@ export class PurrloinArt extends Purrloin {
 
 export class AlolanRaichuArt extends AlolanRaichu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_057_R_EN_LG.png';
+}
+
+export class RaichuAlolanRaichuGXArt extends RaichuAlolanRaichuGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_221_R_EN_LG.png';
 }
 
 export class RecycleEnergyArt extends RecycleEnergy {

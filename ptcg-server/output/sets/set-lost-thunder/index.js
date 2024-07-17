@@ -20,5 +20,6 @@ exports.setLostThunder = [
     new card_images_1.SpellTagArt(),
     new card_images_1.TreeckoArt(),
     new card_images_1.WurmpleArt(),
-    new card_images_1.ZebstrikaArt()
+    new card_images_1.ZebstrikaArt(),
+    new card_images_1.ZeraoraGXArt()
 ];

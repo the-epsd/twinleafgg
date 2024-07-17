@@ -12,6 +12,7 @@ exports.setUnifiedMinds = [
     new card_images_1.NecrozmaArt(),
     new card_images_1.NumelArt(),
     new card_images_1.PurrloinArt(),
+    new card_images_1.RaichuAlolanRaichuGXArt(),
     new card_images_1.RecycleEnergyArt(),
     new card_images_1.ResetStampArt(),
     new card_images_1.RioluArt(),

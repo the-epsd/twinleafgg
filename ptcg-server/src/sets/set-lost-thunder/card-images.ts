@@ -6,6 +6,7 @@ import { CustomCatcher } from './custom-catcher';
 import { Electropower } from './electropower';
 import { Grovyle } from './grovyle';
 import { LostBlender } from './lost-blender';
+import { ZeraoraGX } from './LOT_201_ZeraoraGX';
 import { Slowking } from './LOT_55_Slowking';
 import { Giratina } from './LOT_97_Giratina';
 import { Mareep } from './mareep';
@@ -87,4 +88,8 @@ export class WurmpleArt extends Wurmple {
 
 export class ZebstrikaArt extends Zebstrika {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_082_R_EN_LG.png';
+}
+
+export class ZeraoraGXArt extends ZeraoraGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_201_R_EN_LG.png';
 }

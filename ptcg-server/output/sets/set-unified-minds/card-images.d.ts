@@ -9,6 +9,7 @@ import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
 import { Lickilicky } from './UNM_162_Lickilicky';
 import { Munchlax } from './UNM_173_Munchlax';
+import { RaichuAlolanRaichuGX } from './UNM_221_RaichuAlolanRaichuGX';
 import { Numel } from './UNM_23_Numel';
 import { Froslass } from './UNM_38_Froslass';
 import { AlolanRaichu } from './UNM_57_Alolan_Raichu';
@@ -38,6 +39,9 @@ export declare class PurrloinArt extends Purrloin {
     cardImage: string;
 }
 export declare class AlolanRaichuArt extends AlolanRaichu {
+    cardImage: string;
+}
+export declare class RaichuAlolanRaichuGXArt extends RaichuAlolanRaichuGX {
     cardImage: string;
 }
 export declare class RecycleEnergyArt extends RecycleEnergy {
