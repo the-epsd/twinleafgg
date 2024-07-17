@@ -1,3 +1,4 @@
+import { ArceusDialgaPalkiaGX } from './arceus-dialga-palkia-gx';
 import { Blacephalon } from './blacephalon';
 import { Sawsbuck } from './CEC_16_Sawsbuck';
 import { Stoutland } from './CEC_176_Stoutland';
@@ -19,6 +20,9 @@ import { MallowAndLana } from './mallow-and-lana';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
 import { TagCall } from './tag-call';
+export declare class ArceusDialgaPalkiaGXArt extends ArceusDialgaPalkiaGX {
+    cardImage: string;
+}
 export declare class BlacephalonArt extends Blacephalon {
     cardImage: string;
 }

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WishiwashiArt = exports.TagCallArt = exports.StoutlandArt = exports.SlugmaArt = exports.SawsbuckArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BlacephalonArt = void 0;
+exports.WishiwashiArt = exports.TagCallArt = exports.StoutlandArt = exports.SlugmaArt = exports.SawsbuckArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BlacephalonArt = exports.ArceusDialgaPalkiaGXArt = void 0;
+const arceus_dialga_palkia_gx_1 = require("./arceus-dialga-palkia-gx");
 const blacephalon_1 = require("./blacephalon");
 const CEC_16_Sawsbuck_1 = require("./CEC_16_Sawsbuck");
 const CEC_176_Stoutland_1 = require("./CEC_176_Stoutland");
@@ -22,6 +23,13 @@ const mallow_and_lana_1 = require("./mallow-and-lana");
 const professor_oaks_setup_1 = require("./professor-oaks-setup");
 const slugma_1 = require("./slugma");
 const tag_call_1 = require("./tag-call");
+class ArceusDialgaPalkiaGXArt extends arceus_dialga_palkia_gx_1.ArceusDialgaPalkiaGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_156_R_EN.png';
+    }
+}
+exports.ArceusDialgaPalkiaGXArt = ArceusDialgaPalkiaGXArt;
 class BlacephalonArt extends blacephalon_1.Blacephalon {
     constructor() {
         super(...arguments);

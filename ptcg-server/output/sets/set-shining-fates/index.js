@@ -10,7 +10,9 @@ exports.setShiningFates = [
     new card_images_1.GalarianWeezingArt(),
     new card_images_1.KoffingArt(),
     new card_images_1.RillaboomArt(),
+    new card_images_1.SnomArt(),
     new card_images_1.ThwackeyArt(),
     // Shiny Vault
     new full_art_1.ApplinArt(),
+    new full_art_1.SnomSVArt(),
 ];

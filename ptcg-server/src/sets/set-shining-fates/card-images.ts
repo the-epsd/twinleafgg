@@ -4,6 +4,7 @@ import { Frosmoth } from './frosmoth';
 import { GalarianWeezing } from './galarian-weezing';
 import { Koffing } from './koffing';
 import { Rillaboom } from './rillaboom';
+import { Snom } from './snom';
 import { Thwackey } from './thwackey';
 
 export class BallGuyArt extends BallGuy {
@@ -28,6 +29,10 @@ export class KoffingArt extends Koffing {
 
 export class RillaboomArt extends Rillaboom {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_SV6_R_EN_LG.png';
+}
+
+export class SnomArt extends Snom {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_029_R_EN_LG.png';
 }
 
 export class ThwackeyArt extends Thwackey {

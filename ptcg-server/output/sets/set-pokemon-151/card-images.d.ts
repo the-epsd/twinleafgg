@@ -33,6 +33,7 @@ import { Oddish } from './oddish';
 import { AntiqueHelixFossil } from './antique-helix-fossil';
 import { EnergySticker } from './energy-sticker';
 import { Moltres } from './MEW_146_Moltres';
+import { Staryu } from './staryu';
 export declare class AntiqueHelixFossilArt extends AntiqueHelixFossil {
     cardImage: string;
 }
@@ -118,6 +119,9 @@ export declare class ScytherArt extends Scyther {
     cardImage: string;
 }
 export declare class SquirtleArt extends Squirtle {
+    cardImage: string;
+}
+export declare class StaryuArt extends Staryu {
     cardImage: string;
 }
 export declare class VileplumeArt extends Vileplume {

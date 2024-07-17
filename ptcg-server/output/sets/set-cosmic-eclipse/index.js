@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setCosmicEclipse = void 0;
 const card_images_1 = require("./card-images");
 exports.setCosmicEclipse = [
+    // new ArceusDialgaPalkiaGXArt(),
     new card_images_1.BlacephalonArt(),
     new card_images_1.ChaoticSwellArt(),
     new card_images_1.CynthiaAndCaitlinArt(),

@@ -21,7 +21,8 @@ export class DeckAnalyser {
   }
 
   public isValid(): boolean {
-    const countMap: { [name: string]: number } = { };
+    const countMap: { [name: string]: number } = {};
+    const prismStarCards = new Set<string>();
     let hasBasicPokemon = false;
     let hasAceSpec = false;
     let hasRadiant = false;
@@ -45,7 +46,6 @@ export class DeckAnalyser {
           return false;
         }
       }
-
       if (card.tags.includes(CardTag.ACE_SPEC)) {
         if (hasAceSpec) {
           return false;
@@ -58,6 +58,13 @@ export class DeckAnalyser {
         }
         hasRadiant = true;
       }
+      if (card.tags.includes(CardTag.PRISM_STAR)) {
+        if (prismStarCards.has(card.name)) {
+          return false;
+        }
+        prismStarCards.add(card.name);
+      }
+
     }
 
     return hasBasicPokemon;

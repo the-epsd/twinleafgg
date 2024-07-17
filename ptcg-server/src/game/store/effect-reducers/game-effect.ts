@@ -18,6 +18,7 @@ import {
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { DealDamageEffect, ApplyWeaknessEffect } from '../effects/attack-effects';
 import { TrainerEffect } from '../effects/play-card-effects';
+import { PlayerType } from '../actions/play-card-action';
 
 function applyWeaknessAndResistance(
   damage: number,
@@ -61,6 +62,14 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   const sp = player.active.specialConditions;
   if (sp.includes(SpecialCondition.PARALYZED) || sp.includes(SpecialCondition.ASLEEP)) {
     throw new GameError(GameMessage.BLOCKED_BY_SPECIAL_CONDITION);
+  }
+
+  if (player.alteredCreationDamage == true) {
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      if (effect instanceof DealDamageEffect && effect.source === cardList) {
+        effect.damage += 20;
+      }
+    });
   }
 
   const attack = effect.attack;
@@ -118,8 +127,14 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
 export function gameReducer(store: StoreLike, state: State, effect: Effect): State {
 
   if (effect instanceof KnockOutEffect) {
+    const player = effect.player;
     const card = effect.target.getPokemonCard();
     if (card !== undefined) {
+
+      //Altered Creation GX
+      if (player.usedAlteredCreation == true) {
+        effect.prizeCount += 1;
+      }
 
       // Pokemon ex rule
       if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.POKEMON_GX)) {

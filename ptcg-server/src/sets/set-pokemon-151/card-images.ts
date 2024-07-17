@@ -33,6 +33,7 @@ import { Oddish } from './oddish';
 import { AntiqueHelixFossil } from './antique-helix-fossil';
 import { EnergySticker } from './energy-sticker';
 import { Moltres } from './MEW_146_Moltres';
+import { Staryu } from './staryu';
 
 export class AntiqueHelixFossilArt extends AntiqueHelixFossil {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_153_R_EN.png';
@@ -148,6 +149,10 @@ export class ScytherArt extends Scyther {
 
 export class SquirtleArt extends Squirtle {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_007_R_EN_LG.png';
+}
+
+export class StaryuArt extends Staryu {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_120_R_EN_LG.png';
 }
 
 export class VileplumeArt extends Vileplume {
