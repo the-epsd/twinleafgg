@@ -11,7 +11,7 @@ export class Espathraex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Flittle';
 
@@ -26,7 +26,6 @@ export class Espathraex extends PokemonCard {
   public powers =
     [{
       name: 'Dazzling Gaze',
-      useWhenInPlay: true,
       powerType: PowerType.ABILITY,
       text: 'As long as this Pokémon is in the Active Spot, attacks used by your opponent\'s Active Pokémon cost C more.'
     }];
@@ -58,11 +57,11 @@ export class Espathraex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // const isEspathraexInActive = player.active.cards[0] === this;
+      const isEspathraexInActive = player.active.cards[0] === this;
 
-      // if (!isEspathraexInActive) {
-      //   return state;
-      // }
+      if (!isEspathraexInActive) {
+        return state;
+      }
 
       try {
         const stub = new PowerEffect(player, {
@@ -84,8 +83,7 @@ export class Espathraex extends PokemonCard {
       return state;
     }
 
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

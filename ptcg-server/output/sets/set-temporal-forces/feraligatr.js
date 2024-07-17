@@ -11,7 +11,7 @@ class Feraligatr extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'H';
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Croconaw';
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 180;

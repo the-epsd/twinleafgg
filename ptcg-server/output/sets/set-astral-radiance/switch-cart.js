@@ -36,6 +36,7 @@ function* playCard(next, store, state, effect) {
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
     }
+    return state;
 }
 class SwitchCart extends trainer_card_1.TrainerCard {
     constructor() {

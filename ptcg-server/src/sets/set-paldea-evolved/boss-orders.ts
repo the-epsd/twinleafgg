@@ -43,7 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     const cardList = result[0];
     opponent.switchPokemon(cardList);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
+    return state;
   });
 }
 

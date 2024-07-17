@@ -38,71 +38,20 @@ class IronValiantex extends pokemon_card_1.PokemonCard {
         this.setNumber = '38';
         this.name = 'Iron Valiant ex';
         this.fullName = 'Iron Valiant ex PAR';
+        this.tachyonBits = 0;
         this.TACHYON_BITS_MARKER = 'TACHYON_BITS_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
-    //   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    //     if (effect instanceof EndTurnEffect) {
-    //       this.movedToActiveThisTurn = false;
-    //       console.log('movedToActiveThisTurn = false');
-    //     }
-    //     if (effect instanceof EndTurnEffect && effect.player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
-    //       effect.player.abilityMarker.removeMarker(this.TACHYON_BITS_MARKER, this);
-    //       console.log('marker cleared');
-    //     }
-    //     if (this.movedToActiveThisTurn == true) {
-    //       // if (effect instanceof RetreatEffect && effect.player.active.cards[0] == this) {
-    //       const player = state.players[state.activePlayer];
-    //       const opponent = StateUtils.getOpponent(state, player);
-    //       // if (this.movedToActiveThisTurn == false) {
-    //       //   throw new GameError(GameMessage.CANNOT_USE_ATTACK);
-    //       // }
-    //       try {
-    //   const stub = new PowerEffect(player, {
-    //     name: 'test',
-    //     powerType: PowerType.ABILITY,
-    //     text: ''
-    //   }, this);
-    //   store.reduceEffect(state, stub);
-    // } catch {
-    //   return state;
-    // }
-    //       if (player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
-    //         console.log('attack blocked');
-    //         return state;
-    //       }
-    //       return store.prompt(state, new ChoosePokemonPrompt(
-    //         player.id,
-    //         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-    //         PlayerType.TOP_PLAYER,
-    //         [SlotType.BENCH, SlotType.ACTIVE],
-    //         { min: 1, max: 1, allowCancel: true },
-    //       ), selected => {
-    //         const targets = selected || [];
-    //         targets.forEach(target => {
-    //           target.damage += 20;
-    //           this.movedToActiveThisTurn = false;
-    //           player.abilityMarker.addMarker(this.TACHYON_BITS_MARKER, this);
-    //           console.log('marker added');
-    //           return
-    //         });
-    //       });
-    //     }
-    //     return state;
-    //   }
-    // }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             this.movedToActiveThisTurn = false;
+            this.tachyonBits = 0;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            this.tachyonBits = 0;
             this.movedToActiveThisTurn = false;
             console.log('movedToActiveThisTurn = false');
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
-            effect.player.abilityMarker.removeMarker(this.TACHYON_BITS_MARKER, this);
-            console.log('marker cleared');
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
@@ -113,6 +62,45 @@ class IronValiantex extends pokemon_card_1.PokemonCard {
             effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
         }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
+            this.tachyonBits = 0;
+            effect.player.abilityMarker.removeMarker(this.TACHYON_BITS_MARKER, this);
+            console.log('marker cleared');
+        }
+        const player = state.players[state.activePlayer];
+        if (this.movedToActiveThisTurn == true && player.active.cards[0] == this) {
+            this.tachyonBits++;
+            if (this.tachyonBits === 1) {
+                if (player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
+                    throw new game_1.GameError(game_message_1.GameMessage.BLOCKED_BY_EFFECT);
+                }
+                // Try to reduce PowerEffect, to check if something is blocking our ability
+                try {
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: game_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
+                }
+                catch (_a) {
+                    return state;
+                }
+                state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 1, allowCancel: true }), selected => {
+                    const targets = selected || [];
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        }
+                    });
+                    targets.forEach(target => {
+                        target.damage += 20;
+                        player.abilityMarker.addMarker(this.TACHYON_BITS_MARKER, this);
+                    });
+                    this.tachyonBits++;
+                });
+            }
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker
             if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
@@ -121,42 +109,6 @@ class IronValiantex extends pokemon_card_1.PokemonCard {
             }
             effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
             console.log('marker added');
-        }
-        const player = state.players[state.activePlayer];
-        if (this.movedToActiveThisTurn == true && player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
-            return state;
-        }
-        if (this.movedToActiveThisTurn == true) {
-            if (player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
-                effect.preventDefault = true;
-                return state;
-            }
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 1, allowCancel: true }), selected => {
-                const targets = selected || [];
-                targets.forEach(target => {
-                    target.damage += 20;
-                    player.abilityMarker.addMarker(this.TACHYON_BITS_MARKER, this);
-                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                        if (cardList.getPokemonCard() === this) {
-                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
-                        }
-                    });
-                    return state;
-                });
-                return state;
-            });
         }
         return state;
     }

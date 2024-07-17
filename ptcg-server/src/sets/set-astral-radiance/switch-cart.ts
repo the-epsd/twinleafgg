@@ -16,7 +16,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  
+
 
   // Do not discard the card yet
   effect.preventDefault = true;
@@ -34,7 +34,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.id,
       GameMessage.CHOOSE_POKEMON_TO_SWITCH,
       PlayerType.BOTTOM_PLAYER,
-      [ SlotType.BENCH ],
+      [SlotType.BENCH],
       { allowCancel: false }
     ), results => {
       targets = results || [];
@@ -53,6 +53,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
   }
+  return state;
 }
 export class SwitchCart extends TrainerCard {
 

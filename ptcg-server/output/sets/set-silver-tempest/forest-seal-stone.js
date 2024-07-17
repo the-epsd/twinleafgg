@@ -20,13 +20,13 @@ class ForestSealStone extends game_1.TrainerCard {
         this.VSTAR_MARKER = 'VSTAR_MARKER';
         this.powers = [
             {
-                name: 'Forest Seal Stone',
+                name: 'Star Alchemy',
                 powerType: game_1.PowerType.ABILITY,
                 useWhenInPlay: true,
                 exemptFromAbilityLock: true,
-                text: 'During your turn, you may search your deck for up to ' +
-                    '2 cards and put them into your hand. Then, shuffle your ' +
-                    'deck. (You can\'t use more than 1 VSTAR Power in a game.)'
+                text: 'The Pokémon V this card is attached to can use the VSTAR Power on this card.' +
+                    '' +
+                    'During your turn, you may search your deck for a card and put it into your hand. Then, shuffle your deck. (You can\'t use more than 1 VSTAR Power in a game.) '
             }
         ];
     }

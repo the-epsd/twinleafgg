@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardTag, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, SpecialCondition, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -13,7 +13,7 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.ANCIENT ];
+  public tags = [CardTag.ANCIENT];
 
   public set: string = 'PAR';
 
@@ -30,7 +30,7 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof CheckHpEffect && effect.target.tool === this) {
       const player = effect.player;
       const card = effect.target.getPokemonCard();
 
@@ -45,14 +45,14 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
         return state;
       }
 
-      if (card.tags.includes(CardTag.ANCIENT)) {
+      if (card && card.tags.includes(CardTag.ANCIENT)) {
         effect.hp += 60;
       }
     }
 
-    if (effect instanceof RemoveSpecialConditionsEffect && effect.target.cards.includes(this)) {
-      const card = effect.target.getPokemonCard();
+    if (effect instanceof RemoveSpecialConditionsEffect && effect.target.tool === this) {
       const player = effect.player;
+      const card = effect.target.getPokemonCard();
 
       try {
         const toolEffect = new ToolEffect(player, this);
@@ -65,8 +65,12 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
         return state;
       }
 
-      if (card.tags.includes(CardTag.ANCIENT)) {
-        effect.target.specialConditions = [];
+      if (card && card.tags.includes(CardTag.ANCIENT)) {
+        effect.target.removeSpecialCondition(SpecialCondition.ASLEEP);
+        effect.target.removeSpecialCondition(SpecialCondition.CONFUSED);
+        effect.target.removeSpecialCondition(SpecialCondition.POISONED);
+        effect.target.removeSpecialCondition(SpecialCondition.PARALYZED);
+        effect.target.removeSpecialCondition(SpecialCondition.BURNED);
         effect.preventDefault = true;
         return state;
       }

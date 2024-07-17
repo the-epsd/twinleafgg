@@ -32,6 +32,7 @@ function* playCard(next, store, state, effect) {
         const cardList = result[0];
         opponent.switchPokemon(cardList);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
     });
 }
 class BossOrders extends trainer_card_1.TrainerCard {

@@ -12,6 +12,7 @@ export class Heatran extends PokemonCard {
   public hp: number = 140;
   public weakness = [{ type: CardType.FIRE }];
   public resistance = [{ type: CardType.GRASS, value: -30 }];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     powerType: PowerType.ABILITY,
@@ -19,12 +20,12 @@ export class Heatran extends PokemonCard {
     useWhenInPlay: false,
     name: 'Incandescent Body'
   }];
-  
+
   public attacks = [{
     name: 'Steel Burst',
     cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
     damage: 50,
-    damageCalculation: 'x',    
+    damageCalculation: 'x',
     text: 'Discard all [M] Energy from this Pokémon. This attack does 50 damage for each card you discarded in this way.'
   }];
 
@@ -36,7 +37,7 @@ export class Heatran extends PokemonCard {
   public fullName: string = 'Heatran TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
@@ -55,7 +56,7 @@ export class Heatran extends PokemonCard {
 
       effect.damage += (totalDiscarded - 1) * 50;
     }
-    
+
     if (effect instanceof AfterDamageEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);

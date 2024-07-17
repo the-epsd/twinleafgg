@@ -37,11 +37,6 @@ export class DarkClaw extends TrainerCard {
         store.reduceEffect(state, toolEffect);
       } catch {
         return state;
-      }      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
       }
 
       // Not active Pokemon
