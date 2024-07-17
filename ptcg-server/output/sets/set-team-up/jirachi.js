@@ -20,7 +20,7 @@ function* useStellarWish(next, store, state, effect) {
         }
     });
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.TRAINER }, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false, blocked }), selected => {
         cards = selected || [];
         next();
     });

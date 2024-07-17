@@ -49,13 +49,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  
   // Operation canceled by the user
   if (cards.length === 0) {
     return state;
   }
-
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
   
   cards.forEach((card, index) => {
     opponent.hand.moveCardTo(card, slots[index]);

@@ -16,7 +16,7 @@ export class PromptSelectComponent {
     this.promptId = prompt.id;
     this.message = prompt.message;
     this.options = prompt.values.map(value => {
-      return this.translate.instant('GAME_MESSAGES.' + value);
+      return this.translate.instant(value);
     });
     this.allowCancel = prompt.options.allowCancel;
     this.result = prompt.options.defaultValue;

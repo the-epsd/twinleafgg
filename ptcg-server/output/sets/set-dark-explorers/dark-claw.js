@@ -31,13 +31,6 @@ class DarkClaw extends trainer_card_1.TrainerCard {
             catch (_a) {
                 return state;
             }
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             // Not active Pokemon
             if (opponent.active !== effect.target) {
                 return state;

@@ -20,7 +20,7 @@ class AncientBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
         this.text = 'The Ancient Pokémon this card is attached to gets +60 HP, recovers from all Special Conditions, and can\'t be affected by any Special Conditions.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckHpEffect && effect.target.cards.includes(this)) {
+        if (effect instanceof check_effects_1.CheckHpEffect && effect.target.tool === this) {
             const player = effect.player;
             const card = effect.target.getPokemonCard();
             try {
@@ -33,13 +33,13 @@ class AncientBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
             if (card === undefined) {
                 return state;
             }
-            if (card.tags.includes(card_types_1.CardTag.ANCIENT)) {
+            if (card && card.tags.includes(card_types_1.CardTag.ANCIENT)) {
                 effect.hp += 60;
             }
         }
-        if (effect instanceof attack_effects_1.RemoveSpecialConditionsEffect && effect.target.cards.includes(this)) {
-            const card = effect.target.getPokemonCard();
+        if (effect instanceof attack_effects_1.RemoveSpecialConditionsEffect && effect.target.tool === this) {
             const player = effect.player;
+            const card = effect.target.getPokemonCard();
             try {
                 const toolEffect = new play_card_effects_1.ToolEffect(player, this);
                 store.reduceEffect(state, toolEffect);
@@ -50,8 +50,12 @@ class AncientBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
             if (card === undefined) {
                 return state;
             }
-            if (card.tags.includes(card_types_1.CardTag.ANCIENT)) {
-                effect.target.specialConditions = [];
+            if (card && card.tags.includes(card_types_1.CardTag.ANCIENT)) {
+                effect.target.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
+                effect.target.removeSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
+                effect.target.removeSpecialCondition(card_types_1.SpecialCondition.POISONED);
+                effect.target.removeSpecialCondition(card_types_1.SpecialCondition.PARALYZED);
+                effect.target.removeSpecialCondition(card_types_1.SpecialCondition.BURNED);
                 effect.preventDefault = true;
                 return state;
             }

@@ -26,7 +26,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Pokemon
   });
 
   if (coinResult === false) {
-    player.supporter.moveCardTo(self, player.discard);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
   }
 
@@ -39,6 +39,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Pokemon
   ), result => {
     const cardList = result[0];
     opponent.switchPokemon(cardList);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
   });
 
   player.supporter.moveCardTo(effect.trainerCard, player.discard);

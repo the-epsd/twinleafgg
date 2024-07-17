@@ -14,7 +14,6 @@ export declare class Espathraex extends PokemonCard {
     retreat: CardType[];
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];

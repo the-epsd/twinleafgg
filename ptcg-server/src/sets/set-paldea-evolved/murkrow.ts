@@ -2,8 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE } from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Murkrow extends PokemonCard {
 
@@ -21,18 +21,18 @@ export class Murkrow extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Spin Turn',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 10,
       text: 'Switch this Pokémon with one of your Benched Pokémon.'
     },
     {
       name: 'United Wings',
-      cost: [ CardType.DARK ],
+      cost: [CardType.DARK],
       damage: 20,
       text: 'This attack does 20 damage for each Pokémon in your ' +
         'in your discard pile that have the United Wings attack.'
@@ -53,17 +53,17 @@ export class Murkrow extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-  
+
       const hasBenched = player.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
-  
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false },
       ), selected => {
         if (!selected || selected.length === 0) {
@@ -74,9 +74,19 @@ export class Murkrow extends PokemonCard {
       });
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE(20, c => c.attacks.some(a => a.name === 'United Wings'), effect);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+
+      let pokemonCount = 0;
+      player.discard.cards.forEach(c => {
+        if (c instanceof PokemonCard && c.attacks.some(a => a.name === 'United Wings')) {
+          pokemonCount += 1;
+        }
+      });
+
+      effect.damage = pokemonCount * 20;
     }
+
     return state;
   }
 

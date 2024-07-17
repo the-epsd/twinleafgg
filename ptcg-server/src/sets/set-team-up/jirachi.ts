@@ -26,7 +26,7 @@ function* useStellarWish(next: Function, store: StoreLike, state: State, effect:
     GameMessage.CHOOSE_CARD_TO_HAND,
     deckTop,
     { superType: SuperType.TRAINER },
-    { min: 1, max: 1, allowCancel: true, blocked }
+    { min: 0, max: 1, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();

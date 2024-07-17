@@ -35,6 +35,7 @@ export class DeoxysVSTAR extends PokemonCard {
       name: 'Star Force',
       cost: [CardType.PSYCHIC],
       damage: 60,
+      damageCalculation: 'x',
       text: 'This attack does 60 damage for each Energy attached to both Active Pokémon. (You can\'t use more than 1 VSTAR Power in a game.)'
     },
   ];
@@ -102,14 +103,19 @@ export class DeoxysVSTAR extends PokemonCard {
 
       player.usedVSTAR = true;
 
-      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
-      const checkProvidedEnergyEffect2 = new CheckProvidedEnergyEffect(player);
-      store.reduceEffect(state, checkProvidedEnergyEffect);
-      const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
-      const energyCount2 = checkProvidedEnergyEffect2.energyMap.reduce((left, p) => left + p.provides.length, 0);
+      const playerProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      store.reduceEffect(state, playerProvidedEnergy);
+      const playerEnergyCount = playerProvidedEnergy.energyMap
+        .reduce((left, p) => left + p.provides.length, 0);
 
-      effect.damage += energyCount + energyCount2 * 60;
+      const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
+      store.reduceEffect(state, opponentProvidedEnergy);
+      const opponentEnergyCount = opponentProvidedEnergy.energyMap
+        .reduce((left, p) => left + p.provides.length, 0);
+
+      effect.damage = (playerEnergyCount + opponentEnergyCount) * 60;
     }
+
     return state;
   }
 }

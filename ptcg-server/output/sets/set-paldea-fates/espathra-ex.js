@@ -19,7 +19,6 @@ class Espathraex extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Dazzling Gaze',
-                useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'As long as this Pokémon is in the Active Spot, attacks used by your opponent\'s Active Pokémon cost C more.'
             }];
@@ -42,10 +41,12 @@ class Espathraex extends pokemon_card_1.PokemonCard {
         if (effect instanceof check_effects_1.CheckAttackCostEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            // const isEspathraexInActive = player.active.cards[0] === this;
-            // if (!isEspathraexInActive) {
-            //   return state;
-            // }
+
+            const isEspathraexInActive = player.active.cards[0] === this;
+            if (!isEspathraexInActive) {
+                return state;
+            }
+
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
@@ -53,17 +54,19 @@ class Espathraex extends pokemon_card_1.PokemonCard {
                     text: ''
                 }, this);
                 store.reduceEffect(state, stub);
+
             }
             catch (_a) {
                 return state;
             }
+
             const opponentActive = opponent.active.getPokemonCard();
             if (opponentActive && !state.activePlayer) {
                 effect.cost.push(card_types_1.CardType.COLORLESS);
             }
             return state;
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const playerProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);

@@ -36,17 +36,18 @@ export class EscapeBoard extends TrainerCard {
       }
 
       if (effect.cost.length === 0) {
-        effect.cost = [];        
+        effect.cost = [];
       } else {
-        effect.cost.splice(0, 1);        
+        effect.cost.splice(0, 1);
       }
-      
+
     }
 
     if (effect instanceof RetreatEffect && effect.player.active.tool === this) {
-      effect.ignoreStatusConditions = true;      
+      effect.ignoreStatusConditions = true;
+      effect.player.active.clearEffects();
     }
-    
+
     return state;
   }
 

@@ -36,6 +36,7 @@ class EscapeBoard extends trainer_card_1.TrainerCard {
         }
         if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.tool === this) {
             effect.ignoreStatusConditions = true;
+            effect.player.active.clearEffects();
         }
         return state;
     }

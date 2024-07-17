@@ -1,11 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE } from '../../game/store/prefabs/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useLeParfum(next: Function, store: StoreLike, state: State,
   self: Flamigo, effect: PlayPokemonEffect): IterableIterator<State> {
@@ -100,9 +98,19 @@ export class Flamigo extends PokemonCard {
       return generator.next().value;
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE(20, c => c.attacks.some(a => a.name === 'United Wings'), effect);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+
+      let pokemonCount = 0;
+      player.discard.cards.forEach(c => {
+        if (c instanceof PokemonCard && c.attacks.some(a => a.name === 'United Wings')) {
+          pokemonCount += 1;
+        }
+      });
+
+      effect.damage = pokemonCount * 20;
     }
+
     return state;
   }
 

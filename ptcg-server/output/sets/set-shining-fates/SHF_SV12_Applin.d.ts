@@ -1,30 +1,19 @@
-import { PowerType, State, StoreLike } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Heatran extends PokemonCard {
+export declare class Applin extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
-    resistance: {
-        type: CardType;
-        value: number;
-    }[];
     retreat: CardType[];
-    powers: {
-        powerType: PowerType;
-        text: string;
-        useWhenInPlay: boolean;
-        name: string;
-    }[];
     attacks: {
         name: string;
         cost: CardType[];
         damage: number;
-        damageCalculation: string;
         text: string;
     }[];
     set: string;
@@ -33,5 +22,7 @@ export declare class Heatran extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly CLEAR_WITHDRAW_MARKER = "CLEAR_WITHDRAW_MARKER";
+    readonly WITHDRAW_MARKER = "WITHDRAW_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
