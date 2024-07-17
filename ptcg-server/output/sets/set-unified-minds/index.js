@@ -6,6 +6,7 @@ exports.setUnifiedMinds = [
     new card_images_1.AlolanGrimerArt(),
     new card_images_1.AlolanRaichuArt(),
     new card_images_1.FroslassArt(),
+    new card_images_1.HoopaArt(),
     new card_images_1.KarateBeltArt(),
     new card_images_1.LickilickyArt(),
     new card_images_1.MunchlaxArt(),

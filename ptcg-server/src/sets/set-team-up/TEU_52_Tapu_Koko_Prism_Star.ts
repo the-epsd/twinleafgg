@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { AttachEnergyPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
@@ -40,6 +40,7 @@ export class TapuKokoPrismStar extends PokemonCard {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
 
+
       // Check to see if anything is blocking our Ability
       try {
         const stub = new PowerEffect(player, {
@@ -61,9 +62,52 @@ export class TapuKokoPrismStar extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
+      const hasEnergyInDiscard = player.discard.cards.some(c => {
+        return c instanceof EnergyCard
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.LIGHTNING);
+      });
 
+      if (!hasEnergyInDiscard) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      state = store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+        player.discard,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
+        { allowCancel: false, min: 1, max: 2, differentTargets: true }
+      ), transfers => {
+        transfers = transfers || [];
+
+        if (transfers.length === 0) {
+          return;
+        }
+
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.discard.moveCardTo(transfer.card, target);
+        }
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+
+            const pokemons = cardList.getPokemons();
+            cardList.moveCardsTo(pokemons, player.lostzone);
+            cardList.moveTo(player.discard);
+            cardList.clearEffects();
+
+          }
+        });
+
+        return state;
+      });
 
     }
+
 
     return state;
   }

@@ -35,7 +35,7 @@ class RaichuAlolanRaichuGX extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '195';
         this.name = 'Raichu & Alolan RaichuGX GX';
-        this.fullName = 'Raichu & Alolan Raichu GX GX UNM';
+        this.fullName = 'Raichu & Alolan Raichu GX UNM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

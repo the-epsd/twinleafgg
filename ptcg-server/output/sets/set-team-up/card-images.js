@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.YveltalArt = exports.ViridianForestArt = exports.PokemonCommunicationArt = exports.PidgeottoArt = exports.PersianArt = exports.PawniardArt = exports.MoltresArt = exports.MetalGogglesArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.DragoniteArt = exports.BronzorArt = exports.BisharpArt = exports.AlolanMukArt = exports.AbsolArt = void 0;
+exports.ZapdosArt = exports.YveltalArt = exports.ViridianForestArt = exports.TapuKokoPrismStarArt = exports.PokemonCommunicationArt = exports.PidgeottoArt = exports.PersianArt = exports.PawniardArt = exports.MoltresArt = exports.MetalGogglesArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.DragoniteArt = exports.BronzorArt = exports.BisharpArt = exports.AlolanMukArt = exports.AbsolArt = void 0;
 const alolan_muk_1 = require("./alolan-muk");
 const bronzor_1 = require("./bronzor");
 const dragonite_1 = require("./dragonite");
@@ -16,6 +16,7 @@ const TEU_104_Pawniard_1 = require("./TEU_104_Pawniard");
 const TEU_105_Bisharp_1 = require("./TEU_105_Bisharp");
 const TEU_126_Persian_1 = require("./TEU_126_Persian");
 const TEU_19_Moltres_1 = require("./TEU_19_Moltres");
+const TEU_52_Tapu_Koko_Prism_Star_1 = require("./TEU_52_Tapu_Koko_Prism_Star");
 const TEU_88_Absol_1 = require("./TEU_88_Absol");
 const viridian_forest_1 = require("./viridian-forest");
 const yveltal_1 = require("./yveltal");
@@ -132,6 +133,13 @@ class PokemonCommunicationArt extends pokemon_communication_1.PokemonCommunicati
     }
 }
 exports.PokemonCommunicationArt = PokemonCommunicationArt;
+class TapuKokoPrismStarArt extends TEU_52_Tapu_Koko_Prism_Star_1.TapuKokoPrismStar {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_051_R_EN_LG.png';
+    }
+}
+exports.TapuKokoPrismStarArt = TapuKokoPrismStarArt;
 class ViridianForestArt extends viridian_forest_1.ViridianForest {
     constructor() {
         super(...arguments);
