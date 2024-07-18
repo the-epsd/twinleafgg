@@ -37,6 +37,7 @@ export const setSV7: Card[] = [
   new JoltikArt(),
   new KingdraexArt(),
   new KyuremArt(),
+  // new LaprasexArt(),
   new MunkidoriexArt(),
   new NeutralCenterArt(),
   new NightTimeAcademyArt(),
