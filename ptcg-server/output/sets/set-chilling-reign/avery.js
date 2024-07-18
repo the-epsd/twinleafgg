@@ -45,6 +45,7 @@ class Avery extends trainer_card_1.TrainerCard {
                     selected.forEach(card => {
                         card.moveTo(opponent.discard);
                     });
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
                     return state;
                 });
             }

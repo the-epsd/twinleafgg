@@ -1,4 +1,5 @@
 import { BeastRing } from './beast-ring';
+import { LysandreLabs } from './FLI_111_Lysandre_Labs';
 import { Frogadier } from './FLI_23_Frogadier';
 import { Magnezone } from './FLI_36_Magnezone';
 import { Inkay } from './inkay';
@@ -17,6 +18,10 @@ export class FrogadierArt extends Frogadier {
 
 export class InkayArt extends Inkay {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_050_R_EN_LG.png';
+}
+
+export class LysandreLabsArt extends LysandreLabs {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_111_R_EN_LG.png';
 }
 
 export class MagnezoneArt extends Magnezone {

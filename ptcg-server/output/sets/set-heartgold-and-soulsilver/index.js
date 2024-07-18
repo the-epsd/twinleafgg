@@ -7,6 +7,7 @@ exports.setHeartGoldAndSoulSilver = [
     new card_images_1.CyndaquilArt(),
     new card_images_1.DrowzeeArt(),
     new card_images_1.HypnoArt(),
+    new card_images_1.LightningEnergyArt(),
     new card_images_1.PichuArt(),
     new card_images_1.PokemonCollectorArt(),
     new card_images_1.ProfessorOaksNewTheoryArt(),

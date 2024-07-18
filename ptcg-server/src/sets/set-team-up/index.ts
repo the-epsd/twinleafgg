@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 
-import { AlolanMukArt, BisharpArt, BronzorArt, DragoniteArt, HitmonchanArt, HitmonleeArt, JirachiArt, LaprasArt, MareepArt, MetalGogglesArt, MoltresArt, PawniardArt, PersianArt, PidgeottoArt, PokemonCommunicationArt, ViridianForestArt, YveltalArt, ZapdosArt } from './card-images';
+import { AlolanMukArt, BisharpArt, BronzorArt, DragoniteArt, HitmonchanArt, HitmonleeArt, JirachiArt, LaprasArt, MareepArt, MetalGogglesArt, MoltresArt, PawniardArt, PersianArt, PidgeottoArt, PokemonCommunicationArt, TapuKokoPrismStarArt, ViridianForestArt, YveltalArt, ZapdosArt } from './card-images';
 
 
 export const setTeamUp: Card[] = [
@@ -20,6 +20,7 @@ export const setTeamUp: Card[] = [
   new PersianArt(),
   new PidgeottoArt(),
   new PokemonCommunicationArt(),
+  new TapuKokoPrismStarArt(),
   new ViridianForestArt(),
   new YveltalArt(),
   new ZapdosArt(),

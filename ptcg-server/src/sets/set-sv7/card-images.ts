@@ -33,6 +33,7 @@ import { JaninesSecretTechnique } from './janines-secret-technique';
 import { Joltik } from './joltik';
 import { Kingdraex } from './kingdra-ex';
 import { Kyurem } from './kyurem';
+import { Laprasex } from './lapras-ex';
 import { Munkidoriex } from './munkidori-ex';
 import { NeutralCenter } from './neutral-center';
 import { NightTimeAcademy } from './night-time-academy';
@@ -191,6 +192,10 @@ export class KingdraexArt extends Kingdraex {
 
 export class KyuremArt extends Kyurem {
   public cardImage = 'https://pokemonproxies.com/static/media/Kyurem-047-6a.f7d0b2ea56ade9d9ffa3.png';
+}
+
+export class LaprasexArt extends Laprasex {
+  public cardImage = 'https://pokemonproxies.com/static/media/Lapras_ex-019-7i.c205ed54ae6ba22bd043.png';
 }
 
 export class MunkidoriexArt extends Munkidoriex {

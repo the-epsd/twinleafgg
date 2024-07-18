@@ -68,8 +68,6 @@ export class HorrorPsychicEnergy extends EnergyCard {
         if (state.phase === GamePhase.ATTACK) {
           effect.source.damage += 20;
         }
-        
-        effect.preventDefault = true;
       }
     }
 

@@ -13,6 +13,7 @@ import { Pawniard } from './TEU_104_Pawniard';
 import { Bisharp } from './TEU_105_Bisharp';
 import { Persian } from './TEU_126_Persian';
 import { Moltres } from './TEU_19_Moltres';
+import { TapuKokoPrismStar } from './TEU_52_Tapu_Koko_Prism_Star';
 import { Absol } from './TEU_88_Absol';
 import { ViridianForest } from './viridian-forest';
 import { Yveltal } from './yveltal';
@@ -63,6 +64,9 @@ export declare class PidgeottoArt extends Pidgeotto {
     cardImage: string;
 }
 export declare class PokemonCommunicationArt extends PokemonCommunication {
+    cardImage: string;
+}
+export declare class TapuKokoPrismStarArt extends TapuKokoPrismStar {
     cardImage: string;
 }
 export declare class ViridianForestArt extends ViridianForest {

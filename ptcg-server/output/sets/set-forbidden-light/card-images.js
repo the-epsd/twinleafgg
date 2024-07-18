@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UnitEnergyFDYArt = exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.MagnezoneArt = exports.InkayArt = exports.FrogadierArt = exports.BeastRingArt = void 0;
+exports.UnitEnergyFDYArt = exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.MagnezoneArt = exports.LysandreLabsArt = exports.InkayArt = exports.FrogadierArt = exports.BeastRingArt = void 0;
 const beast_ring_1 = require("./beast-ring");
+const FLI_111_Lysandre_Labs_1 = require("./FLI_111_Lysandre_Labs");
 const FLI_23_Frogadier_1 = require("./FLI_23_Frogadier");
 const FLI_36_Magnezone_1 = require("./FLI_36_Magnezone");
 const inkay_1 = require("./inkay");
@@ -30,6 +31,13 @@ class InkayArt extends inkay_1.Inkay {
     }
 }
 exports.InkayArt = InkayArt;
+class LysandreLabsArt extends FLI_111_Lysandre_Labs_1.LysandreLabs {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_111_R_EN_LG.png';
+    }
+}
+exports.LysandreLabsArt = LysandreLabsArt;
 class MagnezoneArt extends FLI_36_Magnezone_1.Magnezone {
     constructor() {
         super(...arguments);

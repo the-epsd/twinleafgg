@@ -19,6 +19,7 @@ exports.setTeamUp = [
     new card_images_1.PersianArt(),
     new card_images_1.PidgeottoArt(),
     new card_images_1.PokemonCommunicationArt(),
+    new card_images_1.TapuKokoPrismStarArt(),
     new card_images_1.ViridianForestArt(),
     new card_images_1.YveltalArt(),
     new card_images_1.ZapdosArt(),

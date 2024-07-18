@@ -33,6 +33,7 @@ import { JaninesSecretTechnique } from './janines-secret-technique';
 import { Joltik } from './joltik';
 import { Kingdraex } from './kingdra-ex';
 import { Kyurem } from './kyurem';
+import { Laprasex } from './lapras-ex';
 import { Munkidoriex } from './munkidori-ex';
 import { NeutralCenter } from './neutral-center';
 import { NightTimeAcademy } from './night-time-academy';
@@ -155,6 +156,9 @@ export declare class KingdraexArt extends Kingdraex {
     cardImage: string;
 }
 export declare class KyuremArt extends Kyurem {
+    cardImage: string;
+}
+export declare class LaprasexArt extends Laprasex {
     cardImage: string;
 }
 export declare class MunkidoriexArt extends Munkidoriex {

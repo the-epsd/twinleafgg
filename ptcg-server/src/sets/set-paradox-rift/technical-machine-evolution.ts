@@ -86,9 +86,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
 
     // Canceled by user, he didn't found the card in the deck
     if (cards.length === 0) {
-      return state;
-    }
-
+      continue;
+    } 
+    
     const evolution = cards[0] as PokemonCard;
 
     // Evolve Pokemon

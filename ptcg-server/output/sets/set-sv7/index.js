@@ -38,6 +38,7 @@ exports.setSV7 = [
     new card_images_1.JoltikArt(),
     new card_images_1.KingdraexArt(),
     new card_images_1.KyuremArt(),
+    // new LaprasexArt(),
     new card_images_1.MunkidoriexArt(),
     new card_images_1.NeutralCenterArt(),
     new card_images_1.NightTimeAcademyArt(),

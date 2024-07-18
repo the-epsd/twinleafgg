@@ -1,6 +1,7 @@
 import { Cleffa } from './cleffa';
 import { Cyndaquil } from './cyndaquil';
 import { Drowzee } from './drowzee';
+import { LightningEnergy } from './HS_118_Lightning_Energy';
 import { Hypno } from './hypno';
 import { Pichu } from './pichu';
 import { PokemonCollector } from './pokemon-collector';
@@ -19,6 +20,9 @@ export declare class DrowzeeArt extends Drowzee {
     cardImage: string;
 }
 export declare class HypnoArt extends Hypno {
+    cardImage: string;
+}
+export declare class LightningEnergyArt extends LightningEnergy {
     cardImage: string;
 }
 export declare class PichuArt extends Pichu {

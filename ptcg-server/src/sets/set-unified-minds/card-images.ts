@@ -7,8 +7,11 @@ import { ResetStamp } from './reset-stamp';
 import { Riolu } from './riolu';
 import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
+import { Hoopa } from './UNM_140_Hoopa';
 import { Lickilicky } from './UNM_162_Lickilicky';
 import { Munchlax } from './UNM_173_Munchlax';
+import { TagSwitch } from './UNM_209_Tag_Switch';
+import { RaichuAlolanRaichuGX } from './UNM_221_RaichuAlolanRaichuGX';
 import { Numel } from './UNM_23_Numel';
 import { Froslass } from './UNM_38_Froslass';
 import { AlolanRaichu } from './UNM_57_Alolan_Raichu';
@@ -20,6 +23,10 @@ export class AlolanGrimerArt extends AlolanGrimer {
 
 export class FroslassArt extends Froslass {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_038_R_EN_LG.png';
+}
+
+export class HoopaArt extends Hoopa {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_140_R_EN_LG.png';
 }
 
 export class KarateBeltArt extends KarateBelt {
@@ -50,6 +57,10 @@ export class AlolanRaichuArt extends AlolanRaichu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_057_R_EN_LG.png';
 }
 
+export class RaichuAlolanRaichuGXArt extends RaichuAlolanRaichuGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_221_R_EN_LG.png';
+}
+
 export class RecycleEnergyArt extends RecycleEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_212_R_EN.png';
 }
@@ -64,6 +75,10 @@ export class RioluArt extends Riolu {
 
 export class StadiumNavArt extends StadiumNav {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_208_R_EN_LG.png';
+}
+
+export class TagSwitchArt extends TagSwitch {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_209_R_EN_LG.png';
 }
 
 export class UTurnBoardArt extends UTurnBoard {

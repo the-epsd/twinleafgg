@@ -1,4 +1,5 @@
 import { BeastRing } from './beast-ring';
+import { LysandreLabs } from './FLI_111_Lysandre_Labs';
 import { Frogadier } from './FLI_23_Frogadier';
 import { Magnezone } from './FLI_36_Magnezone';
 import { Inkay } from './inkay';
@@ -13,6 +14,9 @@ export declare class FrogadierArt extends Frogadier {
     cardImage: string;
 }
 export declare class InkayArt extends Inkay {
+    cardImage: string;
+}
+export declare class LysandreLabsArt extends LysandreLabs {
     cardImage: string;
 }
 export declare class MagnezoneArt extends Magnezone {

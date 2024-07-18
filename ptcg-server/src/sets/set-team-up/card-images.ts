@@ -13,6 +13,7 @@ import { Pawniard } from './TEU_104_Pawniard';
 import { Bisharp } from './TEU_105_Bisharp';
 import { Persian } from './TEU_126_Persian';
 import { Moltres } from './TEU_19_Moltres';
+import { TapuKokoPrismStar } from './TEU_52_Tapu_Koko_Prism_Star';
 import { Absol } from './TEU_88_Absol';
 import { ViridianForest } from './viridian-forest';
 import { Yveltal } from './yveltal';
@@ -80,6 +81,10 @@ export class PidgeottoArt extends Pidgeotto {
 
 export class PokemonCommunicationArt extends PokemonCommunication {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_152_R_EN.png';
+}
+
+export class TapuKokoPrismStarArt extends TapuKokoPrismStar {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_051_R_EN_LG.png';
 }
 
 export class ViridianForestArt extends ViridianForest {

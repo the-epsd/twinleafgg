@@ -51,7 +51,7 @@ class Regidrago extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            if (player.active.cards[0] !== this) {
+            if (player.active.cards[0] !== this || player.hand.cards.length >= 4) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             if (player.marker.hasMarker(this.DRAGONS_HOARD_MARKER)) {

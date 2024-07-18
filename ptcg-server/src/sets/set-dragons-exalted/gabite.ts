@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, 
   GameMessage, 
   ChooseCardsPrompt,
@@ -70,6 +70,12 @@ export class Gabite extends PokemonCard {
       if (player.marker.hasMarker(this.DRAGON_CALL_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
+      
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
         
       return store.prompt(state, new ChooseCardsPrompt(
         player.id, 

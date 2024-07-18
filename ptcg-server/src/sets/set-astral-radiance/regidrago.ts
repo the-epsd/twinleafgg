@@ -66,7 +66,7 @@ export class Regidrago extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      if (player.active.cards[0] !== this) {
+      if (player.active.cards[0] !== this || player.hand.cards.length >= 4) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 

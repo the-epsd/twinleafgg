@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.RecycleEnergyArt = exports.AlolanRaichuArt = exports.PurrloinArt = exports.NumelArt = exports.NecrozmaArt = exports.MunchlaxArt = exports.LickilickyArt = exports.KarateBeltArt = exports.FroslassArt = exports.AlolanGrimerArt = void 0;
+exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.TagSwitchArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.RecycleEnergyArt = exports.RaichuAlolanRaichuGXArt = exports.AlolanRaichuArt = exports.PurrloinArt = exports.NumelArt = exports.NecrozmaArt = exports.MunchlaxArt = exports.LickilickyArt = exports.KarateBeltArt = exports.HoopaArt = exports.FroslassArt = exports.AlolanGrimerArt = void 0;
 const alolan_grimer_1 = require("./alolan-grimer");
 const karate_belt_1 = require("./karate-belt");
 const necrozma_1 = require("./necrozma");
@@ -10,8 +10,11 @@ const reset_stamp_1 = require("./reset-stamp");
 const riolu_1 = require("./riolu");
 const stadium_nav_1 = require("./stadium-nav");
 const u_turn_board_1 = require("./u-turn-board");
+const UNM_140_Hoopa_1 = require("./UNM_140_Hoopa");
 const UNM_162_Lickilicky_1 = require("./UNM_162_Lickilicky");
 const UNM_173_Munchlax_1 = require("./UNM_173_Munchlax");
+const UNM_209_Tag_Switch_1 = require("./UNM_209_Tag_Switch");
+const UNM_221_RaichuAlolanRaichuGX_1 = require("./UNM_221_RaichuAlolanRaichuGX");
 const UNM_23_Numel_1 = require("./UNM_23_Numel");
 const UNM_38_Froslass_1 = require("./UNM_38_Froslass");
 const UNM_57_Alolan_Raichu_1 = require("./UNM_57_Alolan_Raichu");
@@ -30,6 +33,13 @@ class FroslassArt extends UNM_38_Froslass_1.Froslass {
     }
 }
 exports.FroslassArt = FroslassArt;
+class HoopaArt extends UNM_140_Hoopa_1.Hoopa {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_140_R_EN_LG.png';
+    }
+}
+exports.HoopaArt = HoopaArt;
 class KarateBeltArt extends karate_belt_1.KarateBelt {
     constructor() {
         super(...arguments);
@@ -79,6 +89,13 @@ class AlolanRaichuArt extends UNM_57_Alolan_Raichu_1.AlolanRaichu {
     }
 }
 exports.AlolanRaichuArt = AlolanRaichuArt;
+class RaichuAlolanRaichuGXArt extends UNM_221_RaichuAlolanRaichuGX_1.RaichuAlolanRaichuGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_221_R_EN_LG.png';
+    }
+}
+exports.RaichuAlolanRaichuGXArt = RaichuAlolanRaichuGXArt;
 class RecycleEnergyArt extends recycle_energy_1.RecycleEnergy {
     constructor() {
         super(...arguments);
@@ -107,6 +124,13 @@ class StadiumNavArt extends stadium_nav_1.StadiumNav {
     }
 }
 exports.StadiumNavArt = StadiumNavArt;
+class TagSwitchArt extends UNM_209_Tag_Switch_1.TagSwitch {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_209_R_EN_LG.png';
+    }
+}
+exports.TagSwitchArt = TagSwitchArt;
 class UTurnBoardArt extends u_turn_board_1.UTurnBoard {
     constructor() {
         super(...arguments);

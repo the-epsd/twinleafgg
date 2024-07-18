@@ -7,8 +7,11 @@ import { ResetStamp } from './reset-stamp';
 import { Riolu } from './riolu';
 import { StadiumNav } from './stadium-nav';
 import { UTurnBoard } from './u-turn-board';
+import { Hoopa } from './UNM_140_Hoopa';
 import { Lickilicky } from './UNM_162_Lickilicky';
 import { Munchlax } from './UNM_173_Munchlax';
+import { TagSwitch } from './UNM_209_Tag_Switch';
+import { RaichuAlolanRaichuGX } from './UNM_221_RaichuAlolanRaichuGX';
 import { Numel } from './UNM_23_Numel';
 import { Froslass } from './UNM_38_Froslass';
 import { AlolanRaichu } from './UNM_57_Alolan_Raichu';
@@ -17,6 +20,9 @@ export declare class AlolanGrimerArt extends AlolanGrimer {
     cardImage: string;
 }
 export declare class FroslassArt extends Froslass {
+    cardImage: string;
+}
+export declare class HoopaArt extends Hoopa {
     cardImage: string;
 }
 export declare class KarateBeltArt extends KarateBelt {
@@ -40,6 +46,9 @@ export declare class PurrloinArt extends Purrloin {
 export declare class AlolanRaichuArt extends AlolanRaichu {
     cardImage: string;
 }
+export declare class RaichuAlolanRaichuGXArt extends RaichuAlolanRaichuGX {
+    cardImage: string;
+}
 export declare class RecycleEnergyArt extends RecycleEnergy {
     cardImage: string;
 }
@@ -50,6 +59,9 @@ export declare class RioluArt extends Riolu {
     cardImage: string;
 }
 export declare class StadiumNavArt extends StadiumNav {
+    cardImage: string;
+}
+export declare class TagSwitchArt extends TagSwitch {
     cardImage: string;
 }
 export declare class UTurnBoardArt extends UTurnBoard {
