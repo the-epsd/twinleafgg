@@ -55,7 +55,6 @@ class HorrorPsychicEnergy extends energy_card_1.EnergyCard {
                 if (state.phase === state_1.GamePhase.ATTACK) {
                     effect.source.damage += 20;
                 }
-                effect.preventDefault = true;
             }
         }
         return state;

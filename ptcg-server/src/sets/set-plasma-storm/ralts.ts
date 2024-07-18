@@ -12,7 +12,7 @@ export class Ralts extends PokemonCard {
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public hp: number = 80;
+  public hp: number = 60;
 
   public weakness = [{ type: CardType.PSYCHIC }];
 

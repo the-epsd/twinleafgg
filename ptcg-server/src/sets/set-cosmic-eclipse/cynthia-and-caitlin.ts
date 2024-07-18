@@ -34,60 +34,92 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   let recovered: Card[] = [];
 
-  // first effect, recover supporter
+  // no supporter to recover, has to draw cards
   if (!player.discard.cards.some(c => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER)) {
-    // not recovering a supporter
-  } else {
-    yield store.prompt(state, new ChooseCardsPrompt(
+    state = store.prompt(state, new ChooseCardsPrompt(
       player.id,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      player.discard,
-      { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-      { min: 1, max: 1, allowCancel: false }
-    ), selected => {
-      recovered = selected || [];
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      player.hand,
+      {},
+      { allowCancel: false, min: 1, max: 1 }
+    ), cards => {
+      cards = cards || [];
 
-      recovered.forEach(c => {
-        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: c.name });
+      player.hand.moveCardsTo(cards, player.discard);
+
+      cards.forEach((card, index) => {
+        store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
       });
 
-      next();
+      player.deck.moveTo(player.hand, 3);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      
+      return state;
+    });
+  // supporter available, has to recover supporter, option to draw cards
+  } else {
+    let discardedCards: Card[] = [];
+    state = store.prompt(state, new ConfirmPrompt(
+      effect.player.id,
+      GameMessage.WANT_TO_DRAW_CARDS,
+    ), wantToUse => {
+      if (wantToUse) {
+        state = store.prompt(state, new ChooseCardsPrompt(
+          player.id,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          {},
+          { allowCancel: false, min: 1, max: 1 }
+        ), cards => {
+          discardedCards = cards || [];
+
+          discardedCards.forEach((card, index) => {
+            store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
+          });
+          
+          state = store.prompt(state, new ChooseCardsPrompt(
+            player.id,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.discard,
+            { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+            { min: 1, max: 1, allowCancel: false }
+          ), selected => {
+            recovered = selected || [];
+
+            recovered.forEach(c => {
+              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: c.name });
+            });
+            
+            player.discard.moveCardsTo(recovered, player.hand);
+            player.hand.moveCardsTo(discardedCards, player.discard);
+            player.deck.moveTo(player.hand, 3);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          });
+        });
+      } else {
+        state = store.prompt(state, new ChooseCardsPrompt(
+          player.id,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.discard,
+          { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+          { min: 1, max: 1, allowCancel: false }
+        ), selected => {
+          recovered = selected || [];
+
+          recovered.forEach(c => {
+            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: c.name });
+          });
+          
+          player.discard.moveCardsTo(recovered, player.hand);
+          player.hand.moveCardsTo(cards, player.discard);
+          player.deck.moveTo(player.hand, 3);
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        });
+      }
+      
+      return state;
     });
   }
-
-  // only recovering supporter
-  if (cards.length === 0) {
-    player.discard.moveCardsTo(recovered, player.hand);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    return state;
-  }
-
-  state = store.prompt(state, new ConfirmPrompt(
-    effect.player.id,
-    GameMessage.WANT_TO_DRAW_CARDS,
-  ), wantToUse => {
-    if (wantToUse) {
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { allowCancel: false, min: 1, max: 1 }
-      ), cards => {
-        cards = cards || [];
-
-        player.hand.moveCardsTo(cards, player.discard);
-
-        cards.forEach((card, index) => {
-          store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
-        });
-
-        player.deck.moveTo(player.hand, 3);
-        player.discard.moveCardsTo(recovered, player.hand);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      });
-    }
-  });
     
   return state;
 }
