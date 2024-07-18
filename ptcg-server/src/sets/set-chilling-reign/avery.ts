@@ -71,6 +71,7 @@ export class Avery extends TrainerCard {
             card.moveTo(opponent.discard);
           });
           
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
           return state;
         });
       }

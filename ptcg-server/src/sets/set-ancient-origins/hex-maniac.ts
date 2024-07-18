@@ -38,7 +38,7 @@ export class HexManiac extends TrainerCard {
       player.marker.addMarker(this.HEX_MANIAC_MARKER, this);
       opponent.marker.addMarker(this.HEX_MANIAC_MARKER, this);
       
-      
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);      
     }
     
     if (effect instanceof PowerEffect && effect.player.marker.hasMarker(this.HEX_MANIAC_MARKER, this)) {
