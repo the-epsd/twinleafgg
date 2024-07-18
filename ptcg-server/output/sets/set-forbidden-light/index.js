@@ -6,6 +6,7 @@ exports.setForbiddenLight = [
     new card_images_1.BeastRingArt(),
     new card_images_1.FrogadierArt(),
     new card_images_1.InkayArt(),
+    new card_images_1.LysandreLabsArt(),
     new card_images_1.MagnezoneArt(),
     new card_images_1.MalamarArt(),
     new card_images_1.MetalFryingPanArt(),

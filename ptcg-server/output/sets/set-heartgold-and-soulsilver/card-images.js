@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UnownArt = exports.TyrogueArt = exports.TyphlosionArt = exports.QuilavaArt = exports.ProfessorOaksNewTheoryArt = exports.PokemonCollectorArt = exports.PichuArt = exports.HypnoArt = exports.DrowzeeArt = exports.CyndaquilArt = exports.CleffaArt = void 0;
+exports.UnownArt = exports.TyrogueArt = exports.TyphlosionArt = exports.QuilavaArt = exports.ProfessorOaksNewTheoryArt = exports.PokemonCollectorArt = exports.PichuArt = exports.LightningEnergyArt = exports.HypnoArt = exports.DrowzeeArt = exports.CyndaquilArt = exports.CleffaArt = void 0;
 const cleffa_1 = require("./cleffa");
 const cyndaquil_1 = require("./cyndaquil");
 const drowzee_1 = require("./drowzee");
+const HS_118_Lightning_Energy_1 = require("./HS_118_Lightning_Energy");
 const hypno_1 = require("./hypno");
 const pichu_1 = require("./pichu");
 const pokemon_collector_1 = require("./pokemon-collector");
@@ -40,6 +41,13 @@ class HypnoArt extends hypno_1.Hypno {
     }
 }
 exports.HypnoArt = HypnoArt;
+class LightningEnergyArt extends HS_118_Lightning_Energy_1.LightningEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HS/HS_118_R_EN_LG.png';
+    }
+}
+exports.LightningEnergyArt = LightningEnergyArt;
 class PichuArt extends pichu_1.Pichu {
     constructor() {
         super(...arguments);

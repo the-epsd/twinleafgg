@@ -6,6 +6,7 @@ import { CustomCatcher } from './custom-catcher';
 import { Electropower } from './electropower';
 import { Grovyle } from './grovyle';
 import { LostBlender } from './lost-blender';
+import { ThunderMountainPrismStar } from './LOT_191_ThunderMountainPrismStar';
 import { ZeraoraGX } from './LOT_201_ZeraoraGX';
 import { Slowking } from './LOT_55_Slowking';
 import { Giratina } from './LOT_97_Giratina';
@@ -76,6 +77,10 @@ export class SlowkingArt extends Slowking {
 
 export class SpellTagArt extends SpellTag {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_190_R_EN_LG.png';
+}
+
+export class ThunderMountainPrismStarArt extends ThunderMountainPrismStar {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_191_R_EN_LG.png';
 }
 
 export class TreeckoArt extends Treecko {

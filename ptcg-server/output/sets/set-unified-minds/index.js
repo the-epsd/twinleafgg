@@ -18,6 +18,7 @@ exports.setUnifiedMinds = [
     new card_images_1.ResetStampArt(),
     new card_images_1.RioluArt(),
     new card_images_1.StadiumNavArt(),
+    new card_images_1.TagSwitchArt(),
     new card_images_1.UTurnBoardArt(),
     new card_images_1.WeaknessGuardEnergyArt()
 ];

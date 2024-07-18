@@ -14,6 +14,7 @@ import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
 import { Meowth } from './UNB_147_Meowth';
 import { Lickitung } from './UNB_152_Lickitung';
+import { ElectromagneticRadar } from './UNB_169_Electromagnetic_Radar';
 import { DedenneGX } from './UNB_195_DedenneGX';
 import { Salazzle } from './UNB_31_Salazzle';
 import { Poliwag } from './UNB_37_Poliwag';
@@ -27,6 +28,9 @@ export declare class CleffaArt extends Cleffa {
     cardImage: string;
 }
 export declare class DedenneGXArt extends DedenneGX {
+    cardImage: string;
+}
+export declare class ElectromagneticRadarArt extends ElectromagneticRadar {
     cardImage: string;
 }
 export declare class EspurrArt extends Espurr {

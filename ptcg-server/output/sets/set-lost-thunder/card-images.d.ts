@@ -6,6 +6,7 @@ import { CustomCatcher } from './custom-catcher';
 import { Electropower } from './electropower';
 import { Grovyle } from './grovyle';
 import { LostBlender } from './lost-blender';
+import { ThunderMountainPrismStar } from './LOT_191_ThunderMountainPrismStar';
 import { ZeraoraGX } from './LOT_201_ZeraoraGX';
 import { Slowking } from './LOT_55_Slowking';
 import { Giratina } from './LOT_97_Giratina';
@@ -60,6 +61,9 @@ export declare class SlowkingArt extends Slowking {
     cardImage: string;
 }
 export declare class SpellTagArt extends SpellTag {
+    cardImage: string;
+}
+export declare class ThunderMountainPrismStarArt extends ThunderMountainPrismStar {
     cardImage: string;
 }
 export declare class TreeckoArt extends Treecko {

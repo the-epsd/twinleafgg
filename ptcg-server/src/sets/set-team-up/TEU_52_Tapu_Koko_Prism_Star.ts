@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -7,6 +7,7 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 export class TapuKokoPrismStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.LIGHTNING;
+  public tags = [CardTag.PRISM_STAR];
   public hp: number = 130;
   public weakness = [{ type: CardType.FIGHTING }];
   public resistance = [{ type: CardType.METAL, value: -20 }];

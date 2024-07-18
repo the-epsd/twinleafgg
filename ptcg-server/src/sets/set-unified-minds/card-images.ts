@@ -10,6 +10,7 @@ import { UTurnBoard } from './u-turn-board';
 import { Hoopa } from './UNM_140_Hoopa';
 import { Lickilicky } from './UNM_162_Lickilicky';
 import { Munchlax } from './UNM_173_Munchlax';
+import { TagSwitch } from './UNM_209_Tag_Switch';
 import { RaichuAlolanRaichuGX } from './UNM_221_RaichuAlolanRaichuGX';
 import { Numel } from './UNM_23_Numel';
 import { Froslass } from './UNM_38_Froslass';
@@ -74,6 +75,10 @@ export class RioluArt extends Riolu {
 
 export class StadiumNavArt extends StadiumNav {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_208_R_EN_LG.png';
+}
+
+export class TagSwitchArt extends TagSwitch {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_209_R_EN_LG.png';
 }
 
 export class UTurnBoardArt extends UTurnBoard {

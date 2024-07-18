@@ -10,6 +10,7 @@ class TapuKokoPrismStar extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.LIGHTNING;
+        this.tags = [card_types_1.CardTag.PRISM_STAR];
         this.hp = 130;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.resistance = [{ type: card_types_1.CardType.METAL, value: -20 }];

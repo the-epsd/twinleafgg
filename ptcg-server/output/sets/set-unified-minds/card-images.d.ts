@@ -10,6 +10,7 @@ import { UTurnBoard } from './u-turn-board';
 import { Hoopa } from './UNM_140_Hoopa';
 import { Lickilicky } from './UNM_162_Lickilicky';
 import { Munchlax } from './UNM_173_Munchlax';
+import { TagSwitch } from './UNM_209_Tag_Switch';
 import { RaichuAlolanRaichuGX } from './UNM_221_RaichuAlolanRaichuGX';
 import { Numel } from './UNM_23_Numel';
 import { Froslass } from './UNM_38_Froslass';
@@ -58,6 +59,9 @@ export declare class RioluArt extends Riolu {
     cardImage: string;
 }
 export declare class StadiumNavArt extends StadiumNav {
+    cardImage: string;
+}
+export declare class TagSwitchArt extends TagSwitch {
     cardImage: string;
 }
 export declare class UTurnBoardArt extends UTurnBoard {

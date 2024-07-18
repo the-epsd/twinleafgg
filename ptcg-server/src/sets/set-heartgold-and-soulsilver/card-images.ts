@@ -1,6 +1,7 @@
 import { Cleffa } from './cleffa';
 import { Cyndaquil } from './cyndaquil';
 import { Drowzee } from './drowzee';
+import { LightningEnergy } from './HS_118_Lightning_Energy';
 import { Hypno } from './hypno';
 import { Pichu } from './pichu';
 import { PokemonCollector } from './pokemon-collector';
@@ -24,6 +25,10 @@ export class DrowzeeArt extends Drowzee {
 
 export class HypnoArt extends Hypno {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HS/HS_023_R_EN.png';
+}
+
+export class LightningEnergyArt extends LightningEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HS/HS_118_R_EN_LG.png';
 }
 
 export class PichuArt extends Pichu {

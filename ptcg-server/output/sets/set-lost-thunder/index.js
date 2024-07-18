@@ -18,6 +18,7 @@ exports.setLostThunder = [
     new card_images_1.NihilegoArt(),
     new card_images_1.SlowkingArt(),
     new card_images_1.SpellTagArt(),
+    new card_images_1.ThunderMountainPrismStarArt(),
     new card_images_1.TreeckoArt(),
     new card_images_1.WurmpleArt(),
     new card_images_1.ZebstrikaArt(),

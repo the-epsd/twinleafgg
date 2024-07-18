@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
+exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
 const adventure_bag_1 = require("./adventure-bag");
 const alolan_meowth_1 = require("./alolan-meowth");
 const chikorita_1 = require("./chikorita");
@@ -9,6 +9,7 @@ const custom_catcher_1 = require("./custom-catcher");
 const electropower_1 = require("./electropower");
 const grovyle_1 = require("./grovyle");
 const lost_blender_1 = require("./lost-blender");
+const LOT_191_ThunderMountainPrismStar_1 = require("./LOT_191_ThunderMountainPrismStar");
 const LOT_201_ZeraoraGX_1 = require("./LOT_201_ZeraoraGX");
 const LOT_55_Slowking_1 = require("./LOT_55_Slowking");
 const LOT_97_Giratina_1 = require("./LOT_97_Giratina");
@@ -125,6 +126,13 @@ class SpellTagArt extends spell_tag_1.SpellTag {
     }
 }
 exports.SpellTagArt = SpellTagArt;
+class ThunderMountainPrismStarArt extends LOT_191_ThunderMountainPrismStar_1.ThunderMountainPrismStar {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_191_R_EN_LG.png';
+    }
+}
+exports.ThunderMountainPrismStarArt = ThunderMountainPrismStarArt;
 class TreeckoArt extends treecko_1.Treecko {
     constructor() {
         super(...arguments);
