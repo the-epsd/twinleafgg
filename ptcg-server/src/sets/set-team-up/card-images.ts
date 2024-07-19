@@ -9,6 +9,7 @@ import { Mareep } from './mareep';
 import { MetalGoggles } from './metal-goggles';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
+import { Ferrothorn } from './TEU_103_Ferrothorn';
 import { Pawniard } from './TEU_104_Pawniard';
 import { Bisharp } from './TEU_105_Bisharp';
 import { Persian } from './TEU_126_Persian';
@@ -37,6 +38,10 @@ export class BronzorArt extends Bronzor {
 
 export class DragoniteArt extends Dragonite {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_119_R_EN_LG.png';
+}
+
+export class FerrothornArt extends Ferrothorn {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_103_R_EN_LG.png';
 }
 
 export class HitmonchanArt extends Hitmonchan {
