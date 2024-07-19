@@ -30,6 +30,7 @@ import { Deino } from './PAL_138_Deino';
 import { Zweilous } from './PAL_139_Zweilous';
 import { Hydreigon } from './PAL_140_Hydreigon';
 import { Pelipper } from './PAL_159_Pelipper';
+import { Lokix } from './PAL_21_Lokix';
 import { Magnemite } from './PAL_65_Magnemite';
 import { ReversalEnergy } from './reversal-energy';
 import { Shinx } from './shinx';
@@ -113,6 +114,9 @@ export declare class IonoArt extends Iono {
     cardImage: string;
 }
 export declare class JetEnergyArt extends JetEnergy {
+    cardImage: string;
+}
+export declare class LokixArt extends Lokix {
     cardImage: string;
 }
 export declare class LuminousEnergyArt extends LuminousEnergy {

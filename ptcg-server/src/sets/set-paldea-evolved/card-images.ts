@@ -30,6 +30,7 @@ import { Deino } from './PAL_138_Deino';
 import { Zweilous } from './PAL_139_Zweilous';
 import { Hydreigon } from './PAL_140_Hydreigon';
 import { Pelipper } from './PAL_159_Pelipper';
+import { Lokix } from './PAL_21_Lokix';
 import { Magnemite } from './PAL_65_Magnemite';
 import { ReversalEnergy } from './reversal-energy';
 import { Shinx } from './shinx';
@@ -137,6 +138,10 @@ export class IonoArt extends Iono {
 
 export class JetEnergyArt extends JetEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_190_R_EN_LG.png';
+}
+
+export class LokixArt extends Lokix {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_021_R_EN_LG.png';
 }
 
 export class LuminousEnergyArt extends LuminousEnergy {

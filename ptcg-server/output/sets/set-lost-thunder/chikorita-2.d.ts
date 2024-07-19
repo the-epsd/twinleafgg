@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Chikorita extends PokemonCard {
+export declare class Chikorita2 extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;

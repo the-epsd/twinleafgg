@@ -1,6 +1,7 @@
 import { AdventureBag } from './adventure-bag';
 import { AlolanMeowth } from './alolan-meowth';
 import { Chikorita } from './chikorita';
+import { Chikorita2 } from './chikorita-2';
 import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
 import { Electropower } from './electropower';
@@ -25,6 +26,9 @@ export declare class AlolanMeowthArt extends AlolanMeowth {
     cardImage: string;
 }
 export declare class ChikoritaArt extends Chikorita {
+    cardImage: string;
+}
+export declare class ChikoritaArt2 extends Chikorita2 {
     cardImage: string;
 }
 export declare class CounterGainArt extends CounterGain {

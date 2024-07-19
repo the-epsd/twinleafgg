@@ -8,6 +8,7 @@ import { LureModule } from './lure-module';
 import { Moltres } from './moltres';
 import { Camerupt } from './PGO_14_Camerupt';
 import { Slowpoke } from './PGO_19_Slowpoke';
+import { Ivysaur } from './PGO_2_Ivysaur';
 import { AlolanRaticate } from './PGO_42_Alolan_Raticate';
 import { Pokestop } from './pokestop';
 import { RadiantVenusaur } from './radiant-venusaur';
@@ -43,6 +44,10 @@ export class CharizardArt extends Charizard {
 
 export class DittoArt extends Ditto {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_053_R_EN_LG.png';
+}
+
+export class IvysaurArt extends Ivysaur {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_002_R_EN_LG.png';
 }
 
 export class LunatoneArt extends Lunatone {

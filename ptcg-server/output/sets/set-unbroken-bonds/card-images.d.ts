@@ -18,6 +18,7 @@ import { Meowth } from './UNB_147_Meowth';
 import { Lickitung } from './UNB_152_Lickitung';
 import { ElectromagneticRadar } from './UNB_169_Electromagnetic_Radar';
 import { DedenneGX } from './UNB_195_DedenneGX';
+import { Kartana } from './UNB_19_Kartana';
 import { Salazzle } from './UNB_31_Salazzle';
 import { Poliwag } from './UNB_37_Poliwag';
 import { Zeraora } from './UNB_60_Zeraora';
@@ -51,6 +52,9 @@ export declare class GreensExplorationArt extends GreensExploration {
     cardImage: string;
 }
 export declare class HitmontopArt extends Hitmontop {
+    cardImage: string;
+}
+export declare class KartanaArt extends Kartana {
     cardImage: string;
 }
 export declare class LaironArt extends Lairon {

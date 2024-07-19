@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Chikorita extends PokemonCard {
+export declare class Lokix extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
@@ -10,6 +10,7 @@ export declare class Chikorita extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
+    evolvesFrom: string;
     attacks: {
         name: string;
         cost: CardType[];
@@ -17,9 +18,11 @@ export declare class Chikorita extends PokemonCard {
         text: string;
     }[];
     set: string;
+    regulationMark: string;
+    cardImage: string;
     fullName: string;
     name: string;
     setNumber: string;
-    cardImage: string;
+    evolvedFromNymble: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
