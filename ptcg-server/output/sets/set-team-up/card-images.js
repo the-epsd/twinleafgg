@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-
 exports.ZapdosArt = exports.YveltalArt = exports.ViridianForestArt = exports.TapuKokoPrismStarArt = exports.PokemonCommunicationArt = exports.PidgeottoArt = exports.PersianArt = exports.PawniardArt = exports.MoltresArt = exports.MetalGogglesArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.FerrothornArt = exports.DragoniteArt = exports.BronzorArt = exports.BisharpArt = exports.AlolanMukArt = exports.AbsolArt = void 0;
-
 const alolan_muk_1 = require("./alolan-muk");
 const bronzor_1 = require("./bronzor");
 const dragonite_1 = require("./dragonite");
