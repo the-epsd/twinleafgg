@@ -37,7 +37,14 @@ export class Buzzwole extends PokemonCard {
       const player = effect.player;
       const prizesTaken = 6 - player.getPrizeLeft();
 
-      effect.damage += (20 * prizesTaken);
+      console.log('Current Damage Boost: ' + (20 * prizesTaken));
+
+      if (player.active.getPokemonCard() === this) {
+        effect.damage += (20 * prizesTaken);
+
+        console.log('Current Damage: ' + effect.damage);
+      }
+
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -2,6 +2,7 @@ import { ArceusDialgaPalkiaGX } from './arceus-dialga-palkia-gx';
 import { Blacephalon } from './blacephalon';
 import { Sawsbuck } from './CEC_16_Sawsbuck';
 import { Stoutland } from './CEC_176_Stoutland';
+import { Buzzwole } from './CEC_21_Buzzwole';
 import { Phione } from './CEC_57_Phione';
 import { Wishiwashi } from './CEC_62_Wishiwashi';
 import { Pikachu } from './CEC_66_Pikachu';
@@ -24,6 +25,9 @@ export declare class ArceusDialgaPalkiaGXArt extends ArceusDialgaPalkiaGX {
     cardImage: string;
 }
 export declare class BlacephalonArt extends Blacephalon {
+    cardImage: string;
+}
+export declare class BuzzwoleArt extends Buzzwole {
     cardImage: string;
 }
 export declare class ChaoticSwellArt extends ChaoticSwell {

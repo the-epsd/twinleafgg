@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DedenneGXArt = exports.CleffaArt = exports.ArcanineArt = void 0;
+exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.LaironArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DedenneGXArt = exports.CleffaArt = exports.AronArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
 const espurr_1 = require("./espurr");
@@ -15,6 +15,8 @@ const pokegear_30_1 = require("./pokegear-30");
 const porygon_z_1 = require("./porygon-z");
 const spiritomb_1 = require("./spiritomb");
 const triple_acceleration_energy_1 = require("./triple-acceleration-energy");
+const UNB_123_Aron_1 = require("./UNB_123_Aron");
+const UNB_124_Lairon_1 = require("./UNB_124_Lairon");
 const UNB_147_Meowth_1 = require("./UNB_147_Meowth");
 const UNB_152_Lickitung_1 = require("./UNB_152_Lickitung");
 const UNB_169_Electromagnetic_Radar_1 = require("./UNB_169_Electromagnetic_Radar");
@@ -31,6 +33,13 @@ class ArcanineArt extends arcanine_1.Arcanine {
     }
 }
 exports.ArcanineArt = ArcanineArt;
+class AronArt extends UNB_123_Aron_1.Aron {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_123_R_EN_LG.png';
+    }
+}
+exports.AronArt = AronArt;
 class CleffaArt extends cleffa_1.Cleffa {
     constructor() {
         super(...arguments);
@@ -87,6 +96,13 @@ class HitmontopArt extends hitmontop_1.Hitmontop {
     }
 }
 exports.HitmontopArt = HitmontopArt;
+class LaironArt extends UNB_124_Lairon_1.Lairon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_124_R_EN_LG.png';
+    }
+}
+exports.LaironArt = LaironArt;
 class LickitungArt extends UNB_152_Lickitung_1.Lickitung {
     constructor() {
         super(...arguments);

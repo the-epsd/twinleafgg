@@ -9,6 +9,7 @@ import { Mareep } from './mareep';
 import { MetalGoggles } from './metal-goggles';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
+import { Ferrothorn } from './TEU_103_Ferrothorn';
 import { Pawniard } from './TEU_104_Pawniard';
 import { Bisharp } from './TEU_105_Bisharp';
 import { Persian } from './TEU_126_Persian';
@@ -31,6 +32,9 @@ export declare class BronzorArt extends Bronzor {
     cardImage: string;
 }
 export declare class DragoniteArt extends Dragonite {
+    cardImage: string;
+}
+export declare class FerrothornArt extends Ferrothorn {
     cardImage: string;
 }
 export declare class HitmonchanArt extends Hitmonchan {

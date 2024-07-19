@@ -10,7 +10,6 @@ export class Chikorita extends PokemonCard {
   public hp: number = 70;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS];
-  public evolvesInto = 'Bayleef';
 
   public attacks = [{
     name: 'Mini Drain',

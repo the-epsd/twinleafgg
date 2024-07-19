@@ -10,6 +10,7 @@ import { Snorlax } from './snorlax';
 import { StoneFightingEnergy } from './stone-fighting-energy';
 import { Magearna } from './VIV_128_Magearna';
 import { Taillow } from './VIV_133_Taillow';
+import { Dhelmise } from './VIV_19_Dhelmise';
 import { Zekrom } from './VIV_60_Zekrom';
 import { Wailord } from './wailord';
 import { WashWaterEnergy } from './wash-water-energy';
@@ -28,6 +29,10 @@ export class CharmeleonArt extends Charmeleon {
 
 export class CoatingMetalEnergyArt extends CoatingMetalEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_163_R_EN_LG.png';
+}
+
+export class DhelmiseArt extends Dhelmise {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_019_R_EN_LG.png';
 }
 
 export class JirachiArt extends Jirachi {

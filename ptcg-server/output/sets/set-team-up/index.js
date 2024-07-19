@@ -8,6 +8,7 @@ exports.setTeamUp = [
     new card_images_1.BisharpArt(),
     new card_images_1.BronzorArt(),
     new card_images_1.DragoniteArt(),
+    new card_images_1.FerrothornArt(),
     new card_images_1.HitmonchanArt(),
     new card_images_1.HitmonleeArt(),
     new card_images_1.JirachiArt(),

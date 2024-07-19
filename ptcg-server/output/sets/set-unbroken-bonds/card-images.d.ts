@@ -12,6 +12,8 @@ import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
+import { Aron } from './UNB_123_Aron';
+import { Lairon } from './UNB_124_Lairon';
 import { Meowth } from './UNB_147_Meowth';
 import { Lickitung } from './UNB_152_Lickitung';
 import { ElectromagneticRadar } from './UNB_169_Electromagnetic_Radar';
@@ -22,6 +24,9 @@ import { Zeraora } from './UNB_60_Zeraora';
 import { Gloom } from './UNB_7_Gloom';
 import { Volcanion } from './volcanion';
 export declare class ArcanineArt extends Arcanine {
+    cardImage: string;
+}
+export declare class AronArt extends Aron {
     cardImage: string;
 }
 export declare class CleffaArt extends Cleffa {
@@ -46,6 +51,9 @@ export declare class GreensExplorationArt extends GreensExploration {
     cardImage: string;
 }
 export declare class HitmontopArt extends Hitmontop {
+    cardImage: string;
+}
+export declare class LaironArt extends Lairon {
     cardImage: string;
 }
 export declare class LickitungArt extends Lickitung {

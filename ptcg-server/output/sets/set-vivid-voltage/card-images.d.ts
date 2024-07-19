@@ -10,6 +10,7 @@ import { Snorlax } from './snorlax';
 import { StoneFightingEnergy } from './stone-fighting-energy';
 import { Magearna } from './VIV_128_Magearna';
 import { Taillow } from './VIV_133_Taillow';
+import { Dhelmise } from './VIV_19_Dhelmise';
 import { Zekrom } from './VIV_60_Zekrom';
 import { Wailord } from './wailord';
 import { WashWaterEnergy } from './wash-water-energy';
@@ -23,6 +24,9 @@ export declare class CharmeleonArt extends Charmeleon {
     cardImage: string;
 }
 export declare class CoatingMetalEnergyArt extends CoatingMetalEnergy {
+    cardImage: string;
+}
+export declare class DhelmiseArt extends Dhelmise {
     cardImage: string;
 }
 export declare class JirachiArt extends Jirachi {
