@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Crobat extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -36,6 +37,9 @@ class Crobat extends pokemon_card_1.PokemonCard {
         this.usedCriticalBite = false;
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            this.usedCriticalBite = false;
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             this.usedCriticalBite = false;
             const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.POISONED]);

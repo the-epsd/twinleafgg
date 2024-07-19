@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType } from '../../game';
+import { StoreLike, State, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, ConfirmPrompt } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -13,7 +13,6 @@ function* useLeParfum(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-  // Try to reduce PowerEffect, to check if something is blocking our ability
   try {
     const stub = new PowerEffect(player, {
       name: 'test',
@@ -24,21 +23,28 @@ function* useLeParfum(next: Function, store: StoreLike, state: State,
   } catch {
     return state;
   }
+  state = store.prompt(state, new ConfirmPrompt(
+    effect.player.id,
+    GameMessage.WANT_TO_USE_ABILITY,
+  ), wantToUse => {
+    if (wantToUse) {
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.BASIC, name: 'Flamigo' },
-    { min: 0, max: 3, allowCancel: true }
-  ), selected => {
-    const cards = selected || [];
-    player.deck.moveCardsTo(cards, player.hand);
-    next();
-  });
+      state = store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        player.deck,
+        { superType: SuperType.POKEMON, stage: Stage.BASIC, name: 'Flamigo' },
+        { min: 0, max: 3, allowCancel: false }
+      ), selected => {
+        const cards = selected || [];
+        player.deck.moveCardsTo(cards, player.hand);
+        next();
+      });
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        player.deck.applyOrder(order);
+      });
+    }
   });
 }
 
@@ -98,7 +104,7 @@ export class Flamigo extends PokemonCard {
       return generator.next().value;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
       let pokemonCount = 0;

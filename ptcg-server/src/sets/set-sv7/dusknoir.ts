@@ -64,10 +64,13 @@ export class Dusknoir extends PokemonCard {
         targets.forEach(target => {
           target.damage += 130;
         });
-        this.hp = 0;
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.damage += 999;
+          }
+        });
       });
     }
     return state;
   }
-
 }

@@ -1,22 +1,14 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Toxicroak extends PokemonCard {
+export declare class Scorbunny extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
     retreat: CardType[];
-    powers: {
-        name: string;
-        powerType: PowerType;
-        text: string;
-    }[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -24,7 +16,6 @@ export declare class Toxicroak extends PokemonCard {
         text: string;
     }[];
     set: string;
-    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;

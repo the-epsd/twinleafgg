@@ -11,7 +11,6 @@ function* useLeParfum(next, store, state, self, effect) {
     if (player.deck.cards.length === 0) {
         return state;
     }
-    // Try to reduce PowerEffect, to check if something is blocking our ability
     try {
         const stub = new game_effects_1.PowerEffect(player, {
             name: 'test',
@@ -23,13 +22,17 @@ function* useLeParfum(next, store, state, self, effect) {
     catch (_a) {
         return state;
     }
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC, name: 'Flamigo' }, { min: 0, max: 3, allowCancel: true }), selected => {
-        const cards = selected || [];
-        player.deck.moveCardsTo(cards, player.hand);
-        next();
-    });
-    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
+    state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+        if (wantToUse) {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC, name: 'Flamigo' }, { min: 0, max: 3, allowCancel: false }), selected => {
+                const cards = selected || [];
+                player.deck.moveCardsTo(cards, player.hand);
+                next();
+            });
+            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+            });
+        }
     });
 }
 class Flamigo extends pokemon_card_1.PokemonCard {
@@ -71,7 +74,7 @@ class Flamigo extends pokemon_card_1.PokemonCard {
             const generator = useLeParfum(() => generator.next(), store, state, this, effect);
             return generator.next().value;
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             let pokemonCount = 0;
             player.discard.cards.forEach(c => {

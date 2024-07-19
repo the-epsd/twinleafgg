@@ -1,14 +1,16 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
-  MoveEnergyPrompt, PlayerType, SlotType, ChooseAttackPrompt, Player, EnergyMap } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
+  MoveEnergyPrompt, PlayerType, SlotType, ChooseAttackPrompt, Player, EnergyMap
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 
 export class MewEx extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_EX ];
+  public tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
@@ -18,7 +20,7 @@ export class MewEx extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Versatile',
@@ -32,7 +34,7 @@ export class MewEx extends PokemonCard {
   public attacks = [
     {
       name: 'Replace',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 0,
       text: 'Move as many Energy attached to your Pokemon to your other ' +
         'Pokemon in any way you like.'
@@ -86,7 +88,7 @@ export class MewEx extends PokemonCard {
         effect.player.id,
         GameMessage.MOVE_ENERGY_CARDS,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY },
         { allowCancel: true }
       ), transfers => {
@@ -127,10 +129,10 @@ export class MewEx extends PokemonCard {
     blocked: { index: number, attack: string }[]
   ) {
     {
-      // Only include Pokemon V cards
-      if (!card.tags.includes(CardTag.POKEMON_V)) {
-        return;
-      }
+      // // Only include Pokemon V cards
+      // if (!card.tags.includes(CardTag.POKEMON_V)) {
+      //   return;
+      // }
       // No need to include Mew Ex to the list
       if (card instanceof MewEx) {
         return;

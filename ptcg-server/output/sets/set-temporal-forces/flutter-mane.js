@@ -64,17 +64,26 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
                 && opponent.active.getPokemonCard() !== this) {
                 return state;
             }
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: pokemon_types_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                if (!effect.power.exemptFromAbilityLock) {
-                    throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
+            const activePlayer = state.players[state.activePlayer];
+            if (activePlayer) {
+                const activePokemon = activePlayer.active.getPokemonCard();
+                if (activePokemon !== this) {
+                    try {
+                        const stub = new game_effects_1.PowerEffect(player, {
+                            name: 'test',
+                            powerType: pokemon_types_1.PowerType.ABILITY,
+                            text: ''
+                        }, this);
+                        store.reduceEffect(state, stub);
+                    }
+                    catch (_a) {
+                        if (!effect.power.exemptFromAbilityLock) {
+                            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
+                        }
+                        else {
+                            return state;
+                        }
+                    }
                 }
                 return state;
             }

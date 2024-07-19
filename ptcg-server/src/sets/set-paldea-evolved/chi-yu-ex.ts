@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, GameError, CardTarget } from '../../game';
+import { StoreLike, State, PlayerType, SlotType, AttachEnergyPrompt, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -62,25 +62,11 @@ export class ChiYuex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       const player = effect.player;
-      let firePokemonOnBench = false;
 
-      player.bench.forEach(benchSpot => {
-        const card = benchSpot.getPokemonCard();
-        if (card && card.cardType === CardType.FIRE) {
-          firePokemonOnBench = true;
-        }
-      });
-
-      if (!firePokemonOnBench) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      const hasBench = player.bench.some(b => b.cards.length > 0);
+      if (!hasBench) {
+        return state;
       }
-
-      const blocked2: CardTarget[] = [];
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.cardType !== CardType.FIRE) {
-          blocked2.push(target);
-        }
-      });
 
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
@@ -89,7 +75,7 @@ export class ChiYuex extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { allowCancel: false, min: 0, max: 3, differentTargets: true, blockedTo: blocked2 }
+        { allowCancel: false, min: 0, max: 3, differentTargets: true }
       ), transfers => {
         transfers = transfers || [];
 

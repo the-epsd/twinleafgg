@@ -79,13 +79,6 @@ class Ditto extends pokemon_card_1.PokemonCard {
         this.fullName = 'Ditto PGO';
     }
     reduceEffect(store, state, effect) {
-        //     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-        //       const generator = useApexDragon(() => generator.next(), store, state, effect);
-        //       return generator.next().value;
-        //     }
-        //     return state;
-        //   }
-        // }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const pokemonCard = player.active.getPokemonCard();
@@ -93,17 +86,16 @@ class Ditto extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             // Build cards and blocked for Choose Attack prompt
-            const { pokemonCardsInDiscard2, blocked } = this.buildAttackList(state, store, player);
+            const { pokemonCards, blocked } = this.buildAttackList(state, store, player);
             // No attacks to copy
-            if (pokemonCardsInDiscard2.length === 0) {
+            if (pokemonCards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            return store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, pokemonCardsInDiscard2, { allowCancel: true, blocked }), attack => {
+            return store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, pokemonCards, { allowCancel: true, blocked }), attack => {
                 if (attack !== null) {
                     const useAttackEffect = new game_effects_1.UseAttackEffect(player, attack);
                     store.reduceEffect(state, useAttackEffect);
                 }
-                return state;
             });
         }
         return state;
@@ -112,37 +104,30 @@ class Ditto extends pokemon_card_1.PokemonCard {
         const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player);
         store.reduceEffect(state, checkProvidedEnergyEffect);
         const energyMap = checkProvidedEnergyEffect.energyMap;
-        const pokemonCardsInDiscard = player.discard.cards.filter(card => card.superType == card_types_1.SuperType.POKEMON);
-        const pokemonCardsInDiscard2 = pokemonCardsInDiscard.filter(card => card.stage == card_types_1.Stage.BASIC);
+        const pokemonCards = [];
         const blocked = [];
-        player.discard.cards.forEach((card) => {
-            if (card.superType === card_types_1.SuperType.POKEMON && card.cardType) {
-                this.checkAttack(state, store, player, card, energyMap, pokemonCardsInDiscard2, blocked);
+        player.discard.cards.forEach(card => {
+            if (card instanceof pokemon_card_1.PokemonCard) {
+                this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
             }
         });
-        return { pokemonCardsInDiscard2, blocked };
+        return { pokemonCards, blocked };
     }
-    checkAttack(state, store, player, card, energyMap, pokemonCardsInDiscard2, blocked) {
+    checkAttack(state, store, player, card, energyMap, pokemonCards, blocked) {
         {
-            // No need to include Mew Ex to the list
-            if (card instanceof Ditto) {
-                return;
-            }
             const attacks = card.attacks.filter(attack => {
                 const checkAttackCost = new check_effects_1.CheckAttackCostEffect(player, attack);
                 state = store.reduceEffect(state, checkAttackCost);
                 return game_1.StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost);
             });
-            const index = pokemonCardsInDiscard2.length;
-            pokemonCardsInDiscard2.push(card);
+            const index = pokemonCards.length;
+            pokemonCards.push(card);
             card.attacks.forEach(attack => {
                 if (!attacks.includes(attack)) {
                     blocked.push({ index, attack: attack.name });
                 }
-                return state;
             });
         }
-        return state;
     }
 }
 exports.Ditto = Ditto;

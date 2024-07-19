@@ -7,7 +7,7 @@ import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect } from '../../
 
 export class WalkingWakeex extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.ANCIENT ];
+  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
 
   public regulationMark = 'H';
 
@@ -19,7 +19,7 @@ export class WalkingWakeex extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Azure Wave',
@@ -30,9 +30,9 @@ export class WalkingWakeex extends PokemonCard {
   public attacks = [
     {
       name: 'Cathartic Roar',
-      cost: [ CardType.WATER, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: 120,
-      text: 'During your next turn, this Pokémon can\'t attack.'
+      text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 120 more damage.'
     }
   ];
 
@@ -58,11 +58,11 @@ export class WalkingWakeex extends PokemonCard {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
         } catch {
           return state;
         }
@@ -85,16 +85,15 @@ export class WalkingWakeex extends PokemonCard {
           }
         }
       }
+    }
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
-        if (opponent.active.specialConditions.length > 0) {
-          const attackEffect = effect as AttackEffect;
-          attackEffect.damage += 120;
-        }
-        return state;
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      if (opponent.active.specialConditions.length > 0) {
+        const attackEffect = effect as AttackEffect;
+        attackEffect.damage += 120;
       }
       return state;
     }

@@ -93,17 +93,25 @@ export class FlutterMane extends PokemonCard {
         return state;
       }
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        if (!effect.power.exemptFromAbilityLock) {
+      const activePlayer = state.players[state.activePlayer];
+      if (activePlayer) {
+        const activePokemon = activePlayer.active.getPokemonCard();
+        if (activePokemon !== this) {
 
-          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+          try {
+            const stub = new PowerEffect(player, {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: ''
+            }, this);
+            store.reduceEffect(state, stub);
+          } catch {
+            if (!effect.power.exemptFromAbilityLock) {
+              throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+            } else {
+              return state;
+            }
+          }
         }
         return state;
       }

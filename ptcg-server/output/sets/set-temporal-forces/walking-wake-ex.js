@@ -26,7 +26,7 @@ class WalkingWakeex extends pokemon_card_1.PokemonCard {
                 name: 'Cathartic Roar',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 120,
-                text: 'During your next turn, this Pokémon can\'t attack.'
+                text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 120 more damage.'
             }
         ];
         this.set = 'TEF';
@@ -66,14 +66,13 @@ class WalkingWakeex extends pokemon_card_1.PokemonCard {
                     }
                 }
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                if (opponent.active.specialConditions.length > 0) {
-                    const attackEffect = effect;
-                    attackEffect.damage += 120;
-                }
-                return state;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (opponent.active.specialConditions.length > 0) {
+                const attackEffect = effect;
+                attackEffect.damage += 120;
             }
             return state;
         }

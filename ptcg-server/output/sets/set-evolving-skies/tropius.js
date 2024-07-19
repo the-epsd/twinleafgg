@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Tropius = void 0;
 const game_1 = require("../../game");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Tropius extends game_1.PokemonCard {
@@ -33,15 +34,23 @@ class Tropius extends game_1.PokemonCard {
         this.setNumber = '6';
         this.name = 'Tropius';
         this.fullName = 'Tropius EVS';
-        this.RALLY_BACK_MARKER = 'RALLY_BACK_MARKER';
+        this.REVENGE_MARKER = 'REVENGE_MARKER';
+        this.damageDealt = false;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            if (player.marker.hasMarker(this.RALLY_BACK_MARKER)) {
+            if (player.marker.hasMarker(this.REVENGE_MARKER)) {
                 effect.damage += 90;
             }
             return state;
+        }
+        if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) &&
+            effect.target.tool === this) {
+            const player = game_1.StateUtils.getOpponent(state, effect.player);
+            if (player.active.tool === this) {
+                this.damageDealt = true;
+            }
         }
         if (effect instanceof game_effects_1.KnockOutEffect) {
             const player = effect.player;
@@ -53,12 +62,17 @@ class Tropius extends game_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                effect.player.marker.addMarker(this.RALLY_BACK_MARKER, this);
+                effect.player.marker.addMarkerToState(this.REVENGE_MARKER);
             }
             return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.RALLY_BACK_MARKER);
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            if (owner === effect.player) {
+                this.damageDealt = false;
+            }
+            effect.player.marker.removeMarker(this.REVENGE_MARKER);
         }
         return state;
     }

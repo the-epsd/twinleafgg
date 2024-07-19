@@ -1,11 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage,
+import { Stage, CardType } from '../../game/store/card/card-types';
+import {
+  StoreLike, State, StateUtils, GameMessage,
   ChooseAttackPrompt, PowerType,
   EnergyMap,
   GameError,
-  Player,
-  Card} from '../../game';
+  Player
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/store/effects/check-effects';
@@ -88,7 +89,7 @@ export class Ditto extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Hidden Transormation',
@@ -109,16 +110,6 @@ export class Ditto extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    //     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-    //       const generator = useApexDragon(() => generator.next(), store, state, effect);
-    //       return generator.next().value;
-    //     }
-  
-    //     return state;
-    //   }
-  
-    // }
-
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
@@ -128,76 +119,65 @@ export class Ditto extends PokemonCard {
       }
 
       // Build cards and blocked for Choose Attack prompt
-      const { pokemonCardsInDiscard2, blocked } = this.buildAttackList(state, store, player);
+      const { pokemonCards, blocked } = this.buildAttackList(state, store, player);
 
       // No attacks to copy
-      if (pokemonCardsInDiscard2.length === 0) {
+      if (pokemonCards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       return store.prompt(state, new ChooseAttackPrompt(
         player.id,
         GameMessage.CHOOSE_ATTACK_TO_COPY,
-        pokemonCardsInDiscard2,
+        pokemonCards,
         { allowCancel: true, blocked }
       ), attack => {
         if (attack !== null) {
           const useAttackEffect = new UseAttackEffect(player, attack);
           store.reduceEffect(state, useAttackEffect);
         }
-        return state;
       });
     }
     return state;
   }
 
-
   private buildAttackList(
     state: State, store: StoreLike, player: Player
-  ): { pokemonCardsInDiscard2: PokemonCard[], blocked: { index: number, attack: string }[] } {
+  ): { pokemonCards: PokemonCard[], blocked: { index: number, attack: string }[] } {
 
     const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
     store.reduceEffect(state, checkProvidedEnergyEffect);
     const energyMap = checkProvidedEnergyEffect.energyMap;
 
-
-    const pokemonCardsInDiscard = player.discard.cards.filter(card => card.superType == SuperType.POKEMON) as PokemonCard[];
-    const pokemonCardsInDiscard2 = pokemonCardsInDiscard.filter(card => card.stage == Stage.BASIC);
-
+    const pokemonCards: PokemonCard[] = [];
     const blocked: { index: number, attack: string }[] = [];
-    player.discard.cards.forEach((card: Card) => {
-      if (card.superType === SuperType.POKEMON && (card as PokemonCard).cardType) {
-        this.checkAttack(state, store, player, card as PokemonCard, energyMap, pokemonCardsInDiscard2, blocked);
+    player.discard.cards.forEach(card => {
+      if (card instanceof PokemonCard) {
+        this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
       }
     });
-    
 
-    return { pokemonCardsInDiscard2, blocked };
+    return { pokemonCards, blocked };
   }
 
   private checkAttack(state: State, store: StoreLike, player: Player,
-    card: PokemonCard, energyMap: EnergyMap[], pokemonCardsInDiscard2: PokemonCard[],
+    card: PokemonCard, energyMap: EnergyMap[], pokemonCards: PokemonCard[],
     blocked: { index: number, attack: string }[]
   ) {
     {
-      // No need to include Mew Ex to the list
-      if (card instanceof Ditto) {
-        return;
-      }
+
       const attacks = card.attacks.filter(attack => {
         const checkAttackCost = new CheckAttackCostEffect(player, attack);
         state = store.reduceEffect(state, checkAttackCost);
         return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost);
       });
-      const index = pokemonCardsInDiscard2.length;
-      pokemonCardsInDiscard2.push(card);
+      const index = pokemonCards.length;
+      pokemonCards.push(card);
       card.attacks.forEach(attack => {
         if (!attacks.includes(attack)) {
           blocked.push({ index, attack: attack.name });
         }
-        return state;
       });
     }
-    return state;
   }
 }

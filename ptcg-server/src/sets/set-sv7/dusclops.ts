@@ -64,10 +64,13 @@ export class Dusclops extends PokemonCard {
         targets.forEach(target => {
           target.damage += 50;
         });
-        this.hp = 0;
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.damage += 999;
+          }
+        });
       });
     }
     return state;
   }
-
 }

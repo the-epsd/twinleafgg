@@ -9,9 +9,9 @@ import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/atta
 export class Druddigon extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  
+
   public cardType: CardType = CardType.DRAGON;
-  
+
   public hp: number = 120;
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
@@ -51,7 +51,7 @@ export class Druddigon extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(this.REVENGE_MARKER) && this.damageDealt) {
+      if (player.marker.hasMarker(this.REVENGE_MARKER)) {
         effect.damage += 120;
       }
 
@@ -59,7 +59,7 @@ export class Druddigon extends PokemonCard {
     }
 
     if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
-        effect.target.tool === this) {
+      effect.target.tool === this) {
       const player = StateUtils.getOpponent(state, effect.player);
 
       if (player.active.tool === this) {
@@ -79,7 +79,7 @@ export class Druddigon extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
-        effect.player.marker.addMarker(this.REVENGE_MARKER, this);
+        effect.player.marker.addMarkerToState(this.REVENGE_MARKER);
       }
       return state;
     }
@@ -87,11 +87,11 @@ export class Druddigon extends PokemonCard {
     if (effect instanceof EndTurnEffect) {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
-      
+
       if (owner === effect.player) {
         this.damageDealt = false;
       }
-      
+
       effect.player.marker.removeMarker(this.REVENGE_MARKER);
     }
 

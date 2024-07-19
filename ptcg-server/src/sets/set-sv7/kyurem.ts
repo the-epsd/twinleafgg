@@ -3,11 +3,10 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { Card, ChoosePokemonPrompt, GameMessage, PlayerType, PowerType, SlotType, StateUtils } from '../../game';
-import { CheckAttackCostEffect, CheckPokemonAttacksEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckPokemonAttacksEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { PlayPokemonEffect, AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class Kyurem extends PokemonCard {
@@ -47,40 +46,7 @@ export class Kyurem extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlayPokemonEffect) {
-      const player = effect.player;
-      // Check attack cost
-      const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
-      state = store.reduceEffect(state, checkCost);
-
-      // Check attached energy
-      const checkEnergy = new CheckProvidedEnergyEffect(player);
-      state = store.reduceEffect(state, checkEnergy);
-    }
-
-    if (effect instanceof RetreatEffect) {
-      const player = effect.player;
-      // Check attack cost
-      const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
-      state = store.reduceEffect(state, checkCost);
-
-      // Check attached energy
-      const checkEnergy = new CheckProvidedEnergyEffect(player);
-      state = store.reduceEffect(state, checkEnergy);
-    }
-
-    if (effect instanceof AttachEnergyEffect) {
-      const player = effect.player;
-      // Check attack cost
-      const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
-      state = store.reduceEffect(state, checkCost);
-
-      // Check attached energy
-      const checkEnergy = new CheckProvidedEnergyEffect(player);
-      state = store.reduceEffect(state, checkEnergy);
-    }
-
-    if (effect instanceof CheckAttackCostEffect) {
+    if (effect instanceof UseAttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -122,7 +88,6 @@ export class Kyurem extends PokemonCard {
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
-
 
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,

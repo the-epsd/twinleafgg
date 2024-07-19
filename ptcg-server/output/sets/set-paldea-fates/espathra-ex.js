@@ -11,7 +11,7 @@ class Espathraex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Flittle';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 260;

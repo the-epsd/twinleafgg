@@ -21,6 +21,7 @@ export declare class Tropius extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly RALLY_BACK_MARKER = "RALLY_BACK_MARKER";
+    readonly REVENGE_MARKER = "REVENGE_MARKER";
+    damageDealt: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

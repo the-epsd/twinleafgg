@@ -44,7 +44,11 @@ class Dusclops extends pokemon_card_1.PokemonCard {
                 targets.forEach(target => {
                     target.damage += 50;
                 });
-                this.hp = 0;
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.damage += 999;
+                    }
+                });
             });
         }
         return state;
