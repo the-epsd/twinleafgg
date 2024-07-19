@@ -92,7 +92,7 @@ export class Ditto extends PokemonCard {
   public retreat = [CardType.COLORLESS];
 
   public powers = [{
-    name: 'Hidden Transormation',
+    name: 'Sudden Transormation',
     powerType: PowerType.ABILITY,
     useWhenInPlay: true,
     text: 'This Pokémon can use the attacks of any Basic Pokémon in your discard pile, except for Pokémon with a Rule Box (Pokémon V, Pokémon-GX, etc. have Rule Boxes). (You still need the necessary Energy to use each attack.)'
@@ -152,7 +152,7 @@ export class Ditto extends PokemonCard {
     const pokemonCards: PokemonCard[] = [];
     const blocked: { index: number, attack: string }[] = [];
     player.discard.cards.forEach(card => {
-      if (card instanceof PokemonCard) {
+      if (card instanceof PokemonCard && card.stage === Stage.BASIC) {
         this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
       }
     });

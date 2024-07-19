@@ -1,52 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, ConfirmPrompt } from '../../game';
+import { StoreLike, State, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, ConfirmPrompt, ShowCardsPrompt, StateUtils } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-
-function* useLeParfum(next: Function, store: StoreLike, state: State,
-  self: Flamigo, effect: PlayPokemonEffect): IterableIterator<State> {
-  const player = effect.player;
-
-  if (player.deck.cards.length === 0) {
-    return state;
-  }
-
-  try {
-    const stub = new PowerEffect(player, {
-      name: 'test',
-      powerType: PowerType.ABILITY,
-      text: ''
-    }, self);
-    store.reduceEffect(state, stub);
-  } catch {
-    return state;
-  }
-  state = store.prompt(state, new ConfirmPrompt(
-    effect.player.id,
-    GameMessage.WANT_TO_USE_ABILITY,
-  ), wantToUse => {
-    if (wantToUse) {
-
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC, name: 'Flamigo' },
-        { min: 0, max: 3, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        player.deck.moveCardsTo(cards, player.hand);
-        next();
-      });
-
-      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-      });
-    }
-  });
-}
 
 
 export class Flamigo extends PokemonCard {
@@ -99,9 +56,53 @@ export class Flamigo extends PokemonCard {
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const generator = useLeParfum(() => generator.next(), store, state, this, effect);
-      return generator.next().value;
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      if (player.deck.cards.length === 0) {
+        return state;
+      }
+
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+      state = store.prompt(state, new ConfirmPrompt(
+        effect.player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (wantToUse) {
+
+          state = store.prompt(state, new ChooseCardsPrompt(
+            player.id,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.deck,
+            { superType: SuperType.POKEMON, stage: Stage.BASIC, name: 'Flamigo' },
+            { min: 0, max: 3, allowCancel: false }
+          ), selected => {
+            const cards = selected || [];
+            player.deck.moveCardsTo(cards, player.hand);
+
+            if (cards.length > 0) {
+              state = store.prompt(state, new ShowCardsPrompt(
+                opponent.id,
+                GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+                cards), () => state);
+            }
+          });
+
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+          });
+        }
+      });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
