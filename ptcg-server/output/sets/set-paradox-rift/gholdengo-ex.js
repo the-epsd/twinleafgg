@@ -47,6 +47,33 @@ class Gholdengoex extends pokemon_card_1.PokemonCard {
         this.MAKE_IT_RAIN_MARKER = 'MAKE_IT_RAIN_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+            const player = effect.player;
+            player.marker.removeMarker(this.MAKE_IT_RAIN_MARKER, this);
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.marker.removeMarker(this.MAKE_IT_RAIN_MARKER, this);
+        }
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+            const player = effect.player;
+            if (player.marker.hasMarker(this.MAKE_IT_RAIN_MARKER, this)) {
+                throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
+            }
+            const isActive = player.active.getPokemonCard() === this;
+            if (isActive) {
+                player.deck.moveTo(player.hand, 2);
+            }
+            else {
+                player.deck.moveTo(player.hand, 1);
+            }
+            player.marker.addMarker(this.MAKE_IT_RAIN_MARKER, this);
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            });
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             // Prompt player to choose cards to discard 
@@ -62,43 +89,6 @@ class Gholdengoex extends pokemon_card_1.PokemonCard {
                 // Calculate damage
                 const damage = cards.length * 50;
                 effect.damage = damage;
-                return state;
-            });
-        }
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
-            const player = effect.player;
-            player.marker.removeMarker(this.MAKE_IT_RAIN_MARKER, this);
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const player = effect.player;
-            player.marker.removeMarker(this.MAKE_IT_RAIN_MARKER, this);
-        }
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
-            const player = effect.player;
-            if (player.marker.hasMarker(this.MAKE_IT_RAIN_MARKER, this)) {
-                throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
-            }
-            if (player.active.cards[0] !== this) {
-                // Draw a card
-                player.deck.moveTo(player.hand, 1);
-                player.marker.addMarker(this.MAKE_IT_RAIN_MARKER, this);
-            }
-            else {
-                // Draw 2 cards
-                player.deck.moveTo(player.hand, 2);
-                player.marker.addMarker(this.MAKE_IT_RAIN_MARKER, this);
-            }
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
-                }
-            });
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
-                if (player instanceof Gholdengoex) {
-                    player.marker.removeMarker(this.MAKE_IT_RAIN_MARKER);
-                }
                 return state;
             });
         }

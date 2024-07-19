@@ -64,6 +64,41 @@ export class Gholdengoex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.MAKE_IT_RAIN_MARKER, this);
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.MAKE_IT_RAIN_MARKER, this);
+    }
+
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+      if (player.marker.hasMarker(this.MAKE_IT_RAIN_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      const isActive = player.active.getPokemonCard() === this;
+
+      if (isActive) {
+        player.deck.moveTo(player.hand, 2);
+      } else {
+        player.deck.moveTo(player.hand, 1);
+      }
+
+      player.marker.addMarker(this.MAKE_IT_RAIN_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
+    }
+
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
@@ -92,51 +127,6 @@ export class Gholdengoex extends PokemonCard {
       });
     }
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.MAKE_IT_RAIN_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      player.marker.removeMarker(this.MAKE_IT_RAIN_MARKER, this);
-    }
-
-
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-
-      const player = effect.player;
-      if (player.marker.hasMarker(this.MAKE_IT_RAIN_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
-
-      if (player.active.cards[0] !== this) {
-        // Draw a card
-        player.deck.moveTo(player.hand, 1);
-        player.marker.addMarker(this.MAKE_IT_RAIN_MARKER, this);
-      } else {
-        // Draw 2 cards
-        player.deck.moveTo(player.hand, 2);
-        player.marker.addMarker(this.MAKE_IT_RAIN_MARKER, this);
-      }
-
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
-        }
-      });
-    }
-
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player instanceof Gholdengoex) {
-          player.marker.removeMarker(this.MAKE_IT_RAIN_MARKER);
-        }
-        return state;
-      });
-    }
     return state;
   }
 }
