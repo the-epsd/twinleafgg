@@ -40,7 +40,7 @@ class Druddigon extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            if (player.marker.hasMarker(this.REVENGE_MARKER) && this.damageDealt) {
+            if (player.marker.hasMarker(this.REVENGE_MARKER)) {
                 effect.damage += 120;
             }
             return state;
@@ -62,7 +62,7 @@ class Druddigon extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                effect.player.marker.addMarker(this.REVENGE_MARKER, this);
+                effect.player.marker.addMarkerToState(this.REVENGE_MARKER);
             }
             return state;
         }

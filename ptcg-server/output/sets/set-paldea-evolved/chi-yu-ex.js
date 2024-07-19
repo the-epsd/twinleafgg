@@ -46,23 +46,11 @@ class ChiYuex extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            let firePokemonOnBench = false;
-            player.bench.forEach(benchSpot => {
-                const card = benchSpot.getPokemonCard();
-                if (card && card.cardType === card_types_1.CardType.FIRE) {
-                    firePokemonOnBench = true;
-                }
-            });
-            if (!firePokemonOnBench) {
-                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            const hasBench = player.bench.some(b => b.cards.length > 0);
+            if (!hasBench) {
+                return state;
             }
-            const blocked2 = [];
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-                if (card.cardType !== card_types_1.CardType.FIRE) {
-                    blocked2.push(target);
-                }
-            });
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min: 0, max: 3, differentTargets: true, blockedTo: blocked2 }), transfers => {
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min: 0, max: 3, differentTargets: true }), transfers => {
                 transfers = transfers || [];
                 if (transfers.length === 0) {
                     return;

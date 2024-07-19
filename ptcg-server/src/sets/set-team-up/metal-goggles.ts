@@ -44,7 +44,7 @@ export class MetalGoggles extends TrainerCard {
       }
 
       if (sourceCard) {
-        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.source);
+        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.target);
         store.reduceEffect(state, checkPokemonTypeEffect);
   
         if (checkPokemonTypeEffect.cardTypes.includes(CardType.METAL)) {

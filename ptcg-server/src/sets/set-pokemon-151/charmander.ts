@@ -1,7 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../game/store/prefabs/prefabs';
 
@@ -18,25 +17,16 @@ export class Charmander extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
-    { 
+    {
       name: 'Blazing Destruction',
       cost: [CardType.FIRE],
       damage: 0,
       text: 'Discard a Stadium in play.',
-      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
-        console.log('Entering effect function');
-        try {
-          // DISCARD_A_STADIUM_CARD_IN_PLAY(state);
-          console.log('destroying a stadium:');
-        } catch (error) {
-          console.error('Error when discarding a stadium:', error);
-        }
-      }
     },
-    { 
+    {
       name: 'Steady Firebreathing',
       cost: [CardType.FIRE, CardType.FIRE],
       damage: 30,

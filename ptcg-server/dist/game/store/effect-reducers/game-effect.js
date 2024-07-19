@@ -9,7 +9,6 @@ import { AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect, UsePowerEffe
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { DealDamageEffect, ApplyWeaknessEffect } from '../effects/attack-effects';
 import { TrainerEffect } from '../effects/play-card-effects';
-import { PlayerType } from '../actions/play-card-action';
 function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
     let multiply = 1;
     let modifier = 0;
@@ -43,13 +42,13 @@ function* useAttack(next, store, state, effect) {
     if (sp.includes(SpecialCondition.PARALYZED) || sp.includes(SpecialCondition.ASLEEP)) {
         throw new GameError(GameMessage.BLOCKED_BY_SPECIAL_CONDITION);
     }
-    if (player.alteredCreationDamage == true) {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-            if (effect instanceof DealDamageEffect && effect.source === cardList) {
-                effect.damage += 20;
-            }
-        });
-    }
+    // if (player.alteredCreationDamage == true) {
+    //   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+    //     if (effect instanceof DealDamageEffect && effect.source === cardList) {
+    //       effect.damage += 20;
+    //     }
+    //   });
+    // }
     const attack = effect.attack;
     const checkAttackCost = new CheckAttackCostEffect(player, attack);
     state = store.reduceEffect(state, checkAttackCost);
@@ -90,13 +89,13 @@ function* useAttack(next, store, state, effect) {
 }
 export function gameReducer(store, state, effect) {
     if (effect instanceof KnockOutEffect) {
-        const player = effect.player;
+        // const player = effect.player;
         const card = effect.target.getPokemonCard();
         if (card !== undefined) {
             //Altered Creation GX
-            if (player.usedAlteredCreation == true) {
-                effect.prizeCount += 1;
-            }
+            // if (player.usedAlteredCreation == true) {
+            //   effect.prizeCount += 1;
+            // }
             // Pokemon ex rule
             if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.POKEMON_GX)) {
                 effect.prizeCount += 1;

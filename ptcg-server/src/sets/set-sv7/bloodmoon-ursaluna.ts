@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils,
-  GameMessage, ConfirmPrompt, ChooseCardsPrompt, EnergyCard, GameError } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils,
+  GameMessage, ConfirmPrompt, ChooseCardsPrompt, EnergyCard, GameError
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -18,11 +20,10 @@ export class BloodmoonUrsaluna extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Ground Rule',
-    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, when you play this card from your hand onto your bench, you may attach up to 2 Basic Fighting Energy cards from your hand to this Pokémon.'
 
@@ -31,8 +32,9 @@ export class BloodmoonUrsaluna extends PokemonCard {
   public attacks = [
     {
       name: 'Mad Mud Bite',
-      cost: [ CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS ],
+      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
       damage: 100,
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each damage counter on your opponent\'s Active Pokémon.'
     }
   ];
@@ -51,7 +53,7 @@ export class BloodmoonUrsaluna extends PokemonCard {
 
     if ((effect instanceof PlayPokemonEffect) && effect.pokemonCard === this) {
 
-    
+
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
@@ -79,13 +81,13 @@ export class BloodmoonUrsaluna extends PokemonCard {
           if (!hasEnergyInHand) {
             throw new GameError(GameMessage.CANNOT_USE_POWER);
           }
-    
+
           const cardList = StateUtils.findCardList(state, this);
           if (cardList === undefined) {
             return state;
           }
-          
-    
+
+
           return store.prompt(state, new ChooseCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARD_TO_ATTACH,
@@ -99,17 +101,20 @@ export class BloodmoonUrsaluna extends PokemonCard {
             }
           });
         }
-
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-          const player = effect.player;
-          const opponent = StateUtils.getOpponent(state, player);
-      
-          effect.damage += opponent.active.damage * 30;
-          return state;
-        }
-        return state;
       });
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (opponent.active.damage > 0) {
+        const damage = 100 + (opponent.active.damage * 3);
+
+        effect.damage = damage;
+        console.log(damage);
+      }
     }
     return state;
   }

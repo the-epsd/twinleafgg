@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AlolanRaticateArt, ArticunoArt, BlastoiseArt, CameruptArt, CharizardArt, CharmanderArt, LunatoneArt, LureModuleArt, MoltresArt, PokestopArt, RadiantVenusaurArt, SlakingVArt, SlowbroArt, SlowpokeArt, SnorlaxArt, SolrockArt, ZapdosArt } from './card-images';
+import { AlolanRaticateArt, ArticunoArt, BlastoiseArt, CameruptArt, CharizardArt, CharmanderArt, DittoArt, LunatoneArt, LureModuleArt, MoltresArt, PokestopArt, RadiantVenusaurArt, SlakingVArt, SlowbroArt, SlowpokeArt, SnorlaxArt, SolrockArt, ZapdosArt } from './card-images';
 
 export const setPokemonGO: Card[] = [
   new AlolanRaticateArt(),
@@ -7,7 +7,7 @@ export const setPokemonGO: Card[] = [
   new CameruptArt(),
   new CharmanderArt(),
   new CharizardArt(),
-  // new DittoArt(),
+  new DittoArt(),
   new LunatoneArt(),
   new PokestopArt(),
   new SlakingVArt(),

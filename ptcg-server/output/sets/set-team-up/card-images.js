@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.YveltalArt = exports.ViridianForestArt = exports.TapuKokoPrismStarArt = exports.PokemonCommunicationArt = exports.PidgeottoArt = exports.PersianArt = exports.PawniardArt = exports.MoltresArt = exports.MetalGogglesArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.DragoniteArt = exports.BronzorArt = exports.BisharpArt = exports.AlolanMukArt = exports.AbsolArt = void 0;
+
+exports.ZapdosArt = exports.YveltalArt = exports.ViridianForestArt = exports.TapuKokoPrismStarArt = exports.PokemonCommunicationArt = exports.PidgeottoArt = exports.PersianArt = exports.PawniardArt = exports.MoltresArt = exports.MetalGogglesArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.FerrothornArt = exports.DragoniteArt = exports.BronzorArt = exports.BisharpArt = exports.AlolanMukArt = exports.AbsolArt = void 0;
+
 const alolan_muk_1 = require("./alolan-muk");
 const bronzor_1 = require("./bronzor");
 const dragonite_1 = require("./dragonite");
@@ -12,6 +14,7 @@ const mareep_1 = require("./mareep");
 const metal_goggles_1 = require("./metal-goggles");
 const pidgeotto_1 = require("./pidgeotto");
 const pokemon_communication_1 = require("./pokemon-communication");
+const TEU_103_Ferrothorn_1 = require("./TEU_103_Ferrothorn");
 const TEU_104_Pawniard_1 = require("./TEU_104_Pawniard");
 const TEU_105_Bisharp_1 = require("./TEU_105_Bisharp");
 const TEU_126_Persian_1 = require("./TEU_126_Persian");
@@ -56,6 +59,13 @@ class DragoniteArt extends dragonite_1.Dragonite {
     }
 }
 exports.DragoniteArt = DragoniteArt;
+class FerrothornArt extends TEU_103_Ferrothorn_1.Ferrothorn {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_103_R_EN_LG.png';
+    }
+}
+exports.FerrothornArt = FerrothornArt;
 class HitmonchanArt extends hitmonchan_1.Hitmonchan {
     constructor() {
         super(...arguments);

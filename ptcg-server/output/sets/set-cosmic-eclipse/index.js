@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setCosmicEclipse = [
     // new ArceusDialgaPalkiaGXArt(),
     new card_images_1.BlacephalonArt(),
+    new card_images_1.BuzzwoleArt(),
     new card_images_1.ChaoticSwellArt(),
     new card_images_1.CynthiaAndCaitlinArt(),
     new card_images_1.DrawEnergyArt(),

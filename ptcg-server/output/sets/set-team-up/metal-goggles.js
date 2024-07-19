@@ -35,7 +35,7 @@ class MetalGoggles extends trainer_card_1.TrainerCard {
                 return state;
             }
             if (sourceCard) {
-                const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(effect.source);
+                const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(effect.target);
                 store.reduceEffect(state, checkPokemonTypeEffect);
                 if (checkPokemonTypeEffect.cardTypes.includes(card_types_1.CardType.METAL)) {
                     // Check if damage target is owned by this card's owner 

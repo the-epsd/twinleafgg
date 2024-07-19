@@ -20,7 +20,6 @@ function* useGenomeHacking(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-
   let selected: any;
   yield store.prompt(state, new ChooseAttackPrompt(
     player.id,

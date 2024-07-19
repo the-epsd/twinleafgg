@@ -86,10 +86,10 @@ class MewEx extends pokemon_card_1.PokemonCard {
     }
     checkAttack(state, store, player, card, energyMap, pokemonCards, blocked) {
         {
-            // Only include Pokemon V cards
-            if (!card.tags.includes(card_types_1.CardTag.POKEMON_V)) {
-                return;
-            }
+            // // Only include Pokemon V cards
+            // if (!card.tags.includes(CardTag.POKEMON_V)) {
+            //   return;
+            // }
             // No need to include Mew Ex to the list
             if (card instanceof MewEx) {
                 return;

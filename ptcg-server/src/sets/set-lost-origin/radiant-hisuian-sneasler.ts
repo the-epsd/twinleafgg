@@ -4,15 +4,16 @@ import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game'
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 
 export class RadiantHisuianSneasler extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
   public tags = [CardTag.RADIANT];
-  
+
   public cardType: CardType = CardType.DARK;
-  
+
   public hp: number = 130;
 
   public weakness = [{ type: CardType.FIGHTING }];
@@ -21,7 +22,7 @@ export class RadiantHisuianSneasler extends PokemonCard {
 
   public powers = [{
     name: 'Poison Peak',
-    powerType: PowerType.ABILITY, 
+    powerType: PowerType.ABILITY,
     text: 'During Pokémon Checkup, put 2 more damage counters on your opponent\'s Poisoned Pokémon.'
   }];
 
@@ -44,12 +45,24 @@ export class RadiantHisuianSneasler extends PokemonCard {
 
   public fullName: string = 'Radiant Hisuian Sneasler LOR';
 
-  public reduceEffect (store: StoreLike, state: State, effect: Effect): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (effect instanceof BetweenTurnsEffect) {
       const player = effect.player;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
+
+          try {
+            const stub = new PowerEffect(player, {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: ''
+            }, this);
+            store.reduceEffect(state, stub);
+          } catch {
+            return state;
+          }
+
           const opponent = StateUtils.getOpponent(state, player);
           if (opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
             opponent.active.poisonDamage = 30;

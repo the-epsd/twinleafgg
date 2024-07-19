@@ -12,7 +12,6 @@ class Chikorita extends pokemon_card_1.PokemonCard {
         this.hp = 70;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.retreat = [card_types_1.CardType.COLORLESS];
-        this.evolvesInto = 'Bayleef';
         this.attacks = [{
                 name: 'Mini Drain',
                 cost: [card_types_1.CardType.GRASS],

@@ -7,7 +7,6 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Kyurem extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -34,34 +33,7 @@ class Kyurem extends pokemon_card_1.PokemonCard {
         this.fullName = 'Kyurem SV6a';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect) {
-            const player = effect.player;
-            // Check attack cost
-            const checkCost = new check_effects_1.CheckAttackCostEffect(player, this.attacks[0]);
-            state = store.reduceEffect(state, checkCost);
-            // Check attached energy
-            const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
-            state = store.reduceEffect(state, checkEnergy);
-        }
-        if (effect instanceof game_effects_1.RetreatEffect) {
-            const player = effect.player;
-            // Check attack cost
-            const checkCost = new check_effects_1.CheckAttackCostEffect(player, this.attacks[0]);
-            state = store.reduceEffect(state, checkCost);
-            // Check attached energy
-            const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
-            state = store.reduceEffect(state, checkEnergy);
-        }
-        if (effect instanceof play_card_effects_1.AttachEnergyEffect) {
-            const player = effect.player;
-            // Check attack cost
-            const checkCost = new check_effects_1.CheckAttackCostEffect(player, this.attacks[0]);
-            state = store.reduceEffect(state, checkCost);
-            // Check attached energy
-            const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
-            state = store.reduceEffect(state, checkEnergy);
-        }
-        if (effect instanceof check_effects_1.CheckAttackCostEffect) {
+        if (effect instanceof game_effects_1.UseAttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             new check_effects_1.CheckPokemonAttacksEffect(player);

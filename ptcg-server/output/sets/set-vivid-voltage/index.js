@@ -7,6 +7,7 @@ exports.setVividVoltage = [
     new card_images_1.CharmeleonArt(),
     new card_images_1.CharizardArt(),
     new card_images_1.CoatingMetalEnergyArt(),
+    new card_images_1.DhelmiseArt(),
     new card_images_1.JirachiArt(),
     new card_images_1.LeonArt(),
     new card_images_1.MagearnaArt(),

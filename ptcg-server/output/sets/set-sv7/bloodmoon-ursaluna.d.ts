@@ -13,7 +13,6 @@ export declare class BloodmoonUrsaluna extends PokemonCard {
     retreat: CardType[];
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];
@@ -21,6 +20,7 @@ export declare class BloodmoonUrsaluna extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;

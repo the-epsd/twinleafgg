@@ -42,7 +42,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   height: calc(var(--card-size) * #{$ptcg-bench-slots} + #{($ptcg-bench-slots + 1) * map-get($padding, small)});
 
   position: absolute;
-  top: 38%;
+  top: 41%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }

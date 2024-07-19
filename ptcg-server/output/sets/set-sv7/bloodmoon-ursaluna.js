@@ -17,7 +17,6 @@ class BloodmoonUrsaluna extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Ground Rule',
-                useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'Once during your turn, when you play this card from your hand onto your bench, you may attach up to 2 Basic Fighting Energy cards from your hand to this Pokémon.'
             }];
@@ -26,6 +25,7 @@ class BloodmoonUrsaluna extends pokemon_card_1.PokemonCard {
                 name: 'Mad Mud Bite',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
                 damage: 100,
+                damageCalculation: '+',
                 text: 'This attack does 30 more damage for each damage counter on your opponent\'s Active Pokémon.'
             }
         ];
@@ -71,14 +71,16 @@ class BloodmoonUrsaluna extends pokemon_card_1.PokemonCard {
                         }
                     });
                 }
-                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                    const player = effect.player;
-                    const opponent = game_1.StateUtils.getOpponent(state, player);
-                    effect.damage += opponent.active.damage * 30;
-                    return state;
-                }
-                return state;
             });
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (opponent.active.damage > 0) {
+                const damage = 100 + (opponent.active.damage * 3);
+                effect.damage = damage;
+                console.log(damage);
+            }
         }
         return state;
     }

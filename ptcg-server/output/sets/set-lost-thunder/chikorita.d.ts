@@ -10,7 +10,6 @@ export declare class Chikorita extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    evolvesInto: string;
     attacks: {
         name: string;
         cost: CardType[];

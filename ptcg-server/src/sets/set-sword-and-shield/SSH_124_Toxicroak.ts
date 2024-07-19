@@ -5,9 +5,11 @@ import { StoreLike, State, PlayerType, StateUtils, CoinFlipPrompt, GameMessage }
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Toxicroak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom = 'Croagunk';
   public cardType: CardType = CardType.DARK;
   public hp: number = 110;
   public weakness = [{ type: CardType.FIGHTING }];
@@ -35,10 +37,22 @@ export class Toxicroak extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (effect instanceof BetweenTurnsEffect) {
       const player = effect.player;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
+
+          try {
+            const stub = new PowerEffect(player, {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: ''
+            }, this);
+            store.reduceEffect(state, stub);
+          } catch {
+            return state;
+          }
+
           const opponent = StateUtils.getOpponent(state, player);
           if (opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
             opponent.active.poisonDamage = 30;

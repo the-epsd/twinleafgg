@@ -37,7 +37,7 @@ class Dartrix extends pokemon_card_1.PokemonCard {
         this.fullName = 'Dartrix SV6a';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             let pokemonCount = 0;
             player.discard.cards.forEach(c => {

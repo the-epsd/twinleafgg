@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils, ChooseCardsPrompt, EnergyCard, PlayerType, GameLog } from '../../game';
+import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils, ChooseCardsPrompt, EnergyCard, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -101,9 +101,9 @@ export class TealMaskOgerponex extends PokemonCard {
 
           player.hand.moveCardsTo(cards, cardList);
 
-          cards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_ATTACHES_CARD, { name: player.name, card: card.name });
-          });
+          // cards.forEach((card, index) => {
+          //   store.log(state, GameLog.LOG_PLAYER_ATTACHES_CARD, { name: player.name, card: card.name, cardList: cardList });
+          // });
 
           player.deck.moveTo(player.hand, 1);
         }

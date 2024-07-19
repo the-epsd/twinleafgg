@@ -12,6 +12,8 @@ import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
+import { Aron } from './UNB_123_Aron';
+import { Lairon } from './UNB_124_Lairon';
 import { Meowth } from './UNB_147_Meowth';
 import { Lickitung } from './UNB_152_Lickitung';
 import { ElectromagneticRadar } from './UNB_169_Electromagnetic_Radar';
@@ -24,6 +26,10 @@ import { Volcanion } from './volcanion';
 
 export class ArcanineArt extends Arcanine {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_022_R_EN_LG.png';
+}
+
+export class AronArt extends Aron {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_123_R_EN_LG.png';
 }
 
 export class CleffaArt extends Cleffa {
@@ -56,6 +62,10 @@ export class GreensExplorationArt extends GreensExploration {
 
 export class HitmontopArt extends Hitmontop {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_101_R_EN.png';
+}
+
+export class LaironArt extends Lairon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_124_R_EN_LG.png';
 }
 
 export class LickitungArt extends Lickitung {
