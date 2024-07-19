@@ -9,6 +9,7 @@ exports.setPokemonGO = [
     new card_images_1.CharmanderArt(),
     new card_images_1.CharizardArt(),
     new card_images_1.DittoArt(),
+    new card_images_1.IvysaurArt(),
     new card_images_1.LunatoneArt(),
     new card_images_1.PokestopArt(),
     new card_images_1.SlakingVArt(),
