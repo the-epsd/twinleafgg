@@ -7,6 +7,7 @@ export declare const RemoveDamagePromptType = "Remove damage";
 export interface RemoveDamageOptions {
     allowCancel: boolean;
     blocked: CardTarget[];
+    allowPlacePartialDamage?: boolean | undefined;
 }
 export declare class RemoveDamagePrompt extends Prompt<DamageMap[]> {
     message: GameMessage;

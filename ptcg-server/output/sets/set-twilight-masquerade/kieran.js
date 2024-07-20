@@ -39,26 +39,28 @@ class Kieran extends trainer_card_1.TrainerCard {
                             const cardList = result[0];
                             player.switchPokemon(cardList);
                             player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                            return state;
                         });
                     }
                 },
                 {
                     message: game_message_1.GameMessage.INCREASE_DAMAGE_BY_30_AGAINST_OPPONENTS_EX_AND_V_POKEMON,
                     action: () => {
-                        if (effect instanceof attack_effects_1.PutDamageEffect) {
-                            const player = effect.player;
+                        if (effect instanceof attack_effects_1.DealDamageEffect) {
                             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-                            if (effect.target !== player.active && effect.target !== opponent.active) {
-                                return state;
+                            const targetPokemon = opponent.active.getPokemonCard();
+                            if (targetPokemon && (targetPokemon.tags.includes(card_types_1.CardTag.POKEMON_EX) || targetPokemon.tags.includes(card_types_1.CardTag.POKEMON_V))) {
+                                effect.damage += 30;
                             }
-                            effect.damage += 30;
                         }
+                        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                        return state;
                     }
                 }
             ];
             const hasBench = player.bench.some(b => b.cards.length > 0);
             if (!hasBench) {
-                options.splice(1, 0);
+                options.splice(1, 1);
             }
             return store.prompt(state, new game_1.SelectPrompt(player.id, game_message_1.GameMessage.CHOOSE_OPTION, options.map(opt => opt.message), { allowCancel: false }), choice => {
                 const option = options[choice];

@@ -21,7 +21,7 @@ class Kyurem extends pokemon_card_1.PokemonCard {
                 text: 'If your opponent has any card with Colress in its name in their discard pile, this Pokémon\'s Tri Frost attack can be used for 1 Colorless Energy.'
             }];
         this.attacks = [{
-                name: 'Tri-Frost',
+                name: 'Trifrost',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Discard all Energy from this Pokémon. This attack does 110 damage to 3 of your opponent\'s Pokémon.'

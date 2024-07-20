@@ -1,4 +1,5 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, GameMessage, PlayerType, SlotType, StateUtils, DamageMap, PowerType, ChoosePokemonPrompt, GameError, SpecialCondition } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, GameMessage, PlayerType, SlotType, StateUtils, DamageMap, PowerType, GameError, SpecialCondition, ChoosePokemonPrompt } from '../../game';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -89,51 +90,52 @@ export class Munkidori extends PokemonCard {
 
       const maxAllowedDamage: DamageMap[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        maxAllowedDamage.push({ target, damage: card.hp + 10 });
+        const checkHpEffect = new CheckHpEffect(player, cardList);
+        store.reduceEffect(state, checkHpEffect);
+        maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 30 });
       });
 
-      const damage = 10;
 
-      return store.prompt(
-        state,
-        new RemoveDamagePrompt(
-          effect.player.id,
-          GameMessage.CHOOSE_POKEMON_TO_HEAL,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          damage,
-          maxAllowedDamage,
-          { allowCancel: false }
-        ), targets => {
-          const results = targets || [];
-          for (const result of results) {
+      return store.prompt(state, new RemoveDamagePrompt(
+        effect.player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        30,
+        maxAllowedDamage,
+        { allowCancel: false, allowPlacePartialDamage: true }
+      ), targets => {
+        const results = targets || [];
+        for (const result of results) {
+          // const target = StateUtils.getTarget(state, player, result.target);
+          // const putCountersEffect = new PutCountersEffect(effect, result.damage);
+          // putCountersEffect.target = target;
+          // store.reduceEffect(state, putCountersEffect);
 
-            const target = StateUtils.getTarget(state, player, result.target);
-            const healEffect = new HealEffect(player, target, result.damage);
-            state = store.reduceEffect(state, healEffect);
-            healEffect.target = target;
+          const target = StateUtils.getTarget(state, player, result.target);
+          const healEffect = new HealEffect(player, target, result.damage);
+          state = store.reduceEffect(state, healEffect);
+          healEffect.target = target;
 
-            return store.prompt(state, new ChoosePokemonPrompt(
-              player.id,
-              GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-              PlayerType.TOP_PLAYER,
-              [SlotType.BENCH, SlotType.ACTIVE],
-              { min: 1, max: 1, allowCancel: false },
-            ), selected => {
-              const targets = selected || [];
-              targets.forEach(target => {
-                target.damage += result.damage;
-              });
-              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                  cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
-                }
-              });
-              return state;
-            }
-            );
-          }
-        });
+          return store.prompt(state, new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [SlotType.BENCH, SlotType.ACTIVE],
+            { min: 1, max: 1, allowCancel: false },
+          ), selected => {
+            const targets = selected || [];
+            targets.forEach(target => {
+              target.damage += result.damage;
+            });
+            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+              if (cardList.getPokemonCard() === this) {
+                cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+              }
+            });
+          });
+        }
+      });
     }
     return state;
   }

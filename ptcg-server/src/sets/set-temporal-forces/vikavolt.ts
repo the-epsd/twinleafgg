@@ -15,19 +15,20 @@ export class Vikavolt extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Mach Bolt',
-      cost: [ CardType.LIGHTNING ],
+      cost: [CardType.LIGHTNING],
       damage: 50,
       text: ''
     },
     {
       name: 'Serial Cannon',
-      cost: [ CardType.LIGHTNING, CardType.LIGHTNING ],
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING],
       damage: 120,
+      damageCalculation: '+',
       text: 'This attack does 80 more damage for each of your Benched Vikavolt.'
     }
   ];
@@ -52,13 +53,13 @@ export class Vikavolt extends PokemonCard {
 
       let charjabugInPlay = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (card.name === this.name) {
+        if (card.name === 'Charjabug') {
           charjabugInPlay++;
         }
       });
 
       effect.damage += 80 * charjabugInPlay;
-      
+
     }
 
     return state;

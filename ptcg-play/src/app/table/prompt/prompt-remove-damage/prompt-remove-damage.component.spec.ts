@@ -15,10 +15,10 @@ describe('PromptRemoveDamageComponent', () => {
         ApiModule,
         TranslateModule.forRoot()
       ],
-      declarations: [ PromptRemoveDamageComponent ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      declarations: [PromptRemoveDamageComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

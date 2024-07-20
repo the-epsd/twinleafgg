@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, GameError } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
@@ -8,6 +8,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Cinderaceex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public evolvesFrom = 'Raboot';
   public cardType: CardType = CardType.FIRE;
   public hp: number = 320;

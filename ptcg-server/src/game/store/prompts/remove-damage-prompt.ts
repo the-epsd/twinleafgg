@@ -10,6 +10,7 @@ export const RemoveDamagePromptType = 'Remove damage';
 export interface RemoveDamageOptions {
   allowCancel: boolean;
   blocked: CardTarget[];
+  allowPlacePartialDamage?: boolean | undefined;
 }
 
 export class RemoveDamagePrompt extends Prompt<DamageMap[]> {
@@ -32,7 +33,8 @@ export class RemoveDamagePrompt extends Prompt<DamageMap[]> {
     // Default options
     this.options = Object.assign({}, {
       allowCancel: true,
-      blocked: []
+      blocked: [],
+      allowPlacePartialDamage: false
     }, options);
   }
 
@@ -48,7 +50,7 @@ export class RemoveDamagePrompt extends Prompt<DamageMap[]> {
     let damage = 0;
     result.forEach(r => { damage += r.damage; });
 
-    if (this.damage !== damage) {
+    if (this.damage !== damage && !this.options.allowPlacePartialDamage) {
       return false;
     }
 

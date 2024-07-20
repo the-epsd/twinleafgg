@@ -7,6 +7,7 @@ import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
 import { Briar } from './briar';
 import { Cassiopeia } from './cassiopeia';
 import { ColresssObsession } from './colresss-obsession';
+import { Comfey } from './comfey';
 import { Copperajah } from './copperajah';
 import { Cresselia } from './cresselia';
 import { Crispin } from './crispin';
@@ -14,13 +15,17 @@ import { Cufant } from './cufant';
 import { DangerousLaser } from './dangerous-laser';
 import { Dartrix } from './dartrix';
 import { Decidueye } from './decidueye';
+import { Drednaw } from './drednaw';
+import { Drifblim } from './drifblim';
 import { Dusclops } from './dusclops';
 import { Dusknoir } from './dusknoir';
 import { Duskull } from './duskull';
 import { FanRotom } from './fan-rotom';
 import { Fezandipitiex } from './fezandipiti-ex';
 import { Fraxure } from './fraxure';
+import { Galvantula } from './galvantula';
 import { Genesect } from './genesect';
+import { GlassTrumpet } from './glass-trumpet';
 import { GlisteningCrystal } from './glistening-crystal';
 import { GreatTree } from './great-tree';
 import { Haxorus } from './haxorus';
@@ -29,6 +34,7 @@ import { Horsea } from './horsea';
 import { Houndoom } from './houndoom';
 import { Houndour } from './houndour';
 import { Hydrappleex } from './hydrapple-ex';
+import { IronMoth } from './iron-moth';
 import { JaninesSecretTechnique } from './janines-secret-technique';
 import { Joltik } from './joltik';
 import { Kingdraex } from './kingdra-ex';
@@ -48,8 +54,10 @@ import { Revavroomex } from './revavroom-ex';
 import { Rowlet } from './rowlet';
 import { Seadra } from './seadra';
 import { SlitherWing } from './slither-wing';
+import { Sneasel } from './sneasel';
 import { TapuBulu } from './tapu-bulu';
 import { Terapagosex } from './terapagos-ex';
+import { Weavile } from './weavile';
 import { XerosicsScheme } from './xerosics-scheme';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
@@ -80,6 +88,9 @@ export declare class CassiopeiaArt extends Cassiopeia {
 export declare class ColresssObsessionArt extends ColresssObsession {
     cardImage: string;
 }
+export declare class ComfeyArt extends Comfey {
+    cardImage: string;
+}
 export declare class CopperajahArt extends Copperajah {
     cardImage: string;
 }
@@ -101,6 +112,12 @@ export declare class DartrixArt extends Dartrix {
 export declare class DecidueyeArt extends Decidueye {
     cardImage: string;
 }
+export declare class DrednawArt extends Drednaw {
+    cardImage: string;
+}
+export declare class DrifblimArt extends Drifblim {
+    cardImage: string;
+}
 export declare class DusclopsArt extends Dusclops {
     cardImage: string;
 }
@@ -119,7 +136,13 @@ export declare class FezandipitiexArt extends Fezandipitiex {
 export declare class FraxureArt extends Fraxure {
     cardImage: string;
 }
+export declare class GalvantulaArt extends Galvantula {
+    cardImage: string;
+}
 export declare class GenesectArt extends Genesect {
+    cardImage: string;
+}
+export declare class GlassTrumpetArt extends GlassTrumpet {
     cardImage: string;
 }
 export declare class GlisteningCrystalArt extends GlisteningCrystal {
@@ -144,6 +167,9 @@ export declare class HoundourArt extends Houndour {
     cardImage: string;
 }
 export declare class HydrappleexArt extends Hydrappleex {
+    cardImage: string;
+}
+export declare class IronMothArt extends IronMoth {
     cardImage: string;
 }
 export declare class JaninesSecretTechniqueArt extends JaninesSecretTechnique {
@@ -203,10 +229,16 @@ export declare class SeadraArt extends Seadra {
 export declare class SlitherWingArt extends SlitherWing {
     cardImage: string;
 }
+export declare class SneaselArt extends Sneasel {
+    cardImage: string;
+}
 export declare class TapuBuluArt extends TapuBulu {
     cardImage: string;
 }
 export declare class TerapagosexArt extends Terapagosex {
+    cardImage: string;
+}
+export declare class WeavileArt extends Weavile {
     cardImage: string;
 }
 export declare class XerosicsSchemeArt extends XerosicsScheme {

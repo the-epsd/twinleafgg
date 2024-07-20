@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -9,7 +9,7 @@ export class Terapagosex extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public stage: Stage = Stage.BASIC;
 
@@ -24,7 +24,7 @@ export class Terapagosex extends PokemonCard {
   public attacks = [
     {
       name: 'Unified Beatdown',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
       damageCalculation: 'x',
       text: 'You can\'t use this attack during your first turn going second. This attack does 30 damage for each of your Benched Pokémon.'
@@ -54,16 +54,20 @@ export class Terapagosex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
+      if (state.turn >= 2) {
+        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+      }
+
       const player = effect.player;
 
       const playerBench = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-          
+
       const totalBenched = playerBench;
-        
+
       effect.damage = totalBenched * 30;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {     
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       player.active.attackMarker.addMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
