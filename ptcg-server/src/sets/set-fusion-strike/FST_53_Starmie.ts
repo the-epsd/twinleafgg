@@ -5,33 +5,27 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
-export class AlolanRaichu extends PokemonCard {
+export class Starmie extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = 'Pikachu';
-  public cardType: CardType = CardType.LIGHTNING;
-  public hp: number = 110;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public resistance = [{ type: CardType.METAL, value: -20 }];
+  public evolvesFrom = 'Staryu';
+  public cardType: CardType = CardType.WATER;
+  public hp: number = 90;
+  public weakness = [{ type: CardType.LIGHTNING }];
   public retreat = [CardType.COLORLESS];
 
   public attacks = [{
-    name: 'Electro Rain',
-    cost: [CardType.LIGHTNING],
+    name: 'Multishot Star',
+    cost: [CardType.WATER],
     damage: 0,
-    text: 'Discard any amount of [L] Energy from this Pokémon. Then, for each Energy you discarded in this way, choose 1 of your opponent\'s Pokémon and do 30 damage to it. (You can choose the same Pokémon more than once.) This damage isn\'t affected by Weakness or Resistance. '
-  },
-  {
-    name: 'Electric Ball',
-    cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 90,
-    text: ''
+    text: 'Discard any amount of [W] Energy from this Pokémon. Then, for each Energy you discarded in this way, choose 1 of your opponent\'s Pokémon and do 30 damage to it. (You can choose the same Pokémon more than once.) This damage isn\'t affected by Weakness or Resistance. '
   }];
 
-  public set: string = 'UNM';
-  public setNumber: string = '57';
+  public set: string = 'FST';
+  public regulationMark = 'E';
+  public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Alolan Raichu';
-  public fullName: string = 'Alolan Raichu UNM';
+  public name: string = 'Starmie';
+  public fullName: string = 'Starmie FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -39,11 +33,13 @@ export class AlolanRaichu extends PokemonCard {
 
       const player = effect.player;
 
+
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         player.active, // Card source is target Pokemon
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
         { allowCancel: false }
       ), selected => {
         const cards = selected || [];
@@ -78,6 +74,7 @@ export class AlolanRaichu extends PokemonCard {
         return state;
       });
     }
+
     return state;
   }
 }

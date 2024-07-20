@@ -36,5 +36,6 @@ exports.setFusionStrike = [
     new card_images_1.SchoolgirlArt(),
     new card_images_1.AccelgorArt(),
     new card_images_1.ShelmetArt(),
+    new card_images_1.StarmieArt(),
     new card_images_1.SwampertArt(),
 ];

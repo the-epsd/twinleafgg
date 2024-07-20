@@ -82,7 +82,7 @@ export class Inteleon extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false },
       ), selected => {
         const targets = selected || [];
