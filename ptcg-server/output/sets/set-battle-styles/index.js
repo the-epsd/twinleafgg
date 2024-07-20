@@ -7,6 +7,7 @@ exports.setBattleStyles = [
     new card_images_1.BronzongArt(),
     new card_images_1.BrunoArt(),
     new card_images_1.CarkolArt(),
+    new card_images_1.CarnivineArt(),
     new card_images_1.CherrimArt(),
     new card_images_1.CherubiArt(),
     new card_images_1.CherylArt(),

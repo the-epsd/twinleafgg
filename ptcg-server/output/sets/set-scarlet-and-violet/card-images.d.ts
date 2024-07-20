@@ -55,6 +55,9 @@ import { Seviper } from './seviper';
 import { Shuppet } from './shuppet';
 import { Skwovet } from './skwovet';
 import { Flittle } from './SVI_100_Flittle';
+import { Smoliv } from './SVI_21_Smoliv';
+import { Toedscool } from './SVI_25_Toedscool';
+import { Toedscruel } from './SVI_26_Toedscruel';
 import { Switch } from './switch';
 import { TeamStarGrunt } from './team-star-grunt';
 import { UltraBall } from './ultra-ball';
@@ -236,10 +239,19 @@ export declare class ShuppetArt extends Shuppet {
 export declare class SkwovetArt extends Skwovet {
     cardImage: string;
 }
+export declare class SmolivArt extends Smoliv {
+    cardImage: string;
+}
 export declare class SwitchArt extends Switch {
     cardImage: string;
 }
 export declare class TeamStarGruntArt extends TeamStarGrunt {
+    cardImage: string;
+}
+export declare class ToedscoolArt extends Toedscool {
+    cardImage: string;
+}
+export declare class ToedscruelArt extends Toedscruel {
     cardImage: string;
 }
 export declare class UltraBallArt extends UltraBall {

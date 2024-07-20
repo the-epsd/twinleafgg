@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WailordExArt = exports.TeammatesArt = exports.SlugmaArt = exports.SilentLabArt = exports.ShieldEnergArt = exports.ScorchedEarthArt = exports.RoughSeasArt = exports.MiloticArt = exports.MaxiesHiddenBallTrickArt = exports.DiveBallArt = exports.BunnelbyArt = exports.ArchiesAceInTheHoleArt = exports.AcroBikeArt = void 0;
+exports.WailordExArt = exports.TeammatesArt = exports.SlugmaArt = exports.SilentLabArt = exports.ShieldEnergArt = exports.ScorchedEarthArt = exports.SceptileArt = exports.RoughSeasArt = exports.MiloticArt = exports.MaxiesHiddenBallTrickArt = exports.DiveBallArt = exports.BunnelbyArt = exports.ArchiesAceInTheHoleArt = exports.AcroBikeArt = void 0;
 const acro_bike_1 = require("./acro-bike");
 const archies_ace_in_the_hole_1 = require("./archies-ace-in-the hole");
 const bunnelby_1 = require("./bunnelby");
@@ -9,6 +9,7 @@ const maxies_hidden_ball_trick_1 = require("./maxies-hidden-ball-trick");
 const milotic_1 = require("./milotic");
 const PRC_22_Slugma_1 = require("./PRC_22_Slugma");
 const rough_seas_1 = require("./rough-seas");
+const sceptile_1 = require("./sceptile");
 const scorched_earth_1 = require("./scorched-earth");
 const shield_energy_1 = require("./shield-energy");
 const silent_lab_1 = require("./silent-lab");
@@ -63,6 +64,13 @@ class RoughSeasArt extends rough_seas_1.RoughSeas {
     }
 }
 exports.RoughSeasArt = RoughSeasArt;
+class SceptileArt extends sceptile_1.Sceptile {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_008_R_EN_LG.png';
+    }
+}
+exports.SceptileArt = SceptileArt;
 class ScorchedEarthArt extends scorched_earth_1.ScorchedEarth {
     constructor() {
         super(...arguments);

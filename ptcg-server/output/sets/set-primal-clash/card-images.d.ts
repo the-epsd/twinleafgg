@@ -6,6 +6,7 @@ import { MaxiesHiddenBallTrick } from './maxies-hidden-ball-trick';
 import { Milotic } from './milotic';
 import { Slugma } from './PRC_22_Slugma';
 import { RoughSeas } from './rough-seas';
+import { Sceptile } from './sceptile';
 import { ScorchedEarth } from './scorched-earth';
 import { ShieldEnergy } from './shield-energy';
 import { SilentLab } from './silent-lab';
@@ -30,6 +31,9 @@ export declare class MiloticArt extends Milotic {
     cardImage: string;
 }
 export declare class RoughSeasArt extends RoughSeas {
+    cardImage: string;
+}
+export declare class SceptileArt extends Sceptile {
     cardImage: string;
 }
 export declare class ScorchedEarthArt extends ScorchedEarth {

@@ -10,6 +10,7 @@ exports.setPrimalClash = [
     new card_images_1.MaxiesHiddenBallTrickArt(),
     new card_images_1.MiloticArt(),
     new card_images_1.RoughSeasArt(),
+    new card_images_1.SceptileArt(),
     new card_images_1.ScorchedEarthArt(),
     new card_images_1.ShieldEnergArt(),
     new card_images_1.SilentLabArt(),

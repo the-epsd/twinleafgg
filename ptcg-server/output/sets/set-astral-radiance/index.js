@@ -61,4 +61,5 @@ exports.setAstralRadiance = [
     new card_images_1.TrekkingShoesArt(),
     new card_images_1.UrsalunaArt(),
     new card_images_1.WyrdeerVArt(),
+    new card_images_1.YanmaArt(),
 ];

@@ -1,6 +1,7 @@
 import { Adaman } from './adaman';
 import { Shieldon } from './ASR_109_Shieldon';
 import { Bronzor } from './ASR_111_Bronzor';
+import { Yanma } from './ASR_6_Yanma';
 import { HisuianGrowlithe } from './ASR_70_Hisuian_Growlithe';
 import { HisuianQwilfish2 } from './ASR_88_Hisuian_Qwilfish';
 import { HisuianQwilfish } from './ASR_89_Hisuian_Qwilfish';
@@ -287,4 +288,8 @@ export class UrsalunaArt extends Ursaluna {
 
 export class WyrdeerVArt extends WyrdeerV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_134_R_EN_LG.png';
+}
+
+export class YanmaArt extends Yanma {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_006_R_EN_LG.png';
 }

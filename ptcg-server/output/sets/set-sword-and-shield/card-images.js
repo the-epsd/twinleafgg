@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.RosaArt = exports.RabootArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.OranguruArt = exports.MetalSaucerArt = exports.MarnieArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.GalarianPerrserkerArt = exports.FerroseedArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinderaceArt = exports.CinccinoArt = exports.CentiskorchArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
+exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.RosaArt = exports.RabootArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.OranguruArt = exports.MetalSaucerArt = exports.MarnieArt = exports.MaractusArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.GalarianPerrserkerArt = exports.FerroseedArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinderaceArt = exports.CinccinoArt = exports.CentiskorchArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
 const air_balloon_1 = require("./air-balloon");
 const aurora_energy_1 = require("./aurora-energy");
 const cinccino_1 = require("./cinccino");
@@ -25,6 +25,7 @@ const SSH_130_Ferroseed_1 = require("./SSH_130_Ferroseed");
 const SSH_32_Raboot_1 = require("./SSH_32_Raboot");
 const SSH_34_Cinderace_1 = require("./SSH_34_Cinderace");
 const SSH_39_Centiskorch_1 = require("./SSH_39_Centiskorch");
+const SSH_7_Maractus_1 = require("./SSH_7_Maractus");
 const welder_1 = require("./welder");
 class AirBalloonArt extends air_balloon_1.AirBalloon {
     constructor() {
@@ -117,6 +118,13 @@ class InteleonArt extends inteleon_1.Inteleon {
     }
 }
 exports.InteleonArt = InteleonArt;
+class MaractusArt extends SSH_7_Maractus_1.Maractus {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_007_R_EN_LG.png';
+    }
+}
+exports.MaractusArt = MaractusArt;
 class MarnieArt extends marnie_1.Marnie {
     constructor() {
         super(...arguments);
