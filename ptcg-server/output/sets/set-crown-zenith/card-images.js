@@ -1,12 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZamazentaVArt = exports.ZamazentaArt = exports.ZacianVSTARArt = exports.ZacianArt = exports.WailmerArt = exports.SalanditArt = exports.RotomVArt = exports.RegigigasVSTARArt = exports.RegigigasVArt = exports.RadiantEternatusArt = exports.RadiantCharizardArt = exports.MewtwoArt = exports.LostVacuumArt = exports.LuxrayArt = exports.KyogreArt = exports.HoopaArt = exports.BidoofArt = exports.AbsolArt = void 0;
+exports.ZarudeArt = exports.ZamazentaVArt = exports.ZamazentaArt = exports.ZacianVSTARArt = exports.ZacianArt = exports.YanmegaArt = exports.WailmerArt = exports.SalanditArt = exports.RotomVArt = exports.RegigigasVSTARArt = exports.RegigigasVArt = exports.RadiantEternatusArt = exports.RadiantCharizardArt = exports.MewtwoArt = exports.LostVacuumArt = exports.LuxrayArt = exports.KyogreArt = exports.HoopaArt = exports.BidoofArt = exports.AbsolArt = void 0;
 const lost_vacuum_1 = require("../set-lost-origin/lost-vacuum");
 const rotom_v_1 = require("../set-lost-origin/rotom-v");
 const absol_1 = require("./absol");
 const bidoof_1 = require("./bidoof");
+const CRZ_16_Zarude_1 = require("./CRZ_16_Zarude");
 const CRZ_27_Salandit_1 = require("./CRZ_27_Salandit");
 const CRZ_94_Zacian_1 = require("./CRZ_94_Zacian");
+const CRZ_9_Yanmega_1 = require("./CRZ_9_Yanmega");
 const hoopa_1 = require("./hoopa");
 const kyogre_1 = require("./kyogre");
 const luxray_1 = require("./luxray");
@@ -123,6 +125,13 @@ class WailmerArt extends wailmer_1.Wailmer {
     }
 }
 exports.WailmerArt = WailmerArt;
+class YanmegaArt extends CRZ_9_Yanmega_1.Yanmega {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_009_R_EN_LG.png';
+    }
+}
+exports.YanmegaArt = YanmegaArt;
 class ZacianArt extends CRZ_94_Zacian_1.Zacian {
     constructor() {
         super(...arguments);
@@ -151,3 +160,10 @@ class ZamazentaVArt extends zamazenta_v_1.ZamazentaV {
     }
 }
 exports.ZamazentaVArt = ZamazentaVArt;
+class ZarudeArt extends CRZ_16_Zarude_1.Zarude {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_016_R_EN_LG.png';
+    }
+}
+exports.ZarudeArt = ZarudeArt;

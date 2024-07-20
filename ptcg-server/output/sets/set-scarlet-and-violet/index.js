@@ -138,6 +138,9 @@ exports.setScarletAndViolet = [
     new full_arts_1.RaltsIR(),
     new full_arts_1.RareCandyHR(),
     new full_arts_1.SkwovetIR(),
+    new card_images_1.SmolivArt(),
     new full_arts_1.TeamStarGruntFA(),
+    new card_images_1.ToedscoolArt(),
+    new card_images_1.ToedscruelArt(),
     new card_images_1.NestBallArt2(),
 ];

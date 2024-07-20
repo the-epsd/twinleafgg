@@ -2,8 +2,10 @@ import { LostVacuum } from '../set-lost-origin/lost-vacuum';
 import { RotomV } from '../set-lost-origin/rotom-v';
 import { Absol } from './absol';
 import { Bidoof } from './bidoof';
+import { Zarude } from './CRZ_16_Zarude';
 import { Salandit } from './CRZ_27_Salandit';
 import { Zacian } from './CRZ_94_Zacian';
+import { Yanmega } from './CRZ_9_Yanmega';
 import { Hoopa } from './hoopa';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
@@ -79,6 +81,10 @@ export class WailmerArt extends Wailmer {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_031_R_EN_LG.png';
 }
 
+export class YanmegaArt extends Yanmega {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_009_R_EN_LG.png';
+}
+
 export class ZacianArt extends Zacian {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_094_R_EN_LG.png';
 }
@@ -93,4 +99,8 @@ export class ZamazentaArt extends Zamazenta {
 
 export class ZamazentaVArt extends ZamazentaV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_098_R_EN_LG.png';
+}
+
+export class ZarudeArt extends Zarude {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_016_R_EN_LG.png';
 }

@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 class Moltres extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -36,20 +37,37 @@ class Moltres extends pokemon_card_1.PokemonCard {
         this.fullName = 'Moltres PGO';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        var _a, _b;
+        if (effect instanceof attack_effects_1.DealDamageEffect) {
             const player = effect.player;
-            const legendaryBird = player.active.getPokemonCard();
-            if (legendaryBird && legendaryBird.stage == card_types_1.Stage.BASIC && legendaryBird.cardType == card_types_1.CardType.FIRE) {
-                if (effect instanceof attack_effects_1.DealDamageEffect) {
-                    if (effect.card.name !== 'Moltres') {
-                        // exclude Moltres
-                        effect.damage += 10;
-                    }
-                    return state;
-                }
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_c) {
                 return state;
             }
-            return state;
+            const hasMoltresInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
+            let numberOfMoltresInPlay = 0;
+            if (hasMoltresInPlay) {
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                    if (cardList.cards.includes(this)) {
+                        numberOfMoltresInPlay++;
+                    }
+                });
+            }
+            const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(player.active);
+            store.reduceEffect(state, checkPokemonTypeEffect);
+            if (checkPokemonTypeEffect.cardTypes.includes(card_types_1.CardType.LIGHTNING) && effect.target === opponent.active) {
+                if (((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.name) !== 'Zapdos' && ((_b = effect.player.active.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.stage) === card_types_1.Stage.BASIC) {
+                    effect.damage += 10 * numberOfMoltresInPlay;
+                }
+            }
         }
         return state;
     }

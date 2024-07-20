@@ -1,6 +1,7 @@
 import { Bellsprout } from './bellsprout';
 import { Bronzong } from './bronzong';
 import { Bruno } from './bruno';
+import { Carnivine } from './BST_9_Carnivine';
 import { Carkol } from './carkol';
 import { Cherrim } from './cherrim';
 import { Cherubi } from './cherubi';
@@ -59,6 +60,10 @@ export class BrunoArt extends Bruno {
 
 export class CarkolArt extends Carkol {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_079_R_EN_LG.png';
+}
+
+export class CarnivineArt extends Carnivine {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_009_R_EN_LG.png';
 }
 
 export class CherrimArt extends Cherrim {

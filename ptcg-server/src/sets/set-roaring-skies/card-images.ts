@@ -3,6 +3,7 @@ import { Beautifly } from './beautifly';
 import { DoubleDragonEnergy } from './double-dragon-energy';
 import { Voltorb } from './ROS_21_Voltorb';
 import { Swellow } from './ROS_72_Swellow';
+import { Dustox } from './ROS_8_Dustox';
 import { ShayminEx } from './shaymin-ex';
 import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
@@ -22,6 +23,10 @@ export class BeautiflyArt extends Beautifly {
 
 export class DoubleDragonEnergyArt extends DoubleDragonEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_097_R_EN_LG.png';
+}
+
+export class DustoxArt extends Dustox {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_008_R_EN_LG.png';
 }
 
 export class ShayminExArt extends ShayminEx {

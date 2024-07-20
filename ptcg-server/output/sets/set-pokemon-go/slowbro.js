@@ -2,12 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Slowbro = void 0;
 const game_1 = require("../../game");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 class Slowbro extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.BASIC;
+        this.stage = game_1.Stage.STAGE_1;
         this.evolvesFrom = 'Slowpoke';
         this.cardType = game_1.CardType.WATER;
         this.hp = 120;
@@ -22,7 +21,7 @@ class Slowbro extends game_1.PokemonCard {
             },
             {
                 name: 'Twilight Inspiration',
-                cost: [],
+                cost: [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'You can use this attack only if your opponent has exactly 1 Prize card remaining. Take 2 Prize cards.'
             }
@@ -36,26 +35,52 @@ class Slowbro extends game_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [game_1.SpecialCondition.ASLEEP]);
-            store.reduceEffect(state, specialConditionEffect);
             const player = effect.player;
-            specialConditionEffect.target = player.active;
-            store.reduceEffect(state, specialConditionEffect);
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const active = opponent.active;
+            active.addSpecialCondition(game_1.SpecialCondition.ASLEEP);
+            player.active.addSpecialCondition(game_1.SpecialCondition.ASLEEP);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            // const opponent = StateUtils.getOpponent(state, player);
-            // const prizesTaken = 6 - opponent.getPrizeLeft();
-            // if (prizesTaken === 1) {
-            const prizes = player.prizes;
-            let cards = [];
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, prizes, {}, { min: 2, allowCancel: true }), selected => {
-                cards = selected || [];
-            });
-            prizes.moveCardsTo(cards, player.hand);
-            return state;
+            const prizes = player.prizes.filter(p => p.isSecret);
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const prizesTaken = 6 - opponent.getPrizeLeft();
+            if (prizesTaken === 1) {
+                state = store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON, { count: 2, allowCancel: true }), chosenPrize => {
+                    if (chosenPrize === null || chosenPrize.length === 0) {
+                        prizes.forEach(p => { p.isSecret = true; });
+                        player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
+                        return state;
+                    }
+                    const prizePokemon = chosenPrize[0];
+                    const prizePokemon2 = chosenPrize[1];
+                    const hand = player.hand;
+                    prizePokemon.moveTo(hand);
+                    prizePokemon2.moveTo(hand);
+                    player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
+                });
+            }
         }
         return state;
+    }
+    shuffleFaceDownPrizeCards(array) {
+        const faceDownPrizeCards = array.filter(p => p.isSecret && p.cards.length > 0);
+        for (let i = faceDownPrizeCards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const temp = faceDownPrizeCards[i];
+            faceDownPrizeCards[i] = faceDownPrizeCards[j];
+            faceDownPrizeCards[j] = temp;
+        }
+        const prizePositions = [];
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].cards.length === 0 || !array[i].isSecret) {
+                prizePositions.push(array[i]);
+                continue;
+            }
+            prizePositions.push(faceDownPrizeCards.splice(0, 1)[0]);
+        }
+        return prizePositions;
     }
 }
 exports.Slowbro = Slowbro;

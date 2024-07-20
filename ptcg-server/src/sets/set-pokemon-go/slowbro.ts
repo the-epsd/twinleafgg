@@ -1,11 +1,10 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, SpecialCondition, GameMessage, ChooseCardsPrompt, Card, CardList } from '../../game';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { PokemonCard, Stage, CardType, StoreLike, State, SpecialCondition, GameMessage, CardList, ChoosePrizePrompt, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Slowbro extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom: string = 'Slowpoke';
 
@@ -26,7 +25,7 @@ export class Slowbro extends PokemonCard {
     },
     {
       name: 'Twilight Inspiration',
-      cost: [],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
       text: 'You can use this attack only if your opponent has exactly 1 Prize card remaining. Take 2 Prize cards.'
     }
@@ -47,44 +46,74 @@ export class Slowbro extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
-      store.reduceEffect(state, specialConditionEffect);
-
       const player = effect.player;
-      specialConditionEffect.target = player.active;
-      store.reduceEffect(state, specialConditionEffect);
+      const opponent = StateUtils.getOpponent(state, player);
+      const active = opponent.active;
+
+      active.addSpecialCondition(SpecialCondition.ASLEEP);
+      player.active.addSpecialCondition(SpecialCondition.ASLEEP);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       const player = effect.player;
-      // const opponent = StateUtils.getOpponent(state, player);
+      const prizes = player.prizes.filter(p => p.isSecret);
+      const opponent = StateUtils.getOpponent(state, player);
 
-      // const prizesTaken = 6 - opponent.getPrizeLeft();
+      const prizesTaken = 6 - opponent.getPrizeLeft();
 
-      // if (prizesTaken === 1) {
+      if (prizesTaken === 1) {
 
-      const prizes = player.prizes as unknown as CardList;
+        state = store.prompt(state, new ChoosePrizePrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON,
+          { count: 2, allowCancel: true },
+        ), chosenPrize => {
 
-      let cards: Card[] = [];
+          if (chosenPrize === null || chosenPrize.length === 0) {
+            prizes.forEach(p => { p.isSecret = true; });
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        prizes,
-        {},
-        { min: 2, allowCancel: true }
-      ), selected => {
-        cards = selected || [];
-      });
+            player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
 
-      prizes.moveCardsTo(cards, player.hand);
+            return state;
+          }
+          const prizePokemon = chosenPrize[0];
+          const prizePokemon2 = chosenPrize[1];
+          const hand = player.hand;
+          prizePokemon.moveTo(hand);
+          prizePokemon2.moveTo(hand);
 
-      return state;
+          player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
+        });
+      }
     }
-
     return state;
   }
 
-}
 
+
+  shuffleFaceDownPrizeCards(array: CardList[]): CardList[] {
+
+    const faceDownPrizeCards = array.filter(p => p.isSecret && p.cards.length > 0);
+
+    for (let i = faceDownPrizeCards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = faceDownPrizeCards[i];
+      faceDownPrizeCards[i] = faceDownPrizeCards[j];
+      faceDownPrizeCards[j] = temp;
+    }
+
+    const prizePositions = [];
+
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].cards.length === 0 || !array[i].isSecret) {
+        prizePositions.push(array[i]);
+        continue;
+      }
+
+      prizePositions.push(faceDownPrizeCards.splice(0, 1)[0]);
+    }
+
+    return prizePositions;
+  }
+}

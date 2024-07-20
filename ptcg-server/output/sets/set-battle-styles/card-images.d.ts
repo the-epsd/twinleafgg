@@ -1,6 +1,7 @@
 import { Bellsprout } from './bellsprout';
 import { Bronzong } from './bronzong';
 import { Bruno } from './bruno';
+import { Carnivine } from './BST_9_Carnivine';
 import { Carkol } from './carkol';
 import { Cherrim } from './cherrim';
 import { Cherubi } from './cherubi';
@@ -54,6 +55,9 @@ export declare class BrunoArt extends Bruno {
     cardImage: string;
 }
 export declare class CarkolArt extends Carkol {
+    cardImage: string;
+}
+export declare class CarnivineArt extends Carnivine {
     cardImage: string;
 }
 export declare class CherrimArt extends Cherrim {

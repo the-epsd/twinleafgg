@@ -18,19 +18,19 @@ export class Mawile extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
-  public attacks = 
+  public attacks =
     [
       {
         name: 'Tempting Trap',
-        cost: [ CardType.COLORLESS ],
+        cost: [CardType.COLORLESS],
         damage: 0,
         text: 'During your opponen\'s next turn, the Defending Pokémon can\'t retreat. During your next turn, the Defending Pokémon takes 90 more damage from attacks (after applying Weakness and Resistance).'
       },
       {
         name: 'Bite',
-        cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+        cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
         damage: 90,
         text: ''
       }
@@ -60,25 +60,27 @@ export class Mawile extends PokemonCard {
       opponent.attackMarker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
       opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
-      if (effect instanceof RetreatEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
 
-      if (effect instanceof PutDamageEffect
-                && effect.target.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER)) {
-        effect.damage += 90;
-        return state;
-      }
-      if (effect instanceof EndTurnEffect
-                && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this)) {
-        effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
-          opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-        });
-      }
       return state;
+    }
+
+    if (effect instanceof RetreatEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
+
+    if (effect instanceof PutDamageEffect
+      && effect.target.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER)) {
+      effect.damage += 90;
+      return state;
+    }
+    if (effect instanceof EndTurnEffect
+      && effect.player.attackMarker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this)) {
+      effect.player.attackMarker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        cardList.attackMarker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
+        effect.player.active.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+      });
     }
     return state;
   }
