@@ -3,23 +3,23 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, AttachEnergyPrompt, SlotType, StateUtils, ChooseCardsPrompt, CardList, Card } from '../../game';
+import { GameError, GameMessage, PlayerType, AttachEnergyPrompt, SlotType, StateUtils, ChooseCardsPrompt, CardList, ShowCardsPrompt } from '../../game';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class Crispin extends TrainerCard {
 
   public regulationMark = 'H';
-  
+
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  
+
   public set: string = 'SV7';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '97';
-  
+
   public name: string = 'Crispin';
-  
+
   public fullName: string = 'Crispin SV7';
 
   public text: string =
@@ -29,6 +29,7 @@ export class Crispin extends TrainerCard {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       const supporterTurn = player.supporterTurn;
 
@@ -39,7 +40,7 @@ export class Crispin extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      let cards: Card[] = [];
+      const cardList = new CardList();
       state = store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
@@ -47,11 +48,21 @@ export class Crispin extends TrainerCard {
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { min: 0, max: 2, allowCancel: false }
       ), selected => {
-        cards = selected || [];
-      });
+        const cards = selected || [];
+        if (cards.length > 1) {
+          if (cards[0].name === cards[1].name) {
+            throw new GameError(GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
+          }
+        }
 
-      const cardList = new CardList();
-      player.deck.moveCardsTo(cards, cardList);
+        store.prompt(state, new ShowCardsPrompt(
+          opponent.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          selected
+        ), () => { });
+
+        player.deck.moveCardsTo(cards, cardList);
+      });
 
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
@@ -60,7 +71,7 @@ export class Crispin extends TrainerCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: false, min: 1, max: 2, differentTargets: true }
+        { allowCancel: false, min: 1, max: 1, differentTargets: true }
       ), transfers => {
         transfers = transfers || [];
 
@@ -70,11 +81,15 @@ export class Crispin extends TrainerCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          cardList.moveCardTo(transfer.card, target);
         }
+
+        // Move the remaining card to the player's hand
+        const remainingCard = cardList.cards[0];
+        cardList.moveCardTo(remainingCard, player.hand);
       });
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
     }
     return state;
   }

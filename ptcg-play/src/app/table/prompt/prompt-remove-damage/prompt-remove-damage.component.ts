@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { CardTarget, DamageMap, PokemonCardList, RemoveDamagePrompt } from 'ptcg-server';
+import { RemoveDamagePrompt, CardTarget, DamageMap, PokemonCardList } from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
@@ -75,7 +75,7 @@ export class PromptRemoveDamageComponent implements OnChanges {
     this.damage -= 10;
     const item = this.selectedItem;
     item.cardList = Object.assign(new PokemonCardList(), item.cardList);
-    item.cardList.damage -= 10; // Subtract 10 from the damage property
+    item.cardList.damage += 10;
     this.updateButtonDisable();
     this.updateIsInvalid();
   }
@@ -163,7 +163,7 @@ export class PromptRemoveDamageComponent implements OnChanges {
 
   private updateIsInvalid() {
     let isInvalid = false;
-    if (this.damage > 0) {
+    if (this.damage > 0 && !this.prompt.options.allowPlacePartialDamage) {
       isInvalid = true;
     }
     this.isInvalid = isInvalid;

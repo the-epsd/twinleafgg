@@ -8,6 +8,7 @@ import { LureModule } from './lure-module';
 import { Moltres } from './moltres';
 import { Camerupt } from './PGO_14_Camerupt';
 import { Slowpoke } from './PGO_19_Slowpoke';
+import { Ivysaur } from './PGO_2_Ivysaur';
 import { AlolanRaticate } from './PGO_42_Alolan_Raticate';
 import { Pokestop } from './pokestop';
 import { RadiantVenusaur } from './radiant-venusaur';
@@ -35,6 +36,9 @@ export declare class CharizardArt extends Charizard {
     cardImage: string;
 }
 export declare class DittoArt extends Ditto {
+    cardImage: string;
+}
+export declare class IvysaurArt extends Ivysaur {
     cardImage: string;
 }
 export declare class LunatoneArt extends Lunatone {

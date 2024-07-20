@@ -25,6 +25,7 @@ class Vikavolt extends pokemon_card_1.PokemonCard {
                 name: 'Serial Cannon',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING],
                 damage: 120,
+                damageCalculation: '+',
                 text: 'This attack does 80 more damage for each of your Benched Vikavolt.'
             }
         ];
@@ -40,7 +41,7 @@ class Vikavolt extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             let charjabugInPlay = 0;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                if (card.name === this.name) {
+                if (card.name === 'Charjabug') {
                     charjabugInPlay++;
                 }
             });

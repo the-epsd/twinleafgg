@@ -49,7 +49,6 @@ export declare class Player {
     chainsOfControlUsed: any;
     usedDragonsWish: boolean;
     pecharuntexIsInPlay: boolean;
-    usedJewelHunt: boolean;
     usedFanCall: boolean;
     canEvolve: boolean;
     usedAlteredCreation: boolean;

@@ -73,7 +73,6 @@ export class Player {
   chainsOfControlUsed: any;
   usedDragonsWish = false;
   pecharuntexIsInPlay = false;
-  usedJewelHunt = false;
   usedFanCall = false;
   canEvolve = false;
 

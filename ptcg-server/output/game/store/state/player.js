@@ -46,7 +46,6 @@ class Player {
         this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES';
         this.usedDragonsWish = false;
         this.pecharuntexIsInPlay = false;
-        this.usedJewelHunt = false;
         this.usedFanCall = false;
         this.canEvolve = false;
         //GX-Attack Dedicated Section

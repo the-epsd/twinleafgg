@@ -28,7 +28,7 @@ export class Kyurem extends PokemonCard {
   }];
 
   public attacks = [{
-    name: 'Tri-Frost',
+    name: 'Trifrost',
     cost: [CardType.WATER, CardType.WATER, CardType.METAL, CardType.METAL, CardType.COLORLESS],
     damage: 0,
     text: 'Discard all Energy from this Pokémon. This attack does 110 damage to 3 of your opponent\'s Pokémon.'

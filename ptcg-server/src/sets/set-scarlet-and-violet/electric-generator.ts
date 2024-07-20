@@ -99,7 +99,7 @@ export class ElectricGenerator extends TrainerCard {
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH],
           { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
-          { allowCancel: false, min: 0, max: 2, differentTargets: true, blockedTo: blocked2 }
+          { allowCancel: false, min: 0, max: 2, blockedTo: blocked2 }
         ), transfers => {
 
           // Attach energy based on prompt selection

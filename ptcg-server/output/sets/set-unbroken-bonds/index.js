@@ -13,6 +13,7 @@ exports.setUnbrokenBonds = [
     new card_images_1.GloomArt(),
     new card_images_1.GreensExplorationArt(),
     new card_images_1.HitmontopArt(),
+    new card_images_1.KartanaArt(),
     new card_images_1.LaironArt(),
     new card_images_1.LickitungArt(),
     new card_images_1.LtSurgesStrategyArt(),

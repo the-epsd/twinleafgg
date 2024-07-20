@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Luxray extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -48,6 +49,9 @@ class Luxray extends pokemon_card_1.PokemonCard {
                 return state;
             }
             return state;
+        }
+        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+            this.stage = card_types_1.Stage.STAGE_2;
         }
         return state;
     }

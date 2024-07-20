@@ -1,6 +1,7 @@
 import { AdventureBag } from './adventure-bag';
 import { AlolanMeowth } from './alolan-meowth';
 import { Chikorita } from './chikorita';
+import { Chikorita2 } from './chikorita-2';
 import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
 import { Electropower } from './electropower';
@@ -29,6 +30,10 @@ export class AlolanMeowthArt extends AlolanMeowth {
 
 export class ChikoritaArt extends Chikorita {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_006_R_EN_LG.png';
+}
+
+export class ChikoritaArt2 extends Chikorita2 {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_005_R_EN_LG.png';
 }
 
 export class CounterGainArt extends CounterGain {

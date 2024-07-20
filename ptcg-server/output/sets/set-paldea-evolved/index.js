@@ -55,6 +55,7 @@ exports.setPaldeaEvolved = [
     new card_images_1.HydreigonArt(),
     new card_images_14.IonoArt(),
     new card_images_15.JetEnergyArt(),
+    new card_images_1.LokixArt(),
     new card_images_16.LuminousEnergyArt(),
     new card_images_25.LuxrayArt(),
     new card_images_1.MagnemiteArt(),

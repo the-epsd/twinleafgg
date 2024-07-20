@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Munkidori = void 0;
 const game_1 = require("../../game");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
@@ -69,12 +70,17 @@ class Munkidori extends game_1.PokemonCard {
             player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
             const maxAllowedDamage = [];
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                maxAllowedDamage.push({ target, damage: card.hp + 10 });
+                const checkHpEffect = new check_effects_1.CheckHpEffect(player, cardList);
+                store.reduceEffect(state, checkHpEffect);
+                maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 30 });
             });
-            const damage = 10;
-            return store.prompt(state, new remove_damage_prompt_1.RemoveDamagePrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_HEAL, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], damage, maxAllowedDamage, { allowCancel: false }), targets => {
+            return store.prompt(state, new remove_damage_prompt_1.RemoveDamagePrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], 30, maxAllowedDamage, { allowCancel: false, allowPlacePartialDamage: true }), targets => {
                 const results = targets || [];
                 for (const result of results) {
+                    // const target = StateUtils.getTarget(state, player, result.target);
+                    // const putCountersEffect = new PutCountersEffect(effect, result.damage);
+                    // putCountersEffect.target = target;
+                    // store.reduceEffect(state, putCountersEffect);
                     const target = game_1.StateUtils.getTarget(state, player, result.target);
                     const healEffect = new game_effects_1.HealEffect(player, target, result.damage);
                     state = store.reduceEffect(state, healEffect);
@@ -89,7 +95,6 @@ class Munkidori extends game_1.PokemonCard {
                                 cardList.addSpecialCondition(game_1.SpecialCondition.ABILITY_USED);
                             }
                         });
-                        return state;
                     });
                 }
             });

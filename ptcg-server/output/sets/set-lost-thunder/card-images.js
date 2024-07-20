@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
+exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt2 = exports.ChikoritaArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
 const adventure_bag_1 = require("./adventure-bag");
 const alolan_meowth_1 = require("./alolan-meowth");
 const chikorita_1 = require("./chikorita");
+const chikorita_2_1 = require("./chikorita-2");
 const counter_gain_1 = require("./counter-gain");
 const custom_catcher_1 = require("./custom-catcher");
 const electropower_1 = require("./electropower");
@@ -42,6 +43,13 @@ class ChikoritaArt extends chikorita_1.Chikorita {
     }
 }
 exports.ChikoritaArt = ChikoritaArt;
+class ChikoritaArt2 extends chikorita_2_1.Chikorita2 {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_005_R_EN_LG.png';
+    }
+}
+exports.ChikoritaArt2 = ChikoritaArt2;
 class CounterGainArt extends counter_gain_1.CounterGain {
     constructor() {
         super(...arguments);

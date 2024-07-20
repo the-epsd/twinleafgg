@@ -40,6 +40,7 @@ exports.setParadoxRift = [
     new card_images_1.NacliArt(),
     new card_images_1.NaclstackArt(),
     new card_images_1.NatuArt(),
+    new card_images_1.NymbleArt(),
     new card_images_1.ProfessorSadasVitalityArt(),
     new card_images_1.ProfessorTurosScenarioArt(),
     new card_images_1.RoaringMoonexArt(),
