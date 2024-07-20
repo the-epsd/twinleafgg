@@ -65,7 +65,7 @@ class Zapdos extends pokemon_card_1.PokemonCard {
             catch (_c) {
                 return state;
             }
-            let hasZapdosInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
+            const hasZapdosInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
             let numberOfZapdosInPlay = 0;
             if (hasZapdosInPlay) {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {

@@ -5,10 +5,10 @@ $ptcg-hand-height: calc(var(--card-size) * #{$card-aspect-ratio} + #{4 * $ptcg-h
 $ptcg-hand-max-margin: map-get($padding, normal);
 
 .ptcg-hand {
-  margin-bottom: -60px;
+  margin-bottom: -70px;
   display: flex;
   height: 190px;
-  overflow: auto;
+  // overflow: auto;
   /* Add this line to center horizontally */
   justify-content: center;
   /* Add this line to center horizontally */
@@ -18,29 +18,13 @@ $ptcg-hand-max-margin: map-get($padding, normal);
   align-items: center;
   display: flex;
   flex: 0 0 auto;
-  margin: 0 auto;
+  // margin: 0 auto;
+  // The padding will be dynamically set by the component
 }
 
 dnd-sortable-list {
   display: flex;
 }
-
-ptcg-card-damage {
-  position: absolute;
-  width: 80%;
-  padding: 5px;
-  font-size: smaller;
-  // z-index: 1;
-}
-
-ptcg-card-marker {
-  position: absolute;
-  width: 80%;
-  padding: 5px;
-  font-size: smaller;
-  // z-index: 1;
-}
-
 
 ptcg-badge {
   position: absolute;
@@ -52,38 +36,55 @@ ptcg-badge {
 
 ptcg-card {
   flex: 0 0 auto;
-  width: 98px;
-  padding: 3px;
+  width: 88px;
+  // Remove the static padding from here
+  transition: transform .2s;
 
   &.draggable {
     touch-action: none;
   }
 
-  transition: transform .2s;
-
   &:hover {
-    transform: scale(1.15) translateY(-12.5px); // Add translateY(-10px) to slide up 10px
+    transform: scale(1.15) translateY(-12.5px);
     z-index: 10;
   }
 }
 
+// ptcg-card {
+//   flex: 0 0 auto;
+//   width: 98px;
+//   margin: 3px;
+
+//   &.draggable {
+//     touch-action: none;
+//   }
+
+//   transition: transform .2s;
+
+//   &:hover {
+//     transform: scale(1.15) translateY(-12.5px); // Add translateY(-10px) to slide up 10px
+//     z-index: 10;
+//   }
+// }
+
 .ptcg-hand.opponent {
   position: static;
   z-index: 1;
+  margin-top: -100px;
   transform: rotate(180deg);
-  margin: 0 auto;
-  display: flex;
+  // margin: 0 auto;
+  // display: flex;
   justify-content: center;
   height: 170px; // Add this line to set a fixed height
-  overflow: hidden; // Add this to prevent overflow
-  align-items: flex-end; // Add this to align cards to the bottom of the container
+  // overflow: hidden; // Add this to prevent overflow
+  // align-items: flex-end; // Add this to align cards to the bottom of the container
 
   // ptcg-hand.opponent ptcg-card {
   //   width: 80px;
   // }
 
   ptcg-card {
-    width: 98px;
+    width: 88px;
     margin-bottom: -70px; // Add this to give some space at the bottom
 
     &:hover {
@@ -94,11 +95,6 @@ ptcg-card {
 
 .ptcg-card-preview {
   border-radius: $card-border-radius;
-  position: absolute;
-  width: 98px;
-}
-
-.ptcg-card-marker {
   position: absolute;
   width: 98px;
 }
