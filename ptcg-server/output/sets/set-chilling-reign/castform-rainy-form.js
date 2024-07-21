@@ -37,29 +37,40 @@ class CastformRainyForm extends pokemon_card_1.PokemonCard {
         this.name = 'Castform Rainy Form';
         this.fullName = 'Castform Rainy Form CRE';
     }
+    getColorlessReduction(state) {
+        const player = state.players[state.activePlayer];
+        const stadiumsInDiscard = player.discard.cards.filter(c => c instanceof game_1.TrainerCard && c.trainerType === card_types_1.TrainerType.STADIUM).length;
+        return stadiumsInDiscard >= 8 ? 2 : 0;
+    }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckAttackCostEffect) {
             const player = effect.player;
-            console.log('Number of stadiums in discard pile: ' + player.discard.cards.filter(c => c instanceof game_1.TrainerCard && c.trainerType === card_types_1.TrainerType.STADIUM).length);
-            if (player.discard.cards.filter(c => c instanceof game_1.TrainerCard && c.trainerType === card_types_1.TrainerType.STADIUM).length >= 8) {
-                try {
-                    const stub = new game_effects_1.PowerEffect(player, {
-                        name: 'test',
-                        powerType: game_1.PowerType.ABILITY,
-                        text: ''
-                    }, this);
-                    store.reduceEffect(state, stub);
-                }
-                catch (_a) {
-                    return state;
-                }
-                this.attacks.forEach(attack => {
-                    attack.cost = [];
-                });
+            const stadiumsInDiscard = player.discard.cards.filter(c => c instanceof game_1.TrainerCard && c.trainerType === card_types_1.TrainerType.STADIUM).length;
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
                 return state;
             }
-            else {
-                return state;
+            if (stadiumsInDiscard >= 8) {
+                const costToRemove = 2;
+                for (let i = 0; i < costToRemove; i++) {
+                    let index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+                    if (index !== -1) {
+                        effect.cost.splice(index, 1);
+                    }
+                    else {
+                        index = effect.cost.indexOf(card_types_1.CardType.WATER);
+                        if (index !== -1) {
+                            effect.cost.splice(index, 1);
+                        }
+                    }
+                }
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

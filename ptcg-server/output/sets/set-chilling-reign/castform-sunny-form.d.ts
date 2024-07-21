@@ -29,5 +29,6 @@ export declare class CastformSunnyForm extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    getColorlessReduction(state: State): number;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
