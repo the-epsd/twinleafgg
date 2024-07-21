@@ -20,6 +20,7 @@ export declare class Drifblim extends PokemonCard {
         damageCalculation: string;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
     name: string;
     fullName: string;

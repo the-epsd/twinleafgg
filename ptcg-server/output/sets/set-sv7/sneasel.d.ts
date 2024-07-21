@@ -17,6 +17,7 @@ export declare class Sneasel extends PokemonCard {
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
     cardImage: string;
     setNumber: string;

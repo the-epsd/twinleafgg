@@ -20,6 +20,7 @@ class Drifblim extends game_1.PokemonCard {
                 damageCalculation: 'x',
                 text: 'This attack does 50 damage for each of your Drifloon and Drifblim in play. This attack also does 30 damage to each of your Drifloon and Drifblim in play. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }];
+        this.regulationMark = 'H';
         this.set = 'SV7';
         this.name = 'Drifblim';
         this.fullName = 'Drifblim SV7';

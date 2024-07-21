@@ -21,6 +21,7 @@ export declare class Comfey extends PokemonCard {
         damageCalculation: string;
         text: string;
     })[];
+    regulationMark: string;
     set: string;
     name: string;
     fullName: string;

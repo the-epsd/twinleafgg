@@ -14,6 +14,7 @@ export declare class IronMoth extends PokemonCard {
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
     name: string;
     fullName: string;

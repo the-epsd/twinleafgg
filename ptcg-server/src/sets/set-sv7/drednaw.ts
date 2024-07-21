@@ -26,6 +26,7 @@ export class Drednaw extends PokemonCard {
     text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 80 more damage.'
   }];
 
+  public regulationMark = 'H';
   public set: string = 'SV7';
   public name: string = 'Drednaw';
   public fullName: string = 'Drednaw SV7';

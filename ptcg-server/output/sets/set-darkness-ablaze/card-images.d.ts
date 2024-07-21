@@ -1,5 +1,6 @@
 import { BirdKeeper } from './bird-keeper';
 import { CapeOfToughness } from './cape-of-toughness';
+import { CrobatV } from './crobat-v';
 import { Klang } from './DAA_126_Klang';
 import { Combusken } from './DAA_23_Combusken';
 import { HidingDarknessEnergy } from './hiding-darkness-energy';
@@ -17,6 +18,9 @@ export declare class CapeOfToughnessArt extends CapeOfToughness {
     cardImage: string;
 }
 export declare class CombuskenArt extends Combusken {
+    cardImage: string;
+}
+export declare class CrobatVArt extends CrobatV {
     cardImage: string;
 }
 export declare class HidingDarknessEnergyArt extends HidingDarknessEnergy {

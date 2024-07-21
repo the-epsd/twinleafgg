@@ -6,6 +6,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Zeraora extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
+        this.regulationMark = 'H';
         this.stage = game_1.Stage.BASIC;
         this.cardType = game_1.CardType.LIGHTNING;
         this.hp = 120;

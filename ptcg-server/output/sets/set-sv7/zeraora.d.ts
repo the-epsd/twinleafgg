@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Zeraora extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;

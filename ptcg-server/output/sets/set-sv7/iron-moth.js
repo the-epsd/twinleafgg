@@ -27,6 +27,7 @@ class IronMoth extends game_1.PokemonCard {
                 text: 'During your next turn, prevent all damage done to this Pokémon by attacks from Ancient Pokémon.'
             }
         ];
+        this.regulationMark = 'H';
         this.set = 'SV7';
         this.name = 'Iron Moth';
         this.fullName = 'Iron Moth SV7';

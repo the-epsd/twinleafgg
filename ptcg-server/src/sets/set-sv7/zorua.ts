@@ -6,6 +6,8 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Zorua extends PokemonCard {
 
+  
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.DARK;

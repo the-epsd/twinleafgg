@@ -29,6 +29,7 @@ class Weavile extends pokemon_card_1.PokemonCard {
                 text: 'Discard all Energy from this Pokémon. Your opponent\'s Active Pokémon is now Paralyzed.'
             }
         ];
+        this.regulationMark = 'H';
         this.set = 'SV6a';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '14';
