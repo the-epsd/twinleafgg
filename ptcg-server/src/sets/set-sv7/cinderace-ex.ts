@@ -30,6 +30,7 @@ export class Cinderaceex extends PokemonCard {
     }
   ];
 
+  public regulationMark = 'H';
   public set: string = 'SV7';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';

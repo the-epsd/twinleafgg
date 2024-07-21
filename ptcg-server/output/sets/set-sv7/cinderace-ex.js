@@ -31,6 +31,7 @@ class Cinderaceex extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 180 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }
         ];
+        this.regulationMark = 'H';
         this.set = 'SV7';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '18';

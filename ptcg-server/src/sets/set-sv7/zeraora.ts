@@ -4,6 +4,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 
 
 export class Zeraora extends PokemonCard {
+  public regulationMark = 'H';
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 120;

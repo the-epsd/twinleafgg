@@ -26,6 +26,7 @@ class Raboot extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
+        this.regulationMark = 'H';
         this.set = 'SV7';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '17';

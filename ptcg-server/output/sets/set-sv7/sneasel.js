@@ -29,6 +29,7 @@ class Sneasel extends pokemon_card_1.PokemonCard {
                 text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
             }
         ];
+        this.regulationMark = 'H';
         this.set = 'SV6a';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '13';

@@ -26,6 +26,7 @@ class Comfey extends game_1.PokemonCard {
                 text: 'Flip a coin. If heads, this attack does 20 more damage.'
             }
         ];
+        this.regulationMark = 'H';
         this.set = 'SV7';
         this.name = 'Comfey';
         this.fullName = 'Comfey SV7';

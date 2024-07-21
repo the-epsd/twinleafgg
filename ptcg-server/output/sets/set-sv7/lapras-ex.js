@@ -28,7 +28,7 @@ class Laprasex extends game_1.PokemonCard {
                 text: 'Look at the top 20 cards of your deck and attach any number of Energy cards you found there to your Pokémon in any way you like. Shuffle the remaining cards back into your deck.'
             }
         ];
-        this.regulationMark = 'F';
+        this.regulationMark = 'H';
         this.set = 'SV7';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '134';

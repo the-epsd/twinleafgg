@@ -34,7 +34,7 @@ export class Laprasex extends PokemonCard {
     }
   ];
 
-  public regulationMark = 'F';
+  public regulationMark = 'H';
 
   public set: string = 'SV7';
 

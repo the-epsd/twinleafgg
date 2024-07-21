@@ -17,6 +17,7 @@ class Chewtle extends pokemon_card_1.PokemonCard {
                 damage: 60,
                 text: ''
             }];
+        this.regulationMark = 'H';
         this.set = 'SV7';
         this.name = 'Chewtle';
         this.fullName = 'Chewtle SV7';

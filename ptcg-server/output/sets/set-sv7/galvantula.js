@@ -27,6 +27,7 @@ class Galvantula extends pokemon_card_1.PokemonCard {
                 damage: 50,
                 text: 'If this Pokémon has any [L] Energy attached, this attack does 80 more damage.'
             }];
+        this.regulationMark = 'H';
         this.set = 'SV6a';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '2';

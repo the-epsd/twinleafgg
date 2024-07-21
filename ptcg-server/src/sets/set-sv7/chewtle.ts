@@ -15,6 +15,7 @@ export class Chewtle extends PokemonCard {
     text: ''
   }];
 
+  public regulationMark = 'H';
   public set: string = 'SV7';
   public name: string = 'Chewtle';
   public fullName: string = 'Chewtle SV7';

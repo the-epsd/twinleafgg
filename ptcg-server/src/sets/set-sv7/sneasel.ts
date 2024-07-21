@@ -28,6 +28,8 @@ export class Sneasel extends PokemonCard {
     }
   ];
 
+  public regulationMark = 'H';
+
   public set: string = 'SV6a';
 
   public cardImage: string = 'assets/cardback.png';

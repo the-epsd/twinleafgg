@@ -25,7 +25,7 @@ export class IronMoth extends PokemonCard {
       text: 'During your next turn, prevent all damage done to this Pokémon by attacks from Ancient Pokémon.'
     }
   ];
-
+  public regulationMark = 'H';
   public set: string = 'SV7';
   public name: string = 'Iron Moth';
   public fullName: string = 'Iron Moth SV7';

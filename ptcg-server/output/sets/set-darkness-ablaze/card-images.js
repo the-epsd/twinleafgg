@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UrsaringArt = exports.TeddiursaArt = exports.TapuKokoArt = exports.RoseTowerArt = exports.PowerfulColorlessEnergyArt = exports.LugiaArt = exports.KlangArt = exports.KangaskhanArt = exports.HidingDarknessEnergyArt = exports.CombuskenArt = exports.CapeOfToughnessArt = exports.BirdKeeperArt = void 0;
+exports.UrsaringArt = exports.TeddiursaArt = exports.TapuKokoArt = exports.RoseTowerArt = exports.PowerfulColorlessEnergyArt = exports.LugiaArt = exports.KlangArt = exports.KangaskhanArt = exports.HidingDarknessEnergyArt = exports.CrobatVArt = exports.CombuskenArt = exports.CapeOfToughnessArt = exports.BirdKeeperArt = void 0;
 const bird_keeper_1 = require("./bird-keeper");
 const cape_of_toughness_1 = require("./cape-of-toughness");
+const crobat_v_1 = require("./crobat-v");
 const DAA_126_Klang_1 = require("./DAA_126_Klang");
 const DAA_23_Combusken_1 = require("./DAA_23_Combusken");
 const hiding_darkness_energy_1 = require("./hiding-darkness-energy");
@@ -34,6 +35,13 @@ class CombuskenArt extends DAA_23_Combusken_1.Combusken {
     }
 }
 exports.CombuskenArt = CombuskenArt;
+class CrobatVArt extends crobat_v_1.CrobatV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_104_R_EN_LG.png';
+    }
+}
+exports.CrobatVArt = CrobatVArt;
 class HidingDarknessEnergyArt extends hiding_darkness_energy_1.HidingDarknessEnergy {
     constructor() {
         super(...arguments);
