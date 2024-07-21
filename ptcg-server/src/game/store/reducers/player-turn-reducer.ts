@@ -10,7 +10,6 @@ import { StateUtils } from '../state-utils';
 import { SlotType } from '../actions/play-card-action';
 import { PokemonCard } from '../card/pokemon-card';
 import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect } from '../effects/check-effects';
-import { PokemonCardList } from '../state/pokemon-card-list';
 
 export function playerTurnReducer(store: StoreLike, state: State, action: Action): State {
 
@@ -83,12 +82,11 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       }
 
       let pokemonCard: PokemonCard | undefined;
-      let target: PokemonCardList | undefined;
 
       switch (action.target.slot) {
         case SlotType.ACTIVE:
         case SlotType.BENCH: {
-          target = StateUtils.getTarget(state, player, action.target);
+          const target = StateUtils.getTarget(state, player, action.target);
           pokemonCard = target.getPokemonCard();
           break;
         }
@@ -112,7 +110,9 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
         throw new GameError(GameMessage.INVALID_TARGET);
       }
 
-      const powersEffect = new CheckPokemonPowersEffect(player, target || player.active);
+      const target = StateUtils.getTarget(state, player, action.target);
+
+      const powersEffect = new CheckPokemonPowersEffect(player, target);
       state = store.reduceEffect(state, powersEffect);
 
       const power = [
@@ -125,8 +125,10 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       }
 
       const slot = action.target.slot;
-      if ((slot === SlotType.ACTIVE || slot === SlotType.BENCH) && !power.useWhenInPlay) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      if (slot === SlotType.ACTIVE || slot === SlotType.BENCH) {
+        if (!power.useWhenInPlay) {
+          throw new GameError(GameMessage.CANNOT_USE_POWER);
+        }
       }
 
       if (slot === SlotType.HAND && !power.useFromHand) {
@@ -140,7 +142,6 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       state = store.reduceEffect(state, new UsePowerEffect(player, power, pokemonCard));
       return state;
     }
-
 
 
     if (action instanceof UseStadiumAction) {
