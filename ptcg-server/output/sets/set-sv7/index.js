@@ -43,7 +43,7 @@ exports.setSV7 = [
     new card_images_1.JoltikArt(),
     new card_images_1.KingdraexArt(),
     new card_images_1.KyuremArt(),
-    // new LaprasexArt(),
+    new card_images_1.LaprasexArt(),
     new card_images_1.MunkidoriexArt(),
     new card_images_1.NeutralCenterArt(),
     new card_images_1.NightTimeAcademyArt(),
@@ -63,6 +63,7 @@ exports.setSV7 = [
     new card_images_1.TerapagosexArt(),
     new card_images_1.WeavileArt(),
     new card_images_1.XerosicsSchemeArt(),
+    new card_images_1.ZeraoraArt(),
     new card_images_1.ZoroarkArt(),
     new card_images_1.ZoruaArt(),
 ];

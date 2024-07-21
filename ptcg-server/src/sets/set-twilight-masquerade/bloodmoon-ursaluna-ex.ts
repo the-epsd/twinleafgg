@@ -47,6 +47,13 @@ export class BloodmoonUrsalunaex extends PokemonCard {
 
   public fullName: string = 'Bloodmoon Ursaluna ex TWM';
 
+  public getColorlessReduction(state: State): number {
+    const player = state.players[state.activePlayer];
+    const opponent = StateUtils.getOpponent(state, player);
+    const remainingPrizes = opponent.getPrizeLeft();
+    return 6 - remainingPrizes;
+  }
+
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
@@ -116,6 +123,7 @@ export class BloodmoonUrsalunaex extends PokemonCard {
       return state;
 
     }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker

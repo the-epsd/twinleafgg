@@ -38,6 +38,12 @@ class RadiantCharizard extends pokemon_card_1.PokemonCard {
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
+    getColorlessReduction(state) {
+        const player = state.players[state.activePlayer];
+        const opponent = game_1.StateUtils.getOpponent(state, player);
+        const remainingPrizes = opponent.getPrizeLeft();
+        return 6 - remainingPrizes;
+    }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);

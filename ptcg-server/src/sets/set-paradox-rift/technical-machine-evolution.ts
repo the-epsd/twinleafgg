@@ -1,7 +1,8 @@
 import { Attack, Card, CardManager, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, PokemonCardList, SlotType } from '../../game';
 import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -57,7 +58,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
   if (targets.length === 0) {
     return state; // canceled by user
   }
-  
+
   for (const target of targets) {
     const pokemonCard = target.getPokemonCard();
     if (pokemonCard === undefined) {
@@ -87,8 +88,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
     // Canceled by user, he didn't found the card in the deck
     if (cards.length === 0) {
       continue;
-    } 
-    
+    }
+
     const evolution = cards[0] as PokemonCard;
 
     // Evolve Pokemon
@@ -107,7 +108,7 @@ export class TechnicalMachineEvolution extends TrainerCard {
 
   public regulationMark = 'G';
 
-  public tags = [ ];
+  public tags = [];
 
   public set: string = 'PAR';
 
@@ -121,11 +122,11 @@ export class TechnicalMachineEvolution extends TrainerCard {
 
   public attacks: Attack[] = [{
     name: 'Evolution',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 0,
-    text: 'Choose up to 2 of your Benched Pokémon. For each of those Pokémon, search your deck for a card that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck.' 
+    text: 'Choose up to 2 of your Benched Pokémon. For each of those Pokémon, search your deck for a card that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck.'
   }];
-  
+
   public text: string =
     'The Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) If this card is attached to 1 of your Pokémon, discard it at the end of your turn.';
 
@@ -133,7 +134,7 @@ export class TechnicalMachineEvolution extends TrainerCard {
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
           try {
@@ -151,8 +152,21 @@ export class TechnicalMachineEvolution extends TrainerCard {
       return state;
     }
 
+    if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
+      const pokemonCard = effect.player.active.getPokemonCard();
+      if (pokemonCard && 'getColorlessReduction' in pokemonCard) {
+        const reduction = (pokemonCard as ColorlessCostReducer).getColorlessReduction(state);
+        for (let i = 0; i < reduction && effect.cost.includes(CardType.COLORLESS); i++) {
+          const index = effect.cost.indexOf(CardType.COLORLESS);
+          if (index !== -1) {
+            effect.cost.splice(index, 1);
+          }
+        }
+      }
+    }
+
     if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
-!effect.attacks.includes(this.attacks[0])) {
+      !effect.attacks.includes(this.attacks[0])) {
       const player = effect.player;
 
       try {

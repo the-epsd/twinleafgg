@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, EnergyCard, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { Card, ChooseCardsPrompt, EnergyCard, GameMessage, Player, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag } from '../../game/store/card/card-types';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -52,19 +52,33 @@ export class GalarianZapdosV extends PokemonCard {
   // Implement ability
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckAttackCostEffect) {
+    if (effect instanceof CheckAttackCostEffect &&
+      (effect.attack === this.attacks[0] ||
+        this.tools.some(tool => tool.attacks && tool.attacks.includes(effect.attack)))) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let fightingInstinctCount = 0;
+      // Count V, VSTAR, and VMAX Pokémon in play for the opponent
+      const countSpecialPokemon = (player: Player): number => {
+        const specialTags = [CardTag.POKEMON_V, CardTag.POKEMON_VSTAR, CardTag.POKEMON_VMAX];
+        let count = 0;
 
-      // Check opponent's active Pokemon
-      const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && (opponentActive.tags.includes(CardTag.POKEMON_V) ||
-        opponentActive.tags.includes(CardTag.POKEMON_VMAX) ||
-        opponentActive.tags.includes(CardTag.POKEMON_VSTAR))) {
-        fightingInstinctCount += 1;
-      }
+        // Check active Pokémon
+        const activePokemon = player.active.getPokemonCard();
+        if (activePokemon && specialTags.some(tag => activePokemon.tags.includes(tag))) {
+          count++;
+        }
+
+        // Check bench Pokémon
+        player.bench.forEach(slot => {
+          const benchPokemon = slot.getPokemonCard();
+          if (benchPokemon && specialTags.some(tag => benchPokemon.tags.includes(tag))) {
+            count++;
+          }
+        });
+
+        return count;
+      };
 
       try {
         const stub = new PowerEffect(player, {
@@ -74,26 +88,28 @@ export class GalarianZapdosV extends PokemonCard {
         }, this);
         store.reduceEffect(state, stub);
       } catch {
+        console.log(effect.cost);
         return state;
       }
 
-      // Check opponent's benched Pokemon
-      opponent.bench.forEach(cardList => {
-        cardList.cards.forEach(card => {
-          if (card instanceof PokemonCard &&
-            (card.tags.includes(CardTag.POKEMON_V) ||
-              card.tags.includes(CardTag.POKEMON_VMAX) ||
-              card.tags.includes(CardTag.POKEMON_VSTAR))) {
-            fightingInstinctCount += 1;
-          }
-        });
-      });
+      const specialPokemonCount = countSpecialPokemon(opponent);
 
-      // Reduce attack cost by removing 1 Colorless energy for each counted Pokemon
-      const attackCost = this.attacks[0].cost;
-      const colorlessToRemove = fightingInstinctCount;
-      this.attacks[0].cost = attackCost.filter(c => c !== CardType.COLORLESS).slice(0, -colorlessToRemove);
+      // Determine Colorless energy reduction based on special Pokémon count
+      const colorlessToRemove = Math.min(specialPokemonCount, 4);
+
+      // Remove Colorless energy from attack cost
+      for (let i = 0; i < colorlessToRemove; i++) {
+        const index = effect.cost.indexOf(CardType.COLORLESS);
+        if (index !== -1) {
+          effect.cost.splice(index, 1);
+        }
+      }
+
+      console.log(effect.cost);
+
+      return state;
     }
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PecharuntexArt = exports.OrthwormexArt = exports.OkidogiexArt = exports.NoctowlArt = exports.NightlyStretcherArt = exports.NightTimeAcademyArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.LaprasexArt = exports.KyuremArt = exports.KingdraexArt = exports.JoltikArt = exports.JaninesSecretTechniqueArt = exports.IronMothArt = exports.HydrappleexArt = exports.HoundourArt = exports.HoundoomArt = exports.HorseaArt = exports.HoothootArt = exports.HaxorusArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GenesectArt = exports.GalvantulaArt = exports.FraxureArt = exports.FezandipitiexArt = exports.FanRotomArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.DrifblimArt = exports.DrednawArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.CufantArt = exports.CrispinArt = exports.CresseliaArt = exports.CopperajahArt = exports.ComfeyArt = exports.ColresssObsessionArt = exports.CassiopeiaArt = exports.BriarArt = exports.BloodmoonUrsalunaArt = exports.BindingMochiArt = exports.AxewArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = exports.AbsolArt = void 0;
-exports.ZoruaArt = exports.ZoroarkArt = exports.XerosicsSchemeArt = exports.WeavileArt = exports.TerapagosexArt = exports.TapuBuluArt = exports.SneaselArt = exports.SlitherWingArt = exports.SeadraArt = exports.RowletArt = exports.RevavroomexArt = exports.PowerHourglassArt = exports.PokeVitalAArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.ZeraoraArt = exports.XerosicsSchemeArt = exports.WeavileArt = exports.TerapagosexArt = exports.TapuBuluArt = exports.SneaselArt = exports.SlitherWingArt = exports.SeadraArt = exports.RowletArt = exports.RevavroomexArt = exports.PowerHourglassArt = exports.PokeVitalAArt = void 0;
 const absol_1 = require("./absol");
 const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
@@ -63,6 +63,7 @@ const tapu_bulu_1 = require("./tapu-bulu");
 const terapagos_ex_1 = require("./terapagos-ex");
 const weavile_1 = require("./weavile");
 const xerosics_scheme_1 = require("./xerosics-scheme");
+const zeraora_1 = require("./zeraora");
 const zoroark_1 = require("./zoroark");
 const zorua_1 = require("./zorua");
 class AbsolArt extends absol_1.Absol {
@@ -492,6 +493,13 @@ class XerosicsSchemeArt extends xerosics_scheme_1.XerosicsScheme {
     }
 }
 exports.XerosicsSchemeArt = XerosicsSchemeArt;
+class ZeraoraArt extends zeraora_1.Zeraora {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Zeroaora-037-7i.75e7fd854d32181b00d6.png';
+    }
+}
+exports.ZeraoraArt = ZeraoraArt;
 class ZoroarkArt extends zoroark_1.Zoroark {
     constructor() {
         super(...arguments);

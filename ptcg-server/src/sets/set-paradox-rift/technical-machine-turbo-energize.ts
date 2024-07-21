@@ -1,7 +1,8 @@
 import { AttachEnergyPrompt, Attack, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -15,7 +16,7 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
 
   public regulationMark = 'G';
 
-  public tags = [ ];
+  public tags = [];
 
   public set: string = 'PAR';
 
@@ -29,11 +30,11 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
 
   public attacks: Attack[] = [{
     name: 'Turbo Energize',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 0,
-    text: 'Search your deck for up to 2 Basic Energy cards and attach them to your Benched Pokémon in any way you like. Then, shuffle your deck.' 
+    text: 'Search your deck for up to 2 Basic Energy cards and attach them to your Benched Pokémon in any way you like. Then, shuffle your deck.'
   }];
-  
+
   public text: string =
     'The Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) If this card is attached to 1 of your Pokémon, discard it at the end of your turn.';
 
@@ -41,7 +42,7 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
           try {
@@ -59,8 +60,21 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
       return state;
     }
 
+    if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
+      const pokemonCard = effect.player.active.getPokemonCard();
+      if (pokemonCard && 'getColorlessReduction' in pokemonCard) {
+        const reduction = (pokemonCard as ColorlessCostReducer).getColorlessReduction(state);
+        for (let i = 0; i < reduction && effect.cost.includes(CardType.COLORLESS); i++) {
+          const index = effect.cost.indexOf(CardType.COLORLESS);
+          if (index !== -1) {
+            effect.cost.splice(index, 1);
+          }
+        }
+      }
+    }
+
     if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
-!effect.attacks.includes(this.attacks[0])) {
+      !effect.attacks.includes(this.attacks[0])) {
       const player = effect.player;
 
       try {

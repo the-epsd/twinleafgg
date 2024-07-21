@@ -8,6 +8,7 @@ const game_1 = require("../../game");
 const card_types_2 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class DrapionV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -39,17 +40,27 @@ class DrapionV extends pokemon_card_1.PokemonCard {
     }
     // Implement ability
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckAttackCostEffect) {
+        if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            let wildStyleCount = 0;
-            // Check opponent's active Pokemon
-            const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && (opponentActive.tags.includes(card_types_2.CardTag.FUSION_STRIKE) ||
-                opponentActive.tags.includes(card_types_2.CardTag.RAPID_STRIKE) ||
-                opponentActive.tags.includes(card_types_2.CardTag.SINGLE_STRIKE))) {
-                wildStyleCount += 1;
-            }
+            // Count V, VSTAR, and VMAX Pokémon in play for the opponent
+            const countSpecialPokemon = (player) => {
+                const specialTags = [card_types_2.CardTag.FUSION_STRIKE, card_types_2.CardTag.RAPID_STRIKE, card_types_2.CardTag.SINGLE_STRIKE];
+                let count = 0;
+                // Check active Pokémon
+                const activePokemon = player.active.getPokemonCard();
+                if (activePokemon && specialTags.some(tag => activePokemon.tags.includes(tag))) {
+                    count++;
+                }
+                // Check bench Pokémon
+                player.bench.forEach(slot => {
+                    const benchPokemon = slot.getPokemonCard();
+                    if (benchPokemon && specialTags.some(tag => benchPokemon.tags.includes(tag))) {
+                        count++;
+                    }
+                });
+                return count;
+            };
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
@@ -59,23 +70,40 @@ class DrapionV extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, stub);
             }
             catch (_a) {
+                console.log(effect.cost);
                 return state;
             }
-            // Check opponent's benched Pokemon
-            opponent.bench.forEach(cardList => {
-                cardList.cards.forEach(card => {
-                    if (card instanceof pokemon_card_1.PokemonCard &&
-                        (card.tags.includes(card_types_2.CardTag.FUSION_STRIKE) ||
-                            card.tags.includes(card_types_2.CardTag.RAPID_STRIKE) ||
-                            card.tags.includes(card_types_2.CardTag.SINGLE_STRIKE))) {
-                        wildStyleCount += 1;
+            const specialPokemonCount = countSpecialPokemon(opponent);
+            // Determine Colorless energy reduction based on special Pokémon count
+            const colorlessToRemove = Math.min(specialPokemonCount, 4);
+            // Remove Colorless energy from attack cost
+            for (let i = 0; i < colorlessToRemove; i++) {
+                const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+                if (index !== -1) {
+                    effect.cost.splice(index, 1);
+                }
+            }
+            console.log(effect.cost);
+            return state;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const hasBenched = player.bench.some(b => b.cards.length > 0);
+            if (!hasBenched) {
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.damage += 60;
                     }
                 });
+            }
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { allowCancel: false }), targets => {
+                if (!targets || targets.length === 0) {
+                    return;
+                }
+                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 60);
+                damageEffect.target = targets[0];
+                store.reduceEffect(state, damageEffect);
             });
-            // Reduce attack cost by removing 1 Colorless energy for each counted Pokemon
-            const attackCost = this.attacks[0].cost;
-            const colorlessToRemove = wildStyleCount;
-            this.attacks[0].cost = attackCost.filter(c => c !== card_types_1.CardType.COLORLESS).slice(0, -colorlessToRemove);
         }
         return state;
     }

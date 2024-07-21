@@ -2,8 +2,9 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PokemonCard, PowerType } from '../../game';
-import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { PokemonCard, PowerType, StateUtils } from '../../game';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 
 export class Cramorant extends PokemonCard {
 
@@ -44,33 +45,78 @@ export class Cramorant extends PokemonCard {
 
   public fullName: string = 'Cramorant LOR';
 
+  public getColorlessReduction(state: State): number {
+    const player = StateUtils.findOwner(state, this.cards);
+    return player.lostzone.cards.length >= 4 ? 3 : 0;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
 
-    if (effect instanceof UseAttackEffect && effect.attack === this.attacks[0]) {
+    // if (effect instanceof UseAttackEffect && effect.attack === this.attacks[0]) {
+    //   const player = effect.player;
+
+    //   if (player.lostzone.cards.length <= 3) {
+    //     return state;
+    //   }
+
+    //   if (player.lostzone.cards.length >= 4) {
+    //     try {
+    //       const stub = new PowerEffect(player, {
+    //         name: 'test',
+    //         powerType: PowerType.ABILITY,
+    //         text: ''
+    //       }, this);
+    //       store.reduceEffect(state, stub);
+    //     } catch {
+    //       return state;
+    //     }
+    //     this.attacks.forEach(attack => {
+    //       attack.cost = [];
+    //     });
+    //     return state;
+    //   }
+    // }
+
+    if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      if (player.lostzone.cards.length <= 3) {
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        console.log(effect.cost);
         return state;
       }
 
-      if (player.lostzone.cards.length >= 4) {
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
+      const lostZoneCount = player.lostzone.cards.length;
+
+      if (lostZoneCount >= 4) {
+        const costToRemove = 3;
+
+        for (let i = 0; i < costToRemove; i++) {
+          let index = effect.cost.indexOf(CardType.COLORLESS);
+          if (index !== -1) {
+            effect.cost.splice(index, 1);
+          } else {
+            index = effect.cost.indexOf(CardType.WATER);
+            if (index !== -1) {
+              effect.cost.splice(index, 1);
+            }
+          }
         }
-        this.attacks.forEach(attack => {
-          attack.cost = [];
-        });
-        return state;
       }
+
+      console.log(effect.cost);
+
+      return state;
     }
+
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 

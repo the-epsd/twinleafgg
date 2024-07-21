@@ -46,6 +46,18 @@ class TechnicalMachineDevolution extends trainer_card_1.TrainerCard {
             });
             return state;
         }
+        if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[0]) {
+            const pokemonCard = effect.player.active.getPokemonCard();
+            if (pokemonCard && 'getColorlessReduction' in pokemonCard) {
+                const reduction = pokemonCard.getColorlessReduction(state);
+                for (let i = 0; i < reduction && effect.cost.includes(card_types_1.CardType.COLORLESS); i++) {
+                    const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+                    if (index !== -1) {
+                        effect.cost.splice(index, 1);
+                    }
+                }
+            }
+        }
         if (effect instanceof check_effects_1.CheckPokemonAttacksEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tools.includes(this)) &&
             !effect.attacks.includes(this.attacks[0])) {
             const player = effect.player;

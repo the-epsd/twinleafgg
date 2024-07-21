@@ -56,5 +56,9 @@ export declare class Player {
     getPrizeLeft(): number;
     forEachPokemon(player: PlayerType, handler: (cardList: PokemonCardList, pokemonCard: PokemonCard, target: CardTarget) => void): void;
     removePokemonEffects(target: PokemonCardList): void;
+    vPokemon(): boolean;
+    singleStrike(): boolean;
+    fusionStrike(): boolean;
+    rapidStrike(): boolean;
     switchPokemon(target: PokemonCardList): void;
 }
