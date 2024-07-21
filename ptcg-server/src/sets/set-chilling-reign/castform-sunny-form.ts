@@ -75,14 +75,14 @@ export class CastformSunnyForm extends PokemonCard {
 
       if (stadiumsInDiscard >= 8) {
 
-        const costToRemove = 2;
+        const costToRemove = 3;
 
         for (let i = 0; i < costToRemove; i++) {
           let index = effect.cost.indexOf(CardType.COLORLESS);
           if (index !== -1) {
             effect.cost.splice(index, 1);
           } else {
-            index = effect.cost.indexOf(CardType.WATER);
+            index = effect.cost.indexOf(CardType.FIRE);
             if (index !== -1) {
               effect.cost.splice(index, 1);
             }

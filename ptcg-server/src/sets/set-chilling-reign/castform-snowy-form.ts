@@ -90,7 +90,7 @@ export class CastformSnowyForm extends PokemonCard {
 
       if (stadiumsInDiscard >= 8) {
 
-        const costToRemove = 2;
+        const costToRemove = 3;
 
         for (let i = 0; i < costToRemove; i++) {
           let index = effect.cost.indexOf(CardType.COLORLESS);
