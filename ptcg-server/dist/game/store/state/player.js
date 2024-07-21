@@ -1,4 +1,5 @@
-import { SlotType } from '../actions/play-card-action';
+import { PlayerType, SlotType } from '../actions/play-card-action';
+import { CardTag } from '../card/card-types';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
 import { PokemonCardList } from './pokemon-card-list';
@@ -85,6 +86,42 @@ export class Player {
         this.attackMarker.removeMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
         this.attackMarker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES);
         target.clearEffects();
+    }
+    vPokemon() {
+        let result = false;
+        this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+            if (cardList.vPokemon()) {
+                result = true;
+            }
+        });
+        return result;
+    }
+    singleStrike() {
+        let result = false;
+        this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+            if (cardList.getPokemons().some(pokemon => pokemon.tags.includes(CardTag.SINGLE_STRIKE))) {
+                result = true;
+            }
+        });
+        return result;
+    }
+    fusionStrike() {
+        let result = false;
+        this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+            if (cardList.getPokemons().some(pokemon => pokemon.tags.includes(CardTag.FUSION_STRIKE))) {
+                result = true;
+            }
+        });
+        return result;
+    }
+    rapidStrike() {
+        let result = false;
+        this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+            if (cardList.getPokemons().some(pokemon => pokemon.tags.includes(CardTag.RAPID_STRIKE))) {
+                result = true;
+            }
+        });
+        return result;
     }
     switchPokemon(target) {
         const benchIndex = this.bench.indexOf(target);

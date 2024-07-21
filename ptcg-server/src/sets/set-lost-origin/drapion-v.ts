@@ -1,11 +1,12 @@
 /* eslint-disable indent */
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, State, StateUtils, StoreLike } from '../../game';
+import { ChoosePokemonPrompt, GameMessage, Player, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag } from '../../game/store/card/card-types';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class DrapionV extends PokemonCard {
 
@@ -51,19 +52,31 @@ export class DrapionV extends PokemonCard {
   // Implement ability
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckAttackCostEffect) {
+    if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let wildStyleCount = 0;
+      // Count V, VSTAR, and VMAX Pokémon in play for the opponent
+      const countSpecialPokemon = (player: Player): number => {
+        const specialTags = [CardTag.FUSION_STRIKE, CardTag.RAPID_STRIKE, CardTag.SINGLE_STRIKE];
+        let count = 0;
 
-      // Check opponent's active Pokemon
-      const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && (opponentActive.tags.includes(CardTag.FUSION_STRIKE) ||
-        opponentActive.tags.includes(CardTag.RAPID_STRIKE) ||
-        opponentActive.tags.includes(CardTag.SINGLE_STRIKE))) {
-        wildStyleCount += 1;
-      }
+        // Check active Pokémon
+        const activePokemon = player.active.getPokemonCard();
+        if (activePokemon && specialTags.some(tag => activePokemon.tags.includes(tag))) {
+          count++;
+        }
+
+        // Check bench Pokémon
+        player.bench.forEach(slot => {
+          const benchPokemon = slot.getPokemonCard();
+          if (benchPokemon && specialTags.some(tag => benchPokemon.tags.includes(tag))) {
+            count++;
+          }
+        });
+
+        return count;
+      };
 
       try {
         const stub = new PowerEffect(player, {
@@ -73,25 +86,54 @@ export class DrapionV extends PokemonCard {
         }, this);
         store.reduceEffect(state, stub);
       } catch {
+        console.log(effect.cost);
         return state;
       }
 
-      // Check opponent's benched Pokemon
-      opponent.bench.forEach(cardList => {
-        cardList.cards.forEach(card => {
-          if (card instanceof PokemonCard &&
-            (card.tags.includes(CardTag.FUSION_STRIKE) ||
-              card.tags.includes(CardTag.RAPID_STRIKE) ||
-              card.tags.includes(CardTag.SINGLE_STRIKE))) {
-            wildStyleCount += 1;
+      const specialPokemonCount = countSpecialPokemon(opponent);
+
+      // Determine Colorless energy reduction based on special Pokémon count
+      const colorlessToRemove = Math.min(specialPokemonCount, 4);
+
+      // Remove Colorless energy from attack cost
+      for (let i = 0; i < colorlessToRemove; i++) {
+        const index = effect.cost.indexOf(CardType.COLORLESS);
+        if (index !== -1) {
+          effect.cost.splice(index, 1);
+        }
+      }
+
+      console.log(effect.cost);
+
+      return state;
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      if (!hasBenched) {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.damage += 60;
           }
         });
-      });
+      }
 
-      // Reduce attack cost by removing 1 Colorless energy for each counted Pokemon
-      const attackCost = this.attacks[0].cost;
-      const colorlessToRemove = wildStyleCount;
-      this.attacks[0].cost = attackCost.filter(c => c !== CardType.COLORLESS).slice(0, -colorlessToRemove);
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE],
+        { allowCancel: false }
+      ), targets => {
+        if (!targets || targets.length === 0) {
+          return;
+        }
+        const damageEffect = new PutDamageEffect(effect, 60);
+        damageEffect.target = targets[0];
+        store.reduceEffect(state, damageEffect);
+      });
     }
     return state;
   }

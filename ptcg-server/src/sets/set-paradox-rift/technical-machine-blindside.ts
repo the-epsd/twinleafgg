@@ -1,8 +1,9 @@
 import { Attack, CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { CardType, TrainerType } from '../../game/store/card/card-types';
+import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -16,7 +17,7 @@ export class TechnicalMachineBlindside extends TrainerCard {
 
   public regulationMark = 'G';
 
-  public tags = [ ];
+  public tags = [];
 
   public set: string = 'PAR';
 
@@ -30,18 +31,31 @@ export class TechnicalMachineBlindside extends TrainerCard {
 
   public attacks: Attack[] = [{
     name: 'Blindside',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 0,
-    text: 'You can use this attack only when your opponent has exactly 1 Prize card remaining.' 
+    text: 'This attack does 100 damage to 1 of your opponent\'s Pokémon that has any damage counters on it. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
-  
+
   public text: string =
     'The Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) If this card is attached to 1 of your Pokémon, discard it at the end of your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
+      const pokemonCard = effect.player.active.getPokemonCard();
+      if (pokemonCard && 'getColorlessReduction' in pokemonCard) {
+        const reduction = (pokemonCard as ColorlessCostReducer).getColorlessReduction(state);
+        for (let i = 0; i < reduction && effect.cost.includes(CardType.COLORLESS); i++) {
+          const index = effect.cost.indexOf(CardType.COLORLESS);
+          if (index !== -1) {
+            effect.cost.splice(index, 1);
+          }
+        }
+      }
+    }
+
     if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
-!effect.attacks.includes(this.attacks[0])) {
+      !effect.attacks.includes(this.attacks[0])) {
       const player = effect.player;
 
       try {
@@ -56,7 +70,7 @@ export class TechnicalMachineBlindside extends TrainerCard {
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
           try {
@@ -77,7 +91,7 @@ export class TechnicalMachineBlindside extends TrainerCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       try {
         const toolEffect = new ToolEffect(player, this);
         store.reduceEffect(state, toolEffect);
@@ -86,23 +100,26 @@ export class TechnicalMachineBlindside extends TrainerCard {
       }
 
       const blocked: CardTarget[] = [];
-  
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-      if (!hasBenched) {
-        effect.damage = 120;
-      }
-  
+
+      let hasDamagedPokemon = false;
+
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.damage == 0) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
-        }
         if (cardList.damage > 0) {
-          return state;
+          hasDamagedPokemon = true;
         } else {
           blocked.push(target);
         }
       });
-  
+
+      if (!hasDamagedPokemon) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      if (!hasBenched && opponent.active.damage > 0) {
+        effect.damage = 100;
+      }
+
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,

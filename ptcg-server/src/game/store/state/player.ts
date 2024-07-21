@@ -1,4 +1,5 @@
 import { CardTarget, PlayerType, SlotType } from '../actions/play-card-action';
+import { CardTag } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
@@ -128,6 +129,45 @@ export class Player {
     target.clearEffects();
   }
 
+  vPokemon(): boolean {
+    let result = false;
+    this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+      if (cardList.vPokemon()) {
+        result = true;
+      }
+    });
+    return result;
+  }
+
+  singleStrike(): boolean {
+    let result = false;
+    this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+      if (cardList.getPokemons().some(pokemon => pokemon.tags.includes(CardTag.SINGLE_STRIKE))) {
+        result = true;
+      }
+    });
+    return result;
+  }
+
+  fusionStrike(): boolean {
+    let result = false;
+    this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+      if (cardList.getPokemons().some(pokemon => pokemon.tags.includes(CardTag.FUSION_STRIKE))) {
+        result = true;
+      }
+    });
+    return result;
+  }
+
+  rapidStrike(): boolean {
+    let result = false;
+    this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+      if (cardList.getPokemons().some(pokemon => pokemon.tags.includes(CardTag.RAPID_STRIKE))) {
+        result = true;
+      }
+    });
+    return result;
+  }
 
   switchPokemon(target: PokemonCardList) {
     const benchIndex = this.bench.indexOf(target);

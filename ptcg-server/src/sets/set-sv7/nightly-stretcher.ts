@@ -10,13 +10,15 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { EnergyCard, PokemonCard } from '../../game';
+import { EnergyCard, GameError, PokemonCard } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: NightlyStretcher, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
+
+
 
   let pokemons = 0;
   let energies = 0;
@@ -30,6 +32,11 @@ function* playCard(next: Function, store: StoreLike, state: State,
       blocked.push(index);
     }
   });
+
+  // Player does not have correct cards in discard
+  if (pokemons === 0 && energies === 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
 
   const maxPokemons = Math.min(pokemons, 1);
   const maxEnergies = Math.min(energies, 1);

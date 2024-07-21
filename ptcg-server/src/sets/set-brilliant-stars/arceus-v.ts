@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, 
-  PlayerType, SlotType, GameMessage, ShuffleDeckPrompt, AttachEnergyPrompt, StateUtils, CardTarget } from '../../game';
+import {
+  StoreLike, State,
+  PlayerType, SlotType, GameMessage, ShuffleDeckPrompt, AttachEnergyPrompt, StateUtils, CardTarget
+} from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -10,14 +12,7 @@ function* useTrinityCharge(next: Function, store: StoreLike, state: State,
 
   const player = effect.player;
 
-
-
   if (player.deck.cards.length === 0) {
-    return state;
-  }
-
-  const hasBenched = player.bench.some(b => b.cards.length > 0);
-  if (!hasBenched) {
     return state;
   }
 
@@ -27,7 +22,6 @@ function* useTrinityCharge(next: Function, store: StoreLike, state: State,
       blocked.push(target);
     }
   });
-
 
   yield store.prompt(state, new AttachEnergyPrompt(
     player.id,
@@ -41,11 +35,11 @@ function* useTrinityCharge(next: Function, store: StoreLike, state: State,
     transfers = transfers || [];
     for (const transfer of transfers) {
       const target = StateUtils.getTarget(state, player, transfer.to);
-      player.deck.moveCardTo(transfer.card, target); 
+      player.deck.moveCardTo(transfer.card, target);
       next();
     }
   });
-  
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
 
@@ -54,7 +48,7 @@ function* useTrinityCharge(next: Function, store: StoreLike, state: State,
 
 export class ArceusV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
@@ -66,12 +60,12 @@ export class ArceusV extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Trinity Charge',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
       text: 'Search your deck for up to 3 basic Energy cards and ' +
         'attach them to your Pokémon V in any way you like. Then, ' +
@@ -79,7 +73,7 @@ export class ArceusV extends PokemonCard {
     },
     {
       name: 'Power Edge',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 130,
       text: ''
     }

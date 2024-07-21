@@ -54,38 +54,35 @@ class Laprasex extends game_1.PokemonCard {
             });
             return state;
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const temp = new game_1.CardList();
+            // Create deckBottom and move hand into it
+            const deckBottom = new game_1.CardList();
             player.deck.moveTo(temp, 20);
             // Check if any cards drawn are basic energy
             const energyCardsDrawn = temp.cards.filter(card => {
                 return card instanceof game_1.EnergyCard && card.energyType === game_1.EnergyType.BASIC;
             });
-            // If no energy cards were drawn, move all cards to hand
+            // If no energy cards were drawn, move all cards to deck & shuffle
             if (energyCardsDrawn.length == 0) {
-                temp.cards.slice(0, 20).forEach(card => {
-                    temp.moveCardTo(card, player.deck);
-                });
-                state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                    player.deck.applyOrder(order);
-                });
-                return state;
-            }
-            if (energyCardsDrawn.length > 0) {
-                // Prompt to attach energy if any were drawn
-                return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, temp, // Only show drawn energies
-                game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC }, { min: 0, max: energyCardsDrawn.length, allowCancel: false }), transfers => {
-                    //if transfers = 0, put both in hand
-                    if (transfers.length === 0) {
-                        temp.cards.slice(0, 20).forEach(card => {
-                            temp.moveCardTo(card, player.deck);
-                            state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                                player.deck.applyOrder(order);
-                            });
+                store.prompt(state, [new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_EFFECT, temp.cards)], () => {
+                    temp.cards.forEach(card => {
+                        store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                            temp.applyOrder(order);
+                            temp.moveCardTo(card, deckBottom);
+                            deckBottom.applyOrder(order);
+                            deckBottom.moveTo(player.deck);
                         });
                         return state;
-                    }
+                    });
+                    return state;
+                });
+            }
+            if (energyCardsDrawn.length >= 1) {
+                // Prompt to attach energy if any were drawn
+                return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, temp, // Only show drawn energies
+                game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC }, { min: 0, max: energyCardsDrawn.length }), transfers => {
                     // Attach energy based on prompt selection
                     if (transfers) {
                         for (const transfer of transfers) {
@@ -93,15 +90,22 @@ class Laprasex extends game_1.PokemonCard {
                             temp.moveCardTo(transfer.card, target); // Move card to target
                         }
                         temp.cards.forEach(card => {
-                            temp.moveCardTo(card, player.deck); // Move card to hand
+                            store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                                temp.applyOrder(order);
+                                temp.moveCardTo(card, deckBottom);
+                                deckBottom.applyOrder(order);
+                                deckBottom.moveTo(player.deck);
+                            });
+                            return state;
                         });
-                        state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                            player.deck.applyOrder(order);
-                        });
-                        return state;
                     }
                 });
             }
+            // Shuffle the deck
+            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+                return state;
+            });
         }
         return state;
     }

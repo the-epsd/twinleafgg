@@ -59,6 +59,7 @@ import { TapuBulu } from './tapu-bulu';
 import { Terapagosex } from './terapagos-ex';
 import { Weavile } from './weavile';
 import { XerosicsScheme } from './xerosics-scheme';
+import { Zeraora } from './zeraora';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 
@@ -304,6 +305,10 @@ export class WeavileArt extends Weavile {
 
 export class XerosicsSchemeArt extends XerosicsScheme {
   public cardImage = 'https://pokemonproxies.com/static/media/Xerosic\'s_Machinations-062 - 6a.106ba5c1c488278fc7ab.png';
+}
+
+export class ZeraoraArt extends Zeraora {
+  public cardImage = 'https://pokemonproxies.com/static/media/Zeroaora-037-7i.75e7fd854d32181b00d6.png';
 }
 
 export class ZoroarkArt extends Zoroark {

@@ -30,6 +30,7 @@ import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { MoonlightHill } from './moonlight-hill';
 import { Nemona } from './nemona';
+import { Starmie } from './PAF_119_Starmie';
 import { Scovillainex } from './scovillain-ex';
 import { StudentsInPaldea } from './students-in-paldea';
 import { TechnicalMachineCrisisPunch } from './technical-machine-crisis-punch';
@@ -147,6 +148,10 @@ export class RareCandyArt extends RareCandy {
 
 export class ScovillainexArt extends Scovillainex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_107_R_EN_LG.png';
+}
+
+export class StarmieArt extends Starmie {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_119_R_EN_LG.png';
 }
 
 export class StudentsInPaldeaArt extends StudentsInPaldea {

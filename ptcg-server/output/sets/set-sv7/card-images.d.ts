@@ -59,6 +59,7 @@ import { TapuBulu } from './tapu-bulu';
 import { Terapagosex } from './terapagos-ex';
 import { Weavile } from './weavile';
 import { XerosicsScheme } from './xerosics-scheme';
+import { Zeraora } from './zeraora';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 export declare class AbsolArt extends Absol {
@@ -242,6 +243,9 @@ export declare class WeavileArt extends Weavile {
     cardImage: string;
 }
 export declare class XerosicsSchemeArt extends XerosicsScheme {
+    cardImage: string;
+}
+export declare class ZeraoraArt extends Zeraora {
     cardImage: string;
 }
 export declare class ZoroarkArt extends Zoroark {

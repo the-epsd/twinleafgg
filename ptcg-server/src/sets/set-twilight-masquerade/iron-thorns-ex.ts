@@ -77,24 +77,25 @@ export class IronThornsex extends PokemonCard {
           }, this);
           store.reduceEffect(state, stub);
         } catch {
-          return state;
-        }
+          const pokemonCard = effect.card;
 
-        const pokemonCard = effect.card;
-
-        if (pokemonCard.tags.includes(CardTag.POKEMON_ex && CardTag.FUTURE)) {
-          return state;
-        }
-
-        if (!effect.power.exemptFromAbilityLock) {
-          if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
-            pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
-            pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
-            pokemonCard.tags.includes(CardTag.POKEMON_ex) ||
-            pokemonCard.tags.includes(CardTag.RADIANT)) {
-            // pokemonCard.powers.length = 0;
-            throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+          if (pokemonCard.tags.includes(CardTag.POKEMON_ex && CardTag.FUTURE)) {
+            return state;
           }
+
+          if (!effect.power.exemptFromAbilityLock) {
+            if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
+              pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
+              pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
+              pokemonCard.tags.includes(CardTag.POKEMON_ex) ||
+              pokemonCard.tags.includes(CardTag.RADIANT)) {
+              // pokemonCard.powers.length = 0;
+              throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+            }
+            return state;
+          }
+
+
         }
       }
     }
