@@ -11,6 +11,7 @@ export class HisuianBasculegion extends PokemonCard {
   public hp: number = 110;
   public retreat = [CardType.COLORLESS];
   public weakness = [{ type: CardType.LIGHTNING }];
+  public evolvesFrom = 'Hisuian Basculin';
 
   public attacks = [{
     name: 'Upstream Spirits',
