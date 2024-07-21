@@ -23,6 +23,7 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       });
       effect.player.hand.moveCardTo(effect.pokemonCard, effect.target);
       effect.target.pokemonPlayedTurn = state.turn;
+      effect.target.removeSpecialCondition(SpecialCondition.ABILITY_USED);
       return state;
     }
     const player = effect.player;
@@ -57,9 +58,8 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       effect.target.clearEffects();
       effect.player.removePokemonEffects(effect.target);
 
-      const pokemonCard = effect.target;
-      if (pokemonCard.specialConditions.includes(SpecialCondition.ABILITY_USED)) {
-        pokemonCard.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+      if (effect.target.specialConditions.includes(SpecialCondition.ABILITY_USED)) {
+        effect.target.removeSpecialCondition(SpecialCondition.ABILITY_USED);
       }
 
       // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {

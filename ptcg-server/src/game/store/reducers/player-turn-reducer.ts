@@ -7,9 +7,10 @@ import { GameMessage } from '../../game-message';
 import { RetreatEffect, UseAttackEffect, UsePowerEffect, UseStadiumEffect } from '../effects/game-effects';
 import { EndTurnEffect } from '../effects/game-phase-effects';
 import { StateUtils } from '../state-utils';
-import {SlotType} from '../actions/play-card-action';
-import {PokemonCard} from '../card/pokemon-card';
+import { SlotType } from '../actions/play-card-action';
+import { PokemonCard } from '../card/pokemon-card';
 import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect } from '../effects/check-effects';
+import { PokemonCardList } from '../state/pokemon-card-list';
 
 export function playerTurnReducer(store: StoreLike, state: State, action: Action): State {
 
@@ -46,14 +47,14 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
 
       if (player === undefined || player.id !== action.clientId) {
         throw new GameError(GameMessage.NOT_YOUR_TURN);
-      }    
-      
+      }
+
       const pokemonCard = player.active.getPokemonCard();
-      
+
       if (pokemonCard === undefined) {
         throw new GameError(GameMessage.UNKNOWN_ATTACK);
       }
-      
+
       const attackEffect = new CheckPokemonAttacksEffect(player);
       state = store.reduceEffect(state, attackEffect);
 
@@ -61,16 +62,16 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
         ...pokemonCard.attacks,
         ...attackEffect.attacks
       ].find(a => a.name === action.name);
-      
+
       if (attack === undefined) {
         throw new GameError(GameMessage.UNKNOWN_ATTACK);
       }
-           
+
       const useAttackEffect = new UseAttackEffect(player, attack);
       state = store.reduceEffect(state, useAttackEffect);
-      
+
       state.lastAttack = attack;
-      
+
       return state;
     }
 
@@ -82,11 +83,12 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       }
 
       let pokemonCard: PokemonCard | undefined;
+      let target: PokemonCardList | undefined;
 
       switch (action.target.slot) {
         case SlotType.ACTIVE:
         case SlotType.BENCH: {
-          const target = StateUtils.getTarget(state, player, action.target);
+          target = StateUtils.getTarget(state, player, action.target);
           pokemonCard = target.getPokemonCard();
           break;
         }
@@ -110,25 +112,21 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
         throw new GameError(GameMessage.INVALID_TARGET);
       }
 
-      const target = StateUtils.getTarget(state, player, action.target);
-
-      const powersEffect = new CheckPokemonPowersEffect(player, target);
+      const powersEffect = new CheckPokemonPowersEffect(player, target || player.active);
       state = store.reduceEffect(state, powersEffect);
 
       const power = [
         ...pokemonCard.powers,
         ...powersEffect.powers
       ].find(a => a.name === action.name);
-      
+
       if (power === undefined) {
         throw new GameError(GameMessage.UNKNOWN_POWER);
       }
 
       const slot = action.target.slot;
-      if (slot === SlotType.ACTIVE || slot === SlotType.BENCH) {
-        if (!power.useWhenInPlay) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
-        }
+      if ((slot === SlotType.ACTIVE || slot === SlotType.BENCH) && !power.useWhenInPlay) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       if (slot === SlotType.HAND && !power.useFromHand) {
@@ -142,7 +140,8 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       state = store.reduceEffect(state, new UsePowerEffect(player, power, pokemonCard));
       return state;
     }
-    
+
+
 
     if (action instanceof UseStadiumAction) {
       const player = state.players[state.activePlayer];

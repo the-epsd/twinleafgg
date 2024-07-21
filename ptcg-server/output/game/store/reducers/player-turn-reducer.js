@@ -61,10 +61,11 @@ function playerTurnReducer(store, state, action) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.NOT_YOUR_TURN);
             }
             let pokemonCard;
+            let target;
             switch (action.target.slot) {
                 case play_card_action_1.SlotType.ACTIVE:
                 case play_card_action_1.SlotType.BENCH: {
-                    const target = state_utils_1.StateUtils.getTarget(state, player, action.target);
+                    target = state_utils_1.StateUtils.getTarget(state, player, action.target);
                     pokemonCard = target.getPokemonCard();
                     break;
                 }
@@ -86,8 +87,7 @@ function playerTurnReducer(store, state, action) {
             if (pokemonCard === undefined) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
             }
-            const target = state_utils_1.StateUtils.getTarget(state, player, action.target);
-            const powersEffect = new check_effects_1.CheckPokemonPowersEffect(player, target);
+            const powersEffect = new check_effects_1.CheckPokemonPowersEffect(player, target || player.active);
             state = store.reduceEffect(state, powersEffect);
             const power = [
                 ...pokemonCard.powers,
@@ -97,10 +97,8 @@ function playerTurnReducer(store, state, action) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.UNKNOWN_POWER);
             }
             const slot = action.target.slot;
-            if (slot === play_card_action_1.SlotType.ACTIVE || slot === play_card_action_1.SlotType.BENCH) {
-                if (!power.useWhenInPlay) {
-                    throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
-                }
+            if ((slot === play_card_action_1.SlotType.ACTIVE || slot === play_card_action_1.SlotType.BENCH) && !power.useWhenInPlay) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
             if (slot === play_card_action_1.SlotType.HAND && !power.useFromHand) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
