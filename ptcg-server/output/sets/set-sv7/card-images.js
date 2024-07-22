@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PecharuntexArt = exports.OrthwormexArt = exports.OkidogiexArt = exports.NoctowlArt = exports.NightlyStretcherArt = exports.NightTimeAcademyArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.LaprasexArt = exports.KyuremArt = exports.KingdraexArt = exports.JoltikArt = exports.JaninesSecretTechniqueArt = exports.IronMothArt = exports.HydrappleexArt = exports.HoundourArt = exports.HoundoomArt = exports.HorseaArt = exports.HoothootArt = exports.HaxorusArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GenesectArt = exports.GalvantulaArt = exports.FraxureArt = exports.FezandipitiexArt = exports.FanRotomArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.DrifblimArt = exports.DrednawArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.CufantArt = exports.CrispinArt = exports.CresseliaArt = exports.CopperajahArt = exports.ComfeyArt = exports.ColresssObsessionArt = exports.CassiopeiaArt = exports.BriarArt = exports.BloodmoonUrsalunaArt = exports.BindingMochiArt = exports.AxewArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = exports.AbsolArt = void 0;
-exports.ZoruaArt = exports.ZoroarkArt = exports.ZeraoraArt = exports.XerosicsSchemeArt = exports.WeavileArt = exports.TerapagosexArt = exports.TapuBuluArt = exports.SneaselArt = exports.SlitherWingArt = exports.SeadraArt = exports.RowletArt = exports.RevavroomexArt = exports.PowerHourglassArt = exports.PokeVitalAArt = void 0;
+exports.OrthwormexArt = exports.OkidogiexArt = exports.NoctowlArt = exports.NightlyStretcherArt = exports.NightTimeAcademyArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.LaprasexArt = exports.KyuremArt = exports.KingdraexArt = exports.JoltikArt = exports.JaninesSecretTechniqueArt = exports.IronMothArt = exports.HydrappleexArt = exports.HoundourArt = exports.HoundoomArt = exports.HorseaArt = exports.HoothootArt = exports.HaxorusArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GenesectArt = exports.GalvantulaArt = exports.FraxureArt = exports.FezandipitiexArt = exports.FanRotomArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.DrifblimArt = exports.DrednawArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.CufantArt = exports.CrispinArt = exports.CinderaceexArt = exports.CresseliaArt = exports.CopperajahArt = exports.ComfeyArt = exports.ColresssObsessionArt = exports.CassiopeiaArt = exports.BriarArt = exports.BloodmoonUrsalunaArt = exports.BindingMochiArt = exports.AxewArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = exports.AbsolArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.ZeraoraArt = exports.XerosicsSchemeArt = exports.WeavileArt = exports.TerapagosexArt = exports.TapuBuluArt = exports.SneaselArt = exports.SlitherWingArt = exports.SeadraArt = exports.ScorbunnyArt = exports.RowletArt = exports.RevavroomexArt = exports.RabootArt = exports.PowerHourglassArt = exports.PokeVitalAArt = exports.PecharuntexArt = void 0;
 const absol_1 = require("./absol");
 const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
@@ -10,6 +10,7 @@ const binding_mochi_1 = require("./binding-mochi");
 const bloodmoon_ursaluna_1 = require("./bloodmoon-ursaluna");
 const briar_1 = require("./briar");
 const cassiopeia_1 = require("./cassiopeia");
+const cinderace_ex_1 = require("./cinderace-ex");
 const colresss_obsession_1 = require("./colresss-obsession");
 const comfey_1 = require("./comfey");
 const copperajah_1 = require("./copperajah");
@@ -54,8 +55,10 @@ const orthworm_ex_1 = require("./orthworm-ex");
 const pecharunt_ex_1 = require("./pecharunt-ex");
 const pokevital_a_1 = require("./pokevital-a");
 const power_hourglass_1 = require("./power-hourglass");
+const raboot_1 = require("./raboot");
 const revavroom_ex_1 = require("./revavroom-ex");
 const rowlet_1 = require("./rowlet");
+const scorbunny_1 = require("./scorbunny");
 const seadra_1 = require("./seadra");
 const slither_wing_1 = require("./slither-wing");
 const sneasel_1 = require("./sneasel");
@@ -150,6 +153,13 @@ class CresseliaArt extends cresselia_1.Cresselia {
     }
 }
 exports.CresseliaArt = CresseliaArt;
+class CinderaceexArt extends cinderace_ex_1.Cinderaceex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Cinderace_ex-018-7i.74a6a213db40e77a809a.png';
+    }
+}
+exports.CinderaceexArt = CinderaceexArt;
 class CrispinArt extends crispin_1.Crispin {
     constructor() {
         super(...arguments);
@@ -430,6 +440,13 @@ class PowerHourglassArt extends power_hourglass_1.PowerHourglass {
     }
 }
 exports.PowerHourglassArt = PowerHourglassArt;
+class RabootArt extends raboot_1.Raboot {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Raboot-017-7i.6a3fe499f68d0614a898.png';
+    }
+}
+exports.RabootArt = RabootArt;
 class RevavroomexArt extends revavroom_ex_1.Revavroomex {
     constructor() {
         super(...arguments);
@@ -444,6 +461,13 @@ class RowletArt extends rowlet_1.Rowlet {
     }
 }
 exports.RowletArt = RowletArt;
+class ScorbunnyArt extends scorbunny_1.Scorbunny {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Scorbunny-016-7i.a42e02eebec84f8ae054.png';
+    }
+}
+exports.ScorbunnyArt = ScorbunnyArt;
 class SeadraArt extends seadra_1.Seadra {
     constructor() {
         super(...arguments);

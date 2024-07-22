@@ -45,14 +45,6 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
             }
             if (sourceCard) {
                 // if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
-                // Allow damage
-                if (effect instanceof attack_effects_1.PutDamageEffect) {
-                    return state;
-                }
-                // Allow damage
-                if (effect instanceof attack_effects_1.DealDamageEffect) {
-                    return state;
-                }
                 // Try to reduce PowerEffect, to check if something is blocking our ability
                 try {
                     const player = game_1.StateUtils.findOwner(state, effect.target);
@@ -64,6 +56,14 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
                     store.reduceEffect(state, stub);
                 }
                 catch (_a) {
+                    return state;
+                }
+                // Allow damage
+                if (effect instanceof attack_effects_1.PutDamageEffect) {
+                    return state;
+                }
+                // Allow damage
+                if (effect instanceof attack_effects_1.DealDamageEffect) {
                     return state;
                 }
                 effect.preventDefault = true;

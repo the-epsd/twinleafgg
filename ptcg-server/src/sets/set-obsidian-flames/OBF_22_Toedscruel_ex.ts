@@ -19,7 +19,8 @@ export class Toedscruelex extends PokemonCard {
   public powers = [{
     name: 'Protective Mycelium',
     powerType: PowerType.ABILITY,
-    text: ' Prevent all effects of attacks used by your opponent\'s Pokémon done to all of your Pokémon that have Energy attached. (Existing effects are not removed.Damage is not an effect.) '
+    text: ' Prevent all effects of attacks used by your opponent\'s Pokémon done to all of your Pokémon that have Energy attached. (Existing effects are not removed. Damage is not an effect.) '
+
   }];
 
   public attacks = [{
@@ -50,6 +51,8 @@ export class Toedscruelex extends PokemonCard {
         if (effect instanceof DealDamageEffect) {
           return state;
         }
+        
+                if (effect.target.cards.some(c => c instanceof EnergyCard)) {
 
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
@@ -64,7 +67,6 @@ export class Toedscruelex extends PokemonCard {
           return state;
         }
 
-        if (effect.target.cards.some(c => c instanceof EnergyCard)) {
           effect.preventDefault = true;
         }
 
