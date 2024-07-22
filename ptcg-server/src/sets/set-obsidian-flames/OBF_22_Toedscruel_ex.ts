@@ -20,6 +20,7 @@ export class Toedscruelex extends PokemonCard {
     name: 'Protective Mycelium',
     powerType: PowerType.ABILITY,
     text: ' Prevent all effects of attacks used by your opponent\'s Pokémon done to all of your Pokémon that have Energy attached. (Existing effects are not removed. Damage is not an effect.) '
+
   }];
 
   public attacks = [{
@@ -41,28 +42,30 @@ export class Toedscruelex extends PokemonCard {
       const sourceCard = effect.source.getPokemonCard();
 
       if (sourceCard) {
-        if (effect.target.cards.some(c => c instanceof EnergyCard)) {
-          // Try to reduce PowerEffect, to check if something is blocking our ability
-          try {
-            const player = StateUtils.findOwner(state, effect.target);
-            const stub = new PowerEffect(player, {
-              name: 'test',
-              powerType: PowerType.ABILITY,
-              text: ''
-            }, this);
-            store.reduceEffect(state, stub);
-          } catch {
-            return state;
-          }
 
-          // eslint-disable-next-line indent
-          // Allow damage
-          if (effect instanceof PutDamageEffect) {
-            return state;
-          }
-          if (effect instanceof DealDamageEffect) {
-            return state;
-          }
+        // eslint-disable-next-line indent
+        // Allow damage
+        if (effect instanceof PutDamageEffect) {
+          return state;
+        }
+        if (effect instanceof DealDamageEffect) {
+          return state;
+        }
+        
+                if (effect.target.cards.some(c => c instanceof EnergyCard)) {
+
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const player = StateUtils.findOwner(state, effect.target);
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
+        }
 
           effect.preventDefault = true;
         }
