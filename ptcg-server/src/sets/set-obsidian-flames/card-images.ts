@@ -13,6 +13,7 @@ import { Finizen } from './finizen';
 import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Lunatone } from './lunatone';
 import { Oddish } from './OBF_1_Oddish';
+import { Toedscruelex } from './OBF_22_Toedscruel_ex';
 import { Ninetales } from './OBF_29_Ninetales';
 import { Palafin } from './palafin';
 import { Pidgeotex } from './pidgeot-ex';
@@ -129,6 +130,10 @@ export class ScizorArt extends Scizor {
 
 export class ThundurusArt extends Thundurus {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_070_R_EN.png';
+}
+
+export class ToedscruelexArt extends Toedscruelex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_022_R_EN_LG.png';
 }
 
 export class TownStoreArt extends TownStore {

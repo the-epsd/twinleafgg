@@ -56,8 +56,9 @@ export class HandComponent implements OnChanges {
     };
   }
 
-  @HostBinding('style.--card-count') get cardCount() {
-    return this.cards.length;
+  @HostBinding('style.--card-margin')
+  get cardmargin(): string {
+    return this.calculateContainerMargin();
   }
 
   ngOnChanges() {
@@ -98,6 +99,23 @@ export class HandComponent implements OnChanges {
     temp.splice(item.index, 1);
     temp.splice(item.hover.index, 0, item.data);
     return temp;
+  }
+
+  private cardWidth = 88; // Adjust this value based on your card width
+  private containerWidth = 1000; // Total width to fill
+
+  calculateContainerMargin(): string {
+    const totalCards = this.cards.length;
+    const availableWidth = this.containerWidth - this.cardWidth; // Space for n-1 gaps
+
+    if (totalCards <= 10) {
+      return '3px';
+    }
+
+    const totalGapWidth = availableWidth - (totalCards - 1) * this.cardWidth;
+    const margin = totalGapWidth / (totalCards - 1) / 2; // Divide by 2 for left and right margins
+
+    return `${margin}px`;
   }
 
   private buildHandList(cards: CardList): HandItem[] {

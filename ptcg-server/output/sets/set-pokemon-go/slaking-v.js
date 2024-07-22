@@ -35,8 +35,20 @@ class SlakingV extends pokemon_card_1.PokemonCard {
         this.fullName = 'Slaking V LOR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.UseAttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
             const prizes = effect.player.getPrizeLeft();
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             if (prizes === 2 || prizes === 4 || prizes === 6) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
             }

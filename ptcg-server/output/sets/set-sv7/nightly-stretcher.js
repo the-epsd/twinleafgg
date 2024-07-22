@@ -28,6 +28,10 @@ function* playCard(next, store, state, self, effect) {
             blocked.push(index);
         }
     });
+    // Player does not have correct cards in discard
+    if (pokemons === 0 && energies === 0) {
+        throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
     const maxPokemons = Math.min(pokemons, 1);
     const maxEnergies = Math.min(energies, 1);
     // We will discard this card after prompt confirmation

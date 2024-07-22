@@ -38,6 +38,12 @@ class RadiantCharizard extends pokemon_card_1.PokemonCard {
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
+    getColorlessReduction(state) {
+        const player = state.players[state.activePlayer];
+        const opponent = game_1.StateUtils.getOpponent(state, player);
+        const remainingPrizes = opponent.getPrizeLeft();
+        return 6 - remainingPrizes;
+    }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
@@ -51,11 +57,11 @@ class RadiantCharizard extends pokemon_card_1.PokemonCard {
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
-            // No cost to reduce
-            if (index === -1) {
-                return state;
-            }
+            // const index = effect.cost.indexOf(CardType.COLORLESS);
+            // // No cost to reduce
+            // if (index === -1) {
+            //   return state;
+            // }
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
@@ -65,14 +71,29 @@ class RadiantCharizard extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, stub);
             }
             catch (_a) {
+                console.log(effect.cost);
                 return state;
             }
-            const costToSplice = 6 - opponent.prizes.length;
-            const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(player.active);
-            store.reduceEffect(state, checkPokemonTypeEffect);
-            if (checkPokemonTypeEffect.cardTypes.includes(card_types_1.CardType.FIRE)) {
-                effect.cost.splice(index, costToSplice);
+            const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+            // No cost to reduce
+            if (index === -1) {
+                return state;
             }
+            const remainingPrizes = opponent.getPrizeLeft();
+            const prizeToColorlessReduction = {
+                5: 1,
+                4: 2,
+                3: 3,
+                2: 4
+            };
+            const colorlessToRemove = prizeToColorlessReduction[remainingPrizes] || 0;
+            for (let i = 0; i < colorlessToRemove; i++) {
+                const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+                if (index !== -1) {
+                    effect.cost.splice(index, 1);
+                }
+            }
+            console.log(effect.cost);
             return state;
         }
         // if (effect instanceof KnockOutEffect) {

@@ -79,6 +79,28 @@ class Morpeko extends pokemon_card_1.PokemonCard {
                 }
             });
         }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const hasEnergyInDiscard = player.discard.cards.some(c => {
+                return c instanceof game_1.EnergyCard
+                    && c.energyType === card_types_1.EnergyType.BASIC;
+            });
+            if (!hasEnergyInDiscard) {
+                return state;
+            }
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 1, max: 2 }), transfers => {
+                transfers = transfers || [];
+                // cancelled by user
+                if (transfers.length === 0) {
+                    return;
+                }
+                for (const transfer of transfers) {
+                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                    player.discard.moveCardTo(transfer.card, target);
+                }
+            });
+            return state;
+        }
         return state;
     }
 }

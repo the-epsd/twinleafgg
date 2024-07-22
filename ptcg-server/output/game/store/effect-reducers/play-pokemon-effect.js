@@ -19,6 +19,7 @@ function playPokemonReducer(store, state, effect) {
             });
             effect.player.hand.moveCardTo(effect.pokemonCard, effect.target);
             effect.target.pokemonPlayedTurn = state.turn;
+            effect.target.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
             return state;
         }
         const player = effect.player;
@@ -47,9 +48,8 @@ function playPokemonReducer(store, state, effect) {
             store.reduceEffect(state, evolveEffect);
             effect.target.clearEffects();
             effect.player.removePokemonEffects(effect.target);
-            const pokemonCard = effect.target;
-            if (pokemonCard.specialConditions.includes(card_types_1.SpecialCondition.ABILITY_USED)) {
-                pokemonCard.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+            if (effect.target.specialConditions.includes(card_types_1.SpecialCondition.ABILITY_USED)) {
+                effect.target.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
             }
             // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
             //   if (cardList === player.active) {

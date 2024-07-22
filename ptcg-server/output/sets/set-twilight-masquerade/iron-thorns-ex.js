@@ -61,20 +61,20 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
                     store.reduceEffect(state, stub);
                 }
                 catch (_a) {
-                    return state;
-                }
-                const pokemonCard = effect.card;
-                if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex && card_types_1.CardTag.FUTURE)) {
-                    return state;
-                }
-                if (!effect.power.exemptFromAbilityLock) {
-                    if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V) ||
-                        pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX) ||
-                        pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||
-                        pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex) ||
-                        pokemonCard.tags.includes(card_types_1.CardTag.RADIANT)) {
-                        // pokemonCard.powers.length = 0;
-                        throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
+                    const pokemonCard = effect.card;
+                    if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex && card_types_1.CardTag.FUTURE)) {
+                        return state;
+                    }
+                    if (!effect.power.exemptFromAbilityLock) {
+                        if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V) ||
+                            pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX) ||
+                            pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||
+                            pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex) ||
+                            pokemonCard.tags.includes(card_types_1.CardTag.RADIANT)) {
+                            // pokemonCard.powers.length = 0;
+                            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
+                        }
+                        return state;
                     }
                 }
             }

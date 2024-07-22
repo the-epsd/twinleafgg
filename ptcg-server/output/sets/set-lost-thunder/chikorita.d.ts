@@ -20,5 +20,6 @@ export declare class Chikorita extends PokemonCard {
     fullName: string;
     name: string;
     setNumber: string;
+    cardImage: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

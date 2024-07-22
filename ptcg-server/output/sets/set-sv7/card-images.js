@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SlitherWingArt = exports.SeadraArt = exports.RowletArt = exports.RevavroomexArt = exports.PowerHourglassArt = exports.PokeVitalAArt = exports.PecharuntexArt = exports.OrthwormexArt = exports.OkidogiexArt = exports.NoctowlArt = exports.NightlyStretcherArt = exports.NightTimeAcademyArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.LaprasexArt = exports.KyuremArt = exports.KingdraexArt = exports.JoltikArt = exports.JaninesSecretTechniqueArt = exports.HydrappleexArt = exports.HoundourArt = exports.HoundoomArt = exports.HorseaArt = exports.HoothootArt = exports.HaxorusArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GenesectArt = exports.FraxureArt = exports.FezandipitiexArt = exports.FanRotomArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.CufantArt = exports.CrispinArt = exports.CresseliaArt = exports.CopperajahArt = exports.ColresssObsessionArt = exports.CassiopeiaArt = exports.BriarArt = exports.BloodmoonUrsalunaArt = exports.BindingMochiArt = exports.AxewArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = exports.AbsolArt = void 0;
-exports.ZoruaArt = exports.ZoroarkArt = exports.XerosicsSchemeArt = exports.TerapagosexArt = exports.TapuBuluArt = void 0;
+exports.PecharuntexArt = exports.OrthwormexArt = exports.OkidogiexArt = exports.NoctowlArt = exports.NightlyStretcherArt = exports.NightTimeAcademyArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.LaprasexArt = exports.KyuremArt = exports.KingdraexArt = exports.JoltikArt = exports.JaninesSecretTechniqueArt = exports.IronMothArt = exports.HydrappleexArt = exports.HoundourArt = exports.HoundoomArt = exports.HorseaArt = exports.HoothootArt = exports.HaxorusArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GenesectArt = exports.GalvantulaArt = exports.FraxureArt = exports.FezandipitiexArt = exports.FanRotomArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.DrifblimArt = exports.DrednawArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.CufantArt = exports.CrispinArt = exports.CresseliaArt = exports.CopperajahArt = exports.ComfeyArt = exports.ColresssObsessionArt = exports.CassiopeiaArt = exports.BriarArt = exports.BloodmoonUrsalunaArt = exports.BindingMochiArt = exports.AxewArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = exports.AbsolArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.ZeraoraArt = exports.XerosicsSchemeArt = exports.WeavileArt = exports.TerapagosexArt = exports.TapuBuluArt = exports.SneaselArt = exports.SlitherWingArt = exports.SeadraArt = exports.RowletArt = exports.RevavroomexArt = exports.PowerHourglassArt = exports.PokeVitalAArt = void 0;
 const absol_1 = require("./absol");
 const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
@@ -11,6 +11,7 @@ const bloodmoon_ursaluna_1 = require("./bloodmoon-ursaluna");
 const briar_1 = require("./briar");
 const cassiopeia_1 = require("./cassiopeia");
 const colresss_obsession_1 = require("./colresss-obsession");
+const comfey_1 = require("./comfey");
 const copperajah_1 = require("./copperajah");
 const cresselia_1 = require("./cresselia");
 const crispin_1 = require("./crispin");
@@ -18,13 +19,17 @@ const cufant_1 = require("./cufant");
 const dangerous_laser_1 = require("./dangerous-laser");
 const dartrix_1 = require("./dartrix");
 const decidueye_1 = require("./decidueye");
+const drednaw_1 = require("./drednaw");
+const drifblim_1 = require("./drifblim");
 const dusclops_1 = require("./dusclops");
 const dusknoir_1 = require("./dusknoir");
 const duskull_1 = require("./duskull");
 const fan_rotom_1 = require("./fan-rotom");
 const fezandipiti_ex_1 = require("./fezandipiti-ex");
 const fraxure_1 = require("./fraxure");
+const galvantula_1 = require("./galvantula");
 const genesect_1 = require("./genesect");
+const glass_trumpet_1 = require("./glass-trumpet");
 const glistening_crystal_1 = require("./glistening-crystal");
 const great_tree_1 = require("./great-tree");
 const haxorus_1 = require("./haxorus");
@@ -33,6 +38,7 @@ const horsea_1 = require("./horsea");
 const houndoom_1 = require("./houndoom");
 const houndour_1 = require("./houndour");
 const hydrapple_ex_1 = require("./hydrapple-ex");
+const iron_moth_1 = require("./iron-moth");
 const janines_secret_technique_1 = require("./janines-secret-technique");
 const joltik_1 = require("./joltik");
 const kingdra_ex_1 = require("./kingdra-ex");
@@ -52,9 +58,12 @@ const revavroom_ex_1 = require("./revavroom-ex");
 const rowlet_1 = require("./rowlet");
 const seadra_1 = require("./seadra");
 const slither_wing_1 = require("./slither-wing");
+const sneasel_1 = require("./sneasel");
 const tapu_bulu_1 = require("./tapu-bulu");
 const terapagos_ex_1 = require("./terapagos-ex");
+const weavile_1 = require("./weavile");
 const xerosics_scheme_1 = require("./xerosics-scheme");
+const zeraora_1 = require("./zeraora");
 const zoroark_1 = require("./zoroark");
 const zorua_1 = require("./zorua");
 class AbsolArt extends absol_1.Absol {
@@ -120,6 +129,13 @@ class ColresssObsessionArt extends colresss_obsession_1.ColresssObsession {
     }
 }
 exports.ColresssObsessionArt = ColresssObsessionArt;
+class ComfeyArt extends comfey_1.Comfey {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Comfey-042-7i.3c367e14629bbd9b9480.png';
+    }
+}
+exports.ComfeyArt = ComfeyArt;
 class CopperajahArt extends copperajah_1.Copperajah {
     constructor() {
         super(...arguments);
@@ -169,6 +185,20 @@ class DecidueyeArt extends decidueye_1.Decidueye {
     }
 }
 exports.DecidueyeArt = DecidueyeArt;
+class DrednawArt extends drednaw_1.Drednaw {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Drednaw-026-7i.cd5800cb9f60925679bf.png';
+    }
+}
+exports.DrednawArt = DrednawArt;
+class DrifblimArt extends drifblim_1.Drifblim {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Drifblim-041-7i.cc17a7ddb11c0b661a96.png';
+    }
+}
+exports.DrifblimArt = DrifblimArt;
 class DusclopsArt extends dusclops_1.Dusclops {
     constructor() {
         super(...arguments);
@@ -211,6 +241,13 @@ class FraxureArt extends fraxure_1.Fraxure {
     }
 }
 exports.FraxureArt = FraxureArt;
+class GalvantulaArt extends galvantula_1.Galvantula {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Galvantula-002-6a.51aa64d8c6b46ac99766.png';
+    }
+}
+exports.GalvantulaArt = GalvantulaArt;
 class GenesectArt extends genesect_1.Genesect {
     constructor() {
         super(...arguments);
@@ -218,6 +255,13 @@ class GenesectArt extends genesect_1.Genesect {
     }
 }
 exports.GenesectArt = GenesectArt;
+class GlassTrumpetArt extends glass_trumpet_1.GlassTrumpet {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Glass_Trumpet-089-7i.6013d3d8376ecbed9551.png';
+    }
+}
+exports.GlassTrumpetArt = GlassTrumpetArt;
 class GlisteningCrystalArt extends glistening_crystal_1.GlisteningCrystal {
     constructor() {
         super(...arguments);
@@ -274,6 +318,13 @@ class HydrappleexArt extends hydrapple_ex_1.Hydrappleex {
     }
 }
 exports.HydrappleexArt = HydrappleexArt;
+class IronMothArt extends iron_moth_1.IronMoth {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Iron_Moth-009-6a.31031edc28831e2e7dcd.png';
+    }
+}
+exports.IronMothArt = IronMothArt;
 class JaninesSecretTechniqueArt extends janines_secret_technique_1.JaninesSecretTechnique {
     constructor() {
         super(...arguments);
@@ -407,6 +458,13 @@ class SlitherWingArt extends slither_wing_1.SlitherWing {
     }
 }
 exports.SlitherWingArt = SlitherWingArt;
+class SneaselArt extends sneasel_1.Sneasel {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Sneasel-013-6a.a79d8371273295ea0d92.png';
+    }
+}
+exports.SneaselArt = SneaselArt;
 class TapuBuluArt extends tapu_bulu_1.TapuBulu {
     constructor() {
         super(...arguments);
@@ -421,6 +479,13 @@ class TerapagosexArt extends terapagos_ex_1.Terapagosex {
     }
 }
 exports.TerapagosexArt = TerapagosexArt;
+class WeavileArt extends weavile_1.Weavile {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Weavile-014-6a.82d75ae4ee43bab05123.png';
+    }
+}
+exports.WeavileArt = WeavileArt;
 class XerosicsSchemeArt extends xerosics_scheme_1.XerosicsScheme {
     constructor() {
         super(...arguments);
@@ -428,6 +493,13 @@ class XerosicsSchemeArt extends xerosics_scheme_1.XerosicsScheme {
     }
 }
 exports.XerosicsSchemeArt = XerosicsSchemeArt;
+class ZeraoraArt extends zeraora_1.Zeraora {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Zeroaora-037-7i.75e7fd854d32181b00d6.png';
+    }
+}
+exports.ZeraoraArt = ZeraoraArt;
 class ZoroarkArt extends zoroark_1.Zoroark {
     constructor() {
         super(...arguments);

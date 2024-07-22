@@ -10,18 +10,18 @@ import { ToolEffect } from '../../game/store/effects/play-card-effects';
 export class PowerHourglass extends TrainerCard {
 
   public regulationMark = 'H';
-  
+
   public trainerType: TrainerType = TrainerType.TOOL;
-  
+
   public set: string = 'SV6a';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '58';
-  
-  public name: string = 'Power Hourhlass';
-  
-  public fullName: string = 'Power Hourhlass SV6a';
+
+  public name: string = 'Power Hourglass';
+
+  public fullName: string = 'Power Hourglass SV6a';
 
   public text: string = 'At the end of your turn, if the Pokémon this card is attached to is in the Active Spot, you may attach a Basic Energy from your discard pile to that Pokémon.';
 
@@ -33,9 +33,9 @@ export class PowerHourglass extends TrainerCard {
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
-            && c.energyType === EnergyType.BASIC;
+          && c.energyType === EnergyType.BASIC;
       });
-      
+
       if (!hasEnergyInDiscard) {
         return state;
       }
@@ -46,31 +46,30 @@ export class PowerHourglass extends TrainerCard {
       } catch {
         return state;
       }
-  
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_ACTIVE,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE ],
+        [SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { allowCancel: false, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];
-  
+
         if (transfers.length === 0) {
           return;
         }
-  
+
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
         }
       });
     }
-  
+
     return state;
   }
-  
+
 }
-  

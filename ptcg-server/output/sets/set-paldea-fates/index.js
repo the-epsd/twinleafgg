@@ -12,6 +12,7 @@ exports.setPaldeaFates = [
     new card_images_1.MoonlightHillArt(),
     new card_images_1.NemonaArt(),
     new card_images_1.ScovillainexArt(),
+    new card_images_1.StarmieArt(),
     new card_images_1.StudentsInPaldeaArt(),
     new card_images_1.GengarArt(),
     new card_images_1.KilowattrelArt(),

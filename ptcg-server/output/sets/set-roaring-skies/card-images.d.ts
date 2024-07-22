@@ -3,6 +3,7 @@ import { Beautifly } from './beautifly';
 import { DoubleDragonEnergy } from './double-dragon-energy';
 import { Voltorb } from './ROS_21_Voltorb';
 import { Swellow } from './ROS_72_Swellow';
+import { Dustox } from './ROS_8_Dustox';
 import { ShayminEx } from './shaymin-ex';
 import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
@@ -18,6 +19,9 @@ export declare class BeautiflyArt extends Beautifly {
     cardImage: string;
 }
 export declare class DoubleDragonEnergyArt extends DoubleDragonEnergy {
+    cardImage: string;
+}
+export declare class DustoxArt extends Dustox {
     cardImage: string;
 }
 export declare class ShayminExArt extends ShayminEx {

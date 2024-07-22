@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, State, StoreLike } from '../../game';
+import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
 export class Zapdos extends PokemonCard {
 
@@ -46,7 +47,7 @@ export class Zapdos extends PokemonCard {
   public fullName: string = 'Zapdos PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    /*if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const legendaryBird = player.active.getPokemonCard();
 
@@ -58,7 +59,46 @@ export class Zapdos extends PokemonCard {
           }
         }
       }
+    }*/
+
+    if (effect instanceof DealDamageEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
+      const hasZapdosInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
+      let numberOfZapdosInPlay = 0;
+
+      if (hasZapdosInPlay) {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+          if (cardList.cards.includes(this)) {
+            numberOfZapdosInPlay++;
+          }
+        });
+      }
+
+      const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
+      store.reduceEffect(state, checkPokemonTypeEffect);
+
+      if (checkPokemonTypeEffect.cardTypes.includes(CardType.LIGHTNING) && effect.target === opponent.active) {
+        if (effect.player.active.getPokemonCard()?.name !== 'Zapdos' && effect.player.active.getPokemonCard()?.stage === Stage.BASIC) {
+          effect.damage += 10 * numberOfZapdosInPlay;
+        }
+      }
+
+
     }
+
     return state;
   }
 }

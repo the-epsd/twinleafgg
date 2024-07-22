@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Player = void 0;
 const play_card_action_1 = require("../actions/play-card-action");
+const card_types_1 = require("../card/card-types");
 const card_list_1 = require("./card-list");
 const card_marker_1 = require("./card-marker");
 const pokemon_card_list_1 = require("./pokemon-card-list");
@@ -46,7 +47,6 @@ class Player {
         this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES';
         this.usedDragonsWish = false;
         this.pecharuntexIsInPlay = false;
-        this.usedJewelHunt = false;
         this.usedFanCall = false;
         this.canEvolve = false;
         //GX-Attack Dedicated Section
@@ -89,6 +89,42 @@ class Player {
         this.attackMarker.removeMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
         this.attackMarker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES);
         target.clearEffects();
+    }
+    vPokemon() {
+        let result = false;
+        this.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+            if (cardList.vPokemon()) {
+                result = true;
+            }
+        });
+        return result;
+    }
+    singleStrike() {
+        let result = false;
+        this.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+            if (cardList.getPokemons().some(pokemon => pokemon.tags.includes(card_types_1.CardTag.SINGLE_STRIKE))) {
+                result = true;
+            }
+        });
+        return result;
+    }
+    fusionStrike() {
+        let result = false;
+        this.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+            if (cardList.getPokemons().some(pokemon => pokemon.tags.includes(card_types_1.CardTag.FUSION_STRIKE))) {
+                result = true;
+            }
+        });
+        return result;
+    }
+    rapidStrike() {
+        let result = false;
+        this.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+            if (cardList.getPokemons().some(pokemon => pokemon.tags.includes(card_types_1.CardTag.RAPID_STRIKE))) {
+                result = true;
+            }
+        });
+        return result;
     }
     switchPokemon(target) {
         const benchIndex = this.bench.indexOf(target);

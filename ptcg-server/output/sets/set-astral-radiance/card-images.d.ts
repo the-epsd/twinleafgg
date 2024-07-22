@@ -1,6 +1,7 @@
 import { Adaman } from './adaman';
 import { Shieldon } from './ASR_109_Shieldon';
 import { Bronzor } from './ASR_111_Bronzor';
+import { Yanma } from './ASR_6_Yanma';
 import { HisuianGrowlithe } from './ASR_70_Hisuian_Growlithe';
 import { HisuianQwilfish2 } from './ASR_88_Hisuian_Qwilfish';
 import { HisuianQwilfish } from './ASR_89_Hisuian_Qwilfish';
@@ -228,5 +229,8 @@ export declare class UrsalunaArt extends Ursaluna {
     cardImage: string;
 }
 export declare class WyrdeerVArt extends WyrdeerV {
+    cardImage: string;
+}
+export declare class YanmaArt extends Yanma {
     cardImage: string;
 }

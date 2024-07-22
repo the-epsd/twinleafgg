@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils, GamePhase } from '../../game';
+import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 
 export class BloodmoonUrsalunaex extends PokemonCard {
 
@@ -46,6 +47,13 @@ export class BloodmoonUrsalunaex extends PokemonCard {
 
   public fullName: string = 'Bloodmoon Ursaluna ex TWM';
 
+  public getColorlessReduction(state: State): number {
+    const player = state.players[state.activePlayer];
+    const opponent = StateUtils.getOpponent(state, player);
+    const remainingPrizes = opponent.getPrizeLeft();
+    return 6 - remainingPrizes;
+  }
+
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
@@ -62,52 +70,60 @@ export class BloodmoonUrsalunaex extends PokemonCard {
       console.log('second marker added');
     }
 
-    if (effect instanceof KnockOutEffect) {
+    if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const duringTurn = [GamePhase.PLAYER_TURN, GamePhase.ATTACK].includes(state.phase);
+      // const index = effect.cost.indexOf(CardType.COLORLESS);
 
-      // Do not activate between turns, or when it's not opponents turn.
-      if (!duringTurn || state.players[state.activePlayer] !== opponent) {
+      // // No cost to reduce
+      // if (index === -1) {
+      //   return state;
+      // }
+
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        console.log(effect.cost);
         return state;
       }
 
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
-      if (owner === player) {
+      const index = effect.cost.indexOf(CardType.COLORLESS);
 
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
+      // No cost to reduce
+      if (index === -1) {
+        return state;
+      }
 
-        const card = effect.target.getPokemonCard();
-        if (card !== undefined) {
+      const remainingPrizes = opponent.getPrizeLeft();
 
-          let costToReduce = 1;
+      const prizeToColorlessReduction: { [key: number]: number } = {
+        5: 1,
+        4: 2,
+        3: 3,
+        2: 4,
+        1: 5
+      };
 
-          if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex)) {
-            costToReduce += 1;
-          }
+      const colorlessToRemove = prizeToColorlessReduction[remainingPrizes as keyof typeof prizeToColorlessReduction] || 0;
 
-          if (card.tags.includes(CardTag.POKEMON_VMAX)) {
-            costToReduce += 2;
-          }
-
-          const index = this.attacks[0].cost.indexOf(CardType.COLORLESS);
-          if (index !== -1) {
-            this.attacks[0].cost.splice(index, costToReduce);
-            console.log(this.attacks[0].cost);
-          }
+      for (let i = 0; i < colorlessToRemove; i++) {
+        const index = effect.cost.indexOf(CardType.COLORLESS);
+        if (index !== -1) {
+          effect.cost.splice(index, 1);
         }
       }
+
+      console.log(effect.cost);
+
+      return state;
+
     }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker

@@ -18,7 +18,7 @@ export class Miltank extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Miracle Body',
@@ -28,7 +28,7 @@ export class Miltank extends PokemonCard {
 
   public attacks = [{
     name: 'Rout',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 10,
     text: 'This attack does 20 more damage for each of your opponent\'s Benched Pokémon.'
   }];
@@ -74,9 +74,9 @@ export class Miltank extends PokemonCard {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
           }, this);
           store.reduceEffect(state, stub);
         } catch {
@@ -93,9 +93,9 @@ export class Miltank extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       //Get number of benched pokemon
       const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-        
+
       const totalBenched = opponentBenched;
-      
+
       effect.damage = 10 + totalBenched * 20;
     }
     return state;

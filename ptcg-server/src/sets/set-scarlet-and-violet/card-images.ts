@@ -55,6 +55,9 @@ import { Seviper } from './seviper';
 import { Shuppet } from './shuppet';
 import { Skwovet } from './skwovet';
 import { Flittle } from './SVI_100_Flittle';
+import { Smoliv } from './SVI_21_Smoliv';
+import { Toedscool } from './SVI_25_Toedscool';
+import { Toedscruel } from './SVI_26_Toedscruel';
 import { Switch } from './switch';
 import { TeamStarGrunt } from './team-star-grunt';
 import { UltraBall } from './ultra-ball';
@@ -295,12 +298,24 @@ export class SkwovetArt extends Skwovet {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_151_R_EN_LG.png';
 }
 
+export class SmolivArt extends Smoliv {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_021_R_EN_LG.png';
+}
+
 export class SwitchArt extends Switch {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_194_R_EN_LG.png';
 }
 
 export class TeamStarGruntArt extends TeamStarGrunt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_195_R_EN_LG.png';
+}
+
+export class ToedscoolArt extends Toedscool {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_025_R_EN_LG.png';
+}
+
+export class ToedscruelArt extends Toedscruel {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_026_R_EN_LG.png';
 }
 
 export class UltraBallArt extends UltraBall {

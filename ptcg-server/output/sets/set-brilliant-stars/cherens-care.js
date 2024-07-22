@@ -32,9 +32,9 @@ function* playCard(next, store, state, effect) {
     }
     return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_PICK_UP, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: true, blocked }), targets => {
         if (targets && targets.length > 0) {
-            targets[0].moveTo(player.hand);
-            targets[0].damage = 0;
             targets[0].clearEffects();
+            targets[0].damage = 0;
+            targets[0].moveTo(player.hand);
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
     });

@@ -18,6 +18,7 @@ import { Meowth } from './UNB_147_Meowth';
 import { Lickitung } from './UNB_152_Lickitung';
 import { ElectromagneticRadar } from './UNB_169_Electromagnetic_Radar';
 import { DedenneGX } from './UNB_195_DedenneGX';
+import { Kartana } from './UNB_19_Kartana';
 import { Salazzle } from './UNB_31_Salazzle';
 import { Poliwag } from './UNB_37_Poliwag';
 import { Zeraora } from './UNB_60_Zeraora';
@@ -62,6 +63,10 @@ export class GreensExplorationArt extends GreensExploration {
 
 export class HitmontopArt extends Hitmontop {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_101_R_EN.png';
+}
+
+export class KartanaArt extends Kartana {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_019_R_EN_LG.png';
 }
 
 export class LaironArt extends Lairon {

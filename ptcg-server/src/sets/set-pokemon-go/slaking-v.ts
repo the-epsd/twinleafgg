@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { State } from '../../game/store/state/state';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage, PowerType } from '../../game';
@@ -10,7 +10,7 @@ export class SlakingV extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public cardType = CardType.COLORLESS;
 
@@ -49,9 +49,20 @@ export class SlakingV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
+    if (effect instanceof UseAttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
       const prizes = effect.player.getPrizeLeft();
+
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (prizes === 2 || prizes === 4 || prizes === 6) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);

@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, CardList, GameError, GameMessage, PlayerType } from '../../game';
+import { Stage, CardType, SpecialCondition, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType, CardList, GameError, GameMessage, PlayerType, AttachEnergyPrompt, EnergyCard, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { ConfirmCardsPrompt } from '../../game/store/prompts/confirm-cards-prompt';
@@ -105,6 +105,41 @@ export class Morpeko extends PokemonCard {
 
         }
       });
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      const hasEnergyInDiscard = player.discard.cards.some(c => {
+        return c instanceof EnergyCard
+          && c.energyType === EnergyType.BASIC;
+      });
+      if (!hasEnergyInDiscard) {
+        return state;
+      }
+
+      state = store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        player.discard,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        { allowCancel: false, min: 1, max: 2 }
+      ), transfers => {
+        transfers = transfers || [];
+        // cancelled by user
+        if (transfers.length === 0) {
+          return;
+        }
+
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.discard.moveCardTo(transfer.card, target);
+        }
+      });
+
+      return state;
     }
     return state;
   }

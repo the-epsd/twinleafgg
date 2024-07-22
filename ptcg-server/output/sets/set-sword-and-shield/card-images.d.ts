@@ -22,6 +22,7 @@ import { Ferroseed } from './SSH_130_Ferroseed';
 import { Raboot } from './SSH_32_Raboot';
 import { Cinderace } from './SSH_34_Cinderace';
 import { Centiskorch } from './SSH_39_Centiskorch';
+import { Maractus } from './SSH_7_Maractus';
 import { Welder } from './welder';
 export declare class AirBalloonArt extends AirBalloon {
     cardImage: string;
@@ -60,6 +61,9 @@ export declare class GiantHearthArt extends GiantHearth {
     cardImage: string;
 }
 export declare class InteleonArt extends Inteleon {
+    cardImage: string;
+}
+export declare class MaractusArt extends Maractus {
     cardImage: string;
 }
 export declare class MarnieArt extends Marnie {

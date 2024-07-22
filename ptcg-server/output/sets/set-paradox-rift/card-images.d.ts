@@ -38,6 +38,7 @@ import { Nacli } from './nacli';
 import { Naclstack } from './naclstack';
 import { Natu } from './natu';
 import { Zacian } from './PAR_136_Zacian';
+import { Nymble } from './PAR_13_Nymble';
 import { Flittle } from './PAR_80_Flittle';
 import { Porygon } from './porygon';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
@@ -177,6 +178,9 @@ export declare class NaclstackArt extends Naclstack {
     cardImage: string;
 }
 export declare class NatuArt extends Natu {
+    cardImage: string;
+}
+export declare class NymbleArt extends Nymble {
     cardImage: string;
 }
 export declare class PorygonArt extends Porygon {

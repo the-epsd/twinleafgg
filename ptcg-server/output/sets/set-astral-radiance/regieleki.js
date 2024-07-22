@@ -24,8 +24,8 @@ class Regieleki extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Targeted Bolt',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING],
-                damage: 120,
+                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
+                damage: 0,
                 text: 'Discard 2 [L] Energy from this Pokémon. This attack does 120 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }
         ];
@@ -43,7 +43,7 @@ class Regieleki extends pokemon_card_1.PokemonCard {
             if (!hasTrainer) {
                 return state;
             }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.TRAINER }, { min: 1, max: 1 }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.TRAINER }, { min: 1, max: 1, allowCancel: false }), selected => {
                 player.discard.moveCardTo(selected[0], player.hand);
                 return state;
             });

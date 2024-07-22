@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setPokemon151 = [
     // new AntiqueHelixFossilArt(),
     // new AlakazamexArt(),
+    new card_images_1.ArbokexArt(),
     new card_images_1.BlastoiseexArt(),
     new card_images_1.BulbasaurArt(),
     new card_images_1.CharizardexArt(),
@@ -15,6 +16,7 @@ exports.setPokemon151 = [
     new card_images_1.DodrioArt(),
     new card_images_1.DoduoArt(),
     new card_images_1.EeveeArt(),
+    new card_images_1.EkansArt(),
     new card_images_1.ElectabuzzArt(),
     new card_images_1.EnergyStickerArt(),
     new card_images_1.EreikasInvitationArt(),

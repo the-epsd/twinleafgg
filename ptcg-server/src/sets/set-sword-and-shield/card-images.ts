@@ -22,6 +22,7 @@ import { Ferroseed } from './SSH_130_Ferroseed';
 import { Raboot } from './SSH_32_Raboot';
 import { Cinderace } from './SSH_34_Cinderace';
 import { Centiskorch } from './SSH_39_Centiskorch';
+import { Maractus } from './SSH_7_Maractus';
 import { Welder } from './welder';
 
 export class AirBalloonArt extends AirBalloon {
@@ -74,6 +75,10 @@ export class GiantHearthArt extends GiantHearth {
 
 export class InteleonArt extends Inteleon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_058_R_EN_LG.png';
+}
+
+export class MaractusArt extends Maractus {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_007_R_EN_LG.png';
 }
 
 export class MarnieArt extends Marnie {

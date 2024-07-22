@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PrimeapeArt = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MankeyArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.MagikarpArt = exports.LucarioArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GyaradosexArt = exports.GrowlitheArt = exports.GardevoirexArt = exports.FlittleArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CroagunkArt = exports.CharcadetArt = exports.BeachCourtArt = exports.BanetteexArt = exports.ArvenArt = exports.ArmarougeArt = exports.ArcanineexArt = exports.AnnihilapeArt = void 0;
-exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SkwovetArt = exports.ShuppetArt = exports.SeviperArt = exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RevavroomArt = exports.RareCandyArt = void 0;
+exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.ToedscruelArt = exports.ToedscoolArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SmolivArt = exports.SkwovetArt = exports.ShuppetArt = exports.SeviperArt = exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RevavroomArt = exports.RareCandyArt = void 0;
 const annihilape_1 = require("./annihilape");
 const arcanine_ex_1 = require("./arcanine-ex");
 const armarouge_1 = require("./armarouge");
@@ -59,6 +59,9 @@ const seviper_1 = require("./seviper");
 const shuppet_1 = require("./shuppet");
 const skwovet_1 = require("./skwovet");
 const SVI_100_Flittle_1 = require("./SVI_100_Flittle");
+const SVI_21_Smoliv_1 = require("./SVI_21_Smoliv");
+const SVI_25_Toedscool_1 = require("./SVI_25_Toedscool");
+const SVI_26_Toedscruel_1 = require("./SVI_26_Toedscruel");
 const switch_1 = require("./switch");
 const team_star_grunt_1 = require("./team-star-grunt");
 const ultra_ball_1 = require("./ultra-ball");
@@ -472,6 +475,13 @@ class SkwovetArt extends skwovet_1.Skwovet {
     }
 }
 exports.SkwovetArt = SkwovetArt;
+class SmolivArt extends SVI_21_Smoliv_1.Smoliv {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_021_R_EN_LG.png';
+    }
+}
+exports.SmolivArt = SmolivArt;
 class SwitchArt extends switch_1.Switch {
     constructor() {
         super(...arguments);
@@ -486,6 +496,20 @@ class TeamStarGruntArt extends team_star_grunt_1.TeamStarGrunt {
     }
 }
 exports.TeamStarGruntArt = TeamStarGruntArt;
+class ToedscoolArt extends SVI_25_Toedscool_1.Toedscool {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_025_R_EN_LG.png';
+    }
+}
+exports.ToedscoolArt = ToedscoolArt;
+class ToedscruelArt extends SVI_26_Toedscruel_1.Toedscruel {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_026_R_EN_LG.png';
+    }
+}
+exports.ToedscruelArt = ToedscruelArt;
 class UltraBallArt extends ultra_ball_1.UltraBall {
     constructor() {
         super(...arguments);

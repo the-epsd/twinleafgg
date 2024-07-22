@@ -14,6 +14,7 @@ class HisuianBasculegion extends pokemon_card_1.PokemonCard {
         this.hp = 110;
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
+        this.evolvesFrom = 'Hisuian Basculin';
         this.attacks = [{
                 name: 'Upstream Spirits',
                 cost: [],

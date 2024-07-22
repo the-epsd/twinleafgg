@@ -11,6 +11,7 @@ import { Dreepy } from './dreepy';
 import { Dunsparce } from './dunsparce';
 import { ElesasSparkle } from './elesas-sparkle';
 import { Croagunk } from './FST_165_Croagunk';
+import { Starmie } from './FST_53_Starmie';
 import { Azumarill } from './FST_59_Azumarill';
 import { Swampert } from './FST_64_Swampert';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
@@ -129,6 +130,9 @@ export declare class ShaunaArt extends Shauna {
     cardImage: string;
 }
 export declare class ShelmetArt extends Shelmet {
+    cardImage: string;
+}
+export declare class StarmieArt extends Starmie {
     cardImage: string;
 }
 export declare class SwampertArt extends Swampert {

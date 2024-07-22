@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, EnergyType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameMessage, AttachEnergyPrompt, CardList, EnergyCard, PlayerType, SlotType, StateUtils, ShowCardsPrompt, ChooseCardsPrompt } from '../../game';
+import { StoreLike, State, GameMessage, AttachEnergyPrompt, CardList, EnergyCard, PlayerType, SlotType, StateUtils, ShowCardsPrompt, ChooseCardsPrompt, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class KyuremVMAX extends PokemonCard {
 
@@ -14,10 +15,10 @@ export class KyuremVMAX extends PokemonCard {
 
   public evolvesFrom = 'Kyurem V';
 
-  public cardType: CardType = CardType.WATER; 
+  public cardType: CardType = CardType.WATER;
 
   public cardTypez: CardType = CardType.KYUREM_VMAX;
-   
+
   public hp = 330;
 
   public weakness = [{ type: CardType.METAL }];
@@ -50,13 +51,19 @@ export class KyuremVMAX extends PokemonCard {
 
   public fullName: string = 'Kyurem VMAX LOR';
 
+  public readonly GLACIATED_WORLD_MARKER = 'GLACIATED_WORLD_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-      
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.GLACIATED_WORLD_MARKER, this);
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
-        
+
       // Prompt player to choose cards to discard 
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
@@ -73,7 +80,7 @@ export class KyuremVMAX extends PokemonCard {
         discardEnergy.target = player.active;
         store.reduceEffect(state, discardEnergy);
         player.hand.moveCardsTo(cards, player.discard);
-      
+
         // Calculate damage
         const damage = cards.length * 50;
         effect.damage += damage;
@@ -85,15 +92,21 @@ export class KyuremVMAX extends PokemonCard {
 
       const player = effect.player;
       const temp = new CardList();
-  
-  
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+      if (player.marker.hasMarker(this.GLACIATED_WORLD_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
       player.deck.moveTo(temp, 1);
-  
+
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
         return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Water Energy';
       });
-  
+
       // If no energy cards were drawn, move all cards to discard
       if (energyCardsDrawn.length == 0) {
         temp.cards.slice(0, 1).forEach(card => {
@@ -106,7 +119,7 @@ export class KyuremVMAX extends PokemonCard {
             temp.moveTo(player.discard);
           });
         });
-        
+
       } else {
 
         // Prompt to attach energy if any were drawn
@@ -119,6 +132,12 @@ export class KyuremVMAX extends PokemonCard {
           { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
           { min: 0, max: energyCardsDrawn.length, allowCancel: false }
         ), transfers => {
+
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            }
+          });
 
           // Attach energy based on prompt selection
           if (transfers) {

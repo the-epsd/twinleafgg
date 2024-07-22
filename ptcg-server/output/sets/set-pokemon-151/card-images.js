@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosexArt = exports.WartortleArt = exports.VenusaurexArt = exports.VenomothArt = exports.VenonatArt = exports.VileplumeArt = exports.StaryuArt = exports.SquirtleArt = exports.ScytherArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OddishArt = exports.MoltresArt = exports.MewexArt = exports.MagmarArt = exports.KangaskhanexArt = exports.JolteonArt = exports.IvysaurArt = exports.GrabberArt = exports.GloomArt = exports.GiovannisCharismaArt = exports.EreikasInvitationArt = exports.EnergyStickerArt = exports.EeveeArt = exports.ElectabuzzArt = exports.DoduoArt = exports.DodrioArt = exports.DittoArt = exports.CyclingRoadArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardexArt = exports.BulbasaurArt = exports.BlastoiseexArt = exports.AlakazamexArt = exports.AntiqueHelixFossilArt = void 0;
+exports.ZapdosexArt = exports.WartortleArt = exports.VenusaurexArt = exports.VenomothArt = exports.VenonatArt = exports.VileplumeArt = exports.StaryuArt = exports.SquirtleArt = exports.ScytherArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OddishArt = exports.MoltresArt = exports.MewexArt = exports.MagmarArt = exports.KangaskhanexArt = exports.JolteonArt = exports.IvysaurArt = exports.GrabberArt = exports.GloomArt = exports.GiovannisCharismaArt = exports.EreikasInvitationArt = exports.EnergyStickerArt = exports.EeveeArt = exports.ElectabuzzArt = exports.EkansArt = exports.DoduoArt = exports.DodrioArt = exports.DittoArt = exports.CyclingRoadArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardexArt = exports.BulbasaurArt = exports.BlastoiseexArt = exports.ArbokexArt = exports.AlakazamexArt = exports.AntiqueHelixFossilArt = void 0;
 const alakazam_ex_1 = require("./alakazam-ex");
 const blastoise_ex_1 = require("./blastoise-ex");
 const bulbasaur_1 = require("./bulbasaur");
@@ -37,6 +37,8 @@ const antique_helix_fossil_1 = require("./antique-helix-fossil");
 const energy_sticker_1 = require("./energy-sticker");
 const MEW_146_Moltres_1 = require("./MEW_146_Moltres");
 const staryu_1 = require("./staryu");
+const MEW_24_Arbok_ex_1 = require("./MEW_24_Arbok_ex");
+const MEW_23_Ekans_1 = require("./MEW_23_Ekans");
 class AntiqueHelixFossilArt extends antique_helix_fossil_1.AntiqueHelixFossil {
     constructor() {
         super(...arguments);
@@ -51,6 +53,13 @@ class AlakazamexArt extends alakazam_ex_1.Alakazamex {
     }
 }
 exports.AlakazamexArt = AlakazamexArt;
+class ArbokexArt extends MEW_24_Arbok_ex_1.Arbokex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_024_R_EN_LG.png';
+    }
+}
+exports.ArbokexArt = ArbokexArt;
 class BlastoiseexArt extends blastoise_ex_1.Blastoiseex {
     constructor() {
         super(...arguments);
@@ -114,6 +123,13 @@ class DoduoArt extends doduo_1.Doduo {
     }
 }
 exports.DoduoArt = DoduoArt;
+class EkansArt extends MEW_23_Ekans_1.Ekans {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_023_R_EN_LG.png';
+    }
+}
+exports.EkansArt = EkansArt;
 class ElectabuzzArt extends electabuzz_1.Electabuzz {
     constructor() {
         super(...arguments);

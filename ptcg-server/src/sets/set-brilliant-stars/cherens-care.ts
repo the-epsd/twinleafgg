@@ -42,16 +42,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { min: 1, max: 1, allowCancel: true, blocked }
   ), targets => {
     if (targets && targets.length > 0) {
-
-      targets[0].moveTo(player.hand);
-      targets[0].damage = 0;
       targets[0].clearEffects();
+      targets[0].damage = 0;
+      targets[0].moveTo(player.hand);
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
     }
   });
 }

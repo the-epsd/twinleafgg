@@ -5,6 +5,8 @@ const card_images_1 = require("./card-images");
 exports.setDarknessAblaze = [
     new card_images_1.BirdKeeperArt(),
     new card_images_1.CapeOfToughnessArt(),
+    new card_images_1.CrobatVArt(),
+    new card_images_1.CombuskenArt(),
     new card_images_1.HidingDarknessEnergyArt(),
     new card_images_1.KangaskhanArt(),
     new card_images_1.KlangArt(),

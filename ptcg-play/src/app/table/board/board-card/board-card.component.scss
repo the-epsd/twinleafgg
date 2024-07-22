@@ -1,7 +1,7 @@
 @import '../../../../theme/variables.scss';
 
 $ptcg-max-energy-cards: 8;
-$ptcg-energy-card-offset: 14%;
+$ptcg-energy-card-offset: 13%;
 
 .ptcg-board-card {
   max-width: map-get($ptcg-size, card);
@@ -20,8 +20,8 @@ $ptcg-energy-card-offset: 14%;
     padding-bottom: $card-aspect-ratio * 100%;
   }
 
-  &.face-down > div:not(.ptcg-card-counts),
-  &.face-down > ptcg-card {
+  &.face-down>div:not(.ptcg-card-counts),
+  &.face-down>ptcg-card {
     display: none;
   }
 
@@ -163,7 +163,7 @@ $ptcg-energy-card-offset: 14%;
   top: 0;
   transform: translateX(-100%);
 
-  & > div {
+  &>div {
     padding-bottom: $ptcg-board-tiny-padding;
   }
 
@@ -172,31 +172,31 @@ $ptcg-energy-card-offset: 14%;
   }
 }
 
-.holo{
+.holo {
   z-index: 2;
-  position:relative;
+  position: relative;
   max-width: map-get($ptcg-size, card);
   min-width: map-get($ptcg-size, board-card);
-  background:linear-gradient(100deg, #34DCE7 -6.37%, #7F5FFE 43.87%, #FF87A3 97.22%);
+  background: linear-gradient(100deg, #34DCE7 -6.37%, #7F5FFE 43.87%, #FF87A3 97.22%);
 }
 
-.holo::after{
-  content:'';
-  position:absolute;
-  inset:0;
+.holo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
   animation: holographic 2.4s linear infinite;
   background:
     linear-gradient(218deg, rgba(255, 255, 255, 0.00) 10.16%, #FFF 26.55%, rgba(255, 255, 255, 0.00) 41.78%, #FFF 56.62%, rgba(255, 255, 255, 0.00) 72.63%, #FFF 88.24%);
-  background-position:0%,0%;
-  background-size:200%;
-  background-repeat:no-repeat;
+  background-position: 0%, 0%;
+  background-size: 200%;
+  background-repeat: no-repeat;
   mix-blend-mode: overlay;
-  
+
 }
 
-@keyframes holographic{
-  to{
-    background-position:100%,0;
+@keyframes holographic {
+  to {
+    background-position: 100%, 0;
   }
 }
 
@@ -208,6 +208,7 @@ $ptcg-energy-card-offset: 14%;
   &.rotate-180 {
     transform: rotate(180deg);
   }
+
   &.rotate-90 {
     transform: rotate(90deg);
   }
@@ -220,7 +221,7 @@ $ptcg-energy-card-offset: 14%;
   top: 0;
   transform: translateX(100%);
 
-  & > div {
+  &>div {
     padding-bottom: $ptcg-board-tiny-padding;
   }
 

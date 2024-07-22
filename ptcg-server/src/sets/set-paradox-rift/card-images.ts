@@ -38,6 +38,7 @@ import { Nacli } from './nacli';
 import { Naclstack } from './naclstack';
 import { Natu } from './natu';
 import { Zacian } from './PAR_136_Zacian';
+import { Nymble } from './PAR_13_Nymble';
 import { Flittle } from './PAR_80_Flittle';
 import { Porygon } from './porygon';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
@@ -218,6 +219,10 @@ export class NaclstackArt extends Naclstack {
 
 export class NatuArt extends Natu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_071_R_EN_LG.png';
+}
+
+export class NymbleArt extends Nymble {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_013_R_EN_LG.png';
 }
 
 export class PorygonArt extends Porygon {

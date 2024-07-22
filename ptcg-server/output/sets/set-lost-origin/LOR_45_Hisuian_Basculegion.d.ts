@@ -10,6 +10,7 @@ export declare class HisuianBasculegion extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
+    evolvesFrom: string;
     attacks: {
         name: string;
         cost: CardType[];

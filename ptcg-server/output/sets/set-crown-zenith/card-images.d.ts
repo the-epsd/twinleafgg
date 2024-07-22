@@ -2,8 +2,10 @@ import { LostVacuum } from '../set-lost-origin/lost-vacuum';
 import { RotomV } from '../set-lost-origin/rotom-v';
 import { Absol } from './absol';
 import { Bidoof } from './bidoof';
+import { Zarude } from './CRZ_16_Zarude';
 import { Salandit } from './CRZ_27_Salandit';
 import { Zacian } from './CRZ_94_Zacian';
+import { Yanmega } from './CRZ_9_Yanmega';
 import { Hoopa } from './hoopa';
 import { Kyogre } from './kyogre';
 import { Luxray } from './luxray';
@@ -64,6 +66,9 @@ export declare class SalanditArt extends Salandit {
 export declare class WailmerArt extends Wailmer {
     cardImage: string;
 }
+export declare class YanmegaArt extends Yanmega {
+    cardImage: string;
+}
 export declare class ZacianArt extends Zacian {
     cardImage: string;
 }
@@ -74,5 +79,8 @@ export declare class ZamazentaArt extends Zamazenta {
     cardImage: string;
 }
 export declare class ZamazentaVArt extends ZamazentaV {
+    cardImage: string;
+}
+export declare class ZarudeArt extends Zarude {
     cardImage: string;
 }

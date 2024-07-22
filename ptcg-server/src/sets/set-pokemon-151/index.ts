@@ -1,10 +1,11 @@
 import { Card } from '../../game/store/card/card';
-import { BlastoiseexArt, BulbasaurArt, CharizardexArt, CharmanderArt, CharmeleonArt, CyclingRoadArt, DittoArt, DodrioArt, DoduoArt, EeveeArt, ElectabuzzArt, EnergyStickerArt, EreikasInvitationArt, GiovannisCharismaArt, GloomArt, GrabberArt, IvysaurArt, JolteonArt, KangaskhanexArt, MagmarArt, MewexArt, MoltresArt, OddishArt, PidgeottoArt, PidgeyArt, ScytherArt, SquirtleArt, StaryuArt, VenomothArt, VenonatArt, VenusaurexArt, VileplumeArt, WartortleArt, ZapdosexArt } from './card-images';
+import { ArbokexArt, BlastoiseexArt, BulbasaurArt, CharizardexArt, CharmanderArt, CharmeleonArt, CyclingRoadArt, DittoArt, DodrioArt, DoduoArt, EeveeArt, EkansArt, ElectabuzzArt, EnergyStickerArt, EreikasInvitationArt, GiovannisCharismaArt, GloomArt, GrabberArt, IvysaurArt, JolteonArt, KangaskhanexArt, MagmarArt, MewexArt, MoltresArt, OddishArt, PidgeottoArt, PidgeyArt, ScytherArt, SquirtleArt, StaryuArt, VenomothArt, VenonatArt, VenusaurexArt, VileplumeArt, WartortleArt, ZapdosexArt } from './card-images';
 
 export const setPokemon151: Card[] = [
 
   // new AntiqueHelixFossilArt(),
   // new AlakazamexArt(),
+  new ArbokexArt(),
   new BlastoiseexArt(),
   new BulbasaurArt(),
   new CharizardexArt(),
@@ -15,6 +16,7 @@ export const setPokemon151: Card[] = [
   new DodrioArt(),
   new DoduoArt(),
   new EeveeArt(),
+  new EkansArt(),
   new ElectabuzzArt(),
   new EnergyStickerArt(),
   new EreikasInvitationArt(),

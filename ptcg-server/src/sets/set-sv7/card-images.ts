@@ -7,6 +7,7 @@ import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
 import { Briar } from './briar';
 import { Cassiopeia } from './cassiopeia';
 import { ColresssObsession } from './colresss-obsession';
+import { Comfey } from './comfey';
 import { Copperajah } from './copperajah';
 import { Cresselia } from './cresselia';
 import { Crispin } from './crispin';
@@ -14,13 +15,17 @@ import { Cufant } from './cufant';
 import { DangerousLaser } from './dangerous-laser';
 import { Dartrix } from './dartrix';
 import { Decidueye } from './decidueye';
+import { Drednaw } from './drednaw';
+import { Drifblim } from './drifblim';
 import { Dusclops } from './dusclops';
 import { Dusknoir } from './dusknoir';
 import { Duskull } from './duskull';
 import { FanRotom } from './fan-rotom';
 import { Fezandipitiex } from './fezandipiti-ex';
 import { Fraxure } from './fraxure';
+import { Galvantula } from './galvantula';
 import { Genesect } from './genesect';
+import { GlassTrumpet } from './glass-trumpet';
 import { GlisteningCrystal } from './glistening-crystal';
 import { GreatTree } from './great-tree';
 import { Haxorus } from './haxorus';
@@ -29,6 +34,7 @@ import { Horsea } from './horsea';
 import { Houndoom } from './houndoom';
 import { Houndour } from './houndour';
 import { Hydrappleex } from './hydrapple-ex';
+import { IronMoth } from './iron-moth';
 import { JaninesSecretTechnique } from './janines-secret-technique';
 import { Joltik } from './joltik';
 import { Kingdraex } from './kingdra-ex';
@@ -48,9 +54,12 @@ import { Revavroomex } from './revavroom-ex';
 import { Rowlet } from './rowlet';
 import { Seadra } from './seadra';
 import { SlitherWing } from './slither-wing';
+import { Sneasel } from './sneasel';
 import { TapuBulu } from './tapu-bulu';
 import { Terapagosex } from './terapagos-ex';
+import { Weavile } from './weavile';
 import { XerosicsScheme } from './xerosics-scheme';
+import { Zeraora } from './zeraora';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 
@@ -90,6 +99,10 @@ export class ColresssObsessionArt extends ColresssObsession {
   public cardImage = 'https://pokemonproxies.com/static/media/Colress\'s_Tenacity-059-6a.090977514fede0a7fe80.png';
 }
 
+export class ComfeyArt extends Comfey {
+  public cardImage = 'https://pokemonproxies.com/static/media/Comfey-042-7i.3c367e14629bbd9b9480.png';
+}
+
 export class CopperajahArt extends Copperajah {
   public cardImage = 'https://pokemonproxies.com/static/media/Copperajah-042-6a.32ecdd1229654dc9deb2.png';
 }
@@ -118,6 +131,14 @@ export class DecidueyeArt extends Decidueye {
   public cardImage = 'https://pokemonproxies.com/static/media/Decidueye-005-6a.378b5484c93da50a623c.png';
 }
 
+export class DrednawArt extends Drednaw {
+  public cardImage = 'https://pokemonproxies.com/static/media/Drednaw-026-7i.cd5800cb9f60925679bf.png';
+}
+
+export class DrifblimArt extends Drifblim {
+  public cardImage = 'https://pokemonproxies.com/static/media/Drifblim-041-7i.cc17a7ddb11c0b661a96.png';
+}
+
 export class DusclopsArt extends Dusclops {
   public cardImage = 'https://pokemonproxies.com/static/media/Dusclops-019-6a.f17ae1062b12d2de8626.png';
 }
@@ -142,8 +163,16 @@ export class FraxureArt extends Fraxure {
   public cardImage = 'https://pokemonproxies.com/static/media/Fraxure-045-6a.04ccea2c24cbff601c6a.png';
 }
 
+export class GalvantulaArt extends Galvantula {
+  public cardImage = 'https://pokemonproxies.com/static/media/Galvantula-002-6a.51aa64d8c6b46ac99766.png';
+}
+
 export class GenesectArt extends Genesect {
   public cardImage = 'https://pokemonproxies.com/static/media/Genesect-040-6a.d7db741d7b9c4dce0401.png';
+}
+
+export class GlassTrumpetArt extends GlassTrumpet {
+  public cardImage = 'https://pokemonproxies.com/static/media/Glass_Trumpet-089-7i.6013d3d8376ecbed9551.png';
 }
 
 export class GlisteningCrystalArt extends GlisteningCrystal {
@@ -176,6 +205,10 @@ export class HoundourArt extends Houndour {
 
 export class HydrappleexArt extends Hydrappleex {
   public cardImage = 'https://pokemonproxies.com/static/media/Hydrapple_ex-012-7i.e2c45437bfdb2e889822.png';
+}
+
+export class IronMothArt extends IronMoth {
+  public cardImage = 'https://pokemonproxies.com/static/media/Iron_Moth-009-6a.31031edc28831e2e7dcd.png';
 }
 
 export class JaninesSecretTechniqueArt extends JaninesSecretTechnique {
@@ -254,6 +287,10 @@ export class SlitherWingArt extends SlitherWing {
   public cardImage = 'https://pokemonproxies.com/static/media/Slither_Wing-026-6a.ddab1d9190216017f3ad.png';
 }
 
+export class SneaselArt extends Sneasel {
+  public cardImage = 'https://pokemonproxies.com/static/media/Sneasel-013-6a.a79d8371273295ea0d92.png';
+}
+
 export class TapuBuluArt extends TapuBulu {
   public cardImage = 'https://pokemonproxies.com/static/media/Tapu_Bulu-006-6a.de6a90788c5ce21f61e9.png';
 }
@@ -262,8 +299,16 @@ export class TerapagosexArt extends Terapagosex {
   public cardImage = 'https://pokemonproxies.com/static/media/Terapagos_ex-088-7i.bbfe9ae7bc8e365c6a29.png';
 }
 
+export class WeavileArt extends Weavile {
+  public cardImage = 'https://pokemonproxies.com/static/media/Weavile-014-6a.82d75ae4ee43bab05123.png';
+}
+
 export class XerosicsSchemeArt extends XerosicsScheme {
   public cardImage = 'https://pokemonproxies.com/static/media/Xerosic\'s_Machinations-062 - 6a.106ba5c1c488278fc7ab.png';
+}
+
+export class ZeraoraArt extends Zeraora {
+  public cardImage = 'https://pokemonproxies.com/static/media/Zeroaora-037-7i.75e7fd854d32181b00d6.png';
 }
 
 export class ZoroarkArt extends Zoroark {

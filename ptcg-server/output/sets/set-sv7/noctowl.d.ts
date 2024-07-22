@@ -30,5 +30,6 @@ export declare class Noctowl extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly JEWEL_HUNT_MARKER = "JEWEL_HUNT_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
