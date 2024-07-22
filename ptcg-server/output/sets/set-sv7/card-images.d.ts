@@ -6,6 +6,7 @@ import { BindingMochi } from './binding-mochi';
 import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
 import { Briar } from './briar';
 import { Cassiopeia } from './cassiopeia';
+import { Cinderaceex } from './cinderace-ex';
 import { ColresssObsession } from './colresss-obsession';
 import { Comfey } from './comfey';
 import { Copperajah } from './copperajah';
@@ -50,8 +51,10 @@ import { Orthwormex } from './orthworm-ex';
 import { Pecharuntex } from './pecharunt-ex';
 import { PokeVitalA } from './pokevital-a';
 import { PowerHourglass } from './power-hourglass';
+import { Raboot } from './raboot';
 import { Revavroomex } from './revavroom-ex';
 import { Rowlet } from './rowlet';
+import { Scorbunny } from './scorbunny';
 import { Seadra } from './seadra';
 import { SlitherWing } from './slither-wing';
 import { Sneasel } from './sneasel';
@@ -96,6 +99,9 @@ export declare class CopperajahArt extends Copperajah {
     cardImage: string;
 }
 export declare class CresseliaArt extends Cresselia {
+    cardImage: string;
+}
+export declare class CinderaceexArt extends Cinderaceex {
     cardImage: string;
 }
 export declare class CrispinArt extends Crispin {
@@ -218,10 +224,16 @@ export declare class PokeVitalAArt extends PokeVitalA {
 export declare class PowerHourglassArt extends PowerHourglass {
     cardImage: string;
 }
+export declare class RabootArt extends Raboot {
+    cardImage: string;
+}
 export declare class RevavroomexArt extends Revavroomex {
     cardImage: string;
 }
 export declare class RowletArt extends Rowlet {
+    cardImage: string;
+}
+export declare class ScorbunnyArt extends Scorbunny {
     cardImage: string;
 }
 export declare class SeadraArt extends Seadra {

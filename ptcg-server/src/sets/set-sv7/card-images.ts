@@ -6,6 +6,7 @@ import { BindingMochi } from './binding-mochi';
 import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
 import { Briar } from './briar';
 import { Cassiopeia } from './cassiopeia';
+import { Cinderaceex } from './cinderace-ex';
 import { ColresssObsession } from './colresss-obsession';
 import { Comfey } from './comfey';
 import { Copperajah } from './copperajah';
@@ -50,8 +51,10 @@ import { Orthwormex } from './orthworm-ex';
 import { Pecharuntex } from './pecharunt-ex';
 import { PokeVitalA } from './pokevital-a';
 import { PowerHourglass } from './power-hourglass';
+import { Raboot } from './raboot';
 import { Revavroomex } from './revavroom-ex';
 import { Rowlet } from './rowlet';
+import { Scorbunny } from './scorbunny';
 import { Seadra } from './seadra';
 import { SlitherWing } from './slither-wing';
 import { Sneasel } from './sneasel';
@@ -109,6 +112,10 @@ export class CopperajahArt extends Copperajah {
 
 export class CresseliaArt extends Cresselia {
   public cardImage = 'https://pokemonproxies.com/static/media/Cresselia-021-6a.6b3cc4ace9e5c8122200.png';
+}
+
+export class CinderaceexArt extends Cinderaceex {
+  public cardImage = 'https://pokemonproxies.com/static/media/Cinderace_ex-018-7i.74a6a213db40e77a809a.png';
 }
 
 export class CrispinArt extends Crispin {
@@ -271,12 +278,20 @@ export class PowerHourglassArt extends PowerHourglass {
   public cardImage = 'https://pokemonproxies.com/static/media/Power_Hourglass-058-6a.9152e3faa551dc1347d5.png';
 }
 
+export class RabootArt extends Raboot {
+  public cardImage = 'https://pokemonproxies.com/static/media/Raboot-017-7i.6a3fe499f68d0614a898.png';
+}
+
 export class RevavroomexArt extends Revavroomex {
   public cardImage = 'https://pokemonproxies.com/static/media/Revavroom_ex-015-6a.00156a2092b7eb5fd0d6.png';
 }
 
 export class RowletArt extends Rowlet {
   public cardImage = 'https://pokemonproxies.com/static/media/Rowlet-003-6a.7f5ef22d0a924de25052.png';
+}
+
+export class ScorbunnyArt extends Scorbunny {
+  public cardImage = 'https://pokemonproxies.com/static/media/Scorbunny-016-7i.a42e02eebec84f8ae054.png';
 }
 
 export class SeadraArt extends Seadra {

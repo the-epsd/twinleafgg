@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AbsolArt, ArchaludonArt, AreaZeroUnderdepthsArt, AxewArt, BindingMochiArt, BloodmoonUrsalunaArt, BriarArt, CassiopeiaArt, ColresssObsessionArt, CopperajahArt, CresseliaArt, CrispinArt, CufantArt, DangerousLaserArt, DartrixArt, DecidueyeArt, DrednawArt, DrifblimArt, DusclopsArt, DusknoirArt, DuskullArt, FanRotomArt, FezandipitiexArt, FraxureArt, GalvantulaArt, GlassTrumpetArt, GlisteningCrystalArt, GreatTreeArt, HaxorusArt, HoothootArt, HorseaArt, HoundoomArt, HoundourArt, HydrappleexArt, IronMothArt, JaninesSecretTechniqueArt, JoltikArt, KingdraexArt, KyuremArt, LaprasexArt, MunkidoriexArt, NeutralCenterArt, NightTimeAcademyArt, NightlyStretcherArt, NoctowlArt, OkidogiexArt, PecharuntexArt, PokeVitalAArt, PowerHourglassArt, RevavroomexArt, RowletArt, SeadraArt, SlitherWingArt, SneaselArt, TapuBuluArt, TerapagosexArt, WeavileArt, XerosicsSchemeArt, ZeraoraArt, ZoroarkArt, ZoruaArt } from './card-images';
+import { AbsolArt, ArchaludonArt, AreaZeroUnderdepthsArt, AxewArt, BindingMochiArt, BloodmoonUrsalunaArt, BriarArt, CassiopeiaArt, CinderaceexArt, ColresssObsessionArt, CopperajahArt, CresseliaArt, CrispinArt, CufantArt, DangerousLaserArt, DartrixArt, DecidueyeArt, DrednawArt, DrifblimArt, DusclopsArt, DusknoirArt, DuskullArt, FanRotomArt, FezandipitiexArt, FraxureArt, GalvantulaArt, GlassTrumpetArt, GlisteningCrystalArt, GreatTreeArt, HaxorusArt, HoothootArt, HorseaArt, HoundoomArt, HoundourArt, HydrappleexArt, IronMothArt, JaninesSecretTechniqueArt, JoltikArt, KingdraexArt, KyuremArt, LaprasexArt, MunkidoriexArt, NeutralCenterArt, NightTimeAcademyArt, NightlyStretcherArt, NoctowlArt, OkidogiexArt, PecharuntexArt, PokeVitalAArt, PowerHourglassArt, RabootArt, RevavroomexArt, RowletArt, ScorbunnyArt, SeadraArt, SlitherWingArt, SneaselArt, TapuBuluArt, TerapagosexArt, WeavileArt, XerosicsSchemeArt, ZeraoraArt, ZoroarkArt, ZoruaArt } from './card-images';
 
 export const setSV7: Card[] = [
   new AbsolArt(),
@@ -10,6 +10,7 @@ export const setSV7: Card[] = [
   new BloodmoonUrsalunaArt(),
   new BriarArt(),
   new CassiopeiaArt(),
+  new CinderaceexArt(),
   new ColresssObsessionArt(),
   new CopperajahArt(),
   new CresseliaArt(),
@@ -53,8 +54,10 @@ export const setSV7: Card[] = [
   new PecharuntexArt(),
   new PokeVitalAArt(),
   new PowerHourglassArt(),
+  new RabootArt(),
   new RevavroomexArt(),
   new RowletArt(),
+  new ScorbunnyArt(),
   new SeadraArt(),
   new SlitherWingArt(),
   new SneaselArt(),

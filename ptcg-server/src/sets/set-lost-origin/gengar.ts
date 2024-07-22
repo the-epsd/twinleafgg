@@ -84,21 +84,22 @@ export class Gengar extends PokemonCard {
         player.discard.moveCardTo(card, slots[index]);
         slots[index].damage += 30; // Add 30 damage
       });
-
-      if (effect instanceof EndTurnEffect) {
-        effect.player.marker.removeMarker(this.NETHERWORLD_GATE_MARKER, this);
-      }
-
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const opponent = StateUtils.getOpponent(state, player);
-        const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-        const attackEffect = effect as AttackEffect;
-        const damageEffect = new PutDamageEffect(attackEffect, opponentBenched * 20);
-        return store.reduceEffect(state, damageEffect);
-      }
-
-      return state;
     }
+
+    if (effect instanceof EndTurnEffect) {
+      effect.player.marker.removeMarker(this.NETHERWORLD_GATE_MARKER, this);
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+      const attackEffect = effect as AttackEffect;
+      const damageEffect = new PutDamageEffect(attackEffect, opponentBenched * 20);
+      return store.reduceEffect(state, damageEffect);
+    }
+
     return state;
   }
 }
+
