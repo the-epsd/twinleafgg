@@ -28,6 +28,7 @@ exports.setObsidianFlames = [
     new card_images_1.RymeArt(),
     new card_images_1.ScizorArt(),
     new card_images_1.ThundurusArt(),
+    new card_images_1.ToedscruelexArt(),
     new card_images_1.TownStoreArt(),
     new card_images_1.VengefulPunchArt(),
     new card_images_1.BelliboltArt(),

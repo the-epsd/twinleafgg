@@ -13,6 +13,7 @@ import { Finizen } from './finizen';
 import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Lunatone } from './lunatone';
 import { Oddish } from './OBF_1_Oddish';
+import { Toedscruelex } from './OBF_22_Toedscruel_ex';
 import { Ninetales } from './OBF_29_Ninetales';
 import { Palafin } from './palafin';
 import { Pidgeotex } from './pidgeot-ex';
@@ -102,6 +103,9 @@ export declare class ScizorArt extends Scizor {
     cardImage: string;
 }
 export declare class ThundurusArt extends Thundurus {
+    cardImage: string;
+}
+export declare class ToedscruelexArt extends Toedscruelex {
     cardImage: string;
 }
 export declare class TownStoreArt extends TownStore {

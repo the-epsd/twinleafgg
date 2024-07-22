@@ -34,10 +34,15 @@ import { AntiqueHelixFossil } from './antique-helix-fossil';
 import { EnergySticker } from './energy-sticker';
 import { Moltres } from './MEW_146_Moltres';
 import { Staryu } from './staryu';
+import { Arbokex } from './MEW_24_Arbok_ex';
+import { Ekans } from './MEW_23_Ekans';
 export declare class AntiqueHelixFossilArt extends AntiqueHelixFossil {
     cardImage: string;
 }
 export declare class AlakazamexArt extends Alakazamex {
+    cardImage: string;
+}
+export declare class ArbokexArt extends Arbokex {
     cardImage: string;
 }
 export declare class BlastoiseexArt extends Blastoiseex {
@@ -65,6 +70,9 @@ export declare class DodrioArt extends Dodrio {
     cardImage: string;
 }
 export declare class DoduoArt extends Doduo {
+    cardImage: string;
+}
+export declare class EkansArt extends Ekans {
     cardImage: string;
 }
 export declare class ElectabuzzArt extends Electabuzz {
