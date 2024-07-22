@@ -4,8 +4,8 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
-import { ChoosePokemonPrompt, GameError, PlayerType, SelectPrompt, SlotType } from '../../game';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
+import { ChoosePokemonPrompt, GameError, PlayerType, SelectPrompt, SlotType, StateUtils } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
@@ -25,7 +25,7 @@ export class Kieran extends TrainerCard {
 
   public fullName: string = 'Kieran TWM';
 
-  private readonly LEON_MARKER = 'LEON_MARKER';
+  private readonly KIERAN_MARKER = 'KIERAN_MARKER';
 
   public text: string =
     'Choose 1:' +
@@ -35,8 +35,19 @@ export class Kieran extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.LEON_MARKER, this);
+      effect.player.marker.removeMarker(this.KIERAN_MARKER, this);
       return state;
+    }
+
+    if (effect instanceof DealDamageEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const opponentActive = opponent.active.getPokemonCard();
+      if (player.marker.hasMarker(this.KIERAN_MARKER, this) && effect.damage > 0) {
+        if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_V) || (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VSTAR)) || (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VMAX)) || (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_EX))) {
+          effect.damage += 30;
+        }
+      }
     }
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -74,16 +85,9 @@ export class Kieran extends TrainerCard {
         {
           message: GameMessage.INCREASE_DAMAGE_BY_30_AGAINST_OPPONENTS_EX_AND_V_POKEMON,
           action: () => {
-
-            player.marker.addMarker(this.LEON_MARKER, this);
-
-            if (effect instanceof DealDamageEffect) {
-              const marker = effect.player.marker;
-              if (marker.hasMarker(this.LEON_MARKER, this) && effect.damage > 0) {
-                effect.damage += 30;
-              }
-              return state;
-            }
+            player.marker.addMarker(this.KIERAN_MARKER, this);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            return state;
           }
         }
       ];
@@ -106,7 +110,4 @@ export class Kieran extends TrainerCard {
     }
     return state;
   }
-
-
-
 }

@@ -18,15 +18,25 @@ class Kieran extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.name = 'Kieran';
         this.fullName = 'Kieran TWM';
-        this.LEON_MARKER = 'LEON_MARKER';
+        this.KIERAN_MARKER = 'KIERAN_MARKER';
         this.text = 'Choose 1:' +
             '• Switch your Active Pokémon with 1 of your Benched Pokémon.' +
             '• Your Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon ex and Pokémon V this turn.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.LEON_MARKER, this);
+            effect.player.marker.removeMarker(this.KIERAN_MARKER, this);
             return state;
+        }
+        if (effect instanceof attack_effects_1.DealDamageEffect) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const opponentActive = opponent.active.getPokemonCard();
+            if (player.marker.hasMarker(this.KIERAN_MARKER, this) && effect.damage > 0) {
+                if (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_V) || (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_VSTAR)) || (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) || (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_EX))) {
+                    effect.damage += 30;
+                }
+            }
         }
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
@@ -52,14 +62,9 @@ class Kieran extends trainer_card_1.TrainerCard {
                 {
                     message: game_message_1.GameMessage.INCREASE_DAMAGE_BY_30_AGAINST_OPPONENTS_EX_AND_V_POKEMON,
                     action: () => {
-                        player.marker.addMarker(this.LEON_MARKER, this);
-                        if (effect instanceof attack_effects_1.DealDamageEffect) {
-                            const marker = effect.player.marker;
-                            if (marker.hasMarker(this.LEON_MARKER, this) && effect.damage > 0) {
-                                effect.damage += 30;
-                            }
-                            return state;
-                        }
+                        player.marker.addMarker(this.KIERAN_MARKER, this);
+                        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                        return state;
                     }
                 }
             ];

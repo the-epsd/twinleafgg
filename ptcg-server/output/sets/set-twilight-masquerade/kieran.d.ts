@@ -11,7 +11,7 @@ export declare class Kieran extends TrainerCard {
     regulationMark: string;
     name: string;
     fullName: string;
-    private readonly LEON_MARKER;
+    private readonly KIERAN_MARKER;
     text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
