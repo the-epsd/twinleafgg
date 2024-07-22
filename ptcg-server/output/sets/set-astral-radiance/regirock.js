@@ -45,7 +45,7 @@ class Regirock extends pokemon_card_1.PokemonCard {
             {
                 name: 'Giga Impact',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
-                damage: 100,
+                damage: 140,
                 text: 'During your next turn, this Pokémon can\'t attack.'
             }
         ];

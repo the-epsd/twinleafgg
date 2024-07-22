@@ -4,9 +4,10 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardTag, TrainerType } from '../../game/store/card/card-types';
-import { ChoosePokemonPrompt, GameError, PlayerType, SelectPrompt, SlotType, StateUtils } from '../../game';
+import { TrainerType } from '../../game/store/card/card-types';
+import { ChoosePokemonPrompt, GameError, PlayerType, SelectPrompt, SlotType } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Kieran extends TrainerCard {
 
@@ -24,6 +25,8 @@ export class Kieran extends TrainerCard {
 
   public fullName: string = 'Kieran TWM';
 
+  private readonly LEON_MARKER = 'LEON_MARKER';
+
   public text: string =
     'Choose 1:' +
     '• Switch your Active Pokémon with 1 of your Benched Pokémon.' +
@@ -31,8 +34,12 @@ export class Kieran extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (effect instanceof EndTurnEffect) {
+      effect.player.marker.removeMarker(this.LEON_MARKER, this);
+      return state;
+    }
 
+    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
       const supporterTurn = player.supporterTurn;
@@ -67,19 +74,20 @@ export class Kieran extends TrainerCard {
         {
           message: GameMessage.INCREASE_DAMAGE_BY_30_AGAINST_OPPONENTS_EX_AND_V_POKEMON,
           action: () => {
+
+            player.marker.addMarker(this.LEON_MARKER, this);
+
             if (effect instanceof DealDamageEffect) {
-              const opponent = StateUtils.getOpponent(state, effect.player);
-              const targetPokemon = opponent.active.getPokemonCard();
-              if (targetPokemon && (targetPokemon.tags.includes(CardTag.POKEMON_EX) || targetPokemon.tags.includes(CardTag.POKEMON_V))) {
+              const marker = effect.player.marker;
+              if (marker.hasMarker(this.LEON_MARKER, this) && effect.damage > 0) {
                 effect.damage += 30;
               }
+              return state;
             }
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            return state;
           }
         }
       ];
-
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
       const hasBench = player.bench.some(b => b.cards.length > 0);
 
       if (!hasBench) {

@@ -39,7 +39,7 @@ function* useRegiGate(next: Function, store: StoreLike, state: State,
 export class Regirock extends PokemonCard {
 
   public cardType = CardType.FIGHTING;
-  
+
   public stage = Stage.BASIC;
 
   public hp = 130;
@@ -59,8 +59,8 @@ export class Regirock extends PokemonCard {
     },
     {
       name: 'Giga Impact',
-      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS], 
-      damage: 100,
+      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
+      damage: 140,
       text: 'During your next turn, this Pokémon can\'t attack.'
     }
   ];
@@ -79,7 +79,7 @@ export class Regirock extends PokemonCard {
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER || this.ATTACK_USED_2_MARKER)) {
@@ -100,7 +100,7 @@ export class Regirock extends PokemonCard {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const generator = useRegiGate(() => generator.next(), store, state, effect);
       return generator.next().value;
@@ -112,6 +112,6 @@ export class Regirock extends PokemonCard {
     }
 
     return state;
-    
+
   }
 }

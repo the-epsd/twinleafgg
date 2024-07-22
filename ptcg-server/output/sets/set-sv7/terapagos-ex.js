@@ -42,7 +42,7 @@ class Terapagosex extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            if (state.turn >= 2) {
+            if (state.turn <= 2) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
             }
             const player = effect.player;
