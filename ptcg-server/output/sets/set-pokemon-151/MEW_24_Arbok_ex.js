@@ -52,8 +52,8 @@ class Arbokex extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             if (opponent.hand.cards.length < 2) {
-                const cards = player.hand.cards;
-                player.hand.moveCardsTo(cards, player.discard);
+                const cards = opponent.hand.cards;
+                opponent.hand.moveCardsTo(cards, player.discard);
                 return state;
             }
             store.prompt(state, new game_1.ChooseCardsPrompt(opponent.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: 2, max: 2, allowCancel: false }), selected => {

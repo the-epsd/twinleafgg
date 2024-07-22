@@ -58,8 +58,8 @@ export class Arbokex extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       if (opponent.hand.cards.length < 2) {
-        const cards = player.hand.cards;
-        player.hand.moveCardsTo(cards, player.discard);
+        const cards = opponent.hand.cards;
+        opponent.hand.moveCardsTo(cards, player.discard);
         return state;
       }
 
