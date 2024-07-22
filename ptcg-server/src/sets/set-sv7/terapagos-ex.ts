@@ -54,7 +54,7 @@ export class Terapagosex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
-      if (state.turn >= 2) {
+      if (state.turn <= 2) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 

@@ -32,5 +32,6 @@ export declare class KyuremVMAX extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly GLACIATED_WORLD_MARKER = "GLACIATED_WORLD_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -7,6 +7,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Kieran extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -17,11 +18,26 @@ class Kieran extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.name = 'Kieran';
         this.fullName = 'Kieran TWM';
+        this.KIERAN_MARKER = 'KIERAN_MARKER';
         this.text = 'Choose 1:' +
             '• Switch your Active Pokémon with 1 of your Benched Pokémon.' +
             '• Your Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon ex and Pokémon V this turn.';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.marker.removeMarker(this.KIERAN_MARKER, this);
+            return state;
+        }
+        if (effect instanceof attack_effects_1.DealDamageEffect) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const opponentActive = opponent.active.getPokemonCard();
+            if (player.marker.hasMarker(this.KIERAN_MARKER, this) && effect.damage > 0) {
+                if (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_V) || (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_VSTAR)) || (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) || (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_EX))) {
+                    effect.damage += 30;
+                }
+            }
+        }
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const supporterTurn = player.supporterTurn;
@@ -46,18 +62,13 @@ class Kieran extends trainer_card_1.TrainerCard {
                 {
                     message: game_message_1.GameMessage.INCREASE_DAMAGE_BY_30_AGAINST_OPPONENTS_EX_AND_V_POKEMON,
                     action: () => {
-                        if (effect instanceof attack_effects_1.DealDamageEffect) {
-                            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-                            const targetPokemon = opponent.active.getPokemonCard();
-                            if (targetPokemon && (targetPokemon.tags.includes(card_types_1.CardTag.POKEMON_EX) || targetPokemon.tags.includes(card_types_1.CardTag.POKEMON_V))) {
-                                effect.damage += 30;
-                            }
-                        }
+                        player.marker.addMarker(this.KIERAN_MARKER, this);
                         player.supporter.moveCardTo(effect.trainerCard, player.discard);
                         return state;
                     }
                 }
             ];
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
             const hasBench = player.bench.some(b => b.cards.length > 0);
             if (!hasBench) {
                 options.splice(1, 1);

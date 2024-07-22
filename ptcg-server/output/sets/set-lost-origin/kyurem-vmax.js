@@ -7,6 +7,7 @@ const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class KyuremVMAX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -36,8 +37,13 @@ class KyuremVMAX extends pokemon_card_1.PokemonCard {
         this.setNumber = '48';
         this.name = 'Kyurem VMAX';
         this.fullName = 'Kyurem VMAX LOR';
+        this.GLACIATED_WORLD_MARKER = 'GLACIATED_WORLD_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+            const player = effect.player;
+            player.marker.removeMarker(this.GLACIATED_WORLD_MARKER, this);
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             // Prompt player to choose cards to discard 
@@ -59,6 +65,12 @@ class KyuremVMAX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const temp = new game_1.CardList();
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
+            if (player.marker.hasMarker(this.GLACIATED_WORLD_MARKER, this)) {
+                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+            }
             player.deck.moveTo(temp, 1);
             // Check if any cards drawn are basic energy
             const energyCardsDrawn = temp.cards.filter(card => {
@@ -76,6 +88,11 @@ class KyuremVMAX extends pokemon_card_1.PokemonCard {
                 // Prompt to attach energy if any were drawn
                 return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, temp, // Only show drawn energies
                 game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: energyCardsDrawn.length, allowCancel: false }), transfers => {
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        }
+                    });
                     // Attach energy based on prompt selection
                     if (transfers) {
                         for (const transfer of transfers) {

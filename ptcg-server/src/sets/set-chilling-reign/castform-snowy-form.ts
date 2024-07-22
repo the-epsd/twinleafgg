@@ -38,6 +38,13 @@ export class CastformSnowyForm extends PokemonCard {
   public name: string = 'Castform Snowy Form';
   public fullName: string = 'Castform Snowy Form CRE';
 
+  public getColorlessReduction(state: State): number {
+    const player = state.players[state.activePlayer];
+    const stadiumsInDiscard = player.discard.cards.filter(c => c instanceof TrainerCard && (<TrainerCard>c).trainerType === TrainerType.STADIUM).length
+
+    return stadiumsInDiscard >= 8 ? 2 : 0;
+  }
+
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
@@ -68,26 +75,34 @@ export class CastformSnowyForm extends PokemonCard {
 
     if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
-      console.log('Number of stadiums in discard pile: ' + player.discard.cards.filter(c => c instanceof TrainerCard && (<TrainerCard>c).trainerType === TrainerType.STADIUM).length);
+      const stadiumsInDiscard = player.discard.cards.filter(c => c instanceof TrainerCard && (<TrainerCard>c).trainerType === TrainerType.STADIUM).length
 
-      if (player.discard.cards.filter(c => c instanceof TrainerCard && (<TrainerCard>c).trainerType === TrainerType.STADIUM).length >= 8) {
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
+      if (stadiumsInDiscard >= 8) {
+
+        const costToRemove = 3;
+
+        for (let i = 0; i < costToRemove; i++) {
+          let index = effect.cost.indexOf(CardType.COLORLESS);
+          if (index !== -1) {
+            effect.cost.splice(index, 1);
+          } else {
+            index = effect.cost.indexOf(CardType.WATER);
+            if (index !== -1) {
+              effect.cost.splice(index, 1);
+            }
+          }
         }
-
-        this.attacks.forEach(attack => {
-          attack.cost = [];
-        });
-        return state;
-      } else {
-        return state;
       }
     }
 
