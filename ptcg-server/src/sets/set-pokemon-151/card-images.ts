@@ -34,6 +34,8 @@ import { AntiqueHelixFossil } from './antique-helix-fossil';
 import { EnergySticker } from './energy-sticker';
 import { Moltres } from './MEW_146_Moltres';
 import { Staryu } from './staryu';
+import { Arbokex } from './MEW_24_Arbok_ex';
+import { Ekans } from './MEW_23_Ekans';
 
 export class AntiqueHelixFossilArt extends AntiqueHelixFossil {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_153_R_EN.png';
@@ -41,6 +43,10 @@ export class AntiqueHelixFossilArt extends AntiqueHelixFossil {
 
 export class AlakazamexArt extends Alakazamex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_065_R_EN_LG.png';
+}
+
+export class ArbokexArt extends Arbokex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_024_R_EN_LG.png';
 }
 
 export class BlastoiseexArt extends Blastoiseex {
@@ -77,6 +83,10 @@ export class DodrioArt extends Dodrio {
 
 export class DoduoArt extends Doduo {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_084_R_EN_LG.png';
+}
+
+export class EkansArt extends Ekans {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_023_R_EN_LG.png';
 }
 
 export class ElectabuzzArt extends Electabuzz {
