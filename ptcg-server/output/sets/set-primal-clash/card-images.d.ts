@@ -5,6 +5,7 @@ import { DiveBall } from './dive-ball';
 import { MaxiesHiddenBallTrick } from './maxies-hidden-ball-trick';
 import { Milotic } from './milotic';
 import { Slugma } from './PRC_22_Slugma';
+import { Torchic } from './PRC_26_Torchic';
 import { RoughSeas } from './rough-seas';
 import { Sceptile } from './sceptile';
 import { ScorchedEarth } from './scorched-earth';
@@ -49,6 +50,9 @@ export declare class SlugmaArt extends Slugma {
     cardImage: string;
 }
 export declare class TeammatesArt extends Teammates {
+    cardImage: string;
+}
+export declare class TorchicArt extends Torchic {
     cardImage: string;
 }
 export declare class WailordExArt extends WailordEx {
