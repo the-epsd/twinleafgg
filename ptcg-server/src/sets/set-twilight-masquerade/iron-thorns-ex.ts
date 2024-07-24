@@ -3,6 +3,7 @@ import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-
 import { PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class IronThornsex extends PokemonCard {
 
@@ -44,6 +45,8 @@ export class IronThornsex extends PokemonCard {
   public name: string = 'Iron Thorns ex';
 
   public fullName: string = 'Iron Thorns ex TWM';
+
+  private readonly BOLT_CYCLONE_MARKER = 'BOLT_CYCLONE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -94,13 +97,16 @@ export class IronThornsex extends PokemonCard {
             }
             return state;
           }
-
-
         }
       }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      effect.player.attackMarker.addMarker(this.BOLT_CYCLONE_MARKER, this);
+      return state;
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.BOLT_CYCLONE_MARKER, this)) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
 
@@ -108,6 +114,7 @@ export class IronThornsex extends PokemonCard {
         return state;
       }
 
+      // Then prompt for energy movement
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -122,8 +129,10 @@ export class IronThornsex extends PokemonCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.active.moveCardTo(transfer.card, target);
         }
+        effect.player.attackMarker.removeMarker(this.BOLT_CYCLONE_MARKER, this);
       });
     }
+
     return state;
   }
 }

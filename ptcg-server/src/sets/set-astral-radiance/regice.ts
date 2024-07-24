@@ -39,7 +39,7 @@ function* useRegiGate(next: Function, store: StoreLike, state: State,
 export class Regice extends PokemonCard {
 
   public cardType = CardType.WATER;
-  
+
   public stage = Stage.BASIC;
 
   public hp = 130;
@@ -59,7 +59,7 @@ export class Regice extends PokemonCard {
     },
     {
       name: 'Blizzard Bind',
-      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS], 
+      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
       damage: 100,
       text: 'If the Defending Pokémon is a Pokémon V, it can\'t attack during your opponent\'s next turn.'
     }
@@ -80,7 +80,7 @@ export class Regice extends PokemonCard {
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const generator = useRegiGate(() => generator.next(), store, state, effect);
       return generator.next().value;
@@ -90,21 +90,21 @@ export class Regice extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
-    
-      if (effect instanceof UseAttackEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
-        const pokemonCard = effect.opponent.active.getPokemonCard();
-        if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_V || pokemonCard.tags.includes(CardTag.POKEMON_VMAX || pokemonCard.tags.includes(CardTag.POKEMON_VSTAR)))) {
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-        }
-
-        if (effect instanceof EndTurnEffect) {
-          effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
-        }
-
-        return state;
-      }
-      return state;
     }
+
+    if (effect instanceof UseAttackEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const pokemonCard = opponent.active.getPokemonCard();
+      if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_V || pokemonCard.tags.includes(CardTag.POKEMON_VMAX || pokemonCard.tags.includes(CardTag.POKEMON_VSTAR)))) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
+    }
+
     return state;
   }
 }

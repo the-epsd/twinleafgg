@@ -86,15 +86,14 @@ class Regigigas extends pokemon_card_1.PokemonCard {
                     }
                 });
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                const pokemonCard = opponent.active.getPokemonCard();
-                if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
-                    effect.damage += 150;
-                }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const pokemonCard = opponent.active.getPokemonCard();
+            if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
+                effect.damage += 150;
             }
-            return state;
         }
         return state;
     }

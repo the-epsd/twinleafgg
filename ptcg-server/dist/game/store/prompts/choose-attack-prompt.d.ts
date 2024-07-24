@@ -1,8 +1,8 @@
 import { GameMessage } from '../../game-message';
 import { Prompt } from './prompt';
 import { State } from '../state/state';
-import { PokemonCard } from '../card/pokemon-card';
 import { Attack } from '../card/pokemon-types';
+import { Card } from '../card/card';
 export declare const ChooseAttackPromptType = "Choose attack";
 export interface ChooseAttackOptions {
     allowCancel: boolean;
@@ -18,10 +18,10 @@ export declare type ChooseAttackResultType = {
 };
 export declare class ChooseAttackPrompt extends Prompt<Attack> {
     message: GameMessage;
-    cards: PokemonCard[];
+    cards: Card[];
     readonly type: string;
     options: ChooseAttackOptions;
-    constructor(playerId: number, message: GameMessage, cards: PokemonCard[], options?: Partial<ChooseAttackOptions>);
+    constructor(playerId: number, message: GameMessage, cards: Card[], options?: Partial<ChooseAttackOptions>);
     decode(result: ChooseAttackResultType | null, state: State): Attack | null;
     validate(result: Attack | null): boolean;
 }

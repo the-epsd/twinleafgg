@@ -8,6 +8,7 @@ export class Card {
         this.setNumber = '';
         this.cardImage = '';
         this.retreat = [];
+        this.attacks = [];
         this.cards = new CardList;
         this.marker = new Marker();
     }

@@ -4,6 +4,7 @@ import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { CardList } from '../state/card-list';
 import { Marker } from '../state/card-marker';
+import { Attack } from './pokemon-types';
 export declare abstract class Card {
     abstract set: string;
     abstract superType: SuperType;
@@ -17,6 +18,7 @@ export declare abstract class Card {
     setNumber: string;
     cardImage: string;
     retreat: CardType[];
+    attacks: Attack[];
     static tags: any;
     cards: CardList;
     marker: Marker;

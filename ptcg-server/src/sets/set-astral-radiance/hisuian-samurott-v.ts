@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, GameError, Card, CardTarget, ChooseEnergyPrompt, PokemonCardList } from '../../game';
+import { StoreLike, State, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, Card, CardTarget, ChooseEnergyPrompt, PokemonCardList } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
@@ -60,7 +60,7 @@ export class HisuianSamurottV extends PokemonCard {
       });
 
       if (pokemonsWithTool === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+        return state;
       }
 
       const max = Math.min(2, pokemonsWithTool);
@@ -69,8 +69,8 @@ export class HisuianSamurottV extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
-        { min: 1, max: max, allowCancel: true, blocked }
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { min: 1, max: max, allowCancel: false, blocked }
       ), results => {
         targets = results || [];
 
@@ -90,15 +90,15 @@ export class HisuianSamurottV extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-  
+
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
-  
+
       return store.prompt(state, new ChooseEnergyPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.COLORLESS ],
+        [CardType.COLORLESS],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);
@@ -107,9 +107,8 @@ export class HisuianSamurottV extends PokemonCard {
         store.reduceEffect(state, discardEnergy);
       });
     }
-  
+
     return state;
   }
-  
+
 }
-  

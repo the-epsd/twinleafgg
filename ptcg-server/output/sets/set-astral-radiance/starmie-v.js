@@ -51,20 +51,19 @@ class StarmieV extends pokemon_card_1.PokemonCard {
                 const afterDamage = new attack_effects_1.AfterDamageEffect(effect, damage);
                 state = store.reduceEffect(state, afterDamage);
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                let energies = 0;
-                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
-                    const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
-                    store.reduceEffect(state, checkProvidedEnergyEffect);
-                    checkProvidedEnergyEffect.energyMap.forEach(energy => {
-                        energies += energy.provides.length;
-                    });
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            let energies = 0;
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
+                const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
+                store.reduceEffect(state, checkProvidedEnergyEffect);
+                checkProvidedEnergyEffect.energyMap.forEach(energy => {
+                    energies += energy.provides.length;
                 });
-                effect.damage = energies * 50;
-            }
-            return state;
+            });
+            effect.damage = energies * 50;
         }
         return state;
     }

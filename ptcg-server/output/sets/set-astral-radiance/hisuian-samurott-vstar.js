@@ -48,14 +48,14 @@ class HisuianSamurottVSTAR extends pokemon_card_1.PokemonCard {
                     target.damage += 40;
                     player.usedVSTAR = true;
                 });
-                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                    const player = effect.player;
-                    const opponent = game_1.StateUtils.getOpponent(state, player);
-                    if (opponent.active.damage > 0) {
-                        effect.damage += 110;
-                    }
-                }
             });
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (opponent.active.damage > 0) {
+                effect.damage += 110;
+            }
         }
         return state;
     }

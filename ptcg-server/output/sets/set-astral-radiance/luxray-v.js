@@ -47,19 +47,18 @@ class LuxrayV extends pokemon_card_1.PokemonCard {
                 selected = cards || [];
                 opponent.hand.moveCardsTo(cards, opponent.discard);
             });
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(opponent);
-                state = store.reduceEffect(state, checkProvidedEnergy);
-                store.prompt(state, new game_1.ChooseCardsPrompt(effect.player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.active, { superType: card_types_1.SuperType.ENERGY }, { min: 2, max: 2, allowCancel: false }), selected => {
-                    selected = cards || [];
-                    player.active.moveCardsTo(cards, player.discard);
-                });
-                const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.PARALYZED]);
-                store.reduceEffect(state, specialConditionEffect);
-                return state;
-            }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(opponent);
+            state = store.reduceEffect(state, checkProvidedEnergy);
+            store.prompt(state, new game_1.ChooseCardsPrompt(effect.player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.active, { superType: card_types_1.SuperType.ENERGY }, { min: 2, max: 2, allowCancel: false }), selected => {
+                selected = selected || [];
+                player.active.moveCardsTo(selected, player.discard);
+            });
+            const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.PARALYZED]);
+            store.reduceEffect(state, specialConditionEffect);
             return state;
         }
         return state;

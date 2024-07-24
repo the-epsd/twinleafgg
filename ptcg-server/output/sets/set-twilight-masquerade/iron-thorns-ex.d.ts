@@ -28,5 +28,6 @@ export declare class IronThornsex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    private readonly BOLT_CYCLONE_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

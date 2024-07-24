@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../..';
+import { AttachEnergyPrompt, Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, Player, PlayerType, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { CardType, EnergyType, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -176,6 +176,12 @@ export function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_
       const target = StateUtils.getTarget(state, player, transfer.to);
       player.discard.moveCardTo(transfer.card, target);
     }
+  });
+}
+
+export function SHUFFLE_DECK(effect: Effect, store: StoreLike, state: State, player: Player) {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    player.deck.applyOrder(order);
   });
 }
 

@@ -59,7 +59,7 @@ export class HisuianSamurottVSTAR extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { min: 1, max: 1, allowCancel: true },
       ), selected => {
         const targets = selected || [];
@@ -67,16 +67,15 @@ export class HisuianSamurottVSTAR extends PokemonCard {
           target.damage += 40;
           player.usedVSTAR = true;
         });
+      });
+    }
 
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-          const player = effect.player;
-          const opponent = StateUtils.getOpponent(state, player);
-          if (opponent.active.damage > 0) {
-            effect.damage += 110;
-          }
-        }
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      if (opponent.active.damage > 0) {
+        effect.damage += 110;
       }
-      );
     }
     return state;
   }

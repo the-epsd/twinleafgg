@@ -60,13 +60,12 @@ class Grant extends trainer_card_1.TrainerCard {
                     player.discard.moveCardTo(this, player.hand);
                 });
             }
-            if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-                effect.player.marker.removeMarker(this.RETURN_TO_HAND_MARKER, this);
-            }
-            if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-                effect.player.marker.removeMarker(this.GRANT_MARKER, this);
-                return state;
-            }
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.marker.removeMarker(this.RETURN_TO_HAND_MARKER, this);
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.marker.removeMarker(this.GRANT_MARKER, this);
             return state;
         }
         return state;
