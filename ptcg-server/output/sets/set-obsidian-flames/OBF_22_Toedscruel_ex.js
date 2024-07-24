@@ -21,9 +21,7 @@ class Toedscruelex extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Protective Mycelium',
                 powerType: game_1.PowerType.ABILITY,
-
                 text: ' Prevent all effects of attacks used by your opponent\'s Pokémon done to all of your Pokémon that have Energy attached. (Existing effects are not removed. Damage is not an effect.) '
-
             }];
         this.attacks = [{
                 name: 'Colony Rush',
@@ -41,7 +39,14 @@ class Toedscruelex extends pokemon_card_1.PokemonCard {
         if (effect instanceof attack_effects_1.AbstractAttackEffect) {
             const sourceCard = effect.source.getPokemonCard();
             if (sourceCard) {
-              
+                // eslint-disable-next-line indent
+                // Allow damage
+                if (effect instanceof attack_effects_1.PutDamageEffect) {
+                    return state;
+                }
+                if (effect instanceof attack_effects_1.DealDamageEffect) {
+                    return state;
+                }
                 if (effect.target.cards.some(c => c instanceof game_1.EnergyCard)) {
                     // Try to reduce PowerEffect, to check if something is blocking our ability
                     try {
@@ -56,15 +61,6 @@ class Toedscruelex extends pokemon_card_1.PokemonCard {
                     catch (_a) {
                         return state;
                     }
-                    // eslint-disable-next-line indent
-                    // Allow damage
-                    if (effect instanceof attack_effects_1.PutDamageEffect) {
-                        return state;
-                    }
-                    if (effect instanceof attack_effects_1.DealDamageEffect) {
-                        return state;
-                    }
-
                     effect.preventDefault = true;
                 }
             }

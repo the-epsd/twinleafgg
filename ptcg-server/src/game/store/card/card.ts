@@ -4,6 +4,7 @@ import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { CardList } from '../state/card-list';
 import { Marker } from '../state/card-marker';
+import { Attack } from './pokemon-types';
 
 export abstract class Card {
 
@@ -24,15 +25,17 @@ export abstract class Card {
   public regulationMark: string = '';
 
   public tags: string[] = [];
-  
+
   public setNumber: string = '';
 
   public cardImage: string = '';
 
   public retreat: CardType[] = [];
-  
+
+  public attacks: Attack[] = [];
+
   static tags: any;
-  
+
   public cards: CardList = new CardList;
 
   public marker = new Marker();

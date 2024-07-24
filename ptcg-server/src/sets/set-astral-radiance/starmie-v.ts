@@ -10,7 +10,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class StarmieV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
@@ -22,18 +22,18 @@ export class StarmieV extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public attacks = [
     {
       name: 'Swift',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 50,
       text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
     },
     {
       name: 'Energy Spiral',
-      cost: [ CardType.WATER, CardType.WATER ],
+      cost: [CardType.WATER, CardType.WATER],
       damage: 50,
       text: 'This attack does 50 damage for each Energy attached to all of your opponent\'s Pokémon.'
     }
@@ -60,36 +60,36 @@ export class StarmieV extends PokemonCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-                  
+
       const damage = 50;
-                  
+
       if (damage > 0) {
         opponent.active.damage += damage;
         const afterDamage = new AfterDamageEffect(effect, damage);
         state = store.reduceEffect(state, afterDamage);
       }
-    
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
-
-        let energies = 0;
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-          const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
-          store.reduceEffect(state, checkProvidedEnergyEffect);
-          checkProvidedEnergyEffect.energyMap.forEach(energy => {
-            energies += energy.provides.length;
-          });
-        });
-
-        effect.damage = energies * 50;
-      }
-
-      return state;
     }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let energies = 0;
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
+        store.reduceEffect(state, checkProvidedEnergyEffect);
+        checkProvidedEnergyEffect.energyMap.forEach(energy => {
+          energies += energy.provides.length;
+        });
+      });
+
+      effect.damage = energies * 50;
+    }
+
     return state;
   }
 }
-          
+
+
 

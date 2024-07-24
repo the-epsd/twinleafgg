@@ -24,7 +24,7 @@ export class Cinderaceex extends PokemonCard {
     },
     {
       name: 'Garnet Volley',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
+      cost: [CardType.FIRE, CardType.FIGHTING, CardType.DARK],
       damage: 0,
       text: 'This attack does 180 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }

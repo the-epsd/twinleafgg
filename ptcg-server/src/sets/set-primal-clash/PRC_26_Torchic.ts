@@ -1,27 +1,18 @@
-import { ChooseAttackPrompt, ChooseCardsPrompt, ConfirmPrompt, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
-import { GameLog, GameMessage } from '../../game/game-message';
-import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { Attack, PowerType } from '../../game/store/card/pokemon-types';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State, StateUtils, ConfirmPrompt, GameMessage, ChooseAttackPrompt, GameLog, EnergyCard, GameError, ChooseCardsPrompt, CoinFlipPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { StateUtils } from '../../game/store/state-utils';
-import { State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
-export class Bunnelby extends PokemonCard {
-
+export class Torchic extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.COLORLESS;
-
-  public hp: number = 60;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public cardType: CardType = CardType.FIRE;
+  public hp: number = 50;
+  public weakness = [{ type: CardType.WATER }];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Barrage',
@@ -30,26 +21,23 @@ export class Bunnelby extends PokemonCard {
   }];
 
   public attacks = [{
-    name: 'Burrow',
-    cost: [CardType.COLORLESS],
+    name: 'Flare Bonus',
+    cost: [CardType.FIRE],
     damage: 0,
-    text: 'Discard the top card of your opponent\'s deck.'
-  }, {
-    name: 'Rototiller',
-    cost: [CardType.COLORLESS],
-    damage: 0,
-    text: 'Shuffle a card from your discard pile into your deck.'
+    text: ' Discard a [R] Energy card from your hand. If you do, draw 2 cards. '
+  },
+  {
+    name: 'Claw',
+    cost: [CardType.FIRE],
+    damage: 20,
+    text: ' Flip a coin. If tails, this attack does nothing. '
   }];
 
-  public set: string = 'PRC';
-
-  public name: string = 'Bunnelby';
-
-  public fullName: string = 'Bunnelby PRC';
-
+  public set = 'PRC';
   public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '121';
+  public setNumber: string = '26';
+  public name = 'Torchic';
+  public fullName = 'Torchic PRC';
 
   public attacksThisTurn = 0;
 
@@ -118,7 +106,6 @@ export class Bunnelby extends PokemonCard {
           });
         };
       });
-
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -131,7 +118,40 @@ export class Bunnelby extends PokemonCard {
 
       const thisPokemon = player.active.cards;
 
-      opponent.deck.moveTo(opponent.discard, 1);
+      //DO ATTACK
+
+      let hasCardsInHand = false;
+      const blocked: number[] = [];
+      player.hand.cards.forEach((c, index) => {
+        if (c instanceof EnergyCard) {
+          if (c.provides.includes(CardType.FIRE)) {
+            hasCardsInHand = true;
+          } else {
+            blocked.push(index);
+          }
+        }
+      });
+
+      if (hasCardsInHand === false) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      state = store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        player.hand,
+        { superType: SuperType.ENERGY },
+        { allowCancel: true, min: 1, max: 1, blocked }
+      ), selected => {
+        selected = selected || [];
+        if (selected.length === 0) {
+          return;
+        }
+        player.hand.moveCardsTo(selected, player.discard);
+        player.deck.moveTo(player.hand, 2);
+      });
+
+      // BARRAGE ORIGIN TRAIT
 
       this.attacksThisTurn += 1;
 
@@ -191,37 +211,19 @@ export class Bunnelby extends PokemonCard {
 
       const thisPokemon = player.active.cards;
 
-      if (player.discard.cards.length === 0) {
-        this.attacksThisTurn += 1;
-      } else {
-        state = store.prompt(state, new ChooseCardsPrompt(
-          player.id,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.discard,
-          {},
-          { min: 1, max: 1, allowCancel: false }
-        ), selected => {
-          const cards = selected || [];
+      // DO ATTACK
 
-          this.attacksThisTurn += 1;
+      state = store.prompt(state, [
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+      ], result => {
+        if (result === false) {
+          effect.damage = 0;
+        }
+      });
 
-          store.prompt(state, [new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            cards
-          )], () => {
-            player.discard.moveCardsTo(cards, player.deck);
-          });
+      // BARRAGE ORIGIN TRAIT
 
-          cards.forEach(card => {
-            store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
-          });
-
-          store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
-        });
-      }
+      this.attacksThisTurn += 1;
 
       if (this.attacksThisTurn >= 2) {
         return state;
@@ -260,15 +262,16 @@ export class Bunnelby extends PokemonCard {
                 const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
                 state = store.reduceEffect(state, dealDamage);
               }
+
             }
 
             return state;
           });
         };
       });
+
     }
 
     return state;
   }
-
 }

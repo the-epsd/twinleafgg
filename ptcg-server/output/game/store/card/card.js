@@ -11,6 +11,7 @@ class Card {
         this.setNumber = '';
         this.cardImage = '';
         this.retreat = [];
+        this.attacks = [];
         this.cards = new card_list_1.CardList;
         this.marker = new card_marker_1.Marker();
     }

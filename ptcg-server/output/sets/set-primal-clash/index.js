@@ -16,5 +16,6 @@ exports.setPrimalClash = [
     new card_images_1.SilentLabArt(),
     new card_images_1.SlugmaArt(),
     new card_images_1.TeammatesArt(),
+    new card_images_1.TorchicArt(),
     new card_images_1.WailordExArt()
 ];

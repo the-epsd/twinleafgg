@@ -43,12 +43,15 @@ export class Kieran extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
-      if (player.marker.hasMarker(this.KIERAN_MARKER, this) && effect.damage > 0) {
-        if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_V) || (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VSTAR)) || (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VMAX)) || (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_EX))) {
-          effect.damage += 30;
-        }
+      if (player.marker.hasMarker(this.KIERAN_MARKER, this) && effect.damage > 0 &&
+        (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_V) ||
+          opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VMAX) ||
+          opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VSTAR) ||
+          opponentActive && opponentActive.tags.includes(CardTag.POKEMON_ex))) {
+        effect.damage += 30; // Increased by 30 more
       }
     }
+
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
@@ -95,7 +98,7 @@ export class Kieran extends TrainerCard {
       const hasBench = player.bench.some(b => b.cards.length > 0);
 
       if (!hasBench) {
-        options.splice(1, 1);
+        options.splice(0, 1);
       }
 
       return store.prompt(state, new SelectPrompt(

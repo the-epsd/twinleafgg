@@ -26,7 +26,7 @@ export class Grant extends TrainerCard {
 
   public text: string =
     'During this turn, your [F] Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).' +
-    ''+
+    '' +
     'During your turn, if this Grant is in your discard pile, you may discard 2 cards, except any Grant, from your hand. If you do, put this Grant into your hand. (This effect doesn\'t use up your Supporter card for the turn.)';
 
   private readonly GRANT_MARKER = 'GRANT_MARKER';
@@ -35,7 +35,7 @@ export class Grant extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-        
+
       const player = effect.player;
 
       const supporterTurn = player.supporterTurn;
@@ -54,21 +54,21 @@ export class Grant extends TrainerCard {
         if (marker.hasMarker(this.GRANT_MARKER, this) && effect.damage > 0) {
           effect.damage += 30;
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          
+
         }
 
         // Check if card is in the discard
         if (player.discard.cards.includes(this) === false) {
           throw new GameError(GameMessage.CANNOT_USE_POWER);
         }
-    
+
         // Power already used
         if (player.marker.hasMarker(this.RETURN_TO_HAND_MARKER, this)) {
           throw new GameError(GameMessage.POWER_ALREADY_USED);
         }
 
         let cards: Card[] = [];
-      
+
         return store.prompt(state, new ChooseCardsPrompt(
           player.id,
           GameMessage.CHOOSE_CARD_TO_DISCARD,
@@ -77,7 +77,7 @@ export class Grant extends TrainerCard {
           { min: 2, max: 2, allowCancel: true }
         ), selected => {
           cards = selected || [];
-      
+
           // Operation canceled by the user
           if (cards.length === 0) {
             return state;
@@ -88,18 +88,18 @@ export class Grant extends TrainerCard {
 
         });
       }
-    
-      if (effect instanceof EndTurnEffect) {
-        effect.player.marker.removeMarker(this.RETURN_TO_HAND_MARKER, this);
-      }
+    }
 
-      if (effect instanceof EndTurnEffect) {
-        effect.player.marker.removeMarker(this.GRANT_MARKER, this);
-        return state;
-      }
+    if (effect instanceof EndTurnEffect) {
+      effect.player.marker.removeMarker(this.RETURN_TO_HAND_MARKER, this);
+    }
 
+    if (effect instanceof EndTurnEffect) {
+      effect.player.marker.removeMarker(this.GRANT_MARKER, this);
       return state;
     }
+
     return state;
   }
 }
+

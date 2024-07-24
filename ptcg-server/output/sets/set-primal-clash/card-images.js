@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WailordExArt = exports.TeammatesArt = exports.SlugmaArt = exports.SilentLabArt = exports.ShieldEnergArt = exports.ScorchedEarthArt = exports.SceptileArt = exports.RoughSeasArt = exports.MiloticArt = exports.MaxiesHiddenBallTrickArt = exports.DiveBallArt = exports.BunnelbyArt = exports.ArchiesAceInTheHoleArt = exports.AcroBikeArt = void 0;
+exports.WailordExArt = exports.TorchicArt = exports.TeammatesArt = exports.SlugmaArt = exports.SilentLabArt = exports.ShieldEnergArt = exports.ScorchedEarthArt = exports.SceptileArt = exports.RoughSeasArt = exports.MiloticArt = exports.MaxiesHiddenBallTrickArt = exports.DiveBallArt = exports.BunnelbyArt = exports.ArchiesAceInTheHoleArt = exports.AcroBikeArt = void 0;
 const acro_bike_1 = require("./acro-bike");
 const archies_ace_in_the_hole_1 = require("./archies-ace-in-the hole");
 const bunnelby_1 = require("./bunnelby");
@@ -8,6 +8,7 @@ const dive_ball_1 = require("./dive-ball");
 const maxies_hidden_ball_trick_1 = require("./maxies-hidden-ball-trick");
 const milotic_1 = require("./milotic");
 const PRC_22_Slugma_1 = require("./PRC_22_Slugma");
+const PRC_26_Torchic_1 = require("./PRC_26_Torchic");
 const rough_seas_1 = require("./rough-seas");
 const sceptile_1 = require("./sceptile");
 const scorched_earth_1 = require("./scorched-earth");
@@ -106,6 +107,13 @@ class TeammatesArt extends teammates_1.Teammates {
     }
 }
 exports.TeammatesArt = TeammatesArt;
+class TorchicArt extends PRC_26_Torchic_1.Torchic {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_026_R_EN_LG.png';
+    }
+}
+exports.TorchicArt = TorchicArt;
 class WailordExArt extends wailord_ex_1.WailordEx {
     constructor() {
         super(...arguments);

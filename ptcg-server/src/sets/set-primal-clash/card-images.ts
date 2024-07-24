@@ -5,6 +5,7 @@ import { DiveBall } from './dive-ball';
 import { MaxiesHiddenBallTrick } from './maxies-hidden-ball-trick';
 import { Milotic } from './milotic';
 import { Slugma } from './PRC_22_Slugma';
+import { Torchic } from './PRC_26_Torchic';
 import { RoughSeas } from './rough-seas';
 import { Sceptile } from './sceptile';
 import { ScorchedEarth } from './scorched-earth';
@@ -63,6 +64,10 @@ export class SlugmaArt extends Slugma {
 
 export class TeammatesArt extends Teammates {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_141_R_EN_LG.png';
+}
+
+export class TorchicArt extends Torchic {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_026_R_EN_LG.png';
 }
 
 export class WailordExArt extends WailordEx {

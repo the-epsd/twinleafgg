@@ -86,7 +86,7 @@ export class Regigigas extends PokemonCard {
         if (!hasEnergy) {
           return state;
         }
-        
+
         if (player.marker.hasMarker(this.ANCIENT_WISDOM_MARKER, this)) {
           throw new GameError(GameMessage.POWER_ALREADY_USED);
         }
@@ -119,18 +119,18 @@ export class Regigigas extends PokemonCard {
           }
         });
       }
+    }
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-        const pokemonCard = opponent.active.getPokemonCard();
-        if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VMAX)) {
-          effect.damage += 150;
-        }
+      const pokemonCard = opponent.active.getPokemonCard();
+      if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VMAX)) {
+        effect.damage += 150;
       }
-      return state;
     }
     return state;
   }
 }
+

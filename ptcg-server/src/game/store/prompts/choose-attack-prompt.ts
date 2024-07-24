@@ -2,8 +2,8 @@ import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
 import { Prompt } from './prompt';
 import { State } from '../state/state';
-import { PokemonCard } from '../card/pokemon-card';
 import { Attack } from '../card/pokemon-types';
+import { Card } from '../card/card';
 
 export const ChooseAttackPromptType = 'Choose attack';
 
@@ -13,7 +13,7 @@ export interface ChooseAttackOptions {
   blocked: { index: number; attack: string }[];
 }
 
-export type ChooseAttackResultType = {index: number, attack: string};
+export type ChooseAttackResultType = { index: number, attack: string };
 
 export class ChooseAttackPrompt extends Prompt<Attack> {
 
@@ -24,7 +24,7 @@ export class ChooseAttackPrompt extends Prompt<Attack> {
   constructor(
     playerId: number,
     public message: GameMessage,
-    public cards: PokemonCard[],
+    public cards: Card[],
     options?: Partial<ChooseAttackOptions>
   ) {
     super(playerId);
