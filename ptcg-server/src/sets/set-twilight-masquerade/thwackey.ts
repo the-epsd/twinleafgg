@@ -71,11 +71,11 @@ export class Thwackey extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      // const activePokemon = player.active.getPokemonCard();
-
       // if (activePokemon && activePokemon.powers[0].name !== 'Fesival Lead') {
       //   throw new GameError(GameMessage.CANNOT_USE_POWER);
       // }
+
+
 
       if (player.marker.hasMarker(this.BOOM_BOOM_DRUM_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -85,28 +85,40 @@ export class Thwackey extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      player.marker.addMarker(this.BOOM_BOOM_DRUM_MARKER, this);
+      const activePokemon = player.active.getPokemonCard();
+      if (activePokemon && activePokemon.powers) {
+        const hasFestivalLead = activePokemon.powers.some(power => power.name === 'Festival Lead');
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        if (!hasFestivalLead) {
+          throw new GameError(GameMessage.CANNOT_USE_POWER);
         }
-      });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), cards => {
-        player.deck.moveCardsTo(cards, player.hand);
+        if (hasFestivalLead) {
 
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
+          player.marker.addMarker(this.BOOM_BOOM_DRUM_MARKER, this);
 
-        });
-      });
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            }
+          });
+
+          return store.prompt(state, new ChooseCardsPrompt(
+            player.id,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.deck,
+            {},
+            { min: 1, max: 1, allowCancel: false }
+          ), cards => {
+            player.deck.moveCardsTo(cards, player.hand);
+
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+
+            });
+          });
+        }
+      }
     }
     return state;
   }
