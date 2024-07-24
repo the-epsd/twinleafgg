@@ -36,6 +36,12 @@ import { Moltres } from './MEW_146_Moltres';
 import { Staryu } from './staryu';
 import { Arbokex } from './MEW_24_Arbok_ex';
 import { Ekans } from './MEW_23_Ekans';
+import { Nidoking } from './nidoking';
+import { Nidoqueen } from './nidoqueen';
+import { NidoranMale } from './nidoran-male';
+import { Nidorino } from './nidorino';
+import { NidoranFemale } from './nidoran-female';
+import { Nidorina } from './nidorina';
 
 export class AntiqueHelixFossilArt extends AntiqueHelixFossil {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_153_R_EN.png';
@@ -139,6 +145,30 @@ export class MewexArt extends Mewex {
 
 export class MoltresArt extends Moltres {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_146_R_EN_LG.png';
+}
+
+export class NidoranMaleArt extends NidoranMale {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_032_R_EN.png';
+}
+
+export class NidorinoArt extends Nidorino {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_033_R_EN.png';
+}
+
+export class NidokingArt extends Nidoking {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_034_R_EN.png';
+}
+
+export class NidoranFemaleArt extends NidoranFemale {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_029_R_EN.png';
+}
+
+export class NidorinaArt extends Nidorina {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_030_R_EN.png';
+}
+
+export class NidoqueenArt extends Nidoqueen {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_031_R_EN.png';
 }
 
 export class OddishArt extends Oddish {

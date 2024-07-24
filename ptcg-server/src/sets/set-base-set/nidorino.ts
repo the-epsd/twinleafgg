@@ -11,16 +11,16 @@ import { GameMessage } from '../../game';
 export class Nidorino extends PokemonCard {
 
   public name = 'Nidorino';
-  
+
   public set = 'BS';
-  
+
   public fullName = 'Nidorino BS';
 
   public cardType: CardType = CardType.GRASS;
 
   public stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Nidoran ♂';
+  public evolvesFrom = 'Nidoran♂';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -51,7 +51,7 @@ export class Nidorino extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       return store.prompt(state, [
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)  
+        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)
       ], (results) => {
         const heads = results.filter(r => !!r).length;
         effect.damage = heads * 30;

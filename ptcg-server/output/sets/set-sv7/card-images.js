@@ -1,13 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrthwormexArt = exports.OkidogiexArt = exports.NoctowlArt = exports.NightlyStretcherArt = exports.NightTimeAcademyArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.LaprasexArt = exports.KyuremArt = exports.KingdraexArt = exports.JoltikArt = exports.JaninesSecretTechniqueArt = exports.IronMothArt = exports.HydrappleexArt = exports.HoundourArt = exports.HoundoomArt = exports.HorseaArt = exports.HoothootArt = exports.HaxorusArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GenesectArt = exports.GalvantulaArt = exports.FraxureArt = exports.FezandipitiexArt = exports.FanRotomArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.DrifblimArt = exports.DrednawArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.CufantArt = exports.CrispinArt = exports.CinderaceexArt = exports.CresseliaArt = exports.CopperajahArt = exports.ComfeyArt = exports.ColresssObsessionArt = exports.CassiopeiaArt = exports.BriarArt = exports.BloodmoonUrsalunaArt = exports.BindingMochiArt = exports.AxewArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = exports.AbsolArt = void 0;
-exports.ZoruaArt = exports.ZoroarkArt = exports.ZeraoraArt = exports.XerosicsSchemeArt = exports.WeavileArt = exports.TerapagosexArt = exports.TapuBuluArt = exports.SneaselArt = exports.SlitherWingArt = exports.SeadraArt = exports.ScorbunnyArt = exports.RowletArt = exports.RevavroomexArt = exports.RabootArt = exports.PowerHourglassArt = exports.PokeVitalAArt = exports.PecharuntexArt = void 0;
+exports.OkidogiexArt = exports.NoctowlArt = exports.NightlyStretcherArt = exports.NightTimeAcademyArt = exports.NeutralCenterArt = exports.MunkidoriexArt = exports.LaprasexArt = exports.KyuremArt = exports.KingdraexArt = exports.JoltikArt = exports.JaninesSecretTechniqueArt = exports.IronMothArt = exports.HydrappleexArt = exports.HoundourArt = exports.HoundoomArt = exports.HorseaArt = exports.HoothootArt = exports.HaxorusArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GenesectArt = exports.GalvantulaArt = exports.FraxureArt = exports.FezandipitiexArt = exports.FanRotomArt = exports.DuskullArt = exports.DusknoirArt = exports.DusclopsArt = exports.DrifblimArt = exports.DrednawArt = exports.DecidueyeArt = exports.DartrixArt = exports.DangerousLaserArt = exports.CufantArt = exports.CrispinArt = exports.CinderaceexArt = exports.CresseliaArt = exports.CopperajahArt = exports.ComfeyArt = exports.ColresssObsessionArt = exports.CassiopeiaArt = exports.BriarArt = exports.BouffalantArt = exports.BloodmoonUrsalunaArt = exports.BindingMochiArt = exports.AxewArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = exports.AbsolArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.ZeraoraArt = exports.XerosicsSchemeArt = exports.WeavileArt = exports.TerapagosexArt = exports.TapuBuluArt = exports.SneaselArt = exports.SlitherWingArt = exports.SeadraArt = exports.ScorbunnyArt = exports.RowletArt = exports.RevavroomexArt = exports.RabootArt = exports.PowerHourglassArt = exports.PokeVitalAArt = exports.PecharuntexArt = exports.OrthwormexArt = void 0;
 const absol_1 = require("./absol");
 const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
 const axew_1 = require("./axew");
 const binding_mochi_1 = require("./binding-mochi");
 const bloodmoon_ursaluna_1 = require("./bloodmoon-ursaluna");
+const bouffalant_1 = require("./bouffalant");
 const briar_1 = require("./briar");
 const cassiopeia_1 = require("./cassiopeia");
 const cinderace_ex_1 = require("./cinderace-ex");
@@ -111,6 +112,13 @@ class BloodmoonUrsalunaArt extends bloodmoon_ursaluna_1.BloodmoonUrsaluna {
     }
 }
 exports.BloodmoonUrsalunaArt = BloodmoonUrsalunaArt;
+class BouffalantArt extends bouffalant_1.Bouffalant {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Bouffalant-081-7i.884064b8ac06628a8d6c.png';
+    }
+}
+exports.BouffalantArt = BouffalantArt;
 class BriarArt extends briar_1.Briar {
     constructor() {
         super(...arguments);

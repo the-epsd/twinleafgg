@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { PowerType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Mightyena extends PokemonCard {
 
@@ -10,7 +11,7 @@ export class Mightyena extends PokemonCard {
 
   public evolvesFrom = 'Poochyena';
 
-  public cardType: CardType = CardType.DARK;  
+  public cardType: CardType = CardType.DARK;
 
   public hp: number = 110;
 
@@ -22,7 +23,7 @@ export class Mightyena extends PokemonCard {
 
   public abilities = [{
     name: 'Hustle Bark',
-    powerType: PowerType.ABILITY, 
+    powerType: PowerType.ABILITY,
     text: 'If your opponent has any Pokémon VMAX in play, this Pokémon\'s attacks cost [C][C][C] less.'
   }];
 
@@ -48,21 +49,36 @@ export class Mightyena extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
 
-      const checkEnergy = new CheckProvidedEnergyEffect(effect.player);
-      store.reduceEffect(state, checkEnergy);
-  
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        console.log(effect.cost);
+        return state;
+      }
+
       const opponent = StateUtils.getOpponent(state, effect.player);
 
       const opponentActive = opponent.active.getPokemonCard();
       if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VMAX)) {
 
-        this.attacks[0].cost = [ ];
-        
+        const costToRemove = 3;
+
+        for (let i = 0; i < costToRemove; i++) {
+          const index = effect.cost.indexOf(CardType.COLORLESS);
+          if (index !== -1) {
+            effect.cost.splice(index, 1);
+          }
+        }
       }
     }
-        
+
     return state;
   }
 }
-        

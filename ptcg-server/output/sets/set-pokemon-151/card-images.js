@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosexArt = exports.WartortleArt = exports.VenusaurexArt = exports.VenomothArt = exports.VenonatArt = exports.VileplumeArt = exports.StaryuArt = exports.SquirtleArt = exports.ScytherArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OddishArt = exports.MoltresArt = exports.MewexArt = exports.MagmarArt = exports.KangaskhanexArt = exports.JolteonArt = exports.IvysaurArt = exports.GrabberArt = exports.GloomArt = exports.GiovannisCharismaArt = exports.EreikasInvitationArt = exports.EnergyStickerArt = exports.EeveeArt = exports.ElectabuzzArt = exports.EkansArt = exports.DoduoArt = exports.DodrioArt = exports.DittoArt = exports.CyclingRoadArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardexArt = exports.BulbasaurArt = exports.BlastoiseexArt = exports.ArbokexArt = exports.AlakazamexArt = exports.AntiqueHelixFossilArt = void 0;
+exports.ZapdosexArt = exports.WartortleArt = exports.VenusaurexArt = exports.VenomothArt = exports.VenonatArt = exports.VileplumeArt = exports.StaryuArt = exports.SquirtleArt = exports.ScytherArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OddishArt = exports.NidoqueenArt = exports.NidorinaArt = exports.NidoranFemaleArt = exports.NidokingArt = exports.NidorinoArt = exports.NidoranMaleArt = exports.MoltresArt = exports.MewexArt = exports.MagmarArt = exports.KangaskhanexArt = exports.JolteonArt = exports.IvysaurArt = exports.GrabberArt = exports.GloomArt = exports.GiovannisCharismaArt = exports.EreikasInvitationArt = exports.EnergyStickerArt = exports.EeveeArt = exports.ElectabuzzArt = exports.EkansArt = exports.DoduoArt = exports.DodrioArt = exports.DittoArt = exports.CyclingRoadArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardexArt = exports.BulbasaurArt = exports.BlastoiseexArt = exports.ArbokexArt = exports.AlakazamexArt = exports.AntiqueHelixFossilArt = void 0;
 const alakazam_ex_1 = require("./alakazam-ex");
 const blastoise_ex_1 = require("./blastoise-ex");
 const bulbasaur_1 = require("./bulbasaur");
@@ -39,6 +39,12 @@ const MEW_146_Moltres_1 = require("./MEW_146_Moltres");
 const staryu_1 = require("./staryu");
 const MEW_24_Arbok_ex_1 = require("./MEW_24_Arbok_ex");
 const MEW_23_Ekans_1 = require("./MEW_23_Ekans");
+const nidoking_1 = require("./nidoking");
+const nidoqueen_1 = require("./nidoqueen");
+const nidoran_male_1 = require("./nidoran-male");
+const nidorino_1 = require("./nidorino");
+const nidoran_female_1 = require("./nidoran-female");
+const nidorina_1 = require("./nidorina");
 class AntiqueHelixFossilArt extends antique_helix_fossil_1.AntiqueHelixFossil {
     constructor() {
         super(...arguments);
@@ -221,6 +227,48 @@ class MoltresArt extends MEW_146_Moltres_1.Moltres {
     }
 }
 exports.MoltresArt = MoltresArt;
+class NidoranMaleArt extends nidoran_male_1.NidoranMale {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_032_R_EN.png';
+    }
+}
+exports.NidoranMaleArt = NidoranMaleArt;
+class NidorinoArt extends nidorino_1.Nidorino {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_033_R_EN.png';
+    }
+}
+exports.NidorinoArt = NidorinoArt;
+class NidokingArt extends nidoking_1.Nidoking {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_034_R_EN.png';
+    }
+}
+exports.NidokingArt = NidokingArt;
+class NidoranFemaleArt extends nidoran_female_1.NidoranFemale {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_029_R_EN.png';
+    }
+}
+exports.NidoranFemaleArt = NidoranFemaleArt;
+class NidorinaArt extends nidorina_1.Nidorina {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_030_R_EN.png';
+    }
+}
+exports.NidorinaArt = NidorinaArt;
+class NidoqueenArt extends nidoqueen_1.Nidoqueen {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_031_R_EN.png';
+    }
+}
+exports.NidoqueenArt = NidoqueenArt;
 class OddishArt extends oddish_1.Oddish {
     constructor() {
         super(...arguments);

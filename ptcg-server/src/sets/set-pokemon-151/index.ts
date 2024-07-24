@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArbokexArt, BlastoiseexArt, BulbasaurArt, CharizardexArt, CharmanderArt, CharmeleonArt, CyclingRoadArt, DittoArt, DodrioArt, DoduoArt, EeveeArt, EkansArt, ElectabuzzArt, EnergyStickerArt, EreikasInvitationArt, GiovannisCharismaArt, GloomArt, GrabberArt, IvysaurArt, JolteonArt, KangaskhanexArt, MagmarArt, MewexArt, MoltresArt, OddishArt, PidgeottoArt, PidgeyArt, ScytherArt, SquirtleArt, StaryuArt, VenomothArt, VenonatArt, VenusaurexArt, VileplumeArt, WartortleArt, ZapdosexArt } from './card-images';
+import { ArbokexArt, BlastoiseexArt, BulbasaurArt, CharizardexArt, CharmanderArt, CharmeleonArt, CyclingRoadArt, DittoArt, DodrioArt, DoduoArt, EeveeArt, EkansArt, ElectabuzzArt, EnergyStickerArt, EreikasInvitationArt, GiovannisCharismaArt, GloomArt, GrabberArt, IvysaurArt, JolteonArt, KangaskhanexArt, MagmarArt, MewexArt, MoltresArt, NidokingArt, NidoqueenArt, NidoranFemaleArt, NidoranMaleArt, NidorinaArt, NidorinoArt, OddishArt, PidgeottoArt, PidgeyArt, ScytherArt, SquirtleArt, StaryuArt, VenomothArt, VenonatArt, VenusaurexArt, VileplumeArt, WartortleArt, ZapdosexArt } from './card-images';
 
 export const setPokemon151: Card[] = [
 
@@ -29,6 +29,12 @@ export const setPokemon151: Card[] = [
   new MagmarArt(),
   new MewexArt(),
   new MoltresArt(),
+  new NidoranMaleArt(),
+  new NidorinoArt(),
+  new NidokingArt(),
+  new NidoranFemaleArt(),
+  new NidorinaArt(),
+  new NidoqueenArt(),
   new OddishArt(),
   new PidgeottoArt(),
   new PidgeyArt(),

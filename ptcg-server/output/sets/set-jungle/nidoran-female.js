@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NidoranMale = void 0;
+exports.NidoranFemale = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
@@ -26,13 +26,13 @@ function* useCallForFamily(next, store, state, effect) {
         player.deck.applyOrder(order);
     });
 }
-class NidoranMale extends pokemon_card_1.PokemonCard {
+class NidoranFemale extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.name = 'Nidoran ♀';
+        this.name = 'Nidoran♀';
         this.set = 'JU';
         this.setNumber = '57';
-        this.fullName = 'Nidoran ♀ JU';
+        this.fullName = 'Nidoran♀ JU';
         this.cardType = card_types_1.CardType.GRASS;
         this.stage = card_types_1.Stage.BASIC;
         this.hp = 60;
@@ -72,4 +72,4 @@ class NidoranMale extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.NidoranMale = NidoranMale;
+exports.NidoranFemale = NidoranFemale;

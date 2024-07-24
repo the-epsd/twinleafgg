@@ -52,7 +52,6 @@ class Thwackey extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            // const activePokemon = player.active.getPokemonCard();
             // if (activePokemon && activePokemon.powers[0].name !== 'Fesival Lead') {
             //   throw new GameError(GameMessage.CANNOT_USE_POWER);
             // }
@@ -62,18 +61,27 @@ class Thwackey extends pokemon_card_1.PokemonCard {
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            player.marker.addMarker(this.BOOM_BOOM_DRUM_MARKER, this);
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+            const activePokemon = player.active.getPokemonCard();
+            if (activePokemon && activePokemon.powers) {
+                const hasFestivalLead = activePokemon.powers.some(power => power.name === 'Festival Lead');
+                if (!hasFestivalLead) {
+                    throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
                 }
-            });
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: false }), cards => {
-                player.deck.moveCardsTo(cards, player.hand);
-                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                    player.deck.applyOrder(order);
-                });
-            });
+                if (hasFestivalLead) {
+                    player.marker.addMarker(this.BOOM_BOOM_DRUM_MARKER, this);
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        }
+                    });
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: false }), cards => {
+                        player.deck.moveCardsTo(cards, player.hand);
+                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                            player.deck.applyOrder(order);
+                        });
+                    });
+                }
+            }
         }
         return state;
     }
