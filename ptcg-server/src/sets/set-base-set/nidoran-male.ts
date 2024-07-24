@@ -10,16 +10,16 @@ import { GameMessage } from '../../game';
 
 export class NidoranMale extends PokemonCard {
 
-  public name = 'Nidoran ♂';
+  public name = 'Nidoran♂';
 
   public set = 'BS';
-  
+
   public setNumber = '55';
-  
-  public fullName = 'Nidoran ♂ BS';
-  
+
+  public fullName = 'Nidoran♂ BS';
+
   public cardType = CardType.GRASS;
-  
+
   public stage = Stage.BASIC;
 
   public hp = 40;

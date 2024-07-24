@@ -37,6 +37,10 @@ class Cramorant extends game_1.PokemonCard {
         const player = game_1.StateUtils.findOwner(state, this.cards);
         return player.lostzone.cards.length >= 4 ? 3 : 0;
     }
+    getWaterReduction(state) {
+        const player = game_1.StateUtils.findOwner(state, this.cards);
+        return player.lostzone.cards.length >= 4 ? 3 : 0;
+    }
     reduceEffect(store, state, effect) {
         // if (effect instanceof UseAttackEffect && effect.attack === this.attacks[0]) {
         //   const player = effect.player;

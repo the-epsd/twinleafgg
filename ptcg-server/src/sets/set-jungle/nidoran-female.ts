@@ -13,7 +13,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
   const max = Math.min(slots.length, 1);
-  
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
@@ -25,33 +25,33 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
     cards = selected || [];
     next();
   });
-  
+
   if (cards.length > slots.length) {
     cards.length = slots.length;
   }
-  
+
   cards.forEach((card, index) => {
     player.deck.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
   });
-  
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
 }
 
-export class NidoranMale extends PokemonCard {
+export class NidoranFemale extends PokemonCard {
 
-  public name = 'Nidoran ♀';
+  public name = 'Nidoran♀';
 
   public set = 'JU';
-  
+
   public setNumber = '57';
-  
-  public fullName = 'Nidoran ♀ JU';
-  
+
+  public fullName = 'Nidoran♀ JU';
+
   public cardType = CardType.GRASS;
-  
+
   public stage = Stage.BASIC;
 
   public hp = 60;
@@ -82,7 +82,7 @@ export class NidoranMale extends PokemonCard {
       return store.prompt(state, [
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)  
+        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)
       ], (results) => {
         const heads = results.filter(r => !!r).length;
         effect.damage = heads * 10;

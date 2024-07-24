@@ -51,8 +51,7 @@ export class CastformSunnyForm extends PokemonCard {
 
   public getColorlessReduction(state: State): number {
     const player = state.players[state.activePlayer];
-    const stadiumsInDiscard = player.discard.cards.filter(c => c instanceof TrainerCard && (<TrainerCard>c).trainerType === TrainerType.STADIUM).length
-
+    const stadiumsInDiscard = player.discard.cards.filter(c => c instanceof TrainerCard && (<TrainerCard>c).trainerType === TrainerType.STADIUM).length;
     return stadiumsInDiscard >= 8 ? 2 : 0;
   }
 
@@ -60,7 +59,7 @@ export class CastformSunnyForm extends PokemonCard {
 
     if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
-      const stadiumsInDiscard = player.discard.cards.filter(c => c instanceof TrainerCard && (<TrainerCard>c).trainerType === TrainerType.STADIUM).length
+      const stadiumsInDiscard = player.discard.cards.filter(c => c instanceof TrainerCard && (<TrainerCard>c).trainerType === TrainerType.STADIUM).length;
 
       try {
         const stub = new PowerEffect(player, {

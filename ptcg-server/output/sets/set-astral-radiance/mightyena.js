@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_1 = require("../../game");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class Mightyena extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -35,12 +36,29 @@ class Mightyena extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[0]) {
-            const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(effect.player);
-            store.reduceEffect(state, checkEnergy);
+            const player = effect.player;
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                console.log(effect.cost);
+                return state;
+            }
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
             const opponentActive = opponent.active.getPokemonCard();
             if (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
-                this.attacks[0].cost = [];
+                const costToRemove = 3;
+                for (let i = 0; i < costToRemove; i++) {
+                    const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+                    if (index !== -1) {
+                        effect.cost.splice(index, 1);
+                    }
+                }
             }
         }
         return state;

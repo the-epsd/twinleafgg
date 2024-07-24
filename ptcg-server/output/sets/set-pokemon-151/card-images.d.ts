@@ -36,6 +36,12 @@ import { Moltres } from './MEW_146_Moltres';
 import { Staryu } from './staryu';
 import { Arbokex } from './MEW_24_Arbok_ex';
 import { Ekans } from './MEW_23_Ekans';
+import { Nidoking } from './nidoking';
+import { Nidoqueen } from './nidoqueen';
+import { NidoranMale } from './nidoran-male';
+import { Nidorino } from './nidorino';
+import { NidoranFemale } from './nidoran-female';
+import { Nidorina } from './nidorina';
 export declare class AntiqueHelixFossilArt extends AntiqueHelixFossil {
     cardImage: string;
 }
@@ -112,6 +118,24 @@ export declare class MewexArt extends Mewex {
     cardImage: string;
 }
 export declare class MoltresArt extends Moltres {
+    cardImage: string;
+}
+export declare class NidoranMaleArt extends NidoranMale {
+    cardImage: string;
+}
+export declare class NidorinoArt extends Nidorino {
+    cardImage: string;
+}
+export declare class NidokingArt extends Nidoking {
+    cardImage: string;
+}
+export declare class NidoranFemaleArt extends NidoranFemale {
+    cardImage: string;
+}
+export declare class NidorinaArt extends Nidorina {
+    cardImage: string;
+}
+export declare class NidoqueenArt extends Nidoqueen {
     cardImage: string;
 }
 export declare class OddishArt extends Oddish {

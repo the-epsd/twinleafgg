@@ -88,12 +88,17 @@ export class Squawkabillyex extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-
+      const hasBench = player.bench.some(b => b.cards.length > 0);
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
           && c.energyType === EnergyType.BASIC;
       });
+
       if (!hasEnergyInDiscard) {
+        return state;
+      }
+
+      if (!hasBench) {
         return state;
       }
 

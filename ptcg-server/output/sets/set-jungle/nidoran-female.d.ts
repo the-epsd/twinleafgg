@@ -4,7 +4,7 @@ import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-export declare class NidoranMale extends PokemonCard {
+export declare class NidoranFemale extends PokemonCard {
     name: string;
     set: string;
     setNumber: string;

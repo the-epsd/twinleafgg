@@ -1,6 +1,6 @@
 import { Attack, Card, CardManager, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, PokemonCardList, SlotType } from '../../game';
 import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
+import { ColorlessCostReducer, DarkCostReducer, WaterCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -155,16 +155,33 @@ export class TechnicalMachineEvolution extends TrainerCard {
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const pokemonCard = effect.player.active.getPokemonCard();
       if (pokemonCard && 'getColorlessReduction' in pokemonCard) {
-        const reduction = (pokemonCard as ColorlessCostReducer).getColorlessReduction(state);
-        for (let i = 0; i < reduction && effect.cost.includes(CardType.COLORLESS); i++) {
+        const colorlessReudction = (pokemonCard as ColorlessCostReducer).getColorlessReduction(state);
+        for (let i = 0; i < colorlessReudction && effect.cost.includes(CardType.COLORLESS); i++) {
           const index = effect.cost.indexOf(CardType.COLORLESS);
           if (index !== -1) {
             effect.cost.splice(index, 1);
           }
         }
       }
+      if (pokemonCard && 'getDarkReduction' in pokemonCard) {
+        const darkReduction = (pokemonCard as DarkCostReducer).getDarkReduction(state);
+        for (let i = 0; i < darkReduction && effect.cost.includes(CardType.DARK); i++) {
+          const index = effect.cost.indexOf(CardType.DARK);
+          if (index !== -1) {
+            effect.cost.splice(index, 1);
+          }
+        }
+      }
+      if (pokemonCard && 'getWaterReduction' in pokemonCard) {
+        const waterReduction = (pokemonCard as WaterCostReducer).getWaterReduction(state);
+        for (let i = 0; i < waterReduction && effect.cost.includes(CardType.WATER); i++) {
+          const index = effect.cost.indexOf(CardType.WATER);
+          if (index !== -1) {
+            effect.cost.splice(index, 1);
+          }
+        }
+      }
     }
-
     if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
       !effect.attacks.includes(this.attacks[0])) {
       const player = effect.player;

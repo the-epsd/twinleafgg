@@ -55,6 +55,7 @@ exports.setBaseSet = [
     new card_images_1.MewtwoArt(),
     new card_images_1.NidokingArt(),
     new card_images_1.NidorinoArt(),
+    new card_images_1.NidoranMaleArt(),
     new card_images_1.NinetalesArt(),
     new card_images_1.OnixArt(),
     new card_images_1.PidgeottoArt(),

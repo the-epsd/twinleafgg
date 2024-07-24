@@ -113,9 +113,27 @@ class TechnicalMachineEvolution extends trainer_card_1.TrainerCard {
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[0]) {
             const pokemonCard = effect.player.active.getPokemonCard();
             if (pokemonCard && 'getColorlessReduction' in pokemonCard) {
-                const reduction = pokemonCard.getColorlessReduction(state);
-                for (let i = 0; i < reduction && effect.cost.includes(card_types_1.CardType.COLORLESS); i++) {
+                const colorlessReudction = pokemonCard.getColorlessReduction(state);
+                for (let i = 0; i < colorlessReudction && effect.cost.includes(card_types_1.CardType.COLORLESS); i++) {
                     const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+                    if (index !== -1) {
+                        effect.cost.splice(index, 1);
+                    }
+                }
+            }
+            if (pokemonCard && 'getDarkReduction' in pokemonCard) {
+                const darkReduction = pokemonCard.getDarkReduction(state);
+                for (let i = 0; i < darkReduction && effect.cost.includes(card_types_1.CardType.DARK); i++) {
+                    const index = effect.cost.indexOf(card_types_1.CardType.DARK);
+                    if (index !== -1) {
+                        effect.cost.splice(index, 1);
+                    }
+                }
+            }
+            if (pokemonCard && 'getWaterReduction' in pokemonCard) {
+                const waterReduction = pokemonCard.getWaterReduction(state);
+                for (let i = 0; i < waterReduction && effect.cost.includes(card_types_1.CardType.WATER); i++) {
+                    const index = effect.cost.indexOf(card_types_1.CardType.WATER);
                     if (index !== -1) {
                         effect.cost.splice(index, 1);
                     }

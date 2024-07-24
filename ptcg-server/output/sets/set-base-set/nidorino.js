@@ -14,7 +14,7 @@ class Nidorino extends pokemon_card_1.PokemonCard {
         this.fullName = 'Nidorino BS';
         this.cardType = card_types_1.CardType.GRASS;
         this.stage = card_types_1.Stage.STAGE_1;
-        this.evolvesFrom = 'Nidoran ♂';
+        this.evolvesFrom = 'Nidoran♂';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '37';
         this.hp = 60;
