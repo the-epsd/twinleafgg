@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, PowerType, DamageMap, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, CardTarget, RemoveDamagePrompt, GameError } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, DamageMap, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, CardTarget, RemoveDamagePrompt, GameError, SpecialCondition } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -68,6 +68,10 @@ export class Munkidori extends PokemonCard {
       const blockedFrom: CardTarget[] = [];
       const blockedTo: CardTarget[] = [];
 
+      if (player.marker.hasMarker(this.ADRENA_BRAIN_MARKER, this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       // Check if any Pokémon have damage
       let hasDamagedPokemon = false;
       const damagedPokemon: DamageMap[] = [];
@@ -107,6 +111,14 @@ export class Munkidori extends PokemonCard {
         if (transfers === null) {
           return state;
         }
+
+        player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
 
         let totalDamageMoved = 0;
         for (const transfer of transfers) {

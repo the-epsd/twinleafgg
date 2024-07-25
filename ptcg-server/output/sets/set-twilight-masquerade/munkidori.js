@@ -51,6 +51,9 @@ class Munkidori extends game_1.PokemonCard {
             const maxAllowedDamage = [];
             const blockedFrom = [];
             const blockedTo = [];
+            if (player.marker.hasMarker(this.ADRENA_BRAIN_MARKER, this)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             // Check if any Pokémon have damage
             let hasDamagedPokemon = false;
             const damagedPokemon = [];
@@ -78,6 +81,12 @@ class Munkidori extends game_1.PokemonCard {
                 if (transfers === null) {
                     return state;
                 }
+                player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(game_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
                 let totalDamageMoved = 0;
                 for (const transfer of transfers) {
                     const source = game_1.StateUtils.getTarget(state, player, transfer.from);
