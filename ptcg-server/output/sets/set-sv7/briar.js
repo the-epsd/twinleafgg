@@ -44,6 +44,7 @@ class Briar extends game_1.TrainerCard {
                 }
                 this.extraPrizes = false;
             }
+            player.supporter.moveCardTo(this, player.discard);
             return state;
         }
         return state;
