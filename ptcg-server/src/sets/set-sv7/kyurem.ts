@@ -79,7 +79,6 @@ export class Kyurem extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
@@ -97,13 +96,11 @@ export class Kyurem extends PokemonCard {
         { min: 1, max: 3, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        if (targets.includes(opponent.active)) {
-          targets.forEach(target => {
-            const damageEffect = new PutDamageEffect(effect, 110);
-            damageEffect.target = target;
-            store.reduceEffect(state, damageEffect);
-          });
-        }
+        targets.forEach(target => {
+          const damageEffect = new PutDamageEffect(effect, 110);
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
+        });
       });
     }
     return state;

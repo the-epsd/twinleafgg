@@ -77,7 +77,7 @@ class Munkidori extends game_1.PokemonCard {
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
                 blockedFrom.push(target);
             });
-            return store.prompt(state, new game_1.RemoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 3, allowCancel: false }), transfers => {
+            return store.prompt(state, new game_1.RemoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 3, allowCancel: false, sameTarget: true, blockedTo: blockedTo }), transfers => {
                 if (transfers === null) {
                     return state;
                 }
