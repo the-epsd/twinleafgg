@@ -14,7 +14,7 @@ export class Tsareenaex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
-  public stage = Stage.BASIC;
+  public stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Steenee';
 
@@ -29,8 +29,7 @@ export class Tsareenaex extends PokemonCard {
   public attacks = [
     {
       name: 'Icicle Sole',
-      // cost: [CardType.GRASS],
-      cost: [],
+      cost: [CardType.GRASS],
       damage: 0,
       text: 'Put damage counters on 1 of your opponent\'s Pokémon until its remaining HP is 30.'
     },
