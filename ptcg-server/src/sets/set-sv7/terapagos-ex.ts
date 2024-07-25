@@ -52,6 +52,7 @@ export class Terapagosex extends PokemonCard {
   public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       if (state.turn <= 2) {
@@ -77,10 +78,11 @@ export class Terapagosex extends PokemonCard {
     if (effect instanceof PutDamageEffect && effect.target.attackMarker.hasMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      if (opponent.active.isBasic() && opponent.active.stage == Stage.BASIC) {
+      const opponentActive = opponent.active.getPokemonCard();
+      if (opponent.active.isBasic() && opponent.active.stage == Stage.BASIC && opponentActive?.cardType !== CardType.COLORLESS) {
+        effect.preventDefault = true;
         return state;
       }
-      effect.preventDefault = true;
       return state;
     }
 

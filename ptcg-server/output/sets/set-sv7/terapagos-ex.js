@@ -59,10 +59,11 @@ class Terapagosex extends pokemon_card_1.PokemonCard {
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.attackMarker.hasMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (opponent.active.isBasic() && opponent.active.stage == card_types_1.Stage.BASIC) {
+            const opponentActive = opponent.active.getPokemonCard();
+            if (opponent.active.isBasic() && opponent.active.stage == card_types_1.Stage.BASIC && (opponentActive === null || opponentActive === void 0 ? void 0 : opponentActive.cardType) !== card_types_1.CardType.COLORLESS) {
+                effect.preventDefault = true;
                 return state;
             }
-            effect.preventDefault = true;
             return state;
         }
         if (effect instanceof attack_effects_1.PutDamageEffect) {
