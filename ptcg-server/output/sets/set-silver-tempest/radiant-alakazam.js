@@ -66,7 +66,6 @@ class RadiantAlakazam extends pokemon_card_1.PokemonCard {
                         source.damage -= 20;
                         target.damage += 20;
                     }
-                    player.supporter.moveCardTo(this, player.discard);
                     return state;
                 }
             });

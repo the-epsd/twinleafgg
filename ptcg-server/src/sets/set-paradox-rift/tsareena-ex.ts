@@ -5,7 +5,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
-import { HealTargetEffect, PutDamageEffect, RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { HealTargetEffect, PutCountersEffect, RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 export class Tsareenaex extends PokemonCard {
@@ -14,7 +14,7 @@ export class Tsareenaex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
-  public stage = Stage.STAGE_2;
+  public stage = Stage.BASIC;
 
   public evolvesFrom = 'Steenee';
 
@@ -29,7 +29,8 @@ export class Tsareenaex extends PokemonCard {
   public attacks = [
     {
       name: 'Icicle Sole',
-      cost: [CardType.GRASS],
+      // cost: [CardType.GRASS],
+      cost: [],
       damage: 0,
       text: 'Put damage counters on 1 of your opponent\'s Pokémon until its remaining HP is 30.'
     },
@@ -80,11 +81,11 @@ export class Tsareenaex extends PokemonCard {
         }
 
         if (damageAmount > 0) {
-          const damageEffect = new PutDamageEffect(effect, damageAmount);
+          const damageEffect = new PutCountersEffect(effect, damageAmount);
           damageEffect.target = selectedTarget;
           store.reduceEffect(state, damageEffect);
         } else if (damageAmount <= 0) {
-          const damageEffect = new PutDamageEffect(effect, 0);
+          const damageEffect = new PutCountersEffect(effect, 0);
           damageEffect.target = selectedTarget;
           store.reduceEffect(state, damageEffect);
         }

@@ -86,13 +86,16 @@ function playerTurnReducer(store, state, action) {
             if (pokemonCard === undefined) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
             }
-            const target = state_utils_1.StateUtils.getTarget(state, player, action.target);
-            const powersEffect = new check_effects_1.CheckPokemonPowersEffect(player, target);
-            state = store.reduceEffect(state, powersEffect);
-            const power = [
-                ...pokemonCard.powers,
-                ...powersEffect.powers
-            ].find(a => a.name === action.name);
+            let power;
+            if (action.target.slot === play_card_action_1.SlotType.ACTIVE || action.target.slot === play_card_action_1.SlotType.BENCH) {
+                const target = state_utils_1.StateUtils.getTarget(state, player, action.target);
+                const powersEffect = new check_effects_1.CheckPokemonPowersEffect(player, target);
+                state = store.reduceEffect(state, powersEffect);
+                power = [...pokemonCard.powers, ...powersEffect.powers].find(a => a.name === action.name);
+            }
+            else {
+                power = pokemonCard.powers.find(a => a.name === action.name);
+            }
             if (power === undefined) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.UNKNOWN_POWER);
             }
@@ -108,7 +111,7 @@ function playerTurnReducer(store, state, action) {
             if (slot === play_card_action_1.SlotType.DISCARD && !power.useFromDiscard) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            state = store.reduceEffect(state, new game_effects_1.UsePowerEffect(player, power, pokemonCard));
+            state = store.reduceEffect(state, new game_effects_1.UsePowerEffect(player, power, pokemonCard, action.target));
             return state;
         }
         if (action instanceof game_actions_1.UseStadiumAction) {

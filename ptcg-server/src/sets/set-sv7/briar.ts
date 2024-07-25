@@ -1,4 +1,4 @@
-import { TrainerCard, TrainerType, StoreLike, State, StateUtils, GamePhase, GameError, GameMessage, CardTag } from '../../game';
+import { TrainerCard, TrainerType, StoreLike, State, StateUtils, GamePhase, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -19,18 +19,24 @@ export class Briar extends TrainerCard {
 
   public fullName: string = 'Briar SV7';
 
+  public extraPrizes = false;
+
   public text: string =
-    'Search your deck for a Stadium card and an Energy card, reveal them, and put them into your hand. Then, shuffle your deck.';
+    'You can use this card only if your opponent has exactly 2 Prize cards remaining.' +
+    '' +
+    'During this turn, if your opponent\'s Active Pokémon is Knocked Out by damage from an attack used by your Tera Pokémon, take 1 more Prize card.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
-      if (opponent.prizes.length !== 6) {
+      if (opponent.prizes.length !== 2) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
+
+      this.extraPrizes = true;
+      return state;
     }
 
     if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
@@ -42,22 +48,16 @@ export class Briar extends TrainerCard {
         return state;
       }
 
-      // Articuno wasn't attacking
-      const pokemonCard = opponent.active.getPokemonCard();
-      if (pokemonCard !== player.active.getPokemonCard()) {
-        return state;
+      // Check if the knocked out Pokémon belongs to the opponent and if extra prize should be taken
+      if (effect.target === player.active) {
+        const attackingPokemon = opponent.active;
+        if (attackingPokemon.isTera() && this.extraPrizes) {
+          effect.prizeCount += 1;
+        }
+        this.extraPrizes = false;
       }
-
-      const playerActive = player.active.getPokemonCard();
-
-      if (playerActive && playerActive.tags.includes(CardTag.POKEMON_TERA)) {
-        effect.prizeCount += 1;
-        return state;
-      }
-
       return state;
     }
     return state;
   }
-
 }

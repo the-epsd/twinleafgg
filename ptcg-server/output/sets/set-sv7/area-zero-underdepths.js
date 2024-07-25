@@ -24,17 +24,17 @@ class AreaZeroUnderdepths extends trainer_card_1.TrainerCard {
         if (effect instanceof check_effects_1.CheckTableStateEffect && game_1.StateUtils.getStadiumCard(state) === this) {
             effect.benchSizes = state.players.map((player, index) => {
                 var _a, _b;
-                let pokemonV = 0;
+                let teraPokemon = 0;
                 if ((_b = (_a = player.active) === null || _a === void 0 ? void 0 : _a.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.tags.includes(card_types_1.CardTag.POKEMON_TERA)) {
-                    pokemonV++;
+                    teraPokemon++;
                 }
                 player.bench.forEach(benchSpot => {
                     var _a;
                     if ((_a = benchSpot.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.POKEMON_TERA)) {
-                        pokemonV++;
+                        teraPokemon++;
                     }
                 });
-                return pokemonV >= 1 ? 8 : 5;
+                return teraPokemon >= 1 ? 8 : 5;
             });
             if (effect instanceof game_effects_1.UseStadiumEffect && game_1.StateUtils.getStadiumCard(state) === this) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_STADIUM);

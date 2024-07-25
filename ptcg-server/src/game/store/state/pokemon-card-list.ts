@@ -185,6 +185,10 @@ export class PokemonCardList extends CardList {
     return this.cards.some(c => c.tags.includes(CardTag.ANCIENT));
   }
 
+  isTera(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_TERA));
+  }
+
   getToolEffect(): Power | Attack | undefined {
     if (!this.tool) {
       return;

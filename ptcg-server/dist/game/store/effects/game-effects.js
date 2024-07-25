@@ -20,12 +20,13 @@ export class RetreatEffect {
     }
 }
 export class UsePowerEffect {
-    constructor(player, power, card) {
+    constructor(player, power, card, target) {
         this.type = GameEffects.USE_POWER_EFFECT;
         this.preventDefault = false;
         this.player = player;
         this.power = power;
         this.card = card;
+        this.target = target;
     }
 }
 export class PowerEffect {

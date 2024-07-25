@@ -52,5 +52,6 @@ export declare class PokemonCardList extends CardList {
     exPokemon(): boolean;
     futurePokemon(): boolean;
     ancientPokemon(): boolean;
+    isTera(): boolean;
     getToolEffect(): Power | Attack | undefined;
 }

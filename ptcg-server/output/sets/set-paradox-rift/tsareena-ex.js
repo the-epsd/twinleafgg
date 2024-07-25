@@ -12,7 +12,7 @@ class Tsareenaex extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
-        this.stage = card_types_1.Stage.STAGE_2;
+        this.stage = card_types_1.Stage.BASIC;
         this.evolvesFrom = 'Steenee';
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 310;
@@ -21,7 +21,8 @@ class Tsareenaex extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Icicle Sole',
-                cost: [card_types_1.CardType.GRASS],
+                // cost: [CardType.GRASS],
+                cost: [],
                 damage: 0,
                 text: 'Put damage counters on 1 of your opponent\'s Pokémon until its remaining HP is 30.'
             },
@@ -56,12 +57,12 @@ class Tsareenaex extends pokemon_card_1.PokemonCard {
                     damageAmount = Math.max(0, damageAmount - targetDamage);
                 }
                 if (damageAmount > 0) {
-                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, damageAmount);
+                    const damageEffect = new attack_effects_1.PutCountersEffect(effect, damageAmount);
                     damageEffect.target = selectedTarget;
                     store.reduceEffect(state, damageEffect);
                 }
                 else if (damageAmount <= 0) {
-                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 0);
+                    const damageEffect = new attack_effects_1.PutCountersEffect(effect, 0);
                     damageEffect.target = selectedTarget;
                     store.reduceEffect(state, damageEffect);
                 }

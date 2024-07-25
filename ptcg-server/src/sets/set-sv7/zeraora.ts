@@ -24,7 +24,7 @@ export class Zeraora extends PokemonCard {
   public name: string = 'Zeraora';
   public fullName: string = 'Zeraora SV7';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = 'SV7';
+  public setNumber: string = '37';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

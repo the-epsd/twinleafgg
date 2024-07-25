@@ -15,6 +15,9 @@ class BoomerangEnergy extends energy_card_1.EnergyCard {
         this.regulationMark = 'H';
         this.name = 'Boomerang Energy';
         this.fullName = 'Boomerang Energy TWM';
+        this.text = 'As long as this card is attached to a Pokémon, it provides [C] Energy.' +
+            '' +
+            'If this card is discarded by an effect of an attack used by the Pokémon this card is attached to, attach this card from your discard pile to that Pokémon after attacking.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.DiscardCardsEffect && effect.target === this.cards) {
