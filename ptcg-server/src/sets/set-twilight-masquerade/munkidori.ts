@@ -106,7 +106,7 @@ export class Munkidori extends PokemonCard {
         PlayerType.ANY,
         [SlotType.ACTIVE, SlotType.BENCH],
         maxAllowedDamage,
-        { min: 1, max: 3, allowCancel: false }
+        { min: 1, max: 3, allowCancel: false, sameTarget: true, blockedTo: blockedTo }
       ), transfers => {
         if (transfers === null) {
           return state;
