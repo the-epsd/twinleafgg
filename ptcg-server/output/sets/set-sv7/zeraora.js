@@ -24,7 +24,7 @@ class Zeraora extends game_1.PokemonCard {
         this.name = 'Zeraora';
         this.fullName = 'Zeraora SV7';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = 'SV7';
+        this.setNumber = '37';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

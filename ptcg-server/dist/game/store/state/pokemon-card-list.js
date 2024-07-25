@@ -134,6 +134,9 @@ export class PokemonCardList extends CardList {
     ancientPokemon() {
         return this.cards.some(c => c.tags.includes(CardTag.ANCIENT));
     }
+    isTera() {
+        return this.cards.some(c => c.tags.includes(CardTag.POKEMON_TERA));
+    }
     getToolEffect() {
         if (!this.tool) {
             return;

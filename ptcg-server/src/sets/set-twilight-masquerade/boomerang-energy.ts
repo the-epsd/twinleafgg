@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 
 export class BoomerangEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -22,6 +22,10 @@ export class BoomerangEnergy extends EnergyCard {
 
   public fullName = 'Boomerang Energy TWM';
 
+  public text = 'As long as this card is attached to a Pokémon, it provides [C] Energy.' +
+    '' +
+    'If this card is discarded by an effect of an attack used by the Pokémon this card is attached to, attach this card from your discard pile to that Pokémon after attacking.';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof DiscardCardsEffect && effect.target === this.cards) {
@@ -33,5 +37,5 @@ export class BoomerangEnergy extends EnergyCard {
     return state;
 
   }
-    
+
 }

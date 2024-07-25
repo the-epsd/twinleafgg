@@ -48,36 +48,25 @@ class Charizard extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.ENERGY_BURN_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
-            if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-                player.marker.addMarker(this.ENERGY_BURN_MARKER, this);
-                const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.source);
-                store.reduceEffect(state, checkPokemonType);
-                checkProvidedEnergy.energyMap.forEach(attachedEnergy => {
-                    attachedEnergy.provides.splice(card_types_1.CardType.FIRE);
-                    return state;
-                });
-                if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-                    effect.player.marker.removeMarker(this.ENERGY_BURN_MARKER, this);
-                    checkProvidedEnergy.energyMap.forEach(attachedEnergy => {
-                        if (attachedEnergy.card.energyType) {
-                            attachedEnergy.provides = [attachedEnergy.card.id];
-                        }
-                    });
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
                 }
-                return state;
-            }
+            });
+            player.marker.addMarker(this.ENERGY_BURN_MARKER, this);
+        }
+        if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this) && effect.player.marker.hasMarker(this.ENERGY_BURN_MARKER, this)) {
+            effect.source.cards.forEach(c => {
+                if (c instanceof game_1.EnergyCard && !effect.energyMap.some(e => e.card === c)) {
+                    effect.energyMap.push({ card: c, provides: [card_types_1.CardType.FIRE] });
+                }
+            });
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.player.marker.hasMarker(this.ENERGY_BURN_MARKER, this)) {
+            effect.attack.cost = effect.attack.cost.map(() => card_types_1.CardType.FIRE);
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.marker.removeMarker(this.ENERGY_BURN_MARKER, this);
         }
         return state;
     }

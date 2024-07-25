@@ -5,7 +5,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
-import { HealTargetEffect, PutDamageEffect, RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { HealTargetEffect, PutCountersEffect, RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 export class Tsareenaex extends PokemonCard {
@@ -80,11 +80,11 @@ export class Tsareenaex extends PokemonCard {
         }
 
         if (damageAmount > 0) {
-          const damageEffect = new PutDamageEffect(effect, damageAmount);
+          const damageEffect = new PutCountersEffect(effect, damageAmount);
           damageEffect.target = selectedTarget;
           store.reduceEffect(state, damageEffect);
         } else if (damageAmount <= 0) {
-          const damageEffect = new PutDamageEffect(effect, 0);
+          const damageEffect = new PutCountersEffect(effect, 0);
           damageEffect.target = selectedTarget;
           store.reduceEffect(state, damageEffect);
         }

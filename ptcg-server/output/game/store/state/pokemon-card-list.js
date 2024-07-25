@@ -137,6 +137,9 @@ class PokemonCardList extends card_list_1.CardList {
     ancientPokemon() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.ANCIENT));
     }
+    isTera() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_TERA));
+    }
     getToolEffect() {
         if (!this.tool) {
             return;

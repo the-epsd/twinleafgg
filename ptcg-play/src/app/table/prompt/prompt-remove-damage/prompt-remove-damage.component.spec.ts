@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ApiModule } from '../../../api/api.module';
 import { PromptRemoveDamageComponent } from './prompt-remove-damage.component';
 
-describe('PromptRemoveDamageComponent', () => {
+describe('PromptMoveDamageComponent', () => {
   let component: PromptRemoveDamageComponent;
   let fixture: ComponentFixture<PromptRemoveDamageComponent>;
 

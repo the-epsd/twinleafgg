@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, PowerType } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Munkidori extends PokemonCard {
     stage: Stage;

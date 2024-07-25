@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { GameError, GameMessage, PowerType } from '../../game';
-import { CheckProvidedEnergyEffect, CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EnergyCard, GameError, GameMessage, PlayerType, PowerType } from '../../game';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 
@@ -25,7 +25,7 @@ export class Charizard extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Energy Burn',
@@ -37,7 +37,7 @@ export class Charizard extends PokemonCard {
   public attacks = [
     {
       name: 'Fire Spin',
-      cost: [ CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.FIRE ],
+      cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.FIRE],
       damage: 100,
       text: 'Discard 2 Energy cards attached to Charizard in order to use this attack.'
     }
@@ -66,43 +66,32 @@ export class Charizard extends PokemonCard {
       if (player.marker.hasMarker(this.ENERGY_BURN_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-  
 
-      if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-        player.marker.addMarker(this.ENERGY_BURN_MARKER, this);
-        const checkPokemonType = new CheckPokemonTypeEffect(effect.source);
-        store.reduceEffect(state, checkPokemonType);
-        checkProvidedEnergy.energyMap.forEach(attachedEnergy => {
-          attachedEnergy.provides.splice(CardType.FIRE);
-          return state;
-        });
-        if (effect instanceof EndTurnEffect) {
-          effect.player.marker.removeMarker(this.ENERGY_BURN_MARKER, this);
-          checkProvidedEnergy.energyMap.forEach(attachedEnergy => {
-            if (attachedEnergy.card.energyType) {
-              attachedEnergy.provides = [attachedEnergy.card.id];
-            }
-          });
-
-
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
         }
-        return state;
-      }
+      });
+
+      player.marker.addMarker(this.ENERGY_BURN_MARKER, this);
+    }
+
+    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this) && effect.player.marker.hasMarker(this.ENERGY_BURN_MARKER, this)) {
+      effect.source.cards.forEach(c => {
+        if (c instanceof EnergyCard && !effect.energyMap.some(e => e.card === c)) {
+          effect.energyMap.push({ card: c, provides: [CardType.FIRE] });
+        }
+      });
+    }
+
+    if (effect instanceof AttackEffect && effect.player.marker.hasMarker(this.ENERGY_BURN_MARKER, this)) {
+      effect.attack.cost = effect.attack.cost.map(() => CardType.FIRE);
+    }
+
+
+    if (effect instanceof EndTurnEffect) {
+      effect.player.marker.removeMarker(this.ENERGY_BURN_MARKER, this);
     }
     return state;
   }
 }
-      
-    

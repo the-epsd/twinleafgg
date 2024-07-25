@@ -1,19 +1,34 @@
+import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
 import { Prompt } from './prompt';
 import { PlayerType, SlotType, CardTarget } from '../actions/play-card-action';
 import { State } from '../state/state';
 import { StateUtils } from '../state-utils';
-import { DamageMap } from './move-damage-prompt';
+import { DamageMap, DamageTransfer } from './move-damage-prompt';
 
 export const RemoveDamagePromptType = 'Remove damage';
 
+export type RemoveDamageResultType = DamageTransfer[];
+
+// export interface DamageTransfer {
+//   from: CardTarget;
+//   to: CardTarget;
+// }
+
+// export interface DamageMap {
+//   target: CardTarget;
+//   damage: number;
+// }
+
 export interface RemoveDamageOptions {
   allowCancel: boolean;
-  blocked: CardTarget[];
-  allowPlacePartialDamage?: boolean | undefined;
+  min: number;
+  max: number | undefined;
+  blockedFrom: CardTarget[];
+  blockedTo: CardTarget[];
 }
 
-export class RemoveDamagePrompt extends Prompt<DamageMap[]> {
+export class RemoveDamagePrompt extends Prompt<DamageTransfer[]> {
 
   readonly type: string = RemoveDamagePromptType;
 
@@ -24,7 +39,6 @@ export class RemoveDamagePrompt extends Prompt<DamageMap[]> {
     public message: GameMessage,
     public playerType: PlayerType,
     public slots: SlotType[],
-    public damage: number,
     public maxAllowedDamage: DamageMap[],
     options?: Partial<RemoveDamageOptions>
   ) {
@@ -33,24 +47,34 @@ export class RemoveDamagePrompt extends Prompt<DamageMap[]> {
     // Default options
     this.options = Object.assign({}, {
       allowCancel: true,
-      blocked: [],
-      allowPlacePartialDamage: false
+      min: 0,
+      max: undefined,
+      blockedFrom: [],
+      blockedTo: []
     }, options);
   }
 
-  public decode(result: DamageMap[] | null, state: State): DamageMap[] | null {
+  public decode(result: RemoveDamageResultType | null, state: State): DamageTransfer[] | null {
+    if (result === null) {
+      return result;  // operation cancelled
+    }
+    const player = state.players.find(p => p.id === this.playerId);
+    if (player === undefined) {
+      throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
+    }
     return result;
   }
 
-  public validate(result: DamageMap[] | null, state: State): boolean {
+  public validate(result: DamageTransfer[] | null, state: State): boolean {
     if (result === null) {
       return this.options.allowCancel;  // operation cancelled
     }
 
-    let damage = 0;
-    result.forEach(r => { damage += r.damage; });
+    if (result.length < this.options.min) {
+      return false;
+    }
 
-    if (this.damage !== damage && !this.options.allowPlacePartialDamage) {
+    if (this.options.max !== undefined && result.length > this.options.max) {
       return false;
     }
 
@@ -58,22 +82,29 @@ export class RemoveDamagePrompt extends Prompt<DamageMap[]> {
     if (player === undefined) {
       return false;
     }
-    const blocked = this.options.blocked.map(b => StateUtils.getTarget(state, player, b));
+    const blockedFrom = this.options.blockedFrom.map(b => StateUtils.getTarget(state, player, b));
+    const blockedTo = this.options.blockedTo.map(b => StateUtils.getTarget(state, player, b));
 
     for (const r of result) {
-      const target = StateUtils.getTarget(state, player, r.target);
-      if (target === undefined || blocked.includes(target)) {
+      const from = StateUtils.getTarget(state, player, r.from);
+      if (from === undefined || blockedFrom.includes(from)) {
+        return false;
+      }
+      const to = StateUtils.getTarget(state, player, r.to);
+      if (to === undefined || blockedTo.includes(to)) {
         return false;
       }
     }
 
     if (this.playerType !== PlayerType.ANY) {
-      if (result.some(r => r.target.player !== this.playerType)) {
+      if (result.some(r => r.from.player !== this.playerType)
+        || result.some(r => r.to.player !== this.playerType)) {
         return false;
       }
     }
 
-    if (result.some(r => !this.slots.includes(r.target.slot))) {
+    if (result.some(r => !this.slots.includes(r.from.slot))
+      || result.some(r => !this.slots.includes(r.to.slot))) {
       return false;
     }
 

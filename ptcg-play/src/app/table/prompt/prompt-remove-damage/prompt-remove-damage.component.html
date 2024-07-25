@@ -14,11 +14,11 @@
 
   <div class="ptcg-damage-pane">
     <button mat-mini-fab color="accent" [disabled]="isRemoveDisabled" (click)="removeDamage()">
-      <mat-icon>add</mat-icon>
+      <mat-icon>remove</mat-icon>
     </button>
     <ptcg-badge color="warn" class="ptcg-damage-value">{{ damage }}</ptcg-badge>
     <button mat-mini-fab color="accent" [disabled]="isAddDisabled" (click)="addDamage()">
-      <mat-icon>remove</mat-icon>
+      <mat-icon>add</mat-icon>
     </button>
   </div>
 

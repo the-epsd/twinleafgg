@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { RemoveDamagePrompt, CardTarget, DamageMap, PokemonCardList } from 'ptcg-server';
+import { DamageTransfer, CardTarget, DamageMap, PokemonCardList, RemoveDamagePrompt } from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
@@ -26,10 +26,13 @@ export class PromptRemoveDamageComponent implements OnChanges {
   public isAddDisabled = true;
   public damage = 0;
 
-  private initialDamage = 0;
+  private min: number;
+  private max: number | undefined;
+
   private initialDamageMap: DamageMap[];
   private maxDamageMap: DamageMap[];
-  private blocked: CardTarget[];
+  private blockedFrom: CardTarget[];
+  private blockedTo: CardTarget[];
 
   constructor(
     private gameService: GameService
@@ -48,12 +51,12 @@ export class PromptRemoveDamageComponent implements OnChanges {
   public confirm() {
     const gameId = this.gameState.gameId;
     const id = this.promptId;
-    const results = this.buildDamageMap(this.pokemonData);
+    const results = this.buildDamageTransfers(this.pokemonData);
     this.gameService.resolvePrompt(gameId, id, results);
   }
 
   public onCardClick(item: PokemonItem) {
-    if (this.pokemonData.matchesTarget(item, this.blocked)) {
+    if (this.pokemonData.matchesTarget(item, this.blockedFrom)) {
       return;
     }
     this.pokemonData.unselectAll();
@@ -81,7 +84,7 @@ export class PromptRemoveDamageComponent implements OnChanges {
   }
 
   public reset() {
-    this.damage = this.initialDamage;
+    this.damage = 0;
     const pokemonRows = this.pokemonData.getRows();
     for (const row of pokemonRows) {
       for (const item of row.items) {
@@ -116,28 +119,36 @@ export class PromptRemoveDamageComponent implements OnChanges {
     });
     const allowedDamage: number | undefined = damageMap && damageMap.damage;
 
-    const initial = this.initialDamageMap.find(i => {
-      return i.target.player === target.player
-        && i.target.slot === target.slot
-        && i.target.index === target.index;
-    });
-
     let isAddDisabled = false;
     let isRemoveDisabled = false;
 
-    if (initial !== undefined && cardList.damage <= initial.damage) {
+    if (cardList.damage <= 0) {
       isRemoveDisabled = true;
     }
     if (this.damage === 0 || cardList.damage >= allowedDamage) {
       isAddDisabled = true;
     }
 
+    const initial = this.initialDamageMap.find(i => {
+      return i.target.player === target.player
+        && i.target.slot === target.slot
+        && i.target.index === target.index;
+    });
+    const results = this.buildDamageTransfers(this.pokemonData);
+    const transfers = results.length + Math.round(this.damage / 10);
+    if (transfers >= this.max && initial !== undefined) {
+      if (initial.damage >= cardList.damage) {
+        isRemoveDisabled = true;
+      }
+    }
+
     this.isAddDisabled = isAddDisabled;
     this.isRemoveDisabled = isRemoveDisabled;
   }
 
-  private buildDamageMap(pokemonData: PokemonData): DamageMap[] {
-    const results: DamageMap[] = [];
+  private buildDamageTransfers(pokemonData: PokemonData): DamageTransfer[] {
+    const fromItems: PokemonItem[] = [];
+    const toItems: PokemonItem[] = [];
     const pokemonRows = pokemonData.getRows();
 
     for (const row of pokemonRows) {
@@ -150,20 +161,35 @@ export class PromptRemoveDamageComponent implements OnChanges {
         });
 
         if (initial !== undefined) {
-          const damage = item.cardList.damage - initial.damage;
-          if (damage >= 0) {
-            results.push({ target: item.target, damage });
+          for (let i = initial.damage; i > item.cardList.damage; i -= 10) {
+            fromItems.push(item);
+          }
+          for (let i = initial.damage; i < item.cardList.damage; i += 10) {
+            toItems.push(item);
           }
         }
       }
+    }
+
+    const results: DamageTransfer[] = [];
+    const len = Math.min(fromItems.length, toItems.length);
+    for (let i = 0; i < len; i++) {
+      results.push({ from: fromItems[i].target, to: toItems[i].target });
     }
 
     return results;
   }
 
   private updateIsInvalid() {
+    const results = this.buildDamageTransfers(this.pokemonData);
     let isInvalid = false;
-    if (this.damage > 0 && !this.prompt.options.allowPlacePartialDamage) {
+    if (this.damage > 0) {
+      isInvalid = true;
+    }
+    if (this.min > results.length) {
+      isInvalid = true;
+    }
+    if (this.max !== undefined && this.max < results.length) {
       isInvalid = true;
     }
     this.isInvalid = isInvalid;
@@ -178,7 +204,8 @@ export class PromptRemoveDamageComponent implements OnChanges {
       const slots = prompt.slots;
 
       this.pokemonData = new PokemonData(state, playerId, playerType, slots);
-      this.blocked = prompt.options.blocked;
+      this.blockedFrom = prompt.options.blockedFrom;
+      this.blockedTo = prompt.options.blockedTo;
       this.allowedCancel = prompt.options.allowCancel;
       this.message = prompt.message;
       this.promptId = prompt.id;
@@ -196,8 +223,8 @@ export class PromptRemoveDamageComponent implements OnChanges {
         }
       }
 
-      this.initialDamage = prompt.damage;
-      this.damage = prompt.damage;
+      this.min = prompt.options.min;
+      this.max = prompt.options.max;
       this.updateIsInvalid();
     }
   }

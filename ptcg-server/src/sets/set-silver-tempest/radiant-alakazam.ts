@@ -93,14 +93,11 @@ export class RadiantAlakazam extends PokemonCard {
             source.damage -= 20;
             target.damage += 20;
           }
-          player.supporter.moveCardTo(this, player.discard);
+
           return state;
         }
       });
     }
-
-
-
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       effect.ignoreResistance = true;
