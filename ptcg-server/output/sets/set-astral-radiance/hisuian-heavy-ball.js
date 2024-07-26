@@ -25,9 +25,10 @@ class HisuianHeavyBall extends game_1.TrainerCard {
             const cards = [];
             prizes.forEach(p => { p.cards.forEach(c => cards.push(c)); });
             const blocked = [];
+            const blocked2 = [];
             player.prizes.forEach((c, index) => {
                 if (!c.isSecret) {
-                    blocked.push(index);
+                    blocked2.push(index);
                 }
             });
             // Make prizes no more secret, before displaying prompt
@@ -36,7 +37,7 @@ class HisuianHeavyBall extends game_1.TrainerCard {
             effect.preventDefault = true;
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
             player.prizes.map(p => p.cards[0]).forEach((c, index) => {
-                if (!(c instanceof game_1.PokemonCard && c.stage === game_1.Stage.BASIC)) {
+                if (!(c instanceof game_1.PokemonCard && c.stage === game_1.Stage.BASIC) && !blocked2.includes(index)) {
                     blocked.push(index);
                 }
             });

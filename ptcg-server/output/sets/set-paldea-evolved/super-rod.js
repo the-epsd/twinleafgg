@@ -10,8 +10,10 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
+const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
+    const opponent = game_1.StateUtils.getOpponent(state, player);
     let pokemonsOrEnergyInDiscard = 0;
     const blocked = [];
     player.discard.cards.forEach((c, index) => {
@@ -38,6 +40,9 @@ function* playCard(next, store, state, self, effect) {
     cards.forEach((card, index) => {
         store.log(state, game_message_1.GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
     });
+    if (cards.length > 0) {
+        yield store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
+    }
     player.discard.moveCardsTo(cards, player.deck);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {

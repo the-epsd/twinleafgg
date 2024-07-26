@@ -19,7 +19,7 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Vengeful Hammer',
-                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 20,
                 text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
             },

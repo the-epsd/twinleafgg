@@ -11,10 +11,12 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { ShowCardsPrompt, StateUtils } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: SuperRod, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
 
   let pokemonsOrEnergyInDiscard: number = 0;
   const blocked: number[] = [];
@@ -41,7 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
-    { },
+    {},
     { min: 1, max: 3, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
@@ -51,6 +53,14 @@ function* playCard(next: Function, store: StoreLike, state: State,
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
   });
+
+  if (cards.length > 0) {
+    yield store.prompt(state, new ShowCardsPrompt(
+      opponent.id,
+      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+      cards
+    ), () => next());
+  }
 
   player.discard.moveCardsTo(cards, player.deck);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);

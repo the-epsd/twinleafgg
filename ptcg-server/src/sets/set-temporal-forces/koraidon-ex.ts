@@ -10,7 +10,7 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Koraidonex extends PokemonCard {
 
-  public tags = [ CardTag.ANCIENT, CardTag.POKEMON_ex ];
+  public tags = [CardTag.ANCIENT, CardTag.POKEMON_ex];
 
   public regulationMark = 'H';
 
@@ -20,49 +20,49 @@ export class Koraidonex extends PokemonCard {
 
   public hp: number = 230;
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Vengeful Hammer',
-      cost: [ CardType.FIGHTING, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     },
     {
-        name: 'Kaiser Tackle',
-        cost: [ CardType.FIRE, CardType.FIGHTING, CardType.FIGHTING ],
-        damage: 280,
-        text: 'This Pokémon does 60 damage to itself.'
-      }
+      name: 'Kaiser Tackle',
+      cost: [CardType.FIRE, CardType.FIGHTING, CardType.FIGHTING],
+      damage: 280,
+      text: 'This Pokémon does 60 damage to itself.'
+    }
   ];
 
-    public set: string = 'TEF';
+  public set: string = 'TEF';
 
-    public cardImage: string = 'assets/cardback.png';
+  public cardImage: string = 'assets/cardback.png';
 
-    public setNumber: string = '120';
+  public setNumber: string = '120';
 
-    public name: string = 'Koraidon ex';
+  public name: string = 'Koraidon ex';
 
-    public fullName: string = 'Koraidon ex TEF';
+  public fullName: string = 'Koraidon ex TEF';
 
-    public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-            effect.damage += effect.player.active.damage;
-            return state;
-          }
-    
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      effect.damage += effect.player.active.damage;
+      return state;
+    }
 
-                const player = effect.player;
-          
-                const dealDamage = new DealDamageEffect(effect, 60);
-                dealDamage.target = player.active;
-                return store.reduceEffect(state, dealDamage);
-              }
-              return state;
-            }
-          
-          }
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+
+      const player = effect.player;
+
+      const dealDamage = new DealDamageEffect(effect, 60);
+      dealDamage.target = player.active;
+      return store.reduceEffect(state, dealDamage);
+    }
+    return state;
+  }
+
+}

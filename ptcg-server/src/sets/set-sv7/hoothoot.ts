@@ -12,29 +12,29 @@ export class Hoothoot extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public resistance = [ {type: CardType.FIGHTING, value: -30}];
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
   public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
-      name: 'Sandwich',
+      name: 'Triple Stab',
       cost: [CardType.COLORLESS],
       damage: 10,
       text: 'Flip 3 coins. This attack does 10 damage for each heads.'
     }
   ];
-  
+
   public regulationMark = 'H';
 
   public set: string = 'SV7';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '76';
-  
+
   public name: string = 'Hoothoot';
-  
+
   public fullName: string = 'Hoothoot SV7';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
