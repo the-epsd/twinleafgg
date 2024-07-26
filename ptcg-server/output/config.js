@@ -20,14 +20,6 @@ exports.config = {
         rateLimitCount: 50,
         rateLimitTime: 0 // How long the user should be banned
     },
-    storage: {
-        type: 'mysql',
-        host: 'twinleaf-database-do-user-15340438-0.c.db.ondigitalocean.com',
-        port: 25060,
-        username: 'doadmin',
-        password: 'AVNS_gV9gkMzg6MbbCdiSesR',
-        database: 'ptcg'
-    },
     core: {
         debug: false,
         // How often should we execute the background tasks

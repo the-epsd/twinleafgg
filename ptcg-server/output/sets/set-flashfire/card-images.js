@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ToxicroakExArt = exports.StartlingMegaphoneArt = exports.SkrelpArt = exports.SeedotArt = exports.SacredAshArt = exports.PyroarArt = exports.MiltankArt = exports.LysandreArt = exports.LitleoArt = exports.DragalgeArt = exports.BlacksmithArt = void 0;
+exports.ToxicroakExArt = exports.StartlingMegaphoneArt = exports.SkrelpArt = exports.SeedotArt = exports.SacredAshArt = exports.PyroarArt = exports.MiltankArt = exports.LysandreArt = exports.LitleoArt = exports.FieryTorchArt = exports.DragalgeArt = exports.BlacksmithArt = void 0;
 const blacksmith_1 = require("./blacksmith");
 const dragalge_1 = require("./dragalge");
+const fiery_torch_1 = require("./fiery-torch");
 const FLF_5_Seedot_1 = require("./FLF_5_Seedot");
 const litleo_1 = require("./litleo");
 const lysandre_1 = require("./lysandre");
@@ -26,6 +27,13 @@ class DragalgeArt extends dragalge_1.Dragalge {
     }
 }
 exports.DragalgeArt = DragalgeArt;
+class FieryTorchArt extends fiery_torch_1.FieryTorch {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_089_R_EN_LG.png';
+    }
+}
+exports.FieryTorchArt = FieryTorchArt;
 class LitleoArt extends litleo_1.Litleo {
     constructor() {
         super(...arguments);
