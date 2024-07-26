@@ -1,5 +1,6 @@
 import { Blacksmith } from './blacksmith';
 import { Dragalge } from './dragalge';
+import { FieryTorch } from './fiery-torch';
 import { Seedot } from './FLF_5_Seedot';
 import { Litleo } from './litleo';
 import { Lysandre } from './lysandre';
@@ -16,6 +17,10 @@ export class BlacksmithArt extends Blacksmith {
 
 export class DragalgeArt extends Dragalge {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_071_R_EN.png';
+}
+
+export class FieryTorchArt extends FieryTorch {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_089_R_EN_LG.png';  
 }
 
 export class LitleoArt extends Litleo {

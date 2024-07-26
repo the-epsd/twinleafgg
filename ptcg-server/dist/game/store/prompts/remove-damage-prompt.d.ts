@@ -11,6 +11,7 @@ export interface RemoveDamageOptions {
     max: number | undefined;
     blockedFrom: CardTarget[];
     blockedTo: CardTarget[];
+    sameTarget: boolean;
 }
 export declare class RemoveDamagePrompt extends Prompt<DamageTransfer[]> {
     message: GameMessage;
