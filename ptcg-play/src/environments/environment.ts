@@ -1,12 +1,12 @@
 export const environment = {
-  apiUrl: 'http://127.0.0.1:8080',
-  timeout: 10000 * 10000,
-  production: false,
+  apiUrl: 'https://play-server.twinleaf.gg',
+  timeout: 30 * 1000,
+  production: true,
   apiVersion: 2,
   defaultPageSize: 50,
   allowServerChange: true,
   refreshTokenInterval: 60 * 60 * 1000,
-  enableImageCache: false,
+  enableImageCache: true,
   defaultLanguage: 'en',
-  languages: { en: 'English', jp: 'Japanese' },
+  languages: { en: 'English', jp: 'Japanese', fr: 'French' },
 };
