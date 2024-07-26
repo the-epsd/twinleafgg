@@ -4,6 +4,7 @@ import { DoubleDragonEnergy } from './double-dragon-energy';
 import { Voltorb } from './ROS_21_Voltorb';
 import { Swellow } from './ROS_72_Swellow';
 import { Dustox } from './ROS_8_Dustox';
+import { WideLens } from './ROS_95_Wide_Lens';
 import { ShayminEx } from './shaymin-ex';
 import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
@@ -59,6 +60,10 @@ export class VoltorbArt extends Voltorb {
 
 export class WallyArt extends Wally {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_094_R_EN_LG.png';
+}
+
+export class WideLensArt extends WideLens {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_095_R_EN_LG.png';
 }
 
 export class WinonaArt extends Winona {
