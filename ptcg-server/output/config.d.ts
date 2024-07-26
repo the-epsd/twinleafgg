@@ -2,10 +2,8 @@ export declare const config: {
     backend: {
         address: string;
         port: number;
-        serverPassword: string;
         registrationEnabled: boolean;
         allowCors: boolean;
-        secret: string;
         tokenExpire: number;
         defaultPageSize: number;
         avatarsDir: string;
