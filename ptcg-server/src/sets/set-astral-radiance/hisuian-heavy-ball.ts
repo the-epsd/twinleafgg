@@ -34,10 +34,11 @@ export class HisuianHeavyBall extends TrainerCard {
       prizes.forEach(p => { p.cards.forEach(c => cards.push(c)); });
 
       const blocked: number[] = [];
+      const blocked2: number[] = [];
 
       player.prizes.forEach((c, index) => {
         if (!c.isSecret) {
-          blocked.push(index);
+          blocked2.push(index);
         }
       });
 
@@ -49,7 +50,7 @@ export class HisuianHeavyBall extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       player.prizes.map(p => p.cards[0]).forEach((c, index) => {
-        if (!(c instanceof PokemonCard && c.stage === Stage.BASIC)) {
+        if (!(c instanceof PokemonCard && c.stage === Stage.BASIC) && !blocked2.includes(index)) {
           blocked.push(index);
         }
       });
@@ -59,7 +60,6 @@ export class HisuianHeavyBall extends TrainerCard {
         GameMessage.CHOOSE_POKEMON,
         { count: 1, blocked: blocked, allowCancel: true },
       ), chosenPrize => {
-
 
         if (chosenPrize === null || chosenPrize.length === 0) {
           prizes.forEach(p => { p.isSecret = true; });

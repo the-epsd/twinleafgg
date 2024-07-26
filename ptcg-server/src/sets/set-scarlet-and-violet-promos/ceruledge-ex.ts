@@ -12,7 +12,7 @@ export class Ceruledgeex extends PokemonCard {
   public hp: number = 270;
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
   public weakness = [{ type: CardType.WATER }];
-  public cardTag = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public attacks = [
     {

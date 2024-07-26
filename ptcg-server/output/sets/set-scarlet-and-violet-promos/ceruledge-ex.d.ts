@@ -11,7 +11,7 @@ export declare class Ceruledgeex extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    cardTag: CardTag[];
+    tags: CardTag[];
     attacks: ({
         name: string;
         cost: CardType[];

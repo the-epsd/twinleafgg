@@ -15,7 +15,7 @@ class Ceruledgeex extends pokemon_card_1.PokemonCard {
         this.hp = 270;
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.weakness = [{ type: card_types_1.CardType.WATER }];
-        this.cardTag = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
+        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
         this.attacks = [
             {
                 name: 'Abyssal Flame',

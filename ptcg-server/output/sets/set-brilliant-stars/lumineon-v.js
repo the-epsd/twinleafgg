@@ -27,7 +27,7 @@ class LumineonV extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Aqua Return',
-                cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 120,
                 text: 'Shuffle this Pokémon and all attached cards into your deck.'
             }
@@ -59,11 +59,26 @@ class LumineonV extends pokemon_card_1.PokemonCard {
             }
             state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
                 if (wantToUse) {
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            store.log(state, game_1.GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: 'Luminous Sign' });
+                        }
+                    });
                     state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 0, max: 1, allowCancel: false }), selected => {
                         const cards = selected || [];
-                        store.prompt(state, [new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {
-                            player.deck.moveCardsTo(cards, player.hand);
-                        });
+                        if (cards.length > 0) {
+                            store.prompt(state, [new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {
+                                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                                    if (cardList.getPokemonCard() === this) {
+                                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                                    }
+                                });
+                                cards.forEach((card, index) => {
+                                    store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+                                });
+                                player.deck.moveCardsTo(cards, player.hand);
+                            });
+                        }
                     });
                 }
             });

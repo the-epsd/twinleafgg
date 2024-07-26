@@ -14,7 +14,7 @@ class Hoothoot extends game_1.PokemonCard {
         this.retreat = [game_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Sandwich',
+                name: 'Triple Stab',
                 cost: [game_1.CardType.COLORLESS],
                 damage: 10,
                 text: 'Flip 3 coins. This attack does 10 damage for each heads.'
