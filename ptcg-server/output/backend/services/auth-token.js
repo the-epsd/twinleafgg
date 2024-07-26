@@ -9,7 +9,7 @@ function generateToken(userId, expire) {
     if (expire === undefined) {
         expire = Math.floor(Date.now() / 1000) + config_1.config.backend.tokenExpire;
     }
-    const hash = md5_1.Md5.init(config_1.config.backend.secret + userId + expire);
+    const hash = md5_1.Md5.init(process.env.secret + userId + expire);
     return `${userId},${expire},${hash}`;
 }
 exports.generateToken = generateToken;

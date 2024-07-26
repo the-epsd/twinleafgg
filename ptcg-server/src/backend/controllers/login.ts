@@ -34,8 +34,8 @@ export class Login extends Controller {
       return;
     }
 
-    if (config.backend.serverPassword
-      && config.backend.serverPassword !== body.serverPassword
+    if (process.env.SERVER_PASSWORD
+      && process.env.SERVER_PASSWORD !== body.serverPassword
     ) {
       this.rateLimit.increment(req.ip);
       res.status(400);

@@ -34,8 +34,8 @@ class Login extends controller_1.Controller {
             res.send({ error: errors_1.ApiErrorEnum.REQUESTS_LIMIT_REACHED });
             return;
         }
-        if (config_1.config.backend.serverPassword
-            && config_1.config.backend.serverPassword !== body.serverPassword) {
+        if (process.env.SERVER_PASSWORD
+            && process.env.SERVER_PASSWORD !== body.serverPassword) {
             this.rateLimit.increment(req.ip);
             res.status(400);
             res.send({ error: errors_1.ApiErrorEnum.REGISTER_INVALID_SERVER_PASSWORD });

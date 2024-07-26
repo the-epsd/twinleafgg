@@ -106,7 +106,7 @@ export class ResetPassword extends Controller {
 
     const random = Math.round(10000 * Math.random());
     const expire = now + config.backend.tokenExpire;
-    const md5 = Md5.init(config.backend.secret + random);
+    const md5 = Md5.init(process.env.secret! + random);
     const hash = `${userId},${md5}`;
 
     this.tokens.push({ userId, expire, hash });
