@@ -18,7 +18,8 @@ export class RemoveDamagePrompt extends Prompt {
             min: 0,
             max: undefined,
             blockedFrom: [],
-            blockedTo: []
+            blockedTo: [],
+            sameTarget: false
         }, options);
     }
     decode(result, state) {
@@ -40,6 +41,18 @@ export class RemoveDamagePrompt extends Prompt {
         }
         if (this.options.max !== undefined && result.length > this.options.max) {
             return false;
+        }
+        // Check if all targets are the same
+        if (this.options.sameTarget && result.length > 1) {
+            const t = result[0].to;
+            const different = result.some(r => {
+                return r.to.player !== t.player
+                    || r.to.slot !== t.slot
+                    || r.to.index !== t.index;
+            });
+            if (different) {
+                return false;
+            }
         }
         const player = state.players.find(p => p.id === this.playerId);
         if (player === undefined) {

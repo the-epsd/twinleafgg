@@ -1,5 +1,6 @@
 import { Blacksmith } from './blacksmith';
 import { Dragalge } from './dragalge';
+import { FieryTorch } from './fiery-torch';
 import { Seedot } from './FLF_5_Seedot';
 import { Litleo } from './litleo';
 import { Lysandre } from './lysandre';
@@ -13,6 +14,9 @@ export declare class BlacksmithArt extends Blacksmith {
     cardImage: string;
 }
 export declare class DragalgeArt extends Dragalge {
+    cardImage: string;
+}
+export declare class FieryTorchArt extends FieryTorch {
     cardImage: string;
 }
 export declare class LitleoArt extends Litleo {

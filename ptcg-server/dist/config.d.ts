@@ -17,14 +17,6 @@ export declare const config: {
         rateLimitCount: number;
         rateLimitTime: number;
     };
-    storage: {
-        type: string;
-        host: string;
-        port: number;
-        username: string;
-        password: string;
-        database: string;
-    };
     core: {
         debug: boolean;
         schedulerInterval: number;

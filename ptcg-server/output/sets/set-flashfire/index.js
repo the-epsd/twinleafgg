@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setFlashfire = [
     new card_images_1.BlacksmithArt(),
     new card_images_1.DragalgeArt(),
+    new card_images_1.FieryTorchArt(),
     new card_images_1.LitleoArt(),
     new card_images_1.LysandreArt(),
     new card_images_1.MiltankArt(),

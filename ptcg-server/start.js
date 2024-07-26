@@ -9,6 +9,8 @@ const { config } = require('./output/config');
 const sets = require('./output/sets');
 const process = require('process');
 
+require('dotenv').config({ path: require('find-config')('.env') })
+
 const cardManager = CardManager.getInstance();
 
 cardManager.defineSet(sets.setBaseSet);
