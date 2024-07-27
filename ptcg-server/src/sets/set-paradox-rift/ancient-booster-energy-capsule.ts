@@ -3,9 +3,9 @@ import { CardTag, SpecialCondition, TrainerType } from '../../game/store/card/ca
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import { RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { CheckHpEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
+import { StateUtils, PokemonCardList } from '../../game';
 
 export class AncientBoosterEnergyCapsule extends TrainerCard {
 
@@ -30,9 +30,10 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckHpEffect && effect.target.tool === this) {
+    if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
       const card = effect.target.getPokemonCard();
+
 
       try {
         const toolEffect = new ToolEffect(player, this);
@@ -45,37 +46,23 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
         return state;
       }
 
-      if (card && card.tags.includes(CardTag.ANCIENT)) {
+      if (card.tags.includes(CardTag.ANCIENT)) {
         effect.hp += 60;
       }
     }
 
-    if (effect instanceof RemoveSpecialConditionsEffect && effect.target.tool === this) {
-      const player = effect.player;
-      const card = effect.target.getPokemonCard();
-
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
-
-      if (card === undefined) {
-        return state;
-      }
-
-      if (card && card.tags.includes(CardTag.ANCIENT)) {
-        effect.target.removeSpecialCondition(SpecialCondition.ASLEEP);
-        effect.target.removeSpecialCondition(SpecialCondition.CONFUSED);
-        effect.target.removeSpecialCondition(SpecialCondition.POISONED);
-        effect.target.removeSpecialCondition(SpecialCondition.PARALYZED);
-        effect.target.removeSpecialCondition(SpecialCondition.BURNED);
-        effect.preventDefault = true;
-        return state;
+    if (effect instanceof CheckTableStateEffect) {
+      const cardList = StateUtils.findCardList(state, this);
+      if (cardList instanceof PokemonCardList && cardList.tool === this) {
+        const card = cardList.getPokemonCard();
+        if (card && card.tags.includes(CardTag.ANCIENT)) {
+          const hasSpecialCondition = cardList.specialConditions.some(condition => condition !== SpecialCondition.ABILITY_USED);
+          if (hasSpecialCondition) {
+            cardList.specialConditions = cardList.specialConditions.filter(condition => condition === SpecialCondition.ABILITY_USED);
+          }
+        }
       }
     }
-
     return state;
   }
 }

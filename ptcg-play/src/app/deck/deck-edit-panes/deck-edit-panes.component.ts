@@ -13,7 +13,7 @@ import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-fi
 import { DeckItem, LibraryItem } from '../deck-card/deck-card.interface';
 import { DeckCardType } from '../deck-card/deck-card.component';
 import { DeckEditVirtualScrollStrategy } from './deck-edit-virtual-scroll-strategy';
-import { Card, EnergyType, PokemonCard, SuperType } from 'ptcg-server';
+import { Card, CardTag, EnergyType, PokemonCard, SuperType } from 'ptcg-server';
 
 const DECK_CARD_ITEM_WIDTH = 148;
 const DECK_CARD_ITEM_HEIGHT = 173;
@@ -85,20 +85,20 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
       }
     };
   }
-  
+
   sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {
     const firstTrainerIndex = cards.findIndex((d) => d.card.superType === SuperType.TRAINER);
-    
+
     for (let i = 0; i < firstTrainerIndex; i++) {
       if ((<PokemonCard>cards[i].card).evolvesFrom) {
         const indexOfPrevolution = this.findLastIndex(cards, c => c.card.name === (<PokemonCard>cards[i].card).evolvesFrom);
-        
+
         if (cards[indexOfPrevolution]?.card.superType !== SuperType.POKEMON) {
           continue;
         }
-        
+
         const currentPokemon = { ...cards.splice(i, 1)[0] };
-        
+
         cards = [
           ...cards.slice(0, indexOfPrevolution + 1),
           { ...currentPokemon },
@@ -106,18 +106,18 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         ];
       }
     }
-    
+
     return cards;
   }
-  
+
   findLastIndex<T>(array: Array<T>, predicate: (value: T, index: number, obj: T[]) => boolean): number {
     let l = array.length;
     while (l--) {
-        if (predicate(array[l], l, array))
-            return l;
+      if (predicate(array[l], l, array))
+        return l;
     }
     return -1;
-}
+  }
 
   private loadLibraryCards(): LibraryItem[] {
     return this.cardsBaseService.getCards().map((card, index) => {
@@ -168,7 +168,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     return temp;
   }
 
-  private initDropTarget(pane: DeckEditPane): [DropTarget<DraggedItem<DeckItem>, any>, Observable<boolean>]  {
+  private initDropTarget(pane: DeckEditPane): [DropTarget<DraggedItem<DeckItem>, any>, Observable<boolean>] {
     let dropTarget: DropTarget<DraggedItem<DeckItem>, any>;
     let highlight$: Observable<boolean>;
 
@@ -196,14 +196,41 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
     highlight$ = dropState.pipe(map(state => state.canDrop && state.isOver));
 
-    return [ dropTarget, highlight$ ];
+    return [dropTarget, highlight$];
   }
 
   public async addCardToDeck(item: DeckItem) {
     const index = this.tempList.findIndex(c => c.card.fullName === item.card.fullName);
+    const list = this.tempList.slice();
+
+    // Check for ACE_SPEC
+    if (item.card.tags.includes(CardTag.ACE_SPEC)) {
+      const aceSpecCount = list.filter(c => c.card.tags.includes(CardTag.ACE_SPEC)).reduce((sum, c) => sum + c.count, 0);
+      if (aceSpecCount >= 1) {
+        // Alert user that only one ACE_SPEC card is allowed
+        return;
+      }
+    }
+
+    // Check for RADIANT
+    if (item.card.tags.includes(CardTag.RADIANT)) {
+      const radiantCount = list.filter(c => c.card.tags.includes(CardTag.RADIANT)).reduce((sum, c) => sum + c.count, 0);
+      if (radiantCount >= 1) {
+        // Alert user that only one RADIANT card is allowed
+        return;
+      }
+    }
+
+    // Check for PRISM_STAR
+    if (item.card.tags.includes(CardTag.PRISM_STAR)) {
+      const prismStarCount = list.filter(c => c.card.fullName === item.card.fullName).reduce((sum, c) => sum + c.count, 0);
+      if (prismStarCount >= 1) {
+        // Alert user that only one of each PRISM_STAR card is allowed
+        return;
+      }
+    }
 
     const count = 1;
-    const list = this.tempList.slice();
     if (index === -1) {
       list.push({ ...item, pane: DeckEditPane.DECK, count });
     } else {
@@ -212,7 +239,6 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
       }
       else {
         if (list[index].count < 99 && list[index].card.energyType === EnergyType.BASIC) {
-
           list[index].count += count;
         }
       }
@@ -292,7 +318,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     this.deckTarget.unsubscribe();
   }
 
-    // deck-edit-panes.component.ts
+  // deck-edit-panes.component.ts
 
   onDeckCardClick(card: DeckItem) {
     this.removeCardFromDeck(card);
@@ -301,7 +327,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   onLibraryCardClick(card: DeckItem) {
     this.addCardToDeck(card);
   }
-  
+
   onCardSelectedOnDialog(currentCard: DeckItem, selectedCard: Card, action: 'add' | 'replace') {
     const countToReplace = +currentCard.count;
     if (action === 'replace') {
@@ -310,7 +336,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         this.addCardToDeck({
           ...currentCard,
           card: selectedCard
-        });        
+        });
       }
     } else {
       this.addCardToDeck({

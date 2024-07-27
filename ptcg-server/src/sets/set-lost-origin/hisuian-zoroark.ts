@@ -13,7 +13,7 @@ export class HisuianZoroark extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Hisuian Zoroark';
+  public evolvesFrom = 'Hisuian Zoroua';
 
   public cardType: CardType = CardType.PSYCHIC;
 
@@ -23,18 +23,18 @@ export class HisuianZoroark extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Doom Curse',
-      cost: [ ],
+      cost: [],
       damage: 0,
       text: 'At the end of your opponent\'s next turn, the Defending Pokémon will be Knocked Out.'
     },
     {
       name: 'Call Back',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 10,
       text: 'Put a card from your discard pile into your hand.'
     }
@@ -54,21 +54,21 @@ export class HisuianZoroark extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AbstractAttackEffect && effect.attack === this.attacks[0]) {     
+    if (effect instanceof AbstractAttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       opponent.active.attackMarker.addMarker(this.KNOCKOUT_MARKER, this);
 
-      if (effect instanceof EndTurnEffect 
-              && opponent.active.attackMarker.hasMarker(this.KNOCKOUT_MARKER, this)) {
+      if (effect instanceof EndTurnEffect
+        && opponent.active.attackMarker.hasMarker(this.KNOCKOUT_MARKER, this)) {
         opponent.active.attackMarker.addMarker(this.CLEAR_KNOCKOUT_MARKER, this);
       }
 
-      if (effect instanceof EndTurnEffect 
+      if (effect instanceof EndTurnEffect
         && opponent.active.attackMarker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
         opponent.active.hp = 0;
-      } 
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
@@ -80,22 +80,21 @@ export class HisuianZoroark extends PokemonCard {
       if (!hasCardInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
-  
+
       return store.prompt(state, [
         new ChooseCardsPrompt(
           player.id,
           GameMessage.CHOOSE_CARD_TO_HAND,
           player.discard,
-          { },
+          {},
           { min: 1, max: 1, allowCancel: false }
         )], selected => {
-        const cards = selected || [];
-        player.discard.moveCardsTo(cards, player.hand);
-      });
+          const cards = selected || [];
+          player.discard.moveCardsTo(cards, player.hand);
+        });
     }
-  
+
     return state;
   }
-  
+
 }
-  

@@ -4,8 +4,8 @@ exports.AncientBoosterEnergyCapsule = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const game_1 = require("../../game");
 class AncientBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,7 +20,7 @@ class AncientBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
         this.text = 'The Ancient Pokémon this card is attached to gets +60 HP, recovers from all Special Conditions, and can\'t be affected by any Special Conditions.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckHpEffect && effect.target.tool === this) {
+        if (effect instanceof check_effects_1.CheckHpEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
             const card = effect.target.getPokemonCard();
             try {
@@ -33,31 +33,20 @@ class AncientBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
             if (card === undefined) {
                 return state;
             }
-            if (card && card.tags.includes(card_types_1.CardTag.ANCIENT)) {
+            if (card.tags.includes(card_types_1.CardTag.ANCIENT)) {
                 effect.hp += 60;
             }
         }
-        if (effect instanceof attack_effects_1.RemoveSpecialConditionsEffect && effect.target.tool === this) {
-            const player = effect.player;
-            const card = effect.target.getPokemonCard();
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_b) {
-                return state;
-            }
-            if (card === undefined) {
-                return state;
-            }
-            if (card && card.tags.includes(card_types_1.CardTag.ANCIENT)) {
-                effect.target.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
-                effect.target.removeSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
-                effect.target.removeSpecialCondition(card_types_1.SpecialCondition.POISONED);
-                effect.target.removeSpecialCondition(card_types_1.SpecialCondition.PARALYZED);
-                effect.target.removeSpecialCondition(card_types_1.SpecialCondition.BURNED);
-                effect.preventDefault = true;
-                return state;
+        if (effect instanceof check_effects_1.CheckTableStateEffect) {
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            if (cardList instanceof game_1.PokemonCardList && cardList.tool === this) {
+                const card = cardList.getPokemonCard();
+                if (card && card.tags.includes(card_types_1.CardTag.ANCIENT)) {
+                    const hasSpecialCondition = cardList.specialConditions.some(condition => condition !== card_types_1.SpecialCondition.ABILITY_USED);
+                    if (hasSpecialCondition) {
+                        cardList.specialConditions = cardList.specialConditions.filter(condition => condition === card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                }
             }
         }
         return state;

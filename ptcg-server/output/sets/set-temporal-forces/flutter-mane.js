@@ -59,34 +59,16 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (player.active.getPokemonCard() !== this
-                && opponent.active.getPokemonCard() !== this) {
-                return state;
-            }
-            const activePlayer = state.players[state.activePlayer];
-            if (activePlayer) {
-                const activePokemon = activePlayer.active.getPokemonCard();
-                if (activePokemon !== this) {
-                    try {
-                        const stub = new game_effects_1.PowerEffect(player, {
-                            name: 'test',
-                            powerType: pokemon_types_1.PowerType.ABILITY,
-                            text: ''
-                        }, this);
-                        store.reduceEffect(state, stub);
-                    }
-                    catch (_a) {
-                        if (!effect.power.exemptFromAbilityLock) {
-                            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
-                        }
-                        else {
-                            return state;
-                        }
-                    }
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            // Check if Flutter Mane is in the active position
+            if (owner.active.getPokemonCard() === this) {
+                // Block only the opponent's active Pokémon abilities
+                if (player !== owner && player.active.getPokemonCard() === effect.card && !effect.power.exemptFromAbilityLock) {
+                    throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
                 }
-                return state;
             }
+            return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const generator = useHexHurl(() => generator.next(), store, state, effect);

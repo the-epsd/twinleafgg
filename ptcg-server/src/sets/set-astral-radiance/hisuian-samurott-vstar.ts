@@ -59,7 +59,7 @@ export class HisuianSamurottVSTAR extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { min: 1, max: 1, allowCancel: true },
       ), selected => {
         const targets = selected || [];

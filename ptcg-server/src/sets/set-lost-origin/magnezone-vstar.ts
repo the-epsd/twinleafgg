@@ -7,6 +7,8 @@ export class MagnezoneVSTAR extends PokemonCard {
 
   public stage: Stage = Stage.VSTAR;
 
+  public evolvesFrom = 'Magnezone V';
+
   public cardType: CardType = CardType.LIGHTNING;
 
   public tags = [CardTag.POKEMON_VSTAR];

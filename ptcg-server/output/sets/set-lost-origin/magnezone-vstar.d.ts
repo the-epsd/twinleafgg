@@ -2,6 +2,7 @@ import { PokemonCard, Stage, CardType, CardTag, State, StoreLike } from '../../g
 import { Effect } from '../../game/store/effects/effect';
 export declare class MagnezoneVSTAR extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     tags: CardTag[];
     hp: number;

@@ -38,13 +38,9 @@ class Zapdosex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Zapdos ex MEW';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.cards.includes(this)) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.getPokemonCard() === this) {
             const player = effect.player;
-            const pokemonCard = player.active.getPokemonCard();
-            if (pokemonCard !== this) {
-                return state;
-            }
-            // Try to reduce PowerEffect, to check if something is blocking our ability
+            // Check to see if anything is blocking our Ability
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
@@ -56,48 +52,38 @@ class Zapdosex extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, player.active);
             state = store.reduceEffect(state, checkProvidedEnergy);
-            if (checkProvidedEnergy.energyMap.some(c => {
-                return c instanceof game_1.EnergyCard
-                    && c.energyType === card_types_1.EnergyType.BASIC
-                    && c.name === 'Lightning Energy';
-            })) {
-                effect.cost = [];
-            }
+            checkProvidedEnergy.energyMap.forEach(energy => {
+                if (energy.provides.includes(card_types_1.CardType.LIGHTNING) || energy.provides.includes(card_types_1.CardType.ANY)) {
+                    const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+                    if (index !== -1) {
+                        effect.cost.splice(index, 2);
+                    }
+                }
+            });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const blocked = [];
-            const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-            if (!hasBenched) {
-                effect.damage = 120;
+            const damagedBenchedPokemon = opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0);
+            if (damagedBenchedPokemon.length === 0) {
+                return state;
             }
-            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                if (cardList.damage > 0) {
-                    return state;
-                }
-                else {
-                    blocked.push(target);
+            const blocked = [];
+            opponent.bench.forEach((b, index) => {
+                if (b.damage === 0) {
+                    blocked.push({ player: game_1.PlayerType.TOP_PLAYER, slot: game_1.SlotType.BENCH, index });
                 }
             });
-            if (!blocked.length) {
-                effect.damage = 120;
-            }
-            if (blocked.length) {
-                // Opponent has damaged benched Pokemon
-                state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false, blocked: blocked }), target => {
-                    if (!target || target.length === 0) {
-                        return;
-                    }
-                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 90);
-                    damageEffect.target = target[0];
-                    effect.damage = 120;
-                    store.reduceEffect(state, damageEffect);
-                });
-            }
-            return state;
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false, blocked }), target => {
+                if (!target || target.length === 0) {
+                    return;
+                }
+                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 90);
+                damageEffect.target = target[0];
+                store.reduceEffect(state, damageEffect);
+            });
         }
         return state;
     }

@@ -86,36 +86,20 @@ export class FlutterMane extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
-        return state;
-      }
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
 
-      const activePlayer = state.players[state.activePlayer];
-      if (activePlayer) {
-        const activePokemon = activePlayer.active.getPokemonCard();
-        if (activePokemon !== this) {
-
-          try {
-            const stub = new PowerEffect(player, {
-              name: 'test',
-              powerType: PowerType.ABILITY,
-              text: ''
-            }, this);
-            store.reduceEffect(state, stub);
-          } catch {
-            if (!effect.power.exemptFromAbilityLock) {
-              throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-            } else {
-              return state;
-            }
-          }
+      // Check if Flutter Mane is in the active position
+      if (owner.active.getPokemonCard() === this) {
+        // Block only the opponent's active Pokémon abilities
+        if (player !== owner && player.active.getPokemonCard() === effect.card && !effect.power.exemptFromAbilityLock) {
+          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
         }
-        return state;
       }
+      return state;
     }
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const generator = useHexHurl(() => generator.next(), store, state, effect);

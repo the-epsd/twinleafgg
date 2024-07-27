@@ -4,8 +4,8 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SlotType } from '../../game';
+import { SpecialCondition, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SlotType } from '../../game';
 
 export class Thorton extends TrainerCard {
 
@@ -67,7 +67,6 @@ export class Thorton extends TrainerCard {
           throw new GameError(GameMessage.INVALID_TARGET);
         }
 
-        let cards: Card[] = [];
         return store.prompt(state, new ChooseCardsPrompt(
           player.id,
           GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
@@ -75,19 +74,24 @@ export class Thorton extends TrainerCard {
           { superType: SuperType.POKEMON, stage: Stage.BASIC },
           { min: 1, max: 1, allowCancel: false }
         ), selectedCards => {
-          cards = selectedCards || [];
+          const card = selectedCards[0];
+          if (!card) {
+            throw new GameError(GameMessage.INVALID_TARGET);
+          }
+          // Move the first selected Pokémon to the discard pile
+          const targetList = targets[0];
 
-
-          cards.forEach((card, index) => {
-            effect.player.removePokemonEffects(targets[index]);
-            targets[index].clearEffects();
-            targets[index].moveCardTo(card, player.discard);
-            player.discard.moveCardTo(card, targets[index]);
-            effect.player.removePokemonEffects(targets[index]);
-            targets[index].clearEffects();
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            targetList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
           });
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
+          targetList.moveCardTo(targetList.cards[0], player.discard);
+
+          // Move the selected card from the discard to the target slot
+          player.discard.moveCardTo(card, targetList);
+
+          // Move Thorton to the discard pile
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
         });
       });
     }
