@@ -96,19 +96,18 @@ export * from './set-sword-and-shield-promos';
 export * from './set-vivid-voltage';
 
 //SVI Era
-export * from './set-paldea-evolved';
-export * from './set-paldea-evolved/iono';
 export * from './set-scarlet-and-violet';
 export * from './set-scarlet-and-violet-energy';
 export * from './set-scarlet-and-violet-promos';
-
+export * from './set-paldea-evolved';
 export * from './set-obsidian-flames';
-export * from './set-paldea-fates';
-export * from './set-paradox-rift';
 export * from './set-pokemon-151';
-export * from './set-sv7';
+export * from './set-paradox-rift';
+export * from './set-paldea-fates';
 export * from './set-temporal-forces';
 export * from './set-twilight-masquerade';
+export * from './set-sv7';
+export * from './set-sv8';
 
 //TEST
 export * from './set-test';

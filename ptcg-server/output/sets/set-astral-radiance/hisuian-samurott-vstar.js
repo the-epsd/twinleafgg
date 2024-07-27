@@ -42,7 +42,7 @@ class HisuianSamurottVSTAR extends pokemon_card_1.PokemonCard {
             if (player.usedVSTAR === true) {
                 throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: true }), selected => {
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 1, allowCancel: true }), selected => {
                 const targets = selected || [];
                 targets.forEach(target => {
                     target.damage += 40;

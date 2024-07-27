@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { SuperType, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
@@ -19,7 +19,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (card instanceof PokemonCard && card.retreat.length !== 0) {
+    if (card instanceof PokemonCard && !card.tags.includes(CardTag.POKEMON_TERA)) {
       blocked.push(index);
     }
   });
@@ -55,26 +55,24 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 }
 
-export class FeatherBall extends TrainerCard {
+export class TeraOrb extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public regulationMark = 'F';
+  public regulationMark = 'H';
 
-  public set: string = 'ASR';
+  public set: string = 'svLN';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '141';
 
-  public name: string = 'Feather Ball';
+  public name: string = 'Tera Orb';
 
-  public fullName: string = 'Feather Ball ASR';
+  public fullName: string = 'Tera Orb svLN';
 
   public text =
-    'Search your deck for 1 Pokemon with no retreat cost, ' +
-    'show it to your opponent, and put it into your hand. ' +
-    'Shuffle your deck afterward.';
+    'Search your deck for a Tera Pokémon, reveal it, and put it into your hand. Then shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
