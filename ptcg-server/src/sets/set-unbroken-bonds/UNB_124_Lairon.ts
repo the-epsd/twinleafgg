@@ -13,6 +13,7 @@ export class Lairon extends PokemonCard {
   public weakness = [{ type: CardType.FIRE }];
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public evolvesFrom: string = 'Aron';
 
   public attacks = [{
     name: 'Rigidify',

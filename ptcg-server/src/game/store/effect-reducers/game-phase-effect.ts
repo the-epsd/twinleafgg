@@ -176,7 +176,7 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
 
 
     player.supporterTurn = 0;
-    console.log('player.supporterTurn', player.supporterTurn);
+    // console.log('player.supporterTurn', player.supporterTurn);
 
     if (player === undefined) {
       throw new GameError(GameMessage.NOT_YOUR_TURN);

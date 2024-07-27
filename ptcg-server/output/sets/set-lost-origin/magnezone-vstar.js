@@ -8,6 +8,7 @@ class MagnezoneVSTAR extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.VSTAR;
+        this.evolvesFrom = 'Magnezone V';
         this.cardType = game_1.CardType.LIGHTNING;
         this.tags = [game_1.CardTag.POKEMON_VSTAR];
         this.hp = 270;

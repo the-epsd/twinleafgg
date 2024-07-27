@@ -12,6 +12,7 @@ class BruteBonnet extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.tags = [card_types_1.CardTag.ANCIENT];
         this.cardType = card_types_1.CardType.DARK;
         this.hp = 120;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
@@ -66,29 +67,26 @@ class BruteBonnet extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            let isBruteBonnetWithAncientBoosterInPlay = false;
-            if (isBruteBonnetWithAncientBoosterInPlay == false) {
-                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
-            }
+            let isBruteBonnetWithAncientBooster = false;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 if (card === this && cardList.tool && cardList.tool.name === 'Ancient Booster Energy Capsule') {
-                    isBruteBonnetWithAncientBoosterInPlay = true;
+                    isBruteBonnetWithAncientBooster = true;
                 }
             });
-            if (!isBruteBonnetWithAncientBoosterInPlay) {
-                if (player.marker.hasMarker(this.TOXIC_POWDER_MARKER, this)) {
-                    throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
-                }
-                const active = opponent.active;
-                active.addSpecialCondition(card_types_1.SpecialCondition.POISONED);
-                player.active.addSpecialCondition(card_types_1.SpecialCondition.POISONED);
-                player.marker.addMarker(this.TOXIC_POWDER_MARKER, this);
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                    if (cardList.getPokemonCard() === this) {
-                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
-                    }
-                });
+            if (!isBruteBonnetWithAncientBooster) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
+            if (player.marker.hasMarker(this.TOXIC_POWDER_MARKER, this)) {
+                throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
+            }
+            player.active.addSpecialCondition(card_types_1.SpecialCondition.POISONED);
+            opponent.active.addSpecialCondition(card_types_1.SpecialCondition.POISONED);
+            player.marker.addMarker(this.TOXIC_POWDER_MARKER, this);
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker

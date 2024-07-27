@@ -14,6 +14,7 @@ export declare class Lairon extends PokemonCard {
         value: number;
     }[];
     retreat: CardType[];
+    evolvesFrom: string;
     attacks: {
         name: string;
         cost: CardType[];

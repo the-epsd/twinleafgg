@@ -12,7 +12,7 @@ class HisuianZoroark extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'F';
         this.stage = card_types_1.Stage.STAGE_1;
-        this.evolvesFrom = 'Hisuian Zoroark';
+        this.evolvesFrom = 'Hisuian Zoroua';
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 120;
         this.weakness = [{ type: card_types_1.CardType.DARK }];

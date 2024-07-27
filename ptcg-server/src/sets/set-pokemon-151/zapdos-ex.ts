@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
-import { StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, EnergyCard, CardTarget } from '../../game';
+import { StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, CardTarget } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Zapdosex extends PokemonCard {
@@ -15,7 +15,7 @@ export class Zapdosex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public cardType: CardType = CardType.LIGHTNING;
 
@@ -25,7 +25,7 @@ export class Zapdosex extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Voltaic Float',
@@ -36,7 +36,7 @@ export class Zapdosex extends PokemonCard {
 
   public attacks = [{
     name: 'Multishot Lightning',
-    cost: [ CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING ],
+    cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING],
     damage: 120,
     text: 'This attack also does 90 damage to 1 of your opponent\'s Benched Pokémon that has any damage counters on it. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
@@ -53,15 +53,10 @@ export class Zapdosex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.getPokemonCard() === this) {
       const player = effect.player;
-      const pokemonCard = player.active.getPokemonCard();
 
-      if (pokemonCard !== this) {
-        return state;
-      }
-
-      // Try to reduce PowerEffect, to check if something is blocking our ability
+      // Check to see if anything is blocking our Ability
       try {
         const stub = new PowerEffect(player, {
           name: 'test',
@@ -73,67 +68,50 @@ export class Zapdosex extends PokemonCard {
         return state;
       }
 
-
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      if (checkProvidedEnergy.energyMap.some(c => {
-        return c instanceof EnergyCard
-          && c.energyType === EnergyType.BASIC
-          && c.name === 'Lightning Energy';
-      })) {
-        effect.cost = [ ];
-      }
+      checkProvidedEnergy.energyMap.forEach(energy => {
+        if (energy.provides.includes(CardType.LIGHTNING) || energy.provides.includes(CardType.ANY)) {
+          const index = effect.cost.indexOf(CardType.COLORLESS);
+          if (index !== -1) {
+            effect.cost.splice(index, 2);
+          }
+        }
+      });
     }
-
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const blocked: CardTarget[] = [];
-
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-      if (!hasBenched) {
-        effect.damage = 120;
+      const damagedBenchedPokemon = opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0);
+      if (damagedBenchedPokemon.length === 0) {
+        return state;
       }
 
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.damage > 0) {
-          return state;
-        } else {
-          blocked.push(target);
+      const blocked: CardTarget[] = [];
+      opponent.bench.forEach((b, index) => {
+        if (b.damage === 0) {
+          blocked.push({ player: PlayerType.TOP_PLAYER, slot: SlotType.BENCH, index });
         }
       });
 
-      if (!blocked.length) {
-        effect.damage = 120;
-      }
-
-      if (blocked.length) {
-        // Opponent has damaged benched Pokemon
-
-
-        state = store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { min: 1, max: 1, allowCancel: false, blocked: blocked }
-        ), target => {
-          if (!target || target.length === 0) {
-            return;
-          }
-          const damageEffect = new PutDamageEffect(effect, 90);
-          damageEffect.target = target[0];
-          effect.damage = 120;
-          store.reduceEffect(state, damageEffect);
-        });
-      }
-
-      return state;
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.BENCH],
+        { min: 1, max: 1, allowCancel: false, blocked }
+      ), target => {
+        if (!target || target.length === 0) {
+          return;
+        }
+        const damageEffect = new PutDamageEffect(effect, 90);
+        damageEffect.target = target[0];
+        store.reduceEffect(state, damageEffect);
+      });
     }
-
     return state;
   }
 

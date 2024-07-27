@@ -45,17 +45,20 @@ class Thorton extends trainer_card_1.TrainerCard {
                 if (targets.length === 0) {
                     throw new game_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
                 }
-                let cards = [];
                 return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 1, max: 1, allowCancel: false }), selectedCards => {
-                    cards = selectedCards || [];
-                    cards.forEach((card, index) => {
-                        effect.player.removePokemonEffects(targets[index]);
-                        targets[index].clearEffects();
-                        targets[index].moveCardTo(card, player.discard);
-                        player.discard.moveCardTo(card, targets[index]);
-                        effect.player.removePokemonEffects(targets[index]);
-                        targets[index].clearEffects();
+                    const card = selectedCards[0];
+                    if (!card) {
+                        throw new game_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
+                    }
+                    // Move the first selected Pokémon to the discard pile
+                    const targetList = targets[0];
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        targetList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
                     });
+                    targetList.moveCardTo(targetList.cards[0], player.discard);
+                    // Move the selected card from the discard to the target slot
+                    player.discard.moveCardTo(card, targetList);
+                    // Move Thorton to the discard pile
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 });
             });

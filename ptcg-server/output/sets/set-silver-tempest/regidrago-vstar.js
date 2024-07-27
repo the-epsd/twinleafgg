@@ -11,33 +11,42 @@ function* useApexDragon(next, store, state, effect) {
     const opponent = game_1.StateUtils.getOpponent(state, player);
     const discardPokemon = player.discard.cards.filter(card => card.superType === card_types_1.SuperType.POKEMON);
     const dragonTypePokemon = discardPokemon.filter(card => card.cardType === card_types_1.CardType.DRAGON);
-    if (!dragonTypePokemon) {
+    if (dragonTypePokemon.length === 0) {
         return state;
     }
-    let selected;
-    yield store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, dragonTypePokemon, { allowCancel: false }), result => {
-        selected = result;
-        next();
-    });
-    const attack = selected;
-    if (attack === null) {
-        return state;
+    while (true) {
+        let selected;
+        yield store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, dragonTypePokemon, { allowCancel: true }), result => {
+            selected = result;
+            next();
+        });
+        const attack = selected;
+        if (attack === null) {
+            return state; // Player chose to cancel
+        }
+        try {
+            store.log(state, game_1.GameLog.LOG_PLAYER_COPIES_ATTACK, {
+                name: player.name,
+                attack: attack.name
+            });
+            // Perform attack
+            const attackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
+            state = store.reduceEffect(state, attackEffect);
+            if (store.hasPrompts()) {
+                yield store.waitPrompt(state, () => next());
+            }
+            if (attackEffect.damage > 0) {
+                const dealDamage = new attack_effects_1.DealDamageEffect(attackEffect, attackEffect.damage);
+                state = store.reduceEffect(state, dealDamage);
+            }
+            return state; // Successfully executed attack, exit the function
+        }
+        catch (error) {
+            // Log the error or display a message to the player
+            console.log('attack failed');
+            // Continue the loop to let the player choose another attack
+        }
     }
-    store.log(state, game_1.GameLog.LOG_PLAYER_COPIES_ATTACK, {
-        name: player.name,
-        attack: attack.name
-    });
-    // Perform attack
-    const attackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
-    store.reduceEffect(state, attackEffect);
-    if (store.hasPrompts()) {
-        yield store.waitPrompt(state, () => next());
-    }
-    if (attackEffect.damage > 0) {
-        const dealDamage = new attack_effects_1.DealDamageEffect(attackEffect, attackEffect.damage);
-        state = store.reduceEffect(state, dealDamage);
-    }
-    return state;
 }
 class RegidragoVSTAR extends pokemon_card_1.PokemonCard {
     constructor() {

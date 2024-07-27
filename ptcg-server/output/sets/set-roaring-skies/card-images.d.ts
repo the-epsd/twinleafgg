@@ -4,6 +4,7 @@ import { DoubleDragonEnergy } from './double-dragon-energy';
 import { Voltorb } from './ROS_21_Voltorb';
 import { Swellow } from './ROS_72_Swellow';
 import { Dustox } from './ROS_8_Dustox';
+import { WideLens } from './ROS_95_Wide_Lens';
 import { ShayminEx } from './shaymin-ex';
 import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
@@ -46,6 +47,9 @@ export declare class VoltorbArt extends Voltorb {
     cardImage: string;
 }
 export declare class WallyArt extends Wally {
+    cardImage: string;
+}
+export declare class WideLensArt extends WideLens {
     cardImage: string;
 }
 export declare class WinonaArt extends Winona {
