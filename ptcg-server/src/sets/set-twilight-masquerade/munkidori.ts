@@ -106,7 +106,7 @@ export class Munkidori extends PokemonCard {
         PlayerType.ANY,
         [SlotType.ACTIVE, SlotType.BENCH],
         maxAllowedDamage,
-        { min: 1, max: 3, allowCancel: false, sameTarget: true, blockedTo: blockedTo }
+        { min: 1, max: 3, allowCancel: false, sameTarget: true, blockedTo: blockedTo, blockedFrom: blockedFrom }
       ), transfers => {
         if (transfers === null) {
           return state;
@@ -127,7 +127,11 @@ export class Munkidori extends PokemonCard {
             if (transfer.from === blocked && transfer.to === blocked) {
               throw new GameError(GameMessage.CANNOT_USE_POWER);;
             }
-          });*/
+          });
+
+          if (blockedFrom.includes(transfer.from)) {
+            throw new GameError(GameMessage.CANNOT_USE_POWER);
+          }*/
 
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);

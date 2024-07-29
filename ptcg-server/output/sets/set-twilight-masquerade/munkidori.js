@@ -77,7 +77,7 @@ class Munkidori extends game_1.PokemonCard {
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
                 blockedFrom.push(target);
             });
-            return store.prompt(state, new game_1.RemoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 3, allowCancel: false, sameTarget: true, blockedTo: blockedTo }), transfers => {
+            return store.prompt(state, new game_1.RemoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 3, allowCancel: false, sameTarget: true, blockedTo: blockedTo, blockedFrom: blockedFrom }), transfers => {
                 if (transfers === null) {
                     return state;
                 }
@@ -89,12 +89,15 @@ class Munkidori extends game_1.PokemonCard {
                 });
                 let totalDamageMoved = 0;
                 for (const transfer of transfers) {
-                    blockedFrom.forEach(blocked => {
-                        if (transfer.from === blocked && transfer.to === blocked) {
-                            throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-                            ;
-                        }
+                    /*blockedFrom.forEach(blocked => {
+                      if (transfer.from === blocked && transfer.to === blocked) {
+                        throw new GameError(GameMessage.CANNOT_USE_POWER);;
+                      }
                     });
+          
+                    if (blockedFrom.includes(transfer.from)) {
+                      throw new GameError(GameMessage.CANNOT_USE_POWER);
+                    }*/
                     const source = game_1.StateUtils.getTarget(state, player, transfer.from);
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     const damageToMove = Math.min(30 - totalDamageMoved, Math.min(10, source.damage));

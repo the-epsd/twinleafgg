@@ -56,9 +56,9 @@ export class PromptRemoveDamageComponent implements OnChanges {
   }
 
   public onCardClick(item: PokemonItem) {
-    if (this.pokemonData.matchesTarget(item, this.blockedFrom)) {
+    /*if (this.pokemonData.matchesTarget(item, this.blockedFrom)) {
       return;
-    }
+    }*/
     this.pokemonData.unselectAll();
     item.selected = true;
     this.selectedItem = item;
@@ -70,6 +70,9 @@ export class PromptRemoveDamageComponent implements OnChanges {
     const item = this.selectedItem;
     item.cardList = Object.assign(new PokemonCardList(), item.cardList);
     item.cardList.damage -= 10;
+    if (this.pokemonData.matchesTarget(item, this.blockedFrom)) {
+      return;
+    }
     this.updateButtonDisable();
     this.updateIsInvalid();
   }
