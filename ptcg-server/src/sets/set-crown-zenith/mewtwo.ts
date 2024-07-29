@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -33,7 +33,7 @@ export class Mewtwo extends PokemonCard {
   public fullName: string = 'Mewtwo CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if(effect instanceof AttackEffect && effect.attack == this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack == this.attacks[0]) {
       const player = effect.player;
 
       return store.prompt(state, new AttachEnergyPrompt(
@@ -52,18 +52,16 @@ export class Mewtwo extends PokemonCard {
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
+          player.discard.moveCardTo(transfer.card, target);
         }
-        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
+
       });
     }
-    if(effect instanceof AttackEffect && effect.attack == this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack == this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if(opponent.getPrizeLeft() <= 3) {
+      if (opponent.getPrizeLeft() <= 3) {
         effect.damage += 90;
       }
     }
