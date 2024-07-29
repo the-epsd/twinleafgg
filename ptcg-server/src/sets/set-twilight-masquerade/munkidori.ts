@@ -122,6 +122,13 @@ export class Munkidori extends PokemonCard {
 
         let totalDamageMoved = 0;
         for (const transfer of transfers) {
+
+          /*blockedFrom.forEach(blocked => {
+            if (transfer.from === blocked && transfer.to === blocked) {
+              throw new GameError(GameMessage.CANNOT_USE_POWER);;
+            }
+          });*/
+
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
 

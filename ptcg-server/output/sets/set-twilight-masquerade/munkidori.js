@@ -89,6 +89,12 @@ class Munkidori extends game_1.PokemonCard {
                 });
                 let totalDamageMoved = 0;
                 for (const transfer of transfers) {
+                    blockedFrom.forEach(blocked => {
+                        if (transfer.from === blocked && transfer.to === blocked) {
+                            throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                            ;
+                        }
+                    });
                     const source = game_1.StateUtils.getTarget(state, player, transfer.from);
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     const damageToMove = Math.min(30 - totalDamageMoved, Math.min(10, source.damage));
