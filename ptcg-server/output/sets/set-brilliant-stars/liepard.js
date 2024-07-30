@@ -28,7 +28,7 @@ class Liepard extends pokemon_card_1.PokemonCard {
                 name: 'Slash',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 60,
-                text: '   '
+                text: ''
             }
         ];
         this.set = 'BRS';

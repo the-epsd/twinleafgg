@@ -33,7 +33,7 @@ export class Druddigon extends PokemonCard {
 
   public set: string = 'BRS';
 
-  public regulationMark = 'F';
+  public regulationMark = 'E';
 
   public cardImage: string = 'assets/cardback.png';
 

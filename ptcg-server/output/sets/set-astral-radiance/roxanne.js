@@ -48,8 +48,9 @@ class Roxanne extends trainer_card_1.TrainerCard {
         this.regulationMark = 'F';
         this.name = 'Roxanne';
         this.fullName = 'Roxanne ASR';
-        this.text = 'Each player shuffles his or her hand into his or her deck. ' +
-            'Then, each player draws a card for each of his or her remaining Prize cards.';
+        this.text = 'You can use this card only if your opponent has 3 or fewer Prize cards remaining.' +
+            '' +
+            'Each player shuffles their hand into their deck. Then, you draw 6 cards, and your opponent draws 2 cards.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

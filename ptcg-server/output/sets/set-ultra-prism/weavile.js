@@ -17,16 +17,17 @@ class Weavile extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.PSYCHIC, value: -20 }];
         this.attacks = [
             {
-                name: 'Acidic Mucus',
+                name: 'Icy Wind',
                 cost: [card_types_1.CardType.COLORLESS],
-                damage: 0,
-                text: 'This attack does 50 damage for each of your opponent\'s Pokémon in play that has an Ability.'
+                damage: 10,
+                text: 'Your opponent\'s Active Pokémon is now Asleep.'
             },
             {
-                name: 'Fighting Tackle',
-                cost: [card_types_1.CardType.GRASS, card_types_1.CardType.FIRE],
-                damage: 80,
-                text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 80 more damage.'
+                name: 'Evil Admonition',
+                cost: [card_types_1.CardType.DARK],
+                damage: 50,
+                damageCalculation: 'x',
+                text: 'This attack does 50 damage for each of your opponent\'s Pokémon that has an Ability.'
             }
         ];
         this.set = 'UPR';

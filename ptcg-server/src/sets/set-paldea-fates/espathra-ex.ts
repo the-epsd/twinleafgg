@@ -34,6 +34,7 @@ export class Espathraex extends PokemonCard {
       name: 'Psy Ball',
       cost: [CardType.PSYCHIC],
       damage: 30,
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each Energy attached to both Active Pokémon.'
     }
   ];
@@ -50,36 +51,40 @@ export class Espathraex extends PokemonCard {
 
   public fullName: string = 'Espathra ex PAF';
 
+  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
-      const isEspathraexInActive = player.active.cards[0] === this;
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
 
-      if (!isEspathraexInActive) {
+      // Check if Flutter Mane is in the active position
+      if (owner.active.getPokemonCard() === this) {
+
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
+        }
+
+        if (player !== owner && player.active.getPokemonCard()) {
+          const index = effect.cost.indexOf(CardType.COLORLESS);
+          if (index > -1) {
+            effect.cost.splice(index, 0, CardType.COLORLESS);
+          } else {
+            effect.cost.push(CardType.COLORLESS);
+          }
+        }
         return state;
       }
-
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      const opponentActive = opponent.active.getPokemonCard();
-
-      if (opponentActive && !state.activePlayer) {
-        effect.cost.push(CardType.COLORLESS);
-      }
-
-      return state;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

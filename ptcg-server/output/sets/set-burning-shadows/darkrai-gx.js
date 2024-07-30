@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DarkraiGX = void 0;
 const game_1 = require("../../game");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class DarkraiGX extends game_1.PokemonCard {
@@ -101,6 +102,29 @@ class DarkraiGX extends game_1.PokemonCard {
                         player.discard.moveCardTo(transfer.card, target);
                     }
                 });
+            }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            effect.ignoreResistance = true;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const opponentActive = opponent.active;
+            if (opponentActive instanceof game_1.PokemonCardList) {
+                const activePokemon = opponentActive.getPokemonCard();
+                if (!activePokemon) {
+                    return state;
+                }
+                if (activePokemon) {
+                    const hasSpecialCondition = opponentActive.specialConditions.some(condition => condition !== game_1.SpecialCondition.ABILITY_USED);
+                    if (hasSpecialCondition) {
+                        opponentActive.specialConditions = opponentActive.specialConditions.filter(condition => condition === game_1.SpecialCondition.ABILITY_USED);
+                        const knockOutOpponentEffect = new attack_effects_1.KnockOutOpponentEffect(effect, opponent.active);
+                        knockOutOpponentEffect.target = opponent.active;
+                        store.reduceEffect(state, knockOutOpponentEffect);
+                    }
+                }
             }
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {

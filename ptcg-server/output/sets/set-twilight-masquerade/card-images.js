@@ -450,7 +450,7 @@ exports.PoochyenaArt = PoochyenaArt;
 class RotoStickArt extends roto_stick_1.RotoStick {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_133_R_EN_LG.png';
+        this.cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1718248879325-71YCOBHMH2UM6QU2DVDI/Roto+Stick.jpeg';
     }
 }
 exports.RotoStickArt = RotoStickArt;

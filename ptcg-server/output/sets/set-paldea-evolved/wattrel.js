@@ -25,6 +25,7 @@ class Wattrel extends pokemon_card_1.PokemonCard {
                 name: 'United Wings',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 20,
+                damageCalculation: 'x',
                 text: 'This attack does 20 damage for each Pokémon in your ' +
                     'in your discard pile that have the United Wings attack.'
             }

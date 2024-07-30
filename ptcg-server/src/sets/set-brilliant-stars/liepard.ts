@@ -1,8 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage,
+import {
+  PowerType, StoreLike, State, GameError, GameMessage,
   ChooseCardsPrompt,
-  PlayerType} from '../../game';
+  PlayerType
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -22,7 +24,7 @@ export class Liepard extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Trade',
@@ -34,9 +36,9 @@ export class Liepard extends PokemonCard {
   public attacks = [
     {
       name: 'Slash',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
-      text: '   '
+      text: ''
     }
   ];
 
@@ -53,6 +55,7 @@ export class Liepard extends PokemonCard {
   public readonly TRADE_MARKER = 'TRADE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.TRADE_MARKER, this);
@@ -70,7 +73,7 @@ export class Liepard extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
-        { },
+        {},
         { allowCancel: true, min: 1, max: 1 }
       ), cards => {
         cards = cards || [];

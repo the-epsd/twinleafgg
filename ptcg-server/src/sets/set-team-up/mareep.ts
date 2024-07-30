@@ -14,43 +14,43 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Mareep extends PokemonCard {
-  
+
   public set = 'TEU';
-  
+
   public setNumber = '53';
-  
-  public cardImage: string = 'assets/cardback.png';  
-  
+
+  public cardImage: string = 'assets/cardback.png';
+
   public fullName = 'Mareep TEU';
-  
+
   public name = 'Mareep';
-  
+
   public cardType: CardType = CardType.LIGHTNING;
-  
+
   public stage: Stage = Stage.BASIC;
-  
-  public hp: number = 170;
-  
+
+  public hp: number = 60;
+
   public weakness: Weakness[] = [{ type: CardType.FIGHTING }];
-  
-  public resistance: Resistance[] = [{type: CardType.METAL, value: -20}];
-  
+
+  public resistance: Resistance[] = [{ type: CardType.METAL, value: -20 }];
+
   public retreat: CardType[] = [CardType.COLORLESS];
-  
+
   public attacks: Attack[] = [
     {
       name: 'Shock Bolt',
       cost: [CardType.LIGHTNING],
       damage: 30,
-      text: 'Discard all [L] Energy from this Pokémon.'      
+      text: 'Discard all [L] Energy from this Pokémon.'
     }
   ];
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      
+
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
@@ -61,12 +61,12 @@ export class Mareep extends PokemonCard {
           cards.push(energyMap.card);
         }
       }
-      
+
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
     }
-    
+
     return state;
   }
 }

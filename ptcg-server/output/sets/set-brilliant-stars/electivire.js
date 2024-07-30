@@ -19,15 +19,15 @@ class Electivire extends pokemon_card_1.PokemonCard {
             {
                 name: 'Outrage',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 20,
-                text: 'Does 10 more damage for each damage counter on this Pokemon.'
+                damage: 30,
+                damageCalculation: '+',
+                text: 'If any of your Benched Magmortar have any damage counters on them, this attack does 90 more damage.'
             },
             {
                 name: 'Glaciate',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
                 damage: 0,
-                text: 'This attack does 50 damage to each of your opponent\'s Pokémon ' +
-                    '(Don\'t apply Weakness and Resistance for Benched Pokémon.'
+                text: 'This attack does 50 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }
         ];
         this.set = 'BRS';

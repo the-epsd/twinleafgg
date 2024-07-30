@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WishfulBatonArt = exports.MarillArt = exports.GuzmaArt = exports.AcerolaArt = void 0;
+exports.WishfulBatonArt = exports.MarillArt = exports.GuzmaArt = exports.DarkraiGXArt = exports.AcerolaArt = void 0;
 const acerola_1 = require("./acerola");
 const BUS_34_Marill_1 = require("./BUS_34_Marill");
+const darkrai_gx_1 = require("./darkrai-gx");
 const guzma_1 = require("./guzma");
 const wishful_baton_1 = require("./wishful-baton");
 class AcerolaArt extends acerola_1.Acerola {
@@ -12,6 +13,13 @@ class AcerolaArt extends acerola_1.Acerola {
     }
 }
 exports.AcerolaArt = AcerolaArt;
+class DarkraiGXArt extends darkrai_gx_1.DarkraiGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_088_R_EN.png';
+    }
+}
+exports.DarkraiGXArt = DarkraiGXArt;
 class GuzmaArt extends guzma_1.Guzma {
     constructor() {
         super(...arguments);

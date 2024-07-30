@@ -14,12 +14,19 @@ export declare class Weavile extends PokemonCard {
         type: CardType;
         value: number;
     }[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

@@ -8,29 +8,30 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 export class Weavile extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
-  
+
   public cardType: CardType = CardType.DARK;
-  
+
   public hp: number = 90;
 
   public retreat = [CardType.COLORLESS];
-  
+
   public weakness = [{ type: CardType.FIGHTING }];
 
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
   public attacks = [
     {
-      name: 'Acidic Mucus',
+      name: 'Icy Wind',
       cost: [CardType.COLORLESS],
-      damage: 0,
-      text: 'This attack does 50 damage for each of your opponent\'s Pokémon in play that has an Ability.'
+      damage: 10,
+      text: 'Your opponent\'s Active Pokémon is now Asleep.'
     },
     {
-      name: 'Fighting Tackle',
-      cost: [CardType.GRASS, CardType.FIRE],
-      damage: 80,
-      text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 80 more damage.'
+      name: 'Evil Admonition',
+      cost: [CardType.DARK],
+      damage: 50,
+      damageCalculation: 'x',
+      text: 'This attack does 50 damage for each of your opponent\'s Pokémon that has an Ability.'
     }
   ];
 
@@ -43,7 +44,7 @@ export class Weavile extends PokemonCard {
   public name: string = 'Weavile';
 
   public fullName: string = 'Weavile UPR';
-  
+
   public evolvesFrom = 'Sneasel';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -55,7 +56,7 @@ export class Weavile extends PokemonCard {
       let benchPokemon: PokemonCard[] = [];
       const pokemonWithAbilities: PokemonCard[] = [];
       const opponentActive = opponent.active.getPokemonCard();
-    
+
       const stubPowerEffectForActive = new PowerEffect(opponent, {
         name: 'test',
         powerType: PowerType.ABILITY,
@@ -87,18 +88,18 @@ export class Weavile extends PokemonCard {
         } catch {
           // no abilities on bench
         }
-      }   
-      
+      }
+
       const abilities = pokemonWithAbilities.length;
       effect.damage += abilities * 50;
-      
+
       return state;
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const sleepEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       store.reduceEffect(state, sleepEffect);
-      
+
       return state;
     }
 

@@ -26,6 +26,7 @@ import { FanRotom } from './fan-rotom';
 import { Fezandipitiex } from './fezandipiti-ex';
 import { Fraxure } from './fraxure';
 import { Galvantula } from './galvantula';
+import { Galvantulaex } from './galvantula-ex';
 import { Genesect } from './genesect';
 import { GlassTrumpet } from './glass-trumpet';
 import { GlisteningCrystal } from './glistening-crystal';
@@ -180,6 +181,10 @@ export class GalvantulaArt extends Galvantula {
   public cardImage = 'https://pokemonproxies.com/static/media/Galvantula-002-6a.51aa64d8c6b46ac99766.png';
 }
 
+export class GalvantulexaArt extends Galvantulaex {
+  public cardImage = 'https://pokemonproxies.com/static/media/Galvantuna_ex-033-7i.cd6c1ef69f7c3b424b76.png';
+}
+
 export class GenesectArt extends Genesect {
   public cardImage = 'https://pokemonproxies.com/static/media/Genesect-040-6a.d7db741d7b9c4dce0401.png';
 }
@@ -325,7 +330,7 @@ export class WeavileArt extends Weavile {
 }
 
 export class XerosicsSchemeArt extends XerosicsScheme {
-  public cardImage = 'https://pokemonproxies.com/static/media/Xerosic\'s_Machinations-062 - 6a.106ba5c1c488278fc7ab.png';
+  public cardImage = 'https://pokemonproxies.com/static/media/Xerosic\'s_Machinations-062-6a.106ba5c1c488278fc7ab.png';
 }
 
 export class ZeraoraArt extends Zeraora {

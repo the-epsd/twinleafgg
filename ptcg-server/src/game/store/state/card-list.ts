@@ -18,6 +18,8 @@ export class CardList {
 
   public stadiumDirection: StadiumDirection = StadiumDirection.UP;
 
+  public markedAsNotSecret: boolean = false;
+
   public static fromList(names: string[]): CardList {
     const cardList = new CardList();
     const cardManager = CardManager.getInstance();
@@ -70,20 +72,20 @@ export class CardList {
       }
     }
   }
-  
+
   public moveCardTo(card: Card, destination: CardList): void {
     this.moveCardsTo([card], destination);
   }
-  
+
   public top(count: number = 1): Card[] {
     count = Math.min(count, this.cards.length);
     return this.cards.slice(0, count);
   }
 
   public moveToTopOfDestination(destination: CardList) {
-    destination.cards = [...this.cards,...destination.cards];
+    destination.cards = [...this.cards, ...destination.cards];
   }
-  
+
   public moveToTop(cards: Card[]): void {
     this.cards = [...cards, ...this.cards];
   }

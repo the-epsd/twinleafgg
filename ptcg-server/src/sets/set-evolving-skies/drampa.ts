@@ -7,9 +7,9 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class Drampa extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  
+
   public cardType: CardType = CardType.DRAGON;
-  
+
   public hp: number = 120;
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
@@ -25,7 +25,8 @@ export class Drampa extends PokemonCard {
       name: 'Berserk',
       cost: [CardType.WATER, CardType.FIGHTING],
       damage: 70,
-      text: ''
+      damageCalculation: '+',
+      text: 'If your Benched Pokémon have any damage counters on them, this attack does 90 more damage.'
     }
   ];
 
@@ -44,13 +45,13 @@ export class Drampa extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      
+
       const hasBenchDamage = player.bench.some(cardList => cardList.damage > 0);
 
       if (hasBenchDamage) {
         effect.damage += 90;
       }
-      
+
       return state;
     }
 

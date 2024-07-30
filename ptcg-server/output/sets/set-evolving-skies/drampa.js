@@ -22,7 +22,8 @@ class Drampa extends pokemon_card_1.PokemonCard {
                 name: 'Berserk',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.FIGHTING],
                 damage: 70,
-                text: ''
+                damageCalculation: '+',
+                text: 'If your Benched Pokémon have any damage counters on them, this attack does 90 more damage.'
             }
         ];
         this.set = 'EVS';

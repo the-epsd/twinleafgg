@@ -18,21 +18,21 @@ export class Electivire extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Outrage',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
-      damage: 20,
-      text: 'Does 10 more damage for each damage counter on this Pokemon.'
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      damage: 30,
+      damageCalculation: '+',
+      text: 'If any of your Benched Magmortar have any damage counters on them, this attack does 90 more damage.'
     },
     {
       name: 'Glaciate',
-      cost: [ CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS ],
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 0,
-      text: 'This attack does 50 damage to each of your opponent\'s Pokémon ' +
-        '(Don\'t apply Weakness and Resistance for Benched Pokémon.'
+      text: 'This attack does 50 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 
