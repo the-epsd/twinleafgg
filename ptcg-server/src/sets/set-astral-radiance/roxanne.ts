@@ -50,7 +50,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     opponent.deck.moveTo(opponent.hand, 2);
 
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    
+
   });
 }
 
@@ -71,18 +71,18 @@ export class Roxanne extends TrainerCard {
   public fullName: string = 'Roxanne ASR';
 
   public text: string =
-    'Each player shuffles his or her hand into his or her deck. ' +
-    'Then, each player draws a card for each of his or her remaining Prize cards.';
+    'You can use this card only if your opponent has 3 or fewer Prize cards remaining.' +
+    '' +
+    'Each player shuffles their hand into their deck. Then, you draw 6 cards, and your opponent draws 2 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
-  
+
     return state;
   }
-  
+
 }
-  

@@ -285,7 +285,7 @@ export class PoochyenaArt extends Poochyena {
 }
 
 export class RotoStickArt extends RotoStick {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_133_R_EN_LG.png';
+  public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1718248879325-71YCOBHMH2UM6QU2DVDI/Roto+Stick.jpeg';
 }
 
 export class ScreamTailexArt extends ScreamTailex {

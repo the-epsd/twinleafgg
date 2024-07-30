@@ -25,7 +25,7 @@ export class Flamigo extends PokemonCard {
   public retreat = [CardType.COLORLESS];
 
   public powers = [{
-    name: 'Le Parfum',
+    name: 'Insta-Flock',
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokemon from your hand onto your ' +
       'Bench during your turn, you may search your deck for up ' +
@@ -39,6 +39,7 @@ export class Flamigo extends PokemonCard {
       name: 'United Wings',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each Pokémon in your ' +
         'in your discard pile that have the United Wings attack.'
     }

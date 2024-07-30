@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { DamageTransfer, CardTarget, DamageMap, PokemonCardList, RemoveDamagePrompt } from 'ptcg-server';
+import { DamageTransfer, CardTarget, DamageMap, PokemonCardList, RemoveDamagePrompt, GameError, GameMessage, PlayerType } from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
@@ -56,14 +56,20 @@ export class PromptRemoveDamageComponent implements OnChanges {
   }
 
   public onCardClick(item: PokemonItem) {
-    /*if (this.pokemonData.matchesTarget(item, this.blockedFrom)) {
-      return;
-    }*/
+    if (item.target.player === PlayerType.BOTTOM_PLAYER && item.cardList.damage === 0) {
+      return; // Prevent selection of player's Pokémon without damage
+    }
+
+    // if (this.pokemonData.matchesTarget(item, this.blockedFrom)) {
+    //   return;
+    // }
+
     this.pokemonData.unselectAll();
     item.selected = true;
     this.selectedItem = item;
     this.updateButtonDisable();
   }
+
 
   public removeDamage() {
     this.damage += 10;
@@ -78,6 +84,10 @@ export class PromptRemoveDamageComponent implements OnChanges {
   }
 
   public addDamage() {
+    if (this.selectedItem && this.selectedItem.target.player === PlayerType.BOTTOM_PLAYER) {
+      throw new GameError(GameMessage.CANNOT_USE_POWER);
+    }
+
     this.damage -= 10;
     const item = this.selectedItem;
     item.cardList = Object.assign(new PokemonCardList(), item.cardList);
@@ -85,6 +95,7 @@ export class PromptRemoveDamageComponent implements OnChanges {
     this.updateButtonDisable();
     this.updateIsInvalid();
   }
+
 
   public reset() {
     this.damage = 0;

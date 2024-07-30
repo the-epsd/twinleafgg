@@ -27,6 +27,7 @@ class Espathraex extends pokemon_card_1.PokemonCard {
                 name: 'Psy Ball',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 30,
+                damageCalculation: '+',
                 text: 'This attack does 30 more damage for each Energy attached to both Active Pokémon.'
             }
         ];
@@ -36,31 +37,37 @@ class Espathraex extends pokemon_card_1.PokemonCard {
         this.set = 'PAF';
         this.name = 'Espathra ex';
         this.fullName = 'Espathra ex PAF';
+        this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckAttackCostEffect) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const isEspathraexInActive = player.active.cards[0] === this;
-            if (!isEspathraexInActive) {
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            // Check if Flutter Mane is in the active position
+            if (owner.active.getPokemonCard() === this) {
+                try {
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: game_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
+                }
+                catch (_a) {
+                    return state;
+                }
+                if (player !== owner && player.active.getPokemonCard()) {
+                    const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+                    if (index > -1) {
+                        effect.cost.splice(index, 0, card_types_1.CardType.COLORLESS);
+                    }
+                    else {
+                        effect.cost.push(card_types_1.CardType.COLORLESS);
+                    }
+                }
                 return state;
             }
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
-            const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && !state.activePlayer) {
-                effect.cost.push(card_types_1.CardType.COLORLESS);
-            }
-            return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;

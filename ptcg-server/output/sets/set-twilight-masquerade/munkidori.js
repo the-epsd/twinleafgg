@@ -77,37 +77,56 @@ class Munkidori extends game_1.PokemonCard {
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
                 blockedFrom.push(target);
             });
-            return store.prompt(state, new game_1.RemoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 3, allowCancel: false, sameTarget: true, blockedTo: blockedTo, blockedFrom: blockedFrom }), transfers => {
-                if (transfers === null) {
-                    return state;
-                }
-                player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                    if (cardList.getPokemonCard() === this) {
-                        cardList.addSpecialCondition(game_1.SpecialCondition.ABILITY_USED);
-                    }
-                });
-                let totalDamageMoved = 0;
-                for (const transfer of transfers) {
-                    /*blockedFrom.forEach(blocked => {
-                      if (transfer.from === blocked && transfer.to === blocked) {
-                        throw new GameError(GameMessage.CANNOT_USE_POWER);;
-                      }
+            let hasDarkAttached = false;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
+                    store.reduceEffect(state, checkEnergy);
+                    checkEnergy.energyMap.forEach(em => {
+                        const energyCard = em.card;
+                        if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(game_1.CardType.DARK) || energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(game_1.CardType.ANY)) {
+                            hasDarkAttached = true;
+                        }
                     });
-          
-                    if (blockedFrom.includes(transfer.from)) {
-                      throw new GameError(GameMessage.CANNOT_USE_POWER);
-                    }*/
-                    const source = game_1.StateUtils.getTarget(state, player, transfer.from);
-                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    const damageToMove = Math.min(30 - totalDamageMoved, Math.min(10, source.damage));
-                    if (damageToMove > 0) {
-                        source.damage -= damageToMove;
-                        target.damage += damageToMove;
-                        totalDamageMoved += damageToMove;
+                    if (!hasDarkAttached) {
+                        throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                     }
-                    if (totalDamageMoved >= 30)
-                        break;
+                    if (hasDarkAttached) {
+                        return store.prompt(state, new game_1.RemoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 3, allowCancel: false, sameTarget: true, blockedTo: blockedTo, blockedFrom: blockedFrom }), transfers => {
+                            if (transfers === null) {
+                                return state;
+                            }
+                            player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
+                            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                                if (cardList.getPokemonCard() === this) {
+                                    cardList.addSpecialCondition(game_1.SpecialCondition.ABILITY_USED);
+                                }
+                            });
+                            let totalDamageMoved = 0;
+                            for (const transfer of transfers) {
+                                /*blockedFrom.forEach(blocked => {
+                                  if (transfer.from === blocked && transfer.to === blocked) {
+                                    throw new GameError(GameMessage.CANNOT_USE_POWER);;
+                                  }
+                                });
+                      
+                                if (blockedFrom.includes(transfer.from)) {
+                                  throw new GameError(GameMessage.CANNOT_USE_POWER);
+                                }*/
+                                const source = game_1.StateUtils.getTarget(state, player, transfer.from);
+                                const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                                const damageToMove = Math.min(30 - totalDamageMoved, Math.min(10, source.damage));
+                                if (damageToMove > 0) {
+                                    source.damage -= damageToMove;
+                                    target.damage += damageToMove;
+                                    totalDamageMoved += damageToMove;
+                                }
+                                if (totalDamageMoved >= 30)
+                                    break;
+                            }
+                            return state;
+                        });
+                    }
                 }
             });
         }

@@ -15,6 +15,7 @@ class CardList {
         this.isPublic = false;
         this.isSecret = false;
         this.stadiumDirection = StadiumDirection.UP;
+        this.markedAsNotSecret = false;
     }
     static fromList(names) {
         const cardList = new CardList();

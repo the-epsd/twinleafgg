@@ -6,12 +6,13 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Mewtwoex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.regulationMark = 'G';
-        this.tags = [card_types_1.CardTag.POKEMON_ex];
+        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 230;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
@@ -62,6 +63,18 @@ class Mewtwoex extends pokemon_card_1.PokemonCard {
                 });
             });
             effect.damage = 10 + energies * 30;
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Target is not Active
+            if (effect.target === player.active || effect.target === opponent.active) {
+                return state;
+            }
+            // Target is this Pokemon
+            if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+                effect.preventDefault = true;
+            }
         }
         return state;
     }

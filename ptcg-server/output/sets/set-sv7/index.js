@@ -30,6 +30,7 @@ exports.setSV7 = [
     new card_images_1.FezandipitiexArt(),
     new card_images_1.FraxureArt,
     new card_images_1.GalvantulaArt(),
+    new card_images_1.GalvantulexaArt(),
     // new GenesectArt(),
     new card_images_1.GlassTrumpetArt(),
     new card_images_1.GlisteningCrystalArt(),

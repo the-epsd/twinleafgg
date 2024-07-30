@@ -16,7 +16,7 @@ class Mareep extends pokemon_card_1.PokemonCard {
         this.name = 'Mareep';
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.stage = card_types_1.Stage.BASIC;
-        this.hp = 170;
+        this.hp = 60;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.resistance = [{ type: card_types_1.CardType.METAL, value: -20 }];
         this.retreat = [card_types_1.CardType.COLORLESS];

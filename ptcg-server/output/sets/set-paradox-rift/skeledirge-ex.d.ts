@@ -1,13 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Flamigo extends PokemonCard {
-    regulationMark: string;
+export declare class SkeledirgeEX extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
+    tags: CardTag[];
     cardType: CardType;
-    cardTypez: CardType;
     hp: number;
+    retreat: CardType[];
     weakness: {
         type: CardType;
     }[];
@@ -15,9 +16,9 @@ export declare class Flamigo extends PokemonCard {
         type: CardType;
         value: number;
     }[];
-    retreat: CardType[];
     powers: {
         name: string;
+        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];
@@ -25,13 +26,13 @@ export declare class Flamigo extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
-        damageCalculation: string;
         text: string;
     }[];
     set: string;
-    cardImage: string;
-    setNumber: string;
     name: string;
     fullName: string;
+    cardImage: string;
+    setNumber: string;
+    readonly CONCEALED_CARDS_MARKER = "CONCEALED_CARDS_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

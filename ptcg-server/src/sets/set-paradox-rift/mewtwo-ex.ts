@@ -4,6 +4,7 @@ import { StoreLike, State, PlayerType, ChooseCardsPrompt, GameMessage, StateUtil
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Mewtwoex extends PokemonCard {
 
@@ -11,7 +12,7 @@ export class Mewtwoex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public cardType: CardType = CardType.LIGHTNING;
 
@@ -19,18 +20,18 @@ export class Mewtwoex extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Trans Charge',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 0,
       text: 'Attach up to 2 Basic P Energy from your discard pile to your Pokemon in any way you like.'
     },
     {
       name: 'Photon Kinesis',
-      cost: [ CardType.PSYCHIC, CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC, CardType.PSYCHIC],
       damage: 10,
       text: 'This attack does 30 more damage for each P Energy attached to all of your Pokémon.'
     },
@@ -39,7 +40,7 @@ export class Mewtwoex extends PokemonCard {
   public set: string = 'PAR';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '1';
 
   public name: string = 'Mewtwo ex';
@@ -48,7 +49,7 @@ export class Mewtwoex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
@@ -56,7 +57,7 @@ export class Mewtwoex extends PokemonCard {
       if (cardList === undefined) {
         return state;
       }
-  
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
@@ -88,7 +89,20 @@ export class Mewtwoex extends PokemonCard {
       effect.damage = 10 + energies * 30;
     }
 
+    if (effect instanceof PutDamageEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Target is not Active
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+
+      // Target is this Pokemon
+      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+        effect.preventDefault = true;
+      }
+    }
     return state;
   }
-
 }

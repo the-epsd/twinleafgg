@@ -18,7 +18,7 @@ class Flamigo extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Le Parfum',
+                name: 'Insta-Flock',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'When you play this Pokemon from your hand onto your ' +
                     'Bench during your turn, you may search your deck for up ' +
@@ -30,6 +30,7 @@ class Flamigo extends pokemon_card_1.PokemonCard {
                 name: 'United Wings',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 20,
+                damageCalculation: 'x',
                 text: 'This attack does 20 damage for each Pokémon in your ' +
                     'in your discard pile that have the United Wings attack.'
             }

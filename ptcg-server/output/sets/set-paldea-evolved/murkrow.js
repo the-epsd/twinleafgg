@@ -28,6 +28,7 @@ class Murkrow extends pokemon_card_1.PokemonCard {
                 name: 'United Wings',
                 cost: [card_types_1.CardType.DARK],
                 damage: 20,
+                damageCalculation: 'x',
                 text: 'This attack does 20 damage for each Pokémon in your ' +
                     'in your discard pile that have the United Wings attack.'
             }

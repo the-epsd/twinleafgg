@@ -29,7 +29,7 @@ class Druddigon extends pokemon_card_1.PokemonCard {
             }
         ];
         this.set = 'BRS';
-        this.regulationMark = 'F';
+        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '113';
         this.name = 'Druddigon';

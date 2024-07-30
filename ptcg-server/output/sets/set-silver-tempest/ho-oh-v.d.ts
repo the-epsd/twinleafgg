@@ -27,5 +27,6 @@ export declare class HoOhV extends PokemonCard {
     fullName: string;
     cardImage: string;
     setNumber: string;
+    readonly NETHERWORLD_GATE_MARKER = "NETHERWORLD_GATE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

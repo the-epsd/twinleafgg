@@ -1,6 +1,7 @@
-import { PokemonCard, CardType, Stage, PowerType, GameError, GameMessage, PokemonCardList, State, StoreLike, AttachEnergyPrompt, CardTarget, EnergyCard, EnergyType, PlayerType, SlotType, StateUtils, SuperType } from '../../game';
+import { PokemonCard, CardType, Stage, PowerType, GameError, GameMessage, PokemonCardList, State, StoreLike, AttachEnergyPrompt, CardTarget, EnergyCard, EnergyType, PlayerType, SlotType, StateUtils, SuperType, SpecialCondition } from '../../game';
+import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class DarkraiGX extends PokemonCard {
@@ -122,6 +123,40 @@ export class DarkraiGX extends PokemonCard {
           }
 
         });
+      }
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      effect.ignoreResistance = true;
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const opponentActive = opponent.active;
+
+      if (opponentActive instanceof PokemonCardList) {
+        const activePokemon = opponentActive.getPokemonCard();
+
+        if (!activePokemon) {
+          return state;
+        }
+
+        if (activePokemon) {
+          const hasSpecialCondition = opponentActive.specialConditions.some(condition =>
+            condition !== SpecialCondition.ABILITY_USED
+          );
+
+          if (hasSpecialCondition) {
+            opponentActive.specialConditions = opponentActive.specialConditions.filter(condition =>
+              condition === SpecialCondition.ABILITY_USED);
+
+            const knockOutOpponentEffect = new KnockOutOpponentEffect(effect, opponent.active);
+            knockOutOpponentEffect.target = opponent.active;
+            store.reduceEffect(state, knockOutOpponentEffect);
+          }
+        }
       }
     }
 

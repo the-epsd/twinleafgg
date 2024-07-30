@@ -26,6 +26,7 @@ import { FanRotom } from './fan-rotom';
 import { Fezandipitiex } from './fezandipiti-ex';
 import { Fraxure } from './fraxure';
 import { Galvantula } from './galvantula';
+import { Galvantulaex } from './galvantula-ex';
 import { Genesect } from './genesect';
 import { GlassTrumpet } from './glass-trumpet';
 import { GlisteningCrystal } from './glistening-crystal';
@@ -148,6 +149,9 @@ export declare class FraxureArt extends Fraxure {
     cardImage: string;
 }
 export declare class GalvantulaArt extends Galvantula {
+    cardImage: string;
+}
+export declare class GalvantulexaArt extends Galvantulaex {
     cardImage: string;
 }
 export declare class GenesectArt extends Genesect {
