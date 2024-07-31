@@ -5,5 +5,6 @@ const card_images_1 = require("./card-images");
 exports.setDragonsMajesty = [
     new card_images_1.BlazikenArt(),
     new card_images_1.FeebasArt(),
-    new card_images_1.FeraligatrArt()
+    new card_images_1.FeraligatrArt(),
+    new card_images_1.SwitchRaftArt()
 ];
