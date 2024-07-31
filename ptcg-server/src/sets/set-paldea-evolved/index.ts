@@ -1,33 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArctibaxArt, ArtazonArt, CetitanArt, ChiYuexArt, CufantArt, DeinoArt, GiacomoArt, GrushaArt, HydreigonArt, LokixArt, MagnemiteArt, NoibatArt, NoivernexArt, OrthwormArt, PelipperArt, TherapeuticEnergyArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WingullArt, ZweilousArt } from './card-images';
-import { BaxcaliburArt } from './card-images';
-import { BossOrdersArt } from './card-images';
-import { BraveyCharmArt } from './card-images';
-import { ChienPaoexArt } from './card-images';
-import { ChoiceBeltArt } from './card-images';
-import { DeliveryDroneArt } from './card-images';
-import { DudunsparceArt } from './card-images';
-import { FightingAuLaitArt } from './card-images';
-import { FlamigoArt } from './card-images';
-import { FrigibaxArt } from './card-images';
-import { Frigibax2Art } from './card-images';
-import { GreatBallArt } from './card-images';
-import { IonoArt } from './card-images';
-import { JetEnergyArt } from './card-images';
-import { LuminousEnergyArt } from './card-images';
-import { MimikyuArt } from './card-images';
-import { MurkrowArt } from './card-images';
-import { ReversalEnergyArt } from './card-images';
-import { SpiritombArt } from './card-images';
-import { SquawkabillyexArt } from './card-images';
-import { SuperiorEnergyRetrievalArt } from './card-images';
-import { SuperRodArt } from './card-images';
-import { WattrelArt } from './card-images';
-import { LuxrayArt } from './card-images';
-import { WoChienexArt } from './card-images';
-import { ShinxArt } from './card-images';
-import { TadbulbArt } from './card-images';
-import { TingLuexArt } from './card-images';
+import { ArctibaxArt, ArtazonArt, BaxcaliburArt, BossOrdersArt, BraveyCharmArt, CetitanArt, CetoddleArt, ChienPaoexArt, ChiYuexArt, ChoiceBeltArt, CufantArt, DeinoArt, DeliveryDroneArt, DudunsparceArt, FightingAuLaitArt, FlamigoArt, Frigibax2Art, FrigibaxArt, GiacomoArt, GreatBallArt, GrushaArt, HydreigonArt, IonoArt, JetEnergyArt, LokixArt, LuminousEnergyArt, LuxrayArt, MagnemiteArt, MimikyuArt, MurkrowArt, NoibatArt, NoivernexArt, OrthwormArt, PelipperArt, ReversalEnergyArt, ShinxArt, SpiritombArt, SquawkabillyexArt, SuperiorEnergyRetrievalArt, SuperRodArt, TadbulbArt, TherapeuticEnergyArt, TingLuexArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WattrelArt, WingullArt, WoChienexArt, ZweilousArt } from './card-images';
 
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
@@ -39,6 +11,7 @@ export const setPaldeaEvolved: Card[] = [
   new BossOrdersArt(),
   new BraveyCharmArt(),
   new CetitanArt(),
+  new CetoddleArt(),
   new ChiYuexArt(),
   new ChienPaoexArt(),
   new ChoiceBeltArt(),

@@ -1,33 +1,34 @@
+import { GameError, GameMessage, PlayerType, PokemonCardList, SlotType } from '../../game';
+import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { Stage, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, GameError, GameMessage, PokemonCardList } from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const hasBench = player.bench.some(b => b.cards.length > 0);
 
-  if (hasBench === false) {
+  const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
+  store.reduceEffect(state, checkPokemonTypeEffect);
+
+  const activeIsNotWater = !checkPokemonTypeEffect.cardTypes.includes(CardType.WATER);
+
+  if (hasBench === false || activeIsNotWater) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
   // Do not discard the card yet
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);  
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   const pokemonCard = player.active.getPokemonCard();
 
-  if (pokemonCard && pokemonCard.stage !== Stage.BASIC) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  if (pokemonCard && pokemonCard.stage === Stage.BASIC) {
-
+  if (pokemonCard) {
     let targets: PokemonCardList[] = [];
     yield store.prompt(state, new ChoosePokemonPrompt(
       player.id,
@@ -54,24 +55,22 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
   return state;
 }
-export class SwitchCart extends TrainerCard {
+export class SwitchRaft extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public regulationMark = 'F';
-
-  public set: string = 'ASR';
+  public set: string = 'DRM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '154';
+  public setNumber: string = '62';
 
-  public name: string = 'Switch Cart';
+  public name: string = 'Switch Raft';
 
-  public fullName: string = 'Switch Cart ASR';
+  public fullName: string = 'Switch Raft DRM';
 
   public text: string =
-    'Switch your Active Pokemon with 1 of your Benched Pokemon.';
+    'Switch your Active [W] Pokémon with 1 of your Benched Pokémon. If you do, heal 30 damage from the Pokémon you moved to your Bench.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -4,6 +4,7 @@ import { Baxcalibur } from './baxcalibur';
 import { BossOrders } from './boss-orders';
 import { BraveyCharm } from './bravery-charm';
 import { Cetitan } from './cetitan';
+import { Cetoddle } from './cetoddle';
 import { ChiYuex } from './chi-yu-ex';
 import { ChienPaoex } from './chien-pao-ex';
 import { ChoiceBelt } from './choice-belt';
@@ -70,6 +71,10 @@ export class BraveyCharmArt extends BraveyCharm {
 
 export class CetitanArt extends Cetitan {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_055_R_EN_LG.png';
+}
+
+export class CetoddleArt extends Cetoddle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_053_R_EN_LG.png';
 }
 
 export class ChiYuexArt extends ChiYuex {

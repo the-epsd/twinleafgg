@@ -4,6 +4,7 @@ import { Baxcalibur } from './baxcalibur';
 import { BossOrders } from './boss-orders';
 import { BraveyCharm } from './bravery-charm';
 import { Cetitan } from './cetitan';
+import { Cetoddle } from './cetoddle';
 import { ChiYuex } from './chi-yu-ex';
 import { ChienPaoex } from './chien-pao-ex';
 import { ChoiceBelt } from './choice-belt';
@@ -63,6 +64,9 @@ export declare class BraveyCharmArt extends BraveyCharm {
     cardImage: string;
 }
 export declare class CetitanArt extends Cetitan {
+    cardImage: string;
+}
+export declare class CetoddleArt extends Cetoddle {
     cardImage: string;
 }
 export declare class ChiYuexArt extends ChiYuex {
