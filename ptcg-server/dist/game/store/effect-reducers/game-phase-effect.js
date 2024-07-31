@@ -141,7 +141,7 @@ export function gamePhaseReducer(store, state, effect) {
             cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
         });
         player.supporterTurn = 0;
-        console.log('player.supporterTurn', player.supporterTurn);
+        // console.log('player.supporterTurn', player.supporterTurn);
         if (player === undefined) {
             throw new GameError(GameMessage.NOT_YOUR_TURN);
         }
