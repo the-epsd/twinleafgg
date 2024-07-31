@@ -6,43 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const state_utils_1 = require("../../game/store/state-utils");
-function* playCard(next, store, state, self, effect) {
-    const player = effect.player;
-    const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-    const opponentCards = opponent.hand.cards;
-    const supporterTurn = player.supporterTurn;
-    if (supporterTurn > 0) {
-        throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
-    }
-    const stadiumCard = state_utils_1.StateUtils.getStadiumCard(state);
-    if (stadiumCard == undefined) {
-        throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-    }
-    if (stadiumCard !== undefined) {
-        // Discard Stadium
-        const cardList = state_utils_1.StateUtils.findCardList(state, stadiumCard);
-        const player = state_utils_1.StateUtils.findOwner(state, cardList);
-        cardList.moveTo(player.discard);
-    }
-    player.hand.moveCardTo(effect.trainerCard, player.supporter);
-    // We will discard this card after prompt confirmation
-    effect.preventDefault = true;
-    if (opponentCards.length <= 3) {
-        opponentCards.forEach(c => {
-            opponent.hand.moveCardTo(c, opponent.discard);
-        });
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        return state;
-    }
-    if (opponentCards.length > 3) {
-        store.prompt(state, new game_1.ChooseCardsPrompt(opponent.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: 3, max: 3, allowCancel: false }), selected => {
-            const cards = selected || [];
-            opponent.hand.moveCardsTo(cards, opponent.discard);
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            return state;
-        });
-    }
-}
 class Delinquent extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -56,8 +19,39 @@ class Delinquent extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
-            const generator = playCard(() => generator.next(), store, state, this, effect);
-            return generator.next().value;
+            const player = effect.player;
+            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            // const opponentCards = opponent.hand.cards;
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            const stadiumCard = state_utils_1.StateUtils.getStadiumCard(state);
+            if (stadiumCard == undefined) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            player.hand.moveCardTo(this, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
+            if (stadiumCard !== undefined) {
+                // Discard Stadium
+                const cardList = state_utils_1.StateUtils.findCardList(state, stadiumCard);
+                const player = state_utils_1.StateUtils.findOwner(state, cardList);
+                cardList.moveTo(player.discard);
+            }
+            // Discard 3 cards from opponent's hand
+            const opponentCards = opponent.hand.cards.filter(c => c !== this);
+            if (opponentCards.length <= 3) {
+                opponent.hand.moveTo(opponent.discard);
+            }
+            if (opponentCards.length > 3) {
+                let cards = [];
+                state = store.prompt(state, new game_1.ChooseCardsPrompt(opponent.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: 3, max: 3, allowCancel: false }), selected => {
+                    cards = selected || [];
+                    opponent.hand.moveCardsTo(cards, opponent.discard);
+                });
+            }
+            player.supporter.moveCardTo(this, player.discard);
         }
         return state;
     }
