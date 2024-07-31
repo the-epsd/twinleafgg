@@ -20,7 +20,7 @@ class FocusSash extends trainer_card_1.TrainerCard {
         this.text = 'If the [F] Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent\'s attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tool === this) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.tool === this) {
             const player = effect.player;
             const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);
             const cardList = game_1.StateUtils.findCardList(state, this);
@@ -29,6 +29,7 @@ class FocusSash extends trainer_card_1.TrainerCard {
                 return state;
             }
             const maxHp = effect.target.hp;
+            console.log('maxHp = ' + maxHp);
             try {
                 const toolEffect = new play_card_effects_1.ToolEffect(player, this);
                 store.reduceEffect(state, toolEffect);
@@ -37,10 +38,13 @@ class FocusSash extends trainer_card_1.TrainerCard {
                 return state;
             }
             if (state.phase === state_1.GamePhase.ATTACK) {
-                if (player.active.damage === 0) {
-                    if (effect.source.damage >= maxHp) {
-                        effect.preventDefault = true;
-                        effect.damage = maxHp - 10;
+                if (effect.target.damage === 0) {
+                    if (effect.damage >= maxHp) {
+                        effect.damage = 0;
+                        effect.target.damage = effect.target.hp - 10;
+                        console.log('effect.target.hp - 10 = ' + (effect.target.hp - 10));
+                        cardList.moveCardTo(this, targetPlayer.discard);
+                        cardList.tool = undefined;
                     }
                 }
             }
