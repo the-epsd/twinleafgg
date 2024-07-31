@@ -29,7 +29,6 @@ export declare class Koraidonex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly DINO_CRY_MARKER = "DINO_CRY_MARKER";
     readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

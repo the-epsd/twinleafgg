@@ -11,10 +11,10 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardManager } from '../../game/cards/card-manager';
-import { PokemonCardList} from '../../game/store/state/pokemon-card-list';
+import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { CheckPokemonPlayedTurnEffect } from '../../game/store/effects/check-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import {EvolveEffect} from '../../game/store/effects/game-effects';
+import { EvolveEffect } from '../../game/store/effects/game-effects';
 
 function isMatchingStage2(stage1: PokemonCard[], basic: PokemonCard, stage2: PokemonCard): boolean {
   for (const card of stage1) {
@@ -75,7 +75,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: false, blocked }
   ), selection => {
     targets = selection || [];
@@ -105,7 +105,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_CARD_TO_EVOLVE,
     player.hand,
     { superType: SuperType.POKEMON, stage: Stage.STAGE_2 },
-    { min: 1, max: 1, allowCancel: true, blocked: blocked2 }
+    { min: 1, max: 1, allowCancel: false, blocked: blocked2 }
   ), selected => {
     cards = selected || [];
 

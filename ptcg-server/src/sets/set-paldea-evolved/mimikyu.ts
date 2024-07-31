@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
 
@@ -18,7 +18,7 @@ export class Mimikyu extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Safeguard',
@@ -28,7 +28,7 @@ export class Mimikyu extends PokemonCard {
 
   public attacks = [{
     name: 'Ghost Eye',
-    cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.COLORLESS],
     damage: 0,
     text: 'Put 7 damage counters on your opponent\'s Active Pokémon.'
   }];
@@ -74,11 +74,11 @@ export class Mimikyu extends PokemonCard {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
         } catch {
           return state;
         }
@@ -88,7 +88,7 @@ export class Mimikyu extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const attackEffect = effect as AttackEffect;
-      const damageEffect = new PutDamageEffect(attackEffect, 70);
+      const damageEffect = new PutCountersEffect(attackEffect, 70);
       return store.reduceEffect(state, damageEffect);
     }
 

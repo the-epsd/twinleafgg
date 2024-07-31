@@ -31,6 +31,5 @@ export declare class IronLeaves extends PokemonCard {
     cardImage: string;
     setNumber: string;
     readonly RETALIATE_MARKER = "RETALIATE_MARKER";
-    damageDealt: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

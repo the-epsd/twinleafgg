@@ -26,6 +26,9 @@ function attackReducer(store, state, effect) {
         }
         const damage = Math.max(0, effect.damage);
         target.damage += damage;
+        const targetOwner = state_utils_1.StateUtils.findOwner(state, target);
+        targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
+        console.log('Damage Dealt Marker Added to target owner');
         if (damage > 0) {
             const afterDamageEffect = new attack_effects_1.AfterDamageEffect(effect.attackEffect, damage);
             afterDamageEffect.target = effect.target;

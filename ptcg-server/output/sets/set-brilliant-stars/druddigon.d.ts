@@ -20,6 +20,5 @@ export declare class Druddigon extends PokemonCard {
     name: string;
     fullName: string;
     readonly REVENGE_MARKER = "REVENGE_MARKER";
-    damageDealt: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

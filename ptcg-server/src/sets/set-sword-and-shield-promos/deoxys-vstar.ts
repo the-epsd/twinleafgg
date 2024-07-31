@@ -26,7 +26,7 @@ export class DeoxysVSTAR extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Psychict Javelin',
+      name: 'Psychic Javelin',
       cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
       damage: 190,
       text: 'This attack also does 60 damage to 1 of your opponent\'s Benched Pokémon V. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
@@ -58,22 +58,24 @@ export class DeoxysVSTAR extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let opponentPokemonVInPlay = false;
+      let hasBenchedPokemonV = false;
 
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (list, card) => {
-        if (card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
-          opponentPokemonVInPlay = true;
+      opponent.bench.forEach(benchSpot => {
+        if (benchSpot.getPokemonCard()?.tags.includes(CardTag.POKEMON_V) || benchSpot.getPokemonCard()?.tags.includes(CardTag.POKEMON_VMAX) || benchSpot.getPokemonCard()?.tags.includes(CardTag.POKEMON_VSTAR)) {
+          hasBenchedPokemonV = true;
         }
       });
 
-      if (!opponentPokemonVInPlay) {
+      if (!hasBenchedPokemonV) {
         return state;
       }
 
-      const blocked2: CardTarget[] = [];
+      const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (list, card, target) => {
-        if (card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
-          blocked2.push(target);
+        if (!card.tags.includes(CardTag.POKEMON_V)
+          && !card.tags.includes(CardTag.POKEMON_VMAX)
+          && !card.tags.includes(CardTag.POKEMON_VSTAR)) {
+          blocked.push(target);
         }
       });
 
@@ -82,11 +84,12 @@ export class DeoxysVSTAR extends PokemonCard {
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
         [SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false, blocked: blocked2 }
+        { min: 1, max: 1, allowCancel: false, blocked }
       ), targets => {
         if (!targets || targets.length === 0) {
           return;
         }
+
         const damageEffect = new PutDamageEffect(effect, 60);
         damageEffect.target = targets[0];
         store.reduceEffect(state, damageEffect);
@@ -115,7 +118,6 @@ export class DeoxysVSTAR extends PokemonCard {
 
       effect.damage = (playerEnergyCount + opponentEnergyCount) * 60;
     }
-
     return state;
   }
 }

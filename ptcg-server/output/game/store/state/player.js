@@ -30,6 +30,7 @@ class Player {
         this.avatarName = '';
         this.usedVSTAR = false;
         this.usedGX = false;
+        this.DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
         this.CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';

@@ -7,9 +7,9 @@ export class MagnezoneV extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.LIGHTNING;  
+  public cardType: CardType = CardType.LIGHTNING;
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public hp: number = 210;
 
@@ -20,7 +20,7 @@ export class MagnezoneV extends PokemonCard {
   public attacks = [
     {
       name: 'Magnetic Tension',
-      cost: [CardType.LIGHTNING],
+      cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 0,
       text: 'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. This attack does 40 damage to the new Active Pokémon.'
     },
@@ -60,7 +60,7 @@ export class MagnezoneV extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), result => {
         const cardList = result[0];
@@ -74,27 +74,29 @@ export class MagnezoneV extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
-  
+
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {
           return;
         }
-        const damageEffect = new PutDamageEffect(effect, 30);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
+        targets.forEach(target => {
+          const damageEffect = new PutDamageEffect(effect, 30);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+        });
       });
-  
+
       return state;
     }
     return state;

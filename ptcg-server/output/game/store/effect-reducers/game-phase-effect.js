@@ -139,6 +139,7 @@ function gamePhaseReducer(store, state, effect) {
                 cardList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
             }
         });
+        effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
         player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
             if (cardList === player.active) {
                 return;

@@ -56,7 +56,7 @@ export class Lapras extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof KnockOutEffect) {
+    if (effect instanceof KnockOutEffect && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

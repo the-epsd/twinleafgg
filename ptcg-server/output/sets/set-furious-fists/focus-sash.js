@@ -29,7 +29,6 @@ class FocusSash extends trainer_card_1.TrainerCard {
                 return state;
             }
             const maxHp = effect.target.hp;
-            console.log('maxHp = ' + maxHp);
             try {
                 const toolEffect = new play_card_effects_1.ToolEffect(player, this);
                 store.reduceEffect(state, toolEffect);

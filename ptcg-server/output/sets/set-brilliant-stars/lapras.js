@@ -41,7 +41,7 @@ class Lapras extends pokemon_card_1.PokemonCard {
             }
             return state;
         }
-        if (effect instanceof game_effects_1.KnockOutEffect) {
+        if (effect instanceof game_effects_1.KnockOutEffect && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             // Do not activate between turns, or when it's not opponents turn.

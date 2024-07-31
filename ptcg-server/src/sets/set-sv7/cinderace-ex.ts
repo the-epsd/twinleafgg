@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, GameError } from '../../game';
+import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, GameError, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -64,6 +64,15 @@ export class Cinderaceex extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      if (!hasBenched) {
+        return state;
+      }
+
       return store.prompt(state, new ChoosePokemonPrompt(
         effect.player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,

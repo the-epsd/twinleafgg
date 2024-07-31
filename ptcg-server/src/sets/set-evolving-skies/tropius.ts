@@ -1,5 +1,4 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, GamePhase } from '../../game';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -44,9 +43,10 @@ export class Tropius extends PokemonCard {
 
   public readonly REVENGE_MARKER = 'REVENGE_MARKER';
 
-  public damageDealt = false;
+  // public damageDealt = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
@@ -57,16 +57,16 @@ export class Tropius extends PokemonCard {
       return state;
     }
 
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
-      effect.target.tool === this) {
-      const player = StateUtils.getOpponent(state, effect.player);
+    // if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+    //   effect.target.tool === this) {
+    //   const player = StateUtils.getOpponent(state, effect.player);
 
-      if (player.active.tool === this) {
-        this.damageDealt = true;
-      }
-    }
+    //   if (player.active.tool === this) {
+    //     this.damageDealt = true;
+    //   }
+    // }
 
-    if (effect instanceof KnockOutEffect) {
+    if (effect instanceof KnockOutEffect && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -84,12 +84,12 @@ export class Tropius extends PokemonCard {
     }
 
     if (effect instanceof EndTurnEffect) {
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
+      // const cardList = StateUtils.findCardList(state, this);
+      // const owner = StateUtils.findOwner(state, cardList);
 
-      if (owner === effect.player) {
-        this.damageDealt = false;
-      }
+      // if (owner === effect.player) {
+      //   this.damageDealt = false;
+      // }
 
       effect.player.marker.removeMarker(this.REVENGE_MARKER);
     }

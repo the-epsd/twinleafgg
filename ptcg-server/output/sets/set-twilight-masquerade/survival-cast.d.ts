@@ -1,7 +1,6 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class SurvivalCast extends TrainerCard {
     regulationMark: string;
@@ -11,6 +10,7 @@ export declare class SurvivalCast extends TrainerCard {
     setNumber: string;
     name: string;
     fullName: string;
+    private canDiscard;
     text: string;
-    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
+    reduceEffect(store: any, state: State, effect: Effect): State;
 }

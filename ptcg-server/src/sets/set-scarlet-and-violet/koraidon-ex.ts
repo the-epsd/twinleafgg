@@ -51,7 +51,6 @@ export class Koraidonex extends PokemonCard {
 
   public fullName: string = 'Koraidon ex SVI';
 
-  public readonly DINO_CRY_MARKER = 'DINO_CRY_MARKER';
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
@@ -67,6 +66,7 @@ export class Koraidonex extends PokemonCard {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker
@@ -86,6 +86,7 @@ export class Koraidonex extends PokemonCard {
           && c.energyType === EnergyType.BASIC
           && c.provides.includes(CardType.FIGHTING);
       });
+
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
@@ -94,7 +95,7 @@ export class Koraidonex extends PokemonCard {
 
       player.bench.forEach(benchSpot => {
         const card = benchSpot.getPokemonCard();
-        if (card && card.cardType === CardType.FIRE && card.stage === Stage.BASIC) {
+        if (card && card.cardType === CardType.FIGHTING && card.stage === Stage.BASIC) {
           fightingPokemonOnBench = true;
         }
       });
@@ -105,7 +106,7 @@ export class Koraidonex extends PokemonCard {
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.cardType !== CardType.FIRE) {
+        if (card.cardType !== CardType.FIGHTING && card.stage === Stage.BASIC) {
           blocked2.push(target);
         }
       });
@@ -117,14 +118,13 @@ export class Koraidonex extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
-        { allowCancel: false, min: 1, max: 2, blockedTo: blocked2 }
+        { allowCancel: false, min: 1, max: 2, blockedTo: blocked2, differentTargets: true }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {
           return;
         }
-        player.attackMarker.addMarker(this.DINO_CRY_MARKER, this);
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
