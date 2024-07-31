@@ -35,7 +35,6 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
         this.setNumber = '125';
         this.name = 'Koraidon ex';
         this.fullName = 'Koraidon ex SVI';
-        this.DINO_CRY_MARKER = 'DINO_CRY_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
@@ -71,7 +70,7 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
             let fightingPokemonOnBench = false;
             player.bench.forEach(benchSpot => {
                 const card = benchSpot.getPokemonCard();
-                if (card && card.cardType === card_types_1.CardType.FIRE && card.stage === card_types_1.Stage.BASIC) {
+                if (card && card.cardType === card_types_1.CardType.FIGHTING && card.stage === card_types_1.Stage.BASIC) {
                     fightingPokemonOnBench = true;
                 }
             });
@@ -80,17 +79,16 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
             }
             const blocked2 = [];
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-                if (card.cardType !== card_types_1.CardType.FIRE) {
+                if (card.cardType !== card_types_1.CardType.FIGHTING && card.stage === card_types_1.Stage.BASIC) {
                     blocked2.push(target);
                 }
             });
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { allowCancel: false, min: 1, max: 2, blockedTo: blocked2 }), transfers => {
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { allowCancel: false, min: 1, max: 2, blockedTo: blocked2, differentTargets: true }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {
                     return;
                 }
-                player.attackMarker.addMarker(this.DINO_CRY_MARKER, this);
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.discard.moveCardTo(transfer.card, target);

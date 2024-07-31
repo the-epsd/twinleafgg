@@ -71,7 +71,7 @@ class Mimikyu extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const attackEffect = effect;
-            const damageEffect = new attack_effects_1.PutDamageEffect(attackEffect, 70);
+            const damageEffect = new attack_effects_1.PutCountersEffect(attackEffect, 70);
             return store.reduceEffect(state, damageEffect);
         }
         return state;

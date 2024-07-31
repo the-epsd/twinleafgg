@@ -5,7 +5,6 @@ import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effe
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class IronLeaves extends PokemonCard {
 
@@ -51,7 +50,7 @@ export class IronLeaves extends PokemonCard {
 
   public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
 
-  public damageDealt = false;
+  // public damageDealt = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -85,34 +84,34 @@ export class IronLeaves extends PokemonCard {
       effect.player.marker.removeMarker(this.RETALIATE_MARKER);
     }
 
-    if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
-      const player = StateUtils.getOpponent(state, effect.player);
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
+    // if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
+    //   const player = StateUtils.getOpponent(state, effect.player);
+    //   const cardList = StateUtils.findCardList(state, this);
+    //   const owner = StateUtils.findOwner(state, cardList);
 
-      if (player !== owner) {
-        this.damageDealt = true;
-      }
-    }
+    //   if (player !== owner) {
+    //     this.damageDealt = true;
+    //   }
+    // }
 
-    if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
+    // if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
+    //   const cardList = StateUtils.findCardList(state, this);
+    //   const owner = StateUtils.findOwner(state, cardList);
 
-      if (owner === effect.player) {
-        this.damageDealt = false;
-      }
-    }
+    //   if (owner === effect.player) {
+    //     this.damageDealt = false;
+    //   }
+    // }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(this.RETALIATE_MARKER) && this.damageDealt) {
+      if (player.marker.hasMarker(this.RETALIATE_MARKER)) {
         effect.damage += 60;
       }
     }
 
-    if (effect instanceof KnockOutEffect) {
+    if (effect instanceof KnockOutEffect && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -125,6 +124,7 @@ export class IronLeaves extends PokemonCard {
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
         effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
+        console.log('Revenge Marker Added');
       }
       return state;
     }

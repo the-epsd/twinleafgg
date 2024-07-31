@@ -4,7 +4,6 @@ exports.Lucario = void 0;
 const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Lucario extends pokemon_card_1.PokemonCard {
@@ -38,43 +37,55 @@ class Lucario extends pokemon_card_1.PokemonCard {
         this.fullName = 'Lucario SVI';
         this.RETALIATE_MARKER = 'RETALIATE_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-        this.damageDealt = false;
+        this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
+    // public damageDealt = false;
     reduceEffect(store, state, effect) {
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             effect.player.marker.removeMarker(this.RETALIATE_MARKER);
         }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+            effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('marker cleared');
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('second marker added');
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
+            // Check marker
+            if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+                console.log('attack blocked');
+                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
-            effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+            console.log('marker added');
         }
-        if (effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) {
-            const player = game_1.StateUtils.getOpponent(state, effect.player);
-            const cardList = game_1.StateUtils.findCardList(state, this);
-            const owner = game_1.StateUtils.findOwner(state, cardList);
-            if (player !== owner) {
-                this.damageDealt = true;
-            }
-            else {
-                effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-            }
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player === game_1.StateUtils.getOpponent(state, effect.player)) {
-            const cardList = game_1.StateUtils.findCardList(state, this);
-            const owner = game_1.StateUtils.findOwner(state, cardList);
-            if (owner === effect.player) {
-                this.damageDealt = false;
-            }
-        }
+        // if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
+        //   const player = StateUtils.getOpponent(state, effect.player);
+        //   const cardList = StateUtils.findCardList(state, this);
+        //   const owner = StateUtils.findOwner(state, cardList);
+        //   if (player !== owner) {
+        //     this.damageDealt = true;
+        //   } else {
+        //     effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+        //   }
+        // }
+        // if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
+        //   const cardList = StateUtils.findCardList(state, this);
+        //   const owner = StateUtils.findOwner(state, cardList);
+        //   if (owner === effect.player) {
+        //     this.damageDealt = false;
+        //   }
+        // }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            if (player.marker.hasMarker(this.RETALIATE_MARKER) && this.damageDealt) {
+            if (player.marker.hasMarker(this.RETALIATE_MARKER)) {
                 effect.damage += 120;
             }
         }
-        if (effect instanceof game_effects_1.KnockOutEffect) {
+        if (effect instanceof game_effects_1.KnockOutEffect && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // Do not activate between turns, or when it's not opponents turn.

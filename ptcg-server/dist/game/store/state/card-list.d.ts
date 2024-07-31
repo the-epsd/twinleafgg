@@ -8,6 +8,7 @@ export declare class CardList {
     isPublic: boolean;
     isSecret: boolean;
     stadiumDirection: StadiumDirection;
+    markedAsNotSecret: boolean;
     static fromList(names: string[]): CardList;
     applyOrder(order: number[]): void;
     moveTo(destination: CardList, count?: number): void;

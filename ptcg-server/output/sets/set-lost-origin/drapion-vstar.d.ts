@@ -5,6 +5,7 @@ import { CardTag } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
 export declare class DrapionVSTAR extends PokemonCard {
     tags: CardTag[];
+    evolvesFrom: string;
     regulationMark: string;
     stage: Stage;
     cardType: CardType;

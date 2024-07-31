@@ -13,7 +13,7 @@ export class HisuianZoroark extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Hisuian Zoroua';
+  public evolvesFrom = 'Hisuian Zorua';
 
   public cardType: CardType = CardType.PSYCHIC;
 

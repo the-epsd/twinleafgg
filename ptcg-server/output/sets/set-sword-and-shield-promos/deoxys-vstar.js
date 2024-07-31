@@ -20,7 +20,7 @@ class DeoxysVSTAR extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Psychict Javelin',
+                name: 'Psychic Javelin',
                 cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
                 damage: 190,
                 text: 'This attack also does 60 damage to 1 of your opponent\'s Benched Pokémon V. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
@@ -44,22 +44,25 @@ class DeoxysVSTAR extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            let opponentPokemonVInPlay = false;
-            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (list, card) => {
-                if (card.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_VSTAR)) {
-                    opponentPokemonVInPlay = true;
+            let hasBenchedPokemonV = false;
+            opponent.bench.forEach(benchSpot => {
+                var _a, _b, _c;
+                if (((_a = benchSpot.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.POKEMON_V)) || ((_b = benchSpot.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) || ((_c = benchSpot.getPokemonCard()) === null || _c === void 0 ? void 0 : _c.tags.includes(card_types_1.CardTag.POKEMON_VSTAR))) {
+                    hasBenchedPokemonV = true;
                 }
             });
-            if (!opponentPokemonVInPlay) {
+            if (!hasBenchedPokemonV) {
                 return state;
             }
-            const blocked2 = [];
+            const blocked = [];
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (list, card, target) => {
-                if (card.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_VSTAR)) {
-                    blocked2.push(target);
+                if (!card.tags.includes(card_types_1.CardTag.POKEMON_V)
+                    && !card.tags.includes(card_types_1.CardTag.POKEMON_VMAX)
+                    && !card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR)) {
+                    blocked.push(target);
                 }
             });
-            state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false, blocked: blocked2 }), targets => {
+            state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false, blocked }), targets => {
                 if (!targets || targets.length === 0) {
                     return;
                 }

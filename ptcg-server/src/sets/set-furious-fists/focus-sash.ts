@@ -1,7 +1,7 @@
 import { PokemonCardList, StateUtils } from '../../game';
 import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
@@ -11,15 +11,15 @@ import { StoreLike } from '../../game/store/store-like';
 export class FocusSash extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
-  
+
   public set: string = 'FFI';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '91';
-  
+
   public name = 'Focus Sash';
-  
+
   public fullName = 'Focus Sash FFI';
 
   public text: string =
@@ -27,13 +27,13 @@ export class FocusSash extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AfterDamageEffect && effect.target.tool === this) {
+    if (effect instanceof PutDamageEffect && effect.target.tool === this) {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
       const checkPokemonTypeEffect = new CheckPokemonTypeEffect(cardList);
-      
+
       if (effect.damage <= 0 || player === targetPlayer || !checkPokemonTypeEffect.cardTypes.includes(CardType.FIGHTING)) {
         return state;
       }
@@ -48,10 +48,13 @@ export class FocusSash extends TrainerCard {
       }
 
       if (state.phase === GamePhase.ATTACK) {
-        if (player.active.damage === 0) {
-          if (effect.source.damage >= maxHp) {
-            effect.preventDefault = true;
-            effect.damage = maxHp - 10;
+        if (effect.target.damage === 0) {
+          if (effect.damage >= maxHp) {
+            effect.damage = 0;
+            effect.target.damage = effect.target.hp - 10;
+            console.log('effect.target.hp - 10 = ' + (effect.target.hp - 10));
+            cardList.moveCardTo(this, targetPlayer.discard);
+            cardList.tool = undefined;
           }
         }
       }

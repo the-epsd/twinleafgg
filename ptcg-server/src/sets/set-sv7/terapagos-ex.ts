@@ -9,7 +9,7 @@ export class Terapagosex extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA, CardTag.HOLO];
 
   public stage: Stage = Stage.BASIC;
 

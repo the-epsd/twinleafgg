@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, GamePhase } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, GamePhase, PlayerType, StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -31,23 +31,19 @@ export class Bouffalant extends PokemonCard {
   public fullName: string = 'Bouffalant SV7';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PutDamageEffect) {
-      const player = effect.player;
-      let hasOtherBouffalant = false;
 
-      player.bench.forEach(benchSpot => {
-        const pokemonCard = benchSpot.getPokemonCard();
-        if (pokemonCard && pokemonCard.name === 'Bouffalant' && pokemonCard !== this) {
-          hasOtherBouffalant = true;
+    if (effect instanceof PutDamageEffect) {
+      const cardList = StateUtils.findCardList(state, this);
+      const player = StateUtils.findOwner(state, cardList);
+      let bouffalantCount = 0;
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card.name === 'Bouffalant') {
+          bouffalantCount++;
         }
       });
 
-      const active = player.active.getPokemonCard();
-      if (active && active.name === 'Bouffalant' && active !== this) {
-        hasOtherBouffalant = true;
-      }
-
-      if (!hasOtherBouffalant) {
+      if (bouffalantCount < 2) {
         return state;
       }
 
@@ -58,24 +54,22 @@ export class Bouffalant extends PokemonCard {
       if (effect.damageReduced) {
         return state;
       }
-      if (hasOtherBouffalant) {
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
 
-        const targetPokemon = effect.target.getPokemonCard();
-        if (targetPokemon && targetPokemon.cardType === CardType.COLORLESS && targetPokemon.stage === Stage.BASIC) {
-          effect.damage = Math.max(0, effect.damage - 60);
-          effect.damageReduced = true;
-        }
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
+      const targetPokemon = effect.target.getPokemonCard();
+      if (targetPokemon && targetPokemon.cardType === CardType.COLORLESS && targetPokemon.stage === Stage.BASIC) {
+        effect.damage = Math.max(0, effect.damage - 60);
+        effect.damageReduced = true;
       }
     }
     return state;

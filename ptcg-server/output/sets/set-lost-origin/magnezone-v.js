@@ -16,7 +16,7 @@ class MagnezoneV extends game_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Magnetic Tension',
-                cost: [game_1.CardType.LIGHTNING],
+                cost: [game_1.CardType.LIGHTNING, game_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. This attack does 40 damage to the new Active Pokémon.'
             },
@@ -61,9 +61,11 @@ class MagnezoneV extends game_1.PokemonCard {
                 if (!targets || targets.length === 0) {
                     return;
                 }
-                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 30);
-                damageEffect.target = targets[0];
-                store.reduceEffect(state, damageEffect);
+                targets.forEach(target => {
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 30);
+                    damageEffect.target = targets[0];
+                    store.reduceEffect(state, damageEffect);
+                });
             });
             return state;
         }

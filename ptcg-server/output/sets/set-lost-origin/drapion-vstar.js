@@ -11,6 +11,7 @@ class DrapionVSTAR extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_2.CardTag.POKEMON_VSTAR];
+        this.evolvesFrom = 'Drapion V';
         this.regulationMark = 'F';
         this.stage = card_types_1.Stage.VSTAR;
         this.cardType = card_types_1.CardType.DARK;
@@ -42,6 +43,15 @@ class DrapionVSTAR extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (player.usedVSTAR) {
+                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
+            }
+            player.usedVSTAR = true;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            });
             opponent.active.specialConditions.push(card_types_1.SpecialCondition.POISONED);
             opponent.active.poisonDamage = 30;
         }

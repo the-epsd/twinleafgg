@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Card, CardList, PokemonCardList, Power, SpecialCondition, StadiumDirection, SuperType } from 'ptcg-server';
+import { Card, CardList, CardTag, PokemonCardList, Power, SpecialCondition, StadiumDirection, SuperType } from 'ptcg-server';
 
 const MAX_ENERGY_CARDS = 8;
 
@@ -35,14 +35,13 @@ export class BoardCardComponent {
     this.isPublic = value.isPublic;
     this.isFaceDown = value.isSecret || (!value.isPublic && !this.isOwner);
 
-    // Pokemon slot, init energies, tool, special conditions, etc.
     if (value instanceof PokemonCardList) {
       this.initPokemonCardList(value);
       return;
     }
 
-    // Normal card list, display top-card only
     this.mainCard = value.cards[value.cards.length - 1];
+    this.isHolo = this.mainCard.tags.includes(CardTag.HOLO);
   }
 
   @Input() set owner(value: boolean) {
@@ -60,6 +59,7 @@ export class BoardCardComponent {
     this.damage = 0;
     this.specialConditions = [];
     this.isEmpty = !value;
+    this.isHolo = value ? value.tags.includes(CardTag.HOLO) : false;
   }
 
   @Input() isFaceDown = false;
@@ -75,6 +75,7 @@ export class BoardCardComponent {
   public specialConditions: SpecialCondition[] = [];
   public SpecialCondition = SpecialCondition;
   public isUpsideDown = false;
+  public isHolo: boolean = false;
 
   private isSecret = false;
   private isPublic = false;
@@ -88,16 +89,15 @@ export class BoardCardComponent {
     this.trainerCard = undefined;
     this.mainCard = cardList.getPokemonCard();
     this.trainerCard = cardList.tool;
+    this.isHolo = this.mainCard.tags.includes(CardTag.HOLO);
 
     for (const card of cardList.cards) {
-      switch (card.superType) {
-        case SuperType.ENERGY:
-          if (this.energyCards.length < MAX_ENERGY_CARDS) {
-            this.energyCards.push(card);
-          } else {
-            this.moreEnergies++;
-          }
-          break;
+      if (card.superType === SuperType.ENERGY) {
+        if (this.energyCards.length < MAX_ENERGY_CARDS) {
+          this.energyCards.push(card);
+        } else {
+          this.moreEnergies++;
+        }
       }
     }
   }
@@ -119,7 +119,6 @@ export class BoardCardComponent {
       'Mist Energy': 'assets/energy/mist.png',
       'Legacy Energy': 'assets/energy/legacy.png',
       'Neo Upper Energy': 'assets/energy/neo-upper.png',
-      // Add more custom image URLs for other energy cards
     };
 
     return customImageUrls[card.name] || '';
@@ -128,5 +127,4 @@ export class BoardCardComponent {
   public onCardClick(card: Card) {
     this.cardClick.next(card);
   }
-
 }

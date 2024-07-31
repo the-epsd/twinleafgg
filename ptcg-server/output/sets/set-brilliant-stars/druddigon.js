@@ -6,7 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Druddigon extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -35,8 +34,8 @@ class Druddigon extends pokemon_card_1.PokemonCard {
         this.name = 'Druddigon';
         this.fullName = 'Druddigon BRS';
         this.REVENGE_MARKER = 'REVENGE_MARKER';
-        this.damageDealt = false;
     }
+    // public damageDealt = false;
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
@@ -45,14 +44,14 @@ class Druddigon extends pokemon_card_1.PokemonCard {
             }
             return state;
         }
-        if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) &&
-            effect.target.tool === this) {
-            const player = game_1.StateUtils.getOpponent(state, effect.player);
-            if (player.active.tool === this) {
-                this.damageDealt = true;
-            }
-        }
-        if (effect instanceof game_effects_1.KnockOutEffect) {
+        // if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+        //   effect.target.tool === this) {
+        //   const player = StateUtils.getOpponent(state, effect.player);
+        //   if (player.active.tool === this) {
+        //     this.damageDealt = true;
+        //   }
+        // }
+        if (effect instanceof game_effects_1.KnockOutEffect && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // Do not activate between turns, or when it's not opponents turn.
@@ -67,11 +66,11 @@ class Druddigon extends pokemon_card_1.PokemonCard {
             return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const cardList = game_1.StateUtils.findCardList(state, this);
-            const owner = game_1.StateUtils.findOwner(state, cardList);
-            if (owner === effect.player) {
-                this.damageDealt = false;
-            }
+            // const cardList = StateUtils.findCardList(state, this);
+            // const owner = StateUtils.findOwner(state, cardList);
+            // if (owner === effect.player) {
+            //   this.damageDealt = false;
+            // }
             effect.player.marker.removeMarker(this.REVENGE_MARKER);
         }
         return state;

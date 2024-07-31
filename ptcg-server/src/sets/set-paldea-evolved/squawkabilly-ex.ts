@@ -12,7 +12,7 @@ export class Squawkabillyex extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.POKEMON_ex];
+  public tags = [CardTag.POKEMON_ex, CardTag.HOLO];
 
   public regulationMark = 'G';
 

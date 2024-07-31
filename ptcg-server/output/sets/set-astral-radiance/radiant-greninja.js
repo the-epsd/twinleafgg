@@ -15,7 +15,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class RadiantGreninja extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.RADIANT];
+        this.tags = [card_types_1.CardTag.RADIANT, card_types_1.CardTag.HOLO];
         this.regulationMark = 'F';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.WATER;

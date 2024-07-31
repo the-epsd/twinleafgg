@@ -3,10 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SurvivalCast = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
+// interface PokemonItem {
+//   playerNum: number;
+//   cardList: PokemonCardList;
+// }
 class SurvivalCast extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -17,33 +21,36 @@ class SurvivalCast extends trainer_card_1.TrainerCard {
         this.setNumber = '164';
         this.name = 'Survival Brace';
         this.fullName = 'Survival Brace TWM';
+        this.canDiscard = false;
         this.text = 'If the Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent\'s attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tool === this) {
-            const player = effect.player;
-            const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);
-            if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
-                return state;
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.tool === this && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+            const player = game_1.StateUtils.findOwner(state, effect.target);
+            const checkHpEffect = new check_effects_1.CheckHpEffect(player, effect.target);
+            store.reduceEffect(state, checkHpEffect);
+            if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
+                effect.preventDefault = true;
+                effect.target.damage = checkHpEffect.hp - 10;
+                store.log(state, game_1.GameLog.LOG_PLAYER_PLAYS_TOOL, { card: this.name });
+                this.canDiscard = true;
             }
-            const activePokemon = player.active;
-            const maxHp = activePokemon.hp;
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_a) {
-                return state;
-            }
-            if (state.phase === state_1.GamePhase.ATTACK) {
-                if (player.active.damage === 0) {
-                    if (effect.source.damage >= maxHp) {
-                        effect.preventDefault;
-                        effect.damage = maxHp - 10;
+            if (this.canDiscard) {
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
+                    if (cardList.cards.includes(this)) {
+                        try {
+                            const toolEffect = new play_card_effects_1.ToolEffect(player, this);
+                            store.reduceEffect(state, toolEffect);
+                        }
+                        catch (_a) {
+                            return state;
+                        }
+                        cardList.moveCardTo(this, player.discard);
+                        cardList.tool = undefined;
                     }
-                }
+                });
+                return state;
             }
-            return state;
         }
         return state;
     }

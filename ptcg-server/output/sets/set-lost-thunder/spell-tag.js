@@ -61,9 +61,10 @@ class SpellTag extends trainer_card_1.TrainerCard {
                     const results = targets || [];
                     for (const result of results) {
                         const target = state_utils_1.StateUtils.getTarget(state, player, result.target);
-                        const putCountersEffect = new attack_effects_1.PutCountersEffect(result.target, result.damage);
+                        /*const putCountersEffect = new PutCountersEffect(result.target as unknown as AttackEffect, result.damage);
                         putCountersEffect.target = target;
-                        store.reduceEffect(state, putCountersEffect);
+                        store.reduceEffect(state, putCountersEffect);*/
+                        target.damage += result.damage;
                     }
                 });
             }

@@ -30,6 +30,5 @@ export declare class ChiYu extends PokemonCard {
     name: string;
     fullName: string;
     readonly RETALIATE_MARKER = "RETALIATE_MARKER";
-    damageDealt: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
