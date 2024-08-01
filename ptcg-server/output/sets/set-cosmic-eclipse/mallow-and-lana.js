@@ -24,6 +24,7 @@ class MallowAndLana extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            const activeHasDamage = player.active.damage > 0;
             const supporterTurn = player.supporterTurn;
             if (supporterTurn > 0) {
                 throw new game_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
@@ -39,7 +40,7 @@ class MallowAndLana extends trainer_card_1.TrainerCard {
                 const cardList = result[0];
                 const previousActiveCardList = player.active;
                 player.switchPokemon(cardList);
-                if (player.hand.cards.length < 2) {
+                if (player.hand.cards.length < 2 || !activeHasDamage) {
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
                     return state;
                 }

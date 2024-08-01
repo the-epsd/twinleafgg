@@ -36,6 +36,7 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "core-js": "^2.5.4",
     "dnd-multi-backend": "^5.0.0",
+    "html2canvas": "^1.4.1",
     "imgcache.js": "^1.1.1",
     "ptcg-server": "file:../ptcg-server",
     "react-dnd-html5-backend": "^15.0.0",

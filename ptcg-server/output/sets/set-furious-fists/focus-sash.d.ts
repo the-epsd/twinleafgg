@@ -11,5 +11,6 @@ export declare class FocusSash extends TrainerCard {
     name: string;
     fullName: string;
     text: string;
+    private canDiscard;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

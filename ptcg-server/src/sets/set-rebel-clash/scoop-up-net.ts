@@ -39,6 +39,7 @@ export class ScoopUpNet extends TrainerCard {
                 { allowCancel: false }
               ), result => {
                 const cardList = result[0];
+                targetPokemon.damage = 0;
                 targetPokemon.clearEffects();
                 targetPokemon.cards.forEach((card, index) => {
                   if (card instanceof PokemonCard) {

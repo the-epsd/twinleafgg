@@ -82,7 +82,7 @@ class Zoroark extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'BLW';
         this.name = 'Zoroark';
-        this.fullName = 'Zoroark BW';
+        this.fullName = 'Zoroark BLW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '71';
     }

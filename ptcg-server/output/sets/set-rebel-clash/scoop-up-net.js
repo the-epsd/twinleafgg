@@ -23,6 +23,7 @@ class ScoopUpNet extends game_1.TrainerCard {
                     if (targetPokemon === effect.player.active) {
                         return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
                             const cardList = result[0];
+                            targetPokemon.damage = 0;
                             targetPokemon.clearEffects();
                             targetPokemon.cards.forEach((card, index) => {
                                 if (card instanceof game_1.PokemonCard) {

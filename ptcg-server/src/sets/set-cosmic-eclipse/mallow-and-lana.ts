@@ -34,7 +34,8 @@ export class MallowAndLana extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
 
       const player = effect.player;
-
+      const activeHasDamage = player.active.damage > 0;      
+      
       const supporterTurn = player.supporterTurn;
 
       if (supporterTurn > 0) {
@@ -63,9 +64,8 @@ export class MallowAndLana extends TrainerCard {
 
         player.switchPokemon(cardList);
 
-        if (player.hand.cards.length < 2) {
+        if (player.hand.cards.length < 2 || !activeHasDamage) {
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
           return state;
         }
 
