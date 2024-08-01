@@ -31,8 +31,8 @@ class HisuianGrowlithe extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '70';
-        this.name = 'HisuianGrowlithe';
-        this.fullName = 'HisuianGrowlithe ASR';
+        this.name = 'Hisuian Growlithe';
+        this.fullName = 'Hisuian Growlithe ASR';
         this.CLEAR_DEFENSIVE_POSTURE_MARKER = 'CLEAR_WITHDRAW_MARKER';
         this.DEFENSIVE_POSTURE_MARKER = 'WITHDRAW_MARKER';
     }
