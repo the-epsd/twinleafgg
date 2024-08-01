@@ -7,6 +7,7 @@ import { GameService } from './game.service';
 import { ClientUserData } from '../interfaces/main.interface';
 import { SessionService } from '../../shared/session/session.service';
 import { SocketService } from '../socket.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class MainService {
@@ -16,7 +17,8 @@ export class MainService {
   constructor(
     private gameService: GameService,
     private sessionService: SessionService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private router: Router
   ) { }
 
   public init(coreInfo: CoreInfo): void {
@@ -46,7 +48,9 @@ export class MainService {
     const clientId = this.sessionService.session.clientId;
     if (game.players.some(p => p.clientId === clientId)) {
       // we are listed as players, but not connected.
-      this.gameService.join(game.gameId).subscribe(() => {}, () => {});
+      this.gameService.join(game.gameId).subscribe(() => {
+        this.router.navigate(['table', game.gameId]);
+      }, () => {});
     }
   }
 
