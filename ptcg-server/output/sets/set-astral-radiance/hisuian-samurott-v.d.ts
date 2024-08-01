@@ -7,6 +7,10 @@ export declare class HisuianSamurottV extends PokemonCard {
     cardType: CardType;
     hp: number;
     tags: CardTag[];
+    weakness: {
+        type: CardType;
+    }[];
+    retreat: CardType[];
     attacks: {
         name: string;
         cost: CardType[];

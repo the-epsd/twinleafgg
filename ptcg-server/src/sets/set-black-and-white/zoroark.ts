@@ -122,7 +122,7 @@ export class Zoroark extends PokemonCard {
 
   public name: string = 'Zoroark';
 
-  public fullName: string = 'Zoroark BLW';
+  public fullName: string = 'Zoroark BW';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -1,3 +1,4 @@
+import { DarknessEnergy } from '../set-diamond-and-pearl/darkness-energy';
 import { DevolutionSpray } from './devolution-spray';
 import { Electabuzz } from './electabuzz';
 import { Poliwhirl } from './EVO_24_Poliwhirl';
@@ -17,4 +18,10 @@ export declare class PoliwhirlArt extends Poliwhirl {
 }
 export declare class StarmieArt extends Starmie {
     cardImage: string;
+}
+export declare class DarknessEnergyArt extends DarknessEnergy {
+    cardImage: string;
+    set: string;
+    setNumber: string;
+    fullName: string;
 }

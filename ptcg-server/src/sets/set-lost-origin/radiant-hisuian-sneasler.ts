@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardTag, CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
-import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { PlayerType, PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
@@ -51,7 +51,6 @@ export class RadiantHisuianSneasler extends PokemonCard {
       const player = effect.player;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
-
           try {
             const stub = new PowerEffect(player, {
               name: 'test',
@@ -62,11 +61,7 @@ export class RadiantHisuianSneasler extends PokemonCard {
           } catch {
             return state;
           }
-
-          const opponent = StateUtils.getOpponent(state, player);
-          if (opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
-            opponent.active.poisonDamage = 30;
-          }
+          effect.poisonDamage += 20;
         }
       });
     }

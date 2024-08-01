@@ -8,8 +8,6 @@
   </ng-template>
 </dnd-preview>
 
-<!-- <button (click)="exportDeckImage()">Export Deck Image</button> -->
-
 
 <cdk-virtual-scroll-viewport class="ptcg-deck-edit-pane" [dropTarget]="libraryTarget" ptcgDropHighlight
   [ptcgDropHighlightVisible]="libraryHighlight$ | async">
@@ -24,6 +22,9 @@
   [ptcgDropHighlightVisible]="deckHighlight$ | async">
   <div class="deck-validity">
     <ptcg-deck-validity [deck]="tempList"></ptcg-deck-validity>
+    <!-- <button mat-raised-button (click)="exportDeckImage()">
+      {{ 'EXPORT_IMAGE' | translate }}
+    </button> -->
   </div>
   <div #deckPane>
     <dnd-sortable-list listId="CARD_LIBRARY_LIST" hoverTrigger="fixed" [children]="tempList" [spec]="deckSpec">

@@ -8,6 +8,10 @@ export declare class HisuianSamurottVSTAR extends PokemonCard {
     hp: number;
     evolvesFrom: string;
     tags: CardTag[];
+    weakness: {
+        type: CardType;
+    }[];
+    retreat: CardType[];
     powers: {
         name: string;
         useWhenInPlay: boolean;

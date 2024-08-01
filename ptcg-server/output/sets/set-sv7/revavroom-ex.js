@@ -12,7 +12,7 @@ class Revavroomex extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Varoom';
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 280;
@@ -52,15 +52,10 @@ class Revavroomex extends pokemon_card_1.PokemonCard {
             effect.damage += 120;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            this.discardRevavroom == true;
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && this.discardRevavroom == true) {
             const player = effect.player;
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                    cardList.moveCardsTo(player.discard.cards, cardList);
-                }
-            });
+            const knockOutEffect = new game_effects_1.KnockOutEffect(player, player.active);
+            state = store.reduceEffect(state, knockOutEffect);
+            return state;
         }
         if (effect instanceof attack_effects_1.PutDamageEffect) {
             const player = effect.player;

@@ -50,10 +50,7 @@ class RadiantHisuianSneasler extends pokemon_card_1.PokemonCard {
                     catch (_a) {
                         return state;
                     }
-                    const opponent = game_1.StateUtils.getOpponent(state, player);
-                    if (opponent.active.specialConditions.includes(card_types_1.SpecialCondition.POISONED)) {
-                        opponent.active.poisonDamage = 30;
-                    }
+                    effect.poisonDamage += 20;
                 }
             });
         }

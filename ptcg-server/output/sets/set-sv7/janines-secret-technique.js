@@ -15,8 +15,8 @@ class JaninesSecretTechnique extends trainer_card_1.TrainerCard {
         this.set = 'SV6a';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '60';
-        this.name = 'Jenine\'s Secret Technique';
-        this.fullName = 'Jenine\'s Secret Technique SV6a';
+        this.name = 'Janine\'s Secret Technique';
+        this.fullName = 'Janine\'s Secret Technique SV6a';
         this.text = 'Choose up to 2 of your [D] Pokémon. For each of those Pokémon, search your deck for a Basic [D] Energy card and attach it to that Pokémon. Then, shuffle your deck. If you attached any Energy to your Active Pokémon in this way, that Pokémon is now Poisoned.';
     }
     reduceEffect(store, state, effect) {

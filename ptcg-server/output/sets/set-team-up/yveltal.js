@@ -37,11 +37,6 @@ class Yveltal extends pokemon_card_1.PokemonCard {
         this.fullName = 'Yveltal TEU';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            opponent.active.attackMarker.addMarker(game_1.PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-        }
         if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.attackMarker.hasMarker(game_1.PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
             throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
         }
@@ -51,39 +46,25 @@ class Yveltal extends pokemon_card_1.PokemonCard {
             player.active.attackMarker.removeMarker(game_1.PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
             return state;
         }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            opponent.active.attackMarker.addMarker(game_1.PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            let hasPokemonWithEnergy = false;
-            const blocked = [];
-            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                if (cardList.cards.some(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.SPECIAL)) {
-                    hasPokemonWithEnergy = true;
-                }
-                else {
-                    blocked.push(target);
-                }
-            });
-            if (hasPokemonWithEnergy) {
-                let targets = [];
-                store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE], { allowCancel: false, blocked }), results => {
-                    targets = results || [];
-                });
-                if (targets.length === 0) {
-                    return state;
-                }
-                const target = targets[0];
-                let cards = [];
-                store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { min: 1, max: 1, allowCancel: false }), selected => {
-                    cards = selected || [];
-                    if (cards.length > 0) {
-                        // Discard selected special energy card
-                        target.moveCardsTo(cards, opponent.discard);
-                    }
-                });
+            const specialEnergy = opponent.active.cards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.SPECIAL);
+            if (specialEnergy.length === 0) {
                 return state;
             }
-            return state;
+            let cards = [];
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { min: 1, max: 1, allowCancel: false }), selected => {
+                cards = selected || [];
+                if (cards.length > 0) {
+                    opponent.active.moveCardsTo(cards, opponent.discard);
+                }
+            });
         }
         return state;
     }
