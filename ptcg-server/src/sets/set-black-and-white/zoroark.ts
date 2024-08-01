@@ -26,7 +26,7 @@ function* useNastyPlot(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { },
+    {},
     { min: 1, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
@@ -54,7 +54,7 @@ function* useFoulPlay(next: Function, store: StoreLike, state: State,
   yield store.prompt(state, new ChooseAttackPrompt(
     player.id,
     GameMessage.CHOOSE_ATTACK_TO_COPY,
-    [ pokemonCard ],
+    [pokemonCard],
     { allowCancel: false }
   ), result => {
     selected = result;
@@ -88,7 +88,6 @@ function* useFoulPlay(next: Function, store: StoreLike, state: State,
   return state;
 }
 
-
 export class Zoroark extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
@@ -103,17 +102,17 @@ export class Zoroark extends PokemonCard {
 
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Nasty Plot',
-    cost: [ CardType.DARK ],
+    cost: [CardType.DARK],
     damage: 0,
     text: 'Search your deck for a card and put it into your hand. ' +
       'Shuffle your deck afterward.'
   }, {
     name: 'Foul Play',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 0,
     text: 'Choose 1 of the Defending Pokemon\'s attacks and use it ' +
       'as this attack.'
@@ -123,7 +122,7 @@ export class Zoroark extends PokemonCard {
 
   public name: string = 'Zoroark';
 
-  public fullName: string = 'Zoroark BW';
+  public fullName: string = 'Zoroark BLW';
 
   public cardImage: string = 'assets/cardback.png';
 

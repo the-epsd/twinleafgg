@@ -1,11 +1,10 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { DndService, DropTarget } from '@ng-dnd/core';
 import { DraggedItem, SortableSpec } from '@ng-dnd/sortable';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { VIRTUAL_SCROLL_STRATEGY } from '@angular/cdk/scrolling';
 import { map } from 'rxjs/operators';
-
 import { AlertService } from '../../shared/alert/alert.service';
 import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
 import { DeckEditPane } from './deck-edit-pane.interface';
@@ -13,7 +12,8 @@ import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-fi
 import { DeckItem, LibraryItem } from '../deck-card/deck-card.interface';
 import { DeckCardType } from '../deck-card/deck-card.component';
 import { DeckEditVirtualScrollStrategy } from './deck-edit-virtual-scroll-strategy';
-import { Card, CardTag, EnergyType, PokemonCard, SuperType } from 'ptcg-server';
+import { Card, CardTag, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType } from 'ptcg-server';
+import html2canvas from 'html2canvas';
 
 const DECK_CARD_ITEM_WIDTH = 148;
 const DECK_CARD_ITEM_HEIGHT = 173;
@@ -267,10 +267,83 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
     this.tempList = this.list = list;
     this.deckItemsChange.next(list);
-    this.tempList.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
+
+    // Sort by supertype
     this.tempList.sort((a, b) => a.card.superType - b.card.superType);
+
+    // Apply evolution sorting with alphabetical sorting within each evolution stage
     this.tempList = this.sortByPokemonEvolution([...this.tempList]);
+    this.tempList.sort((a, b) => {
+      if (a.card.superType === SuperType.POKEMON && b.card.superType === SuperType.POKEMON) {
+        const aStage = (a.card as PokemonCard).stage;
+        const bStage = (b.card as PokemonCard).stage;
+        if (aStage === bStage) {
+          return a.card.fullName.localeCompare(b.card.fullName);
+        }
+      }
+      return 0;
+    });
+
+    // Sort trainers by type and then alphabetically within each type
+    this.tempList.sort((a, b) => {
+      if (a.card.superType === SuperType.TRAINER && b.card.superType === SuperType.TRAINER) {
+        const trainerOrder = [TrainerType.SUPPORTER, TrainerType.ITEM, TrainerType.TOOL, TrainerType.STADIUM];
+        const aTrainer = a.card as TrainerCard;
+        const bTrainer = b.card as TrainerCard;
+        const aIndex = trainerOrder.indexOf(aTrainer.trainerType);
+        const bIndex = trainerOrder.indexOf(bTrainer.trainerType);
+        if (aIndex !== bIndex) {
+          return aIndex - bIndex;
+        }
+        return a.card.fullName.localeCompare(b.card.fullName);
+      }
+      return 0;
+    });
+
   }
+
+  @ViewChild('deckPane') deckPane: ElementRef;
+
+  exportDeckImage() {
+    const element = this.deckPane.nativeElement;
+    const clone = element.cloneNode(true) as HTMLElement;
+    document.body.appendChild(clone);
+
+    clone.style.position = 'absolute';
+    clone.style.left = '-9999px';
+    clone.style.width = '1920px';
+    clone.style.height = '1080px';
+    clone.style.overflow = 'hidden';
+    clone.style.padding = '50px';
+    clone.style.boxSizing = 'border-box';
+    clone.style.flexWrap = 'wrap';
+    clone.style.alignContent = 'flex-start';
+    clone.style.display = 'flex';
+    clone.style.flexDirection = 'column';
+    clone.style.justifyContent = 'center';
+    clone.style.alignItems = 'center';
+    clone.style.backgroundImage = 'url("assets/deck-builder-bg.png")';
+    clone.style.backgroundSize = 'cover';
+    clone.style.backgroundPosition = 'center';
+
+    html2canvas(clone, {
+      width: 1920,
+      height: 1080,
+      scale: 4, // Increased scale for higher resolution
+      allowTaint: true,
+      useCORS: true,
+      scrollX: 0,
+      scrollY: 0
+    }).then(canvas => {
+      document.body.removeChild(clone);
+
+      const link = document.createElement('a');
+      link.download = 'deck_image.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  }
+
 
   public async setCardCount(item: DeckItem) {
     const MAX_CARD_VALUE = 99;
