@@ -1,13 +1,15 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, 
-  StateUtils, GameMessage, ConfirmPrompt } from '../../game';
+import {
+  StoreLike, State, ChooseCardsPrompt,
+  StateUtils, GameMessage, ConfirmPrompt
+} from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 export class LugiaV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
@@ -21,18 +23,18 @@ export class LugiaV extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Read the Wind',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Discard a card from your hand. If you do, draw 3 cards.'
     },
     {
       name: 'Aero Dive',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 130,
       text: 'You may discard a Stadium in play.'
     }
@@ -57,8 +59,8 @@ export class LugiaV extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
-        { },
-        { allowCancel: true, min: 1, max: 1 }
+        {},
+        { allowCancel: false, min: 1, max: 1 }
       ), cards => {
         cards = cards || [];
         if (cards.length === 0) {
@@ -80,7 +82,7 @@ export class LugiaV extends PokemonCard {
           GameMessage.WANT_TO_USE_ABILITY,
         ), wantToUse => {
           if (wantToUse) {
-    
+
             // Discard Stadium
             const cardList = StateUtils.findCardList(state, stadiumCard);
             const player = StateUtils.findOwner(state, cardList);
