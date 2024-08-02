@@ -5,6 +5,7 @@ import { PlayerType, SlotType, CardTarget } from '../actions/play-card-action';
 import { State } from '../state/state';
 import { CardList } from '../state/card-list';
 import { FilterType } from './choose-cards-prompt';
+import { CardType } from '../card/card-types';
 export declare const AttachEnergyPromptType = "Attach energy";
 export interface AttachEnergyOptions {
     allowCancel: boolean;
@@ -15,6 +16,7 @@ export interface AttachEnergyOptions {
     differentTypes: boolean;
     sameTarget: boolean;
     differentTargets: boolean;
+    validCardTypes?: CardType[];
 }
 export declare type AttachEnergyResultType = {
     to: CardTarget;

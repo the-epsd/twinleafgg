@@ -1,4 +1,5 @@
 import { AlolanMuk } from './alolan-muk';
+import { Articuno } from './articuno';
 import { Bronzor } from './bronzor';
 import { Dragonite } from './dragonite';
 import { Hitmonchan } from './hitmonchan';
@@ -23,6 +24,9 @@ export declare class AbsolArt extends Absol {
     cardImage: string;
 }
 export declare class AlolanMukArt extends AlolanMuk {
+    cardImage: string;
+}
+export declare class ArticunoArt extends Articuno {
     cardImage: string;
 }
 export declare class BisharpArt extends Bisharp {

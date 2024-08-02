@@ -4,7 +4,7 @@ import { PlayerType, SlotType } from '../../game/store/actions/play-card-action'
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
@@ -28,6 +28,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   //let playTwoCards = false;
 
   if (benchCount > 0) {
+    
+    try {
+      const supporterEffect = new SupporterEffect(player, effect.trainerCard);
+      store.reduceEffect(state, supporterEffect);
+    } catch {
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      return state;
+    }
+    
   // playTwoCards = true;
 
     return store.prompt(state, new ChoosePokemonPrompt(

@@ -2,7 +2,7 @@ import { PowerType, State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Diancie extends PokemonCard {
+export declare class Articuno extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
@@ -20,9 +20,12 @@ export declare class Diancie extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
+    resistance: {
+        type: CardType;
+        value: number;
+    }[];
     retreat: CardType[];
     set: string;
-    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;

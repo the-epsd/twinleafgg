@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.YveltalArt = exports.ViridianForestArt = exports.TapuKokoPrismStarArt = exports.PokemonCommunicationArt = exports.PidgeottoArt = exports.PersianArt = exports.PawniardArt = exports.MoltresArt = exports.MetalGogglesArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.FerrothornArt = exports.DragoniteArt = exports.BronzorArt = exports.BisharpArt = exports.AlolanMukArt = exports.AbsolArt = void 0;
+exports.ZapdosArt = exports.YveltalArt = exports.ViridianForestArt = exports.TapuKokoPrismStarArt = exports.PokemonCommunicationArt = exports.PidgeottoArt = exports.PersianArt = exports.PawniardArt = exports.MoltresArt = exports.MetalGogglesArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.FerrothornArt = exports.DragoniteArt = exports.BronzorArt = exports.BisharpArt = exports.ArticunoArt = exports.AlolanMukArt = exports.AbsolArt = void 0;
 const alolan_muk_1 = require("./alolan-muk");
+const articuno_1 = require("./articuno");
 const bronzor_1 = require("./bronzor");
 const dragonite_1 = require("./dragonite");
 const hitmonchan_1 = require("./hitmonchan");
@@ -36,6 +37,13 @@ class AlolanMukArt extends alolan_muk_1.AlolanMuk {
     }
 }
 exports.AlolanMukArt = AlolanMukArt;
+class ArticunoArt extends articuno_1.Articuno {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_032_R_EN.png';
+    }
+}
+exports.ArticunoArt = ArticunoArt;
 class BisharpArt extends TEU_105_Bisharp_1.Bisharp {
     constructor() {
         super(...arguments);
