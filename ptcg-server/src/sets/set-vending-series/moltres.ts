@@ -13,9 +13,9 @@ export class Moltres extends PokemonCard {
 
   public hp: number = 80;
 
-  public weakness = [ ];
+  public weakness = [];
 
-  public resistance = [ { type: CardType.FIGHTING, value: -30 } ];
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
   public retreat = [CardType.COLORLESS];
 
@@ -29,13 +29,13 @@ export class Moltres extends PokemonCard {
   ];
 
   public set: string = 'VS2';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '14';
-  
+
   public name: string = 'Moltres';
-  
+
   public fullName: string = 'Moltres VS2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -43,17 +43,14 @@ export class Moltres extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      return store.prompt(state, new CoinFlipPrompt(
-        player.id,
-        GameMessage.COIN_FLIP
-      ), results => {
-        let numFlips = 0;
-        if (results === true) {
+      let numFlips = 0;
+
+      return store.prompt(state, [
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+      ], result => {
+        if (result === true) {
           numFlips++;
-          store.prompt(state, new CoinFlipPrompt(
-            player.id,
-            GameMessage.COIN_FLIP
-          ), results => { });
+          return this.reduceEffect(store, state, effect);
         }
 
         if (numFlips === 0) {
@@ -64,11 +61,11 @@ export class Moltres extends PokemonCard {
           player.id,
           GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
           PlayerType.TOP_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH], 
+          [SlotType.ACTIVE, SlotType.BENCH],
           { min: 1, max: 1, allowCancel: false }
         ), targets => {
           targets.forEach(target => {
-        
+
             return store.prompt(state, new ChooseCardsPrompt(
               player.id,
               GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
@@ -78,11 +75,11 @@ export class Moltres extends PokemonCard {
             ), selected => {
               const cards = selected || [];
               if (cards.length > 0) {
-        
+
                 targets.forEach(target => {
-        
+
                   const discardEnergy = new DiscardCardsEffect(effect, cards);
-                  discardEnergy.target = target;        
+                  discardEnergy.target = target;
                   store.reduceEffect(state, discardEnergy);
                 });
               }

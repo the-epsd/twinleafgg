@@ -14,15 +14,17 @@ class HisuianSamurottV extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.DARK;
         this.hp = 220;
         this.tags = [card_types_1.CardTag.POKEMON_V];
+        this.weakness = [{ type: card_types_1.CardType.GRASS }];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Merciless Blade',
+                name: 'Basket Crash',
                 cost: [card_types_1.CardType.DARK],
                 damage: 0,
                 text: 'Discard up to 2 Pokémon Tools from your opponent\'s Pokémon.'
             },
             {
-                name: 'Merciless Blade',
+                name: 'Shadow Slash',
                 cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK, card_types_1.CardType.DARK],
                 damage: 110,
                 text: 'Discard an Energy from this Pokémon.'

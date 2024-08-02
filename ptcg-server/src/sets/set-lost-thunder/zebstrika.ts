@@ -11,7 +11,7 @@ import { GameMessage } from '../../game/game-message';
 export class Zebstrika extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public cardType: CardType = CardType.LIGHTNING;
-  public hp: number = 90;
+  public hp: number = 110;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS];
   public evolvesFrom: string = 'Blitzle';

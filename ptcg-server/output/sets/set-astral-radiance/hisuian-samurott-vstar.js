@@ -13,6 +13,8 @@ class HisuianSamurottVSTAR extends pokemon_card_1.PokemonCard {
         this.hp = 270;
         this.evolvesFrom = 'Hisuian Samurott V';
         this.tags = [card_types_1.CardTag.POKEMON_VSTAR];
+        this.weakness = [{ type: card_types_1.CardType.GRASS }];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [
             {
                 name: 'Moon Cleave Star',

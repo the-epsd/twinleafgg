@@ -30,8 +30,8 @@ export class HisuianGrowlithe extends PokemonCard {
   public regulationMark: string = 'F';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '70';
-  public name: string = 'HisuianGrowlithe';
-  public fullName: string = 'HisuianGrowlithe ASR';
+  public name: string = 'Hisuian Growlithe';
+  public fullName: string = 'Hisuian Growlithe ASR';
 
   public readonly CLEAR_DEFENSIVE_POSTURE_MARKER = 'CLEAR_WITHDRAW_MARKER';
 

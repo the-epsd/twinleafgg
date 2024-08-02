@@ -16,15 +16,19 @@ export class HisuianSamurottV extends PokemonCard {
 
   public tags = [CardTag.POKEMON_V];
 
+  public weakness = [{ type: CardType.GRASS }];
+
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+
   public attacks = [
     {
-      name: 'Merciless Blade',
+      name: 'Basket Crash',
       cost: [CardType.DARK],
       damage: 0,
       text: 'Discard up to 2 Pokémon Tools from your opponent\'s Pokémon.'
     },
     {
-      name: 'Merciless Blade',
+      name: 'Shadow Slash',
       cost: [CardType.DARK, CardType.DARK, CardType.DARK],
       damage: 110,
       text: 'Discard an Energy from this Pokémon.'

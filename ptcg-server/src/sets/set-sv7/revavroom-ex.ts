@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
@@ -12,7 +12,7 @@ export class Revavroomex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Varoom';
 
@@ -68,16 +68,10 @@ export class Revavroomex extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      this.discardRevavroom == true;
-    }
-
-    if (effect instanceof EndTurnEffect && this.discardRevavroom == true) {
       const player = effect.player;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.moveCardsTo(player.discard.cards, cardList);
-        }
-      });
+      const knockOutEffect = new KnockOutEffect(player, player.active);
+      state = store.reduceEffect(state, knockOutEffect);
+      return state;
     }
 
     if (effect instanceof PutDamageEffect) {

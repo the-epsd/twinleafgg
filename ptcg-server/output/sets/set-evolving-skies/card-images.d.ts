@@ -7,6 +7,9 @@ import { DuraludonVMAX } from './duraludon-vmax';
 import { EspeonV } from './espeon-v';
 import { EspeonVMAX } from './espeon-vmax';
 import { Vigoroth } from './EVS_130_Vigoroth';
+import { Hoppip } from './EVS_2_Hoppip';
+import { Skiploom } from './EVS_3_Skiploom';
+import { Jumpluff } from './EVS_4_Jumpluff';
 import { GalarianZapdos } from './EVS_82_Galarian_Zapdos';
 import { Flaaffy } from './flaaffy';
 import { Flapple } from './flapple';
@@ -86,6 +89,12 @@ export declare class GyaradosVArt extends GyaradosV {
 export declare class GyaradosVMAXArt extends GyaradosVMAX {
     cardImage: string;
 }
+export declare class HoppipArt extends Hoppip {
+    cardImage: string;
+}
+export declare class JumpluffArt extends Jumpluff {
+    cardImage: string;
+}
 export declare class LeafeonVArt extends LeafeonV {
     cardImage: string;
 }
@@ -114,6 +123,9 @@ export declare class RegielekiArt extends Regieleki {
     cardImage: string;
 }
 export declare class RescueCarrierArt extends RescueCarrier {
+    cardImage: string;
+}
+export declare class SkiploomArt extends Skiploom {
     cardImage: string;
 }
 export declare class StormyMountainsArt extends StormyMountains {

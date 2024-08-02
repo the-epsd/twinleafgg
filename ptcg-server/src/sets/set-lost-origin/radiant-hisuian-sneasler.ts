@@ -4,7 +4,7 @@ import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game'
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
+import { BeginTurnEffect, BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 
 export class RadiantHisuianSneasler extends PokemonCard {
 
@@ -45,6 +45,8 @@ export class RadiantHisuianSneasler extends PokemonCard {
 
   public fullName: string = 'Radiant Hisuian Sneasler LOR';
 
+  private POISON_MODIFIER_MARKER = 'POISON_MODIFIER_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof BetweenTurnsEffect) {
@@ -63,12 +65,29 @@ export class RadiantHisuianSneasler extends PokemonCard {
             return state;
           }
 
+          if (this.marker.hasMarker(this.POISON_MODIFIER_MARKER)) {
+            return state;
+          }
+
           const opponent = StateUtils.getOpponent(state, player);
           if (opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
-            opponent.active.poisonDamage = 30;
+            opponent.active.poisonDamage += 20;
+            this.marker.addMarker(this.POISON_MODIFIER_MARKER, this);
           }
         }
       });
+    }
+
+    if (effect instanceof BeginTurnEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          this.marker.removeMarker(this.POISON_MODIFIER_MARKER, this);
+        }
+      });
+
+      opponent.active.poisonDamage -= 20;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

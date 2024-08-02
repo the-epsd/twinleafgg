@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StarmieArt = exports.PoliwhirlArt = exports.PokedexArt = exports.ElectabuzzArt = exports.DevolutionSprayArt = void 0;
+exports.DarknessEnergyArt = exports.StarmieArt = exports.PoliwhirlArt = exports.PokedexArt = exports.ElectabuzzArt = exports.DevolutionSprayArt = void 0;
+const darkness_energy_1 = require("../set-diamond-and-pearl/darkness-energy");
 const devolution_spray_1 = require("./devolution-spray");
 const electabuzz_1 = require("./electabuzz");
 const EVO_24_Poliwhirl_1 = require("./EVO_24_Poliwhirl");
@@ -41,3 +42,14 @@ class StarmieArt extends starmie_1.Starmie {
     }
 }
 exports.StarmieArt = StarmieArt;
+//Energy
+class DarknessEnergyArt extends darkness_energy_1.DarknessEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVO/EVO_097_R_EN.png';
+        this.set = 'EVO';
+        this.setNumber = '097';
+        this.fullName = 'Darkness Energy EVO';
+    }
+}
+exports.DarknessEnergyArt = DarknessEnergyArt;

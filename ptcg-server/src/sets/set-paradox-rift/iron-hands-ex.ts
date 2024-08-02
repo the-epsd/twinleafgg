@@ -41,7 +41,7 @@ export class IronHandsex extends PokemonCard {
   public set: string = 'PAR';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '70';
 
   public name: string = 'Iron Hands ex';
