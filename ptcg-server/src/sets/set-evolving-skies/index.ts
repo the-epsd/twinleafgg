@@ -21,6 +21,7 @@ export const setEvolvingSkies: Card[] = [
   new GalarianZapdosArt(),
   new GyaradosVArt(),
   new GyaradosVMAXArt(),
+  // new HoppipArt(),
   new JumpluffArt(),
   new LeafeonVArt(),
   new LeafeonVMAXArt(),

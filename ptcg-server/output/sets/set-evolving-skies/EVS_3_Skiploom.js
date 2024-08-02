@@ -9,7 +9,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Skiploom extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Hoppip';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 60;
@@ -55,13 +55,21 @@ class Skiploom extends pokemon_card_1.PokemonCard {
             return store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
                 if (wantToUse) {
                     let cards = [];
-                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_1, evolvesFrom: 'Skiploom' }, { min: 1, max: 1, allowCancel: true }), selected => {
+                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_2, evolvesFrom: 'Skiploom' }, { min: 1, max: 1, allowCancel: true }), selected => {
                         cards = selected || [];
                         if (cards.length > 0) {
-                            // Evolve Pokemon
-                            player.deck.moveCardsTo(cards, player.active);
-                            player.active.clearEffects();
-                            player.active.pokemonPlayedTurn = state.turn;
+                            if (effect.target.cards === player.active.cards) {
+                                // Evolve Pokemon
+                                player.deck.moveCardsTo(cards, player.active);
+                                player.active.clearEffects();
+                                player.active.pokemonPlayedTurn = state.turn;
+                            }
+                            else {
+                                const benchIndex = player.bench.indexOf(effect.target);
+                                player.deck.moveCardsTo(cards, player.bench[benchIndex]);
+                                player.bench[benchIndex].clearEffects();
+                                player.bench[benchIndex].pokemonPlayedTurn = state.turn;
+                            }
                         }
                         return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                             player.deck.applyOrder(order);

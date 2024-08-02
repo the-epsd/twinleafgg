@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, ConfirmPrompt, GameMessage, PowerType, ShuffleDeckPrompt, State, StoreLike } from '../../game';
+import { Card, ChooseCardsPrompt, ConfirmPrompt, GameMessage, PokemonCardList, PowerType, ShuffleDeckPrompt, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Skiploom extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Hoppip';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 60;
@@ -54,7 +54,6 @@ export class Skiploom extends PokemonCard {
       if (player.deck.cards.length === 0) {
         return state;
       }
-
       return store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_USE_ABILITY,
@@ -66,15 +65,24 @@ export class Skiploom extends PokemonCard {
             player.id,
             GameMessage.CHOOSE_CARD_TO_EVOLVE,
             player.deck,
-            { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Skiploom' },
+            { superType: SuperType.POKEMON, stage: Stage.STAGE_2, evolvesFrom: 'Skiploom' },
             { min: 1, max: 1, allowCancel: true }
           ), selected => {
             cards = selected || [];
             if (cards.length > 0) {
-              // Evolve Pokemon
-              player.deck.moveCardsTo(cards, player.active);
-              player.active.clearEffects();
-              player.active.pokemonPlayedTurn = state.turn;
+              if (effect.target.cards === player.active.cards) {
+                // Evolve Pokemon
+                player.deck.moveCardsTo(cards, player.active);
+                player.active.clearEffects();
+                player.active.pokemonPlayedTurn = state.turn;
+              } else {
+                const benchIndex = player.bench.indexOf(effect.target as PokemonCardList);
+                player.deck.moveCardsTo(cards, player.bench[benchIndex]);
+                player.bench[benchIndex].clearEffects();
+                player.bench[benchIndex].pokemonPlayedTurn = state.turn;
+              }
+
+
             }
 
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

@@ -20,6 +20,7 @@ exports.setEvolvingSkies = [
     new card_images_1.GalarianZapdosArt(),
     new card_images_1.GyaradosVArt(),
     new card_images_1.GyaradosVMAXArt(),
+    // new HoppipArt(),
     new card_images_1.JumpluffArt(),
     new card_images_1.LeafeonVArt(),
     new card_images_1.LeafeonVMAXArt(),
