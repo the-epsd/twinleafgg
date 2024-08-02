@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.VigorothArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SylveonVMAXArt = exports.SylveonVArt = exports.SwitchingCupsArt = exports.SwabluArt = exports.SuicuneVArt = exports.StormyMountainsArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVMAXArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianZapdosArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FullFaceGuardArt = exports.FlappleArt = exports.FlaaffyArt = exports.EspeonVMAXArt = exports.EspeonVArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DrampaArt = exports.DragoniteVArt = exports.CrystalCaveArt = exports.CopycatArt = void 0;
+exports.ZoruaArt = exports.ZoroarkArt = exports.ZinniasResolveArt = exports.WishiwashiArt = exports.VigorothArt = exports.UmbreonVMAXArt = exports.UmbreonVArt = exports.TropiusArt = exports.SylveonVMAXArt = exports.SylveonVArt = exports.SwitchingCupsArt = exports.SwabluArt = exports.SuicuneVArt = exports.StormyMountainsArt = exports.SkiploomArt = exports.RescueCarrierArt = exports.RegielekiArt = exports.RegidragoArt = exports.RayquazaVMAXArt = exports.RayquazaVArt = exports.RaihanArt = exports.PumpkabooArt = exports.MareepArt = exports.LeafeonVMAXArt = exports.LeafeonVArt = exports.JumpluffArt = exports.GyaradosVMAXArt = exports.GyaradosVArt = exports.GalarianZapdosArt = exports.GalarianMoltresArt = exports.GalarianArticunoArt = exports.FullFaceGuardArt = exports.FlappleArt = exports.FlaaffyArt = exports.EspeonVMAXArt = exports.EspeonVArt = exports.DuraludonVMAXArt = exports.DuraludonVArt = exports.DrampaArt = exports.DragoniteVArt = exports.CrystalCaveArt = exports.CopycatArt = void 0;
 const copycat_1 = require("./copycat");
 const crystal_cave_1 = require("./crystal-cave");
 const dragonite_v_1 = require("./dragonite-v");
@@ -10,6 +10,8 @@ const duraludon_vmax_1 = require("./duraludon-vmax");
 const espeon_v_1 = require("./espeon-v");
 const espeon_vmax_1 = require("./espeon-vmax");
 const EVS_130_Vigoroth_1 = require("./EVS_130_Vigoroth");
+const EVS_3_Skiploom_1 = require("./EVS_3_Skiploom");
+const EVS_4_Jumpluff_1 = require("./EVS_4_Jumpluff");
 const EVS_82_Galarian_Zapdos_1 = require("./EVS_82_Galarian_Zapdos");
 const flaaffy_1 = require("./flaaffy");
 const flapple_1 = require("./flapple");
@@ -153,6 +155,13 @@ class GyaradosVMAXArt extends gyarados_vmax_1.GyaradosVMAX {
     }
 }
 exports.GyaradosVMAXArt = GyaradosVMAXArt;
+class JumpluffArt extends EVS_4_Jumpluff_1.Jumpluff {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_004_R_EN_LG.png';
+    }
+}
+exports.JumpluffArt = JumpluffArt;
 class LeafeonVArt extends leafeon_v_1.LeafeonV {
     constructor() {
         super(...arguments);
@@ -223,6 +232,13 @@ class RescueCarrierArt extends rescue_carrier_1.RescueCarrier {
     }
 }
 exports.RescueCarrierArt = RescueCarrierArt;
+class SkiploomArt extends EVS_3_Skiploom_1.Skiploom {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_003_R_EN_LG.png';
+    }
+}
+exports.SkiploomArt = SkiploomArt;
 class StormyMountainsArt extends stormy_mountains_1.StormyMountains {
     constructor() {
         super(...arguments);
