@@ -6,7 +6,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class SerperiorVSTAR extends PokemonCard {
 
-  public stage: Stage = Stage.VSTAR;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Serperior V';
 
@@ -56,7 +56,7 @@ export class SerperiorVSTAR extends PokemonCard {
 
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergyEffect);
-                
+
       let energyCount = 0;
       checkProvidedEnergyEffect.energyMap.forEach(em => {
         energyCount = em.card.superType;
@@ -94,11 +94,11 @@ export class SerperiorVSTAR extends PokemonCard {
       });
 
       return store.prompt(state, new MoveEnergyPrompt(
-        player.id, 
+        player.id,
         GameMessage.MOVE_ENERGY_CARDS,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE], // Only allow moving to active
-        { superType: SuperType.ENERGY }, 
+        { superType: SuperType.ENERGY },
         { allowCancel: true, blockedMap }
       ), transfers => {
 
@@ -107,14 +107,13 @@ export class SerperiorVSTAR extends PokemonCard {
         }
 
         for (const transfer of transfers) {
-  
-          // Can only move energy to the active Pokemon
-          const target = player.active;  
-          const source = StateUtils.getTarget(state, player, transfer.from);
 
+          // Can only move energy to the active Pokemon
+          const source = StateUtils.getTarget(state, player, transfer.from);
+          const target = StateUtils.getTarget(state, player, transfer.to);
           source.moveCardTo(transfer.card, target);
         }
-                      
+
         return state;
       });
     }
