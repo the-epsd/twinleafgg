@@ -115,6 +115,7 @@ function handleSpecialConditions(store: StoreLike, state: State, effect: Between
     switch (sp) {
       case SpecialCondition.POISONED:
         player.active.damage += effect.poisonDamage;
+
         break;
       case SpecialCondition.BURNED:
         if (effect.burnFlipResult === true) {

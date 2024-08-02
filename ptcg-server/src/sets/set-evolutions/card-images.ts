@@ -1,3 +1,4 @@
+import { DarknessEnergy } from '../set-diamond-and-pearl/darkness-energy';
 import { DevolutionSpray } from './devolution-spray';
 import { Electabuzz } from './electabuzz';
 import { Poliwhirl } from './EVO_24_Poliwhirl';
@@ -22,4 +23,13 @@ export class PoliwhirlArt extends Poliwhirl {
 
 export class StarmieArt extends Starmie {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVO/EVO_031_R_EN_LG.png';
+}
+
+//Energy
+
+export class DarknessEnergyArt extends DarknessEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVO/EVO_097_R_EN.png';
+  public set = 'EVO';
+  public setNumber = '097';
+  public fullName = 'Darkness Energy EVO';
 }

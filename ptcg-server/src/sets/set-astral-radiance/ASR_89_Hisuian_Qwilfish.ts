@@ -32,36 +32,15 @@ export class HisuianQwilfish extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      return store.prompt(state, new CoinFlipPrompt(
-        player.id,
-        GameMessage.COIN_FLIP
-      ), results => {
-        let numFlips = 0;
-        if (results === true) {
-          numFlips++;
-          while (!this.COIN_FLIP_TAILS) {
-            store.prompt(state, [
-              new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-            ], result => {
-              if (result === true) {
-                numFlips++;
-              }
-              else {
-                this.COIN_FLIP_TAILS = true;
-              }
-            });
-
-            if (this.COIN_FLIP_TAILS) {
-              break;
-            }
-          }
+      return store.prompt(state, [
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+      ], result => {
+        if (result === true) {
+          effect.damage += 10;
+          return this.reduceEffect(store, state, effect);
         }
-
-        effect.damage = 10 * numFlips;
       });
-
     }
-
     return state;
   }
 }

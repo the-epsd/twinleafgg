@@ -32,6 +32,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   @Input() toolbarFilter: DeckEditToolbarFilter;
   @Output() deckItemsChange = new EventEmitter<DeckItem[]>();
 
+
   @Input() set deckItems(value: DeckItem[]) {
     this.list = value;
     this.tempList = this.sortByPokemonEvolution([...value]);
@@ -268,43 +269,42 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     this.tempList = this.list = list;
     this.deckItemsChange.next(list);
 
-    // Sort by supertype
-    this.tempList.sort((a, b) => a.card.superType - b.card.superType);
-
-    // Apply evolution sorting with alphabetical sorting within each evolution stage
-    this.tempList = this.sortByPokemonEvolution([...this.tempList]);
+    // Sort by supertype first
     this.tempList.sort((a, b) => {
-      if (a.card.superType === SuperType.POKEMON && b.card.superType === SuperType.POKEMON) {
-        const aStage = (a.card as PokemonCard).stage;
-        const bStage = (b.card as PokemonCard).stage;
-        if (aStage === bStage) {
-          return a.card.fullName.localeCompare(b.card.fullName);
-        }
+      if (a.card.superType !== b.card.superType) {
+        return a.card.superType - b.card.superType;
       }
-      return 0;
+      // If supertypes are the same, sort alphabetically
+      return a.card.fullName.localeCompare(b.card.fullName);
     });
 
-    // Sort trainers by type and then alphabetically within each type
-    this.tempList.sort((a, b) => {
-      if (a.card.superType === SuperType.TRAINER && b.card.superType === SuperType.TRAINER) {
-        const trainerOrder = [TrainerType.SUPPORTER, TrainerType.ITEM, TrainerType.TOOL, TrainerType.STADIUM];
-        const aTrainer = a.card as TrainerCard;
-        const bTrainer = b.card as TrainerCard;
-        const aIndex = trainerOrder.indexOf(aTrainer.trainerType);
-        const bIndex = trainerOrder.indexOf(bTrainer.trainerType);
-        if (aIndex !== bIndex) {
-          return aIndex - bIndex;
-        }
-        return a.card.fullName.localeCompare(b.card.fullName);
-      }
-      return 0;
-    });
-
+    // Then apply specific sorting for Pokémon and Trainers
+    this.sortPokemonCards();
+    this.sortTrainerCards();
   }
+
+  private sortPokemonCards() {
+    const pokemonCards = this.tempList.filter(item => item.card.superType === SuperType.POKEMON);
+    pokemonCards.sort((a, b) => {
+      const aStage = (a.card as PokemonCard).stage || 0;
+      const bStage = (b.card as PokemonCard).stage || 0;
+      return aStage - bStage || a.card.fullName.localeCompare(b.card.fullName);
+    });
+  }
+
+  private sortTrainerCards() {
+    const trainerCards = this.tempList.filter(item => item.card.superType === SuperType.TRAINER);
+    trainerCards.sort((a, b) => {
+      const aType = (a.card as TrainerCard).trainerType;
+      const bType = (b.card as TrainerCard).trainerType;
+      return aType - bType || a.card.fullName.localeCompare(b.card.fullName);
+    });
+  }
+
 
   @ViewChild('deckPane') deckPane: ElementRef;
 
-  exportDeckImage() {
+  public exportDeckImage() {
     const element = this.deckPane.nativeElement;
     const clone = element.cloneNode(true) as HTMLElement;
     document.body.appendChild(clone);
@@ -314,7 +314,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     clone.style.width = '1920px';
     clone.style.height = '1080px';
     clone.style.overflow = 'hidden';
-    clone.style.padding = '50px';
+    clone.style.padding = '100px';
     clone.style.boxSizing = 'border-box';
     clone.style.flexWrap = 'wrap';
     clone.style.alignContent = 'flex-start';
@@ -326,10 +326,21 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     clone.style.backgroundSize = 'cover';
     clone.style.backgroundPosition = 'center';
 
+    // const cardElements = clone.querySelectorAll('.card-element');
+    // cardElements.forEach((card: HTMLElement) => {
+    //   card.style.transform = 'scale(3)';
+    //   card.style.margin = '10px';
+    // });
+
+    // const cardTextElements = clone.querySelectorAll('.card-text');
+    // cardTextElements.forEach((text: HTMLElement) => {
+    //   text.style.display = 'none';
+    // });
+
     html2canvas(clone, {
       width: 1920,
       height: 1080,
-      scale: 4, // Increased scale for higher resolution
+      // scale: 4,
       allowTaint: true,
       useCORS: true,
       scrollX: 0,
@@ -343,6 +354,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
       link.click();
     });
   }
+
 
 
   public async setCardCount(item: DeckItem) {

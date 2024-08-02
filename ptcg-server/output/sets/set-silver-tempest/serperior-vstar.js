@@ -7,7 +7,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class SerperiorVSTAR extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.VSTAR;
+        this.stage = game_1.Stage.BASIC;
         this.evolvesFrom = 'Serperior V';
         this.cardType = game_1.CardType.GRASS;
         this.hp = 280;
@@ -76,8 +76,8 @@ class SerperiorVSTAR extends game_1.PokemonCard {
                 }
                 for (const transfer of transfers) {
                     // Can only move energy to the active Pokemon
-                    const target = player.active;
                     const source = game_1.StateUtils.getTarget(state, player, transfer.from);
+                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     source.moveCardTo(transfer.card, target);
                 }
                 return state;

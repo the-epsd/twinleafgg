@@ -16,6 +16,10 @@ export class HisuianSamurottVSTAR extends PokemonCard {
 
   public tags = [CardTag.POKEMON_VSTAR];
 
+  public weakness = [{ type: CardType.GRASS }];
+
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+
   public powers = [
     {
       name: 'Moon Cleave Star',

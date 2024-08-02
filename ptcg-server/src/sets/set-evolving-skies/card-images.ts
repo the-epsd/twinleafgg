@@ -7,6 +7,9 @@ import { DuraludonVMAX } from './duraludon-vmax';
 import { EspeonV } from './espeon-v';
 import { EspeonVMAX } from './espeon-vmax';
 import { Vigoroth } from './EVS_130_Vigoroth';
+import { Hoppip } from './EVS_2_Hoppip';
+import { Skiploom } from './EVS_3_Skiploom';
+import { Jumpluff } from './EVS_4_Jumpluff';
 import { GalarianZapdos } from './EVS_82_Galarian_Zapdos';
 import { Flaaffy } from './flaaffy';
 import { Flapple } from './flapple';
@@ -103,6 +106,14 @@ export class GyaradosVMAXArt extends GyaradosVMAX {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_029_R_EN.png';
 }
 
+export class HoppipArt extends Hoppip {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_002_R_EN_LG.png';
+}
+
+export class JumpluffArt extends Jumpluff {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_004_R_EN_LG.png';
+}
+
 export class LeafeonVArt extends LeafeonV {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_007_R_EN_LG.png';
 }
@@ -141,6 +152,10 @@ export class RegielekiArt extends Regieleki {
 
 export class RescueCarrierArt extends RescueCarrier {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_154_R_EN_LG.png';
+}
+
+export class SkiploomArt extends Skiploom {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_003_R_EN_LG.png';
 }
 
 export class StormyMountainsArt extends StormyMountains {

@@ -1,7 +1,7 @@
-import {CardType} from './card-types';
-import {StoreLike} from '../store-like';
-import {State} from '../state/state';
-import {AttackEffect, PowerEffect} from '../effects/game-effects';
+import { CardType } from './card-types';
+import { StoreLike } from '../store-like';
+import { State } from '../state/state';
+import { AttackEffect, PowerEffect } from '../effects/game-effects';
 
 export interface Weakness {
   type: CardType;

@@ -33,6 +33,7 @@ class RadiantHisuianSneasler extends pokemon_card_1.PokemonCard {
         this.setNumber = '123';
         this.name = 'Radiant Hisuian Sneasler';
         this.fullName = 'Radiant Hisuian Sneasler LOR';
+        this.POISON_MODIFIER_MARKER = 'POISON_MODIFIER_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_phase_effects_1.BetweenTurnsEffect) {
@@ -50,12 +51,26 @@ class RadiantHisuianSneasler extends pokemon_card_1.PokemonCard {
                     catch (_a) {
                         return state;
                     }
+                    if (this.marker.hasMarker(this.POISON_MODIFIER_MARKER)) {
+                        return state;
+                    }
                     const opponent = game_1.StateUtils.getOpponent(state, player);
                     if (opponent.active.specialConditions.includes(card_types_1.SpecialCondition.POISONED)) {
-                        opponent.active.poisonDamage = 30;
+                        opponent.active.poisonDamage += 20;
+                        this.marker.addMarker(this.POISON_MODIFIER_MARKER, this);
                     }
                 }
             });
+        }
+        if (effect instanceof game_phase_effects_1.BeginTurnEffect) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card === this) {
+                    this.marker.removeMarker(this.POISON_MODIFIER_MARKER, this);
+                }
+            });
+            opponent.active.poisonDamage -= 20;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const specialCondition = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.POISONED]);
