@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, PlayerType, Card, CardTarget, GameMessage, MoveEnergyPrompt, SlotType, StateUtils, SuperType } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, PlayerType, GameMessage, MoveEnergyPrompt, SlotType, StateUtils, SuperType } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -6,7 +6,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class SerperiorVSTAR extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VSTAR;
 
   public evolvesFrom = 'Serperior V';
 
@@ -68,30 +68,30 @@ export class SerperiorVSTAR extends PokemonCard {
 
       const player = effect.player;
 
-      const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
-        store.reduceEffect(state, checkProvidedEnergy);
-        const blockedCards: Card[] = [];
+      // const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+      // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+      //   const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
+      //   store.reduceEffect(state, checkProvidedEnergy);
+      //   const blockedCards: Card[] = [];
 
-        checkProvidedEnergy.energyMap.forEach(em => {
-          if (em.provides.includes(CardType.ANY)) {
-            blockedCards.push(em.card);
-          }
-        });
+      //   checkProvidedEnergy.energyMap.forEach(em => {
+      //     if (em.provides.includes(CardType.ANY)) {
+      //       blockedCards.push(em.card);
+      //     }
+      //   });
 
-        const blocked: number[] = [];
-        blockedCards.forEach(bc => {
-          const index = cardList.cards.indexOf(bc);
-          if (index !== -1 && !blocked.includes(index)) {
-            blocked.push(index);
-          }
-        });
+      //   const blocked: number[] = [];
+      //   blockedCards.forEach(bc => {
+      //     const index = cardList.cards.indexOf(bc);
+      //     if (index !== -1 && !blocked.includes(index)) {
+      //       blocked.push(index);
+      //     }
+      //   });
 
-        if (blocked.length !== 0) {
-          blockedMap.push({ source: target, blocked });
-        }
-      });
+      //   if (blocked.length !== 0) {
+      //     blockedMap.push({ source: target, blocked });
+      //   }
+      // });
 
       return store.prompt(state, new MoveEnergyPrompt(
         player.id,
@@ -99,7 +99,7 @@ export class SerperiorVSTAR extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE], // Only allow moving to active
         { superType: SuperType.ENERGY },
-        { allowCancel: true, blockedMap }
+        { min: 0, allowCancel: false }
       ), transfers => {
 
         if (!transfers) {

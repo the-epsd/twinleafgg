@@ -1,7 +1,6 @@
 import { Card, ChooseCardsPrompt, GameError, GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -51,25 +50,41 @@ export class HisuianZoroark extends PokemonCard {
 
   public readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
   public readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
+  public readonly CLEAR_KNOCKOUT_MARKER_2 = 'CLEAR_KNOCKOUT_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AbstractAttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.active.attackMarker.addMarker(this.KNOCKOUT_MARKER, this);
+      effect.player.marker.addMarker(this.KNOCKOUT_MARKER, this);
+      opponent.active.marker.addMarker(this.CLEAR_KNOCKOUT_MARKER, this);
+      console.log('first marker added');
+    }
 
-      if (effect instanceof EndTurnEffect
-        && opponent.active.attackMarker.hasMarker(this.KNOCKOUT_MARKER, this)) {
-        opponent.active.attackMarker.addMarker(this.CLEAR_KNOCKOUT_MARKER, this);
-      }
+    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      opponent.marker.addMarker(this.CLEAR_KNOCKOUT_MARKER_2, this);
+      console.log('clear marker added');
+    }
 
-      if (effect instanceof EndTurnEffect
-        && opponent.active.attackMarker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
-        opponent.active.hp = 0;
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.KNOCKOUT_MARKER) && effect.player.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER_2)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      if (opponent.active.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
+        console.log('knockout');
+        effect.player.marker.removeMarker(this.KNOCKOUT_MARKER, this);
+        effect.player.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER_2, this);
+        opponent.active.marker.removeMarker(this.KNOCKOUT_MARKER, this);
+        opponent.active.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER, this);
+        opponent.active.damage = 999;
+        return state;
       }
     }
+
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
@@ -93,8 +108,6 @@ export class HisuianZoroark extends PokemonCard {
           player.discard.moveCardsTo(cards, player.hand);
         });
     }
-
     return state;
   }
-
 }

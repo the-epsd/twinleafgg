@@ -1,9 +1,9 @@
+import { PowerType, State, StateUtils, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { SupporterEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { SupporterEffect } from '../../game/store/effects/play-card-effects';
 
 export class Diancie extends PokemonCard {
 
@@ -25,6 +25,10 @@ export class Diancie extends PokemonCard {
     damage: 20,
     text: 'Draw 2 cards.'
   }];
+  
+  public weakness = [{ type: CardType.METAL }];
+  
+  public retreat = [CardType.COLORLESS];
 
   public set: string = 'ASR';
 
@@ -46,11 +50,7 @@ export class Diancie extends PokemonCard {
 
       let isDiancieInPlay = false;
 
-      if (player.active.cards[0] == this) {
-        isDiancieInPlay = true;
-      }
-
-      if (opponent.active.cards[0] == this) {
+      if (opponent.active.cards.includes(this)) {
         isDiancieInPlay = true;
       }
 
@@ -60,7 +60,7 @@ export class Diancie extends PokemonCard {
 
       // Try reducing ability for opponent
       try {
-        const stub = new PowerEffect(player, {
+        const stub = new PowerEffect(opponent, {
           name: 'test',
           powerType: PowerType.ABILITY,
           text: ''
@@ -69,9 +69,10 @@ export class Diancie extends PokemonCard {
       } catch {
         return state;
       }
+      
       effect.preventDefault = true;
-      throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    
     return state;
   }
 }

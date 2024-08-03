@@ -38,7 +38,6 @@ export class Toedscool extends PokemonCard {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       store.reduceEffect(state, specialConditionEffect);
     }
-
     return state;
   }
 }

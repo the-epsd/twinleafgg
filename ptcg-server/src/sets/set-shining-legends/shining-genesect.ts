@@ -1,10 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
 import {
   StoreLike, State, StateUtils, PlayerType, SlotType,
   MoveEnergyPrompt, CardTarget,
   PowerType,
-  GameError
+  Card,
+  GameError,
+  EnergyCard
 } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -62,43 +64,88 @@ export class ShiningGenesect extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      const blockedFrom: CardTarget[] = [];
-      const blockedTo: CardTarget[] = [];
 
       if (player.marker.hasMarker(this.ENERGY_RELOAD_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList === player.active) {
-          blockedFrom.push(target);
-          return;
+
+      let pokemonCount = 0;
+      let otherPokemonWithEnergy = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card !== this) {
+          pokemonCount += 1;
+          const hasAttachedEnergy = cardList.cards.some(c => c instanceof EnergyCard && c.provides.includes(CardType.GRASS || c instanceof EnergyCard && c.provides.includes(CardType.ANY)));
+          otherPokemonWithEnergy = otherPokemonWithEnergy || hasAttachedEnergy;
         }
-        blockedTo.push(target);
+      });
+
+      if (pokemonCount <= 1 && !otherPokemonWithEnergy) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
+        store.reduceEffect(state, checkProvidedEnergy);
+        const blockedCards: Card[] = [];
+
+        checkProvidedEnergy.energyMap.forEach(em => {
+          if (!em.provides.includes(CardType.GRASS) && !em.provides.includes(CardType.ANY)) {
+            blockedCards.push(em.card);
+          }
+        });
+
+        const blocked: number[] = [];
+        blockedCards.forEach(bc => {
+          const index = cardList.cards.indexOf(bc);
+          if (index !== -1 && !blocked.includes(index)) {
+            blocked.push(index);
+          }
+        });
+
+        if (blocked.length !== 0) {
+          blockedMap.push({ source: target, blocked });
+        }
+      });
+
+      const blockedFrom: CardTarget[] = [];
+      const blockedTo: CardTarget[] = [];
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (cardList.getPokemonCard() !== this) {
+          blockedTo.push(target);
+        } else {
+          blockedFrom.push(target);
+        }
       });
 
       return store.prompt(state, new MoveEnergyPrompt(
         effect.player.id,
-        GameMessage.MOVE_ENERGY_TO_ACTIVE,
+        GameMessage.MOVE_ENERGY_CARDS,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
-        { min: 1, max: 1, allowCancel: false, blockedFrom, blockedTo }
-      ), result => {
-        const transfers = result || [];
-
+        { superType: SuperType.ENERGY },
+        { min: 1, max: 1, allowCancel: false, blockedMap, blockedFrom, blockedTo }
+      ), transfers => {
+        if (transfers === null) {
+          return;
+        }
         player.marker.addMarker(this.ENERGY_RELOAD_MARKER, this);
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
-          }
-        });
+        for (const transfer of transfers) {
 
-        transfers.forEach(transfer => {
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            }
+          });
+
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
           source.moveCardTo(transfer.card, target);
-        });
+        }
+
+        return state;
       });
     }
 

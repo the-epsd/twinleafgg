@@ -10,6 +10,7 @@ const game_message_1 = require("../../game/game-message");
 const show_cards_prompt_1 = require("../../game/store/prompts/show-cards-prompt");
 const state_utils_1 = require("../../game/store/state-utils");
 const game_1 = require("../../game");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Dragonite extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -37,17 +38,31 @@ class Dragonite extends pokemon_card_1.PokemonCard {
         this.fullName = 'Dragonite TEU';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '119';
+        this.FAST_CALL_MARKER = 'FAST_CALL_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.marker.removeMarker(this.FAST_CALL_MARKER, this);
+        }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
+            if (player.marker.hasMarker(this.FAST_CALL_MARKER, this)) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
+            }
             state = store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 0, max: 1, allowCancel: false }), selected => {
                 const cards = selected || [];
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
                 store.prompt(state, [new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {
+                    player.marker.addMarker(this.FAST_CALL_MARKER, this);
                     player.deck.moveCardsTo(cards, player.hand);
                 });
             });

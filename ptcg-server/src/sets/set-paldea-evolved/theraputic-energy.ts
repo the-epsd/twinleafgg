@@ -1,9 +1,9 @@
-import { StoreLike, State } from '../../game';
+import { State, StoreLike } from '../../game';
 import { CardType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { CheckTableStateEffect, CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class TherapeuticEnergy extends EnergyCard {
 
@@ -25,6 +25,13 @@ export class TherapeuticEnergy extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof AttachEnergyEffect && effect.target.cards.includes(this)) {
+      const pokemon = effect.target;
+      pokemon.removeSpecialCondition(SpecialCondition.ASLEEP);
+      pokemon.removeSpecialCondition(SpecialCondition.PARALYZED);
+      pokemon.removeSpecialCondition(SpecialCondition.CONFUSED);
+    }
+    
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const pokemon = effect.source;
       if (effect instanceof CheckTableStateEffect) {

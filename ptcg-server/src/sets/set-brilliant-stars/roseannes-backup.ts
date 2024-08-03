@@ -2,7 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardType, TrainerType } from '../../game/store/card/card-types';
+import { EnergyType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
@@ -33,17 +33,20 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let pokemon = 0;
   let tools = 0;
   let stadiums = 0;
-  let energies = 0;
+  let basicEnergies = 0;
+  let specialEnergies = 0;
   const blocked: number[] = [];
-  player.deck.cards.forEach((c, index) => {
-    if (c instanceof PokemonCard && c.cardType === CardType.ANY) {
+  player.discard.cards.forEach((c, index) => {
+    if (c instanceof PokemonCard) {
       pokemon += 1;
     } else if (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL) {
       tools += 1;
     } else if (c instanceof TrainerCard && c.trainerType === TrainerType.STADIUM) {
       stadiums += 1;
-    } else if (c instanceof EnergyCard && c.provides.includes(CardType.ANY)) {
-      energies += 1;
+    } else if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
+      basicEnergies += 1;
+    } else if (c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL) {
+      specialEnergies += 1;
     } else {
       blocked.push(index);
     }
@@ -53,7 +56,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const maxPokemons = Math.min(pokemon, 1);
   const maxTools = Math.min(tools, 1);
   const maxStadiums = Math.min(stadiums, 1);
-  const maxEnergies = Math.min(energies, 1);
+  const maxEnergies = Math.min(basicEnergies + specialEnergies, 1);
+  const maxBasicEnergies = Math.min(basicEnergies, 1);
+  const maxSpecialEnergies = Math.min(specialEnergies, 1);
 
   // Total max is sum of max for each 
   const count = maxPokemons + maxTools + maxStadiums + maxEnergies;
@@ -64,7 +69,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_ONE_ITEM_AND_ONE_TOOL_TO_HAND,
     player.discard,
     {},
-    { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTools, maxStadiums, maxEnergies }
+    { min: 1, max: count, allowCancel: false, blocked, maxPokemons, maxTools, maxStadiums, maxEnergies, maxBasicEnergies, maxSpecialEnergies }
   ), selected => {
     cards = selected || [];
     next();
@@ -72,7 +77,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   player.discard.moveCardsTo(cards, player.deck);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });

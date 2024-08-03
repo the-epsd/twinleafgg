@@ -4,7 +4,6 @@ exports.HisuianZoroark = void 0;
 const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class HisuianZoroark extends pokemon_card_1.PokemonCard {
@@ -39,19 +38,33 @@ class HisuianZoroark extends pokemon_card_1.PokemonCard {
         this.fullName = 'Hisuian Zoroark LOR';
         this.KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
         this.CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
+        this.CLEAR_KNOCKOUT_MARKER_2 = 'CLEAR_KNOCKOUT_MARKER_2';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.active.attackMarker.addMarker(this.KNOCKOUT_MARKER, this);
-            if (effect instanceof game_phase_effects_1.EndTurnEffect
-                && opponent.active.attackMarker.hasMarker(this.KNOCKOUT_MARKER, this)) {
-                opponent.active.attackMarker.addMarker(this.CLEAR_KNOCKOUT_MARKER, this);
-            }
-            if (effect instanceof game_phase_effects_1.EndTurnEffect
-                && opponent.active.attackMarker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
-                opponent.active.hp = 0;
+            effect.player.marker.addMarker(this.KNOCKOUT_MARKER, this);
+            opponent.active.marker.addMarker(this.CLEAR_KNOCKOUT_MARKER, this);
+            console.log('first marker added');
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            opponent.marker.addMarker(this.CLEAR_KNOCKOUT_MARKER_2, this);
+            console.log('clear marker added');
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.KNOCKOUT_MARKER) && effect.player.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER_2)) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (opponent.active.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
+                console.log('knockout');
+                effect.player.marker.removeMarker(this.KNOCKOUT_MARKER, this);
+                effect.player.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER_2, this);
+                opponent.active.marker.removeMarker(this.KNOCKOUT_MARKER, this);
+                opponent.active.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER, this);
+                opponent.active.damage = 999;
+                return state;
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

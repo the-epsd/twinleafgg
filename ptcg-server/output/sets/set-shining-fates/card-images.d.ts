@@ -2,6 +2,7 @@ import { BallGuy } from './ball-guy';
 import { Buizel } from './buizel';
 import { Frosmoth } from './frosmoth';
 import { GalarianWeezing } from './galarian-weezing';
+import { Horsea } from './horsea';
 import { Koffing } from './koffing';
 import { Rillaboom } from './rillaboom';
 import { Snom } from './snom';
@@ -16,6 +17,9 @@ export declare class FrosmothArt extends Frosmoth {
     cardImage: string;
 }
 export declare class GalarianWeezingArt extends GalarianWeezing {
+    cardImage: string;
+}
+export declare class HorseaArt extends Horsea {
     cardImage: string;
 }
 export declare class KoffingArt extends Koffing {

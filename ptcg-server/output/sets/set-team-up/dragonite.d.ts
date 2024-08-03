@@ -31,5 +31,6 @@ export declare class Dragonite extends PokemonCard {
     fullName: string;
     cardImage: string;
     setNumber: string;
+    private readonly FAST_CALL_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

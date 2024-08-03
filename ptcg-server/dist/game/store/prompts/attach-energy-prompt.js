@@ -59,6 +59,16 @@ export class AttachEnergyPrompt extends Prompt {
                 return false;
             }
         }
+        if (this.options.validCardTypes) {
+            let onlyValidTypes = true;
+            for (let card of result) {
+                const energyCard = card.card;
+                if (energyCard.provides.every(p => !this.options.validCardTypes.includes(p))) {
+                    onlyValidTypes = false;
+                }
+            }
+            return onlyValidTypes;
+        }
         // Check if 'different types' restriction is valid
         if (this.options.differentTypes) {
             const typeMap = {};

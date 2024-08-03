@@ -1,4 +1,5 @@
 import { AlolanMuk } from './alolan-muk';
+import { Articuno } from './articuno';
 import { Bronzor } from './bronzor';
 import { Dragonite } from './dragonite';
 import { Hitmonchan } from './hitmonchan';
@@ -26,6 +27,10 @@ export class AbsolArt extends Absol {
 
 export class AlolanMukArt extends AlolanMuk {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_084_R_EN.png';
+}
+
+export class ArticunoArt extends Articuno {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_032_R_EN.png';
 }
 
 export class BisharpArt extends Bisharp {

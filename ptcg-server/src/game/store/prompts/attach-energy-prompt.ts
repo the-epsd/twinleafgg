@@ -21,6 +21,7 @@ export interface AttachEnergyOptions {
   differentTypes: boolean;
   sameTarget: boolean;
   differentTargets: boolean;
+  validCardTypes?: CardType[];
 }
 
 export type AttachEnergyResultType = {to: CardTarget, index: number}[];
@@ -96,6 +97,20 @@ export class AttachEnergyPrompt extends Prompt<CardAssign[]> {
       if (different) {
         return false;
       }
+    }
+    
+    if (this.options.validCardTypes) {
+      let onlyValidTypes = true;
+      
+      for (let card of result) {
+        const energyCard = card.card as EnergyCard;
+        
+        if (energyCard.provides.every(p => !this.options.validCardTypes!.includes(p))) {
+          onlyValidTypes = false;
+        }
+      }
+      
+      return onlyValidTypes;
     }
 
     // Check if 'different types' restriction is valid

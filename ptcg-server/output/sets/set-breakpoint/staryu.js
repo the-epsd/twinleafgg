@@ -11,10 +11,10 @@ class Staryu extends pokemon_card_1.PokemonCard {
         this.hp = 40;
         this.weakness = [{ type: card_types_1.CardType.METAL }];
         this.resistance = [];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.retreat = [];
         this.attacks = [
             {
-                name: 'Smack Water',
+                name: 'Smack',
                 cost: [card_types_1.CardType.WATER],
                 damage: 20,
                 text: ''

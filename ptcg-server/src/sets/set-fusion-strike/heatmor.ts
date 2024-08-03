@@ -55,11 +55,11 @@ export class Heatmor extends PokemonCard {
           && c.energyType === EnergyType.BASIC
           && c.provides.includes(CardType.FIRE);
       });
-      
+
       if (!hasEnergyInDiscard) {
         return state;
       }
-      
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_ACTIVE,
@@ -101,20 +101,21 @@ export class Heatmor extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkEnergy);
 
-      // Filter for only Fire Energy
-      const fireEnergy = checkEnergy.energyMap.filter(e =>
-        e.provides.includes(CardType.FIRE));
+      // Count total FIRE energy provided
+      const totalFireEnergy = checkEnergy.energyMap.reduce((sum, energy) => {
+        return sum + energy.provides.filter(type => type === CardType.FIRE).length;
+      }, 0);
 
       // Get number of extra Fire energy  
-      const extrafireEnergy = fireEnergy.length - checkCost.cost.length;
+      const extrafireEnergy = totalFireEnergy - checkCost.cost.length;
 
       // Apply damage boost based on extra Fire energy
-      if (extrafireEnergy == 3) {
+      if (extrafireEnergy >= 3) {
         return store.prompt(state, new ChoosePokemonPrompt(
           player.id,
           GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
           PlayerType.TOP_PLAYER,
-          [ SlotType.BENCH ],
+          [SlotType.BENCH],
           { min: 1, max: 1, allowCancel: false }
         ), selected => {
           const targets = selected || [];
@@ -123,7 +124,7 @@ export class Heatmor extends PokemonCard {
             damageEffect.target = target;
             store.reduceEffect(state, damageEffect);
           });
-          return state; 
+          return state;
         });
       }
     }

@@ -22,6 +22,14 @@ function* playCard(next, store, state, effect) {
     }, 0);
     //let playTwoCards = false;
     if (benchCount > 0) {
+        try {
+            const supporterEffect = new play_card_effects_1.SupporterEffect(player, effect.trainerCard);
+            store.reduceEffect(state, supporterEffect);
+        }
+        catch (_a) {
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            return state;
+        }
         // playTwoCards = true;
         return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.BENCH], { allowCancel: false }), targets => {
             if (!targets || targets.length === 0) {

@@ -3,7 +3,6 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-
 export class TestPokemon extends PokemonCard {
 
   public regulationMark = 'G';
@@ -16,12 +15,12 @@ export class TestPokemon extends PokemonCard {
 
   public weakness = [{ type: CardType.COLORLESS }];
 
-  public retreat = [  ];
+  public retreat = [];
 
   public attacks = [
-    { 
+    {
       name: 'Put Opponent Card In Prizes',
-      cost: [ ],
+      cost: [],
       damage: 0,
       text: 'Add top 2 cards of opponent\'s deck to prizes',
       effect: (store: StoreLike, state: State, effect: AttackEffect) => {

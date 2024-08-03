@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AccelgorArt, AdventurersDiscoveryArt, AzumarillArt, BasculinArt, BattleVIPPassArt, CookArt, CreamomaticArt, CroagunkArt, CrossSwitcherArt, DeoxysArt, DreepyArt, DunsparceArt, ElesasSparkleArt, FusionStrikeEnergyArt, GalarianLinooneArt, GenesectVArt, GengarVArt, GengarVMAXArt, HeatmorArt, InteleonVArt, InteleonVMAXArt, JudgeArt, MeloettaArt, MewVArt, MewVMAXArt, OricorioArt, PowerTabletArt, SchoolboyArt, SchoolgirlArt, ShaunaArt, ShelmetArt, StarmieArt, SwampertArt, YveltalArt } from './card-images';
+import { AccelgorArt, AdventurersDiscoveryArt, AzumarillArt, BasculinArt, BattleVIPPassArt, CookArt, CreamomaticArt, CroagunkArt, CrossSwitcherArt, DeoxysArt, DreepyArt, DunsparceArt, ElesasSparkleArt, FusionStrikeEnergyArt, GalarianLinooneArt, GenesectVArt, GengarVArt, GengarVMAXArt, HeatmorArt, InteleonVArt, InteleonVMAXArt, JudgeArt, MeloettaArt, MewVArt, MewVMAXArt, OricorioArt, PowerTabletArt, SchoolboyArt, SchoolgirlArt, ShaunaArt, ShelmetArt, StarmieArt, SwampertArt, TotodileArt, YveltalArt } from './card-images';
 
 
 export const setFusionStrike: Card[] = [
@@ -39,4 +39,5 @@ export const setFusionStrike: Card[] = [
   new ShelmetArt(),
   new StarmieArt(),
   new SwampertArt(),
+  new TotodileArt(),
 ];

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Diancie = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Diancie extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -23,6 +23,8 @@ class Diancie extends pokemon_card_1.PokemonCard {
                 damage: 20,
                 text: 'Draw 2 cards.'
             }];
+        this.weakness = [{ type: card_types_1.CardType.METAL }];
+        this.retreat = [card_types_1.CardType.COLORLESS];
         this.set = 'ASR';
         this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
@@ -35,10 +37,7 @@ class Diancie extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let isDiancieInPlay = false;
-            if (player.active.cards[0] == this) {
-                isDiancieInPlay = true;
-            }
-            if (opponent.active.cards[0] == this) {
+            if (opponent.active.cards.includes(this)) {
                 isDiancieInPlay = true;
             }
             if (!isDiancieInPlay) {
@@ -46,7 +45,7 @@ class Diancie extends pokemon_card_1.PokemonCard {
             }
             // Try reducing ability for opponent
             try {
-                const stub = new game_effects_1.PowerEffect(player, {
+                const stub = new game_effects_1.PowerEffect(opponent, {
                     name: 'test',
                     powerType: game_1.PowerType.ABILITY,
                     text: ''
@@ -57,7 +56,6 @@ class Diancie extends pokemon_card_1.PokemonCard {
                 return state;
             }
             effect.preventDefault = true;
-            throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
         }
         return state;
     }

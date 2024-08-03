@@ -1,7 +1,7 @@
 import { EnergyCard, GameError, PokemonCard } from '../../game';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
-import { CardType, TrainerType } from '../../game/store/card/card-types';
+import { EnergyType, Stage, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -19,7 +19,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let cards: Card[] = [];
 
   const supporterTurn = player.supporterTurn;
-  
+
   if (supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
@@ -31,11 +31,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
     // eslint-disable-next-line no-empty
-    if (c instanceof EnergyCard) {
-      
-    // eslint-disable-next-line no-empty
-    } else if (c instanceof PokemonCard && c.cardType === CardType.DARK) {
-      
+    if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
+      // eslint-disable-next-line no-empty
+    } else if (c instanceof PokemonCard && c.stage === Stage.BASIC) {
     } else {
       blocked.push(index);
     }
@@ -46,16 +44,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_ONE_ITEM_AND_ONE_TOOL_TO_HAND,
     player.deck,
-    { },
+    {},
     { min: 0, max: 2, allowCancel: false, blocked, allowDifferentSuperTypes: false }
   ), selected => {
     cards = selected || [];
     next();
   });
-  
+
   player.deck.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });

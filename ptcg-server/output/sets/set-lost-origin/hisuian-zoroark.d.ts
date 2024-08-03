@@ -29,5 +29,6 @@ export declare class HisuianZoroark extends PokemonCard {
     fullName: string;
     readonly KNOCKOUT_MARKER = "KNOCKOUT_MARKER";
     readonly CLEAR_KNOCKOUT_MARKER = "CLEAR_KNOCKOUT_MARKER";
+    readonly CLEAR_KNOCKOUT_MARKER_2 = "CLEAR_KNOCKOUT_MARKER_2";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -12,14 +12,14 @@ export class Staryu extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public resistance = [ ];
+  public resistance = [];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [];
 
   public attacks = [
     {
-      name: 'Smack Water',
-      cost: [ CardType.WATER ],
+      name: 'Smack',
+      cost: [CardType.WATER],
       damage: 20,
       text: ''
     },

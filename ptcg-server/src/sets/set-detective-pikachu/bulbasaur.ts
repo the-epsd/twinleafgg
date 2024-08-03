@@ -5,7 +5,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 export class Bulbasaur extends PokemonCard {
-  
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.GRASS;
@@ -34,12 +34,12 @@ export class Bulbasaur extends PokemonCard {
   public name: string = 'Bulbasaur';
 
   public fullName: string = 'Bulbasaur DET';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-        
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -49,21 +49,21 @@ export class Bulbasaur extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
         player.deck,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: CardType.GRASS },
+        { superType: SuperType.POKEMON, cardType: CardType.GRASS },
         { min: 0, max: 1, allowCancel: false }
       ), selectedCards => {
         cards = selectedCards || [];
-        
-    
+
+
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, player.hand);
 
           return state;
         });
-    
+
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
-    
+
           return state;
         });
       });

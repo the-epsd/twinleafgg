@@ -30,7 +30,7 @@ export class LucarioVSTAR extends PokemonCard {
     {
       name: 'Fighting Knuckle',
       cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 50,
+      damage: 120,
       text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 120 more damage.'
     },
     {
@@ -58,7 +58,7 @@ export class LucarioVSTAR extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const defending = opponent.active.getPokemonCard();
-      if (!defending || defending.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX)) {
+      if (defending && defending.tags.includes(CardTag.POKEMON_V) || defending && defending.tags.includes(CardTag.POKEMON_VSTAR) || defending && defending.tags.includes(CardTag.POKEMON_VMAX)) {
         effect.damage += 120;
         return state;
       }

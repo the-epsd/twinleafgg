@@ -40,10 +40,20 @@ ptcg-card {
 
 .ptcg-deck-card-count {
   display: flex;
-  cursor: pointer;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 34px;
+  bottom: 10px;
+  width: 32px;
+  height: 32px;
+  border: 2px solid #2d3748;
+  background-color: #0e1117;
+  border-radius: 50%;
+  // color: rgb(29, 35, 54);
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 .ptcg-deck-card-info {

@@ -47,7 +47,7 @@ export class Revitalizer extends TrainerCard {
       if (pokemonInDiscard === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
@@ -59,22 +59,22 @@ export class Revitalizer extends TrainerCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.discard,
         { superType: SuperType.POKEMON },
-        { min: Math.min(pokemonInDiscard, 2), max: 1, allowCancel: false, blocked }
+        { min: Math.min(pokemonInDiscard, 2), max: 2, allowCancel: false, blocked }
       ), selected => {
         cards = selected || [];
-        
+
         cards.forEach((card, index) => {
           store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
         });
 
         player.discard.moveCardsTo(cards, player.hand);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        
+
         return state;
-      });                  
+      });
     }
-    
+
     return state;
   }
-      
+
 }

@@ -7,7 +7,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Grovyle extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Treecko';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 80;
@@ -28,7 +28,7 @@ export class Grovyle extends PokemonCard {
     }
   ];
 
-  
+
   public set: string = 'LOT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
@@ -42,27 +42,27 @@ export class Grovyle extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.SUNSHINE_GRACE_MARKER, this);
     }
-      
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.SUNSHINE_GRACE_MARKER, this);
     }
-      
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       if (player.marker.hasMarker(this.SUNSHINE_GRACE_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-        
+
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id, 
+        player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck, 
+        player.deck,
         { superType: SuperType.POKEMON, cardType: CardType.GRASS },
         { min: 0, max: 1, allowCancel: true }
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);
-  
+
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
           player.marker.addMarker(this.SUNSHINE_GRACE_MARKER, this);

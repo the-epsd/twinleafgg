@@ -1,19 +1,12 @@
 <div class="ptcg-deck-card">
-  <ptcg-card [card]="card.card" [dragSource]="source" [noHTML5Preview]="true"
-             (click)="onCardClick();" (mouseenter)="showButtons = true;"
-             (mouseleave)="showButtons = false;">
-    <ptcg-badge color="accent" class="ptcg-deck-card-count mat-title"
-                *ngIf="showCardCount && card.count > 0"
-                (click)="onCountClick($event)">
+  <ptcg-card [card]="card.card" [dragSource]="source" [noHTML5Preview]="true" (click)="onCardClick();"
+    (mouseenter)="showButtons = true;" (mouseleave)="showButtons = false;">
+    <div class="ptcg-deck-card-count" *ngIf="showCardCount && card.count > 0" (click)="onCountClick($event)">
       {{ 'DECK_CARDS_X' | translate:{count: card.count } }}
-    </ptcg-badge>
-    <button mat-mini-fab color="primary" *ngIf="showButtons && showDetailButtons" 
-            class="inspect-button" 
-            (click)="showCardDialog.next(); $event.stopPropagation()">
+    </div>
+    <button mat-mini-fab color="primary" *ngIf="showButtons && showDetailButtons" class="inspect-button"
+      (click)="showCardDialog.next(); $event.stopPropagation()">
       <mat-icon>zoom_in</mat-icon>
     </button>
   </ptcg-card>
-  <span class="ptcg-deck-card-label">
-    {{ card.card.name }}
-  </span>
 </div>

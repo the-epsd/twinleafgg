@@ -8,7 +8,7 @@ export declare class Staryu extends PokemonCard {
         type: CardType;
     }[];
     resistance: never[];
-    retreat: CardType[];
+    retreat: never[];
     attacks: {
         name: string;
         cost: CardType[];
