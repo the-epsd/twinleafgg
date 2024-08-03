@@ -26,10 +26,11 @@ function* playCard(next, store, state, self, effect) {
     let pokemon = 0;
     let tools = 0;
     let stadiums = 0;
-    let energies = 0;
+    let basicEnergies = 0;
+    let specialEnergies = 0;
     const blocked = [];
-    player.deck.cards.forEach((c, index) => {
-        if (c instanceof pokemon_card_1.PokemonCard && c.cardType === card_types_1.CardType.ANY) {
+    player.discard.cards.forEach((c, index) => {
+        if (c instanceof pokemon_card_1.PokemonCard) {
             pokemon += 1;
         }
         else if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL) {
@@ -38,8 +39,11 @@ function* playCard(next, store, state, self, effect) {
         else if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.STADIUM) {
             stadiums += 1;
         }
-        else if (c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.ANY)) {
-            energies += 1;
+        else if (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC) {
+            basicEnergies += 1;
+        }
+        else if (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.SPECIAL) {
+            specialEnergies += 1;
         }
         else {
             blocked.push(index);
@@ -49,11 +53,13 @@ function* playCard(next, store, state, self, effect) {
     const maxPokemons = Math.min(pokemon, 1);
     const maxTools = Math.min(tools, 1);
     const maxStadiums = Math.min(stadiums, 1);
-    const maxEnergies = Math.min(energies, 1);
+    const maxEnergies = Math.min(basicEnergies + specialEnergies, 1);
+    const maxBasicEnergies = Math.min(basicEnergies, 1);
+    const maxSpecialEnergies = Math.min(specialEnergies, 1);
     // Total max is sum of max for each 
     const count = maxPokemons + maxTools + maxStadiums + maxEnergies;
     // Pass max counts to prompt options
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ONE_ITEM_AND_ONE_TOOL_TO_HAND, player.discard, {}, { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTools, maxStadiums, maxEnergies }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ONE_ITEM_AND_ONE_TOOL_TO_HAND, player.discard, {}, { min: 1, max: count, allowCancel: false, blocked, maxPokemons, maxTools, maxStadiums, maxEnergies, maxBasicEnergies, maxSpecialEnergies }), selected => {
         cards = selected || [];
         next();
     });

@@ -17,6 +17,7 @@ export interface ChooseCardsOptions {
   isSecret: boolean;
   differentTypes: boolean;
   maxPokemons: number | undefined;
+  maxBasicEnergies: number | undefined;
   maxEnergies: number | undefined;
   maxTrainers: number | undefined;
   maxTools: number | undefined;
@@ -54,6 +55,7 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
       differentTypes: false,
       allowDifferentSuperTypes: true,
       maxPokemons: undefined,
+      maxBasicEnergies: undefined,
       maxEnergies: undefined,
       maxTrainers: undefined,
       maxTools: undefined,
@@ -117,9 +119,10 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
       }
     }
 
-    const { maxPokemons, maxEnergies, maxTrainers, maxItems, maxTools, maxStadiums, maxSupporters, maxSpecialEnergies } = this.options;
+    const { maxPokemons, maxBasicEnergies, maxTrainers, maxItems, maxTools, maxStadiums, maxSupporters, maxSpecialEnergies, maxEnergies } = this.options;
     if ((maxPokemons !== undefined && maxPokemons < countMap[`${SuperType.POKEMON}`])
-      || (maxEnergies !== undefined && maxEnergies < countMap[`${SuperType.ENERGY}-${EnergyType.BASIC}`])
+      || (maxBasicEnergies !== undefined && maxBasicEnergies < countMap[`${SuperType.ENERGY}-${EnergyType.BASIC}`])
+      || (maxEnergies !== undefined && maxEnergies < countMap[`${SuperType.ENERGY}`])
       || (maxTrainers !== undefined && maxTrainers < countMap[`${SuperType.TRAINER}-${SuperType.TRAINER}`])
       || (maxItems !== undefined && maxItems < countMap[`${SuperType.TRAINER}-${TrainerType.ITEM}`])
       || (maxStadiums !== undefined && maxStadiums < countMap[`${SuperType.TRAINER}-${TrainerType.STADIUM}`])
