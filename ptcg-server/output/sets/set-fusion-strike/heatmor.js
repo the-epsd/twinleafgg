@@ -70,18 +70,17 @@ class Heatmor extends pokemon_card_1.PokemonCard {
             // Check attack cost
             const checkCost = new check_effects_1.CheckAttackCostEffect(player, this.attacks[1]);
             state = store.reduceEffect(state, checkCost);
-            console.log('Cost of attack: ' + checkCost.cost.length);
             // Check attached energy
-            const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, player.active);
+            const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkEnergy);
-            console.log('Checking Provided Energy: ' + checkEnergy.energyMap.length);
-            // Filter for only Fire Energy
-            const fireEnergy = checkEnergy.energyMap.filter(e => e.provides.includes(card_types_1.CardType.FIRE));
-            console.log('Checking Fire Energy: ' + fireEnergy.length);
+            // Count total FIRE energy provided
+            const totalFireEnergy = checkEnergy.energyMap.reduce((sum, energy) => {
+                return sum + energy.provides.filter(type => type === card_types_1.CardType.FIRE).length;
+            }, 0);
             // Get number of extra Fire energy  
-            const extrafireEnergy = fireEnergy.length - checkCost.cost.length;
+            const extrafireEnergy = totalFireEnergy - checkCost.cost.length;
             // Apply damage boost based on extra Fire energy
-            if (extrafireEnergy == 3) {
+            if (extrafireEnergy >= 3) {
                 return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
                     const targets = selected || [];
                     targets.forEach(target => {

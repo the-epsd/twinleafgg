@@ -39,7 +39,7 @@ class Revitalizer extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             let cards = [];
-            store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: Math.min(pokemonInDiscard, 2), max: 1, allowCancel: false, blocked }), selected => {
+            store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: Math.min(pokemonInDiscard, 2), max: 2, allowCancel: false, blocked }), selected => {
                 cards = selected || [];
                 cards.forEach((card, index) => {
                     store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
