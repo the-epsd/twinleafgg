@@ -12,7 +12,7 @@ export declare class RegielekiVMAX extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    retreat: CardType[];
+    retreat: never[];
     powers: {
         name: string;
         powerType: PowerType;

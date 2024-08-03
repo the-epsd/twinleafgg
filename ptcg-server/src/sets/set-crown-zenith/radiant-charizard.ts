@@ -47,12 +47,12 @@ export class RadiantCharizard extends PokemonCard {
 
   public fullName: string = 'Radiant Charizard CRZ';
 
-  public getColorlessReduction(state: State): number {
-    const player = state.players[state.activePlayer];
-    const opponent = StateUtils.getOpponent(state, player);
-    const remainingPrizes = opponent.getPrizeLeft();
-    return 6 - remainingPrizes;
-  }
+  // public getColorlessReduction(state: State): number {
+  //   const player = state.players[state.activePlayer];
+  //   const opponent = StateUtils.getOpponent(state, player);
+  //   const remainingPrizes = opponent.getPrizeLeft();
+  //   return 6 - remainingPrizes;
+  // }
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

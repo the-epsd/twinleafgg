@@ -2,12 +2,15 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State,
-  GameMessage, GameError
+  GameMessage, GameError,
+  PlayerType,
+  StateUtils
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
 // import mappings from '../../sets/card-mappings.json';
 
@@ -27,7 +30,7 @@ export class RegielekiVMAX extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [];
 
   public powers = [{
     name: 'Transistor',
@@ -81,19 +84,44 @@ export class RegielekiVMAX extends PokemonCard {
       console.log('marker added');
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-
+    if (effect instanceof DealDamageEffect) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-      const activePokemon = player.active.getPokemonCard();
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
-      if (activePokemon && activePokemon.stage == Stage.BASIC && activePokemon.cardType == CardType.LIGHTNING) {
-        if (effect instanceof DealDamageEffect) {
-          effect.damage += 30;
+      const hasZapdosInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
+      let numberOfRegielekiVMAXInPlay = 0;
+
+      if (hasZapdosInPlay) {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+          if (cardList.cards.includes(this)) {
+            numberOfRegielekiVMAXInPlay++;
+          }
+        });
+      }
+
+      const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
+      store.reduceEffect(state, checkPokemonTypeEffect);
+
+      if (checkPokemonTypeEffect.cardTypes.includes(CardType.LIGHTNING) && effect.target === opponent.active) {
+        if (effect.player.active.getPokemonCard()?.stage === Stage.BASIC) {
+          effect.damage += 30 * numberOfRegielekiVMAXInPlay;
         }
       }
-      return state;
+
+
     }
+
     return state;
   }
 }

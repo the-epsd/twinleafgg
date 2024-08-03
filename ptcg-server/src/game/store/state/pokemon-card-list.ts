@@ -28,6 +28,7 @@ export class PokemonCardList extends CardList {
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
   public static readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
+  public static readonly CLEAR_KNOCKOUT_MARKER_2 = 'CLEAR_KNOCKOUT_MARKER_2';
   public static readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
   public static readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
   public static readonly CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
@@ -95,7 +96,6 @@ export class PokemonCardList extends CardList {
 
     this.attackMarker.removeMarker(PokemonCardList.ATTACK_USED_MARKER);
     this.attackMarker.removeMarker(PokemonCardList.ATTACK_USED_2_MARKER);
-    this.attackMarker.removeMarker(PokemonCardList.KNOCKOUT_MARKER);
     this.attackMarker.removeMarker(PokemonCardList.CLEAR_KNOCKOUT_MARKER);
     this.attackMarker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER);
     this.attackMarker.removeMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER);

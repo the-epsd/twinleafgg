@@ -32,6 +32,7 @@ import { Schoolboy } from './schoolboy';
 import { Schoolgirl } from './schoolgirl';
 import { Shauna } from './shauna';
 import { Shelmet } from './shelmet';
+import { Totodile } from './totodile';
 import { Yveltal } from './yveltal';
 export declare class AccelgorArt extends Accelgor {
     cardImage: string;
@@ -136,6 +137,9 @@ export declare class StarmieArt extends Starmie {
     cardImage: string;
 }
 export declare class SwampertArt extends Swampert {
+    cardImage: string;
+}
+export declare class TotodileArt extends Totodile {
     cardImage: string;
 }
 export declare class YveltalArt extends Yveltal {

@@ -50,6 +50,13 @@ export class Ninetales extends PokemonCard {
       console.log('second marker added');
     }
 
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        console.log('attack blocked');
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       // Check marker

@@ -45,31 +45,68 @@ class ShiningGenesect extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            const blockedFrom = [];
-            const blockedTo = [];
             if (player.marker.hasMarker(this.ENERGY_RELOAD_MARKER, this)) {
                 throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                if (cardList === player.active) {
-                    blockedFrom.push(target);
-                    return;
+            let pokemonCount = 0;
+            let otherPokemonWithEnergy = false;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card !== this) {
+                    pokemonCount += 1;
+                    const hasAttachedEnergy = cardList.cards.some(c => c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.GRASS || c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.ANY)));
+                    otherPokemonWithEnergy = otherPokemonWithEnergy || hasAttachedEnergy;
                 }
-                blockedTo.push(target);
             });
-            return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_message_1.GameMessage.MOVE_ENERGY_TO_ACTIVE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Grass Energy' }, { min: 1, max: 1, allowCancel: false, blockedFrom, blockedTo }), result => {
-                const transfers = result || [];
-                player.marker.addMarker(this.ENERGY_RELOAD_MARKER, this);
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                    if (cardList.getPokemonCard() === this) {
-                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+            if (pokemonCount <= 1 && !otherPokemonWithEnergy) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
+            }
+            const blockedMap = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
+                store.reduceEffect(state, checkProvidedEnergy);
+                const blockedCards = [];
+                checkProvidedEnergy.energyMap.forEach(em => {
+                    if (!em.provides.includes(card_types_1.CardType.GRASS) && !em.provides.includes(card_types_1.CardType.ANY)) {
+                        blockedCards.push(em.card);
                     }
                 });
-                transfers.forEach(transfer => {
+                const blocked = [];
+                blockedCards.forEach(bc => {
+                    const index = cardList.cards.indexOf(bc);
+                    if (index !== -1 && !blocked.includes(index)) {
+                        blocked.push(index);
+                    }
+                });
+                if (blocked.length !== 0) {
+                    blockedMap.push({ source: target, blocked });
+                }
+            });
+            const blockedFrom = [];
+            const blockedTo = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                if (cardList.getPokemonCard() !== this) {
+                    blockedTo.push(target);
+                }
+                else {
+                    blockedFrom.push(target);
+                }
+            });
+            return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false, blockedMap, blockedFrom, blockedTo }), transfers => {
+                if (transfers === null) {
+                    return;
+                }
+                player.marker.addMarker(this.ENERGY_RELOAD_MARKER, this);
+                for (const transfer of transfers) {
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        }
+                    });
                     const source = game_1.StateUtils.getTarget(state, player, transfer.from);
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     source.moveCardTo(transfer.card, target);
-                });
+                }
+                return state;
             });
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, TrainerType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
@@ -9,7 +9,8 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { GameMessage } from '../../game/game-message';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
-import { GameError } from '../../game';
+import { GameError, PlayerType } from '../../game';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Dragonite extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -39,12 +40,24 @@ export class Dragonite extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '119';
 
+  private readonly FAST_CALL_MARKER = 'FAST_CALL_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.FAST_CALL_MARKER, this);
+    }
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      if (player.marker.hasMarker(this.FAST_CALL_MARKER, this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -57,11 +70,18 @@ export class Dragonite extends PokemonCard {
       ), selected => {
         const cards = selected || [];
 
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
         store.prompt(state, [new ShowCardsPrompt(
           opponent.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
           cards
         )], () => {
+          player.marker.addMarker(this.FAST_CALL_MARKER, this);
           player.deck.moveCardsTo(cards, player.hand);
         });
       });

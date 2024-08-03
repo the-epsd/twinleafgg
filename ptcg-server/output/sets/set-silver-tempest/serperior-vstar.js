@@ -7,7 +7,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class SerperiorVSTAR extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.BASIC;
+        this.stage = game_1.Stage.VSTAR;
         this.evolvesFrom = 'Serperior V';
         this.cardType = game_1.CardType.GRASS;
         this.hp = 280;
@@ -48,29 +48,29 @@ class SerperiorVSTAR extends game_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            const blockedMap = [];
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
-                store.reduceEffect(state, checkProvidedEnergy);
-                const blockedCards = [];
-                checkProvidedEnergy.energyMap.forEach(em => {
-                    if (em.provides.includes(game_1.CardType.ANY)) {
-                        blockedCards.push(em.card);
-                    }
-                });
-                const blocked = [];
-                blockedCards.forEach(bc => {
-                    const index = cardList.cards.indexOf(bc);
-                    if (index !== -1 && !blocked.includes(index)) {
-                        blocked.push(index);
-                    }
-                });
-                if (blocked.length !== 0) {
-                    blockedMap.push({ source: target, blocked });
-                }
-            });
+            // const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+            // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+            //   const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
+            //   store.reduceEffect(state, checkProvidedEnergy);
+            //   const blockedCards: Card[] = [];
+            //   checkProvidedEnergy.energyMap.forEach(em => {
+            //     if (em.provides.includes(CardType.ANY)) {
+            //       blockedCards.push(em.card);
+            //     }
+            //   });
+            //   const blocked: number[] = [];
+            //   blockedCards.forEach(bc => {
+            //     const index = cardList.cards.indexOf(bc);
+            //     if (index !== -1 && !blocked.includes(index)) {
+            //       blocked.push(index);
+            //     }
+            //   });
+            //   if (blocked.length !== 0) {
+            //     blockedMap.push({ source: target, blocked });
+            //   }
+            // });
             return store.prompt(state, new game_1.MoveEnergyPrompt(player.id, game_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], // Only allow moving to active
-            { superType: game_1.SuperType.ENERGY }, { allowCancel: true, blockedMap }), transfers => {
+            { superType: game_1.SuperType.ENERGY }, { min: 0, allowCancel: false }), transfers => {
                 if (!transfers) {
                     return;
                 }

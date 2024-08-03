@@ -6,6 +6,7 @@ const game_message_1 = require("../../game/game-message");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const discard_energy_prompt_1 = require("../../game/store/prompts/discard-energy-prompt");
 class GiratinaVSTAR extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -59,16 +60,15 @@ class GiratinaVSTAR extends game_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 6, allowCancel: false }), targets => {
-                if (targets && targets.length > 0) {
-                    const target = targets[0];
-                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, target, // Card source is target Pokemon
-                    { superType: card_types_1.SuperType.ENERGY }, { min: 2, max: 2, allowCancel: false }), selected => {
-                        const cards = selected || [];
-                        if (cards.length > 0) {
-                            target.moveCardsTo(cards, player.lostzone);
-                        }
-                    });
+            return store.prompt(state, new discard_energy_prompt_1.DiscardEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], // Card source is target Pokemon
+            { superType: card_types_1.SuperType.ENERGY }, { min: 2, max: 2, allowCancel: false }), transfers => {
+                if (transfers === null) {
+                    return;
+                }
+                for (const transfer of transfers) {
+                    const source = game_1.StateUtils.getTarget(state, player, transfer.from);
+                    const target = player.lostzone;
+                    source.moveCardTo(transfer.card, target);
                 }
             });
         }

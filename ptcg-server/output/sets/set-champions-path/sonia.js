@@ -24,10 +24,10 @@ function* playCard(next, store, state, self, effect) {
     const blocked = [];
     player.deck.cards.forEach((c, index) => {
         // eslint-disable-next-line no-empty
-        if (c instanceof game_1.EnergyCard) {
+        if (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC) {
             // eslint-disable-next-line no-empty
         }
-        else if (c instanceof game_1.PokemonCard && c.cardType === card_types_1.CardType.DARK) {
+        else if (c instanceof game_1.PokemonCard && c.stage === card_types_1.Stage.BASIC) {
         }
         else {
             blocked.push(index);

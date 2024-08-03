@@ -1,30 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Staryu = void 0;
+exports.Horsea = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-class Staryu extends pokemon_card_1.PokemonCard {
+class Horsea extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 40;
-        this.weakness = [{ type: card_types_1.CardType.METAL }];
-        this.resistance = [];
+        this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.retreat = [];
         this.attacks = [
             {
-                name: 'Smack',
+                name: 'Water Gun',
                 cost: [card_types_1.CardType.WATER],
-                damage: 20,
+                damage: 10,
                 text: ''
-            },
+            }
         ];
-        this.set = 'BKP';
+        this.set = 'SHF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '25';
-        this.name = 'Staryu';
-        this.fullName = 'Staryu BKP';
+        this.setNumber = '20';
+        this.name = 'Horsea';
+        this.fullName = 'Horsea SHF';
     }
 }
-exports.Staryu = Staryu;
+exports.Horsea = Horsea;

@@ -11,6 +11,8 @@ export class Wailord extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public evolvesFrom = 'Wailmer';
+
   public cardType: CardType = CardType.WATER;
 
   public hp: number = 200;

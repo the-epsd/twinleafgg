@@ -309,12 +309,19 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     const clone = element.cloneNode(true) as HTMLElement;
     document.body.appendChild(clone);
 
+    const deckCardElements = clone.querySelectorAll('.ptcg-deck-card');
+    deckCardElements.forEach((card: HTMLElement) => {
+      card.style.transform = 'scale(1.25)'; // Adjust the scale factor as needed
+      card.style.transformOrigin = 'center';
+      card.style.margin = '23px 15px'; // Add some margin to prevent overlap
+    });
+
     clone.style.position = 'absolute';
     clone.style.left = '-9999px';
     clone.style.width = '1920px';
     clone.style.height = '1080px';
     clone.style.overflow = 'hidden';
-    clone.style.padding = '100px';
+    clone.style.paddingLeft = '63px';
     clone.style.boxSizing = 'border-box';
     clone.style.flexWrap = 'wrap';
     clone.style.alignContent = 'flex-start';

@@ -1,38 +1,25 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 
-
-export class Staryu extends PokemonCard {
-
+export class Horsea extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-
   public cardType: CardType = CardType.WATER;
-
   public hp: number = 40;
-
-  public weakness = [{ type: CardType.METAL }];
-
-  public resistance = [];
-
+  public weakness = [{ type: CardType.LIGHTNING }];
   public retreat = [];
 
   public attacks = [
     {
-      name: 'Smack',
+      name: 'Water Gun',
       cost: [CardType.WATER],
-      damage: 20,
+      damage: 10,
       text: ''
-    },
+    }
   ];
 
-  public set: string = 'BKP';
-
+  public set: string = 'SHF';
   public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '25';
-
-  public name: string = 'Staryu';
-
-  public fullName: string = 'Staryu BKP';
-
+  public setNumber: string = '20';
+  public name: string = 'Horsea';
+  public fullName: string = 'Horsea SHF';
 }

@@ -3,9 +3,10 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
-import { ChooseCardsPrompt, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SlotType, StateUtils } from '../../game';
+import { GameError, PlayerType, PokemonCard, SlotType, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
 
 export class GiratinaVSTAR extends PokemonCard {
 
@@ -82,31 +83,25 @@ export class GiratinaVSTAR extends PokemonCard {
 
       const player = effect.player;
 
-      return store.prompt(state, new ChoosePokemonPrompt(
+      return store.prompt(state, new DiscardEnergyPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 6, allowCancel: false }
-      ), targets => {
-        if (targets && targets.length > 0) {
+        [SlotType.ACTIVE, SlotType.BENCH],// Card source is target Pokemon
+        { superType: SuperType.ENERGY },
+        { min: 2, max: 2, allowCancel: false }
+      ), transfers => {
 
-          const target = targets[0];
+        if (transfers === null) {
+          return;
+        }
 
-          return store.prompt(state, new ChooseCardsPrompt(
-            player.id,
-            GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-            target, // Card source is target Pokemon
-            { superType: SuperType.ENERGY },
-            { min: 2, max: 2, allowCancel: false }
-          ), selected => {
-            const cards = selected || [];
-            if (cards.length > 0) {
+        for (const transfer of transfers) {
 
-              target.moveCardsTo(cards, player.lostzone);
+          const source = StateUtils.getTarget(state, player, transfer.from);
+          const target = player.lostzone;
+          source.moveCardTo(transfer.card, target);
 
-            }
-          });
         }
       });
     }
