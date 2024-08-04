@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import {
   StoreLike, State, StateUtils, GameMessage,
-  ChooseAttackPrompt, GameLog, PowerType, Card, ChooseCardsPrompt, GameError
+  ChooseAttackPrompt, Attack, GameLog, PowerType, Card, ChooseCardsPrompt, GameError
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -32,16 +32,20 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
       next();
     });
 
-    const selectedAttack = selected.attack;
+    const attack: Attack | null = selected;
+
+    if (attack === null) {
+      return state; // Player chose to cancel
+    }
 
     try {
       store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
         name: player.name,
-        attack: selectedAttack.name
+        attack: attack.name
       });
 
       // Perform attack
-      const attackEffect = new AttackEffect(player, opponent, selectedAttack);
+      const attackEffect = new AttackEffect(player, opponent, attack);
       state = store.reduceEffect(state, attackEffect);
 
       if (store.hasPrompts()) {
@@ -55,10 +59,14 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
 
       return state; // Successfully executed attack, exit the function
     } catch (error) {
+      // Log the error or display a message to the player
       console.log('attack failed');
+      // Continue the loop to let the player choose another attack
     }
   }
 }
+
+
 
 export class RegidragoVSTAR extends PokemonCard {
 
@@ -137,7 +145,7 @@ export class RegidragoVSTAR extends PokemonCard {
       ), selected => {
         cards = selected || [];
 
-        cards.forEach((card) => {
+        cards.forEach((card, index) => {
           player.discard.moveCardTo(card, player.hand);
         });
       });
