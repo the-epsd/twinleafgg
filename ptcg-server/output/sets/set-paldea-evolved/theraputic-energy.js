@@ -18,6 +18,12 @@ class TherapeuticEnergy extends energy_card_1.EnergyCard {
         this.fullName = 'Therapeutic Energy PAL';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.target.cards.includes(this)) {
+            const pokemon = effect.target;
+            pokemon.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
+            pokemon.removeSpecialCondition(card_types_1.SpecialCondition.PARALYZED);
+            pokemon.removeSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
+        }
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const pokemon = effect.source;
             if (effect instanceof check_effects_1.CheckTableStateEffect) {

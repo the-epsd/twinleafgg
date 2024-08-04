@@ -15,16 +15,16 @@ export class GalarianWeezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
 
   public regulationMark = 'D';
-  
+
   public cardType: CardType = CardType.DARK;
-  
+
   public evolvesFrom = 'Koffing';
 
   public hp: number = 130;
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Neutralizing Gas',
@@ -34,7 +34,7 @@ export class GalarianWeezing extends PokemonCard {
 
   public attacks = [{
     name: 'Severe Poison',
-    cost: [ CardType.DARK ],
+    cost: [CardType.DARK],
     damage: 0,
     text: 'Your opponent\'s Active Pokémon is now Poisoned. Put 4 damage counters instead of 1 on that Pokémon during Pokémon Checkup.'
   }];
@@ -55,10 +55,8 @@ export class GalarianWeezing extends PokemonCard {
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
       specialCondition.poisonDamage = 40;
       store.reduceEffect(state, specialCondition);
-      
-      return state;
     }
-    
+
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && !effect.power.exemptFromAbilityLock) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -67,14 +65,14 @@ export class GalarianWeezing extends PokemonCard {
       const owner = StateUtils.findOwner(state, cardList);
 
       if (!player.active.cards.includes(this) &&
-          !opponent.active.cards.includes(this)) {
+        !opponent.active.cards.includes(this)) {
         return state;
       }
-      
+
       if (owner === player) {
         return state;
       }
-      
+
       // Try reducing ability for opponent
       try {
         const stub = new PowerEffect(player, {

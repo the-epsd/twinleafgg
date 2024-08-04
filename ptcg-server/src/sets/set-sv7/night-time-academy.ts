@@ -16,17 +16,17 @@ export class NightTimeAcademy extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '64';
-  
-  public  trainerType = TrainerType.STADIUM;
+
+  public trainerType = TrainerType.STADIUM;
 
   public set = 'SV6a';
 
-  public name = 'Night-Time Academy';
+  public name = 'Academy at Night';
 
-  public fullName = 'Night-Time Academy SV6a';
-  
-  public  text = 'Once during each player\'s turn, that player may put a card from their hand on top of their deck.';
-    
+  public fullName = 'Academy at Night SV6a';
+
+  public text = 'Once during each player\'s turn, that player may put a card from their hand on top of their deck.';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
 
@@ -42,7 +42,7 @@ export class NightTimeAcademy extends TrainerCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_DECK,
         player.hand,
-        { },
+        {},
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const cards = selected || [];

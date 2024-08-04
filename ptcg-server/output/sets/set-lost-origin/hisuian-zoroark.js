@@ -38,7 +38,6 @@ class HisuianZoroark extends pokemon_card_1.PokemonCard {
         this.fullName = 'Hisuian Zoroark LOR';
         this.KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
         this.CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
-        this.CLEAR_KNOCKOUT_MARKER_2 = 'CLEAR_KNOCKOUT_MARKER_2';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -51,21 +50,10 @@ class HisuianZoroark extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.marker.addMarker(this.CLEAR_KNOCKOUT_MARKER_2, this);
+            effect.player.active.damage = 999;
+            effect.player.active.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER, this);
+            opponent.marker.removeMarker(this.KNOCKOUT_MARKER, this);
             console.log('clear marker added');
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.KNOCKOUT_MARKER) && effect.player.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER_2)) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (opponent.active.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
-                console.log('knockout');
-                effect.player.marker.removeMarker(this.KNOCKOUT_MARKER, this);
-                effect.player.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER_2, this);
-                opponent.active.marker.removeMarker(this.KNOCKOUT_MARKER, this);
-                opponent.active.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER, this);
-                opponent.active.damage = 999;
-                return state;
-            }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;

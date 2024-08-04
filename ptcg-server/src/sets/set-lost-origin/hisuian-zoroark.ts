@@ -50,7 +50,6 @@ export class HisuianZoroark extends PokemonCard {
 
   public readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
   public readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
-  public readonly CLEAR_KNOCKOUT_MARKER_2 = 'CLEAR_KNOCKOUT_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -66,25 +65,11 @@ export class HisuianZoroark extends PokemonCard {
     if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.marker.addMarker(this.CLEAR_KNOCKOUT_MARKER_2, this);
+      effect.player.active.damage = 999;
+      effect.player.active.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER, this);
+      opponent.marker.removeMarker(this.KNOCKOUT_MARKER, this);
       console.log('clear marker added');
     }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.KNOCKOUT_MARKER) && effect.player.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER_2)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      if (opponent.active.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
-        console.log('knockout');
-        effect.player.marker.removeMarker(this.KNOCKOUT_MARKER, this);
-        effect.player.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER_2, this);
-        opponent.active.marker.removeMarker(this.KNOCKOUT_MARKER, this);
-        opponent.active.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER, this);
-        opponent.active.damage = 999;
-        return state;
-      }
-    }
-
-
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;

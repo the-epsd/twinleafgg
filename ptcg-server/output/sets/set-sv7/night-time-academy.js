@@ -16,8 +16,8 @@ class NightTimeAcademy extends trainer_card_1.TrainerCard {
         this.setNumber = '64';
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'SV6a';
-        this.name = 'Night-Time Academy';
-        this.fullName = 'Night-Time Academy SV6a';
+        this.name = 'Academy at Night';
+        this.fullName = 'Academy at Night SV6a';
         this.text = 'Once during each player\'s turn, that player may put a card from their hand on top of their deck.';
     }
     reduceEffect(store, state, effect) {

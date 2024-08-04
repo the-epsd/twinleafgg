@@ -85,9 +85,9 @@ export class NightlyStretcher extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public name: string = 'Nightly Stretcher';
+  public name: string = 'Night Stretcher';
 
-  public fullName: string = 'Nightly Stretcher SV6a';
+  public fullName: string = 'Night Stretcher SV6a';
 
   public text: string =
     'Put a Pokémon or a Basic Energy Card from your discard pile into your hand.';

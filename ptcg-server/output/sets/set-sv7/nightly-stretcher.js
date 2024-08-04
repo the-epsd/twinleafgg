@@ -58,8 +58,8 @@ class NightlyStretcher extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '56';
         this.regulationMark = 'H';
-        this.name = 'Nightly Stretcher';
-        this.fullName = 'Nightly Stretcher SV6a';
+        this.name = 'Night Stretcher';
+        this.fullName = 'Night Stretcher SV6a';
         this.text = 'Put a Pokémon or a Basic Energy Card from your discard pile into your hand.';
     }
     reduceEffect(store, state, effect) {

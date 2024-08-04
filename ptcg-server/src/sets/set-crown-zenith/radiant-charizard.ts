@@ -105,7 +105,8 @@ export class RadiantCharizard extends PokemonCard {
         5: 1,
         4: 2,
         3: 3,
-        2: 4
+        2: 4,
+        1: 4
       };
 
       const colorlessToRemove = prizeToColorlessReduction[remainingPrizes as keyof typeof prizeToColorlessReduction] || 0;
@@ -122,7 +123,6 @@ export class RadiantCharizard extends PokemonCard {
       return state;
 
     }
-
     // if (effect instanceof KnockOutEffect) {
     //   const player = effect.player;
     //   const opponent = StateUtils.getOpponent(state, player);
