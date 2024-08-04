@@ -5,6 +5,10 @@ export declare class Kricketune extends PokemonCard {
     evolvesFrom: string;
     cardType: CardType;
     hp: number;
+    weakness: {
+        type: CardType;
+    }[];
+    retreat: CardType[];
     powers: Power[];
     attacks: Attack[];
     set: string;
@@ -12,6 +16,5 @@ export declare class Kricketune extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    SWELLING_TUNE_MARKER: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

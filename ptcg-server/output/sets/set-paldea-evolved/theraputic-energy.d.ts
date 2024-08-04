@@ -1,4 +1,4 @@
-import { StoreLike, State } from '../../game';
+import { State, StoreLike } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';

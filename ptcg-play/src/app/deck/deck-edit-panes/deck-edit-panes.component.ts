@@ -88,6 +88,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   }
 
   sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {
+    // Sort by superType first
+    cards.sort((a, b) => a.card.superType - b.card.superType);
     const firstTrainerIndex = cards.findIndex((d) => d.card.superType === SuperType.TRAINER);
 
     for (let i = 0; i < firstTrainerIndex; i++) {
@@ -107,6 +109,42 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         ];
       }
     }
+
+    // Sort Pokemon cards by cardType after sorting by evolution
+    const pokemonCards = cards.slice(0, firstTrainerIndex);
+    pokemonCards.sort((a, b) => {
+      const cardA = a.card as PokemonCard;
+      const cardB = b.card as PokemonCard;
+      return cardA.cardType - cardB.cardType;
+    });
+    cards = [...pokemonCards, ...cards.slice(firstTrainerIndex)];
+
+    // Sort Trainer cards by trainerType and then alphabetically
+    const firstEnergyIndex = cards.findIndex((d) => d.card.superType === SuperType.ENERGY, firstTrainerIndex);
+    cards = [...cards.slice(0, firstTrainerIndex), ...cards.slice(firstTrainerIndex, firstEnergyIndex).sort((a, b) => {
+      const trainerA = a.card as TrainerCard;
+      const trainerB = b.card as TrainerCard;
+
+      const trainerTypeOrder = [TrainerType.SUPPORTER, TrainerType.ITEM, TrainerType.TOOL, TrainerType.STADIUM];
+      const trainerAIndex = trainerTypeOrder.indexOf(trainerA.trainerType);
+      const trainerBIndex = trainerTypeOrder.indexOf(trainerB.trainerType);
+
+      if (trainerAIndex !== trainerBIndex) {
+        return trainerAIndex - trainerBIndex;
+      }
+
+      return trainerA.name.localeCompare(trainerB.name);
+    }), ...cards.slice(firstEnergyIndex)];
+
+    // Sort Energy cards
+    const energyCards = cards.slice(firstEnergyIndex);
+    const specialEnergyCards = energyCards.filter((d) => d.card.energyType === EnergyType.SPECIAL);
+    const basicEnergyCards = energyCards.filter((d) => d.card.energyType === EnergyType.BASIC);
+
+    specialEnergyCards.sort((a, b) => a.card.name.localeCompare(b.card.name));
+    basicEnergyCards.sort((a, b) => a.card.name.localeCompare(b.card.name));
+
+    cards = [...cards.slice(0, firstEnergyIndex), ...specialEnergyCards, ...basicEnergyCards];
 
     return cards;
   }

@@ -1,19 +1,19 @@
 import { Attack, CardType, PlayerType, PokemonCard, Power, PowerType, Stage, State, StoreLike } from '../../game';
-import { CheckHpEffect, CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Kricketune extends PokemonCard {
-  public stage: Stage = Stage.STAGE_1;
+  public stage: Stage = Stage.BASIC;
   public evolvesFrom = 'Kricketot';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 90;
+  public weakness = [{ type: CardType.FIRE }];
+  public retreat = [CardType.COLORLESS];
 
   public powers: Power[] = [
     {
       name: 'Swelling Tune',
       powerType: PowerType.ABILITY,
-      useWhenInPlay: false,
       text: 'Your [G] Pokémon in play, except any Kricketune, get +40 HP. You can\'t apply more than 1 Swelling Tune Ability at a time.'
     }
   ];
@@ -32,43 +32,35 @@ export class Kricketune extends PokemonCard {
   public setNumber: string = '10';
   public name: string = 'Kricketune';
   public fullName: string = 'Kricketune ASR';
-  
-  public SWELLING_TUNE_MARKER = 'SWELLING_TUNE_MARKER';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-      
-    if (effect instanceof CheckHpEffect && effect.player.bench.some(b => b.cards.includes(this))) {
+    if (effect instanceof CheckHpEffect) {
       const player = effect.player;
-      
-      try {
-       const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-          cardList.marker.removeMarker(this.SWELLING_TUNE_MARKER, this);
-        });  
-        
+
+      let kricketunesInPlay = false;
+      let swellingTuneApplied = false;
+
+      if (swellingTuneApplied) {
         return state;
       }
-      
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(cardList);
-        store.reduceEffect(state, checkPokemonTypeEffect);
 
-        if (checkPokemonTypeEffect.cardTypes.includes(CardType.GRASS) && !cardList.marker.hasMarker(this.SWELLING_TUNE_MARKER) && 
-            !cardList.cards.includes(this)) {
-          cardList.hp += 40;
-          cardList.marker.addMarker(this.SWELLING_TUNE_MARKER, this);
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.getPokemonCard()?.name === 'Kricketune') {
+          kricketunesInPlay = true;
         }
       });
-      
-      return state;
+
+      if (kricketunesInPlay) {
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          const pokemonCard = cardList.getPokemonCard();
+          if (pokemonCard && pokemonCard.cardType === CardType.GRASS && pokemonCard.name !== 'Kricketune') {
+            effect.hp += 40;
+            swellingTuneApplied = true;
+          }
+        });
+      }
     }
-    
     return state;
   }
 }

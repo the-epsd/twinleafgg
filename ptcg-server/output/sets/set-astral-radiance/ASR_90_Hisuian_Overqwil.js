@@ -41,7 +41,6 @@ class HisuianOverqwil extends pokemon_card_1.PokemonCard {
             const specialCondition = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.POISONED]);
             specialCondition.poisonDamage = 50;
             store.reduceEffect(state, specialCondition);
-            return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;

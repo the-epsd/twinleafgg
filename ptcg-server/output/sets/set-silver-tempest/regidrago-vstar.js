@@ -20,17 +20,14 @@ function* useApexDragon(next, store, state, effect) {
             selected = result;
             next();
         });
-        const attack = selected;
-        if (attack === null) {
-            return state; // Player chose to cancel
-        }
+        const selectedAttack = selected.attack;
         try {
             store.log(state, game_1.GameLog.LOG_PLAYER_COPIES_ATTACK, {
                 name: player.name,
-                attack: attack.name
+                attack: selectedAttack.name
             });
             // Perform attack
-            const attackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
+            const attackEffect = new game_effects_1.AttackEffect(player, opponent, selectedAttack);
             state = store.reduceEffect(state, attackEffect);
             if (store.hasPrompts()) {
                 yield store.waitPrompt(state, () => next());
@@ -42,9 +39,7 @@ function* useApexDragon(next, store, state, effect) {
             return state; // Successfully executed attack, exit the function
         }
         catch (error) {
-            // Log the error or display a message to the player
             console.log('attack failed');
-            // Continue the loop to let the player choose another attack
         }
     }
 }
@@ -99,7 +94,7 @@ class RegidragoVSTAR extends pokemon_card_1.PokemonCard {
             let cards = [];
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 1, max: 2, allowCancel: false }), selected => {
                 cards = selected || [];
-                cards.forEach((card, index) => {
+                cards.forEach((card) => {
                     player.discard.moveCardTo(card, player.hand);
                 });
             });

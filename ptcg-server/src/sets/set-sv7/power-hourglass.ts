@@ -19,9 +19,9 @@ export class PowerHourglass extends TrainerCard {
 
   public setNumber: string = '58';
 
-  public name: string = 'Power Hourglass';
+  public name: string = 'Powerglass';
 
-  public fullName: string = 'Power Hourglass SV6a';
+  public fullName: string = 'Powerglass SV6a';
 
   public text: string = 'At the end of your turn, if the Pokémon this card is attached to is in the Active Spot, you may attach a Basic Energy from your discard pile to that Pokémon.';
 

@@ -41,7 +41,6 @@ class GalarianWeezing extends pokemon_card_1.PokemonCard {
             const specialCondition = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.POISONED]);
             specialCondition.poisonDamage = 40;
             store.reduceEffect(state, specialCondition);
-            return state;
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY && !effect.power.exemptFromAbilityLock) {
             const player = effect.player;

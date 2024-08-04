@@ -14,8 +14,8 @@ class PowerHourglass extends trainer_card_1.TrainerCard {
         this.set = 'SV6a';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '58';
-        this.name = 'Power Hourglass';
-        this.fullName = 'Power Hourglass SV6a';
+        this.name = 'Powerglass';
+        this.fullName = 'Powerglass SV6a';
         this.text = 'At the end of your turn, if the Pokémon this card is attached to is in the Active Spot, you may attach a Basic Energy from your discard pile to that Pokémon.';
     }
     reduceEffect(store, state, effect) {

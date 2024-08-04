@@ -84,7 +84,8 @@ class RadiantCharizard extends pokemon_card_1.PokemonCard {
                 5: 1,
                 4: 2,
                 3: 3,
-                2: 4
+                2: 4,
+                1: 4
             };
             const colorlessToRemove = prizeToColorlessReduction[remainingPrizes] || 0;
             for (let i = 0; i < colorlessToRemove; i++) {
