@@ -1,4 +1,4 @@
-  import { CoinFlipPrompt, DamageMap, GameLog, GameMessage, PlayerType, Power, PowerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { CoinFlipPrompt, DamageMap, GameLog, GameMessage, PlayerType, Power, PowerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -82,6 +82,12 @@ export class Dragapult extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const maxAllowedDamage: DamageMap[] = [];
+
+      const oppHasBenched = opponent.bench.some(b => b.cards.length > 0);
+
+      if (!oppHasBenched) {
+        return state;
+      }
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         maxAllowedDamage.push({ target, damage: card.hp + 30 });
