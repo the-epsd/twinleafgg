@@ -28,6 +28,7 @@ export const setParadoxRift: Card[] = [
   new HoopaexArt(),
   new IronBundleArt(),
   new IronHandsexArt(),
+  new IronJugulisArt(),
   new IronValiantexArt(),
   new JirachiArt(),
   new KlawfArt(),
