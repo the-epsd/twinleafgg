@@ -1,6 +1,6 @@
+import { AlolanVulpix } from '../set-hidden-fates/alolan-vulpix';
 import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
 import { AetherParadiseConvserationArea } from './aether-paradise-conservation-area';
-import { AlolanVulpix } from './alolan-vulpix';
 import { AquaPatch } from './aqua-patch';
 import { BrookletHill } from './brooklet-hill';
 import { FieldBlower } from './field-blower';
@@ -13,6 +13,8 @@ export declare class AetherParadiseConvserationAreaArt extends AetherParadiseCon
 }
 export declare class AlolanVulpixArt extends AlolanVulpix {
     cardImage: string;
+    fullName: string;
+    setNumber: string;
 }
 export declare class AquaPatchArt extends AquaPatch {
     cardImage: string;

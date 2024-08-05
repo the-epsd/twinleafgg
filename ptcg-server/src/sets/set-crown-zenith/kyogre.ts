@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, ChoosePokemonPrompt, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
@@ -6,6 +6,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
 
 
 export class Kyogre extends PokemonCard {
@@ -18,17 +19,17 @@ export class Kyogre extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Wave Summoning',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Search your deck for a W Energy card and attach it to this Pokémon. Then, shuffle your deck.'
     }, {
       name: 'Dynamic Wave',
-      cost: [ CardType.WATER, CardType.WATER, CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.WATER, CardType.WATER, CardType.COLORLESS],
       damage: 0,
       text: 'Put 3 Energy attached to this Pokémon into your hand. This attack does 180 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
@@ -47,20 +48,21 @@ export class Kyogre extends PokemonCard {
   public fullName: string = 'Kyogre CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       const player = effect.player;
-  
+
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
-  
-      state = store.prompt(state, new ChooseEnergyPrompt(
+
+      return store.prompt(state, new DiscardEnergyPrompt(
         player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [ CardType.WATER, CardType.WATER, CardType.WATER ],
-        { allowCancel: false }
+        GameMessage.CHOOSE_ENERGIES_TO_HAND,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.ACTIVE],// Card source is target Pokemon
+        { superType: SuperType.ENERGY },
+        { min: 3, max: 3, allowCancel: false }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
@@ -75,7 +77,7 @@ export class Kyogre extends PokemonCard {
           player.id,
           GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
           PlayerType.TOP_PLAYER,
-          [ SlotType.ACTIVE, SlotType.BENCH ],
+          [SlotType.ACTIVE, SlotType.BENCH],
           { min: max, max, allowCancel: false }
         ), selected => {
           const targets = selected || [];
@@ -84,7 +86,7 @@ export class Kyogre extends PokemonCard {
             damageEffect.target = target;
             store.reduceEffect(state, damageEffect);
           });
-          
+
           return state;
         });
       });
@@ -99,9 +101,9 @@ export class Kyogre extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_ACTIVE,
         player.deck,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE ],
+        [SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { allowCancel: true, min: 1, max: 1 }
+        { allowCancel: false, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user

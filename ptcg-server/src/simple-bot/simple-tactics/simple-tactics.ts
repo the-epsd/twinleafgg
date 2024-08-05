@@ -1,5 +1,9 @@
-import { Action, Player, State, PokemonCardList, CardTarget, PlayerType,
-  SlotType, GameError, GameMessage, Prompt, ResolvePromptAction } from '../../game';
+import {
+  Action, Player, State, PokemonCardList, CardTarget, PlayerType,
+  SlotType, GameError, GameMessage, Prompt, ResolvePromptAction,
+  UseAbilityAction,
+  PokemonCard
+} from '../../game';
 import { Simulator } from '../../game/bots/simulator';
 import { SimpleBotOptions } from '../simple-bot-options';
 import { StateScore } from '../state-score/state-score';
@@ -50,7 +54,7 @@ export abstract class SimpleTactic {
     try {
       const simulator = new Simulator(state, this.options.arbiter);
       newState = simulator.dispatch(action);
-      
+
       while (simulator.store.state.prompts.some(p => p.result === undefined)) {
         newState = simulator.store.state;
         const prompt = newState.prompts.find(p => p.result === undefined);
@@ -93,9 +97,22 @@ export abstract class SimpleTactic {
     const newState = this.simulateAction(state, action);
     const newPlayer = newState && newState.players.find(p => p.id === playerId);
     if (newState !== undefined && newPlayer !== undefined) {
-      return this.stateScore.getScore(newState, playerId)
+      let score = this.stateScore.getScore(newState, playerId)
         + (newState.turn > state.turn ? passTurnScore : 0);
+
+      // Special case for Lugia bot using Summoning Star ability
+      if (newPlayer.name === 'Lugia' && action instanceof UseAbilityAction && action.name === 'Summoning Star') {
+        const archeopsInDiscard = newPlayer.discard.cards.filter(c => c instanceof PokemonCard && c.name === 'Archeops').length;
+        const emptyBenchSlots = newPlayer.bench.filter(b => b.cards.length === 0).length;
+
+        if (archeopsInDiscard > 0 && emptyBenchSlots > 0) {
+          score += 1000; // Significant boost to encourage using the ability
+        }
+      }
+
+      return score;
     }
   }
+
 
 }

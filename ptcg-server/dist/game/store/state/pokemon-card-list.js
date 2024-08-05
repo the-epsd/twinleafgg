@@ -53,7 +53,6 @@ export class PokemonCardList extends CardList {
     clearEffects() {
         this.attackMarker.removeMarker(PokemonCardList.ATTACK_USED_MARKER);
         this.attackMarker.removeMarker(PokemonCardList.ATTACK_USED_2_MARKER);
-        this.attackMarker.removeMarker(PokemonCardList.KNOCKOUT_MARKER);
         this.attackMarker.removeMarker(PokemonCardList.CLEAR_KNOCKOUT_MARKER);
         this.attackMarker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER);
         this.attackMarker.removeMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER);
@@ -151,6 +150,7 @@ export class PokemonCardList extends CardList {
 PokemonCardList.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
 PokemonCardList.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 PokemonCardList.CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
+PokemonCardList.CLEAR_KNOCKOUT_MARKER_2 = 'CLEAR_KNOCKOUT_MARKER_2';
 PokemonCardList.KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
 PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
 PokemonCardList.CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
