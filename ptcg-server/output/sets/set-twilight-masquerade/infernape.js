@@ -9,10 +9,11 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 class Infernape extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.STAGE_2;
+        this.stage = card_types_1.Stage.BASIC;
         this.evolvesFrom = 'Monferno';
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.FIRE;
@@ -54,7 +55,7 @@ class Infernape extends pokemon_card_1.PokemonCard {
             const hasEnergyInDiscard = player.discard.cards.some(c => {
                 return c instanceof game_1.EnergyCard
                     && c.energyType === card_types_1.EnergyType.BASIC
-                    && (c.provides.includes(card_types_1.CardType.FIGHTING) || c.provides.includes(card_types_1.CardType.FIRE));
+                    && (c.provides.includes(card_types_1.CardType.FIGHTING) || (c.provides.includes(card_types_1.CardType.FIRE)));
             });
             if (!hasEnergyInDiscard) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
@@ -62,17 +63,27 @@ class Infernape extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.TAR_GENERATOR_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
-            const filterType = {
-                superType: card_types_1.SuperType.ENERGY,
-                energyType: card_types_1.EnergyType.BASIC,
-                name: 'Fighting Energy',
-            };
-            const filterType2 = {
-                superType: card_types_1.SuperType.ENERGY,
-                energyType: card_types_1.EnergyType.BASIC,
-                name: 'Fire Energy',
-            };
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], filterType || filterType2, { allowCancel: false, min: 1, max: 2 }), transfers => {
+            const blocked = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
+                store.reduceEffect(state, checkProvidedEnergy);
+                checkProvidedEnergy.energyMap.forEach((em, index) => {
+                    if (!(em.provides.includes(card_types_1.CardType.FIGHTING) || em.provides.includes(card_types_1.CardType.FIRE)) || em.provides.includes(card_types_1.CardType.ANY)) {
+                        const globalIndex = cardList.cards.indexOf(em.card);
+                        if (globalIndex !== -1 && !blocked.includes(globalIndex)) {
+                            blocked.push(globalIndex);
+                        }
+                    }
+                });
+            });
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, {
+                allowCancel: true,
+                min: 1,
+                max: 2,
+                blocked,
+                differentTypes: true,
+                validCardTypes: [card_types_1.CardType.FIRE, card_types_1.CardType.FIGHTING]
+            }), transfers => {
                 transfers = transfers || [];
                 player.marker.addMarker(this.TAR_GENERATOR_MARKER, this);
                 if (transfers.length === 0) {
@@ -85,7 +96,7 @@ class Infernape extends pokemon_card_1.PokemonCard {
                 }
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    player.discard.moveCardTo(transfer.card, target);
+                    player.hand.moveCardTo(transfer.card, target);
                     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                         if (cardList.getPokemonCard() === this) {
                             cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);

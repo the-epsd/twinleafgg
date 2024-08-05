@@ -1,12 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SpecialCondition, SuperType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, EnergyCard, GameError, GameMessage, PlayerType, AttachEnergyPrompt, SlotType, StateUtils, FilterType } from '../../game';
+import { StoreLike, State, EnergyCard, GameError, GameMessage, PlayerType, AttachEnergyPrompt, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Infernape extends PokemonCard {
 
@@ -71,7 +72,7 @@ export class Infernape extends PokemonCard {
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
           && c.energyType === EnergyType.BASIC
-          && (c.provides.includes(CardType.FIGHTING) || c.provides.includes(CardType.FIRE));
+          && (c.provides.includes(CardType.FIGHTING) || (c.provides.includes(CardType.FIRE)));
       });
 
       if (!hasEnergyInDiscard) {
@@ -82,53 +83,65 @@ export class Infernape extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      const filterType: FilterType = {
-        superType: SuperType.ENERGY,
-        energyType: EnergyType.BASIC,
-        name: 'Fighting Energy',
-      };
-      const filterType2: FilterType = {
-        superType: SuperType.ENERGY,
-        energyType: EnergyType.BASIC,
-        name: 'Fire Energy',
-      };
 
-      state = store.prompt(
-        state,
-        new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_CARDS,
-          player.discard,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH, SlotType.ACTIVE],
-          filterType || filterType2,
-          { allowCancel: false, min: 1, max: 2 }
-        ), transfers => {
-          transfers = transfers || [];
+      const blocked: number[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
+        store.reduceEffect(state, checkProvidedEnergy);
 
-          player.marker.addMarker(this.TAR_GENERATOR_MARKER, this);
-
-          if (transfers.length === 0) {
-            return state;
-          }
-
-          if (transfers.length > 1) {
-            if (transfers[0].card.name === transfers[1].card.name) {
-              throw new GameError(GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
+        checkProvidedEnergy.energyMap.forEach((em, index) => {
+          if (!(em.provides.includes(CardType.FIGHTING) || em.provides.includes(CardType.FIRE)) || em.provides.includes(CardType.ANY)) {
+            const globalIndex = cardList.cards.indexOf(em.card);
+            if (globalIndex !== -1 && !blocked.includes(globalIndex)) {
+              blocked.push(globalIndex);
             }
           }
-
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.discard.moveCardTo(transfer.card, target);
-
-            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-              if (cardList.getPokemonCard() === this) {
-                cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
-              }
-            });
-          }
         });
+      });
+
+
+      state = store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        player.hand,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        {
+          allowCancel: true,
+          min: 1,
+          max: 2,
+          blocked,
+          differentTypes: true,
+          validCardTypes: [CardType.FIRE, CardType.FIGHTING]
+        },
+      ), transfers => {
+        transfers = transfers || [];
+
+
+        player.marker.addMarker(this.TAR_GENERATOR_MARKER, this);
+
+        if (transfers.length === 0) {
+          return state;
+        }
+
+        if (transfers.length > 1) {
+          if (transfers[0].card.name === transfers[1].card.name) {
+            throw new GameError(GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
+          }
+        }
+
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.hand.moveCardTo(transfer.card, target);
+
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            }
+          });
+        }
+      });
     }
     return state;
   }

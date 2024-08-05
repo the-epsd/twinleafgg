@@ -1,6 +1,7 @@
+import { AlolanVulpix } from '../set-hidden-fates/alolan-vulpix';
 import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
 import { AetherParadiseConvserationArea } from './aether-paradise-conservation-area';
-import { AlolanVulpix } from './alolan-vulpix';
+
 import { AquaPatch } from './aqua-patch';
 import { BrookletHill } from './brooklet-hill';
 import { FieldBlower } from './field-blower';
@@ -15,6 +16,8 @@ export class AetherParadiseConvserationAreaArt extends AetherParadiseConvseratio
 
 export class AlolanVulpixArt extends AlolanVulpix {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_021_R_EN_LG.png';
+  public fullName = 'Alolan Vulpix GRI';
+  public setNumber = '21';
 }
 
 export class AquaPatchArt extends AquaPatch {
@@ -38,7 +41,7 @@ export class MachokeArt extends Machoke {
 }
 
 export class MallowArt extends Mallow {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_127_R_EN_LG.png';  
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_127_R_EN_LG.png';
 }
 
 export class MimikyuArt extends Mimikyu {
@@ -46,5 +49,5 @@ export class MimikyuArt extends Mimikyu {
 }
 
 export class RescueStretcherArt extends RescueStretcher {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_130_R_EN_LG.png';  
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_130_R_EN_LG.png';
 }

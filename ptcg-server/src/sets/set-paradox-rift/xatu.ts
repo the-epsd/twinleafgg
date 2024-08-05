@@ -29,10 +29,10 @@ export class Xatu extends PokemonCard {
   public retreat = [CardType.COLORLESS];
 
   public powers = [{
-    name: 'Akashic Sense',
+    name: 'Clairvoyant Sense',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may attach a Basic P Energy card from your hand to 1 of your Benched Pokémon. If you attached Energy to a Pokémon in this way, draw 2 cards.'
+    text: 'Once during your turn, you may attach a Basic [P] Energy card from your hand to 1 of your Benched Pokémon. If you attached Energy to a Pokémon in this way, draw 2 cards.'
   }];
 
   public attacks = [{

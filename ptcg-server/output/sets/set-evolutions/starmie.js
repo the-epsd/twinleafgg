@@ -7,10 +7,11 @@ const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 function* useSpaceBeacon(next, store, state, effect) {
     const player = effect.player;
     let cards = [];
-    if (cards.length < 1) {
+    if (player.hand.cards.length === 0) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     let basicEnergies = 0;
@@ -39,6 +40,11 @@ function* useSpaceBeacon(next, store, state, effect) {
     if (recovered.length === 0) {
         return state;
     }
+    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === effect.card) {
+            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+        }
+    });
     player.hand.moveCardsTo(cards, player.discard);
     player.discard.moveCardsTo(recovered, player.hand);
     return state;
@@ -70,10 +76,20 @@ class Starmie extends pokemon_card_1.PokemonCard {
                 text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
             }
         ];
+        this.FLOWER_SELECTING_MARKER = 'FLOWER_SELECTING_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.marker.removeMarker(this.FLOWER_SELECTING_MARKER, this);
+        }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+            const player = effect.player;
+            if (player.marker.hasMarker(this.FLOWER_SELECTING_MARKER, this)) {
+                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+            }
             const generator = useSpaceBeacon(() => generator.next(), store, state, effect);
+            player.marker.addMarker(this.FLOWER_SELECTING_MARKER, this);
             return generator.next().value;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

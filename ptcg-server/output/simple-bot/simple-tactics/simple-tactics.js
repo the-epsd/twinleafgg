@@ -74,8 +74,17 @@ class SimpleTactic {
         const newState = this.simulateAction(state, action);
         const newPlayer = newState && newState.players.find(p => p.id === playerId);
         if (newState !== undefined && newPlayer !== undefined) {
-            return this.stateScore.getScore(newState, playerId)
+            let score = this.stateScore.getScore(newState, playerId)
                 + (newState.turn > state.turn ? passTurnScore : 0);
+            // Special case for Lugia bot using Summoning Star ability
+            if (newPlayer.name === 'Lugia' && action instanceof game_1.UseAbilityAction && action.name === 'Summoning Star') {
+                const archeopsInDiscard = newPlayer.discard.cards.filter(c => c instanceof game_1.PokemonCard && c.name === 'Archeops').length;
+                const emptyBenchSlots = newPlayer.bench.filter(b => b.cards.length === 0).length;
+                if (archeopsInDiscard > 0 && emptyBenchSlots > 0) {
+                    score += 1000; // Significant boost to encourage using the ability
+                }
+            }
+            return score;
         }
     }
 }

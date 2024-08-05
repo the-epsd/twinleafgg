@@ -15,6 +15,7 @@ export interface ChooseCardsOptions {
     isSecret: boolean;
     differentTypes: boolean;
     maxPokemons: number | undefined;
+    maxBasicEnergies: number | undefined;
     maxEnergies: number | undefined;
     maxTrainers: number | undefined;
     maxTools: number | undefined;

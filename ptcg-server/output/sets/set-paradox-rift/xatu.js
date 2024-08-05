@@ -20,10 +20,10 @@ class Xatu extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Akashic Sense',
+                name: 'Clairvoyant Sense',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your turn, you may attach a Basic P Energy card from your hand to 1 of your Benched Pokémon. If you attached Energy to a Pokémon in this way, draw 2 cards.'
+                text: 'Once during your turn, you may attach a Basic [P] Energy card from your hand to 1 of your Benched Pokémon. If you attached Energy to a Pokémon in this way, draw 2 cards.'
             }];
         this.attacks = [{
                 name: 'Super Psy Bolt',

@@ -1,48 +1,49 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { Attack, PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage, Card, ChooseCardsPrompt, EnergyCard, GameError } from '../../game';
+import { StoreLike, State, CoinFlipPrompt, GameMessage, Card, ChooseCardsPrompt, EnergyCard, GameError, PlayerType } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
   effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
-    
-  if (cards.length < 1) {
+
+  if (player.hand.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   let basicEnergies = 0;
   player.discard.cards.forEach(c => {
     if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
       basicEnergies += 1;
     }
   });
-  
+
   if (basicEnergies === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     player.hand,
-    { },
+    {},
     { min: 1, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
   });
-  
+
   // Operation canceled by the user
   if (cards.length === 0) {
     return state;
   }
-  
-  
+
+
   let recovered: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
@@ -54,12 +55,19 @@ function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
     recovered = selected || [];
     next();
   });
-  
+
   // Operation canceled by the user
   if (recovered.length === 0) {
     return state;
   }
-  
+
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+    if (cardList.getPokemonCard() === effect.card) {
+      cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+    }
+  });
+
+
   player.hand.moveCardsTo(cards, player.discard);
   player.discard.moveCardsTo(recovered, player.hand);
 
@@ -69,15 +77,15 @@ function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
 export class Starmie extends PokemonCard {
 
   public name = 'Starmie';
-  
+
   public set = 'EVO';
-  
+
   public evolvesFrom: string = 'Staryu';
-  
+
   public fullName = 'Starmie EVO';
-  
+
   public setNumber = '31';
-  
+
   public cardType = CardType.WATER;
 
   public stage = Stage.STAGE_1;
@@ -104,11 +112,24 @@ export class Starmie extends PokemonCard {
       text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
     }
   ];
-  
+
+  public readonly FLOWER_SELECTING_MARKER = 'FLOWER_SELECTING_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof EndTurnEffect) {
+      const player = (effect as EndTurnEffect).player;
+      player.marker.removeMarker(this.FLOWER_SELECTING_MARKER, this);
+    }
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+      if (player.marker.hasMarker(this.FLOWER_SELECTING_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
       const generator = useSpaceBeacon(() => generator.next(), store, state, effect);
+      player.marker.addMarker(this.FLOWER_SELECTING_MARKER, this);
       return generator.next().value;
     }
 
