@@ -10,7 +10,7 @@ class SerperiorVSTAR extends game_1.PokemonCard {
         this.stage = game_1.Stage.VSTAR;
         this.evolvesFrom = 'Serperior V';
         this.cardType = game_1.CardType.GRASS;
-        this.hp = 280;
+        this.hp = 270;
         this.weakness = [{ type: game_1.CardType.FIRE }];
         this.retreat = [];
         this.tags = [game_1.CardTag.POKEMON_VSTAR];

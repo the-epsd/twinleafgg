@@ -150,6 +150,14 @@ export class KyuremVMAX extends PokemonCard {
 
             });
           }
+
+          player.marker.addMarker(this.GLACIATED_WORLD_MARKER, this);
+
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            }
+          });
         });
       }
     }

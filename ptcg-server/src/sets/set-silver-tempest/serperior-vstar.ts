@@ -12,7 +12,7 @@ export class SerperiorVSTAR extends PokemonCard {
 
   public cardType: CardType = CardType.GRASS;
 
-  public hp: number = 280;
+  public hp: number = 270;
 
   public weakness = [{ type: CardType.FIRE }];
 

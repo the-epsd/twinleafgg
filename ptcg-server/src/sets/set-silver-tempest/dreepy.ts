@@ -17,16 +17,16 @@ export class Dreepy extends PokemonCard {
 
   public weakness = [{ type: CardType.DARK }];
 
-  public resistance = [ {type: CardType.FIGHTING, value: -30} ];
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
-  public attacks = 
+  public attacks =
     [
       {
         name: 'Reckless Charge',
-        cost: [ CardType.PSYCHIC ],
-        damage: 10,
+        cost: [CardType.PSYCHIC],
+        damage: 30,
         text: 'This Pokémon also does 10 damage to itself.'
       }
     ];
@@ -51,7 +51,7 @@ export class Dreepy extends PokemonCard {
       dealDamage.target = player.active;
       return store.reduceEffect(state, dealDamage);
     }
-    
+
     return state;
   }
 }

@@ -103,6 +103,12 @@ class KyuremVMAX extends pokemon_card_1.PokemonCard {
                             temp.moveCardTo(card, player.hand); // Move card to hand
                         });
                     }
+                    player.marker.addMarker(this.GLACIATED_WORLD_MARKER, this);
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        }
+                    });
                 });
             }
         }
