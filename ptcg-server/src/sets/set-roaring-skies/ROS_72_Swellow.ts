@@ -10,7 +10,7 @@ export class Swellow extends PokemonCard {
   public cardType: CardType = CardType.COLORLESS;
   public hp: number = 90;
   public weakness = [{ type: CardType.LIGHTNING }];
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }]
+  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
   public retreat = [CardType.COLORLESS];
   public evolvesFrom = 'Taillow';
 

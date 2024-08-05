@@ -2,6 +2,7 @@ import { Arctibax } from './arctibax';
 import { Artazon } from './artazon';
 import { Baxcalibur } from './baxcalibur';
 import { BossOrders } from './boss-orders';
+import { Bramblin } from './bramblin';
 import { BraveyCharm } from './bravery-charm';
 import { Cetitan } from './cetitan';
 import { Cetoddle } from './cetoddle';
@@ -58,6 +59,9 @@ export declare class BaxcaliburArt extends Baxcalibur {
     cardImage: string;
 }
 export declare class BossOrdersArt extends BossOrders {
+    cardImage: string;
+}
+export declare class BramblinArt extends Bramblin {
     cardImage: string;
 }
 export declare class BraveyCharmArt extends BraveyCharm {

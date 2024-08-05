@@ -41,6 +41,7 @@ exports.setChillingReign = [
     new card_images_1.PeoniaArt(),
     new card_images_1.PeonyArt(),
     new card_images_1.Porygon2Art(),
+    new card_images_1.RaltsArt(),
     new card_images_1.ShadowRiderCalyrexVArt(),
     new card_images_1.ShadowRiderCalyrexVMAXArt(),
     new card_images_1.SnoruntArt(),

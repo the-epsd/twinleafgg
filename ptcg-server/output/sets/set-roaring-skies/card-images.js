@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WurmpleArt = exports.WinonaArt = exports.WideLensArt = exports.WallyArt = exports.VoltorbArt = exports.TrainersMailArt = exports.SwellowArt = exports.SkyFieldArt = exports.SilcoonArt = exports.ShuppetArt = exports.ShayminExArt = exports.DustoxArt = exports.DoubleDragonEnergyArt = exports.BeautiflyArt = exports.ArticunoArt = void 0;
+exports.WurmpleArt = exports.WinonaArt = exports.WideLensArt = exports.WallyArt = exports.VoltorbArt = exports.TrainersMailArt = exports.SwellowArt = exports.SkyFieldArt = exports.SilcoonArt = exports.ShuppetArt = exports.ShayminExArt = exports.NatuArt = exports.DustoxArt = exports.DoubleDragonEnergyArt = exports.BeautiflyArt = exports.ArticunoArt = void 0;
 const articuno_1 = require("./articuno");
 const beautifly_1 = require("./beautifly");
 const double_dragon_energy_1 = require("./double-dragon-energy");
+const natu_1 = require("./natu");
 const ROS_21_Voltorb_1 = require("./ROS_21_Voltorb");
 const ROS_72_Swellow_1 = require("./ROS_72_Swellow");
 const ROS_8_Dustox_1 = require("./ROS_8_Dustox");
@@ -44,6 +45,13 @@ class DustoxArt extends ROS_8_Dustox_1.Dustox {
     }
 }
 exports.DustoxArt = DustoxArt;
+class NatuArt extends natu_1.Natu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_028_R_EN_LG.png';
+    }
+}
+exports.NatuArt = NatuArt;
 class ShayminExArt extends shaymin_ex_1.ShayminEx {
     constructor() {
         super(...arguments);

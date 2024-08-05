@@ -2,6 +2,7 @@ import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
 import { Bombirdierex } from './bombirdier';
 import { Bounsweet } from './bounsweet';
 import { BruteBonnet } from './brute-bonnet';
+import { Charcadet } from './charcadet';
 import { ChiYu } from './chi-yu';
 import { CounterCatcher } from './counter-catcher';
 import { Crobat } from './crobat';
@@ -70,6 +71,9 @@ export declare class BounsweetArt extends Bounsweet {
     cardImage: string;
 }
 export declare class BruteBonnetArt extends BruteBonnet {
+    cardImage: string;
+}
+export declare class CharcadetArt extends Charcadet {
     cardImage: string;
 }
 export declare class ChiYuArt extends ChiYu {

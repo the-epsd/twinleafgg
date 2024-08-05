@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZweilousArt = exports.WingullArt = exports.TinkatonArt = exports.TinkatuffArt = exports.TinkatinkArt = exports.TingLuexArt = exports.TherapeuticEnergyArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.PelipperArt = exports.OrthwormArt = exports.NoivernexArt = exports.NoibatArt = exports.MurkrowArt = exports.MimikyuArt = exports.MagnemiteArt = exports.LuminousEnergyArt = exports.LokixArt = exports.JetEnergyArt = exports.IonoArt = exports.HydreigonArt = exports.GrushaArt = exports.GreatBallArt = exports.GiacomoArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.DeinoArt = exports.CufantArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.ChiYuexArt = exports.CetoddleArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
+exports.WingullArt = exports.TinkatonArt = exports.TinkatuffArt = exports.TinkatinkArt = exports.TingLuexArt = exports.TherapeuticEnergyArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.PelipperArt = exports.OrthwormArt = exports.NoivernexArt = exports.NoibatArt = exports.MurkrowArt = exports.MimikyuArt = exports.MagnemiteArt = exports.LuminousEnergyArt = exports.LokixArt = exports.JetEnergyArt = exports.IonoArt = exports.HydreigonArt = exports.GrushaArt = exports.GreatBallArt = exports.GiacomoArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.DeinoArt = exports.CufantArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.ChiYuexArt = exports.CetoddleArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BramblinArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
+exports.ZweilousArt = void 0;
 const arctibax_1 = require("./arctibax");
 const artazon_1 = require("./artazon");
 const baxcalibur_1 = require("./baxcalibur");
 const boss_orders_1 = require("./boss-orders");
+const bramblin_1 = require("./bramblin");
 const bravery_charm_1 = require("./bravery-charm");
 const cetitan_1 = require("./cetitan");
 const cetoddle_1 = require("./cetoddle");
@@ -79,6 +81,13 @@ class BossOrdersArt extends boss_orders_1.BossOrders {
     }
 }
 exports.BossOrdersArt = BossOrdersArt;
+class BramblinArt extends bramblin_1.Bramblin {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_023_R_EN_LG.png';
+    }
+}
+exports.BramblinArt = BramblinArt;
 class BraveyCharmArt extends bravery_charm_1.BraveyCharm {
     constructor() {
         super(...arguments);

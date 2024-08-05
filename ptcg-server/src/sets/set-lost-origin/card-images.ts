@@ -21,6 +21,7 @@ import { HisuianZoroark } from './hisuian-zoroark';
 import { HisuianZoroarkV } from './hisuian-zoroark-v';
 import { HisuianZoroarkVSTAR } from './hisuian-zoroark-vstar';
 import { HisuianZorua } from './hisuian-zorua';
+import { Inkay } from './inkay';
 import { Jynx } from './jynx';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
@@ -46,6 +47,7 @@ import { Sableye } from './sableye';
 import { Silcoon } from './silcoon';
 import { Snorlax } from './snorlax';
 import { Thorton } from './thorton';
+import { Tynamo } from './tynamo';
 import { Volo } from './volo';
 
 export class ArezuArt extends Arezu {
@@ -144,6 +146,10 @@ export class HisuianZoroarkArt extends HisuianZoroark {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_076_R_EN_LG.png';
 }
 
+export class InkayArt extends Inkay {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_121_R_EN_LG.png';
+}
+
 export class JynxArt extends Jynx {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_068_R_EN_LG.png';
 }
@@ -238,6 +244,10 @@ export class SnorlaxArt extends Snorlax {
 
 export class ThortonArt extends Thorton {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_167_R_EN.png';
+}
+
+export class TynamoArt extends Tynamo {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_059_R_EN_LG.png';
 }
 
 export class VoloArt extends Volo {

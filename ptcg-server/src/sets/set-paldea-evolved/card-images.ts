@@ -2,6 +2,7 @@ import { Arctibax } from './arctibax';
 import { Artazon } from './artazon';
 import { Baxcalibur } from './baxcalibur';
 import { BossOrders } from './boss-orders';
+import { Bramblin } from './bramblin';
 import { BraveyCharm } from './bravery-charm';
 import { Cetitan } from './cetitan';
 import { Cetoddle } from './cetoddle';
@@ -63,6 +64,10 @@ export class BaxcaliburArt extends Baxcalibur {
 
 export class BossOrdersArt extends BossOrders {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_172_R_EN_LG.png';
+}
+
+export class BramblinArt extends Bramblin {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_023_R_EN_LG.png';
 }
 
 export class BraveyCharmArt extends BraveyCharm {

@@ -20,6 +20,7 @@ exports.setSilverTempest = [
     new card_images_1.ElgyemArt(),
     new card_images_1.EmergencyJellyArt(),
     new card_images_1.FeebasArt(),
+    new card_images_1.FennekinArt(),
     new card_images_1.ForestSealStoneArt(),
     new card_images_1.FurisodeGirlArt(),
     new card_images_1.GardevoirArt(),

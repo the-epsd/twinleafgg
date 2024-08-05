@@ -21,6 +21,7 @@ import { HisuianZoroark } from './hisuian-zoroark';
 import { HisuianZoroarkV } from './hisuian-zoroark-v';
 import { HisuianZoroarkVSTAR } from './hisuian-zoroark-vstar';
 import { HisuianZorua } from './hisuian-zorua';
+import { Inkay } from './inkay';
 import { Jynx } from './jynx';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
@@ -46,6 +47,7 @@ import { Sableye } from './sableye';
 import { Silcoon } from './silcoon';
 import { Snorlax } from './snorlax';
 import { Thorton } from './thorton';
+import { Tynamo } from './tynamo';
 import { Volo } from './volo';
 export declare class ArezuArt extends Arezu {
     cardImage: string;
@@ -119,6 +121,9 @@ export declare class HisuianZoruaArt extends HisuianZorua {
 export declare class HisuianZoroarkArt extends HisuianZoroark {
     cardImage: string;
 }
+export declare class InkayArt extends Inkay {
+    cardImage: string;
+}
 export declare class JynxArt extends Jynx {
     cardImage: string;
 }
@@ -189,6 +194,9 @@ export declare class SnorlaxArt extends Snorlax {
     cardImage: string;
 }
 export declare class ThortonArt extends Thorton {
+    cardImage: string;
+}
+export declare class TynamoArt extends Tynamo {
     cardImage: string;
 }
 export declare class VoloArt extends Volo {

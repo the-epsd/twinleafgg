@@ -15,6 +15,7 @@ exports.setNobleVictories = [
     new card_images_1.SuperRodArt(),
     new card_images_1.TerrakionArt(),
     new card_images_1.TynamoArt(),
+    new card_images_1.Tynamo2Art(),
     new card_images_1.VanillishArt(),
     new card_images_1.VanilliteArt(),
     new card_images_1.VanilluxeArt(),

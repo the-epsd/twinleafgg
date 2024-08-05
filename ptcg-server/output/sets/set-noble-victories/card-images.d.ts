@@ -11,6 +11,7 @@ import { PlumeFossil } from './plume-fossil';
 import { Terrakion } from './terrakion';
 import { Trubbish } from './trubbish';
 import { Tynamo } from './tynamo';
+import { Tynamo2 } from './tynamo-2';
 import { Vanillish } from './vanillish';
 import { Vanillite } from './vanillite';
 import { Vanilluxe } from './vanilluxe';
@@ -54,6 +55,9 @@ export declare class TrubbishArt extends Trubbish {
     cardImage: string;
 }
 export declare class TynamoArt extends Tynamo {
+    cardImage: string;
+}
+export declare class Tynamo2Art extends Tynamo2 {
     cardImage: string;
 }
 export declare class VanillishArt extends Vanillish {

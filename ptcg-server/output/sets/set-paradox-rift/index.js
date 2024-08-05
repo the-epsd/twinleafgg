@@ -6,6 +6,7 @@ exports.setParadoxRift = [
     new card_images_1.AncientBoosterEnergyCapsuleArt(),
     new card_images_1.BruteBonnetArt(),
     new card_images_1.BounsweetArt(),
+    new card_images_1.CharcadetArt(),
     new card_images_1.ChiYuArt(),
     new card_images_1.CounterCatcherArt(),
     new card_images_1.CrobatArt(),

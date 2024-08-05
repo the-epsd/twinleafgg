@@ -7,6 +7,7 @@ exports.setRoaringSkies = [
     new card_images_1.BeautiflyArt(),
     new card_images_1.DoubleDragonEnergyArt(),
     new card_images_1.DustoxArt(),
+    new card_images_1.NatuArt(),
     new card_images_1.ShayminExArt(),
     new card_images_1.ShuppetArt(),
     new card_images_1.SilcoonArt(),
