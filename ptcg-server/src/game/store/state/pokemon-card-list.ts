@@ -24,6 +24,8 @@ export class PokemonCardList extends CardList {
   public abilityMarker = new Marker();
 
   public pokemonPlayedTurn: number = 0;
+  
+  public sleepFlips = 1;
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

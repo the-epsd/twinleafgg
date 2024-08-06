@@ -1,11 +1,9 @@
-import { CoinFlipPrompt, GameLog, GameMessage } from '../../game';
 import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -47,39 +45,11 @@ export class Snorlax extends PokemonCard {
 
   public fullName: string = 'Snorlax LOR';
 
-  public THUMPING_SNORE_MARKER = 'THUMPING_SNORE_MARKER';
-  
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof BetweenTurnsEffect && effect.player.active.cards.includes(this)) {
-      
-      if (!effect.player.marker.hasMarker(this.THUMPING_SNORE_MARKER, this) || 
-          !effect.player.active.specialConditions.includes(SpecialCondition.ASLEEP)) {
-        return state;
-      }
-      
-      const player = effect.player;
-      
-      store.log(state, GameLog.LOG_FLIP_ASLEEP, { name: player.name });
-      store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
-        const wakesUp = results.every(r => r);
-        
-        if (wakesUp) {
-          player.marker.removeMarker(this.THUMPING_SNORE_MARKER);
-        }
-        
-        effect.asleepFlipResult = wakesUp;
-      });
-      
-      return state;
-    }
     
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       effect.player.active.addSpecialCondition(SpecialCondition.ASLEEP);
-      effect.player.marker.addMarker(this.THUMPING_SNORE_MARKER, this);
+      effect.player.active.sleepFlips = 2;
     }
 
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
