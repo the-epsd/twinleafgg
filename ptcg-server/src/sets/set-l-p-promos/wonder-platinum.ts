@@ -1,25 +1,23 @@
-import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, Stage, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../game';
+import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
-export class HisuianHeavyBall extends TrainerCard {
+export class WonderPlatinum extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public regulationMark = 'F';
+  public set: string = 'DPt-P';
 
-  public set: string = 'ASR';
-
-  public name: string = 'Hisuian Heavy Ball';
+  public name: string = 'Wonder Platinum';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '146';
+  public setNumber: string = '33';
 
-  public fullName: string = 'Hisuian Heavy Ball ASR';
+  public fullName: string = 'Wonder Platinum DPt-P';
 
   public text: string =
-    'Look at your face-down Prize cards. You may reveal a Basic Pokémon you find there, put it into your hand, and put this Hisuian Heavy Ball in its place as a face-down Prize card. (If you don\'t reveal a Basic Pokémon, put this card in the discard pile.) Then, shuffle your face-down Prize cards.';
+    'Look at all of your face-down Prize cards. You may choose 1 Energy card you find there, show it to your opponent, and put it into your hand. If you do, put this card as a Prize card face up instead of discarding it.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -65,14 +63,14 @@ export class HisuianHeavyBall extends TrainerCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
         allPrizeCards,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC },
+        { superType: SuperType.ENERGY },
         { min: 0, max: 1, allowCancel: false, blocked: blocked }
       ), chosenPrize => {
 
         if (chosenPrize === null || chosenPrize.length === 0) {
           player.prizes.forEach(p => { p.isSecret = true; });
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
+          // player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
           return state;
         }
 
@@ -97,7 +95,7 @@ export class HisuianHeavyBall extends TrainerCard {
         }
 
         player.prizes.forEach(p => { p.isSecret = true; });
-        player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
+        // player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
 
         return state;
 
@@ -106,30 +104,30 @@ export class HisuianHeavyBall extends TrainerCard {
 
     return state;
   }
-
-
-  shuffleFaceDownPrizeCards(array: CardList[]): CardList[] {
-
-    const faceDownPrizeCards = array.filter(p => p.isSecret && p.cards.length > 0);
-
-    for (let i = faceDownPrizeCards.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = faceDownPrizeCards[i];
-      faceDownPrizeCards[i] = faceDownPrizeCards[j];
-      faceDownPrizeCards[j] = temp;
-    }
-
-    const prizePositions = [];
-
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].cards.length === 0 || !array[i].isSecret) {
-        prizePositions.push(array[i]);
-        continue;
-      }
-
-      prizePositions.push(faceDownPrizeCards.splice(0, 1)[0]);
-    }
-
-    return prizePositions;
-  }
 }
+
+//   shuffleFaceDownPrizeCards(array: CardList[]): CardList[] {
+
+//     const faceDownPrizeCards = array.filter(p => p.isSecret && p.cards.length > 0);
+
+//     for (let i = faceDownPrizeCards.length - 1; i > 0; i--) {
+//       const j = Math.floor(Math.random() * (i + 1));
+//       const temp = faceDownPrizeCards[i];
+//       faceDownPrizeCards[i] = faceDownPrizeCards[j];
+//       faceDownPrizeCards[j] = temp;
+//     }
+
+//     const prizePositions = [];
+
+//     for (let i = 0; i < array.length; i++) {
+//       if (array[i].cards.length === 0 || !array[i].isSecret) {
+//         prizePositions.push(array[i]);
+//         continue;
+//       }
+
+//       prizePositions.push(faceDownPrizeCards.splice(0, 1)[0]);
+//     }
+
+//     return prizePositions;
+//   }
+// }

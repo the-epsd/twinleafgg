@@ -24,8 +24,10 @@ __exportStar(require("./set-great-encounters"), exports);
 __exportStar(require("./set-op9"), exports);
 __exportStar(require("./set-platinum"), exports);
 //HGSS Era
+__exportStar(require("./set-battle-road-promos"), exports);
 __exportStar(require("./set-heartgold-and-soulsilver"), exports);
 __exportStar(require("./set-heartgold-and-soulsilver-promos"), exports);
+__exportStar(require("./set-l-p-promos"), exports);
 __exportStar(require("./set-triumphant"), exports);
 __exportStar(require("./set-undaunted"), exports);
 __exportStar(require("./set-unleashed"), exports);

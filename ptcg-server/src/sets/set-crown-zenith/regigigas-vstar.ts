@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils, GameError } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 
 export class RegigigasVSTAR extends PokemonCard {
@@ -33,7 +34,7 @@ export class RegigigasVSTAR extends PokemonCard {
       name: 'Giga Impact',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 230,
-      text: ''
+      text: 'During your next turn, this Pokémon can\'t attack.'
     },
   ];
 
@@ -49,7 +50,21 @@ export class RegigigasVSTAR extends PokemonCard {
 
   public fullName: string = 'Regigigas VSTAR CRZ';
 
+  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('marker cleared');
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('second marker added');
+    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
@@ -81,6 +96,18 @@ export class RegigigasVSTAR extends PokemonCard {
         return state;
       });
     }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      // Check marker
+      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        console.log('attack blocked');
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+      console.log('marker added');
+    }
+
     return state;
   }
 }

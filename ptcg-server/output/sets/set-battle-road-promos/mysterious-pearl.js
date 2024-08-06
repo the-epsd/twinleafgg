@@ -1,19 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HisuianHeavyBall = void 0;
+exports.MysteriousPearl = void 0;
 const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-class HisuianHeavyBall extends game_1.TrainerCard {
+class MysteriousPearl extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = game_1.TrainerType.ITEM;
-        this.regulationMark = 'F';
-        this.set = 'ASR';
-        this.name = 'Hisuian Heavy Ball';
+        this.set = 'BRP';
+        this.name = 'Mysterious Pearl';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '146';
-        this.fullName = 'Hisuian Heavy Ball ASR';
-        this.text = 'Look at your face-down Prize cards. You may reveal a Basic Pokémon you find there, put it into your hand, and put this Hisuian Heavy Ball in its place as a face-down Prize card. (If you don\'t reveal a Basic Pokémon, put this card in the discard pile.) Then, shuffle your face-down Prize cards.';
+        this.setNumber = '2';
+        this.fullName = 'Mysterious Pearl BRP';
+        this.text = 'Look at all of your face-down Prize cards. You may choose 1 Pokémon you find there, show it to your opponent, and put it into your hand. If you do, put this card as a Prize card face up instead of discarding it.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
@@ -45,11 +44,11 @@ class HisuianHeavyBall extends game_1.TrainerCard {
             player.prizes.forEach(prizeList => {
                 allPrizeCards.cards.push(...prizeList.cards);
             });
-            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, allPrizeCards, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false, blocked: blocked }), chosenPrize => {
+            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, allPrizeCards, { superType: game_1.SuperType.POKEMON }, { min: 0, max: 1, allowCancel: false, blocked: blocked }), chosenPrize => {
                 if (chosenPrize === null || chosenPrize.length === 0) {
                     player.prizes.forEach(p => { p.isSecret = true; });
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                    player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
+                    // player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
                     return state;
                 }
                 const prizePokemon = chosenPrize[0];
@@ -65,29 +64,30 @@ class HisuianHeavyBall extends game_1.TrainerCard {
                     player.supporter.moveCardTo(heavyBall, chosenPrizeList);
                 }
                 player.prizes.forEach(p => { p.isSecret = true; });
-                player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
+                // player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
                 return state;
             });
         }
         return state;
     }
-    shuffleFaceDownPrizeCards(array) {
-        const faceDownPrizeCards = array.filter(p => p.isSecret && p.cards.length > 0);
-        for (let i = faceDownPrizeCards.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            const temp = faceDownPrizeCards[i];
-            faceDownPrizeCards[i] = faceDownPrizeCards[j];
-            faceDownPrizeCards[j] = temp;
-        }
-        const prizePositions = [];
-        for (let i = 0; i < array.length; i++) {
-            if (array[i].cards.length === 0 || !array[i].isSecret) {
-                prizePositions.push(array[i]);
-                continue;
-            }
-            prizePositions.push(faceDownPrizeCards.splice(0, 1)[0]);
-        }
-        return prizePositions;
-    }
 }
-exports.HisuianHeavyBall = HisuianHeavyBall;
+exports.MysteriousPearl = MysteriousPearl;
+//   shuffleFaceDownPrizeCards(array: CardList[]): CardList[] {
+//     const faceDownPrizeCards = array.filter(p => p.isSecret && p.cards.length > 0);
+//     for (let i = faceDownPrizeCards.length - 1; i > 0; i--) {
+//       const j = Math.floor(Math.random() * (i + 1));
+//       const temp = faceDownPrizeCards[i];
+//       faceDownPrizeCards[i] = faceDownPrizeCards[j];
+//       faceDownPrizeCards[j] = temp;
+//     }
+//     const prizePositions = [];
+//     for (let i = 0; i < array.length; i++) {
+//       if (array[i].cards.length === 0 || !array[i].isSecret) {
+//         prizePositions.push(array[i]);
+//         continue;
+//       }
+//       prizePositions.push(faceDownPrizeCards.splice(0, 1)[0]);
+//     }
+//     return prizePositions;
+//   }
+// }

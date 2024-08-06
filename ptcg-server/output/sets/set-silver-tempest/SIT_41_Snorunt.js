@@ -29,8 +29,8 @@ class Snorunt extends pokemon_card_1.PokemonCard {
         this.setNumber = '41';
         this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
-        this.name = 'Snowrunt';
-        this.fullName = 'Snowrunt SIT';
+        this.name = 'Snorunt';
+        this.fullName = 'Snorunt SIT';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

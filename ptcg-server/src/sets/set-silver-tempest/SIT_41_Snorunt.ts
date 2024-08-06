@@ -28,8 +28,8 @@ export class Snorunt extends PokemonCard {
   public setNumber: string = '41';
   public regulationMark: string = 'F';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Snowrunt';
-  public fullName: string = 'Snowrunt SIT';
+  public name: string = 'Snorunt';
+  public fullName: string = 'Snorunt SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

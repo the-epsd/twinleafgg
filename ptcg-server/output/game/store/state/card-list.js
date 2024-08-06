@@ -14,6 +14,7 @@ class CardList {
         this.cards = [];
         this.isPublic = false;
         this.isSecret = false;
+        this.faceUpPrize = false;
         this.stadiumDirection = StadiumDirection.UP;
         this.markedAsNotSecret = false;
     }

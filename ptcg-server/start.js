@@ -26,9 +26,11 @@ cardManager.defineSet(sets.setBaseSetEnergy);
 cardManager.defineSet(sets.setGreatEncounters);
 cardManager.defineSet(sets.setPlatinum);
 
+cardManager.defineSet(sets.setBattleRoadPromos);
 
 cardManager.defineSet(sets.setHeartGoldAndSoulSilver);
 cardManager.defineSet(sets.setHeartGoldAndSoulSilverPromos);
+cardManager.defineSet(sets.setLPPromos);
 cardManager.defineSet(sets.setTriumphant);
 cardManager.defineSet(sets.setUndaunted);
 cardManager.defineSet(sets.setUnleashed);

@@ -16,6 +16,8 @@ export class CardList {
 
   public isSecret: boolean = false;
 
+  public faceUpPrize: boolean = false;
+
   public stadiumDirection: StadiumDirection = StadiumDirection.UP;
 
   public markedAsNotSecret: boolean = false;

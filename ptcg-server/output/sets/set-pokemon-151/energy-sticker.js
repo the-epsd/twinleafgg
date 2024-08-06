@@ -19,6 +19,17 @@ class EnergySticker extends game_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            const hasBench = player.bench.some(b => b.cards.length > 0);
+            if (!hasBench) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            const hasEnergyInDiscard = player.discard.cards.some(c => {
+                return c instanceof game_1.EnergyCard
+                    && c.energyType === card_types_1.EnergyType.BASIC;
+            });
+            if (!hasEnergyInDiscard) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
             return store.prompt(state, [
                 new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
             ], result => {
@@ -28,19 +39,7 @@ class EnergySticker extends game_1.TrainerCard {
                 }
                 if (result === true) {
                     const player = effect.player;
-                    const hasBench = player.bench.some(b => b.cards.length > 0);
-                    if (!hasBench) {
-                        throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-                    }
-                    const hasEnergyInDiscard = player.discard.cards.some(c => {
-                        return c instanceof game_1.EnergyCard
-                            && c.energyType === card_types_1.EnergyType.BASIC
-                            && c.provides.includes(card_types_1.CardType.LIGHTNING);
-                    });
-                    if (!hasEnergyInDiscard) {
-                        throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-                    }
-                    state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { allowCancel: true, min: 1, max: 1 }), transfers => {
+                    state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 1, max: 1 }), transfers => {
                         transfers = transfers || [];
                         // cancelled by user
                         if (transfers.length === 0) {

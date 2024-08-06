@@ -259,7 +259,7 @@ export class SerperiorVSTARArt extends SerperiorVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_008_R_EN_LG.png';
 }
 
-export class SnowruntArt extends Snorunt {
+export class SnoruntArt extends Snorunt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_041_R_EN_LG.png';
 }
 

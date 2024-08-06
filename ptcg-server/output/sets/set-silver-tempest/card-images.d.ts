@@ -208,7 +208,7 @@ export declare class SerperiorVArt extends SerperiorV {
 export declare class SerperiorVSTARArt extends SerperiorVSTAR {
     cardImage: string;
 }
-export declare class SnowruntArt extends Snorunt {
+export declare class SnoruntArt extends Snorunt {
     cardImage: string;
 }
 export declare class SpindaArt extends Spinda {

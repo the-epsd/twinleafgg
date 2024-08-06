@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_message_1 = require("../../game/game-message");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Donphan extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -19,7 +20,7 @@ class Donphan extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Spinning Turn',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.FIGHTING],
                 damage: 40,
                 text: 'Switch this Pokemon with 1 of your Benched Pokemon.'
             }, {
@@ -35,18 +36,25 @@ class Donphan extends pokemon_card_1.PokemonCard {
         this.fullName = 'Donphan PLS';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '72';
+        this.hitAndRun = false;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            this.hitAndRun = true;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && this.hitAndRun == true) {
             const player = effect.player;
             const hasBenched = player.bench.some(b => b.cards.length > 0);
             if (!hasBenched) {
+                this.hitAndRun = false;
                 return state;
             }
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_NEW_ACTIVE_POKEMON, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), selected => {
+            return state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_NEW_ACTIVE_POKEMON, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), selected => {
                 if (!selected || selected.length === 0) {
+                    this.hitAndRun = false;
                     return state;
                 }
+                this.hitAndRun = false;
                 const target = selected[0];
                 player.switchPokemon(target);
             });

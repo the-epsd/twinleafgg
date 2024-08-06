@@ -60,6 +60,7 @@ class Cresselia extends pokemon_card_1.PokemonCard {
                             const prizeCard = chosenPrize[0];
                             prizeCard.isSecret = false;
                             prizeCard.isPublic = true;
+                            prizeCard.faceUpPrize = true;
                             effect.damage += 80;
                         });
                     }
