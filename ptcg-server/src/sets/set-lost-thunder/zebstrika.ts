@@ -31,6 +31,7 @@ export class Zebstrika extends PokemonCard {
   }];
 
   public set: string = 'LOT';
+  public setNumber: string = '82';
   public name: string = 'Zebstrika';
   public fullName: string = 'Zebstrika LOT';
   public cardImage = 'assets/cardback.png';

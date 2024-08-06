@@ -18,6 +18,7 @@ class RegigigasVSTAR extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Star Guardian',
                 powerType: game_1.PowerType.ABILITY,
+                useWhenInPlay: true,
                 text: 'During your turn, if your opponent has exactly 1 Prize card remaining, you may choose 1 of your opponent\'s Benched Pokémon. They discard that Pokémon and all attached cards. (You can\'t use more than 1 VSTAR Power in a game.)'
             }];
         this.attacks = [
@@ -45,11 +46,12 @@ class RegigigasVSTAR extends pokemon_card_1.PokemonCard {
             if (player.usedVSTAR == true) {
                 throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
-            player.usedVSTAR = true;
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: true }), selected => {
+            //Add bench check
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
                 const targets = selected || [];
                 targets.forEach(target => {
                     target.moveTo(opponent.discard);
+                    player.usedVSTAR = true;
                 });
                 return state;
             });

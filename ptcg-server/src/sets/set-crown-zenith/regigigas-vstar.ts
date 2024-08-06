@@ -11,7 +11,7 @@ export class RegigigasVSTAR extends PokemonCard {
 
   public evolvesFrom = 'Regigigas V';
 
-  public tags = [ CardTag.POKEMON_VSTAR ];
+  public tags = [CardTag.POKEMON_VSTAR];
 
   public cardType: CardType = CardType.COLORLESS;
 
@@ -19,18 +19,19 @@ export class RegigigasVSTAR extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
-  
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+
   public powers = [{
     name: 'Star Guardian',
     powerType: PowerType.ABILITY,
+    useWhenInPlay: true,
     text: 'During your turn, if your opponent has exactly 1 Prize card remaining, you may choose 1 of your opponent\'s Benched Pokémon. They discard that Pokémon and all attached cards. (You can\'t use more than 1 VSTAR Power in a game.)'
   }];
 
   public attacks = [
     {
       name: 'Giga Impact',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 230,
       text: ''
     },
@@ -62,18 +63,20 @@ export class RegigigasVSTAR extends PokemonCard {
       if (player.usedVSTAR == true) {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
-      player.usedVSTAR = true;
+
+      //Add bench check
 
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
         [SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: true },
+        { min: 1, max: 1, allowCancel: false },
       ), selected => {
         const targets = selected || [];
         targets.forEach(target => {
           target.moveTo(opponent.discard);
+          player.usedVSTAR = true;
         });
         return state;
       });

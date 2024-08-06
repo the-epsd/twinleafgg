@@ -26,6 +26,7 @@ export declare class Zebstrika extends PokemonCard {
         text: string;
     }[];
     set: string;
+    setNumber: string;
     name: string;
     fullName: string;
     cardImage: string;
