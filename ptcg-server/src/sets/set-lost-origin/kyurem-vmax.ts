@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class KyuremVMAX extends PokemonCard {
 
@@ -60,6 +61,11 @@ export class KyuremVMAX extends PokemonCard {
       player.marker.removeMarker(this.GLACIATED_WORLD_MARKER, this);
     }
 
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.GLACIATED_WORLD_MARKER, this);
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
@@ -109,6 +115,15 @@ export class KyuremVMAX extends PokemonCard {
 
       // If no energy cards were drawn, move all cards to discard
       if (energyCardsDrawn.length == 0) {
+
+        player.marker.addMarker(this.GLACIATED_WORLD_MARKER, this);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
         temp.cards.slice(0, 1).forEach(card => {
 
           store.prompt(state, [new ShowCardsPrompt(
@@ -133,6 +148,8 @@ export class KyuremVMAX extends PokemonCard {
           { min: 0, max: energyCardsDrawn.length, allowCancel: false }
         ), transfers => {
 
+          player.marker.addMarker(this.GLACIATED_WORLD_MARKER, this);
+
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
             if (cardList.getPokemonCard() === this) {
               cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
@@ -151,13 +168,6 @@ export class KyuremVMAX extends PokemonCard {
             });
           }
 
-          player.marker.addMarker(this.GLACIATED_WORLD_MARKER, this);
-
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-            if (cardList.getPokemonCard() === this) {
-              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
-            }
-          });
         });
       }
     }
