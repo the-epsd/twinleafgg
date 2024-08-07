@@ -77,9 +77,9 @@ export class Gardevoir extends PokemonCard {
 
       let energyCount = 0;
       checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType => {
-          return cardType === CardType.PSYCHIC;
-        }).length;
+        energyCount += em.provides.filter(cardType =>
+          cardType === CardType.PSYCHIC || cardType === CardType.ANY
+        ).length;
       });
       effect.damage += energyCount * 30;
     }

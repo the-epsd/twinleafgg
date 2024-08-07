@@ -5,6 +5,7 @@ import { DarkClaw } from './dark-claw';
 import { DarkraiEx } from './darkrai-ex';
 import { Gardevoir } from './DEX_109_Gardevoir';
 import { Empoleon } from './empoleon';
+import { Ivysaur } from './ivysaur';
 import { Piplup } from './piplup';
 import { Prinplup } from './prinplup';
 import { RaikouEx } from './raikou-ex';
@@ -46,6 +47,10 @@ export class EnhancedHammerArt extends EnhancedHammer {
 
 export class GardevoirArt extends Gardevoir {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DEX/DEX_109_R_EN_LG.png';
+}
+
+export class IvysaurArt extends Ivysaur {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DEX/DEX_002_R_EN_LG.png';
 }
 
 export class PiplupArt extends Piplup {

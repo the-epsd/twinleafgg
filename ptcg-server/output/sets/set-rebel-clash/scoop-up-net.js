@@ -8,7 +8,7 @@ class ScoopUpNet extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.name = 'Scoop Up Net';
-        this.setNumber = '71';
+        this.setNumber = '165';
         this.set = 'RCL';
         this.fullName = 'Scoop Up Net RCL';
         this.superType = card_types_1.SuperType.TRAINER;

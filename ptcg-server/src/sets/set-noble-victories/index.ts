@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArchenArt, ArcheopsArt, BlitzleArt, ChandelureArt, DurantArt, EelektrikArt, KyuremArt, LampentArt, PlumeFossilArt, SuperRodArt, TerrakionArt, TynamoArt, VanillishArt, VanilliteArt, VanilluxeArt, XtransceiverArt } from './card-images';
+import { ArchenArt, ArcheopsArt, BlitzleArt, ChandelureArt, DurantArt, EelektrikArt, KyuremArt, LampentArt, PlumeFossilArt, SuperRodArt, TerrakionArt, Tynamo2Art, TynamoArt, VanillishArt, VanilliteArt, VanilluxeArt, XtransceiverArt } from './card-images';
 
 export const setNobleVictories: Card[] = [
   new ArchenArt(),
@@ -14,6 +14,7 @@ export const setNobleVictories: Card[] = [
   new SuperRodArt(),
   new TerrakionArt(),
   new TynamoArt(),
+  new Tynamo2Art(),
   new VanillishArt(),
   new VanilliteArt(),
   new VanilluxeArt(),

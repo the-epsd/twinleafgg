@@ -111,9 +111,9 @@ export class Orthwormex extends PokemonCard {
 
       let energyCount = 0;
       checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType => {
-          return cardType === CardType.METAL;
-        }).length;
+        energyCount += em.provides.filter(cardType =>
+          cardType === CardType.METAL || cardType === CardType.ANY
+        ).length;
       });
 
       const oppActive = player.active;

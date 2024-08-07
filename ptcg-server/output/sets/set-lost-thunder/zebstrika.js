@@ -29,6 +29,7 @@ class Zebstrika extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.set = 'LOT';
+        this.setNumber = '82';
         this.name = 'Zebstrika';
         this.fullName = 'Zebstrika LOT';
         this.cardImage = 'assets/cardback.png';

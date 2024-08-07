@@ -8,6 +8,7 @@ import { HustleBelt } from './hustle-belt';
 import { Magcargo } from './magcargo';
 import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
+import { Oricorio } from './oricorio';
 import { Swampert } from './swampert';
 import { TateAndLiza } from './tate-and-liza';
 
@@ -37,6 +38,10 @@ export class MarshtompArt extends Marshtomp {
 
 export class NuzleafArt extends Nuzleaf {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_013_R_EN_LG.png';
+}
+
+export class OricorioArt extends Oricorio {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_030_R_EN_LG.png';
 }
 
 export class SableyeArt extends Sableye {

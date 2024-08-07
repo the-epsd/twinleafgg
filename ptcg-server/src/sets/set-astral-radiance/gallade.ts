@@ -6,6 +6,7 @@ import {
   MoveEnergyPrompt,
   PlayerType,
   PowerType,
+  ShowCardsPrompt,
   ShuffleDeckPrompt,
   SlotType,
   State,
@@ -35,7 +36,7 @@ export class Gallade extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Buddy Catch',
@@ -49,7 +50,7 @@ export class Gallade extends PokemonCard {
   public attacks = [
     {
       name: 'Swirling Slice',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
       damage: 160,
       text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon'
     }
@@ -64,11 +65,11 @@ export class Gallade extends PokemonCard {
   public name: string = 'Gallade';
 
   public fullName: string = 'Gallade ASR';
-  
+
   public readonly BUDDY_CATCH_MARKER = 'BUDDY_CATCH_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
@@ -108,27 +109,36 @@ export class Gallade extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.BUDDY_CATCH_MARKER, this);
     }
-      
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.BUDDY_CATCH_MARKER, this);
     }
-      
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
       if (player.marker.hasMarker(this.BUDDY_CATCH_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-        
+
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id, 
+        player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck, 
+        player.deck,
         { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
         { min: 0, max: 2, allowCancel: true }
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);
-  
+
+        if (cards.length > 0) {
+          state = store.prompt(state, new ShowCardsPrompt(
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            cards
+          ), () => { });
+        }
+
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
           player.marker.addMarker(this.BUDDY_CATCH_MARKER, this);
@@ -136,7 +146,7 @@ export class Gallade extends PokemonCard {
       });
     }
     if (effect instanceof EndTurnEffect) {
-    
+
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
         if (player instanceof Gallade) {
           player.marker.removeMarker(this.BUDDY_CATCH_MARKER);

@@ -108,10 +108,11 @@ export class Kingdraex extends PokemonCard {
 
       let energyCount = 0;
       checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType => {
-          return cardType === CardType.WATER;
-        }).length;
+        energyCount += em.provides.filter(cardType =>
+          cardType === CardType.WATER || cardType === CardType.ANY
+        ).length;
       });
+
       effect.damage += energyCount * 50;
     }
 

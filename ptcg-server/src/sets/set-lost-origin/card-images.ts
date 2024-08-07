@@ -1,5 +1,6 @@
 import { Arezu } from './arezu';
 import { Banette } from './banette';
+import { Beautifly } from './beautifly';
 import { Bouffalant } from './bouffalant';
 import { BoxOfDisaster } from './box-of-disaster';
 import { ColresssExperiment } from './colress\'s-experiment';
@@ -20,6 +21,7 @@ import { HisuianZoroark } from './hisuian-zoroark';
 import { HisuianZoroarkV } from './hisuian-zoroark-v';
 import { HisuianZoroarkVSTAR } from './hisuian-zoroark-vstar';
 import { HisuianZorua } from './hisuian-zorua';
+import { Inkay } from './inkay';
 import { Jynx } from './jynx';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
@@ -45,6 +47,7 @@ import { Sableye } from './sableye';
 import { Silcoon } from './silcoon';
 import { Snorlax } from './snorlax';
 import { Thorton } from './thorton';
+import { Tynamo } from './tynamo';
 import { Volo } from './volo';
 
 export class ArezuArt extends Arezu {
@@ -53,6 +56,10 @@ export class ArezuArt extends Arezu {
 
 export class BanetteArt extends Banette {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_073_R_EN_LG.png';
+}
+
+export class BeautiflyArt extends Beautifly {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_008_R_EN_LG.png';
 }
 
 export class BouffalantArt extends Bouffalant {
@@ -137,6 +144,10 @@ export class HisuianZoruaArt extends HisuianZorua {
 
 export class HisuianZoroarkArt extends HisuianZoroark {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_076_R_EN_LG.png';
+}
+
+export class InkayArt extends Inkay {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_121_R_EN_LG.png';
 }
 
 export class JynxArt extends Jynx {
@@ -233,6 +244,10 @@ export class SnorlaxArt extends Snorlax {
 
 export class ThortonArt extends Thorton {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_167_R_EN.png';
+}
+
+export class TynamoArt extends Tynamo {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_059_R_EN_LG.png';
 }
 
 export class VoloArt extends Volo {

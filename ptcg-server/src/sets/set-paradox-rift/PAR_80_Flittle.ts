@@ -43,7 +43,6 @@ export class Flittle extends PokemonCard {
 
       effect.damage += energyCount * 10;
 
-      console.log('Total Damage: ' + effect.damage);
     }
 
 

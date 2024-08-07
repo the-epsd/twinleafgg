@@ -21,6 +21,7 @@ class TownMap extends trainer_card_1.TrainerCard {
             const player = effect.player;
             player.prizes.forEach(p => {
                 p.isPublic = true;
+                p.faceUpPrize = true;
                 p.isSecret = false;
             });
             effect.player.hand.moveCardTo(effect.trainerCard, effect.player.supporter);

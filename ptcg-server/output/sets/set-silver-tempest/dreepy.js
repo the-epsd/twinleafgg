@@ -19,7 +19,7 @@ class Dreepy extends pokemon_card_1.PokemonCard {
             {
                 name: 'Reckless Charge',
                 cost: [card_types_1.CardType.PSYCHIC],
-                damage: 10,
+                damage: 30,
                 text: 'This Pokémon also does 10 damage to itself.'
             }
         ];

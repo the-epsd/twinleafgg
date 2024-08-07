@@ -1,12 +1,14 @@
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, 
+import {
+  StoreLike, State, PlayerType,
   PokemonCardList,
   Card,
   ChoosePrizePrompt,
   ConfirmPrompt,
-  GameMessage} from '../../game';
+  GameMessage
+} from '../../game';
 import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
 
 
@@ -22,18 +24,18 @@ export class Cresselia extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Healing Pirouette',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 0,
       text: 'Heal 20 damage from each of your Pokémon.'
     },
     {
       name: 'Crescent Purge',
-      cost: [ CardType.PSYCHIC, CardType.PSYCHIC, CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.PSYCHIC],
       damage: 80,
       damageCalculation: '+',
       text: 'You may turn of your face-down Prize cards face up. If you do, this attack does 80 more damage. (That Prize card remains face up for the rest of the game.)'
@@ -81,13 +83,14 @@ export class Cresselia extends PokemonCard {
               GameMessage.CHOOSE_POKEMON,
               { count: 1, allowCancel: true },
             ), chosenPrize => {
-            
-              if (chosenPrize === null || chosenPrize.length === 0) {          
-                prizes.forEach(p => { p.isSecret = true; }); 
+
+              if (chosenPrize === null || chosenPrize.length === 0) {
+                prizes.forEach(p => { p.isSecret = true; });
               }
               const prizeCard = chosenPrize[0];
               prizeCard.isSecret = false;
               prizeCard.isPublic = true;
+              prizeCard.faceUpPrize = true;
               effect.damage += 80;
             });
           }

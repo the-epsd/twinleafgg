@@ -16,6 +16,7 @@ import { Dreepy } from './dreepy';
 import { Elgyem } from './elgyem';
 import { EmergencyJelly } from './emergency-jelly';
 import { Feebas } from './feebas';
+import { Fennekin } from './fennekin';
 import { ForestSealStone } from './forest-seal-stone';
 import { FurisodeGirl } from './furisode-girl';
 import { Gardevoir } from './gardevoir';
@@ -111,6 +112,9 @@ export declare class EmergencyJellyArt extends EmergencyJelly {
 export declare class FeebasArt extends Feebas {
     cardImage: string;
 }
+export declare class FennekinArt extends Fennekin {
+    cardImage: string;
+}
 export declare class ForestSealStoneArt extends ForestSealStone {
     cardImage: string;
 }
@@ -204,7 +208,7 @@ export declare class SerperiorVArt extends SerperiorV {
 export declare class SerperiorVSTARArt extends SerperiorVSTAR {
     cardImage: string;
 }
-export declare class SnowruntArt extends Snorunt {
+export declare class SnoruntArt extends Snorunt {
     cardImage: string;
 }
 export declare class SpindaArt extends Spinda {

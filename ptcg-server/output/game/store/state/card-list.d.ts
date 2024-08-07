@@ -7,6 +7,7 @@ export declare class CardList {
     cards: Card[];
     isPublic: boolean;
     isSecret: boolean;
+    faceUpPrize: boolean;
     stadiumDirection: StadiumDirection;
     markedAsNotSecret: boolean;
     static fromList(names: string[]): CardList;

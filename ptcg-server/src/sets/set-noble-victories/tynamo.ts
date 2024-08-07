@@ -16,12 +16,12 @@ export class Tynamo extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Thunder Wave',
-      cost: [ CardType.LIGHTNING ],
+      cost: [CardType.LIGHTNING],
       damage: 10,
       text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
     }
@@ -31,11 +31,11 @@ export class Tynamo extends PokemonCard {
 
   public name: string = 'Tynamo';
 
-  public fullName: string = 'Tynamo NVI';
+  public fullName: string = 'Tynamo NVI 38';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '38';
+  public setNumber: string = '';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

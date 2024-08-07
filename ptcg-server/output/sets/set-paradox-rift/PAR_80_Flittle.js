@@ -39,7 +39,6 @@ class Flittle extends pokemon_card_1.PokemonCard {
                 }
             });
             effect.damage += energyCount * 10;
-            console.log('Total Damage: ' + effect.damage);
         }
         return state;
     }

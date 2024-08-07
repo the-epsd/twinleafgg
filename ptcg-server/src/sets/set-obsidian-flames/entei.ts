@@ -16,7 +16,7 @@ export class Entei extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Pressure',
@@ -27,11 +27,11 @@ export class Entei extends PokemonCard {
   public attacks = [
     {
       name: 'Blaze Ball',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
       damageCalculation: 'x',
       text: 'This attack does 30 more damage for each [R] Energy ' +
-      'attached to this Pokémon.'
+        'attached to this Pokémon.'
     }
   ];
 
@@ -57,9 +57,9 @@ export class Entei extends PokemonCard {
 
       let energyCount = 0;
       checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType => {
-          return cardType === CardType.FIRE;
-        }).length;
+        energyCount += em.provides.filter(cardType =>
+          cardType === CardType.FIRE || cardType === CardType.ANY
+        ).length;
       });
       effect.damage += energyCount * 20;
     }
@@ -70,9 +70,9 @@ export class Entei extends PokemonCard {
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
-  
+
       const player = StateUtils.findOwner(state, effect.target);
-  
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {
@@ -84,11 +84,11 @@ export class Entei extends PokemonCard {
       } catch {
         return state;
       }
-  
+
       effect.damage = Math.max(0, effect.damage - 20);
     }
-  
+
     return state;
   }
-  
+
 }

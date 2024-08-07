@@ -25,9 +25,9 @@ class Tynamo extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'NVI';
         this.name = 'Tynamo';
-        this.fullName = 'Tynamo NVI';
+        this.fullName = 'Tynamo NVI 38';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '38';
+        this.setNumber = '';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

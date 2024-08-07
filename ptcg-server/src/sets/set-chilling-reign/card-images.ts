@@ -39,6 +39,7 @@ import { PathToThePeak } from './path-to-the-peak';
 import { Peonia } from './peonia';
 import { Peony } from './peony';
 import { Porygon2 } from './porygon2';
+import { Ralts } from './ralts';
 import { ShadowRiderCalyrexV } from './shadow-rider-calyrex-v';
 import { ShadowRiderCalyrexVMAX } from './shadow-rider-calyrex-vmax';
 import { Sneasel } from './sneasel';
@@ -205,6 +206,10 @@ export class PeonyArt extends Peony {
 
 export class Porygon2Art extends Porygon2 {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_117_R_EN_LG.png';
+}
+
+export class RaltsArt extends Ralts {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_059_R_EN_LG.png';
 }
 
 export class ShadowRiderCalyrexVArt extends ShadowRiderCalyrexV {

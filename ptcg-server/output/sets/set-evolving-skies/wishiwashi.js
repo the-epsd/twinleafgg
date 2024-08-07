@@ -55,9 +55,9 @@ class Wishiwashi extends game_1.PokemonCard {
                 store.reduceEffect(state, checkProvidedEnergyEffect);
                 let energyCount = 0;
                 checkProvidedEnergyEffect.energyMap.forEach(em => {
-                    energyCount += em.provides.filter(cardType => {
-                        return cardType === game_1.CardType.ANY && game_1.EnergyType.BASIC;
-                    }).length;
+                    if (em.card.energyType === game_1.EnergyType.BASIC) {
+                        energyCount += em.provides.length;
+                    }
                 });
                 effect.damage += energyCount * 30;
             }

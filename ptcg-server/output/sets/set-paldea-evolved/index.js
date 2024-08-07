@@ -8,6 +8,7 @@ exports.setPaldeaEvolved = [
     new card_images_1.ArtazonArt(),
     new card_images_1.BaxcaliburArt(),
     new card_images_1.BossOrdersArt(),
+    new card_images_1.BramblinArt(),
     new card_images_1.BraveyCharmArt(),
     new card_images_1.CetitanArt(),
     new card_images_1.CetoddleArt(),

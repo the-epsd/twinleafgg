@@ -16,6 +16,7 @@ import { Dreepy } from './dreepy';
 import { Elgyem } from './elgyem';
 import { EmergencyJelly } from './emergency-jelly';
 import { Feebas } from './feebas';
+import { Fennekin } from './fennekin';
 import { ForestSealStone } from './forest-seal-stone';
 import { FurisodeGirl } from './furisode-girl';
 import { Gardevoir } from './gardevoir';
@@ -128,6 +129,10 @@ export class EmergencyJellyArt extends EmergencyJelly {
 
 export class FeebasArt extends Feebas {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_039_R_EN_LG.png';
+}
+
+export class FennekinArt extends Fennekin {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_025_R_EN_LG.png';
 }
 
 export class ForestSealStoneArt extends ForestSealStone {
@@ -254,7 +259,7 @@ export class SerperiorVSTARArt extends SerperiorVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_008_R_EN_LG.png';
 }
 
-export class SnowruntArt extends Snorunt {
+export class SnoruntArt extends Snorunt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_041_R_EN_LG.png';
 }
 

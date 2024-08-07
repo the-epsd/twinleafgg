@@ -90,9 +90,9 @@ export class PikachuZekromGX extends PokemonCard {
 
       let energyCount = 0;
       checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType => {
-          return cardType === CardType.LIGHTNING;
-        }).length;
+        energyCount += em.provides.filter(cardType =>
+          cardType === CardType.LIGHTNING || cardType === CardType.ANY
+        ).length;
       });
 
       let extraLightningEnergy = energyCount - effect.attack.cost.length;

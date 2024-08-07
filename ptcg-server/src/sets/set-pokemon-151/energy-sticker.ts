@@ -1,4 +1,4 @@
-import { CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
+import { SuperType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, EnergyCard, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, CoinFlipPrompt, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -27,6 +27,19 @@ export class EnergySticker extends TrainerCard {
 
       const player = effect.player;
 
+
+      const hasBench = player.bench.some(b => b.cards.length > 0);
+      if (!hasBench) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+      const hasEnergyInDiscard = player.discard.cards.some(c => {
+        return c instanceof EnergyCard
+          && c.energyType === EnergyType.BASIC;
+      });
+      if (!hasEnergyInDiscard) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
@@ -38,27 +51,14 @@ export class EnergySticker extends TrainerCard {
 
           const player = effect.player;
 
-          const hasBench = player.bench.some(b => b.cards.length > 0);
-          if (!hasBench) {
-            throw new GameError(GameMessage.CANNOT_USE_POWER);
-          }
-          const hasEnergyInDiscard = player.discard.cards.some(c => {
-            return c instanceof EnergyCard
-              && c.energyType === EnergyType.BASIC
-              && c.provides.includes(CardType.LIGHTNING);
-          });
-          if (!hasEnergyInDiscard) {
-            throw new GameError(GameMessage.CANNOT_USE_POWER);
-          }
-
           state = store.prompt(state, new AttachEnergyPrompt(
             player.id,
             GameMessage.ATTACH_ENERGY_TO_BENCH,
             player.discard,
             PlayerType.BOTTOM_PLAYER,
             [SlotType.BENCH],
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
-            { allowCancel: true, min: 1, max: 1 }
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+            { allowCancel: false, min: 1, max: 1 }
           ), transfers => {
             transfers = transfers || [];
             // cancelled by user

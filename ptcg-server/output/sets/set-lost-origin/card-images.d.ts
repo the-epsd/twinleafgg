@@ -1,5 +1,6 @@
 import { Arezu } from './arezu';
 import { Banette } from './banette';
+import { Beautifly } from './beautifly';
 import { Bouffalant } from './bouffalant';
 import { BoxOfDisaster } from './box-of-disaster';
 import { ColresssExperiment } from './colress\'s-experiment';
@@ -20,6 +21,7 @@ import { HisuianZoroark } from './hisuian-zoroark';
 import { HisuianZoroarkV } from './hisuian-zoroark-v';
 import { HisuianZoroarkVSTAR } from './hisuian-zoroark-vstar';
 import { HisuianZorua } from './hisuian-zorua';
+import { Inkay } from './inkay';
 import { Jynx } from './jynx';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
@@ -45,11 +47,15 @@ import { Sableye } from './sableye';
 import { Silcoon } from './silcoon';
 import { Snorlax } from './snorlax';
 import { Thorton } from './thorton';
+import { Tynamo } from './tynamo';
 import { Volo } from './volo';
 export declare class ArezuArt extends Arezu {
     cardImage: string;
 }
 export declare class BanetteArt extends Banette {
+    cardImage: string;
+}
+export declare class BeautiflyArt extends Beautifly {
     cardImage: string;
 }
 export declare class BouffalantArt extends Bouffalant {
@@ -113,6 +119,9 @@ export declare class HisuianZoruaArt extends HisuianZorua {
     cardImage: string;
 }
 export declare class HisuianZoroarkArt extends HisuianZoroark {
+    cardImage: string;
+}
+export declare class InkayArt extends Inkay {
     cardImage: string;
 }
 export declare class JynxArt extends Jynx {
@@ -185,6 +194,9 @@ export declare class SnorlaxArt extends Snorlax {
     cardImage: string;
 }
 export declare class ThortonArt extends Thorton {
+    cardImage: string;
+}
+export declare class TynamoArt extends Tynamo {
     cardImage: string;
 }
 export declare class VoloArt extends Volo {

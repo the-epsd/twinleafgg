@@ -39,6 +39,7 @@ import { PathToThePeak } from './path-to-the-peak';
 import { Peonia } from './peonia';
 import { Peony } from './peony';
 import { Porygon2 } from './porygon2';
+import { Ralts } from './ralts';
 import { ShadowRiderCalyrexV } from './shadow-rider-calyrex-v';
 import { ShadowRiderCalyrexVMAX } from './shadow-rider-calyrex-vmax';
 import { Sneasel } from './sneasel';
@@ -164,6 +165,9 @@ export declare class PeonyArt extends Peony {
     cardImage: string;
 }
 export declare class Porygon2Art extends Porygon2 {
+    cardImage: string;
+}
+export declare class RaltsArt extends Ralts {
     cardImage: string;
 }
 export declare class ShadowRiderCalyrexVArt extends ShadowRiderCalyrexV {

@@ -15,8 +15,12 @@ export * from './set-op9';
 export * from './set-platinum';
 
 //HGSS Era
+
+export * from './set-battle-road-promos';
+
 export * from './set-heartgold-and-soulsilver';
 export * from './set-heartgold-and-soulsilver-promos';
+export * from './set-l-p-promos';
 export * from './set-triumphant';
 export * from './set-undaunted';
 export * from './set-unleashed';

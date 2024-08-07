@@ -142,12 +142,20 @@ function handleSpecialConditions(store: StoreLike, state: State, effect: Between
         if (effect.asleepFlipResult === false) {
           break;
         }
-        store.log(state, GameLog.LOG_FLIP_ASLEEP, { name: player.name });
-        store.prompt(state, new CoinFlipPrompt(
-          player.id,
-          GameMessage.FLIP_ASLEEP
-        ), result => {
-          if (result === true) {
+        
+        const flipsForSleep = [];
+        for (let i = 0; i < effect.player.active.sleepFlips; i++) {
+          store.log(state, GameLog.LOG_FLIP_ASLEEP, { name: player.name });
+          flipsForSleep.push(new CoinFlipPrompt(
+            player.id,
+            GameMessage.FLIP_ASLEEP
+          ));
+        }
+        
+        store.prompt(state, flipsForSleep, results => {
+        const wakesUp = results.every(r => r);
+          
+          if (wakesUp) {
             player.active.removeSpecialCondition(SpecialCondition.ASLEEP);
           }
         });

@@ -15,6 +15,7 @@ export declare class RegigigasVSTAR extends PokemonCard {
     powers: {
         name: string;
         powerType: PowerType;
+        useWhenInPlay: boolean;
         text: string;
     }[];
     attacks: {
@@ -29,5 +30,7 @@ export declare class RegigigasVSTAR extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
+    readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

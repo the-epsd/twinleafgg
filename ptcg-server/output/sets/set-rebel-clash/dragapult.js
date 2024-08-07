@@ -66,6 +66,10 @@ class Dragapult extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const maxAllowedDamage = [];
+            const oppHasBenched = opponent.bench.some(b => b.cards.length > 0);
+            if (!oppHasBenched) {
+                return state;
+            }
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
                 maxAllowedDamage.push({ target, damage: card.hp + 30 });
             });

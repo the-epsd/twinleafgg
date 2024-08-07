@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArctibaxArt, ArtazonArt, BaxcaliburArt, BossOrdersArt, BraveyCharmArt, CetitanArt, CetoddleArt, ChienPaoexArt, ChiYuexArt, ChoiceBeltArt, CufantArt, DeinoArt, DeliveryDroneArt, DudunsparceArt, FightingAuLaitArt, FlamigoArt, Frigibax2Art, FrigibaxArt, GiacomoArt, GreatBallArt, GrushaArt, HydreigonArt, IonoArt, JetEnergyArt, LokixArt, LuminousEnergyArt, LuxrayArt, MagnemiteArt, MimikyuArt, MurkrowArt, NoibatArt, NoivernexArt, OrthwormArt, PelipperArt, ReversalEnergyArt, ShinxArt, SpiritombArt, SquawkabillyexArt, SuperiorEnergyRetrievalArt, SuperRodArt, TadbulbArt, TherapeuticEnergyArt, TingLuexArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WattrelArt, WingullArt, WoChienexArt, ZweilousArt } from './card-images';
+import { ArctibaxArt, ArtazonArt, BaxcaliburArt, BossOrdersArt, BramblinArt, BraveyCharmArt, CetitanArt, CetoddleArt, ChienPaoexArt, ChiYuexArt, ChoiceBeltArt, CufantArt, DeinoArt, DeliveryDroneArt, DudunsparceArt, FightingAuLaitArt, FlamigoArt, Frigibax2Art, FrigibaxArt, GiacomoArt, GreatBallArt, GrushaArt, HydreigonArt, IonoArt, JetEnergyArt, LokixArt, LuminousEnergyArt, LuxrayArt, MagnemiteArt, MimikyuArt, MurkrowArt, NoibatArt, NoivernexArt, OrthwormArt, PelipperArt, ReversalEnergyArt, ShinxArt, SpiritombArt, SquawkabillyexArt, SuperiorEnergyRetrievalArt, SuperRodArt, TadbulbArt, TherapeuticEnergyArt, TingLuexArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WattrelArt, WingullArt, WoChienexArt, ZweilousArt } from './card-images';
 
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
@@ -9,6 +9,7 @@ export const setPaldeaEvolved: Card[] = [
   new ArtazonArt(),
   new BaxcaliburArt(),
   new BossOrdersArt(),
+  new BramblinArt(),
   new BraveyCharmArt(),
   new CetitanArt(),
   new CetoddleArt(),

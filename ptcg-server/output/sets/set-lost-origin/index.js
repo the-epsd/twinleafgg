@@ -4,6 +4,7 @@ exports.setLostOrigin = void 0;
 const card_images_1 = require("./card-images");
 exports.setLostOrigin = [
     new card_images_1.BanetteArt(),
+    new card_images_1.BeautiflyArt(),
     new card_images_1.BouffalantArt(),
     new card_images_1.ColresssExperimentArt(),
     new card_images_1.ComfeyArt(),
@@ -22,6 +23,7 @@ exports.setLostOrigin = [
     new card_images_1.HisuianZoroarkVSTARArt(),
     new card_images_1.HisuianZoruaArt(),
     new card_images_1.HisuianZoroarkArt(),
+    new card_images_1.InkayArt(),
     new card_images_1.JynxArt(),
     new card_images_1.KingdraArt(),
     new card_images_1.KyuremVArt(),
@@ -51,4 +53,5 @@ exports.setLostOrigin = [
     new card_images_1.ArezuArt(),
     new card_images_1.DrapionVSTARArt(),
     new card_images_1.ThortonArt(),
+    new card_images_1.TynamoArt()
 ];

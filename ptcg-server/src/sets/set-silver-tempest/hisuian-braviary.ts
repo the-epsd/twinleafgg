@@ -58,10 +58,10 @@ export class HisuianBraviary extends PokemonCard {
       effect.damage = 30;
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (cardList === opponent.active) {
+        if (cardList === opponent.active || cardList.damage === 0) {
           return;
         }
-        const damageEffect = new PutDamageEffect(effect, 10);
+        const damageEffect = new PutDamageEffect(effect, 30);
         damageEffect.target = cardList;
         store.reduceEffect(state, damageEffect);
       });

@@ -20,7 +20,7 @@ export class Bulbasaur extends PokemonCard {
     {
       name: 'Find a Friend',
       cost: [CardType.GRASS],
-      damage: 20,
+      damage: 0,
       text: 'Search your deck for a G Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.',
     }
   ];

@@ -18,6 +18,7 @@ class HisuianHeavyBall extends game_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             const prizes = player.prizes.filter(p => p.isSecret);
             if (prizes.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -25,10 +26,9 @@ class HisuianHeavyBall extends game_1.TrainerCard {
             const cards = [];
             prizes.forEach(p => { p.cards.forEach(c => cards.push(c)); });
             const blocked = [];
-            const blocked2 = [];
             player.prizes.forEach((c, index) => {
-                if (!c.isSecret) {
-                    blocked2.push(index);
+                if (c.faceUpPrize) {
+                    blocked.push(index);
                 }
             });
             // Make prizes no more secret, before displaying prompt
@@ -36,32 +36,38 @@ class HisuianHeavyBall extends game_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
-            player.prizes.map(p => p.cards[0]).forEach((c, index) => {
-                if (!(c instanceof game_1.PokemonCard && c.stage === game_1.Stage.BASIC) && !blocked2.includes(index)) {
-                    blocked.push(index);
-                }
+            // state = store.prompt(state, new ChoosePrizePrompt(
+            //   player.id,
+            //   GameMessage.CHOOSE_POKEMON,
+            //   { count: 1, blocked: blocked, allowCancel: true },
+            // ), chosenPrize => {
+            const allPrizeCards = new game_1.CardList();
+            player.prizes.forEach(prizeList => {
+                allPrizeCards.cards.push(...prizeList.cards);
             });
-            state = store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON, { count: 1, blocked: blocked, allowCancel: true }), chosenPrize => {
+            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, allPrizeCards, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false, blocked: blocked }), chosenPrize => {
                 if (chosenPrize === null || chosenPrize.length === 0) {
-                    prizes.forEach(p => { p.isSecret = true; });
+                    player.prizes.forEach(p => { p.isSecret = true; });
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
                     player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
                     return state;
                 }
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, chosenPrize[0].cards), () => {
-                    const prizePokemon = chosenPrize[0];
-                    const hand = player.hand;
-                    const heavyBall = effect.trainerCard;
-                    store.log(state, game_1.GameLog.LOG_HISUIAN_HEAVY_BALL, { name: player.name, card: chosenPrize[0].cards[0].name });
-                    prizePokemon.moveTo(hand);
-                    const chosenPrizeIndex = player.prizes.indexOf(chosenPrize[0]);
-                    player.supporter.moveCardTo(heavyBall, player.prizes[chosenPrizeIndex]);
-                    prizes.forEach(p => { p.isSecret = true; });
-                    player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
-                });
+                const prizePokemon = chosenPrize[0];
+                const hand = player.hand;
+                const heavyBall = effect.trainerCard;
+                // Find the prize list containing the chosen card
+                const chosenPrizeList = player.prizes.find(prizeList => prizeList.cards.includes(prizePokemon));
+                if (chosenPrize.length > 0) {
+                    state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, chosenPrize), () => { });
+                }
+                if (chosenPrizeList) {
+                    chosenPrizeList.moveCardTo(prizePokemon, hand);
+                    player.supporter.moveCardTo(heavyBall, chosenPrizeList);
+                }
+                player.prizes.forEach(p => { p.isSecret = true; });
+                player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
+                return state;
             });
-            return state;
         }
         return state;
     }
