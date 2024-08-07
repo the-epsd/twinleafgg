@@ -28,7 +28,7 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
         //   player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
         //   console.log('U-Turn Board is active.');
         // }
-        if (effect instanceof play_card_effects_1.ToolEffect && effect.card === this) {
+        if (effect instanceof play_card_effects_1.AttachPokemonToolEffect && effect.trainerCard === this) {
             const player = effect.player;
             player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
             console.log('U-Turn Board is on a card.');

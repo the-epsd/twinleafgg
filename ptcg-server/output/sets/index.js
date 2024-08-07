@@ -110,6 +110,7 @@ __exportStar(require("./set-paradox-rift"), exports);
 __exportStar(require("./set-paldea-fates"), exports);
 __exportStar(require("./set-temporal-forces"), exports);
 __exportStar(require("./set-twilight-masquerade"), exports);
+__exportStar(require("./set-shrouded-fable"), exports);
 __exportStar(require("./set-sv7"), exports);
 __exportStar(require("./set-sv8"), exports);
 //TEST

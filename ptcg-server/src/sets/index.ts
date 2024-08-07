@@ -110,6 +110,7 @@ export * from './set-paradox-rift';
 export * from './set-paldea-fates';
 export * from './set-temporal-forces';
 export * from './set-twilight-masquerade';
+export * from './set-shrouded-fable';
 export * from './set-sv7';
 export * from './set-sv8';
 

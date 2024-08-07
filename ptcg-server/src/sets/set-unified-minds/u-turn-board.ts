@@ -3,7 +3,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+import { AttachPokemonToolEffect, ToolEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -39,7 +39,7 @@ export class UTurnBoard extends TrainerCard {
     //   console.log('U-Turn Board is active.');
     // }
 
-    if (effect instanceof ToolEffect && effect.card === this) {
+    if (effect instanceof AttachPokemonToolEffect && effect.trainerCard === this) {
       const player = effect.player;
       player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
       console.log('U-Turn Board is on a card.');
