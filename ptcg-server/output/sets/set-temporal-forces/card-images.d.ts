@@ -2,6 +2,7 @@ import { AncientBoosterEnergyCapsule } from '../set-paradox-rift/ancient-booster
 import { FutureBoosterEnergyCapsule } from '../set-paradox-rift/future-booster-energy-capsule';
 import { Beldum } from './beldum';
 import { BiancasDevotion } from './biancas-devotion';
+import { Brambleghast } from './brambleghast';
 import { BuddyBuddyPoffin } from './buddy-buddy-poffin';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
@@ -77,6 +78,9 @@ export declare class BeldumArt extends Beldum {
     cardImage: string;
 }
 export declare class BiancasDevotionArt extends BiancasDevotion {
+    cardImage: string;
+}
+export declare class BrambleghastArt extends Brambleghast {
     cardImage: string;
 }
 export declare class BuddyBuddyPoffinArt extends BuddyBuddyPoffin {
