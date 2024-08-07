@@ -36,9 +36,7 @@ class Absol extends pokemon_card_1.PokemonCard {
             store.reduceEffect(state, checkProvidedEnergyEffect);
             let energyCount = 0;
             checkProvidedEnergyEffect.energyMap.forEach(em => {
-                energyCount += em.provides.filter(cardType => {
-                    return em.card.name == 'Darkness Energy';
-                }).length;
+                energyCount += em.provides.filter(cardType => cardType === card_types_1.CardType.DARK || cardType === card_types_1.CardType.ANY).length;
             });
             if (energyCount >= 3)
                 effect.damage += 50;

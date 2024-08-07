@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import {
   StoreLike, State, StateUtils, GameMessage,
-  ChooseAttackPrompt, Attack, GameLog, PowerType, Card, ChooseCardsPrompt, GameError
+  ChooseAttackPrompt, Attack, GameLog, PowerType, Card, ChooseCardsPrompt, GameError,
+  ShowCardsPrompt
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -66,8 +67,6 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
   }
 }
 
-
-
 export class RegidragoVSTAR extends PokemonCard {
 
   public tags = [CardTag.POKEMON_VSTAR];
@@ -122,6 +121,7 @@ export class RegidragoVSTAR extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
@@ -148,6 +148,15 @@ export class RegidragoVSTAR extends PokemonCard {
         cards.forEach((card, index) => {
           player.discard.moveCardTo(card, player.hand);
         });
+
+        if (cards.length > 0) {
+          state = store.prompt(state, new ShowCardsPrompt(
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            cards
+          ), () => { });
+        }
+
       });
     }
     return state;

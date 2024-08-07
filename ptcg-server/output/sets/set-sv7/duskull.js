@@ -5,7 +5,6 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 function* useKingsOrder(next, store, state, effect) {
     const player = effect.player;
     const slots = player.bench.filter(b => b.cards.length === 0);
@@ -66,18 +65,6 @@ class Duskull extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const generator = useKingsOrder(() => generator.next(), store, state, effect);
             return generator.next().value;
-        }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            const player = effect.player;
-            const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player);
-            store.reduceEffect(state, checkProvidedEnergyEffect);
-            let energyCount = 0;
-            checkProvidedEnergyEffect.energyMap.forEach(em => {
-                energyCount += em.provides.filter(cardType => {
-                    return cardType === card_types_1.CardType.WATER;
-                }).length;
-            });
-            effect.damage += energyCount * 50;
         }
         return state;
     }

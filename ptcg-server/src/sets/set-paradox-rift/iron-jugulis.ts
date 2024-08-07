@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils, GameError, PokemonCardList } from '../../game';
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils, CardTarget } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -53,36 +53,34 @@ export class IronJugulis extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const damagedPokemon: PokemonCardList[] = [];
+      const damagedBenchedPokemon = opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0);
+      if (damagedBenchedPokemon.length === 0) {
+        return state;
+      }
 
-
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.damage > 0) {
-          damagedPokemon.push(cardList);
+      const blocked: CardTarget[] = [];
+      opponent.bench.forEach((b, index) => {
+        if (b.damage === 0) {
+          blocked.push({ player: PlayerType.TOP_PLAYER, slot: SlotType.BENCH, index });
         }
+      });
 
-        if (damagedPokemon.length == 0) {
-          throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+      state = store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE],
+        { min: 1, max: 3, allowCancel: false, blocked }
+      ), target => {
+        if (!target || target.length === 0) {
+          return;
         }
-
-        // Opponent has damaged Pokemon
-        if (damagedPokemon.length > 0) {
-
-          state = store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-            PlayerType.TOP_PLAYER,
-            [SlotType.BENCH, SlotType.ACTIVE],
-            { min: 1, max: 3, allowCancel: false }
-          ), target => {
-            if (!target || target.length === 0) {
-              return;
-            }
-            const damageEffect = new PutDamageEffect(effect, 50);
-            damageEffect.target = target[0];
-            store.reduceEffect(state, damageEffect);
-          });
-        }
+        const targets = target || [];
+        targets.forEach(target => {
+          const damageEffect = new PutDamageEffect(effect, 50);
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
+        });
       });
     }
 

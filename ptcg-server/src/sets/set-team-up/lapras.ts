@@ -15,19 +15,19 @@ export class Lapras extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Confuse Ray',
-      cost: [ CardType.WATER ],
+      cost: [CardType.WATER],
       damage: 10,
       damageCalculation: '+',
       text: 'Your opponent\'s Active Pokémon is now Confused.'
     },
     {
       name: 'Hydro Pump',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 10,
       damageCalculation: '+',
       text: 'This attack does 30 more damage times the amount of [W] Energy attached to this Pokémon.'
@@ -51,7 +51,7 @@ export class Lapras extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       opponent.active.specialConditions.push(SpecialCondition.CONFUSED);
     }
-  
+
 
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
@@ -62,9 +62,9 @@ export class Lapras extends PokemonCard {
 
       let energyCount = 0;
       checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType => {
-          return cardType === CardType.WATER;
-        }).length;
+        energyCount += em.provides.filter(cardType =>
+          cardType === CardType.WATER || cardType === CardType.ANY
+        ).length;
       });
       effect.damage += energyCount * 30;
     }

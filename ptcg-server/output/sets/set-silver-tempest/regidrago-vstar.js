@@ -88,6 +88,7 @@ class RegidragoVSTAR extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             if (player.usedVSTAR === true) {
                 throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
@@ -102,6 +103,9 @@ class RegidragoVSTAR extends pokemon_card_1.PokemonCard {
                 cards.forEach((card, index) => {
                     player.discard.moveCardTo(card, player.hand);
                 });
+                if (cards.length > 0) {
+                    state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => { });
+                }
             });
         }
         return state;

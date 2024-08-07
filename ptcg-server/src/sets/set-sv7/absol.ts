@@ -17,12 +17,12 @@ export class Absol extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Bad Fall',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 20,
       damageCalculation: '+',
       text: 'If you have at least 3 [D] Energy in play, this attack does 50 more damage.'
@@ -49,9 +49,9 @@ export class Absol extends PokemonCard {
 
       let energyCount = 0;
       checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType => {
-          return em.card.name == 'Darkness Energy';
-        }).length;
+        energyCount += em.provides.filter(cardType =>
+          cardType === CardType.DARK || cardType === CardType.ANY
+        ).length;
       });
 
       if (energyCount >= 3)
@@ -60,5 +60,5 @@ export class Absol extends PokemonCard {
     }
     return state;
   }
-  
+
 }

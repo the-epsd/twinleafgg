@@ -57,9 +57,7 @@ class Lunatone extends pokemon_card_1.PokemonCard {
             store.reduceEffect(state, checkProvidedEnergyEffect);
             let energyCount = 0;
             checkProvidedEnergyEffect.energyMap.forEach(em => {
-                energyCount += em.provides.filter(cardType => {
-                    return cardType === card_types_1.CardType.PSYCHIC;
-                }).length;
+                energyCount += em.provides.filter(cardType => cardType === card_types_1.CardType.PSYCHIC || cardType === card_types_1.CardType.ANY).length;
             });
             effect.damage += energyCount * 30;
         }

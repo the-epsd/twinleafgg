@@ -6,7 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { CardTag } from '../../game/store/card/card-types';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -62,35 +62,44 @@ export class GenesectV extends PokemonCard {
 
   public reduceEffect(_store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.active.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.active.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.active.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.active.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.active.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.active.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.active.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.active.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
+    if (effect instanceof UseAttackEffect) {
       // Check marker
-      if (effect.player.active.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      if (effect.player.active.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
-      effect.player.active.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      // Check marker
+      if (effect.player.active.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        console.log('attack blocked');
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+      effect.player.active.marker.addMarker(this.ATTACK_USED_MARKER, this);
       console.log('marker added');
     }
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.attackMarker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
+      player.marker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
     }
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      player.attackMarker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
+      player.marker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
@@ -98,7 +107,7 @@ export class GenesectV extends PokemonCard {
       const player = effect.player;
 
 
-      if (player.attackMarker.hasMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this)) {
+      if (player.marker.hasMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -129,14 +138,14 @@ export class GenesectV extends PokemonCard {
         });
       }
 
-      player.attackMarker.addMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
+      player.marker.addMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
     }
 
     if (effect instanceof EndTurnEffect) {
 
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
         if (player instanceof GenesectV) {
-          player.attackMarker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER);
+          player.marker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER);
         }
       });
 
