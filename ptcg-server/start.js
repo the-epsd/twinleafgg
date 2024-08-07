@@ -128,11 +128,13 @@ cardManager.defineSet(sets.setTest);
 StateSerializer.setKnownCards(cardManager.getAllCards());
 
 const botManager = BotManager.getInstance();
-botManager.registerBot(new SimpleBot('Gardevoir'));
-botManager.registerBot(new SimpleBot('Charizard'));
-botManager.registerBot(new SimpleBot('LostBox'));
-botManager.registerBot(new SimpleBot('Lugia'));
-botManager.registerBot(new SimpleBot('Dragapult'));
+// botManager.registerBot(new SimpleBot('Gardevoir'));
+// botManager.registerBot(new SimpleBot('Charizard'));
+// botManager.registerBot(new SimpleBot('LostBox'));
+// botManager.registerBot(new SimpleBot('Lugia'));
+// botManager.registerBot(new SimpleBot('Dragapult'));
+botManager.registerBot(new SimpleBot('Standard'));
+botManager.registerBot(new SimpleBot('GLC'));
 
 const app = new App();
 
