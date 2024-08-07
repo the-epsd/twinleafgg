@@ -118,6 +118,8 @@ function handleSpecialConditions(store: StoreLike, state: State, effect: Between
 
         break;
       case SpecialCondition.BURNED:
+        player.active.damage += effect.burnDamage;
+
         if (effect.burnFlipResult === true) {
           break;
         }
@@ -129,8 +131,8 @@ function handleSpecialConditions(store: StoreLike, state: State, effect: Between
           player.id,
           GameMessage.FLIP_BURNED
         ), result => {
-          if (result === false) {
-            player.active.damage += effect.burnDamage;
+          if (result === true) {
+            player.active.removeSpecialCondition(SpecialCondition.BURNED);
           }
         });
         break;
@@ -142,7 +144,7 @@ function handleSpecialConditions(store: StoreLike, state: State, effect: Between
         if (effect.asleepFlipResult === false) {
           break;
         }
-        
+
         const flipsForSleep = [];
         for (let i = 0; i < effect.player.active.sleepFlips; i++) {
           store.log(state, GameLog.LOG_FLIP_ASLEEP, { name: player.name });
@@ -151,10 +153,10 @@ function handleSpecialConditions(store: StoreLike, state: State, effect: Between
             GameMessage.FLIP_ASLEEP
           ));
         }
-        
+
         store.prompt(state, flipsForSleep, results => {
-        const wakesUp = results.every(r => r);
-          
+          const wakesUp = results.every(r => r);
+
           if (wakesUp) {
             player.active.removeSpecialCondition(SpecialCondition.ASLEEP);
           }
