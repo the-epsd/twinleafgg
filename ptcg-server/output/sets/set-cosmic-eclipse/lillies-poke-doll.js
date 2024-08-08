@@ -9,6 +9,7 @@ class LilliesPokeDoll extends __1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
+        this.superType = card_types_1.SuperType.TRAINER;
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.COLORLESS;
         this.cardTypez = card_types_1.CardType.COLORLESS;

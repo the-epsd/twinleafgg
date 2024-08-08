@@ -21,8 +21,8 @@ class Oricorio extends pokemon_card_1.PokemonCard {
                 text: 'Switch 1 of your opponent\'s Benched Pokemon with their Active Pokemon. The new Active Poekmon is now Burned and Confused.'
             }];
         this.set = 'SHF';
-        this.name = 'Koffing';
-        this.fullName = 'Koffing SHF';
+        this.name = 'Oricorio';
+        this.fullName = 'Oricorio SHF';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '41';
     }
