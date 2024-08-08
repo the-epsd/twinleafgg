@@ -22,8 +22,8 @@ export class Oricorio extends PokemonCard {
   }];
 
   public set: string = 'SHF';
-  public name: string = 'Koffing';
-  public fullName: string = 'Koffing SHF';
+  public name: string = 'Oricorio';
+  public fullName: string = 'Oricorio SHF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
 
