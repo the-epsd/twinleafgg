@@ -110,7 +110,7 @@ export class Munkidori extends PokemonCard {
 
           checkEnergy.energyMap.forEach(em => {
             const energyCard = em.card;
-            if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.DARK) || energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.ANY)) {
+            if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.DARK) || energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.ANY) || (energyCard instanceof EnergyCard  && energyCard.blendedEnergies.includes(CardType.DARK))) {
               hasDarkAttached = true;
             }
           });

@@ -35,6 +35,12 @@ class Thundurus extends pokemon_card_1.PokemonCard {
         this.fullName = 'Thundurus OBF';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 50);
+            dealDamage.target = player.active;
+            return store.reduceEffect(state, dealDamage);
+        }
         if (effect instanceof attack_effects_1.PutDamageEffect) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);

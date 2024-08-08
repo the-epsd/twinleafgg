@@ -84,7 +84,7 @@ class Munkidori extends game_1.PokemonCard {
                     store.reduceEffect(state, checkEnergy);
                     checkEnergy.energyMap.forEach(em => {
                         const energyCard = em.card;
-                        if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(game_1.CardType.DARK) || energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(game_1.CardType.ANY)) {
+                        if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(game_1.CardType.DARK) || energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(game_1.CardType.ANY) || (energyCard instanceof game_1.EnergyCard && energyCard.blendedEnergies.includes(game_1.CardType.DARK))) {
                             hasDarkAttached = true;
                         }
                     });

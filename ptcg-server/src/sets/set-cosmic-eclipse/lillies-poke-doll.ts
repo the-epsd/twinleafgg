@@ -1,5 +1,5 @@
 import { GameError, GameLog, GameMessage, PokemonCard, Power, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../..';
-import { CardType, PokemonType, Stage, TrainerType } from '../../game/store/card/card-types';
+import { CardType, PokemonType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -7,6 +7,7 @@ import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play
 export class LilliesPokeDoll extends TrainerCard {
 
   public trainerType = TrainerType.ITEM;
+  public superType = SuperType.TRAINER;
 
   public stage: Stage = Stage.BASIC;
 
