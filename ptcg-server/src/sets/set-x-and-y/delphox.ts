@@ -10,7 +10,7 @@ export class Delphox extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Braixen';
   public cardType: CardType = CardType.FIRE;
-  public hp: number = 80;
+  public hp: number = 140;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS];
 

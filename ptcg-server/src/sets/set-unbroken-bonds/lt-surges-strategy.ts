@@ -44,7 +44,9 @@ export class LtSurgesStrategy extends TrainerCard {
         player.hand.moveCardTo(this, player.discard);
         
         this.playedSurgeThisTurn = true;        
-      }      
+      }     
+      
+      return state;
     }
     
     if (effect instanceof EndTurnEffect) {

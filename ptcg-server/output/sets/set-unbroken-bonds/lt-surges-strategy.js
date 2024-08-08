@@ -33,6 +33,7 @@ class LtSurgesStrategy extends trainer_card_1.TrainerCard {
                 player.hand.moveCardTo(this, player.discard);
                 this.playedSurgeThisTurn = true;
             }
+            return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             this.playedSurgeThisTurn = false;
