@@ -12,6 +12,7 @@ import { Magearna } from './VIV_128_Magearna';
 import { Taillow } from './VIV_133_Taillow';
 import { Dhelmise } from './VIV_19_Dhelmise';
 import { Zekrom } from './VIV_60_Zekrom';
+import { Wailmer } from './wailmer';
 import { Wailord } from './wailord';
 import { WashWaterEnergy } from './wash-water-energy';
 
@@ -65,6 +66,10 @@ export class StoneFightingEnergyArt extends StoneFightingEnergy {
 
 export class TaillowArt extends Taillow {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_133_R_EN_LG.png';
+}
+
+export class WailmerArt extends Wailmer {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_031_R_EN_LG.png';
 }
 
 export class WailordArt extends Wailord {
