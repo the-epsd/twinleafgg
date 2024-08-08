@@ -75,22 +75,22 @@ export class Gengarex extends PokemonCard {
       });
     }
 
-
     if (effect instanceof AttachEnergyEffect) {
-
       const player = effect.player;
-      // const opponent = StateUtils.getOpponent(state, player);
+      const opponent = StateUtils.getOpponent(state, player);
 
       let isGengarInPlay = false;
-      if (player.active.cards[0] === this || player.bench.some(b => b.cards[0] === this)) {
-        isGengarInPlay = true;
-      }
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isGengarInPlay = true;
+        }
+      });
 
       if (!isGengarInPlay) {
         return state;
       }
 
-
+      // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {
           name: 'test',
@@ -101,24 +101,7 @@ export class Gengarex extends PokemonCard {
       } catch {
         return state;
       }
-
-
-
-      // const cardList = [opponent.active, ...opponent.bench].filter(b => b.cards.length > 0);
-      // if (cardList.length === 0) {
-      //   return state;
-      // }
-
-
-      const target = effect.target;
-      const opponent = StateUtils.getOpponent(state, player);
-      const opponentPokemon = [opponent.active, ...opponent.bench].filter(b => b.cards.length > 0);
-
-      if (target == opponentPokemon) {
-
-        target.damage += 20;
-      }
-      return state;
+      effect.target.damage += 20;
     }
     return state;
   }

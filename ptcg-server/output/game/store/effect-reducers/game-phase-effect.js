@@ -98,6 +98,7 @@ function handleSpecialConditions(store, state, effect) {
                 player.active.damage += effect.poisonDamage;
                 break;
             case card_types_1.SpecialCondition.BURNED:
+                player.active.damage += effect.burnDamage;
                 if (effect.burnFlipResult === true) {
                     break;
                 }
@@ -106,8 +107,8 @@ function handleSpecialConditions(store, state, effect) {
                     break;
                 }
                 store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.FLIP_BURNED), result => {
-                    if (result === false) {
-                        player.active.damage += effect.burnDamage;
+                    if (result === true) {
+                        player.active.removeSpecialCondition(card_types_1.SpecialCondition.BURNED);
                     }
                 });
                 break;

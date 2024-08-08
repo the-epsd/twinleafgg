@@ -7,15 +7,15 @@ export class Wishiwashi extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.RAPID_STRIKE];
 
   public cardType: CardType = CardType.WATER;
-  
+
   public hp: number = 30;
-  
+
   public weakness = [{ type: CardType.FIGHTING }];
-  
-  public retreat = [ CardType.COLORLESS ];
+
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Group Power',
@@ -32,7 +32,7 @@ export class Wishiwashi extends PokemonCard {
       text: 'This attack does 30 more damage for each basic Energy attached to this Pokémon.'
     }
   ];
-  
+
   public set: string = 'EVS';
 
   public regulationMark = 'E';
@@ -70,16 +70,16 @@ export class Wishiwashi extends PokemonCard {
 
       if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
         const player = effect.player;
-
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
         store.reduceEffect(state, checkProvidedEnergyEffect);
 
         let energyCount = 0;
         checkProvidedEnergyEffect.energyMap.forEach(em => {
-          energyCount += em.provides.filter(cardType => {
-            return cardType === CardType.ANY && EnergyType.BASIC;
-          }).length;
+          if (em.card.energyType === EnergyType.BASIC) {
+            energyCount += em.provides.length;
+          }
         });
+
         effect.damage += energyCount * 30;
       }
       return state;

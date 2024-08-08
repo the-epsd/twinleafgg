@@ -40,25 +40,26 @@ class IronJugulis extends game_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const damagedPokemon = [];
-            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                if (cardList.damage > 0) {
-                    damagedPokemon.push(cardList);
+            const damagedBenchedPokemon = opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0);
+            if (damagedBenchedPokemon.length === 0) {
+                return state;
+            }
+            const blocked = [];
+            opponent.bench.forEach((b, index) => {
+                if (b.damage === 0) {
+                    blocked.push({ player: game_1.PlayerType.TOP_PLAYER, slot: game_1.SlotType.BENCH, index });
                 }
-                if (damagedPokemon.length == 0) {
-                    throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
+            });
+            state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 3, allowCancel: false, blocked }), target => {
+                if (!target || target.length === 0) {
+                    return;
                 }
-                // Opponent has damaged Pokemon
-                if (damagedPokemon.length > 0) {
-                    state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 3, allowCancel: false }), target => {
-                        if (!target || target.length === 0) {
-                            return;
-                        }
-                        const damageEffect = new attack_effects_1.PutDamageEffect(effect, 50);
-                        damageEffect.target = target[0];
-                        store.reduceEffect(state, damageEffect);
-                    });
-                }
+                const targets = target || [];
+                targets.forEach(target => {
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 50);
+                    damageEffect.target = target;
+                    store.reduceEffect(state, damageEffect);
+                });
             });
         }
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[1]) {

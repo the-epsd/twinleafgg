@@ -2,6 +2,7 @@ import { AncientBoosterEnergyCapsule } from '../set-paradox-rift/ancient-booster
 import { FutureBoosterEnergyCapsule } from '../set-paradox-rift/future-booster-energy-capsule';
 import { Beldum } from './beldum';
 import { BiancasDevotion } from './biancas-devotion';
+import { Brambleghast } from './brambleghast';
 import { BuddyBuddyPoffin } from './buddy-buddy-poffin';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
@@ -81,6 +82,10 @@ export class BeldumArt extends Beldum {
 
 export class BiancasDevotionArt extends BiancasDevotion {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_142_R_EN.png';
+}
+
+export class BrambleghastArt extends Brambleghast {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_021_R_EN_LG.png';
 }
 
 export class BuddyBuddyPoffinArt extends BuddyBuddyPoffin {

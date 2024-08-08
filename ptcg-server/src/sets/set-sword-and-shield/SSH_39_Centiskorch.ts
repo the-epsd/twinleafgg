@@ -45,9 +45,9 @@ export class Centiskorch extends PokemonCard {
 
       let energyCount = 0;
       checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType => {
-          return cardType === CardType.FIRE;
-        }).length;
+        energyCount += em.provides.filter(cardType =>
+          cardType === CardType.FIRE || cardType === CardType.ANY
+        ).length;
       });
 
       opponent.deck.moveTo(opponent.discard, energyCount);

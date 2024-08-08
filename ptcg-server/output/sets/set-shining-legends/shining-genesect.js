@@ -112,17 +112,16 @@ class ShiningGenesect extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             effect.player.marker.removeMarker(this.ENERGY_RELOAD_MARKER, this);
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player);
-            store.reduceEffect(state, checkProvidedEnergyEffect);
-            let energyCount = 0;
-            checkProvidedEnergyEffect.energyMap.forEach(em => {
-                energyCount += em.provides.filter(cardType => {
-                    return cardType === card_types_1.CardType.GRASS;
-                }).length;
-            });
-            effect.damage += energyCount * 20;
+            // Check attached energy
+            const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+            state = store.reduceEffect(state, checkEnergy);
+            // Count total FIRE energy provided
+            const totalGrassEnergy = checkEnergy.energyMap.reduce((sum, energy) => {
+                return sum + energy.provides.filter(type => type === card_types_1.CardType.GRASS || type === card_types_1.CardType.ANY).length;
+            }, 0);
+            effect.damage += totalGrassEnergy * 20;
         }
         return state;
     }

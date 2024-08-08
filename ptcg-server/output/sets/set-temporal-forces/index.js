@@ -6,6 +6,7 @@ exports.setTemporalForces = [
     new card_images_1.AncientBoosterEnergyCapsuleArt(),
     new card_images_1.BeldumArt(),
     new card_images_1.BiancasDevotionArt(),
+    new card_images_1.BrambleghastArt(),
     new card_images_1.BuddyBuddyPoffinArt(),
     new card_images_1.CharjabugArt(),
     new card_images_1.ChatotArt(),

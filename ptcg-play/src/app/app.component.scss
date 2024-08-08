@@ -5,13 +5,17 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  user-select: none; // chrome and Opera
+  -moz-user-select: none; // Firefox
+  -webkit-text-select: none; // IOS Safari
+  -webkit-user-select: none; // Safari
 
-  > mat-sidenav-container {
+  >mat-sidenav-container {
     flex: 1 1;
     z-index: unset;
   }
 
-  > mat-sidenav-container > mat-sidenav-content {
+  >mat-sidenav-container>mat-sidenav-content {
     z-index: unset;
   }
 }

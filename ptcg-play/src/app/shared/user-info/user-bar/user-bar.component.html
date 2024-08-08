@@ -9,7 +9,9 @@
       <span class="ptcg-user-name-text" (click)="showUserInfoPopup(user)">
         {{ user.name }}
       </span>
-      <ptcg-badge *ngIf="['Lugia', 'Charizard', 'Gardevoir', 'Dragapult', 'LostBox'].includes(user.name)" color="bot">
+      <ptcg-badge
+        *ngIf="['Lugia', 'Charizard', 'Gardevoir', 'Dragapult', 'LostBox', 'Standard', 'GLC'].includes(user.name)"
+        color="bot">
         BOT
       </ptcg-badge>
       <ptcg-badge *ngIf="['TheEPSD', 'OkamiAstra', 'wheatr', 'DanTDM', 'Charlie'].includes(user.name)" color="admin">
