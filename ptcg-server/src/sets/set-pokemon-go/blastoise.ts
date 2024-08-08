@@ -23,7 +23,7 @@ function* useVitalitySpring(next: Function, store: StoreLike, state: State,
     player.deck,
     PlayerType.BOTTOM_PLAYER,
     [SlotType.BENCH, SlotType.ACTIVE],
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+    { superType: SuperType.ENERGY },
     { allowCancel: false, min: 0, max: 6 }
   ), transfers => {
     transfers = transfers || [];
