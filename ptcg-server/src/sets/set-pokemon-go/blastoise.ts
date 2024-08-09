@@ -1,11 +1,16 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import {
-  PowerType, StoreLike, State, AttachEnergyPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StateUtils
+  AttachEnergyPrompt, GameMessage, PlayerType,
+  PowerType,
+  ShuffleDeckPrompt, SlotType,
+  State,
+  StateUtils,
+  StoreLike
 } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 function* useVitalitySpring(next: Function, store: StoreLike, state: State,
@@ -23,7 +28,7 @@ function* useVitalitySpring(next: Function, store: StoreLike, state: State,
     player.deck,
     PlayerType.BOTTOM_PLAYER,
     [SlotType.BENCH, SlotType.ACTIVE],
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+    { superType: SuperType.ENERGY },
     { allowCancel: false, min: 0, max: 6 }
   ), transfers => {
     transfers = transfers || [];

@@ -32,7 +32,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
     player.deck,
     { superType: SuperType.POKEMON, stage: Stage.BASIC },
-    { min: 0, max: 1, allowCancel: false }
+    { min: 0, max: 1, allowCancel: false, blocked }
   ), selectedCards => {
     cards = selectedCards || [];
 

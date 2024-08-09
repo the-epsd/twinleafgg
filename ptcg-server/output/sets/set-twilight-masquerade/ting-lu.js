@@ -37,14 +37,18 @@ class TingLu extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const stadiumCard = game_1.StateUtils.getStadiumCard(state);
-            if (stadiumCard !== undefined) {
-                // Discard Stadium
-                const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-                const player = game_1.StateUtils.findOwner(state, cardList);
-                cardList.moveTo(player.discard);
+            if (stadiumCard == undefined) {
                 return state;
             }
-            return state;
+            // Discard Stadium
+            const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
+            const player = game_1.StateUtils.findOwner(state, cardList);
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            //Get number of benched pokemon
+            const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+            const totalBenched = opponentBenched;
+            effect.damage = 20 + (totalBenched * 20);
+            cardList.moveTo(player.discard);
         }
         return state;
     }

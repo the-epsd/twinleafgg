@@ -17,10 +17,15 @@ import { StoreLike } from '../../game/store/store-like';
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Raihan, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
+  const supporterTurn = player.supporterTurn;
 
   // No Pokemon KO last turn
   if (!player.marker.hasMarker(self.RAIHAN_MARKER)) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
   if (player.deck.cards.length === 0) {
@@ -76,7 +81,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
         player.hand.moveCardTo(self, player.supporter);
         player.deck.moveCardsTo(cards, player.hand);
 
-        
+
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
@@ -141,9 +146,9 @@ export class Raihan extends TrainerCard {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
-      
+
       if (owner === player) {
-        effect.player.marker.removeMarker(this.RAIHAN_MARKER);        
+        effect.player.marker.removeMarker(this.RAIHAN_MARKER);
       }
     }
 

@@ -60,6 +60,7 @@ export class Mareep extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       
       opponent.active.addSpecialCondition(SpecialCondition.ASLEEP);
+      return state;
     }
     
     if (effect instanceof EndTurnEffect) {

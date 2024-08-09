@@ -1,28 +1,26 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { Attack, PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Starmie extends PokemonCard {
-    name: string;
-    set: string;
-    evolvesFrom: string;
-    fullName: string;
-    setNumber: string;
-    cardType: CardType;
+export declare class Wailmer extends PokemonCard {
     stage: Stage;
+    cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
     retreat: CardType[];
-    powers: {
+    attacks: {
         name: string;
-        powerType: PowerType;
-        useWhenInPlay: boolean;
+        cost: CardType[];
+        damage: number;
         text: string;
     }[];
-    attacks: Attack[];
-    readonly SPACE_BEACON_MARKER = "SPACE_BEACON_MARKER";
+    set: string;
+    regulationMark: string;
+    setNumber: string;
+    cardImage: string;
+    name: string;
+    fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -12,7 +12,7 @@ export class Delphox extends PokemonCard {
   public cardType: CardType = CardType.FIRE;
   public hp: number = 140;
   public weakness = [{ type: CardType.WATER }];
-  public retreat = [CardType.COLORLESS];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Mystical Fire',

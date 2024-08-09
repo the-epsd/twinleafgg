@@ -50,7 +50,7 @@ export class Thundurus extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const dealDamage = new DealDamageEffect(effect, 50);
+      const dealDamage = new DealDamageEffect(effect, 90);
       dealDamage.target = player.active;
        return store.reduceEffect(state, dealDamage);
     }

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZekromArt = exports.WashWaterEnergyArt = exports.WailordArt = exports.TaillowArt = exports.StoneFightingEnergyArt = exports.SnorlaxArt = exports.RaikouArt = exports.NessaArt = exports.MagearnaArt = exports.LeonArt = exports.JirachiArt = exports.DhelmiseArt = exports.CoatingMetalEnergyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = void 0;
+exports.ZekromArt = exports.WashWaterEnergyArt = exports.WailordArt = exports.WailmerArt = exports.TaillowArt = exports.StoneFightingEnergyArt = exports.SnorlaxArt = exports.RaikouArt = exports.NessaArt = exports.MagearnaArt = exports.LeonArt = exports.JirachiArt = exports.DhelmiseArt = exports.CoatingMetalEnergyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = void 0;
 const charizard_1 = require("./charizard");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
@@ -15,6 +15,7 @@ const VIV_128_Magearna_1 = require("./VIV_128_Magearna");
 const VIV_133_Taillow_1 = require("./VIV_133_Taillow");
 const VIV_19_Dhelmise_1 = require("./VIV_19_Dhelmise");
 const VIV_60_Zekrom_1 = require("./VIV_60_Zekrom");
+const wailmer_1 = require("./wailmer");
 const wailord_1 = require("./wailord");
 const wash_water_energy_1 = require("./wash-water-energy");
 class CharizardArt extends charizard_1.Charizard {
@@ -108,6 +109,13 @@ class TaillowArt extends VIV_133_Taillow_1.Taillow {
     }
 }
 exports.TaillowArt = TaillowArt;
+class WailmerArt extends wailmer_1.Wailmer {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_031_R_EN_LG.png';
+    }
+}
+exports.WailmerArt = WailmerArt;
 class WailordArt extends wailord_1.Wailord {
     constructor() {
         super(...arguments);

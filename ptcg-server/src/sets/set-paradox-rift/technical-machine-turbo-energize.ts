@@ -105,7 +105,7 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { max: 2, allowCancel: true }
+        { min: 0, max: 2, allowCancel: false }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {

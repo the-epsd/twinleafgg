@@ -15,9 +15,13 @@ const state_utils_1 = require("../../game/store/state-utils");
 const state_1 = require("../../game/store/state/state");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
+    const supporterTurn = player.supporterTurn;
     // No Pokemon KO last turn
     if (!player.marker.hasMarker(self.RAIHAN_MARKER)) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
+    if (supporterTurn > 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
     }
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);

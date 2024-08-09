@@ -1,13 +1,13 @@
+import { ConfirmPrompt, GameMessage, PokemonCardList, PowerType, StateUtils } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, PowerType, StateUtils } from '../../game';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class Garchomp extends PokemonCard {
 
@@ -64,32 +64,45 @@ export class Garchomp extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.SONIC_SLIP_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_SONIC_SLIP_MARKER, this);
-      return state;
-    }
 
-    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.SONIC_SLIP_MARKER)) {
-
-      const sourcePokemon = effect.source.getPokemonCard();
-
-      if (sourcePokemon !== this) {
-        effect.preventDefault = true;
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
       }
-
-      return state;
-
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
-      const player = StateUtils.getOpponent(state, effect.player);
-      player.marker.removeMarker(this.CLEAR_SONIC_SLIP_MARKER, this);
-      player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        if (cardList.marker.hasMarker(this.SONIC_SLIP_MARKER)) {
-          cardList.marker.removeMarker(this.SONIC_SLIP_MARKER, this);
+      state = store.prompt(state, new ConfirmPrompt(
+        effect.player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (wantToUse) {
+          const cardList = StateUtils.findCardList(state, this) as PokemonCardList;          
+          cardList.marker.addMarker(this.SONIC_SLIP_MARKER, this);
         }
-      });
+      });      
+      
+      return state;
+    }
+    
+    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this) && effect.target.marker.hasMarker(this.SONIC_SLIP_MARKER, this)) {
+      effect.preventDefault = true;
+      return state;
+    }
+    
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      
+      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+      const owner = StateUtils.findOwner(state, cardList);
+      
+      if (owner !== player) {
+        cardList.marker?.removeMarker(this.SONIC_SLIP_MARKER, this);
+      }
     }
 
     return state;
