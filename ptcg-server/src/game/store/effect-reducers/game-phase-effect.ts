@@ -154,13 +154,17 @@ function handleSpecialConditions(store: StoreLike, state: State, effect: Between
           ));
         }
 
-        store.prompt(state, flipsForSleep, results => {
-          const wakesUp = results.every(r => r);
+        if (flipsForSleep.length > 0) {
+          store.prompt(state, flipsForSleep, results => {
+            const wakesUp = Array.isArray(results) ? results.every(r => r) : results;
 
-          if (wakesUp) {
-            player.active.removeSpecialCondition(SpecialCondition.ASLEEP);
-          }
-        });
+            if (wakesUp) {
+              player.active.removeSpecialCondition(SpecialCondition.ASLEEP);
+            }
+          });
+        } else {
+          player.active.removeSpecialCondition(SpecialCondition.ASLEEP);
+        }
         break;
     }
   }
