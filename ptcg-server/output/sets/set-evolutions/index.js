@@ -8,4 +8,6 @@ exports.setEvolutions = [
     new card_images_1.PokedexArt(),
     new card_images_1.PoliwhirlArt(),
     new card_images_1.StarmieArt(),
+    //Energy
+    new card_images_1.DarknessEnergyArt(),
 ];

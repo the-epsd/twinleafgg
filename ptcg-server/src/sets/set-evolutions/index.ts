@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { DevolutionSprayArt, ElectabuzzArt, PokedexArt, PoliwhirlArt, StarmieArt } from './card-images';
+import { DarknessEnergyArt, DevolutionSprayArt, ElectabuzzArt, PokedexArt, PoliwhirlArt, StarmieArt } from './card-images';
 
 export const setEvolutions: Card[] = [
   new DevolutionSprayArt(),
@@ -7,4 +7,7 @@ export const setEvolutions: Card[] = [
   new PokedexArt(),
   new PoliwhirlArt(),
   new StarmieArt(),
+
+  //Energy
+  new DarknessEnergyArt(),
 ];

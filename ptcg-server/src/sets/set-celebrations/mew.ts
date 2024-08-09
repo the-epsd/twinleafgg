@@ -11,45 +11,45 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Mew extends PokemonCard {
-  
+
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'E';
-  
+
   public cardType: CardType = CardType.PSYCHIC;
-  
+
   public hp: number = 60;
-  
+
   public weakness = [{ type: CardType.DARK }];
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-  
-  public retreat = [ CardType.COLORLESS ];
-  
+
+  public retreat = [CardType.COLORLESS];
+
   public powers = [{
     name: 'Mysterious Tail',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, if this Pokémon is in the Active Spot, you may look at the top 6 cards of your deck, reveal an Item card you find there, and put it into your hand. Shuffle the other cards back into your deck.'
   }];
-  
+
   public attacks = [
     {
       name: 'Psyshot',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 30,
       text: ''
     }
   ];
-  
+
   public set: string = 'CEL';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '11';
-  
+
   public name: string = 'Mew';
-  
+
   public fullName: string = 'Mew CEL';
 
   public readonly MYSTERIOUS_TAIL_MARKER = 'MYSTERIOUS_TAIL_MARKER';
@@ -63,11 +63,11 @@ export class Mew extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-  
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-  
+
       if (player.marker.hasMarker(this.MYSTERIOUS_TAIL_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -75,11 +75,11 @@ export class Mew extends PokemonCard {
       if (player.active.cards[0] !== this) {
         return state; // Not active
       }
-  
+
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 6);
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
@@ -108,11 +108,10 @@ export class Mew extends PokemonCard {
       });
     }
     if (effect instanceof EndTurnEffect) {
-      const player = (effect as EndTurnEffect).player;
+      const player = effect.player;
       player.marker.removeMarker(this.MYSTERIOUS_TAIL_MARKER, this);
     }
-    
+
     return state;
   }
 }
-    

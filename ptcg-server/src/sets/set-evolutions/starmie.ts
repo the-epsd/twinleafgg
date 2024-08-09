@@ -113,23 +113,23 @@ export class Starmie extends PokemonCard {
     }
   ];
 
-  public readonly FLOWER_SELECTING_MARKER = 'FLOWER_SELECTING_MARKER';
+  public readonly SPACE_BEACON_MARKER = 'SPACE_BEACON_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof EndTurnEffect) {
-      const player = (effect as EndTurnEffect).player;
-      player.marker.removeMarker(this.FLOWER_SELECTING_MARKER, this);
+      const player = effect.player;
+      player.marker.removeMarker(this.SPACE_BEACON_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.FLOWER_SELECTING_MARKER, this)) {
+      if (player.marker.hasMarker(this.SPACE_BEACON_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
       const generator = useSpaceBeacon(() => generator.next(), store, state, effect);
-      player.marker.addMarker(this.FLOWER_SELECTING_MARKER, this);
+      player.marker.addMarker(this.SPACE_BEACON_MARKER, this);
       return generator.next().value;
     }
 

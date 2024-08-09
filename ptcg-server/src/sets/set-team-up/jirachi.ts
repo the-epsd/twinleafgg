@@ -1,52 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, CardList, TrainerCard, ChooseCardsPrompt, Card, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, GameError, GameMessage, StateUtils, CardList, ChooseCardsPrompt, ShowCardsPrompt, ShuffleDeckPrompt, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-function* useStellarWish(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-
-  const deckTop = new CardList();
-  player.deck.moveTo(deckTop, 5);
-
-  const blocked: number[] = [];
-  deckTop.cards.forEach((card, index) => {
-    if (card instanceof TrainerCard && card.name === 'Trainers\' Mail') {
-      blocked.push(index);
-    }
-  });
-
-  let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    deckTop,
-    { superType: SuperType.TRAINER },
-    { min: 0, max: 1, allowCancel: false, blocked }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
-
-  deckTop.moveCardsTo(cards, player.hand);
-  deckTop.moveTo(player.deck);
-
-  if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
-  }
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
-}
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -79,10 +38,16 @@ export class Jirachi extends PokemonCard {
   public readonly STELLAR_WISH_MARKER = 'STELLAR_WISH_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.STELLAR_WISH_MARKER, this);
       return state;
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.STELLAR_WISH_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
@@ -97,22 +62,46 @@ export class Jirachi extends PokemonCard {
       }
 
       if (player.active.cards[0] !== this) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+        return state; // Not active
       }
 
-      player.active.addSpecialCondition(SpecialCondition.ABILITY_USED);
-      player.active.addSpecialCondition(SpecialCondition.ASLEEP);
-      player.marker.addMarker(this.STELLAR_WISH_MARKER, this);
+      const deckTop = new CardList();
+      player.deck.moveTo(deckTop, 5);
+      const opponent = StateUtils.getOpponent(state, player);
 
-      const generator = useStellarWish(() => generator.next(), store, state, effect);
-      return generator.next().value;
+      return store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        deckTop,
+        { superType: SuperType.TRAINER },
+        { min: 0, max: 1, allowCancel: false }
+      ), selected => {
+        player.marker.addMarker(this.STELLAR_WISH_MARKER, this);
+        deckTop.moveCardsTo(selected, player.hand);
+        deckTop.moveTo(player.deck);
 
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.addSpecialCondition(SpecialCondition.ASLEEP);
+          }
+        });
 
-    }
+        if (selected.length > 0) {
+          return store.prompt(state, new ShowCardsPrompt(
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            selected
+          ), () => {
 
-    if (effect instanceof EndTurnEffect) {
-      const player = (effect as EndTurnEffect).player;
-      player.marker.removeMarker(this.STELLAR_WISH_MARKER, this);
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+              return state;
+            });
+          });
+        }
+        return state;
+      });
     }
 
     return state;

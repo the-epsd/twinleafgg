@@ -1,10 +1,12 @@
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { StoreLike, State, PlayerType, 
-  StateUtils } from '../../game';
+import {
+  StoreLike, State, PlayerType,
+  StateUtils
+} from '../../game';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 
 
 export class HisuianBraviary extends PokemonCard {
@@ -21,18 +23,18 @@ export class HisuianBraviary extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Eerie Cry',
-      cost: [ ],
+      cost: [],
       damage: 0,
       text: 'Put 3 damage counters on each of your opponent\'s Pokémon that has any damage counters on it.'
     },
     {
       name: 'Mind Bend',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
       text: 'Your opponent\'s Active Pokémon is now Confused.'
     }
@@ -61,7 +63,7 @@ export class HisuianBraviary extends PokemonCard {
         if (cardList === opponent.active || cardList.damage === 0) {
           return;
         }
-        const damageEffect = new PutDamageEffect(effect, 30);
+        const damageEffect = new PutCountersEffect(effect, 30);
         damageEffect.target = cardList;
         store.reduceEffect(state, damageEffect);
       });

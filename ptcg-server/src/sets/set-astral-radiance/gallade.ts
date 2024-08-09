@@ -13,7 +13,7 @@ import {
   StateUtils,
   StoreLike
 } from '../../game';
-import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { CardType, SpecialCondition, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -118,6 +118,7 @@ export class Gallade extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
       if (player.marker.hasMarker(this.BUDDY_CATCH_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -127,7 +128,7 @@ export class Gallade extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-        { min: 0, max: 2, allowCancel: true }
+        { min: 0, max: 1, allowCancel: false }
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);
 
@@ -139,12 +140,19 @@ export class Gallade extends PokemonCard {
           ), () => { });
         }
 
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
           player.marker.addMarker(this.BUDDY_CATCH_MARKER, this);
         });
       });
     }
+
     if (effect instanceof EndTurnEffect) {
 
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {

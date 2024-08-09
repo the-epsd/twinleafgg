@@ -8,31 +8,6 @@ const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-function* useStellarWish(next, store, state, effect) {
-    const player = effect.player;
-    const opponent = game_1.StateUtils.getOpponent(state, player);
-    const deckTop = new game_1.CardList();
-    player.deck.moveTo(deckTop, 5);
-    const blocked = [];
-    deckTop.cards.forEach((card, index) => {
-        if (card instanceof game_1.TrainerCard && card.name === 'Trainers\' Mail') {
-            blocked.push(index);
-        }
-    });
-    let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false, blocked }), selected => {
-        cards = selected || [];
-        next();
-    });
-    deckTop.moveCardsTo(cards, player.hand);
-    deckTop.moveTo(player.deck);
-    if (cards.length > 0) {
-        yield store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
-    }
-    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-    });
-}
 class Jirachi extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -67,6 +42,10 @@ class Jirachi extends pokemon_card_1.PokemonCard {
             player.marker.removeMarker(this.STELLAR_WISH_MARKER, this);
             return state;
         }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.marker.removeMarker(this.STELLAR_WISH_MARKER, this);
+        }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             if (player.deck.cards.length === 0) {
@@ -76,17 +55,31 @@ class Jirachi extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             if (player.active.cards[0] !== this) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                return state; // Not active
             }
-            player.active.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
-            player.active.addSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
-            player.marker.addMarker(this.STELLAR_WISH_MARKER, this);
-            const generator = useStellarWish(() => generator.next(), store, state, effect);
-            return generator.next().value;
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const player = effect.player;
-            player.marker.removeMarker(this.STELLAR_WISH_MARKER, this);
+            const deckTop = new game_1.CardList();
+            player.deck.moveTo(deckTop, 5);
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false }), selected => {
+                player.marker.addMarker(this.STELLAR_WISH_MARKER, this);
+                deckTop.moveCardsTo(selected, player.hand);
+                deckTop.moveTo(player.deck);
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
+                    }
+                });
+                if (selected.length > 0) {
+                    return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected), () => {
+                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                            player.deck.applyOrder(order);
+                            return state;
+                        });
+                    });
+                }
+                return state;
+            });
         }
         return state;
     }
