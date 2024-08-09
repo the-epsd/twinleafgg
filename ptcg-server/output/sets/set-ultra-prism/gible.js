@@ -36,7 +36,7 @@ class Gible extends pokemon_card_1.PokemonCard {
         this.attacks = [{
                 name: 'Ascension',
                 cost: [card_types_1.CardType.FIGHTING],
-                damage: 20,
+                damage: 0,
                 text: 'Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck.'
             }
         ];

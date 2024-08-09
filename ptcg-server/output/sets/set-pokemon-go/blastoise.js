@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Blastoise = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
-const game_effects_1 = require("../../game/store/effects/game-effects");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 function* useVitalitySpring(next, store, state, effect) {
     const player = effect.player;
     if (player.deck.cards.length === 0) {
         return state;
     }
-    yield store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 6 }), transfers => {
+    yield store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 0, max: 6 }), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
             const target = game_1.StateUtils.getTarget(state, player, transfer.to);

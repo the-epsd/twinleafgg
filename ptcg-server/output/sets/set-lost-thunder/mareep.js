@@ -48,6 +48,7 @@ class Mareep extends pokemon_card_1.PokemonCard {
             player.marker.addMarker(this.FLUFFY_PILLOW_MARKER, this);
             const opponent = game_1.StateUtils.getOpponent(state, player);
             opponent.active.addSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
+            return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;

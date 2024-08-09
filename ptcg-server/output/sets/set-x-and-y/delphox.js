@@ -15,7 +15,7 @@ class Delphox extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 140;
         this.weakness = [{ type: card_types_1.CardType.WATER }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Mystical Fire',
                 useWhenInPlay: true,

@@ -17,7 +17,7 @@ function* useStadium(next, store, state, effect) {
     const blocked = [];
     player.deck.cards.forEach((card, index) => {
         // eslint-disable-next-line no-empty
-        if (card instanceof game_1.PokemonCard && card.stage !== card_types_1.Stage.BASIC && card.stage !== card_types_1.Stage.RESTORED) {
+        if (card instanceof game_1.PokemonCard && card.stage !== card_types_1.Stage.BASIC && card.stage !== card_types_1.Stage.RESTORED && card.cardType === card_types_1.CardType.GRASS) {
         }
         else {
             blocked.push(index);

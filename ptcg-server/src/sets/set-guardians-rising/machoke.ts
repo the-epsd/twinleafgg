@@ -94,6 +94,7 @@ export class Machoke extends PokemonCard {
 
       effect.preventDefault = true;
     }
+    
     if (effect instanceof PutCountersEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
