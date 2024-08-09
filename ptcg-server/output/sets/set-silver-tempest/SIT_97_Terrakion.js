@@ -19,7 +19,7 @@ class Terrakion extends pokemon_card_1.PokemonCard {
                 name: 'Cavern Tackle',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
                 damage: 120,
-                text: 'During your opponent\'s next turn, prevent all damage from attacks done to this Pokémon.If 1 of your Pokémon used Cavern Tackle during your last turn, this attack can\'t be used. '
+                text: 'During your opponent\'s next turn, prevent all damage from attacks done to this Pokémon. If 1 of your Pokémon used Cavern Tackle during your last turn, this attack can\'t be used. '
             }];
         this.set = 'SIT';
         this.setNumber = '97';

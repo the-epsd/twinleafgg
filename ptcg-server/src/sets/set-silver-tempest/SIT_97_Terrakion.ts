@@ -18,7 +18,7 @@ export class Terrakion extends PokemonCard {
     name: 'Cavern Tackle',
     cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
     damage: 120,
-    text: 'During your opponent\'s next turn, prevent all damage from attacks done to this Pokémon.If 1 of your Pokémon used Cavern Tackle during your last turn, this attack can\'t be used. '
+    text: 'During your opponent\'s next turn, prevent all damage from attacks done to this Pokémon. If 1 of your Pokémon used Cavern Tackle during your last turn, this attack can\'t be used. '
   }];
 
   public set: string = 'SIT';
@@ -47,8 +47,6 @@ export class Terrakion extends PokemonCard {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
-
-
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;

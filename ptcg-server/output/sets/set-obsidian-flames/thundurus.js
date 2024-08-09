@@ -37,7 +37,7 @@ class Thundurus extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 50);
+            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 90);
             dealDamage.target = player.active;
             return store.reduceEffect(state, dealDamage);
         }
