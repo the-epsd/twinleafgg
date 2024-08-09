@@ -120,25 +120,23 @@ function handleSpecialConditions(store, state, effect) {
                 if (effect.asleepFlipResult === false) {
                     break;
                 }
-                {
-                    const flipsForSleep = [];
-                    for (let i = 0; i < effect.player.active.sleepFlips; i++) {
-                        store.log(state, game_message_1.GameLog.LOG_FLIP_ASLEEP, { name: player.name });
-                        flipsForSleep.push(new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.FLIP_ASLEEP));
-                    }
-                    if (flipsForSleep.length > 0) {
-                        store.prompt(state, flipsForSleep, results => {
-                            const wakesUp = Array.isArray(results) ? results.every(r => r) : results;
-                            if (wakesUp) {
-                                player.active.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
-                            }
-                        });
-                    }
-                    else {
-                        player.active.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
-                    }
-                    break;
+                const flipsForSleep = [];
+                for (let i = 0; i < effect.player.active.sleepFlips; i++) {
+                    store.log(state, game_message_1.GameLog.LOG_FLIP_ASLEEP, { name: player.name });
+                    flipsForSleep.push(new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.FLIP_ASLEEP));
                 }
+                if (flipsForSleep.length > 0) {
+                    store.prompt(state, flipsForSleep, results => {
+                        const wakesUp = Array.isArray(results) ? results.every(r => r) : results;
+                        if (wakesUp) {
+                            player.active.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
+                        }
+                    });
+                }
+                else {
+                    player.active.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
+                }
+                break;
         }
     }
 }
