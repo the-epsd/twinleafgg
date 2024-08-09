@@ -46,7 +46,7 @@ class HisuianBraviary extends pokemon_card_1.PokemonCard {
                 if (cardList === opponent.active || cardList.damage === 0) {
                     return;
                 }
-                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 30);
+                const damageEffect = new attack_effects_1.PutCountersEffect(effect, 30);
                 damageEffect.target = cardList;
                 store.reduceEffect(state, damageEffect);
             });

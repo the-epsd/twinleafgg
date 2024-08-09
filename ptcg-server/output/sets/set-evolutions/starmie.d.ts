@@ -23,6 +23,6 @@ export declare class Starmie extends PokemonCard {
         text: string;
     }[];
     attacks: Attack[];
-    readonly FLOWER_SELECTING_MARKER = "FLOWER_SELECTING_MARKER";
+    readonly SPACE_BEACON_MARKER = "SPACE_BEACON_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
