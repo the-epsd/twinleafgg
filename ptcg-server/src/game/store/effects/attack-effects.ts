@@ -97,16 +97,27 @@ export class PutCountersEffect extends AbstractAttackEffect implements Effect {
   }
 }
 
-export class KnockOutOpponentEffect extends AbstractAttackEffect implements Effect {
-  readonly type: string = AttackEffects.KNOCK_OUT_OPPONENT_EFFECT;
+export class KOEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = AttackEffects.PUT_DAMAGE_EFFECT;
   public preventDefault = false;
-  public target: PokemonCardList;
-  public prizeCount: number;
+  public damage: number;
+  public damageReduced = false;
+  public wasKnockedOutFromFullHP: boolean = false;
 
-  constructor(base: AttackEffect, target: PokemonCardList) {
+  constructor(base: AttackEffect, damage: number) {
     super(base);
-    this.target = target;
-    this.prizeCount = 1;
+    this.damage = damage;
+  }
+}
+
+export class KnockOutOpponentEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = AttackEffects.DEAL_DAMAGE_EFFECT;
+  public preventDefault = false;
+  public damage: number;
+
+  constructor(base: AttackEffect, damage: number) {
+    super(base);
+    this.damage = damage;
   }
 }
 

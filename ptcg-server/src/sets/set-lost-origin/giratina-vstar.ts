@@ -70,7 +70,7 @@ export class GiratinaVSTAR extends PokemonCard {
         const activePokemon = opponent.active.getPokemonCard();
 
         if (activePokemon) {
-          const dealDamage = new KnockOutOpponentEffect(effect, opponent.active);
+          const dealDamage = new KnockOutOpponentEffect(effect, 999);
           dealDamage.target = opponent.active;
           store.reduceEffect(state, dealDamage);
         }

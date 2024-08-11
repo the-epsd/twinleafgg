@@ -42,19 +42,39 @@ function attackReducer(store, state, effect) {
         state = store.reduceEffect(state, dealDamage);
         return state;
     }
+    if (effect instanceof attack_effects_1.KOEffect) {
+        const target = effect.target;
+        const pokemonCard = target.getPokemonCard();
+        if (pokemonCard === undefined) {
+            throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
+        }
+        // Check if the effect is part of an attack and the target is the opponent's active Pokemon
+        const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
+        if (effect.attackEffect && target === opponent.active) {
+            // Apply weakness
+            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect.attackEffect, effect.damage);
+            applyWeakness.target = effect.target;
+            applyWeakness.ignoreWeakness = effect.attackEffect.ignoreWeakness;
+            applyWeakness.ignoreResistance = effect.attackEffect.ignoreResistance;
+            state = store.reduceEffect(state, applyWeakness);
+            effect.damage = applyWeakness.damage;
+        }
+        const damage = Math.max(0, effect.damage);
+        target.damage += damage;
+        const targetOwner = state_utils_1.StateUtils.findOwner(state, target);
+        targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
+        console.log('Damage Dealt Marker Added to target owner');
+        if (damage > 0) {
+            const afterDamageEffect = new attack_effects_1.AfterDamageEffect(effect.attackEffect, damage);
+            afterDamageEffect.target = effect.target;
+            store.reduceEffect(state, afterDamageEffect);
+        }
+    }
     if (effect instanceof attack_effects_1.KnockOutOpponentEffect) {
-        const base = effect.player;
-        const knockOutOpp = new game_effects_1.KnockOutEffect(base, effect.target);
-        knockOutOpp.target = effect.target;
-        state = store.reduceEffect(state, knockOutOpp);
-        // const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
-        // applyWeakness.target = effect.target;
-        // applyWeakness.ignoreWeakness = base.ignoreWeakness;
-        // applyWeakness.ignoreResistance = base.ignoreResistance;
-        // state = store.reduceEffect(state, applyWeakness);
-        // const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
-        // dealDamage.target = effect.target;
-        // state = store.reduceEffect(state, dealDamage);
+        const base = effect.attackEffect;
+        const dealDamage = new attack_effects_1.DealDamageEffect(base, effect.damage);
+        dealDamage.target = effect.target;
+        state = store.reduceEffect(state, dealDamage);
         return state;
     }
     if (effect instanceof attack_effects_1.PutCountersEffect) {

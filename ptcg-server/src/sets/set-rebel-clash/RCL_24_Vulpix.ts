@@ -8,7 +8,7 @@ import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effe
 export class Vulpix extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.FIRE;
-  public hp: number = 70;
+  public hp: number = 60;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS];
 

@@ -31,8 +31,14 @@ function* useFireOff(next, store, state, effect) {
             blockedMap.push({ source: target, blocked: target.slot === game_1.SlotType.ACTIVE ? cardList.cards.map((_, i) => i) : blocked });
         }
     });
+    const blocked2 = [];
+    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        if (player.active.cards[0] !== card) {
+            blocked2.push(target);
+        }
+    });
     return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], // Only allow moving from bench
-    { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 0, blockedMap }), transfers => {
+    { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 0, blockedMap, blockedTo: blocked2 }), transfers => {
         if (transfers === null) {
             return;
         }

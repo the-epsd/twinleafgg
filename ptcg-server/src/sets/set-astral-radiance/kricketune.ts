@@ -3,7 +3,7 @@ import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 export class Kricketune extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Kricketot';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 90;
