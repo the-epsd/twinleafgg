@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, GameLog } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Milotic extends PokemonCard {
 
@@ -17,7 +18,7 @@ export class Milotic extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Sparkling Ripples',
@@ -28,8 +29,8 @@ export class Milotic extends PokemonCard {
   public attacks = [
     {
       name: 'Aqua Swirl',
-      cost: [ CardType.WATER, CardType.COLORLESS, CardType.COLORLESS ],
-      damage: 120,
+      cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 60,
       text: 'You may have your opponent switch his or her Active Pokémon with 1 of his or her Benched Pokémon.'
     }
   ];
@@ -49,11 +50,11 @@ export class Milotic extends PokemonCard {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       if (player.deck.cards.length === 0) {
         return state;
       }
-      
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {
@@ -70,23 +71,23 @@ export class Milotic extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-      
+
           state = store.prompt(state, new ChooseCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARD_TO_HAND,
             player.discard,
-            { },
+            {},
             { min: 0, max: 1, allowCancel: false }
           ), selected => {
             const cards = selected || [];
-  
+
             store.prompt(state, [new ShowCardsPrompt(
               opponent.id,
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
               cards
             )], () => {
               player.discard.moveCardsTo(cards, player.hand);
-              
+
               cards.forEach((card, index) => {
                 store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
               });
@@ -95,7 +96,7 @@ export class Milotic extends PokemonCard {
         }
       });
     }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AfterDamageEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
@@ -104,19 +105,27 @@ export class Milotic extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        opponent.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), targets => {
-        if (targets && targets.length > 0) {
-          opponent.active.clearEffects();
-          opponent.switchPokemon(targets[0]);
-          return state;
+      state = store.prompt(state, new ConfirmPrompt(
+        effect.player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (wantToUse) {
+          return store.prompt(state, new ChoosePokemonPrompt(
+            opponent.id,
+            GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.BENCH],
+            { allowCancel: false }
+          ), targets => {
+            if (targets && targets.length > 0) {
+              opponent.active.clearEffects();
+              opponent.switchPokemon(targets[0]);
+              return state;
+            }
+          });
         }
       });
+
     }
     return state;
   }

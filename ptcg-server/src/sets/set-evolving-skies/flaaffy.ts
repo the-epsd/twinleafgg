@@ -1,12 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils,
+  GameError, GameMessage, EnergyCard, PlayerType, SlotType
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import {AttachEnergyPrompt} from '../../game/store/prompts/attach-energy-prompt';
+import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 
 export class Flaaffy extends PokemonCard {
 
@@ -22,7 +24,7 @@ export class Flaaffy extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Dynamotor',
@@ -35,7 +37,7 @@ export class Flaaffy extends PokemonCard {
   public attacks = [
     {
       name: 'Electro Ball',
-      cost: [ CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS ],
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 50,
       text: ''
     }
@@ -83,9 +85,9 @@ export class Flaaffy extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
-        { allowCancel: false, min: 1, max: 2 }
+        { allowCancel: false, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user

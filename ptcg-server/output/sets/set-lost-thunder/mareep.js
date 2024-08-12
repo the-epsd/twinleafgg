@@ -45,6 +45,9 @@ class Mareep extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.FLUFFY_PILLOW_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
+            if (player.active.cards[0] !== this) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER); // Not active
+            }
             player.marker.addMarker(this.FLUFFY_PILLOW_MARKER, this);
             const opponent = game_1.StateUtils.getOpponent(state, player);
             opponent.active.addSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
