@@ -17,6 +17,7 @@ class Ferrothorn extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.resistance = [{ type: card_types_1.CardType.PSYCHIC, value: -20 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.evolvesFrom = 'Ferroseed';
         this.attacks = [{
                 name: 'Guard Press',
                 cost: [card_types_1.CardType.METAL],
@@ -33,8 +34,8 @@ class Ferrothorn extends pokemon_card_1.PokemonCard {
         this.set = 'UNB';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '124';
-        this.name = 'Lairon';
-        this.fullName = 'Lairon UNB';
+        this.name = 'Ferrothorn';
+        this.fullName = 'Ferrothorn UNB';
         this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
         this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
     }
