@@ -22,7 +22,6 @@ class PanicMask extends trainer_card_1.TrainerCard {
         var _a;
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.tool === this) {
             const player = effect.player;
-            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
             try {
                 const toolEffect = new play_card_effects_1.ToolEffect(player, this);
@@ -34,9 +33,9 @@ class PanicMask extends trainer_card_1.TrainerCard {
             if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
                 return state;
             }
-            const activePokemon = opponent.active;
-            const maxHp = ((_a = activePokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.hp) || 0;
-            const currentHp = maxHp - activePokemon.damage;
+            const attackingPokemon = player.active;
+            const maxHp = ((_a = attackingPokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.hp) || 0;
+            const currentHp = maxHp - attackingPokemon.damage;
             if (currentHp <= 40) {
                 effect.damage = 0;
             }

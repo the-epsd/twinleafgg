@@ -34,7 +34,7 @@ class MaximumBelt extends trainer_card_1.TrainerCard {
                 return state;
             }
             const targetCard = effect.target.getPokemonCard();
-            if (targetCard && targetCard.tags.includes(card_types_1.CardTag.POKEMON_ex)) {
+            if (targetCard && targetCard.tags.includes(card_types_1.CardTag.POKEMON_ex) && effect.damage > 0) {
                 effect.damage += 50;
             }
         }

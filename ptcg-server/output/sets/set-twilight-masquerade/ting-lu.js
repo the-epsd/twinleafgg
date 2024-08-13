@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class TingLu extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -44,10 +45,12 @@ class TingLu extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
             const player = game_1.StateUtils.findOwner(state, cardList);
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            //Get number of benched pokemon
-            const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-            const totalBenched = opponentBenched;
-            effect.damage = 20 + (totalBenched * 20);
+            const benched = opponent.bench.filter(b => b.cards.length > 0);
+            benched.forEach(target => {
+                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 30);
+                damageEffect.target = target;
+                store.reduceEffect(state, damageEffect);
+            });
             cardList.moveTo(player.discard);
         }
         return state;

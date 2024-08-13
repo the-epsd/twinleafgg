@@ -11,7 +11,7 @@ export class MaximumBelt extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
 
-  public tags = [ CardTag.ACE_SPEC ];
+  public tags = [CardTag.ACE_SPEC];
 
   public set: string = 'TEF';
 
@@ -45,7 +45,7 @@ export class MaximumBelt extends TrainerCard {
       }
 
       const targetCard = effect.target.getPokemonCard();
-      if (targetCard && targetCard.tags.includes(CardTag.POKEMON_ex)) {
+      if (targetCard && targetCard.tags.includes(CardTag.POKEMON_ex) && effect.damage > 0) {
         effect.damage += 50;
       }
     }

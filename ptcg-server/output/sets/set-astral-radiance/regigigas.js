@@ -63,7 +63,7 @@ class Regigigas extends pokemon_card_1.PokemonCard {
                 // Check if player has energy cards in discard pile
                 const hasEnergy = player.discard.cards.some(c => c instanceof game_1.EnergyCard);
                 if (!hasEnergy) {
-                    return state;
+                    throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                 }
                 if (player.marker.hasMarker(this.ANCIENT_WISDOM_MARKER, this)) {
                     throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);

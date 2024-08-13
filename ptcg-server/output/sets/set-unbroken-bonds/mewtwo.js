@@ -73,7 +73,7 @@ class Mewtwo extends pokemon_card_1.PokemonCard {
                         selected.forEach((card, index) => {
                             store.log(state, game_1.GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
                         });
-                        deckTop.cards = selected;
+                        player.discard.moveCardTo(selected[0], deckTop);
                         deckTop.moveToTopOfDestination(player.deck);
                         store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected), () => { });
                         return state;

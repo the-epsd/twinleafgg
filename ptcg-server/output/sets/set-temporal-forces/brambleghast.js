@@ -39,6 +39,17 @@ class Brambleghast extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const prizesTaken = 6 - opponent.getPrizeLeft();
             const hpBoostPerPrize = 50;
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             if (effect.target.getPokemonCard() === this) {
                 effect.hp += prizesTaken * hpBoostPerPrize;
                 console.log('hp boost' + (effect.hp));

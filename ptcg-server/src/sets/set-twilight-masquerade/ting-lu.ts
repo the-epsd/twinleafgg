@@ -6,6 +6,7 @@ import {
 } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class TingLu extends PokemonCard {
 
@@ -58,12 +59,13 @@ export class TingLu extends PokemonCard {
       const player = StateUtils.findOwner(state, cardList);
 
       const opponent = StateUtils.getOpponent(state, player);
-      //Get number of benched pokemon
-      const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+      const benched = opponent.bench.filter(b => b.cards.length > 0);
 
-      const totalBenched = opponentBenched;
-
-      effect.damage = 20 + (totalBenched * 20);
+      benched.forEach(target => {
+        const damageEffect = new PutDamageEffect(effect, 30);
+        damageEffect.target = target;
+        store.reduceEffect(state, damageEffect);
+      });
 
       cardList.moveTo(player.discard);
     }

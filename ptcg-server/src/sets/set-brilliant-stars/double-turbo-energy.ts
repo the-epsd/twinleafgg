@@ -29,7 +29,7 @@ export class DoubleTurboEnergy extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if ((effect instanceof PutDamageEffect) && effect.source.cards.includes(this)) {
+    if ((effect instanceof PutDamageEffect) && effect.source.cards.includes(this) && !effect.target.cards.includes(this)) {
       const player = effect.player;
 
       try {

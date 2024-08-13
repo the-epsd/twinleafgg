@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { CoinFlipPrompt, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Brambleghast extends PokemonCard {
   public regulationMark = 'H';
@@ -42,6 +42,17 @@ export class Brambleghast extends PokemonCard {
       const prizesTaken = 6 - opponent.getPrizeLeft();
 
       const hpBoostPerPrize = 50;
+
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (effect.target.getPokemonCard() === this) {
         effect.hp += prizesTaken * hpBoostPerPrize;

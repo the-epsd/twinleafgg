@@ -1,5 +1,7 @@
-import { Action, Player, State, TrainerCard, TrainerType, PlayCardAction,
-  PlayerType, SlotType } from '../../game';
+import {
+  Action, Player, State, TrainerCard, TrainerType, PlayCardAction,
+  PlayerType, SlotType
+} from '../../game';
 import { SimpleTactic } from './simple-tactics';
 
 export class PlaySupporterTactic extends SimpleTactic {
@@ -36,9 +38,11 @@ export class PlaySupporterTactic extends SimpleTactic {
       }
     });
 
+    if (playCardAction) {
+      player.supporterTurn = state.turn;
+    }
+
     return playCardAction;
-
-
   }
 
 }
