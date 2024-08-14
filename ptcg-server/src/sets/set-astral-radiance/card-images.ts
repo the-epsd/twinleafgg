@@ -24,6 +24,7 @@ import { HisuianBasculin } from './hisuian-basculin';
 import { HisuianHeavyBall } from './hisuian-heavy-ball';
 import { HisuianSamurottV } from './hisuian-samurott-v';
 import { HisuianSamurottVSTAR } from './hisuian-samurott-vstar';
+import { HisuianBasculegion } from './hisuian_basculegion';
 import { Irida } from './irida';
 import { JubilifeVillage } from './jubilife-village';
 import { Keldeo } from './keldeo';
@@ -120,6 +121,10 @@ export class GutsyPickaxeArt extends GutsyPickaxe {
 
 export class HisuianArcanineArt extends HisuianArcanine {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_071_R_EN_LG.png';
+}
+
+export class HisuianBasculegionArt extends HisuianBasculegion {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_044_R_EN_LG.png';
 }
 
 export class HisuianBasculinArt extends HisuianBasculin {
