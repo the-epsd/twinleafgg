@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType, GameError, GameMessage, PlayerType } from '../../game';
+import { StoreLike, State, StateUtils, PowerType, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
@@ -8,7 +8,7 @@ export class ShayminVSTAR extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public stage: Stage = Stage.VSTAR;
 
@@ -20,7 +20,7 @@ export class ShayminVSTAR extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Star Bloom',
@@ -33,7 +33,7 @@ export class ShayminVSTAR extends PokemonCard {
   public attacks = [
     {
       name: 'Revenge Blast',
-      cost: [ CardType.GRASS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.COLORLESS],
       damage: 120,
       text: 'This attack does 40 more damage for each Prize card your opponent has taken.'
     }
@@ -60,10 +60,10 @@ export class ShayminVSTAR extends PokemonCard {
       }
 
       // Heal each Pokemon by 10 damage
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        const pokemonCard = cardList.getPokemonCard();
+      player.bench.forEach(benchSpot => {
+        const pokemonCard = benchSpot.getPokemonCard();
         if (pokemonCard && pokemonCard.cardType === CardType.GRASS) {
-          const healEffect = new HealEffect(player, cardList, 120);
+          const healEffect = new HealEffect(player, benchSpot, 120);
           state = store.reduceEffect(state, healEffect);
           player.usedVSTAR = true;
         }
@@ -71,7 +71,7 @@ export class ShayminVSTAR extends PokemonCard {
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

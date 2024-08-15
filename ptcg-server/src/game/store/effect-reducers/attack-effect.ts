@@ -14,7 +14,11 @@ import {
 import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
 
+
+
 export function attackReducer(store: StoreLike, state: State, effect: Effect): State {
+
+  // let addWeakness: boolean = false;
 
   if (effect instanceof PutDamageEffect) {
     const target = effect.target;
@@ -25,7 +29,10 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
 
     // Check if the effect is part of an attack and the target is the opponent's active Pokemon
     const opponent = StateUtils.getOpponent(state, effect.player);
-    if (effect.attackEffect && target === opponent.active) {
+
+    if (effect.attackEffect && target === opponent.active
+      // && !addWeakness
+    ) {
       // Apply weakness
       const applyWeakness = new ApplyWeaknessEffect(effect.attackEffect, effect.damage);
       applyWeakness.target = effect.target;
@@ -34,7 +41,6 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       state = store.reduceEffect(state, applyWeakness);
 
       effect.damage = applyWeakness.damage;
-
     }
 
     const damage = Math.max(0, effect.damage);
@@ -49,12 +55,22 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       afterDamageEffect.target = effect.target;
       store.reduceEffect(state, afterDamageEffect);
     }
+
+    console.log(damage);
+
   }
 
   if (effect instanceof DealDamageEffect) {
     const base = effect.attackEffect;
 
-    const dealDamage = new PutDamageEffect(base, effect.damage);
+    const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
+    applyWeakness.target = effect.target;
+    applyWeakness.ignoreWeakness = base.ignoreWeakness;
+    applyWeakness.ignoreResistance = base.ignoreResistance;
+    state = store.reduceEffect(state, applyWeakness);
+    // addWeakness = true;
+
+    const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
     dealDamage.target = effect.target;
     state = store.reduceEffect(state, dealDamage);
 

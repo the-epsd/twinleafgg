@@ -8,7 +8,7 @@ import { AddSpecialConditionsEffect, DealDamageEffect, PutDamageEffect } from '.
 export class Spinda extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.COLORLESS;
-  public hp: number = 60;
+  public hp: number = 90;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 

@@ -32,7 +32,7 @@ export class Cyllene extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       let cards: Card[] = [];
-      
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -46,32 +46,34 @@ export class Cyllene extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      
+
       let heads: number = 0;
       store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], results => {
         results.forEach(r => { heads += r ? 1 : 0; });
-        
+
         if (heads === 0) {
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
           return state;
         }
-        
+
         const deckTop = new CardList();
-  
+
         store.prompt(state, new ChooseCardsPrompt(
           player.id,
           GameMessage.CHOOSE_CARDS_TO_PUT_ON_TOP_OF_THE_DECK,
           player.discard,
-          { },
+          {},
           { min: Math.min(heads, player.discard.cards.length), max: heads, allowCancel: false }
         ), selected => {
-          cards = selected || [];    
-          
-          deckTop.cards = cards;
-          
+          cards = selected || [];
+
+          cards.forEach(card => {
+            player.discard.moveCardTo(card, deckTop);
+          });
+
           return store.prompt(state, new OrderCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARDS_ORDER,
@@ -81,33 +83,32 @@ export class Cyllene extends TrainerCard {
             if (order === null) {
               return state;
             }
-        
+
             deckTop.applyOrder(order);
             deckTop.moveToTopOfDestination(player.deck);
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            
-    
+
             if (cards.length > 0) {
               return store.prompt(state, new ShowCardsPrompt(
                 opponent.id,
                 GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
                 cards
               ), () => {
-    
+
                 return state;
-    
+
               });
             }
-            
-            player.deck.moveCardsTo(cards, deckTop);
-            
+
+            // player.deck.moveCardsTo(cards, deckTop);
+
             return state;
           });
         });
-        
+
       });
     }
-    
+
     return state;
   }
 }

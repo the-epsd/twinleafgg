@@ -7,6 +7,7 @@ const attack_effects_1 = require("../effects/attack-effects");
 const game_effects_1 = require("../effects/game-effects");
 const state_utils_1 = require("../state-utils");
 function attackReducer(store, state, effect) {
+    // let addWeakness: boolean = false;
     if (effect instanceof attack_effects_1.PutDamageEffect) {
         const target = effect.target;
         const pokemonCard = target.getPokemonCard();
@@ -15,7 +16,9 @@ function attackReducer(store, state, effect) {
         }
         // Check if the effect is part of an attack and the target is the opponent's active Pokemon
         const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
-        if (effect.attackEffect && target === opponent.active) {
+        if (effect.attackEffect && target === opponent.active
+        // && !addWeakness
+        ) {
             // Apply weakness
             const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect.attackEffect, effect.damage);
             applyWeakness.target = effect.target;
@@ -34,10 +37,17 @@ function attackReducer(store, state, effect) {
             afterDamageEffect.target = effect.target;
             store.reduceEffect(state, afterDamageEffect);
         }
+        console.log(damage);
     }
     if (effect instanceof attack_effects_1.DealDamageEffect) {
         const base = effect.attackEffect;
-        const dealDamage = new attack_effects_1.PutDamageEffect(base, effect.damage);
+        const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(base, effect.damage);
+        applyWeakness.target = effect.target;
+        applyWeakness.ignoreWeakness = base.ignoreWeakness;
+        applyWeakness.ignoreResistance = base.ignoreResistance;
+        state = store.reduceEffect(state, applyWeakness);
+        // addWeakness = true;
+        const dealDamage = new attack_effects_1.PutDamageEffect(base, applyWeakness.damage);
         dealDamage.target = effect.target;
         state = store.reduceEffect(state, dealDamage);
         return state;

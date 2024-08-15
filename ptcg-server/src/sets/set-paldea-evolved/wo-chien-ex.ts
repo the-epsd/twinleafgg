@@ -11,28 +11,28 @@ export class WoChienex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
-  
+  public tags = [CardTag.POKEMON_ex];
+
   public stage = Stage.BASIC;
 
-  public  cardType = CardType.GRASS;
+  public cardType = CardType.GRASS;
 
   public hp = 230;
 
-  public weakness = [{type: CardType.FIRE}];
+  public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Covetous Ivy',
-      cost: [ CardType.GRASS, CardType.GRASS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
       damage: 0,
       text: 'This attack does 60 damage to 1 of your opponent\'s Benched Pokémon for each Prize card your opponent has taken. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Forest Blast',
-      cost: [ CardType.GRASS, CardType.GRASS, CardType.GRASS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
       damage: 220,
       text: ''
     }
@@ -53,16 +53,16 @@ export class WoChienex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       const prizesTaken = 6 - opponent.getPrizeLeft();
-    
+
       const damagePerPrize = 60;
 
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];
@@ -71,7 +71,7 @@ export class WoChienex extends PokemonCard {
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });
-        return state; 
+        return state;
       });
     }
     return state;

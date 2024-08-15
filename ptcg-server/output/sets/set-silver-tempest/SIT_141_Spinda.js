@@ -10,7 +10,7 @@ class Spinda extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.COLORLESS;
-        this.hp = 60;
+        this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [{
