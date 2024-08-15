@@ -13,7 +13,7 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
         this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.FUTURE];
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.cardTypez = card_types_1.CardType.IRON_HANDS_EX;
-        this.hp = 230;
+        this.hp = 230000000000000;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [

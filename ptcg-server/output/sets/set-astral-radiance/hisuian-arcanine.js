@@ -1,28 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HisuianArcanine = void 0;
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class HisuianArcanine extends game_1.PokemonCard {
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
+class HisuianArcanine extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.STAGE_1;
-        this.cardType = game_1.CardType.FIGHTING;
+        this.stage = card_types_1.Stage.STAGE_1;
+        this.cardType = card_types_1.CardType.FIGHTING;
         this.hp = 150;
         this.evolvesFrom = 'Hisuian Growlithe';
-        this.weakness = [{ type: game_1.CardType.GRASS }];
-        this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
+        this.weakness = [{ type: card_types_1.CardType.GRASS }];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
                 name: 'Boulder Crush',
-                cost: [game_1.CardType.FIGHTING, game_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
                 damage: 50,
                 text: ''
             },
             {
                 name: 'Scorching Horn',
-                cost: [game_1.CardType.FIGHTING, game_1.CardType.FIGHTING, game_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
                 damage: 80,
                 text: 'If this Pokémon has any [R] Energy attached, this attack does 80 more damage, and your opponent\'s Active Pokémon is now Burned.'
             }
@@ -37,17 +39,12 @@ class HisuianArcanine extends game_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player);
-            store.reduceEffect(state, checkProvidedEnergyEffect);
-            let energyCount = 0;
-            checkProvidedEnergyEffect.energyMap.forEach(em => {
-                energyCount += em.provides.filter(cardType => {
-                    return cardType === game_1.CardType.FIRE;
-                }).length;
-            });
-            if (energyCount > 0) {
+            const cardList = player.active;
+            const hasAttachedEnergy = cardList.cards.some(c => c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.FIRE || c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.ANY)));
+            if (hasAttachedEnergy) {
                 effect.damage = effect.damage + 80;
-                effect.target.specialConditions.push(game_1.SpecialCondition.BURNED);
+                const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.BURNED]);
+                store.reduceEffect(state, specialConditionEffect);
             }
             return state;
         }
