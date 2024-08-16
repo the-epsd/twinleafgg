@@ -11,15 +11,15 @@ export class Clive extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'G';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '78';
-  
+
   public set = 'PAF';
-  
+
   public name = 'Clive';
-  
+
   public fullName = 'Clive PAF';
 
   public text: string =
@@ -44,15 +44,15 @@ export class Clive extends TrainerCard {
       const cardsInOpponentHand = opponent.hand.cards.filter(card => card instanceof TrainerCard && card.trainerType === TrainerType.SUPPORTER);
 
       state = store.prompt(state, new ShowCardsPrompt(
-        opponent.id,
+        player.id,
         GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
         opponent.hand.cards
       ), () => {
 
-        const cardsToMove = opponent.hand.cards.slice(0, cardsInOpponentHand.length * 2);
-        player.deck.moveCardsTo(cardsToMove, player.hand);
+        const cardsToMove = cardsInOpponentHand.length * 2;
+        player.deck.moveTo(player.hand, cardsToMove);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        
+
 
       });
     }

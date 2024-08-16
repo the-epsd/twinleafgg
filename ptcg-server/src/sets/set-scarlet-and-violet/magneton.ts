@@ -1,5 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Magneton extends PokemonCard {
 
@@ -15,14 +19,20 @@ export class Magneton extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Lightning Ball',
-      cost: [ CardType.LIGHTNING ],
+      cost: [CardType.LIGHTNING],
       damage: 20,
       text: ''
+    },
+    {
+      name: 'Explosion',
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING],
+      damage: 90,
+      text: 'This Pokémon also does 90 damage to itself.'
     }
   ];
 
@@ -35,5 +45,18 @@ export class Magneton extends PokemonCard {
   public name: string = 'Magneton';
 
   public fullName: string = 'Magneton SVI';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+
+      const player = effect.player;
+
+      const dealDamage = new DealDamageEffect(effect, 90);
+      dealDamage.target = player.active;
+      return store.reduceEffect(state, dealDamage);
+    }
+    return state;
+  }
 
 }

@@ -20,15 +20,15 @@ class AggronVMAX extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Rock Slide',
+                name: 'Cracking Stomp',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 90,
+                damage: 150,
                 text: 'Discard the top card of your opponent\'s deck.'
             },
             {
-                name: 'Merciless Strike',
+                name: 'Max Take Down',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 150,
+                damage: 270,
                 text: 'This Pokémon also does 30 damage to itself.'
             }
         ];
@@ -42,7 +42,7 @@ class AggronVMAX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            // Discard 2 cards from opponent's deck 
+            // Discard 1 card from opponent's deck 
             opponent.deck.moveTo(opponent.discard, 1);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

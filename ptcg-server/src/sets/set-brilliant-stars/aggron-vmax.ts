@@ -9,7 +9,7 @@ export class AggronVMAX extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public tags = [ CardTag.POKEMON_VMAX ];
+  public tags = [CardTag.POKEMON_VMAX];
 
   public stage: Stage = Stage.VMAX;
 
@@ -23,19 +23,19 @@ export class AggronVMAX extends PokemonCard {
 
   public resistance = [{ type: CardType.GRASS, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
-      name: 'Rock Slide',
-      cost: [ CardType.METAL, CardType.COLORLESS, CardType.COLORLESS ],
-      damage: 90,
+      name: 'Cracking Stomp',
+      cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 150,
       text: 'Discard the top card of your opponent\'s deck.'
     },
     {
-      name: 'Merciless Strike',
-      cost: [ CardType.METAL, CardType.METAL, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
-      damage: 150,
+      name: 'Max Take Down',
+      cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 270,
       text: 'This Pokémon also does 30 damage to itself.'
     }
   ];
@@ -55,21 +55,20 @@ export class AggronVMAX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-          
-      // Discard 2 cards from opponent's deck 
+      // Discard 1 card from opponent's deck 
       opponent.deck.moveTo(opponent.discard, 1);
-          
+
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       const player = effect.player;
-  
+
       const dealDamage = new DealDamageEffect(effect, 30);
       dealDamage.target = player.active;
       return store.reduceEffect(state, dealDamage);
     }
     return state;
   }
-  
+
 }

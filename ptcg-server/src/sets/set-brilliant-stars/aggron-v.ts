@@ -9,7 +9,7 @@ export class AggronV extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public stage: Stage = Stage.BASIC;
 
@@ -21,18 +21,18 @@ export class AggronV extends PokemonCard {
 
   public resistance = [{ type: CardType.GRASS, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Rock Slide',
-      cost: [ CardType.METAL, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
       damage: 90,
       text: 'This attack also does 30 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Merciless Strike',
-      cost: [ CardType.METAL, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 150,
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 150 more damage.'
     }
@@ -53,25 +53,26 @@ export class AggronV extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-        
+
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
-        
+
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { min: 1, max: 2, allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {
           return;
         }
-        const damageEffect = new PutDamageEffect(effect, 30);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
+        targets.forEach(target => {
+          const damageEffect = new PutDamageEffect(effect, 30);
+          store.reduceEffect(state, damageEffect);
+        });
       });
     }
 
