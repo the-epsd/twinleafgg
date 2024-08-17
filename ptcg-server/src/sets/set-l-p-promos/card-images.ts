@@ -1,6 +1,6 @@
 import { WonderPlatinum } from './wonder-platinum';
 
 export class WonderPlatinumArt extends WonderPlatinum {
-  public cardImage = 'https://archives.bulbagarden.net/media/upload/3/3e/WonderPlatinumDPtPromo33.jpg';
+  public cardImage = 'https://i.imgur.com/ANWl9Cy.jpeg';
 }
 

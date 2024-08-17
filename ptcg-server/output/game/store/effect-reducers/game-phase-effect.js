@@ -120,7 +120,6 @@ function handleSpecialConditions(store, state, effect) {
                 if (effect.asleepFlipResult === false) {
                     break;
                 }
-
                 const flipsForSleep = [];
                 for (let i = 0; i < effect.player.active.sleepFlips; i++) {
                     store.log(state, game_message_1.GameLog.LOG_FLIP_ASLEEP, { name: player.name });
