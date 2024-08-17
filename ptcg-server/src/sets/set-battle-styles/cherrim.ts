@@ -1,7 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils,
+  GameError, GameMessage, EnergyCard, PlayerType, SlotType,
+  CardTarget
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
@@ -21,7 +24,7 @@ export class Cherrim extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Spring Bloom',
@@ -37,7 +40,7 @@ export class Cherrim extends PokemonCard {
   public attacks = [
     {
       name: 'Seed Bomb',
-      cost: [ CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 70,
       text: ''
     }
@@ -67,44 +70,49 @@ export class Cherrim extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
+      const blocked2: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        if (card.tags.includes(CardTag.POKEMON_V)) {
+          blocked2.push(target);
+        }
+        if (card.tags.includes(CardTag.POKEMON_VSTAR)) {
+          blocked2.push(target);
+        }
+        if (card.tags.includes(CardTag.POKEMON_ex)) {
+          blocked2.push(target);
+        }
+        if (card.tags.includes(CardTag.POKEMON_VMAX)) {
+          blocked2.push(target);
+        }
+        if (card.tags.includes(CardTag.RADIANT)) {
+          blocked2.push(target);
+        }
+        if (card.tags.includes(CardTag.POKEMON_GX)) {
+          blocked2.push(target);
+        }
+        if (card.tags.includes(CardTag.POKEMON_EX)) {
+          blocked2.push(target);
+        }
+      });
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_CARDS,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
-        { allowCancel: true }
+        { allowCancel: false, blockedTo: blocked2 }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
-
           const target = StateUtils.getTarget(state, player, transfer.to);
-
-          if (target.cards[0].tags.includes(CardTag.POKEMON_V) && 
-          target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) &&
-          target.cards[0].tags.includes(CardTag.POKEMON_VMAX) && 
-          target.cards[0].tags.includes(CardTag.POKEMON_EX) &&
-          target.cards[0].tags.includes(CardTag.POKEMON_GX) &&
-          target.cards[0].tags.includes(CardTag.POKEMON_LV_X) &&
-          target.cards[0].tags.includes(CardTag.POKEMON_ex) &&
-          target.cards[0].tags.includes(CardTag.RADIANT)) {
-            throw new GameError(GameMessage.INVALID_TARGET);
-          }
-          else {
-
-            const energyCard = transfer.card as EnergyCard;
-            const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
-            store.reduceEffect(state, attachEnergyEffect);
-
-          }
-          return state;
+          const energyCard = transfer.card as EnergyCard;
+          const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+          store.reduceEffect(state, attachEnergyEffect);
         }
-
-        return state;
       });
     }
     return state;
   }
-
 }

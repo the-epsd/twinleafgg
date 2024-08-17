@@ -20,7 +20,7 @@ export class Mewtwo extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Mind Report',
@@ -30,7 +30,7 @@ export class Mewtwo extends PokemonCard {
 
   public attacks = [{
     name: 'Psyshock',
-    cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
     damage: 70,
     text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
   }];
@@ -50,13 +50,13 @@ export class Mewtwo extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-        
+
       const applyWeakness = new ApplyWeaknessEffect(effect, 70);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
-        
+
       effect.damage = 0;
-        
+
       if (damage > 0) {
         opponent.active.damage += damage;
         const afterDamage = new AfterDamageEffect(effect, damage);
@@ -67,11 +67,11 @@ export class Mewtwo extends PokemonCard {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       if (!player.discard.cards.some(c => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER)) {
         return state;
       }
-      
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {
@@ -83,7 +83,7 @@ export class Mewtwo extends PokemonCard {
       } catch {
         return state;
       }
-      
+
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_USE_ABILITY,
@@ -91,7 +91,7 @@ export class Mewtwo extends PokemonCard {
         if (wantToUse) {
 
           const deckTop = new CardList();
-          
+
           return store.prompt(state, new ChooseCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARD_TO_DECK,
@@ -102,23 +102,21 @@ export class Mewtwo extends PokemonCard {
             selected.forEach((card, index) => {
               store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
             });
-            
-            deckTop.cards = selected;
-            deckTop.moveToTopOfDestination(player.deck);            
-          
+
+            player.discard.moveCardTo(selected[0], deckTop);
+            deckTop.moveToTopOfDestination(player.deck);
+
             store.prompt(state, new ShowCardsPrompt(
               opponent.id,
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
               selected
             ), () => { });
-          
+
             return state;
           });
         }
       });
     }
-
     return state;
   }
-
 }

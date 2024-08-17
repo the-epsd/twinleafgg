@@ -9,11 +9,11 @@ import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class RapidStrikeEnergy extends EnergyCard {
 
-  public cardTag: CardTag[] = [CardTag.RAPID_STRIKE];
+  public tags = [CardTag.RAPID_STRIKE];
 
   public regulationMark = 'E';
 
-  public provides: CardType[] = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -32,7 +32,7 @@ export class RapidStrikeEnergy extends EnergyCard {
     'As long as this card is attached to a Pokémon, it provides 2 in any combination of W Energy and F Energy.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     // Provide energy when attached to Rapid Strike Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
@@ -46,13 +46,14 @@ export class RapidStrikeEnergy extends EnergyCard {
       }
 
       if (pokemon.getPokemonCard()?.tags.includes(CardTag.RAPID_STRIKE)) {
-        effect.energyMap.push({ card: this, provides: 
-          [CardType.WATER, CardType.FIGHTING || CardType.WATER, CardType.WATER || CardType.FIGHTING, CardType.FIGHTING] // 2 Fighting
+        effect.energyMap.push({
+          card: this, provides:
+            [CardType.WATER, CardType.FIGHTING || CardType.WATER, CardType.WATER || CardType.FIGHTING, CardType.FIGHTING] // 2 Fighting
         });
       }
       return state;
     }
-    
+
     // Discard card when not attached to Rapid Strike Pokemon
     if (effect instanceof CheckTableStateEffect) {
       state.players.forEach(player => {
@@ -78,6 +79,5 @@ export class RapidStrikeEnergy extends EnergyCard {
     }
     return state;
   }
-    
+
 }
-    

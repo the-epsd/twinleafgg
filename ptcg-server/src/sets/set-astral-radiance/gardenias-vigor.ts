@@ -55,9 +55,9 @@ export class GardeniasVigor extends TrainerCard {
         GameMessage.ATTACH_ENERGY_CARDS,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
-        { min: 1, max: 2, allowCancel: true }
+        { min: 1, max: 2, allowCancel: false, differentTargets: false }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
@@ -66,7 +66,7 @@ export class GardeniasVigor extends TrainerCard {
           const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
           store.reduceEffect(state, attachEnergyEffect);
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          
+
         }
       });
     }

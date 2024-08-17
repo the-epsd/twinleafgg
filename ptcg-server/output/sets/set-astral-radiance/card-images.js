@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ShieldonArt = exports.RoxanneArt = exports.RegisteelArt = exports.RegirockArt = exports.RegigigasArt = exports.RegielekiArt = exports.RegidragoArt = exports.RegiceArt = exports.RaltsArt = exports.RadiantHawluchaArt = exports.RadiantGreninjaArt = exports.OriginFormePalkiaVSTARArt = exports.OriginFormePalkiaVArt = exports.OriginFormeDialgaVSTARArt = exports.OriginFormeDialgaVArt = exports.MiltankArt = exports.MightyenaArt = exports.MantineArt = exports.MagnetonArt = exports.LuxrayVArt = exports.LucarioVArt = exports.KricketuneArt = exports.KleavorArt = exports.KeldeoArt = exports.JubilifeVillageArt = exports.IridaArt = exports.HisuianSamurottVSTARArt = exports.HisuianSamurottVArt = exports.HisuianQwilfishArt2 = exports.HisuianQwilfishArt = exports.HisuianOverqwilArt = exports.HisuianHeavyBallArt = exports.HisuianGrowlitheArt = exports.HisuianBasculinArt = exports.HisuianArcanineArt = exports.GutsyPickaxeArt = exports.GrantArt = exports.GardeniasVigorArt = exports.GapejawBogArt = exports.GalladeArt = exports.FeatherBallArt = exports.EnergyLotoArt = exports.DiancieArt = exports.DarkraiVSTARArt = exports.DarkraiVArt = exports.DarkPatchArt = exports.CylleneArt = exports.CancelingCologneArt = exports.BronzorArt = exports.AdamanArt = void 0;
-exports.YanmaArt = exports.WyrdeerVArt = exports.UrsalunaArt = exports.TrekkingShoesArt = exports.TempleofSinnohArt = exports.SwitchCartArt = exports.SupereffectiveGlassesArt = exports.StarmieVArt = exports.SpicySeasonedCurryArt = void 0;
+exports.RoxanneArt = exports.RegisteelArt = exports.RegirockArt = exports.RegigigasArt = exports.RegielekiArt = exports.RegidragoArt = exports.RegiceArt = exports.RaltsArt = exports.RadiantHawluchaArt = exports.RadiantGreninjaArt = exports.OriginFormePalkiaVSTARArt = exports.OriginFormePalkiaVArt = exports.OriginFormeDialgaVSTARArt = exports.OriginFormeDialgaVArt = exports.MiltankArt = exports.MightyenaArt = exports.MantineArt = exports.MagnetonArt = exports.LuxrayVArt = exports.LucarioVArt = exports.KricketuneArt = exports.KleavorArt = exports.KeldeoArt = exports.JubilifeVillageArt = exports.IridaArt = exports.HisuianSamurottVSTARArt = exports.HisuianSamurottVArt = exports.HisuianQwilfishArt2 = exports.HisuianQwilfishArt = exports.HisuianOverqwilArt = exports.HisuianHeavyBallArt = exports.HisuianGrowlitheArt = exports.HisuianBasculinArt = exports.HisuianBasculegionArt = exports.HisuianArcanineArt = exports.GutsyPickaxeArt = exports.GrantArt = exports.GardeniasVigorArt = exports.GapejawBogArt = exports.GalladeArt = exports.FeatherBallArt = exports.EnergyLotoArt = exports.DiancieArt = exports.DarkraiVSTARArt = exports.DarkraiVArt = exports.DarkPatchArt = exports.CylleneArt = exports.CancelingCologneArt = exports.BronzorArt = exports.AdamanArt = void 0;
+exports.YanmaArt = exports.WyrdeerVArt = exports.UrsalunaArt = exports.TrekkingShoesArt = exports.TempleofSinnohArt = exports.SwitchCartArt = exports.SupereffectiveGlassesArt = exports.StarmieVArt = exports.SpicySeasonedCurryArt = exports.ShieldonArt = void 0;
 const adaman_1 = require("./adaman");
 const ASR_109_Shieldon_1 = require("./ASR_109_Shieldon");
 const ASR_111_Bronzor_1 = require("./ASR_111_Bronzor");
@@ -28,6 +28,7 @@ const hisuian_basculin_1 = require("./hisuian-basculin");
 const hisuian_heavy_ball_1 = require("./hisuian-heavy-ball");
 const hisuian_samurott_v_1 = require("./hisuian-samurott-v");
 const hisuian_samurott_vstar_1 = require("./hisuian-samurott-vstar");
+const hisuian_basculegion_1 = require("./hisuian_basculegion");
 const irida_1 = require("./irida");
 const jubilife_village_1 = require("./jubilife-village");
 const keldeo_1 = require("./keldeo");
@@ -173,6 +174,13 @@ class HisuianArcanineArt extends hisuian_arcanine_1.HisuianArcanine {
     }
 }
 exports.HisuianArcanineArt = HisuianArcanineArt;
+class HisuianBasculegionArt extends hisuian_basculegion_1.HisuianBasculegion {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_044_R_EN_LG.png';
+    }
+}
+exports.HisuianBasculegionArt = HisuianBasculegionArt;
 class HisuianBasculinArt extends hisuian_basculin_1.HisuianBasculin {
     constructor() {
         super(...arguments);

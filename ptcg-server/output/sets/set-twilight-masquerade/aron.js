@@ -18,9 +18,9 @@ class Aron extends game_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Double-Edge',
-                cost: [],
+                cost: [card_types_1.CardType.METAL],
                 damage: 20,
-                text: ''
+                text: 'This Pokémon also does 10 damage to itself.'
             }
         ];
         this.set = 'TWM';

@@ -45,7 +45,9 @@ class Cyllene extends trainer_card_1.TrainerCard {
                 const deckTop = new game_1.CardList();
                 store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARDS_TO_PUT_ON_TOP_OF_THE_DECK, player.discard, {}, { min: Math.min(heads, player.discard.cards.length), max: heads, allowCancel: false }), selected => {
                     cards = selected || [];
-                    deckTop.cards = cards;
+                    cards.forEach(card => {
+                        player.discard.moveCardTo(card, deckTop);
+                    });
                     return store.prompt(state, new game_1.OrderCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARDS_ORDER, deckTop, { allowCancel: false }), order => {
                         if (order === null) {
                             return state;
@@ -58,7 +60,7 @@ class Cyllene extends trainer_card_1.TrainerCard {
                                 return state;
                             });
                         }
-                        player.deck.moveCardsTo(cards, deckTop);
+                        // player.deck.moveCardsTo(cards, deckTop);
                         return state;
                     });
                 });

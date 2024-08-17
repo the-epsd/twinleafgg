@@ -12,6 +12,7 @@ export var AttackEffects;
     AttackEffects["ADD_MARKER_EFFECT"] = "ADD_MARKER_EFFECT";
     AttackEffects["ADD_SPECIAL_CONDITIONS_EFFECT"] = "ADD_SPECIAL_CONDITIONS_EFFECT";
     AttackEffects["MOVED_TO_ACTIVE_BONUS_EFFECT"] = "MOVED_TO_ACTIVE_BONUS_EFFECT";
+    AttackEffects["LOST_ZONED_CARDS_EFFECT"] = "LOST_ZONED_CARDS_EFFECT";
 })(AttackEffects || (AttackEffects = {}));
 export class AbstractAttackEffect {
     constructor(base) {
@@ -48,6 +49,7 @@ export class PutDamageEffect extends AbstractAttackEffect {
         this.preventDefault = false;
         this.damageReduced = false;
         this.wasKnockedOutFromFullHP = false;
+        this.weaknessApplied = false;
         this.damage = damage;
     }
 }
@@ -67,19 +69,36 @@ export class PutCountersEffect extends AbstractAttackEffect {
         this.damage = damage;
     }
 }
-export class KnockOutOpponentEffect extends AbstractAttackEffect {
-    constructor(base, target) {
+export class KOEffect extends AbstractAttackEffect {
+    constructor(base, damage) {
         super(base);
-        this.type = AttackEffects.KNOCK_OUT_OPPONENT_EFFECT;
+        this.type = AttackEffects.PUT_DAMAGE_EFFECT;
         this.preventDefault = false;
-        this.target = target;
-        this.prizeCount = 1;
+        this.damageReduced = false;
+        this.wasKnockedOutFromFullHP = false;
+        this.damage = damage;
+    }
+}
+export class KnockOutOpponentEffect extends AbstractAttackEffect {
+    constructor(base, damage) {
+        super(base);
+        this.type = AttackEffects.DEAL_DAMAGE_EFFECT;
+        this.preventDefault = false;
+        this.damage = damage;
     }
 }
 export class DiscardCardsEffect extends AbstractAttackEffect {
     constructor(base, energyCards) {
         super(base);
         this.type = AttackEffects.DISCARD_CARD_EFFECT;
+        this.preventDefault = false;
+        this.cards = energyCards;
+    }
+}
+export class LostZoneCardsEffect extends AbstractAttackEffect {
+    constructor(base, energyCards) {
+        super(base);
+        this.type = AttackEffects.LOST_ZONED_CARDS_EFFECT;
         this.preventDefault = false;
         this.cards = energyCards;
     }

@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType
+  GameError, GameMessage, EnergyCard, PlayerType, SlotType,
+  CardTarget
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -79,6 +80,13 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
+      const blocked2: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        if (card.cardType !== CardType.WATER) {
+          blocked2.push(target);
+        }
+      });
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -86,7 +94,7 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { allowCancel: false, min: 1, max: 3 }
+        { allowCancel: false, min: 1, max: 3, blockedTo: blocked2 }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user

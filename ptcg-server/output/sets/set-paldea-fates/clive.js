@@ -29,9 +29,9 @@ class Clive extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             const cardsInOpponentHand = opponent.hand.cards.filter(card => card instanceof trainer_card_1.TrainerCard && card.trainerType === card_types_1.TrainerType.SUPPORTER);
-            state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, opponent.hand.cards), () => {
-                const cardsToMove = opponent.hand.cards.slice(0, cardsInOpponentHand.length * 2);
-                player.deck.moveCardsTo(cardsToMove, player.hand);
+            state = store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, opponent.hand.cards), () => {
+                const cardsToMove = cardsInOpponentHand.length * 2;
+                player.deck.moveTo(player.hand, cardsToMove);
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
             });
         }

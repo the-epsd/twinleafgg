@@ -31,7 +31,6 @@ class ForestSealStone extends game_1.TrainerCard {
         ];
     }
     reduceEffect(store, state, effect) {
-        var _a;
         if (effect instanceof check_effects_1.CheckPokemonPowersEffect && effect.target.cards.includes(this) &&
             !effect.powers.find(p => p.name === this.powers[0].name)) {
             const player = effect.player;
@@ -39,11 +38,8 @@ class ForestSealStone extends game_1.TrainerCard {
                 const toolEffect = new play_card_effects_1.ToolEffect(player, this);
                 store.reduceEffect(state, toolEffect);
             }
-            catch (_b) {
+            catch (_a) {
                 return state;
-            }
-            if (!((_a = effect.target.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_VSTAR))) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             effect.powers.push(this.powers[0]);
         }
@@ -56,7 +52,7 @@ class ForestSealStone extends game_1.TrainerCard {
                 const toolEffect = new play_card_effects_1.ToolEffect(player, this);
                 store.reduceEffect(state, toolEffect);
             }
-            catch (_c) {
+            catch (_b) {
                 return state;
             }
             player.usedVSTAR = true;

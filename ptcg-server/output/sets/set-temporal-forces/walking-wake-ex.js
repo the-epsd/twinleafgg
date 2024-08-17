@@ -36,7 +36,7 @@ class WalkingWakeex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Walking Wake ex TEF';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.DealDamageEffect) {
+        if (effect instanceof game_effects_1.AttackEffect) {
             const player = effect.player;
             const targetCard = player.active.getPokemonCard();
             if (targetCard && targetCard.name == 'Walking Wake ex') {
@@ -53,17 +53,14 @@ class WalkingWakeex extends pokemon_card_1.PokemonCard {
                     return state;
                 }
                 const opponent = game_1.StateUtils.getOpponent(state, player);
-                if (effect instanceof game_effects_1.AttackEffect && effect.target === opponent.active) {
-                    const damage = this.attacks[0].damage;
-                    const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, damage);
-                    store.reduceEffect(state, applyWeakness);
-                    const newDamage = applyWeakness.damage;
-                    effect.damage = 0;
-                    if (newDamage > 0) {
-                        opponent.active.damage += newDamage;
-                        const afterDamage = new attack_effects_1.AfterDamageEffect(effect, newDamage);
-                        state = store.reduceEffect(state, afterDamage);
-                    }
+                const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, effect.damage);
+                store.reduceEffect(state, applyWeakness);
+                const damage = applyWeakness.damage;
+                effect.damage = 0;
+                if (damage > 0) {
+                    opponent.active.damage += damage;
+                    const afterDamage = new attack_effects_1.AfterDamageEffect(effect, damage);
+                    state = store.reduceEffect(state, afterDamage);
                 }
             }
         }

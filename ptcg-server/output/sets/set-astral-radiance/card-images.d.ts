@@ -24,6 +24,7 @@ import { HisuianBasculin } from './hisuian-basculin';
 import { HisuianHeavyBall } from './hisuian-heavy-ball';
 import { HisuianSamurottV } from './hisuian-samurott-v';
 import { HisuianSamurottVSTAR } from './hisuian-samurott-vstar';
+import { HisuianBasculegion } from './hisuian_basculegion';
 import { Irida } from './irida';
 import { JubilifeVillage } from './jubilife-village';
 import { Keldeo } from './keldeo';
@@ -103,6 +104,9 @@ export declare class GutsyPickaxeArt extends GutsyPickaxe {
     cardImage: string;
 }
 export declare class HisuianArcanineArt extends HisuianArcanine {
+    cardImage: string;
+}
+export declare class HisuianBasculegionArt extends HisuianBasculegion {
     cardImage: string;
 }
 export declare class HisuianBasculinArt extends HisuianBasculin {

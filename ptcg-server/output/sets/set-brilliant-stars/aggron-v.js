@@ -49,9 +49,10 @@ class AggronV extends pokemon_card_1.PokemonCard {
                 if (!targets || targets.length === 0) {
                     return;
                 }
-                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 30);
-                damageEffect.target = targets[0];
-                store.reduceEffect(state, damageEffect);
+                targets.forEach(target => {
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 30);
+                    store.reduceEffect(state, damageEffect);
+                });
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

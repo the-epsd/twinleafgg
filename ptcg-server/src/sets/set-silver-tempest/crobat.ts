@@ -4,7 +4,6 @@ import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotTyp
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -37,10 +36,6 @@ export class Crobat extends PokemonCard {
   private usedCriticalBite = false;
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
-      this.usedCriticalBite = false;
-    }
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       this.usedCriticalBite = false;
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
@@ -49,6 +44,9 @@ export class Crobat extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
+
+      this.usedCriticalBite = true;
+      console.log('Just used Critical Bite: ' + this.usedCriticalBite);
 
       const max = Math.min(1);
       return store.prompt(state, new ChoosePokemonPrompt(
@@ -63,9 +61,6 @@ export class Crobat extends PokemonCard {
           const damageEffect = new PutDamageEffect(effect, 30);
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
-          this.usedCriticalBite = true;
-          console.log('Just used Critical Bite: ' + this.usedCriticalBite);
-
           return state;
         });
       });

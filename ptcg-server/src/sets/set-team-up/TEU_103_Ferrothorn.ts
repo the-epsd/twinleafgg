@@ -14,6 +14,7 @@ export class Ferrothorn extends PokemonCard {
   public weakness = [{ type: CardType.FIRE }];
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public evolvesFrom = 'Ferroseed';
 
   public attacks = [{
     name: 'Guard Press',
@@ -32,8 +33,8 @@ export class Ferrothorn extends PokemonCard {
   public set = 'UNB';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '124';
-  public name = 'Lairon';
-  public fullName = 'Lairon UNB';
+  public name = 'Ferrothorn';
+  public fullName = 'Ferrothorn UNB';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

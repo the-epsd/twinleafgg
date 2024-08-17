@@ -92,7 +92,7 @@ class IronCrownex extends pokemon_card_1.PokemonCard {
             }
             const futurePokemon = effect.player.active.getPokemonCard();
             if (futurePokemon && futurePokemon.tags.includes(card_types_1.CardTag.FUTURE)) {
-                if (futurePokemon && futurePokemon.name !== 'Iron Crown ex') {
+                if (futurePokemon && futurePokemon.name !== 'Iron Crown ex' && effect.damage > 0) {
                     effect.damage += 20;
                 }
             }

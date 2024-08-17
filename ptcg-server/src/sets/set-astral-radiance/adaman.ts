@@ -6,12 +6,13 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { Card} from '../../game/store/card/card';
+import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../game/store/state/card-list';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { EnergyCard } from '../../game';
 
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -19,11 +20,15 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
-  
-  cards = player.hand.cards.filter(c => c !== self);
-  if (cards.length < 2) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+
+  const hasEnergyInHand = player.hand.cards.filter(c => {
+    return c instanceof EnergyCard && c.name === 'Metal Energy';
+  }).length >= 2;
+
+  if (!hasEnergyInHand) {
+    throw new GameError(GameMessage.CANNOT_USE_POWER);
   }
+
 
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -47,8 +52,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name : 'Metal Energy'},
-    { min: 2, max: 2, allowCancel: true }
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
+    { min: 2, max: 2, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
@@ -65,8 +70,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { },
-    { min: 2, max: 2, allowCancel: true }
+    {},
+    { min: 1, max: 2, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
@@ -82,7 +87,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   player.deck.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

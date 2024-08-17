@@ -7,7 +7,7 @@ import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect } from '../../
 
 export class IronCrownex extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.FUTURE ];
+  public tags = [CardTag.POKEMON_ex, CardTag.FUTURE];
 
   public regulationMark = 'H';
 
@@ -23,7 +23,7 @@ export class IronCrownex extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Cobalt Command',
@@ -34,7 +34,7 @@ export class IronCrownex extends PokemonCard {
   public attacks = [
     {
       name: 'Twin Shotels',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
       text: 'This attack does 50 damage to 2 of your opponent\'s Pokémon. This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on those Pokémon.'
     }
@@ -54,13 +54,13 @@ export class IronCrownex extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-    
+
       const max = Math.min(2);
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: max, allowCancel: false }
       ), selected => {
         const targets = selected || [];
@@ -75,11 +75,11 @@ export class IronCrownex extends PokemonCard {
           const applyWeakness = new ApplyWeaknessEffect(effect, 50);
           store.reduceEffect(state, applyWeakness);
           const damage = applyWeakness.damage;
-          
+
           effect.damage = 0;
-                    
+
           if (damage > 0) {
-            targets.forEach(target => { 
+            targets.forEach(target => {
               target.damage = damage;
               const afterDamage = new AfterDamageEffect(effect, damage);
               state = store.reduceEffect(state, afterDamage);
@@ -121,11 +121,11 @@ export class IronCrownex extends PokemonCard {
       }
       const futurePokemon = effect.player.active.getPokemonCard();
       if (futurePokemon && futurePokemon.tags.includes(CardTag.FUTURE)) {
-        if (futurePokemon && futurePokemon.name !== 'Iron Crown ex') {
+        if (futurePokemon && futurePokemon.name !== 'Iron Crown ex' && effect.damage > 0) {
           effect.damage += 20;
         }
       }
     }
     return state;
-  }       
+  }
 }

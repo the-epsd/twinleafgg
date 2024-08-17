@@ -11,13 +11,16 @@ const card_list_1 = require("../../game/store/state/card-list");
 const show_cards_prompt_1 = require("../../game/store/prompts/show-cards-prompt");
 const state_utils_1 = require("../../game/store/state-utils");
 const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
+const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     let cards = [];
-    cards = player.hand.cards.filter(c => c !== self);
-    if (cards.length < 2) {
-        throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+    const hasEnergyInHand = player.hand.cards.filter(c => {
+        return c instanceof game_1.EnergyCard && c.name === 'Metal Energy';
+    }).length >= 2;
+    if (!hasEnergyInHand) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
     }
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -32,7 +35,7 @@ function* playCard(next, store, state, self, effect) {
     // prepare card list without Junk Arm
     const handTemp = new card_list_1.CardList();
     handTemp.cards = player.hand.cards.filter(c => c !== self);
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Metal Energy' }, { min: 2, max: 2, allowCancel: true }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Metal Energy' }, { min: 2, max: 2, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });
@@ -41,7 +44,7 @@ function* playCard(next, store, state, self, effect) {
         return state;
     }
     player.hand.moveCardsTo(cards, player.discard);
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 2, max: 2, allowCancel: true }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 2, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });

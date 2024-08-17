@@ -25,14 +25,15 @@ class Electropower extends trainer_card_1.TrainerCard {
             player.marker.addMarker(this.ELECTROPOWER_MARKER, this);
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
-        if (effect instanceof attack_effects_1.DealDamageEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === card_types_1.CardType.LIGHTNING) {
-            const marker = effect.player.marker;
-            if (marker.hasMarker(this.ELECTROPOWER_MARKER, this) && effect.damage > 0) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === card_types_1.CardType.LIGHTNING) {
+            const player = effect.player;
+            if (player.marker.hasMarker(this.ELECTROPOWER_MARKER, this) && effect.damage > 0) {
                 effect.damage += 30;
             }
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.ELECTROPOWER_MARKER, this);
+            const player = effect.player;
+            player.marker.removeMarker(this.ELECTROPOWER_MARKER, this);
         }
         return state;
     }

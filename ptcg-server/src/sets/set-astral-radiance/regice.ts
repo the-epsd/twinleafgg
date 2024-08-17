@@ -17,7 +17,7 @@ function* useRegiGate(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
     player.deck,
     { superType: SuperType.POKEMON, stage: Stage.BASIC },
-    { min: 0, max, allowCancel: true }
+    { min: 0, max, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
@@ -94,9 +94,8 @@ export class Regice extends PokemonCard {
 
     if (effect instanceof UseAttackEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const pokemonCard = opponent.active.getPokemonCard();
-      if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_V || pokemonCard.tags.includes(CardTag.POKEMON_VMAX || pokemonCard.tags.includes(CardTag.POKEMON_VSTAR)))) {
+      const pokemonCard = player.active.getPokemonCard();
+      if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_V) || pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) || pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VMAX)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }

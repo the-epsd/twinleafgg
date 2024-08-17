@@ -18,6 +18,7 @@ export enum AttackEffects {
   ADD_MARKER_EFFECT = 'ADD_MARKER_EFFECT',
   ADD_SPECIAL_CONDITIONS_EFFECT = 'ADD_SPECIAL_CONDITIONS_EFFECT',
   MOVED_TO_ACTIVE_BONUS_EFFECT = 'MOVED_TO_ACTIVE_BONUS_EFFECT',
+  LOST_ZONED_CARDS_EFFECT = 'LOST_ZONED_CARDS_EFFECT',
 }
 
 export abstract class AbstractAttackEffect {
@@ -68,6 +69,7 @@ export class PutDamageEffect extends AbstractAttackEffect implements Effect {
   public damage: number;
   public damageReduced = false;
   public wasKnockedOutFromFullHP: boolean = false;
+  public weaknessApplied: boolean = false;
 
   constructor(base: AttackEffect, damage: number) {
     super(base);
@@ -97,21 +99,43 @@ export class PutCountersEffect extends AbstractAttackEffect implements Effect {
   }
 }
 
-export class KnockOutOpponentEffect extends AbstractAttackEffect implements Effect {
-  readonly type: string = AttackEffects.KNOCK_OUT_OPPONENT_EFFECT;
+export class KOEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = AttackEffects.PUT_DAMAGE_EFFECT;
   public preventDefault = false;
-  public target: PokemonCardList;
-  public prizeCount: number;
+  public damage: number;
+  public damageReduced = false;
+  public wasKnockedOutFromFullHP: boolean = false;
 
-  constructor(base: AttackEffect, target: PokemonCardList) {
+  constructor(base: AttackEffect, damage: number) {
     super(base);
-    this.target = target;
-    this.prizeCount = 1;
+    this.damage = damage;
+  }
+}
+
+export class KnockOutOpponentEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = AttackEffects.DEAL_DAMAGE_EFFECT;
+  public preventDefault = false;
+  public damage: number;
+
+  constructor(base: AttackEffect, damage: number) {
+    super(base);
+    this.damage = damage;
   }
 }
 
 export class DiscardCardsEffect extends AbstractAttackEffect implements Effect {
   readonly type: string = AttackEffects.DISCARD_CARD_EFFECT;
+  public preventDefault = false;
+  public cards: Card[];
+
+  constructor(base: AttackEffect, energyCards: Card[]) {
+    super(base);
+    this.cards = energyCards;
+  }
+}
+
+export class LostZoneCardsEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = AttackEffects.LOST_ZONED_CARDS_EFFECT;
   public preventDefault = false;
   public cards: Card[];
 

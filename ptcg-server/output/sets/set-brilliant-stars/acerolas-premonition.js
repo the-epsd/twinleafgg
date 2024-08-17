@@ -32,9 +32,9 @@ class AcerolasPremonition extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             const cardsInOpponentHand = opponent.hand.cards.filter(card => card instanceof trainer_card_1.TrainerCard);
-            state = store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, opponent.hand.cards), () => {
-                const cardsToMove = opponent.hand.cards.slice(0, cardsInOpponentHand.length * 1);
-                player.deck.moveCardsTo(cardsToMove, player.hand);
+            state = store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(player.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, opponent.hand.cards), () => {
+                const cardsToMove = cardsInOpponentHand.length;
+                player.deck.moveTo(player.hand, cardsToMove);
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
             });
         }

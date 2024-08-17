@@ -10,7 +10,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class HorrorPsychicEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -41,8 +41,8 @@ export class HorrorPsychicEnergy extends EnergyCard {
         return state;
       }
 
-      effect.energyMap.push({ card: this, provides: [ CardType.PSYCHIC ] });
-      
+      effect.energyMap.push({ card: this, provides: [CardType.PSYCHIC] });
+
       return state;
     }
 
@@ -56,15 +56,15 @@ export class HorrorPsychicEnergy extends EnergyCard {
       } catch {
         return state;
       }
-      
-      const checkPokemonType = new CheckPokemonTypeEffect(player.active);
+      console.log('Player Active: ' + player.active.getPokemonCard()?.name);
+      const checkPokemonType = new CheckPokemonTypeEffect(targetPlayer.active);
       store.reduceEffect(state, checkPokemonType);
 
       if (checkPokemonType.cardTypes.includes(CardType.PSYCHIC)) {
         if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
           return state;
         }
-  
+
         if (state.phase === GamePhase.ATTACK) {
           effect.source.damage += 20;
         }

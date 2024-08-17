@@ -30,6 +30,9 @@ class PlaySupporterTactic extends simple_tactics_1.SimpleTactic {
                 playCardAction = action;
             }
         });
+        if (playCardAction) {
+            player.supporterTurn = state.turn;
+        }
         return playCardAction;
     }
 }

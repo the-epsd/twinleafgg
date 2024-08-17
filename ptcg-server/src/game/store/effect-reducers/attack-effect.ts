@@ -8,14 +8,73 @@ import {
   AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect,
   RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect,
   PutCountersEffect, CardsToHandEffect,
-  KnockOutOpponentEffect
+  KnockOutOpponentEffect,
+  KOEffect,
+  LostZoneCardsEffect
 } from '../effects/attack-effects';
-import { HealEffect, KnockOutEffect } from '../effects/game-effects';
+import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
+
+
 
 export function attackReducer(store: StoreLike, state: State, effect: Effect): State {
 
   if (effect instanceof PutDamageEffect) {
+    const target = effect.target;
+    const pokemonCard = target.getPokemonCard();
+    if (pokemonCard === undefined) {
+      throw new GameError(GameMessage.ILLEGAL_ACTION);
+    }
+
+    // Check if the effect is part of an attack and the target is the opponent's active Pokemon
+    const opponent = StateUtils.getOpponent(state, effect.player);
+
+    if (effect.attackEffect && target === opponent.active && !effect.weaknessApplied) {
+      // Apply weakness
+      const applyWeakness = new ApplyWeaknessEffect(effect.attackEffect, effect.damage);
+      applyWeakness.target = effect.target;
+      applyWeakness.ignoreWeakness = effect.attackEffect.ignoreWeakness;
+      applyWeakness.ignoreResistance = effect.attackEffect.ignoreResistance;
+      state = store.reduceEffect(state, applyWeakness);
+
+      effect.damage = applyWeakness.damage;
+    }
+
+    const damage = Math.max(0, effect.damage);
+    target.damage += damage;
+
+    const targetOwner = StateUtils.findOwner(state, target);
+    targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
+    console.log('Damage Dealt Marker Added to target owner');
+
+    if (damage > 0) {
+      const afterDamageEffect = new AfterDamageEffect(effect.attackEffect, damage);
+      afterDamageEffect.target = effect.target;
+      store.reduceEffect(state, afterDamageEffect);
+    }
+
+    console.log(damage);
+
+  }
+
+  if (effect instanceof DealDamageEffect) {
+    const base = effect.attackEffect;
+
+    const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
+    applyWeakness.target = effect.target;
+    applyWeakness.ignoreWeakness = base.ignoreWeakness;
+    applyWeakness.ignoreResistance = base.ignoreResistance;
+    state = store.reduceEffect(state, applyWeakness);
+
+    const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
+    dealDamage.target = effect.target;
+    dealDamage.weaknessApplied = true;
+    state = store.reduceEffect(state, dealDamage);
+
+    return state;
+  }
+
+  if (effect instanceof KOEffect) {
     const target = effect.target;
     const pokemonCard = target.getPokemonCard();
     if (pokemonCard === undefined) {
@@ -50,33 +109,13 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     }
   }
 
-  if (effect instanceof DealDamageEffect) {
-    const base = effect.attackEffect;
-
-    const dealDamage = new PutDamageEffect(base, effect.damage);
-    dealDamage.target = effect.target;
-    state = store.reduceEffect(state, dealDamage);
-
-    return state;
-  }
-
 
   if (effect instanceof KnockOutOpponentEffect) {
-    const base = effect.player;
+    const base = effect.attackEffect;
 
-    const knockOutOpp = new KnockOutEffect(base, effect.target);
-    knockOutOpp.target = effect.target;
-    state = store.reduceEffect(state, knockOutOpp);
-
-    // const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
-    // applyWeakness.target = effect.target;
-    // applyWeakness.ignoreWeakness = base.ignoreWeakness;
-    // applyWeakness.ignoreResistance = base.ignoreResistance;
-    // state = store.reduceEffect(state, applyWeakness);
-
-    // const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
-    // dealDamage.target = effect.target;
-    // state = store.reduceEffect(state, dealDamage);
+    const dealDamage = new DealDamageEffect(base, effect.damage);
+    dealDamage.target = effect.target;
+    state = store.reduceEffect(state, dealDamage);
 
     return state;
   }
@@ -97,6 +136,14 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     const cards = effect.cards;
     const owner = StateUtils.findOwner(state, target);
     target.moveCardsTo(cards, owner.discard);
+    return state;
+  }
+
+  if (effect instanceof LostZoneCardsEffect) {
+    const target = effect.target;
+    const cards = effect.cards;
+    const owner = StateUtils.findOwner(state, target);
+    target.moveCardsTo(cards, owner.lostzone);
     return state;
   }
 

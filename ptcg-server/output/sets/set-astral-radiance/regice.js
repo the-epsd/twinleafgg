@@ -11,7 +11,7 @@ function* useRegiGate(next, store, state, effect) {
     const slots = player.bench.filter(b => b.cards.length === 0);
     const max = Math.min(slots.length, 1);
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max, allowCancel: true }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });
@@ -69,9 +69,8 @@ class Regice extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.UseAttackEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const pokemonCard = opponent.active.getPokemonCard();
-            if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V || pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX || pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR)))) {
+            const pokemonCard = player.active.getPokemonCard();
+            if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V) || pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
         }

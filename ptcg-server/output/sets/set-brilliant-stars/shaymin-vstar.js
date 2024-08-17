@@ -42,17 +42,17 @@ class ShayminVSTAR extends pokemon_card_1.PokemonCard {
             if (player.usedVSTAR === true) {
                 throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
-            // Heal each Pokemon by 10 damage
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
-                const pokemonCard = cardList.getPokemonCard();
+            // Heal each Benched Grass Pokemon by 120 damage
+            player.bench.forEach(benchSpot => {
+                const pokemonCard = benchSpot.getPokemonCard();
                 if (pokemonCard && pokemonCard.cardType === card_types_1.CardType.GRASS) {
-                    const healEffect = new game_effects_1.HealEffect(player, cardList, 120);
+                    const healEffect = new game_effects_1.HealEffect(player, benchSpot, 120);
                     state = store.reduceEffect(state, healEffect);
                     player.usedVSTAR = true;
                 }
             });
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const prizesTaken = 6 - opponent.getPrizeLeft();

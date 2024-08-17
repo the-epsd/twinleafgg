@@ -6,7 +6,7 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 class Kricketune extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.BASIC;
+        this.stage = game_1.Stage.STAGE_1;
         this.evolvesFrom = 'Kricketot';
         this.cardType = game_1.CardType.GRASS;
         this.hp = 90;

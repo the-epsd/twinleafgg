@@ -52,6 +52,7 @@ export class Zamazenta extends PokemonCard {
   public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 

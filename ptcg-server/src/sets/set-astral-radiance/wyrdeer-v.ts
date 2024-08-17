@@ -30,6 +30,7 @@ export class WyrdeerV extends PokemonCard {
     name: 'Psyshield Bash',
     cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 40,
+    damageCalculation: 'x',
     text: 'This attack does 40 damage for each Energy attached to this Pokémon.'
   }];
 
@@ -142,11 +143,8 @@ export class WyrdeerV extends PokemonCard {
           }
         });
 
-        const damagePerEnergy = 40;
-
-        effect.damage = this.attacks[0].damage + (checkProvidedEnergy.energyMap.length * damagePerEnergy);
+        effect.damage = 40 * checkProvidedEnergy.energyMap.length;
       });
-      return state;
     }
     return state;
   }

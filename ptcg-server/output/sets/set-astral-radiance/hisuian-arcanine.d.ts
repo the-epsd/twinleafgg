@@ -1,4 +1,6 @@
-import { PokemonCard, Stage, CardType, State, StoreLike } from '../../game';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class HisuianArcanine extends PokemonCard {
     stage: Stage;

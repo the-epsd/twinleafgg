@@ -38,13 +38,20 @@ function* useFireOff(next: Function, store: StoreLike, state: State, effect: Pow
     }
   });
 
+  const blocked2: CardTarget[] = [];
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+    if (player.active.cards[0] !== card) {
+      blocked2.push(target);
+    }
+  });
+
   return store.prompt(state, new MoveEnergyPrompt(
     effect.player.id,
     GameMessage.MOVE_ENERGY_CARDS,
     PlayerType.BOTTOM_PLAYER,
     [SlotType.BENCH, SlotType.ACTIVE], // Only allow moving from bench
     { superType: SuperType.ENERGY },
-    { allowCancel: false, min: 0, blockedMap }
+    { allowCancel: false, min: 0, blockedMap, blockedTo: blocked2 }
   ), transfers => {
     if (transfers === null) {
       return;

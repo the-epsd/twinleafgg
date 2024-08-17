@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, GameError, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
@@ -80,7 +80,7 @@ export class Cinderaceex extends PokemonCard {
         [SlotType.ACTIVE, SlotType.BENCH],
       ), selected => {
         const target = selected[0];
-        const damageEffect = new DealDamageEffect(effect, 180);
+        const damageEffect = new PutDamageEffect(effect, 180);
         damageEffect.target = target;
         store.reduceEffect(state, damageEffect);
       });

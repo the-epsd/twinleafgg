@@ -120,9 +120,9 @@ class DarkraiGX extends game_1.PokemonCard {
                     const hasSpecialCondition = opponentActive.specialConditions.some(condition => condition !== game_1.SpecialCondition.ABILITY_USED);
                     if (hasSpecialCondition) {
                         opponentActive.specialConditions = opponentActive.specialConditions.filter(condition => condition === game_1.SpecialCondition.ABILITY_USED);
-                        const knockOutOpponentEffect = new attack_effects_1.KnockOutOpponentEffect(effect, opponent.active);
-                        knockOutOpponentEffect.target = opponent.active;
-                        store.reduceEffect(state, knockOutOpponentEffect);
+                        const dealDamage = new attack_effects_1.KnockOutOpponentEffect(effect, 999);
+                        dealDamage.target = opponent.active;
+                        store.reduceEffect(state, dealDamage);
                     }
                 }
             }

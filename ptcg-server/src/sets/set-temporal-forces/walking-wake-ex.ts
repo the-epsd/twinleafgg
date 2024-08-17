@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PowerType } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
 
 export class WalkingWakeex extends PokemonCard {
 
@@ -48,7 +48,7 @@ export class WalkingWakeex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect) {
+    if (effect instanceof AttackEffect) {
 
       const player = effect.player;
 
@@ -66,23 +66,19 @@ export class WalkingWakeex extends PokemonCard {
         } catch {
           return state;
         }
+
         const opponent = StateUtils.getOpponent(state, player);
 
-        if (effect instanceof AttackEffect && effect.target === opponent.active) {
+        const applyWeakness = new ApplyWeaknessEffect(effect, effect.damage);
+        store.reduceEffect(state, applyWeakness);
+        const damage = applyWeakness.damage;
 
-          const damage = this.attacks[0].damage;
+        effect.damage = 0;
 
-          const applyWeakness = new ApplyWeaknessEffect(effect, damage);
-          store.reduceEffect(state, applyWeakness);
-          const newDamage = applyWeakness.damage;
-
-          effect.damage = 0;
-
-          if (newDamage > 0) {
-            opponent.active.damage += newDamage;
-            const afterDamage = new AfterDamageEffect(effect, newDamage);
-            state = store.reduceEffect(state, afterDamage);
-          }
+        if (damage > 0) {
+          opponent.active.damage += damage;
+          const afterDamage = new AfterDamageEffect(effect, damage);
+          state = store.reduceEffect(state, afterDamage);
         }
       }
     }

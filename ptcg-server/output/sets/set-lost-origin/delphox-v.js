@@ -39,18 +39,25 @@ class DelphoxV extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = game_1.StateUtils.findOwner(state, effect.target);
+            const burnEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.BURNED]);
+            store.reduceEffect(state, burnEffect);
+            const confusedEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.CONFUSED]);
+            store.reduceEffect(state, confusedEffect);
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.active.specialConditions.push(card_types_1.SpecialCondition.BURNED);
-            opponent.active.specialConditions.push(card_types_1.SpecialCondition.POISONED);
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
-                state = store.reduceEffect(state, checkProvidedEnergy);
-                state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
-                    const cards = energy.map(e => e.card);
-                    player.active.moveTo(player.lostzone, cards.length);
-                });
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+            state = store.reduceEffect(state, checkProvidedEnergy);
+            return store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
+                const cards = (energy || []).map(e => e.card);
+                const lostZoneEnergy = new attack_effects_1.LostZoneCardsEffect(effect, cards);
+                lostZoneEnergy.target = player.active;
+                store.reduceEffect(state, lostZoneEnergy);
+                const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+                if (!hasBenched) {
+                    return state;
+                }
                 // Prompt to choose benched pokemon
                 const max = Math.min(1);
                 return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: max, max, allowCancel: false }), selected => {
@@ -62,8 +69,7 @@ class DelphoxV extends pokemon_card_1.PokemonCard {
                     });
                     return state;
                 });
-            }
-            return state;
+            });
         }
         return state;
     }

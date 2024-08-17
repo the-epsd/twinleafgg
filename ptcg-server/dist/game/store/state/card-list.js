@@ -66,15 +66,8 @@ export class CardList {
     moveCardTo(card, destination) {
         this.moveCardsTo([card], destination);
     }
-    top(count = 1) {
-        count = Math.min(count, this.cards.length);
-        return this.cards.slice(0, count);
-    }
     moveToTopOfDestination(destination) {
         destination.cards = [...this.cards, ...destination.cards];
-    }
-    moveToTop(cards) {
-        this.cards = [...cards, ...this.cards];
     }
     filter(query) {
         return this.cards.filter(c => {

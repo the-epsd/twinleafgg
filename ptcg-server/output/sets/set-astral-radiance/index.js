@@ -19,6 +19,7 @@ exports.setAstralRadiance = [
     new card_images_1.GrantArt(),
     new card_images_1.GutsyPickaxeArt(),
     new card_images_1.HisuianArcanineArt(),
+    new card_images_1.HisuianBasculegionArt(),
     new card_images_1.HisuianBasculinArt(),
     new card_images_1.HisuianGrowlitheArt(),
     new card_images_1.HisuianHeavyBallArt(),

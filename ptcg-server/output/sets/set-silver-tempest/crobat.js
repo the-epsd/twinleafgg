@@ -6,7 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Crobat extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -37,9 +36,6 @@ class Crobat extends pokemon_card_1.PokemonCard {
         this.usedCriticalBite = false;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            this.usedCriticalBite = false;
-        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             this.usedCriticalBite = false;
             const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.POISONED]);
@@ -47,6 +43,8 @@ class Crobat extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
+            this.usedCriticalBite = true;
+            console.log('Just used Critical Bite: ' + this.usedCriticalBite);
             const max = Math.min(1);
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: false }), selected => {
                 const targets = selected || [];
@@ -54,8 +52,6 @@ class Crobat extends pokemon_card_1.PokemonCard {
                     const damageEffect = new attack_effects_1.PutDamageEffect(effect, 30);
                     damageEffect.target = target;
                     store.reduceEffect(state, damageEffect);
-                    this.usedCriticalBite = true;
-                    console.log('Just used Critical Bite: ' + this.usedCriticalBite);
                     return state;
                 });
             });

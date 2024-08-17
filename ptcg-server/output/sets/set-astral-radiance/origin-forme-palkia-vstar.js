@@ -58,7 +58,13 @@ class OriginFormePalkiaVSTAR extends pokemon_card_1.PokemonCard {
             if (!hasEnergyInDiscard) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: false, min: 1, max: 3 }), transfers => {
+            const blocked2 = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+                if (card.cardType !== card_types_1.CardType.WATER) {
+                    blocked2.push(target);
+                }
+            });
+            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: false, min: 1, max: 3, blockedTo: blocked2 }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {

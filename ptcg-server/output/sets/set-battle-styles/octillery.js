@@ -6,13 +6,14 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_message_1 = require("../../game/game-message");
+const card_1 = require("../../game/store/card/card");
 function* useRapidStrikeSearch(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
     let cards = [];
     const blocked = [];
     player.deck.cards.forEach((card, index) => {
-        if (!(card instanceof pokemon_card_1.PokemonCard && card.tags.includes(card_types_1.CardTag.RAPID_STRIKE))) {
+        if (!(card instanceof card_1.Card && card.tags.includes(card_types_1.CardTag.RAPID_STRIKE))) {
             blocked.push(index);
         }
     });
@@ -20,7 +21,7 @@ function* useRapidStrikeSearch(next, store, state, self, effect) {
         throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
     }
     player.usedRapidStrikeSearchThisTurn = true;
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
         cards = selected || [];
         next();
     });
@@ -36,7 +37,8 @@ exports.useRapidStrikeSearch = useRapidStrikeSearch;
 class Octillery extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
+        this.evolvesFrom = 'Remoraid';
         this.regulationMark = 'E';
         this.tags = [card_types_1.CardTag.RAPID_STRIKE];
         this.cardType = card_types_1.CardType.WATER;
