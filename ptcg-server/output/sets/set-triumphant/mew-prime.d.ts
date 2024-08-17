@@ -2,21 +2,19 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class InteleonVMAX extends PokemonCard {
+export declare class Mew extends PokemonCard {
     tags: CardTag[];
-    regulationMark: string;
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
-    retreat: CardType[];
+    retreat: never[];
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
+        useWhenInPlay: boolean;
         text: string;
     }[];
     attacks: {
@@ -30,6 +28,7 @@ export declare class InteleonVMAX extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly DOUBLE_GUNNER_MARKER = "DOUBLE_GUNNER_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
+    private buildAttackList;
+    private checkAttack;
 }

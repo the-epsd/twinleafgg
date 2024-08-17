@@ -6,6 +6,7 @@ exports.setTriumphant = [
     new card_images_1.BlackBeltArt(),
     new card_images_1.CelebiArt(),
     new card_images_1.JunkArmArt(),
+    new card_images_1.MewArt(),
     new card_images_1.RescueEnergyArt(),
     new card_images_1.SeekerArt(),
     new card_images_1.TwinsArt(),

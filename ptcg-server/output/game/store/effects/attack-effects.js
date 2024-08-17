@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HealTargetEffect = exports.RemoveSpecialConditionsEffect = exports.AddSpecialConditionsEffect = exports.AddMarkerEffect = exports.CardsToHandEffect = exports.DiscardCardsEffect = exports.KnockOutOpponentEffect = exports.KOEffect = exports.PutCountersEffect = exports.AfterDamageEffect = exports.PutDamageEffect = exports.DealDamageEffect = exports.ApplyWeaknessEffect = exports.AbstractAttackEffect = exports.AttackEffects = void 0;
+exports.HealTargetEffect = exports.RemoveSpecialConditionsEffect = exports.AddSpecialConditionsEffect = exports.AddMarkerEffect = exports.CardsToHandEffect = exports.LostZoneCardsEffect = exports.DiscardCardsEffect = exports.KnockOutOpponentEffect = exports.KOEffect = exports.PutCountersEffect = exports.AfterDamageEffect = exports.PutDamageEffect = exports.DealDamageEffect = exports.ApplyWeaknessEffect = exports.AbstractAttackEffect = exports.AttackEffects = void 0;
 const card_types_1 = require("../card/card-types");
 var AttackEffects;
 (function (AttackEffects) {
@@ -15,6 +15,7 @@ var AttackEffects;
     AttackEffects["ADD_MARKER_EFFECT"] = "ADD_MARKER_EFFECT";
     AttackEffects["ADD_SPECIAL_CONDITIONS_EFFECT"] = "ADD_SPECIAL_CONDITIONS_EFFECT";
     AttackEffects["MOVED_TO_ACTIVE_BONUS_EFFECT"] = "MOVED_TO_ACTIVE_BONUS_EFFECT";
+    AttackEffects["LOST_ZONED_CARDS_EFFECT"] = "LOST_ZONED_CARDS_EFFECT";
 })(AttackEffects = exports.AttackEffects || (exports.AttackEffects = {}));
 class AbstractAttackEffect {
     constructor(base) {
@@ -54,6 +55,7 @@ class PutDamageEffect extends AbstractAttackEffect {
         this.preventDefault = false;
         this.damageReduced = false;
         this.wasKnockedOutFromFullHP = false;
+        this.weaknessApplied = false;
         this.damage = damage;
     }
 }
@@ -105,6 +107,15 @@ class DiscardCardsEffect extends AbstractAttackEffect {
     }
 }
 exports.DiscardCardsEffect = DiscardCardsEffect;
+class LostZoneCardsEffect extends AbstractAttackEffect {
+    constructor(base, energyCards) {
+        super(base);
+        this.type = AttackEffects.LOST_ZONED_CARDS_EFFECT;
+        this.preventDefault = false;
+        this.cards = energyCards;
+    }
+}
+exports.LostZoneCardsEffect = LostZoneCardsEffect;
 class CardsToHandEffect extends AbstractAttackEffect {
     constructor(base, energyCards) {
         super(base);

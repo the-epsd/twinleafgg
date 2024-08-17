@@ -16,7 +16,8 @@ export declare enum AttackEffects {
     CARDS_TO_HAND_EFFECT = "CARDS_TO_HAND_EFFECT",
     ADD_MARKER_EFFECT = "ADD_MARKER_EFFECT",
     ADD_SPECIAL_CONDITIONS_EFFECT = "ADD_SPECIAL_CONDITIONS_EFFECT",
-    MOVED_TO_ACTIVE_BONUS_EFFECT = "MOVED_TO_ACTIVE_BONUS_EFFECT"
+    MOVED_TO_ACTIVE_BONUS_EFFECT = "MOVED_TO_ACTIVE_BONUS_EFFECT",
+    LOST_ZONED_CARDS_EFFECT = "LOST_ZONED_CARDS_EFFECT"
 }
 export declare abstract class AbstractAttackEffect {
     attackEffect: AttackEffect;
@@ -47,6 +48,7 @@ export declare class PutDamageEffect extends AbstractAttackEffect implements Eff
     damage: number;
     damageReduced: boolean;
     wasKnockedOutFromFullHP: boolean;
+    weaknessApplied: boolean;
     constructor(base: AttackEffect, damage: number);
 }
 export declare class AfterDamageEffect extends AbstractAttackEffect implements Effect {
@@ -76,6 +78,12 @@ export declare class KnockOutOpponentEffect extends AbstractAttackEffect impleme
     constructor(base: AttackEffect, damage: number);
 }
 export declare class DiscardCardsEffect extends AbstractAttackEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    cards: Card[];
+    constructor(base: AttackEffect, energyCards: Card[]);
+}
+export declare class LostZoneCardsEffect extends AbstractAttackEffect implements Effect {
     readonly type: string;
     preventDefault: boolean;
     cards: Card[];

@@ -14,8 +14,8 @@ class InteleonVMAX extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_VMAX, card_types_1.CardTag.RAPID_STRIKE];
         this.regulationMark = 'E';
-        this.stage = card_types_1.Stage.BASIC;
-        //   public evolvesFrom = 'Inteleon V';
+        this.stage = card_types_1.Stage.VMAX;
+        this.evolvesFrom = 'Inteleon V';
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 320;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];

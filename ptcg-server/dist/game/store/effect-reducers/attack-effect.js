@@ -1,10 +1,9 @@
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
-import { PutDamageEffect, DealDamageEffect, DiscardCardsEffect, AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect, RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect, PutCountersEffect, CardsToHandEffect, KnockOutOpponentEffect, KOEffect } from '../effects/attack-effects';
+import { PutDamageEffect, DealDamageEffect, DiscardCardsEffect, AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect, RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect, PutCountersEffect, CardsToHandEffect, KnockOutOpponentEffect, KOEffect, LostZoneCardsEffect } from '../effects/attack-effects';
 import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
 export function attackReducer(store, state, effect) {
-    // let addWeakness: boolean = false;
     if (effect instanceof PutDamageEffect) {
         const target = effect.target;
         const pokemonCard = target.getPokemonCard();
@@ -13,9 +12,7 @@ export function attackReducer(store, state, effect) {
         }
         // Check if the effect is part of an attack and the target is the opponent's active Pokemon
         const opponent = StateUtils.getOpponent(state, effect.player);
-        if (effect.attackEffect && target === opponent.active
-        // && !addWeakness
-        ) {
+        if (effect.attackEffect && target === opponent.active && !effect.weaknessApplied) {
             // Apply weakness
             const applyWeakness = new ApplyWeaknessEffect(effect.attackEffect, effect.damage);
             applyWeakness.target = effect.target;
@@ -43,9 +40,9 @@ export function attackReducer(store, state, effect) {
         applyWeakness.ignoreWeakness = base.ignoreWeakness;
         applyWeakness.ignoreResistance = base.ignoreResistance;
         state = store.reduceEffect(state, applyWeakness);
-        // addWeakness = true;
         const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
         dealDamage.target = effect.target;
+        dealDamage.weaknessApplied = true;
         state = store.reduceEffect(state, dealDamage);
         return state;
     }
@@ -98,6 +95,13 @@ export function attackReducer(store, state, effect) {
         const cards = effect.cards;
         const owner = StateUtils.findOwner(state, target);
         target.moveCardsTo(cards, owner.discard);
+        return state;
+    }
+    if (effect instanceof LostZoneCardsEffect) {
+        const target = effect.target;
+        const cards = effect.cards;
+        const owner = StateUtils.findOwner(state, target);
+        target.moveCardsTo(cards, owner.lostzone);
         return state;
     }
     if (effect instanceof CardsToHandEffect) {

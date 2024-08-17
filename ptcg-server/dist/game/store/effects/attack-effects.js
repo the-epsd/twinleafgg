@@ -12,6 +12,7 @@ export var AttackEffects;
     AttackEffects["ADD_MARKER_EFFECT"] = "ADD_MARKER_EFFECT";
     AttackEffects["ADD_SPECIAL_CONDITIONS_EFFECT"] = "ADD_SPECIAL_CONDITIONS_EFFECT";
     AttackEffects["MOVED_TO_ACTIVE_BONUS_EFFECT"] = "MOVED_TO_ACTIVE_BONUS_EFFECT";
+    AttackEffects["LOST_ZONED_CARDS_EFFECT"] = "LOST_ZONED_CARDS_EFFECT";
 })(AttackEffects || (AttackEffects = {}));
 export class AbstractAttackEffect {
     constructor(base) {
@@ -48,6 +49,7 @@ export class PutDamageEffect extends AbstractAttackEffect {
         this.preventDefault = false;
         this.damageReduced = false;
         this.wasKnockedOutFromFullHP = false;
+        this.weaknessApplied = false;
         this.damage = damage;
     }
 }
@@ -89,6 +91,14 @@ export class DiscardCardsEffect extends AbstractAttackEffect {
     constructor(base, energyCards) {
         super(base);
         this.type = AttackEffects.DISCARD_CARD_EFFECT;
+        this.preventDefault = false;
+        this.cards = energyCards;
+    }
+}
+export class LostZoneCardsEffect extends AbstractAttackEffect {
+    constructor(base, energyCards) {
+        super(base);
+        this.type = AttackEffects.LOST_ZONED_CARDS_EFFECT;
         this.preventDefault = false;
         this.cards = energyCards;
     }

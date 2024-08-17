@@ -9,7 +9,7 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 class RapidStrikeEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
-        this.cardTag = [card_types_1.CardTag.RAPID_STRIKE];
+        this.tags = [card_types_1.CardTag.RAPID_STRIKE];
         this.regulationMark = 'E';
         this.provides = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.energyType = card_types_1.EnergyType.SPECIAL;
@@ -36,7 +36,8 @@ class RapidStrikeEnergy extends energy_card_1.EnergyCard {
                 return state;
             }
             if ((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.RAPID_STRIKE)) {
-                effect.energyMap.push({ card: this, provides: [card_types_1.CardType.WATER, card_types_1.CardType.FIGHTING || card_types_1.CardType.WATER, card_types_1.CardType.WATER || card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING] // 2 Fighting
+                effect.energyMap.push({
+                    card: this, provides: [card_types_1.CardType.WATER, card_types_1.CardType.FIGHTING || card_types_1.CardType.WATER, card_types_1.CardType.WATER || card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING] // 2 Fighting
                 });
             }
             return state;

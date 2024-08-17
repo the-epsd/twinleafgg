@@ -59,7 +59,7 @@ export class ShayminVSTAR extends PokemonCard {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
 
-      // Heal each Pokemon by 10 damage
+      // Heal each Benched Grass Pokemon by 120 damage
       player.bench.forEach(benchSpot => {
         const pokemonCard = benchSpot.getPokemonCard();
         if (pokemonCard && pokemonCard.cardType === CardType.GRASS) {

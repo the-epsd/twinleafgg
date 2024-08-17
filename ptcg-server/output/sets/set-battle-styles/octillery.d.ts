@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare function useRapidStrikeSearch(next: Function, store: StoreLike, state: State, self: PokemonCard, effect: PowerEffect): IterableIterator<State>;
 export declare class Octillery extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     regulationMark: string;
     tags: CardTag[];
     cardType: CardType;

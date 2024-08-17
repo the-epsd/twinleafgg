@@ -39,6 +39,7 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
         this.name = 'Alolan Vulpix VSTAR';
         this.fullName = 'Alolan Vulpix VSTAR SIT';
         this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
+        this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = 'CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
@@ -48,7 +49,6 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            player.marker.addMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
             const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 160);
             store.reduceEffect(state, applyWeakness);
             const damage = applyWeakness.damage;
@@ -57,43 +57,49 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
                 opponent.active.damage += damage;
                 const afterDamage = new attack_effects_1.AfterDamageEffect(effect, damage);
                 state = store.reduceEffect(state, afterDamage);
-                if (player.marker.hasMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
-                    const opponent = game_1.StateUtils.getOpponent(state, player);
-                    if (opponent.active) {
-                        const opponentActive = opponent.active.getPokemonCard();
-                        if (opponentActive && opponentActive.powers.length > 0) {
-                            if (effect instanceof attack_effects_1.PutDamageEffect) {
-                                effect.preventDefault = true;
-                            }
-                        }
-                    }
+                const oppActive = opponent.active.getPokemonCard();
+                if (oppActive && (oppActive === null || oppActive === void 0 ? void 0 : oppActive.powers.length) > 0) {
+                    player.active.marker.addMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
+                    opponent.marker.addMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
+                    console.log('marker added');
                 }
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                if (player.usedVSTAR === true) {
-                    throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
-                }
-                const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
-                const vPokemons = benchPokemon.filter(card => card.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX));
-                const opponentActive = opponent.active.getPokemonCard();
-                if (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_ex)) {
-                    vPokemons.push(opponentActive);
-                }
-                let vPokes = vPokemons.length;
-                if (opponentActive) {
-                    vPokes++;
-                }
-                effect.ignoreResistance = true;
-                effect.ignoreWeakness = true;
-                effect.damage *= vPokes;
-                player.usedVSTAR = true;
-            }
-            return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (player.usedVSTAR === true) {
+                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
+            }
+            const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
+            const vPokemons = benchPokemon.filter(card => card.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX));
+            const opponentActive = opponent.active.getPokemonCard();
+            if (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_ex)) {
+                vPokemons.push(opponentActive);
+            }
+            let vPokes = vPokemons.length;
+            if (opponentActive) {
+                vPokes++;
+            }
+            effect.ignoreResistance = true;
+            effect.ignoreWeakness = true;
+            effect.damage *= vPokes;
+            player.usedVSTAR = true;
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
+            if (effect.target.marker.hasMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
+                effect.preventDefault = true;
+                return state;
+            }
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect
+            && effect.player.active.marker.hasMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
+            effect.player.active.marker.removeMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
+            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                cardList.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
+            });
+            console.log('marker removed');
         }
         return state;
     }

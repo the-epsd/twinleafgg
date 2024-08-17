@@ -21,6 +21,7 @@ export declare enum CardTag {
     TEAM_MAGMA = "TEAM_MAGMA",
     PRISM_STAR = "PRISM_STAR",
     BREAK = "BREAK",
+    PRIME = "PRIME",
     HOLO = "HOLO"
 }
 export declare enum SuperType {

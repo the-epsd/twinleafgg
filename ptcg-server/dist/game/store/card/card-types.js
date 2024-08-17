@@ -22,6 +22,7 @@ export var CardTag;
     CardTag["TEAM_MAGMA"] = "TEAM_MAGMA";
     CardTag["PRISM_STAR"] = "PRISM_STAR";
     CardTag["BREAK"] = "BREAK";
+    CardTag["PRIME"] = "PRIME";
     CardTag["HOLO"] = "HOLO";
 })(CardTag || (CardTag = {}));
 export var SuperType;

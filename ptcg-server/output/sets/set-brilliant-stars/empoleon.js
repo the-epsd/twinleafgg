@@ -28,7 +28,7 @@ class Empoleon extends pokemon_card_1.PokemonCard {
         this.attacks = [{
                 name: 'Water Arrow',
                 cost: [card_types_1.CardType.WATER],
-                damage: 60,
+                damage: 0,
                 text: 'This attack does 60 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }];
         this.regulationMark = 'F';
@@ -54,6 +54,9 @@ class Empoleon extends pokemon_card_1.PokemonCard {
             // No open slots, throw error
             if (slots.length === 0) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            if (player.hand.cards.length !== 0) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
             // Add Marker
             player.marker.addMarker(this.EMERGENCY_SURFACING_MARKER, this);

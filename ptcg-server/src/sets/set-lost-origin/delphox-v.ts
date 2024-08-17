@@ -4,15 +4,15 @@ import { State } from '../../game/store/state/state';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
-import { ChooseEnergyPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Card, ChooseEnergyPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { AddSpecialConditionsEffect, LostZoneCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class DelphoxV extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public cardType = CardType.FIRE;
 
@@ -52,29 +52,36 @@ export class DelphoxV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = StateUtils.findOwner(state, effect.target);
+      const burnEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
+      store.reduceEffect(state, burnEffect);
+      const confusedEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
+      store.reduceEffect(state, confusedEffect);
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.specialConditions.push(SpecialCondition.BURNED);
-      opponent.active.specialConditions.push(SpecialCondition.POISONED);
+
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+
+      return store.prompt(state, new ChooseEnergyPrompt(
+        player.id,
+        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+        checkProvidedEnergy.energyMap,
+        [CardType.COLORLESS, CardType.COLORLESS],
+        { allowCancel: false }
+      ), energy => {
+        const cards: Card[] = (energy || []).map(e => e.card);
+        const lostZoneEnergy = new LostZoneCardsEffect(effect, cards);
+        lostZoneEnergy.target = player.active;
+        store.reduceEffect(state, lostZoneEnergy);
 
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
-        const player = effect.player;
-
-        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-        state = store.reduceEffect(state, checkProvidedEnergy);
-
-        state = store.prompt(state, new ChooseEnergyPrompt(
-          player.id,
-          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-          checkProvidedEnergy.energyMap,
-          [CardType.COLORLESS, CardType.COLORLESS],
-          { allowCancel: false }
-        ), energy => {
-          const cards = energy.map(e => e.card);
-          player.active.moveTo(player.lostzone, cards.length);
-        });
+        const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+        if (!hasBenched) {
+          return state;
+        }
 
         // Prompt to choose benched pokemon
         const max = Math.min(1);
@@ -93,13 +100,8 @@ export class DelphoxV extends PokemonCard {
           });
           return state;
         });
-      }
-
-      return state;
+      });
     }
     return state;
   }
-
-
 }
-  

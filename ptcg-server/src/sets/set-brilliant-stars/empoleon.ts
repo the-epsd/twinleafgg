@@ -23,7 +23,7 @@ export class Empoleon extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Emergency Surfacing',
@@ -34,8 +34,8 @@ export class Empoleon extends PokemonCard {
 
   public attacks = [{
     name: 'Water Arrow',
-    cost: [ CardType.WATER ],
-    damage: 60,
+    cost: [CardType.WATER],
+    damage: 0,
     text: 'This attack does 60 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
@@ -73,6 +73,11 @@ export class Empoleon extends PokemonCard {
       if (slots.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
+
+      if (player.hand.cards.length !== 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       // Add Marker
       player.marker.addMarker(this.EMERGENCY_SURFACING_MARKER, this);
 
@@ -91,12 +96,12 @@ export class Empoleon extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];
@@ -105,7 +110,7 @@ export class Empoleon extends PokemonCard {
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });
-        return state; 
+        return state;
       });
     }
     return state;

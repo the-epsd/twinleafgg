@@ -25,5 +25,6 @@ export declare class AlolanVulpixVSTAR extends PokemonCard {
     name: string;
     fullName: string;
     readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = "PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER";
+    readonly CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = "CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

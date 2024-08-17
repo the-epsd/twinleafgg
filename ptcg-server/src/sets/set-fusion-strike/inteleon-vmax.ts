@@ -10,13 +10,13 @@ import { CardsToHandEffect } from '../../game/store/effects/attack-effects';
 
 export class InteleonVMAX extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
 
   public regulationMark = 'E';
-  
-  public stage: Stage = Stage.BASIC;
 
-  //   public evolvesFrom = 'Inteleon V';
+  public stage: Stage = Stage.VMAX;
+
+  public evolvesFrom = 'Inteleon V';
 
   public cardType: CardType = CardType.WATER;
 
@@ -24,7 +24,7 @@ export class InteleonVMAX extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Double Gunner',
@@ -60,7 +60,7 @@ export class InteleonVMAX extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
     }
-      
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
@@ -78,7 +78,7 @@ export class InteleonVMAX extends PokemonCard {
           const energyCards = player.active.cards.filter(c => c instanceof EnergyCard);
           const cardList = new CardList();
           cardList.cards = energyCards;
-      
+
           state = store.prompt(state, new ChooseCardsPrompt(
             player.id,
             GameMessage.CHOOSE_ENERGIES_TO_HAND,
@@ -109,7 +109,7 @@ export class InteleonVMAX extends PokemonCard {
         if (player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
           throw new GameError(GameMessage.POWER_ALREADY_USED);
         }
-      
+
         const hasBenched = opponent.bench.some(b => b.cards.length > 0);
         if (!hasBenched) {
           return state;
@@ -131,7 +131,7 @@ export class InteleonVMAX extends PokemonCard {
             player.id,
             GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
             PlayerType.TOP_PLAYER,
-            [ SlotType.BENCH ],
+            [SlotType.BENCH],
             { min: 1, max: 2, allowCancel: false },
           ), selected => {
             const targets = selected || [];
