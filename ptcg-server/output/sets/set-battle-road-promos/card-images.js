@@ -6,14 +6,14 @@ const mysterious_pearl_1 = require("./mysterious-pearl");
 class MiracleDiamondArt extends miracle_diamond_1.MiracleDiamond {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://archives.bulbagarden.net/media/upload/c/c9/MiracleDiamondBattleRoadPromo.jpg';
+        this.cardImage = 'https://i.imgur.com/S0HzoWg.jpeg';
     }
 }
 exports.MiracleDiamondArt = MiracleDiamondArt;
 class MysteriousPearlArt extends mysterious_pearl_1.MysteriousPearl {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://archives.bulbagarden.net/media/upload/f/f2/MysteriousPearlBattleRoadPromo.jpg';
+        this.cardImage = 'https://i.imgur.com/15UfOpD.jpeg';
     }
 }
 exports.MysteriousPearlArt = MysteriousPearlArt;

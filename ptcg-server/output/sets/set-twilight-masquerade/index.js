@@ -49,7 +49,6 @@ exports.setTwilightMasquerade = [
     new card_images_1.SurvivalCastArt(),
     new card_images_1.UnfairStampArt(),
     new card_images_1.TealMaskOgerponexArt(),
-    new card_images_1.TingLuArt(),
     new card_images_1.FroakieArt(),
     new card_images_1.FrogadierArt(),
     new card_images_1.GreninjaexArt(),
