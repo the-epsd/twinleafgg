@@ -68,12 +68,12 @@ export class Regieleki extends PokemonCard {
           store.reduceEffect(state, damageEffect);
         });
         
-        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
         state = store.reduceEffect(state, checkProvidedEnergy);
         
         const cards: Card[] = [];
-        for (const energyMap of checkProvidedEnergy.energyMap) {
-          const energy = energyMap.provides.filter(t => t === CardType.LIGHTNING || t === CardType.ANY);
+         for (const energyMap of checkProvidedEnergy.energyMap) {
+          const energy = energyMap.provides.filter(t => t === CardType.LIGHTNING || t === CardType.ANY || t === CardType.WLFM || t === CardType.LPM);
           if (energy.length > 0) {
             cards.push(energyMap.card);
           }

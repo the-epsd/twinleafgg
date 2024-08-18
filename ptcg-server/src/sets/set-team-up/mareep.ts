@@ -17,7 +17,7 @@ export class Mareep extends PokemonCard {
 
   public set = 'TEU';
 
-  public setNumber = '53';
+  public setNumber = '41';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -51,7 +51,7 @@ export class Mareep extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
       const cards: Card[] = [];
