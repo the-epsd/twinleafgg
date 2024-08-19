@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, PlayerType, SlotType, StateUtils } from '../../game';
+import { StoreLike, State, PlayerType, SlotType, StateUtils, GameError, AttachEnergyPrompt, ShuffleDeckPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -51,6 +51,12 @@ export class RaichuV extends PokemonCard {
   // Implement power
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    const player = state.players[state.activePlayer];
+
+    if (state.turn == 1 && player.active.cards[0] == this) {
+      player.canAttackFirstTurn = true;
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
@@ -59,22 +65,39 @@ export class RaichuV extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.deck,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
-        { min: 0, max: 1, allowCancel: false }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          player.deck.moveCardsTo(cards, cardList);
-        }
-      });
+      if (player.canAttackFirstTurn) {
+
+        return store.prompt(state, new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
+          { allowCancel: false, min: 0, max: 1 },
+        ), transfers => {
+          transfers = transfers || [];
+          // cancelled by user
+          if (transfers.length === 0) {
+            return state;
+          }
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.deck.moveCardTo(transfer.card, target);
+          }
+          state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+          });
+        });
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
+
+      if (player.canAttackFirstTurn) {
+        throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
+      }
 
       // return store.prompt(state, new ChoosePokemonPrompt(
       //   player.id,

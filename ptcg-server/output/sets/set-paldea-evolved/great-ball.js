@@ -22,6 +22,9 @@ class GreatBall extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const temp = new game_1.CardList();
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             player.deck.moveTo(temp, 7);

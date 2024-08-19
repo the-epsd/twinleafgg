@@ -49,6 +49,10 @@ class HisuianGoodraVSTAR extends game_1.PokemonCard {
                 if (cardList.getPokemonCard() === this) {
                     const healEffect = new game_effects_1.HealEffect(player, cardList, 999);
                     store.reduceEffect(state, healEffect);
+                }
+            });
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
                     cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
                 }
             });

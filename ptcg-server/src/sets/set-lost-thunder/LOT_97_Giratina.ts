@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, PokemonCardList, GameError } from '../../game';
+import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, PokemonCardList, GameError, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
@@ -57,6 +57,13 @@ export class Giratina extends PokemonCard {
 
       // No open slots, throw error
       if (slots.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      const opponent = StateUtils.getOpponent(state, player);
+      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+
+      if (!hasBench) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 

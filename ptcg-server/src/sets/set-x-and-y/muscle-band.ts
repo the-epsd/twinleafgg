@@ -27,6 +27,7 @@ export class MuscleBand extends TrainerCard {
     'and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);

@@ -10,7 +10,7 @@ class Mareep extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.set = 'TEU';
-        this.setNumber = '53';
+        this.setNumber = '41';
         this.cardImage = 'assets/cardback.png';
         this.fullName = 'Mareep TEU';
         this.name = 'Mareep';
@@ -32,7 +32,7 @@ class Mareep extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, player.active);
             state = store.reduceEffect(state, checkProvidedEnergy);
             const cards = [];
             for (const energyMap of checkProvidedEnergy.energyMap) {

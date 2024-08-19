@@ -4,7 +4,7 @@ import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, GameLog, StateUtils } from '../../game';
+import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, GameLog, StateUtils, GameError } from '../../game';
 
 export class GreatBall extends TrainerCard {
 
@@ -28,18 +28,22 @@ export class GreatBall extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-    
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const temp = new CardList();
-    
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      player.deck.moveTo(temp, 7); 
+      player.deck.moveTo(temp, 7);
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,  
+        player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
         temp,
         { superType: SuperType.POKEMON },
@@ -54,20 +58,20 @@ export class GreatBall extends TrainerCard {
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
               player.deck.applyOrder(order);
             });
-          });  
+          });
         }
-    
+
         if (chosenCards.length > 0) {
           // Move chosen Pokemon to hand
-          const pokemon = chosenCards[0]; 
+          const pokemon = chosenCards[0];
           temp.moveCardTo(pokemon, player.hand);
           temp.moveTo(player.deck);
           player.supporter.moveCardTo(this, player.discard);
-          
+
           chosenCards.forEach((card, index) => {
             store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
           });
-          
+
           if (chosenCards.length > 0) {
             state = store.prompt(state, new ShowCardsPrompt(
               opponent.id,
