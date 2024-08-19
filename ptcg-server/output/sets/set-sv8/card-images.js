@@ -1,12 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TeraOrbArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.AzumarillArt = exports.HoOhArt = void 0;
+exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.AzumarillArt = exports.HoOhArt = void 0;
+const counter_gain_1 = require("../set-lost-thunder/counter-gain");
+const klefki_1 = require("../set-scarlet-and-violet/klefki");
+const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
+const archaludon_ex_1 = require("./archaludon-ex");
 const azulmarill_1 = require("./azulmarill");
+const celebration_fanfare_1 = require("./celebration-fanfare");
 const cherish_carrier_1 = require("./cherish-carrier");
+const dialga_1 = require("./dialga");
+const dragons_elixir_1 = require("./dragons-elixir");
+const drayton_1 = require("./drayton");
+const duraludon_1 = require("./duraludon");
+const dusk_ball_1 = require("./dusk-ball");
+const exeggcute_1 = require("./exeggcute");
+const flygon_ex_1 = require("./flygon-ex");
+const helper_bell_1 = require("./helper.bell");
 const ho_oh_1 = require("./ho-oh");
 const marill_1 = require("./marill");
+const megaton_blower_1 = require("./megaton-blower");
 const perfect_mixer_1 = require("./perfect-mixer");
+const rich_energy_1 = require("./rich-energy");
+const smoochum_1 = require("./smoochum");
 const tera_orb_1 = require("./tera-orb");
+const trapinch_1 = require("./trapinch");
+const vibrava_1 = require("./vibrava");
 class HoOhArt extends ho_oh_1.HoOh {
     constructor() {
         super(...arguments);
@@ -49,3 +67,129 @@ class TeraOrbArt extends tera_orb_1.TeraOrb {
     }
 }
 exports.TeraOrbArt = TeraOrbArt;
+class HelperBellArt extends helper_bell_1.HelperBell {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Helper-Bell.png';
+    }
+}
+exports.HelperBellArt = HelperBellArt;
+class MegatonBlowerArt extends megaton_blower_1.MegatonBlower {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Megaton-Blower.png';
+    }
+}
+exports.MegatonBlowerArt = MegatonBlowerArt;
+class TrapinchArt extends trapinch_1.Trapinch {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Trapinch.png';
+    }
+}
+exports.TrapinchArt = TrapinchArt;
+class VibravaArt extends vibrava_1.Vibrava {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Vibrava.png';
+    }
+}
+exports.VibravaArt = VibravaArt;
+class FlygonexArt extends flygon_ex_1.Flygonex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Tera-Flygon-ex.png';
+    }
+}
+exports.FlygonexArt = FlygonexArt;
+class CounterGainArt extends counter_gain_1.CounterGain {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GVPnDxPWgAAstfh?format=jpg&name=medium';
+    }
+}
+exports.CounterGainArt = CounterGainArt;
+class SmoochumArt extends smoochum_1.Smoochum {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Smoochum.jpg';
+    }
+}
+exports.SmoochumArt = SmoochumArt;
+class DuraludonArt extends duraludon_1.Duraludon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Duraludon.png';
+    }
+}
+exports.DuraludonArt = DuraludonArt;
+class ArchaludonexArt extends archaludon_ex_1.Archaludonex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Arcaludon-ex.jpg';
+    }
+}
+exports.ArchaludonexArt = ArchaludonexArt;
+class CelebrationFanfareArt extends celebration_fanfare_1.CelebrationFanfare {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GT8_RuqXgAAr-PB?format=jpg&name=large';
+    }
+}
+exports.CelebrationFanfareArt = CelebrationFanfareArt;
+class DialgaArt extends dialga_1.Dialga {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GVPjdKyWQAA9iwN?format=jpg&name=large';
+    }
+}
+exports.DialgaArt = DialgaArt;
+class DragonsElixirArt extends dragons_elixir_1.DragonsElixir {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s4_RyuNoHiyaku.jpg';
+    }
+}
+exports.DragonsElixirArt = DragonsElixirArt;
+class DuskBallArt extends dusk_ball_1.DuskBall {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s4_DarkBall.jpg';
+    }
+}
+exports.DuskBallArt = DuskBallArt;
+class DraytonArt extends drayton_1.Drayton {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s4_Kakitsubata.jpg';
+    }
+}
+exports.DraytonArt = DraytonArt;
+class RichEnergyArt extends rich_energy_1.RichEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s3_RichEnergy.jpg';
+    }
+}
+exports.RichEnergyArt = RichEnergyArt;
+class KlefkiArt extends klefki_1.Klefki {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s2_CLEFFY.jpg';
+    }
+}
+exports.KlefkiArt = KlefkiArt;
+class ExeggcuteArt extends exeggcute_1.Exeggcute {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s1_TAMATAMA.jpg';
+    }
+}
+exports.ExeggcuteArt = ExeggcuteArt;
+class AlolanExeggutorexArt extends alolan_exeggutor_ex_1.AlolanExeggutorex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s1_aNASSYex.jpg';
+    }
+}
+exports.AlolanExeggutorexArt = AlolanExeggutorexArt;

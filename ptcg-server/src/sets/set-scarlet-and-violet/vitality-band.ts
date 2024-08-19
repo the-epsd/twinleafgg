@@ -27,6 +27,7 @@ export class VitalityBand extends TrainerCard {
     'The attacks of the Pokémon this card is attached to do 10 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);

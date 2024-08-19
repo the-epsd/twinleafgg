@@ -4,11 +4,15 @@ import { FloatStone } from './float-stone';
 import { FrozenCity } from './frozen-city';
 import { MrMime } from './mr-mime';
 import { Electrode } from './PLF_33_Electrode';
+import { Exeggutor } from './PLF_5_Exeggutor';
 import { RockGuard } from './rock-guard';
 export declare class ElectrodeArt extends Electrode {
     cardImage: string;
 }
 export declare class ExeggcuteArt extends Exeggcute {
+    cardImage: string;
+}
+export declare class ExeggutorArt extends Exeggutor {
     cardImage: string;
 }
 export declare class FloatStoneArt extends FloatStone {

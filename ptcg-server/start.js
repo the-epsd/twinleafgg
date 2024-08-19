@@ -122,6 +122,7 @@ cardManager.defineSet(sets.setTwilightMasquerade);
 cardManager.defineSet(sets.setShroudedFable);
 cardManager.defineSet(sets.setSV7);
 cardManager.defineSet(sets.setSV8);
+cardManager.defineSet(sets.setSV9);
 
 cardManager.defineSet(sets.setTest);
 

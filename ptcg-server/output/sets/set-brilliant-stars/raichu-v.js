@@ -39,21 +39,38 @@ class RaichuV extends pokemon_card_1.PokemonCard {
     }
     // Implement power
     reduceEffect(store, state, effect) {
+        const player = state.players[state.activePlayer];
+        if (state.turn == 1 && player.active.cards[0] == this) {
+            player.canAttackFirstTurn = true;
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const cardList = game_1.StateUtils.findCardList(state, this);
             if (cardList === undefined) {
                 return state;
             }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { min: 0, max: 1, allowCancel: false }), cards => {
-                cards = cards || [];
-                if (cards.length > 0) {
-                    player.deck.moveCardsTo(cards, cardList);
-                }
-            });
+            if (player.canAttackFirstTurn) {
+                return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_CARDS, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { allowCancel: false, min: 0, max: 1 }), transfers => {
+                    transfers = transfers || [];
+                    // cancelled by user
+                    if (transfers.length === 0) {
+                        return state;
+                    }
+                    for (const transfer of transfers) {
+                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                        player.deck.moveCardTo(transfer.card, target);
+                    }
+                    state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                        player.deck.applyOrder(order);
+                    });
+                });
+            }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
+            if (player.canAttackFirstTurn) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
+            }
             // return store.prompt(state, new ChoosePokemonPrompt(
             //   player.id,
             //   GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
