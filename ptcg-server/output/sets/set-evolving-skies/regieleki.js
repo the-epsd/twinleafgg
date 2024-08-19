@@ -50,11 +50,11 @@ class Regieleki extends pokemon_card_1.PokemonCard {
                     damageEffect.target = target;
                     store.reduceEffect(state, damageEffect);
                 });
-                const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+                const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, player.active);
                 state = store.reduceEffect(state, checkProvidedEnergy);
                 const cards = [];
                 for (const energyMap of checkProvidedEnergy.energyMap) {
-                    const energy = energyMap.provides.filter(t => t === card_types_1.CardType.LIGHTNING || t === card_types_1.CardType.ANY);
+                    const energy = energyMap.provides.filter(t => t === card_types_1.CardType.LIGHTNING || t === card_types_1.CardType.ANY || t === card_types_1.CardType.WLFM || t === card_types_1.CardType.LPM);
                     if (energy.length > 0) {
                         cards.push(energyMap.card);
                     }

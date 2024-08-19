@@ -14,7 +14,7 @@ import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-fi
 import { DeckService } from '../../api/services/deck.service';
 import { FileDownloadService } from '../../shared/file-download/file-download.service';
 import { Card, PokemonCard, SuperType } from 'ptcg-server';
-import { cardReplacements } from './card-replacements';
+import { cardReplacements, exportReplacements } from './card-replacements';
 
 
 @UntilDestroy()
@@ -161,7 +161,14 @@ export class DeckEditComponent implements OnInit {
   public async exportDeck() {
     const cardNames = [];
     for (const item of this.deckItems) {
-      const fullNameWithSetNumber = item.card.fullName + (item.card.setNumber ? ` ${item.card.setNumber}` : '');
+      let fullNameWithSetNumber = item.card.fullName + (item.card.setNumber ? ` ${item.card.setNumber}` : '');
+
+      // Apply export replacements
+      const replacement = exportReplacements.find(r => r.from === fullNameWithSetNumber);
+      if (replacement) {
+        fullNameWithSetNumber = replacement.to;
+      }
+
       const fullCardName = `${item.count} ${fullNameWithSetNumber}`;
 
       if (!cardNames.includes(fullCardName)) {
@@ -177,6 +184,7 @@ export class DeckEditComponent implements OnInit {
       this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
     }
   }
+
 
   public saveDeck() {
     if (!this.deck) {

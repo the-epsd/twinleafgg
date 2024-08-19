@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setPlasmaFreeze = [
     new card_images_1.ElectrodeArt(),
     new card_images_1.ExeggcuteArt(),
+    new card_images_1.ExeggutorArt(),
     new card_images_1.FloatStoneArt(),
     new card_images_1.FrozenCityArt(),
     new card_images_1.MrMimeArt(),

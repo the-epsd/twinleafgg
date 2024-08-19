@@ -4,6 +4,7 @@ import { FloatStone } from './float-stone';
 import { FrozenCity } from './frozen-city';
 import { MrMime } from './mr-mime';
 import { Electrode } from './PLF_33_Electrode';
+import { Exeggutor } from './PLF_5_Exeggutor';
 import { RockGuard } from './rock-guard';
 
 export class ElectrodeArt extends Electrode {
@@ -12,6 +13,10 @@ export class ElectrodeArt extends Electrode {
 
 export class ExeggcuteArt extends Exeggcute {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLF/PLF_004_R_EN.png';
+}
+
+export class ExeggutorArt extends Exeggutor {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLF/PLF_005_R_EN.png';
 }
 
 export class FloatStoneArt extends FloatStone {

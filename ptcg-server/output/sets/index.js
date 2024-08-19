@@ -113,5 +113,6 @@ __exportStar(require("./set-twilight-masquerade"), exports);
 __exportStar(require("./set-shrouded-fable"), exports);
 __exportStar(require("./set-sv7"), exports);
 __exportStar(require("./set-sv8"), exports);
+__exportStar(require("./set-sv9"), exports);
 //TEST
 __exportStar(require("./set-test"), exports);

@@ -175,6 +175,7 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     const player = state.players[state.activePlayer];
 
     player.canEvolve = false;
+    player.canAttackFirstTurn = false;
 
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
       const pokemonCard = cardList.getPokemonCard();

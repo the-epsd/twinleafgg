@@ -1,10 +1,13 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
 import {
-  StoreLike, State, StateUtils, CardTarget, GameError, GameMessage, PlayerType} from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { Effect } from '../../game/store/effects/effect';
+  PlayerType,
+  State, StateUtils,
+  StoreLike
+} from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 
 export class Raichu extends PokemonCard {
@@ -54,40 +57,20 @@ export class Raichu extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
   
-      const blocked: CardTarget[] = [];
-  
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
-      const oppHasBenched = opponent.bench.some(b => b.cards.length > 0);
-      if (!hasBenched && !oppHasBenched) {
-        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
-      }
-  
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         if (cardList.damage > 0) {
-          return state;
-        } else {
-          blocked.push(target);
-        }
-      });
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.damage > 0) {
-          return state;
-        } else {
-          blocked.push(target);
-        }
-  
-        if (!blocked.length) {
-          throw new GameError(GameMessage.CANNOT_USE_ATTACK);
-        }
-  
-        if (blocked.length) {
-          // Opponent has damaged benched Pokemon
-
           const damageEffect = new PutDamageEffect(effect, 50);
           damageEffect.target = cardList;
           store.reduceEffect(state, damageEffect);
         }
+      });
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (cardList.damage > 0 && card !== this) {
+          const damageEffect = new PutDamageEffect(effect, 50);
+          damageEffect.target = cardList;
+          store.reduceEffect(state, damageEffect);
+        }       
       });
       return state;
     }
