@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Electropower = void 0;
+const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
@@ -27,7 +28,8 @@ class Electropower extends trainer_card_1.TrainerCard {
         }
         if (effect instanceof attack_effects_1.PutDamageEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === card_types_1.CardType.LIGHTNING) {
             const player = effect.player;
-            if (player.marker.hasMarker(this.ELECTROPOWER_MARKER, this) && effect.damage > 0) {
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (player.marker.hasMarker(this.ELECTROPOWER_MARKER, this) && effect.damage > 0 && effect.target === opponent.active) {
                 effect.damage += 30;
             }
         }
