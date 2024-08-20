@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GardeniasVigor = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
+const energy_card_1 = require("../../game/store/card/energy-card");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_message_1 = require("../../game/game-message");
 const attach_energy_prompt_1 = require("../../game/store/prompts/attach-energy-prompt");
@@ -35,6 +36,14 @@ class GardeniasVigor extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             player.deck.moveTo(player.hand, 2);
+            const hasEnergyInHand = player.hand.cards.some(c => {
+                return c instanceof energy_card_1.EnergyCard
+                    && c.energyType === card_types_1.EnergyType.BASIC
+                    && c.provides.includes(card_types_1.CardType.GRASS);
+            });
+            if (!hasEnergyInHand) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
+            }
             return store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_CARDS, player.hand, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Grass Energy' }, { min: 1, max: 2, allowCancel: false, differentTargets: false }), transfers => {
                 transfers = transfers || [];
                 for (const transfer of transfers) {

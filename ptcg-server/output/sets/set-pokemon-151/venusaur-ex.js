@@ -27,7 +27,7 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
                 name: 'Dangerous Toxwhip',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS],
                 damage: 150,
-                text: ''
+                text: 'Your opponent\'s Active Pokémon is now Confused and Poisoned.'
             }
         ];
         this.set = 'MEW';
@@ -69,8 +69,9 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = game_1.StateUtils.findOwner(state, effect.target);
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.active.specialConditions.push(card_types_1.SpecialCondition.CONFUSED);
-            opponent.active.specialConditions.push(card_types_1.SpecialCondition.POISONED);
+            const active = opponent.active;
+            active.addSpecialCondition(card_types_1.SpecialCondition.BURNED);
+            active.addSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
         }
         return state;
     }
