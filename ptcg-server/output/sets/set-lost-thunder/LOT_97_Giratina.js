@@ -56,7 +56,7 @@ class Giratina extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const hasBench = opponent.bench.some(b => b.cards.length > 0);
             if (!hasBench) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+                return state;
             }
             // Add Marker
             player.marker.addMarker(this.DISTORTION_DOOR_MARKER, this);
