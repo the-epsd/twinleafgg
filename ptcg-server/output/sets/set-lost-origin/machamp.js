@@ -34,10 +34,17 @@ class Machamp extends pokemon_card_1.PokemonCard {
         this.name = 'Machamp';
         this.fullName = 'Machamp LOR';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+        this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('second marker added');
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('marker cleared');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;

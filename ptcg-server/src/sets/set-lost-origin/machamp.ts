@@ -20,7 +20,7 @@ export class Machamp extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Crisis Muscles',
@@ -30,7 +30,7 @@ export class Machamp extends PokemonCard {
 
   public attacks = [{
     name: 'Strong-Arm Lariat',
-    cost: [ CardType.FIGHTING, CardType.FIGHTING ],
+    cost: [CardType.FIGHTING, CardType.FIGHTING],
     damage: 100,
     text: 'You may do 100 more damage. If you do, during your next turn, this Pokémon can\'t attack.'
   }];
@@ -48,12 +48,20 @@ export class Machamp extends PokemonCard {
   public fullName: string = 'Machamp LOR';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('second marker added');
     }
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('marker cleared');
+    }
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
@@ -93,7 +101,7 @@ export class Machamp extends PokemonCard {
 
       return state;
     }
-    
+
     return state;
   }
 
