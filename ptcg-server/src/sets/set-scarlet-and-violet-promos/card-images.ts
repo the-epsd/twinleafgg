@@ -5,6 +5,7 @@ import { Charcadet } from './charcadet';
 import { Charmander } from './charmander';
 import { Eevee } from './eevee';
 import { Mimikyuex } from './mimikyu-ex';
+import { Pecharunt } from './pecharunt';
 import { Sylveonex } from './sylveon-ex';
 
 export class AmpharosexArt extends Ampharosex {
@@ -33,6 +34,10 @@ export class EeveeArt extends Eevee {
 
 export class MimikyuexArt extends Mimikyuex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVP/SVP_004_R_EN_LG.png';
+}
+
+export class PecharuntArt extends Pecharunt {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVP/SVP_149_R_EN_LG.png';
 }
 
 export class SylveonexArt extends Sylveonex {

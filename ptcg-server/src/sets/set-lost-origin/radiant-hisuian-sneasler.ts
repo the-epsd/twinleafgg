@@ -82,12 +82,11 @@ export class RadiantHisuianSneasler extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
+        if (card === this && this.marker.hasMarker(this.POISON_MODIFIER_MARKER)) {
           this.marker.removeMarker(this.POISON_MODIFIER_MARKER, this);
+          opponent.active.poisonDamage -= 50;
         }
       });
-
-      opponent.active.poisonDamage -= 20;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
