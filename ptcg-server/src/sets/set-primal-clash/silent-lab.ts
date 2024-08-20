@@ -8,6 +8,7 @@ import { TrainerType, Stage } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { UseStadiumEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
+import { PowerType } from '../../game';
 
 export class SilentLab extends TrainerCard {
 
@@ -28,6 +29,7 @@ export class SilentLab extends TrainerCard {
     'and in each player\'s discard pile has no Abilities.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this) {
       const pokemonCard = effect.card;
       const cardList = StateUtils.findCardList(state, pokemonCard);
@@ -36,7 +38,7 @@ export class SilentLab extends TrainerCard {
         ? cardList.isBasic()
         : pokemonCard.stage === Stage.BASIC;
 
-      if (isBasic) {
+      if (isBasic && pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 

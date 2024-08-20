@@ -7,7 +7,7 @@ import { AfterDamageEffect, DealDamageEffect } from '../../game/store/effects/at
 
 export class ZacianVSTAR extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VSTAR ];
+  public tags = [CardTag.POKEMON_VSTAR];
 
   public regulationMark = 'F';
 
@@ -23,24 +23,24 @@ export class ZacianVSTAR extends PokemonCard {
 
   public resistance = [{ type: CardType.GRASS, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Break Edge',
-      cost: [ CardType.METAL, CardType.METAL, CardType.COLORLESS ],
+      cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
       damage: 200,
       text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
     },
     {
       name: 'Sword Star',
-      cost: [ CardType.METAL, CardType.METAL, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
       damage: 310,
       text: 'This Pokémon also does 30 damage to itself. (You can\'t use more than 1 VSTAR Power in a game.)'
     },
   ];
 
-  public set: string = 'SV5';
+  public set: string = 'CRZ';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -55,16 +55,16 @@ export class ZacianVSTAR extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-              
+
       effect.ignoreWeakness = true;
-      effect.ignoreResistance =true;
+      effect.ignoreResistance = true;
 
       const dealDamage = new DealDamageEffect(effect, 200);
       store.reduceEffect(state, dealDamage);
       const damage = dealDamage.damage;
-              
+
       effect.damage = 0;
-              
+
       if (damage > 0) {
         opponent.active.damage += damage;
         const afterDamage = new AfterDamageEffect(effect, damage);
@@ -79,7 +79,7 @@ export class ZacianVSTAR extends PokemonCard {
       if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
-  
+
       const dealDamage = new DealDamageEffect(effect, damage);
       dealDamage.target = player.active;
       player.usedVSTAR = true;

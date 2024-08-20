@@ -1,3 +1,4 @@
+import { BlendEnergyGRPD } from './blend-energy-grpd';
 import { BlendEnergyWLFM } from './blend-energy-wlfm';
 import { Bouffalant } from './bouffalant';
 import { Deino } from './deino';
@@ -15,6 +16,9 @@ import { Sigilyph } from './sigilyph';
 import { ToolScrapper } from './tool-scrapper';
 import { Zweilous } from './zweilous';
 export declare class BlendEnergyWLFMArt extends BlendEnergyWLFM {
+    cardImage: string;
+}
+export declare class BlendEnergyGRPDArt extends BlendEnergyGRPD {
     cardImage: string;
 }
 export declare class BouffalantArt extends Bouffalant {

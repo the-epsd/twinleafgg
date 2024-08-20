@@ -32,7 +32,7 @@ class ZacianVSTAR extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon also does 30 damage to itself. (You can\'t use more than 1 VSTAR Power in a game.)'
             },
         ];
-        this.set = 'SV5';
+        this.set = 'CRZ';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '96';
         this.name = 'Zacian VSTAR';

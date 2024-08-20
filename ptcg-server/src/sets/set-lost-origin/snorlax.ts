@@ -1,7 +1,7 @@
 import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
@@ -52,25 +52,17 @@ export class Snorlax extends PokemonCard {
       effect.player.active.sleepFlips = 2;
     }
 
+    // Prevent effects of attacks
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
       const pokemonCard = effect.target.getPokemonCard();
       const sourceCard = effect.source.getPokemonCard();
 
-      // pokemon is evolved
       if (pokemonCard !== this) {
         return state;
       }
 
       if (sourceCard) {
-
-        // eslint-disable-next-line indent
-        // Allow damage
-        if (effect instanceof PutDamageEffect) {
-          return state;
-        }
-        if (effect instanceof DealDamageEffect) {
-          return state;
-        }
+        // if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
 
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
@@ -84,10 +76,21 @@ export class Snorlax extends PokemonCard {
         } catch {
           return state;
         }
+        // Allow Weakness & Resistance
+        if (effect instanceof ApplyWeaknessEffect) {
+          return state;
+        }
+        // Allow damage
+        if (effect instanceof PutDamageEffect) {
+          return state;
+        }
+        // Allow damage
+        if (effect instanceof DealDamageEffect) {
+          return state;
+        }
 
         effect.preventDefault = true;
       }
-      return state;
     }
     return state;
   }

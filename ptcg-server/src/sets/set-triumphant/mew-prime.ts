@@ -9,7 +9,6 @@ import {
   Card,
   ChooseCardsPrompt,
   GameLog,
-  ShowCardsPrompt,
   ShuffleDeckPrompt
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -126,7 +125,6 @@ export class Mew extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       let cards: Card[] = [];
 
@@ -142,19 +140,13 @@ export class Mew extends PokemonCard {
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, player.lostzone);
 
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, { name: player.name, card: card.name });
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
             return state;
           });
         });
-
-        return store.prompt(state, new ShowCardsPrompt(
-          opponent.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          cards), () => state
-        );
       });
     }
 

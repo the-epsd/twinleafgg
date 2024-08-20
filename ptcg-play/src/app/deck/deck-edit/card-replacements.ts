@@ -12,11 +12,17 @@ export const cardReplacements = [
 
   { from: 'Grass Energy SVE 1', to: 'Grass Energy 1' },
 
+  //GRI
+  { from: 'Mallow GRI 127', to: 'Mallow TEF 121' },
+
   //CRE
   { from: 'Klara CRE 145', to: 'Klara CRE 145 145' },
 
   //PGO
   { from: 'PokéStop PGO 68', to: 'Pokestop PGO 68' },
+
+  //CRZ
+  { from: 'Zacian VSTAR CRZ 96', to: 'Zacian VSTAR' },
 
   //SVI
   { from: 'Pokégear 3.0 SVI 186', to: 'Pokegear SVI 186' },
@@ -35,11 +41,17 @@ export const cardReplacements = [
 
 export const exportReplacements = [
 
+  //GRI
+  { from: 'Mallow TEF 121', to: 'Mallow GRI 127' },
+
   //CRE
   { from: 'Klara CRE 145 145', to: 'Klara CRE 145' },
 
   //PGO
   { from: 'Pokestop PGO 68', to: 'PokéStop PGO 68' },
+
+  //CRZ
+  { from: 'Zacian VSTAR', to: 'Zacian VSTAR CRZ 96' },
 
   //SVI
   { from: 'Pokegear SVI 186', to: 'Pokégear 3.0 SVI 186' },

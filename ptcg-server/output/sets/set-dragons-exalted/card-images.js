@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZweilousArt = exports.ToolScrapperArt = exports.SigilyphArt = exports.RoseradeArt = exports.RoseliaArt = exports.RescueScarfArt = exports.RayquazaExArt = exports.HydreigonArt = exports.HoOhExArt = exports.GarbodorArt = exports.GabiteArt = exports.EmolgaArt = exports.DevolutionSprayArt = exports.DeinoArt = exports.BouffalantArt = exports.BlendEnergyWLFMArt = void 0;
+exports.ZweilousArt = exports.ToolScrapperArt = exports.SigilyphArt = exports.RoseradeArt = exports.RoseliaArt = exports.RescueScarfArt = exports.RayquazaExArt = exports.HydreigonArt = exports.HoOhExArt = exports.GarbodorArt = exports.GabiteArt = exports.EmolgaArt = exports.DevolutionSprayArt = exports.DeinoArt = exports.BouffalantArt = exports.BlendEnergyGRPDArt = exports.BlendEnergyWLFMArt = void 0;
+const blend_energy_grpd_1 = require("./blend-energy-grpd");
 const blend_energy_wlfm_1 = require("./blend-energy-wlfm");
 const bouffalant_1 = require("./bouffalant");
 const deino_1 = require("./deino");
@@ -24,6 +25,13 @@ class BlendEnergyWLFMArt extends blend_energy_wlfm_1.BlendEnergyWLFM {
     }
 }
 exports.BlendEnergyWLFMArt = BlendEnergyWLFMArt;
+class BlendEnergyGRPDArt extends blend_energy_grpd_1.BlendEnergyGRPD {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRX/DRX_117_R_EN.png';
+    }
+}
+exports.BlendEnergyGRPDArt = BlendEnergyGRPDArt;
 class BouffalantArt extends bouffalant_1.Bouffalant {
     constructor() {
         super(...arguments);

@@ -1,4 +1,4 @@
-import { CardTag, CardType, EnergyType } from '../../game/store/card/card-types';
+import { CardTag, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
@@ -13,7 +13,7 @@ export class RapidStrikeEnergy extends EnergyCard {
 
   public regulationMark = 'E';
 
-  public provides: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -45,11 +45,25 @@ export class RapidStrikeEnergy extends EnergyCard {
         return state;
       }
 
-      if (pokemon.getPokemonCard()?.tags.includes(CardTag.RAPID_STRIKE)) {
-        effect.energyMap.push({
-          card: this, provides:
-            [CardType.WATER, CardType.FIGHTING || CardType.WATER, CardType.WATER || CardType.FIGHTING, CardType.FIGHTING] // 2 Fighting
-        });
+      const pokemonCard = pokemon.getPokemonCard();
+      if (pokemonCard?.tags.includes(CardTag.RAPID_STRIKE)) {
+        const attackCosts = pokemonCard.attacks.map(attack => attack.cost);
+        const existingEnergy = pokemon.cards.filter(c => c.superType === SuperType.ENERGY);
+
+        const existingWater = existingEnergy.filter(c => 'provides' in c && (c as EnergyCard).provides.includes(CardType.WATER)).length;
+        const existingFighting = existingEnergy.filter(c => 'provides' in c && (c as EnergyCard).provides.includes(CardType.FIGHTING)).length;
+        const needsWater = attackCosts.some(cost => cost.filter(c => c === CardType.WATER).length > existingWater);
+        const needsFighting = attackCosts.some(cost => cost.filter(c => c === CardType.FIGHTING).length > existingFighting);
+
+        if (needsWater && needsFighting) {
+          effect.energyMap.push({ card: this, provides: [CardType.WATER, CardType.FIGHTING] });
+        } else if (needsWater) {
+          effect.energyMap.push({ card: this, provides: [CardType.WATER, CardType.WATER] });
+        } else if (needsFighting) {
+          effect.energyMap.push({ card: this, provides: [CardType.FIGHTING, CardType.FIGHTING] });
+        } else {
+          effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
+        }
       }
       return state;
     }
@@ -66,11 +80,12 @@ export class RapidStrikeEnergy extends EnergyCard {
             const energyEffect = new EnergyEffect(player, this);
             store.reduceEffect(state, energyEffect);
           } catch {
-            return state;
+            return;
           }
 
           const pokemon = cardList;
-          if (!pokemon.getPokemonCard()?.tags.includes(CardTag.RAPID_STRIKE)) {
+          const pokemonCard = pokemon.getPokemonCard();
+          if (pokemonCard && !pokemonCard.tags.includes(CardTag.RAPID_STRIKE)) {
             cardList.moveCardTo(this, player.discard);
           }
         });

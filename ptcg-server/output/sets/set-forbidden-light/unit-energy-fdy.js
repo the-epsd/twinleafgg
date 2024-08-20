@@ -23,6 +23,7 @@ class UnitEnergyFDY extends energy_card_1.EnergyCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
+            const pokemon = effect.source;
             try {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
@@ -30,8 +31,26 @@ class UnitEnergyFDY extends energy_card_1.EnergyCard {
             catch (_a) {
                 return state;
             }
-            effect.energyMap.push({ card: this, provides: [card_types_1.CardType.FDY] });
-            return state;
+            const pokemonCard = pokemon.getPokemonCard();
+            const attackCosts = pokemonCard === null || pokemonCard === void 0 ? void 0 : pokemonCard.attacks.map(attack => attack.cost);
+            const existingEnergy = pokemon.cards.filter(c => c.superType === card_types_1.SuperType.ENERGY);
+            const needsFighting = attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.some(cost => cost.includes(card_types_1.CardType.FIGHTING) && !existingEnergy.some(e => e instanceof energy_card_1.EnergyCard && e.provides.includes(card_types_1.CardType.FIGHTING)));
+            const needsDark = attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.some(cost => cost.includes(card_types_1.CardType.DARK) && !existingEnergy.some(e => e instanceof energy_card_1.EnergyCard && e.provides.includes(card_types_1.CardType.DARK)));
+            const needsFairy = attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.some(cost => cost.includes(card_types_1.CardType.FAIRY) && !existingEnergy.some(e => e instanceof energy_card_1.EnergyCard && e.provides.includes(card_types_1.CardType.FAIRY)));
+            const provides = [];
+            if (needsFighting)
+                provides.push(card_types_1.CardType.FIGHTING);
+            if (needsDark)
+                provides.push(card_types_1.CardType.DARK);
+            if (needsFairy)
+                provides.push(card_types_1.CardType.FAIRY);
+            if (provides.length > 0) {
+                effect.energyMap.push({ card: this, provides });
+            }
+            else {
+                effect.energyMap.push({ card: this, provides: [card_types_1.CardType.COLORLESS] });
+            }
+            console.log('Blend Energy GRPD is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
         }
         return state;
     }

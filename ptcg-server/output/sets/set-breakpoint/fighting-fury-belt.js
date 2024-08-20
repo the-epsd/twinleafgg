@@ -19,7 +19,7 @@ class FightingFuryBelt extends trainer_card_1.TrainerCard {
         this.text = 'The Basic Pokémon this card is attached to gets +40 HP and its attacks do 10 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
             try {
