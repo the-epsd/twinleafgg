@@ -59,7 +59,7 @@ export class CassiopeiaArt extends Cassiopeia {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SFA/SFA_056_R_EN.png';
 }
 
-export class ColresssObsessionArt extends ColresssObsession {
+export class ColresssTenacityArt extends ColresssObsession {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SFA/SFA_057_R_EN.png';
 }
 

@@ -1,12 +1,12 @@
 import { Card } from '../../game/store/card/card';
-import { AbsolArt, AxewArt, BindingMochiArt, CassiopeiaArt, ColresssObsessionArt, CopperajahArt, CresseliaArt, CufantArt, DangerousLaserArt, DartrixArt, DecidueyeArt, DusclopsArt, DusknoirArt, DuskullArt, FezandipitiexArt, FraxureArt, GalvantulaArt, HaxorusArt, HorseaArt, HoundoomArt, HoundourArt, IronMothArt, JaninesSecretTechniqueArt, KingdraexArt, KyuremArt, MunkidoriexArt, NeutralCenterArt, NightTimeAcademyArt, NightlyStretcherArt, OkidogiexArt, PecharuntexArt, PokeVitalAArt, PowerHourglassArt, RevavroomexArt, RowletArt, SeadraArt, SlitherWingArt, SneaselArt, TapuBuluArt, WeavileArt, XerosicsSchemeArt, ZoroarkArt, ZoruaArt } from './card-images';
+import { AbsolArt, AxewArt, BindingMochiArt, CassiopeiaArt, ColresssTenacityArt, CopperajahArt, CresseliaArt, CufantArt, DangerousLaserArt, DartrixArt, DecidueyeArt, DusclopsArt, DusknoirArt, DuskullArt, FezandipitiexArt, FraxureArt, GalvantulaArt, HaxorusArt, HorseaArt, HoundoomArt, HoundourArt, IronMothArt, JaninesSecretTechniqueArt, KingdraexArt, KyuremArt, MunkidoriexArt, NeutralCenterArt, NightTimeAcademyArt, NightlyStretcherArt, OkidogiexArt, PecharuntexArt, PokeVitalAArt, PowerHourglassArt, RevavroomexArt, RowletArt, SeadraArt, SlitherWingArt, SneaselArt, TapuBuluArt, WeavileArt, XerosicsSchemeArt, ZoroarkArt, ZoruaArt } from './card-images';
 
 export const setShroudedFable: Card[] = [
   new AbsolArt(),
   new AxewArt(),
   new BindingMochiArt(),
   new CassiopeiaArt(),
-  new ColresssObsessionArt(),
+  new ColresssTenacityArt(),
   new CopperajahArt(),
   new CresseliaArt(),
   new CufantArt(),

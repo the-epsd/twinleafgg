@@ -54,7 +54,7 @@ export declare class BindingMochiArt extends BindingMochi {
 export declare class CassiopeiaArt extends Cassiopeia {
     cardImage: string;
 }
-export declare class ColresssObsessionArt extends ColresssObsession {
+export declare class ColresssTenacityArt extends ColresssObsession {
     cardImage: string;
 }
 export declare class CopperajahArt extends Copperajah {
