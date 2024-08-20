@@ -8,6 +8,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const state_utils_1 = require("../../game/store/state-utils");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const pokemon_card_list_1 = require("../../game/store/state/pokemon-card-list");
+const game_1 = require("../../game");
 class SilentLab extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -27,7 +28,7 @@ class SilentLab extends trainer_card_1.TrainerCard {
             const isBasic = cardList instanceof pokemon_card_list_1.PokemonCardList
                 ? cardList.isBasic()
                 : pokemonCard.stage === card_types_1.Stage.BASIC;
-            if (isBasic) {
+            if (isBasic && pokemonCard.powers.some(power => power.powerType === game_1.PowerType.ABILITY)) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_EFFECT);
             }
             return state;

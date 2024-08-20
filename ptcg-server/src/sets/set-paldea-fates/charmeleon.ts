@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 
@@ -74,7 +74,10 @@ export class Charmeleon extends PokemonCard {
         } catch {
           return state;
         }
-
+        // Allow Weakness & Resistance
+        if (effect instanceof ApplyWeaknessEffect) {
+          return state;
+        }
         // Allow damage
         if (effect instanceof PutDamageEffect) {
           return state;

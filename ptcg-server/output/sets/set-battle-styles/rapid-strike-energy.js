@@ -11,7 +11,7 @@ class RapidStrikeEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.tags = [card_types_1.CardTag.RAPID_STRIKE];
         this.regulationMark = 'E';
-        this.provides = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.provides = [card_types_1.CardType.COLORLESS];
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'BST';
         this.cardImage = 'assets/cardback.png';
@@ -23,7 +23,6 @@ class RapidStrikeEnergy extends energy_card_1.EnergyCard {
             'As long as this card is attached to a Pokémon, it provides 2 in any combination of W Energy and F Energy.';
     }
     reduceEffect(store, state, effect) {
-        var _a;
         // Provide energy when attached to Rapid Strike Pokemon
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
@@ -32,13 +31,29 @@ class RapidStrikeEnergy extends energy_card_1.EnergyCard {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_b) {
+            catch (_a) {
                 return state;
             }
-            if ((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.RAPID_STRIKE)) {
-                effect.energyMap.push({
-                    card: this, provides: [card_types_1.CardType.WATER, card_types_1.CardType.FIGHTING || card_types_1.CardType.WATER, card_types_1.CardType.WATER || card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING] // 2 Fighting
-                });
+            const pokemonCard = pokemon.getPokemonCard();
+            if (pokemonCard === null || pokemonCard === void 0 ? void 0 : pokemonCard.tags.includes(card_types_1.CardTag.RAPID_STRIKE)) {
+                const attackCosts = pokemonCard.attacks.map(attack => attack.cost);
+                const existingEnergy = pokemon.cards.filter(c => c.superType === card_types_1.SuperType.ENERGY);
+                const existingWater = existingEnergy.filter(c => 'provides' in c && c.provides.includes(card_types_1.CardType.WATER)).length;
+                const existingFighting = existingEnergy.filter(c => 'provides' in c && c.provides.includes(card_types_1.CardType.FIGHTING)).length;
+                const needsWater = attackCosts.some(cost => cost.filter(c => c === card_types_1.CardType.WATER).length > existingWater);
+                const needsFighting = attackCosts.some(cost => cost.filter(c => c === card_types_1.CardType.FIGHTING).length > existingFighting);
+                if (needsWater && needsFighting) {
+                    effect.energyMap.push({ card: this, provides: [card_types_1.CardType.WATER, card_types_1.CardType.FIGHTING] });
+                }
+                else if (needsWater) {
+                    effect.energyMap.push({ card: this, provides: [card_types_1.CardType.WATER, card_types_1.CardType.WATER] });
+                }
+                else if (needsFighting) {
+                    effect.energyMap.push({ card: this, provides: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING] });
+                }
+                else {
+                    effect.energyMap.push({ card: this, provides: [card_types_1.CardType.COLORLESS] });
+                }
             }
             return state;
         }
@@ -46,7 +61,6 @@ class RapidStrikeEnergy extends energy_card_1.EnergyCard {
         if (effect instanceof check_effects_1.CheckTableStateEffect) {
             state.players.forEach(player => {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                    var _a;
                     if (!cardList.cards.includes(this)) {
                         return;
                     }
@@ -54,11 +68,12 @@ class RapidStrikeEnergy extends energy_card_1.EnergyCard {
                         const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                         store.reduceEffect(state, energyEffect);
                     }
-                    catch (_b) {
-                        return state;
+                    catch (_a) {
+                        return;
                     }
                     const pokemon = cardList;
-                    if (!((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.RAPID_STRIKE))) {
+                    const pokemonCard = pokemon.getPokemonCard();
+                    if (pokemonCard && !pokemonCard.tags.includes(card_types_1.CardTag.RAPID_STRIKE)) {
                         cardList.moveCardTo(this, player.discard);
                     }
                 });

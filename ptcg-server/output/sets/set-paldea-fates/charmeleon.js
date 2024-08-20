@@ -58,6 +58,10 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
                 catch (_a) {
                     return state;
                 }
+                // Allow Weakness & Resistance
+                if (effect instanceof attack_effects_1.ApplyWeaknessEffect) {
+                    return state;
+                }
                 // Allow damage
                 if (effect instanceof attack_effects_1.PutDamageEffect) {
                     return state;

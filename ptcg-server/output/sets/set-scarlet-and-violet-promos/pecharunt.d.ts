@@ -1,18 +1,16 @@
-import { PowerType } from '../..';
-import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { PowerType } from '../../game/store/card/pokemon-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
-export declare class Machamp extends PokemonCard {
+export declare class Pecharunt extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
+    retreat: CardType[];
     weakness: {
         type: CardType;
     }[];
-    retreat: CardType[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -24,13 +22,13 @@ export declare class Machamp extends PokemonCard {
         damage: number;
         text: string;
     }[];
-    set: string;
-    cardImage: string;
-    setNumber: string;
     regulationMark: string;
+    set: string;
     name: string;
     fullName: string;
-    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
-    readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
+    cardImage: string;
+    setNumber: string;
+    readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = "DEFENDING_POKEMON_CANNOT_RETREAT_MARKER";
+    private POISON_MODIFIER_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

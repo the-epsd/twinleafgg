@@ -139,6 +139,7 @@ export function gamePhaseReducer(store, state, effect) {
     if (effect instanceof EndTurnEffect) {
         const player = state.players[state.activePlayer];
         player.canEvolve = false;
+        player.canAttackFirstTurn = false;
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
             const pokemonCard = cardList.getPokemonCard();
             if (pokemonCard && player.active.cards.includes(pokemonCard)) {

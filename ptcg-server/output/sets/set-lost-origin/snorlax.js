@@ -38,22 +38,15 @@ class Snorlax extends pokemon_card_1.PokemonCard {
             effect.player.active.addSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
             effect.player.active.sleepFlips = 2;
         }
+        // Prevent effects of attacks
         if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this)) {
             const pokemonCard = effect.target.getPokemonCard();
             const sourceCard = effect.source.getPokemonCard();
-            // pokemon is evolved
             if (pokemonCard !== this) {
                 return state;
             }
             if (sourceCard) {
-                // eslint-disable-next-line indent
-                // Allow damage
-                if (effect instanceof attack_effects_1.PutDamageEffect) {
-                    return state;
-                }
-                if (effect instanceof attack_effects_1.DealDamageEffect) {
-                    return state;
-                }
+                // if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
                 // Try to reduce PowerEffect, to check if something is blocking our ability
                 try {
                     const player = state_utils_1.StateUtils.findOwner(state, effect.target);
@@ -67,9 +60,20 @@ class Snorlax extends pokemon_card_1.PokemonCard {
                 catch (_a) {
                     return state;
                 }
+                // Allow Weakness & Resistance
+                if (effect instanceof attack_effects_1.ApplyWeaknessEffect) {
+                    return state;
+                }
+                // Allow damage
+                if (effect instanceof attack_effects_1.PutDamageEffect) {
+                    return state;
+                }
+                // Allow damage
+                if (effect instanceof attack_effects_1.DealDamageEffect) {
+                    return state;
+                }
                 effect.preventDefault = true;
             }
-            return state;
         }
         return state;
     }

@@ -75,18 +75,18 @@ export class Okidogi extends PokemonCard {
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
       let darkProvided = false;
-      
+
       checkProvidedEnergyEffect.energyMap.forEach(em => {
         if (em.provides.includes(CardType.DARK)) {
           darkProvided = true;
         }
-        
+
         try {
           const energyEffect = new EnergyEffect(player, em.card as EnergyCard);
           store.reduceEffect(state, energyEffect);
-          
+
           if ((em.card instanceof EnergyCard && em.card.blendedEnergies.includes(CardType.DARK)) ||
-              (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY))) {
+            (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY))) {
             darkProvided = true;
           }
         } catch {
@@ -115,21 +115,23 @@ export class Okidogi extends PokemonCard {
       } catch {
         return state;
       }
-            
+
+      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, effect.target);
+      store.reduceEffect(state, checkProvidedEnergyEffect);
+
       let darkProvided = false;
-      
-      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, effect.target);      
+
       checkProvidedEnergyEffect.energyMap.forEach(em => {
         if (em.provides.includes(CardType.DARK)) {
           darkProvided = true;
         }
-        
+
         try {
           const energyEffect = new EnergyEffect(player, em.card as EnergyCard);
           store.reduceEffect(state, energyEffect);
-          
+
           if ((em.card instanceof EnergyCard && em.card.blendedEnergies.includes(CardType.DARK)) ||
-              (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY))) {
+            (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY))) {
             darkProvided = true;
           }
         } catch {
@@ -139,6 +141,7 @@ export class Okidogi extends PokemonCard {
 
       if (darkProvided) {
         effect.hp += 100;
+        console.log('okidogi hp increased');
         return state;
       }
 

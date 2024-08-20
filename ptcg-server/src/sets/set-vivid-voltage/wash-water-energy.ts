@@ -1,6 +1,6 @@
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EnergyEffect } from '../../game/store/effects/play-card-effects';
@@ -9,7 +9,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class WashWaterEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -42,11 +42,11 @@ export class WashWaterEnergy extends EnergyCard {
         return state;
       }
 
-      effect.energyMap.push({ card: this, provides: [ CardType.WATER ] });
-      
+      effect.energyMap.push({ card: this, provides: [CardType.WATER] });
+
       return state;
     }
-    
+
     // Prevent effects of attacks
     if (effect instanceof AbstractAttackEffect && effect.target?.cards?.includes(this)) {
       const player = effect.player;
@@ -57,25 +57,28 @@ export class WashWaterEnergy extends EnergyCard {
       } catch {
         return state;
       }
-      
+
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
 
       if (checkPokemonType.cardTypes.includes(CardType.WATER)) {
+        // Allow Weakness & Resistance
+        if (effect instanceof ApplyWeaknessEffect) {
+          return state;
+        }
         // Allow damage
         if (effect instanceof PutDamageEffect) {
-          return state; 
+          return state;
         }
         if (effect instanceof DealDamageEffect) {
-          return state; 
+          return state;
         }
-        
+
         effect.preventDefault = true;
       }
     }
-      
+
     return state;
   }
-      
+
 }
-      

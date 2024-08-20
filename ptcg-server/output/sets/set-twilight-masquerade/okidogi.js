@@ -95,8 +95,9 @@ class Okidogi extends pokemon_card_1.PokemonCard {
             catch (_b) {
                 return state;
             }
-            let darkProvided = false;
             const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, effect.target);
+            store.reduceEffect(state, checkProvidedEnergyEffect);
+            let darkProvided = false;
             checkProvidedEnergyEffect.energyMap.forEach(em => {
                 if (em.provides.includes(card_types_1.CardType.DARK)) {
                     darkProvided = true;
@@ -115,6 +116,7 @@ class Okidogi extends pokemon_card_1.PokemonCard {
             });
             if (darkProvided) {
                 effect.hp += 100;
+                console.log('okidogi hp increased');
                 return state;
             }
             return state;

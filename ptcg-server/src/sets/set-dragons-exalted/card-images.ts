@@ -1,3 +1,4 @@
+import { BlendEnergyGRPD } from './blend-energy-grpd';
 import { BlendEnergyWLFM } from './blend-energy-wlfm';
 import { Bouffalant } from './bouffalant';
 import { Deino } from './deino';
@@ -17,6 +18,10 @@ import { Zweilous } from './zweilous';
 
 export class BlendEnergyWLFMArt extends BlendEnergyWLFM {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRX/DRX_118_R_EN.png';
+}
+
+export class BlendEnergyGRPDArt extends BlendEnergyGRPD {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRX/DRX_117_R_EN.png';
 }
 
 export class BouffalantArt extends Bouffalant {

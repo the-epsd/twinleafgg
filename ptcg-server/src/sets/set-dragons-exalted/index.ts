@@ -1,8 +1,9 @@
 import { Card } from '../../game/store/card/card';
-import { BlendEnergyWLFMArt, BouffalantArt, DeinoArt, DevolutionSprayArt, EmolgaArt, GabiteArt, GarbodorArt, HoOhExArt, HydreigonArt, RayquazaExArt, RescueScarfArt, RoseliaArt, RoseradeArt, SigilyphArt, ToolScrapperArt, ZweilousArt } from './card-images';
+import { BlendEnergyGRPDArt, BlendEnergyWLFMArt, BouffalantArt, DeinoArt, DevolutionSprayArt, EmolgaArt, GabiteArt, GarbodorArt, HoOhExArt, HydreigonArt, RayquazaExArt, RescueScarfArt, RoseliaArt, RoseradeArt, SigilyphArt, ToolScrapperArt, ZweilousArt } from './card-images';
 
 export const setDragonsExalted: Card[] = [
   new BlendEnergyWLFMArt(),
+  new BlendEnergyGRPDArt(),
   new BouffalantArt(),
   new DeinoArt(),
   new DevolutionSprayArt(),

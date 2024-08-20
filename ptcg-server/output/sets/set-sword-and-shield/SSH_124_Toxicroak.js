@@ -67,7 +67,7 @@ class Toxicroak extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card === this) {
+                if (card === this && this.marker.hasMarker(this.POISON_MODIFIER_MARKER)) {
                     this.marker.removeMarker(this.POISON_MODIFIER_MARKER, this);
                     opponent.active.poisonDamage -= 20;
                 }

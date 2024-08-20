@@ -1,3 +1,4 @@
+import { StateUtils } from '../../game';
 import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -35,7 +36,8 @@ export class Electropower extends TrainerCard {
 
     if (effect instanceof PutDamageEffect && effect.player.active.getPokemonCard()?.cardType === CardType.LIGHTNING) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.ELECTROPOWER_MARKER, this) && effect.damage > 0) {
+      const opponent = StateUtils.getOpponent(state, player);
+      if (player.marker.hasMarker(this.ELECTROPOWER_MARKER, this) && effect.damage > 0 && effect.target === opponent.active) {
         effect.damage += 30;
       }
     }

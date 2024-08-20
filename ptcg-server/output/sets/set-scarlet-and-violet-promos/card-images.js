@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SylveonexArt = exports.MimikyuexArt = exports.EeveeArt = exports.CharmanderArt = exports.CharcadetArt = exports.CeruledgeexArt = exports.AnnihilapeexArt = exports.AmpharosexArt = void 0;
+exports.SylveonexArt = exports.PecharuntArt = exports.MimikyuexArt = exports.EeveeArt = exports.CharmanderArt = exports.CharcadetArt = exports.CeruledgeexArt = exports.AnnihilapeexArt = exports.AmpharosexArt = void 0;
 const ampharos_ex_1 = require("./ampharos-ex");
 const annihilape_ex_1 = require("./annihilape-ex");
 const ceruledge_ex_1 = require("./ceruledge-ex");
@@ -8,6 +8,7 @@ const charcadet_1 = require("./charcadet");
 const charmander_1 = require("./charmander");
 const eevee_1 = require("./eevee");
 const mimikyu_ex_1 = require("./mimikyu-ex");
+const pecharunt_1 = require("./pecharunt");
 const sylveon_ex_1 = require("./sylveon-ex");
 class AmpharosexArt extends ampharos_ex_1.Ampharosex {
     constructor() {
@@ -58,6 +59,13 @@ class MimikyuexArt extends mimikyu_ex_1.Mimikyuex {
     }
 }
 exports.MimikyuexArt = MimikyuexArt;
+class PecharuntArt extends pecharunt_1.Pecharunt {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVP/SVP_149_R_EN_LG.png';
+    }
+}
+exports.PecharuntArt = PecharuntArt;
 class SylveonexArt extends sylveon_ex_1.Sylveonex {
     constructor() {
         super(...arguments);
