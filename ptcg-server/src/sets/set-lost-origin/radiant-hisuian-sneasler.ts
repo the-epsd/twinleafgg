@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardTag, CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { BeginTurnEffect, BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 
@@ -85,6 +85,17 @@ export class RadiantHisuianSneasler extends PokemonCard {
         if (card === this && this.marker.hasMarker(this.POISON_MODIFIER_MARKER)) {
           this.marker.removeMarker(this.POISON_MODIFIER_MARKER, this);
           opponent.active.poisonDamage -= 50;
+        }
+      });
+    }
+
+    if (effect instanceof KnockOutEffect && effect.target.getPokemonCard() === this) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this && this.marker.hasMarker(this.POISON_MODIFIER_MARKER)) {
+          this.marker.removeMarker(this.POISON_MODIFIER_MARKER, this);
+          opponent.active.poisonDamage -= 20;
         }
       });
     }
