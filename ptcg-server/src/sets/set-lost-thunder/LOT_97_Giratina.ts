@@ -64,7 +64,7 @@ export class Giratina extends PokemonCard {
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
 
       if (!hasBench) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+        return state;
       }
 
       // Add Marker
