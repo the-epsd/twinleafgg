@@ -262,6 +262,10 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     return [dropTarget, highlight$];
   }
 
+  trackByCard(index: number, card: any): string {
+    return card.id; // or any unique identifier for the card
+  }
+
   public async addCardToDeck(item: DeckItem) {
     const index = this.tempList.findIndex(c => c.card.fullName === item.card.fullName);
     const list = this.tempList.slice();

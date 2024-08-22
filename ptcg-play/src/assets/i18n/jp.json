@@ -81,7 +81,7 @@
   "DECK_EDIT_SUPERTYPE": "スーパータイプ",
   "DECK_EDIT_STAGES": "ステージ",
   "DECK_EDIT_TRAINERS": "すべてのトレーナー",
-  "DECK_EDIT_TITLE": "デッキを編集中: {{name}}",
+  "DECK_EDIT_TITLE": "{{name}}",
   "DECK_ENTER_NAME_INPUT": "デッキ名",
   "DECK_ENTER_NAME_TITLE": "デッキ名を入力してください",
   "DECK_EXPORTED": "デッキをエクスポートしました。",

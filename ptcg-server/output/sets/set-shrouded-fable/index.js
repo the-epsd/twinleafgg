@@ -7,7 +7,7 @@ exports.setShroudedFable = [
     new card_images_1.AxewArt(),
     new card_images_1.BindingMochiArt(),
     new card_images_1.CassiopeiaArt(),
-    new card_images_1.ColresssObsessionArt(),
+    new card_images_1.ColresssTenacityArt(),
     new card_images_1.CopperajahArt(),
     new card_images_1.CresseliaArt(),
     new card_images_1.CufantArt(),

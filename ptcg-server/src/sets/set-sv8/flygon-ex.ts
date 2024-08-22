@@ -64,13 +64,15 @@ export class Flygonex extends PokemonCard {
         return state;
       }
 
+      this.stormBug = false;
+
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_SWITCH_POKEMON,
       ), wantToUse => {
         if (wantToUse) {
 
-          return state = store.prompt(state, new ChoosePokemonPrompt(
+          return store.prompt(state, new ChoosePokemonPrompt(
             player.id,
             GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
             PlayerType.BOTTOM_PLAYER,
@@ -82,7 +84,6 @@ export class Flygonex extends PokemonCard {
             }
             const target = selected[0];
             player.switchPokemon(target);
-            this.stormBug = false;
           });
         }
       });

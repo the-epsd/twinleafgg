@@ -11,7 +11,7 @@ export class ZacianVSTAR extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public stage: Stage = Stage.VSTAR;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Zacian V';
 
@@ -29,6 +29,7 @@ export class ZacianVSTAR extends PokemonCard {
     {
       name: 'Break Edge',
       cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
+      // cost: [],
       damage: 200,
       text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
     },
@@ -56,12 +57,9 @@ export class ZacianVSTAR extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      effect.ignoreWeakness = true;
+      const damage = 200;  // Fixed damage without weakness/resistance
       effect.ignoreResistance = true;
-
-      const dealDamage = new DealDamageEffect(effect, 200);
-      store.reduceEffect(state, dealDamage);
-      const damage = dealDamage.damage;
+      effect.ignoreWeakness = true;
 
       effect.damage = 0;
 
@@ -71,6 +69,7 @@ export class ZacianVSTAR extends PokemonCard {
         state = store.reduceEffect(state, afterDamage);
       }
     }
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;

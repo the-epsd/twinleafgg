@@ -5,8 +5,8 @@
       {{ 'DECK_CARDS_X' | translate:{count: card.count } }}
     </div>
     <button mat-mini-fab color="primary" *ngIf="showButtons && showDetailButtons" class="inspect-button"
-      (click)="showCardDialog.next(); $event.stopPropagation()">
-      <mat-icon>zoom_in</mat-icon>
+      (click)="showCardInfo(); $event.stopPropagation()">
+      <mat-icon>info_outline</mat-icon>
     </button>
   </ptcg-card>
 </div>

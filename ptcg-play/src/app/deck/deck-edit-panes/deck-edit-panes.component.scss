@@ -10,7 +10,13 @@
 .ptcg-deck-edit-pane {
   flex: 1 1 0;
   overflow: auto;
-  max-width: 40%;
+  max-width: 250px;
+}
+
+.ptcg-deck-edit-pane.secondary {
+  border-width: 0px;
+  overflow: auto;
+  max-width: 100%;
 }
 
 ptcg-deck-card.placeholder {
@@ -31,12 +37,6 @@ ptcg-deck-card.placeholder {
   margin-top: 10px;
   margin-bottom: 10px;
   place-content: center;
-}
-
-.ptcg-deck-edit-pane.secondary {
-  border-width: 0px;
-  overflow: auto;
-  max-width: 60%;
 }
 
 // .deck-pane-container {

@@ -1,6 +1,6 @@
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
@@ -49,6 +49,15 @@ export class GardeniasVigor extends TrainerCard {
       effect.preventDefault = true;
 
       player.deck.moveTo(player.hand, 2);
+
+      const hasEnergyInHand = player.hand.cards.some(c => {
+        return c instanceof EnergyCard
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.GRASS);
+      });
+      if (!hasEnergyInHand) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,

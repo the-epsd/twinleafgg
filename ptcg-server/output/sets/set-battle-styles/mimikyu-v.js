@@ -7,6 +7,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class MimikyuV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -20,19 +21,15 @@ class MimikyuV extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Dummmy Doll',
-                useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'When you play this Pokémon from your hand onto your ' +
-                    'Bench during your turn, you may prevent all damage ' +
-                    'done to this Mimikyu V by attacks from your opponent\'s ' +
-                    'Pokémon until the end of your opponent’s next turn.'
+                text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may prevent all damage done to this Mimikyu V by attacks from your opponent\'s Pokémon until the end of your opponent\'s next turn.'
             }];
         this.attacks = [
             {
-                name: 'X-Scissor',
+                name: 'Jealous Eyes',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 30,
-                text: 'Put 3 damage counters on your opponent’s Active Pokémon ' +
+                text: 'Put 3 damage counters on your opponent\'s Active Pokémon ' +
                     'for each Prize card your opponent has taken. '
             }
         ];
@@ -42,33 +39,53 @@ class MimikyuV extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'E';
         this.name = 'Mimikyu V';
         this.fullName = 'Mimikyu V BST';
-        this.TIME_CIRCLE_MARKER = 'TIME_CIRCLE_MARKER';
-        this.CLEAR_TIME_CIRCLE_MARKER = 'CLEAR_TIME_CIRCLE_MARKER';
+        this.DUMMY_DOLL_MARKER = 'DUMMY_DOLL_MARKER';
+        this.CLEAR_DUMMY_DOLL_MARKER = 'CLEAR_DUMMY_DOLL_MARKER';
     }
     reduceEffect(store, state, effect) {
+        var _a;
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            player.active.marker.addMarker(this.TIME_CIRCLE_MARKER, this);
-            opponent.marker.addMarker(this.CLEAR_TIME_CIRCLE_MARKER, this);
-            return state;
-        }
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.marker.hasMarker(this.TIME_CIRCLE_MARKER)) {
-            const sourcePokemon = effect.source.getPokemonCard();
-            if (sourcePokemon !== this) {
-                effect.preventDefault = true;
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
             }
-            return state;
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player === game_1.StateUtils.getOpponent(state, effect.player)) {
-            const player = game_1.StateUtils.getOpponent(state, effect.player);
-            player.marker.removeMarker(this.CLEAR_TIME_CIRCLE_MARKER, this);
-            player.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                if (cardList.marker.hasMarker(this.TIME_CIRCLE_MARKER)) {
-                    cardList.marker.removeMarker(this.TIME_CIRCLE_MARKER, this);
+            catch (_b) {
+                return state;
+            }
+            state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+                if (wantToUse) {
+                    const cardList = game_1.StateUtils.findCardList(state, this);
+                    cardList.marker.addMarker(this.DUMMY_DOLL_MARKER, this);
                 }
             });
             return state;
+        }
+        if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this) && effect.target.marker.hasMarker(this.DUMMY_DOLL_MARKER, this)) {
+            effect.preventDefault = true;
+            return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            if (owner !== player) {
+                (_a = cardList.marker) === null || _a === void 0 ? void 0 : _a.removeMarker(this.DUMMY_DOLL_MARKER, this);
+            }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const prizesTaken = 6 - opponent.getPrizeLeft();
+            const damagePerPrize = 30 * prizesTaken;
+            const damageEffect = new attack_effects_1.PutCountersEffect(effect, damagePerPrize);
+            damageEffect.target = opponent.active;
+            store.reduceEffect(state, damageEffect);
         }
         return state;
     }

@@ -13,7 +13,7 @@ class Necrozma extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 130;
-        this.weakness = [{ type: card_types_1.CardType.DARK }];
+        this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [{
                 name: 'Barrier Attack',

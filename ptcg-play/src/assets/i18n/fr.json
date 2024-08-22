@@ -81,7 +81,7 @@
   "DECK_EDIT_SUPERTYPE": "Supertype",
   "DECK_EDIT_STAGES": "Niveaux",
   "DECK_EDIT_TRAINERS": "Tous les Dresseurs",
-  "DECK_EDIT_TITLE": "Édition de deck : {{name}}.",
+  "DECK_EDIT_TITLE": "{{name}}.",
   "DECK_ENTER_NAME_INPUT": "Nom du deck",
   "DECK_ENTER_NAME_TITLE": "Entrer le nom du deck.",
   "DECK_EXPORTED": "Deck exporté.",

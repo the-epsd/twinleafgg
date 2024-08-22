@@ -5,30 +5,31 @@
 }
 
 .mat-toolbar-row {
-  > h1 {
+  >h1 {
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  > button {
+  >button {
     margin-left: map-get($padding, small);
     min-width: 80px;
   }
 }
 
 .mat-toolbar-row {
-  
+
   place-items: center;
-  
-  > mat-form-field, > ptcg-search-box {
-    margin-left: map-get($padding, normal);
-  }
-  
-  > mat-checkbox {
+
+  >mat-form-field,
+  >ptcg-search-box {
     margin-left: map-get($padding, normal);
   }
 
-  > *:first-child {
+  >mat-checkbox {
+    margin-left: map-get($padding, normal);
+  }
+
+  >*:first-child {
     margin-left: 0;
   }
 }

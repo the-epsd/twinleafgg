@@ -10,7 +10,7 @@ export class Necrozma extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.PSYCHIC;
   public hp: number = 130;
-  public weakness = [{ type: CardType.DARK }];
+  public weakness = [{ type: CardType.PSYCHIC }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{

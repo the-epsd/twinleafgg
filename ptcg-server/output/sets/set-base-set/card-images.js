@@ -488,7 +488,7 @@ exports.NidokingArt = NidokingArt;
 class NidoranMaleArt extends nidoran_male_1.NidoranMale {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pkmncards.com/wp-content/uploads/nidoran-male-base-set-bs-66.jpg';
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/nidoran-male-base-set-bs-55.jpg';
     }
 }
 exports.NidoranMaleArt = NidoranMaleArt;

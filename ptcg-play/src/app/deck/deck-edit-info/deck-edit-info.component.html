@@ -1,6 +1,6 @@
-<ptcg-info [visible]="cardsCount > 0">
-  {{ 'DECK_EDIT_CARDS_COUNT' | translate:{count: cardsCount} }}
-  <div>{{ 'LABEL_POKEMON' | translate }}: {{ pokemonCount }}</div>
-  <div>{{ 'LABEL_TRAINER' | translate }}: {{ trainerCount }}</div>
-  <div>{{ 'LABEL_ENERGY' | translate }}: {{ energyCount }}</div>
-</ptcg-info>
+<div class="deck-info">
+  <span>{{ 'DECK_EDIT_CARDS_COUNT' | translate:{count: cardsCount} }}</span>
+  <span>{{ 'LABEL_POKEMON' | translate }}: {{ pokemonCount }}</span>
+  <span>{{ 'LABEL_TRAINER' | translate }}: {{ trainerCount }}</span>
+  <span>{{ 'LABEL_ENERGY' | translate }}: {{ energyCount }}</span>
+</div>

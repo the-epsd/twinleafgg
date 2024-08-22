@@ -63,8 +63,8 @@ class ColresssObsession extends trainer_card_1.TrainerCard {
         this.set = 'SFA';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '57';
-        this.name = 'Colress\'s Obsession';
-        this.fullName = 'Colress\'s Obsession SFA';
+        this.name = 'Colress\'s Tenacity';
+        this.fullName = 'Colress\'s Tenacity SFA';
         this.text = 'Search your deck for a Stadium card and an Energy card, reveal them, and put them into your hand. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {

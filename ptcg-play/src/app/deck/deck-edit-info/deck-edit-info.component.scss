@@ -1,0 +1,20 @@
+.deck-info {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 12px;
+  margin: 0 auto;
+}
+
+.deck-info span {
+  margin-right: 8px;
+}
+
+.deck-info span:last-child {
+  margin-right: 0;
+}
+
+:host {
+  display: flex;
+  justify-content: center;
+}

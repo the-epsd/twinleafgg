@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   place-content: start;
   place-items: center;
-  
+
   button.type {
     display: inline-flex;
     place-items: center;
@@ -18,17 +18,17 @@
     height: 2rem;
     width: 2rem;
     overflow: hidden;
-    
+
     &:focus {
       outline: 2px solid transparent;
       outline-offset: 2px;
     }
   }
-  
+
   .mr-2 {
     margin-right: .5rem;
   }
-  
+
 }
 
 .selected {

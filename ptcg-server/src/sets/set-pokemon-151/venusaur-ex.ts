@@ -12,7 +12,7 @@ export class Venusaurex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Ivysaur';
   public cardType: CardType = CardType.GRASS;
-  public hp: number = 330;
+  public hp: number = 340;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
   public powers = [{
@@ -26,7 +26,7 @@ export class Venusaurex extends PokemonCard {
       name: 'Dangerous Toxwhip',
       cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
       damage: 150,
-      text: ''
+      text: 'Your opponent\'s Active Pokémon is now Confused and Poisoned.'
     }
   ];
   public set: string = 'MEW';
@@ -80,10 +80,11 @@ export class Venusaurex extends PokemonCard {
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = StateUtils.findOwner(state, effect.target);
-
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.specialConditions.push(SpecialCondition.CONFUSED);
-      opponent.active.specialConditions.push(SpecialCondition.POISONED);
+
+      const active = opponent.active;
+      active.addSpecialCondition(SpecialCondition.BURNED);
+      active.addSpecialCondition(SpecialCondition.CONFUSED);
     }
 
     return state;

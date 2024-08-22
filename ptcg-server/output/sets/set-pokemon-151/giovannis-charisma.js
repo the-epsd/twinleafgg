@@ -25,6 +25,16 @@ function* playCard(next, store, state, effect) {
     yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.active, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
         card = selected[0];
         opponent.active.moveCardTo(card, opponent.hand);
+        state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: 0, max: 1 }), transfers => {
+            transfers = transfers || [];
+            if (transfers.length === 0) {
+                return;
+            }
+            for (const transfer of transfers) {
+                const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                player.hand.moveCardTo(transfer.card, target);
+            }
+        });
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
     });
@@ -39,7 +49,7 @@ class GiovannisCharisma extends trainer_card_1.TrainerCard {
         this.setNumber = '161';
         this.name = 'Giovanni\'s Charisma';
         this.fullName = 'Giovanni\'s Charisma MEW';
-        this.text = 'Your opponent reveals their hand, and you put a Basic Pokémon you find there onto your opponent\'s Bench. If you put a Pokémon onto their Bench in this way, switch in that Pokémon to the Active Spot.';
+        this.text = 'Put an Energy attached to your opponent\'s Active Pokémon into their hand. If you do, attach an Energy card from your hand to your Active Pokémon.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

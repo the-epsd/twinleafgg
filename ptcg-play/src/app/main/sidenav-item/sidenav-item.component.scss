@@ -6,11 +6,14 @@ $ptcg-sidenav-close-margin: $ptcg-sidenav-close-button-size - map-get($padding, 
 
 .ptcg-sidenav-item {
   position: relative;
+
 }
 
 .ptcg-sidenav-label-container {
   max-width: 100%;
   padding-right: $ptcg-sidenav-close-margin;
+  color: white;
+  font-weight: bold;
 }
 
 .ptcg-sidenav-label-badge {

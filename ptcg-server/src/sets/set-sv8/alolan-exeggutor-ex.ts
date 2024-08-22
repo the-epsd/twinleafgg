@@ -1,4 +1,4 @@
-import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, StateUtils, CoinFlipPrompt, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, CardTarget, AttachEnergyPrompt, EnergyCard, EnergyType, GameError, SuperType } from '../../game';
+import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, StateUtils, CoinFlipPrompt, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, CardTarget, AttachEnergyPrompt, EnergyCard, EnergyType, SuperType } from '../../game';
 import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -50,7 +50,7 @@ export class AlolanExeggutorex extends PokemonCard {
           && c.energyType === EnergyType.BASIC;
       });
       if (!hasEnergyInHand) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+        return state;
       }
 
       return store.prompt(state, new AttachEnergyPrompt(

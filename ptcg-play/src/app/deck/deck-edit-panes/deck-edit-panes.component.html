@@ -9,35 +9,39 @@
 </dnd-preview>
 
 
-<cdk-virtual-scroll-viewport class="ptcg-deck-edit-pane" [dropTarget]="libraryTarget" ptcgDropHighlight
+<div class="ptcg-deck-edit-pane" [dropTarget]="libraryTarget" ptcgDropHighlight
   [ptcgDropHighlightVisible]="libraryHighlight$ | async">
-  <ptcg-deck-card *cdkVirtualFor="let card of (cards | filterCards: toolbarFilter)" [dndSortableExternal]="card.spec"
-    #ext="dndSortableExternal" [source]="ext.source" (cardClick)="onLibraryCardClick(card)" [showDetailButtons]="true"
+
+  <ptcg-deck-card *ngFor="let card of (cards | filterCards: toolbarFilter); trackBy: trackByCard"
+    [dndSortableExternal]="card.spec" #ext="dndSortableExternal" [source]="ext.source"
+    (cardClick)="onLibraryCardClick(card)" [showDetailButtons]="true"
     (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)" [card]="card">
   </ptcg-deck-card>
-</cdk-virtual-scroll-viewport>
+</div>
+
 
 
 <div class="ptcg-deck-edit-pane secondary" [dropTarget]="deckTarget" ptcgDropHighlight
   [ptcgDropHighlightVisible]="deckHighlight$ | async">
-  <div class="deck-validity">
-    <ptcg-deck-validity [deck]="tempList"></ptcg-deck-validity>
-    <button mat-raised-button (click)="exportDeckImage()">
-      {{ 'EXPORT_IMAGE' | translate }}
-    </button>
-  </div>
   <div #deckPane>
     <dnd-sortable-list listId="CARD_LIBRARY_LIST" hoverTrigger="fixed" [children]="tempList" [spec]="deckSpec">
       <ng-template dndSortableTemplate let-context>
         <!-- dndSortableRender configures a DragSource for you, but you have to attach it. -->
         <ptcg-deck-card [dndSortableRender]="context" #render="dndSortableRender"
           [ptcgCardPlaceholder]="render.isDragging$" [source]="render.source" showCardCount="true"
-          (infoClick)="showCardInfo(render.data)" (cardClick)="onDeckCardClick(render.data)"
-          (countClick)="setCardCount(render.data)" [showDetailButtons]="true"
-          (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)" [card]="render.data">
+          (cardClick)="onDeckCardClick(render.data)" (countClick)="setCardCount(render.data)" [showDetailButtons]="true"
+          (cardSelected)="showCardInfo(render.data)" [card]="render.data">
         </ptcg-deck-card>
       </ng-template>
     </dnd-sortable-list>
 
   </div>
+
+  <div class="deck-validity">
+    <ptcg-deck-validity [deck]="tempList"></ptcg-deck-validity>
+    <!-- <button mat-raised-button (click)="exportDeckImage()">
+      {{ 'EXPORT_IMAGE' | translate }}
+    </button> -->
+  </div>
+
 </div>

@@ -1,6 +1,33 @@
 <mat-toolbar [ngClass]="{'is-logged-in': loggedUser}">
-  <img src="/assets/tl-burger.png" width="1%" (click)="onLogoClick()">&nbsp;&nbsp;&nbsp;<img src="/assets/tl-beta.png" width="9%>">
+  <!-- <img src="/assets/tl-burger.png" width="1%" (click)="onLogoClick()">-->
+  &nbsp;&nbsp;&nbsp;<img src="/assets/tl-beta.png" width="8%>">
   <span class="epsd-spacer"></span>
+
+  <div class="horizontal-nav">
+    <a routerLink="/games" mat-button>{{ 'MAIN_GAMES' | translate }}</a>
+    <a routerLink="/deck" mat-button>{{ 'MAIN_DECKS' | translate }}</a>
+    <a routerLink="/ranking" mat-button>{{ 'MAIN_RANKING' | translate }}</a>
+    <a routerLink="/replays" mat-button>{{ 'MAIN_REPLAYS' | translate }}</a>
+    <a routerLink="/message" mat-button [matBadge]="unreadMessages$ | async" matBadgeOverlap="true"
+      [matBadgeHidden]="(unreadMessages$ | async) === 0">
+      <!-- <span [matBadge]="unreadMessages$ | async" matBadgeOverlap="false"
+        [matBadgeHidden]="(unreadMessages$ | async) === 0"> -->
+      {{ 'MAIN_MESSAGES' | translate }}
+      <!-- </span> -->
+    </a>
+  </div>
+
+  <!-- <span class="title-text" translate>MAIN_TABLES</span> -->
+  <div class="horizontal-nav">
+    <a mat-button *ngFor="let gameState of (gameStates$ | async)">
+      <ptcg-sidenav-item [gameState]="gameState"></ptcg-sidenav-item>
+    </a>
+  </div>
+
+
+
+  <span class="epsd-spacer"></span>
+
 
   <!-- Language select -->
   <ptcg-language-select *ngIf="!loggedUser"></ptcg-language-select>
@@ -9,14 +36,11 @@
     <button *ngIf="!loggedUser" mat-button (click)="login()">
       {{ 'BUTTON_LOGIN' | translate }}
     </button>
-   
-    <ptcg-user-bar *ngIf="loggedUser"
-      class="ptcg-logged-user"
-      [openUserPopup]="false"
-      [user]="loggedUser"
+
+    <ptcg-user-bar *ngIf="loggedUser" class="ptcg-logged-user" [openUserPopup]="false" [user]="loggedUser"
       [matMenuTriggerFor]="menu">
     </ptcg-user-bar>
-  
+
     <mat-menu #menu="matMenu">
       <button mat-menu-item [routerLink]="['/profile', loggedUser?.userId]">
         {{ 'BUTTON_SHOW_PROFILE' | translate }}

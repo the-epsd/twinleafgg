@@ -46,7 +46,7 @@ class Galvantulaex extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && (opponentActive.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_ex))) {
+            if (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_V) || opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_ex)) {
                 effect.damage += 110;
             }
         }

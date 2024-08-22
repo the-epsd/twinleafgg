@@ -4,7 +4,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, PlayerType, StateUtils, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { BeginTurnEffect, BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AttackEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 
 export class Pecharunt extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -69,6 +69,17 @@ export class Pecharunt extends PokemonCard {
     }
 
     if (effect instanceof BeginTurnEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this && this.marker.hasMarker(this.POISON_MODIFIER_MARKER)) {
+          this.marker.removeMarker(this.POISON_MODIFIER_MARKER, this);
+          opponent.active.poisonDamage -= 50;
+        }
+      });
+    }
+
+    if (effect instanceof KnockOutEffect && effect.target.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {

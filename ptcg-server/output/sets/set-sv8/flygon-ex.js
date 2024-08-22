@@ -48,15 +48,15 @@ class Flygonex extends game_1.PokemonCard {
             if (!hasBenched) {
                 return state;
             }
+            this.stormBug = false;
             state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_SWITCH_POKEMON), wantToUse => {
                 if (wantToUse) {
-                    return state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_NEW_ACTIVE_POKEMON, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), selected => {
+                    return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_NEW_ACTIVE_POKEMON, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), selected => {
                         if (!selected || selected.length === 0) {
                             return state;
                         }
                         const target = selected[0];
                         player.switchPokemon(target);
-                        this.stormBug = false;
                     });
                 }
             });

@@ -318,7 +318,7 @@ export class NidokingArt extends Nidoking {
 }
 
 export class NidoranMaleArt extends NidoranMale {
-  public cardImage = 'https://pkmncards.com/wp-content/uploads/nidoran-male-base-set-bs-66.jpg';
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/nidoran-male-base-set-bs-55.jpg';
 }
 
 export class NidorinoArt extends Nidorino {
