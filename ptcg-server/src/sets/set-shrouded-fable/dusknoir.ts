@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, GameError, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Dusknoir extends PokemonCard {
 
@@ -31,10 +32,10 @@ export class Dusknoir extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Will-o-Wisp',
-      cost: [CardType.PSYCHIC, CardType.PSYCHIC],
-      damage: 50,
-      text: ''
+      name: 'Shadow Bind',
+      cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
+      damage: 150,
+      text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
     }
   ];
 
@@ -48,7 +49,23 @@ export class Dusknoir extends PokemonCard {
 
   public fullName: string = 'Dusknoir SFA';
 
+  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    }
+
+    if (effect instanceof RetreatEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      effect.player.active.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;

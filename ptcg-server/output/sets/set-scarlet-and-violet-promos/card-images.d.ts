@@ -4,6 +4,7 @@ import { Ceruledgeex } from './ceruledge-ex';
 import { Charcadet } from './charcadet';
 import { Charmander } from './charmander';
 import { Eevee } from './eevee';
+import { Magneton } from './magneton';
 import { Mimikyuex } from './mimikyu-ex';
 import { Pecharunt } from './pecharunt';
 import { Sylveonex } from './sylveon-ex';
@@ -23,6 +24,9 @@ export declare class CharmanderArt extends Charmander {
     cardImage: string;
 }
 export declare class EeveeArt extends Eevee {
+    cardImage: string;
+}
+export declare class MagnetonArt extends Magneton {
     cardImage: string;
 }
 export declare class MimikyuexArt extends Mimikyuex {

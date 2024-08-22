@@ -8,6 +8,7 @@ exports.setScarletAndVioletPromos = [
     new card_images_1.CharcadetArt(),
     new card_images_1.CharmanderArt(),
     new card_images_1.EeveeArt(),
+    new card_images_1.MagnetonArt(),
     new card_images_1.MimikyuexArt(),
     new card_images_1.PecharuntArt(),
     new card_images_1.SylveonexArt(),

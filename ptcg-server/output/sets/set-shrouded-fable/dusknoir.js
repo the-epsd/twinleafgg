@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Dusknoir extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -24,10 +25,10 @@ class Dusknoir extends pokemon_card_1.PokemonCard {
             }];
         this.attacks = [
             {
-                name: 'Will-o-Wisp',
-                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC],
-                damage: 50,
-                text: ''
+                name: 'Shadow Bind',
+                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
+                damage: 150,
+                text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
             }
         ];
         this.set = 'SFA';
@@ -35,8 +36,20 @@ class Dusknoir extends pokemon_card_1.PokemonCard {
         this.setNumber = '20';
         this.name = 'Dusknoir';
         this.fullName = 'Dusknoir SFA';
+        this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+        }
+        if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.active.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+        }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 1, allowCancel: false }), selected => {
