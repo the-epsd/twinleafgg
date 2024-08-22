@@ -1,9 +1,8 @@
 <div class="ptcg-sidenav-item">
-  <a mat-list-item
-    [routerLink]="['/table', localId]">
+  <a mat-list-item [routerLink]="['/table', localId]">
     <div class="ptcg-sidenav-label-container" [class.deleted]="!isPlaying">
-      <div class="ptcg-sidenav-label-badge"
-        [matBadge]="badgeContent" [matBadgeColor]="badgeColor" matBadgeOverlap="false">
+      <div class="ptcg-sidenav-label-badge" [matBadge]="badgeContent" [matBadgeColor]="badgeColor"
+        matBadgeOverlap="false">
         <span class="ptcg-sidenav-label-inner">{{ label }}</span>
       </div>
     </div>

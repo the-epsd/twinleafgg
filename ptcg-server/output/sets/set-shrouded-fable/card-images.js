@@ -195,7 +195,7 @@ exports.HoundoomArt = HoundoomArt;
 class HoundourArt extends houndour_1.Houndour {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SFA/SFA_007_R_EN.pngg';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SFA/SFA_007_R_EN.png';
     }
 }
 exports.HoundourArt = HoundourArt;

@@ -128,7 +128,7 @@ export class HoundoomArt extends Houndoom {
 }
 
 export class HoundourArt extends Houndour {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SFA/SFA_007_R_EN.pngg';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SFA/SFA_007_R_EN.png';
 }
 
 export class IronMothArt extends IronMoth {

@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { UserInfo } from 'ptcg-server';
+import { GameState, UserInfo } from 'ptcg-server';
 import { map } from 'rxjs/operators';
 
 import { LoginPopupService } from '../../login/login-popup/login-popup.service';
@@ -22,15 +22,35 @@ export class ToolbarComponent implements OnInit {
 
   private loggedUser$: Observable<UserInfo | undefined>;
   public loggedUser: UserInfo | undefined;
+  public gameStates$: Observable<GameState[]>;
+  public unreadMessages$: Observable<number>;
 
   apiUrl = environment.apiUrl;
-  
+
   constructor(
     private loginPopupService: LoginPopupService,
     private loginRememberService: LoginRememberService,
     private router: Router,
     private sessionService: SessionService
   ) {
+
+    this.gameStates$ = this.sessionService.get(session => session.gameStates).pipe(
+      map(gameStates => gameStates.slice(0, 1))
+    );
+
+
+    this.unreadMessages$ = this.sessionService.get(session => {
+      let unread = 0;
+      session.conversations.forEach(c => {
+        const message = c.lastMessage;
+        if (message.senderId !== session.loggedUserId && !message.isRead) {
+          unread += 1;
+        }
+      });
+      return unread;
+    });
+
+
     this.loggedUser$ = this.sessionService.get(
       session => session.loggedUserId,
       session => session.users

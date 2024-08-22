@@ -15,7 +15,6 @@ export declare class MimikyuV extends PokemonCard {
     retreat: CardType[];
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];
@@ -31,7 +30,7 @@ export declare class MimikyuV extends PokemonCard {
     regulationMark: string;
     name: string;
     fullName: string;
-    readonly TIME_CIRCLE_MARKER: string;
-    readonly CLEAR_TIME_CIRCLE_MARKER: string;
+    readonly DUMMY_DOLL_MARKER: string;
+    readonly CLEAR_DUMMY_DOLL_MARKER: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

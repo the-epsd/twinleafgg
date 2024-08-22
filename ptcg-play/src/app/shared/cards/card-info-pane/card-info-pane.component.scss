@@ -1,6 +1,15 @@
 @use 'sass:math';
 @import '../../../../theme/variables.scss';
 
+::ng-deep .mat-dialog-container {
+  background: rgba(26, 32, 44, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
 .ptcg-card-info-pane {
   display: flex;
   background-image: map-get($ptcg-size, card);
@@ -23,12 +32,14 @@
   border-top-right-radius: map-get($padding, small);
   display: flex;
   padding: map-get($padding, small);
+  background-color: #1a202c7a;
 }
 
 .subtitle {
   display: flex;
   align-items: center;
   padding: map-get($padding, small);
+  background-color: #2127347a;
 }
 
 .subtitle-hp {
@@ -43,7 +54,8 @@
   margin-right: math.div(map-get($padding, small), 2);
 }
 
-.attack, .power {
+.attack,
+.power {
   margin: map-get($padding, small) 0;
   padding: map-get($padding, small);
 }
@@ -61,7 +73,7 @@
   display: flex;
 }
 
-.attack-header + .card-text {
+.attack-header+.card-text {
   padding-top: map-get($padding, small);
 }
 
@@ -69,6 +81,7 @@
   border-radius: map-get($padding, small);
   display: flex;
   padding: map-get($padding, small);
+  background-color: #2127347a;
 }
 
 .stats-item {

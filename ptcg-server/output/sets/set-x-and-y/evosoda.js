@@ -57,7 +57,7 @@ function* playCard(next, store, state, effect) {
     const evolution = cards[0];
     const blocked2 = [];
     player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.name !== evolution.evolvesFrom) {
+        if (card.name !== evolution.evolvesFrom || list.pokemonPlayedTurn === state.turn) {
             blocked2.push(target);
         }
     });

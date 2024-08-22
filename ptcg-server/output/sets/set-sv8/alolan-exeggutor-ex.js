@@ -48,7 +48,7 @@ class AlolanExeggutorex extends game_1.PokemonCard {
                     && c.energyType === game_1.EnergyType.BASIC;
             });
             if (!hasEnergyInHand) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                return state;
             }
             return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC }, { allowCancel: false }), transfers => {
                 transfers = transfers || [];
