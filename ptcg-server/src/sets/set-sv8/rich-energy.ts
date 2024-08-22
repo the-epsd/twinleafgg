@@ -1,4 +1,4 @@
-import { CardType, EnergyType } from '../../game/store/card/card-types';
+import { CardTag, CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
@@ -8,6 +8,8 @@ import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-
 export class RichEnergy extends EnergyCard {
 
   public provides: CardType[] = [CardType.COLORLESS];
+
+  public tags = [CardTag.ACE_SPEC];
 
   public energyType = EnergyType.SPECIAL;
 

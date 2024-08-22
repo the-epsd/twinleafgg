@@ -8,6 +8,7 @@ class RichEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
         this.provides = [card_types_1.CardType.COLORLESS];
+        this.tags = [card_types_1.CardTag.ACE_SPEC];
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'SV7a';
         this.regulationMark = 'H';
