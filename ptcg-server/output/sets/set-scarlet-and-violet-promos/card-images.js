@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SylveonexArt = exports.PecharuntArt = exports.MimikyuexArt = exports.EeveeArt = exports.CharmanderArt = exports.CharcadetArt = exports.CeruledgeexArt = exports.AnnihilapeexArt = exports.AmpharosexArt = void 0;
+exports.SylveonexArt = exports.PecharuntArt = exports.MimikyuexArt = exports.MagnetonArt = exports.EeveeArt = exports.CharmanderArt = exports.CharcadetArt = exports.CeruledgeexArt = exports.AnnihilapeexArt = exports.AmpharosexArt = void 0;
 const ampharos_ex_1 = require("./ampharos-ex");
 const annihilape_ex_1 = require("./annihilape-ex");
 const ceruledge_ex_1 = require("./ceruledge-ex");
 const charcadet_1 = require("./charcadet");
 const charmander_1 = require("./charmander");
 const eevee_1 = require("./eevee");
+const magneton_1 = require("./magneton");
 const mimikyu_ex_1 = require("./mimikyu-ex");
 const pecharunt_1 = require("./pecharunt");
 const sylveon_ex_1 = require("./sylveon-ex");
@@ -52,6 +53,13 @@ class EeveeArt extends eevee_1.Eevee {
     }
 }
 exports.EeveeArt = EeveeArt;
+class MagnetonArt extends magneton_1.Magneton {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GVlvOVzW4AA5Nho?format=png&name=small';
+    }
+}
+exports.MagnetonArt = MagnetonArt;
 class MimikyuexArt extends mimikyu_ex_1.Mimikyuex {
     constructor() {
         super(...arguments);

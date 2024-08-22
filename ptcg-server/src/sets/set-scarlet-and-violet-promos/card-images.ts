@@ -4,6 +4,7 @@ import { Ceruledgeex } from './ceruledge-ex';
 import { Charcadet } from './charcadet';
 import { Charmander } from './charmander';
 import { Eevee } from './eevee';
+import { Magneton } from './magneton';
 import { Mimikyuex } from './mimikyu-ex';
 import { Pecharunt } from './pecharunt';
 import { Sylveonex } from './sylveon-ex';
@@ -30,6 +31,10 @@ export class CharmanderArt extends Charmander {
 
 export class EeveeArt extends Eevee {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1721900292627-Z7DJUJWZJHZ4525SHSNE/Eevee.png?format=1500w';
+}
+
+export class MagnetonArt extends Magneton {
+  public cardImage = 'https://pbs.twimg.com/media/GVlvOVzW4AA5Nho?format=png&name=small';
 }
 
 export class MimikyuexArt extends Mimikyuex {

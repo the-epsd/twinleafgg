@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Dusknoir extends PokemonCard {
+export declare class Magneton extends PokemonCard {
     regulationMark: string;
     stage: Stage;
     evolvesFrom: string;
@@ -10,10 +10,6 @@ export declare class Dusknoir extends PokemonCard {
     hp: number;
     weakness: {
         type: CardType;
-    }[];
-    resistance: {
-        type: CardType;
-        value: number;
     }[];
     retreat: CardType[];
     powers: {
@@ -33,6 +29,5 @@ export declare class Dusknoir extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = "DEFENDING_POKEMON_CANNOT_RETREAT_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
