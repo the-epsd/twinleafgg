@@ -64,4 +64,5 @@ exports.setTwilightMasquerade = [
     new card_images_1.InfernapeArt(),
     new card_images_1.WalkingWakeArt(),
     new card_images_1.SecretBoxArt(),
+    new card_images_1.TingLuArt()
 ];
