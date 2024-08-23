@@ -48,28 +48,24 @@ class GenesectV extends pokemon_card_1.PokemonCard {
     reduceEffect(_store, state, effect) {
         var _a, _b;
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-            effect.player.active.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-            effect.player.active.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+            const player = effect.player;
+            player.active.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+            player.active.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('marker cleared');
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            effect.player.active.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+            const player = effect.player;
+            player.active.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
         }
-        if (effect instanceof game_effects_1.UseAttackEffect) {
-            // Check marker
-            if (effect.player.active.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                console.log('attack blocked');
-                throw new game_1.GameError(game_2.GameMessage.BLOCKED_BY_EFFECT);
-            }
-        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
             // Check marker
-            if (effect.player.active.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            if (player.active.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 console.log('attack blocked');
                 throw new game_1.GameError(game_2.GameMessage.BLOCKED_BY_EFFECT);
             }
-            effect.player.active.marker.addMarker(this.ATTACK_USED_MARKER, this);
+            player.active.marker.addMarker(this.ATTACK_USED_MARKER, this);
             console.log('marker added');
         }
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

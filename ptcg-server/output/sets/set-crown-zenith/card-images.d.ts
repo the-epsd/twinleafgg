@@ -15,6 +15,7 @@ import { RadiantEternatus } from './radiant-eternatus';
 import { RegigigasV } from './regigigas-v';
 import { RegigigasVSTAR } from './regigigas-vstar';
 import { Wailmer } from './wailmer';
+import { ZacianV } from './zacian-v';
 import { ZacianVSTAR } from './zacian-vstar';
 import { Zamazenta } from './zamazenta';
 import { ZamazentaV } from './zamazenta-v';
@@ -70,6 +71,9 @@ export declare class YanmegaArt extends Yanmega {
     cardImage: string;
 }
 export declare class ZacianArt extends Zacian {
+    cardImage: string;
+}
+export declare class ZacianVArt extends ZacianV {
     cardImage: string;
 }
 export declare class ZacianVSTARArt extends ZacianVSTAR {

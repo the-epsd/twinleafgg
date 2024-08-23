@@ -8,7 +8,7 @@ export class ShayminV extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public stage: Stage = Stage.BASIC;
 
@@ -18,18 +18,18 @@ export class ShayminV extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Flap',
-      cost: [ CardType.GRASS ],
+      cost: [CardType.GRASS],
       damage: 30,
       text: ''
     },
     {
       name: 'Revenge Blast',
-      cost: [ CardType.GRASS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.COLORLESS],
       damage: 60,
       text: 'This attack does 40 more damage for each Prize card your opponent has taken.'
     }
@@ -51,12 +51,12 @@ export class ShayminV extends PokemonCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       const prizesTaken = 6 - opponent.getPrizeLeft();
-    
+
       const damagePerPrize = 40;
-    
-      effect.damage = this.attacks[0].damage + (prizesTaken * damagePerPrize);
+
+      effect.damage = 60 + (prizesTaken * damagePerPrize);
     }
     return state;
   }

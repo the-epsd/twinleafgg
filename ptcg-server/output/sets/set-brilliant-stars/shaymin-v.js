@@ -41,7 +41,7 @@ class ShayminV extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const prizesTaken = 6 - opponent.getPrizeLeft();
             const damagePerPrize = 40;
-            effect.damage = this.attacks[0].damage + (prizesTaken * damagePerPrize);
+            effect.damage = 60 + (prizesTaken * damagePerPrize);
         }
         return state;
     }

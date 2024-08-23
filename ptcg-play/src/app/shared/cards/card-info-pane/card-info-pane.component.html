@@ -1,7 +1,6 @@
 <div class="ptcg-card-info-pane">
   <div class="ptcg-card-info-image">
-    <ptcg-card [card]="card" [class.cardback]="facedown"
-      (click)="showCardImage(card, facedown)"></ptcg-card>
+    <ptcg-card [card]="card" [class.cardback]="facedown" (click)="showCardImage(card, facedown)"></ptcg-card>
   </div>
 
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.POKEMON">
@@ -47,10 +46,9 @@
         <div class="card-text">{{ power.text }}</div>
       </div>
     </ptcg-hover-highlight>
-    
+
     <ptcg-hover-highlight *ngFor="let attack of card.attacks"
-      (click)="options.enableAttack && clickAction({attack: attack.name})"
-      [enabled]="options.enableAttack">
+      (click)="options.enableAttack && clickAction({attack: attack.name})" [enabled]="options.enableAttack">
       <div class="attack">
         <div class="attack-header">
           <div class="attack-cost">
@@ -96,15 +94,18 @@
         </div>
       </div>
 
-      <div class="stats-item">
-        <div class="stats-item-header" translate>CARDS_RETREAT_COST</div>
-        <div class="stats-item-value">
-          <div class="stats-item-value-type">
-            <ptcg-energy *ngFor="let cost of card.retreat" [type]="cost"></ptcg-energy>
+      <ptcg-hover-highlight (click)="clickAction({retreatAction})">
+        <div class="stats-item">
+          <div class="stats-item-header" translate>CARDS_RETREAT_COST</div>
+          <div class="stats-item-value">
+            <div class="stats-item-value-type">
+              <ptcg-energy *ngFor="let cost of card.retreat" [type]="cost"></ptcg-energy>
+            </div>
           </div>
         </div>
-      </div>
+      </ptcg-hover-highlight>
     </div>
+
 
     <div class="power" *ngIf="card.text">
       <div class="power-header">
@@ -160,7 +161,7 @@
       </div>
     </div>
 
-     <ptcg-hover-highlight *ngFor="let power of card.powers"
+    <ptcg-hover-highlight *ngFor="let power of card.powers"
       (click)="enabledAbilities[power.name] && clickAction({ability: power.name})"
       [enabled]="enabledAbilities[power.name]">
       <div class="power">
@@ -177,30 +178,28 @@
     </ptcg-hover-highlight>
 
     <ptcg-hover-highlight *ngFor="let attack of card.attacks"
-    (click)="options.enableAttack && clickAction({attack: attack.name})"
-    [enabled]="options.enableAttack">
-    <div class="attack">
-      <div class="attack-header">
-        <div class="attack-cost">
-          <ptcg-energy *ngIf="attack.cost.length === 0"></ptcg-energy>
-          <ptcg-energy *ngFor="let cost of attack.cost" [type]="cost"></ptcg-energy>
+      (click)="options.enableAttack && clickAction({attack: attack.name})" [enabled]="options.enableAttack">
+      <div class="attack">
+        <div class="attack-header">
+          <div class="attack-cost">
+            <ptcg-energy *ngIf="attack.cost.length === 0"></ptcg-energy>
+            <ptcg-energy *ngFor="let cost of attack.cost" [type]="cost"></ptcg-energy>
+          </div>
+          <div class="attack-name">
+            {{ attack.name }}
+          </div>
+          <div class="ptcg-u-spacer"></div>
+          <div class="attack-damage" *ngIf="attack.damage > 0">
+            {{ attack.damage }}
+          </div>
         </div>
-        <div class="attack-name">
-          {{ attack.name }}
-        </div>
-        <div class="ptcg-u-spacer"></div>
-        <div class="attack-damage" *ngIf="attack.damage > 0">
-          {{ attack.damage }}
+        <div class="card-text" *ngIf="attack.text">
+          {{ attack.text }}
         </div>
       </div>
-      <div class="card-text" *ngIf="attack.text">
-        {{ attack.text }}
-      </div>
-    </div>
-  </ptcg-hover-highlight>
+    </ptcg-hover-highlight>
 
-    <ptcg-hover-highlight
-      (click)="options.enableTrainer && clickAction({trainer: true})"
+    <ptcg-hover-highlight (click)="options.enableTrainer && clickAction({trainer: true})"
       [enabled]="options.enableTrainer">
       <div class="power" *ngIf="card.text">
         <div class="power-header">
