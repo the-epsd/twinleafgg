@@ -9,7 +9,7 @@ export class Venusaurex extends PokemonCard {
   public regulationMark = 'G';
 
   public tags = [CardTag.POKEMON_ex];
-  public stage: Stage = Stage.STAGE_2;
+  public stage: Stage = Stage.BASIC;
   public evolvesFrom = 'Ivysaur';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 340;
@@ -79,7 +79,7 @@ export class Venusaurex extends PokemonCard {
       });
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = StateUtils.findOwner(state, effect.target);
+      const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       const active = opponent.active;

@@ -10,7 +10,7 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.POKEMON_ex];
-        this.stage = card_types_1.Stage.STAGE_2;
+        this.stage = card_types_1.Stage.BASIC;
         this.evolvesFrom = 'Ivysaur';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 340;
@@ -67,7 +67,7 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = game_1.StateUtils.findOwner(state, effect.target);
+            const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const active = opponent.active;
             active.addSpecialCondition(card_types_1.SpecialCondition.BURNED);
