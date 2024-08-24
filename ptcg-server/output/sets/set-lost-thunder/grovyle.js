@@ -10,7 +10,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Grovyle extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.STAGE_1;
+        this.stage = card_types_1.Stage.BASIC;
         this.evolvesFrom = 'Treecko';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 80;
@@ -48,6 +48,7 @@ class Grovyle extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             // Check to see if anything is blocking our Ability
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
@@ -65,10 +66,11 @@ class Grovyle extends pokemon_card_1.PokemonCard {
             }
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.GRASS }, { min: 0, max: 1, allowCancel: true }), cards => {
                 player.deck.moveCardsTo(cards, player.hand);
-                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
                     player.marker.addMarker(this.SUNSHINE_GRACE_MARKER, this);
                 });
+                return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
             });
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {

@@ -10,7 +10,7 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.POKEMON_ex];
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Ivysaur';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 340;

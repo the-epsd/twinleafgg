@@ -12,6 +12,7 @@ export declare class Kricketune extends PokemonCard {
     powers: Power[];
     attacks: Attack[];
     set: string;
+    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;

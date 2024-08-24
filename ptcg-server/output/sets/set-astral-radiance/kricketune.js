@@ -28,6 +28,7 @@ class Kricketune extends game_1.PokemonCard {
             }
         ];
         this.set = 'ASR';
+        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '10';
         this.name = 'Kricketune';

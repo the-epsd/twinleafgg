@@ -1,13 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { ChooseCardsPrompt, GameError, GameMessage, PlayerType, PowerType, ShuffleDeckPrompt, State, StoreLike } from '../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, PlayerType, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Grovyle extends PokemonCard {
-  public stage: Stage = Stage.STAGE_1;
+  public stage: Stage = Stage.BASIC;
   public evolvesFrom = 'Treecko';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 80;
@@ -50,6 +50,7 @@ export class Grovyle extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       // Check to see if anything is blocking our Ability
       try {
@@ -77,10 +78,16 @@ export class Grovyle extends PokemonCard {
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);
 
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
           player.marker.addMarker(this.SUNSHINE_GRACE_MARKER, this);
         });
+
+        return store.prompt(state, new ShowCardsPrompt(
+          opponent.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          cards), () => state
+        );
       });
     }
     if (effect instanceof EndTurnEffect) {
