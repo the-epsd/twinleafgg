@@ -152,6 +152,18 @@ export class Meganium extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
+      // Check to see if anything is blocking our Ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
       if (player.marker.hasMarker(this.QUICK_RIPENING_HERB_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }

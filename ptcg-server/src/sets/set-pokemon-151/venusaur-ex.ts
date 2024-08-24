@@ -83,7 +83,7 @@ export class Venusaurex extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const active = opponent.active;
-      active.addSpecialCondition(SpecialCondition.BURNED);
+      active.addSpecialCondition(SpecialCondition.POISONED);
       active.addSpecialCondition(SpecialCondition.CONFUSED);
     }
 

@@ -70,7 +70,7 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const active = opponent.active;
-            active.addSpecialCondition(card_types_1.SpecialCondition.BURNED);
+            active.addSpecialCondition(card_types_1.SpecialCondition.POISONED);
             active.addSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
         }
         return state;

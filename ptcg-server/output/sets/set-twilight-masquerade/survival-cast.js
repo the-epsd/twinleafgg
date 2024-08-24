@@ -16,6 +16,7 @@ class SurvivalCast extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.TOOL;
+        this.tags = [card_types_1.CardTag.ACE_SPEC];
         this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '164';

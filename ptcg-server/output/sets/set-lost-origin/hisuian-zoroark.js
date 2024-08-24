@@ -27,7 +27,7 @@ class HisuianZoroark extends pokemon_card_1.PokemonCard {
             {
                 name: 'Call Back',
                 cost: [card_types_1.CardType.PSYCHIC],
-                damage: 10,
+                damage: 0,
                 text: 'Put a card from your discard pile into your hand.'
             }
         ];
