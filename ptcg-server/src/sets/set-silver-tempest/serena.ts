@@ -94,8 +94,8 @@ export class Serena extends TrainerCard {
               { allowCancel: false, blocked: blocked }
             ), result => {
               const cardList = result[0];
-              if (result[0].getPokemonCard()?.cardTag[0] !== CardTag.POKEMON_V || result[0].getPokemonCard()?.cardTag[0] !== CardTag.POKEMON_VMAX || result[0].getPokemonCard()?.cardTag[0] !== CardTag.POKEMON_VSTAR) {
-                throw new GameError(GameMessage.INVALID_TARGET);
+              if (!result[0].getPokemonCard()?.tags.includes(CardTag.POKEMON_V) && !result[0].getPokemonCard()?.tags.includes(CardTag.POKEMON_VMAX) && !result[0].getPokemonCard()?.tags.includes(CardTag.POKEMON_VSTAR)) {
+                throw new GameError(GameMessage.INVALID_TARGET)
               }
               opponent.switchPokemon(cardList);
               player.supporter.moveCardTo(effect.trainerCard, player.discard);
@@ -108,6 +108,13 @@ export class Serena extends TrainerCard {
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
 
       if (!hasBench) {
+        options.splice(1, 1);
+      }
+
+
+      const hasVPokeBench = opponent.bench.some(b => b.getPokemonCard()?.tags.includes(CardTag.POKEMON_V) || b.getPokemonCard()?.tags.includes(CardTag.POKEMON_VMAX) || b.getPokemonCard()?.tags.includes(CardTag.POKEMON_VSTAR));
+
+      if (!hasVPokeBench) {
         options.splice(1, 1);
       }
 
