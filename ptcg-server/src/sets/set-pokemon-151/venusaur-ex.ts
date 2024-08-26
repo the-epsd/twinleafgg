@@ -9,7 +9,7 @@ export class Venusaurex extends PokemonCard {
   public regulationMark = 'G';
 
   public tags = [CardTag.POKEMON_ex];
-  public stage: Stage = Stage.STAGE_2;
+  public stage: Stage = Stage.BASIC;
   public evolvesFrom = 'Ivysaur';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 340;
@@ -43,16 +43,17 @@ export class Venusaurex extends PokemonCard {
       const player = effect.player;
 
       const blocked: CardTarget[] = [];
-      let hasPokemonWithDamage: boolean = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         if (cardList.damage === 0) {
           blocked.push(target);
-        } else {
-          hasPokemonWithDamage = true;
         }
       });
 
-      if (player.active.cards[0] !== this || hasPokemonWithDamage === false) {
+      const hasPokeBenchWithDamage = player.bench.some(b => b.damage > 0);
+      const hasActiveWIthDamage = player.active.damage > 0;
+      const pokemonInPlayWithDamage = hasPokeBenchWithDamage || hasActiveWIthDamage;
+
+      if (player.active.cards[0] !== this || !pokemonInPlayWithDamage) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
