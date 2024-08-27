@@ -42,10 +42,20 @@ export class BlendEnergyGRPD extends EnergyCard {
       const attackCosts = pokemonCard?.attacks.map(attack => attack.cost);
       const existingEnergy = pokemon.cards.filter(c => c.superType === SuperType.ENERGY);
 
-      const needsGrass = attackCosts?.some(cost => cost.includes(CardType.GRASS) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.GRASS)));
-      const needsFire = attackCosts?.some(cost => cost.includes(CardType.FIRE) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.FIRE)));
-      const needsPsychic = attackCosts?.some(cost => cost.includes(CardType.PSYCHIC) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.PSYCHIC)));
-      const needsDark = attackCosts?.some(cost => cost.includes(CardType.DARK) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.DARK)));
+      const grassCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.GRASS).length, 0) || 0;
+      const fireCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.FIRE).length, 0) || 0;
+      const psychicCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.PSYCHIC).length, 0) || 0;
+      const darkCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.DARK).length, 0) || 0;
+
+      const existingGrass = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.GRASS).length : 0), 0);
+      const existingFire = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.FIRE).length : 0), 0);
+      const existingPsychic = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.PSYCHIC).length : 0), 0);
+      const existingDark = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.DARK).length : 0), 0);
+
+      const needsGrass = grassCost > existingGrass;
+      const needsFire = fireCost > existingFire;
+      const needsPsychic = psychicCost > existingPsychic;
+      const needsDark = darkCost > existingDark;
 
       const provides = [];
       if (needsGrass) provides.push(CardType.GRASS);
@@ -58,6 +68,7 @@ export class BlendEnergyGRPD extends EnergyCard {
       } else {
         effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
       }
+
       console.log('Blend Energy GRPD is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
     }
 

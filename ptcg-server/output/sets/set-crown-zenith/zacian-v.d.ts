@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class GalarianMoltres extends PokemonCard {
+export declare class ZacianV extends PokemonCard {
+    tags: CardTag[];
     regulationMark: string;
     stage: Stage;
     cardType: CardType;
@@ -10,20 +11,24 @@ export declare class GalarianMoltres extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    retreat: CardType[];
-    powers: {
-        name: string;
-        useWhenInPlay: boolean;
-        powerType: PowerType;
-        text: string;
+    resistance: {
+        type: CardType;
+        value: number;
     }[];
-    attacks: {
+    retreat: CardType[];
+    attacks: ({
+        name: string;
+        cost: CardType[];
+        damage: number;
+        text: string;
+        damageCalculation?: undefined;
+    } | {
         name: string;
         cost: CardType[];
         damage: number;
         damageCalculation: string;
         text: string;
-    }[];
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

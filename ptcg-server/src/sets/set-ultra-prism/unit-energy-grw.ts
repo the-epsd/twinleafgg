@@ -44,9 +44,17 @@ export class UnitEnergyGRW extends EnergyCard {
       const attackCosts = pokemonCard?.attacks.map(attack => attack.cost);
       const existingEnergy = pokemon.cards.filter(c => c.superType === SuperType.ENERGY);
 
-      const needsGrass = attackCosts?.some(cost => cost.includes(CardType.GRASS) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.GRASS)));
-      const needsFire = attackCosts?.some(cost => cost.includes(CardType.FIRE) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.FIRE)));
-      const needsWater = attackCosts?.some(cost => cost.includes(CardType.WATER) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.WATER)));
+      const grassCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.GRASS).length, 0) || 0;
+      const fireCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.FIRE).length, 0) || 0;
+      const waterCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.WATER).length, 0) || 0;
+
+      const existingGrass = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.GRASS).length : 0), 0);
+      const existingFire = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.FIRE).length : 0), 0);
+      const existingWater = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.WATER).length : 0), 0);
+
+      const needsGrass = grassCost > existingGrass;
+      const needsFire = fireCost > existingFire;
+      const needsWater = waterCost > existingWater;
 
       const provides = [];
       if (needsGrass) provides.push(CardType.GRASS);
@@ -58,7 +66,7 @@ export class UnitEnergyGRW extends EnergyCard {
       } else {
         effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
       }
-      console.log('Blend Energy GRPD is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
+      console.log('Unit Energy GRW is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
     }
 
     return state;

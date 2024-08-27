@@ -29,7 +29,7 @@ class GutsyPickaxe extends game_1.TrainerCard {
             });
             // If no energy cards were drawn, move all cards to hand
             if (temp.cards.length > 0) {
-                return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id && player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, temp.cards), () => {
+                return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, temp.cards), () => {
                     if (energyCardsDrawn.length == 0) {
                         temp.cards.slice(0, 1).forEach(card => {
                             temp.moveCardTo(card, player.hand);

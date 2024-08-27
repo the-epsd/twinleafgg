@@ -25,10 +25,10 @@ export class Fezandipitiex extends PokemonCard {
   public retreat = [CardType.COLORLESS];
 
   public powers = [{
-    name: 'Table Turner',
+    name: 'Flip the Script',
     powerType: PowerType.ABILITY,
     useWhenInPlay: true,
-    text: 'Once during your turn, if any of your Pokémon were Knocked Out during your opponent\'s last turn, you may draw 3 cards. You can\'t use more than 1 Table Turner Ability each turn.'
+    text: 'Once during your turn, if any of your Pokémon were Knocked Out during your opponent\'s last turn, you may draw 3 cards.You can\'t use more than 1 Flip the Script Ability each turn.'
   }];
 
   public attacks = [{

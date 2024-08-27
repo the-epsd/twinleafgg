@@ -10,7 +10,6 @@ const game_message_1 = require("../../game/game-message");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const attach_energy_prompt_1 = require("../../game/store/prompts/attach-energy-prompt");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
-const __1 = require("../..");
 class RebootPod extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -28,20 +27,16 @@ class RebootPod extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             let hasEnergyInDiscard = 0;
-            const blocked = [];
             player.discard.cards.forEach((c, index) => {
                 const isBasicEnergy = c instanceof energy_card_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC;
                 if (isBasicEnergy) {
                     hasEnergyInDiscard += 1;
                 }
-                else {
-                    blocked.push(index);
-                }
-                // Player does not have correct cards in discard
-                if (hasEnergyInDiscard === 0) {
-                    throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-                }
             });
+            // Player does not have correct cards in discard
+            if (hasEnergyInDiscard === 0) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
             const blocked2 = [];
             player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
                 if (!card.tags.includes(card_types_1.CardTag.FUTURE)) {
@@ -50,20 +45,17 @@ class RebootPod extends trainer_card_1.TrainerCard {
             });
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
-            return store.prompt(state, new __1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH, play_card_action_1.SlotType.ACTIVE], { min: 1, max: blocked2.length, blocked: blocked2, allowCancel: false }), chosen => {
-                chosen.forEach(target => {
-                    state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.discard, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH, play_card_action_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 1 }), transfers => {
-                        transfers = transfers || [];
-                        if (transfers.length === 0) {
-                            return;
-                        }
-                        for (const transfer of transfers) {
-                            const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
-                            player.deck.moveCardTo(transfer.card, target);
-                            player.supporter.moveCardTo(this, player.discard);
-                        }
-                    });
-                });
+            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.discard, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH, play_card_action_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: hasEnergyInDiscard, blockedTo: blocked2, differentTargets: true }), transfers => {
+                transfers = transfers || [];
+                if (transfers.length === 0) {
+                    player.supporter.moveCardTo(this, player.discard);
+                    return;
+                }
+                for (const transfer of transfers) {
+                    const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
+                    player.discard.moveCardTo(transfer.card, target);
+                    player.supporter.moveCardTo(this, player.discard);
+                }
             });
         }
         return state;

@@ -6,25 +6,26 @@ import { Effect } from '../../game/store/effects/effect';
 import { CardList } from '../../game/store/state/card-list';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { ConfirmPrompt, ShowCardsPrompt, StateUtils } from '../..';
+import { StateUtils } from '../..';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
+import { ConfirmCardsPrompt } from '../../game/store/prompts/confirm-cards-prompt';
 
 export class PrimordialAltar extends TrainerCard {
-  
+
   public trainerType = TrainerType.STADIUM;
-  
+
   public regulationMark = 'F';
-  
+
   public set = 'SIT';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '161';
-  
+
   public name = 'Primordial Altar';
-  
+
   public fullName = 'Primordial Altar SIT';
-  
+
   public text = 'Once during each player\'s turn, that player may look at the top card of their deck. They may discard that card.';
 
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -33,7 +34,7 @@ export class PrimordialAltar extends TrainerCard {
     }
     return state;
   }
-        
+
   useStadium(store: StoreLike, state: State, effect: UseStadiumEffect): State {
     const player = effect.player;
 
@@ -44,26 +45,23 @@ export class PrimordialAltar extends TrainerCard {
     const deckTop = new CardList();
     player.deck.moveTo(deckTop, 1);
 
-    return store.prompt(state, new ShowCardsPrompt(
+    return store.prompt(state, new ConfirmCardsPrompt(
       player.id,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      deckTop.cards // Fix error by changing toArray() to cards
-    ), () => {
+      GameMessage.TREKKING_SHOES,
+      deckTop.cards, // Fix error by changing toArray() to cards
+      { allowCancel: true },
+    ), yes => {
 
-      return store.prompt(state, new ConfirmPrompt(
-        player.id, 
-        GameMessage.CHOOSE_CARD_TO_HAND
-      ), yes => {
-          
+      if (yes !== null) {
+
         if (yes) {
           // Add card to hand
-          deckTop.moveCardsTo(deckTop.cards, player.hand);
+          deckTop.moveTo(player.discard);
         } else {
           // Discard card
-          deckTop.moveTo(player.deck);
+          deckTop.moveToTopOfDestination(player.deck);
         }
-        return state;
-      });
+      }
     });
   }
 }

@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils,
-  GameMessage, ConfirmPrompt, ChooseCardsPrompt, EnergyCard, GameError } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils,
+  GameMessage, ConfirmPrompt, ChooseCardsPrompt, EnergyCard, GameError
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -18,7 +20,7 @@ export class GalarianMoltres extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Malevolent Charge',
@@ -31,10 +33,11 @@ export class GalarianMoltres extends PokemonCard {
   public attacks = [
     {
       name: 'Fiery Wrath',
-      cost: [ CardType.DARK, CardType.DARK, CardType.COLORLESS ],
+      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 20,
+      damageCalculation: '+',
       text: 'This attack does 50 more damage for each Prize card your ' +
-      'opponent has taken.'
+        'opponent has taken.'
     }
   ];
 
@@ -52,7 +55,7 @@ export class GalarianMoltres extends PokemonCard {
 
     if ((effect instanceof PlayPokemonEffect) && effect.pokemonCard === this) {
 
-    
+
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
@@ -80,19 +83,18 @@ export class GalarianMoltres extends PokemonCard {
           if (!hasEnergyInHand) {
             throw new GameError(GameMessage.CANNOT_USE_POWER);
           }
-    
+
           const cardList = StateUtils.findCardList(state, this);
           if (cardList === undefined) {
             return state;
           }
-          
-    
+
           return store.prompt(state, new ChooseCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARD_TO_ATTACH,
             player.hand,
             { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
-            { min: 0, max: 2, allowCancel: true }
+            { min: 0, max: 2, allowCancel: false }
           ), cards => {
             cards = cards || [];
             if (cards.length > 0) {
@@ -100,20 +102,19 @@ export class GalarianMoltres extends PokemonCard {
             }
           });
         }
-
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-          const player = effect.player;
-          const opponent = StateUtils.getOpponent(state, player);
-    
-          const prizesTaken = 6 - opponent.getPrizeLeft();
-    
-          const damagePerPrize = 50;
-    
-          effect.damage = this.attacks[0].damage + (prizesTaken * damagePerPrize);
-        }
-        return state;
       });
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const prizesTaken = 6 - opponent.getPrizeLeft();
+
+      const damagePerPrize = 50;
+
+      effect.damage = 20 + (prizesTaken * damagePerPrize);
     }
     return state;
   }

@@ -26,6 +26,7 @@ class GalarianMoltres extends pokemon_card_1.PokemonCard {
                 name: 'Fiery Wrath',
                 cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
                 damage: 20,
+                damageCalculation: '+',
                 text: 'This attack does 50 more damage for each Prize card your ' +
                     'opponent has taken.'
             }
@@ -65,22 +66,21 @@ class GalarianMoltres extends pokemon_card_1.PokemonCard {
                     if (cardList === undefined) {
                         return state;
                     }
-                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.hand, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Darkness Energy' }, { min: 0, max: 2, allowCancel: true }), cards => {
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.hand, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Darkness Energy' }, { min: 0, max: 2, allowCancel: false }), cards => {
                         cards = cards || [];
                         if (cards.length > 0) {
                             player.hand.moveCardsTo(cards, cardList);
                         }
                     });
                 }
-                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                    const player = effect.player;
-                    const opponent = game_1.StateUtils.getOpponent(state, player);
-                    const prizesTaken = 6 - opponent.getPrizeLeft();
-                    const damagePerPrize = 50;
-                    effect.damage = this.attacks[0].damage + (prizesTaken * damagePerPrize);
-                }
-                return state;
             });
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const prizesTaken = 6 - opponent.getPrizeLeft();
+            const damagePerPrize = 50;
+            effect.damage = 20 + (prizesTaken * damagePerPrize);
         }
         return state;
     }

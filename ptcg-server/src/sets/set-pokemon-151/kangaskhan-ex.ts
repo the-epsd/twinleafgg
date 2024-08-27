@@ -12,7 +12,7 @@ export class Kangaskhanex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public cardType: CardType = CardType.COLORLESS;
 
@@ -20,17 +20,17 @@ export class Kangaskhanex extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Triple Draw',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 0,
     text: 'Draw 3 cards.'
   },
   {
     name: 'Incessant Punching',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 100,
     text: 'Flip 4 coins. This attack does 100 damage for each heads.'
   }
@@ -67,9 +67,8 @@ export class Kangaskhanex extends PokemonCard {
         effect.damage = 100 * heads;
       });
     }
-  
+
     return state;
   }
-  
+
 }
-  

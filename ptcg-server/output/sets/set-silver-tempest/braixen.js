@@ -37,7 +37,7 @@ class Braixen extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const cards = effect.player.discard.cards.filter(c => c.name === 'Serena');
-            effect.damage += cards.length * 60;
+            effect.damage = cards.length * 60;
             return state;
         }
         return state;

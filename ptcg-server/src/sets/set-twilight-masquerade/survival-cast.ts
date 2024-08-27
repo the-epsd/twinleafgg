@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { State, StateUtils, GameLog, PlayerType } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -16,6 +16,8 @@ export class SurvivalCast extends TrainerCard {
   public regulationMark = 'H';
 
   public trainerType: TrainerType = TrainerType.TOOL;
+
+  public tags = [CardTag.ACE_SPEC];
 
   public set: string = 'TWM';
 

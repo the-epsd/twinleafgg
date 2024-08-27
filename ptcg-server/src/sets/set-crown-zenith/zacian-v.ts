@@ -1,23 +1,21 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AfterDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 
-export class ZacianVSTAR extends PokemonCard {
+export class ZacianV extends PokemonCard {
 
-  public tags = [CardTag.POKEMON_VSTAR];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
-  public stage: Stage = Stage.VSTAR;
-
-  public evolvesFrom = 'Zacian V';
+  public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.METAL;
 
-  public hp: number = 270;
+  public hp: number = 220;
 
   public weakness = [{ type: CardType.FIRE }];
 
@@ -27,17 +25,17 @@ export class ZacianVSTAR extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Break Edge',
-      cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
-      // cost: [],
-      damage: 200,
+      name: 'Piercing Strike',
+      cost: [CardType.METAL],
+      damage: 40,
       text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
     },
     {
-      name: 'Sword Star',
+      name: 'Behemoth Blade',
       cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 310,
-      text: 'This Pokémon also does 30 damage to itself. (You can\'t use more than 1 VSTAR Power in a game.)'
+      damage: 100,
+      damageCalculation: '+',
+      text: 'If your opponent\'s Active Pokémon is a Pokémon VMAX, this attack does 160 more damage.'
     },
   ];
 
@@ -45,11 +43,11 @@ export class ZacianVSTAR extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '96';
+  public setNumber: string = '95';
 
-  public name: string = 'Zacian VSTAR';
+  public name: string = 'Zacian V';
 
-  public fullName: string = 'Zacian VSTAR';
+  public fullName: string = 'Zacian V';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -57,7 +55,7 @@ export class ZacianVSTAR extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const damage = 200;  // Fixed damage without weakness/resistance
+      const damage = 40;  // Fixed damage without weakness/resistance
       effect.ignoreResistance = true;
       effect.ignoreWeakness = true;
 
@@ -70,20 +68,14 @@ export class ZacianVSTAR extends PokemonCard {
       }
     }
 
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      const damage = 30;
-
-      if (player.usedVSTAR === true) {
-        throw new GameError(GameMessage.LABEL_VSTAR_USED);
+      const opponent = StateUtils.getOpponent(state, player);
+      const opponentActive = opponent.active.getPokemonCard();
+      if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VMAX)) {
+        effect.damage += 160;
       }
-
-      const dealDamage = new DealDamageEffect(effect, damage);
-      dealDamage.target = player.active;
-      player.usedVSTAR = true;
-      return store.reduceEffect(state, dealDamage);
     }
     return state;
   }
-}  
+}

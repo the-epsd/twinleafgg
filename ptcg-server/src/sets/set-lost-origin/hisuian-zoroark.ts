@@ -34,7 +34,7 @@ export class HisuianZoroark extends PokemonCard {
     {
       name: 'Call Back',
       cost: [CardType.PSYCHIC],
-      damage: 10,
+      damage: 0,
       text: 'Put a card from your discard pile into your hand.'
     }
   ];

@@ -41,29 +41,29 @@ export class GutsyPickaxe extends TrainerCard {
       // If no energy cards were drawn, move all cards to hand
       if (temp.cards.length > 0) {
         return store.prompt(state, new ShowCardsPrompt(
-          opponent.id && player.id,
+          opponent.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
           temp.cards
         ), () => {
           if (energyCardsDrawn.length == 0) {
             temp.cards.slice(0, 1).forEach(card => {
-              temp.moveCardTo(card, player.hand); 
+              temp.moveCardTo(card, player.hand);
               player.supporter.moveCardTo(effect.trainerCard, player.discard);
             });
           } else {
-      
+
 
             // Prompt to attach energy if any were drawn
             return store.prompt(state, new AttachEnergyPrompt(
               player.id,
-              GameMessage.ATTACH_ENERGY_CARDS, 
+              GameMessage.ATTACH_ENERGY_CARDS,
               temp, // Only show drawn energies
               PlayerType.BOTTOM_PLAYER,
               [SlotType.BENCH],
-              {superType: SuperType.ENERGY, energyType: EnergyType.BASIC},
-              {min: 0, allowCancel: false, max: energyCardsDrawn.length}
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+              { min: 0, allowCancel: false, max: energyCardsDrawn.length }
             ), transfers => {
-    
+
               // Attach energy based on prompt selection
               if (transfers) {
                 for (const transfer of transfers) {
@@ -81,7 +81,7 @@ export class GutsyPickaxe extends TrainerCard {
             });
           }
           return state;
-        } );
+        });
       }
       return state;
     }

@@ -10,7 +10,7 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.POKEMON_ex];
-        this.stage = card_types_1.Stage.STAGE_2;
+        this.stage = card_types_1.Stage.BASIC;
         this.evolvesFrom = 'Ivysaur';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 340;
@@ -40,16 +40,15 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const blocked = [];
-            let hasPokemonWithDamage = false;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
                 if (cardList.damage === 0) {
                     blocked.push(target);
                 }
-                else {
-                    hasPokemonWithDamage = true;
-                }
             });
-            if (player.active.cards[0] !== this || hasPokemonWithDamage === false) {
+            const hasPokeBenchWithDamage = player.bench.some(b => b.damage > 0);
+            const hasActiveWIthDamage = player.active.damage > 0;
+            const pokemonInPlayWithDamage = hasPokeBenchWithDamage || hasActiveWIthDamage;
+            if (player.active.cards[0] !== this || !pokemonInPlayWithDamage) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             let targets = [];
@@ -67,10 +66,10 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = game_1.StateUtils.findOwner(state, effect.target);
+            const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const active = opponent.active;
-            active.addSpecialCondition(card_types_1.SpecialCondition.BURNED);
+            active.addSpecialCondition(card_types_1.SpecialCondition.POISONED);
             active.addSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
         }
         return state;

@@ -34,9 +34,15 @@ class UnitEnergyGRW extends energy_card_1.EnergyCard {
             const pokemonCard = pokemon.getPokemonCard();
             const attackCosts = pokemonCard === null || pokemonCard === void 0 ? void 0 : pokemonCard.attacks.map(attack => attack.cost);
             const existingEnergy = pokemon.cards.filter(c => c.superType === card_types_1.SuperType.ENERGY);
-            const needsGrass = attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.some(cost => cost.includes(card_types_1.CardType.GRASS) && !existingEnergy.some(e => e instanceof energy_card_1.EnergyCard && e.provides.includes(card_types_1.CardType.GRASS)));
-            const needsFire = attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.some(cost => cost.includes(card_types_1.CardType.FIRE) && !existingEnergy.some(e => e instanceof energy_card_1.EnergyCard && e.provides.includes(card_types_1.CardType.FIRE)));
-            const needsWater = attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.some(cost => cost.includes(card_types_1.CardType.WATER) && !existingEnergy.some(e => e instanceof energy_card_1.EnergyCard && e.provides.includes(card_types_1.CardType.WATER)));
+            const grassCost = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.reduce((sum, cost) => sum + cost.filter(t => t === card_types_1.CardType.GRASS).length, 0)) || 0;
+            const fireCost = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.reduce((sum, cost) => sum + cost.filter(t => t === card_types_1.CardType.FIRE).length, 0)) || 0;
+            const waterCost = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.reduce((sum, cost) => sum + cost.filter(t => t === card_types_1.CardType.WATER).length, 0)) || 0;
+            const existingGrass = existingEnergy.reduce((sum, e) => sum + (e instanceof energy_card_1.EnergyCard ? e.provides.filter(t => t === card_types_1.CardType.GRASS).length : 0), 0);
+            const existingFire = existingEnergy.reduce((sum, e) => sum + (e instanceof energy_card_1.EnergyCard ? e.provides.filter(t => t === card_types_1.CardType.FIRE).length : 0), 0);
+            const existingWater = existingEnergy.reduce((sum, e) => sum + (e instanceof energy_card_1.EnergyCard ? e.provides.filter(t => t === card_types_1.CardType.WATER).length : 0), 0);
+            const needsGrass = grassCost > existingGrass;
+            const needsFire = fireCost > existingFire;
+            const needsWater = waterCost > existingWater;
             const provides = [];
             if (needsGrass)
                 provides.push(card_types_1.CardType.GRASS);
@@ -50,7 +56,7 @@ class UnitEnergyGRW extends energy_card_1.EnergyCard {
             else {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.COLORLESS] });
             }
-            console.log('Blend Energy GRPD is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
+            console.log('Unit Energy GRW is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
         }
         return state;
     }

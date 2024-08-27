@@ -38,6 +38,7 @@ class EnergyLoto extends trainer_card_1.TrainerCard {
                     const energyCard = chosenCards[0];
                     temp.moveCardTo(energyCard, player.hand);
                     player.supporter.moveCardTo(this, player.discard);
+                    temp.moveTo(player.deck);
                     chosenCards.forEach((card, index) => {
                         store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
                     });

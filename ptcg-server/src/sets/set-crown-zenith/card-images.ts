@@ -15,6 +15,7 @@ import { RadiantEternatus } from './radiant-eternatus';
 import { RegigigasV } from './regigigas-v';
 import { RegigigasVSTAR } from './regigigas-vstar';
 import { Wailmer } from './wailmer';
+import { ZacianV } from './zacian-v';
 import { ZacianVSTAR } from './zacian-vstar';
 import { Zamazenta } from './zamazenta';
 import { ZamazentaV } from './zamazenta-v';
@@ -87,6 +88,10 @@ export class YanmegaArt extends Yanmega {
 
 export class ZacianArt extends Zacian {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_094_R_EN_LG.png';
+}
+
+export class ZacianVArt extends ZacianV {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_095_R_EN_LG.png';
 }
 
 export class ZacianVSTARArt extends ZacianVSTAR {

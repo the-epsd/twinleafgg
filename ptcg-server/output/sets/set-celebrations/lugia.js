@@ -21,8 +21,8 @@ class Lugia extends pokemon_card_1.PokemonCard {
             {
                 name: 'Aero Ball',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 20,
-                damageCalculation: '+',
+                damage: 0,
+                damageCalculation: 'x',
                 text: 'This attack does 20 damage for each Energy attached to both Active Pokémon.'
             }, {
                 name: 'Deep Crush',

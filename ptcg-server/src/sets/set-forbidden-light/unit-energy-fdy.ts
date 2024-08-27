@@ -26,7 +26,7 @@ export class UnitEnergyFDY extends EnergyCard {
     '' +
     'While this card is attached to a Pokémon, it provides [F], [D], and [Y] Energy but provides only 1 Energy at a time.';
 
-  blendedEnergies = [CardType.FAIRY, CardType.FIGHTING, CardType.DARK];
+  blendedEnergies = [CardType.FIGHTING, CardType.DARK, CardType.FAIRY];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
@@ -44,9 +44,17 @@ export class UnitEnergyFDY extends EnergyCard {
       const attackCosts = pokemonCard?.attacks.map(attack => attack.cost);
       const existingEnergy = pokemon.cards.filter(c => c.superType === SuperType.ENERGY);
 
-      const needsFighting = attackCosts?.some(cost => cost.includes(CardType.FIGHTING) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.FIGHTING)));
-      const needsDark = attackCosts?.some(cost => cost.includes(CardType.DARK) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.DARK)));
-      const needsFairy = attackCosts?.some(cost => cost.includes(CardType.FAIRY) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.FAIRY)));
+      const fightingCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.FIGHTING).length, 0) || 0;
+      const darkCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.DARK).length, 0) || 0;
+      const fairyCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.FAIRY).length, 0) || 0;
+
+      const existingFighting = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.FIGHTING).length : 0), 0);
+      const existingDark = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.DARK).length : 0), 0);
+      const existingFairy = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.FAIRY).length : 0), 0);
+
+      const needsFighting = fightingCost > existingFighting;
+      const needsDark = darkCost > existingDark;
+      const needsFairy = fairyCost > existingFairy;
 
       const provides = [];
       if (needsFighting) provides.push(CardType.FIGHTING);
@@ -58,7 +66,8 @@ export class UnitEnergyFDY extends EnergyCard {
       } else {
         effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
       }
-      console.log('Blend Energy GRPD is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
+
+      console.log('Unit Energy FDY is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
     }
 
     return state;

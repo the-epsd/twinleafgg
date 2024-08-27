@@ -55,12 +55,16 @@ class Serena extends trainer_card_1.TrainerCard {
                     action: () => {
                         const blocked = [];
                         opponent.bench.forEach((card, index) => {
-                            if (card instanceof game_1.PokemonCard && !(card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR))) {
+                            if (card instanceof game_1.PokemonCard && !((card.cardTag[0] == card_types_1.CardTag.POKEMON_V) || (card.cardTag[0] == card_types_1.CardTag.POKEMON_VMAX) || (card.cardTag[0] == card_types_1.CardTag.POKEMON_VSTAR))) {
                                 blocked.push({ player: game_1.PlayerType.TOP_PLAYER, slot: game_1.SlotType.BENCH, index });
                             }
                         });
-                        return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, blocked }), result => {
+                        return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, blocked: blocked }), result => {
+                            var _a, _b, _c;
                             const cardList = result[0];
+                            if (!((_a = result[0].getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.POKEMON_V)) && !((_b = result[0].getPokemonCard()) === null || _b === void 0 ? void 0 : _b.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) && !((_c = result[0].getPokemonCard()) === null || _c === void 0 ? void 0 : _c.tags.includes(card_types_1.CardTag.POKEMON_VSTAR))) {
+                                throw new game_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
+                            }
                             opponent.switchPokemon(cardList);
                             player.supporter.moveCardTo(effect.trainerCard, player.discard);
                             return state;
@@ -70,7 +74,11 @@ class Serena extends trainer_card_1.TrainerCard {
             ];
             const hasBench = opponent.bench.some(b => b.cards.length > 0);
             if (!hasBench) {
-                options.splice(1, 0);
+                options.splice(1, 1);
+            }
+            const hasVPokeBench = opponent.bench.some(b => { var _a, _b, _c; return ((_a = b.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.POKEMON_V)) || ((_b = b.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) || ((_c = b.getPokemonCard()) === null || _c === void 0 ? void 0 : _c.tags.includes(card_types_1.CardTag.POKEMON_VSTAR)); });
+            if (!hasVPokeBench) {
+                options.splice(1, 1);
             }
             let cards = [];
             cards = player.hand.cards;

@@ -8,6 +8,7 @@ const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
 const __1 = require("../..");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const confirm_cards_prompt_1 = require("../../game/store/prompts/confirm-cards-prompt");
 class PrimordialAltar extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -33,19 +34,18 @@ class PrimordialAltar extends trainer_card_1.TrainerCard {
         }
         const deckTop = new card_list_1.CardList();
         player.deck.moveTo(deckTop, 1);
-        return store.prompt(state, new __1.ShowCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop.cards // Fix error by changing toArray() to cards
-        ), () => {
-            return store.prompt(state, new __1.ConfirmPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND), yes => {
+        return store.prompt(state, new confirm_cards_prompt_1.ConfirmCardsPrompt(player.id, game_message_1.GameMessage.TREKKING_SHOES, deckTop.cards, // Fix error by changing toArray() to cards
+        { allowCancel: true }), yes => {
+            if (yes !== null) {
                 if (yes) {
                     // Add card to hand
-                    deckTop.moveCardsTo(deckTop.cards, player.hand);
+                    deckTop.moveTo(player.discard);
                 }
                 else {
                     // Discard card
-                    deckTop.moveTo(player.deck);
+                    deckTop.moveToTopOfDestination(player.deck);
                 }
-                return state;
-            });
+            }
         });
     }
 }

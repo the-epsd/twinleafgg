@@ -34,9 +34,15 @@ class UnitEnergyLPM extends energy_card_1.EnergyCard {
             const pokemonCard = pokemon.getPokemonCard();
             const attackCosts = pokemonCard === null || pokemonCard === void 0 ? void 0 : pokemonCard.attacks.map(attack => attack.cost);
             const existingEnergy = pokemon.cards.filter(c => c.superType === card_types_1.SuperType.ENERGY);
-            const needsLightning = attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.some(cost => cost.includes(card_types_1.CardType.LIGHTNING) && !existingEnergy.some(e => e instanceof energy_card_1.EnergyCard && e.provides.includes(card_types_1.CardType.LIGHTNING)));
-            const needsPsychic = attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.some(cost => cost.includes(card_types_1.CardType.PSYCHIC) && !existingEnergy.some(e => e instanceof energy_card_1.EnergyCard && e.provides.includes(card_types_1.CardType.PSYCHIC)));
-            const needsMetal = attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.some(cost => cost.includes(card_types_1.CardType.METAL) && !existingEnergy.some(e => e instanceof energy_card_1.EnergyCard && e.provides.includes(card_types_1.CardType.METAL)));
+            const lightningCost = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.reduce((sum, cost) => sum + cost.filter(t => t === card_types_1.CardType.LIGHTNING).length, 0)) || 0;
+            const psychicCost = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.reduce((sum, cost) => sum + cost.filter(t => t === card_types_1.CardType.PSYCHIC).length, 0)) || 0;
+            const metalCost = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.reduce((sum, cost) => sum + cost.filter(t => t === card_types_1.CardType.METAL).length, 0)) || 0;
+            const existingLightning = existingEnergy.reduce((sum, e) => sum + (e instanceof energy_card_1.EnergyCard ? e.provides.filter(t => t === card_types_1.CardType.LIGHTNING).length : 0), 0);
+            const existingPsychic = existingEnergy.reduce((sum, e) => sum + (e instanceof energy_card_1.EnergyCard ? e.provides.filter(t => t === card_types_1.CardType.PSYCHIC).length : 0), 0);
+            const existingMetal = existingEnergy.reduce((sum, e) => sum + (e instanceof energy_card_1.EnergyCard ? e.provides.filter(t => t === card_types_1.CardType.METAL).length : 0), 0);
+            const needsLightning = lightningCost > existingLightning;
+            const needsPsychic = psychicCost > existingPsychic;
+            const needsMetal = metalCost > existingMetal;
             const provides = [];
             if (needsLightning)
                 provides.push(card_types_1.CardType.LIGHTNING);
@@ -50,7 +56,7 @@ class UnitEnergyLPM extends energy_card_1.EnergyCard {
             else {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.COLORLESS] });
             }
-            console.log('Blend Energy GRPD is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
+            console.log('Unit Energy LPM is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
         }
         return state;
     }
