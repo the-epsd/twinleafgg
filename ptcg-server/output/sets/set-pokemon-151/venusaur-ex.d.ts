@@ -30,5 +30,6 @@ export declare class Venusaurex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly TRANQUIL_FLOWER_MARKER = "TRANQUIL_FLOWER_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

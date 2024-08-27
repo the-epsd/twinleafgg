@@ -35,6 +35,8 @@ export class Venusaurex extends PokemonCard {
   public name: string = 'Venusaur ex';
   public fullName: string = 'Venusaur ex MEW';
 
+  public readonly TRANQUIL_FLOWER_MARKER = "TRANQUIL_FLOWER_MARKER";
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
 
@@ -53,6 +55,10 @@ export class Venusaurex extends PokemonCard {
       const hasActiveWIthDamage = player.active.damage > 0;
       const pokemonInPlayWithDamage = hasPokeBenchWithDamage || hasActiveWIthDamage;
 
+      if (!player.marker.hasMarker(this.TRANQUIL_FLOWER_MARKER)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       if (player.active.cards[0] !== this || !pokemonInPlayWithDamage) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
@@ -69,11 +75,18 @@ export class Venusaurex extends PokemonCard {
         if (targets.length === 0) {
           return state;
         }
+        player.marker.addMarker(this.TRANQUIL_FLOWER_MARKER, this);
 
         targets.forEach(target => {
           // Heal Pokemon
           const healEffect = new HealEffect(player, target, 60);
           store.reduceEffect(state, healEffect);
+        });
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
         });
 
         return state;
