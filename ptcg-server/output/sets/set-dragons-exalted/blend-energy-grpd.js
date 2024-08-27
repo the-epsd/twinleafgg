@@ -32,10 +32,18 @@ class BlendEnergyGRPD extends energy_card_1.EnergyCard {
             const pokemonCard = pokemon.getPokemonCard();
             const attackCosts = pokemonCard === null || pokemonCard === void 0 ? void 0 : pokemonCard.attacks.map(attack => attack.cost);
             const existingEnergy = pokemon.cards.filter(c => c.superType === card_types_1.SuperType.ENERGY);
-            const needsGrass = attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.some(cost => cost.includes(card_types_1.CardType.GRASS) && !existingEnergy.some(e => e instanceof energy_card_1.EnergyCard && e.provides.includes(card_types_1.CardType.GRASS)));
-            const needsFire = attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.some(cost => cost.includes(card_types_1.CardType.FIRE) && !existingEnergy.some(e => e instanceof energy_card_1.EnergyCard && e.provides.includes(card_types_1.CardType.FIRE)));
-            const needsPsychic = attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.some(cost => cost.includes(card_types_1.CardType.PSYCHIC) && !existingEnergy.some(e => e instanceof energy_card_1.EnergyCard && e.provides.includes(card_types_1.CardType.PSYCHIC)));
-            const needsDark = attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.some(cost => cost.includes(card_types_1.CardType.DARK) && !existingEnergy.some(e => e instanceof energy_card_1.EnergyCard && e.provides.includes(card_types_1.CardType.DARK)));
+            const grassCost = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.reduce((sum, cost) => sum + cost.filter(t => t === card_types_1.CardType.GRASS).length, 0)) || 0;
+            const fireCost = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.reduce((sum, cost) => sum + cost.filter(t => t === card_types_1.CardType.FIRE).length, 0)) || 0;
+            const psychicCost = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.reduce((sum, cost) => sum + cost.filter(t => t === card_types_1.CardType.PSYCHIC).length, 0)) || 0;
+            const darkCost = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.reduce((sum, cost) => sum + cost.filter(t => t === card_types_1.CardType.DARK).length, 0)) || 0;
+            const existingGrass = existingEnergy.reduce((sum, e) => sum + (e instanceof energy_card_1.EnergyCard ? e.provides.filter(t => t === card_types_1.CardType.GRASS).length : 0), 0);
+            const existingFire = existingEnergy.reduce((sum, e) => sum + (e instanceof energy_card_1.EnergyCard ? e.provides.filter(t => t === card_types_1.CardType.FIRE).length : 0), 0);
+            const existingPsychic = existingEnergy.reduce((sum, e) => sum + (e instanceof energy_card_1.EnergyCard ? e.provides.filter(t => t === card_types_1.CardType.PSYCHIC).length : 0), 0);
+            const existingDark = existingEnergy.reduce((sum, e) => sum + (e instanceof energy_card_1.EnergyCard ? e.provides.filter(t => t === card_types_1.CardType.DARK).length : 0), 0);
+            const needsGrass = grassCost > existingGrass;
+            const needsFire = fireCost > existingFire;
+            const needsPsychic = psychicCost > existingPsychic;
+            const needsDark = darkCost > existingDark;
             const provides = [];
             if (needsGrass)
                 provides.push(card_types_1.CardType.GRASS);

@@ -44,9 +44,17 @@ export class UnitEnergyLPM extends EnergyCard {
       const attackCosts = pokemonCard?.attacks.map(attack => attack.cost);
       const existingEnergy = pokemon.cards.filter(c => c.superType === SuperType.ENERGY);
 
-      const needsLightning = attackCosts?.some(cost => cost.includes(CardType.LIGHTNING) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.LIGHTNING)));
-      const needsPsychic = attackCosts?.some(cost => cost.includes(CardType.PSYCHIC) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.PSYCHIC)));
-      const needsMetal = attackCosts?.some(cost => cost.includes(CardType.METAL) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.METAL)));
+      const lightningCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.LIGHTNING).length, 0) || 0;
+      const psychicCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.PSYCHIC).length, 0) || 0;
+      const metalCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.METAL).length, 0) || 0;
+
+      const existingLightning = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.LIGHTNING).length : 0), 0);
+      const existingPsychic = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.PSYCHIC).length : 0), 0);
+      const existingMetal = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.METAL).length : 0), 0);
+
+      const needsLightning = lightningCost > existingLightning;
+      const needsPsychic = psychicCost > existingPsychic;
+      const needsMetal = metalCost > existingMetal;
 
       const provides = [];
       if (needsLightning) provides.push(CardType.LIGHTNING);
@@ -58,7 +66,7 @@ export class UnitEnergyLPM extends EnergyCard {
       } else {
         effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
       }
-      console.log('Blend Energy GRPD is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
+      console.log('Unit Energy LPM is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
     }
 
     return state;

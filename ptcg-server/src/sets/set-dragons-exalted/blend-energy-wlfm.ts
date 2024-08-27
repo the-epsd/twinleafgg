@@ -42,23 +42,34 @@ export class BlendEnergyWLFM extends EnergyCard {
       const attackCosts = pokemonCard?.attacks.map(attack => attack.cost);
       const existingEnergy = pokemon.cards.filter(c => c.superType === SuperType.ENERGY);
 
-      const needWater = attackCosts?.some(cost => cost.includes(CardType.WATER) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.WATER)));
-      const needLightning = attackCosts?.some(cost => cost.includes(CardType.LIGHTNING) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.LIGHTNING)));
-      const needFighting = attackCosts?.some(cost => cost.includes(CardType.FIGHTING) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.FIGHTING)));
-      const needMetal = attackCosts?.some(cost => cost.includes(CardType.METAL) && !existingEnergy.some(e => e instanceof EnergyCard && e.provides.includes(CardType.METAL)));
+      const waterCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.WATER).length, 0) || 0;
+      const lightningCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.LIGHTNING).length, 0) || 0;
+      const fightingCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.FIGHTING).length, 0) || 0;
+      const metalCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.METAL).length, 0) || 0;
+
+      const existingWater = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.WATER).length : 0), 0);
+      const existingLightning = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.LIGHTNING).length : 0), 0);
+      const existingFighting = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.FIGHTING).length : 0), 0);
+      const existingMetal = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.METAL).length : 0), 0);
+
+      const needsWater = waterCost > existingWater;
+      const needsLightning = lightningCost > existingLightning;
+      const needsFighting = fightingCost > existingFighting;
+      const needsMetal = metalCost > existingMetal;
 
       const provides = [];
-      if (needWater) provides.push(CardType.WATER);
-      if (needLightning) provides.push(CardType.LIGHTNING);
-      if (needFighting) provides.push(CardType.FIGHTING);
-      if (needMetal) provides.push(CardType.METAL);
+      if (needsWater) provides.push(CardType.WATER);
+      if (needsLightning) provides.push(CardType.LIGHTNING);
+      if (needsFighting) provides.push(CardType.FIGHTING);
+      if (needsMetal) provides.push(CardType.METAL);
 
       if (provides.length > 0) {
         effect.energyMap.push({ card: this, provides });
       } else {
         effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
       }
-      console.log('Blend Energy GRPD is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
+
+      console.log('Blend Energy WLFM is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
     }
 
     return state;

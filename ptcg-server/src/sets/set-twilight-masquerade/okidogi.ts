@@ -1,11 +1,10 @@
-import { EnergyCard, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { EnergyCard, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class Okidogi extends PokemonCard {
 
@@ -71,36 +70,33 @@ export class Okidogi extends PokemonCard {
         return state;
       }
 
-      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, effect.source);
-      store.reduceEffect(state, checkProvidedEnergyEffect);
+      let hasDarkAttached = false;
 
-      let darkProvided = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
 
-      checkProvidedEnergyEffect.energyMap.forEach(em => {
-        if (em.provides.includes(CardType.DARK)) {
-          darkProvided = true;
-        }
+          const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
+          store.reduceEffect(state, checkEnergy);
 
-        try {
-          const energyEffect = new EnergyEffect(player, em.card as EnergyCard);
-          store.reduceEffect(state, energyEffect);
+          checkEnergy.energyMap.forEach(em => {
+            const energyCard = em.card;
+            if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.DARK) || energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.ANY) || (energyCard instanceof EnergyCard && energyCard.blendedEnergies.includes(CardType.DARK))) {
+              hasDarkAttached = true;
+            }
+          });
 
-          if ((em.card instanceof EnergyCard && em.card.blendedEnergies.includes(CardType.DARK)) ||
-            (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY))) {
-            darkProvided = true;
+          if (!hasDarkAttached) {
+            return state;
           }
-        } catch {
-          // specials blocked
+
+          if (hasDarkAttached) {
+            effect.damage += 100;
+            return state;
+          }
         }
       });
-
-      if (darkProvided) {
-        effect.damage += 100;
-        return state;
-      }
-
-      return state;
     }
+
 
     if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
@@ -116,38 +112,33 @@ export class Okidogi extends PokemonCard {
         return state;
       }
 
-      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, effect.target);
-      store.reduceEffect(state, checkProvidedEnergyEffect);
+      let hasDarkAttached = false;
 
-      let darkProvided = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
 
-      checkProvidedEnergyEffect.energyMap.forEach(em => {
-        if (em.provides.includes(CardType.DARK)) {
-          darkProvided = true;
-        }
+          const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
+          store.reduceEffect(state, checkEnergy);
 
-        try {
-          const energyEffect = new EnergyEffect(player, em.card as EnergyCard);
-          store.reduceEffect(state, energyEffect);
+          checkEnergy.energyMap.forEach(em => {
+            const energyCard = em.card;
+            if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.DARK) || energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.ANY) || (energyCard instanceof EnergyCard && energyCard.blendedEnergies.includes(CardType.DARK))) {
+              hasDarkAttached = true;
+            }
+          });
 
-          if ((em.card instanceof EnergyCard && em.card.blendedEnergies.includes(CardType.DARK)) ||
-            (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY))) {
-            darkProvided = true;
+          if (!hasDarkAttached) {
+            return state;
           }
-        } catch {
-          // specials blocked
+
+          if (hasDarkAttached) {
+            effect.hp += 100;
+            console.log('okidogi hp increased');
+            return state;
+          }
         }
       });
-
-      if (darkProvided) {
-        effect.hp += 100;
-        console.log('okidogi hp increased');
-        return state;
-      }
-
-      return state;
     }
-
     return state;
   }
 }
