@@ -4,6 +4,7 @@ import { Lucario } from './lucario';
 import { Mew } from './mew';
 import { N } from './n';
 import { Riolu } from './riolu';
+import { TeamRocketsHandiwork } from './team-rockets-handiwork';
 
 export class DeerlingArt extends Deerling {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_008_R_EN_LG.png';
@@ -27,4 +28,8 @@ export class NArt extends N {
 
 export class RioluArt extends Riolu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_045_R_EN_LG.png';
+}
+
+export class TeamRocketsHandiworkArt extends TeamRocketsHandiwork {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_112_R_EN_LG.png';  
 }
