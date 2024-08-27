@@ -9,6 +9,7 @@ import { Cetoddle } from './cetoddle';
 import { ChiYuex } from './chi-yu-ex';
 import { ChienPaoex } from './chien-pao-ex';
 import { ChoiceBelt } from './choice-belt';
+import { Clavell } from './clavell';
 import { Cufant } from './cufant';
 import { DeliveryDrone } from './delivery-drone';
 import { Dudunsparce } from './dudunsparce';
@@ -80,6 +81,9 @@ export declare class ChienPaoexArt extends ChienPaoex {
     cardImage: string;
 }
 export declare class ChoiceBeltArt extends ChoiceBelt {
+    cardImage: string;
+}
+export declare class ClavellArt extends Clavell {
     cardImage: string;
 }
 export declare class CufantArt extends Cufant {

@@ -92,6 +92,7 @@ export class Snorlax extends PokemonCard {
         effect.preventDefault = true;
       }
     }
+    
     return state;
   }
 }

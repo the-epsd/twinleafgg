@@ -1,3 +1,4 @@
+import { ApricornMaker } from './apricorn-maker';
 import { Slakoth } from './CES_113_Slakoth';
 import { Slaking } from './CES_115_Slaking';
 import { Nuzleaf } from './CES_13_Nuzleaf';
@@ -11,6 +12,10 @@ import { Mudkip } from './mudkip';
 import { Oricorio } from './oricorio';
 import { Swampert } from './swampert';
 import { TateAndLiza } from './tate-and-liza';
+
+export class ApricornMakerArt extends ApricornMaker {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_124_R_EN_LG.png';
+}
 
 export class CopycatArt extends Copycat {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_127_R_EN_LG.png';

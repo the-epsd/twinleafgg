@@ -1,3 +1,4 @@
+import { AromaticEnergy } from './aromatic-energy';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
@@ -15,6 +16,9 @@ import { Zekrom } from './VIV_60_Zekrom';
 import { Wailmer } from './wailmer';
 import { Wailord } from './wailord';
 import { WashWaterEnergy } from './wash-water-energy';
+export declare class AromaticEnergyArt extends AromaticEnergy {
+    cardImage: string;
+}
 export declare class CharizardArt extends Charizard {
     cardImage: string;
 }

@@ -9,4 +9,5 @@ exports.setFatesCollide = [
     new card_images_1.MewArt(),
     new card_images_1.NArt(),
     new card_images_1.RioluArt(),
+    new card_images_1.TeamRocketsHandiworkArt(),
 ];

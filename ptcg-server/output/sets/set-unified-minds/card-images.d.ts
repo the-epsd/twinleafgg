@@ -1,4 +1,5 @@
 import { AlolanGrimer } from './alolan-grimer';
+import { DarkCity } from './dark-city';
 import { KarateBelt } from './karate-belt';
 import { Necrozma } from './necrozma';
 import { Purrloin } from './purrloin';
@@ -17,6 +18,9 @@ import { Froslass } from './UNM_38_Froslass';
 import { AlolanRaichu } from './UNM_57_Alolan_Raichu';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
 export declare class AlolanGrimerArt extends AlolanGrimer {
+    cardImage: string;
+}
+export declare class DarkCityArt extends DarkCity {
     cardImage: string;
 }
 export declare class FroslassArt extends Froslass {

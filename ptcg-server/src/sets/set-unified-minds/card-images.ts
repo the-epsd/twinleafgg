@@ -1,4 +1,5 @@
 import { AlolanGrimer } from './alolan-grimer';
+import { DarkCity } from './dark-city';
 import { KarateBelt } from './karate-belt';
 import { Necrozma } from './necrozma';
 import { Purrloin } from './purrloin';
@@ -19,6 +20,10 @@ import { WeaknessGuardEnergy } from './weakness-guard-energy';
 
 export class AlolanGrimerArt extends AlolanGrimer {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_127_R_EN.png';
+}
+
+export class DarkCityArt extends DarkCity {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_193_R_EN.png';
 }
 
 export class FroslassArt extends Froslass {

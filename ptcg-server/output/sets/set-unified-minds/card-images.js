@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.TagSwitchArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.RecycleEnergyArt = exports.RaichuAlolanRaichuGXArt = exports.AlolanRaichuArt = exports.PurrloinArt = exports.NumelArt = exports.NecrozmaArt = exports.MunchlaxArt = exports.LickilickyArt = exports.KarateBeltArt = exports.HoopaArt = exports.FroslassArt = exports.AlolanGrimerArt = void 0;
+exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.TagSwitchArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.RecycleEnergyArt = exports.RaichuAlolanRaichuGXArt = exports.AlolanRaichuArt = exports.PurrloinArt = exports.NumelArt = exports.NecrozmaArt = exports.MunchlaxArt = exports.LickilickyArt = exports.KarateBeltArt = exports.HoopaArt = exports.FroslassArt = exports.DarkCityArt = exports.AlolanGrimerArt = void 0;
 const alolan_grimer_1 = require("./alolan-grimer");
+const dark_city_1 = require("./dark-city");
 const karate_belt_1 = require("./karate-belt");
 const necrozma_1 = require("./necrozma");
 const purrloin_1 = require("./purrloin");
@@ -26,6 +27,13 @@ class AlolanGrimerArt extends alolan_grimer_1.AlolanGrimer {
     }
 }
 exports.AlolanGrimerArt = AlolanGrimerArt;
+class DarkCityArt extends dark_city_1.DarkCity {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_193_R_EN.png';
+    }
+}
+exports.DarkCityArt = DarkCityArt;
 class FroslassArt extends UNM_38_Froslass_1.Froslass {
     constructor() {
         super(...arguments);

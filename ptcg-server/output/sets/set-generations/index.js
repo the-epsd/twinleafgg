@@ -6,6 +6,7 @@ const full_art_1 = require("./full-art");
 exports.setGenerations = [
     new card_images_1.RedCardArt(),
     new card_images_1.RevitalizerArt(),
+    new card_images_1.TeamFlareGruntArt(),
     // Full Arts/Radiant Collection
-    new full_art_1.CharmeleonArt()
+    new full_art_1.CharmeleonArt(),
 ];

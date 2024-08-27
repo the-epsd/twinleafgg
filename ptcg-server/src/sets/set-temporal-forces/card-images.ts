@@ -47,6 +47,7 @@ import { MistEnergy } from './mist-energy';
 import { MortysConviction } from './mortys-conviction';
 import { MrMime } from './mr-mime';
 import { NeoUpperEnergy } from './neo-upper-energy';
+import { PerilousJungle } from './perilous-jungle';
 import { Pikachu } from './pikachu';
 import { PrimeCatcher } from './prime-catcher';
 import { Rabsca } from './rabsca';
@@ -273,6 +274,10 @@ export class NeoUpperEnergyArt extends NeoUpperEnergy {
 
 export class PalafinArt extends Palafin {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_049_R_EN_LG.png';
+}
+
+export class PerilousJungleArt extends PerilousJungle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_156_R_EN.png';
 }
 
 export class PikachuArt extends Pikachu {

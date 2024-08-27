@@ -6,36 +6,36 @@ import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect, CheckTableStateEffec
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
 
-export class TherapeuticEnergy extends EnergyCard {
+export class AromaticEnergy extends EnergyCard {
 
   public provides: CardType[] = [ CardType.COLORLESS ];
 
   public energyType = EnergyType.SPECIAL;
 
-  public set: string = 'PAL';
+  public set: string = 'VIV';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '193';
+  public setNumber: string = '162';
 
-  public regulationMark = 'G';
+  public regulationMark = 'D';
 
-  public name = 'Therapeutic Energy';
+  public name = 'Aromatic Energy';
 
-  public fullName = 'Therapeutic Energy PAL';
+  public fullName = 'Aromatic Energy VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttachEnergyEffect && effect.target.cards.includes(this)) {
       const pokemon = effect.target;
       pokemon.removeSpecialCondition(SpecialCondition.ASLEEP);
+      pokemon.removeSpecialCondition(SpecialCondition.BURNED);
       pokemon.removeSpecialCondition(SpecialCondition.PARALYZED);
       pokemon.removeSpecialCondition(SpecialCondition.CONFUSED);
     }
     
     if (effect instanceof AddSpecialConditionsEffect && effect.target.cards.includes(this)) {
-      effect.specialConditions = effect.specialConditions.filter(c => c === SpecialCondition.BURNED || c === SpecialCondition.POISONED);
-      return state;
+      effect.preventDefault = true;
     }
     
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TateAndLizaArt = exports.SwampertArt = exports.SlakothArt = exports.SlakingArt = exports.SableyeArt = exports.OricorioArt = exports.NuzleafArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.HustleBeltArt = exports.DelcattyArt = exports.CopycatArt = void 0;
+exports.TateAndLizaArt = exports.SwampertArt = exports.SlakothArt = exports.SlakingArt = exports.SableyeArt = exports.OricorioArt = exports.NuzleafArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.HustleBeltArt = exports.DelcattyArt = exports.CopycatArt = exports.ApricornMakerArt = void 0;
+const apricorn_maker_1 = require("./apricorn-maker");
 const CES_113_Slakoth_1 = require("./CES_113_Slakoth");
 const CES_115_Slaking_1 = require("./CES_115_Slaking");
 const CES_13_Nuzleaf_1 = require("./CES_13_Nuzleaf");
@@ -14,6 +15,13 @@ const mudkip_1 = require("./mudkip");
 const oricorio_1 = require("./oricorio");
 const swampert_1 = require("./swampert");
 const tate_and_liza_1 = require("./tate-and-liza");
+class ApricornMakerArt extends apricorn_maker_1.ApricornMaker {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_124_R_EN_LG.png';
+    }
+}
+exports.ApricornMakerArt = ApricornMakerArt;
 class CopycatArt extends copycat_1.Copycat {
     constructor() {
         super(...arguments);
