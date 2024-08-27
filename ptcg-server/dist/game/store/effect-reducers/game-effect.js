@@ -138,8 +138,7 @@ export function gameReducer(store, state, effect) {
     }
     if (effect instanceof TrainerEffect && effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
         const player = effect.player;
-        // store.log(state, GameLog.LOG_PLAYER_PLAYS_SUPPORTER, { name: player.name, stadium: effect.trainerCard.name });
-        player.supporterTurn = state.turn;
+        store.log(state, GameLog.LOG_PLAYER_PLAYS_SUPPORTER, { name: player.name, stadium: effect.trainerCard.name });
     }
     if (effect instanceof HealEffect) {
         effect.target.damage = Math.max(0, effect.target.damage - effect.damage);
