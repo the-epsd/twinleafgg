@@ -1,3 +1,4 @@
+import { ApricornMaker } from './apricorn-maker';
 import { Slakoth } from './CES_113_Slakoth';
 import { Slaking } from './CES_115_Slaking';
 import { Nuzleaf } from './CES_13_Nuzleaf';
@@ -11,6 +12,9 @@ import { Mudkip } from './mudkip';
 import { Oricorio } from './oricorio';
 import { Swampert } from './swampert';
 import { TateAndLiza } from './tate-and-liza';
+export declare class ApricornMakerArt extends ApricornMaker {
+    cardImage: string;
+}
 export declare class CopycatArt extends Copycat {
     cardImage: string;
 }

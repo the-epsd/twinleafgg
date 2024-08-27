@@ -1,3 +1,4 @@
+import { AromaticEnergy } from './aromatic-energy';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
@@ -15,6 +16,10 @@ import { Zekrom } from './VIV_60_Zekrom';
 import { Wailmer } from './wailmer';
 import { Wailord } from './wailord';
 import { WashWaterEnergy } from './wash-water-energy';
+
+export class AromaticEnergyArt extends AromaticEnergy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_162_R_EN.png';
+}
 
 export class CharizardArt extends Charizard {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_025_R_EN.png';

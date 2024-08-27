@@ -9,6 +9,7 @@ import { Cetoddle } from './cetoddle';
 import { ChiYuex } from './chi-yu-ex';
 import { ChienPaoex } from './chien-pao-ex';
 import { ChoiceBelt } from './choice-belt';
+import { Clavell } from './clavell';
 import { Cufant } from './cufant';
 import { DeliveryDrone } from './delivery-drone';
 import { Dudunsparce } from './dudunsparce';
@@ -92,6 +93,10 @@ export class ChienPaoexArt extends ChienPaoex {
 
 export class ChoiceBeltArt extends ChoiceBelt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_176_R_EN_LG.png';
+}
+
+export class ClavellArt extends Clavell {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_177_R_EN_LG.png';
 }
 
 export class CufantArt extends Cufant {

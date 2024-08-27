@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZekromArt = exports.WashWaterEnergyArt = exports.WailordArt = exports.WailmerArt = exports.TaillowArt = exports.StoneFightingEnergyArt = exports.SnorlaxArt = exports.RaikouArt = exports.NessaArt = exports.MagearnaArt = exports.LeonArt = exports.JirachiArt = exports.DhelmiseArt = exports.CoatingMetalEnergyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = void 0;
+exports.ZekromArt = exports.WashWaterEnergyArt = exports.WailordArt = exports.WailmerArt = exports.TaillowArt = exports.StoneFightingEnergyArt = exports.SnorlaxArt = exports.RaikouArt = exports.NessaArt = exports.MagearnaArt = exports.LeonArt = exports.JirachiArt = exports.DhelmiseArt = exports.CoatingMetalEnergyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = exports.AromaticEnergyArt = void 0;
+const aromatic_energy_1 = require("./aromatic-energy");
 const charizard_1 = require("./charizard");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
@@ -18,6 +19,13 @@ const VIV_60_Zekrom_1 = require("./VIV_60_Zekrom");
 const wailmer_1 = require("./wailmer");
 const wailord_1 = require("./wailord");
 const wash_water_energy_1 = require("./wash-water-energy");
+class AromaticEnergyArt extends aromatic_energy_1.AromaticEnergy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_162_R_EN.png';
+    }
+}
+exports.AromaticEnergyArt = AromaticEnergyArt;
 class CharizardArt extends charizard_1.Charizard {
     constructor() {
         super(...arguments);

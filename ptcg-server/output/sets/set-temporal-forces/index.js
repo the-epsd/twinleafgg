@@ -53,6 +53,7 @@ exports.setTemporalForces = [
     new card_images_1.MrMimeArt(),
     new card_images_1.NeoUpperEnergyArt(),
     new card_images_1.PalafinArt(),
+    new card_images_1.PerilousJungleArt(),
     new card_images_1.PikachuArt(),
     new card_images_1.PrimeCatcherArt(),
     new card_images_1.RabscaArt(),
