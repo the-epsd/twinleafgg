@@ -17,14 +17,14 @@ class Electivire extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Outrage',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                name: 'Explosive Bolt',
+                cost: [card_types_1.CardType.LIGHTNING],
                 damage: 30,
                 damageCalculation: '+',
                 text: 'If any of your Benched Magmortar have any damage counters on them, this attack does 90 more damage.'
             },
             {
-                name: 'Glaciate',
+                name: 'High-Voltage Current',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'This attack does 50 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'

@@ -87,33 +87,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     };
   }
 
-  sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {
-    const firstTrainerIndex = cards.findIndex((d) => d.card.superType === SuperType.TRAINER);
-
-    for (let i = 0; i < firstTrainerIndex; i++) {
-      if ((<PokemonCard>cards[i].card).evolvesFrom) {
-        const indexOfPrevolution = this.findLastIndex(cards, c => c.card.name === (<PokemonCard>cards[i].card).evolvesFrom);
-
-        if (cards[indexOfPrevolution]?.card.superType !== SuperType.POKEMON) {
-          continue;
-        }
-
-        const currentPokemon = { ...cards.splice(i, 1)[0] };
-
-        cards = [
-          ...cards.slice(0, indexOfPrevolution + 1),
-          { ...currentPokemon },
-          ...cards.slice(indexOfPrevolution + 1),
-        ];
-      }
-    }
-
-    return cards;
-  }
-
   // sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {
-  //   // Sort by superType first
-  //   cards.sort((a, b) => a.card.superType - b.card.superType);
   //   const firstTrainerIndex = cards.findIndex((d) => d.card.superType === SuperType.TRAINER);
 
   //   for (let i = 0; i < firstTrainerIndex; i++) {
@@ -134,44 +108,71 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   //     }
   //   }
 
-  //   // Sort Pokemon cards by cardType after sorting by evolution
-  //   const pokemonCards = cards.slice(0, firstTrainerIndex);
-  //   pokemonCards.sort((a, b) => {
-  //     const cardA = a.card as PokemonCard;
-  //     const cardB = b.card as PokemonCard;
-  //     return cardA.cardType - cardB.cardType;
-  //   });
-  //   cards = [...pokemonCards, ...cards.slice(firstTrainerIndex)];
-
-  //   // Sort Trainer cards by trainerType and then alphabetically
-  //   const firstEnergyIndex = cards.findIndex((d) => d.card.superType === SuperType.ENERGY, firstTrainerIndex);
-  //   cards = [...cards.slice(0, firstTrainerIndex), ...cards.slice(firstTrainerIndex, firstEnergyIndex).sort((a, b) => {
-  //     const trainerA = a.card as TrainerCard;
-  //     const trainerB = b.card as TrainerCard;
-
-  //     const trainerTypeOrder = [TrainerType.SUPPORTER, TrainerType.ITEM, TrainerType.TOOL, TrainerType.STADIUM];
-  //     const trainerAIndex = trainerTypeOrder.indexOf(trainerA.trainerType);
-  //     const trainerBIndex = trainerTypeOrder.indexOf(trainerB.trainerType);
-
-  //     if (trainerAIndex !== trainerBIndex) {
-  //       return trainerAIndex - trainerBIndex;
-  //     }
-
-  //     return trainerA.name.localeCompare(trainerB.name);
-  //   }), ...cards.slice(firstEnergyIndex)];
-
-  //   // Sort Energy cards
-  //   const energyCards = cards.slice(firstEnergyIndex);
-  //   const specialEnergyCards = energyCards.filter((d) => d.card.energyType === EnergyType.SPECIAL);
-  //   const basicEnergyCards = energyCards.filter((d) => d.card.energyType === EnergyType.BASIC);
-
-  //   specialEnergyCards.sort((a, b) => a.card.name.localeCompare(b.card.name));
-  //   basicEnergyCards.sort((a, b) => a.card.name.localeCompare(b.card.name));
-
-  //   cards = [...cards.slice(0, firstEnergyIndex), ...specialEnergyCards, ...basicEnergyCards];
-
   //   return cards;
   // }
+
+  sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {
+    // Sort by superType first
+    cards.sort((a, b) => a.card.superType - b.card.superType);
+    const firstTrainerIndex = cards.findIndex((d) => d.card.superType === SuperType.TRAINER);
+
+    // Group Pokemon cards by evolution chains
+    const evolutionChains: DeckItem[][] = [];
+    const pokemonCards = cards.slice(0, firstTrainerIndex);
+
+    pokemonCards.forEach(card => {
+      const chain = evolutionChains.find(chain =>
+        chain.some(c => c.card.name === (card.card as PokemonCard).evolvesFrom || c.card.name === card.card.name)
+      );
+      if (chain) {
+        chain.push(card);
+      } else {
+        evolutionChains.push([card]);
+      }
+    });
+
+    // Sort evolution chains by the cardType of the base form
+    evolutionChains.sort((a, b) => {
+      const baseA = a.find(c => !(c.card as PokemonCard).evolvesFrom) || a[0];
+      const baseB = b.find(c => !(c.card as PokemonCard).evolvesFrom) || b[0];
+      return (baseA.card as PokemonCard).cardType - (baseB.card as PokemonCard).cardType;
+    });
+
+    // Sort within each evolution chain by stage
+    evolutionChains.forEach(chain => {
+      chain.sort((a, b) => {
+        const stageA = (a.card as PokemonCard).stage;
+        const stageB = (b.card as PokemonCard).stage;
+        return stageA - stageB;
+      });
+    });
+
+    // Flatten the sorted evolution chains
+    const sortedPokemon = evolutionChains.flat();
+
+    // Sort Trainer cards
+    const trainerCards = cards.slice(firstTrainerIndex);
+    const firstEnergyIndex = trainerCards.findIndex((d) => d.card.superType === SuperType.ENERGY);
+    const sortedTrainers = [
+      ...trainerCards.slice(0, firstEnergyIndex).sort((a, b) => {
+        const trainerA = a.card as TrainerCard;
+        const trainerB = b.card as TrainerCard;
+        const trainerTypeOrder = [TrainerType.SUPPORTER, TrainerType.ITEM, TrainerType.TOOL, TrainerType.STADIUM];
+        const trainerAIndex = trainerTypeOrder.indexOf(trainerA.trainerType);
+        const trainerBIndex = trainerTypeOrder.indexOf(trainerB.trainerType);
+        return trainerAIndex !== trainerBIndex ? trainerAIndex - trainerBIndex : trainerA.name.localeCompare(trainerB.name);
+      }),
+      ...trainerCards.slice(firstEnergyIndex)
+    ];
+
+    // Sort Energy cards
+    const energyCards = sortedTrainers.slice(firstEnergyIndex);
+    const specialEnergyCards = energyCards.filter((d) => d.card.energyType === EnergyType.SPECIAL).sort((a, b) => a.card.name.localeCompare(b.card.name));
+    const basicEnergyCards = energyCards.filter((d) => d.card.energyType === EnergyType.BASIC).sort((a, b) => a.card.name.localeCompare(b.card.name));
+
+    // Combine all sorted sections
+    return [...sortedPokemon, ...sortedTrainers.slice(0, firstEnergyIndex), ...specialEnergyCards, ...basicEnergyCards];
+  }
 
   findLastIndex<T>(array: Array<T>, predicate: (value: T, index: number, obj: T[]) => boolean): number {
     let l = array.length;
@@ -311,11 +312,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.tempList = this.list = list;
-    this.deckItemsChange.next(list);
-    this.tempList.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
-    this.tempList.sort((a, b) => a.card.superType - b.card.superType);
-    this.tempList = this.sortByPokemonEvolution([...this.tempList]);
+    this.tempList = this.sortByPokemonEvolution(list);
+    this.deckItemsChange.next(this.tempList);
   }
 
   public async removeCardFromDeck(item: DeckItem) {
@@ -332,39 +330,9 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
       list[index].count -= count;
     }
 
-    this.tempList = this.list = list;
-    this.deckItemsChange.next(list);
 
-    // Sort by supertype first
-    this.tempList.sort((a, b) => {
-      if (a.card.superType !== b.card.superType) {
-        return a.card.superType - b.card.superType;
-      }
-      // If supertypes are the same, sort alphabetically
-      return a.card.fullName.localeCompare(b.card.fullName);
-    });
-
-    // Then apply specific sorting for Pokémon and Trainers
-    this.sortPokemonCards();
-    this.sortTrainerCards();
-  }
-
-  private sortPokemonCards() {
-    const pokemonCards = this.tempList.filter(item => item.card.superType === SuperType.POKEMON);
-    pokemonCards.sort((a, b) => {
-      const aStage = (a.card as PokemonCard).stage || 0;
-      const bStage = (b.card as PokemonCard).stage || 0;
-      return aStage - bStage || a.card.fullName.localeCompare(b.card.fullName);
-    });
-  }
-
-  private sortTrainerCards() {
-    const trainerCards = this.tempList.filter(item => item.card.superType === SuperType.TRAINER);
-    trainerCards.sort((a, b) => {
-      const aType = (a.card as TrainerCard).trainerType;
-      const bType = (b.card as TrainerCard).trainerType;
-      return aType - bType || a.card.fullName.localeCompare(b.card.fullName);
-    });
+    this.tempList = this.sortByPokemonEvolution(list);
+    this.deckItemsChange.next(this.tempList);
   }
 
 

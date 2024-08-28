@@ -12,6 +12,7 @@ import { Entei } from './entei';
 import { Finizen } from './finizen';
 import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Lunatone } from './lunatone';
+import { Miraidonex } from './miraidon-ex';
 import { Oddish } from './OBF_1_Oddish';
 import { Toedscruelex } from './OBF_22_Toedscruel_ex';
 import { Ninetales } from './OBF_29_Ninetales';
@@ -70,6 +71,9 @@ export declare class LetterOfEncouragementArt extends LetterOfEncouragement {
     cardImage: string;
 }
 export declare class LunatoneArt extends Lunatone {
+    cardImage: string;
+}
+export declare class MiraidonexArt extends Miraidonex {
     cardImage: string;
 }
 export declare class NinetalesArt extends Ninetales {

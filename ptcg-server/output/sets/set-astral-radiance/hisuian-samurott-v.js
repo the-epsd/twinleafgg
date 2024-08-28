@@ -26,7 +26,7 @@ class HisuianSamurottV extends pokemon_card_1.PokemonCard {
             {
                 name: 'Shadow Slash',
                 cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK, card_types_1.CardType.DARK],
-                damage: 110,
+                damage: 180,
                 text: 'Discard an Energy from this Pokémon.'
             }
         ];

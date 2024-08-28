@@ -10,19 +10,19 @@ export class Gloom extends PokemonCard {
   public evolvesFrom = 'Oddish';
 
   public cardType = CardType.GRASS;
-  
+
   public hp = 70;
 
-  public weakness = [{type: CardType.FIRE}];
+  public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Semi-Blooming Energy',
-    powerType: PowerType.ABILITY, 
+    powerType: PowerType.ABILITY,
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may look at the top 3 cards of your deck and attach any number of Basic Energy cards you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck.'
   }];
-  
+
   public attacks = [{
     name: 'Drool',
     cost: [CardType.COLORLESS, CardType.COLORLESS],
@@ -44,7 +44,7 @@ export class Gloom extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if ((effect instanceof EvolveEffect) && effect.pokemonCard === this) {
+    if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
 
       const player = effect.player;
 
@@ -59,7 +59,7 @@ export class Gloom extends PokemonCard {
       } catch {
         return state;
       }
-      
+
       const temp = new CardList();
 
 
@@ -73,25 +73,25 @@ export class Gloom extends PokemonCard {
       // If no energy cards were drawn, move all cards to deck
       if (energyCardsDrawn.length == 0) {
         temp.cards.slice(0, 3).forEach(card => {
-          temp.moveCardTo(card, player.deck); 
+          temp.moveCardTo(card, player.deck);
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
           });
         });
       } else {
-      
+
 
         // Prompt to attach energy if any were drawn
         return store.prompt(state, new AttachEnergyPrompt(
           player.id,
-          GameMessage.ATTACH_ENERGY_CARDS, 
+          GameMessage.ATTACH_ENERGY_CARDS,
           temp, // Only show drawn energies
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH, SlotType.ACTIVE],
-          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC},
-          {min: 0, max: energyCardsDrawn.length}
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { min: 0, max: energyCardsDrawn.length }
         ), transfers => {
-    
+
           // Attach energy based on prompt selection
           if (transfers) {
             for (const transfer of transfers) {
@@ -107,6 +107,7 @@ export class Gloom extends PokemonCard {
           }
           return state;
         });
+        return state;
       }
       return state;
     }

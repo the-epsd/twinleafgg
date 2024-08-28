@@ -110,7 +110,7 @@ export class Munkidori extends PokemonCard {
 
           checkEnergy.energyMap.forEach(em => {
             const energyCard = em.card;
-            if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.DARK) || energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.ANY) || (energyCard instanceof EnergyCard  && energyCard.blendedEnergies.includes(CardType.DARK))) {
+            if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.DARK) || energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.ANY) || (energyCard instanceof EnergyCard && energyCard.blendedEnergies.includes(CardType.DARK))) {
               hasDarkAttached = true;
             }
           });
@@ -133,16 +133,27 @@ export class Munkidori extends PokemonCard {
                 return state;
               }
 
-              player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
-
-              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                  cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
-                }
-              });
-
               let totalDamageMoved = 0;
               for (const transfer of transfers) {
+
+                const source = StateUtils.getTarget(state, player, transfer.from);
+                const target = StateUtils.getTarget(state, player, transfer.to);
+
+                if (source.cards.length > 1) {
+                  throw new GameError(GameMessage.INVALID_TARGET);
+                }
+
+                if (target.cards.length > 1) {
+                  throw new GameError(GameMessage.INVALID_TARGET);
+                }
+
+                player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
+
+                player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+                  if (cardList.getPokemonCard() === this) {
+                    cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                  }
+                });
 
                 /*blockedFrom.forEach(blocked => {
                   if (transfer.from === blocked && transfer.to === blocked) {
@@ -153,9 +164,6 @@ export class Munkidori extends PokemonCard {
                 if (blockedFrom.includes(transfer.from)) {
                   throw new GameError(GameMessage.CANNOT_USE_POWER);
                 }*/
-
-                const source = StateUtils.getTarget(state, player, transfer.from);
-                const target = StateUtils.getTarget(state, player, transfer.to);
 
                 const damageToMove = Math.min(30 - totalDamageMoved, Math.min(10, source.damage));
                 if (damageToMove > 0) {

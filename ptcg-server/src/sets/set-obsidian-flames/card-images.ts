@@ -12,6 +12,7 @@ import { Entei } from './entei';
 import { Finizen } from './finizen';
 import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Lunatone } from './lunatone';
+import { Miraidonex } from './miraidon-ex';
 import { Oddish } from './OBF_1_Oddish';
 import { Toedscruelex } from './OBF_22_Toedscruel_ex';
 import { Ninetales } from './OBF_29_Ninetales';
@@ -86,6 +87,10 @@ export class LetterOfEncouragementArt extends LetterOfEncouragement {
 
 export class LunatoneArt extends Lunatone {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_092_R_EN_LG.png';
+}
+
+export class MiraidonexArt extends Miraidonex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_079_R_EN.png';
 }
 
 export class NinetalesArt extends Ninetales {

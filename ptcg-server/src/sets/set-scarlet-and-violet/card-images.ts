@@ -4,6 +4,7 @@ import { Armarouge } from './armarouge';
 import { Arven } from './arven';
 import { Banetteex } from './banette-ex';
 import { BeachCourt } from './beach-court';
+import { Capsakid } from './capsakid';
 import { Charcadet } from './charcadet';
 import { Croagunk } from './croagunk';
 import { CrushingHammer } from './crushing-hammer';
@@ -86,6 +87,10 @@ export class BanetteexArt extends Banetteex {
 
 export class BeachCourtArt extends BeachCourt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_167_R_EN_LG.png';
+}
+
+export class CapsakidArt extends Capsakid {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_028_R_EN.png';
 }
 
 export class CharcadetArt extends Charcadet {

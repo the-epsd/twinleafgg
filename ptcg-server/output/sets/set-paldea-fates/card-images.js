@@ -214,7 +214,7 @@ exports.RareCandyArt = RareCandyArt;
 class ScovillainexArt extends scovillain_ex_1.Scovillainex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_107_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_022_R_EN.png';
     }
 }
 exports.ScovillainexArt = ScovillainexArt;

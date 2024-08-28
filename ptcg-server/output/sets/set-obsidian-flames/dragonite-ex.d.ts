@@ -12,17 +12,25 @@ export declare class Dragoniteex extends PokemonCard {
     hp: number;
     weakness: never[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;
-    NO_ATTACK_NEXT_TURN_MARKER: string;
+    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
+    readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

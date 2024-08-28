@@ -1,9 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 
 export class Lunatone extends PokemonCard {
 
@@ -19,19 +16,19 @@ export class Lunatone extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'New Moon',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'If you have Solrock in play, prevent all effects of any Stadium ' +
-    'done to your Pokémon in play.'
+      'done to your Pokémon in play.'
   }];
 
   public attacks = [{
-    name: '',
-    cost: [  ],
+    name: 'Moon Press',
+    cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
     damage: 100,
     text: ''
   }];
@@ -46,20 +43,4 @@ export class Lunatone extends PokemonCard {
 
   public fullName: string = 'Lunatone OBF';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof UseStadiumEffect) {
-    
-      StateUtils.getStadiumCard(state);
-      const target = effect.player;
-      
-      if (this.powers.some(a => a.name === 'New Moon') && target === effect.player) {
-        effect.preventDefault = true;
-        return state; 
-      }
-    }
-  
-    return state;
-  
-  }
 }

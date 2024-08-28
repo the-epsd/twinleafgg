@@ -1,8 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
 export declare class Lunatone extends PokemonCard {
     regulationMark: string;
     stage: Stage;
@@ -24,7 +22,7 @@ export declare class Lunatone extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: never[];
+        cost: CardType[];
         damage: number;
         text: string;
     }[];
@@ -33,5 +31,4 @@ export declare class Lunatone extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

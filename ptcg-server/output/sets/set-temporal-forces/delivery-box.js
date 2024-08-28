@@ -25,20 +25,21 @@ class DeliveryBox extends trainer_card_1.TrainerCard {
             let cards = [];
             store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 1, max: 2, allowCancel: false }), selected => {
                 cards = selected || [];
-            });
-            if (cards.length > 0) {
-                return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => {
-                    player.deck.moveCardsTo(cards, player.hand);
-                    player.supporter.moveCardTo(this, player.discard);
-                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                        player.deck.applyOrder(order);
+                player.deck.moveCardsTo(cards, player.hand);
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                cards.forEach((card, index) => {
+                    store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+                });
+                if (cards.length > 0) {
+                    return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => {
                         const endTurnEffect = new game_phase_effects_1.EndTurnEffect(player);
                         store.reduceEffect(state, endTurnEffect);
-                        return state;
+                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                            player.deck.applyOrder(order);
+                        });
                     });
-                });
-            }
-            return state;
+                }
+            });
         }
         return state;
     }

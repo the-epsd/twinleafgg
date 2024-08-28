@@ -74,7 +74,7 @@ class Weavile extends pokemon_card_1.PokemonCard {
                 }
             }
             const abilities = pokemonWithAbilities.length;
-            effect.damage += abilities * 50;
+            effect.damage = abilities * 50;
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

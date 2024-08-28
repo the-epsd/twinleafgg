@@ -1,35 +1,24 @@
-import { PowerType, State, StoreLike } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
-import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { PokemonCard, Stage, CardType, Resistance, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Orthworm extends PokemonCard {
+export declare class Capsakid extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
-    resistance: {
-        type: CardType;
-        value: number;
-    }[];
+    resistance: Resistance[];
     retreat: CardType[];
-    powers: {
-        powerType: PowerType;
-        text: string;
-        useWhenInPlay: boolean;
-        name: string;
-    }[];
     attacks: {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
     }[];
-    set: string;
     regulationMark: string;
     cardImage: string;
     setNumber: string;
+    set: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

@@ -31,7 +31,7 @@ class Gloom extends game_1.PokemonCard {
         this.fullName = 'Gloom MEW';
     }
     reduceEffect(store, state, effect) {
-        if ((effect instanceof game_effects_1.EvolveEffect) && effect.pokemonCard === this) {
+        if (effect instanceof game_effects_1.EvolveEffect && effect.pokemonCard === this) {
             const player = effect.player;
             // Try to reduce PowerEffect, to check if something is blocking our ability
             try {
@@ -79,6 +79,7 @@ class Gloom extends game_1.PokemonCard {
                     }
                     return state;
                 });
+                return state;
             }
             return state;
         }

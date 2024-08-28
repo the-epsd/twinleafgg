@@ -10,8 +10,8 @@ class Magmar extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.FIRE;
-        this.hp = 50;
-        this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
+        this.hp = 90;
+        this.weakness = [{ type: card_types_1.CardType.WATER }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [{
                 name: 'Live Coal',
@@ -19,7 +19,7 @@ class Magmar extends pokemon_card_1.PokemonCard {
                 damage: 10,
                 text: ''
             }, {
-                name: 'Light Punch',
+                name: 'Flare Combo',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
                 damage: 80,
                 text: 'If Electabuzz is on your Bench, this attack does 80 more damage.'

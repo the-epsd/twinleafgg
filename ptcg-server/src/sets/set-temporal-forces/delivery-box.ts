@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { Card, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
+import { Card, ChooseCardsPrompt, GameLog, GameMessage, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class DeliveryBox extends TrainerCard {
@@ -41,29 +41,29 @@ export class DeliveryBox extends TrainerCard {
         { min: 1, max: 2, allowCancel: false }
       ), selected => {
         cards = selected || [];
-      });
-    
-      if (cards.length > 0) {
-        return store.prompt(state, new ShowCardsPrompt(
-          opponent.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          cards
-        ), () => {
-    
-          player.deck.moveCardsTo(cards, player.hand);
-    
-          player.supporter.moveCardTo(this, player.discard);
-    
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
+
+        player.deck.moveCardsTo(cards, player.hand);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
+        cards.forEach((card, index) => {
+          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+        });
+
+        if (cards.length > 0) {
+          return store.prompt(state, new ShowCardsPrompt(
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            cards
+          ), () => {
 
             const endTurnEffect = new EndTurnEffect(player);
             store.reduceEffect(state, endTurnEffect);
-            return state;
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+            });
           });
-        });
-      }
-      return state;
+        }
+      });
     }
     return state;
   }

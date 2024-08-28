@@ -9,7 +9,7 @@ class Magmortar extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
-        this.evolvesFrom = 'Magmortar';
+        this.evolvesFrom = 'Magmar';
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 140;
         this.weakness = [{

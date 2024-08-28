@@ -4,6 +4,7 @@ import { Armarouge } from './armarouge';
 import { Arven } from './arven';
 import { Banetteex } from './banette-ex';
 import { BeachCourt } from './beach-court';
+import { Capsakid } from './capsakid';
 import { Charcadet } from './charcadet';
 import { Croagunk } from './croagunk';
 import { CrushingHammer } from './crushing-hammer';
@@ -79,6 +80,9 @@ export declare class BanetteexArt extends Banetteex {
     cardImage: string;
 }
 export declare class BeachCourtArt extends BeachCourt {
+    cardImage: string;
+}
+export declare class CapsakidArt extends Capsakid {
     cardImage: string;
 }
 export declare class CharcadetArt extends Charcadet {
