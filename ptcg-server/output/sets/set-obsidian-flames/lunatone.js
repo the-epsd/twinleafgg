@@ -4,8 +4,6 @@ exports.Lunatone = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
-const game_1 = require("../../game");
-const game_effects_1 = require("../../game/store/effects/game-effects");
 class Lunatone extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -24,8 +22,8 @@ class Lunatone extends pokemon_card_1.PokemonCard {
                     'done to your Pokémon in play.'
             }];
         this.attacks = [{
-                name: '',
-                cost: [],
+                name: 'Moon Press',
+                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 100,
                 text: ''
             }];
@@ -34,17 +32,6 @@ class Lunatone extends pokemon_card_1.PokemonCard {
         this.setNumber = '92';
         this.name = 'Lunatone';
         this.fullName = 'Lunatone OBF';
-    }
-    reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.UseStadiumEffect) {
-            game_1.StateUtils.getStadiumCard(state);
-            const target = effect.player;
-            if (this.powers.some(a => a.name === 'New Moon') && target === effect.player) {
-                effect.preventDefault = true;
-                return state;
-            }
-        }
-        return state;
     }
 }
 exports.Lunatone = Lunatone;

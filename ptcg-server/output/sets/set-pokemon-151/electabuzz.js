@@ -41,7 +41,7 @@ class Electabuzz extends pokemon_card_1.PokemonCard {
                 }
             });
             if (isMagmarInPlay) {
-                effect.damage += 80;
+                effect.damage += 40;
             }
             return state;
         }

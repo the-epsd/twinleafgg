@@ -22,14 +22,14 @@ export class Electivire extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Outrage',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      name: 'Explosive Bolt',
+      cost: [CardType.LIGHTNING],
       damage: 30,
       damageCalculation: '+',
       text: 'If any of your Benched Magmortar have any damage counters on them, this attack does 90 more damage.'
     },
     {
-      name: 'Glaciate',
+      name: 'High-Voltage Current',
       cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 0,
       text: 'This attack does 50 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'

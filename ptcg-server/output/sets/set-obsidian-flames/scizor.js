@@ -40,14 +40,41 @@ class Scizor extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
-            const vPokemons = benchPokemon.filter(card => card.powers.length);
+            let benchPokemon = [];
+            const pokemonWithAbilities = [];
             const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && opponentActive.powers.length) {
-                vPokemons.push(opponentActive);
+            const stubPowerEffectForActive = new game_effects_1.PowerEffect(opponent, {
+                name: 'test',
+                powerType: game_1.PowerType.ABILITY,
+                text: ''
+            }, opponent.active.getPokemonCard());
+            try {
+                store.reduceEffect(state, stubPowerEffectForActive);
+                if (opponentActive && opponentActive.powers.length) {
+                    pokemonWithAbilities.push(opponentActive);
+                }
             }
-            const vPokes = vPokemons.length;
-            effect.damage += vPokes * 50;
+            catch (_a) {
+                // no abilities in active
+            }
+            if (opponent.bench.some(b => b.cards.length > 0)) {
+                const stubPowerEffectForBench = new game_effects_1.PowerEffect(opponent, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, opponent.bench.filter(b => b.cards.length > 0)[0].getPokemonCard());
+                try {
+                    store.reduceEffect(state, stubPowerEffectForBench);
+                    benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
+                    pokemonWithAbilities.push(...benchPokemon.filter(card => card.powers.length));
+                }
+                catch (_b) {
+                    // no abilities on bench
+                }
+            }
+            const abilities = pokemonWithAbilities.length;
+            effect.damage += abilities * 50;
+            return state;
         }
         return state;
     }

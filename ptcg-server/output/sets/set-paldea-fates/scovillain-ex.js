@@ -18,13 +18,13 @@ class Scovillainex extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Spicy Bind',
+                name: 'Chili Snapper Bind',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Your opponent\'s Active Pokémon is now Burned. The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
             },
             {
-                name: 'Raging Flames',
+                name: 'Two-Headed Crushing',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.GRASS],
                 damage: 140,
                 text: 'Discard a random card from your opponent\'s hand. Discard the top card of your opponent\'s deck.'

@@ -91,7 +91,7 @@ export class Weavile extends PokemonCard {
       }
 
       const abilities = pokemonWithAbilities.length;
-      effect.damage += abilities * 50;
+      effect.damage = abilities * 50;
 
       return state;
     }

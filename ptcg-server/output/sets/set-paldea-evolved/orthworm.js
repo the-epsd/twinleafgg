@@ -15,6 +15,7 @@ class Orthworm extends pokemon_card_1.PokemonCard {
         this.hp = 130;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 powerType: game_1.PowerType.ABILITY,
                 text: 'If this Pokémon has 3 or more [M] Energy attached, it gets +100 HP.',

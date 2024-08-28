@@ -35,6 +35,7 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
         this.setNumber = '3';
         this.name = 'Venusaur ex';
         this.fullName = 'Venusaur ex MEW';
+        this.TRANQUIL_FLOWER_MARKER = "TRANQUIL_FLOWER_MARKER";
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
@@ -48,6 +49,9 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
             const hasPokeBenchWithDamage = player.bench.some(b => b.damage > 0);
             const hasActiveWIthDamage = player.active.damage > 0;
             const pokemonInPlayWithDamage = hasPokeBenchWithDamage || hasActiveWIthDamage;
+            if (!player.marker.hasMarker(this.TRANQUIL_FLOWER_MARKER)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             if (player.active.cards[0] !== this || !pokemonInPlayWithDamage) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
@@ -57,10 +61,16 @@ class Venusaurex extends pokemon_card_1.PokemonCard {
                 if (targets.length === 0) {
                     return state;
                 }
+                player.marker.addMarker(this.TRANQUIL_FLOWER_MARKER, this);
                 targets.forEach(target => {
                     // Heal Pokemon
                     const healEffect = new game_effects_1.HealEffect(player, target, 60);
                     store.reduceEffect(state, healEffect);
+                });
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
                 });
                 return state;
             });

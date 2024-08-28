@@ -37,6 +37,7 @@ export const cardReplacements = [
   //TWM
   { from: 'Applin TWM 17', to: 'Applin TWM 17 ' },
   { from: 'Applin TWM 126', to: 'Applin TWM 126 ' },
+  { from: 'Scovillain ex TEF 22', to: 'Scovillain ex PAF 107' },
 ];
 
 export const exportReplacements = [
@@ -66,4 +67,5 @@ export const exportReplacements = [
   //TWM
   { from: 'Applin TWM 17 ', to: 'Applin TWM 17' },
   { from: 'Applin TWM 126 ', to: 'Applin TWM 126' },
+  { from: 'Scovillain ex PAF 107', to: 'Scovillain ex TEF 22' },
 ];

@@ -19,29 +19,29 @@ export class Scovillainex extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
-      name: 'Spicy Bind',
-      cost: [ CardType.COLORLESS ],
+      name: 'Chili Snapper Bind',
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Your opponent\'s Active Pokémon is now Burned. The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
     },
     {
-      name: 'Raging Flames',
-      cost: [ CardType.GRASS, CardType.GRASS ],
+      name: 'Two-Headed Crushing',
+      cost: [CardType.GRASS, CardType.GRASS],
       damage: 140,
       text: 'Discard a random card from your opponent\'s hand. Discard the top card of your opponent\'s deck.'
     }
   ];
 
   public regulationMark = 'G';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '107';
-  
+
   public set = 'PAF';
 
   public name: string = 'Scovillain ex';
@@ -60,11 +60,11 @@ export class Scovillainex extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       opponent.active.marker.addMarker(this.SPICY_BIND_MARKER, this);
     }
-  
+
     if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.SPICY_BIND_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
-  
+
     if (effect instanceof EndTurnEffect) {
       effect.player.active.marker.removeMarker(this.SPICY_BIND_MARKER, this);
     }

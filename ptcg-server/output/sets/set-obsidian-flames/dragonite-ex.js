@@ -29,6 +29,7 @@ class Dragoniteex extends pokemon_card_1.PokemonCard {
                 name: 'Mighty Meteor',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.LIGHTNING],
                 damage: 140,
+                damageCalculation: '+',
                 text: 'Flip a coin. If heads, this attack does 140 more damage.' +
                     'If tails, during your next turn, this Pokémon can\'t attack.'
             }];
@@ -37,24 +38,36 @@ class Dragoniteex extends pokemon_card_1.PokemonCard {
         this.setNumber = '159';
         this.name = 'Dragonite ex';
         this.fullName = 'Dragonite ex OBF';
-        this.NO_ATTACK_NEXT_TURN_MARKER = 'NO_ATTACK_NEXT_TURN_MARKER';
+        this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+        this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+            effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('marker cleared');
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('second marker added');
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
+            // Check marker
+            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+                console.log('attack blocked');
+                throw new game_1.GameError(game_message_1.GameMessage.BLOCKED_BY_EFFECT);
+            }
             return store.prompt(state, [
                 new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.COIN_FLIP)
             ], result => {
-                if (result === true) {
+                if (!result) {
+                    effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+                }
+                if (result) {
                     effect.damage += 140;
                 }
-                else {
-                    player.marker.addMarker(this.NO_ATTACK_NEXT_TURN_MARKER, this);
-                }
             });
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.NO_ATTACK_NEXT_TURN_MARKER)) {
-            effect.player.marker.removeMarker(this.NO_ATTACK_NEXT_TURN_MARKER, this);
         }
         if (effect instanceof attack_effects_1.PutDamageEffect) {
             const player = effect.player;

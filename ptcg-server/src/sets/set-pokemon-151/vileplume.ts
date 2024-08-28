@@ -11,7 +11,7 @@ export class Vileplume extends PokemonCard {
   public cardType = CardType.GRASS;
 
   public hp = 140;
-  
+
   public weakness = [{ type: CardType.FIRE }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
@@ -43,11 +43,11 @@ export class Vileplume extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if ((effect instanceof EvolveEffect) && effect.pokemonCard === this) {
+    if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
 
-    
+
       const player = effect.player;
-  
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {
@@ -59,7 +59,7 @@ export class Vileplume extends PokemonCard {
       } catch {
         return state;
       }
-      
+
       const temp = new CardList();
 
 
@@ -73,25 +73,25 @@ export class Vileplume extends PokemonCard {
       // If no energy cards were drawn, move all cards to deck
       if (energyCardsDrawn.length == 0) {
         temp.cards.slice(0, 8).forEach(card => {
-          temp.moveCardTo(card, player.deck); 
+          temp.moveCardTo(card, player.deck);
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
           });
         });
       } else {
-      
+
 
         // Prompt to attach energy if any were drawn
         return store.prompt(state, new AttachEnergyPrompt(
           player.id,
-          GameMessage.ATTACH_ENERGY_CARDS, 
+          GameMessage.ATTACH_ENERGY_CARDS,
           temp, // Only show drawn energies
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH, SlotType.ACTIVE],
-          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC},
-          {min: 0, max: energyCardsDrawn.length}
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { min: 0, max: energyCardsDrawn.length }
         ), transfers => {
-    
+
           // Attach energy based on prompt selection
           if (transfers) {
             for (const transfer of transfers) {

@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import {  CardType, TrainerType } from '../../game/store/card/card-types';
+import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { GameError, GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EnergyEffect } from '../../game/store/effects/play-card-effects';
@@ -11,7 +11,7 @@ export class TempleofSinnoh extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '155';
-  
+
   public trainerType = TrainerType.STADIUM;
 
   public set = 'ASR';
@@ -27,7 +27,7 @@ export class TempleofSinnoh extends TrainerCard {
     if (effect instanceof EnergyEffect && StateUtils.getStadiumCard(state) === this) {
       effect.preventDefault = true;
       effect.card.provides = [CardType.COLORLESS];
-      console.log('Jamming Tower blocks Tool Effect');
+      console.log('Temple of Sinnoh blocks Special Energy Effects');
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
     return state;

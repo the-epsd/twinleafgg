@@ -13,20 +13,20 @@ export class Magmar extends PokemonCard {
 
   public cardType: CardType = CardType.FIRE;
 
-  public hp: number = 50;
+  public hp: number = 90;
 
-  public weakness = [{type: CardType.LIGHTNING}];
+  public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Live Coal',
-    cost: [ CardType.FIRE ],
+    cost: [CardType.FIRE],
     damage: 10,
     text: ''
   }, {
-    name: 'Light Punch',
-    cost: [ CardType.FIRE, CardType.FIRE, CardType.COLORLESS ],
+    name: 'Flare Combo',
+    cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
     damage: 80,
     text: 'If Electabuzz is on your Bench, this attack does 80 more damage.'
   }];
@@ -47,14 +47,14 @@ export class Magmar extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-  
+
       let isElectabuzzInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card.name === 'Electabuzz') {
           isElectabuzzInPlay = true;
         }
       });
-  
+
       if (isElectabuzzInPlay) {
         effect.damage += 80;
       }

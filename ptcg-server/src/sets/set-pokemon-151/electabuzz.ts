@@ -17,16 +17,16 @@ export class Electabuzz extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Electro Combo',
-    cost: [ CardType.LIGHTNING ],
+    cost: [CardType.LIGHTNING],
     damage: 10,
     text: 'If Magmar is on your Bench, this attack does 40 more damage.'
   }, {
     name: 'Light Punch',
-    cost: [ CardType.LIGHTNING, CardType.COLORLESS ],
+    cost: [CardType.LIGHTNING, CardType.COLORLESS],
     damage: 30,
     text: ''
   }];
@@ -47,16 +47,16 @@ export class Electabuzz extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       let isMagmarInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card.name === 'Magmar') {
           isMagmarInPlay = true;
         }
       });
-  
+
       if (isMagmarInPlay) {
-        effect.damage += 80;
+        effect.damage += 40;
       }
       return state;
     }

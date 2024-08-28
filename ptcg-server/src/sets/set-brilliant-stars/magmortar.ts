@@ -11,7 +11,7 @@ export class Magmortar extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Magmortar';
+  public evolvesFrom = 'Magmar';
 
   public cardType: CardType = CardType.FIRE;
 
@@ -21,16 +21,16 @@ export class Magmortar extends PokemonCard {
     type: CardType.WATER
   }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Mega Punch',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 50,
     text: ''
   }, {
     name: 'Boltsplosion',
-    cost: [ CardType.FIRE, CardType.FIRE, CardType.COLORLESS ],
+    cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
     damage: 120,
     text: 'If Electivire is on your Bench, this attack does 120 more damage.'
   }];
@@ -51,14 +51,14 @@ export class Magmortar extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-  
+
       let isElectivireInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card.name === 'Electivire') {
           isElectivireInPlay = true;
         }
       });
-  
+
       if (isElectivireInPlay) {
         effect.damage += 120;
       }

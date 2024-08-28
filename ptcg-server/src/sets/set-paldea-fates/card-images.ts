@@ -147,7 +147,7 @@ export class RareCandyArt extends RareCandy {
 }
 
 export class ScovillainexArt extends Scovillainex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_107_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_022_R_EN.png';
 }
 
 export class StarmieArt extends Starmie {

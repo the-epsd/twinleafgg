@@ -21,7 +21,7 @@ class TempleofSinnoh extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.EnergyEffect && game_1.StateUtils.getStadiumCard(state) === this) {
             effect.preventDefault = true;
             effect.card.provides = [card_types_1.CardType.COLORLESS];
-            console.log('Jamming Tower blocks Tool Effect');
+            console.log('Temple of Sinnoh blocks Special Energy Effects');
             throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_STADIUM);
         }
         return state;

@@ -30,7 +30,7 @@ export class HisuianSamurottV extends PokemonCard {
     {
       name: 'Shadow Slash',
       cost: [CardType.DARK, CardType.DARK, CardType.DARK],
-      damage: 110,
+      damage: 180,
       text: 'Discard an Energy from this Pokémon.'
     }
   ];

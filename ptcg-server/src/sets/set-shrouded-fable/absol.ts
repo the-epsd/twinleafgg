@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, EnergyCard, PlayerType } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Absol extends PokemonCard {
 
@@ -43,16 +42,20 @@ export class Absol extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-
-      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
-      store.reduceEffect(state, checkProvidedEnergyEffect);
-
       let energyCount = 0;
-      checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType =>
-          cardType === CardType.DARK || cardType === CardType.ANY
-        ).length;
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        cardList.cards.forEach(card => {
+          if (card instanceof EnergyCard) {
+            if (card.provides.includes(CardType.DARK) || card.provides.includes(CardType.ANY)) {
+              energyCount += 1;
+            } else if (card.blendedEnergies.includes(CardType.DARK)) {
+              energyCount += 1;
+            }
+          }
+        });
       });
+
 
       if (energyCount >= 3)
         effect.damage += 50;
@@ -60,5 +63,4 @@ export class Absol extends PokemonCard {
     }
     return state;
   }
-
 }

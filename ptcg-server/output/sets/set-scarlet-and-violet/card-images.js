@@ -1,13 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PrimeapeArt = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MankeyArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.MagikarpArt = exports.LucarioArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GyaradosexArt = exports.GrowlitheArt = exports.GardevoirexArt = exports.FlittleArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CroagunkArt = exports.CharcadetArt = exports.BeachCourtArt = exports.BanetteexArt = exports.ArvenArt = exports.ArmarougeArt = exports.ArcanineexArt = exports.AnnihilapeArt = void 0;
-exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.ToedscruelArt = exports.ToedscoolArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SmolivArt = exports.SkwovetArt = exports.ShuppetArt = exports.SeviperArt = exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RevavroomArt = exports.RareCandyArt = void 0;
+exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PrimeapeArt = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MankeyArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.MagikarpArt = exports.LucarioArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GyaradosexArt = exports.GrowlitheArt = exports.GardevoirexArt = exports.FlittleArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CroagunkArt = exports.CharcadetArt = exports.CapsakidArt = exports.BeachCourtArt = exports.BanetteexArt = exports.ArvenArt = exports.ArmarougeArt = exports.ArcanineexArt = exports.AnnihilapeArt = void 0;
+exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.ToedscruelArt = exports.ToedscoolArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SmolivArt = exports.SkwovetArt = exports.ShuppetArt = exports.SeviperArt = exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RevavroomArt = exports.RareCandyArt = exports.RaltsArt = void 0;
 const annihilape_1 = require("./annihilape");
 const arcanine_ex_1 = require("./arcanine-ex");
 const armarouge_1 = require("./armarouge");
 const arven_1 = require("./arven");
 const banette_ex_1 = require("./banette-ex");
 const beach_court_1 = require("./beach-court");
+const capsakid_1 = require("./capsakid");
 const charcadet_1 = require("./charcadet");
 const croagunk_1 = require("./croagunk");
 const crushing_hammer_1 = require("./crushing-hammer");
@@ -109,6 +110,13 @@ class BeachCourtArt extends beach_court_1.BeachCourt {
     }
 }
 exports.BeachCourtArt = BeachCourtArt;
+class CapsakidArt extends capsakid_1.Capsakid {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_028_R_EN.png';
+    }
+}
+exports.CapsakidArt = CapsakidArt;
 class CharcadetArt extends charcadet_1.Charcadet {
     constructor() {
         super(...arguments);
