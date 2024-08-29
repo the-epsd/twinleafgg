@@ -139,13 +139,13 @@ export class Munkidori extends PokemonCard {
                 const source = StateUtils.getTarget(state, player, transfer.from);
                 const target = StateUtils.getTarget(state, player, transfer.to);
 
-                if (source.cards.length > 1) {
-                  throw new GameError(GameMessage.INVALID_TARGET);
-                }
+                // if (source.cards.length > 1) {
+                //   throw new GameError(GameMessage.INVALID_TARGET);
+                // }
 
-                if (target.cards.length > 1) {
-                  throw new GameError(GameMessage.INVALID_TARGET);
-                }
+                // if (target.cards.length > 1) {
+                //   throw new GameError(GameMessage.INVALID_TARGET);
+                // }
 
                 player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
 
