@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.AzumarillArt = exports.HoOhArt = void 0;
 const counter_gain_1 = require("../set-lost-thunder/counter-gain");
-const klefki_1 = require("../set-scarlet-and-violet/klefki");
 const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
 const archaludon_ex_1 = require("./archaludon-ex");
 const azulmarill_1 = require("./azulmarill");
@@ -17,6 +16,7 @@ const exeggcute_1 = require("./exeggcute");
 const flygon_ex_1 = require("./flygon-ex");
 const helper_bell_1 = require("./helper.bell");
 const ho_oh_1 = require("./ho-oh");
+const klefki_1 = require("./klefki");
 const marill_1 = require("./marill");
 const megaton_blower_1 = require("./megaton-blower");
 const perfect_mixer_1 = require("./perfect-mixer");

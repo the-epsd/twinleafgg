@@ -5,7 +5,6 @@ const card_images_1 = require("./card-images");
 exports.setSV7 = [
     new card_images_1.ArchaludonArt(),
     new card_images_1.AreaZeroUnderdepthsArt(),
-    new card_images_1.BloodmoonUrsalunaArt(),
     new card_images_1.BouffalantArt(),
     new card_images_1.BriarArt(),
     new card_images_1.CinderaceexArt(),

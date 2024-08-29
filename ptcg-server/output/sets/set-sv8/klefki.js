@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LugiaV = void 0;
+exports.Klefki = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class LugiaV extends pokemon_card_1.PokemonCard {
+class Klefki extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'H';
@@ -50,4 +50,4 @@ class LugiaV extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.LugiaV = LugiaV;
+exports.Klefki = Klefki;

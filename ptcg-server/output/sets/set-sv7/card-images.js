@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.LaprasexArt = exports.JoltikArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.DrifblimArt = exports.DrednawArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.BriarArt = exports.BouffalantArt = exports.BloodmoonUrsalunaArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
+exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.LaprasexArt = exports.JoltikArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.DrifblimArt = exports.DrednawArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
 const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
-const bloodmoon_ursaluna_1 = require("./bloodmoon-ursaluna");
 const bouffalant_1 = require("./bouffalant");
 const briar_1 = require("./briar");
 const cinderace_ex_1 = require("./cinderace-ex");
@@ -40,13 +39,6 @@ class AreaZeroUnderdepthsArt extends area_zero_underdepths_1.AreaZeroUnderdepths
     }
 }
 exports.AreaZeroUnderdepthsArt = AreaZeroUnderdepthsArt;
-class BloodmoonUrsalunaArt extends bloodmoon_ursaluna_1.BloodmoonUrsaluna {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://pokemonproxies.com/static/media/Bloodmoon_Ursaluna-025-6a.8576ad8a2465438f2477.png';
-    }
-}
-exports.BloodmoonUrsalunaArt = BloodmoonUrsalunaArt;
 class BouffalantArt extends bouffalant_1.Bouffalant {
     constructor() {
         super(...arguments);

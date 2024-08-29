@@ -2,17 +2,18 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { Effect } from '../../game/store/effects/effect';
 
 export class Moltres extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  
+
   public cardType: CardType = CardType.FIRE;
-  
+
   public hp: number = 120;
 
   public weakness = [{ type: CardType.WATER }];
-  
+
   public retreat = [CardType.COLORLESS];
 
   public attacks = [{
@@ -34,17 +35,20 @@ export class Moltres extends PokemonCard {
 
   public fullName: string = 'Moltres BRS';
 
-  public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect.attack === this.attacks[0]) {
-      
-      // Check if this Pokemon has any damage
-      if (effect.player.active.damage > 0) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      const player = effect.player;
+      const source = player.active;
+
+      // Check if source Pokemon has damage
+      const damage = source.damage;
+      if (damage > 0) {
         effect.damage += 70;
       }
-      
-      // Make damage ignore weakness
-      effect.ignoreWeakness = true;
+      console.log(effect.damage);
+      return state;
     }
     return state;
   }

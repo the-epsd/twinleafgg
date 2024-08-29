@@ -1,6 +1,5 @@
 import { Archaludon } from './archaludon';
 import { AreaZeroUnderdepths } from './area-zero-underdepths';
-import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
 import { Bouffalant } from './bouffalant';
 import { Briar } from './briar';
 import { Cinderaceex } from './cinderace-ex';
@@ -30,10 +29,6 @@ export class ArchaludonArt extends Archaludon {
 
 export class AreaZeroUnderdepthsArt extends AreaZeroUnderdepths {
   public cardImage = 'https://pokemonproxies.com/static/media/Area_Zero_Underdepths-102-7i.4dd76540f7ac7d471002.png';
-}
-
-export class BloodmoonUrsalunaArt extends BloodmoonUrsaluna {
-  public cardImage = 'https://pokemonproxies.com/static/media/Bloodmoon_Ursaluna-025-6a.8576ad8a2465438f2477.png';
 }
 
 export class BouffalantArt extends Bouffalant {

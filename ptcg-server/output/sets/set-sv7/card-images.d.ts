@@ -1,6 +1,5 @@
 import { Archaludon } from './archaludon';
 import { AreaZeroUnderdepths } from './area-zero-underdepths';
-import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
 import { Bouffalant } from './bouffalant';
 import { Briar } from './briar';
 import { Cinderaceex } from './cinderace-ex';
@@ -27,9 +26,6 @@ export declare class ArchaludonArt extends Archaludon {
     cardImage: string;
 }
 export declare class AreaZeroUnderdepthsArt extends AreaZeroUnderdepths {
-    cardImage: string;
-}
-export declare class BloodmoonUrsalunaArt extends BloodmoonUrsaluna {
     cardImage: string;
 }
 export declare class BouffalantArt extends Bouffalant {

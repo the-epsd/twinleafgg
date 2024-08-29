@@ -23,15 +23,15 @@ export class BloodmoonUrsaluna extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
-    name: 'Ground Rule',
+    name: 'Battle-Hardened',
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, when you play this card from your hand onto your bench, you may attach up to 2 Basic Fighting Energy cards from your hand to this Pokémon.'
+    text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may attach up to 2 Basic [F] Energy cards from your hand to this Pokémon.'
 
   }];
 
   public attacks = [
     {
-      name: 'Mad Mud Bite',
+      name: 'Mad Bite',
       cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
       damage: 100,
       damageCalculation: '+',

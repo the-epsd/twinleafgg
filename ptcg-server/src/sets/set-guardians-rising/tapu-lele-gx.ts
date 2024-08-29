@@ -160,7 +160,7 @@ export class TapuLeleGX extends PokemonCard {
       }
 
       if (player.usedGX === true) {
-        throw new GameError(GameMessage.LABEL_VSTAR_USED);
+        throw new GameError(GameMessage.LABEL_GX_USED);
       }
 
       let targets: PokemonCardList[] = [];

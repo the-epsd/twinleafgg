@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Moltres = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class Moltres extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -25,13 +26,16 @@ class Moltres extends pokemon_card_1.PokemonCard {
         this.fullName = 'Moltres BRS';
     }
     reduceEffect(store, state, effect) {
-        if (effect.attack === this.attacks[0]) {
-            // Check if this Pokemon has any damage
-            if (effect.player.active.damage > 0) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const source = player.active;
+            // Check if source Pokemon has damage
+            const damage = source.damage;
+            if (damage > 0) {
                 effect.damage += 70;
             }
-            // Make damage ignore weakness
-            effect.ignoreWeakness = true;
+            console.log(effect.damage);
+            return state;
         }
         return state;
     }

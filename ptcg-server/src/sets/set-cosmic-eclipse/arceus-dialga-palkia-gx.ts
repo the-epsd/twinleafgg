@@ -88,7 +88,7 @@ export class ArceusDialgaPalkiaGX extends PokemonCard {
 
       // Check if player has used altered creation
       if (player.usedGX == true) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+        throw new GameError(GameMessage.LABEL_GX_USED);
       }
 
       player.usedGX = true;
