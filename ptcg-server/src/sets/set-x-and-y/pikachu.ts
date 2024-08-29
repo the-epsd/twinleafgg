@@ -18,20 +18,21 @@ export class Pikachu extends PokemonCard {
 
   public resistance = [{ type: CardType.METAL, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Nuzzle',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Flip a coin. If heads, your opponent\'s Active Pokemon ' +
         'is now Paralyzed.'
     },
     {
       name: 'Quick Attack',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];

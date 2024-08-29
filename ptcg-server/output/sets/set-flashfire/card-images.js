@@ -1,13 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ToxicroakExArt = exports.StartlingMegaphoneArt = exports.SkrelpArt = exports.SeedotArt = exports.SacredAshArt = exports.PyroarArt = exports.MiltankArt = exports.LysandreArt = exports.LitleoArt = exports.FieryTorchArt = exports.DragalgeArt = exports.BlacksmithArt = void 0;
+exports.ToxicroakExArt = exports.StartlingMegaphoneArt = exports.SkrelpArt = exports.SeedotArt = exports.SacredAshArt = exports.PyroarArt = exports.ProtectionCubeArt = exports.MiltankArt = exports.MCharizardEXArt = exports.LysandreArt = exports.LitleoArt = exports.FieryTorchArt = exports.DragalgeArt = exports.BlacksmithArt = void 0;
 const blacksmith_1 = require("./blacksmith");
 const dragalge_1 = require("./dragalge");
 const fiery_torch_1 = require("./fiery-torch");
 const FLF_5_Seedot_1 = require("./FLF_5_Seedot");
 const litleo_1 = require("./litleo");
 const lysandre_1 = require("./lysandre");
+const m_charizard_ex_1 = require("./m-charizard-ex");
 const miltank_1 = require("./miltank");
+const protection_cube_1 = require("./protection-cube");
 const pyroar_1 = require("./pyroar");
 const sacred_ash_1 = require("./sacred-ash");
 const skrelp_1 = require("./skrelp");
@@ -48,6 +50,13 @@ class LysandreArt extends lysandre_1.Lysandre {
     }
 }
 exports.LysandreArt = LysandreArt;
+class MCharizardEXArt extends m_charizard_ex_1.MCharizardEX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_069_R_EN.png';
+    }
+}
+exports.MCharizardEXArt = MCharizardEXArt;
 class MiltankArt extends miltank_1.Miltank {
     constructor() {
         super(...arguments);
@@ -55,6 +64,13 @@ class MiltankArt extends miltank_1.Miltank {
     }
 }
 exports.MiltankArt = MiltankArt;
+class ProtectionCubeArt extends protection_cube_1.ProtectionCube {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_095_R_EN.png';
+    }
+}
+exports.ProtectionCubeArt = ProtectionCubeArt;
 class PyroarArt extends pyroar_1.Pyroar {
     constructor() {
         super(...arguments);

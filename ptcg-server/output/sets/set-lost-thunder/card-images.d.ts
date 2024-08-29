@@ -5,6 +5,7 @@ import { Chikorita2 } from './chikorita-2';
 import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
 import { Electropower } from './electropower';
+import { Girafarig } from './girafarig';
 import { Grovyle } from './grovyle';
 import { LostBlender } from './lost-blender';
 import { ThunderMountainPrismStar } from './LOT_191_ThunderMountainPrismStar';
@@ -38,6 +39,9 @@ export declare class CustomCatcherArt extends CustomCatcher {
     cardImage: string;
 }
 export declare class ElectropowerArt extends Electropower {
+    cardImage: string;
+}
+export declare class GirafarigArt extends Girafarig {
     cardImage: string;
 }
 export declare class GiratinaArt extends Giratina {

@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WurmpleArt = exports.WinonaArt = exports.WideLensArt = exports.WallyArt = exports.VoltorbArt = exports.TrainersMailArt = exports.SwellowArt = exports.SkyFieldArt = exports.SilcoonArt = exports.ShuppetArt = exports.ShayminExArt = exports.NatuArt = exports.DustoxArt = exports.DoubleDragonEnergyArt = exports.BeautiflyArt = exports.ArticunoArt = void 0;
+exports.WurmpleArt = exports.WinonaArt = exports.WideLensArt = exports.WallyArt = exports.VoltorbArt = exports.TrainersMailArt = exports.SwellowArt = exports.SkyFieldArt = exports.SilcoonArt = exports.ShuppetArt = exports.ShayminExArt = exports.NatuArt = exports.MRayquazaEXArt = exports.DustoxArt = exports.DoubleDragonEnergyArt = exports.BeautiflyArt = exports.ArticunoArt = void 0;
 const articuno_1 = require("./articuno");
 const beautifly_1 = require("./beautifly");
 const double_dragon_energy_1 = require("./double-dragon-energy");
+const m_rayquaza_ex_1 = require("./m-rayquaza-ex");
 const natu_1 = require("./natu");
 const ROS_21_Voltorb_1 = require("./ROS_21_Voltorb");
 const ROS_72_Swellow_1 = require("./ROS_72_Swellow");
@@ -45,6 +46,13 @@ class DustoxArt extends ROS_8_Dustox_1.Dustox {
     }
 }
 exports.DustoxArt = DustoxArt;
+class MRayquazaEXArt extends m_rayquaza_ex_1.MRayquazaEX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_061_R_EN.png';
+    }
+}
+exports.MRayquazaEXArt = MRayquazaEXArt;
 class NatuArt extends natu_1.Natu {
     constructor() {
         super(...arguments);

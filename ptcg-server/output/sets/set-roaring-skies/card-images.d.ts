@@ -1,6 +1,7 @@
 import { Articuno } from './articuno';
 import { Beautifly } from './beautifly';
 import { DoubleDragonEnergy } from './double-dragon-energy';
+import { MRayquazaEX } from './m-rayquaza-ex';
 import { Natu } from './natu';
 import { Voltorb } from './ROS_21_Voltorb';
 import { Swellow } from './ROS_72_Swellow';
@@ -24,6 +25,9 @@ export declare class DoubleDragonEnergyArt extends DoubleDragonEnergy {
     cardImage: string;
 }
 export declare class DustoxArt extends Dustox {
+    cardImage: string;
+}
+export declare class MRayquazaEXArt extends MRayquazaEX {
     cardImage: string;
 }
 export declare class NatuArt extends Natu {

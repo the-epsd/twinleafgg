@@ -15,6 +15,7 @@ import { DeliveryDrone } from './delivery-drone';
 import { Dudunsparce } from './dudunsparce';
 import { FightingAuLait } from './fighting-au-lait';
 import { Flamigo } from './flamigo';
+import { Forretressex } from './forretress-ex';
 import { Frigibax } from './frigibax';
 import { Frigibax2 } from './frigibax2';
 import { Giacomo } from './giacomo';
@@ -35,6 +36,7 @@ import { Hydreigon } from './PAL_140_Hydreigon';
 import { Pelipper } from './PAL_159_Pelipper';
 import { Lokix } from './PAL_21_Lokix';
 import { Magnemite } from './PAL_65_Magnemite';
+import { Pineco } from './pineco';
 import { ReversalEnergy } from './reversal-energy';
 import { Shinx } from './shinx';
 import { Spiritomb } from './spiritomb';
@@ -123,6 +125,10 @@ export class FlamigoArt extends Flamigo {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_170_R_EN_LG.png';
 }
 
+export class ForretressexArt extends Forretressex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_005_R_EN.png';
+}
+
 export class FrigibaxArt extends Frigibax {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_057_R_EN_LG.png';
 }
@@ -189,6 +195,10 @@ export class OrthwormArt extends Orthworm {
 
 export class PelipperArt extends Pelipper {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_159_R_EN_LG.png';
+}
+
+export class PinecoArt extends Pineco {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_004_R_EN.png';
 }
 
 export class ReversalEnergyArt extends ReversalEnergy {

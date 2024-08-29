@@ -61,6 +61,7 @@ export enum Stage {
   STAGE_2,
   VMAX,
   VSTAR,
+  MEGA,
 }
 
 export enum CardType {

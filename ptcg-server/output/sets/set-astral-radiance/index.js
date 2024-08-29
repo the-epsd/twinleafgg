@@ -14,6 +14,7 @@ exports.setAstralRadiance = [
     new card_images_1.EnergyLotoArt(),
     new card_images_1.FeatherBallArt(),
     new card_images_1.GalladeArt(),
+    new card_images_1.GarchompVArt(),
     new card_images_1.GapejawBogArt(),
     new card_images_1.GardeniasVigorArt(),
     new card_images_1.GrantArt(),

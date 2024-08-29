@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArctibaxArt, ArtazonArt, BaxcaliburArt, BossOrdersArt, BramblinArt, BraveyCharmArt, CetitanArt, CetoddleArt, ChienPaoexArt, ChiYuexArt, ChoiceBeltArt, ClavellArt, CufantArt, DeinoArt, DeliveryDroneArt, DudunsparceArt, FightingAuLaitArt, FlamigoArt, Frigibax2Art, FrigibaxArt, GiacomoArt, GreatBallArt, GrushaArt, HydreigonArt, IonoArt, JetEnergyArt, LokixArt, LuminousEnergyArt, LuxrayArt, MagnemiteArt, MimikyuArt, MurkrowArt, NoibatArt, NoivernexArt, OrthwormArt, PelipperArt, ReversalEnergyArt, ShinxArt, SpiritombArt, SquawkabillyexArt, SuperiorEnergyRetrievalArt, SuperRodArt, TadbulbArt, TherapeuticEnergyArt, TingLuexArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WattrelArt, WingullArt, WoChienexArt, ZweilousArt } from './card-images';
+import { ArctibaxArt, ArtazonArt, BaxcaliburArt, BossOrdersArt, BramblinArt, BraveyCharmArt, CetitanArt, CetoddleArt, ChienPaoexArt, ChiYuexArt, ChoiceBeltArt, ClavellArt, CufantArt, DeinoArt, DeliveryDroneArt, DudunsparceArt, FightingAuLaitArt, FlamigoArt, ForretressexArt, Frigibax2Art, FrigibaxArt, GiacomoArt, GreatBallArt, GrushaArt, HydreigonArt, IonoArt, JetEnergyArt, LokixArt, LuminousEnergyArt, LuxrayArt, MagnemiteArt, MimikyuArt, MurkrowArt, NoibatArt, NoivernexArt, OrthwormArt, PelipperArt, PinecoArt, ReversalEnergyArt, ShinxArt, SpiritombArt, SquawkabillyexArt, SuperiorEnergyRetrievalArt, SuperRodArt, TadbulbArt, TherapeuticEnergyArt, TingLuexArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WattrelArt, WingullArt, WoChienexArt, ZweilousArt } from './card-images';
 
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
@@ -23,6 +23,7 @@ export const setPaldeaEvolved: Card[] = [
   new DudunsparceArt(),
   new FightingAuLaitArt(),
   new FlamigoArt(),
+  new ForretressexArt(),
   new FrigibaxArt(),
   new Frigibax2Art(),
   new GiacomoArt(),
@@ -41,6 +42,7 @@ export const setPaldeaEvolved: Card[] = [
   new NoivernexArt(),
   new OrthwormArt(),
   new PelipperArt(),
+  new PinecoArt(),
   new ReversalEnergyArt(),
   new ShinxArt(),
   new SpiritombArt(),

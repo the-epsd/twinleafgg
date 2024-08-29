@@ -1,6 +1,7 @@
 import { Articuno } from './articuno';
 import { Beautifly } from './beautifly';
 import { DoubleDragonEnergy } from './double-dragon-energy';
+import { MRayquazaEX } from './m-rayquaza-ex';
 import { Natu } from './natu';
 import { Voltorb } from './ROS_21_Voltorb';
 import { Swellow } from './ROS_72_Swellow';
@@ -29,6 +30,10 @@ export class DoubleDragonEnergyArt extends DoubleDragonEnergy {
 
 export class DustoxArt extends Dustox {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_008_R_EN_LG.png';
+}
+
+export class MRayquazaEXArt extends MRayquazaEX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ROS/ROS_061_R_EN.png';
 }
 
 export class NatuArt extends Natu {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.MewtwoArt = exports.MewArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.LaironArt = exports.KartanaArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DedenneGXArt = exports.CleffaArt = exports.AronArt = exports.ArcanineArt = void 0;
+exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.OddishArt = exports.MewtwoArt = exports.MewArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.MarshadowArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.LaironArt = exports.KartanaArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DedenneGXArt = exports.CleffaArt = exports.AronArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
 const espurr_1 = require("./espurr");
@@ -8,9 +8,11 @@ const fire_crystal_1 = require("./fire-crystal");
 const greens_exploration_1 = require("./greens-exploration");
 const hitmontop_1 = require("./hitmontop");
 const lt_surges_strategy_1 = require("./lt-surges-strategy");
+const marshadow_1 = require("./marshadow");
 const martial_arts_dojo_1 = require("./martial-arts-dojo");
 const mew_1 = require("./mew");
 const mewtwo_1 = require("./mewtwo");
+const oddish_1 = require("./oddish");
 const pokegear_30_1 = require("./pokegear-30");
 const porygon_z_1 = require("./porygon-z");
 const spiritomb_1 = require("./spiritomb");
@@ -125,6 +127,13 @@ class LtSurgesStrategyArt extends lt_surges_strategy_1.LtSurgesStrategy {
     }
 }
 exports.LtSurgesStrategyArt = LtSurgesStrategyArt;
+class MarshadowArt extends marshadow_1.Marshadow {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_081_R_EN.png';
+    }
+}
+exports.MarshadowArt = MarshadowArt;
 class MartialArtsDojoArt extends martial_arts_dojo_1.MartialArtsDojo {
     constructor() {
         super(...arguments);
@@ -153,6 +162,13 @@ class MewtwoArt extends mewtwo_1.Mewtwo {
     }
 }
 exports.MewtwoArt = MewtwoArt;
+class OddishArt extends oddish_1.Oddish {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_005_R_EN.png';
+    }
+}
+exports.OddishArt = OddishArt;
 class Pokegear30Art extends pokegear_30_1.Pokegear30 {
     constructor() {
         super(...arguments);

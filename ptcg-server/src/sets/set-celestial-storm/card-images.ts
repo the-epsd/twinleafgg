@@ -5,6 +5,7 @@ import { Nuzleaf } from './CES_13_Nuzleaf';
 import { Sableye } from './CES_88_Sableye';
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
+import { ElectrodeGX } from './electrode-gx';
 import { HustleBelt } from './hustle-belt';
 import { Magcargo } from './magcargo';
 import { Marshtomp } from './marshtomp';
@@ -12,6 +13,7 @@ import { Mudkip } from './mudkip';
 import { Oricorio } from './oricorio';
 import { Swampert } from './swampert';
 import { TateAndLiza } from './tate-and-liza';
+import { Whismur } from './whismur';
 
 export class ApricornMakerArt extends ApricornMaker {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_124_R_EN_LG.png';
@@ -23,6 +25,10 @@ export class CopycatArt extends Copycat {
 
 export class DelcattyArt extends Delcatty {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_121_R_EN.png';
+}
+
+export class ElectrodeGXArt extends ElectrodeGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_048_R_EN.png';
 }
 
 export class HustleBeltArt extends HustleBelt {
@@ -67,4 +73,8 @@ export class SwampertArt extends Swampert {
 
 export class TateAndLizaArt extends TateAndLiza {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_148_R_EN_LG.png';
+}
+
+export class WhismurArt extends Whismur {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_116_R_EN.png';
 }

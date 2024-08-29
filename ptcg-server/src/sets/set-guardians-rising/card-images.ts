@@ -9,6 +9,7 @@ import { Machoke } from './machoke';
 import { Mallow } from './mallow';
 import { Mimikyu } from './mimikyu';
 import { RescueStretcher } from './rescue-stretcher';
+import { TapuLeleGX } from './tapu-lele-gx';
 
 export class AetherParadiseConvserationAreaArt extends AetherParadiseConvserationArea {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_116_R_EN_LG.png';
@@ -50,4 +51,8 @@ export class MimikyuArt extends Mimikyu {
 
 export class RescueStretcherArt extends RescueStretcher {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_130_R_EN_LG.png';
+}
+
+export class TapuLeleGXArt extends TapuLeleGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_060_R_EN.png';
 }

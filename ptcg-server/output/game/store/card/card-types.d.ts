@@ -53,7 +53,8 @@ export declare enum Stage {
     STAGE_1 = 3,
     STAGE_2 = 4,
     VMAX = 5,
-    VSTAR = 6
+    VSTAR = 6,
+    MEGA = 7
 }
 export declare enum CardType {
     ANY = 0,

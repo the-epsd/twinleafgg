@@ -11,5 +11,6 @@ exports.setGuardiansRising = [
     new card_images_1.MachokeArt(),
     new card_images_1.MallowArt(),
     new card_images_1.MimikyuArt(),
-    new card_images_1.RescueStretcherArt()
+    new card_images_1.RescueStretcherArt(),
+    new card_images_1.TapuLeleGXArt(),
 ];

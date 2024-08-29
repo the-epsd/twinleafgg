@@ -5,9 +5,11 @@ import { FireCrystal } from './fire-crystal';
 import { GreensExploration } from './greens-exploration';
 import { Hitmontop } from './hitmontop';
 import { LtSurgesStrategy } from './lt-surges-strategy';
+import { Marshadow } from './marshadow';
 import { MartialArtsDojo } from './martial-arts-dojo';
 import { Mew } from './mew';
 import { Mewtwo } from './mewtwo';
+import { Oddish } from './oddish';
 import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Spiritomb } from './spiritomb';
@@ -66,6 +68,9 @@ export declare class LickitungArt extends Lickitung {
 export declare class LtSurgesStrategyArt extends LtSurgesStrategy {
     cardImage: string;
 }
+export declare class MarshadowArt extends Marshadow {
+    cardImage: string;
+}
 export declare class MartialArtsDojoArt extends MartialArtsDojo {
     cardImage: string;
 }
@@ -76,6 +81,9 @@ export declare class MewArt extends Mew {
     cardImage: string;
 }
 export declare class MewtwoArt extends Mewtwo {
+    cardImage: string;
+}
+export declare class OddishArt extends Oddish {
     cardImage: string;
 }
 export declare class Pokegear30Art extends Pokegear30 {

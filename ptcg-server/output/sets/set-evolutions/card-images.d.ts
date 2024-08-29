@@ -1,10 +1,14 @@
 import { DarknessEnergy } from '../set-diamond-and-pearl/darkness-energy';
 import { DevolutionSpray } from './devolution-spray';
+import { DragoniteEX } from './dragonite-ex';
 import { Electabuzz } from './electabuzz';
 import { Poliwhirl } from './EVO_24_Poliwhirl';
 import { Pokedex } from './pokedex';
 import { Starmie } from './starmie';
 export declare class DevolutionSprayArt extends DevolutionSpray {
+    cardImage: string;
+}
+export declare class DragoniteEXArt extends DragoniteEX {
     cardImage: string;
 }
 export declare class ElectabuzzArt extends Electabuzz {

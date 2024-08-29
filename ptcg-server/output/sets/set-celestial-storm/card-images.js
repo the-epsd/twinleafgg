@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TateAndLizaArt = exports.SwampertArt = exports.SlakothArt = exports.SlakingArt = exports.SableyeArt = exports.OricorioArt = exports.NuzleafArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.HustleBeltArt = exports.DelcattyArt = exports.CopycatArt = exports.ApricornMakerArt = void 0;
+exports.WhismurArt = exports.TateAndLizaArt = exports.SwampertArt = exports.SlakothArt = exports.SlakingArt = exports.SableyeArt = exports.OricorioArt = exports.NuzleafArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.HustleBeltArt = exports.ElectrodeGXArt = exports.DelcattyArt = exports.CopycatArt = exports.ApricornMakerArt = void 0;
 const apricorn_maker_1 = require("./apricorn-maker");
 const CES_113_Slakoth_1 = require("./CES_113_Slakoth");
 const CES_115_Slaking_1 = require("./CES_115_Slaking");
@@ -8,6 +8,7 @@ const CES_13_Nuzleaf_1 = require("./CES_13_Nuzleaf");
 const CES_88_Sableye_1 = require("./CES_88_Sableye");
 const copycat_1 = require("./copycat");
 const delcatty_1 = require("./delcatty");
+const electrode_gx_1 = require("./electrode-gx");
 const hustle_belt_1 = require("./hustle-belt");
 const magcargo_1 = require("./magcargo");
 const marshtomp_1 = require("./marshtomp");
@@ -15,6 +16,7 @@ const mudkip_1 = require("./mudkip");
 const oricorio_1 = require("./oricorio");
 const swampert_1 = require("./swampert");
 const tate_and_liza_1 = require("./tate-and-liza");
+const whismur_1 = require("./whismur");
 class ApricornMakerArt extends apricorn_maker_1.ApricornMaker {
     constructor() {
         super(...arguments);
@@ -36,6 +38,13 @@ class DelcattyArt extends delcatty_1.Delcatty {
     }
 }
 exports.DelcattyArt = DelcattyArt;
+class ElectrodeGXArt extends electrode_gx_1.ElectrodeGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_048_R_EN.png';
+    }
+}
+exports.ElectrodeGXArt = ElectrodeGXArt;
 class HustleBeltArt extends hustle_belt_1.HustleBelt {
     constructor() {
         super(...arguments);
@@ -113,3 +122,10 @@ class TateAndLizaArt extends tate_and_liza_1.TateAndLiza {
     }
 }
 exports.TateAndLizaArt = TateAndLizaArt;
+class WhismurArt extends whismur_1.Whismur {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_116_R_EN.png';
+    }
+}
+exports.WhismurArt = WhismurArt;

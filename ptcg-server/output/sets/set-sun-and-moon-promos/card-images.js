@@ -1,10 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TapuKokoArt = exports.PikachuZekromGXArt = exports.PalaceBookArt = exports.LurantisArt = void 0;
+exports.TapuKokoArt = exports.PikachuZekromGXArt = exports.PalaceBookArt = exports.LurantisArt = exports.FirefighterPikachuArt = void 0;
+const firefighter_pikachu_1 = require("./firefighter-pikachu");
 const palace_book_1 = require("./palace-book");
 const SMP_168_Pikachu_ZekromGX_1 = require("./SMP_168_Pikachu&ZekromGX");
 const SMP_25_Lurantis_1 = require("./SMP_25_Lurantis");
 const tapu_koko_1 = require("./tapu-koko");
+class FirefighterPikachuArt extends firefighter_pikachu_1.FirefighterPikachu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SMP/SMP_209_R_JP.png';
+    }
+}
+exports.FirefighterPikachuArt = FirefighterPikachuArt;
 class LurantisArt extends SMP_25_Lurantis_1.Lurantis {
     constructor() {
         super(...arguments);

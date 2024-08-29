@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TinkatonArt = exports.TinkatuffArt = exports.TinkatinkArt = exports.TingLuexArt = exports.TherapeuticEnergyArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.PelipperArt = exports.OrthwormArt = exports.NoivernexArt = exports.NoibatArt = exports.MurkrowArt = exports.MimikyuArt = exports.MagnemiteArt = exports.LuminousEnergyArt = exports.LokixArt = exports.JetEnergyArt = exports.IonoArt = exports.HydreigonArt = exports.GrushaArt = exports.GreatBallArt = exports.GiacomoArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.DeinoArt = exports.CufantArt = exports.ClavellArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.ChiYuexArt = exports.CetoddleArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BramblinArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
-exports.ZweilousArt = exports.WingullArt = void 0;
+exports.TinkatinkArt = exports.TingLuexArt = exports.TherapeuticEnergyArt = exports.TadbulbArt = exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.PinecoArt = exports.PelipperArt = exports.OrthwormArt = exports.NoivernexArt = exports.NoibatArt = exports.MurkrowArt = exports.MimikyuArt = exports.MagnemiteArt = exports.LuminousEnergyArt = exports.LokixArt = exports.JetEnergyArt = exports.IonoArt = exports.HydreigonArt = exports.GrushaArt = exports.GreatBallArt = exports.GiacomoArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.ForretressexArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.DeinoArt = exports.CufantArt = exports.ClavellArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.ChiYuexArt = exports.CetoddleArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BramblinArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
+exports.ZweilousArt = exports.WingullArt = exports.TinkatonArt = exports.TinkatuffArt = void 0;
 const arctibax_1 = require("./arctibax");
 const artazon_1 = require("./artazon");
 const baxcalibur_1 = require("./baxcalibur");
@@ -19,6 +19,7 @@ const delivery_drone_1 = require("./delivery-drone");
 const dudunsparce_1 = require("./dudunsparce");
 const fighting_au_lait_1 = require("./fighting-au-lait");
 const flamigo_1 = require("./flamigo");
+const forretress_ex_1 = require("./forretress-ex");
 const frigibax_1 = require("./frigibax");
 const frigibax2_1 = require("./frigibax2");
 const giacomo_1 = require("./giacomo");
@@ -39,6 +40,7 @@ const PAL_140_Hydreigon_1 = require("./PAL_140_Hydreigon");
 const PAL_159_Pelipper_1 = require("./PAL_159_Pelipper");
 const PAL_21_Lokix_1 = require("./PAL_21_Lokix");
 const PAL_65_Magnemite_1 = require("./PAL_65_Magnemite");
+const pineco_1 = require("./pineco");
 const reversal_energy_1 = require("./reversal-energy");
 const shinx_1 = require("./shinx");
 const spiritomb_1 = require("./spiritomb");
@@ -180,6 +182,13 @@ class FlamigoArt extends flamigo_1.Flamigo {
     }
 }
 exports.FlamigoArt = FlamigoArt;
+class ForretressexArt extends forretress_ex_1.Forretressex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_005_R_EN.png';
+    }
+}
+exports.ForretressexArt = ForretressexArt;
 class FrigibaxArt extends frigibax_1.Frigibax {
     constructor() {
         super(...arguments);
@@ -299,6 +308,13 @@ class PelipperArt extends PAL_159_Pelipper_1.Pelipper {
     }
 }
 exports.PelipperArt = PelipperArt;
+class PinecoArt extends pineco_1.Pineco {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_004_R_EN.png';
+    }
+}
+exports.PinecoArt = PinecoArt;
 class ReversalEnergyArt extends reversal_energy_1.ReversalEnergy {
     constructor() {
         super(...arguments);
