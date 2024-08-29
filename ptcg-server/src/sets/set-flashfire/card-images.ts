@@ -4,7 +4,9 @@ import { FieryTorch } from './fiery-torch';
 import { Seedot } from './FLF_5_Seedot';
 import { Litleo } from './litleo';
 import { Lysandre } from './lysandre';
+import { MCharizardEX } from './m-charizard-ex';
 import { Miltank } from './miltank';
+import { ProtectionCube } from './protection-cube';
 import { Pyroar } from './pyroar';
 import { SacredAsh } from './sacred-ash';
 import { Skrelp } from './skrelp';
@@ -20,7 +22,7 @@ export class DragalgeArt extends Dragalge {
 }
 
 export class FieryTorchArt extends FieryTorch {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_089_R_EN_LG.png';  
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_089_R_EN_LG.png';
 }
 
 export class LitleoArt extends Litleo {
@@ -31,8 +33,16 @@ export class LysandreArt extends Lysandre {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_090_R_EN.png';
 }
 
+export class MCharizardEXArt extends MCharizardEX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_069_R_EN.png';
+}
+
 export class MiltankArt extends Miltank {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_083_R_EN.png';
+}
+
+export class ProtectionCubeArt extends ProtectionCube {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_095_R_EN.png';
 }
 
 export class PyroarArt extends Pyroar {

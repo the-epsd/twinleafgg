@@ -16,7 +16,7 @@ class ScreamTailex extends pokemon_card_1.PokemonCard {
         this.hp = 190;
         this.weakness = [{ type: game_1.CardType.DARK }];
         this.resistance = [{ type: game_1.CardType.FIGHTING, value: -30 }];
-        this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
+        this.retreat = [game_1.CardType.COLORLESS];
         this.attacks = [
             {
                 name: 'Sudden Shriek',

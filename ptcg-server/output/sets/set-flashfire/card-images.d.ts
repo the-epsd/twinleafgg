@@ -4,7 +4,9 @@ import { FieryTorch } from './fiery-torch';
 import { Seedot } from './FLF_5_Seedot';
 import { Litleo } from './litleo';
 import { Lysandre } from './lysandre';
+import { MCharizardEX } from './m-charizard-ex';
 import { Miltank } from './miltank';
+import { ProtectionCube } from './protection-cube';
 import { Pyroar } from './pyroar';
 import { SacredAsh } from './sacred-ash';
 import { Skrelp } from './skrelp';
@@ -25,7 +27,13 @@ export declare class LitleoArt extends Litleo {
 export declare class LysandreArt extends Lysandre {
     cardImage: string;
 }
+export declare class MCharizardEXArt extends MCharizardEX {
+    cardImage: string;
+}
 export declare class MiltankArt extends Miltank {
+    cardImage: string;
+}
+export declare class ProtectionCubeArt extends ProtectionCube {
     cardImage: string;
 }
 export declare class PyroarArt extends Pyroar {

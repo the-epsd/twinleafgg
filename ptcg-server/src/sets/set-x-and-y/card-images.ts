@@ -10,6 +10,7 @@ import { Raichu } from './raichu';
 import { ShadowCircle } from './shadow-circle';
 import { Shauna } from './shauna';
 import { SuperPotion } from './super-potion';
+import { Voltorb } from './voltorb';
 import { Trevenant } from './XY_55_Trevenant';
 import { YveltalEx } from './yveltal-ex';
 
@@ -66,6 +67,10 @@ export class SuperPotionArt extends SuperPotion {
 
 export class TrevenantArt extends Trevenant {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/XY/XY_055_R_EN_LG.png';
+}
+
+export class VoltorbArt extends Voltorb {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/XY/XY_044_R_EN.png';
 }
 
 export class YveltalExArt extends YveltalEx {

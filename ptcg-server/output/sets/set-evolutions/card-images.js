@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DarknessEnergyArt = exports.StarmieArt = exports.PoliwhirlArt = exports.PokedexArt = exports.ElectabuzzArt = exports.DevolutionSprayArt = void 0;
+exports.DarknessEnergyArt = exports.StarmieArt = exports.PoliwhirlArt = exports.PokedexArt = exports.ElectabuzzArt = exports.DragoniteEXArt = exports.DevolutionSprayArt = void 0;
 const darkness_energy_1 = require("../set-diamond-and-pearl/darkness-energy");
 const devolution_spray_1 = require("./devolution-spray");
+const dragonite_ex_1 = require("./dragonite-ex");
 const electabuzz_1 = require("./electabuzz");
 const EVO_24_Poliwhirl_1 = require("./EVO_24_Poliwhirl");
 const pokedex_1 = require("./pokedex");
@@ -14,6 +15,13 @@ class DevolutionSprayArt extends devolution_spray_1.DevolutionSpray {
     }
 }
 exports.DevolutionSprayArt = DevolutionSprayArt;
+class DragoniteEXArt extends dragonite_ex_1.DragoniteEX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVO/EVO_072_R_EN.png';
+    }
+}
+exports.DragoniteEXArt = DragoniteEXArt;
 class ElectabuzzArt extends electabuzz_1.Electabuzz {
     constructor() {
         super(...arguments);

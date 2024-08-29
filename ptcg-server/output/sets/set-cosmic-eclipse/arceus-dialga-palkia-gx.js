@@ -6,18 +6,13 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 function* useUltimateRay(next, store, state, effect) {
     const player = effect.player;
     if (player.deck.cards.length === 0) {
         return state;
     }
-    const blocked = [];
-    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (!cardList.vPokemon()) {
-            blocked.push(target);
-        }
-    });
-    yield store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 3, blockedTo: blocked }), transfers => {
+    yield store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 3 }), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
             const target = game_1.StateUtils.getTarget(state, player, transfer.to);
@@ -71,19 +66,45 @@ class ArceusDialgaPalkiaGX extends pokemon_card_1.PokemonCard {
             }
             player.usedGX = true;
             player.alteredCreationDamage = true;
-            // Check attack cost
-            const checkCost = new check_effects_1.CheckAttackCostEffect(player, this.attacks[1]);
-            state = store.reduceEffect(state, checkCost);
             // Check attached energy
             const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkEnergy);
-            // Filter for only Water Energy
-            const waterEnergy = checkEnergy.energyMap.filter(e => e.provides.includes(card_types_1.CardType.WATER));
-            // Get number of extra Water energy  
-            const extraWaterEnergy = waterEnergy.length - checkCost.cost.length;
-            // Apply damage boost based on extra Water energy
-            if (extraWaterEnergy >= 1) {
+            // Check if there's any Water energy attached
+            const hasWaterEnergy = checkEnergy.energyMap.some(e => e.provides.includes(card_types_1.CardType.WATER));
+            if (hasWaterEnergy) {
                 player.usedAlteredCreation == true;
+                console.log('Used Altered Creation with Extra Water');
+            }
+        }
+        if (effect instanceof game_effects_1.KnockOutEffect) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Do not activate between turns, or when it's not opponents turn.
+            if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+                return state;
+            }
+            // Check if the attack that caused the KnockOutEffect is "Amp You Very Much"
+            if (player.usedAlteredCreation === true) {
+                effect.prizeCount += 1;
+            }
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.source == effect.player.active) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            if (effect.target == effect.source) {
+                return state;
+            }
+            if (effect.target !== player.active && effect.target !== opponent.active) {
+                return state;
+            }
+            if (effect.damageReduced) {
+                // Damage already reduced, don't reduce again
+                return state;
+            }
+            const targetCard = effect.target.getPokemonCard();
+            if (targetCard && player.alteredCreationDamage) {
+                effect.damage += 30;
+                effect.damageReduced = true;
             }
         }
         return state;

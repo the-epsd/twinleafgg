@@ -63,6 +63,7 @@ var Stage;
     Stage[Stage["STAGE_2"] = 4] = "STAGE_2";
     Stage[Stage["VMAX"] = 5] = "VMAX";
     Stage[Stage["VSTAR"] = 6] = "VSTAR";
+    Stage[Stage["MEGA"] = 7] = "MEGA";
 })(Stage = exports.Stage || (exports.Stage = {}));
 var CardType;
 (function (CardType) {

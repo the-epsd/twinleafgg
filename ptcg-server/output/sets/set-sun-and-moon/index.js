@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSunAndMoon = void 0;
 const card_images_1 = require("./card-images");
 exports.setSunAndMoon = [
+    new card_images_1.AlolanGrimerArt(),
+    new card_images_1.AlolanMukArt(),
     new card_images_1.AlolanRattataArt(),
     new card_images_1.DragonairArt(),
     new card_images_1.EnergyRetrievalArt(),

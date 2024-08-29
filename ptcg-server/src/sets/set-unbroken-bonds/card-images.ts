@@ -5,9 +5,11 @@ import { FireCrystal } from './fire-crystal';
 import { GreensExploration } from './greens-exploration';
 import { Hitmontop } from './hitmontop';
 import { LtSurgesStrategy } from './lt-surges-strategy';
+import { Marshadow } from './marshadow';
 import { MartialArtsDojo } from './martial-arts-dojo';
 import { Mew } from './mew';
 import { Mewtwo } from './mewtwo';
+import { Oddish } from './oddish';
 import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
 import { Spiritomb } from './spiritomb';
@@ -81,6 +83,10 @@ export class LtSurgesStrategyArt extends LtSurgesStrategy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_178_R_EN.png';
 }
 
+export class MarshadowArt extends Marshadow {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_081_R_EN.png';
+}
+
 export class MartialArtsDojoArt extends MartialArtsDojo {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_179_R_EN_LG.png';
 }
@@ -95,6 +101,10 @@ export class MewArt extends Mew {
 
 export class MewtwoArt extends Mewtwo {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_075_R_EN.png';
+}
+
+export class OddishArt extends Oddish {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_005_R_EN.png';
 }
 
 export class Pokegear30Art extends Pokegear30 {

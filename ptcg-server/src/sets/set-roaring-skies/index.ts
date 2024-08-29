@@ -1,11 +1,12 @@
 import { Card } from '../../game/store/card/card';
-import { ArticunoArt, BeautiflyArt, DoubleDragonEnergyArt, DustoxArt, NatuArt, ShayminExArt, ShuppetArt, SilcoonArt, SkyFieldArt, SwellowArt, TrainersMailArt, VoltorbArt, WallyArt, WideLensArt, WinonaArt, WurmpleArt } from './card-images';
+import { ArticunoArt, BeautiflyArt, DoubleDragonEnergyArt, DustoxArt, MRayquazaEXArt, NatuArt, ShayminExArt, ShuppetArt, SilcoonArt, SkyFieldArt, SwellowArt, TrainersMailArt, VoltorbArt, WallyArt, WideLensArt, WinonaArt, WurmpleArt } from './card-images';
 
 export const setRoaringSkies: Card[] = [
   new ArticunoArt(),
   new BeautiflyArt(),
   new DoubleDragonEnergyArt(),
   new DustoxArt(),
+  new MRayquazaEXArt(),
   new NatuArt(),
   new ShayminExArt(),
   new ShuppetArt(),

@@ -2,6 +2,8 @@ import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
 import { ExpShare } from '../set-scarlet-and-violet/exp-share';
 import { NestBall } from '../set-scarlet-and-violet/nest-ball';
 import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
+import { AlolanGrimer } from './alolan-grimer';
+import { AlolanMuk } from './alolan-muk';
 import { Dragonair } from './dragonair';
 import { Herdier } from './herdier';
 import { Oranguru } from './oranguru';
@@ -11,6 +13,14 @@ import { Fomantis } from './SUM_14_Fomantis';
 import { Golduck } from './SUM_29_Golduck';
 import { AlolanRattata } from './SUM_76_Alolan_Rattata';
 import { TimerBall } from './timer-ball';
+
+export class AlolanGrimerArt extends AlolanGrimer {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_057_R_EN_LG.png';
+}
+
+export class AlolanMukArt extends AlolanMuk {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_058_R_EN_LG.png';
+}
 
 export class AlolanRattataArt extends AlolanRattata {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_076_R_EN_LG.png';

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.YveltalExArt = exports.TrevenantArt = exports.SuperPotionArt = exports.ShaunaArt = exports.ShadowCircleArt = exports.RaichuArt = exports.ProfessorsLetterArt = exports.PikachuArt = exports.MuscleBandArt = exports.FairyEnergyArt = exports.EvosodaArt = exports.DoubleColorlessEnergyArt = exports.DelphoxArt = exports.BraixenArt = void 0;
+exports.YveltalExArt = exports.VoltorbArt = exports.TrevenantArt = exports.SuperPotionArt = exports.ShaunaArt = exports.ShadowCircleArt = exports.RaichuArt = exports.ProfessorsLetterArt = exports.PikachuArt = exports.MuscleBandArt = exports.FairyEnergyArt = exports.EvosodaArt = exports.DoubleColorlessEnergyArt = exports.DelphoxArt = exports.BraixenArt = void 0;
 const braixen_1 = require("./braixen");
 const delphox_1 = require("./delphox");
 const double_colorless_energy_1 = require("./double-colorless-energy");
@@ -13,6 +13,7 @@ const raichu_1 = require("./raichu");
 const shadow_circle_1 = require("./shadow-circle");
 const shauna_1 = require("./shauna");
 const super_potion_1 = require("./super-potion");
+const voltorb_1 = require("./voltorb");
 const XY_55_Trevenant_1 = require("./XY_55_Trevenant");
 const yveltal_ex_1 = require("./yveltal-ex");
 class BraixenArt extends braixen_1.Braixen {
@@ -109,6 +110,13 @@ class TrevenantArt extends XY_55_Trevenant_1.Trevenant {
     }
 }
 exports.TrevenantArt = TrevenantArt;
+class VoltorbArt extends voltorb_1.Voltorb {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/XY/XY_044_R_EN.png';
+    }
+}
+exports.VoltorbArt = VoltorbArt;
 class YveltalExArt extends yveltal_ex_1.YveltalEx {
     constructor() {
         super(...arguments);

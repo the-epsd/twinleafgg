@@ -16,5 +16,6 @@ exports.setXY = [
     new card_images_1.ShaunaArt(),
     new card_images_1.SuperPotionArt(),
     new card_images_1.TrevenantArt(),
+    new card_images_1.VoltorbArt(),
     new card_images_1.YveltalExArt(),
 ];

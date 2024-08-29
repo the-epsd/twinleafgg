@@ -10,6 +10,7 @@ import { Raichu } from './raichu';
 import { ShadowCircle } from './shadow-circle';
 import { Shauna } from './shauna';
 import { SuperPotion } from './super-potion';
+import { Voltorb } from './voltorb';
 import { Trevenant } from './XY_55_Trevenant';
 import { YveltalEx } from './yveltal-ex';
 export declare class BraixenArt extends Braixen {
@@ -52,6 +53,9 @@ export declare class SuperPotionArt extends SuperPotion {
     cardImage: string;
 }
 export declare class TrevenantArt extends Trevenant {
+    cardImage: string;
+}
+export declare class VoltorbArt extends Voltorb {
     cardImage: string;
 }
 export declare class YveltalExArt extends YveltalEx {

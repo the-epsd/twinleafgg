@@ -8,6 +8,7 @@ import { Machoke } from './machoke';
 import { Mallow } from './mallow';
 import { Mimikyu } from './mimikyu';
 import { RescueStretcher } from './rescue-stretcher';
+import { TapuLeleGX } from './tapu-lele-gx';
 export declare class AetherParadiseConvserationAreaArt extends AetherParadiseConvserationArea {
     cardImage: string;
 }
@@ -38,5 +39,8 @@ export declare class MimikyuArt extends Mimikyu {
     cardImage: string;
 }
 export declare class RescueStretcherArt extends RescueStretcher {
+    cardImage: string;
+}
+export declare class TapuLeleGXArt extends TapuLeleGX {
     cardImage: string;
 }

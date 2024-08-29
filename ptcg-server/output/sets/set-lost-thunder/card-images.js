@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt2 = exports.ChikoritaArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
+exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.GirafarigArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt2 = exports.ChikoritaArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
 const adventure_bag_1 = require("./adventure-bag");
 const alolan_meowth_1 = require("./alolan-meowth");
 const chikorita_1 = require("./chikorita");
@@ -8,6 +8,7 @@ const chikorita_2_1 = require("./chikorita-2");
 const counter_gain_1 = require("./counter-gain");
 const custom_catcher_1 = require("./custom-catcher");
 const electropower_1 = require("./electropower");
+const girafarig_1 = require("./girafarig");
 const grovyle_1 = require("./grovyle");
 const lost_blender_1 = require("./lost-blender");
 const LOT_191_ThunderMountainPrismStar_1 = require("./LOT_191_ThunderMountainPrismStar");
@@ -71,6 +72,13 @@ class ElectropowerArt extends electropower_1.Electropower {
     }
 }
 exports.ElectropowerArt = ElectropowerArt;
+class GirafarigArt extends girafarig_1.Girafarig {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_094_R_EN.png';
+    }
+}
+exports.GirafarigArt = GirafarigArt;
 class GiratinaArt extends LOT_97_Giratina_1.Giratina {
     constructor() {
         super(...arguments);

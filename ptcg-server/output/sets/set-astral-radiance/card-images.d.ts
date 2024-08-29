@@ -16,6 +16,7 @@ import { EnergyLoto } from './energy-loto';
 import { FeatherBall } from './feather-ball';
 import { Gallade } from './gallade';
 import { GapejawBog } from './gapejaw-bog';
+import { GarchompV } from './garchomp-v';
 import { GardeniasVigor } from './gardenias-vigor';
 import { Grant } from './grant';
 import { GutsyPickaxe } from './gutsy-pickaxe';
@@ -89,6 +90,9 @@ export declare class FeatherBallArt extends FeatherBall {
     cardImage: string;
 }
 export declare class GalladeArt extends Gallade {
+    cardImage: string;
+}
+export declare class GarchompVArt extends GarchompV {
     cardImage: string;
 }
 export declare class GapejawBogArt extends GapejawBog {

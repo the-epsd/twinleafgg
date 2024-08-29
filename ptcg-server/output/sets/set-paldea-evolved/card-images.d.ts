@@ -15,6 +15,7 @@ import { DeliveryDrone } from './delivery-drone';
 import { Dudunsparce } from './dudunsparce';
 import { FightingAuLait } from './fighting-au-lait';
 import { Flamigo } from './flamigo';
+import { Forretressex } from './forretress-ex';
 import { Frigibax } from './frigibax';
 import { Frigibax2 } from './frigibax2';
 import { Giacomo } from './giacomo';
@@ -35,6 +36,7 @@ import { Hydreigon } from './PAL_140_Hydreigon';
 import { Pelipper } from './PAL_159_Pelipper';
 import { Lokix } from './PAL_21_Lokix';
 import { Magnemite } from './PAL_65_Magnemite';
+import { Pineco } from './pineco';
 import { ReversalEnergy } from './reversal-energy';
 import { Shinx } from './shinx';
 import { Spiritomb } from './spiritomb';
@@ -104,6 +106,9 @@ export declare class FightingAuLaitArt extends FightingAuLait {
 export declare class FlamigoArt extends Flamigo {
     cardImage: string;
 }
+export declare class ForretressexArt extends Forretressex {
+    cardImage: string;
+}
 export declare class FrigibaxArt extends Frigibax {
     cardImage: string;
 }
@@ -153,6 +158,9 @@ export declare class OrthwormArt extends Orthworm {
     cardImage: string;
 }
 export declare class PelipperArt extends Pelipper {
+    cardImage: string;
+}
+export declare class PinecoArt extends Pineco {
     cardImage: string;
 }
 export declare class ReversalEnergyArt extends ReversalEnergy {

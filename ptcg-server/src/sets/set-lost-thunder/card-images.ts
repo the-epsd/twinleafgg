@@ -5,6 +5,7 @@ import { Chikorita2 } from './chikorita-2';
 import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
 import { Electropower } from './electropower';
+import { Girafarig } from './girafarig';
 import { Grovyle } from './grovyle';
 import { LostBlender } from './lost-blender';
 import { ThunderMountainPrismStar } from './LOT_191_ThunderMountainPrismStar';
@@ -46,6 +47,10 @@ export class CustomCatcherArt extends CustomCatcher {
 
 export class ElectropowerArt extends Electropower {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_172_R_EN_LG.png';
+}
+
+export class GirafarigArt extends Girafarig {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_094_R_EN.png';
 }
 
 export class GiratinaArt extends Giratina {

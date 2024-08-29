@@ -7,7 +7,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class ScreamTailex extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.ANCIENT ];
+  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
 
   public regulationMark = 'H';
 
@@ -21,7 +21,7 @@ export class ScreamTailex extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
@@ -55,7 +55,7 @@ export class ScreamTailex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       // Get current turn
       const turn = state.turn;
-      
+
       // Check if it is player's first turn
       if (turn !== 2) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
@@ -70,12 +70,12 @@ export class ScreamTailex extends PokemonCard {
 
         const player = effect.player;
         const opponent = StateUtils.getOpponent(state, player);
-  
+
         // Defending Pokemon has no energy cards attached
         if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
           return state;
         }
-  
+
         let card: Card;
         return store.prompt(state, new ChooseCardsPrompt(
           player.id,
@@ -85,7 +85,7 @@ export class ScreamTailex extends PokemonCard {
           { min: 1, max: 1, allowCancel: false }
         ), selected => {
           card = selected[0];
-  
+
           opponent.active.moveCardTo(card, opponent.discard);
           return state;
         });
@@ -98,7 +98,7 @@ export class ScreamTailex extends PokemonCard {
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
         }
       }
-  
+
       if (effect instanceof EndTurnEffect) {
         effect.player.marker.removeMarker(this.SUDDEN_SHRIEK_MARKER, this);
       }

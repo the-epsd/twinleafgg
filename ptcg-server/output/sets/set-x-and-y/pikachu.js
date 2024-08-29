@@ -28,6 +28,7 @@ class Pikachu extends pokemon_card_1.PokemonCard {
                 name: 'Quick Attack',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 20,
+                damageCalculation: '+',
                 text: 'Flip a coin. If heads, this attack does 10 more damage.'
             }
         ];

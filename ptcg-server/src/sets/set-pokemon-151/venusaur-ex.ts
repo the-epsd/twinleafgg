@@ -35,7 +35,7 @@ export class Venusaurex extends PokemonCard {
   public name: string = 'Venusaur ex';
   public fullName: string = 'Venusaur ex MEW';
 
-  public readonly TRANQUIL_FLOWER_MARKER = "TRANQUIL_FLOWER_MARKER";
+  public readonly TRANQUIL_FLOWER_MARKER = 'TRANQUIL_FLOWER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

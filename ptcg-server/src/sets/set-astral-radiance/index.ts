@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AdamanArt, BronzorArt, CancelingCologneArt, CylleneArt, DarkPatchArt, DarkraiVArt, DarkraiVSTARArt, DiancieArt, EnergyLotoArt, FeatherBallArt, GalladeArt, GapejawBogArt, GardeniasVigorArt, GrantArt, GutsyPickaxeArt, HisuianArcanineArt, HisuianBasculegionArt, HisuianBasculinArt, HisuianGrowlitheArt, HisuianHeavyBallArt, HisuianOverqwilArt, HisuianQwilfishArt2, HisuianSamurottVArt, HisuianSamurottVSTARArt, IridaArt, JubilifeVillageArt, KeldeoArt, KleavorArt, KricketuneArt, LucarioVArt, LuxrayVArt, MagnetonArt, MantineArt, MightyenaArt, MiltankArt, OriginFormeDialgaVArt, OriginFormeDialgaVSTARArt, OriginFormePalkiaVArt, OriginFormePalkiaVSTARArt, RadiantGreninjaArt, RadiantHawluchaArt, RaltsArt, RegiceArt, RegidragoArt, RegielekiArt, RegigigasArt, RegirockArt, RegisteelArt, RoxanneArt, ShieldonArt, SpicySeasonedCurryArt, StarmieVArt, SupereffectiveGlassesArt, SwitchCartArt, TempleofSinnohArt, TrekkingShoesArt, UrsalunaArt, WyrdeerVArt, YanmaArt } from './card-images';
+import { AdamanArt, BronzorArt, CancelingCologneArt, CylleneArt, DarkPatchArt, DarkraiVArt, DarkraiVSTARArt, DiancieArt, EnergyLotoArt, FeatherBallArt, GalladeArt, GapejawBogArt, GarchompVArt, GardeniasVigorArt, GrantArt, GutsyPickaxeArt, HisuianArcanineArt, HisuianBasculegionArt, HisuianBasculinArt, HisuianGrowlitheArt, HisuianHeavyBallArt, HisuianOverqwilArt, HisuianQwilfishArt2, HisuianSamurottVArt, HisuianSamurottVSTARArt, IridaArt, JubilifeVillageArt, KeldeoArt, KleavorArt, KricketuneArt, LucarioVArt, LuxrayVArt, MagnetonArt, MantineArt, MightyenaArt, MiltankArt, OriginFormeDialgaVArt, OriginFormeDialgaVSTARArt, OriginFormePalkiaVArt, OriginFormePalkiaVSTARArt, RadiantGreninjaArt, RadiantHawluchaArt, RaltsArt, RegiceArt, RegidragoArt, RegielekiArt, RegigigasArt, RegirockArt, RegisteelArt, RoxanneArt, ShieldonArt, SpicySeasonedCurryArt, StarmieVArt, SupereffectiveGlassesArt, SwitchCartArt, TempleofSinnohArt, TrekkingShoesArt, UrsalunaArt, WyrdeerVArt, YanmaArt } from './card-images';
 
 
 
@@ -16,6 +16,7 @@ export const setAstralRadiance: Card[] = [
   new EnergyLotoArt(),
   new FeatherBallArt(),
   new GalladeArt(),
+  new GarchompVArt(),
   new GapejawBogArt(),
   new GardeniasVigorArt(),
   new GrantArt(),

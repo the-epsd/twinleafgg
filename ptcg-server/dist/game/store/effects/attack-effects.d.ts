@@ -47,6 +47,7 @@ export declare class PutDamageEffect extends AbstractAttackEffect implements Eff
     preventDefault: boolean;
     damage: number;
     damageReduced: boolean;
+    damageIncreased: boolean;
     wasKnockedOutFromFullHP: boolean;
     weaknessApplied: boolean;
     constructor(base: AttackEffect, damage: number);

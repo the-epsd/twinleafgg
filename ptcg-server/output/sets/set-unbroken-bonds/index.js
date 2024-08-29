@@ -17,6 +17,7 @@ exports.setUnbrokenBonds = [
     new card_images_1.LaironArt(),
     new card_images_1.LickitungArt(),
     new card_images_1.LtSurgesStrategyArt(),
+    new card_images_1.MarshadowArt(),
     new card_images_1.MartialArtsDojoArt(),
     new card_images_1.MeowthArt(),
     new card_images_1.MewArt(),

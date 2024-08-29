@@ -1,7 +1,12 @@
+import { FirefighterPikachu } from './firefighter-pikachu';
 import { PalaceBook } from './palace-book';
 import { PikachuZekromGX } from './SMP_168_Pikachu&ZekromGX';
 import { Lurantis } from './SMP_25_Lurantis';
 import { TapuKoko } from './tapu-koko';
+
+export class FirefighterPikachuArt extends FirefighterPikachu {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SMP/SMP_209_R_JP.png';
+}
 
 export class LurantisArt extends Lurantis {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SMP/SMP_025_R_EN_LG.png';

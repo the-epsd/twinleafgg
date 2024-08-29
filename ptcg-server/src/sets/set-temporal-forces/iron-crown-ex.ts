@@ -80,7 +80,7 @@ export class IronCrownex extends PokemonCard {
 
           if (damage > 0) {
             targets.forEach(target => {
-              target.damage = damage;
+              target.damage += damage;
               const afterDamage = new AfterDamageEffect(effect, damage);
               state = store.reduceEffect(state, afterDamage);
             });
