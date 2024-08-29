@@ -100,12 +100,12 @@ class Munkidori extends game_1.PokemonCard {
                             for (const transfer of transfers) {
                                 const source = game_1.StateUtils.getTarget(state, player, transfer.from);
                                 const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                                if (source.cards.length > 1) {
-                                    throw new game_1.GameError(game_1.GameMessage.INVALID_TARGET);
-                                }
-                                if (target.cards.length > 1) {
-                                    throw new game_1.GameError(game_1.GameMessage.INVALID_TARGET);
-                                }
+                                // if (source.cards.length > 1) {
+                                //   throw new GameError(GameMessage.INVALID_TARGET);
+                                // }
+                                // if (target.cards.length > 1) {
+                                //   throw new GameError(GameMessage.INVALID_TARGET);
+                                // }
                                 player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
                                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                                     if (cardList.getPokemonCard() === this) {
