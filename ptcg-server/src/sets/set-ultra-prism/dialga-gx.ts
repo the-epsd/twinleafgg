@@ -107,7 +107,7 @@ export class DialgaGX extends PokemonCard {
       const player = effect.player;
 
       if (player.usedGX === true) {
-        throw new GameError(GameMessage.LABEL_VSTAR_USED);
+        throw new GameError(GameMessage.LABEL_GX_USED);
       }
 
       player.usedGX = true;

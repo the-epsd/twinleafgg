@@ -13,5 +13,6 @@ export declare class PowerTablet extends TrainerCard {
     name: string;
     fullName: string;
     text: string;
+    readonly POWER_TABLET_MARKER = "POWER_TABLET_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

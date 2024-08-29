@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeavileArt = exports.VolknerArt = exports.UnitEnergyLPMArt = exports.UnitEnergyGRWArt = exports.TurtwigArt = exports.SneaselArt = exports.RioluArt = exports.PokemonFanClubArt = exports.MtCoronetArt = exports.MagnezoneArt = exports.MagnemiteArt = exports.GibleArt = exports.GardeniaArt = exports.EscapeBoardArt = exports.CynthiaArt = exports.BastiodonArt = void 0;
+exports.WeavileArt = exports.VolknerArt = exports.UnitEnergyLPMArt = exports.UnitEnergyGRWArt = exports.TurtwigArt = exports.SneaselArt = exports.RioluArt = exports.PokemonFanClubArt = exports.MtCoronetArt = exports.MagnezoneArt = exports.MagnemiteArt = exports.GibleArt = exports.GardeniaArt = exports.EscapeBoardArt = exports.DialgaGXArt = exports.CynthiaArt = exports.BastiodonArt = void 0;
 const cynthia_1 = require("./cynthia");
+const dialga_gx_1 = require("./dialga-gx");
 const escape_board_1 = require("./escape-board");
 const gardenia_1 = require("./gardenia");
 const gible_1 = require("./gible");
@@ -31,6 +32,13 @@ class CynthiaArt extends cynthia_1.Cynthia {
     }
 }
 exports.CynthiaArt = CynthiaArt;
+class DialgaGXArt extends dialga_gx_1.DialgaGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_100_R_EN.png';
+    }
+}
+exports.DialgaGXArt = DialgaGXArt;
 class EscapeBoardArt extends escape_board_1.EscapeBoard {
     constructor() {
         super(...arguments);

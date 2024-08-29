@@ -1,4 +1,5 @@
 import { Cynthia } from './cynthia';
+import { DialgaGX } from './dialga-gx';
 import { EscapeBoard } from './escape-board';
 import { Gardenia } from './gardenia';
 import { Gible } from './gible';
@@ -18,6 +19,9 @@ export declare class BastiodonArt extends Bastiodon {
     cardImage: string;
 }
 export declare class CynthiaArt extends Cynthia {
+    cardImage: string;
+}
+export declare class DialgaGXArt extends DialgaGX {
     cardImage: string;
 }
 export declare class EscapeBoardArt extends EscapeBoard {

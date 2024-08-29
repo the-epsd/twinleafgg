@@ -1,2 +1,2 @@
-import { Card } from "../../game/store/card/card";
+import { Card } from '../../game/store/card/card';
 export declare const setXYPromos: Card[];

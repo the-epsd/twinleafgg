@@ -42,6 +42,7 @@ import { Weavile } from '../set-shrouded-fable/weavile';
 import { XerosicsScheme } from '../set-shrouded-fable/xerosics-scheme';
 import { Zoroark } from '../set-shrouded-fable/zoroark';
 import { Zorua } from '../set-shrouded-fable/zorua';
+import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
 
 export class AbsolArt extends Absol {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SFA/SFA_030_R_EN.png';
@@ -53,6 +54,10 @@ export class AxewArt extends Axew {
 
 export class BindingMochiArt extends BindingMochi {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SFA/SFA_055_R_EN.png';
+}
+
+export class BloodmoonUrsalunaArt extends BloodmoonUrsaluna {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SFA/SFA_025_R_EN.png';
 }
 
 export class CassiopeiaArt extends Cassiopeia {

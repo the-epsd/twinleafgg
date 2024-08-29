@@ -1,4 +1,5 @@
 import { Cynthia } from './cynthia';
+import { DialgaGX } from './dialga-gx';
 import { EscapeBoard } from './escape-board';
 import { Gardenia } from './gardenia';
 import { Gible } from './gible';
@@ -21,6 +22,10 @@ export class BastiodonArt extends Bastiodon {
 
 export class CynthiaArt extends Cynthia {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_119_R_EN_LG.png';
+}
+
+export class DialgaGXArt extends DialgaGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_100_R_EN.png';
 }
 
 export class EscapeBoardArt extends EscapeBoard {

@@ -7,7 +7,7 @@ import {
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
-export class LugiaV extends PokemonCard {
+export class Klefki extends PokemonCard {
 
   public regulationMark = 'H';
 

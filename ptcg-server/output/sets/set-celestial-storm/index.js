@@ -17,5 +17,6 @@ exports.setCelestialStorm = [
     new card_images_1.SlakingArt(),
     new card_images_1.SlakothArt(),
     new card_images_1.SwampertArt(),
-    new card_images_1.TateAndLizaArt()
+    new card_images_1.TateAndLizaArt(),
+    new card_images_1.WhismurArt(),
 ];

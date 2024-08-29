@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, EnergyCard, GameError, AttachEnergyPrompt, StateUtils, CardTarget } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -33,13 +33,13 @@ export class ElectrodeGX extends PokemonCard {
   public attacks = [
     {
       name: 'Electro Ball',
-      cost: [CardType.LIGHTNING, CardType.PSYCHIC],
+      cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 50,
       text: ''
     },
     {
       name: 'Crash and Burn-GX',
-      cost: [CardType.LIGHTNING, CardType.PSYCHIC],
+      cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 30,
       damageCalculation: '+',
       text: 'Discard any amount of Energy from your Pokémon. This attack does 50 more damage for each card you discarded in this way. (You can\'t use more than 1 GX attack in a game.) '
@@ -83,13 +83,18 @@ export class ElectrodeGX extends PokemonCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        { superType: SuperType.ENERGY },
         { allowCancel: false, min: 0, max: 5, blockedTo: blocked2 },
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {
-          return state;
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.damage += 999;
+              return state;
+            }
+          });
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
@@ -149,7 +154,6 @@ export class ElectrodeGX extends PokemonCard {
         return state;
       });
     }
-
     return state;
   }
 }

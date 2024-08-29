@@ -1,5 +1,4 @@
 import { CounterGain } from '../set-lost-thunder/counter-gain';
-import { Klefki } from '../set-scarlet-and-violet/klefki';
 import { AlolanExeggutorex } from './alolan-exeggutor-ex';
 import { Archaludonex } from './archaludon-ex';
 import { Azumarill } from './azulmarill';
@@ -14,6 +13,7 @@ import { Exeggcute } from './exeggcute';
 import { Flygonex } from './flygon-ex';
 import { HelperBell } from './helper.bell';
 import { HoOh } from './ho-oh';
+import { Klefki } from './klefki';
 import { Marill } from './marill';
 import { MegatonBlower } from './megaton-blower';
 import { PerfectMixer } from './perfect-mixer';

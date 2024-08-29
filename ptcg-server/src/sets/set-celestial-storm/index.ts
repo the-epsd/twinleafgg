@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ApricornMakerArt, CopycatArt, DelcattyArt, ElectrodeGXArt, HustleBeltArt, MagcargoArt, MarshtompArt, MudkipArt, NuzleafArt, OricorioArt, SableyeArt, SlakingArt, SlakothArt, SwampertArt, TateAndLizaArt } from './card-images';
+import { ApricornMakerArt, CopycatArt, DelcattyArt, ElectrodeGXArt, HustleBeltArt, MagcargoArt, MarshtompArt, MudkipArt, NuzleafArt, OricorioArt, SableyeArt, SlakingArt, SlakothArt, SwampertArt, TateAndLizaArt, WhismurArt } from './card-images';
 
 export const setCelestialStorm: Card[] = [
   new ApricornMakerArt(),
@@ -16,5 +16,6 @@ export const setCelestialStorm: Card[] = [
   new SlakingArt(),
   new SlakothArt(),
   new SwampertArt(),
-  new TateAndLizaArt()
+  new TateAndLizaArt(),
+  new WhismurArt(),
 ];

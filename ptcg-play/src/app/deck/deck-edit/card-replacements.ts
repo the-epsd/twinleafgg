@@ -38,6 +38,9 @@ export const cardReplacements = [
   { from: 'Applin TWM 17', to: 'Applin TWM 17 ' },
   { from: 'Applin TWM 126', to: 'Applin TWM 126 ' },
   { from: 'Scovillain ex TEF 22', to: 'Scovillain ex PAF 107' },
+
+  //SFA
+  { from: 'Bloodmoon Ursaluna SFA 25', to: 'Bloodmoon Ursaluna SV6a 25' },
 ];
 
 export const exportReplacements = [
@@ -68,4 +71,7 @@ export const exportReplacements = [
   { from: 'Applin TWM 17 ', to: 'Applin TWM 17' },
   { from: 'Applin TWM 126 ', to: 'Applin TWM 126' },
   { from: 'Scovillain ex PAF 107', to: 'Scovillain ex TEF 22' },
+
+  //SFA
+  { from: 'Bloodmoon Ursaluna SV6a 25', to: 'Bloodmoon Ursaluna SFA 25' },
 ];

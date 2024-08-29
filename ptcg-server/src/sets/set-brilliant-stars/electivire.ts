@@ -49,49 +49,36 @@ export class Electivire extends PokemonCard {
   public fullName: string = 'Electivire BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
 
-      let isMagmortarInPlay = false;
+      let isMagmortarWithDamageInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.name === 'Magmortar') {
-          isMagmortarInPlay = true;
+        if (card.name === 'Magmortar' && cardList.damage > 0) {
+          isMagmortarWithDamageInPlay = true;
         }
       });
 
-      if (isMagmortarInPlay) {
-
-        const source = player.bench.filter(b => b.cards[0].name === 'Magmortar')[0];
-
-
-        // Check if source Pokemon has damage
-        const damage = source.damage;
-        if (damage > 0) {
-          effect.damage += 90;
-        }
-
-        return state;
-
+      if (isMagmortarWithDamageInPlay) {
+        effect.damage += 90;
       }
-
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        const opponent = effect.opponent;
-        const benched = opponent.bench.filter(b => b.cards.length > 0);
-
-        const activeDamageEffect = new DealDamageEffect(effect, 50);
-        store.reduceEffect(state, activeDamageEffect);
-
-        benched.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 50);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-      }
-
-      return state;
     }
 
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const opponent = effect.opponent;
+      const benched = opponent.bench.filter(b => b.cards.length > 0);
+
+      const activeDamageEffect = new DealDamageEffect(effect, 50);
+      store.reduceEffect(state, activeDamageEffect);
+
+      benched.forEach(target => {
+        const damageEffect = new PutDamageEffect(effect, 50);
+        damageEffect.target = target;
+        store.reduceEffect(state, damageEffect);
+      });
+    }
     return state;
   }
 }

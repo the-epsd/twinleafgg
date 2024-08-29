@@ -1,10 +1,11 @@
 import { Card } from '../../game/store/card/card';
-import { BastiodonArt, CynthiaArt, EscapeBoardArt, GardeniaArt, MagnemiteArt, MagnezoneArt, MtCoronetArt, PokemonFanClubArt, RioluArt, SneaselArt, TurtwigArt, UnitEnergyGRWArt, UnitEnergyLPMArt, VolknerArt, WeavileArt } from './card-images';
+import { BastiodonArt, CynthiaArt, DialgaGXArt, EscapeBoardArt, GardeniaArt, MagnemiteArt, MagnezoneArt, MtCoronetArt, PokemonFanClubArt, RioluArt, SneaselArt, TurtwigArt, UnitEnergyGRWArt, UnitEnergyLPMArt, VolknerArt, WeavileArt } from './card-images';
 import { GibleArt } from './card-images';
 
 export const setUltraPrism: Card[] = [
   new BastiodonArt(),
   new CynthiaArt(),
+  new DialgaGXArt(),
   new EscapeBoardArt(),
   new GardeniaArt(),
   new GibleArt(),

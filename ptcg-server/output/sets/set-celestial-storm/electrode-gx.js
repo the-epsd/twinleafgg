@@ -26,13 +26,13 @@ class ElectrodeGX extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Electro Ball',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.PSYCHIC],
+                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
                 damage: 50,
                 text: ''
             },
             {
                 name: 'Crash and Burn-GX',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.PSYCHIC],
+                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
                 damage: 30,
                 damageCalculation: '+',
                 text: 'Discard any amount of Energy from your Pokémon. This attack does 50 more damage for each card you discarded in this way. (You can\'t use more than 1 GX attack in a game.) '
@@ -62,11 +62,16 @@ class ElectrodeGX extends pokemon_card_1.PokemonCard {
                     blocked2.push(target);
                 }
             });
-            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 5, blockedTo: blocked2 }), transfers => {
+            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 0, max: 5, blockedTo: blocked2 }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {
-                    return state;
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            cardList.damage += 999;
+                            return state;
+                        }
+                    });
                 }
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
