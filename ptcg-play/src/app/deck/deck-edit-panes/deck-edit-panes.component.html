@@ -9,16 +9,14 @@
 </dnd-preview>
 
 
-<div class="ptcg-deck-edit-pane" [dropTarget]="libraryTarget" ptcgDropHighlight
+<cdk-virtual-scroll-viewport class="ptcg-deck-edit-pane" [dropTarget]="libraryTarget" ptcgDropHighlight
   [ptcgDropHighlightVisible]="libraryHighlight$ | async">
-
   <ptcg-deck-card *ngFor="let card of (cards | filterCards: toolbarFilter); trackBy: trackByCard"
     [dndSortableExternal]="card.spec" #ext="dndSortableExternal" [source]="ext.source"
     (cardClick)="onLibraryCardClick(card)" [showDetailButtons]="true"
     (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)" [card]="card">
   </ptcg-deck-card>
-</div>
-
+</cdk-virtual-scroll-viewport>
 
 
 <div class="ptcg-deck-edit-pane secondary" [dropTarget]="deckTarget" ptcgDropHighlight
