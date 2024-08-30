@@ -19,20 +19,20 @@ export class MrMime extends PokemonCard {
 
   public weakness = [{ type: CardType.DARK }];
 
-  public resistance = [{ type: CardType.DARK, value: -30 }];
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
   public retreat = [CardType.COLORLESS];
 
   public attacks =
     [
       {
-        name: 'Mime Show',
+        name: 'Look-Alike Show',
         cost: [CardType.COLORLESS],
         damage: 0,
         text: 'Your opponent reveals their hand. You may use the effect of a Supporter card you find there as the effect of this attack.'
       },
       {
-        name: 'Tail Rap',
+        name: 'Eerie Wave',
         cost: [CardType.PSYCHIC],
         damage: 20,
         text: 'Your opponent\'s Active Pokémon is now Confused.'

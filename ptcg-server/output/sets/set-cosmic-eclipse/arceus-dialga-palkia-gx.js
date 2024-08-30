@@ -62,7 +62,7 @@ class ArceusDialgaPalkiaGX extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             // Check if player has used altered creation
             if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
             }
             player.usedGX = true;
             player.alteredCreationDamage = true;

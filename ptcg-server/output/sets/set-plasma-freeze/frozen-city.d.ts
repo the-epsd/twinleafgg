@@ -3,7 +3,6 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 export declare class FrozenCity extends TrainerCard {
-    regulationMark: string;
     cardImage: string;
     setNumber: string;
     trainerType: TrainerType;

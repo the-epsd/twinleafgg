@@ -14,17 +14,17 @@ class MrMime extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.DARK }];
-        this.resistance = [{ type: card_types_1.CardType.DARK, value: -30 }];
+        this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Mime Show',
+                name: 'Look-Alike Show',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Your opponent reveals their hand. You may use the effect of a Supporter card you find there as the effect of this attack.'
             },
             {
-                name: 'Tail Rap',
+                name: 'Eerie Wave',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 20,
                 text: 'Your opponent\'s Active Pokémon is now Confused.'

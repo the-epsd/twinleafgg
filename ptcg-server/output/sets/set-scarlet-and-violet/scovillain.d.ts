@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Scovillain extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     regulationMark: string;
     cardType: CardType;
     hp: number;

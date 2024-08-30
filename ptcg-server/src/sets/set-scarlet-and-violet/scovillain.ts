@@ -12,6 +12,8 @@ export class Scovillain extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public evolvesFrom = 'Capsakid';
+
   public regulationMark = 'G';
 
   public cardType: CardType = CardType.GRASS;
