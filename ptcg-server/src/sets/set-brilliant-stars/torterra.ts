@@ -16,7 +16,8 @@ export class Torterra extends PokemonCard {
   public attacks = [{
     name: 'Evopress',
     cost: [CardType.GRASS, CardType.COLORLESS],
-    damage: 60,
+    damage: 50,
+    damageCalculation: 'x',
     text: 'This attack does 50 for each of your Evolution Pokemon in play.'
   },
   {
@@ -42,7 +43,7 @@ export class Torterra extends PokemonCard {
 
       playerBench.forEach(c => {
         if (c.getPokemonCard() instanceof PokemonCard) {
-          if (c.getPokemonCard()?.stage == Stage.STAGE_1 || c.getPokemonCard()?.stage == Stage.STAGE_2 || c.getPokemonCard()?.stage == Stage.VMAX || c.getPokemonCard()?.stage == Stage.VSTAR){
+          if (c.getPokemonCard()?.stage == Stage.STAGE_1 || c.getPokemonCard()?.stage == Stage.STAGE_2 || c.getPokemonCard()?.stage == Stage.VMAX || c.getPokemonCard()?.stage == Stage.VSTAR) {
             console.log(c.getPokemonCard()?.stage);
             evolutionPokemonCount++;
           }

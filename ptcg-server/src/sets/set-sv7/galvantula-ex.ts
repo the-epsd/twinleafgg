@@ -22,6 +22,7 @@ export class Galvantulaex extends PokemonCard {
       name: 'Upper Thread',
       cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 110,
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 110 more damage.',
     },
     {

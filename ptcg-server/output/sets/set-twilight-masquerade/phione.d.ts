@@ -10,12 +10,19 @@ export declare class Phione extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    })[];
     regulationMark: string;
     set: string;
     name: string;

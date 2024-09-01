@@ -17,7 +17,8 @@ class OriginFormeDialgaVSTAR extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.METAL;
         this.hp = 280;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.retreat = [];
+        this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
                 name: 'Metal Blast',

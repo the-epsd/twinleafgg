@@ -16,6 +16,7 @@ class Scorbunny extends game_1.PokemonCard {
                 name: 'Quick Attack',
                 cost: [game_1.CardType.COLORLESS],
                 damage: 10,
+                damageCalculation: '+',
                 text: 'Flip a coin. If heads, this attack does 10 more damage.'
             }];
         this.set = 'SV7';

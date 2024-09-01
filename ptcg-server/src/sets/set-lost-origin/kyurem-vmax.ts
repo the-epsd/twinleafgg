@@ -37,6 +37,7 @@ export class KyuremVMAX extends PokemonCard {
     name: 'Max Frost',
     cost: [CardType.WATER, CardType.WATER, CardType.WATER],
     damage: 120,
+    damageCalculation: '+',
     text: 'You may discard any amount of [W] Energy from this Pokémon. This attack does 50 more damage for each card you discarded in this way.'
   }];
 

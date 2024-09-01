@@ -28,6 +28,7 @@ export class Scizor extends PokemonCard {
       name: 'Punishing Scissors',
       cost: [CardType.METAL],
       damage: 10,
+      damageCalculation: '+',
       text: 'This attack does 50 more damage for each of your opponent\'s Pokémon in play that has an Ability.'
     },
     {

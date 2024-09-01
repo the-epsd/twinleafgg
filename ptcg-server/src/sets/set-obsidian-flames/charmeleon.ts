@@ -20,10 +20,10 @@ export class Charmeleon extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
-    { name: 'Heat Tackle', cost: [CardType.FIRE, CardType.FIRE],  damage: 70, text: 'This Pokémon does 20 damage to itself.' },
+    { name: 'Heat Tackle', cost: [CardType.FIRE, CardType.FIRE], damage: 90, text: 'This Pokémon does 20 damage to itself.' },
   ];
 
   public set: string = 'OBF';
@@ -40,14 +40,13 @@ export class Charmeleon extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       const dealDamage = new DealDamageEffect(effect, 20);
       dealDamage.target = player.active;
       return store.reduceEffect(state, dealDamage);
     }
-  
+
     return state;
   }
-  
+
 }
-  

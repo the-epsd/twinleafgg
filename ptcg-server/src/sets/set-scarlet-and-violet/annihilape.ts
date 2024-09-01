@@ -18,6 +18,7 @@ export class Annihilape extends PokemonCard {
       name: 'Rage Fist',
       cost: [CardType.FIGHTING],
       damage: 70,
+      damageCalculation: 'x',
       text: 'This attack does 70 damage for each Prize card your opponent has taken.'
     },
     {

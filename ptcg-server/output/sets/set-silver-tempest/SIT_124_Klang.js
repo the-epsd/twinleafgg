@@ -20,6 +20,7 @@ class Klang extends pokemon_card_1.PokemonCard {
                 name: 'Gear Grind',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 80,
+                damageCalculation: 'x',
                 text: 'Flip 2 coins. The attack does 80 damage for each heads.'
             }];
         this.set = 'SIT';

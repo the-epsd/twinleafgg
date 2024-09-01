@@ -19,7 +19,7 @@ class Froslassex extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Je Ne Sais Quoi',
+                name: 'Evanescent',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'If this Pokémon in the Active Spot and is Knocked Out, flip a coin. If heads, your opponent takes 1 fewer Prize card.'
             }

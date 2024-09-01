@@ -10,7 +10,7 @@ export class Cufant extends PokemonCard {
 
   public cardType: CardType = CardType.METAL;
 
-  public hp: number = 90;
+  public hp: number = 100;
 
   public weakness = [{ type: CardType.FIRE }];
 

@@ -10,7 +10,7 @@ export class Magnezoneex extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public evolvesFrom = 'Magneton';
 
@@ -22,18 +22,19 @@ export class Magnezoneex extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Energy Crush',
-      cost: [ CardType.LIGHTNING ],
+      cost: [CardType.LIGHTNING],
       damage: 50,
+      damageCalculation: 'x',
       text: 'This attack does 50 damage for each Energy attached to all of your opponent\'s Pokémon.'
     },
     {
       name: 'Pulse Launcher',
-      cost: [ CardType.LIGHTNING, CardType.LIGHTNING ],
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING],
       damage: 220,
       text: 'This Pokémon also does 30 damage to itself.'
     }
@@ -68,8 +69,8 @@ export class Magnezoneex extends PokemonCard {
       effect.damage = energies * 50;
     }
 
-    
- 
+
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       const player = effect.player;
@@ -82,4 +83,3 @@ export class Magnezoneex extends PokemonCard {
   }
 
 }
-      

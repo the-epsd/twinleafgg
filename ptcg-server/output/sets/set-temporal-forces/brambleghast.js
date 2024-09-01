@@ -25,6 +25,7 @@ class Brambleghast extends pokemon_card_1.PokemonCard {
                 name: 'Powerful Needles',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS],
                 damage: 80,
+                damageCalculation: 'x',
                 text: ' Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads. '
             }];
         this.set = 'TEF';

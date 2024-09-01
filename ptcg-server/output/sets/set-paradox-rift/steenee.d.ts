@@ -11,12 +11,19 @@ export declare class Steenee extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    })[];
     set: string;
     regulationMark: string;
     cardImage: string;

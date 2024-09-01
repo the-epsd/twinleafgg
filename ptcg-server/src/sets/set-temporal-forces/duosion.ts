@@ -22,12 +22,13 @@ export class Duosion extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Double Trick',
-    cost: [ CardType.PSYCHIC ],
+    cost: [CardType.PSYCHIC],
     damage: 30,
+    damageCalculation: 'x',
     text: 'Flip 2 coins. This attack does 30 damage for each heads.'
   }
   ];
@@ -35,7 +36,7 @@ export class Duosion extends PokemonCard {
   public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '71';
 
   public name: string = 'Duosion';
@@ -55,9 +56,8 @@ export class Duosion extends PokemonCard {
         effect.damage = 30 * heads;
       });
     }
-  
+
     return state;
   }
-  
+
 }
-  

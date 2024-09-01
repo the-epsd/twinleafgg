@@ -34,6 +34,7 @@ export class RaichuV extends PokemonCard {
       name: 'Dynamic Spark',
       cost: [CardType.LIGHTNING, CardType.LIGHTNING],
       damage: 60,
+      damageCalculation: 'x',
       text: 'You may discard any amount of L Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way.'
     }
   ];

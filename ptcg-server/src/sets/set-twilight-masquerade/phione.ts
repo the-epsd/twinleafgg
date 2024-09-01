@@ -14,21 +14,22 @@ export class Phione extends PokemonCard {
 
   public hp: number = 70;
 
-  public weakness = [ {type: CardType.LIGHTNING} ];
+  public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Beckon',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Put a Supporter card from your discard pile into your hand.'
     },
     {
       name: 'Energy Press',
-      cost: [ CardType.WATER ],
+      cost: [CardType.WATER],
       damage: 20,
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -69,21 +70,21 @@ export class Phione extends PokemonCard {
           { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
           { min, max, allowCancel: false }
         )], selected => {
-        const cards = selected || [];
-        player.discard.moveCardsTo(cards, player.hand);
-      });
+          const cards = selected || [];
+          player.discard.moveCardsTo(cards, player.hand);
+        });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, checkProvidedEnergyEffect);
       const energyCount = checkProvidedEnergyEffect.energyMap
         .reduce((left, p) => left + p.provides.length, 0);
-  
+
       effect.damage = energyCount * 20;
     }
 

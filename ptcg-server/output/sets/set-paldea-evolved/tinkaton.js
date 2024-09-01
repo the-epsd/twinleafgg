@@ -27,6 +27,7 @@ class Tinkaton extends pokemon_card_1.PokemonCard {
                 name: 'Special Hammer',
                 cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
                 damage: 90,
+                damageCalculation: '+',
                 text: 'If this Pokemon has any Special Energy attached, this attack does 90 more damage.'
             }];
         this.regulationMark = 'G';

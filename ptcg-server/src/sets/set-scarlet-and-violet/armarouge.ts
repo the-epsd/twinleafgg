@@ -90,7 +90,7 @@ export class Armarouge extends PokemonCard {
       'Pokémon.'
   }];
   public attacks = [{
-    name: 'Dragonblast',
+    name: 'Flame Cannon',
     cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
     damage: 90,
     text: 'Your opponent\'s Active Pokémon is now Burned.'

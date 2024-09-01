@@ -91,7 +91,7 @@ export class Gallade extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY },
-        { allowCancel: false, blockedFrom, blockedTo }
+        { allowCancel: false, blockedFrom, blockedTo, min: 1, max: 1 }
       ), transfers => {
         if (transfers === null) {
           return;

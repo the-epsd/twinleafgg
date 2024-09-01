@@ -30,7 +30,7 @@ export class Magneton extends PokemonCard {
   public attacks = [
     {
       name: 'Electric Ball',
-      cost: [CardType.LIGHTNING, CardType.PSYCHIC],
+      cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 40,
       text: ''
     }

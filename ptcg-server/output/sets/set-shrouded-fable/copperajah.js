@@ -18,15 +18,16 @@ class Copperajah extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Gargantuan Body',
+                name: 'Massive Body',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'As long as this Pokémon is in the Active Spot, your opponent can\'t play any Stadium cards from their hand.'
             }];
         this.attacks = [
             {
-                name: 'Nose Lariat',
+                name: 'Nasal Lariat',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
                 damage: 130,
+                damageCalculation: '+',
                 text: 'You may do 100 more damage. If you do, during your next turn, this Pokémon can\'t attack.'
             }
         ];

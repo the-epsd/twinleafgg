@@ -16,19 +16,19 @@ export class GreatTusk extends PokemonCard {
 
   public hp: number = 140;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
-      name: 'Ground Collapse',
+      name: 'Land Collapse',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
       text: 'Discard the top card of your opponent\'s deck. If you played an Ancient Supporter card from your hand during this turn, discard 3 more cards.'
     },
     {
-      name: 'Suffocating Gas',
+      name: 'Giant Tusk',
       cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 160,
       text: ''
@@ -52,16 +52,16 @@ export class GreatTusk extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-          
+
       // Discard 1 card from opponent's deck 
       opponent.deck.moveTo(opponent.discard, 1);
 
       if (player.marker.hasMarker(this.ANCIENT_SUPPORTER_MARKER, this)) {
 
-        opponent.deck.moveTo(opponent.discard, 3);  
+        opponent.deck.moveTo(opponent.discard, 3);
 
       }
-      return state;    
+      return state;
     }
     return state;
   }

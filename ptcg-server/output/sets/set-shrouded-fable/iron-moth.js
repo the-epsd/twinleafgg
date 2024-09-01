@@ -15,13 +15,13 @@ class IronMoth extends game_1.PokemonCard {
         this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Absorption',
+                name: 'Suction',
                 cost: [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS],
                 damage: 30,
                 text: 'Heal from this Pokémon the same amount of damage you did to your opponent\'s Active Pokémon.'
             },
             {
-                name: 'Wild Rejector',
+                name: 'Anachronism Repulsor',
                 cost: [game_1.CardType.FIRE, game_1.CardType.FIRE, game_1.CardType.COLORLESS],
                 damage: 120,
                 text: 'During your next turn, prevent all damage done to this Pokémon by attacks from Ancient Pokémon.'

@@ -57,7 +57,7 @@ export class Eevee extends PokemonCard {
 
     const player = state.players[state.activePlayer];
 
-    if (state.turn >= 1 && player.active.cards[0] !== this && player.marker.hasMarker(this.EVOLUTIONARY_ADVANTAGE_MARKER, this)) {
+    if (state.turn >= 1 && player.active.cards[0] == this && player.marker.hasMarker(this.EVOLUTIONARY_ADVANTAGE_MARKER, this)) {
 
       try {
         const stub = new PowerEffect(player, {

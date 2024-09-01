@@ -68,7 +68,7 @@ class Armarouge extends pokemon_card_1.PokemonCard {
                     'Pokémon.'
             }];
         this.attacks = [{
-                name: 'Dragonblast',
+                name: 'Flame Cannon',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
                 damage: 90,
                 text: 'Your opponent\'s Active Pokémon is now Burned.'

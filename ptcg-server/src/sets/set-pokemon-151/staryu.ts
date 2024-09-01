@@ -23,7 +23,7 @@ export class Staryu extends PokemonCard {
   public attacks = [
     {
       name: 'Swift',
-      cost: [CardType.WATER],
+      cost: [CardType.WATER, CardType.COLORLESS],
       damage: 30,
       text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
     },

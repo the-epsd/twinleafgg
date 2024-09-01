@@ -24,7 +24,7 @@ class Manaphy extends pokemon_card_1.PokemonCard {
                 text: 'Your opponent reveals their hand. Put up to 2 Basic Pokémon you find there onto your opponent\'s Bench.'
             },
             {
-                name: 'Rain Splash',
+                name: 'Aqua Bullet',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
                 damage: 40,
                 text: 'This attack also does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'

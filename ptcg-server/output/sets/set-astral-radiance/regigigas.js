@@ -25,6 +25,7 @@ class Regigigas extends pokemon_card_1.PokemonCard {
                 name: 'Gigaton Break',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 150,
+                damageCalculator: '+',
                 text: 'If your opponent\'s Active Pokémon is a Pokémon VMAX, this attack does 150 more damage.'
             }];
         this.regulationMark = 'F';

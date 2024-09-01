@@ -30,9 +30,10 @@ class RadiantAlakazam extends pokemon_card_1.PokemonCard {
                     'their Pokémon.'
             }];
         this.attacks = [{
-                name: 'Shadow Punch',
+                name: 'Mind Ruler',
                 cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
                 damage: 20,
+                damageCalculation: 'x',
                 text: 'This attack does 20 damage for each card in your ' +
                     'opponent\'s hand.'
             }];

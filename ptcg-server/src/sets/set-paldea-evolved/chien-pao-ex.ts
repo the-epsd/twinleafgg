@@ -42,6 +42,7 @@ export class ChienPaoex extends PokemonCard {
       name: 'Hail Blade',
       cost: [CardType.WATER, CardType.WATER],
       damage: 60,
+      damageCalculation: 'x',
       text: 'You may discard any amount of W Energy from your ' +
         'Pokémon. This attack does 60 damage for each card you ' +
         'discarded in this way.'

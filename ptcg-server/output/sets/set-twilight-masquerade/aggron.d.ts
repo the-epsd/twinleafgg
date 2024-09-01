@@ -17,12 +17,19 @@ export declare class Aggron extends PokemonCard {
     }[];
     hp: number;
     retreat: CardType[];
-    attacks: {
+    attacks: ({
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    } | {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

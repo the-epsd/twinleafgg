@@ -20,6 +20,7 @@ class Kleavor extends pokemon_card_1.PokemonCard {
                 name: 'Rout',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 10,
+                damageCalculation: '+',
                 text: 'This attack does 30 more damage for each of your opponent\'s Benched Pokémon.'
             },
             {

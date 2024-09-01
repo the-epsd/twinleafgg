@@ -16,21 +16,21 @@ export class Cyclizar extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Ram',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 30,
       text: ''
     },
     {
       name: 'Driving Buddy',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 70,
       damageCalculation: '+',
-      text: ''
+      text: 'If you played a Supporter card from your hand during this turn, this attack does 70 more damage.'
     }
   ];
 
@@ -47,7 +47,7 @@ export class Cyclizar extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      
+
       const player = effect.player;
 
       if (player.supporterTurn >= 1) {

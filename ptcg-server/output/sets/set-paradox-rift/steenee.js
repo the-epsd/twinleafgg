@@ -26,6 +26,7 @@ class Steenee extends pokemon_card_1.PokemonCard {
                 name: 'Double Spin',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.GRASS],
                 damage: 40,
+                damageCalculation: 'x',
                 text: 'Flip 2 coins. This attack does 40 damage for each heads.'
             }
         ];

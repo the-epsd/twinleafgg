@@ -20,6 +20,7 @@ class Duosion extends pokemon_card_1.PokemonCard {
                 name: 'Double Trick',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 30,
+                damageCalculation: 'x',
                 text: 'Flip 2 coins. This attack does 30 damage for each heads.'
             }
         ];

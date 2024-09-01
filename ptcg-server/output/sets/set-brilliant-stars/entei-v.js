@@ -29,6 +29,7 @@ class EnteiV extends pokemon_card_1.PokemonCard {
                 name: 'Burning Rondo',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
                 damage: 20,
+                damageCalculation: '+',
                 text: 'This attack does 20 more damage for each Benched ' +
                     'Pokémon (both yours and your opponent\'s).'
             }

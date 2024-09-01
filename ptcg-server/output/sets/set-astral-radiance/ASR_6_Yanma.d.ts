@@ -7,7 +7,7 @@ export declare class Yanma extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    attack: {
+    attacks: {
         name: string;
         cost: CardType[];
         damage: number;

@@ -20,6 +20,7 @@ class Rufflet extends pokemon_card_1.PokemonCard {
                 name: 'Jump On',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 10,
+                damageCalculator: '+',
                 text: 'Flip a coin. If heads, this attack does 30 more damage.'
             }
         ];

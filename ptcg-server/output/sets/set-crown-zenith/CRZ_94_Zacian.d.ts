@@ -14,12 +14,19 @@ export declare class Zacian extends PokemonCard {
         value: number;
     }[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    } | {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    })[];
     set: string;
     regulationMark: string;
     cardImage: string;

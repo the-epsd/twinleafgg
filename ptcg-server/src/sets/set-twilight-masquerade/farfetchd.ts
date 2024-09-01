@@ -29,10 +29,10 @@ export class Farfetchd extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
-    name: 'Sonic Duty',
+    name: 'Impromptu Carrier',
     powerType: PowerType.ABILITY,
     text: 'You may use this Ability when you put this card from your hand onto your Bench during your turn. Search your deck for a Pokémon Tool card and attach it to this Pokémon. Then, shuffle your deck.'
   }];
@@ -40,7 +40,7 @@ export class Farfetchd extends PokemonCard {
   public attacks = [
     {
       name: 'Mach Cut',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 30,
       text: 'Discard a Special Energy from your opponent\'s Active Pokémon.'
     }
@@ -80,14 +80,14 @@ export class Farfetchd extends PokemonCard {
         { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
         { min: 0, max: 1, allowCancel: false }
       ), cards => {
-        
+
         let benchSlot = 0;
         player.bench.forEach((cardList, index) => {
           if (cardList.getPokemonCard() === this) {
             benchSlot = index;
           }
         });
-        
+
         if (cards[0] instanceof TrainerCard) {
           state = store.reduceEffect(state, new AttachPokemonToolEffect(player, cards[0] as TrainerCard, player.bench[benchSlot]));
         }

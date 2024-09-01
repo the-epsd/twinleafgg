@@ -14,7 +14,7 @@ class Aggron extends game_1.PokemonCard {
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.METAL;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.resistance = [{ type: card_types_1.CardType.FIRE, value: -30 }];
+        this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
         this.hp = 180;
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
@@ -22,6 +22,7 @@ class Aggron extends game_1.PokemonCard {
                 name: 'Angry Slam',
                 cost: [card_types_1.CardType.METAL],
                 damage: 50,
+                damageCalculation: 'x',
                 text: 'This attack does 50 damage for each of your Pokémon that has any damage counters on it.'
             },
             {

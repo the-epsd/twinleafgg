@@ -12,7 +12,7 @@ export declare class Pikachu extends PokemonCard {
     retreat: CardType[];
     attacks: {
         name: string;
-        cost: never[];
+        cost: CardType[];
         damage: number;
         text: string;
     }[];

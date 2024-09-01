@@ -21,8 +21,9 @@ export class AlolanVulpixV extends PokemonCard {
   public attacks = [
     {
       name: 'White Drop',
-      cost: [ ],
+      cost: [],
       damage: 10,
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 50 more damage.'
     },
     {
@@ -49,7 +50,7 @@ export class AlolanVulpixV extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       const defending = opponent.active.getPokemonCard();
       if (!defending || defending.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX)) {
         effect.damage += 50;

@@ -23,16 +23,17 @@ export class Copperajah extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
-    name: 'Gargantuan Body',
+    name: 'Massive Body',
     powerType: PowerType.ABILITY,
     text: 'As long as this Pokémon is in the Active Spot, your opponent can\'t play any Stadium cards from their hand.'
   }];
 
   public attacks = [
     {
-      name: 'Nose Lariat',
+      name: 'Nasal Lariat',
       cost: [CardType.METAL, CardType.METAL, CardType.METAL, CardType.COLORLESS],
       damage: 130,
+      damageCalculation: '+',
       text: 'You may do 100 more damage. If you do, during your next turn, this Pokémon can\'t attack.'
     }
   ];

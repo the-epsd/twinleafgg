@@ -18,6 +18,7 @@ class Klawf extends pokemon_card_1.PokemonCard {
                 name: 'Unhinged Scissors',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 30,
+                damageCalculation: '+',
                 text: 'If this Pokémon is affected by a Special Condition, this attack does 160 more damage.'
             },
             {

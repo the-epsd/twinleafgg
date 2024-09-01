@@ -17,7 +17,7 @@ class Zoroark extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Phantom Jack',
+                name: 'Illusory Hijacking',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 60,
                 damageCalculation: 'x',

@@ -32,7 +32,7 @@ export class ZacianV extends PokemonCard {
     },
     {
       name: 'Behemoth Blade',
-      cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
       damage: 100,
       damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon VMAX, this attack does 160 more damage.'
@@ -47,7 +47,7 @@ export class ZacianV extends PokemonCard {
 
   public name: string = 'Zacian V';
 
-  public fullName: string = 'Zacian V';
+  public fullName: string = 'Zacian V CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

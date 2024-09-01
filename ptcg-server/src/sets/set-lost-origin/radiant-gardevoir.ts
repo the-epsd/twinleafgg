@@ -15,7 +15,7 @@ export class RadiantGardevoir extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public tags = [ CardTag.RADIANT ];
+  public tags = [CardTag.RADIANT];
 
   public cardType: CardType = CardType.PSYCHIC;
 
@@ -23,7 +23,7 @@ export class RadiantGardevoir extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Loving Veil',
@@ -33,8 +33,9 @@ export class RadiantGardevoir extends PokemonCard {
 
   public attacks = [{
     name: 'Psychic',
-    cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
     damage: 70,
+    damageCalculation: '+',
     text: 'This attack does 20 more damage for each Energy attached to your opponent\'s Active Pokémon.'
   }];
 
@@ -53,12 +54,12 @@ export class RadiantGardevoir extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, checkProvidedEnergyEffect);
       const energyCount = checkProvidedEnergyEffect.energyMap
         .reduce((left, p) => left + p.provides.length, 0);
-  
+
       effect.damage += energyCount * 20;
     }
 
@@ -84,11 +85,11 @@ export class RadiantGardevoir extends PokemonCard {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
         } catch {
           return state;
         }

@@ -14,14 +14,14 @@ export class Remoraid extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public resistance = [ ];
+  public resistance = [];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Sprinkle Water',
-      cost: [ CardType.WATER ],
+      cost: [CardType.COLORLESS],
       damage: 10,
       text: ''
     },

@@ -17,18 +17,19 @@ export class Porygon2 extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Tri-Attack',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
+      damageCalculator: 'x',
       text: 'Flip 3 coins. This attack does 30 damage for each heads.'
     }
   ];
 
-  public regulationMark = 'G';
+  public regulationMark = 'E';
 
   public set: string = 'CRE';
 

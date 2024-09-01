@@ -28,7 +28,9 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [];
+  public resistance = [{ type: CardType.GRASS, value: -30 }];
+
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {

@@ -16,12 +16,13 @@ export class Snorunt extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Bite',
-    cost: [ CardType.WATER ],
+    cost: [CardType.WATER],
     damage: 10,
+    damageCalculation: '+',
     text: 'If your opponent\'s Active Pokémon is a F Pokémon, this attack does 30 more damage.'
   }
   ];
@@ -42,7 +43,7 @@ export class Snorunt extends PokemonCard {
 
       const opponentActive = effect.opponent.active;
       const opponentActiveCard = opponentActive.getPokemonCard();
-      
+
       if (opponentActiveCard?.cardType === CardType.FIGHTING) {
         effect.damage += 30;
       }

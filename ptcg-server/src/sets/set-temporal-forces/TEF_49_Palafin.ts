@@ -23,6 +23,7 @@ export class Palafin extends PokemonCard {
     name: 'Double Hit',
     cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
     damage: 90,
+    damageCalculation: 'x',
     text: 'Flip 2 coins. This attack does 90 damage for each heads.'
   }];
 

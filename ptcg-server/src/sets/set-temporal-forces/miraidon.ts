@@ -31,7 +31,7 @@ export class Miraidon extends PokemonCard {
     },
     {
       name: 'Sparking Strike',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.PSYCHIC],
       damage: 160,
       text: ''
     }

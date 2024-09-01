@@ -29,7 +29,8 @@ class RotomV extends pokemon_card_1.PokemonCard {
             {
                 name: 'Scrap Short',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING],
-                damage: 0,
+                damage: 40,
+                damageCalculation: '+',
                 text: 'Put any number of Pokémon Tool cards from your discard pile in the Lost Zone. This attack does 40 more damage for each card you put in the Lost Zone in this way.'
             }
         ];

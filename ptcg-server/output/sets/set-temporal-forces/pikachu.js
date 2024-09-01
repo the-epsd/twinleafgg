@@ -17,8 +17,8 @@ class Pikachu extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Random Spark',
-                cost: [],
-                damage: 10,
+                cost: [card_types_1.CardType.LIGHTNING],
+                damage: 0,
                 text: 'This attack does 10 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }
         ];

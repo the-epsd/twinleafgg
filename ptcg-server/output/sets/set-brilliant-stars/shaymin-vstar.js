@@ -27,6 +27,7 @@ class ShayminVSTAR extends pokemon_card_1.PokemonCard {
                 name: 'Revenge Blast',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS],
                 damage: 120,
+                damageCalculation: '+',
                 text: 'This attack does 40 more damage for each Prize card your opponent has taken.'
             }
         ];

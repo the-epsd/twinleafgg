@@ -65,6 +65,8 @@ import { WalkingWake } from './walking-wake';
 import { Okidogi } from './okidogi';
 import { SecretBox } from './secret-box';
 import { Heatran } from './heatran';
+import { Chimchar } from './chimchar';
+import { Monferno } from './monferno';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -99,6 +101,9 @@ export declare class ChanseyArt extends Chansey {
     cardImage: string;
 }
 export declare class ChiYuArt extends ChiYu {
+    cardImage: string;
+}
+export declare class ChimcharArt extends Chimchar {
     cardImage: string;
 }
 export declare class ClefableArt extends Clefable {
@@ -204,6 +209,9 @@ export declare class LuxrayexArt extends Luxrayex {
     cardImage: string;
 }
 export declare class MightyenaArt extends Mightyena {
+    cardImage: string;
+}
+export declare class MonfernoArt extends Monferno {
     cardImage: string;
 }
 export declare class MorpekoArt extends Morpeko {

@@ -26,7 +26,8 @@ class Cetitan extends pokemon_card_1.PokemonCard {
             {
                 name: 'Special Horn',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
-                damage: 100,
+                damage: 80,
+                damageCalculation: '+',
                 text: 'If this Pokémon has any Special Energy attached, this attack does 140 more damage.'
             }
         ];

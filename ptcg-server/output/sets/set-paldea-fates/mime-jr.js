@@ -50,7 +50,7 @@ class MimeJr extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [];
         this.attacks = [{
-                name: 'Make Believe Copycat',
+                name: 'Mimed Games',
                 cost: [],
                 damage: 0,
                 text: 'Your opponent chooses 1 of their Pokémon\'s attacks. Use that attack as this attack.'

@@ -13,7 +13,7 @@ export class SerperiorV extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public tags = [CardTag.POKEMON_V];
 
@@ -25,7 +25,7 @@ export class SerperiorV extends PokemonCard {
       text: 'Heal 30 damage from each Pokémon (both yours and your opponent\'s).'
     },
     {
-      name: 'Solear Beam',
+      name: 'Solar Beam',
       cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 120,
       text: ''

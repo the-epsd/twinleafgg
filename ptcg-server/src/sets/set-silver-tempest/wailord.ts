@@ -28,6 +28,7 @@ export class Wailord extends PokemonCard {
     name: 'Special Wave',
     cost: [CardType.WATER, CardType.WATER, CardType.WATER, CardType.COLORLESS],
     damage: 120,
+    damageCalculation: '+',
     text: 'If this Pokemon has any Special Energy attached, this attack does 120 more damage.'
   }];
 
@@ -67,7 +68,7 @@ export class Wailord extends PokemonCard {
 
       effect.damage = Math.max(0, effect.damage - 30);
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const pokemon = player.active;

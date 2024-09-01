@@ -25,7 +25,7 @@ export class Morpeko extends PokemonCard {
 
   public powers = [
     {
-      name: 'Snack Search',
+      name: 'Snack Seek',
       useWhenInPlay: true,
       powerType: PowerType.ABILITY,
       text: 'Once during your turn, you may look at the top card of your deck. You may discard that card.'

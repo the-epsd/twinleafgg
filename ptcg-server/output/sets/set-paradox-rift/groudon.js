@@ -27,6 +27,7 @@ class Groudon extends pokemon_card_1.PokemonCard {
                 name: 'Magma Purge',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
                 damage: 60,
+                damageCalculation: 'x',
                 text: 'Discard up to 4 Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way.'
             },
         ];

@@ -20,6 +20,7 @@ export class Moltres extends PokemonCard {
     name: 'Inferno Wings',
     cost: [CardType.FIRE],
     damage: 20,
+    damageCalculation: '+',
     text: 'If this Pokémon has any damage counters on it, this attack does 70 more damage. This attack\'s damage isn\'t affected by Weakness.'
   }];
 

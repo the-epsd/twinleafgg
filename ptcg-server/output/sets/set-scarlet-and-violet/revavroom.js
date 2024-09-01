@@ -15,6 +15,7 @@ class Revavroom extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.METAL;
         this.hp = 140;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
+        this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.evolvesFrom = 'Varoom';
         this.powers = [{
@@ -27,6 +28,7 @@ class Revavroom extends pokemon_card_1.PokemonCard {
                 name: 'Knock Away',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 90,
+                damageCalculation: '+',
                 text: 'Flip a coin. If heads, this attack does 90 more damage.'
             }];
         this.set = 'SVI';

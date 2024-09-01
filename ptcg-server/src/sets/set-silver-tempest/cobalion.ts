@@ -31,7 +31,7 @@ export class Cobalion extends PokemonCard {
     {
       name: 'Follow-Up',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
-      damage: 20,
+      damage: 30,
       text: 'Choose up to 2 of your Benched Pokémon. For each of those Pokémon, search your deck for a basic Energy card and attach it to that Pokémon. Then, shuffle your deck.'
     }
   ];

@@ -20,7 +20,7 @@ export class Rowlet extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Collect',
+      name: 'Add On',
       cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Draw a card.'

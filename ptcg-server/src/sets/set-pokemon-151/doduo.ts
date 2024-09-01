@@ -16,11 +16,11 @@ export class Doduo extends PokemonCard {
 
   public hp: number = 70;
 
-  // public weakness = [{ type: CardType.LIGHTNING }];
+  public weakness = [{ type: CardType.LIGHTNING }];
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
@@ -42,7 +42,7 @@ export class Doduo extends PokemonCard {
   public fullName: string = 'Doduo MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 

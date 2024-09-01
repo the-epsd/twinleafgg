@@ -24,6 +24,7 @@ export declare class Copperajah extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     regulationMark: string;

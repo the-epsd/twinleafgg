@@ -18,7 +18,7 @@ class Dusknoir extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Cursed Bomb',
+                name: 'Cursed Blast',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'Once during your turn, you may put 13 damage counters on 1 of your opponent\'s Pokémon. If you placed any damage counters in this way, this Pokémon is Knocked Out.'

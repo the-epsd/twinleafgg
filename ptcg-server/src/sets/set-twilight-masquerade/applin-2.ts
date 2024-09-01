@@ -23,7 +23,7 @@ export class Applin2 extends PokemonCard {
   public attacks = [
     {
       name: 'Tumbling Attack',
-      cost: [CardType.COLORLESS],
+      cost: [CardType.GRASS],
       damage: 10,
       damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'

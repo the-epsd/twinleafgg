@@ -19,7 +19,7 @@ class Scovillain extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Hot Bite 20',
+                name: 'Hot Bite',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 20,
                 text: 'Your opponent\'s Active Pokémon is now Burned.'
@@ -28,6 +28,7 @@ class Scovillain extends pokemon_card_1.PokemonCard {
                 name: 'Super Spicy Breath',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 90,
+                damageCalculation: '+',
                 text: 'If this Pokémon has any [R] Energy attached, this attack does 90 more damage.'
             }
         ];

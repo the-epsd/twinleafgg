@@ -24,6 +24,7 @@ class Toedscruel extends pokemon_card_1.PokemonCard {
                 name: 'Triple Smash',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 80,
+                damageCalculation: 'x',
                 text: ' Flip 3 coins. This attack does 80 damage for each heads. '
             }];
         this.set = 'SVI';

@@ -49,7 +49,7 @@ class CherensCare extends trainer_card_1.TrainerCard {
         this.setNumber = '134';
         this.name = 'Cheren\'s Care';
         this.fullName = 'Cheren\'s Care BRS';
-        this.text = 'Put 1 of your Basic Pokémon and all attached cards into your hand.';
+        this.text = 'Put 1 of your [C] Pokémon that has any damage counters on it and all attached cards into your hand.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

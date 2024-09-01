@@ -18,15 +18,16 @@ class Okidogiex extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Poison Muscle',
+                name: 'Poisonous Musculature',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Attach up to 2 Basic Darkness Energy from your deck to this Pokémon, then shuffle your deck. If you attached any Energy this way, this Pokémon is now Poisoned.'
             },
             {
-                name: 'Crazy Chain',
+                name: 'CChain-Crazed',
                 cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
                 damage: 130,
+                damageCalculation: '+',
                 text: 'If this Pokémon is Poisoned, this attack does 130 more.'
             }
         ];

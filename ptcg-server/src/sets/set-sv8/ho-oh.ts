@@ -12,11 +12,11 @@ export class HoOh extends PokemonCard {
 
   public cardType: CardType = CardType.FIRE;
 
-  public hp: number = 110;
+  public hp: number = 130;
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public resistance = [{ type: CardType.LIGHTNING, value: -30 }];
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 

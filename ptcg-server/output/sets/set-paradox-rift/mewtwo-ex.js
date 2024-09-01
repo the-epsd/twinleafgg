@@ -19,7 +19,7 @@ class Mewtwoex extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Trans Charge',
+                name: 'Transfer Charge',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 0,
                 text: 'Attach up to 2 Basic P Energy from your discard pile to your Pokemon in any way you like.'
@@ -28,6 +28,7 @@ class Mewtwoex extends pokemon_card_1.PokemonCard {
                 name: 'Photon Kinesis',
                 cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC],
                 damage: 10,
+                damageCalculation: '+',
                 text: 'This attack does 30 more damage for each P Energy attached to all of your Pokémon.'
             },
         ];

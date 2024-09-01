@@ -29,6 +29,7 @@ class SuicuneV extends pokemon_card_1.PokemonCard {
                 name: 'Blizzard Rondo',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
                 damage: 20,
+                damageCalculation: '+',
                 text: 'This attack does 20 more damage for each Benched ' +
                     'Pokémon (both yours and your opponent\'s).'
             }

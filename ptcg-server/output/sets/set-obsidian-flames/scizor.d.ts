@@ -16,12 +16,19 @@ export declare class Scizor extends PokemonCard {
         type: CardType;
         value: number;
     }[];
-    attacks: {
+    attacks: ({
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    } | {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

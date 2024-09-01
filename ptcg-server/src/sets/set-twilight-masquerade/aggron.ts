@@ -19,7 +19,7 @@ export class Aggron extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public resistance = [{ type: CardType.FIRE, value: -30 }];
+  public resistance = [{ type: CardType.GRASS, value: -30 }];
 
   public hp: number = 180;
 
@@ -30,6 +30,7 @@ export class Aggron extends PokemonCard {
       name: 'Angry Slam',
       cost: [CardType.METAL],
       damage: 50,
+      damageCalculation: 'x',
       text: 'This attack does 50 damage for each of your Pokémon that has any damage counters on it.'
     },
     {

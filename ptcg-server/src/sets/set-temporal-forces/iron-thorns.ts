@@ -16,19 +16,20 @@ export class IronThorns extends PokemonCard {
 
   public resistance = [];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
-      name: 'Destropressor', 
+      name: 'Destropressor',
       cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 70,
+      damageCalculation: 'x',
       text: 'Reveal the top 5 cards of your deck. This attack does 70 damage times for each Future card you find there. Then, discard the revealed Future cards and shuffle the other cards back into your deck.'
     },
     {
       name: 'Megaton Lariat',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS], 
-      damage: 80,
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
+      damage: 140,
       text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 80 more damage.'
     }
   ];
@@ -52,19 +53,19 @@ export class IronThorns extends PokemonCard {
 
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 5);
-  
+
       // Filter for item cards
-      const futureCards = deckTop.cards.filter(c => 
-        c instanceof PokemonCard && 
-            c.tags.includes(CardTag.FUTURE)
+      const futureCards = deckTop.cards.filter(c =>
+        c instanceof PokemonCard &&
+        c.tags.includes(CardTag.FUTURE)
       );
 
       // Move item cards to hand
       deckTop.moveCardsTo(futureCards, player.discard);
-    
+
       // Move all cards to discard
       deckTop.moveTo(player.deck, deckTop.cards.length);
-    
+
       effect.damage = 70 * futureCards.length;
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

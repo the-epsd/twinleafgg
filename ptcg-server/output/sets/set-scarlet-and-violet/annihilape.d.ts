@@ -11,12 +11,19 @@ export declare class Annihilape extends PokemonCard {
     }[];
     retreat: CardType[];
     evolvesFrom: string;
-    attacks: {
+    attacks: ({
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    } | {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    })[];
     regulationMark: string;
     set: string;
     cardImage: string;

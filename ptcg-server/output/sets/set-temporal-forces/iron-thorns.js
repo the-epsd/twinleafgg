@@ -19,12 +19,13 @@ class IronThorns extends pokemon_card_1.PokemonCard {
                 name: 'Destropressor',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
                 damage: 70,
+                damageCalculation: 'x',
                 text: 'Reveal the top 5 cards of your deck. This attack does 70 damage times for each Future card you find there. Then, discard the revealed Future cards and shuffle the other cards back into your deck.'
             },
             {
                 name: 'Megaton Lariat',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
-                damage: 80,
+                damage: 140,
                 text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 80 more damage.'
             }
         ];

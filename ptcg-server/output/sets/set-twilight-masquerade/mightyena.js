@@ -19,9 +19,10 @@ class Mightyena extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Pack Outing',
+                name: 'Hunting Pack',
                 cost: [card_types_1.CardType.DARK],
                 damage: 30,
+                damageCalculation: '+',
                 text: 'This attack does 90 more damage for each of your Benched Mightyena.'
             },
             {

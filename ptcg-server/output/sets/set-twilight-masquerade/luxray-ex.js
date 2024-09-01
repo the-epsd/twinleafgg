@@ -20,7 +20,7 @@ class Luxrayex extends game_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Piercing Glint',
+                name: 'Piercing Gaze',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 120,
                 text: 'Look at your opponent\'s hand and discard 1 card your find there.'

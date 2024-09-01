@@ -13,12 +13,20 @@ export declare class Heatran extends PokemonCard {
         type: CardType;
         value: number;
     }[];
-    attacks: {
+    retreat: CardType[];
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    })[];
     set: string;
     regulationMark: string;
     cardImage: string;

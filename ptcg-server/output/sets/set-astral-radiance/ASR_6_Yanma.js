@@ -10,7 +10,7 @@ class Yanma extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 60;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.attack = [{
+        this.attacks = [{
                 name: 'Speed Dive',
                 cost: [card_types_1.CardType.GRASS],
                 damage: 20,

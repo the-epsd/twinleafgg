@@ -24,6 +24,7 @@ class Zarude extends pokemon_card_1.PokemonCard {
                 name: 'Triple Whip',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.GRASS],
                 damage: 70,
+                damageCalculation: 'x',
                 text: ' Flip 3 coins. This attack does 70 damage for each heads. '
             }];
         this.set = 'CRZ';

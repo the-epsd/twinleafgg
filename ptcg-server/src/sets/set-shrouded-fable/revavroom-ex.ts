@@ -26,14 +26,14 @@ export class Revavroomex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Accelerating Flash',
+      name: 'Accelerator Flash',
       cost: [CardType.METAL],
       damage: 20,
       damageCalculation: '+',
       text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 120 more damage.'
     },
     {
-      name: 'Speed Break',
+      name: 'Shattering Speed',
       cost: [CardType.METAL, CardType.METAL, CardType.METAL],
       damage: 250,
       text: 'Discard this Pokémon and all attached cards.'

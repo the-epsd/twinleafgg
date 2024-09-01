@@ -1,12 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
+import { PlayerType } from '../../game';
 
 export class Zebstrika extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,13 +37,33 @@ export class Zebstrika extends PokemonCard {
   public fullName: string = 'Zebstrika LOT';
   public cardImage = 'assets/cardback.png';
 
+  public readonly SPRINT_MARKER = 'SPRINT_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.SPRINT_MARKER, this);
+    }
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+
+      if (player.marker.hasMarker(this.SPRINT_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      player.marker.addMarker(this.SPRINT_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+        }
+      });
 
       const cards = player.hand.cards.filter(c => c !== this);
       player.hand.moveCardsTo(cards, player.discard);

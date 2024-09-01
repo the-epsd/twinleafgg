@@ -17,6 +17,7 @@ class Snorunt extends pokemon_card_1.PokemonCard {
                 name: 'Bite',
                 cost: [card_types_1.CardType.WATER],
                 damage: 10,
+                damageCalculation: '+',
                 text: 'If your opponent\'s Active Pokémon is a F Pokémon, this attack does 30 more damage.'
             }
         ];

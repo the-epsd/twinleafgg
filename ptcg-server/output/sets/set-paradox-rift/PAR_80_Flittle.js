@@ -18,6 +18,7 @@ class Flittle extends pokemon_card_1.PokemonCard {
                 name: 'Psychic',
                 cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC],
                 damage: 10,
+                damageCalculation: '+',
                 text: 'This attack does 10 more damage for each Energy attached to your opponent\'s Active Pokémon.'
             }];
         this.set = 'PAR';

@@ -16,6 +16,7 @@ export class Zeraora extends PokemonCard {
       name: 'Combat Thunder',
       cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 20,
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each of your opponent\'s Benched Pokémon.'
     }
   ];

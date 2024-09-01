@@ -33,6 +33,7 @@ export class Zamazenta extends PokemonCard {
       name: 'Retaliate',
       cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
       damage: 100,
+      damageCalculation: '+',
       text: 'If any of your Pokémon were Knocked Out during your opponent\'s last turn, this attack does 120 more damage.'
     },
   ];
@@ -52,7 +53,7 @@ export class Zamazenta extends PokemonCard {
   public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 

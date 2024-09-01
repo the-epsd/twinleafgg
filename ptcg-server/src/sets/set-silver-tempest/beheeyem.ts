@@ -19,19 +19,19 @@ export class Beheeyem extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Psychic Sphere',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 30,
       text: ''
     },
     {
       name: 'Psychic Arrow',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
-      damage: 60,
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      damage: 0,
       text: 'This attack does 60 damage to 1 of your opponent\'s Pokémon. Also apply Weakness and Resistance for Benched Pokémon.'
     }
   ];
@@ -57,7 +57,7 @@ export class Beheeyem extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];
@@ -66,7 +66,7 @@ export class Beheeyem extends PokemonCard {
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });
-        return state; 
+        return state;
       });
     }
     return state;

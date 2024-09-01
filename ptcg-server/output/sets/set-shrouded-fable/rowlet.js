@@ -15,7 +15,7 @@ class Rowlet extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Collect',
+                name: 'Add On',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Draw a card.'

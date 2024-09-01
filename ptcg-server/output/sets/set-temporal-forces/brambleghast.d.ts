@@ -21,6 +21,7 @@ export declare class Brambleghast extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;

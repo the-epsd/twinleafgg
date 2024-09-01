@@ -25,10 +25,10 @@ export class Zorua extends PokemonCard {
     },
     {
       name: 'Double Scratch',
-      cost: [CardType.COLORLESS],
-      damage: 10,
+      cost: [CardType.DARK, CardType.COLORLESS],
+      damage: 20,
       damageCalculation: 'x',
-      text: ''
+      text: 'Flip 2 coins. This attack does 20 damage for each heads.'
     }
   ];
 

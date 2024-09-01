@@ -20,7 +20,7 @@ class SerperiorV extends game_1.PokemonCard {
                 text: 'Heal 30 damage from each Pokémon (both yours and your opponent\'s).'
             },
             {
-                name: 'Solear Beam',
+                name: 'Solar Beam',
                 cost: [game_1.CardType.GRASS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS],
                 damage: 120,
                 text: ''

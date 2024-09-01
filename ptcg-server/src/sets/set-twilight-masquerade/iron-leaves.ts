@@ -30,7 +30,7 @@ export class IronLeaves extends PokemonCard {
       text: 'Choose up to 2 Pokémon from your discard pile, reveal them, and put them into your hand.'
     },
     {
-      name: 'Vengeful Edge',
+      name: 'Avenging Edge',
       cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 100,
       damageCalculation: '+',

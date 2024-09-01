@@ -28,6 +28,7 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
                 name: 'Calamity Storm',
                 cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
                 damage: 100,
+                damageCalculation: '+',
                 text: 'You may discard a Stadium in play. If you do, this attack does 120 more damage.'
             }
         ];

@@ -18,9 +18,10 @@ class DeoxysV extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Psychict',
+                name: 'Psychic',
                 cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
                 damage: 30,
+                damageCalculation: '+',
                 text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
             },
             {

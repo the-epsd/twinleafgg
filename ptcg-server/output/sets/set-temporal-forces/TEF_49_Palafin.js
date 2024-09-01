@@ -25,6 +25,7 @@ class Palafin extends pokemon_card_1.PokemonCard {
                 name: 'Double Hit',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 90,
+                damageCalculation: 'x',
                 text: 'Flip 2 coins. This attack does 90 damage for each heads.'
             }];
         this.set = 'TEF';

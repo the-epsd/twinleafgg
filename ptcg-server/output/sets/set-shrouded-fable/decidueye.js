@@ -17,7 +17,7 @@ class Decidueye extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Feather Stock',
+                name: 'Stock Up on Feathers',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Draw cards until you have 7 cards in your hand.'

@@ -31,7 +31,7 @@ export class Feraligatr extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Balliastic Beak',
+      name: 'Giant Wave',
       cost: [CardType.WATER, CardType.WATER],
       damage: 160,
       text: 'This Pokémon can\'t use Giant Wave during your next turn.'

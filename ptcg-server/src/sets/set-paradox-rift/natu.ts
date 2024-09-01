@@ -20,12 +20,13 @@ export class Natu extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Triple Jab',
-    cost: [ CardType.PSYCHIC ],
+    cost: [CardType.PSYCHIC],
     damage: 10,
+    damageCalculation: 'x',
     text: 'Flip 3 coins. This attack does 10 damage for each heads.'
   }
   ];
@@ -33,7 +34,7 @@ export class Natu extends PokemonCard {
   public set: string = 'PAR';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '4';
 
   public name: string = 'Natu';
@@ -54,9 +55,8 @@ export class Natu extends PokemonCard {
         effect.damage = 10 * heads;
       });
     }
-  
+
     return state;
   }
-  
+
 }
-  

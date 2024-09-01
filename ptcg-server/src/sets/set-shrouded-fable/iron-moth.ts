@@ -13,13 +13,13 @@ export class IronMoth extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Absorption',
+      name: 'Suction',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
       text: 'Heal from this Pokémon the same amount of damage you did to your opponent\'s Active Pokémon.'
     },
     {
-      name: 'Wild Rejector',
+      name: 'Anachronism Repulsor',
       cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
       damage: 120,
       text: 'During your next turn, prevent all damage done to this Pokémon by attacks from Ancient Pokémon.'

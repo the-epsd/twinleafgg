@@ -18,7 +18,7 @@ class Froslass extends game_1.PokemonCard {
         this.hp = 90;
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Chilling Curtain',
+                name: 'Freezing Shroud',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'During Pokémon Checkup, put 1 damage counter on each Pokémon in play that has any Abilities (excluding any Froslass).'
             }];

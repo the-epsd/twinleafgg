@@ -16,18 +16,19 @@ export class Zeraora extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public attacks = [
     {
-      name: 'Touring',
-      cost: [ CardType.LIGHTNING ],
+      name: 'Battle Claw',
+      cost: [CardType.LIGHTNING],
       damage: 30,
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 30 more damage.'
     },
     {
-      name: 'Speed Attack',
-      cost: [ CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS ],
+      name: 'Mach Bolt',
+      cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
       text: ''
     }
@@ -46,7 +47,7 @@ export class Zeraora extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

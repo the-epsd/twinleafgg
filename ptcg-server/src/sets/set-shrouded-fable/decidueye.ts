@@ -22,7 +22,7 @@ export class Decidueye extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Feather Stock',
+      name: 'Stock Up on Feathers',
       cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Draw cards until you have 7 cards in your hand.'

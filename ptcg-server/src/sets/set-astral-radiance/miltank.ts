@@ -30,6 +30,7 @@ export class Miltank extends PokemonCard {
     name: 'Rout',
     cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 10,
+    damageCalculator: '+',
     text: 'This attack does 20 more damage for each of your opponent\'s Benched Pokémon.'
   }];
 

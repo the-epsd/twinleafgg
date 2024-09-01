@@ -28,6 +28,7 @@ class HisuianSamurottVSTAR extends pokemon_card_1.PokemonCard {
                 name: 'Merciless Blade',
                 cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK],
                 damage: 110,
+                damageCalculation: '+',
                 text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 110 more damage.'
             }
         ];

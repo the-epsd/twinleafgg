@@ -25,7 +25,7 @@ export class SandyShocks extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Magnetic Blast',
+      name: 'Magnetic Burst',
       cost: [CardType.FIGHTING],
       damage: 20,
       damageCalculation: '+',

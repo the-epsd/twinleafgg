@@ -28,6 +28,7 @@ class AggronV extends pokemon_card_1.PokemonCard {
                 name: 'Merciless Strike',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 150,
+                damageCalculation: '+',
                 text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 150 more damage.'
             }
         ];

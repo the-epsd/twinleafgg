@@ -66,6 +66,8 @@ import { WalkingWake } from './walking-wake';
 import { Okidogi } from './okidogi';
 import { SecretBox } from './secret-box';
 import { Heatran } from './heatran';
+import { Chimchar } from './chimchar';
+import { Monferno } from './monferno';
 
 
 export class AggronArt extends Aggron {
@@ -114,6 +116,10 @@ export class ChanseyArt extends Chansey {
 
 export class ChiYuArt extends ChiYu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_039_R_EN_LG.png';
+}
+
+export class ChimcharArt extends Chimchar {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_031_R_EN.png';
 }
 
 export class ClefableArt extends Clefable {
@@ -254,6 +260,10 @@ export class LuxrayexArt extends Luxrayex {
 
 export class MightyenaArt extends Mightyena {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_114_R_EN_LG.png';
+}
+
+export class MonfernoArt extends Monferno {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_032_R_EN.png';
 }
 
 export class MorpekoArt extends Morpeko {

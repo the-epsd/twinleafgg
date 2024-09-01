@@ -17,18 +17,18 @@ export class Victini extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Flippity Flap',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Shuffle your hand into your deck. Then, draw 6 cards.'
     },
     {
-      name: 'Burn Away',
-      cost: [ CardType.FIRE ],
+      name: 'Singe Off',
+      cost: [CardType.FIRE],
       damage: 30,
       text: 'Discard a Special Energy from your opponent\'s Active Pokémon.'
     }
@@ -93,6 +93,6 @@ export class Victini extends PokemonCard {
         }
       });
     }
-    return state; 
+    return state;
   }
 }

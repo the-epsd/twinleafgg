@@ -22,6 +22,7 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
                 name: 'Repulsion Bolt',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.PSYCHIC],
                 damage: 60,
+                damageCalculator: '+',
                 text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 100 more damage.'
             },
             {

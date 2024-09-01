@@ -22,7 +22,7 @@ class Haxorus extends pokemon_card_1.PokemonCard {
                 name: 'Wild Axe',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.METAL],
                 damage: 160,
-                text: ''
+                text: 'This Pokémon also does 30 damage to itself.'
             }];
         this.set = 'BRS';
         this.regulationMark = 'F';

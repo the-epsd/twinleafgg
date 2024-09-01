@@ -16,6 +16,7 @@ class Moltres extends pokemon_card_1.PokemonCard {
                 name: 'Inferno Wings',
                 cost: [card_types_1.CardType.FIRE],
                 damage: 20,
+                damageCalculation: '+',
                 text: 'If this Pokémon has any damage counters on it, this attack does 70 more damage. This attack\'s damage isn\'t affected by Weakness.'
             }];
         this.set = 'BRS';

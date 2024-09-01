@@ -22,7 +22,7 @@ class Galvantula extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon\'s attacks do 50 more damage to your opponent\'s Active Pokémon that have an Ability.'
             }];
         this.attacks = [{
-                name: 'Electrifying Web',
+                name: 'Shocking Web',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS],
                 damage: 50,
                 text: 'If this Pokémon has any [L] Energy attached, this attack does 80 more damage.'

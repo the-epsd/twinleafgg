@@ -19,7 +19,7 @@ export class Haxorus extends PokemonCard {
 
 
   public attacks = [{
-    name: 'Axe Down',
+    name: 'Bring Down the Axe',
     cost: [CardType.FIGHTING],
     damage: 0,
     text: 'If your opponent\'s Active Pokémon has any Special Energy attached, it is Knocked Out.'

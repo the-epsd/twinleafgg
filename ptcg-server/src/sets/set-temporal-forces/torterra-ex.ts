@@ -31,7 +31,7 @@ export class Torterraex extends PokemonCard {
       text: 'This attack does 30 damage for each [G] Pokémon you have in play.'
     },
     {
-      name: 'Leafage',
+      name: 'Jungle Hammer',
       cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 150,
       text: 'Heal 50 damage from this Pokémon.'

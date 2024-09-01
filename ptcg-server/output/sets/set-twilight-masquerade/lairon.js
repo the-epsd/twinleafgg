@@ -13,7 +13,7 @@ class Lairon extends game_1.PokemonCard {
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.METAL;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.resistance = [{ type: card_types_1.CardType.FIRE, value: -30 }];
+        this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
         this.hp = 110;
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [

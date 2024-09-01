@@ -29,10 +29,10 @@ export class IronThornsex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Bolt Cyclone',
+      name: 'Volt Cyclone',
       cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 140,
-      text: 'Move 1 Energy from this Pokémon to 1 of your Benched Pokémon.'
+      text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.'
     }
   ];
 

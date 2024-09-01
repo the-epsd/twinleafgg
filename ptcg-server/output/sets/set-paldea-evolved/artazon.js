@@ -21,7 +21,7 @@ function* useStadium(next, store, state, effect) {
         // handle no open slots
         const blocked = [];
         player.deck.cards.forEach((card, index) => {
-            if (card instanceof game_1.PokemonCard && card.tags.includes(card_types_1.CardTag.RADIANT) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || card.tags.includes(card_types_1.CardTag.POKEMON_ex)) {
+            if (card instanceof game_1.PokemonCard && card.tags.includes(card_types_1.CardTag.RADIANT) || card instanceof game_1.PokemonCard && card.tags.includes(card_types_1.CardTag.POKEMON_EX) || card instanceof game_1.PokemonCard && card.tags.includes(card_types_1.CardTag.POKEMON_GX) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || card.tags.includes(card_types_1.CardTag.POKEMON_ex)) {
                 blocked.push(index);
             }
         });

@@ -15,6 +15,7 @@ export declare class Porygon2 extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
+        damageCalculator: string;
         text: string;
     }[];
     regulationMark: string;

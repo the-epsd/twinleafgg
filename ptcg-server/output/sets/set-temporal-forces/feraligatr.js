@@ -25,7 +25,7 @@ class Feraligatr extends pokemon_card_1.PokemonCard {
             }];
         this.attacks = [
             {
-                name: 'Balliastic Beak',
+                name: 'Giant Wave',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER],
                 damage: 160,
                 text: 'This Pokémon can\'t use Giant Wave during your next turn.'

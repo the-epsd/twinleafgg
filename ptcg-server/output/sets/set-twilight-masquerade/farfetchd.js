@@ -18,7 +18,7 @@ class Farfetchd extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Sonic Duty',
+                name: 'Impromptu Carrier',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'You may use this Ability when you put this card from your hand onto your Bench during your turn. Search your deck for a Pokémon Tool card and attach it to this Pokémon. Then, shuffle your deck.'
             }];

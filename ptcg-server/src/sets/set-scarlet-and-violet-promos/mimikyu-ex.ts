@@ -31,9 +31,10 @@ export class Mimikyuex extends PokemonCard {
     damage: 30,
     text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
   }, {
-    name: 'Iron Breaker',
+    name: 'Energy Burst',
     cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
     damage: 30,
+    damageCalculation: 'x',
     text: 'This attack does 30 damage for each Energy attached to both Active Pokémon.'
   }];
 

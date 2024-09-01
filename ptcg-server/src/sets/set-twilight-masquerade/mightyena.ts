@@ -19,20 +19,21 @@ export class Mightyena extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public resistance = [ ];
+  public resistance = [];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
-      name: 'Pack Outing',
-      cost: [ CardType.DARK ],
+      name: 'Hunting Pack',
+      cost: [CardType.DARK],
       damage: 30,
+      damageCalculation: '+',
       text: 'This attack does 90 more damage for each of your Benched Mightyena.'
     },
     {
       name: 'Corner',
-      cost: [ CardType.DARK, CardType.COLORLESS ],
+      cost: [CardType.DARK, CardType.COLORLESS],
       damage: 60,
       text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
     },
@@ -56,7 +57,7 @@ export class Mightyena extends PokemonCard {
 
       const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
       const mightyenasInPlay = benchPokemon.filter(card => card.name == 'Mightyena');
-      
+
       if (mightyenasInPlay) {
         effect.damage += 90;
       }
@@ -67,17 +68,16 @@ export class Mightyena extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
-          
+
     if (effect instanceof RetreatEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
-          
+
     if (effect instanceof EndTurnEffect) {
       effect.player.active.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
-  
+
     return state;
   }
-  
+
 }
-  

@@ -19,6 +19,7 @@ class Natu extends pokemon_card_1.PokemonCard {
                 name: 'Triple Jab',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 10,
+                damageCalculation: 'x',
                 text: 'Flip 3 coins. This attack does 10 damage for each heads.'
             }
         ];

@@ -21,7 +21,7 @@ class Nidorina extends game_1.PokemonCard {
             },
             {
                 name: 'Sharp Fang',
-                cost: [game_1.CardType.DARK, game_1.CardType.DARK],
+                cost: [game_1.CardType.DARK, game_1.CardType.COLORLESS],
                 damage: 50,
                 text: ''
             }

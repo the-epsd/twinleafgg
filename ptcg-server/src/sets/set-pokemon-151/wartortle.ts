@@ -10,21 +10,21 @@ import { Effect } from '../../game/store/effects/effect';
 export class Wartortle extends PokemonCard {
 
   public regulationMark = 'G';
-  
+
   public stage = Stage.STAGE_1;
-  
+
   public evolvesFrom = 'Squirtle';
-  
+
   public cardType = CardType.WATER;
 
   public hp = 100;
 
-  public weakness = [{type: CardType.LIGHTNING,}];
+  public weakness = [{ type: CardType.LIGHTNING, }];
 
   retreat = [CardType.COLORLESS, CardType.COLORLESS];
   attacks = [
     {
-      name: 'Free Dive',
+      name: 'Free Diving',
       cost: [CardType.WATER],
       damage: 0,
       text: 'Put up to 3 Water Energy cards from your discard pile into your hand.'
@@ -44,18 +44,18 @@ export class Wartortle extends PokemonCard {
   public setNumber: string = '8';
 
   public name: string = 'Wartortle';
-  
+
   public fullName: string = 'Wartortle MEW';
-    
+
   reduceEffect(store: StoreLike, state: State, effect: Effect) {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const prompt = new ChooseCardsPrompt(
-        player.id, 
-        GameMessage.CHOOSE_CARD_TO_HAND, 
-        player.discard, 
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        player.discard,
         {
-          cardType: CardType.WATER 
+          cardType: CardType.WATER
         },
         {
           min: 0,

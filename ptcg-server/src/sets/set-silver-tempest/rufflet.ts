@@ -17,13 +17,14 @@ export class Rufflet extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Jump On',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 10,
+      damageCalculator: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
