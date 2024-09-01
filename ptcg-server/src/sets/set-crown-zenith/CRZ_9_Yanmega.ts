@@ -16,7 +16,7 @@ export class Yanmega extends PokemonCard {
   public attacks = [{
     name: 'Shoot Through',
     cost: [CardType.COLORLESS],
-    damage: 0,
+    damage: 20,
     text: ' This attack also does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.) '
   },
   {
