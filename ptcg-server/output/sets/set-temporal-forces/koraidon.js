@@ -20,9 +20,10 @@ class Koraidon extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Primeval Battering',
+                name: 'Primordial Beatdown',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
                 damage: 30,
+                damageCalculator: 'x',
                 text: 'This attack does 30 damage for each of your Ancient Pokémon in play.'
             },
             {

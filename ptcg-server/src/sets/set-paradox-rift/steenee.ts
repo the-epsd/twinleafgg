@@ -17,19 +17,20 @@ export class Steenee extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Spinning Attack',
-      cost: [ CardType.GRASS ],
+      cost: [CardType.GRASS],
       damage: 30,
       text: ''
     },
     {
       name: 'Double Spin',
-      cost: [ CardType.GRASS, CardType.GRASS ],
+      cost: [CardType.GRASS, CardType.GRASS],
       damage: 40,
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 40 damage for each heads.'
     }
   ];

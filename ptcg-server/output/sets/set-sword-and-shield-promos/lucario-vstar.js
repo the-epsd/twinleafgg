@@ -22,12 +22,14 @@ class LucarioVSTAR extends pokemon_card_1.PokemonCard {
                 name: 'Fighting Knuckle',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 120,
+                damageCalculation: '+',
                 text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 120 more damage.'
             },
             {
                 name: 'Aura Star',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
                 damage: 70,
+                damageCalculation: 'x',
                 text: 'This attack does 70 damage for each Energy attached to all of your opponent\'s Pokémon. (You can\'t use more than 1 VSTAR Power in a game.)'
             }
         ];

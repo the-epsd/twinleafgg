@@ -10,12 +10,19 @@ export declare class Miraidonex extends PokemonCard {
     cardType: CardType;
     hp: number;
     retreat: CardType[];
-    attacks: {
+    attacks: ({
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculator: string;
+        text: string;
+    } | {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculator?: undefined;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

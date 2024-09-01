@@ -26,7 +26,7 @@ class ZacianV extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Behemoth Blade',
-                cost: [card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
                 damage: 100,
                 damageCalculation: '+',
                 text: 'If your opponent\'s Active Pokémon is a Pokémon VMAX, this attack does 160 more damage.'
@@ -36,7 +36,7 @@ class ZacianV extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '95';
         this.name = 'Zacian V';
-        this.fullName = 'Zacian V';
+        this.fullName = 'Zacian V CRZ';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

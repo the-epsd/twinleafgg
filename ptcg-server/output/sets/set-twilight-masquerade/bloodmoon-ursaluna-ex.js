@@ -18,7 +18,7 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Elder\'s Technique',
+                name: 'Seasoned Skill',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'This Pokémon\'s Blood Moon attacks costs 1 Colorless less to use for each Prize card your opponent has already taken.'
             }];

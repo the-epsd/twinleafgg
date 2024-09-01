@@ -61,7 +61,7 @@ export class Duskull extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Meet Up',
+      name: 'Come and Get You',
       cost: [CardType.PSYCHIC],
       damage: 0,
       text: 'Put up to 3 Duskull from your discard pile onto your Bench.'

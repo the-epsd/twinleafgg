@@ -25,7 +25,7 @@ class Cyclizar extends pokemon_card_1.PokemonCard {
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 70,
                 damageCalculation: '+',
-                text: ''
+                text: 'If you played a Supporter card from your hand during this turn, this attack does 70 more damage.'
             }
         ];
         this.set = 'PAR';

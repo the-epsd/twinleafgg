@@ -4,7 +4,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Dragonair extends PokemonCard {
-    regulationMark: string;
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;

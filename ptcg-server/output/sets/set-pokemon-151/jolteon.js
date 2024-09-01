@@ -20,13 +20,14 @@ class Jolteon extends pokemon_card_1.PokemonCard {
             {
                 name: 'Linear Attack',
                 cost: [card_types_1.CardType.LIGHTNING],
-                damage: 30,
+                damage: 0,
                 text: 'This attack does 30 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             },
             {
                 name: 'Fighting Lightning',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 90,
+                damageCalculation: '+',
                 text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 90 more damage.'
             }
         ];

@@ -25,6 +25,7 @@ class Machamp extends pokemon_card_1.PokemonCard {
                 name: 'Strong-Arm Lariat',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING],
                 damage: 100,
+                damageCalculation: '+',
                 text: 'You may do 100 more damage. If you do, during your next turn, this Pokémon can\'t attack.'
             }];
         this.set = 'LOR';

@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 
 export class GougingFireex extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.ANCIENT ];
+  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
 
   public regulationMark = 'H';
 
@@ -18,20 +18,20 @@ export class GougingFireex extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Heat Blast',
-      cost: [ CardType.FIRE, CardType.COLORLESS ],
+      cost: [CardType.FIRE, CardType.COLORLESS],
       damage: 60,
       text: ''
     },
     {
-      name: 'Explosive Flare',
-      cost: [ CardType.FIRE, CardType.FIRE, CardType.COLORLESS ],
+      name: 'Blaze Blitz',
+      cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
       damage: 260,
-      text: 'This Pokémon can\'t use Exploding Flare again until it leaves the Active Spot.'
+      text: 'This Pokémon can\'t use Blaze Blitz again until it leaves the Active Spot.'
     }
   ];
 

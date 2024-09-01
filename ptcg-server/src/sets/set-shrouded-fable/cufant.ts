@@ -19,7 +19,7 @@ export class Cufant extends PokemonCard {
     {
       name: 'Tackle',
       cost: [CardType.METAL, CardType.COLORLESS],
-      damage: 10,
+      damage: 30,
       text: ''
     },
     {

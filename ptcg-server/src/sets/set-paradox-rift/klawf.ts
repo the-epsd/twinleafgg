@@ -9,7 +9,7 @@ export class Klawf extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.FIGHTING;
-  
+
   public hp: number = 120;
 
   public weakness = [{ type: CardType.GRASS }];
@@ -23,6 +23,7 @@ export class Klawf extends PokemonCard {
       name: 'Unhinged Scissors',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
+      damageCalculation: '+',
       text: 'If this Pokémon is affected by a Special Condition, this attack does 160 more damage.'
     },
     {

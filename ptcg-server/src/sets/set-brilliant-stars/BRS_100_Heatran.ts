@@ -12,7 +12,7 @@ export class Heatran extends PokemonCard {
   public hp: number = 140;
   public weakness = [{ type: CardType.FIRE }];
   public resistance = [{ type: CardType.GRASS, value: -30 }];
-
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
   public attacks = [{
     name: 'Guard Claw',
     cost: [CardType.COLORLESS, CardType.COLORLESS],
@@ -23,6 +23,7 @@ export class Heatran extends PokemonCard {
     name: 'Iron Hammer',
     cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
     damage: 80,
+    damageCalculation: '+',
     text: 'If this Pokémon has any [R] Energy attached, this attack does 80 more damage. '
   }];
 

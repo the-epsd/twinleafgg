@@ -19,7 +19,7 @@ class ScreamTailex extends pokemon_card_1.PokemonCard {
         this.retreat = [game_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Sudden Shriek',
+                name: 'Scream',
                 cost: [game_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'You can use this attack only if you go second, and only during your first turn. During your opponent\'s next turn, they can\'t play any Supporter cards from their hand.'

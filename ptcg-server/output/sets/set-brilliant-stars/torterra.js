@@ -17,7 +17,8 @@ class Torterra extends pokemon_card_1.PokemonCard {
         this.attacks = [{
                 name: 'Evopress',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS],
-                damage: 60,
+                damage: 50,
+                damageCalculation: 'x',
                 text: 'This attack does 50 for each of your Evolution Pokemon in play.'
             },
             {

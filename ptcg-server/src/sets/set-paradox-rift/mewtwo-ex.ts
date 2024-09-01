@@ -24,7 +24,7 @@ export class Mewtwoex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Trans Charge',
+      name: 'Transfer Charge',
       cost: [CardType.PSYCHIC],
       damage: 0,
       text: 'Attach up to 2 Basic P Energy from your discard pile to your Pokemon in any way you like.'
@@ -33,6 +33,7 @@ export class Mewtwoex extends PokemonCard {
       name: 'Photon Kinesis',
       cost: [CardType.PSYCHIC, CardType.PSYCHIC],
       damage: 10,
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each P Energy attached to all of your Pokémon.'
     },
   ];

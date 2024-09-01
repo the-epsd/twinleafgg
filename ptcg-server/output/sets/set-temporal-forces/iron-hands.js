@@ -23,9 +23,10 @@ class IronHands extends pokemon_card_1.PokemonCard {
                 text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
             },
             {
-                name: 'Super Alloy Hands',
+                name: 'Superalloy Hands',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
                 damage: 80,
+                damageCalculation: '+',
                 text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 80 more damage.'
             }
         ];

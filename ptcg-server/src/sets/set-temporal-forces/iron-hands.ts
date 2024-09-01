@@ -17,19 +17,20 @@ export class IronHands extends PokemonCard {
 
   public resistance = [];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
-      name: 'Volt Wave', 
+      name: 'Volt Wave',
       cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 30,
       text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
     },
     {
-      name: 'Super Alloy Hands',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS], 
+      name: 'Superalloy Hands',
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 80,
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 80 more damage.'
     }
   ];
@@ -69,7 +70,7 @@ export class IronHands extends PokemonCard {
       if (opponentActive && (opponentActive.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.POKEMON_ex))) {
         effect.damage += 80;
       }
-    }    
+    }
     return state;
   }
 }

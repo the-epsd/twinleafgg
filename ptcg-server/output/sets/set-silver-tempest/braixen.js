@@ -21,9 +21,10 @@ class Braixen extends pokemon_card_1.PokemonCard {
                 text: ''
             },
             {
-                name: 'Royal Blaze',
+                name: 'Flare Parade',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 60,
+                damageCalculation: 'x',
                 text: 'This attack does 60 damage for each Serena card in your discard pile.'
             }
         ];

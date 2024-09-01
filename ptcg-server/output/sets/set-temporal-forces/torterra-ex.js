@@ -24,7 +24,7 @@ class Torterraex extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 30 damage for each [G] Pokémon you have in play.'
             },
             {
-                name: 'Leafage',
+                name: 'Jungle Hammer',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 150,
                 text: 'Heal 50 damage from this Pokémon.'

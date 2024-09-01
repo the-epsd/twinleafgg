@@ -6,12 +6,10 @@ import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class FrozenCity extends TrainerCard {
 
-  public regulationMark = 'F';
-
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '100';
-  
+
   public trainerType = TrainerType.STADIUM;
 
   public set = 'PLF';
@@ -26,9 +24,9 @@ export class FrozenCity extends TrainerCard {
 
     if (effect instanceof AttachEnergyEffect && StateUtils.getStadiumCard(state) === this) {
       const owner = StateUtils.findOwner(state, effect.target);
-      
+
       store.log(state, GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, { name: owner.name, damage: 20, target: effect.target.getPokemonCard()!.name, effect: this.name });
-      
+
       effect.target.damage += 20;
       return state;
     }

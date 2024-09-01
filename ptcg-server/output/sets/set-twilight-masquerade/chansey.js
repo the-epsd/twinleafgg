@@ -16,7 +16,7 @@ class Chansey extends game_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Lucky Attach',
+                name: 'Lucky Attachment',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Attach a Basic Energy card from your hand to 1 of your Pokémon.'

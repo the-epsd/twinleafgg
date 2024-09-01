@@ -18,13 +18,13 @@ class TingLu extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Ground Crack',
-                cost: [],
+                cost: [card_types_1.CardType.FIGHTING],
                 damage: 30,
                 text: 'If a Stadium is in play, this attack does 30 damage to each of your opponent\'s Benched Pokémon. Then, discard that Stadium. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             },
             {
                 name: 'Hammer In',
-                cost: [],
+                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
                 damage: 110,
                 text: ''
             }

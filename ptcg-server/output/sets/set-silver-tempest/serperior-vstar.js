@@ -25,6 +25,7 @@ class SerperiorVSTAR extends game_1.PokemonCard {
                 name: 'Star Winder',
                 cost: [game_1.CardType.GRASS],
                 damage: 60,
+                damageCalculation: 'x',
                 text: 'This attack does 60 damage for each Energy attached to this Pokémon. Switch this Pokémon with 1 of your Benched Pokémon. (You can\'t use more than 1 VSTAR Power in a game.)'
             }
         ];

@@ -17,7 +17,7 @@ class Mantine extends pokemon_card_1.PokemonCard {
         this.attacks = [{
                 name: 'Borne Ashore',
                 cost: [card_types_1.CardType.COLORLESS],
-                damage: 160,
+                damage: 0,
                 text: 'Put a Basic Pokémon from either player\'s discard pile onto that player\'s Bench.'
             },
             {

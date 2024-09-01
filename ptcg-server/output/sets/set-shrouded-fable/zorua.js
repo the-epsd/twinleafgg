@@ -22,10 +22,10 @@ class Zorua extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Double Scratch',
-                cost: [card_types_1.CardType.COLORLESS],
-                damage: 10,
+                cost: [card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
+                damage: 20,
                 damageCalculation: 'x',
-                text: ''
+                text: 'Flip 2 coins. This attack does 20 damage for each heads.'
             }
         ];
         this.regulationMark = 'H';

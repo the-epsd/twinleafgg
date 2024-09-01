@@ -8,7 +8,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 export class Jolteon extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
-  
+
   public evolvesFrom = 'Eevee';
 
   public cardType: CardType = CardType.LIGHTNING;
@@ -23,15 +23,16 @@ export class Jolteon extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Linear Attack', 
+      name: 'Linear Attack',
       cost: [CardType.LIGHTNING],
-      damage: 30,
+      damage: 0,
       text: 'This attack does 30 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Fighting Lightning',
-      cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS], 
+      cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 90,
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 90 more damage.'
     }
   ];
@@ -58,7 +59,7 @@ export class Jolteon extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];
@@ -77,7 +78,7 @@ export class Jolteon extends PokemonCard {
       if (opponentActive && (opponentActive.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.POKEMON_ex))) {
         effect.damage += 90;
       }
-    }    
+    }
     return state;
   }
 }

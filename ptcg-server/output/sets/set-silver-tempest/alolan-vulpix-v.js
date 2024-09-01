@@ -19,6 +19,7 @@ class AlolanVulpixV extends pokemon_card_1.PokemonCard {
                 name: 'White Drop',
                 cost: [],
                 damage: 10,
+                damageCalculation: '+',
                 text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 50 more damage.'
             },
             {

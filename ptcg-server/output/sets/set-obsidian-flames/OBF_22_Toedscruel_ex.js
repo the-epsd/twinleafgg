@@ -27,6 +27,7 @@ class Toedscruelex extends pokemon_card_1.PokemonCard {
                 name: 'Colony Rush',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.GRASS],
                 damage: 80,
+                damageCalculation: '+',
                 text: ' This attack does 40 more damage for each of your Benched Pokémon that has any [G] Energy attached. '
             }];
         this.set = 'OBF';

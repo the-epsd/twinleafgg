@@ -14,15 +14,15 @@ export class Croconaw extends PokemonCard {
 
   public cardType: CardType = CardType.WATER;
 
-  public hp: number = 70;
+  public hp: number = 90;
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Reverse Thrust',
-    cost: [ CardType.WATER ],
+    cost: [CardType.WATER],
     damage: 30,
     text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
   }];
@@ -43,17 +43,17 @@ export class Croconaw extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-            
+
       const hasBenched = player.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
-        
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: true },
       ), selected => {
         if (!selected || selected.length === 0) {

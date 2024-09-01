@@ -14,47 +14,47 @@ function* useMakeBelieveCopycat(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
   const activePokemonCard = opponent.active.getPokemonCard();
   const benchPokemonCard = opponent.bench.forEach(b => b.getPokemonCard());
-  
+
   if (activePokemonCard === undefined || activePokemonCard.attacks.length === 0) {
     return state;
   }
-  
+
 
   let selected: any;
   yield store.prompt(state, new ChooseAttackPrompt(
     opponent.id,
     GameMessage.CHOOSE_ATTACK_TO_COPY,
-    [ activePokemonCard || benchPokemonCard ],
+    [activePokemonCard || benchPokemonCard],
     { allowCancel: false }
   ), result => {
     selected = result;
     next();
   });
-  
+
   const attack: Attack | null = selected;
-  
+
   if (attack === null) {
     return state;
   }
-  
+
   store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
     name: player.name,
     attack: attack.name
   });
-  
+
   // Perform attack
   const attackEffect = new AttackEffect(player, opponent, attack);
   store.reduceEffect(state, attackEffect);
-  
+
   if (store.hasPrompts()) {
     yield store.waitPrompt(state, () => next());
   }
-  
+
   if (attackEffect.damage > 0) {
     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
     state = store.reduceEffect(state, dealDamage);
   }
-  
+
   return state;
 }
 
@@ -72,11 +72,11 @@ export class MimeJr extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public attacks = [{
-    name: 'Make Believe Copycat',
-    cost: [ ],
+    name: 'Mimed Games',
+    cost: [],
     damage: 0,
     text: 'Your opponent chooses 1 of their Pokémon\'s attacks. Use that attack as this attack.'
   }];
@@ -92,14 +92,13 @@ export class MimeJr extends PokemonCard {
   public fullName: string = 'Mime Jr. PAF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const generator = useMakeBelieveCopycat(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-  
+
     return state;
   }
-  
+
 }
-  

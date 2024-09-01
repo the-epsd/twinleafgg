@@ -16,6 +16,7 @@ export declare class Hoothoot extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
+        damageCalculator: string;
         text: string;
     }[];
     regulationMark: string;

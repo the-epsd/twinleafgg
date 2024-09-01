@@ -35,27 +35,21 @@ class Dragonite extends pokemon_card_1.PokemonCard {
         this.fullName = 'Dragonite SIT';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
+            if (player.deck.cards.length === 0) {
+                return state;
+            }
             state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: true, min: 0, max: 3 }), transfers => {
                 transfers = transfers || [];
-                // cancelled by user
-                if (transfers.length === 0) {
-                    return state;
-                }
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    if (target.cards[0].superType == card_types_1.SuperType.POKEMON) {
-                        player.deck.moveCardTo(transfer.card, target);
-                        state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                            player.deck.applyOrder(order);
-                        });
-                    }
-                    return state;
+                    player.deck.moveCardTo(transfer.card, target);
                 }
-                return state;
             });
-            return state;
+            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+            });
         }
         return state;
     }

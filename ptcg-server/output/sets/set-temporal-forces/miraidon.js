@@ -25,7 +25,7 @@ class Miraidon extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Sparking Strike',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.PSYCHIC],
                 damage: 160,
                 text: ''
             }

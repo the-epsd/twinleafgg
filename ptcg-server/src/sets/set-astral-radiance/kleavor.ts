@@ -8,11 +8,11 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class Kleavor extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
-  
+
   public evolvesFrom: string = 'Scyther';
-  
+
   public cardType: CardType = CardType.FIGHTING;
-  
+
   public hp: number = 140;
 
   public weakness = [{ type: CardType.GRASS }];
@@ -24,6 +24,7 @@ export class Kleavor extends PokemonCard {
       name: 'Rout',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 10,
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each of your opponent\'s Benched Pokémon.'
     },
     {
@@ -54,11 +55,11 @@ export class Kleavor extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       //Get number of benched pokemon
       const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-        
+
       const totalBenched = opponentBenched;
-      
+
       effect.damage = 10 + (totalBenched * 30);
-    
+
     }
 
 

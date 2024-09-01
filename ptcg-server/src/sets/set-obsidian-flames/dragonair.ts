@@ -22,17 +22,18 @@ export class Dragonair extends PokemonCard {
 
   public weakness = [];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Ram',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 30,
     text: ''
   }, {
     name: 'Dragon Tail',
-    cost: [ CardType.WATER, CardType.LIGHTNING ],
+    cost: [CardType.WATER, CardType.LIGHTNING],
     damage: 70,
+    damageCalculator: 'x',
     text: 'Flip 2 coins. This attack does 70 damage for each heads.'
   }];
 

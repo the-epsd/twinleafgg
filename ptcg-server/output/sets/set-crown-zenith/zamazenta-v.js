@@ -27,6 +27,7 @@ class ZamazentaV extends pokemon_card_1.PokemonCard {
                 name: 'Revenge Blast',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 120,
+                damageCalculation: '+',
                 text: 'This attack does 30 more damage for each Prize card your opponent has taken.'
             },
         ];

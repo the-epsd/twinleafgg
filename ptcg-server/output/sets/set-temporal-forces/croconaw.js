@@ -11,9 +11,9 @@ class Croconaw extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Totodile';
         this.cardType = card_types_1.CardType.WATER;
-        this.hp = 70;
+        this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [{
                 name: 'Reverse Thrust',
                 cost: [card_types_1.CardType.WATER],

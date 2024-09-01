@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Scovillain extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     regulationMark: string;
     cardType: CardType;
     hp: number;
@@ -12,12 +13,19 @@ export declare class Scovillain extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

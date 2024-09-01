@@ -13,7 +13,7 @@ class Moltres extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 120;
-        this.weakness = [{ type: card_types_1.CardType.WATER }];
+        this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Flare FLoat',

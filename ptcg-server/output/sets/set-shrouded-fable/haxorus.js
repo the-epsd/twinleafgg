@@ -18,7 +18,7 @@ class Haxorus extends pokemon_card_1.PokemonCard {
         this.resistance = [];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [{
-                name: 'Axe Down',
+                name: 'Bring Down the Axe',
                 cost: [card_types_1.CardType.FIGHTING],
                 damage: 0,
                 text: 'If your opponent\'s Active Pokémon has any Special Energy attached, it is Knocked Out.'

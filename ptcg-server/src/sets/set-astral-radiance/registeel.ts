@@ -40,7 +40,7 @@ export class Registeel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.METAL;
-  
+
   public hp: number = 130;
 
   public weakness = [{ type: CardType.FIRE }];
@@ -60,6 +60,7 @@ export class Registeel extends PokemonCard {
       name: 'Heavy Slam',
       cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
       damage: 220,
+      damageCalculation: '-',
       text: 'This attack does 50 less damage for each [C] in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];
@@ -83,7 +84,7 @@ export class Registeel extends PokemonCard {
       return generator.next().value;
     }
 
-    if(effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

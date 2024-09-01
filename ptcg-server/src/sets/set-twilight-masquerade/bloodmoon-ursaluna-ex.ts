@@ -23,7 +23,7 @@ export class BloodmoonUrsalunaex extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
-    name: 'Elder\'s Technique',
+    name: 'Seasoned Skill',
     powerType: PowerType.ABILITY,
     text: 'This Pokémon\'s Blood Moon attacks costs 1 Colorless less to use for each Prize card your opponent has already taken.'
   }];

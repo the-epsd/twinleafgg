@@ -25,7 +25,7 @@ export class Munkidoriex extends PokemonCard {
   public retreat = [CardType.COLORLESS];
 
   public powers = [{
-    name: 'Chains of Control',
+    name: 'Oh No You Don\'t',
     powerType: PowerType.ABILITY,
     text: 'If this Pokémon is Knocked Out by damage from an opponent\'s attack while you have Pecharunt ex in play, your opponent takes one less prize card.'
   }];

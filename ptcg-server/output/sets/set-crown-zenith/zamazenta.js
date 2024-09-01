@@ -27,6 +27,7 @@ class Zamazenta extends pokemon_card_1.PokemonCard {
                 name: 'Retaliate',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
                 damage: 100,
+                damageCalculation: '+',
                 text: 'If any of your Pokémon were Knocked Out during your opponent\'s last turn, this attack does 120 more damage.'
             },
         ];

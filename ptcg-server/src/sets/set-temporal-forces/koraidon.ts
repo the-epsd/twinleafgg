@@ -27,9 +27,10 @@ export class Koraidon extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Primeval Battering',
+      name: 'Primordial Beatdown',
       cost: [CardType.FIGHTING, CardType.COLORLESS],
       damage: 30,
+      damageCalculator: 'x',
       text: 'This attack does 30 damage for each of your Ancient Pokémon in play.'
     },
     {

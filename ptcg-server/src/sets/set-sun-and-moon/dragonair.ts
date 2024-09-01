@@ -9,8 +9,6 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Dragonair extends PokemonCard {
 
-  public regulationMark = 'G';
-
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Dratini';
@@ -19,18 +17,18 @@ export class Dragonair extends PokemonCard {
 
   public hp: number = 90;
 
-  public weakness = [ {type: CardType.FAIRY} ];
+  public weakness = [{ type: CardType.FAIRY }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Dragon\'s Wish',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 0,
     text: 'During your next turn, you may attach any number of Energy cards from your hand to your Pokémon.'
   }, {
     name: 'Tail Smack',
-    cost: [ CardType.GRASS, CardType.LIGHTNING, CardType.COLORLESS ],
+    cost: [CardType.GRASS, CardType.LIGHTNING, CardType.COLORLESS],
     damage: 60,
     text: ''
   }];
@@ -49,7 +47,7 @@ export class Dragonair extends PokemonCard {
   public readonly DRAGONS_WISH_2_MARKER = 'DRAGONS_WISH_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.DRAGONS_WISH_2_MARKER, this)) {
       const player = effect.player;
       effect.player.attackMarker.removeMarker(this.DRAGONS_WISH_MARKER, this);
@@ -57,7 +55,7 @@ export class Dragonair extends PokemonCard {
       player.usedDragonsWish = false;
       console.log('marker cleared');
     }
-    
+
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.DRAGONS_WISH_MARKER, this)) {
       const player = effect.player;
       effect.player.attackMarker.addMarker(this.DRAGONS_WISH_2_MARKER, this);

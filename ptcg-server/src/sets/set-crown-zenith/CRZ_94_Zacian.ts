@@ -17,6 +17,7 @@ export class Zacian extends PokemonCard {
     name: 'Battle Legion',
     cost: [CardType.METAL],
     damage: 20,
+    damageCalculation: '+',
     text: 'This attack does 10 more damage for each of your Benched Pokémon. This attack\'s damage '
       + 'isn\'t affected by Weakness or by any effects on your opponent\'s Active Pokémon.'
   },

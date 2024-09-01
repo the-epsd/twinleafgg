@@ -7,42 +7,42 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Chansey extends PokemonCard {
-  
+
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'H';
-  
+
   public cardType: CardType = CardType.COLORLESS;
-  
+
   public weakness = [{ type: CardType.FIGHTING }];
 
   public hp: number = 120;
-  
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
-  
+
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+
   public attacks = [
     {
-      name: 'Lucky Attach',
-      cost: [ CardType.COLORLESS ],
+      name: 'Lucky Attachment',
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Attach a Basic Energy card from your hand to 1 of your Pokémon.'
     },
     {
       name: 'Boundless Power',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
       text: 'During your next turn, this Pokémon can\'t attack.'
     }
   ];
-  
+
   public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '133';
-  
+
   public name: string = 'Chansey';
-  
+
   public fullName: string = 'Chansey TWM';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
@@ -83,7 +83,7 @@ export class Chansey extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { allowCancel: false, min: 1, max: 1 }
       ), transfers => {

@@ -30,6 +30,7 @@ export class HisuianArcanine extends PokemonCard {
       name: 'Scorching Horn',
       cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
       damage: 80,
+      damageCalculation: '+',
       text: 'If this Pokémon has any [R] Energy attached, this attack does 80 more damage, and your opponent\'s Active Pokémon is now Burned.'
     }
   ];

@@ -29,6 +29,7 @@ class RaikouV extends pokemon_card_1.PokemonCard {
                 name: 'Lightning Rondo',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
                 damage: 20,
+                damageCalculation: '+',
                 text: 'This attack does 20 more damage for each Benched ' +
                     'Pokémon (both yours and your opponent\'s).'
             }

@@ -7,6 +7,9 @@ export declare class Doduo extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
+    weakness: {
+        type: CardType;
+    }[];
     resistance: {
         type: CardType;
         value: number;

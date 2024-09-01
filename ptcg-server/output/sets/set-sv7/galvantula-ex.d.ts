@@ -12,12 +12,19 @@ export declare class Galvantulaex extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    } | {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    })[];
     regulationMark: string;
     set: string;
     cardImage: string;

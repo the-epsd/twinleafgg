@@ -25,6 +25,7 @@ class Dragonair extends pokemon_card_1.PokemonCard {
                 name: 'Dragon Tail',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.LIGHTNING],
                 damage: 70,
+                damageCalculator: 'x',
                 text: 'Flip 2 coins. This attack does 70 damage for each heads.'
             }];
         this.set = 'OBF';

@@ -16,7 +16,7 @@ class Venonat extends pokemon_card_1.PokemonCard {
             {
                 name: 'Gnaw',
                 cost: [card_types_1.CardType.COLORLESS],
-                damage: 20,
+                damage: 10,
                 text: '',
             },
             {

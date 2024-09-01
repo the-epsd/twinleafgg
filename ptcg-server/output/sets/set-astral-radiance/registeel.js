@@ -45,6 +45,7 @@ class Registeel extends pokemon_card_1.PokemonCard {
                 name: 'Heavy Slam',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
                 damage: 220,
+                damageCalculation: '-',
                 text: 'This attack does 50 less damage for each [C] in your opponent\'s Active Pokémon\'s Retreat Cost.'
             }
         ];

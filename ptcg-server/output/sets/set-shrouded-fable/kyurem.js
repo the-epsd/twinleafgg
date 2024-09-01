@@ -16,7 +16,7 @@ class Kyurem extends pokemon_card_1.PokemonCard {
         this.hp = 130;
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Anti-Plasma',
+                name: 'Plasma Bane',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'If your opponent has any card with Colress in its name in their discard pile, this Pokémon\'s Tri Frost attack can be used for 1 Colorless Energy.'
             }];

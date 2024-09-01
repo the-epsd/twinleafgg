@@ -20,10 +20,11 @@ class Porygon2 extends pokemon_card_1.PokemonCard {
                 name: 'Tri-Attack',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 30,
+                damageCalculator: 'x',
                 text: 'Flip 3 coins. This attack does 30 damage for each heads.'
             }
         ];
-        this.regulationMark = 'G';
+        this.regulationMark = 'E';
         this.set = 'CRE';
         this.name = 'Porygon2';
         this.fullName = 'Porygon2 CRE';

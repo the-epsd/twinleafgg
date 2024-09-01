@@ -28,6 +28,7 @@ class Wailord extends pokemon_card_1.PokemonCard {
                 name: 'Special Wave',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
                 damage: 120,
+                damageCalculation: '+',
                 text: 'If this Pokemon has any Special Energy attached, this attack does 120 more damage.'
             }];
         this.set = 'SIT';

@@ -8,7 +8,6 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 class FrozenCity extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '100';
         this.trainerType = card_types_1.TrainerType.STADIUM;

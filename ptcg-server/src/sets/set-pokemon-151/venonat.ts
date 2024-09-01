@@ -4,7 +4,7 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 export class Venonat extends PokemonCard {
 
   public regulationMark = 'G';
-  
+
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.GRASS;
   public hp: number = 70;
@@ -14,7 +14,7 @@ export class Venonat extends PokemonCard {
     {
       name: 'Gnaw',
       cost: [CardType.COLORLESS],
-      damage: 20,
+      damage: 10,
       text: '',
     },
     {
@@ -29,5 +29,5 @@ export class Venonat extends PokemonCard {
   public setNumber: string = '48';
   public name: string = 'Venonat';
   public fullName: string = 'Venonat MEW';
-  
+
 }

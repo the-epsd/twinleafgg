@@ -8,7 +8,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class HearthflameMaskOgerponex extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public regulationMark = 'H';
 
@@ -20,13 +20,13 @@ export class HearthflameMaskOgerponex extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Wrathful Hearth',
       cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 30,
+      damage: 20,
       damageCalculation: 'x',
       text: 'This attack does 20 damage for each damage counter on this Pokémon.'
     },
@@ -73,7 +73,7 @@ export class HearthflameMaskOgerponex extends PokemonCard {
       store.reduceEffect(state, discardEnergy);
 
     }
-    
+
     if (effect instanceof PutDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

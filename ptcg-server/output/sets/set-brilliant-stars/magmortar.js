@@ -25,6 +25,7 @@ class Magmortar extends pokemon_card_1.PokemonCard {
                 name: 'Boltsplosion',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
                 damage: 120,
+                damageCalculation: '+',
                 text: 'If Electivire is on your Bench, this attack does 120 more damage.'
             }];
         this.set = 'BRS';

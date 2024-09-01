@@ -12,7 +12,7 @@ export class Froslassex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public evolvesFrom = 'Snorunt';
 
@@ -22,10 +22,10 @@ export class Froslassex extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
-    name: 'Je Ne Sais Quoi',
+    name: 'Evanescent',
     powerType: PowerType.ABILITY,
     text: 'If this Pokémon in the Active Spot and is Knocked Out, flip a coin. If heads, your opponent takes 1 fewer Prize card.'
   }
@@ -33,7 +33,7 @@ export class Froslassex extends PokemonCard {
 
   public attacks = [{
     name: 'Frost Bullet',
-    cost: [ CardType.WATER, CardType.WATER ],
+    cost: [CardType.WATER, CardType.WATER],
     damage: 140,
     text: 'This attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }
@@ -50,7 +50,7 @@ export class Froslassex extends PokemonCard {
   public fullName: string = 'Froslass ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
 
       return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), result => {
@@ -67,12 +67,12 @@ export class Froslassex extends PokemonCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       const targets = opponent.bench.filter(b => b.cards.length > 0);
       if (targets.length === 0) {
         return state;
       }
-    
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,

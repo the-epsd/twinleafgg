@@ -13,17 +13,17 @@ class GreatTusk extends pokemon_card_1.PokemonCard {
         this.tags = [card_types_1.CardTag.ANCIENT];
         this.cardType = card_types_1.CardType.FIGHTING;
         this.hp = 140;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Ground Collapse',
+                name: 'Land Collapse',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Discard the top card of your opponent\'s deck. If you played an Ancient Supporter card from your hand during this turn, discard 3 more cards.'
             },
             {
-                name: 'Suffocating Gas',
+                name: 'Giant Tusk',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 160,
                 text: ''

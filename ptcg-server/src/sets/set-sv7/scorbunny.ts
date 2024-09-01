@@ -15,6 +15,7 @@ export class Scorbunny extends PokemonCard {
     name: 'Quick Attack',
     cost: [CardType.COLORLESS],
     damage: 10,
+    damageCalculation: '+',
     text: 'Flip a coin. If heads, this attack does 10 more damage.'
   }];
 

@@ -11,7 +11,7 @@ export class Blastoiseex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.STAGE_2;
 
@@ -23,7 +23,7 @@ export class Blastoiseex extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Solid Shell',
@@ -35,8 +35,9 @@ export class Blastoiseex extends PokemonCard {
   public attacks = [
     {
       name: 'Twin Cannons',
-      cost: [CardType.WATER, CardType.WATER ],
+      cost: [CardType.WATER, CardType.WATER],
       damage: 140,
+      damageCalculation: 'x',
       text: 'Discard up to 2 Basic Water Energies from your hand. This ' +
         'attack does 140 damage for each card you discarded in ' +
         'this way.'
@@ -55,7 +56,7 @@ export class Blastoiseex extends PokemonCard {
 
   // Implement power
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
@@ -78,31 +79,31 @@ export class Blastoiseex extends PokemonCard {
         }
         const damage = cards.length * 140;
         effect.damage = damage;
-      
+
         player.hand.moveCardsTo(cards, player.discard);
-      
+
         return state;
-      
+
       });
-      
-    }      
-    
+
+    }
+
     // Reduce damage by 30
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const pokemonCard = effect.target.getPokemonCard();
-  
+
       // It's not this pokemon card
       if (pokemonCard !== this) {
         return state;
       }
-  
+
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
-  
+
       const player = StateUtils.findOwner(state, effect.target);
-  
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {
@@ -114,10 +115,10 @@ export class Blastoiseex extends PokemonCard {
       } catch {
         return state;
       }
-  
+
       effect.damage = Math.max(0, effect.damage - 30);
     }
-  
+
     return state;
   }
 }

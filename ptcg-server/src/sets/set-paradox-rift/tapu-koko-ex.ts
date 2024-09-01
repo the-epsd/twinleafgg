@@ -29,6 +29,7 @@ export class TapuKokoex extends PokemonCard {
       name: 'Vengeful Shock',
       cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 30,
+      damageCalculation: '+',
       text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 90 more damage, and your opponent\'s Active Pokémon is now Paralyzed.'
     },
     {

@@ -26,9 +26,10 @@ class DrapionVSTAR extends pokemon_card_1.PokemonCard {
             }];
         this.attacks = [
             {
-                name: 'Dynamic Tail',
+                name: 'Big Bang Arm',
                 cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
                 damage: 250,
+                damageCalculation: '-',
                 text: 'This attack does 10 less damage for each damage counter on this Pokémon.'
             }
         ];

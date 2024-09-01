@@ -28,6 +28,7 @@ class Ampharosex extends pokemon_card_1.PokemonCard {
                 name: 'Thunderstrike Tail',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 140,
+                damageCalculation: '+',
                 text: 'You may discard 2 Energy from this Pokémon to have this attack do 100 more damage.'
             }
         ];

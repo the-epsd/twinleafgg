@@ -8,7 +8,7 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class EnteiV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
@@ -20,23 +20,24 @@ export class EnteiV extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Fleet-Footed',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, if this Pokémon is in the Active Spot, ' +
-    'you may draw a card.'
+      'you may draw a card.'
   }];
 
   public attacks = [
     {
       name: 'Burning Rondo',
-      cost: [ CardType.FIRE, CardType.COLORLESS ],
+      cost: [CardType.FIRE, CardType.COLORLESS],
       damage: 20,
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each Benched ' +
-      'Pokémon (both yours and your opponent\'s).'
+        'Pokémon (both yours and your opponent\'s).'
     }
   ];
 
@@ -59,7 +60,7 @@ export class EnteiV extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
     }
-      
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
@@ -67,7 +68,7 @@ export class EnteiV extends PokemonCard {
 
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      
+
       const player = effect.player;
       if (player.marker.hasMarker(this.FLEET_FOOTED_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -96,17 +97,17 @@ export class EnteiV extends PokemonCard {
         return state;
       });
     }
-      
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       const playerBenched = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
       const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-      
+
       const totalBenched = playerBenched + opponentBenched;
-    
+
       effect.damage = 20 + totalBenched * 20;
     }
     return state;

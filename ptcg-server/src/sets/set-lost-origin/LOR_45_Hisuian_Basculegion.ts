@@ -17,6 +17,7 @@ export class HisuianBasculegion extends PokemonCard {
     name: 'Upstream Spirits',
     cost: [],
     damage: 20,
+    damageCalculation: 'x',
     text: 'This attack does 20 damage for each basic Energy card in your discard pile. Then, shuffle those cards into your deck.'
   },
   {

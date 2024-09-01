@@ -25,6 +25,7 @@ class Kangaskhanex extends pokemon_card_1.PokemonCard {
                 name: 'Incessant Punching',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 100,
+                damageCalculator: 'x',
                 text: 'Flip 4 coins. This attack does 100 damage for each heads.'
             }
         ];

@@ -12,7 +12,7 @@ class Doduo extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.COLORLESS;
         this.hp = 70;
-        // public weakness = [{ type: CardType.LIGHTNING }];
+        this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [

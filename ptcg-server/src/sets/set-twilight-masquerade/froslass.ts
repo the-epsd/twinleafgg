@@ -7,25 +7,25 @@ import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class Froslass extends PokemonCard {
-  
+
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom: string = 'Snorunt';
 
   public regulationMark = 'H';
-  
+
   public cardType: CardType = CardType.WATER;
 
   public cardTypez: CardType = CardType.FROSLASS;
-  
+
   public weakness = [{ type: CardType.METAL }];
 
   public hp: number = 90;
-  
-  public retreat = [ CardType.COLORLESS ];
-  
+
+  public retreat = [CardType.COLORLESS];
+
   public powers = [{
-    name: 'Chilling Curtain',
+    name: 'Freezing Shroud',
     powerType: PowerType.ABILITY,
     text: 'During Pokémon Checkup, put 1 damage counter on each Pokémon in play that has any Abilities (excluding any Froslass).'
   }];
@@ -33,20 +33,20 @@ export class Froslass extends PokemonCard {
   public attacks = [
     {
       name: 'Frost Smash',
-      cost: [CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.COLORLESS],
       damage: 60,
       text: ''
     }
   ];
-  
+
   public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '53';
-  
+
   public name: string = 'Froslass';
-  
+
   public fullName: string = 'Froslass TWM';
 
   public CHILLING_CURTAIN_MARKER = 'CHILLING_CURTAIN_MARKER';
@@ -97,7 +97,7 @@ export class Froslass extends PokemonCard {
       }
       return state;
     }
-      
+
     if (effect instanceof EndTurnEffect) {
 
       let numberOfFroslass = 0;

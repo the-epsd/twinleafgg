@@ -16,7 +16,7 @@ class NidoranFemale extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Poison Horn',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
                 damage: 20,
                 text: 'Your opponent\'s Active Pokémon is now Poisoned.'
             }

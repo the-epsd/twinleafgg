@@ -10,6 +10,10 @@ export declare class Revavroom extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
+    resistance: {
+        type: CardType;
+        value: number;
+    }[];
     retreat: CardType[];
     evolvesFrom: string;
     powers: {
@@ -22,6 +26,7 @@ export declare class Revavroom extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;

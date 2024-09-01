@@ -9,11 +9,11 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
   const max = Math.min(slots.length, 2);
-  
+
   if (slots.length === 0) {
     return state;
   }
-  
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
@@ -25,16 +25,16 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
     cards = selected || [];
     next();
   });
-  
+
   if (cards.length > slots.length) {
     cards.length = slots.length;
   }
-  
+
   cards.forEach((card, index) => {
     player.deck.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
   });
-  
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
@@ -52,19 +52,19 @@ export class Minccino extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Call For Family',
-      cost: [CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
     },
     {
       name: 'Pound',
-      cost: [CardType.COLORLESS ],
-      damage: 20,
+      cost: [CardType.COLORLESS],
+      damage: 10,
       text: ''
     }
   ];

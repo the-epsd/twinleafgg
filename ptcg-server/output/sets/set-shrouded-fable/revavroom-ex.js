@@ -20,14 +20,14 @@ class Revavroomex extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Accelerating Flash',
+                name: 'Accelerator Flash',
                 cost: [card_types_1.CardType.METAL],
                 damage: 20,
                 damageCalculation: '+',
                 text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 120 more damage.'
             },
             {
-                name: 'Speed Break',
+                name: 'Shattering Speed',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.METAL],
                 damage: 250,
                 text: 'Discard this Pokémon and all attached cards.'

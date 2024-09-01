@@ -16,7 +16,7 @@ class Cufant extends pokemon_card_1.PokemonCard {
             {
                 name: 'Tackle',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
-                damage: 10,
+                damage: 30,
                 text: ''
             },
             {

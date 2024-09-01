@@ -28,6 +28,7 @@ class RadiantGardevoir extends pokemon_card_1.PokemonCard {
                 name: 'Psychic',
                 cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 70,
+                damageCalculation: '+',
                 text: 'This attack does 20 more damage for each Energy attached to your opponent\'s Active Pokémon.'
             }];
         this.set = 'LOR';

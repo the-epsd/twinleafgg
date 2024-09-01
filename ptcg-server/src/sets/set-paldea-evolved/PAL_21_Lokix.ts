@@ -16,6 +16,7 @@ export class Lokix extends PokemonCard {
     name: 'Assaulting Kick',
     cost: [CardType.GRASS],
     damage: 30,
+    damageCalculation: '+',
     text: ' If this Pokémon evolved from Nymble during this turn, this attack does 100 more damage. '
   },
   {

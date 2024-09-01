@@ -48,15 +48,16 @@ class Pecharuntex extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Chains of Control',
+                name: 'Subjugating Chains',
                 powerType: game_1.PowerType.ABILITY,
                 useWhenInPlay: true,
-                text: 'Once during your turn, you may switch 1 of your Benched D Pokémon (excluding Pecharunt ex) with your Active Pokémon. Your new Active Pokémon is now Poisoned. You can\'t use more than 1 Chains of Control Ability per turn.'
+                text: 'Once during your turn, you may switch 1 of your Benched [D] Pokémon, except any Pecharunt ex, with your Active Pokémon. If you do, the new Active Pokémon is now Poisoned. You can\'t use more than 1 Subjugating Chains Ability each turn.'
             }];
         this.attacks = [{
-                name: 'Irritating Burst',
+                name: 'Irritated Outburst',
                 cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK],
                 damage: 60,
+                damageCalculation: 'x',
                 text: 'This attack does 60 damage for each Prize card your opponent has taken.'
             }];
         this.set = 'SFA';

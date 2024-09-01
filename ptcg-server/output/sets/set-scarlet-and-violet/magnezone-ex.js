@@ -23,6 +23,7 @@ class Magnezoneex extends pokemon_card_1.PokemonCard {
                 name: 'Energy Crush',
                 cost: [card_types_1.CardType.LIGHTNING],
                 damage: 50,
+                damageCalculation: 'x',
                 text: 'This attack does 50 damage for each Energy attached to all of your opponent\'s Pokémon.'
             },
             {

@@ -11,12 +11,19 @@ export declare class RegigigasV extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculator?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculator: string;
+        text: string;
+    })[];
     set: string;
     regulationMark: string;
     cardImage: string;

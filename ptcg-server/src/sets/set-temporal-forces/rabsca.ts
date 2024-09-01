@@ -20,7 +20,7 @@ export class Rabsca extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Spherical Shield',
@@ -30,8 +30,9 @@ export class Rabsca extends PokemonCard {
 
   public attacks = [{
     name: 'Psychic',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.GRASS],
     damage: 10,
+    damageCalculation: '+',
     text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
   }];
 
@@ -50,7 +51,7 @@ export class Rabsca extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -123,11 +124,11 @@ export class Rabsca extends PokemonCard {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
         } catch {
           return state;
         }

@@ -22,6 +22,7 @@ export class Zarude extends PokemonCard {
     name: 'Triple Whip',
     cost: [CardType.GRASS, CardType.GRASS],
     damage: 70,
+    damageCalculation: 'x',
     text: ' Flip 3 coins. This attack does 70 damage for each heads. '
   }];
 

@@ -35,6 +35,7 @@ export class StarmieV extends PokemonCard {
       name: 'Energy Spiral',
       cost: [CardType.WATER, CardType.WATER],
       damage: 50,
+      damageCalculation: 'x',
       text: 'This attack does 50 damage for each Energy attached to all of your opponent\'s Pokémon.'
     }
   ];

@@ -11,9 +11,9 @@ class HoOh extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.BASIC;
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.FIRE;
-        this.hp = 110;
+        this.hp = 130;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
-        this.resistance = [{ type: card_types_1.CardType.LIGHTNING, value: -30 }];
+        this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {

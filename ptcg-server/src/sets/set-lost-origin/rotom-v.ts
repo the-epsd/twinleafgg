@@ -12,7 +12,7 @@ export class RotomV extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public stage: Stage = Stage.BASIC;
 
@@ -24,7 +24,7 @@ export class RotomV extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Instant Charge',
@@ -36,8 +36,9 @@ export class RotomV extends PokemonCard {
   public attacks = [
     {
       name: 'Scrap Short',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING ],
-      damage: 0,
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING],
+      damage: 40,
+      damageCalculation: '+',
       text: 'Put any number of Pokémon Tool cards from your discard pile in the Lost Zone. This attack does 40 more damage for each card you put in the Lost Zone in this way.'
     }
   ];
@@ -53,11 +54,11 @@ export class RotomV extends PokemonCard {
   public fullName: string = 'Rotom V LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-        
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
-      
+
       // Prompt player to choose tools to send to lost zone 
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
@@ -74,7 +75,7 @@ export class RotomV extends PokemonCard {
         discountTools.target = player.active;
         store.reduceEffect(state, discountTools);
         player.discard.moveCardsTo(cards, player.lostzone);
-    
+
         // Calculate damage
         const damage = cards.length * 40;
         effect.damage = damage;
@@ -83,7 +84,7 @@ export class RotomV extends PokemonCard {
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-        
+
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {

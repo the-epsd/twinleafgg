@@ -8,6 +8,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Yanmega extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom = 'Yanma';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 130;
   public weakness = [{ type: CardType.FIRE }];

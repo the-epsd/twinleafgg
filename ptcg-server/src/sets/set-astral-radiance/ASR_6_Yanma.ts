@@ -7,7 +7,7 @@ export class Yanma extends PokemonCard {
   public hp: number = 60;
   public weakness = [{ type: CardType.FIRE }];
 
-  public attack = [{
+  public attacks = [{
     name: 'Speed Dive',
     cost: [CardType.GRASS],
     damage: 20,

@@ -20,19 +20,19 @@ export class Manaphy extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
 
   public attacks = [
     {
       name: 'Pulling Currents',
-      cost: [ CardType.WATER ],
+      cost: [CardType.WATER],
       damage: 0,
       text: 'Your opponent reveals their hand. Put up to 2 Basic Pokémon you find there onto your opponent\'s Bench.'
     },
     {
-      name: 'Rain Splash',
-      cost: [ CardType.WATER, CardType.COLORLESS ],
+      name: 'Aqua Bullet',
+      cost: [CardType.WATER, CardType.COLORLESS],
       damage: 40,
       text: 'This attack also does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
@@ -54,19 +54,19 @@ export class Manaphy extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const slots: PokemonCardList[] = opponent.bench.filter(b => b.cards.length === 0);
-      
+
       if (opponent.hand.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
       // Check if bench has open slots
       const openSlots = opponent.bench.filter(b => b.cards.length === 0);
-            
+
       if (openSlots.length === 0) {
         // No open slots, throw error
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
-      
+
+
       let cards: Card[] = [];
       state = store.prompt(state, new ChooseCardsPrompt(
         player.id,
@@ -77,32 +77,32 @@ export class Manaphy extends PokemonCard {
       ), selected => {
         cards = selected || [];
       });
-      
+
       // Operation canceled by the user
       if (cards.length === 0) {
         return state;
       }
-      
-        
+
+
       cards.forEach((card, index) => {
         opponent.hand.moveCardTo(card, slots[index]);
         slots[index].pokemonPlayedTurn = state.turn;
       });
-      
+
       if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
         const player = effect.player;
         const opponent = StateUtils.getOpponent(state, player);
-            
+
         const hasBenched = opponent.bench.some(b => b.cards.length > 0);
         if (!hasBenched) {
           return state;
         }
-            
+
         state = store.prompt(state, new ChoosePokemonPrompt(
           player.id,
           GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
           PlayerType.TOP_PLAYER,
-          [ SlotType.BENCH ],
+          [SlotType.BENCH],
           { allowCancel: false }
         ), targets => {
           if (!targets || targets.length === 0) {
@@ -112,7 +112,7 @@ export class Manaphy extends PokemonCard {
           damageEffect.target = targets[0];
           store.reduceEffect(state, damageEffect);
         });
-            
+
         return state;
       }
       return state;

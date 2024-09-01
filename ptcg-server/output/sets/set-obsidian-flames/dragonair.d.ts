@@ -11,12 +11,19 @@ export declare class Dragonair extends PokemonCard {
     hp: number;
     weakness: never[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculator?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculator: string;
+        text: string;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

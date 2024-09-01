@@ -30,9 +30,10 @@ export class Cinccino extends PokemonCard {
       text: ''
     },
     {
-      name: 'Special Round',
+      name: 'Special Roll',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 70,
+      damageCalculation: 'x',
       text: 'This attack does 70 damage for each Special Energy card attached to this Pokémon.'
     }
   ];

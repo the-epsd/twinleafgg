@@ -17,6 +17,7 @@ class Hoothoot extends game_1.PokemonCard {
                 name: 'Triple Stab',
                 cost: [game_1.CardType.COLORLESS],
                 damage: 10,
+                damageCalculator: 'x',
                 text: 'Flip 3 coins. This attack does 10 damage for each heads.'
             }
         ];

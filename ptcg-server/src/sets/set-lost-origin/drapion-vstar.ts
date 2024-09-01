@@ -33,9 +33,10 @@ export class DrapionVSTAR extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Dynamic Tail',
+      name: 'Big Bang Arm',
       cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 250,
+      damageCalculation: '-',
       text: 'This attack does 10 less damage for each damage counter on this Pokémon.'
     }
   ];

@@ -9,7 +9,7 @@ function* useAcapella(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
   const max = Math.min(slots.length, 3);
-  
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
@@ -21,16 +21,16 @@ function* useAcapella(next: Function, store: StoreLike, state: State,
     cards = selected || [];
     next();
   });
-  
+
   if (cards.length > slots.length) {
     cards.length = slots.length;
   }
-  
+
   cards.forEach((card, index) => {
     player.deck.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
   });
-  
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
@@ -50,18 +50,18 @@ export class Chatot extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
-      name: 'Acapella',
-      cost: [CardType.COLORLESS ],
+      name: 'A Capella',
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
     },
     {
       name: 'Gust',
-      cost: [CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 20,
       text: ''
     }

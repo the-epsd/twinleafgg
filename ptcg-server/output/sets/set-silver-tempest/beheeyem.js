@@ -26,7 +26,7 @@ class Beheeyem extends pokemon_card_1.PokemonCard {
             {
                 name: 'Psychic Arrow',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 60,
+                damage: 0,
                 text: 'This attack does 60 damage to 1 of your opponent\'s Pokémon. Also apply Weakness and Resistance for Benched Pokémon.'
             }
         ];

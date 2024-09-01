@@ -29,9 +29,10 @@ export class Braixen extends PokemonCard {
       text: ''
     },
     {
-      name: 'Royal Blaze',
+      name: 'Flare Parade',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
+      damageCalculation: 'x',
       text: 'This attack does 60 damage for each Serena card in your discard pile.'
     }
   ];

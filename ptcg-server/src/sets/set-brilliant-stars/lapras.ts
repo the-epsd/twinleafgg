@@ -23,7 +23,7 @@ export class Lapras extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
-    name: 'Retaliate',
+    name: 'Raging Freeze',
     cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
     damage: 110,
     text:

@@ -43,7 +43,7 @@ class Froakie extends pokemon_card_1.PokemonCard {
                 text: 'Search your deck for up to 2 Froakie and put them onto your Bench. Then, shuffle your deck.'
             },
             {
-                name: 'Hop Around',
+                name: 'Flop',
                 cost: [card_types_1.CardType.WATER],
                 damage: 10,
                 text: ''

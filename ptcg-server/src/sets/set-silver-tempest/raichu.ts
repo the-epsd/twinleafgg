@@ -1,7 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import {
-  StoreLike, State, StateUtils} from '../../game';
+  StoreLike, State, StateUtils
+} from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -27,6 +28,7 @@ export class Raichu extends PokemonCard {
       name: 'Ambushing Spark',
       cost: [CardType.COLORLESS],
       damage: 40,
+      damageCalculation: '+',
       text: 'If your opponent has used their VSTAR Power during this game, this attack does 100 more damage.'
     },
     {

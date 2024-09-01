@@ -22,7 +22,7 @@ export class Kyurem extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
-    name: 'Anti-Plasma',
+    name: 'Plasma Bane',
     powerType: PowerType.ABILITY,
     text: 'If your opponent has any card with Colress in its name in their discard pile, this Pokémon\'s Tri Frost attack can be used for 1 Colorless Energy.'
   }];

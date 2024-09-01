@@ -15,6 +15,7 @@ class Heatran extends pokemon_card_1.PokemonCard {
         this.hp = 140;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [{
                 name: 'Guard Claw',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
@@ -25,6 +26,7 @@ class Heatran extends pokemon_card_1.PokemonCard {
                 name: 'Iron Hammer',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
                 damage: 80,
+                damageCalculation: '+',
                 text: 'If this Pokémon has any [R] Energy attached, this attack does 80 more damage. '
             }];
         this.set = 'BRS';

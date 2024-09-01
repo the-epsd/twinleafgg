@@ -25,6 +25,7 @@ class RegigigasV extends pokemon_card_1.PokemonCard {
                 name: 'Angry Whack',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 100,
+                damageCalculator: '+',
                 text: 'This attack does 10 more damage for each damage counter on this Pokémon. This Pokémon is now Confused.'
             },
         ];

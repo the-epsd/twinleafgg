@@ -29,6 +29,7 @@ export class Hydrappleex extends PokemonCard {
     name: 'Syrup Storm',
     cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 30,
+    damageCalculation: '+',
     text: 'This attack does 30 more damage for each [G] energy attached to your Pokemon.'
   }];
 

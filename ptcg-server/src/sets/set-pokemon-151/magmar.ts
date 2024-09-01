@@ -28,6 +28,7 @@ export class Magmar extends PokemonCard {
     name: 'Flare Combo',
     cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
     damage: 80,
+    damageCalculation: '+',
     text: 'If Electabuzz is on your Bench, this attack does 80 more damage.'
   }];
 

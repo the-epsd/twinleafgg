@@ -21,7 +21,7 @@ export class Galvantula extends PokemonCard {
   }];
 
   public attacks = [{
-    name: 'Electrifying Web',
+    name: 'Shocking Web',
     cost: [CardType.GRASS, CardType.COLORLESS],
     damage: 50,
     text: 'If this Pokémon has any [L] Energy attached, this attack does 80 more damage.'

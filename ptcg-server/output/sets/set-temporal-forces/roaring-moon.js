@@ -16,9 +16,10 @@ class RoaringMoon extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Vengeful Feathers',
+                name: 'Vengeance Fletching',
                 cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK],
                 damage: 70,
+                damageCalculation: '+',
                 text: 'This attack does 10 more damage for each Ancient card in your discard pile.'
             },
             {

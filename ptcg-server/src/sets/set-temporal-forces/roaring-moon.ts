@@ -1,6 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State
+import {
+  StoreLike, State
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -20,18 +21,19 @@ export class RoaringMoon extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
-      name: 'Vengeful Feathers',
-      cost: [ CardType.DARK, CardType.DARK ],
+      name: 'Vengeance Fletching',
+      cost: [CardType.DARK, CardType.DARK],
       damage: 70,
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each Ancient card in your discard pile.'
     },
     {
       name: 'Speed Wing',
-      cost: [ CardType.DARK, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.DARK, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 120,
       text: ''
     }

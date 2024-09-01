@@ -16,7 +16,7 @@ class Remoraid extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Sprinkle Water',
-                cost: [card_types_1.CardType.WATER],
+                cost: [card_types_1.CardType.COLORLESS],
                 damage: 10,
                 text: ''
             },

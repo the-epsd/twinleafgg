@@ -23,10 +23,10 @@ class GougingFireex extends pokemon_card_1.PokemonCard {
                 text: ''
             },
             {
-                name: 'Explosive Flare',
+                name: 'Blaze Blitz',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
                 damage: 260,
-                text: 'This Pokémon can\'t use Exploding Flare again until it leaves the Active Spot.'
+                text: 'This Pokémon can\'t use Blaze Blitz again until it leaves the Active Spot.'
             }
         ];
         this.set = 'TEF';

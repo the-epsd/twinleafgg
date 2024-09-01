@@ -21,19 +21,20 @@ export class Cetitan extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Icicle Missile',
-      cost: [ CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.COLORLESS],
       damage: 50,
       text: ''
     },
     {
       name: 'Special Horn',
-      cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
-      damage: 100,
+      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+      damage: 80,
+      damageCalculation: '+',
       text: 'If this Pokémon has any Special Energy attached, this attack does 140 more damage.'
     }
   ];
@@ -54,22 +55,22 @@ export class Cetitan extends PokemonCard {
 
       const player = effect.player;
       const pokemon = player.active;
-  
+
       const checkEnergy = new CheckProvidedEnergyEffect(player, pokemon);
       store.reduceEffect(state, checkEnergy);
-  
+
       let damage = 80;
-  
+
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
         if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL) {
           damage += 140;
         }
       });
-  
+
       effect.damage = damage;
-  
+
     }
-    return state; 
+    return state;
   }
 }

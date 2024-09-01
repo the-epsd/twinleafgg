@@ -24,9 +24,10 @@ export class Koraidonex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Vengeful Hammer',
+      name: 'Retribution Strike',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
+      damageCalculator: '+',
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     },
     {

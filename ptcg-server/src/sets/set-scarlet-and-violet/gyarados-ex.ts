@@ -7,7 +7,7 @@ export class Gyaradosex extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Magipark';
+  public evolvesFrom = 'Magikarp';
 
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
@@ -22,7 +22,7 @@ export class Gyaradosex extends PokemonCard {
   public attacks = [
     {
       name: 'Waterfall',
-      cost: [CardType.WATER, CardType.WATER],
+      cost: [CardType.WATER, CardType.WATER, CardType.WATER],
       damage: 100,
       text: ''
     },

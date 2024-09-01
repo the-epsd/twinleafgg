@@ -25,7 +25,7 @@ class Absolex extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Cursed Slug',
-                cost: [card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
                 damage: 100,
                 damageCalculation: '+',
                 text: 'If your opponent has 3 or fewer cards in their hand, this attack does 120 more damage.'

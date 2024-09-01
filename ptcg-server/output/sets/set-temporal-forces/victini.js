@@ -22,7 +22,7 @@ class Victini extends pokemon_card_1.PokemonCard {
                 text: 'Shuffle your hand into your deck. Then, draw 6 cards.'
             },
             {
-                name: 'Burn Away',
+                name: 'Singe Off',
                 cost: [card_types_1.CardType.FIRE],
                 damage: 30,
                 text: 'Discard a Special Energy from your opponent\'s Active Pokémon.'

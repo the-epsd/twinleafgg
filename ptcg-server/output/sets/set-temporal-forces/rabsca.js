@@ -23,8 +23,9 @@ class Rabsca extends pokemon_card_1.PokemonCard {
             }];
         this.attacks = [{
                 name: 'Psychic',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.GRASS],
                 damage: 10,
+                damageCalculation: '+',
                 text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
             }];
         this.set = 'TEF';

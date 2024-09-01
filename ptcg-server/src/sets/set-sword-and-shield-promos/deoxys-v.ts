@@ -23,9 +23,10 @@ export class DeoxysV extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Psychict',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+      name: 'Psychic',
+      cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 30,
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     },
     {
@@ -51,15 +52,15 @@ export class DeoxysV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, checkProvidedEnergyEffect);
       const energyCount = checkProvidedEnergyEffect.energyMap
         .reduce((left, p) => left + p.provides.length, 0);
-  
+
       effect.damage += energyCount * 20;
     }
     return state;

@@ -16,13 +16,14 @@ class Zeraora extends pokemon_card_1.PokemonCard {
         this.retreat = [];
         this.attacks = [
             {
-                name: 'Touring',
+                name: 'Battle Claw',
                 cost: [card_types_1.CardType.LIGHTNING],
                 damage: 30,
+                damageCalculation: '+',
                 text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 30 more damage.'
             },
             {
-                name: 'Speed Attack',
+                name: 'Mach Bolt',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 80,
                 text: ''

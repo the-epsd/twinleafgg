@@ -16,6 +16,7 @@ export class Flittle extends PokemonCard {
     name: 'Psychic',
     cost: [CardType.PSYCHIC, CardType.PSYCHIC],
     damage: 10,
+    damageCalculation: '+',
     text: 'This attack does 10 more damage for each Energy attached to your opponent\'s Active Pokémon.'
   }]
 

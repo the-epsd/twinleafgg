@@ -20,7 +20,7 @@ class Morpeko extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [
             {
-                name: 'Snack Search',
+                name: 'Snack Seek',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'Once during your turn, you may look at the top card of your deck. You may discard that card.'

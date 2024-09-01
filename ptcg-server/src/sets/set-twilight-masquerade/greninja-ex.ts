@@ -36,7 +36,7 @@ export class Greninjaex extends PokemonCard {
       text: 'You may search your deck for any 1 card and put it into your hand. Then, shuffle your deck.'
     },
     {
-      name: 'Duplicates Barrage',
+      name: 'Mirage Barrage',
       cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
       text: 'Discard 2 energy from this Pokémon. This attack does ' +

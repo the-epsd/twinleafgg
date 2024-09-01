@@ -31,6 +31,7 @@ class TealMaskOgerponex extends pokemon_card_1.PokemonCard {
                 name: 'Myriad Leaf Shower',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.GRASS, card_types_1.CardType.GRASS],
                 damage: 30,
+                damageCalculation: '+',
                 text: 'This attack does 30 more damage for each Energy attached to both Active Pokémon.'
             }
         ];

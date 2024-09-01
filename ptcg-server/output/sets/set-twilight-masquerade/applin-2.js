@@ -18,7 +18,7 @@ class Applin2 extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Tumbling Attack',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.GRASS],
                 damage: 10,
                 damageCalculation: '+',
                 text: 'Flip a coin. If heads, this attack does 20 more damage.'

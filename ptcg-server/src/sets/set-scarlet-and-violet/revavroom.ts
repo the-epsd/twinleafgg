@@ -12,6 +12,7 @@ export class Revavroom extends PokemonCard {
   public cardType: CardType = CardType.METAL;
   public hp: number = 140;
   public weakness = [{ type: CardType.FIRE }];
+  public resistance = [{ type: CardType.GRASS, value: -30 }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
   public evolvesFrom: string = 'Varoom';
 
@@ -26,6 +27,7 @@ export class Revavroom extends PokemonCard {
     name: 'Knock Away',
     cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 90,
+    damageCalculation: '+',
     text: 'Flip a coin. If heads, this attack does 90 more damage.'
   }];
 
@@ -51,19 +53,19 @@ export class Revavroom extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      
+
       if (player.hand.cards.length >= 7) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      
+
       const hasEnergyInHand = player.hand.cards.some(c => {
         return c instanceof EnergyCard;
       });
-      
+
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      
+
       if (player.marker.hasMarker(this.RUMBLING_ENGINE_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -80,14 +82,14 @@ export class Revavroom extends PokemonCard {
         }
 
         player.hand.moveCardsTo(cards, player.discard);
-        
+
         while (player.hand.cards.length < 6) {
           if (player.deck.cards.length === 0) {
             break;
           }
           player.deck.moveTo(player.hand, 1);
         }
-        
+
         player.marker.addMarker(this.RUMBLING_ENGINE_MARKER, this);
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {

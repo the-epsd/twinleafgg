@@ -1,10 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils,
-  GameMessage, 
-  CardList, 
+import {
+  StoreLike, State, StateUtils,
+  GameMessage,
+  CardList,
   OrderCardsPrompt,
-  SelectPrompt} from '../../game';
+  SelectPrompt
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -12,7 +14,7 @@ export class Absolex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.BASIC;
 
@@ -24,18 +26,18 @@ export class Absolex extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Future Sight',
-      cost: [ CardType.DARK ],
+      cost: [CardType.DARK],
       damage: 0,
       text: 'Look at the top 3 cards of either player\'s deck and put them back in any order.'
     },
     {
       name: 'Cursed Slug',
-      cost: [ CardType.DARK, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 100,
       damageCalculation: '+',
       text: 'If your opponent has 3 or fewer cards in their hand, this attack does 120 more damage.'

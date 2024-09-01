@@ -62,7 +62,6 @@ export const setParadoxRift: Card[] = [
   new TulipArt(),
   new XatuArt(),
   new GroudonArt(),
-  new IronJugulisArt(),
   new TapuKokoexArt(),
   new PorygonArt(),
   new ZacianArt()

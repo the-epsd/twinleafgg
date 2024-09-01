@@ -12,6 +12,8 @@ export class Scovillain extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public evolvesFrom = 'Capsakid';
+
   public regulationMark = 'G';
 
   public cardType: CardType = CardType.GRASS;
@@ -24,7 +26,7 @@ export class Scovillain extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Hot Bite 20',
+      name: 'Hot Bite',
       cost: [CardType.COLORLESS],
       damage: 20,
       text: 'Your opponent\'s Active Pokémon is now Burned.'
@@ -33,6 +35,7 @@ export class Scovillain extends PokemonCard {
       name: 'Super Spicy Breath',
       cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 90,
+      damageCalculation: '+',
       text: 'If this Pokémon has any [R] Energy attached, this attack does 90 more damage.'
     }
   ];

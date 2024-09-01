@@ -10,7 +10,7 @@ export class RegigigasV extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public cardType: CardType = CardType.COLORLESS;
 
@@ -18,19 +18,20 @@ export class RegigigasV extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
-  
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+
   public attacks = [
     {
       name: 'Hammer In',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 50,
       text: ''
     },
     {
       name: 'Angry Whack',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 100,
+      damageCalculator: '+',
       text: 'This attack does 10 more damage for each damage counter on this Pokémon. This Pokémon is now Confused.'
     },
   ];

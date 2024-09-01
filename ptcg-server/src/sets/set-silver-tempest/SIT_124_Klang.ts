@@ -18,6 +18,7 @@ export class Klang extends PokemonCard {
     name: 'Gear Grind',
     cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
     damage: 80,
+    damageCalculation: 'x',
     text: 'Flip 2 coins. The attack does 80 damage for each heads.'
   }];
 
@@ -28,16 +29,16 @@ export class Klang extends PokemonCard {
   public fullName: string = 'Klang SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
-    if(effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       return store.prompt(state, [
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)  
+        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)
       ], (results) => {
         const heads = results.filter(r => !!r).length;
         effect.damage = 80 * heads;
       });
-      
+
     }
 
     return state;

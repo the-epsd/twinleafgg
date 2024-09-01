@@ -9,11 +9,13 @@ export class Marshadow extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = CardType.PSYCHIC;
 
   public hp: number = 80;
 
-  public weakness = [{ type: CardType.LIGHTNING }];
+  public weakness = [{ type: CardType.DARK }];
+
+  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
   public retreat = [CardType.COLORLESS];
 

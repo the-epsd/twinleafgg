@@ -30,7 +30,7 @@ export class IronLeavesex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Prismatic Edge',
+      name: 'Prism Edge',
       cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
       damage: 180,
       text: 'During your next turn, this Pokémon can\'t attack.',

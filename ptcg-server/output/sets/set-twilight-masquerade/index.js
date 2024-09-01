@@ -8,6 +8,7 @@ exports.setTwilightMasquerade = [
     new card_images_1.BlisseyexArt(),
     // new BoomerangEnergyArt(),
     new card_images_1.CarmineArt(),
+    new card_images_1.ChimcharArt(),
     new card_images_1.CornerstoneMaskOgerponexArt(),
     new card_images_1.DreepyArt(),
     new card_images_1.DrakloakArt(),
@@ -64,5 +65,6 @@ exports.setTwilightMasquerade = [
     new card_images_1.InfernapeArt(),
     new card_images_1.WalkingWakeArt(),
     new card_images_1.SecretBoxArt(),
-    new card_images_1.TingLuArt()
+    new card_images_1.TingLuArt(),
+    new card_images_1.MonfernoArt(),
 ];

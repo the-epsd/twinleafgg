@@ -112,7 +112,7 @@ class TapuLeleGX extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             if (player.usedGX === true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
+                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
             }
             let targets = [];
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_HEAL, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: false, blocked }), results => {

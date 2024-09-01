@@ -23,10 +23,10 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
             }];
         this.attacks = [
             {
-                name: 'Bolt Cyclone',
+                name: 'Volt Cyclone',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 140,
-                text: 'Move 1 Energy from this Pokémon to 1 of your Benched Pokémon.'
+                text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.'
             }
         ];
         this.set = 'TWM';

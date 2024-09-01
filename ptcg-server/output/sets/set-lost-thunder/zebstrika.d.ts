@@ -30,5 +30,6 @@ export declare class Zebstrika extends PokemonCard {
     name: string;
     fullName: string;
     cardImage: string;
+    readonly SPRINT_MARKER = "SPRINT_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

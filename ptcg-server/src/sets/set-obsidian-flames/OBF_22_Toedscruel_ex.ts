@@ -27,6 +27,7 @@ export class Toedscruelex extends PokemonCard {
     name: 'Colony Rush',
     cost: [CardType.GRASS, CardType.GRASS],
     damage: 80,
+    damageCalculation: '+',
     text: ' This attack does 40 more damage for each of your Benched Pokémon that has any [G] Energy attached. '
   }];
 
@@ -51,21 +52,21 @@ export class Toedscruelex extends PokemonCard {
         if (effect instanceof DealDamageEffect) {
           return state;
         }
-        
-                if (effect.target.cards.some(c => c instanceof EnergyCard)) {
 
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const player = StateUtils.findOwner(state, effect.target);
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
+        if (effect.target.cards.some(c => c instanceof EnergyCard)) {
+
+          // Try to reduce PowerEffect, to check if something is blocking our ability
+          try {
+            const player = StateUtils.findOwner(state, effect.target);
+            const stub = new PowerEffect(player, {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: ''
+            }, this);
+            store.reduceEffect(state, stub);
+          } catch {
+            return state;
+          }
 
           effect.preventDefault = true;
         }

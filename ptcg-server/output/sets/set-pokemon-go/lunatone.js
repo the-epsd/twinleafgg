@@ -28,6 +28,7 @@ class Lunatone extends pokemon_card_1.PokemonCard {
                 name: 'Moon Kinesis',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 30,
+                damageCalculation: '+',
                 text: 'This attack does 30 more damage for each [P] Energy ' +
                     'attached to this Pokémon.'
             }

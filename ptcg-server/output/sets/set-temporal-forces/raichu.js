@@ -18,7 +18,7 @@ class Raichu extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Entangling Bolt',
+                name: 'Collateral Bolts',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'This attack does 50 damage to each other Pokémon in play with any damage counters on it. (Both yours and your opponent\'s. Don\'t apply Weakness and Resistance for Benched Pokémon.)'

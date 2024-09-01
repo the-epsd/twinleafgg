@@ -26,6 +26,7 @@ class Phione extends pokemon_card_1.PokemonCard {
                 name: 'Energy Press',
                 cost: [card_types_1.CardType.WATER],
                 damage: 20,
+                damageCalculation: 'x',
                 text: 'This attack does 20 damage for each Energy attached to your opponent\'s Active Pokémon.'
             }
         ];

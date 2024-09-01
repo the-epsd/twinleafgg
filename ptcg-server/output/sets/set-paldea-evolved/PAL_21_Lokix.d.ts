@@ -11,12 +11,19 @@ export declare class Lokix extends PokemonCard {
     }[];
     retreat: CardType[];
     evolvesFrom: string;
-    attacks: {
+    attacks: ({
+        name: string;
+        cost: CardType[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    } | {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        damageCalculation?: undefined;
+    })[];
     set: string;
     regulationMark: string;
     cardImage: string;

@@ -24,7 +24,7 @@ export class Zoroark extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Phantom Jack',
+      name: 'Illusory Hijacking',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
       damageCalculation: 'x',

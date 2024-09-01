@@ -21,7 +21,7 @@ class Sableye extends game_1.PokemonCard {
                 text: ''
             },
             {
-                name: 'Damage Collector',
+                name: 'Damage Collection',
                 cost: [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Move any number of damage counters from your opponent\'s Benched Pokémon to their Active Pokémon.'

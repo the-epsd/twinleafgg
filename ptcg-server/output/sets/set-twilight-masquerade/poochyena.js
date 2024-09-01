@@ -20,6 +20,7 @@ class Poochyena extends pokemon_card_1.PokemonCard {
                 name: 'Continuous Steps',
                 cost: [card_types_1.CardType.DARK],
                 damage: 10,
+                damageCalculation: 'x',
                 text: 'Flip a coin until you get tails. This attack does 10 damage for each heads.'
             },
             {

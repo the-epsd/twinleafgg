@@ -43,7 +43,7 @@ class Duskull extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Meet Up',
+                name: 'Come and Get You',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 0,
                 text: 'Put up to 3 Duskull from your discard pile onto your Bench.'

@@ -29,6 +29,7 @@ class Blastoiseex extends pokemon_card_1.PokemonCard {
                 name: 'Twin Cannons',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER],
                 damage: 140,
+                damageCalculation: 'x',
                 text: 'Discard up to 2 Basic Water Energies from your hand. This ' +
                     'attack does 140 damage for each card you discarded in ' +
                     'this way.'

@@ -72,7 +72,7 @@ export class CherensCare extends TrainerCard {
   public fullName: string = 'Cheren\'s Care BRS';
 
   public text: string =
-    'Put 1 of your Basic Pokémon and all attached cards into your hand.';
+    'Put 1 of your [C] Pokémon that has any damage counters on it and all attached cards into your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -19,6 +19,7 @@ export class HisuianBasculegion extends PokemonCard {
     name: 'Grudge Dive',
     cost: [CardType.WATER],
     damage: 30,
+    damageCalculation: '+',
     text: 'If any of your Pokémon were Knocked Out by damage from an attack from your opponent\'s Pokémon during their last turn, this attack does 90 more damage, and your opponent\'s Active Pokémon is now Confused.'
   },
   {

@@ -16,7 +16,7 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.WATER }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
-            { name: 'Heat Tackle', cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE], damage: 70, text: 'This Pokémon does 20 damage to itself.' },
+            { name: 'Heat Tackle', cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE], damage: 90, text: 'This Pokémon does 20 damage to itself.' },
         ];
         this.set = 'OBF';
         this.cardImage = 'assets/cardback.png';

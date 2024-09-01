@@ -28,7 +28,7 @@ export class Raichu extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Entangling Bolt',
+      name: 'Collateral Bolts',
       cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 0,
       text: 'This attack does 50 damage to each other Pokémon in play with any damage counters on it. (Both yours and your opponent\'s. Don\'t apply Weakness and Resistance for Benched Pokémon.)'
@@ -56,7 +56,7 @@ export class Raichu extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         if (cardList.damage > 0) {
           const damageEffect = new PutDamageEffect(effect, 50);
@@ -70,7 +70,7 @@ export class Raichu extends PokemonCard {
           const damageEffect = new PutDamageEffect(effect, 50);
           damageEffect.target = cardList;
           store.reduceEffect(state, damageEffect);
-        }       
+        }
       });
       return state;
     }

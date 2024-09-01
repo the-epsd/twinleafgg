@@ -53,7 +53,7 @@ class Gallade extends pokemon_card_1.PokemonCard {
                 }
                 blockedFrom.push(target);
             });
-            return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, blockedFrom, blockedTo }), transfers => {
+            return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, blockedFrom, blockedTo, min: 1, max: 1 }), transfers => {
                 if (transfers === null) {
                     return;
                 }

@@ -18,6 +18,7 @@ export declare class Rufflet extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
+        damageCalculator: string;
         text: string;
     }[];
     set: string;

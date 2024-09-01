@@ -25,7 +25,7 @@ export class ScreamTailex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Sudden Shriek',
+      name: 'Scream',
       cost: [CardType.COLORLESS],
       damage: 0,
       text: 'You can use this attack only if you go second, and only during your first turn. During your opponent\'s next turn, they can\'t play any Supporter cards from their hand.'

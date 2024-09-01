@@ -16,7 +16,7 @@ export class Aron extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public resistance = [{ type: CardType.FIRE, value: -30 }];
+  public resistance = [{ type: CardType.GRASS, value: -30 }];
 
   public hp: number = 70;
 

@@ -80,7 +80,7 @@ class DialgaGX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[2]) {
             const player = effect.player;
             if (player.usedGX === true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
+                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
             }
             player.usedGX = true;
             player.marker.addMarker(this.TIMELESS_GX_MARKER, this);

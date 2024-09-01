@@ -23,6 +23,7 @@ class Minior extends pokemon_card_1.PokemonCard {
                 name: 'Gravitational Tackle',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 20,
+                damageCalculation: 'x',
                 text: 'This attack does 20 damage for each [C] in your opponent\'s Active Pokémon\'s Retreat Cost.'
             }];
         this.regulationMark = 'G';

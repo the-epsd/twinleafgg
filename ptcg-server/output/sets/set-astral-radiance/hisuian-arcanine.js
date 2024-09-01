@@ -26,6 +26,7 @@ class HisuianArcanine extends pokemon_card_1.PokemonCard {
                 name: 'Scorching Horn',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
                 damage: 80,
+                damageCalculation: '+',
                 text: 'If this Pokémon has any [R] Energy attached, this attack does 80 more damage, and your opponent\'s Active Pokémon is now Burned.'
             }
         ];

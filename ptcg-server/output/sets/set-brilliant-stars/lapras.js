@@ -19,7 +19,7 @@ class Lapras extends pokemon_card_1.PokemonCard {
             }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [{
-                name: 'Retaliate',
+                name: 'Raging Freeze',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
                 damage: 110,
                 text: 'If any of your Pokémon were Knocked Out by damage from an attack from your opponent\'s Pokémon during their last turn, your opponent\'s Active Pokémon is now Paralyzed.'

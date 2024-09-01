@@ -10,9 +10,10 @@ class Marshadow extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.WATER;
+        this.cardType = card_types_1.CardType.PSYCHIC;
         this.hp = 80;
-        this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
+        this.weakness = [{ type: card_types_1.CardType.DARK }];
+        this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -20 }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [
             {

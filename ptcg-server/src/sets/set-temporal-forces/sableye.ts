@@ -15,18 +15,18 @@ export class Sableye extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Claw Slash',
-      cost: [ CardType.DARK ],
+      cost: [CardType.DARK],
       damage: 20,
       text: ''
     },
     {
-      name: 'Damage Collector',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      name: 'Damage Collection',
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
       text: 'Move any number of damage counters from your opponent\'s Benched Pokémon to their Active Pokémon.'
     }
@@ -76,19 +76,19 @@ export class Sableye extends PokemonCard {
           store.reduceEffect(state, checkHpEffect);
           maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
         });
-        
+
         return store.prompt(state, new MoveDamagePrompt(
           effect.player.id,
           GameMessage.MOVE_DAMAGE,
           PlayerType.TOP_PLAYER,
-          [ SlotType.ACTIVE, SlotType.BENCH ],
+          [SlotType.ACTIVE, SlotType.BENCH],
           maxAllowedDamage,
           { min: 0, allowCancel: false }
         ), transfers => {
           if (transfers === null) {
             return;
           }
-        
+
           for (const transfer of transfers) {
             const source = StateUtils.getTarget(state, player, transfer.from);
             const target = StateUtils.getTarget(state, player, transfer.to);

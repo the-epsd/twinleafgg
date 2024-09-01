@@ -12,7 +12,11 @@ export declare class OriginFormeDialgaVSTAR extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    retreat: never[];
+    resistance: {
+        type: CardType;
+        value: number;
+    }[];
+    retreat: CardType[];
     attacks: {
         name: string;
         cost: CardType[];

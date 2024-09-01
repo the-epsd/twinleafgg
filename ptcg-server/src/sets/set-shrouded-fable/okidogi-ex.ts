@@ -24,15 +24,16 @@ export class Okidogiex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Poison Muscle',
+      name: 'Poisonous Musculature',
       cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Attach up to 2 Basic Darkness Energy from your deck to this Pokémon, then shuffle your deck. If you attached any Energy this way, this Pokémon is now Poisoned.'
     },
     {
-      name: 'Crazy Chain',
+      name: 'CChain-Crazed',
       cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 130,
+      damageCalculation: '+',
       text: 'If this Pokémon is Poisoned, this attack does 130 more.'
     }
   ];

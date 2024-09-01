@@ -8,7 +8,7 @@ export class Mantine extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.WATER;  
+  public cardType: CardType = CardType.WATER;
 
   public hp: number = 110;
 
@@ -21,7 +21,7 @@ export class Mantine extends PokemonCard {
   public attacks = [{
     name: 'Borne Ashore',
     cost: [CardType.COLORLESS],
-    damage: 160,
+    damage: 0,
     text: 'Put a Basic Pokémon from either player\'s discard pile onto that player\'s Bench.'
   },
   {
@@ -52,18 +52,18 @@ export class Mantine extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const slots: PokemonCardList[] = opponent.bench.filter(b => b.cards.length === 0);
-      
+
       if (opponent.discard.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
       // Check if bench has open slots
       const openSlots = opponent.bench.filter(b => b.cards.length === 0);
-            
+
       if (openSlots.length === 0) {
         // No open slots, throw error
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(
         player.id,
@@ -74,13 +74,13 @@ export class Mantine extends PokemonCard {
       ), selected => {
         cards = selected || [];
       });
-      
+
       // Operation canceled by the user
       if (cards.length === 0) {
         return state;
       }
-      
-        
+
+
       cards.forEach((card, index) => {
         if (opponent.discard) {
           opponent.discard.moveCardTo(card, slots[index]);
@@ -89,10 +89,9 @@ export class Mantine extends PokemonCard {
         }
         slots[index].pokemonPlayedTurn = state.turn;
       });
-      
+
     }
-        
+
     return state;
   }
 }
-        

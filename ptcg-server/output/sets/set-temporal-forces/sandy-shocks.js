@@ -18,7 +18,7 @@ class SandyShocks extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Magnetic Blast',
+                name: 'Magnetic Burst',
                 cost: [card_types_1.CardType.FIGHTING],
                 damage: 20,
                 damageCalculation: '+',

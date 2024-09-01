@@ -8,7 +8,7 @@ class Gyaradosex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.STAGE_1;
-        this.evolvesFrom = 'Magipark';
+        this.evolvesFrom = 'Magikarp';
         this.tags = [game_1.CardTag.POKEMON_ex, game_1.CardTag.POKEMON_TERA];
         this.cardType = game_1.CardType.WATER;
         this.hp = 300;
@@ -17,7 +17,7 @@ class Gyaradosex extends game_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Waterfall',
-                cost: [game_1.CardType.WATER, game_1.CardType.WATER],
+                cost: [game_1.CardType.WATER, game_1.CardType.WATER, game_1.CardType.WATER],
                 damage: 100,
                 text: ''
             },

@@ -21,7 +21,7 @@ export class Haxorus extends PokemonCard {
     name: 'Wild Axe',
     cost: [CardType.FIGHTING, CardType.METAL],
     damage: 160,
-    text: ''
+    text: 'This Pokémon also does 30 damage to itself.'
   }];
 
   public set = 'BRS';

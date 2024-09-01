@@ -24,7 +24,7 @@ class Magneton extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Electric Ball',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.PSYCHIC],
+                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
                 damage: 40,
                 text: ''
             }

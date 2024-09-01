@@ -34,6 +34,7 @@ export class ZamazentaV extends PokemonCard {
       name: 'Revenge Blast',
       cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
       damage: 120,
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each Prize card your opponent has taken.'
     },
   ];

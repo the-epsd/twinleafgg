@@ -23,9 +23,10 @@ class HisuianZoroarkVSTAR extends game_1.PokemonCard {
             }];
         this.attacks = [
             {
-                name: 'Nightly Raid',
+                name: 'Ticking Curse',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 0,
+                damage: 50,
+                damageCalculator: 'x',
                 text: 'This attack does 50 damage for each of your Pokémon that has any damage counters on it.'
             }
         ];
