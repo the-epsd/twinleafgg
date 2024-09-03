@@ -19,6 +19,8 @@ import { ZacianV } from './zacian-v';
 import { ZacianVSTAR } from './zacian-vstar';
 import { Zamazenta } from './zamazenta';
 import { ZamazentaV } from './zamazenta-v';
+import { ZeraoraV } from './zeraora-v';
+import { ZeraoraVSTAR } from './zeraora-vstar';
 
 export class AbsolArt extends Absol {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_076_R_EN_LG.png';
@@ -108,4 +110,12 @@ export class ZamazentaVArt extends ZamazentaV {
 
 export class ZarudeArt extends Zarude {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_016_R_EN_LG.png';
+}
+
+export class ZeraoraVArt extends ZeraoraV {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_053_R_EN_LG.png';
+}
+
+export class ZeraoraVSTARArt extends ZeraoraVSTAR {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_055_R_EN_LG.png';
 }

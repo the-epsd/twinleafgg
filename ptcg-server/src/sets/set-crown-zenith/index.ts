@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AbsolArt, BidoofArt, HoopaArt, KyogreArt, LostVacuumArt, LuxrayArt, MewtwoArt, RadiantCharizardArt, RadiantEternatusArt, RegigigasVArt, RegigigasVSTARArt, RotomVArt, SalanditArt, WailmerArt, YanmegaArt, ZacianArt, ZacianVArt, ZacianVSTARArt, ZamazentaArt, ZamazentaVArt, ZarudeArt } from './card-images';
+import { AbsolArt, BidoofArt, HoopaArt, KyogreArt, LostVacuumArt, LuxrayArt, MewtwoArt, RadiantCharizardArt, RadiantEternatusArt, RegigigasVArt, RegigigasVSTARArt, RotomVArt, SalanditArt, WailmerArt, YanmegaArt, ZacianArt, ZacianVArt, ZacianVSTARArt, ZamazentaArt, ZamazentaVArt, ZarudeArt, ZeraoraVArt, ZeraoraVSTARArt } from './card-images';
 
 export const setCrownZenith: Card[] = [
 
@@ -24,4 +24,6 @@ export const setCrownZenith: Card[] = [
   new ZacianVArt(),
   new ZacianVSTARArt(),
   new ZarudeArt(),
+  new ZeraoraVArt(),
+  new ZeraoraVSTARArt(),
 ];

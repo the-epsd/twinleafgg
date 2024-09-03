@@ -34,7 +34,12 @@ export class AlertService {
   }
 
   public toast(message: string, duration: number = 3000) {
-    this.snackBar.open(message, '', { duration, horizontalPosition: 'center', verticalPosition: 'top' });
+    this.snackBar.open(message, '', {
+      duration,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['toast-offset']
+    });
   }
 
   public confirm(message: string, title?: string): Promise<boolean> {
