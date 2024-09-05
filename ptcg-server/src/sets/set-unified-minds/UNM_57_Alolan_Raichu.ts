@@ -6,7 +6,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
 
 export class AlolanRaichu extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Pikachu';
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 110;

@@ -9,7 +9,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class AlolanRaichu extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Pikachu';
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 110;
