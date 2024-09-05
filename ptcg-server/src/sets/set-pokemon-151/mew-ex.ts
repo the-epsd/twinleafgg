@@ -42,6 +42,10 @@ function* useGenomeHacking(next: Function, store: StoreLike, state: State,
     return state;
   }
 
+  if (attack.name === 'Genome Hacking') {
+    return state;
+  }
+
   store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
     name: player.name,
     attack: attack.name
