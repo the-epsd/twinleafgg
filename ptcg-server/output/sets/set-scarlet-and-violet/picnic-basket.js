@@ -19,10 +19,15 @@ class PicnicBasket extends game_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             // Heal each Pokemon by 30 damage
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER && game_1.PlayerType.TOP_PLAYER, (cardList) => {
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
+                const healEffect = new game_effects_1.HealEffect(player, cardList, 30);
+                state = store.reduceEffect(state, healEffect);
+            });
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
                 const healEffect = new game_effects_1.HealEffect(player, cardList, 30);
                 state = store.reduceEffect(state, healEffect);
             });
