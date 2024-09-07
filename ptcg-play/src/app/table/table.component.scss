@@ -1,59 +1,25 @@
 :host {
   display: block;
   height: 100%;
-  width: 100%;
   overflow: hidden;
-  background-color: #091624;
-
-  #myVideo {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    right: 0;
-    bottom: 0;
-    object-fit: cover;
-    z-index: 0;
-  }
 }
 
-
 .ptcg-table {
-  overflow-x: scroll;
-  overflow-y: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%;
-  user-select: none; // chrome and Opera
-  -moz-user-select: none; // Firefox
-  -webkit-text-select: none; // IOS Safari
-  -webkit-user-select: none; // Safari
+  overflow: hidden;
 }
 
 ptcg-board {
-  overflow: hidden;
   flex: 1 1 auto;
-
-  // margin-top: -3%;
-  // margin-right: -50%;
+  overflow: hidden;
+  margin-top: -2%;
+  margin-bottom: -2%;
 }
 
 ptcg-hand {
-  // background-color: #1a202c00;
-  position: static;
-  // flex: 0 0 auto;
-  margin-top: -9%;
-  z-index: 1;
+  flex: 0 0 auto;
+  overflow: visible;
+  background: transparent;
 }
-
-// .opp-hand {
-//   width: 60%;
-//   transform: rotate(180deg);
-//   z-index: 1;
-//   margin: 0 auto;
-//   /* Add this line to center horizontally */
-//   display: flex;
-//   /* Add this line to enable centering */
-//   justify-content: center;
-//   /* Add this line to center horizontally */
-// }

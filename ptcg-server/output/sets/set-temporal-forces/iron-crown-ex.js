@@ -21,6 +21,7 @@ class IronCrownex extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Cobalt Command',
                 powerType: game_1.PowerType.ABILITY,
+                exemptFromInitialize: true,
                 text: 'Your Future Pokémon\'s attacks, except any Iron Crown ex, do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
             }];
         this.attacks = [

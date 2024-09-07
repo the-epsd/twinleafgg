@@ -6,12 +6,6 @@ $ptcg-energy-card-offset: 13%;
 .ptcg-board-card {
   max-width: map-get($ptcg-size, card);
   min-width: map-get($ptcg-size, board-card);
-  // max-width: 4.5vw; // Adjust this value to your preference
-  // min-width: 4.5vw; // Adjust this value to your preference
-  // height: calc(4.5vw * #{$card-aspect-ratio}); // Maintain the aspect ratio
-  // margin-left: 41px;
-  // margin-left: calc(1 * $spacing-unit);
-  // margin-right: calc(1 * $spacing-unit);
   position: relative;
 
   &.empty:after {
@@ -34,10 +28,6 @@ $ptcg-energy-card-offset: 13%;
     padding-bottom: $card-aspect-ratio * 100%;
   }
 }
-
-// Import custom energy card images
-// $custom-grass-energy-image: '~src/assets/custom-grass-energy.png';
-// $custom-fire-energy-image: '~src/assets/custom-fire-energy.png';
 
 .ptcg-energy-cards {
   ptcg-card {

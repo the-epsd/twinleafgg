@@ -15,6 +15,7 @@ export declare class IronValiantex extends PokemonCard {
     powers: {
         name: string;
         powerType: PowerType;
+        exemptFromInitialize: boolean;
         text: string;
     }[];
     attacks: {

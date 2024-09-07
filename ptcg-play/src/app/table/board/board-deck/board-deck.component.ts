@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
-import {Player, CardList, Card} from 'ptcg-server';
+import { Player, CardList, Card } from 'ptcg-server';
 
 @Component({
   selector: 'ptcg-board-deck',
@@ -34,7 +34,7 @@ export class BoardDeckComponent implements OnChanges {
   createRange(length: number): number[] {
     return Array.from({ length }, (_, i) => i);
   }
-  
+
 
   public onDeckClick() {
     let card;

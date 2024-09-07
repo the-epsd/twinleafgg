@@ -1,34 +1,24 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class IronThornsex extends PokemonCard {
-    tags: CardTag[];
-    regulationMark: string;
+export declare class Palkia extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
-    weakness: {
-        type: CardType;
-    }[];
     retreat: CardType[];
-    powers: {
-        name: string;
-        powerType: PowerType;
-        exemptFromInitialize: boolean;
-        text: string;
-    }[];
     attacks: {
         name: string;
         cost: CardType[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;
     cardImage: string;
     setNumber: string;
+    regulationMark: string;
     name: string;
     fullName: string;
-    private readonly BOLT_CYCLONE_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
