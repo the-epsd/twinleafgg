@@ -19,6 +19,8 @@ import { ZacianV } from './zacian-v';
 import { ZacianVSTAR } from './zacian-vstar';
 import { Zamazenta } from './zamazenta';
 import { ZamazentaV } from './zamazenta-v';
+import { ZeraoraV } from './zeraora-v';
+import { ZeraoraVSTAR } from './zeraora-vstar';
 export declare class AbsolArt extends Absol {
     cardImage: string;
 }
@@ -86,5 +88,11 @@ export declare class ZamazentaVArt extends ZamazentaV {
     cardImage: string;
 }
 export declare class ZarudeArt extends Zarude {
+    cardImage: string;
+}
+export declare class ZeraoraVArt extends ZeraoraV {
+    cardImage: string;
+}
+export declare class ZeraoraVSTARArt extends ZeraoraVSTAR {
     cardImage: string;
 }

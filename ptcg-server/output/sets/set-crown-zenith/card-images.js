@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZarudeArt = exports.ZamazentaVArt = exports.ZamazentaArt = exports.ZacianVSTARArt = exports.ZacianVArt = exports.ZacianArt = exports.YanmegaArt = exports.WailmerArt = exports.SalanditArt = exports.RotomVArt = exports.RegigigasVSTARArt = exports.RegigigasVArt = exports.RadiantEternatusArt = exports.RadiantCharizardArt = exports.MewtwoArt = exports.LostVacuumArt = exports.LuxrayArt = exports.KyogreArt = exports.HoopaArt = exports.BidoofArt = exports.AbsolArt = void 0;
+exports.ZeraoraVSTARArt = exports.ZeraoraVArt = exports.ZarudeArt = exports.ZamazentaVArt = exports.ZamazentaArt = exports.ZacianVSTARArt = exports.ZacianVArt = exports.ZacianArt = exports.YanmegaArt = exports.WailmerArt = exports.SalanditArt = exports.RotomVArt = exports.RegigigasVSTARArt = exports.RegigigasVArt = exports.RadiantEternatusArt = exports.RadiantCharizardArt = exports.MewtwoArt = exports.LostVacuumArt = exports.LuxrayArt = exports.KyogreArt = exports.HoopaArt = exports.BidoofArt = exports.AbsolArt = void 0;
 const lost_vacuum_1 = require("../set-lost-origin/lost-vacuum");
 const rotom_v_1 = require("../set-lost-origin/rotom-v");
 const absol_1 = require("./absol");
@@ -22,6 +22,8 @@ const zacian_v_1 = require("./zacian-v");
 const zacian_vstar_1 = require("./zacian-vstar");
 const zamazenta_1 = require("./zamazenta");
 const zamazenta_v_1 = require("./zamazenta-v");
+const zeraora_v_1 = require("./zeraora-v");
+const zeraora_vstar_1 = require("./zeraora-vstar");
 class AbsolArt extends absol_1.Absol {
     constructor() {
         super(...arguments);
@@ -175,3 +177,17 @@ class ZarudeArt extends CRZ_16_Zarude_1.Zarude {
     }
 }
 exports.ZarudeArt = ZarudeArt;
+class ZeraoraVArt extends zeraora_v_1.ZeraoraV {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_053_R_EN_LG.png';
+    }
+}
+exports.ZeraoraVArt = ZeraoraVArt;
+class ZeraoraVSTARArt extends zeraora_vstar_1.ZeraoraVSTAR {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_055_R_EN_LG.png';
+    }
+}
+exports.ZeraoraVSTARArt = ZeraoraVSTARArt;

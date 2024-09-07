@@ -22,6 +22,7 @@ class IronValiantex extends pokemon_card_1.PokemonCard {
             {
                 name: 'Tachyon Bits',
                 powerType: game_1.PowerType.ABILITY,
+                exemptFromInitialize: true,
                 text: 'Once during your turn, when this Pokémon moves from your Bench to the Active Spot, you may put 2 damage counters on 1 of your opponent\'s Pokémon.'
             }
         ];

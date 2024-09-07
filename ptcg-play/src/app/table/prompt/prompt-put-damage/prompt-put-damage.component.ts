@@ -63,19 +63,21 @@ export class PromptPutDamageComponent implements OnChanges {
   }
 
   public removeDamage() {
-    this.damage += 10;
+    const damageMultiple = this.prompt.options.damageMultiple || 10;
+    this.damage += damageMultiple;
     const item = this.selectedItem;
     item.cardList = Object.assign(new PokemonCardList(), item.cardList);
-    item.cardList.damage -= 10;
+    item.cardList.damage -= damageMultiple;
     this.updateButtonDisable();
     this.updateIsInvalid();
   }
 
   public addDamage() {
-    this.damage -= 10;
+    const damageMultiple = this.prompt.options.damageMultiple || 10;
+    this.damage -= damageMultiple;
     const item = this.selectedItem;
     item.cardList = Object.assign(new PokemonCardList(), item.cardList);
-    item.cardList.damage += 10;
+    item.cardList.damage += damageMultiple;
     this.updateButtonDisable();
     this.updateIsInvalid();
   }

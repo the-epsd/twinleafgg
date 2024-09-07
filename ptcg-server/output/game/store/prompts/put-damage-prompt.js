@@ -18,7 +18,8 @@ class PutDamagePrompt extends prompt_1.Prompt {
         this.options = Object.assign({}, {
             allowCancel: true,
             blocked: [],
-            allowPlacePartialDamage: false
+            allowPlacePartialDamage: false,
+            damageMultiple: 10,
         }, options);
     }
     decode(result, state) {

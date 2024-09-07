@@ -20,6 +20,11 @@ function* useGenomeHacking(next: Function, store: StoreLike, state: State,
     return state;
   }
 
+  const attacks = pokemonCard.attacks.map(a => a.name);
+  if (attacks.includes(effect.attack.name + ' (Genome Hacking)')) {
+    return state;
+  }
+
   let selected: any;
   yield store.prompt(state, new ChooseAttackPrompt(
     player.id,
@@ -34,6 +39,10 @@ function* useGenomeHacking(next: Function, store: StoreLike, state: State,
   const attack: Attack | null = selected;
 
   if (attack === null) {
+    return state;
+  }
+
+  if (attack.name === 'Genome Hacking') {
     return state;
   }
 

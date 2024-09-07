@@ -8,6 +8,7 @@ export interface PutDamageOptions {
     allowCancel: boolean;
     blocked: CardTarget[];
     allowPlacePartialDamage?: boolean | undefined;
+    damageMultiple?: number;
 }
 export declare class PutDamagePrompt extends Prompt<DamageMap[]> {
     message: GameMessage;

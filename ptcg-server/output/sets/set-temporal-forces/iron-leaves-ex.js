@@ -20,6 +20,7 @@ class IronLeavesex extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Rapid Vernier',
                 powerType: game_1.PowerType.ABILITY,
+                exemptFromInitialize: true,
                 text: 'Once during your turn, when you play this Pokémon from your hand onto your Bench, you may switch this Pokémon with your Active Pokémon. If you do, you may move any number of Energy from your Benched Pokémon to this Pokémon.'
             }];
         this.attacks = [

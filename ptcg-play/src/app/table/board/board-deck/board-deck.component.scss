@@ -3,54 +3,40 @@
 .ptcg-board-deck {
   display: flex;
   flex-direction: column;
-  height: 220px;
+  height: 100%;
   justify-content: space-around;
   margin: 0 auto;
+  max-width: var(--card-size);
   width: 100%;
 }
 
-ptcg-board-card {
-  width: 75px;
-  // max-width: 4.5vw;
-  // min-width: 4.5vw;
-  // margin-top: -40%;
-}
-
-.deck-wrapper {
-  position: relative;
-  margin-top: -43%;
-  transform: translateX(5%);
-}
-
-.discard-wrapper {
-  position: relative;
-  // margin-top: 10%;
-  transform: translateX(5%);
-}
-
-// .deck-count {
-//   position: absolute;
-//   bottom: 125px; // Adjust this value as needed
-//   right: 7%;
-//   transform: translateX(-50%);
-// }
-
-// .discard-count {
-//   position: absolute;
-//   bottom: -px; // Adjust this value as needed
-//   right: 6.25%;
-//   transform: translateX(-50%);
-//   size: 70%;
-// }
-
-.deck-container,
-.discard-container {
-  position: relative;
-}
-
-.deck-card,
-.discard-card {
+.deck-card {
   position: absolute;
-  left: 0;
-  top: 0;
+  bottom: 33%;
+}
+
+
+ptcg-board-card {
+  width: var(--card-size);
+  height: calc(var(--card-size) * #{$card-aspect-ratio} - 14px);
+  max-width: 100%;
+  flex-shrink: 0; // Prevents shrinking
+}
+
+.card-stack {
+  &.owner {
+    @for $i from 0 through 10 {
+      &:nth-child(#{$i + 1}) {
+        transform: translate(#{$i * 0.25}px, #{$i * -0.25}px);
+      }
+    }
+  }
+
+  &:not(.owner) {
+    @for $i from 0 through 10 {
+      &:nth-child(#{$i + 1}) {
+        transform: translate(#{$i * 0.25}px, #{$i * 0.25}px);
+      }
+    }
+  }
 }

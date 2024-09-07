@@ -38,4 +38,5 @@ export interface Power {
   useFromHand?: boolean;
   useFromDiscard?: boolean;
   exemptFromAbilityLock?: boolean;
+  exemptFromInitialize?: boolean;
 }

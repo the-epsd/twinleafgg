@@ -25,6 +25,7 @@ export class IronLeavesex extends PokemonCard {
   public powers = [{
     name: 'Rapid Vernier',
     powerType: PowerType.ABILITY,
+    exemptFromInitialize: true,
     text: 'Once during your turn, when you play this Pokémon from your hand onto your Bench, you may switch this Pokémon with your Active Pokémon. If you do, you may move any number of Energy from your Benched Pokémon to this Pokémon.'
   }];
 

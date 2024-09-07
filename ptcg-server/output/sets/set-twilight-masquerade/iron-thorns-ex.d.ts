@@ -15,6 +15,7 @@ export declare class IronThornsex extends PokemonCard {
     powers: {
         name: string;
         powerType: PowerType;
+        exemptFromInitialize: boolean;
         text: string;
     }[];
     attacks: {

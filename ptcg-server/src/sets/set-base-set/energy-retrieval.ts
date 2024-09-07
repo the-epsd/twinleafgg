@@ -36,7 +36,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
-    { },
+    {},
     { min: 1, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
@@ -71,8 +71,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class EnergyRetrieval extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
-  public regulationMark = 'G';
 
   public set: string = 'BS';
 

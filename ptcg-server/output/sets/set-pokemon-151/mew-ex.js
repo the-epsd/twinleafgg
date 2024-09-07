@@ -16,6 +16,10 @@ function* useGenomeHacking(next, store, state, effect) {
     if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
         return state;
     }
+    const attacks = pokemonCard.attacks.map(a => a.name);
+    if (attacks.includes(effect.attack.name + ' (Genome Hacking)')) {
+        return state;
+    }
     let selected;
     yield store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, [pokemonCard], { allowCancel: false }), result => {
         selected = result;
@@ -23,6 +27,9 @@ function* useGenomeHacking(next, store, state, effect) {
     });
     const attack = selected;
     if (attack === null) {
+        return state;
+    }
+    if (attack.name === 'Genome Hacking') {
         return state;
     }
     store.log(state, game_1.GameLog.LOG_PLAYER_COPIES_ATTACK, {

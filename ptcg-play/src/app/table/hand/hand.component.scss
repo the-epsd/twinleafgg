@@ -5,21 +5,17 @@ $ptcg-hand-height: calc(var(--card-size) * #{$card-aspect-ratio} + #{4 * $ptcg-h
 $ptcg-hand-max-margin: map-get($padding, normal);
 
 .ptcg-hand {
-  margin-bottom: -70px;
+  margin-bottom: -80px;
   display: flex;
-  height: 190px;
-  // overflow: auto;
-  /* Add this line to center horizontally */
+  height: 100px;
   justify-content: center;
-  /* Add this line to center horizontally */
 }
 
 .ptcg-hand-container {
   align-items: center;
   display: flex;
   flex: 0 0 auto;
-  // margin: 0 auto;
-  // The padding will be dynamically set by the component
+  background: transparent;
 }
 
 dnd-sortable-list {
@@ -37,15 +33,11 @@ ptcg-badge {
 ptcg-card {
   flex: 0 0 auto;
   width: 88px;
-  // Remove the static padding from here
   transition: transform .2s;
-
-  &.draggable {
-    touch-action: none;
-  }
+  transform: translateY(-45px); // This will move the cards up
 
   &:hover {
-    transform: scale(1.15) translateY(-12.5px);
+    transform: scale(1.15) translateY(-40px); // Adjust this value as needed
     z-index: 10;
   }
 }
@@ -85,16 +77,16 @@ ptcg-card {
 
   ptcg-card {
     width: 88px;
-    margin-bottom: -70px; // Add this to give some space at the bottom
+    transform: translateY(15px); // This will move the cards up
 
     &:hover {
-      transform: scale(1.075) translateY(-8.5px); // Change to positive value
+      transform: scale(1.025) translateY(7.5px); // Change to positive value
     }
   }
 }
 
-.ptcg-card-preview {
-  border-radius: $card-border-radius;
-  position: absolute;
-  width: 98px;
-}
+// .ptcg-card-preview {
+//   border-radius: $card-border-radius;
+//   position: absolute;
+//   width: 98px;
+// }

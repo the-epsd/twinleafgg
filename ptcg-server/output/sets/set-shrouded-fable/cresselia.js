@@ -54,10 +54,13 @@ class Cresselia extends pokemon_card_1.PokemonCard {
                 state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
                     if (wantToUse) {
                         state = store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON, { count: 1, allowCancel: true }), chosenPrize => {
+                            const prizeCard = chosenPrize[0];
+                            if (prizeCard.faceUpPrize == true) {
+                                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                            }
                             if (chosenPrize === null || chosenPrize.length === 0) {
                                 prizes.forEach(p => { p.isSecret = true; });
                             }
-                            const prizeCard = chosenPrize[0];
                             prizeCard.isSecret = false;
                             prizeCard.isPublic = true;
                             prizeCard.faceUpPrize = true;

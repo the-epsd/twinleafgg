@@ -39,7 +39,7 @@ class BirdKeeper extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'DAA';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '66';
+        this.setNumber = '159';
         this.name = 'Bird Keeper';
         this.fullName = 'Bird Keeper DAA';
         this.text = 'Switch your Active Pokemon with 1 of your Benched Pokemon.';

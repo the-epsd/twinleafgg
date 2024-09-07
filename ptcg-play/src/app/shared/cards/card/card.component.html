@@ -1,7 +1,7 @@
-<div class="ptcg-card"  *ngIf="data">
-  <img *ngIf="customImageUrl" class="ptcg-card-scan" [src]="customImageUrl" alt="Card Image">
-  <img *ngIf="!customImageUrl" class="ptcg-card-scan" [src]="scanUrl" alt="Card Image">
-    <ng-content></ng-content>
+<div class="ptcg-card" *ngIf="data">
+  <img *ngIf="customImageUrl" class="ptcg-card-scan" [src]="customImageUrl" alt="Card Image" draggable="false">
+  <img *ngIf="!customImageUrl" class="ptcg-card-scan" [src]="scanUrl" alt="Card Image" draggable="false">
+  <ng-content></ng-content>
 </div>
 <!-- <div class="ptcg-card" *ngIf="data">
   <img class="ptcg-card-scan" [ptcgImageCache]="scanUrl" draggable="false">

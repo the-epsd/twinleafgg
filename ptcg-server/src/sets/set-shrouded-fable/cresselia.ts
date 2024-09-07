@@ -7,7 +7,8 @@ import {
   Card,
   ChoosePrizePrompt,
   ConfirmPrompt,
-  GameMessage
+  GameMessage,
+  GameError
 } from '../../game';
 import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
 
@@ -83,11 +84,16 @@ export class Cresselia extends PokemonCard {
               GameMessage.CHOOSE_POKEMON,
               { count: 1, allowCancel: true },
             ), chosenPrize => {
+              const prizeCard = chosenPrize[0];
+
+              if (prizeCard.faceUpPrize == true) {
+                throw new GameError(GameMessage.CANNOT_USE_POWER);
+              }
 
               if (chosenPrize === null || chosenPrize.length === 0) {
                 prizes.forEach(p => { p.isSecret = true; });
               }
-              const prizeCard = chosenPrize[0];
+
               prizeCard.isSecret = false;
               prizeCard.isPublic = true;
               prizeCard.faceUpPrize = true;

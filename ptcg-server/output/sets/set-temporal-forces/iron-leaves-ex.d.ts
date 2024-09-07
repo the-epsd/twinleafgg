@@ -15,6 +15,7 @@ export declare class IronLeavesex extends PokemonCard {
     powers: {
         name: string;
         powerType: PowerType;
+        exemptFromInitialize: boolean;
         text: string;
     }[];
     attacks: {

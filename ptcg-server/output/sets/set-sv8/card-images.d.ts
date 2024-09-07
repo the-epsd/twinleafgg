@@ -16,12 +16,16 @@ import { HoOh } from './ho-oh';
 import { Klefki } from './klefki';
 import { Marill } from './marill';
 import { MegatonBlower } from './megaton-blower';
+import { Palkia } from './palkia';
 import { PerfectMixer } from './perfect-mixer';
 import { RichEnergy } from './rich-energy';
 import { Smoochum } from './smoochum';
 import { TeraOrb } from './tera-orb';
 import { Trapinch } from './trapinch';
 import { Vibrava } from './vibrava';
+export declare class PalkiaArt extends Palkia {
+    cardImage: string;
+}
 export declare class HoOhArt extends HoOh {
     cardImage: string;
 }

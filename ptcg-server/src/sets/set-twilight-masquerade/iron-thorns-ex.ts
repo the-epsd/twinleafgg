@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../game';
+import { PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
 export class IronThornsex extends PokemonCard {
 
@@ -22,8 +23,9 @@ export class IronThornsex extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
-    name: 'Initialize',
+    name: 'Initialization',
     powerType: PowerType.ABILITY,
+    exemptFromInitialize: true,
     text: 'While this Pokémon is in the Active Spot, Pokémon with a Rule Box in play (except any Future Pokémon) don\'t have any Abilities.'
   }];
 
@@ -50,54 +52,48 @@ export class IronThornsex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect
-      && effect.power.powerType === PowerType.ABILITY
-      && effect.power.name !== 'Initialize' && !effect.power.exemptFromAbilityLock) {
+    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let isIronThornsexInPlay = false;
-
-      if (player.active.cards[0] == this) {
-        isIronThornsexInPlay = true;
-      }
-
-      if (opponent.active.cards[0] == this) {
-        isIronThornsexInPlay = true;
-      }
-
-      if (!isIronThornsexInPlay) {
+      // Iron Thorns ex is not active Pokemon
+      if (player.active.getPokemonCard() !== this
+        && opponent.active.getPokemonCard() !== this) {
         return state;
       }
 
-      if (isIronThornsexInPlay) {
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          const pokemonCard = effect.card;
+      const cardList = StateUtils.findCardList(state, effect.card);
+      if (cardList instanceof PokemonCardList) {
+        const checkPokemonType = new CheckPokemonTypeEffect(cardList);
+        store.reduceEffect(state, checkPokemonType);
+      }
 
-          if (pokemonCard.tags.includes(CardTag.POKEMON_ex && CardTag.FUTURE)) {
-            return state;
-          }
+      // We are not blocking the Abilities from Future Pokemon
+      // if (effect.power.exemptFromInitialize) {
+      //   return state;
+      // }
 
-          if (!effect.power.exemptFromAbilityLock) {
-            if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
-              pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
-              pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
-              pokemonCard.tags.includes(CardTag.POKEMON_ex) ||
-              pokemonCard.tags.includes(CardTag.RADIANT)) {
-              // pokemonCard.powers.length = 0;
-              throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-            }
-            return state;
+      // Try reducing ability for each player  
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+
+        if (effect.card.tags.includes(CardTag.POKEMON_ex) ||
+          effect.card.tags.includes(CardTag.POKEMON_V) ||
+          effect.card.tags.includes(CardTag.POKEMON_VSTAR) ||
+          effect.card.tags.includes(CardTag.POKEMON_VMAX) ||
+          effect.card.tags.includes(CardTag.RADIANT)) {
+
+          if (!effect.power.exemptFromAbilityLock || effect.power.exemptFromInitialize) {
+            throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
           }
         }
+        return state;
       }
     }
 

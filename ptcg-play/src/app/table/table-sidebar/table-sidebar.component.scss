@@ -4,27 +4,20 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-
-      background: rgba( 26, 32, 44, 0.5 );
-      box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-      backdrop-filter: blur( 20px );
-      -webkit-backdrop-filter: blur( 20px );
-
 }
 
 .ptcg-table-sidebar-header {
   display: flex;
   padding: map-get($padding, small);
-  
 
-  & > h3 {
+  &>h3 {
     flex: 0 1 auto;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  & > ptcg-badge {
+  &>ptcg-badge {
     align-self: center;
     display: flex;
     flex: 0 0 auto;

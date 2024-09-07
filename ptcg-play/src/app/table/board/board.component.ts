@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { DraggedItem } from '@ng-dnd/sortable';
 import { DropTarget, DndService } from '@ng-dnd/core';
 import { Observable } from 'rxjs';
-import { Player, SlotType, PlayerType, CardTarget, Card, CardList, PokemonCardList } from 'ptcg-server';
+import { Player, SlotType, PlayerType, CardTarget, Card, CardList, PokemonCardList, StateUtils } from 'ptcg-server';
 import { map } from 'rxjs/operators';
 
 import { HandItem, HandCardType } from '../hand/hand-item.interface';
@@ -39,6 +39,9 @@ export class BoardComponent implements OnDestroy {
   public bottomActiveHighlight$: Observable<boolean>;
   public bottomBenchTarget: DropTargetType[];
   public bottomBenchHighlight$: Observable<boolean>[];
+  public isUpsideDown: boolean = false;
+  public stateUtils = StateUtils;
+
 
   constructor(
     private cardsBaseService: CardsBaseService,
@@ -160,6 +163,12 @@ export class BoardComponent implements OnDestroy {
   updateActivePlayer(newActivePlayer: Player) {
     this.activePlayer = newActivePlayer;
   }
+
+  ngOnInit() {
+    // Your existing initialization code
+    this.isUpsideDown = this.topPlayer.id === this.clientId;
+  }
+
 
   ngOnDestroy() {
     this.bottomActive.source.unsubscribe();

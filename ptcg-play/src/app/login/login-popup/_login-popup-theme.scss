@@ -9,8 +9,14 @@
 
   ptcg-login-popup {
 
+    width: 1000px;
+    height: 100%;
+
     // Disable autocomplete fill color
-    input, textarea, select {
+    input,
+    textarea,
+    select {
+
       &:-webkit-autofill,
       &:-internal-autofill-selected {
         -webkit-box-shadow: 0 0 0 50px $deck-login-popup-background-color inset;
@@ -20,18 +26,18 @@
 
     .ptcg-login-popup-link.disabled {
       color: mat.get-color-from-palette($foreground, disabled-text);
-      
+
     }
 
     .rcorners2 {
       border-radius: 25px;
       border: 2px solid #73AD21;
-      padding: 20px; 
+      padding: 20px;
       width: 200px;
-      height: 150px; 
+      height: 150px;
     }
 
   }
 }
 
-@mixin ptcg-deck-edit-typography($config) { }
+@mixin ptcg-deck-edit-typography($config) {}

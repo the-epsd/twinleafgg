@@ -16,7 +16,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   const supporterTurn = player.supporterTurn;
-  
+
   if (supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
@@ -31,7 +31,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_SWITCH,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.BENCH ],
+    [SlotType.BENCH],
     { allowCancel: false }
   ), results => {
     targets = results || [];
@@ -45,7 +45,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   player.switchPokemon(targets[0]);
   player.deck.moveTo(player.hand, 3);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
 
   return state;
 }
@@ -60,7 +60,7 @@ export class BirdKeeper extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '66';
+  public setNumber: string = '159';
 
   public name: string = 'Bird Keeper';
 

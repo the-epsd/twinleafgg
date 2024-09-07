@@ -1,98 +1,69 @@
 @use 'sass:math';
 @import '../../../theme/variables.scss';
 
+:root {
+  --sidebar-width: 400px; // Adjust this value to match your sidebar width
+  --card-size: 8vmin;
+  --padding-small: 1vmin;
+  --padding-normal: 2vmin;
+}
+
 $board-min-width: calc((4 + #{$ptcg-bench-slots}) * (var(--card-size) + #{map-get($padding, small)}));
-$board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map-get($padding, small)});
+$board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map-get($padding, medium)});
 
 :host {
+  transform: translateY(0%);
   display: flex;
-  overflow: hidden;
+  overflow: auto;
   z-index: 0;
   justify-content: center;
+  width: calc(100vw - var(--sidebar-width));
+  height: 100%;
+  background-color: #091624;
 }
 
-* {
-  box-sizing: content-box;
-  justify-content: center;
-  align-items: center;
+.ptcg-board-outer-container {
+  width: 100%;
+  height: 85%;
+  overflow: hidden;
 }
 
-.text {
-  font-family: "forma-djr-display", sans-serif;
-  font-weight: 500;
-  font-style: normal;
-  font-size: 12px;
-  color: #449058;
-  margin-left: -22px;
+.responsive-board {
+  min-width: 990px;
 }
 
-.parent {
-  height: 640px;
-  width: 960px;
-  transform: perspective(55em) rotateX(18deg);
+@media (max-width: 990px) {
+  .responsive-board {
+    transform-origin: top left;
+    transform: scale(calc(100vw / 990));
+    height: calc(100vh * (990 / 100vw));
+  }
 }
 
 .ptcg-board-container {
   display: grid;
   grid-template-rows: 1fr 1fr;
   margin: 0 auto;
-  min-height: $board-min-height;
-  min-width: $board-min-width;
-  width: calc(var(--card-size) * #{$ptcg-bench-slots} + #{($ptcg-bench-slots + 1) * map-get($padding, small)});
-  height: calc(var(--card-size) * #{$ptcg-bench-slots} + #{($ptcg-bench-slots + 1) * map-get($padding, small)});
+  width: 75%;
+  height: 100%;
+  transform: translateY(4%); // Apply transformY by default
 
-  position: absolute;
-  top: 41%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-#bottom_div {
-  width: 100%;
-
-  &:after {
-    content: '';
-    position: absolute;
-    top: 66%;
-    left: -55%;
-    right: -55%;
-    height: 100%;
-    background: linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(0, 90, 207, 0.75);
-    background-size: 56%;
-    background-position: center, top;
-    border-top-left-radius: 50% 100%;
-    border-top-right-radius: 50% 100%;
-    margin-top: -135px;
-    z-index: -1;
+  @media (min-aspect-ratio: 4/3) {
+    transform: perspective(55em) rotateX(18deg);
   }
+
+  transform-origin: center center;
+  transition: transform 0.5s ease;
 }
 
-#top_div {
-  width: 100%;
-
-  &:after {
-    content: '';
-    position: absolute;
-    top: 0%;
-    left: -40%;
-    right: -40%;
-    height: 115%;
-    background: linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(255, 0, 0, 0.75);
-    background-size: 56%;
-    background-position: center;
-    transform: scaleY(-1);
-    border-top-left-radius: 50% 100%;
-    border-top-right-radius: 50% 100%;
-    margin-top: -350px;
-    z-index: -1;
-  }
+.upside-down {
+  transform: scale(-1, -1);
 }
+
 
 .ptcg-board-player {
   display: grid;
-  border-radius: 0px;
-  padding: 0px;
-  grid-template-columns: 2fr #{math.div($ptcg-bench-slots, 3)}fr #{math.div($ptcg-bench-slots, 3)}fr #{math.div($ptcg-bench-slots, 3)}fr 2fr;
+  grid-template-columns: 2fr repeat(3, #{math.div($ptcg-bench-slots, 3)}fr) 2fr;
   grid-template-rows: auto;
   grid-template-areas:
     "prizes stadium active supporter deck"
@@ -103,6 +74,115 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   }
 }
 
+//div style
+
+.ptcg-board-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.ptcg-board-player {
+  position: relative;
+  z-index: 1;
+}
+
+#bottom_div,
+#top_div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+// #bottom_div:after {
+//   content: '';
+//   position: absolute;
+//   top: 55%;
+//   left: -55%;
+//   right: -55%;
+//   height: 100%;
+//   // background: linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(0, 90, 207, 0.75);
+//   background: rgba(0, 90, 207, 0.225);
+//   background-size: 56%;
+//   background-position: center, top;
+//   border-top-left-radius: 50% 100%;
+//   border-top-right-radius: 50% 100%;
+//   margin-top: -50px;
+//   z-index: -1;
+// }
+
+#bottom_div:after {
+  content: '';
+  position: absolute;
+  top: 60%;
+  left: -55%;
+  right: -55%;
+  height: 100%;
+  // background: linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(0, 90, 207, 0.75);
+  background: rgba(0, 90, 207, 0.225);
+  background-size: 56%;
+  background-position: center, top;
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+  margin-top: -50px;
+  z-index: -1;
+}
+
+#top_div:after {
+  content: '';
+  position: absolute;
+  top: -20vh;
+  left: -40%;
+  right: -40%;
+  height: 50vh;
+  // background: linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(255, 0, 0, 0.75);
+  background: rgba(255, 0, 0, 0.225);
+  background-size: 56%;
+  background-position: center;
+  transform: scaleY(-1);
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+  z-index: -1;
+}
+
+.background-image-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-12.5%, -50%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.background-image-container img {
+  width: 25%;
+  height: auto;
+  opacity: 0.5;
+}
+
+// .background-image-container {
+//   position: absolute;
+//   background-image: url(~src/assets/twinleaf-board-center.png);
+//   background-size: 10%;
+//   background-repeat: no-repeat;
+//   top: 42.5%;
+//   left: 45%;
+//   // transform: translate(-50%, -50%);
+//   width: 100%;
+//   height: 100%;
+//   z-index: -1;
+//   pointer-events: none;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// .background-image-container img {
+//   width: 50%;
+//   height: auto;
+//   opacity: 0.2;
+// }
+
 .ptcg-board-row {
   align-items: center;
   display: flex;
@@ -112,23 +192,20 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 
   >ptcg-board-card,
   >.ptcg-board-drop-target {
-    // border: solid 1px;
-    // border-color: #283d5b;
-    border-radius: $card-border-radius;
-    // background-color: rgb(55, 61, 88);
-    width: 75px;
+    width: var(--card-size);
+    height: calc(var(--card-size) * #{$card-aspect-ratio});
+    max-width: 100%;
   }
 }
 
 .ptcg-board-active {
-  grid-area: active;
-  margin-left: 27.25%;
-  width: 98px;
-}
 
-.ptcg-board-active>ptcg-board-card,
-.ptcg-board-active>.ptcg-board-drop-target {
-  transform: scale(1.25); // Inverse of the scale value (1 / 1.2)
+  >ptcg-board-card,
+  >.ptcg-board-drop-target {
+    width: calc(var(--card-size) * 1.45);
+    height: calc(var(--card-size) * 1.45 * #{$card-aspect-ratio});
+    max-width: 100%;
+  }
 }
 
 .ptcg-board-supporter,
@@ -136,7 +213,9 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 
   >ptcg-board-card,
   >.ptcg-board-drop-target {
-    width: 75px;
+    width: var(--card-size);
+    // height: calc(var(--card-size) * #{$card-aspect-ratio});
+    max-width: 100%;
   }
 }
 
@@ -157,9 +236,11 @@ ptcg-board-deck {
   grid-area: deck;
 }
 
-// .ptcg-board-active {
-//   grid-area: active;
-// }
+.ptcg-board-active {
+  grid-area: active;
+  // transform: scale(1.25);
+  transform-origin: center bottom;
+}
 
 .ptcg-board-bench {
   grid-area: bench;
@@ -171,43 +252,92 @@ ptcg-board-deck {
 
 .ptcg-board-supporter {
   grid-area: supporter;
+  align-self: end;
 }
-
-// .stadium-card {
-//   align-self: flex-start;
-
-//   margin-top: -28.75%;
-//   margin-left: 30%;
-
-//   &.stadium-card-down {
-//     transform: rotate(180deg);
-//   }
-// }
 
 .lost-zone {
-  align-self: flex-start;
+  // align-self: flex-start;
   transform: rotate(-90deg);
-  margin-top: 30%;
-}
-
-.ptcg-card-preview {
-  border-radius: $card-border-radius;
-  position: absolute;
-  width: 98px;
 }
 
 .stadium-card {
   align-self: flex-start;
-  margin-top: -24.50%;
-  margin-left: 50%;
+  margin-top: -40px;
 
   &.stadium-card-down {
     transform: rotate(180deg);
   }
 }
 
-// .ptcg-card-marker {
-//   border-radius: $card-border-radius;
-//   position: absolute;
-//   width: 87px;
+.ptcg-card-preview {
+  border-radius: $card-border-radius;
+  position: absolute;
+  width: 101.2px; // Increased from var(--card-size)
+  transform: translate(15%, -75%); // Center on cursor
+  pointer-events: none;
+}
+
+// @media (max-width: 768px) {
+//   .ptcg-board-player {
+//     grid-template-columns: repeat(3, 1fr);
+//     grid-template-areas:
+//       "prizes active deck"
+//       "stadium bench supporter";
+//   }
 // }
+
+
+@media (orientation: portrait) {
+  .ptcg-board-player {
+    // margin-top: 15%;
+    display: grid;
+    grid-template-columns: 2fr repeat(3, #{math.div($ptcg-bench-slots, 3)}fr) 2fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "prizes stadium active supporter deck"
+      "prizes bench bench bench deck";
+  }
+
+  ptcg-board-prizes {
+    grid-area: prizes;
+  }
+
+  ptcg-board-deck {
+    grid-area: deck;
+  }
+
+  .ptcg-board-active {
+    grid-area: active;
+    transform: scale(1.25);
+    transform-origin: center bottom;
+  }
+
+  .ptcg-board-bench {
+    grid-area: bench;
+    margin-top: 15%;
+    transform: scale(1.05);
+    transform-origin: center bottom;
+  }
+
+  .ptcg-board-stadium {
+    grid-area: stadium;
+  }
+
+  .ptcg-board-supporter {
+    grid-area: supporter;
+    align-self: end;
+  }
+
+  //div style
+
+  .ptcg-board-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ptcg-board-player {
+    position: relative;
+    z-index: 1;
+  }
+
+}

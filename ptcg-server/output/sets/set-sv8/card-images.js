@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.AzumarillArt = exports.HoOhArt = void 0;
+exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.AzumarillArt = exports.HoOhArt = exports.PalkiaArt = void 0;
 const counter_gain_1 = require("../set-lost-thunder/counter-gain");
 const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
 const archaludon_ex_1 = require("./archaludon-ex");
@@ -19,12 +19,20 @@ const ho_oh_1 = require("./ho-oh");
 const klefki_1 = require("./klefki");
 const marill_1 = require("./marill");
 const megaton_blower_1 = require("./megaton-blower");
+const palkia_1 = require("./palkia");
 const perfect_mixer_1 = require("./perfect-mixer");
 const rich_energy_1 = require("./rich-energy");
 const smoochum_1 = require("./smoochum");
 const tera_orb_1 = require("./tera-orb");
 const trapinch_1 = require("./trapinch");
 const vibrava_1 = require("./vibrava");
+class PalkiaArt extends palkia_1.Palkia {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pbs.twimg.com/media/GWxHVtGa8AIClwa?format=jpg&name=large';
+    }
+}
+exports.PalkiaArt = PalkiaArt;
 class HoOhArt extends ho_oh_1.HoOh {
     constructor() {
         super(...arguments);

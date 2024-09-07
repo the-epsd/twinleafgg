@@ -87,7 +87,7 @@ export class TableComponent implements OnInit {
         switchMap(decks => {
           const options = decks
             .filter(deckEntry => deckEntry.isValid)
-            .map(deckEntry => ({value: deckEntry.id, viewValue: deckEntry.name}));
+            .map(deckEntry => ({ value: deckEntry.id, viewValue: deckEntry.name }));
 
           if (options.length === 0) {
             this.alertService.alert(
@@ -116,7 +116,7 @@ export class TableComponent implements OnInit {
           const deck = deckResponse.deck.cards;
           this.gameService.play(this.gameState.gameId, deck);
         },
-        error: (error: ApiError) => {}
+        error: (error: ApiError) => { }
       });
   }
 

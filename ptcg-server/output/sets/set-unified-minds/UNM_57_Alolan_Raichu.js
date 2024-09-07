@@ -37,6 +37,7 @@ class AlolanRaichu extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, player.active, // Card source is target Pokemon
             { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { allowCancel: false }), selected => {
                 const cards = selected || [];
@@ -44,17 +45,19 @@ class AlolanRaichu extends pokemon_card_1.PokemonCard {
                     const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
                     discardEnergy.target = player.active;
                     store.reduceEffect(state, discardEnergy);
-                    // For every energy discarded, target a brodie and do 30 to it. Same target can be selected multiple times
-                    discardEnergy.cards.forEach(card => {
-                        return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
-                            const targets = selected || [];
-                            targets.forEach(target => {
-                                //damaging target
-                                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 30);
-                                damageEffect.target = target;
-                                store.reduceEffect(state, damageEffect);
-                            });
-                        });
+                    const damage = cards.length * 30;
+                    const maxAllowedDamage = [];
+                    opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
+                        maxAllowedDamage.push({ target, damage: card.hp + damage });
+                    });
+                    return store.prompt(state, new game_1.PutDamagePrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], damage, maxAllowedDamage, { allowCancel: false, damageMultiple: 30 }), targets => {
+                        const results = targets || [];
+                        for (const result of results) {
+                            const target = game_1.StateUtils.getTarget(state, player, result.target);
+                            const putCountersEffect = new attack_effects_1.PutCountersEffect(effect, result.damage);
+                            putCountersEffect.target = target;
+                            store.reduceEffect(state, putCountersEffect);
+                        }
                     });
                 }
                 return state;

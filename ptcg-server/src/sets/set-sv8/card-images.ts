@@ -16,12 +16,17 @@ import { HoOh } from './ho-oh';
 import { Klefki } from './klefki';
 import { Marill } from './marill';
 import { MegatonBlower } from './megaton-blower';
+import { Palkia } from './palkia';
 import { PerfectMixer } from './perfect-mixer';
 import { RichEnergy } from './rich-energy';
 import { Smoochum } from './smoochum';
 import { TeraOrb } from './tera-orb';
 import { Trapinch } from './trapinch';
 import { Vibrava } from './vibrava';
+
+export class PalkiaArt extends Palkia {
+  public cardImage = 'https://pbs.twimg.com/media/GWxHVtGa8AIClwa?format=jpg&name=large';
+}
 
 export class HoOhArt extends HoOh {
   public cardImage = 'https://pbs.twimg.com/media/GTY5hwSXMAIqBkf?format=jpg&name=large';
