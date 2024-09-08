@@ -90,9 +90,8 @@ class Zamazenta extends pokemon_card_1.PokemonCard {
             }
             // Check attached energy 
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
-            // Look for Lightning energy
             checkProvidedEnergy.energyMap.some(e => {
-                if (e.provides.includes(card_types_1.CardType.ANY)) {
+                if (e.provides.includes(card_types_1.CardType.ANY) || e.provides.includes(card_types_1.CardType.METAL)) {
                     effect.damage = Math.max(0, effect.damage - 30);
                 }
             });
