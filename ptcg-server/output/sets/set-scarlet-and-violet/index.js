@@ -50,6 +50,7 @@ const card_images_46 = require("./card-images");
 const full_arts_1 = require("./full-arts");
 exports.setScarletAndViolet = [
     new card_images_1.AnnihilapeArt(),
+    new card_images_1.ArbolivaArt(),
     new card_images_1.ArcanineexArt(),
     new card_images_1.ArmarougeArt(),
     new card_images_2.ArvenArt(),
@@ -59,6 +60,7 @@ exports.setScarletAndViolet = [
     new card_images_4.CrushingHammerArt(),
     new card_images_5.CyclizarArt(),
     new card_images_6.DefianceBandArt(),
+    new card_images_1.DollivArt(),
     new card_images_7.DrifloonArt(),
     new card_images_8.ElectricGeneratorArt(),
     new card_images_9.EnergyRetrievalArt(),

@@ -1,4 +1,5 @@
 import { Annihilape } from './annihilape';
+import { Arboliva } from './arboliva';
 import { Arcanineex } from './arcanine-ex';
 import { Armarouge } from './armarouge';
 import { Arven } from './arven';
@@ -10,6 +11,7 @@ import { Croagunk } from './croagunk';
 import { CrushingHammer } from './crushing-hammer';
 import { Cyclizar } from './cyclizar';
 import { DefianceBand } from './defiance-band';
+import { Dolliv } from './dolliv';
 import { Drifloon } from './drifloon';
 import { ElectricGenerator } from './electric-generator';
 import { EnergyRetrieval } from './energy-retrieval';
@@ -68,6 +70,9 @@ import { Youngster } from './youngster';
 export declare class AnnihilapeArt extends Annihilape {
     cardImage: string;
 }
+export declare class ArbolivaArt extends Arboliva {
+    cardImage: string;
+}
 export declare class ArcanineexArt extends Arcanineex {
     cardImage: string;
 }
@@ -99,6 +104,9 @@ export declare class CyclizarArt extends Cyclizar {
     cardImage: string;
 }
 export declare class DefianceBandArt extends DefianceBand {
+    cardImage: string;
+}
+export declare class DollivArt extends Dolliv {
     cardImage: string;
 }
 export declare class DrifloonArt extends Drifloon {

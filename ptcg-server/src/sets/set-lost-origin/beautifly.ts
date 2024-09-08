@@ -13,6 +13,7 @@ import { GameMessage } from '../../game/game-message';
 
 export class Beautifly extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
+  public evolvesFrom = 'Silcoon';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 130;
   public weakness = [{ type: CardType.FIRE }];

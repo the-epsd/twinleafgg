@@ -9,7 +9,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class HisuianGoodraVSTAR extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.VSTAR;
+        this.stage = card_types_1.Stage.BASIC;
         this.evolvesFrom = 'Hisuian Goodra V';
         this.tags = [card_types_1.CardTag.POKEMON_VSTAR];
         this.regulationMark = 'F';
@@ -25,7 +25,8 @@ class HisuianGoodraVSTAR extends game_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Rolling Iron',
-                cost: [card_types_1.CardType.WATER, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
+                // cost: [CardType.WATER, CardType.METAL, CardType.COLORLESS],
+                cost: [],
                 damage: 200,
                 text: 'During your opponent\'s next turn, this Pokémon takes 80 less damage from attacks (after applying Weakness and Resistance).'
             }

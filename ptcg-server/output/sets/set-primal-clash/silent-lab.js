@@ -28,10 +28,12 @@ class SilentLab extends trainer_card_1.TrainerCard {
             const isBasic = cardList instanceof pokemon_card_list_1.PokemonCardList
                 ? cardList.isBasic()
                 : pokemonCard.stage === card_types_1.Stage.BASIC;
-            if (isBasic && pokemonCard.powers.some(power => power.powerType === game_1.PowerType.ABILITY)) {
-                throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_EFFECT);
+            if (!effect.power.exemptFromAbilityLock) {
+                if (isBasic && pokemonCard.powers.some(power => power.powerType === game_1.PowerType.ABILITY)) {
+                    throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_EFFECT);
+                }
+                return state;
             }
-            return state;
         }
         if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
             throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_STADIUM);
