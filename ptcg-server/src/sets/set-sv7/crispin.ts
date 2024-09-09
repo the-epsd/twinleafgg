@@ -64,30 +64,36 @@ export class Crispin extends TrainerCard {
         player.deck.moveCardsTo(cards, cardList);
       });
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
-        cardList,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: false, min: 1, max: 1, differentTargets: true }
-      ), transfers => {
-        transfers = transfers || [];
-
-        if (transfers.length === 0) {
-          return;
-        }
-
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          cardList.moveCardTo(transfer.card, target);
-        }
-
-        // Move the remaining card to the player's hand
+      if (cardList.cards.length === 2) {
+        state = store.prompt(state, new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+          cardList,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { allowCancel: false, min: 1, max: 1, differentTargets: true }
+        ), transfers => {
+          transfers = transfers || [];
+  
+          if (transfers.length === 0) {
+            return;
+          }
+  
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            cardList.moveCardTo(transfer.card, target);
+          }
+  
+          // Move the remaining card to the player's hand
+          const remainingCard = cardList.cards[0];
+          cardList.moveCardTo(remainingCard, player.hand);
+        });
+      } else if (cardList.cards.length === 1) {
         const remainingCard = cardList.cards[0];
-        cardList.moveCardTo(remainingCard, player.hand);
-      });
+        cardList.moveCardTo(remainingCard, player.hand);        
+      }
+      
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
     }

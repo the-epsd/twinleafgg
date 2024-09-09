@@ -1,9 +1,10 @@
+import { PlayerType, State, StateUtils, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType, EnergyCard } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Heatran extends PokemonCard {
@@ -51,18 +52,12 @@ export class Heatran extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      const pokemon = player.active;
 
-      let fireEnergyCount = 0;
-      pokemon.cards.forEach(c => {
-        if (c instanceof EnergyCard) {
-          if (c.provides.includes(CardType.FIRE)) {
-            fireEnergyCount++;
-          }
-        }
-      });
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
 
-      if (fireEnergyCount > 0) {
+      const hasFireEnergy = checkProvidedEnergy.energyMap.some(e => e.provides.includes(CardType.ANY) || e.provides.includes(CardType.FIRE));
+      
+      if (hasFireEnergy) {
         effect.damage += 80;
       }
       return state;
@@ -70,7 +65,7 @@ export class Heatran extends PokemonCard {
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-        effect.damage -= 80;
+        effect.damage -= 30;
         return state;
       }
     }
