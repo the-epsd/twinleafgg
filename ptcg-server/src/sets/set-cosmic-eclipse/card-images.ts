@@ -11,6 +11,7 @@ import { Duskull } from './CEC_83_Duskull';
 import { Dusclops } from './CEC_84_Dusclops';
 
 import { ChaoticSwell } from './chaotic-swell';
+import { Clay } from './clay';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
 import { DrawEnergy } from './draw-energy';
 import { Golett } from './golett';
@@ -38,6 +39,10 @@ export class BuzzwoleArt extends Buzzwole {
 
 export class ChaoticSwellArt extends ChaoticSwell {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_187_R_EN_LG.png';
+}
+
+export class ClayArt extends Clay {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_188_R_EN_LG.png';
 }
 
 export class CynthiaAndCaitlinArt extends CynthiaAndCaitlin {

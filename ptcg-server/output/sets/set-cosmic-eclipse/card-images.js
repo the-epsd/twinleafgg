@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WishiwashiArt = exports.TagCallArt = exports.StoutlandArt = exports.SlugmaArt = exports.SawsbuckArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ChaoticSwellArt = exports.BuzzwoleArt = exports.BlacephalonArt = exports.ArceusDialgaPalkiaGXArt = void 0;
+exports.WishiwashiArt = exports.TagCallArt = exports.StoutlandArt = exports.SlugmaArt = exports.SawsbuckArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ClayArt = exports.ChaoticSwellArt = exports.BuzzwoleArt = exports.BlacephalonArt = exports.ArceusDialgaPalkiaGXArt = void 0;
 const arceus_dialga_palkia_gx_1 = require("./arceus-dialga-palkia-gx");
 const blacephalon_1 = require("./blacephalon");
 const CEC_16_Sawsbuck_1 = require("./CEC_16_Sawsbuck");
@@ -12,6 +12,7 @@ const CEC_66_Pikachu_1 = require("./CEC_66_Pikachu");
 const CEC_83_Duskull_1 = require("./CEC_83_Duskull");
 const CEC_84_Dusclops_1 = require("./CEC_84_Dusclops");
 const chaotic_swell_1 = require("./chaotic-swell");
+const clay_1 = require("./clay");
 const cynthia_and_caitlin_1 = require("./cynthia-and-caitlin");
 const draw_energy_1 = require("./draw-energy");
 const golett_1 = require("./golett");
@@ -52,6 +53,13 @@ class ChaoticSwellArt extends chaotic_swell_1.ChaoticSwell {
     }
 }
 exports.ChaoticSwellArt = ChaoticSwellArt;
+class ClayArt extends clay_1.Clay {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_188_R_EN_LG.png';
+    }
+}
+exports.ClayArt = ClayArt;
 class CynthiaAndCaitlinArt extends cynthia_and_caitlin_1.CynthiaAndCaitlin {
     constructor() {
         super(...arguments);

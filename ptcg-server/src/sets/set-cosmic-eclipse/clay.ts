@@ -7,7 +7,7 @@ import { CardList } from '../../game/store/state/card-list';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-export class CLAY extends TrainerCard {
+export class Clay extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -17,9 +17,9 @@ export class CLAY extends TrainerCard {
   
   public set = 'CEC';
 
-  public name = 'CLAY';
+  public name = 'Clay';
 
-  public fullName = 'CLAY CEC';
+  public fullName = 'Clay CEC';
 
   public text = 'Discard the top 7 cards of your deck. If any of those cards are Item cards, put them into your hand.';
     
@@ -27,12 +27,14 @@ export class CLAY extends TrainerCard {
     
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      player.hand.moveCardTo(this, player.supporter);
       
       if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
       
+      effect.preventDefault = true;
+      player.hand.moveCardTo(this, player.supporter);
+            
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 7);
 

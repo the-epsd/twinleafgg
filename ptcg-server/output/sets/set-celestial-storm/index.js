@@ -7,6 +7,7 @@ exports.setCelestialStorm = [
     new card_images_1.CopycatArt(),
     new card_images_1.DelcattyArt(),
     new card_images_1.ElectrodeGXArt(),
+    new card_images_1.FishermanArt(),
     new card_images_1.HustleBeltArt(),
     new card_images_1.MagcargoArt(),
     new card_images_1.MarshtompArt(),

@@ -6,6 +6,7 @@ import { Sableye } from './CES_88_Sableye';
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
 import { ElectrodeGX } from './electrode-gx';
+import { Fisherman } from './fisherman';
 import { HustleBelt } from './hustle-belt';
 import { Magcargo } from './magcargo';
 import { Marshtomp } from './marshtomp';
@@ -29,6 +30,10 @@ export class DelcattyArt extends Delcatty {
 
 export class ElectrodeGXArt extends ElectrodeGX {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_048_R_EN.png';
+}
+
+export class FishermanArt extends Fisherman {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_130_R_EN.png';
 }
 
 export class HustleBeltArt extends HustleBelt {

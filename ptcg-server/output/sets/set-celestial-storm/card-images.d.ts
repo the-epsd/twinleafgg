@@ -6,6 +6,7 @@ import { Sableye } from './CES_88_Sableye';
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
 import { ElectrodeGX } from './electrode-gx';
+import { Fisherman } from './fisherman';
 import { HustleBelt } from './hustle-belt';
 import { Magcargo } from './magcargo';
 import { Marshtomp } from './marshtomp';
@@ -24,6 +25,9 @@ export declare class DelcattyArt extends Delcatty {
     cardImage: string;
 }
 export declare class ElectrodeGXArt extends ElectrodeGX {
+    cardImage: string;
+}
+export declare class FishermanArt extends Fisherman {
     cardImage: string;
 }
 export declare class HustleBeltArt extends HustleBelt {
