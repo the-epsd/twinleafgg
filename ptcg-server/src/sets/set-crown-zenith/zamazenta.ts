@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GamePhase, PowerType } from '../../game';
+import { StoreLike, State, StateUtils, GamePhase, PowerType, PokemonCardList } from '../../game';
 import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -115,7 +115,10 @@ export class Zamazenta extends PokemonCard {
       }
 
       // Check attached energy 
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      const zamazentaCardList = StateUtils.findCardList(state, this) as PokemonCardList;
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, zamazentaCardList);
+      
+      store.reduceEffect(state, checkProvidedEnergy);
 
       const hasMetalEnergy = checkProvidedEnergy.energyMap.some(e => e.provides.includes(CardType.ANY) || e.provides.includes(CardType.METAL));
       
