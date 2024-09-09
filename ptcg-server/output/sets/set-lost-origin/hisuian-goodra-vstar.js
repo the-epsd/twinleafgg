@@ -25,8 +25,7 @@ class HisuianGoodraVSTAR extends game_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Rolling Iron',
-                // cost: [CardType.WATER, CardType.METAL, CardType.COLORLESS],
-                cost: [],
+                cost: [card_types_1.CardType.WATER, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
                 damage: 200,
                 text: 'During your opponent\'s next turn, this Pokémon takes 80 less damage from attacks (after applying Weakness and Resistance).'
             }
