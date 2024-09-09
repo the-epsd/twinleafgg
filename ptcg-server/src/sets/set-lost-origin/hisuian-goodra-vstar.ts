@@ -9,7 +9,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class HisuianGoodraVSTAR extends PokemonCard {
 
-  public stage: Stage = Stage.VSTAR;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Hisuian Goodra V';
 
@@ -33,7 +33,8 @@ export class HisuianGoodraVSTAR extends PokemonCard {
   public attacks = [
     {
       name: 'Rolling Iron',
-      cost: [CardType.WATER, CardType.METAL, CardType.COLORLESS],
+      // cost: [CardType.WATER, CardType.METAL, CardType.COLORLESS],
+      cost: [],
       damage: 200,
       text: 'During your opponent\'s next turn, this Pokémon takes 80 less damage from attacks (after applying Weakness and Resistance).'
     }

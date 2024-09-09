@@ -37,12 +37,13 @@ export class SilentLab extends TrainerCard {
       const isBasic = cardList instanceof PokemonCardList
         ? cardList.isBasic()
         : pokemonCard.stage === Stage.BASIC;
+      if (!effect.power.exemptFromAbilityLock) {
+        if (isBasic && pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
+          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+        }
 
-      if (isBasic && pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+        return state;
       }
-
-      return state;
     }
 
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {

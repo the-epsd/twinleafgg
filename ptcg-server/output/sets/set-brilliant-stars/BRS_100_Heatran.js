@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Heatran = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
-const game_effects_1 = require("../../game/store/effects/game-effects");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Heatran extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -48,13 +49,11 @@ class Heatran extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            const pokemon = player.active;
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, player.active);
             let fireEnergyCount = 0;
-            pokemon.cards.forEach(c => {
-                if (c instanceof game_1.EnergyCard) {
-                    if (c.provides.includes(card_types_1.CardType.FIRE)) {
-                        fireEnergyCount++;
-                    }
+            checkProvidedEnergy.energyMap.some(e => {
+                if (e.provides.includes(card_types_1.CardType.ANY) || e.provides.includes(card_types_1.CardType.FIRE)) {
+                    fireEnergyCount += 1;
                 }
             });
             if (fireEnergyCount > 0) {
@@ -64,7 +63,7 @@ class Heatran extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-                effect.damage -= 80;
+                effect.damage -= 30;
                 return state;
             }
         }

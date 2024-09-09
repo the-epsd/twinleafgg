@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = exports.PrimeapeArt = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MankeyArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.MagikarpArt = exports.LucarioArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GyaradosexArt = exports.GrowlitheArt = exports.GardevoirexArt = exports.FlittleArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CroagunkArt = exports.CharcadetArt = exports.CapsakidArt = exports.BeachCourtArt = exports.BanetteexArt = exports.ArvenArt = exports.ArmarougeArt = exports.ArcanineexArt = exports.AnnihilapeArt = void 0;
-exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.ToedscruelArt = exports.ToedscoolArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SmolivArt = exports.SkwovetArt = exports.ShuppetArt = exports.SeviperArt = exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RioluArt = exports.RevavroomArt = exports.RareCandyArt = exports.RaltsArt = void 0;
+exports.PrimeapeArt = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MankeyArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.MagikarpArt = exports.LucarioArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GyaradosexArt = exports.GrowlitheArt = exports.GardevoirexArt = exports.FlittleArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DollivArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CroagunkArt = exports.CharcadetArt = exports.CapsakidArt = exports.BeachCourtArt = exports.BanetteexArt = exports.ArvenArt = exports.ArmarougeArt = exports.ArcanineexArt = exports.ArbolivaArt = exports.AnnihilapeArt = void 0;
+exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.ToedscruelArt = exports.ToedscoolArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SmolivArt = exports.SkwovetArt = exports.ShuppetArt = exports.SeviperArt = exports.ScovillainArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RioluArt = exports.RevavroomArt = exports.RareCandyArt = exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = void 0;
 const annihilape_1 = require("./annihilape");
+const arboliva_1 = require("./arboliva");
 const arcanine_ex_1 = require("./arcanine-ex");
 const armarouge_1 = require("./armarouge");
 const arven_1 = require("./arven");
@@ -14,6 +15,7 @@ const croagunk_1 = require("./croagunk");
 const crushing_hammer_1 = require("./crushing-hammer");
 const cyclizar_1 = require("./cyclizar");
 const defiance_band_1 = require("./defiance-band");
+const dolliv_1 = require("./dolliv");
 const drifloon_1 = require("./drifloon");
 const electric_generator_1 = require("./electric-generator");
 const energy_retrieval_1 = require("./energy-retrieval");
@@ -76,6 +78,13 @@ class AnnihilapeArt extends annihilape_1.Annihilape {
     }
 }
 exports.AnnihilapeArt = AnnihilapeArt;
+class ArbolivaArt extends arboliva_1.Arboliva {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_023_R_EN_LG.png';
+    }
+}
+exports.ArbolivaArt = ArbolivaArt;
 class ArcanineexArt extends arcanine_ex_1.Arcanineex {
     constructor() {
         super(...arguments);
@@ -153,6 +162,13 @@ class DefianceBandArt extends defiance_band_1.DefianceBand {
     }
 }
 exports.DefianceBandArt = DefianceBandArt;
+class DollivArt extends dolliv_1.Dolliv {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_022_R_EN_LG.png';
+    }
+}
+exports.DollivArt = DollivArt;
 class DrifloonArt extends drifloon_1.Drifloon {
     constructor() {
         super(...arguments);

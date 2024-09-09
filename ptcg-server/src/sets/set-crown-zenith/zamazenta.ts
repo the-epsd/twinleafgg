@@ -117,12 +117,12 @@ export class Zamazenta extends PokemonCard {
       // Check attached energy 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
 
-      // Look for Lightning energy
-      checkProvidedEnergy.energyMap.some(e => {
-        if (e.provides.includes(CardType.ANY)) {
-          effect.damage = Math.max(0, effect.damage - 30);
-        }
-      });
+      const hasMetalEnergy = checkProvidedEnergy.energyMap.some(e => e.provides.includes(CardType.ANY) || e.provides.includes(CardType.METAL));
+      
+      if (hasMetalEnergy) {
+        effect.damage = Math.max(0, effect.damage - 30);
+      }
+      
       return state;
     }
     return state;

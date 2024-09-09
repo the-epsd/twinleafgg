@@ -1,4 +1,5 @@
 import { Annihilape } from './annihilape';
+import { Arboliva } from './arboliva';
 import { Arcanineex } from './arcanine-ex';
 import { Armarouge } from './armarouge';
 import { Arven } from './arven';
@@ -10,6 +11,7 @@ import { Croagunk } from './croagunk';
 import { CrushingHammer } from './crushing-hammer';
 import { Cyclizar } from './cyclizar';
 import { DefianceBand } from './defiance-band';
+import { Dolliv } from './dolliv';
 import { Drifloon } from './drifloon';
 import { ElectricGenerator } from './electric-generator';
 import { EnergyRetrieval } from './energy-retrieval';
@@ -70,6 +72,10 @@ export class AnnihilapeArt extends Annihilape {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_109_R_EN_LG.png';
 }
 
+export class ArbolivaArt extends Arboliva {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_023_R_EN_LG.png';
+}
+
 export class ArcanineexArt extends Arcanineex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_032_R_EN_LG.png';
 }
@@ -112,6 +118,10 @@ export class CyclizarArt extends Cyclizar {
 
 export class DefianceBandArt extends DefianceBand {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_169_R_EN_LG.png';
+}
+
+export class DollivArt extends Dolliv {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_022_R_EN_LG.png';
 }
 
 export class DrifloonArt extends Drifloon {

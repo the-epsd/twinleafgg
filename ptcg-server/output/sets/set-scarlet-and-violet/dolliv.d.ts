@@ -1,25 +1,21 @@
-import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PokemonCard, PowerType } from '../../game';
-export declare class HisuianGoodraVSTAR extends PokemonCard {
-    stage: Stage;
-    evolvesFrom: string;
-    tags: CardTag[];
+export declare class Dolliv extends PokemonCard {
     regulationMark: string;
+    evolvesFrom: string;
+    stage: Stage;
     cardType: CardType;
     hp: number;
-    retreat: CardType[];
-    powers: {
-        name: string;
-        useWhenInPlay: boolean;
-        powerType: PowerType;
-        text: string;
+    weakness: {
+        type: CardType;
     }[];
+    retreat: CardType[];
     attacks: {
         name: string;
-        cost: never[];
+        cost: CardType[];
         damage: number;
         text: string;
     }[];
