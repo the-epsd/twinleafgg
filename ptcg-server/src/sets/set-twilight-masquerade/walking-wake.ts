@@ -21,6 +21,8 @@ export class WalkingWake extends PokemonCard {
 
   public hp: number = 130;
 
+  public weakness = [{ type: CardType.LIGHTNING }];
+
   public retreat = [CardType.COLORLESS];
 
   public attacks = [

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.LaprasexArt = exports.JoltikArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.DrifblimArt = exports.DrednawArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
+exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.DrifblimArt = exports.DrednawArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
 const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
 const bouffalant_1 = require("./bouffalant");
@@ -19,6 +19,8 @@ const hoothoot_1 = require("./hoothoot");
 const hydrapple_ex_1 = require("./hydrapple-ex");
 const joltik_1 = require("./joltik");
 const lapras_ex_1 = require("./lapras-ex");
+const medicham_ex_1 = require("./medicham-ex");
+const meditite_1 = require("./meditite");
 const noctowl_1 = require("./noctowl");
 const orthworm_ex_1 = require("./orthworm-ex");
 const raboot_1 = require("./raboot");
@@ -151,6 +153,20 @@ class LaprasexArt extends lapras_ex_1.Laprasex {
     }
 }
 exports.LaprasexArt = LaprasexArt;
+class MedichamexArt extends medicham_ex_1.Medichamex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/Medicham_ex-054-7i.1f3be39b342c650e1b43.png';
+    }
+}
+exports.MedichamexArt = MedichamexArt;
+class MedititeArt extends meditite_1.Meditite {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokemonproxies.com/static/media/Archaludon-073-7i.a607ae18f6db80594379.png';
+    }
+}
+exports.MedititeArt = MedititeArt;
 class NoctowlArt extends noctowl_1.Noctowl {
     constructor() {
         super(...arguments);

@@ -40,6 +40,7 @@ class LostBlender extends trainer_card_1.TrainerCard {
                     return state;
                 }
                 cards.forEach((card, index) => {
+                    card.cards.moveTo(player.lostzone);
                     store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, { name: player.name, card: card.name });
                 });
                 player.deck.moveTo(player.hand, 1);

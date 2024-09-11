@@ -1,12 +1,13 @@
-import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Effect } from '../../game/store/effects/effect';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-export declare class WalkingWake extends PokemonCard {
-    tags: CardTag[];
+import { Effect } from '../../game/store/effects/effect';
+export declare class Medichamex extends PokemonCard {
     regulationMark: string;
+    tags: CardTag[];
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {

@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { AncientBoosterEnergyCapsuleArt, BeldumArt, BiancasDevotionArt, BrambleghastArt, BuddyBuddyPoffinArt, CharjabugArt, ChatotArt, CinccinoArt, CroconawArt, CryptomaniacsDecipheringArt, DeliveryBoxArt, DrilburArt, DrumsOfAwakeningArt, DudunsparceArt, DunsparceArt, DuosionArt, EmergencyBoardArt, EriArt, ExplorersGuidanceArt, FeraligatrArt, FlutterManeArt, FullMetalLabArt, FutureBoosterEnergyCapsuleArt, GastlyArt, GengarexArt, GougingFireexArt, GreatTuskArt, GrotleArt, HandTrimmerArt, HaunterArt, HeavyBatonArt, HerosCapeArt, IronCrownexArt, IronHandsArt, IronLeavesexArt, IronThornsArt, KoraidonArt, KoraidonexArt, MasterBallArt, MaximumBeltArt, MetagrossArt, MetangArt, MinccinoArt, MiraidonArt, MiraidonexArt, MistEnergyArt, MortysConvictionArt, MrMimeArt, NeoUpperEnergyArt, PalafinArt, PerilousJungleArt, PikachuArt, PrimeCatcherArt, RabscaArt, RagingBoltexArt, RaichuArt, RebootPodArt, RellorArt, ReuniclusArt, RoaringMoonArt, SableyeArt, SalvatoreArt, SandyShocksArt, SkittyArt, SolosisArt, TorterraexArt, TotodileArt, TurtwigArt, VictiniArt, VikavoltArt, WalkingWakeexArt } from './card-images';
+import { GrotleIR, CharjabugIR, ReuniclusIR, GastlyIR, MetagrossIR, ChatotIR, MinccinoIR, CinccinoIR, TorterraexFA, IronLeavesexFA, GougingFireexFA, WalkingWakeexFA, IronCrownexFA, GengarexFA, RagingBoltexFA, BiancasDevotionFA, EriFA, ExplorersGuidanceFA, MortysConvictionFA, SalvatoreFA, IronLeavesexSIR, GougingFireexSIR, WalkingWakeexSIR, IronCrownexSIR, RagingBoltexSIR, BiancasDevotionSIR, EriSIR, MortysConvictionSIR, SalvatoreSIR, IronLeavesexHR, GougingFireexHR, WalkingWakeexHR, IronCrownexHR, RagingBoltexHR, CryptomaniacsDecipheringFA } from './full-art';
 
 export const setTemporalForces: Card[] = [
 
@@ -74,5 +75,42 @@ export const setTemporalForces: Card[] = [
   new VictiniArt(),
   new VikavoltArt(),
   new WalkingWakeexArt(),
+
+  //FA
+  new GrotleIR(),
+  new CharjabugIR(),
+  new ReuniclusIR(),
+  new GastlyIR(),
+  new MetagrossIR(),
+  new ChatotIR(),
+  new MinccinoIR(),
+  new CinccinoIR(),
+  new TorterraexFA(),
+  new IronLeavesexFA(),
+  new GougingFireexFA(),
+  new WalkingWakeexFA(),
+  new IronCrownexFA(),
+  new GengarexFA(),
+  new RagingBoltexFA(),
+  new BiancasDevotionFA(),
+  new CryptomaniacsDecipheringFA(),
+  new EriFA(),
+  new ExplorersGuidanceFA(),
+  new MortysConvictionFA(),
+  new SalvatoreFA(),
+  new IronLeavesexSIR(),
+  new GougingFireexSIR(),
+  new WalkingWakeexSIR(),
+  new IronCrownexSIR(),
+  new RagingBoltexSIR(),
+  new BiancasDevotionSIR(),
+  new EriSIR(),
+  new MortysConvictionSIR(),
+  new SalvatoreSIR(),
+  new IronLeavesexHR(),
+  new GougingFireexHR(),
+  new WalkingWakeexHR(),
+  new IronCrownexHR(),
+  new RagingBoltexHR(),
 
 ];

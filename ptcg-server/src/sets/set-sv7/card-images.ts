@@ -16,6 +16,8 @@ import { Hoothoot } from './hoothoot';
 import { Hydrappleex } from './hydrapple-ex';
 import { Joltik } from './joltik';
 import { Laprasex } from './lapras-ex';
+import { Medichamex } from './medicham-ex';
+import { Meditite } from './meditite';
 import { Noctowl } from './noctowl';
 import { Orthwormex } from './orthworm-ex';
 import { Raboot } from './raboot';
@@ -93,6 +95,14 @@ export class JoltikArt extends Joltik {
 
 export class LaprasexArt extends Laprasex {
   public cardImage = 'https://pokemonproxies.com/static/media/Lapras_ex-019-7i.c205ed54ae6ba22bd043.png';
+}
+
+export class MedichamexArt extends Medichamex {
+  public cardImage = 'https://pokemonproxies.com/static/media/Medicham_ex-054-7i.1f3be39b342c650e1b43.png';
+}
+
+export class MedititeArt extends Meditite {
+  public cardImage = 'https://www.pokemonproxies.com/static/media/Archaludon-073-7i.a607ae18f6db80594379.png';
 }
 
 export class NoctowlArt extends Noctowl {

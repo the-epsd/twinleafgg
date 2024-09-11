@@ -67,7 +67,7 @@ export class Bouffalant extends PokemonCard {
       }
 
       const targetPokemon = effect.target.getPokemonCard();
-      if (targetPokemon && targetPokemon.cardType === CardType.COLORLESS && targetPokemon.stage === Stage.BASIC) {
+      if (targetPokemon && targetPokemon.cardType === CardType.COLORLESS && targetPokemon.stage === Stage.BASIC && StateUtils.findOwner(state, effect.target) === player) {
         effect.damage = Math.max(0, effect.damage - 60);
         effect.damageReduced = true;
       }

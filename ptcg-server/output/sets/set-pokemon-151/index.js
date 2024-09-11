@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPokemon151 = void 0;
 const card_images_1 = require("./card-images");
+const full_art_1 = require("./full-art");
 exports.setPokemon151 = [
     // new AntiqueHelixFossilArt(),
     // new AlakazamexArt(),
@@ -47,4 +48,32 @@ exports.setPokemon151 = [
     new card_images_1.VileplumeArt(),
     new card_images_1.WartortleArt(),
     new card_images_1.ZapdosexArt(),
+    //Full Art
+    new full_art_1.BulbasaurIR(),
+    new full_art_1.IvysaurIR(),
+    new full_art_1.CharmanderIR(),
+    new full_art_1.CharmeleonIR(),
+    new full_art_1.SquirtleIR(),
+    new full_art_1.WartortleIR(),
+    new full_art_1.NidokingIR(),
+    new full_art_1.VenusaurexFA(),
+    new full_art_1.CharizardexFA(),
+    new full_art_1.BlastoiseexFA(),
+    new full_art_1.ArbokexFA(),
+    // new AlakazamexFA(),
+    new full_art_1.KangaskhanexFA(),
+    new full_art_1.ZapdosexFA(),
+    new full_art_1.MewexFA(),
+    new full_art_1.ErikasInvitationFA(),
+    new full_art_1.GiovannisCharismaFA(),
+    new full_art_1.VenusaurexSIR(),
+    new full_art_1.CharizardexSIR(),
+    new full_art_1.BlastoiseexSIR(),
+    // new AlakazamexSIR(),
+    new full_art_1.ZapdosexSIR(),
+    new full_art_1.ErikasInvitationSIR(),
+    new full_art_1.GiovannisCharismaSIR(),
+    new full_art_1.MewexHR(),
+    new full_art_1.SwitchHR(),
+    new full_art_1.BasicPsychicEnergyHR(),
 ];

@@ -7,25 +7,6 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-function* attack(next, store, state, effect) {
-    const player = effect.player;
-    const maxAllowedDamage = [];
-    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        const checkHpEffect = new check_effects_1.CheckHpEffect(player, cardList);
-        store.reduceEffect(state, checkHpEffect);
-        maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 90 });
-    });
-    return store.prompt(state, new game_1.PutDamagePrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], 70, maxAllowedDamage, { allowCancel: false, allowPlacePartialDamage: true }), targets => {
-        const results = targets || [];
-        for (const result of results) {
-            const target = game_1.StateUtils.getTarget(state, player, result.target);
-            const putCountersEffect = new attack_effects_1.PutCountersEffect(effect, result.damage);
-            putCountersEffect.target = target;
-            store.reduceEffect(state, putCountersEffect);
-            effect.damage = result.damage * 2;
-        }
-    });
-}
 class Froslass extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -61,6 +42,25 @@ class Froslass extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.ASLEEP]);
             store.reduceEffect(state, specialConditionEffect);
+        }
+        function* attack(next, store, state, effect) {
+            const player = effect.player;
+            const maxAllowedDamage = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                const checkHpEffect = new check_effects_1.CheckHpEffect(player, cardList);
+                store.reduceEffect(state, checkHpEffect);
+                maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 70 });
+            });
+            return store.prompt(state, new game_1.PutDamagePrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], 90, maxAllowedDamage, { allowCancel: false, allowPlacePartialDamage: true }), targets => {
+                const results = targets || [];
+                for (const result of results) {
+                    const target = game_1.StateUtils.getTarget(state, player, result.target);
+                    const putCountersEffect = new attack_effects_1.PutCountersEffect(effect, result.damage);
+                    putCountersEffect.target = target;
+                    store.reduceEffect(state, putCountersEffect);
+                    effect.damage = result.damage * 2;
+                }
+            });
         }
         return state;
     }

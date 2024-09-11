@@ -34,7 +34,7 @@ function* useLightningStormStar(next: Function, store: StoreLike, state: State, 
 }
 
 export class ZeraoraVSTAR extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Zeraora V';
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 270;
