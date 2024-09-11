@@ -13,6 +13,7 @@ class PerilousJungle extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
+        this.regulationMark = 'H';
         this.set = 'TEF';
         this.name = 'Perilous Jungle';
         this.fullName = 'Perilous Jungle TEF';

@@ -38,27 +38,27 @@ class Crispin extends trainer_card_1.TrainerCard {
                 }
                 store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected), () => { });
                 player.deck.moveCardsTo(cards, cardList);
-            });
-            if (cardList.cards.length === 2) {
-                state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, cardList, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 1, max: 1, differentTargets: true }), transfers => {
-                    transfers = transfers || [];
-                    if (transfers.length === 0) {
-                        return;
-                    }
-                    for (const transfer of transfers) {
-                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                        cardList.moveCardTo(transfer.card, target);
-                    }
-                    // Move the remaining card to the player's hand
+                if (cardList.cards.length === 2) {
+                    state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, cardList, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 1, max: 1, differentTargets: true }), transfers => {
+                        transfers = transfers || [];
+                        if (transfers.length === 0) {
+                            return;
+                        }
+                        for (const transfer of transfers) {
+                            const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                            cardList.moveCardTo(transfer.card, target);
+                        }
+                        // Move the remaining card to the player's hand
+                        const remainingCard = cardList.cards[0];
+                        cardList.moveCardTo(remainingCard, player.hand);
+                    });
+                }
+                if (cardList.cards.length === 1) {
                     const remainingCard = cardList.cards[0];
                     cardList.moveCardTo(remainingCard, player.hand);
-                });
-            }
-            else if (cardList.cards.length === 1) {
-                const remainingCard = cardList.cards[0];
-                cardList.moveCardTo(remainingCard, player.hand);
-            }
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                }
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            });
         }
         return state;
     }

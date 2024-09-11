@@ -7,6 +7,7 @@ const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Giratina extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -36,6 +37,10 @@ class Giratina extends pokemon_card_1.PokemonCard {
         this.DISTORTION_DOOR_MARKER = 'DISTORTION_DOOR_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.marker.removeMarker(this.DISTORTION_DOOR_MARKER, this);
+        }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             //const opponent = StateUtils.getOpponent(state, player);

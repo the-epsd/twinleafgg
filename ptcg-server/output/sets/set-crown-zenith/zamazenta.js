@@ -89,12 +89,13 @@ class Zamazenta extends pokemon_card_1.PokemonCard {
                 return state;
             }
             // Check attached energy 
-            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
-            checkProvidedEnergy.energyMap.some(e => {
-                if (e.provides.includes(card_types_1.CardType.ANY) || e.provides.includes(card_types_1.CardType.METAL)) {
-                    effect.damage = Math.max(0, effect.damage - 30);
-                }
-            });
+            const zamazentaCardList = game_1.StateUtils.findCardList(state, this);
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, zamazentaCardList);
+            store.reduceEffect(state, checkProvidedEnergy);
+            const hasMetalEnergy = checkProvidedEnergy.energyMap.some(e => e.provides.includes(card_types_1.CardType.ANY) || e.provides.includes(card_types_1.CardType.METAL));
+            if (hasMetalEnergy) {
+                effect.damage = Math.max(0, effect.damage - 30);
+            }
             return state;
         }
         return state;

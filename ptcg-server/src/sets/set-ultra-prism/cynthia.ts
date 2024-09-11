@@ -34,15 +34,13 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   player.deck.moveTo(player.hand, 6);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
   return state;
 }
 
 export class Cynthia extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
-  public regulationMark = 'F';
 
   public set: string = 'UPR';
 

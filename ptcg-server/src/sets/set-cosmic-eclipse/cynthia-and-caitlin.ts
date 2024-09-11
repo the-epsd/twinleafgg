@@ -17,7 +17,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let cards: Card[] = [];
 
   const supporterTurn = player.supporterTurn;
-  
+
   if (supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
@@ -25,10 +25,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
   cards = player.hand.cards.filter(c => c !== self);
 
   if (!player.discard.cards.some(c => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER) &&
-      cards.length === 0) {
+    cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   // Do not discard the card yet
   effect.preventDefault = true;
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
@@ -53,10 +53,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
       player.deck.moveTo(player.hand, 3);
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
       return state;
     });
-  // supporter available, has to recover supporter, option to draw cards
+    // supporter available, has to recover supporter, option to draw cards
   } else {
     let discardedCards: Card[] = [];
     state = store.prompt(state, new ConfirmPrompt(
@@ -76,7 +76,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
           discardedCards.forEach((card, index) => {
             store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
           });
-          
+
           state = store.prompt(state, new ChooseCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARD_TO_HAND,
@@ -89,7 +89,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
             recovered.forEach(c => {
               store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: c.name });
             });
-            
+
             player.discard.moveCardsTo(recovered, player.hand);
             player.hand.moveCardsTo(discardedCards, player.discard);
             player.deck.moveTo(player.hand, 3);
@@ -109,30 +109,28 @@ function* playCard(next: Function, store: StoreLike, state: State,
           recovered.forEach(c => {
             store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: c.name });
           });
-          
+
           player.discard.moveCardsTo(recovered, player.hand);
           player.hand.moveCardsTo(cards, player.discard);
           player.deck.moveTo(player.hand, 3);
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
         });
       }
-      
+
       return state;
     });
   }
-    
+
   return state;
 }
 
 export class CynthiaAndCaitlin extends TrainerCard {
 
-  public regulationMark = 'G';
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'CEC';
-  
-  public tags = [CardTag.TAG_TEAM];  
+
+  public tags = [CardTag.TAG_TEAM];
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -143,8 +141,8 @@ export class CynthiaAndCaitlin extends TrainerCard {
   public fullName: string = 'Cynthia & Caitlin CEC';
 
   public text: string =
-    'Put a Supporter card from your discard pile into your hand. You can\'t choose Cynthia & Caitlin or a card you discarded with the effect of this card.'+
-    ''+
+    'Put a Supporter card from your discard pile into your hand. You can\'t choose Cynthia & Caitlin or a card you discarded with the effect of this card.' +
+    '' +
     'When you play this card, you may discard another card from your hand. If you do, draw 3 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

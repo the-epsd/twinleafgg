@@ -21,7 +21,7 @@ export class Thundurus extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Adverse Weather',
@@ -31,7 +31,7 @@ export class Thundurus extends PokemonCard {
 
   public attacks = [{
     name: 'Gigantic Bolt',
-    cost: [ CardType.LIGHTNING, CardType.LIGHTNING ],
+    cost: [CardType.LIGHTNING, CardType.LIGHTNING],
     damage: 140,
     text: 'This Pokémon also does 90 damage to itself.'
   }];
@@ -52,49 +52,46 @@ export class Thundurus extends PokemonCard {
       const player = effect.player;
       const dealDamage = new DealDamageEffect(effect, 90);
       dealDamage.target = player.active;
-       return store.reduceEffect(state, dealDamage);
+      return store.reduceEffect(state, dealDamage);
     }
-    
+
     if (effect instanceof PutDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.active.cards[0] == this) {
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
 
-        if (effect.target === player.active || effect.target === opponent.active) {
-          return state;
+      const targetPlayer = StateUtils.findOwner(state, effect.target);
+
+      let isThundurusActive = false;
+      targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this && cardList === targetPlayer.active) {
+          isThundurusActive = true;
         }
+      });
 
-        const targetPlayer = StateUtils.findOwner(state, effect.target);
+      if (!isThundurusActive) {
+        return state;
+      }
 
-        let isThundurusInPlay = false;
-        targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (card === this) {
-            isThundurusInPlay = true;
-          }
-        });
-
-        if (!isThundurusInPlay) {
-          return state;
-        }
-
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const stub = new PowerEffect(player, {
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
           name: 'test',
           powerType: PowerType.ABILITY,
           text: ''
         }, this);
         store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-
-        effect.preventDefault = true;
+      } catch {
+        return state;
       }
 
-      return state;
+      effect.preventDefault = true;
     }
+
     return state;
   }
+
 }

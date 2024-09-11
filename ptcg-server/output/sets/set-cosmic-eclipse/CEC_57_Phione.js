@@ -50,9 +50,14 @@ class Phione extends pokemon_card_1.PokemonCard {
             }
             return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
                 if (targets && targets.length > 0) {
+                    const deckBottom = new game_1.CardList();
                     opponent.active.clearEffects();
                     opponent.switchPokemon(targets[0]);
-                    player.bench[benchIndex].moveTo(player.discard);
+                    player.bench[benchIndex].moveTo(deckBottom);
+                    player.bench[benchIndex].cards.forEach((c, index) => {
+                        c.cards.moveTo(player.discard);
+                    });
+                    deckBottom.moveTo(player.deck);
                     player.bench[benchIndex].clearEffects();
                     return state;
                 }

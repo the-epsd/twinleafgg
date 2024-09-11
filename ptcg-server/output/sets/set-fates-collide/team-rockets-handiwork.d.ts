@@ -6,7 +6,6 @@ import { StoreLike } from '../../game/store/store-like';
 export declare class TeamRocketsHandiwork extends TrainerCard {
     trainerType: TrainerType;
     set: string;
-    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;

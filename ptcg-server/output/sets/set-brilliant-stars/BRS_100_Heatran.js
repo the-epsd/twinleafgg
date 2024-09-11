@@ -50,13 +50,9 @@ class Heatran extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, player.active);
-            let fireEnergyCount = 0;
-            checkProvidedEnergy.energyMap.some(e => {
-                if (e.provides.includes(card_types_1.CardType.ANY) || e.provides.includes(card_types_1.CardType.FIRE)) {
-                    fireEnergyCount += 1;
-                }
-            });
-            if (fireEnergyCount > 0) {
+            store.reduceEffect(state, checkProvidedEnergy);
+            const hasFireEnergy = checkProvidedEnergy.energyMap.some(e => e.provides.includes(card_types_1.CardType.ANY) || e.provides.includes(card_types_1.CardType.FIRE));
+            if (hasFireEnergy) {
                 effect.damage += 80;
             }
             return state;

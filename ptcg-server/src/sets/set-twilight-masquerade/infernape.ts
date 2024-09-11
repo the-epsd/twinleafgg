@@ -69,7 +69,7 @@ export class Infernape extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      const hasEnergyInDiscard = player.discard.cards.some(c => {
+      const hasEnergyInDiscard = player.hand.cards.some(c => {
         return c instanceof EnergyCard
           && c.energyType === EnergyType.BASIC
           && (c.provides.includes(CardType.FIGHTING) || (c.provides.includes(CardType.FIRE)));
@@ -105,7 +105,7 @@ export class Infernape extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         {
           allowCancel: true,

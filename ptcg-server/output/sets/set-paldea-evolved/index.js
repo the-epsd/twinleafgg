@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPaldeaEvolved = void 0;
 const card_images_1 = require("./card-images");
+const full_art_1 = require("./full-art");
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 exports.setPaldeaEvolved = [
     new card_images_1.ArctibaxArt(),
@@ -57,5 +58,37 @@ exports.setPaldeaEvolved = [
     new card_images_1.WattrelArt(),
     new card_images_1.WingullArt(),
     new card_images_1.WoChienexArt(),
-    new card_images_1.ZweilousArt()
+    new card_images_1.ZweilousArt(),
+    // Full Art
+    new full_art_1.ArctibaxIR(),
+    new full_art_1.BaxcaliburIR(),
+    new full_art_1.BossOrdersFA(),
+    new full_art_1.ChiYuexFA(),
+    new full_art_1.ChienPaoexFA(),
+    new full_art_1.ClavellFA(),
+    new full_art_1.FlamigoIR(),
+    new full_art_1.FrigibaxIR(),
+    new full_art_1.GiacomoFA(),
+    new full_art_1.GrushaFA(),
+    new full_art_1.IonoFA(),
+    new full_art_1.MeowscaradaexFA(),
+    new full_art_1.NoivernexFA(),
+    new full_art_1.SquawkabillyexFA(),
+    new full_art_1.SuperRodHR(),
+    new full_art_1.SuperiorEnergyRetrievalHR(),
+    new full_art_1.TingLuexFA(),
+    new full_art_1.WoChienexFA(),
+    new full_art_1.MeowscaradaexSIR(),
+    new full_art_1.WoChienexSIR(),
+    new full_art_1.ChiYuexSIR(),
+    new full_art_1.ChienPaoexSIR(),
+    new full_art_1.TingLuexSIR(),
+    new full_art_1.SquawkabillyexSIR(),
+    new full_art_1.BossOrdersSIR(),
+    new full_art_1.GiacomoSIR(),
+    new full_art_1.GrushaSIR(),
+    new full_art_1.IonoSIR(),
+    new full_art_1.MeowscaradaexHR(),
+    new full_art_1.ChienPaoexHR(),
+    new full_art_1.TingLuexHR(),
 ];

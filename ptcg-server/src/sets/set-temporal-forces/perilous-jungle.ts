@@ -14,6 +14,8 @@ export class PerilousJungle extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
 
+  public regulationMark: string = 'H';
+
   public set: string = 'TEF';
 
   public name: string = 'Perilous Jungle';
@@ -29,14 +31,14 @@ export class PerilousJungle extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof BetweenTurnsEffect && StateUtils.getStadiumCard(state) === this) {
-      
+
       const checkPokemonType = new CheckPokemonTypeEffect(effect.player.active);
       store.reduceEffect(state, checkPokemonType);
-      
+
       if ((checkPokemonType.cardTypes.includes(CardType.DARK))) {
-        return state;        
+        return state;
       }
-      
+
       effect.poisonDamage += 20;
       return state;
     }

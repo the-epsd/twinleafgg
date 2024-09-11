@@ -25,7 +25,7 @@ function* useLightningStormStar(next, store, state, effect) {
 class ZeraoraVSTAR extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.BASIC;
+        this.stage = game_1.Stage.VSTAR;
         this.evolvesFrom = 'Zeraora V';
         this.cardType = game_1.CardType.LIGHTNING;
         this.hp = 270;

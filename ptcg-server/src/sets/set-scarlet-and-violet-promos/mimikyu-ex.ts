@@ -52,6 +52,25 @@ export class Mimikyuex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+
+    // Energy Burst
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const playerProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      store.reduceEffect(state, playerProvidedEnergy);
+      const playerEnergyCount = playerProvidedEnergy.energyMap
+        .reduce((left, p) => left + p.provides.length, 0);
+
+      const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
+      store.reduceEffect(state, opponentProvidedEnergy);
+      const opponentEnergyCount = opponentProvidedEnergy.energyMap
+        .reduce((left, p) => left + p.provides.length, 0);
+
+      effect.damage = (playerEnergyCount + opponentEnergyCount) * 30;
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       this.voidReturn = true;
     }
@@ -86,20 +105,6 @@ export class Mimikyuex extends PokemonCard {
           });
         }
       });
-
-      // Energy Burst
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
-
-        const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
-        const checkProvidedEnergyEffect2 = new CheckProvidedEnergyEffect(player);
-        store.reduceEffect(state, checkProvidedEnergyEffect);
-        const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
-        const energyCount2 = checkProvidedEnergyEffect2.energyMap.reduce((left, p) => left + p.provides.length, 0);
-
-        effect.damage += energyCount + energyCount2 * 30;
-      }
     }
     return state;
   }

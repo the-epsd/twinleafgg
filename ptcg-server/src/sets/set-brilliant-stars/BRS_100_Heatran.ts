@@ -54,7 +54,8 @@ export class Heatran extends PokemonCard {
       const player = effect.player;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
-
+      store.reduceEffect(state, checkProvidedEnergy);
+      
       const hasFireEnergy = checkProvidedEnergy.energyMap.some(e => e.provides.includes(CardType.ANY) || e.provides.includes(CardType.FIRE));
       
       if (hasFireEnergy) {

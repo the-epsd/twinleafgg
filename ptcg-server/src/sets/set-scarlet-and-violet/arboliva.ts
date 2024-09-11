@@ -2,8 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, CardTarget, ChoosePokemonPrompt, ConfirmPrompt, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { EvolveEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Arboliva extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -31,7 +30,7 @@ export class Arboliva extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+    if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {

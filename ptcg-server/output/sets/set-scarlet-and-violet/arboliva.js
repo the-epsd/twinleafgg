@@ -5,7 +5,6 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Arboliva extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -31,7 +30,7 @@ class Arboliva extends pokemon_card_1.PokemonCard {
         this.fullName = 'Arboliva SVI';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+        if (effect instanceof game_effects_1.EvolveEffect && effect.pokemonCard === this) {
             const player = effect.player;
             if (player.deck.cards.length === 0) {
                 return state;

@@ -16,18 +16,18 @@ export class Regieleki extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Static Shock',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 20,
       text: ''
     },
     {
       name: 'Teraspark',
-      cost: [ CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS ],
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 120,
       text: 'Discard all [L] Energy from this Pokémon. This attack also does 40 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
@@ -49,16 +49,22 @@ export class Regieleki extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+
+      if (!hasBench) {
+        return state;
+      }
+
       const benched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-      
+
       const min = Math.min(2, benched);
       const max = Math.min(2, benched);
-      
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { min, max, allowCancel: true },
       ), selected => {
         const targets = selected || [];
@@ -67,26 +73,26 @@ export class Regieleki extends PokemonCard {
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });
-        
+
         const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
         state = store.reduceEffect(state, checkProvidedEnergy);
-        
+
         const cards: Card[] = [];
-         for (const energyMap of checkProvidedEnergy.energyMap) {
+        for (const energyMap of checkProvidedEnergy.energyMap) {
           const energy = energyMap.provides.filter(t => t === CardType.LIGHTNING || t === CardType.ANY || t === CardType.WLFM || t === CardType.LPM);
           if (energy.length > 0) {
             cards.push(energyMap.card);
           }
         }
-        
+
         const discardEnergy = new DiscardCardsEffect(effect, cards);
         discardEnergy.target = player.active;
         store.reduceEffect(state, discardEnergy);
-        
+
         return state;
       });
     }
-    
+
     return state;
   }
 }

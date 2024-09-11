@@ -1,4 +1,4 @@
-import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, State, StoreLike } from '../../game';
+import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -8,9 +8,9 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class Hitmonlee extends PokemonCard {
 
   public name = 'Hitmonlee';
-  
+
   public set = 'TEU';
-  
+
   public fullName = 'Hitmonlee TEU';
 
   public stage = Stage.BASIC;
@@ -20,10 +20,10 @@ export class Hitmonlee extends PokemonCard {
   public setNumber: string = '73';
 
   public hp = 100;
-  
+
   public cardType = CardType.FIGHTING;
 
-  public weakness = [{ type: CardType.PSYCHIC }]
+  public weakness = [{ type: CardType.PSYCHIC }];
 
   public retreat = [CardType.COLORLESS];
 
@@ -43,10 +43,16 @@ export class Hitmonlee extends PokemonCard {
   ];
 
   public hitAndRunTurn = -10;
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+
+      if (!hasBench) {
+        return state;
+      }
 
       if (state.turn !== this.hitAndRunTurn + 2) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
@@ -56,7 +62,7 @@ export class Hitmonlee extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];

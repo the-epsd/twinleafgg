@@ -129,7 +129,11 @@ export const BanLists: { [key: number]: string[] } = {
     'Hiker CES 133',
     'Hiker HIF SV85',
     'Kyogre SHF 021',
-    'Pokémon Research Lab UNM 205'
+    'Pokémon Research Lab UNM 205',
+    'Raikou VIV 50',
+    'Duskull CEC 83',
+    'Marshadow SLG 45',
+    'Marshadow SM 85'
   ],
   [Format.EXPANDED]: [
     'Archeops NVI 67',
@@ -168,7 +172,8 @@ export const BanLists: { [key: number]: string[] } = {
     'Shaymin-EX ROS 77a',
     'Shaymin-EX ROS 106',
     'Unown LOT 90',
-    'Unown LOT 91'
+    'Unown LOT 91',
+    // 'Duskull CEC 83',
   ],
   [Format.RETRO]: [],
   [Format.UNLIMITED]: [],

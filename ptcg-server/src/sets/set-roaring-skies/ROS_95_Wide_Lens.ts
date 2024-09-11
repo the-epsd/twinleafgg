@@ -15,7 +15,7 @@ export class WideLens extends TrainerCard {
 
   public text: string =
     ' Damage from the attacks of the Pokémon this card is attached to'
-    + ' is affected by Weakness and Resistance for your opponent\'s Benched Pokémon.'
+    + ' is affected by Weakness and Resistance for your opponent\'s Benched Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

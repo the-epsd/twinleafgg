@@ -79,7 +79,6 @@ function* playCard(next, store, state, self, effect) {
 class CynthiaAndCaitlin extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'G';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'CEC';
         this.tags = [card_types_1.CardTag.TAG_TEAM];

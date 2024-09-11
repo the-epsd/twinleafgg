@@ -26,7 +26,7 @@ class GalarianArticuno extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Psylaser',
-                cost: [card_types_1.CardType.DARK, card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Discard all [P] Energy from this Pokémon. This attack does 120 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }

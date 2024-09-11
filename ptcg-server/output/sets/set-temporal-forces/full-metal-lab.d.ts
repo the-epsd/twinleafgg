@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 export declare class FullMetalLab extends TrainerCard {
     trainerType: TrainerType;
+    regulationMark: string;
     set: string;
     cardImage: string;
     setNumber: string;

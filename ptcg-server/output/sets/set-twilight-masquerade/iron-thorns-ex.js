@@ -70,8 +70,8 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
                     effect.card.tags.includes(card_types_1.CardTag.POKEMON_V) ||
                     effect.card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||
                     effect.card.tags.includes(card_types_1.CardTag.POKEMON_VMAX) ||
-                    effect.card.tags.includes(card_types_1.CardTag.RADIANT)) {
-                    if (!effect.power.exemptFromAbilityLock || effect.power.exemptFromInitialize) {
+                    effect.card.tags.includes(card_types_1.CardTag.RADIANT) && !effect.power.exemptFromInitialize) {
+                    if (!effect.power.exemptFromAbilityLock) {
                         throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
                     }
                 }

@@ -43,6 +43,11 @@ class Kilowattrel extends pokemon_card_1.PokemonCard {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
                 const player = effect.player;
+                const opponent = game_1.StateUtils.getOpponent(state, player);
+                const hasBench = opponent.bench.some(b => b.cards.length > 0);
+                if (!hasBench) {
+                    return state;
+                }
                 let pokemonCount = 0;
                 player.discard.cards.forEach(c => {
                     if (c instanceof pokemon_card_1.PokemonCard && c.attacks.some(a => a.name === 'United Wings')) {

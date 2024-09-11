@@ -13,7 +13,6 @@ export declare class Articuno extends PokemonCard {
     powers: {
         name: string;
         powerType: PowerType;
-        useWhenInPlay: boolean;
         text: string;
     }[];
     attacks: {

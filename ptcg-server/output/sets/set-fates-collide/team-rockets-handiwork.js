@@ -11,7 +11,6 @@ class TeamRocketsHandiwork extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'FCO';
-        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '112';
         this.name = 'Team Rocket\'s Handiwork';

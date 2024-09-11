@@ -13,18 +13,17 @@ function* useMakeBelieveCopycat(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   const activePokemonCard = opponent.active.getPokemonCard();
-  const benchPokemonCard = opponent.bench.forEach(b => b.getPokemonCard());
 
-  if (activePokemonCard === undefined || activePokemonCard.attacks.length === 0) {
-    return state;
-  }
 
+  const benchPokemonCards = opponent.bench.map(b => b.getPokemonCard()).filter((card): card is PokemonCard => card !== undefined);
+
+  const allPokemon = [activePokemonCard, ...benchPokemonCards].filter((card): card is PokemonCard => card !== undefined);
 
   let selected: any;
   yield store.prompt(state, new ChooseAttackPrompt(
     opponent.id,
     GameMessage.CHOOSE_ATTACK_TO_COPY,
-    [activePokemonCard || benchPokemonCard],
+    allPokemon,
     { allowCancel: false }
   ), result => {
     selected = result;
@@ -44,7 +43,8 @@ function* useMakeBelieveCopycat(next: Function, store: StoreLike, state: State,
 
   // Perform attack
   const attackEffect = new AttackEffect(player, opponent, attack);
-  store.reduceEffect(state, attackEffect);
+
+  state = store.reduceEffect(state, attackEffect);
 
   if (store.hasPrompts()) {
     yield store.waitPrompt(state, () => next());
@@ -56,10 +56,10 @@ function* useMakeBelieveCopycat(next: Function, store: StoreLike, state: State,
   }
 
   return state;
+
 }
 
 export class MimeJr extends PokemonCard {
-
   public regulationMark = 'G';
 
   public stage: Stage = Stage.BASIC;

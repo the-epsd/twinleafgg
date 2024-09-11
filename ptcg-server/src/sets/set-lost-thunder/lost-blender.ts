@@ -26,15 +26,15 @@ export class LostBlender extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       if (player.hand.cards.length < 2) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       let cards: Card[] = [];
 
       cards = player.hand.cards;
@@ -59,15 +59,16 @@ export class LostBlender extends TrainerCard {
         if (cards.length === 0) {
           return state;
         }
-        
+
         cards.forEach((card, index) => {
+          card.cards.moveTo(player.lostzone);
           store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, { name: player.name, card: card.name });
         });
-        
+
         player.deck.moveTo(player.hand, 1);
         player.supporter.moveCardTo(this, player.discard);
 
-        store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });        
+        store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
       });
 
       return state;

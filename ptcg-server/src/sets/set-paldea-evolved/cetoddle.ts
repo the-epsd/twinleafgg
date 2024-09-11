@@ -18,12 +18,12 @@ export class Cetoddle extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Avalanche',
-      cost: [ CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.COLORLESS],
       damage: 30,
       text: 'This attack also does 10 damage to each of your opponent\'s Benched Pokémon. (Don’t apply Weakness and Resistance for Benched Pokémon.)'
     }
@@ -46,13 +46,13 @@ export class Cetoddle extends PokemonCard {
       const benched = opponent.bench.filter(b => b.cards.length > 0);
 
       effect.damage = 20;
-      
+
       benched.forEach(target => {
         const damageEffect = new PutDamageEffect(effect, 10);
         damageEffect.target = target;
         store.reduceEffect(state, damageEffect);
       });
     }
-    return state; 
+    return state;
   }
 }

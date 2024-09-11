@@ -52,6 +52,10 @@ class RegigigasVSTAR extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const hasBench = opponent.bench.some(b => b.cards.length > 0);
+            if (!hasBench) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             if (opponent.getPrizeLeft() !== 1) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }

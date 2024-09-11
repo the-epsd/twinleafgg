@@ -52,7 +52,7 @@ class Metagross extends pokemon_card_1.PokemonCard {
             // Check marker
             if (effect.player.attackMarker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
                 console.log('attack added damage');
-                effect.damage += 100;
+                effect.damage += 60;
             }
             effect.player.attackMarker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
             console.log('marker added');

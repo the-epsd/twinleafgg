@@ -3,6 +3,7 @@ import { Marill } from './BUS_34_Marill';
 import { DarkraiGX } from './darkrai-gx';
 import { Gloom } from './gloom';
 import { Guzma } from './guzma';
+import { Plumeria } from './plumeria';
 import { WishfulBaton } from './wishful-baton';
 
 export class AcerolaArt extends Acerola {
@@ -23,6 +24,10 @@ export class GuzmaArt extends Guzma {
 
 export class MarillArt extends Marill {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_034_R_EN_LG.png';
+}
+
+export class PlumeriaArt extends Plumeria {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_120_R_EN_LG.png';
 }
 
 export class WishfulBatonArt extends WishfulBaton {

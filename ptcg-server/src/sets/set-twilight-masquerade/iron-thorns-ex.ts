@@ -87,9 +87,9 @@ export class IronThornsex extends PokemonCard {
           effect.card.tags.includes(CardTag.POKEMON_V) ||
           effect.card.tags.includes(CardTag.POKEMON_VSTAR) ||
           effect.card.tags.includes(CardTag.POKEMON_VMAX) ||
-          effect.card.tags.includes(CardTag.RADIANT)) {
+          effect.card.tags.includes(CardTag.RADIANT) && !effect.power.exemptFromInitialize) {
 
-          if (!effect.power.exemptFromAbilityLock || effect.power.exemptFromInitialize) {
+          if (!effect.power.exemptFromAbilityLock) {
             throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
           }
         }

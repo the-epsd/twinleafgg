@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage, PokemonCardList, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, StateUtils, GameError, GameMessage, PokemonCardList, ChoosePokemonPrompt, PlayerType, SlotType, CardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
@@ -62,9 +62,16 @@ export class Phione extends PokemonCard {
         { allowCancel: false }
       ), targets => {
         if (targets && targets.length > 0) {
+
+          const deckBottom = new CardList();
+
           opponent.active.clearEffects();
           opponent.switchPokemon(targets[0]);
-          player.bench[benchIndex].moveTo(player.discard);
+          player.bench[benchIndex].moveTo(deckBottom);
+          player.bench[benchIndex].cards.forEach((c, index) => {
+            c.cards.moveTo(player.discard);
+          });
+          deckBottom.moveTo(player.deck);
           player.bench[benchIndex].clearEffects();
           return state;
         }

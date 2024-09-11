@@ -16,6 +16,8 @@ import { Hoothoot } from './hoothoot';
 import { Hydrappleex } from './hydrapple-ex';
 import { Joltik } from './joltik';
 import { Laprasex } from './lapras-ex';
+import { Medichamex } from './medicham-ex';
+import { Meditite } from './meditite';
 import { Noctowl } from './noctowl';
 import { Orthwormex } from './orthworm-ex';
 import { Raboot } from './raboot';
@@ -74,6 +76,12 @@ export declare class JoltikArt extends Joltik {
     cardImage: string;
 }
 export declare class LaprasexArt extends Laprasex {
+    cardImage: string;
+}
+export declare class MedichamexArt extends Medichamex {
+    cardImage: string;
+}
+export declare class MedititeArt extends Meditite {
     cardImage: string;
 }
 export declare class NoctowlArt extends Noctowl {

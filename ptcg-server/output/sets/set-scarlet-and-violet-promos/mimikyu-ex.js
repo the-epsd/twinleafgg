@@ -38,6 +38,20 @@ class Mimikyuex extends pokemon_card_1.PokemonCard {
         this.voidReturn = false;
     }
     reduceEffect(store, state, effect) {
+        // Energy Burst
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            const playerProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+            store.reduceEffect(state, playerProvidedEnergy);
+            const playerEnergyCount = playerProvidedEnergy.energyMap
+                .reduce((left, p) => left + p.provides.length, 0);
+            const opponentProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(opponent);
+            store.reduceEffect(state, opponentProvidedEnergy);
+            const opponentEnergyCount = opponentProvidedEnergy.energyMap
+                .reduce((left, p) => left + p.provides.length, 0);
+            effect.damage = (playerEnergyCount + opponentEnergyCount) * 30;
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             this.voidReturn = true;
         }
@@ -59,17 +73,6 @@ class Mimikyuex extends pokemon_card_1.PokemonCard {
                     });
                 }
             });
-            // Energy Burst
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-                const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(opponent);
-                const checkProvidedEnergyEffect2 = new check_effects_1.CheckProvidedEnergyEffect(player);
-                store.reduceEffect(state, checkProvidedEnergyEffect);
-                const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
-                const energyCount2 = checkProvidedEnergyEffect2.energyMap.reduce((left, p) => left + p.provides.length, 0);
-                effect.damage += energyCount + energyCount2 * 30;
-            }
         }
         return state;
     }

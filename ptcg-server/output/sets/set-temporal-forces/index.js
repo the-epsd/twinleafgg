@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTemporalForces = void 0;
 const card_images_1 = require("./card-images");
+const full_art_1 = require("./full-art");
 exports.setTemporalForces = [
     new card_images_1.AncientBoosterEnergyCapsuleArt(),
     new card_images_1.BeldumArt(),
@@ -74,4 +75,40 @@ exports.setTemporalForces = [
     new card_images_1.VictiniArt(),
     new card_images_1.VikavoltArt(),
     new card_images_1.WalkingWakeexArt(),
+    //FA
+    new full_art_1.GrotleIR(),
+    new full_art_1.CharjabugIR(),
+    new full_art_1.ReuniclusIR(),
+    new full_art_1.GastlyIR(),
+    new full_art_1.MetagrossIR(),
+    new full_art_1.ChatotIR(),
+    new full_art_1.MinccinoIR(),
+    new full_art_1.CinccinoIR(),
+    new full_art_1.TorterraexFA(),
+    new full_art_1.IronLeavesexFA(),
+    new full_art_1.GougingFireexFA(),
+    new full_art_1.WalkingWakeexFA(),
+    new full_art_1.IronCrownexFA(),
+    new full_art_1.GengarexFA(),
+    new full_art_1.RagingBoltexFA(),
+    new full_art_1.BiancasDevotionFA(),
+    new full_art_1.CryptomaniacsDecipheringFA(),
+    new full_art_1.EriFA(),
+    new full_art_1.ExplorersGuidanceFA(),
+    new full_art_1.MortysConvictionFA(),
+    new full_art_1.SalvatoreFA(),
+    new full_art_1.IronLeavesexSIR(),
+    new full_art_1.GougingFireexSIR(),
+    new full_art_1.WalkingWakeexSIR(),
+    new full_art_1.IronCrownexSIR(),
+    new full_art_1.RagingBoltexSIR(),
+    new full_art_1.BiancasDevotionSIR(),
+    new full_art_1.EriSIR(),
+    new full_art_1.MortysConvictionSIR(),
+    new full_art_1.SalvatoreSIR(),
+    new full_art_1.IronLeavesexHR(),
+    new full_art_1.GougingFireexHR(),
+    new full_art_1.WalkingWakeexHR(),
+    new full_art_1.IronCrownexHR(),
+    new full_art_1.RagingBoltexHR(),
 ];

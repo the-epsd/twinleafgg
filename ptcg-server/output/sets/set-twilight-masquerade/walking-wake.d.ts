@@ -9,6 +9,9 @@ export declare class WalkingWake extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
+    weakness: {
+        type: CardType;
+    }[];
     retreat: CardType[];
     attacks: {
         name: string;

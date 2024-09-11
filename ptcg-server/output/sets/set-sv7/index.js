@@ -20,6 +20,8 @@ exports.setSV7 = [
     new card_images_1.HydrappleexArt(),
     new card_images_1.JoltikArt(),
     new card_images_1.LaprasexArt(),
+    new card_images_1.MedichamexArt(),
+    new card_images_1.MedititeArt(),
     new card_images_1.NoctowlArt(),
     // new OrthwormexArt(),
     new card_images_1.RabootArt(),

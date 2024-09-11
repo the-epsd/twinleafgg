@@ -66,37 +66,36 @@ class InteleonVMAX extends pokemon_card_1.PokemonCard {
                 }
                 return state;
             });
-            if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                const hasEnergyInHand = player.hand.cards.some(c => {
-                    return c instanceof game_1.EnergyCard;
-                });
-                if (!hasEnergyInHand) {
-                    throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
+        }
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const hasEnergyInHand = player.hand.cards.some(c => {
+                return c instanceof game_1.EnergyCard;
+            });
+            if (!hasEnergyInHand) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
+            }
+            if (player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
+                throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
+            }
+            const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+            if (!hasBenched) {
+                return state;
+            }
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: 1, max: 1 }), cards => {
+                cards = cards || [];
+                if (cards.length === 0) {
+                    return;
                 }
-                if (player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
-                    throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
-                }
-                const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-                if (!hasBenched) {
-                    return state;
-                }
-                state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: 1, max: 1 }), cards => {
-                    cards = cards || [];
-                    if (cards.length === 0) {
-                        return;
-                    }
-                    return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: false }), selected => {
-                        const targets = selected || [];
-                        targets.forEach(target => {
-                            target.damage += 20;
-                            player.marker.addMarker(this.DOUBLE_GUNNER_MARKER, this);
-                        });
+                return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: false }), selected => {
+                    const targets = selected || [];
+                    targets.forEach(target => {
+                        target.damage += 20;
+                        player.marker.addMarker(this.DOUBLE_GUNNER_MARKER, this);
                     });
                 });
-            }
-            return state;
+            });
         }
         return state;
     }

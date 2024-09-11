@@ -14,6 +14,8 @@ export class FullMetalLab extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
 
+  public regulationMark: string = 'H';
+
   public set: string = 'TEF';
 
   public cardImage: string = 'assets/cardback.png';
@@ -23,22 +25,22 @@ export class FullMetalLab extends TrainerCard {
   public name: string = 'Full Metal Lab';
 
   public fullName: string = 'Full Metal Lab TEF';
-  
+
   public text: string =
     '[M] Pokémon (both yours and your opponent\'s) take 30 less damage from attacks from the opponent\'s Pokémon (after applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof PutDamageEffect && StateUtils.getStadiumCard(state) === this) {
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
-      
+
       if (checkPokemonType.cardTypes.includes(CardType.METAL)) {
         effect.damage = Math.max(0, effect.damage - 30);
-        effect.damageReduced = true;     
+        effect.damageReduced = true;
       }
     }
-    
+
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }

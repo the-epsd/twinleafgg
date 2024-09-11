@@ -13,8 +13,6 @@ export class TeamRocketsHandiwork extends TrainerCard {
 
   public set: string = 'FCO';
 
-  public regulationMark = 'F';
-
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '112';
@@ -26,7 +24,7 @@ export class TeamRocketsHandiwork extends TrainerCard {
   public text: string = 'Flip 2 coins. For each heads, discard 2 cards from the top of your opponent\'s deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -46,8 +44,8 @@ export class TeamRocketsHandiwork extends TrainerCard {
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)
       ], (result) => {
         const heads = result.filter(r => !!r).length;
-        opponent.deck.moveTo(opponent.discard, heads * 2);          
-        
+        opponent.deck.moveTo(opponent.discard, heads * 2);
+
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
       });
     }

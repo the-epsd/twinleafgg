@@ -5,6 +5,7 @@ import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPromp
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Giratina extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -37,6 +38,11 @@ export class Giratina extends PokemonCard {
   public readonly DISTORTION_DOOR_MARKER = 'DISTORTION_DOOR_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.DISTORTION_DOOR_MARKER, this);
+    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;

@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { ArctibaxArt, ArtazonArt, BaxcaliburArt, BossOrdersArt, BramblinArt, BraveyCharmArt, CetitanArt, CetoddleArt, ChienPaoexArt, ChiYuexArt, ChoiceBeltArt, ClavellArt, CufantArt, DeinoArt, DeliveryDroneArt, DudunsparceArt, FightingAuLaitArt, FlamigoArt, ForretressexArt, Frigibax2Art, FrigibaxArt, GiacomoArt, GreatBallArt, GrushaArt, HydreigonArt, IonoArt, JetEnergyArt, LokixArt, LuminousEnergyArt, LuxrayArt, MagnemiteArt, MimikyuArt, MurkrowArt, NoibatArt, NoivernexArt, OrthwormArt, PelipperArt, PinecoArt, ReversalEnergyArt, ShinxArt, SpiritombArt, SquawkabillyexArt, SuperiorEnergyRetrievalArt, SuperRodArt, TadbulbArt, TherapeuticEnergyArt, TingLuexArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WattrelArt, WingullArt, WoChienexArt, ZweilousArt } from './card-images';
+import { ArctibaxIR, BaxcaliburIR, BossOrdersFA, BossOrdersSIR, ChiYuexFA, ChiYuexSIR, ChienPaoexFA, ChienPaoexHR, ChienPaoexSIR, ClavellFA, FlamigoIR, FrigibaxIR, GiacomoFA, GiacomoSIR, GrushaFA, GrushaSIR, IonoFA, IonoSIR, MeowscaradaexFA, MeowscaradaexHR, MeowscaradaexSIR, NoivernexFA, SquawkabillyexFA, SquawkabillyexSIR, SuperRodHR, SuperiorEnergyRetrievalHR, TingLuexFA, TingLuexHR, TingLuexSIR, WoChienexFA, WoChienexSIR } from './full-art';
 
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
@@ -58,6 +59,40 @@ export const setPaldeaEvolved: Card[] = [
   new WattrelArt(),
   new WingullArt(),
   new WoChienexArt(),
-  new ZweilousArt()
+  new ZweilousArt(),
+
+  // Full Art
+  new ArctibaxIR(),
+  new BaxcaliburIR(),
+  new BossOrdersFA(),
+  new ChiYuexFA(),
+  new ChienPaoexFA(),
+  new ClavellFA(),
+  new FlamigoIR(),
+  new FrigibaxIR(),
+  new GiacomoFA(),
+  new GrushaFA(),
+  new IonoFA(),
+  new MeowscaradaexFA(),
+  new NoivernexFA(),
+  new SquawkabillyexFA(),
+  new SuperRodHR(),
+  new SuperiorEnergyRetrievalHR(),
+  new TingLuexFA(),
+  new WoChienexFA(),
+  new MeowscaradaexSIR(),
+  new WoChienexSIR(),
+  new ChiYuexSIR(),
+  new ChienPaoexSIR(),
+  new TingLuexSIR(),
+  new SquawkabillyexSIR(),
+  new BossOrdersSIR(),
+  new GiacomoSIR(),
+  new GrushaSIR(),
+  new IonoSIR(),
+  new MeowscaradaexHR(),
+  new ChienPaoexHR(),
+  new TingLuexHR(),
+
 
 ];
