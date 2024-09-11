@@ -29,10 +29,10 @@ function* useCallForFamily(next, store, state, effect) {
 class NidoranFemale extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.name = 'Nidoran♀';
+        this.name = 'Nidoran F';
         this.set = 'JU';
         this.setNumber = '57';
-        this.fullName = 'Nidoran♀ JU';
+        this.fullName = 'Nidoran F JU';
         this.cardType = card_types_1.CardType.GRASS;
         this.stage = card_types_1.Stage.BASIC;
         this.hp = 60;

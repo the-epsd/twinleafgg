@@ -42,13 +42,13 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
 
 export class NidoranFemale extends PokemonCard {
 
-  public name = 'Nidoran♀';
+  public name = 'Nidoran F';
 
   public set = 'JU';
 
   public setNumber = '57';
 
-  public fullName = 'Nidoran♀ JU';
+  public fullName = 'Nidoran F JU';
 
   public cardType = CardType.GRASS;
 

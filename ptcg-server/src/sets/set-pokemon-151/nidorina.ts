@@ -4,7 +4,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Nidorina extends PokemonCard {
   public stage = Stage.STAGE_1;
-  public evolvesFrom = 'Nidoran♀';
+  public evolvesFrom = 'Nidoran F';
   public cardType = CardType.DARK;
   public hp = 90;
   public weakness = [{ type: CardType.FIGHTING }];

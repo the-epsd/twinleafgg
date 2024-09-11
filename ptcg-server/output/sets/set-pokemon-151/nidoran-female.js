@@ -25,8 +25,8 @@ class NidoranFemale extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '29';
-        this.name = 'Nidoran♀';
-        this.fullName = 'Nidoran♀ MEW';
+        this.name = 'Nidoran F';
+        this.fullName = 'Nidoran F MEW';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
