@@ -67,9 +67,13 @@ export class RegigigasVSTAR extends PokemonCard {
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+
+      if (!hasBench) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
       if (opponent.getPrizeLeft() !== 1) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);

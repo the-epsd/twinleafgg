@@ -63,6 +63,11 @@ class Moltres extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const hasBench = opponent.bench.some(b => b.cards.length > 0);
+            if (!hasBench) {
+                return state;
+            }
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkProvidedEnergy);
             state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE], { allowCancel: false }), energy => {

@@ -10,12 +10,10 @@ function* useMakeBelieveCopycat(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
     const activePokemonCard = opponent.active.getPokemonCard();
-    const benchPokemonCard = opponent.bench.forEach(b => b.getPokemonCard());
-    if (activePokemonCard === undefined || activePokemonCard.attacks.length === 0) {
-        return state;
-    }
+    const benchPokemonCards = opponent.bench.map(b => b.getPokemonCard()).filter((card) => card !== undefined);
+    const allPokemon = [activePokemonCard, ...benchPokemonCards].filter((card) => card !== undefined);
     let selected;
-    yield store.prompt(state, new game_1.ChooseAttackPrompt(opponent.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, [activePokemonCard || benchPokemonCard], { allowCancel: false }), result => {
+    yield store.prompt(state, new game_1.ChooseAttackPrompt(opponent.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, allPokemon, { allowCancel: false }), result => {
         selected = result;
         next();
     });
@@ -29,7 +27,7 @@ function* useMakeBelieveCopycat(next, store, state, effect) {
     });
     // Perform attack
     const attackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
-    store.reduceEffect(state, attackEffect);
+    state = store.reduceEffect(state, attackEffect);
     if (store.hasPrompts()) {
         yield store.waitPrompt(state, () => next());
     }

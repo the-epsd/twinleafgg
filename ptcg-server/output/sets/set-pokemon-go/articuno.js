@@ -18,7 +18,6 @@ class Articuno extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Ice Symbol',
                 powerType: game_1.PowerType.ABILITY,
-                useWhenInPlay: true,
                 text: 'Your Basic [W] Pokémon\'s attacks, except any Articuno, do 10 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
             }];
         this.attacks = [

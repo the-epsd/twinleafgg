@@ -40,6 +40,10 @@ class WoChienex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const hasBench = opponent.bench.some(b => b.cards.length > 0);
+            if (!hasBench) {
+                return state;
+            }
             const prizesTaken = 6 - opponent.getPrizeLeft();
             const damagePerPrize = 60;
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {

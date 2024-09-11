@@ -52,7 +52,7 @@ class Infernape extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            const hasEnergyInDiscard = player.discard.cards.some(c => {
+            const hasEnergyInDiscard = player.hand.cards.some(c => {
                 return c instanceof game_1.EnergyCard
                     && c.energyType === card_types_1.EnergyType.BASIC
                     && (c.provides.includes(card_types_1.CardType.FIGHTING) || (c.provides.includes(card_types_1.CardType.FIRE)));
@@ -76,7 +76,7 @@ class Infernape extends pokemon_card_1.PokemonCard {
                     }
                 });
             });
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, {
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, {
                 allowCancel: true,
                 min: 1,
                 max: 2,

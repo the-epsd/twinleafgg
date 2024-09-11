@@ -8,5 +8,6 @@ exports.setBurningShadows = [
     new card_images_1.GloomArt(),
     new card_images_1.GuzmaArt(),
     new card_images_1.MarillArt(),
+    new card_images_1.PlumeriaArt(),
     new card_images_1.WishfulBatonArt()
 ];

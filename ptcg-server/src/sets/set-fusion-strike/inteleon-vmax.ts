@@ -95,57 +95,56 @@ export class InteleonVMAX extends PokemonCard {
 
         return state;
       });
+    }
 
-      if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-        const hasEnergyInHand = player.hand.cards.some(c => {
-          return c instanceof EnergyCard;
-        });
-        if (!hasEnergyInHand) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
+      const hasEnergyInHand = player.hand.cards.some(c => {
+        return c instanceof EnergyCard;
+      });
+      if (!hasEnergyInHand) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+      if (player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      if (!hasBenched) {
+        return state;
+      }
+
+      state = store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        player.hand,
+        { superType: SuperType.ENERGY },
+        { allowCancel: true, min: 1, max: 1 }
+      ), cards => {
+        cards = cards || [];
+        if (cards.length === 0) {
+          return;
         }
-        if (player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
-          throw new GameError(GameMessage.POWER_ALREADY_USED);
-        }
 
-        const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-        if (!hasBenched) {
-          return state;
-        }
-
-        state = store.prompt(state, new ChooseCardsPrompt(
+        return store.prompt(state, new ChoosePokemonPrompt(
           player.id,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          player.hand,
-          { superType: SuperType.ENERGY },
-          { allowCancel: true, min: 1, max: 1 }
-        ), cards => {
-          cards = cards || [];
-          if (cards.length === 0) {
-            return;
-          }
-
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-            PlayerType.TOP_PLAYER,
-            [SlotType.BENCH],
-            { min: 1, max: 2, allowCancel: false },
-          ), selected => {
-            const targets = selected || [];
-            targets.forEach(target => {
-              target.damage += 20;
-              player.marker.addMarker(this.DOUBLE_GUNNER_MARKER, this);
-            });
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 2, allowCancel: false },
+        ), selected => {
+          const targets = selected || [];
+          targets.forEach(target => {
+            target.damage += 20;
+            player.marker.addMarker(this.DOUBLE_GUNNER_MARKER, this);
           });
         });
-
-      }
-      return state;
+      });
 
     }
     return state;
+
   }
 }

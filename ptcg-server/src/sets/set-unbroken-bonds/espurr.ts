@@ -16,18 +16,18 @@ export class Espurr extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Caturday',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Draw a card. If you do, this Pokémon is now Asleep.'
     },
     {
       name: 'Ear Kinesis',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 0,
       text: 'This attack does 20 damage to 1 of your opponent\'s Benched Pokémon for each damage counter on that Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
@@ -47,27 +47,28 @@ export class Espurr extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       player.deck.moveTo(player.hand, 1);
-      
+
       const asleepEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       asleepEffect.target = player.active;
       store.reduceEffect(state, asleepEffect);
-      
+
       return state;
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
-      if (!opponent.bench.some(c => c.cards.length > 0)) {
+      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+
+      if (!hasBench) {
         return state;
       }
-      
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];
@@ -76,7 +77,7 @@ export class Espurr extends PokemonCard {
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });
-        
+
         return state;
       });
     }

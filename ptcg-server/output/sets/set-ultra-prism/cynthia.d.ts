@@ -5,7 +5,6 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 export declare class Cynthia extends TrainerCard {
     trainerType: TrainerType;
-    regulationMark: string;
     set: string;
     cardImage: string;
     setNumber: string;

@@ -118,7 +118,7 @@ export class Koraidonex extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
-        { allowCancel: false, min: 1, max: 2, blockedTo: blocked2, differentTargets: true }
+        { allowCancel: false, min: 1, max: 2, blockedTo: blocked2 }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user

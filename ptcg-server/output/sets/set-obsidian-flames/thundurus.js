@@ -44,35 +44,32 @@ class Thundurus extends pokemon_card_1.PokemonCard {
         if (effect instanceof attack_effects_1.PutDamageEffect) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            if (player.active.cards[0] == this) {
-                if (effect.target === player.active || effect.target === opponent.active) {
-                    return state;
-                }
-                const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
-                let isThundurusInPlay = false;
-                targetPlayer.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                    if (card === this) {
-                        isThundurusInPlay = true;
-                    }
-                });
-                if (!isThundurusInPlay) {
-                    return state;
-                }
-                // Try to reduce PowerEffect, to check if something is blocking our ability
-                try {
-                    const stub = new game_effects_1.PowerEffect(player, {
-                        name: 'test',
-                        powerType: pokemon_types_1.PowerType.ABILITY,
-                        text: ''
-                    }, this);
-                    store.reduceEffect(state, stub);
-                }
-                catch (_a) {
-                    return state;
-                }
-                effect.preventDefault = true;
+            if (effect.target === player.active || effect.target === opponent.active) {
+                return state;
             }
-            return state;
+            const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
+            let isThundurusActive = false;
+            targetPlayer.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card === this && cardList === targetPlayer.active) {
+                    isThundurusActive = true;
+                }
+            });
+            if (!isThundurusActive) {
+                return state;
+            }
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: pokemon_types_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
+            effect.preventDefault = true;
         }
         return state;
     }

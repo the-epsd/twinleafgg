@@ -37,6 +37,11 @@ class Kyogre extends game_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const hasBench = opponent.bench.some(b => b.cards.length > 0);
+            if (!hasBench) {
+                return state;
+            }
             const deckTop = new card_list_1.CardList();
             // Move top 5 cards from deckTop
             player.deck.moveTo(deckTop, 5);
@@ -45,7 +50,7 @@ class Kyogre extends game_1.PokemonCard {
                 c.energyType === card_types_1.EnergyType.BASIC);
             // Move all cards to discard
             deckTop.moveTo(player.discard, deckTop.cards.length);
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: true }), selected => {
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: false }), selected => {
                 const targets = selected || [];
                 targets.forEach(target => {
                     target.damage += basicEnergy.length * 50;

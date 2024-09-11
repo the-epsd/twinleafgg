@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 export declare class PerilousJungle extends TrainerCard {
     trainerType: TrainerType;
+    regulationMark: string;
     set: string;
     name: string;
     fullName: string;

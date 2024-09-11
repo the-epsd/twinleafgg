@@ -9,67 +9,72 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class WellspringMaskOgerponex extends PokemonCard {
-  
+
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public regulationMark = 'H';
-  
+
   public cardType: CardType = CardType.WATER;
-  
+
   public weakness = [{ type: CardType.LIGHTNING }];
 
   public hp: number = 210;
-  
-  public retreat = [ CardType.COLORLESS ];
-  
+
+  public retreat = [CardType.COLORLESS];
+
   public attacks = [
     {
       name: 'Sob',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 20,
       text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
     },
     {
       name: 'Torrential Pump',
-      cost: [ CardType.WATER, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: 100,
       text: 'You may shuffle 3 Energy attached to this Pokémon into your Deck. If you do, this attack also does 120 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
-  
+
   public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '64';
-  
+
   public name: string = 'Wellspring Mask Ogerpon ex';
-  
+
   public fullName: string = 'Wellspring Mask Ogerpon ex TWM';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
-          
+
     if (effect instanceof RetreatEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
-          
+
     if (effect instanceof EndTurnEffect) {
       effect.player.active.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-  
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+
+      if (!hasBench) {
+        return state;
+      }
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
@@ -84,7 +89,7 @@ export class WellspringMaskOgerponex extends PokemonCard {
             player.id,
             GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
             checkProvidedEnergy.energyMap,
-            [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+            [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
             { allowCancel: false }
           ), energy => {
             const cards: Card[] = (energy || []).map(e => e.card);
@@ -94,13 +99,13 @@ export class WellspringMaskOgerponex extends PokemonCard {
                 player.deck.applyOrder(order);
               });
             });
-        
+
             const max = Math.min(1);
             return store.prompt(state, new ChoosePokemonPrompt(
               player.id,
               GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
               PlayerType.TOP_PLAYER,
-              [ SlotType.BENCH ],
+              [SlotType.BENCH],
               { min: 1, max: max, allowCancel: false }
             ), selected => {
               const targets = selected || [];

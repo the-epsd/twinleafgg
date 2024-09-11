@@ -18,7 +18,6 @@ class Zapdos extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Lightning Symbol',
                 powerType: game_1.PowerType.ABILITY,
-                useWhenInPlay: true,
                 text: 'Your Basic [L] Pokémon\'s attacks, except any Zapdos, do 10 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
             }];
         this.attacks = [

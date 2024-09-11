@@ -39,6 +39,10 @@ class Orthworm extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const hasBench = opponent.bench.some(b => b.cards.length > 0);
+            if (!hasBench) {
+                return state;
+            }
             const benched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
             const min = Math.min(1, benched);
             const max = Math.min(1, benched);

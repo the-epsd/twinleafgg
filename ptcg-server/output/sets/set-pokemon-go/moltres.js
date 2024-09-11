@@ -18,7 +18,6 @@ class Moltres extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Flare Symbol',
                 powerType: game_1.PowerType.ABILITY,
-                useWhenInPlay: true,
                 text: 'Your Basic [R] Pokémon\'s attacks, except any Moltres, do 10 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
             }];
         this.attacks = [

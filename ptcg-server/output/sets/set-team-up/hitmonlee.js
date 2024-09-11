@@ -38,6 +38,11 @@ class Hitmonlee extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const hasBench = opponent.bench.some(b => b.cards.length > 0);
+            if (!hasBench) {
+                return state;
+            }
             if (state.turn !== this.hitAndRunTurn + 2) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
             }

@@ -49,7 +49,7 @@ class Kyurem extends pokemon_card_1.PokemonCard {
                 return state;
             }
             let isColressInOpponentsDiscard = false;
-            opponent.discard.cards.find(card => {
+            opponent.discard.cards.filter(card => {
                 if (card.name === 'Colress' || card.name === 'Colress\'s Experiment' || card.name === 'Colress\'s Obsession') {
                     isColressInOpponentsDiscard = true;
                 }

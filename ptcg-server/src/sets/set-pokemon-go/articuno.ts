@@ -21,7 +21,6 @@ export class Articuno extends PokemonCard {
   public powers = [{
     name: 'Ice Symbol',
     powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
     text: 'Your Basic [W] Pokémon\'s attacks, except any Articuno, do 10 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
   }];
 
