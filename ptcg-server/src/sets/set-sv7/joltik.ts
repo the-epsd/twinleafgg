@@ -38,49 +38,32 @@ export class Joltik extends PokemonCard {
         player.deck,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
-        { allowCancel: true, min: 0, max: 2 },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        {
+          allowCancel: true,
+          min: 0,
+          max: 4,
+          differentTypes: true,
+          validCardTypes: [CardType.GRASS, CardType.LIGHTNING],
+          maxPerType: 2
+        },
       ), transfers => {
         transfers = transfers || [];
-
         // cancelled by user
         if (transfers.length === 0) {
           return state;
         }
-
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.deck.moveCardTo(transfer.card, target);
         }
 
-        //attach lightning energy prompt
-        return store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          player.deck,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH, SlotType.ACTIVE],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
-          { allowCancel: true, min: 0, max: 2 },
-        ), transfers => {
-          transfers = transfers || [];
-          // cancelled by user
-          if (transfers.length === 0) {
-            return state;
-          }
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.deck.moveCardTo(transfer.card, target);
-          }
-
-          // Shuffles deck after attaching both types of energies
-          state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
+        // Shuffles deck after attaching both types of energies
+        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
         });
       });
     }
-
     return state;
   }
 }

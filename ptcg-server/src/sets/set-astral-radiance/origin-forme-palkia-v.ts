@@ -1,13 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, GameError, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt, StateUtils, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class OriginFormePalkiaV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
@@ -19,18 +19,18 @@ export class OriginFormePalkiaV extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Rule the Region',
-      cost: [ CardType.WATER ],
+      cost: [CardType.WATER],
       damage: 0,
       text: 'Search your deck for a Stadium card, reveal it, and put it into your hand. Then, shuffle your deck.'
     },
     {
       name: 'Hydro Break',
-      cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
       damage: 200,
       text: 'During your next turn, this Pokémon can\'t attack.'
     }
@@ -64,24 +64,32 @@ export class OriginFormePalkiaV extends PokemonCard {
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
-  
+
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
       const player = effect.player;
-      
+      const opponent = StateUtils.getOpponent(state, player);
+
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id, 
+        player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck, 
+        player.deck,
         { superType: SuperType.TRAINER, trainerType: TrainerType.STADIUM },
         { min: 0, max: 1, allowCancel: false }
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);
+
+        if (cards.length > 0) {
+          return store.prompt(state, new ShowCardsPrompt(
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            cards
+          ), () => { });
+        }
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

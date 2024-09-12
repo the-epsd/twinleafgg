@@ -20,6 +20,7 @@ import { Fennekin } from './fennekin';
 import { ForestSealStone } from './forest-seal-stone';
 import { FurisodeGirl } from './furisode-girl';
 import { Gardevoir } from './gardevoir';
+import { Golbat } from './golbat';
 import { HisuianBraviary } from './hisuian-braviary';
 import { Kirlia } from './kirlia';
 import { Lance } from './lance';
@@ -145,6 +146,10 @@ export class FurisodeGirlArt extends FurisodeGirl {
 
 export class GardevoirArt extends Gardevoir {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_069_R_EN_LG.png';
+}
+
+export class GolbatArt extends Golbat {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_104_R_EN_LG.png';
 }
 
 export class HisuianBraviaryArt extends HisuianBraviary {

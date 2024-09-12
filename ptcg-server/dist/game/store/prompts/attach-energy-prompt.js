@@ -47,6 +47,17 @@ export class AttachEnergyPrompt extends Prompt {
         if (result.length < this.options.min || result.length > this.options.max) {
             return false;
         }
+        if (this.options.maxPerType) {
+            const typeCounts = new Map();
+            for (const assign of result) {
+                const energyCard = assign.card;
+                const type = energyCard.provides[0];
+                typeCounts.set(type, (typeCounts.get(type) || 0) + 1);
+                if (typeCounts.get(type) > this.options.maxPerType) {
+                    return false;
+                }
+            }
+        }
         // Check if all targets are the same
         if (this.options.sameTarget && result.length > 1) {
             const t = result[0].to;
@@ -61,8 +72,8 @@ export class AttachEnergyPrompt extends Prompt {
         }
         if (this.options.validCardTypes) {
             let onlyValidTypes = true;
-            for (let card of result) {
-                const energyCard = card.card;
+            for (let assign of result) {
+                const energyCard = assign.card;
                 if (energyCard.provides.every(p => !this.options.validCardTypes.includes(p))) {
                     onlyValidTypes = false;
                 }
@@ -72,8 +83,8 @@ export class AttachEnergyPrompt extends Prompt {
         // Check if 'different types' restriction is valid
         if (this.options.differentTypes) {
             const typeMap = {};
-            for (const card of result) {
-                const cardType = this.getCardType(card.card);
+            for (const assign of result) {
+                const cardType = this.getCardType(assign.card);
                 if (typeMap[cardType] === true) {
                     return false;
                 }

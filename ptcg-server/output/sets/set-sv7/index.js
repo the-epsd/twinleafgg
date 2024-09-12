@@ -7,6 +7,7 @@ exports.setSV7 = [
     new card_images_1.AreaZeroUnderdepthsArt(),
     new card_images_1.BouffalantArt(),
     new card_images_1.BriarArt(),
+    new card_images_1.ChewtleArt(),
     new card_images_1.CinderaceexArt(),
     new card_images_1.CrispinArt(),
     new card_images_1.DrednawArt(),

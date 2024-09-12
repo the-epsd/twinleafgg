@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SerperiorVSTARArt = exports.SerperiorVArt = exports.SerenaArt = exports.SandygastArt = exports.RuffletArt = exports.RegielekiVMAXArt = exports.RegielekiVArt = exports.RegidragoVSTARArt = exports.RegidragoVArt = exports.RegenerativeEnergyArt = exports.RaltsArt = exports.RaichuArt = exports.RadiantTsareenaArt = exports.RadiantJirachiArt = exports.RadiantAlakazamArt = exports.PrimordialAltarArt = exports.PalossandArt = exports.MismagiusArt = exports.MetagrossArt = exports.MeowsticArt = exports.LugiaVSTARArt = exports.LugiaVArt = exports.LanceArt = exports.KlinklangArt = exports.KlinkArt = exports.KlangArt = exports.KirliaArt = exports.HisuianBraviaryArt = exports.GardevoirArt = exports.FurisodeGirlArt = exports.ForestSealStoneArt = exports.FennekinArt = exports.FeebasArt = exports.EmergencyJellyArt = exports.ElgyemArt = exports.DreepyArt = exports.DrakloakArt = exports.DragoniteArt = exports.CrobatArt = exports.CobalionArt = exports.CapturingAromaArt = exports.CandiceArt = exports.BraixenArt = exports.BeldumArt = exports.BeheeyemArt = exports.ArticunoArt = exports.ArcheopsArt = exports.ArchenArt = exports.AlolanVulpixVSTARArt = exports.AlolanVulpixVArt = void 0;
-exports.ZubatArt = exports.ZeraoraArt = exports.WorkerArt = exports.WailordArt = exports.VGuardEnergyArt = exports.UrsalunaVArt = exports.UnidentifiedFossilArt = exports.TerrakionArt = exports.SpindaArt = exports.SnoruntArt = void 0;
+exports.SerperiorVArt = exports.SerenaArt = exports.SandygastArt = exports.RuffletArt = exports.RegielekiVMAXArt = exports.RegielekiVArt = exports.RegidragoVSTARArt = exports.RegidragoVArt = exports.RegenerativeEnergyArt = exports.RaltsArt = exports.RaichuArt = exports.RadiantTsareenaArt = exports.RadiantJirachiArt = exports.RadiantAlakazamArt = exports.PrimordialAltarArt = exports.PalossandArt = exports.MismagiusArt = exports.MetagrossArt = exports.MeowsticArt = exports.LugiaVSTARArt = exports.LugiaVArt = exports.LanceArt = exports.KlinklangArt = exports.KlinkArt = exports.KlangArt = exports.KirliaArt = exports.HisuianBraviaryArt = exports.GolbatArt = exports.GardevoirArt = exports.FurisodeGirlArt = exports.ForestSealStoneArt = exports.FennekinArt = exports.FeebasArt = exports.EmergencyJellyArt = exports.ElgyemArt = exports.DreepyArt = exports.DrakloakArt = exports.DragoniteArt = exports.CrobatArt = exports.CobalionArt = exports.CapturingAromaArt = exports.CandiceArt = exports.BraixenArt = exports.BeldumArt = exports.BeheeyemArt = exports.ArticunoArt = exports.ArcheopsArt = exports.ArchenArt = exports.AlolanVulpixVSTARArt = exports.AlolanVulpixVArt = void 0;
+exports.ZubatArt = exports.ZeraoraArt = exports.WorkerArt = exports.WailordArt = exports.VGuardEnergyArt = exports.UrsalunaVArt = exports.UnidentifiedFossilArt = exports.TerrakionArt = exports.SpindaArt = exports.SnoruntArt = exports.SerperiorVSTARArt = void 0;
 const alolan_vulpix_v_1 = require("./alolan-vulpix-v");
 const alolan_vulpix_vstar_1 = require("./alolan-vulpix-vstar");
 const archen_1 = require("./archen");
@@ -24,6 +24,7 @@ const fennekin_1 = require("./fennekin");
 const forest_seal_stone_1 = require("./forest-seal-stone");
 const furisode_girl_1 = require("./furisode-girl");
 const gardevoir_1 = require("./gardevoir");
+const golbat_1 = require("./golbat");
 const hisuian_braviary_1 = require("./hisuian-braviary");
 const kirlia_1 = require("./kirlia");
 const lance_1 = require("./lance");
@@ -216,6 +217,13 @@ class GardevoirArt extends gardevoir_1.Gardevoir {
     }
 }
 exports.GardevoirArt = GardevoirArt;
+class GolbatArt extends golbat_1.Golbat {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_104_R_EN_LG.png';
+    }
+}
+exports.GolbatArt = GolbatArt;
 class HisuianBraviaryArt extends hisuian_braviary_1.HisuianBraviary {
     constructor() {
         super(...arguments);

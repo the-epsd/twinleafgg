@@ -7,7 +7,7 @@ class Nidorina extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.STAGE_1;
-        this.evolvesFrom = 'Nidoran♀';
+        this.evolvesFrom = 'Nidoran F';
         this.cardType = game_1.CardType.DARK;
         this.hp = 90;
         this.weakness = [{ type: game_1.CardType.FIGHTING }];

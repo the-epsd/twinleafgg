@@ -53,5 +53,6 @@ exports.setLostOrigin = [
     new card_images_1.ArezuArt(),
     new card_images_1.DrapionVSTARArt(),
     new card_images_1.ThortonArt(),
-    new card_images_1.TynamoArt()
+    new card_images_1.TynamoArt(),
+    new card_images_1.WurmpleArt(),
 ];

@@ -23,8 +23,8 @@ class NidoranMale extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '32';
-        this.name = 'Nidoran♂';
-        this.fullName = 'Nidoran♂ MEW';
+        this.name = 'Nidoran M';
+        this.fullName = 'Nidoran M MEW';
     }
 }
 exports.NidoranMale = NidoranMale;

@@ -30,7 +30,14 @@ class Joltik extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             //attach grass energy prompt
-            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Grass Energy' }, { allowCancel: true, min: 0, max: 2 }), transfers => {
+            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, {
+                allowCancel: true,
+                min: 0,
+                max: 4,
+                differentTypes: true,
+                validCardTypes: [card_types_1.CardType.GRASS, card_types_1.CardType.LIGHTNING],
+                maxPerType: 2
+            }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {
@@ -40,21 +47,9 @@ class Joltik extends pokemon_card_1.PokemonCard {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.deck.moveCardTo(transfer.card, target);
                 }
-                //attach lightning energy prompt
-                return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { allowCancel: true, min: 0, max: 2 }), transfers => {
-                    transfers = transfers || [];
-                    // cancelled by user
-                    if (transfers.length === 0) {
-                        return state;
-                    }
-                    for (const transfer of transfers) {
-                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                        player.deck.moveCardTo(transfer.card, target);
-                    }
-                    // Shuffles deck after attaching both types of energies
-                    state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                        player.deck.applyOrder(order);
-                    });
+                // Shuffles deck after attaching both types of energies
+                state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
                 });
             });
         }

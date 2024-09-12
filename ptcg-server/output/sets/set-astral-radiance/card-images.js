@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RegisteelArt = exports.RegirockArt = exports.RegigigasArt = exports.RegielekiArt = exports.RegidragoArt = exports.RegiceArt = exports.RaltsArt = exports.RadiantHawluchaArt = exports.RadiantGreninjaArt = exports.OriginFormePalkiaVSTARArt = exports.OriginFormePalkiaVArt = exports.OriginFormeDialgaVSTARArt = exports.OriginFormeDialgaVArt = exports.MiltankArt = exports.MightyenaArt = exports.MantineArt = exports.MagnetonArt = exports.LuxrayVArt = exports.LucarioVArt = exports.KricketuneArt = exports.KleavorArt = exports.KeldeoArt = exports.JubilifeVillageArt = exports.IridaArt = exports.HisuianSamurottVSTARArt = exports.HisuianSamurottVArt = exports.HisuianQwilfishArt2 = exports.HisuianQwilfishArt = exports.HisuianOverqwilArt = exports.HisuianHeavyBallArt = exports.HisuianGrowlitheArt = exports.HisuianBasculinArt = exports.HisuianBasculegionArt = exports.HisuianArcanineArt = exports.GutsyPickaxeArt = exports.GrantArt = exports.GardeniasVigorArt = exports.GapejawBogArt = exports.GarchompVArt = exports.GalladeArt = exports.FeatherBallArt = exports.EnergyLotoArt = exports.DiancieArt = exports.DarkraiVSTARArt = exports.DarkraiVArt = exports.DarkPatchArt = exports.CylleneArt = exports.CancelingCologneArt = exports.BronzorArt = exports.AdamanArt = void 0;
-exports.YanmaArt = exports.WyrdeerVArt = exports.UrsalunaArt = exports.TrekkingShoesArt = exports.TempleofSinnohArt = exports.SwitchCartArt = exports.SupereffectiveGlassesArt = exports.StarmieVArt = exports.SpicySeasonedCurryArt = exports.ShieldonArt = exports.RoxanneArt = void 0;
+exports.RegirockArt = exports.RegigigasArt = exports.RegielekiArt = exports.RegidragoArt = exports.RegiceArt = exports.RaltsArt = exports.RadiantHawluchaArt = exports.RadiantGreninjaArt = exports.OriginFormePalkiaVSTARArt = exports.OriginFormePalkiaVArt = exports.OriginFormeDialgaVSTARArt = exports.OriginFormeDialgaVArt = exports.MiltankArt = exports.MightyenaArt = exports.MantineArt = exports.MagnetonArt = exports.LuxrayVArt = exports.LucarioVArt = exports.KricketuneArt = exports.KricketotArt = exports.KleavorArt = exports.KeldeoArt = exports.JubilifeVillageArt = exports.IridaArt = exports.HisuianSamurottVSTARArt = exports.HisuianSamurottVArt = exports.HisuianQwilfishArt2 = exports.HisuianQwilfishArt = exports.HisuianOverqwilArt = exports.HisuianHeavyBallArt = exports.HisuianGrowlitheArt = exports.HisuianBasculinArt = exports.HisuianBasculegionArt = exports.HisuianArcanineArt = exports.GutsyPickaxeArt = exports.GrantArt = exports.GardeniasVigorArt = exports.GapejawBogArt = exports.GarchompVArt = exports.GalladeArt = exports.FeatherBallArt = exports.EnergyLotoArt = exports.DiancieArt = exports.DarkraiVSTARArt = exports.DarkraiVArt = exports.DarkPatchArt = exports.CylleneArt = exports.CancelingCologneArt = exports.BronzorArt = exports.AdamanArt = void 0;
+exports.YanmaArt = exports.WyrdeerVArt = exports.UrsalunaArt = exports.TrekkingShoesArt = exports.TempleofSinnohArt = exports.SwitchCartArt = exports.SupereffectiveGlassesArt = exports.StarmieVArt = exports.SpicySeasonedCurryArt = exports.ShieldonArt = exports.RoxanneArt = exports.RegisteelArt = void 0;
 const adaman_1 = require("./adaman");
 const ASR_109_Shieldon_1 = require("./ASR_109_Shieldon");
 const ASR_111_Bronzor_1 = require("./ASR_111_Bronzor");
@@ -34,6 +34,7 @@ const irida_1 = require("./irida");
 const jubilife_village_1 = require("./jubilife-village");
 const keldeo_1 = require("./keldeo");
 const kleavor_1 = require("./kleavor");
+const kricketot_1 = require("./kricketot");
 const kricketune_1 = require("./kricketune");
 const lucario_v_1 = require("./lucario-v");
 const luxray_v_1 = require("./luxray-v");
@@ -273,6 +274,13 @@ class KleavorArt extends kleavor_1.Kleavor {
     }
 }
 exports.KleavorArt = KleavorArt;
+class KricketotArt extends kricketot_1.Kricketot {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_009_R_EN.png';
+    }
+}
+exports.KricketotArt = KricketotArt;
 class KricketuneArt extends kricketune_1.Kricketune {
     constructor() {
         super(...arguments);

@@ -18,6 +18,7 @@ export declare class Silcoon extends PokemonCard {
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
     cardImage: string;
     setNumber: string;

@@ -42,6 +42,8 @@ import { NidoranMale } from './nidoran-male';
 import { Nidorino } from './nidorino';
 import { NidoranFemale } from './nidoran-female';
 import { Nidorina } from './nidorina';
+import { Machop } from './machop';
+import { Machoke } from './machoke';
 
 export class AntiqueHelixFossilArt extends AntiqueHelixFossil {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_153_R_EN.png';
@@ -133,6 +135,14 @@ export class JolteonArt extends Jolteon {
 
 export class KangaskhanexArt extends Kangaskhanex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_115_R_EN_LG.png';
+}
+
+export class MachopArt extends Machop {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_066_R_EN_LG.png';
+}
+
+export class MachokeArt extends Machoke {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_067_R_EN_LG.png';
 }
 
 export class MagmarArt extends Magmar {

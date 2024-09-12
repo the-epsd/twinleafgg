@@ -92,3 +92,4 @@ ptcg-server/dist/avatars
 ptcg-server/avatars
 ptcg-server/.nyc_output/processinfo/index.json
 /TCGDex
+card-images.json

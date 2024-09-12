@@ -8,7 +8,7 @@ class Nidorino extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.cardType = card_types_1.CardType.DARK;
         this.stage = card_types_1.Stage.STAGE_1;
-        this.evolvesFrom = 'Nidoran♂';
+        this.evolvesFrom = 'Nidoran M';
         this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

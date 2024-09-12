@@ -22,9 +22,10 @@ export interface AttachEnergyOptions {
   sameTarget: boolean;
   differentTargets: boolean;
   validCardTypes?: CardType[];
+  maxPerType?: number  // Add this new option
 }
 
-export type AttachEnergyResultType = {to: CardTarget, index: number}[];
+export type AttachEnergyResultType = { to: CardTarget, index: number }[];
 
 export interface CardAssign {
   to: CardTarget;
@@ -86,6 +87,18 @@ export class AttachEnergyPrompt extends Prompt<CardAssign[]> {
       return false;
     }
 
+    if (this.options.maxPerType) {
+      const typeCounts = new Map<CardType, number>();
+      for (const assign of result) {
+        const energyCard = assign.card as EnergyCard;
+        const type = energyCard.provides[0];
+        typeCounts.set(type, (typeCounts.get(type) || 0) + 1);
+        if (typeCounts.get(type)! > this.options.maxPerType) {
+          return false;
+        }
+      }
+    }
+
     // Check if all targets are the same
     if (this.options.sameTarget && result.length > 1) {
       const t = result[0].to;
@@ -98,26 +111,26 @@ export class AttachEnergyPrompt extends Prompt<CardAssign[]> {
         return false;
       }
     }
-    
+
     if (this.options.validCardTypes) {
       let onlyValidTypes = true;
-      
-      for (let card of result) {
-        const energyCard = card.card as EnergyCard;
-        
+
+      for (let assign of result) {
+        const energyCard = assign.card as EnergyCard;
+
         if (energyCard.provides.every(p => !this.options.validCardTypes!.includes(p))) {
           onlyValidTypes = false;
         }
       }
-      
+
       return onlyValidTypes;
     }
 
     // Check if 'different types' restriction is valid
     if (this.options.differentTypes) {
       const typeMap: { [key: number]: boolean } = {};
-      for (const card of result) {
-        const cardType = this.getCardType(card.card);
+      for (const assign of result) {
+        const cardType = this.getCardType(assign.card);
         if (typeMap[cardType] === true) {
           return false;
         } else {
@@ -143,7 +156,6 @@ export class AttachEnergyPrompt extends Prompt<CardAssign[]> {
 
     return result.every(r => r.card !== undefined);
   }
-
   private getCardType(card: Card): CardType {
     if (card.superType === SuperType.ENERGY) {
       const energyCard = card as EnergyCard;

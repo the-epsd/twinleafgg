@@ -9,10 +9,10 @@ const game_1 = require("../../game");
 class NidoranMale extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.name = 'Nidoran♂';
+        this.name = 'Nidoran M';
         this.set = 'BS';
         this.setNumber = '55';
-        this.fullName = 'Nidoran♂ BS';
+        this.fullName = 'Nidoran M BS';
         this.cardType = card_types_1.CardType.GRASS;
         this.stage = card_types_1.Stage.BASIC;
         this.hp = 40;

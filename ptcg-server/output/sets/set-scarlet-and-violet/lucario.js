@@ -24,7 +24,7 @@ class Lucario extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Accelerating Stab',
-                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 120,
                 text: 'During your next turn, this Pokémon can\'t use Accelerating Stab.'
             }

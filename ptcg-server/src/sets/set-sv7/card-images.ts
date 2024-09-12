@@ -2,6 +2,7 @@ import { Archaludon } from './archaludon';
 import { AreaZeroUnderdepths } from './area-zero-underdepths';
 import { Bouffalant } from './bouffalant';
 import { Briar } from './briar';
+import { Chewtle } from './chewtle';
 import { Cinderaceex } from './cinderace-ex';
 import { Comfey } from './comfey';
 import { Crispin } from './crispin';
@@ -39,6 +40,10 @@ export class BouffalantArt extends Bouffalant {
 
 export class BriarArt extends Briar {
   public cardImage = 'https://pbs.twimg.com/media/GQAkviMWoAAp8Y9?format=png&name=900x900';
+}
+
+export class ChewtleArt extends Chewtle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV7/SV7_25_R_JP.png';
 }
 
 export class ComfeyArt extends Comfey {

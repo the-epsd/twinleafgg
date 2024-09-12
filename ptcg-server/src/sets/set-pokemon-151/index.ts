@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArbokexArt, BlastoiseexArt, BulbasaurArt, CharizardexArt, CharmanderArt, CharmeleonArt, CyclingRoadArt, DittoArt, DodrioArt, DoduoArt, EeveeArt, EkansArt, ElectabuzzArt, EnergyStickerArt, EreikasInvitationArt, GiovannisCharismaArt, GloomArt, GrabberArt, IvysaurArt, JolteonArt, KangaskhanexArt, MagmarArt, MewexArt, MoltresArt, NidokingArt, NidoqueenArt, NidoranFemaleArt, NidoranMaleArt, NidorinaArt, NidorinoArt, OddishArt, PidgeottoArt, PidgeyArt, ScytherArt, SquirtleArt, StaryuArt, VenomothArt, VenonatArt, VenusaurexArt, VileplumeArt, WartortleArt, ZapdosexArt } from './card-images';
+import { ArbokexArt, BlastoiseexArt, BulbasaurArt, CharizardexArt, CharmanderArt, CharmeleonArt, CyclingRoadArt, DittoArt, DodrioArt, DoduoArt, EeveeArt, EkansArt, ElectabuzzArt, EnergyStickerArt, EreikasInvitationArt, GiovannisCharismaArt, GloomArt, GrabberArt, IvysaurArt, JolteonArt, KangaskhanexArt, MachokeArt, MachopArt, MagmarArt, MewexArt, MoltresArt, NidokingArt, NidoqueenArt, NidoranFemaleArt, NidoranMaleArt, NidorinaArt, NidorinoArt, OddishArt, PidgeottoArt, PidgeyArt, ScytherArt, SquirtleArt, StaryuArt, VenomothArt, VenonatArt, VenusaurexArt, VileplumeArt, WartortleArt, ZapdosexArt } from './card-images';
 import { BulbasaurIR, IvysaurIR, CharmanderIR, CharmeleonIR, SquirtleIR, WartortleIR, NidokingIR, VenusaurexFA, CharizardexFA, BlastoiseexFA, ArbokexFA, KangaskhanexFA, ZapdosexFA, MewexFA, ErikasInvitationFA, GiovannisCharismaFA, VenusaurexSIR, CharizardexSIR, BlastoiseexSIR, ZapdosexSIR, ErikasInvitationSIR, GiovannisCharismaSIR, MewexHR, SwitchHR, BasicPsychicEnergyHR } from './full-art';
 
 export const setPokemon151: Card[] = [
@@ -27,6 +27,8 @@ export const setPokemon151: Card[] = [
   new IvysaurArt(),
   new JolteonArt(),
   new KangaskhanexArt(),
+  new MachopArt(),
+  new MachokeArt(),
   new MagmarArt(),
   new MewexArt(),
   new MoltresArt(),

@@ -35,11 +35,11 @@ class Keldeo extends pokemon_card_1.PokemonCard {
         this.fullName = 'Keldeo ASR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const playerBench = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
             const totalBenched = playerBench;
-            effect.damage = 10 + (totalBenched * 30);
+            effect.damage = 10 + (totalBenched * 20);
         }
         return state;
     }

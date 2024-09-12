@@ -5,6 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 function* useStadium(next, store, state, effect) {
     const player = effect.player;
     if (player.deck.cards.length === 0) {
@@ -18,7 +19,9 @@ function* useStadium(next, store, state, effect) {
     // Build possible evolution card names
     const evolutionNames = [];
     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.stage !== card_types_1.Stage.BASIC) {
+        const playedTurnEffect = new check_effects_1.CheckPokemonPlayedTurnEffect(player, list);
+        store.reduceEffect(state, playedTurnEffect);
+        if (card.stage !== card_types_1.Stage.BASIC || playedTurnEffect.pokemonPlayedTurn === state.turn) {
             return;
         }
         const valid = evolutions.filter(e => e.evolvesFrom === card.name);

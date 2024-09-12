@@ -22,6 +22,7 @@ class Charizard extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.WATER }];
         this.resistance = [];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.regulationMark = 'F';
         this.powers = [
             {
                 name: 'Burn Brightly',

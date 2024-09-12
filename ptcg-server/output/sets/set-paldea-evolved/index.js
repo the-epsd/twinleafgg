@@ -37,6 +37,7 @@ exports.setPaldeaEvolved = [
     new card_images_1.LuxrayArt(),
     new card_images_1.MagnemiteArt(),
     new card_images_1.MimikyuArt(),
+    new card_images_1.MisdreavusArt(),
     new card_images_1.MurkrowArt(),
     new card_images_1.NoibatArt(),
     new card_images_1.NoivernexArt(),
