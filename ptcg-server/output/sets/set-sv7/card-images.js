@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.DrifblimArt = exports.DrednawArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
+exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.DrifblimArt = exports.DrednawArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.ChewtleArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
 const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
 const bouffalant_1 = require("./bouffalant");
 const briar_1 = require("./briar");
+const chewtle_1 = require("./chewtle");
 const cinderace_ex_1 = require("./cinderace-ex");
 const comfey_1 = require("./comfey");
 const crispin_1 = require("./crispin");
@@ -55,6 +56,13 @@ class BriarArt extends briar_1.Briar {
     }
 }
 exports.BriarArt = BriarArt;
+class ChewtleArt extends chewtle_1.Chewtle {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV7/SV7_25_R_JP.png';
+    }
+}
+exports.ChewtleArt = ChewtleArt;
 class ComfeyArt extends comfey_1.Comfey {
     constructor() {
         super(...arguments);

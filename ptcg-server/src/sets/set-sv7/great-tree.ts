@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage, CardManager, PokemonCard, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, Card, ChooseCardsPrompt, StateUtils } from '../../game';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPlayedTurnEffect } from '../../game/store/effects/check-effects';
 
 function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
   const player = effect.player;
@@ -22,7 +23,9 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   // Build possible evolution card names
   const evolutionNames: string[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-    if (card.stage !== Stage.BASIC) {
+    const playedTurnEffect = new CheckPokemonPlayedTurnEffect(player, list);
+    store.reduceEffect(state, playedTurnEffect);
+    if (card.stage !== Stage.BASIC || playedTurnEffect.pokemonPlayedTurn === state.turn) {
       return;
     }
     const valid = evolutions.filter(e => e.evolvesFrom === card.name);
@@ -32,6 +35,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
       }
     });
   });
+
 
   // There is nothing that can evolve
   if (evolutionNames.length === 0) {

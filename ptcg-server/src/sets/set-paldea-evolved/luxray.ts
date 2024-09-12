@@ -25,7 +25,8 @@ export class Luxray extends PokemonCard {
   public powers = [{
     name: 'Swelling Flash',
     powerType: PowerType.ABILITY,
-    text: ''
+    useFromHand: true,
+    text: 'Once during your turn, if this Pokémon is in your hand and you have more Prize cards remaining than your opponent, you may put this Pokémon onto your Bench.'
   }];
 
   public attacks = [{

@@ -107,3 +107,4 @@ export declare class EvolveEffect implements Effect {
     pokemonCard: PokemonCard;
     constructor(player: Player, target: PokemonCardList, pokemonCard: PokemonCard);
 }
+export { Effect };

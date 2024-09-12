@@ -27,6 +27,8 @@ exports.setPokemon151 = [
     new card_images_1.IvysaurArt(),
     new card_images_1.JolteonArt(),
     new card_images_1.KangaskhanexArt(),
+    new card_images_1.MachopArt(),
+    new card_images_1.MachokeArt(),
     new card_images_1.MagmarArt(),
     new card_images_1.MewexArt(),
     new card_images_1.MoltresArt(),

@@ -17,6 +17,7 @@ export interface AttachEnergyOptions {
     sameTarget: boolean;
     differentTargets: boolean;
     validCardTypes?: CardType[];
+    maxPerType?: number;
 }
 export declare type AttachEnergyResultType = {
     to: CardTarget;

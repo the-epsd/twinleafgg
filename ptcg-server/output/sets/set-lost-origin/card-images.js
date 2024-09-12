@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TynamoArt = exports.ThortonArt = exports.SnorlaxArt = exports.SilcoonArt = exports.SableyeArt = exports.RotomVArt = exports.RoseliaArt = exports.RadiantHisuianSneaslerArt = exports.RadiantGardevoirArt = exports.PidgeotVArt = exports.PanicMaskArt = exports.MissFortuneSistersArt = exports.MirageGateArt = exports.MawileArt = exports.MagnezoneVSTARArt = exports.MagnezoneVArt = exports.MachampArt = exports.MachopArt = exports.LostVacuumArt = exports.LostCityArt = exports.LadyArt = exports.KyuremVMAXArt = exports.KyuremVArt = exports.KingdraArt = exports.JynxArt = exports.InkayArt = exports.HisuianZoroarkArt = exports.HisuianZoruaArt = exports.HisuianZoroarkVSTARArt = exports.HisuianZoroarkVArt = exports.HisuianGoodraVSTARArt = exports.HisuianGoodraVArt = exports.HisuianBasculegionArt = exports.GiratinaVSTARArt = exports.GiratinaVArt = exports.GiftEnergyArt = exports.GengarArt = exports.DrapionVSTARArt = exports.DrapionVArt = exports.DelphoxVArt = exports.DamagePumpArt = exports.CresseliaArt = exports.CramorantArt = exports.ComfeyArt = exports.ColresssExperimentArt = exports.BoxOfDisasterArt = exports.BouffalantArt = exports.BeautiflyArt = exports.BanetteArt = exports.ArezuArt = void 0;
-exports.VoloArt = void 0;
+exports.WurmpleArt = exports.VoloArt = void 0;
 const arezu_1 = require("./arezu");
 const banette_1 = require("./banette");
 const beautifly_1 = require("./beautifly");
@@ -53,6 +53,7 @@ const snorlax_1 = require("./snorlax");
 const thorton_1 = require("./thorton");
 const tynamo_1 = require("./tynamo");
 const volo_1 = require("./volo");
+const wurmple_1 = require("./wurmple");
 class ArezuArt extends arezu_1.Arezu {
     constructor() {
         super(...arguments);
@@ -410,3 +411,10 @@ class VoloArt extends volo_1.Volo {
     }
 }
 exports.VoloArt = VoloArt;
+class WurmpleArt extends wurmple_1.Wurmple {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_006_R_EN_LG.png';
+    }
+}
+exports.WurmpleArt = WurmpleArt;

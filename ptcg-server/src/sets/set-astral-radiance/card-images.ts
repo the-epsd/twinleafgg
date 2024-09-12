@@ -30,6 +30,7 @@ import { Irida } from './irida';
 import { JubilifeVillage } from './jubilife-village';
 import { Keldeo } from './keldeo';
 import { Kleavor } from './kleavor';
+import { Kricketot } from './kricketot';
 import { Kricketune } from './kricketune';
 import { LucarioV } from './lucario-v';
 import { LuxrayV } from './luxray-v';
@@ -178,6 +179,10 @@ export class KeldeoArt extends Keldeo {
 
 export class KleavorArt extends Kleavor {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_085_R_EN_LG.png';
+}
+
+export class KricketotArt extends Kricketot {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_009_R_EN.png';
 }
 
 export class KricketuneArt extends Kricketune {

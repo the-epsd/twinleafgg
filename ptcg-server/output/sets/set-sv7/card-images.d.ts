@@ -2,6 +2,7 @@ import { Archaludon } from './archaludon';
 import { AreaZeroUnderdepths } from './area-zero-underdepths';
 import { Bouffalant } from './bouffalant';
 import { Briar } from './briar';
+import { Chewtle } from './chewtle';
 import { Cinderaceex } from './cinderace-ex';
 import { Comfey } from './comfey';
 import { Crispin } from './crispin';
@@ -34,6 +35,9 @@ export declare class BouffalantArt extends Bouffalant {
     cardImage: string;
 }
 export declare class BriarArt extends Briar {
+    cardImage: string;
+}
+export declare class ChewtleArt extends Chewtle {
     cardImage: string;
 }
 export declare class ComfeyArt extends Comfey {

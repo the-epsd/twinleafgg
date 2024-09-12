@@ -49,6 +49,7 @@ import { Snorlax } from './snorlax';
 import { Thorton } from './thorton';
 import { Tynamo } from './tynamo';
 import { Volo } from './volo';
+import { Wurmple } from './wurmple';
 export declare class ArezuArt extends Arezu {
     cardImage: string;
 }
@@ -200,5 +201,8 @@ export declare class TynamoArt extends Tynamo {
     cardImage: string;
 }
 export declare class VoloArt extends Volo {
+    cardImage: string;
+}
+export declare class WurmpleArt extends Wurmple {
     cardImage: string;
 }

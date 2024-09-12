@@ -49,6 +49,7 @@ import { Snorlax } from './snorlax';
 import { Thorton } from './thorton';
 import { Tynamo } from './tynamo';
 import { Volo } from './volo';
+import { Wurmple } from './wurmple';
 
 export class ArezuArt extends Arezu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_153_R_EN_LG.png';
@@ -252,4 +253,8 @@ export class TynamoArt extends Tynamo {
 
 export class VoloArt extends Volo {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_169_R_EN_LG.png';
+}
+
+export class WurmpleArt extends Wurmple {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_006_R_EN_LG.png';
 }

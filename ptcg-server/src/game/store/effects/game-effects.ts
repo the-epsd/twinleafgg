@@ -175,3 +175,5 @@ export class EvolveEffect implements Effect {
     this.pokemonCard = pokemonCard;
   }
 }
+
+export { Effect };

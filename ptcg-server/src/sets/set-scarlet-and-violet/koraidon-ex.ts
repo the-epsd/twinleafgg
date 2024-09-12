@@ -91,22 +91,25 @@ export class Koraidonex extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      let fightingPokemonOnBench = false;
+      // let fightingPokemonOnBench = false;
 
-      player.bench.forEach(benchSpot => {
-        const card = benchSpot.getPokemonCard();
-        if (card && card.cardType === CardType.FIGHTING && card.stage === Stage.BASIC) {
-          fightingPokemonOnBench = true;
-        }
-      });
+      // player.bench.forEach(benchSpot => {
+      //   const card = benchSpot.getPokemonCard();
+      //   if (card && card.cardType === CardType.FIGHTING && card.stage === Stage.BASIC) {
+      //     fightingPokemonOnBench = true;
+      //   }
+      // });
 
-      if (!fightingPokemonOnBench) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
+      // if (!fightingPokemonOnBench) {
+      //   throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      // }
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.cardType !== CardType.FIGHTING && card.stage === Stage.BASIC) {
+        if (card.cardType !== CardType.FIGHTING) {
+          blocked2.push(target);
+        }
+        if (card.stage !== Stage.BASIC) {
           blocked2.push(target);
         }
       });
@@ -125,14 +128,15 @@ export class Koraidonex extends PokemonCard {
         if (transfers.length === 0) {
           return;
         }
-        for (const transfer of transfers) {
+        transfers.forEach(transfer => {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
-          const endTurnEffect = new EndTurnEffect(player);
-          store.reduceEffect(state, endTurnEffect);
-          return state;
-        }
-      });
+        });
+      }
+      );
+      const endTurnEffect = new EndTurnEffect(player);
+      store.reduceEffect(state, endTurnEffect);
+      return state;
     }
     return state;
   }

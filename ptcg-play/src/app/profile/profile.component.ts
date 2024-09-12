@@ -10,6 +10,8 @@ import { AlertService } from '../shared/alert/alert.service';
 import { ProfileService } from '../api/services/profile.service';
 import { SessionService } from '../shared/session/session.service';
 import { ProfilePopupService } from './profile-popup.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ChangeCardImagesPopupComponent } from './change-card-images-popup/change-card-images-popup.component';
 
 @UntilDestroy()
 @Component({
@@ -26,6 +28,7 @@ export class ProfileComponent implements OnInit {
   public owner$: Observable<boolean>;
 
   constructor(
+    private dialog: MatDialog,
     private alertService: AlertService,
     private profilePopupService: ProfilePopupService,
     private profileService: ProfileService,
@@ -68,6 +71,12 @@ export class ProfileComponent implements OnInit {
           this.router.navigate(['/']);
         }
       });
+  }
+
+  openChangeCardImagesDialog(): void {
+    this.dialog.open(ChangeCardImagesPopupComponent, {
+      width: '350px'
+    });
   }
 
   changePassword() {

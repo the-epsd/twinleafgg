@@ -26,6 +26,7 @@ import { JetEnergy } from './jet-energy';
 import { LuminousEnergy } from './luminous-energy';
 import { Luxray } from './luxray';
 import { Mimikyu } from './mimikyu';
+import { Misdreavus } from './misdreavus';
 import { Murkrow } from './murkrow';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
@@ -175,6 +176,10 @@ export class MagnemiteArt extends Magnemite {
 
 export class MimikyuArt extends Mimikyu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_097_R_EN_LG.png';
+}
+
+export class MisdreavusArt extends Misdreavus {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_087_R_EN_LG.png';
 }
 
 export class MurkrowArt extends Murkrow {

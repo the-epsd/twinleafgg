@@ -20,6 +20,7 @@ import { Fennekin } from './fennekin';
 import { ForestSealStone } from './forest-seal-stone';
 import { FurisodeGirl } from './furisode-girl';
 import { Gardevoir } from './gardevoir';
+import { Golbat } from './golbat';
 import { HisuianBraviary } from './hisuian-braviary';
 import { Kirlia } from './kirlia';
 import { Lance } from './lance';
@@ -122,6 +123,9 @@ export declare class FurisodeGirlArt extends FurisodeGirl {
     cardImage: string;
 }
 export declare class GardevoirArt extends Gardevoir {
+    cardImage: string;
+}
+export declare class GolbatArt extends Golbat {
     cardImage: string;
 }
 export declare class HisuianBraviaryArt extends HisuianBraviary {

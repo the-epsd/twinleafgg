@@ -67,19 +67,22 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
             if (!hasEnergyInDiscard) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            let fightingPokemonOnBench = false;
-            player.bench.forEach(benchSpot => {
-                const card = benchSpot.getPokemonCard();
-                if (card && card.cardType === card_types_1.CardType.FIGHTING && card.stage === card_types_1.Stage.BASIC) {
-                    fightingPokemonOnBench = true;
-                }
-            });
-            if (!fightingPokemonOnBench) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-            }
+            // let fightingPokemonOnBench = false;
+            // player.bench.forEach(benchSpot => {
+            //   const card = benchSpot.getPokemonCard();
+            //   if (card && card.cardType === CardType.FIGHTING && card.stage === Stage.BASIC) {
+            //     fightingPokemonOnBench = true;
+            //   }
+            // });
+            // if (!fightingPokemonOnBench) {
+            //   throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+            // }
             const blocked2 = [];
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-                if (card.cardType !== card_types_1.CardType.FIGHTING && card.stage === card_types_1.Stage.BASIC) {
+                if (card.cardType !== card_types_1.CardType.FIGHTING) {
+                    blocked2.push(target);
+                }
+                if (card.stage !== card_types_1.Stage.BASIC) {
                     blocked2.push(target);
                 }
             });
@@ -89,14 +92,14 @@ class Koraidonex extends pokemon_card_1.PokemonCard {
                 if (transfers.length === 0) {
                     return;
                 }
-                for (const transfer of transfers) {
+                transfers.forEach(transfer => {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.discard.moveCardTo(transfer.card, target);
-                    const endTurnEffect = new game_phase_effects_1.EndTurnEffect(player);
-                    store.reduceEffect(state, endTurnEffect);
-                    return state;
-                }
+                });
             });
+            const endTurnEffect = new game_phase_effects_1.EndTurnEffect(player);
+            store.reduceEffect(state, endTurnEffect);
+            return state;
         }
         return state;
     }

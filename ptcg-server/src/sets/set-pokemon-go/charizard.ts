@@ -22,7 +22,7 @@ export class Charizard extends PokemonCard {
   public set = 'PGO';
 
   public setNumber = '53';
-  
+
   public stage: Stage = Stage.STAGE_2;
 
   public cardImage: string = 'assets/cardback.png';
@@ -42,6 +42,8 @@ export class Charizard extends PokemonCard {
   public resistance: Resistance[] = [];
 
   public retreat: CardType[] = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+
+  public regulationMark: string = 'F';
 
   public powers: Power[] = [
     {

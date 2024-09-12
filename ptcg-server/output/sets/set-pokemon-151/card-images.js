@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosexArt = exports.WartortleArt = exports.VenusaurexArt = exports.VenomothArt = exports.VenonatArt = exports.VileplumeArt = exports.StaryuArt = exports.SquirtleArt = exports.ScytherArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OddishArt = exports.NidoqueenArt = exports.NidorinaArt = exports.NidoranFemaleArt = exports.NidokingArt = exports.NidorinoArt = exports.NidoranMaleArt = exports.MoltresArt = exports.MewexArt = exports.MagmarArt = exports.KangaskhanexArt = exports.JolteonArt = exports.IvysaurArt = exports.GrabberArt = exports.GloomArt = exports.GiovannisCharismaArt = exports.EreikasInvitationArt = exports.EnergyStickerArt = exports.EeveeArt = exports.ElectabuzzArt = exports.EkansArt = exports.DoduoArt = exports.DodrioArt = exports.DittoArt = exports.CyclingRoadArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardexArt = exports.BulbasaurArt = exports.BlastoiseexArt = exports.ArbokexArt = exports.AlakazamexArt = exports.AntiqueHelixFossilArt = void 0;
+exports.ZapdosexArt = exports.WartortleArt = exports.VenusaurexArt = exports.VenomothArt = exports.VenonatArt = exports.VileplumeArt = exports.StaryuArt = exports.SquirtleArt = exports.ScytherArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OddishArt = exports.NidoqueenArt = exports.NidorinaArt = exports.NidoranFemaleArt = exports.NidokingArt = exports.NidorinoArt = exports.NidoranMaleArt = exports.MoltresArt = exports.MewexArt = exports.MagmarArt = exports.MachokeArt = exports.MachopArt = exports.KangaskhanexArt = exports.JolteonArt = exports.IvysaurArt = exports.GrabberArt = exports.GloomArt = exports.GiovannisCharismaArt = exports.EreikasInvitationArt = exports.EnergyStickerArt = exports.EeveeArt = exports.ElectabuzzArt = exports.EkansArt = exports.DoduoArt = exports.DodrioArt = exports.DittoArt = exports.CyclingRoadArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardexArt = exports.BulbasaurArt = exports.BlastoiseexArt = exports.ArbokexArt = exports.AlakazamexArt = exports.AntiqueHelixFossilArt = void 0;
 const alakazam_ex_1 = require("./alakazam-ex");
 const blastoise_ex_1 = require("./blastoise-ex");
 const bulbasaur_1 = require("./bulbasaur");
@@ -45,6 +45,8 @@ const nidoran_male_1 = require("./nidoran-male");
 const nidorino_1 = require("./nidorino");
 const nidoran_female_1 = require("./nidoran-female");
 const nidorina_1 = require("./nidorina");
+const machop_1 = require("./machop");
+const machoke_1 = require("./machoke");
 class AntiqueHelixFossilArt extends antique_helix_fossil_1.AntiqueHelixFossil {
     constructor() {
         super(...arguments);
@@ -206,6 +208,20 @@ class KangaskhanexArt extends kangaskhan_ex_1.Kangaskhanex {
     }
 }
 exports.KangaskhanexArt = KangaskhanexArt;
+class MachopArt extends machop_1.Machop {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_066_R_EN_LG.png';
+    }
+}
+exports.MachopArt = MachopArt;
+class MachokeArt extends machoke_1.Machoke {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_067_R_EN_LG.png';
+    }
+}
+exports.MachokeArt = MachokeArt;
 class MagmarArt extends magmar_1.Magmar {
     constructor() {
         super(...arguments);

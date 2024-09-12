@@ -9,7 +9,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class HisuianGoodraVSTAR extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VSTAR;
 
   public evolvesFrom = 'Hisuian Goodra V';
 

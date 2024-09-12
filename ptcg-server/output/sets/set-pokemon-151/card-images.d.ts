@@ -42,6 +42,8 @@ import { NidoranMale } from './nidoran-male';
 import { Nidorino } from './nidorino';
 import { NidoranFemale } from './nidoran-female';
 import { Nidorina } from './nidorina';
+import { Machop } from './machop';
+import { Machoke } from './machoke';
 export declare class AntiqueHelixFossilArt extends AntiqueHelixFossil {
     cardImage: string;
 }
@@ -109,6 +111,12 @@ export declare class JolteonArt extends Jolteon {
     cardImage: string;
 }
 export declare class KangaskhanexArt extends Kangaskhanex {
+    cardImage: string;
+}
+export declare class MachopArt extends Machop {
+    cardImage: string;
+}
+export declare class MachokeArt extends Machoke {
     cardImage: string;
 }
 export declare class MagmarArt extends Magmar {

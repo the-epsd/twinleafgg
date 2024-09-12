@@ -30,6 +30,7 @@ import { Irida } from './irida';
 import { JubilifeVillage } from './jubilife-village';
 import { Keldeo } from './keldeo';
 import { Kleavor } from './kleavor';
+import { Kricketot } from './kricketot';
 import { Kricketune } from './kricketune';
 import { LucarioV } from './lucario-v';
 import { LuxrayV } from './luxray-v';
@@ -147,6 +148,9 @@ export declare class KeldeoArt extends Keldeo {
     cardImage: string;
 }
 export declare class KleavorArt extends Kleavor {
+    cardImage: string;
+}
+export declare class KricketotArt extends Kricketot {
     cardImage: string;
 }
 export declare class KricketuneArt extends Kricketune {

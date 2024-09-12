@@ -15,6 +15,7 @@ export declare class Charizard extends PokemonCard {
     weakness: Weakness[];
     resistance: Resistance[];
     retreat: CardType[];
+    regulationMark: string;
     powers: Power[];
     attacks: Attack[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

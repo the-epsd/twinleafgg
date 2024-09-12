@@ -21,7 +21,7 @@ export class Keldeo extends PokemonCard {
   public attacks = [
     {
       name: 'Smash Kick',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 20,
       text: ''
     },
@@ -45,15 +45,16 @@ export class Keldeo extends PokemonCard {
   public fullName: string = 'Keldeo ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       const player = effect.player;
 
       const playerBench = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-          
+
       const totalBenched = playerBench;
-        
-      effect.damage = 10 + (totalBenched * 30);
+
+      effect.damage = 10 + (totalBenched * 20);
     }
     return state;
   }

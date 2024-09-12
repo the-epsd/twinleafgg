@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resetPasswordTemplates = void 0;
 const en = {
-    subject: '{appName} Password Reset',
+    subject: 'twinleaf.gg Password Reset',
     body: `You are receiving this because you (or someone else) have requested the reset of the password for your account.
 Please click on the following link, or paste this into your browser to complete the process:
 
@@ -10,13 +10,4 @@ Please click on the following link, or paste this into your browser to complete 
 
 If you did not request this, please ignore this email and your password will remain unchanged.`
 };
-const pl = {
-    subject: '{appName} Reset hasła',
-    body: `Otrzymałeś tego e-maila, ponieważ ty (albo ktoś inny) wysłał prośbę o wygenerowanie nowego hasła.
-Kliknij w poniższy link albo przekopiuj go do przeglądarki, aby dokończyć ten proces:
-
-{publicAddress}/reset-password/{token}
-
-Jeśli to nie ty wysłałeś tę prośbę, zignoruj ten e-mail, a twoje hasło nie zostanie zmienione.`
-};
-exports.resetPasswordTemplates = { en, pl };
+exports.resetPasswordTemplates = { en };
