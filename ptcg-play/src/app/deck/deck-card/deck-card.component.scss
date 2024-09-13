@@ -63,3 +63,14 @@ ptcg-card {
   left: 0;
   top: 0;
 }
+
+// .ptcg-card-damage {
+//   z-index: 3;
+//   position: absolute;
+//   top: -2%;
+//   right: -2%;
+
+//   :host-context(.upside-down) & {
+//     transform: rotate(180deg);
+//   }
+// }

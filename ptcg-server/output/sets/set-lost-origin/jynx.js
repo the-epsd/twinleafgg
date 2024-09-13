@@ -31,7 +31,7 @@ class Jynx extends game_1.PokemonCard {
         this.fullName = 'Jynx LOR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const hasBench = opponent.bench.some(b => b.cards.length > 0);

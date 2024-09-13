@@ -42,6 +42,11 @@ import { NidoranMale } from './nidoran-male';
 import { Nidorino } from './nidorino';
 import { NidoranFemale } from './nidoran-female';
 import { Nidorina } from './nidorina';
+import { Abra } from './abra';
+
+export class AbraArt extends Abra {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_063_R_EN.png';
+}
 import { Machop } from './machop';
 import { Machoke } from './machoke';
 

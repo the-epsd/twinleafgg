@@ -32,12 +32,17 @@ class StudentsInPaldea extends trainer_card_1.TrainerCard {
             const cardsToTake = 1 + cardsInDiscard.length;
             const blocked = [];
             player.deck.cards.forEach((card, index) => {
-                if (!(card instanceof game_1.PokemonCard && card.tags.includes(card_types_1.CardTag.POKEMON_V) && card.tags.includes(card_types_1.CardTag.POKEMON_ex) && card.tags.includes(card_types_1.CardTag.POKEMON_VMAX) && card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) && card.tags.includes(card_types_1.CardTag.RADIANT))) {
+                if ((card instanceof game_1.PokemonCard &&
+                    (card.tags.includes(card_types_1.CardTag.POKEMON_V) ||
+                        card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||
+                        card.tags.includes(card_types_1.CardTag.POKEMON_VMAX) ||
+                        card.tags.includes(card_types_1.CardTag.POKEMON_ex) ||
+                        card.tags.includes(card_types_1.CardTag.RADIANT)))) {
                     blocked.push(index);
                 }
             });
             let cards = [];
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: cardsToTake, allowCancel: true, blocked }), selected => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: cardsToTake, allowCancel: false, blocked }), selected => {
                 cards = selected || [];
                 player.deck.moveCardsTo(cards, player.hand);
                 state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => {

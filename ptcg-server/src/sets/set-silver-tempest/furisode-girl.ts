@@ -2,7 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
-import { PokemonCardList } from '../../game';
+import { ConfirmPrompt, PokemonCardList } from '../../game';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Stage, TrainerType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
@@ -30,7 +30,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
   // Check if bench has open slots
   const openSlots = player.bench.filter(b => b.cards.length === 0);
-      
+
   if (openSlots.length === 0) {
     // No open slots, throw error
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -54,16 +54,29 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
-  
+
   cards.forEach((card, index) => {
     player.deck.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
-    player.active.clearEffects();
-    player.switchPokemon(slots[index]);
+
+    state = store.prompt(state, new ConfirmPrompt(
+      effect.player.id,
+      GameMessage.WANT_TO_USE_ABILITY,
+    ), wantToUse => {
+      if (wantToUse) {
+        if (index === 0 && player.active.cards.length > 0) {
+          const activePokemon = player.active;
+          activePokemon.clearEffects();
+          player.switchPokemon(slots[index]);
+        }
+      }
+    });
+
   });
 
+
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

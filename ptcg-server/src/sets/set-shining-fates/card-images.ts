@@ -5,6 +5,7 @@ import { GalarianWeezing } from './galarian-weezing';
 import { Horsea } from './horsea';
 import { Koffing } from './koffing';
 import { Rillaboom } from './rillaboom';
+import { Rookidee } from './rookidee';
 import { Snom } from './snom';
 import { Thwackey } from './thwackey';
 
@@ -34,6 +35,10 @@ export class KoffingArt extends Koffing {
 
 export class RillaboomArt extends Rillaboom {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_SV6_R_EN_LG.png';
+}
+
+export class RookideeArt extends Rookidee {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_SV101_R_EN_LG.png';
 }
 
 export class SnomArt extends Snom {

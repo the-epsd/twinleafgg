@@ -63,7 +63,8 @@
         </div>
 
 
-        <div class="ptcg-ability-used" *ngIf="specialConditions.includes(SpecialCondition.ABILITY_USED)">
+        <div class="ptcg-ability-used" style="pointer-events: none;"
+          *ngIf="specialConditions.includes(SpecialCondition.ABILITY_USED)">
           <ptcg-badge color="warn">
             {{ 'LABEL_ABILITY_USED' | translate }}
           </ptcg-badge>

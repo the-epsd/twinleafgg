@@ -1,6 +1,6 @@
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -11,15 +11,15 @@ export class StudentsInPaldea extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'G';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '85';
-  
+
   public set = 'PAF';
-  
+
   public name = 'Paldean Student';
-  
+
   public fullName = 'Paldean Student PAF';
 
   public text: string =
@@ -42,12 +42,17 @@ export class StudentsInPaldea extends TrainerCard {
 
       const cardsInDiscard = effect.player.discard.cards.filter(c => c.name === 'Paldean Student');
       const cardsToTake = 1 + cardsInDiscard.length;
-      
+
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (!(card instanceof PokemonCard && card.tags.includes(CardTag.POKEMON_V) && card.tags.includes(CardTag.POKEMON_ex) && card.tags.includes(CardTag.POKEMON_VMAX) && card.tags.includes(CardTag.POKEMON_VSTAR) && card.tags.includes(CardTag.RADIANT))) {
+        if ((card instanceof PokemonCard &&
+          (card.tags.includes(CardTag.POKEMON_V) ||
+            card.tags.includes(CardTag.POKEMON_VSTAR) ||
+            card.tags.includes(CardTag.POKEMON_VMAX) ||
+            card.tags.includes(CardTag.POKEMON_ex) ||
+            card.tags.includes(CardTag.RADIANT)))) {
           blocked.push(index);
-        } 
+        }
       });
 
 
@@ -56,8 +61,8 @@ export class StudentsInPaldea extends TrainerCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 0, max: cardsToTake, allowCancel: true, blocked }
+        { superType: SuperType.POKEMON },
+        { min: 0, max: cardsToTake, allowCancel: false, blocked }
       ), selected => {
         cards = selected || [];
 
@@ -74,7 +79,7 @@ export class StudentsInPaldea extends TrainerCard {
             return state;
           });
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          
+
         });
         return state;
       });

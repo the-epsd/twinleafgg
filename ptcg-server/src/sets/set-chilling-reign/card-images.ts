@@ -22,6 +22,7 @@ import { GalarianMoltresV } from './galarian-moltres-v';
 import { GalarianZapdosV } from './galarian-zapdos-v';
 import { Gallade } from './gallade';
 import { Gardevoir } from './gardevoir';
+import { Golett } from './golett';
 import { Golurk } from './golurk';
 import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
 import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
@@ -139,7 +140,9 @@ export class GardevoirArt extends Gardevoir {
 export class GalladeArt extends Gallade {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_081_R_EN.png';
 }
-
+export class GolettArt extends Golett {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_065_R_EN.png';
+}
 export class GolurkArt extends Golurk {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_066_R_EN_LG.png';
 }

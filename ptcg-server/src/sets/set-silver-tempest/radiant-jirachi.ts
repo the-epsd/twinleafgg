@@ -3,9 +3,9 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { ChooseCardsPrompt, CoinFlipPrompt, GameMessage, ShuffleDeckPrompt, StateUtils } from '../../game';
+import { ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, StateUtils } from '../../game';
 
 
 export class RadiantJirachi extends PokemonCard {
@@ -51,59 +51,54 @@ export class RadiantJirachi extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-
+    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+      // This Pokemon was knocked out
       const player = effect.player;
 
-      if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
-        // This Pokemon was knocked out
-
-        let cards: any[] = [];
-        return store.prompt(state, new ChooseCardsPrompt(
-          player.id,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.deck,
-          {},
-          { min: 0, max: 3, allowCancel: true }),
-          (selected: any[]) => {
-            cards = selected || [];
-            if (cards.length > 0) {
-              player.deck.moveCardsTo(cards, player.hand);
-            }
-            return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
-              player.deck.applyOrder(order);
-              return state;
-            });
-          });
-      }
-
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
-
-        let coin1Result = false;
-        let coin2Result = false;
-
-        return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
-          coin1Result = result;
-
-          return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
-            coin2Result = result;
-
-            if (coin1Result && coin2Result) {
-              // Both heads
-
-              const activePokemon = opponent.active.getPokemonCard();
-              if (activePokemon) {
-                activePokemon.hp = 0;
-              }
-            }
+      let cards: any[] = [];
+      return store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        player.deck,
+        {},
+        { min: 0, max: 3, allowCancel: false }),
+        (selected: any[]) => {
+          cards = selected || [];
+          if (cards.length > 0) {
+            player.deck.moveCardsTo(cards, player.hand);
+          }
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
+            player.deck.applyOrder(order);
             return state;
           });
         });
-      }
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let coin1Result = false;
+      let coin2Result = false;
+
+      return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
+        coin1Result = result;
+
+        return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
+          coin2Result = result;
+
+          if (coin1Result && coin2Result) {
+            // Both heads
+
+            opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+              if (cardList.getPokemonCard() === opponent.active.cards[0]) {
+                cardList.damage += 999;
+              }
+            });
+          }
+        });
+      });
     }
     return state;
   }

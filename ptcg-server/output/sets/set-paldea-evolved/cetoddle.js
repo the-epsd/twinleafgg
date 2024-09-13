@@ -19,7 +19,7 @@ class Cetoddle extends pokemon_card_1.PokemonCard {
                 name: 'Avalanche',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
                 damage: 30,
-                text: 'This attack also does 10 damage to each of your opponent\'s Benched Pokémon. (Don’t apply Weakness and Resistance for Benched Pokémon.)'
+                text: 'This attack also does 10 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }
         ];
         this.set = 'PAL';

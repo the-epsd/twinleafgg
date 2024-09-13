@@ -35,42 +35,40 @@ class RadiantJirachi extends pokemon_card_1.PokemonCard {
         this.fullName = 'Radiant Jirachi SIT';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+            // This Pokemon was knocked out
             const player = effect.player;
-            if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
-                // This Pokemon was knocked out
-                let cards = [];
-                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 3, allowCancel: true }), (selected) => {
-                    cards = selected || [];
-                    if (cards.length > 0) {
-                        player.deck.moveCardsTo(cards, player.hand);
-                    }
-                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), (order) => {
-                        player.deck.applyOrder(order);
-                        return state;
-                    });
+            let cards = [];
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 3, allowCancel: false }), (selected) => {
+                cards = selected || [];
+                if (cards.length > 0) {
+                    player.deck.moveCardsTo(cards, player.hand);
+                }
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), (order) => {
+                    player.deck.applyOrder(order);
+                    return state;
                 });
-            }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                const player = effect.player;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                let coin1Result = false;
-                let coin2Result = false;
+            });
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            let coin1Result = false;
+            let coin2Result = false;
+            return store.prompt(state, new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP), (result) => {
+                coin1Result = result;
                 return store.prompt(state, new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP), (result) => {
-                    coin1Result = result;
-                    return store.prompt(state, new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP), (result) => {
-                        coin2Result = result;
-                        if (coin1Result && coin2Result) {
-                            // Both heads
-                            const activePokemon = opponent.active.getPokemonCard();
-                            if (activePokemon) {
-                                activePokemon.hp = 0;
+                    coin2Result = result;
+                    if (coin1Result && coin2Result) {
+                        // Both heads
+                        opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, cardList => {
+                            if (cardList.getPokemonCard() === opponent.active.cards[0]) {
+                                cardList.damage += 999;
                             }
-                        }
-                        return state;
-                    });
+                        });
+                    }
                 });
-            }
+            });
         }
         return state;
     }

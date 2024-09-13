@@ -10,6 +10,7 @@ class Buzzwole extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.tags = [card_types_1.CardTag.ULTRA_BEAST];
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 130;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];

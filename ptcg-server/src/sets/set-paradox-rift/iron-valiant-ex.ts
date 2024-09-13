@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, PowerType, GameError } from '../../game';
+import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, PowerType, GameError, ConfirmPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -97,38 +97,46 @@ export class IronValiantex extends PokemonCard {
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
         }
 
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-
-        state = store.prompt(state, new ChoosePokemonPrompt(
+        state = store.prompt(state, new ConfirmPrompt(
           player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH, SlotType.ACTIVE],
-          { min: 1, max: 1, allowCancel: true },
-        ), selected => {
+          GameMessage.WANT_TO_USE_ABILITY,
+        ), wantToUse => {
+          if (wantToUse) {
 
-          const targets = selected || [];
-
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-            if (cardList.getPokemonCard() === this) {
-              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+              const stub = new PowerEffect(player, {
+                name: 'test',
+                powerType: PowerType.ABILITY,
+                text: ''
+              }, this);
+              store.reduceEffect(state, stub);
+            } catch {
+              return state;
             }
-          });
-          targets.forEach(target => {
-            target.damage += 20;
-            player.abilityMarker.addMarker(this.TACHYON_BITS_MARKER, this);
-          });
-          this.tachyonBits++;
+
+            state = store.prompt(state, new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+              PlayerType.TOP_PLAYER,
+              [SlotType.BENCH, SlotType.ACTIVE],
+              { min: 1, max: 1, allowCancel: true },
+            ), selected => {
+
+              const targets = selected || [];
+
+              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                  cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                }
+              });
+              targets.forEach(target => {
+                target.damage += 20;
+                player.abilityMarker.addMarker(this.TACHYON_BITS_MARKER, this);
+              });
+              this.tachyonBits++;
+            });
+          }
         });
       }
     }
@@ -143,7 +151,6 @@ export class IronValiantex extends PokemonCard {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
       console.log('marker added');
     }
-
     return state;
   }
 }

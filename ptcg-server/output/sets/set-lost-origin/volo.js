@@ -17,30 +17,42 @@ class Volo extends game_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
-            const players = state.players;
-            const player = players[0];
-            const bench = player.bench;
-            if (bench.length > 0) {
+            const player = effect.player;
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
+            let hasBenchedV = false;
+            const blocked = [];
+            player.bench.forEach((benchSpot, index) => {
+                const pokemonCard = benchSpot.getPokemonCard();
+                if (pokemonCard) {
+                    if (pokemonCard.tags.includes(game_1.CardTag.POKEMON_V) ||
+                        pokemonCard.tags.includes(game_1.CardTag.POKEMON_VSTAR) ||
+                        pokemonCard.tags.includes(game_1.CardTag.POKEMON_VMAX)) {
+                        hasBenchedV = true;
+                    }
+                    else {
+                        blocked.push({ player: game_1.PlayerType.BOTTOM_PLAYER, slot: game_1.SlotType.BENCH, index: index });
+                    }
+                }
+            });
+            if (!hasBenchedV) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            if (bench.length > 0) {
-                const pokemonToDiscard = bench[0];
-                if (!pokemonToDiscard.cards[0].tags.includes(game_1.CardTag.POKEMON_V)) {
-                    throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-                }
-                if (pokemonToDiscard.cards[0].tags.includes(game_1.CardTag.POKEMON_V)) {
-                    const supporterTurn = player.supporterTurn;
-                    if (supporterTurn > 0) {
-                        throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
-                    }
-                    player.hand.moveCardTo(effect.trainerCard, player.supporter);
-                    // We will discard this card after prompt confirmation
-                    effect.preventDefault = true;
-                    const cardsToDiscard = pokemonToDiscard.cards;
-                    pokemonToDiscard.moveCardsTo(cardsToDiscard, player.discard);
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_PICK_UP, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, blocked }), result => {
+                const cardList = result.length > 0 ? result[0] : null;
+                if (cardList !== null) {
+                    const pokemons = cardList.getPokemons();
+                    cardList.moveCardsTo(pokemons, player.discard);
+                    cardList.moveTo(player.discard);
+                    cardList.clearEffects();
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 }
-            }
+            });
         }
         return state;
     }

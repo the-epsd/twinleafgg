@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -7,6 +7,7 @@ import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects'
 
 export class Buzzwole extends PokemonCard {
   public stage: Stage = Stage.BASIC;
+  public tags = [CardTag.ULTRA_BEAST];
   public cardType: CardType = CardType.GRASS;
   public hp: number = 130;
   public weakness = [{ type: CardType.FIRE }];

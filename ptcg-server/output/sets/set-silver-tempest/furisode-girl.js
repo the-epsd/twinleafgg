@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FurisodeGirl = void 0;
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
+const game_1 = require("../../game");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
@@ -39,8 +40,15 @@ function* playCard(next, store, state, effect) {
     cards.forEach((card, index) => {
         player.deck.moveCardTo(card, slots[index]);
         slots[index].pokemonPlayedTurn = state.turn;
-        player.active.clearEffects();
-        player.switchPokemon(slots[index]);
+        state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_message_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+            if (wantToUse) {
+                if (index === 0 && player.active.cards.length > 0) {
+                    const activePokemon = player.active;
+                    activePokemon.clearEffects();
+                    player.switchPokemon(slots[index]);
+                }
+            }
+        });
     });
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {

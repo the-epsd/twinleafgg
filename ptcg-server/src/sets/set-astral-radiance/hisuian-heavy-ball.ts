@@ -69,6 +69,17 @@ export class HisuianHeavyBall extends TrainerCard {
         { min: 0, max: 1, allowCancel: false, blocked: blocked }
       ), chosenPrize => {
 
+        // if (chosenPrize === null || chosenPrize.length === 0) {
+        //   player.prizes.forEach(p => {
+        //     if (!p.faceUpPrize) {
+        //       p.isSecret = true;
+        //     }
+        //   });
+        //   player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        //   player.prizes = this.shuffleFaceDownPrizeCards(player.prizes.filter(p => !p.faceUpPrize));
+        //   return state;
+        // }
+
         if (chosenPrize === null || chosenPrize.length === 0) {
           player.prizes.forEach(p => { p.isSecret = true; });
           player.supporter.moveCardTo(effect.trainerCard, player.discard);

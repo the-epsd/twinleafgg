@@ -1,14 +1,13 @@
-import { State, StoreLike } from '../../game';
+import { PokemonCardList, State, StateUtils, StoreLike } from '../../game';
 import { CardType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class TherapeuticEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -24,6 +23,10 @@ export class TherapeuticEnergy extends EnergyCard {
 
   public fullName = 'Therapeutic Energy PAL';
 
+  public text = 'As long as this card is attached to a Pokémon, it provides [C] Energy.' +
+    '' +
+    'The Pokémon this card is attached to recovers from being Asleep, Confused, or Paralyzed and can\'t be affected by those Special Conditions.';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttachEnergyEffect && effect.target.cards.includes(this)) {
@@ -32,45 +35,26 @@ export class TherapeuticEnergy extends EnergyCard {
       pokemon.removeSpecialCondition(SpecialCondition.PARALYZED);
       pokemon.removeSpecialCondition(SpecialCondition.CONFUSED);
     }
-    
-    if (effect instanceof AddSpecialConditionsEffect && effect.target.cards.includes(this)) {
-      effect.specialConditions = effect.specialConditions.filter(c => c === SpecialCondition.BURNED || c === SpecialCondition.POISONED);
-      return state;
-    }
-    
-    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const pokemon = effect.source;
-      if (effect instanceof CheckTableStateEffect) {
-        state.players.forEach(player => {
-          if (pokemon.specialConditions.length === 0) {
-            return;
-          }
-  
-          try {
-            const energyEffect = new EnergyEffect(player, this);
-            store.reduceEffect(state, energyEffect);
-          } catch {
-            return state;
-          }
 
-          const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
-          store.reduceEffect(state, checkPokemonTypeEffect);
-  
-          if (checkPokemonTypeEffect) {
-            const conditions = pokemon.specialConditions.slice();
-            conditions.forEach(condition => {
-              pokemon.removeSpecialCondition(SpecialCondition.ASLEEP);
-              pokemon.removeSpecialCondition(SpecialCondition.PARALYZED);
-              pokemon.removeSpecialCondition(SpecialCondition.CONFUSED);
-            });
-          }
-        });
+    if (effect instanceof CheckTableStateEffect) {
+      const player = state.players[state.activePlayer];
+      const cardList = StateUtils.findCardList(state, this);
+
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
         return state;
       }
-  
-      return state;
+
+      if (cardList instanceof PokemonCardList && cardList.cards.includes(this)) {
+        const conditionsToKeep = [SpecialCondition.ABILITY_USED, SpecialCondition.POISONED, SpecialCondition.BURNED];
+        const hasSpecialCondition = cardList.specialConditions.some(condition => !conditionsToKeep.includes(condition));
+        if (hasSpecialCondition) {
+          cardList.specialConditions = cardList.specialConditions.filter(condition => conditionsToKeep.includes(condition));
+        }
+      }
     }
     return state;
   }
 }
-  
