@@ -5,6 +5,7 @@ import { GalarianWeezing } from './galarian-weezing';
 import { Horsea } from './horsea';
 import { Koffing } from './koffing';
 import { Rillaboom } from './rillaboom';
+import { Rookidee } from './rookidee';
 import { Snom } from './snom';
 import { Thwackey } from './thwackey';
 export declare class BallGuyArt extends BallGuy {
@@ -26,6 +27,9 @@ export declare class KoffingArt extends Koffing {
     cardImage: string;
 }
 export declare class RillaboomArt extends Rillaboom {
+    cardImage: string;
+}
+export declare class RookideeArt extends Rookidee {
     cardImage: string;
 }
 export declare class SnomArt extends Snom {

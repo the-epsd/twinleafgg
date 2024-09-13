@@ -22,6 +22,7 @@ import { GalarianMoltresV } from './galarian-moltres-v';
 import { GalarianZapdosV } from './galarian-zapdos-v';
 import { Gallade } from './gallade';
 import { Gardevoir } from './gardevoir';
+import { Golett } from './golett';
 import { Golurk } from './golurk';
 import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
 import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
@@ -114,6 +115,9 @@ export declare class GardevoirArt extends Gardevoir {
     cardImage: string;
 }
 export declare class GalladeArt extends Gallade {
+    cardImage: string;
+}
+export declare class GolettArt extends Golett {
     cardImage: string;
 }
 export declare class GolurkArt extends Golurk {

@@ -1,7 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { BallGuyArt, BuizelArt, FrosmothArt, GalarianWeezingArt, HorseaArt, KoffingArt, RillaboomArt, SnomArt, ThwackeyArt } from './card-images';
+import { BallGuyArt, BuizelArt, FrosmothArt, GalarianWeezingArt, HorseaArt, KoffingArt, RillaboomArt, RookideeArt, SnomArt, ThwackeyArt } from './card-images';
 import { ApplinArt, SnomSVArt } from './full-art';
-
 
 export const setShiningFates: Card[] = [
   new BallGuyArt(),
@@ -11,6 +10,7 @@ export const setShiningFates: Card[] = [
   new HorseaArt(),
   new KoffingArt(),
   new RillaboomArt(),
+  new RookideeArt(),
   new SnomArt(),
   new ThwackeyArt(),
 
