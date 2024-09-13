@@ -25,6 +25,7 @@ exports.setChillingReign = [
     new card_images_1.GalarianZapdosVArt(),
     new card_images_1.GardevoirArt(),
     new card_images_1.GalladeArt(),
+    new card_images_1.GolettArt(),
     new card_images_1.GolurkArt(),
     new card_images_1.IceRiderCalyrexVArt(),
     new card_images_1.IceRiderCalyrexVMAXArt(),

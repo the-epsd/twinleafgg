@@ -42,6 +42,10 @@ import { NidoranMale } from './nidoran-male';
 import { Nidorino } from './nidorino';
 import { NidoranFemale } from './nidoran-female';
 import { Nidorina } from './nidorina';
+import { Abra } from './abra';
+export declare class AbraArt extends Abra {
+    cardImage: string;
+}
 import { Machop } from './machop';
 import { Machoke } from './machoke';
 export declare class AntiqueHelixFossilArt extends AntiqueHelixFossil {
