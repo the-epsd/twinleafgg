@@ -22,26 +22,27 @@ class BeastRing extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (opponent.getPrizeLeft() !== 3 && opponent.getPrizeLeft() !== 4) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-            }
+            // const opponent = StateUtils.getOpponent(state, player);
+            // if (opponent.getPrizeLeft() !== 3 && opponent.getPrizeLeft() !== 4) {
+            //   throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+            // }
             effect.preventDefault = true;
-            player.hand.moveCardTo(effect.trainerCard, player.supporter);
-            let ultraBeastCount = 0;
-            const blocked = [];
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+            let ultraBeastInPlay = false;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card) => {
                 if (card.tags.includes(card_types_1.CardTag.ULTRA_BEAST)) {
-                    ultraBeastCount += 1;
-                }
-                else {
-                    blocked.push(target.index);
+                    ultraBeastInPlay = true;
                 }
             });
-            if (ultraBeastCount === 0) {
+            if (!ultraBeastInPlay) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: 2, allowCancel: false, sameTarget: true, blocked }), transfers => {
+            const blocked2 = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+                if (!card.tags.includes(card_types_1.CardTag.ULTRA_BEAST)) {
+                    blocked2.push(target);
+                }
+            });
+            store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 2, blockedTo: blocked2, sameTarget: true }), transfers => {
                 transfers = transfers || [];
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);

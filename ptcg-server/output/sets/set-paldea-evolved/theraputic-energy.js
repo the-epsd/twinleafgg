@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TherapeuticEnergy = void 0;
+const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class TherapeuticEnergy extends energy_card_1.EnergyCard {
@@ -17,6 +17,9 @@ class TherapeuticEnergy extends energy_card_1.EnergyCard {
         this.regulationMark = 'G';
         this.name = 'Therapeutic Energy';
         this.fullName = 'Therapeutic Energy PAL';
+        this.text = 'As long as this card is attached to a Pokémon, it provides [C] Energy.' +
+            '' +
+            'The Pokémon this card is attached to recovers from being Asleep, Confused, or Paralyzed and can\'t be affected by those Special Conditions.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.target.cards.includes(this)) {
@@ -25,38 +28,23 @@ class TherapeuticEnergy extends energy_card_1.EnergyCard {
             pokemon.removeSpecialCondition(card_types_1.SpecialCondition.PARALYZED);
             pokemon.removeSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
         }
-        if (effect instanceof attack_effects_1.AddSpecialConditionsEffect && effect.target.cards.includes(this)) {
-            effect.specialConditions = effect.specialConditions.filter(c => c === card_types_1.SpecialCondition.BURNED || c === card_types_1.SpecialCondition.POISONED);
-            return state;
-        }
-        if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const pokemon = effect.source;
-            if (effect instanceof check_effects_1.CheckTableStateEffect) {
-                state.players.forEach(player => {
-                    if (pokemon.specialConditions.length === 0) {
-                        return;
-                    }
-                    try {
-                        const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                        store.reduceEffect(state, energyEffect);
-                    }
-                    catch (_a) {
-                        return state;
-                    }
-                    const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(player.active);
-                    store.reduceEffect(state, checkPokemonTypeEffect);
-                    if (checkPokemonTypeEffect) {
-                        const conditions = pokemon.specialConditions.slice();
-                        conditions.forEach(condition => {
-                            pokemon.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
-                            pokemon.removeSpecialCondition(card_types_1.SpecialCondition.PARALYZED);
-                            pokemon.removeSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
-                        });
-                    }
-                });
+        if (effect instanceof check_effects_1.CheckTableStateEffect) {
+            const player = state.players[state.activePlayer];
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            try {
+                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                store.reduceEffect(state, energyEffect);
+            }
+            catch (_a) {
                 return state;
             }
-            return state;
+            if (cardList instanceof game_1.PokemonCardList && cardList.cards.includes(this)) {
+                const conditionsToKeep = [card_types_1.SpecialCondition.ABILITY_USED, card_types_1.SpecialCondition.POISONED, card_types_1.SpecialCondition.BURNED];
+                const hasSpecialCondition = cardList.specialConditions.some(condition => !conditionsToKeep.includes(condition));
+                if (hasSpecialCondition) {
+                    cardList.specialConditions = cardList.specialConditions.filter(condition => conditionsToKeep.includes(condition));
+                }
+            }
         }
         return state;
     }

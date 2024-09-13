@@ -75,30 +75,34 @@ class IronValiantex extends pokemon_card_1.PokemonCard {
                 if (player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
                     throw new game_1.GameError(game_message_1.GameMessage.BLOCKED_BY_EFFECT);
                 }
-                // Try to reduce PowerEffect, to check if something is blocking our ability
-                try {
-                    const stub = new game_effects_1.PowerEffect(player, {
-                        name: 'test',
-                        powerType: game_1.PowerType.ABILITY,
-                        text: ''
-                    }, this);
-                    store.reduceEffect(state, stub);
-                }
-                catch (_a) {
-                    return state;
-                }
-                state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 1, allowCancel: true }), selected => {
-                    const targets = selected || [];
-                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                        if (cardList.getPokemonCard() === this) {
-                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                state = store.prompt(state, new game_1.ConfirmPrompt(player.id, game_message_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+                    if (wantToUse) {
+                        // Try to reduce PowerEffect, to check if something is blocking our ability
+                        try {
+                            const stub = new game_effects_1.PowerEffect(player, {
+                                name: 'test',
+                                powerType: game_1.PowerType.ABILITY,
+                                text: ''
+                            }, this);
+                            store.reduceEffect(state, stub);
                         }
-                    });
-                    targets.forEach(target => {
-                        target.damage += 20;
-                        player.abilityMarker.addMarker(this.TACHYON_BITS_MARKER, this);
-                    });
-                    this.tachyonBits++;
+                        catch (_a) {
+                            return state;
+                        }
+                        state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 1, allowCancel: true }), selected => {
+                            const targets = selected || [];
+                            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                                if (cardList.getPokemonCard() === this) {
+                                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                                }
+                            });
+                            targets.forEach(target => {
+                                target.damage += 20;
+                                player.abilityMarker.addMarker(this.TACHYON_BITS_MARKER, this);
+                            });
+                            this.tachyonBits++;
+                        });
+                    }
                 });
             }
         }

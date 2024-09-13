@@ -162,6 +162,7 @@ function gameReducer(store, state, effect) {
         effect.target.clearEffects();
         // Apply the removePokemonEffects method from the Player class
         effect.player.removePokemonEffects(effect.target);
+        effect.target.specialConditions = [card_types_1.SpecialCondition.ABILITY_USED];
     }
     return state;
 }

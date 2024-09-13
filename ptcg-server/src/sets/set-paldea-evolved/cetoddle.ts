@@ -25,7 +25,7 @@ export class Cetoddle extends PokemonCard {
       name: 'Avalanche',
       cost: [CardType.WATER, CardType.COLORLESS],
       damage: 30,
-      text: 'This attack also does 10 damage to each of your opponent\'s Benched Pokémon. (Don’t apply Weakness and Resistance for Benched Pokémon.)'
+      text: 'This attack also does 10 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 
@@ -40,7 +40,8 @@ export class Cetoddle extends PokemonCard {
   public fullName: string = 'Cetoddle PAL';
 
 
-  reduceEffect(store: StoreLike, state: State, effect: Effect) {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const opponent = effect.opponent;
       const benched = opponent.bench.filter(b => b.cards.length > 0);

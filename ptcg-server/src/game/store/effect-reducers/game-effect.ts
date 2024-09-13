@@ -209,6 +209,7 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     effect.target.clearEffects();
     // Apply the removePokemonEffects method from the Player class
     effect.player.removePokemonEffects(effect.target);
+    effect.target.specialConditions = [SpecialCondition.ABILITY_USED];
   }
 
   return state;
