@@ -44,6 +44,7 @@ class ZamazentaV extends pokemon_card_1.PokemonCard {
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
+            player.hand.moveTo(player.discard);
             player.deck.moveTo(player.hand, 5);
             const endTurnEffect = new game_phase_effects_1.EndTurnEffect(player);
             store.reduceEffect(state, endTurnEffect);
@@ -54,7 +55,7 @@ class ZamazentaV extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const prizesTaken = 6 - opponent.getPrizeLeft();
             const damagePerPrize = 30;
-            effect.damage = prizesTaken * damagePerPrize;
+            effect.damage += prizesTaken * damagePerPrize;
         }
         return state;
     }

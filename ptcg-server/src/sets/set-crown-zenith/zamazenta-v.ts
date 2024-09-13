@@ -61,6 +61,7 @@ export class ZamazentaV extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
+      player.hand.moveTo(player.discard);
       player.deck.moveTo(player.hand, 5);
       const endTurnEffect = new EndTurnEffect(player);
       store.reduceEffect(state, endTurnEffect);
@@ -77,7 +78,7 @@ export class ZamazentaV extends PokemonCard {
 
       const damagePerPrize = 30;
 
-      effect.damage = prizesTaken * damagePerPrize;
+      effect.damage += prizesTaken * damagePerPrize;
     }
     return state;
   }

@@ -7,7 +7,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class Oddish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.GRASS;
-  public hp: number = 50;
+  public hp: number = 60;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS];
 
