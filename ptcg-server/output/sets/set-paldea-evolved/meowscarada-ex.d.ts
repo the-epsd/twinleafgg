@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
 export declare class Meowscaradaex extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     tags: CardTag[];
     cardType: CardType;
     hp: number;
@@ -32,6 +33,6 @@ export declare class Meowscaradaex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly DOUBLE_GUNNER_MARKER = "DOUBLE_GUNNER_MARKER";
+    readonly BOUQUET_MAGIC_MARKER = "BOUQUET_MAGIC_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

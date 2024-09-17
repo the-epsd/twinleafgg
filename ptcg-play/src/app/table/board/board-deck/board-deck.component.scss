@@ -6,8 +6,8 @@
   height: 100%;
   justify-content: space-around;
   margin: 0 auto;
-  max-width: var(--card-size);
-  width: 100%;
+  width: 50%;
+  margin-top: -18px;
 }
 
 .deck-card {
@@ -23,20 +23,14 @@ ptcg-board-card {
   flex-shrink: 0; // Prevents shrinking
 }
 
-.card-stack {
-  &.owner {
-    @for $i from 0 through 10 {
-      &:nth-child(#{$i + 1}) {
-        transform: translate(#{$i * 0.25}px, #{$i * -0.25}px);
-      }
-    }
-  }
+.deck-container,
+.discard-container {
+  position: relative;
+}
 
-  &:not(.owner) {
-    @for $i from 0 through 10 {
-      &:nth-child(#{$i + 1}) {
-        transform: translate(#{$i * 0.25}px, #{$i * 0.25}px);
-      }
-    }
-  }
+.deck-card,
+.discard-card {
+  position: absolute;
+  left: 0;
+  top: -12px;
 }

@@ -12,7 +12,8 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 class Meowscaradaex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
+        this.evolvesFrom = 'Floragato';
         this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 310;
@@ -37,26 +38,26 @@ class Meowscaradaex extends pokemon_card_1.PokemonCard {
         this.setNumber = '15';
         this.name = 'Meowscarada ex';
         this.fullName = 'Meowscarada ex PAL';
-        this.DOUBLE_GUNNER_MARKER = 'DOUBLE_GUNNER_MARKER';
+        this.BOUQUET_MAGIC_MARKER = 'BOUQUET_MAGIC_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
+            player.marker.removeMarker(this.BOUQUET_MAGIC_MARKER, this);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
-            player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
+            player.marker.removeMarker(this.BOUQUET_MAGIC_MARKER, this);
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            if (player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
+            if (player.marker.hasMarker(this.BOUQUET_MAGIC_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             const hasBenched = opponent.bench.some(b => b.cards.length > 0);
             if (!hasBenched) {
-                return state;
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             const hasEnergyInHand = player.hand.cards.some(c => {
                 return c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Grass Energy';
@@ -64,7 +65,7 @@ class Meowscaradaex extends pokemon_card_1.PokemonCard {
             if (!hasEnergyInHand) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
+            if (player.marker.hasMarker(this.BOUQUET_MAGIC_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Grass Energy' }, { allowCancel: false, min: 1, max: 1 }), cards => {
@@ -72,11 +73,17 @@ class Meowscaradaex extends pokemon_card_1.PokemonCard {
                 if (cards.length === 0) {
                     return;
                 }
+                player.hand.moveCardsTo(cards, player.discard);
                 return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
                     const targets = selected || [];
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        }
+                    });
                     targets.forEach(target => {
                         target.damage += 30;
-                        player.marker.addMarker(this.DOUBLE_GUNNER_MARKER, this);
+                        player.marker.addMarker(this.BOUQUET_MAGIC_MARKER, this);
                     });
                 });
             });

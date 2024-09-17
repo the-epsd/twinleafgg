@@ -8,8 +8,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
-// import mappings from '../../sets/card-mappings.json';
-
 export class Miraidonex extends PokemonCard {
 
   public regulationMark = 'G';

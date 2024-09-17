@@ -16,14 +16,12 @@ export class Blacksmith extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public regulationMark = 'F';
-
   public set: string = 'FLF';
 
   public name: string = 'Blacksmith';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '88';
 
   public fullName: string = 'Blacksmith FLF';
@@ -70,13 +68,13 @@ export class Blacksmith extends TrainerCard {
       }
 
       const supporterTurn = player.supporterTurn;
-  
+
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-    
+
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
-    
+
       // Do not discard the card yet
       effect.preventDefault = true;
 
@@ -85,7 +83,7 @@ export class Blacksmith extends TrainerCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
         { allowCancel: false, min: 2, max: 2, blockedTo, sameTarget: true }
       ), transfers => {
@@ -100,7 +98,7 @@ export class Blacksmith extends TrainerCard {
           player.discard.moveCardTo(transfer.card, target);
         }
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        
+
       });
     }
 

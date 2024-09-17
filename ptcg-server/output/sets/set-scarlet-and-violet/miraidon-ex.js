@@ -6,7 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-// import mappings from '../../sets/card-mappings.json';
 class Miraidonex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);

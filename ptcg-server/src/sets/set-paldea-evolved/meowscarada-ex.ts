@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -12,7 +12,9 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Meowscaradaex extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
+
+  public evolvesFrom = 'Floragato';
 
   public tags = [CardTag.POKEMON_ex];
 
@@ -51,31 +53,31 @@ export class Meowscaradaex extends PokemonCard {
 
   public fullName: string = 'Meowscarada ex PAL';
 
-  public readonly DOUBLE_GUNNER_MARKER = 'DOUBLE_GUNNER_MARKER';
+  public readonly BOUQUET_MAGIC_MARKER = 'BOUQUET_MAGIC_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
+      player.marker.removeMarker(this.BOUQUET_MAGIC_MARKER, this);
     }
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
+      player.marker.removeMarker(this.BOUQUET_MAGIC_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
+      if (player.marker.hasMarker(this.BOUQUET_MAGIC_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
-        return state;
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       const hasEnergyInHand = player.hand.cards.some(c => {
@@ -84,7 +86,7 @@ export class Meowscaradaex extends PokemonCard {
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      if (player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
+      if (player.marker.hasMarker(this.BOUQUET_MAGIC_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
       state = store.prompt(state, new ChooseCardsPrompt(
@@ -99,6 +101,8 @@ export class Meowscaradaex extends PokemonCard {
           return;
         }
 
+        player.hand.moveCardsTo(cards, player.discard);
+
         return store.prompt(state, new ChoosePokemonPrompt(
           player.id,
           GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
@@ -107,9 +111,16 @@ export class Meowscaradaex extends PokemonCard {
           { min: 1, max: 1, allowCancel: false },
         ), selected => {
           const targets = selected || [];
+
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            }
+          });
+
           targets.forEach(target => {
             target.damage += 30;
-            player.marker.addMarker(this.DOUBLE_GUNNER_MARKER, this);
+            player.marker.addMarker(this.BOUQUET_MAGIC_MARKER, this);
           });
         });
       });

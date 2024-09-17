@@ -4,7 +4,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 export declare class BallGuy extends TrainerCard {
-    regulationMark: string;
     trainerType: TrainerType;
     set: string;
     cardImage: string;

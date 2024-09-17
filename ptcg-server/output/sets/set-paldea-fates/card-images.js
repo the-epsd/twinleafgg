@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ArtazonArt = exports.SquawkabillyexArt = exports.NoivernexArt = exports.NoibatArt = exports.GardevoirexArt = exports.RaltsArt = exports.CharcadetArt = exports.ArmarougeArt = exports.XatuArt = exports.UltraBallArt = exports.TechnicalMachineCrisisPunchArt = exports.NatuArt = exports.StudentsInPaldeaArt2 = exports.StudentsInPaldeaArt = exports.StarmieArt = exports.ScovillainexArt = exports.RareCandyArt = exports.ProfessorsResearch2Art = exports.ProfessorsResearchArt = exports.NemonaArt = exports.NestBallArt = exports.MoonlightHillArt = exports.MimikyuArt = exports.MimeJrArt = exports.KilowattrelArt = exports.IonoArt = exports.HaunterArt = exports.GengarArt = exports.GastlyArt = exports.FrigibaxArt = exports.EspathraexArt = exports.ElectricGeneratorArt = exports.CliveArt = exports.CharmanderArt = exports.CharizardexArt = exports.CharmeleonArt = exports.AtticusArt = void 0;
+exports.ArtazonArt = exports.SquawkabillyexArt = exports.NoivernexArt = exports.NoibatArt = exports.GardevoirexArt = exports.RaltsArt = exports.CharcadetArt = exports.ArmarougeArt = exports.XatuArt = exports.UltraBallArt = exports.TechnicalMachineCrisisPunchArt = exports.NatuArt = exports.StudentsInPaldeaArt2 = exports.StudentsInPaldeaArt = exports.ScovillainexArt = exports.RareCandyArt = exports.ProfessorsResearch2Art = exports.ProfessorsResearchArt = exports.NemonaArt = exports.NestBallArt = exports.MoonlightHillArt = exports.MimikyuArt = exports.MimeJrArt = exports.KilowattrelArt = exports.IonoArt = exports.HaunterArt = exports.GengarArt = exports.GastlyArt = exports.FrigibaxArt = exports.EspathraexArt = exports.ElectricGeneratorArt = exports.CliveArt = exports.CharmanderArt = exports.CharizardexArt = exports.CharmeleonArt = exports.AtticusArt = void 0;
 const charizard_ex_1 = require("../set-obsidian-flames/charizard-ex");
 const artazon_1 = require("../set-paldea-evolved/artazon");
 const iono_1 = require("../set-paldea-evolved/iono");
@@ -33,7 +33,6 @@ const kilowattrel_1 = require("./kilowattrel");
 const mime_jr_1 = require("./mime-jr");
 const moonlight_hill_1 = require("./moonlight-hill");
 const nemona_1 = require("./nemona");
-const PAF_119_Starmie_1 = require("./PAF_119_Starmie");
 const scovillain_ex_1 = require("./scovillain-ex");
 const students_in_paldea_1 = require("./students-in-paldea");
 const technical_machine_crisis_punch_1 = require("./technical-machine-crisis-punch");
@@ -218,13 +217,6 @@ class ScovillainexArt extends scovillain_ex_1.Scovillainex {
     }
 }
 exports.ScovillainexArt = ScovillainexArt;
-class StarmieArt extends PAF_119_Starmie_1.Starmie {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_119_R_EN_LG.png';
-    }
-}
-exports.StarmieArt = StarmieArt;
 class StudentsInPaldeaArt extends students_in_paldea_1.StudentsInPaldea {
     constructor() {
         super(...arguments);

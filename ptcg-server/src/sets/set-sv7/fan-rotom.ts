@@ -110,14 +110,14 @@ export class FanRotom extends PokemonCard {
           }
         });
       }
+    }
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const stadiumCard = StateUtils.getStadiumCard(state);
-        if (stadiumCard == undefined) {
-          effect.damage = 0;
-        } else {
-          effect.damage = 70;
-        }
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const stadiumCard = StateUtils.getStadiumCard(state);
+      if (stadiumCard == undefined) {
+        effect.damage = 0;
+      } else {
+        effect.damage = 70;
       }
     }
     return state;

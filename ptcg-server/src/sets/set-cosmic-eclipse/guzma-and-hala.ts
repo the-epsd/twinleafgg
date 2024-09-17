@@ -19,8 +19,6 @@ export class GuzmaAndHala extends TrainerCard {
 
   public setNumber: string = '193';
 
-  public regulationMark = 'F';
-
   public name: string = 'Guzma & Hala';
 
   public fullName: string = 'Guzma & Hala CEC';

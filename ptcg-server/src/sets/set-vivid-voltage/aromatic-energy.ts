@@ -8,7 +8,7 @@ import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-
 
 export class AromaticEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -24,6 +24,10 @@ export class AromaticEnergy extends EnergyCard {
 
   public fullName = 'Aromatic Energy VIV';
 
+  public text = 'As long as this card is attached to a Pokémon, it provides [G] Energy.' +
+    '' +
+    'The [G] Pokémon this card is attached to recovers from all Special Conditions and can\'t be affected by any Special Conditions.';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttachEnergyEffect && effect.target.cards.includes(this)) {
@@ -33,11 +37,11 @@ export class AromaticEnergy extends EnergyCard {
       pokemon.removeSpecialCondition(SpecialCondition.PARALYZED);
       pokemon.removeSpecialCondition(SpecialCondition.CONFUSED);
     }
-    
+
     if (effect instanceof AddSpecialConditionsEffect && effect.target.cards.includes(this)) {
       effect.preventDefault = true;
     }
-    
+
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const pokemon = effect.source;
       if (effect instanceof CheckTableStateEffect) {
@@ -45,7 +49,7 @@ export class AromaticEnergy extends EnergyCard {
           if (pokemon.specialConditions.length === 0) {
             return;
           }
-  
+
           try {
             const energyEffect = new EnergyEffect(player, this);
             store.reduceEffect(state, energyEffect);
@@ -55,7 +59,7 @@ export class AromaticEnergy extends EnergyCard {
 
           const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
           store.reduceEffect(state, checkPokemonTypeEffect);
-  
+
           if (checkPokemonTypeEffect) {
             const conditions = pokemon.specialConditions.slice();
             conditions.forEach(condition => {
@@ -67,10 +71,9 @@ export class AromaticEnergy extends EnergyCard {
         });
         return state;
       }
-  
+
       return state;
     }
     return state;
   }
 }
-  

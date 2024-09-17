@@ -15,6 +15,7 @@ import { DeliveryDrone } from './delivery-drone';
 import { Dudunsparce } from './dudunsparce';
 import { FightingAuLait } from './fighting-au-lait';
 import { Flamigo } from './flamigo';
+import { Floragato } from './floragato';
 import { Forretressex } from './forretress-ex';
 import { Frigibax } from './frigibax';
 import { Frigibax2 } from './frigibax2';
@@ -25,6 +26,7 @@ import { Iono } from './iono';
 import { JetEnergy } from './jet-energy';
 import { LuminousEnergy } from './luminous-energy';
 import { Luxray } from './luxray';
+import { Meowscaradaex } from './meowscarada-ex';
 import { Mimikyu } from './mimikyu';
 import { Misdreavus } from './misdreavus';
 import { Murkrow } from './murkrow';
@@ -41,6 +43,7 @@ import { Pineco } from './pineco';
 import { ReversalEnergy } from './reversal-energy';
 import { Shinx } from './shinx';
 import { Spiritomb } from './spiritomb';
+import { Sprigatito } from './sprigatito';
 import { Squawkabillyex } from './squawkabilly-ex';
 import { SuperRod } from './super-rod';
 import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
@@ -107,6 +110,9 @@ export declare class FightingAuLaitArt extends FightingAuLait {
 export declare class FlamigoArt extends Flamigo {
     cardImage: string;
 }
+export declare class FloragatoArt extends Floragato {
+    cardImage: string;
+}
 export declare class ForretressexArt extends Forretressex {
     cardImage: string;
 }
@@ -141,6 +147,9 @@ export declare class LuminousEnergyArt extends LuminousEnergy {
     cardImage: string;
 }
 export declare class MagnemiteArt extends Magnemite {
+    cardImage: string;
+}
+export declare class MeowscaradaexArt extends Meowscaradaex {
     cardImage: string;
 }
 export declare class MimikyuArt extends Mimikyu {
@@ -192,6 +201,9 @@ export declare class WoChienexArt extends WoChienex {
     cardImage: string;
 }
 export declare class ShinxArt extends Shinx {
+    cardImage: string;
+}
+export declare class SprigatitoArt extends Sprigatito {
     cardImage: string;
 }
 export declare class TadbulbArt extends Tadbulb {

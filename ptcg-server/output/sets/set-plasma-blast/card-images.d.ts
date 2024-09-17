@@ -10,6 +10,7 @@ export declare class JirachiExArt extends JirachiEx {
 }
 export declare class ScoopUpCycloneArt extends ScoopUpCyclone {
     cardImage: string;
+    set: string;
     setNumber: string;
     fullName: string;
 }
@@ -18,6 +19,7 @@ export declare class SilverBangleArt extends SilverBangle {
 }
 export declare class UltraBallArt extends UltraBall {
     cardImage: string;
+    set: string;
     setNumber: string;
     fullName: string;
 }
@@ -26,6 +28,7 @@ export declare class VirizionExArt extends VirizionEx {
 }
 export declare class MasterBallArt extends MasterBall {
     cardImage: string;
+    set: string;
     setNumber: string;
     fullName: string;
 }

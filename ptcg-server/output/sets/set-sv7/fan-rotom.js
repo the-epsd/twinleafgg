@@ -79,14 +79,14 @@ class FanRotom extends game_1.PokemonCard {
                     }
                 });
             }
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                const stadiumCard = game_1.StateUtils.getStadiumCard(state);
-                if (stadiumCard == undefined) {
-                    effect.damage = 0;
-                }
-                else {
-                    effect.damage = 70;
-                }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const stadiumCard = game_1.StateUtils.getStadiumCard(state);
+            if (stadiumCard == undefined) {
+                effect.damage = 0;
+            }
+            else {
+                effect.damage = 70;
             }
         }
         return state;

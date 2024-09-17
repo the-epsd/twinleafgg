@@ -64,9 +64,9 @@ class GalarianWeezing extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, stub);
             }
             catch (_a) {
-                return state;
+                throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
+            // throw new GameError(GameMessage.CANNOT_USE_POWER);
         }
         return state;
     }

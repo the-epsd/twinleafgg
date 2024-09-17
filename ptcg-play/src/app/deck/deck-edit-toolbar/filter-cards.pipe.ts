@@ -33,34 +33,34 @@ export class FilterCardsPipe implements PipeTransform {
       const card = item.card;
       if (!!filter.searchValue && !this.matchCardText(card, filter.searchValue)) {
         return false;
-    }
+      }
 
       if (filter.superTypes.length && !filter.superTypes.includes(card.superType)) {
         return false;
       }
-      
-      if (filter.superTypes.includes(SuperType.POKEMON) && 
-         ((filter.hasAbility && (card as PokemonCard).powers?.length === 0) || 
-         (!filter.hasAbility && (card as PokemonCard).powers?.length > 0))) {
-        return false
-      }
-      
+
+      // if (filter.superTypes.includes(SuperType.POKEMON) && 
+      //    ((filter.hasAbility && (card as PokemonCard).powers?.length === 0) || 
+      //    (!filter.hasAbility && (card as PokemonCard).powers?.length > 0))) {
+      //   return false
+      // }
+
       if (filter.stages.length && !filter.stages.includes((card as PokemonCard).stage)) {
         return false;
       }
-      
+
       if (filter.energyTypes.length && !filter.energyTypes.includes((card as EnergyCard).energyType)) {
         return false;
       }
-      
+
       if (filter.trainerTypes.length && !filter.trainerTypes.includes((card as TrainerCard).trainerType)) {
         return false;
       }
-      
+
       if (filter.retreatCosts.length && !this.matchRetreatCosts(filter.retreatCosts, card)) {
         return false;
       }
-      
+
       if (filter.attackCosts.length && !this.matchAttackCosts(filter.attackCosts, card)) {
         return false;
       }
@@ -80,63 +80,66 @@ export class FilterCardsPipe implements PipeTransform {
       return true;
     });
   }
-  
+
   private matchCardText(card: Card, searchValue: string) {
     const lowerCaseSearchValue = searchValue.toLocaleLowerCase();
     if (card.name.toLocaleLowerCase().includes(lowerCaseSearchValue))
       return true;
-    
+
     if (card.setNumber.toLocaleLowerCase().includes(lowerCaseSearchValue))
       return true;
-    
+
     if (card.set.toLocaleLowerCase().includes(lowerCaseSearchValue))
       return true;
-    
+
     const pokemonCard = card as PokemonCard;
     if (pokemonCard.attacks?.some(a => a.name.toLocaleLowerCase().includes(lowerCaseSearchValue)))
       return true;
-    
+
     if (pokemonCard.attacks?.some(a => a.text.toLocaleLowerCase().includes(lowerCaseSearchValue)))
       return true;
-  
+
     const trainerCard = card as TrainerCard;
     if (trainerCard.text?.toLocaleLowerCase().includes(lowerCaseSearchValue))
       return true;
-    
+
     const energyCard = card as EnergyCard;
     if (energyCard.text?.toLocaleLowerCase().includes(lowerCaseSearchValue))
       return true;
   }
-  
+
   private matchRetreatCosts(retreatCosts: number[], card: Card): boolean {
     const pokemonCard = card as PokemonCard;
-    
+
     if (pokemonCard.retreat === undefined) return false;
-    
+
     const retreat = pokemonCard.retreat;
-    
+
     if (retreatCosts.includes(0) && !card.retreat.length) {
       return true;
     }
-    
+
     return retreatCosts.includes(retreat.length);
   }
-  
+
   private matchAttackCosts(attackCosts: number[], card: Card): boolean {
     const pokemonCard = card as PokemonCard;
-    
-    if (pokemonCard.attacks === undefined) return false;    
-    
+
+    if (pokemonCard.attacks === undefined) return false;
+
     const attacks = pokemonCard.attacks;
-    
+
     if (attackCosts.includes(0) && attacks.map(a => a.cost.length).filter(c => c === 0).length >= 1) {
       return true;
     }
-    
+
     return attackCosts.some(c => attacks.map(a => a.cost.length).includes(c));
   }
-  
+
   private getTags(card: Card): CardTag {
+    if (card.tags.includes(CardTag.POKEMON_ex)) {
+      return CardTag.POKEMON_ex;
+    }
     if (card.tags.includes(CardTag.POKEMON_V)) {
       return CardTag.POKEMON_V;
     }
@@ -145,6 +148,45 @@ export class FilterCardsPipe implements PipeTransform {
     }
     if (card.tags.includes(CardTag.POKEMON_VMAX)) {
       return CardTag.POKEMON_VMAX;
+    }
+    if (card.tags.includes(CardTag.POKEMON_TERA)) {
+      return CardTag.POKEMON_TERA;
+    }
+    if (card.tags.includes(CardTag.RADIANT)) {
+      return CardTag.RADIANT;
+    }
+    if (card.tags.includes(CardTag.FUTURE)) {
+      return CardTag.ANCIENT;
+    }
+    if (card.tags.includes(CardTag.SINGLE_STRIKE)) {
+      return CardTag.SINGLE_STRIKE;
+    }
+    if (card.tags.includes(CardTag.RAPID_STRIKE)) {
+      return CardTag.RAPID_STRIKE;
+    }
+    if (card.tags.includes(CardTag.FUSION_STRIKE)) {
+      return CardTag.FUSION_STRIKE;
+    }
+    if (card.tags.includes(CardTag.POKEMON_GX)) {
+      return CardTag.POKEMON_GX;
+    }
+    if (card.tags.includes(CardTag.TAG_TEAM)) {
+      return CardTag.TAG_TEAM;
+    }
+    if (card.tags.includes(CardTag.ULTRA_BEAST)) {
+      return CardTag.ULTRA_BEAST;
+    }
+    if (card.tags.includes(CardTag.POKEMON_EX)) {
+      return CardTag.POKEMON_EX;
+    }
+    if (card.tags.includes(CardTag.TEAM_PLASMA)) {
+      return CardTag.TEAM_PLASMA;
+    }
+    if (card.tags.includes(CardTag.POKEMON_LV_X)) {
+      return CardTag.POKEMON_LV_X;
+    }
+    if (card.tags.includes(CardTag.POKEMON_SP)) {
+      return CardTag.POKEMON_SP;
     }
   }
 
@@ -157,7 +199,7 @@ export class FilterCardsPipe implements PipeTransform {
     if (card.superType === SuperType.POKEMON) {
       return (card as PokemonCard).cardType;
     }
-    
+
     if (card.superType === SuperType.ENERGY) {
       const energyCard = card as EnergyCard;
       if (energyCard.provides.length > 0) {

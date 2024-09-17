@@ -54,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { superType: SuperType.POKEMON },
-    { min: 1, max: 3, allowCancel: false, blocked }
+    { min: 0, max: 3, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();
@@ -72,7 +72,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.deck.moveCardsTo(cards, player.hand);
     player.hand.moveCardTo(self, player.discard);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    
+
 
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,

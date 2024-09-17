@@ -24,6 +24,7 @@ export enum CardTag {
   BREAK = 'BREAK',
   PRIME = 'PRIME',
   HOLO = 'HOLO',
+  LEGEND = 'LEGEND',
 }
 
 

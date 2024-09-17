@@ -14,7 +14,6 @@ class GuzmaAndHala extends trainer_card_1.TrainerCard {
         this.tags = [card_types_1.CardTag.TAG_TEAM];
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '193';
-        this.regulationMark = 'F';
         this.name = 'Guzma & Hala';
         this.fullName = 'Guzma & Hala CEC';
         this.text = 'Search your deck for a Stadium card, reveal it, and put it into your hand. Then, shuffle your deck.' +

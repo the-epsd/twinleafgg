@@ -28,7 +28,7 @@ class Lugia extends pokemon_card_1.PokemonCard {
                 name: 'Deep Crush',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 160,
-                text: ''
+                text: 'During your next turn, this Pokémon can\'t attack.'
             },
         ];
         this.set = 'CEL';
@@ -52,6 +52,11 @@ class Lugia extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Check marker
+            if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+                console.log('attack blocked');
+                throw new game_1.GameError(game_message_1.GameMessage.BLOCKED_BY_EFFECT);
+            }
             const playerProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             store.reduceEffect(state, playerProvidedEnergy);
             const playerEnergyCount = playerProvidedEnergy.energyMap

@@ -56,13 +56,17 @@ export class Kyogre extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
+      const isKyogre = effect.player.active.cards.includes(this);
+      const availableEnergy = player.active.cards.filter(card => card.superType === SuperType.ENERGY).length;
+      const minEnergy = isKyogre ? 3 : Math.min(3, availableEnergy);
+
       return store.prompt(state, new DiscardEnergyPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_HAND,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE],// Card source is target Pokemon
         { superType: SuperType.ENERGY },
-        { min: 3, max: 3, allowCancel: false }
+        { min: minEnergy, max: 3, allowCancel: false }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
@@ -103,7 +107,7 @@ export class Kyogre extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { allowCancel: false, min: 1, max: 1 }
+        { allowCancel: false, min: 0, max: 1 }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user

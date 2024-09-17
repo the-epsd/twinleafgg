@@ -30,7 +30,6 @@ import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { MoonlightHill } from './moonlight-hill';
 import { Nemona } from './nemona';
-import { Starmie } from './PAF_119_Starmie';
 import { Scovillainex } from './scovillain-ex';
 import { StudentsInPaldea } from './students-in-paldea';
 import { TechnicalMachineCrisisPunch } from './technical-machine-crisis-punch';
@@ -125,9 +124,6 @@ export declare class RareCandyArt extends RareCandy {
     setNumber: string;
 }
 export declare class ScovillainexArt extends Scovillainex {
-    cardImage: string;
-}
-export declare class StarmieArt extends Starmie {
     cardImage: string;
 }
 export declare class StudentsInPaldeaArt extends StudentsInPaldea {

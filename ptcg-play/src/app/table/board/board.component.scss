@@ -24,8 +24,8 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 
 .ptcg-board-outer-container {
   width: 100%;
-  height: 85%;
-  overflow: hidden;
+  height: 82.5%;
+  // overflow: hidden;
 }
 
 .responsive-board {
@@ -64,10 +64,10 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 .ptcg-board-player {
   display: grid;
   grid-template-columns: 2fr repeat(3, #{math.div($ptcg-bench-slots, 3)}fr) 2fr;
-  grid-template-rows: auto;
+  grid-template-rows: auto auto;
   grid-template-areas:
     "prizes stadium active supporter deck"
-    "prizes bench bench bench deck";
+    "prizes bench bench bench discard";
 
   &.upside-down {
     transform: rotate(180deg);
@@ -233,7 +233,10 @@ ptcg-board-prizes {
 }
 
 ptcg-board-deck {
-  grid-area: deck;
+  grid-area: deck / deck / discard / discard;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .ptcg-board-active {

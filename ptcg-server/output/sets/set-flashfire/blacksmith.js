@@ -15,7 +15,6 @@ class Blacksmith extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.regulationMark = 'F';
         this.set = 'FLF';
         this.name = 'Blacksmith';
         this.cardImage = 'assets/cardback.png';

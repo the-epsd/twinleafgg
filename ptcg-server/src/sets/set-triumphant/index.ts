@@ -10,4 +10,5 @@ export const setTriumphant: Card[] = [
   new SeekerArt(),
   new TwinsArt(),
 
+  // new PalkiaDialgaLEGEND(),
 ];

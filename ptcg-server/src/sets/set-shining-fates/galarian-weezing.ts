@@ -82,10 +82,10 @@ export class GalarianWeezing extends PokemonCard {
         }, this);
         store.reduceEffect(state, stub);
       } catch {
-        return state;
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      throw new GameError(GameMessage.CANNOT_USE_POWER);
+      // throw new GameError(GameMessage.CANNOT_USE_POWER);
     }
 
     return state;

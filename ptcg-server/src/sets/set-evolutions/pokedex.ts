@@ -24,13 +24,11 @@ export class Pokedex extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      const deck = player.deck;
 
       const deckTop = new CardList();
 
       // Get up to 5 cards from the top of the deck
-      const cards = deck.cards.slice(0, 5);
-      player.deck.moveCardsTo(cards, deckTop);
+      player.deck.moveTo(deckTop, 5);
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
@@ -39,14 +37,13 @@ export class Pokedex extends TrainerCard {
         player.id,
         GameMessage.CHOOSE_CARDS_ORDER,
         deckTop,
-        { allowCancel: false }
-      ), (rearrangedCards) => {
-        if (rearrangedCards === null) {
+        { allowCancel: false },
+      ), order => {
+        if (order === null) {
           return state;
         }
-
-        deckTop.applyOrder(rearrangedCards);
-        deckTop.moveTo(player.deck);
+        deckTop.applyOrder(order);
+        deckTop.moveToTopOfDestination(player.deck);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
       });
     }

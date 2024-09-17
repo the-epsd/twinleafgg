@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.AzumarillArt = exports.HoOhArt = exports.PalkiaArt = void 0;
+exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.AzumarillArt = exports.HoOhArt = exports.BlackKyuremexArt = exports.PalkiaArt = void 0;
 const counter_gain_1 = require("../set-lost-thunder/counter-gain");
 const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
 const archaludon_ex_1 = require("./archaludon-ex");
 const azulmarill_1 = require("./azulmarill");
+const black_kyurem_ex_1 = require("./black-kyurem-ex");
 const celebration_fanfare_1 = require("./celebration-fanfare");
 const cherish_carrier_1 = require("./cherish-carrier");
 const dialga_1 = require("./dialga");
@@ -33,6 +34,13 @@ class PalkiaArt extends palkia_1.Palkia {
     }
 }
 exports.PalkiaArt = PalkiaArt;
+class BlackKyuremexArt extends black_kyurem_ex_1.BlackKyuremex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV7a/SV7a_11_R_JP.png';
+    }
+}
+exports.BlackKyuremexArt = BlackKyuremexArt;
 class HoOhArt extends ho_oh_1.HoOh {
     constructor() {
         super(...arguments);

@@ -12,6 +12,7 @@ export class JirachiExArt extends JirachiEx {
 
 export class ScoopUpCycloneArt extends ScoopUpCyclone {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLB/PLB_095_R_EN.png';
+  public set = 'PLB';
   public setNumber = '95';
   public fullName: string = 'Scoop Up Cyclone PLB';
 }
@@ -22,6 +23,7 @@ export class SilverBangleArt extends SilverBangle {
 
 export class UltraBallArt extends UltraBall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLB/PLB_090_R_EN.png';
+  public set = 'PLB';
   public setNumber = '90';
   public fullName: string = 'Ultra ball PLB';
 }
@@ -32,6 +34,7 @@ export class VirizionExArt extends VirizionEx {
 
 export class MasterBallArt extends MasterBall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLB/PLB_094_R_EN_LG.png';
+  public set = 'PLB';
   public setNumber = '94';
   public fullName: string = 'Master Ball PLB';
 }

@@ -19,8 +19,7 @@ class DrawEnergy extends energy_card_1.EnergyCard {
             'When you attach this card from your hand to a Pokémon, draw a card.';
     }
     reduceEffect(store, state, effect) {
-        var _a, _b;
-        if (effect instanceof play_card_effects_1.AttachEnergyEffect && ((_b = (_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards) === null || _b === void 0 ? void 0 : _b.includes(this))) {
+        if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard === this) {
             const player = effect.player;
             if (player.deck.cards.length === 0) {
                 return state;
@@ -29,7 +28,7 @@ class DrawEnergy extends energy_card_1.EnergyCard {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_c) {
+            catch (_a) {
                 return state;
             }
             player.deck.moveTo(player.hand, 1);
