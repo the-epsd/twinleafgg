@@ -5,8 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { GameMessage } from '../../game/game-message';
-import { ChooseCardsPrompt } from '../../game';
+import { GameLog } from '../../game';
 
 export class Absol extends PokemonCard {
 
@@ -20,18 +19,18 @@ export class Absol extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Slash',
-      cost: [ CardType.DARK ],
+      cost: [CardType.DARK],
       damage: 30,
       text: ''
     },
     {
       name: 'Lost Claw',
-      cost: [ CardType.DARK, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
       damage: 70,
       text: 'Put a random card from your opponent\'s hand in the Lost Zone.'
     }
@@ -53,21 +52,18 @@ export class Absol extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.hand.cards.length == 0) {
-        return state;
-      }
+      if (opponent.hand.cards.length > 0) {
+        const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
+        const randomCard = opponent.hand.cards[randomIndex];
+        opponent.hand.moveCardTo(randomCard, opponent.lostzone);
 
-      store.prompt(state, new ChooseCardsPrompt(
-        opponent.id,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.hand,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        opponent.hand.moveCardsTo(cards, opponent.lostzone);
-      });
+        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, {
+          player: opponent.name,
+          card: randomCard.name
+        });
+      }
     }
     return state;
+
   }
 }

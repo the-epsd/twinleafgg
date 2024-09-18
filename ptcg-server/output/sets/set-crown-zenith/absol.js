@@ -5,7 +5,6 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const state_utils_1 = require("../../game/store/state-utils");
-const game_message_1 = require("../../game/game-message");
 const game_1 = require("../../game");
 class Absol extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -40,13 +39,15 @@ class Absol extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            if (opponent.hand.cards.length == 0) {
-                return state;
+            if (opponent.hand.cards.length > 0) {
+                const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
+                const randomCard = opponent.hand.cards[randomIndex];
+                opponent.hand.moveCardTo(randomCard, opponent.lostzone);
+                store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, {
+                    player: opponent.name,
+                    card: randomCard.name
+                });
             }
-            store.prompt(state, new game_1.ChooseCardsPrompt(opponent.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: 1, max: 1, allowCancel: false }), selected => {
-                const cards = selected || [];
-                opponent.hand.moveCardsTo(cards, opponent.lostzone);
-            });
         }
         return state;
     }

@@ -50,6 +50,10 @@ export class Ditto extends PokemonCard {
       // Get current turn
       const turn = state.turn;
 
+      if (player.active.cards[0] !== this) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       // Check if it is player's first turn
       if (turn > 2) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);

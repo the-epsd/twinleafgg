@@ -45,7 +45,7 @@ class SlitherWing extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 10);
+            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 90);
             dealDamage.target = player.active;
             const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.BURNED]);
             store.reduceEffect(state, specialConditionEffect);

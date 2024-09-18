@@ -13,6 +13,8 @@ export class AcerolasPremonition extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
+  public regulationMark = 'E';
+
   public set: string = 'BRS';
 
   public cardImage: string = 'assets/cardback.png';

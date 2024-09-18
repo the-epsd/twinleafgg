@@ -35,6 +35,10 @@ class Bombirdierex extends game_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         // Implement ability
+        const player = state.players[state.activePlayer];
+        if (state.turn == 1 && player.active.cards[0] == this) {
+            player.canAttackFirstTurn = true;
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             // Allow player to search deck and choose up to 2 Basic Pokemon
@@ -49,27 +53,33 @@ class Bombirdierex extends game_1.PokemonCard {
                     // No open slots, throw error
                     throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
                 }
-                let cards = [];
-                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC }, { min: 0, max: 3, allowCancel: true }), selectedCards => {
-                    cards = selectedCards || [];
-                    cards.forEach((card, index) => {
-                        player.deck.moveCardTo(card, slots[index]);
-                        slots[index].pokemonPlayedTurn = state.turn;
+                if (player.canAttackFirstTurn) {
+                    let cards = [];
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC }, { min: 0, max: 3, allowCancel: true }), selectedCards => {
+                        cards = selectedCards || [];
+                        cards.forEach((card, index) => {
+                            player.deck.moveCardTo(card, slots[index]);
+                            slots[index].pokemonPlayedTurn = state.turn;
+                        });
+                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                            player.deck.applyOrder(order);
+                            return state;
+                        });
                     });
-                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                        player.deck.applyOrder(order);
-                        return state;
-                    });
-                });
+                }
             }
         }
         // Implement attack
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            player.active.moveTo(player.deck);
-            player.active.clearEffects();
-            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                player.deck.applyOrder(order);
+            state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+                if (wantToUse) {
+                    player.active.moveTo(player.deck);
+                    player.active.clearEffects();
+                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                        player.deck.applyOrder(order);
+                    });
+                }
             });
         }
         return state;

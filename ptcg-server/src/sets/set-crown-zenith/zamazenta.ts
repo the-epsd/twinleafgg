@@ -115,17 +115,17 @@ export class Zamazenta extends PokemonCard {
       }
 
       // Check attached energy 
+      // Check attached energy 
       const zamazentaCardList = StateUtils.findCardList(state, this) as PokemonCardList;
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, zamazentaCardList);
-      
-      store.reduceEffect(state, checkProvidedEnergy);
+      state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const hasMetalEnergy = checkProvidedEnergy.energyMap.some(e => e.provides.includes(CardType.ANY) || e.provides.includes(CardType.METAL));
-      
-      if (hasMetalEnergy) {
+      const hasAnyEnergy = checkProvidedEnergy.energyMap.length > 0;
+
+      if (hasAnyEnergy) {
         effect.damage = Math.max(0, effect.damage - 30);
       }
-      
+
       return state;
     }
     return state;

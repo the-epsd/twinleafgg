@@ -43,16 +43,20 @@ class Bouffalant extends pokemon_card_1.PokemonCard {
             if (!opponent.active.cards.some(c => c instanceof game_1.EnergyCard)) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            const energyToDiscard = new game_1.CardList();
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(opponent);
             state = store.reduceEffect(state, checkProvidedEnergy);
             state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS], { allowCancel: false }), (energy) => {
                 const cards = (energy || []).map(e => e.card);
-                // Fix error by looping through cards and moving individually
                 cards.forEach(card => {
-                    energyToDiscard.moveCardTo(card, opponent.lostzone);
+                    const cardList = game_1.StateUtils.findCardList(state, card);
+                    if (cardList) {
+                        cardList.moveCardTo(card, opponent.lostzone);
+                        store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, {
+                            player: opponent.name,
+                            card: card.name
+                        });
+                    }
                 });
-                return state;
             });
         }
         return state;
