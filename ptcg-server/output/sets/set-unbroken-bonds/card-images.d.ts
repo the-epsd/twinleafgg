@@ -9,6 +9,7 @@ import { Marshadow } from './marshadow';
 import { MartialArtsDojo } from './martial-arts-dojo';
 import { Mew } from './mew';
 import { Mewtwo } from './mewtwo';
+import { Mismagius } from './mismagius';
 import { Oddish } from './oddish';
 import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
@@ -81,6 +82,9 @@ export declare class MewArt extends Mew {
     cardImage: string;
 }
 export declare class MewtwoArt extends Mewtwo {
+    cardImage: string;
+}
+export declare class MismagiusArt extends Mismagius {
     cardImage: string;
 }
 export declare class OddishArt extends Oddish {

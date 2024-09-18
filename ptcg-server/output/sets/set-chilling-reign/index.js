@@ -5,7 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setChillingReign = [
     new card_images_1.AgathaArt(),
     new card_images_1.AveryArt(),
-    // new BanetteArt(),
+    new card_images_1.BanetteArt(),
     new card_images_1.BeedrillArt(),
     new card_images_1.BlazikenVArt(),
     new card_images_1.BlazikenVMAXArt(),

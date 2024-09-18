@@ -22,13 +22,13 @@ class Magnezone extends pokemon_card_1.PokemonCard {
                 name: 'Magnetic Circuit',
                 useWhenInPlay: true,
                 powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'As often as you like during your turn (before your attack), you may attach a [M] Energy card from your hand to 1 of your Pokémon.'
+                text: 'As often as you like during your turn (before your attack), you may attach a [L] Energy card from your hand to 1 of your Pokémon.'
             }];
         this.attacks = [{
                 name: 'Zap Cannon',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
                 damage: 130,
-                text: 'This Poekmon can\'t use Zap Cannon during your next turn.'
+                text: 'This Pokemon can\'t use Zap Cannon during your next turn.'
             }];
         this.set = 'FLI';
         this.cardImage = 'assets/cardback.png';

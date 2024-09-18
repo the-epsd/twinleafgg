@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.OddishArt = exports.MewtwoArt = exports.MewArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.MarshadowArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.LaironArt = exports.KartanaArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DedenneGXArt = exports.CleffaArt = exports.AronArt = exports.ArcanineArt = void 0;
+exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.OddishArt = exports.MismagiusArt = exports.MewtwoArt = exports.MewArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.MarshadowArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.LaironArt = exports.KartanaArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DedenneGXArt = exports.CleffaArt = exports.AronArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
 const espurr_1 = require("./espurr");
@@ -12,6 +12,7 @@ const marshadow_1 = require("./marshadow");
 const martial_arts_dojo_1 = require("./martial-arts-dojo");
 const mew_1 = require("./mew");
 const mewtwo_1 = require("./mewtwo");
+const mismagius_1 = require("./mismagius");
 const oddish_1 = require("./oddish");
 const pokegear_30_1 = require("./pokegear-30");
 const porygon_z_1 = require("./porygon-z");
@@ -162,6 +163,13 @@ class MewtwoArt extends mewtwo_1.Mewtwo {
     }
 }
 exports.MewtwoArt = MewtwoArt;
+class MismagiusArt extends mismagius_1.Mismagius {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_078_R_EN_LG.png';
+    }
+}
+exports.MismagiusArt = MismagiusArt;
 class OddishArt extends oddish_1.Oddish {
     constructor() {
         super(...arguments);
