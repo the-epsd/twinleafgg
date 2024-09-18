@@ -1,5 +1,5 @@
-import { PokemonCard, Stage, CardTag, CardType, DamageMap, GameMessage, PlayerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
-import { PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { PokemonCard, Stage, CardTag, CardType, DamageMap, GameMessage, PlayerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike, SpecialCondition } from '../../game';
+import { AddSpecialConditionsEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -50,6 +50,11 @@ export class Banette extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const generator = attack(() => generator.next(), store, state, effect);
       return generator.next().value;
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
+      store.reduceEffect(state, specialConditionEffect);
     }
 
     return state;

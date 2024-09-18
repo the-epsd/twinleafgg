@@ -9,6 +9,7 @@ import { Marshadow } from './marshadow';
 import { MartialArtsDojo } from './martial-arts-dojo';
 import { Mew } from './mew';
 import { Mewtwo } from './mewtwo';
+import { Mismagius } from './mismagius';
 import { Oddish } from './oddish';
 import { Pokegear30 } from './pokegear-30';
 import { PorygonZ } from './porygon-z';
@@ -101,6 +102,10 @@ export class MewArt extends Mew {
 
 export class MewtwoArt extends Mewtwo {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_075_R_EN.png';
+}
+
+export class MismagiusArt extends Mismagius {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_078_R_EN_LG.png';
 }
 
 export class OddishArt extends Oddish {

@@ -39,6 +39,10 @@ class Banette extends game_1.PokemonCard {
             const generator = attack(() => generator.next(), store, state, effect);
             return generator.next().value;
         }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [game_1.SpecialCondition.CONFUSED]);
+            store.reduceEffect(state, specialConditionEffect);
+        }
         return state;
     }
 }
