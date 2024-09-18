@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 
-import { AbsolexArt, ArvenArt, BelliboltArt, CharizardexArt, CharmanderArt, CharmeleonArt, CleffaArt, DragonairArt, DragoniteexArt, DratiniArt, EnteiArt, FinizenArt, LetterOfEncouragementArt, NinetalesArt, OddishArt, PalafinArt, PidgeotexArt, PidgeottoArt, PidgeyArt, PokemonLeagueHeadquartersArt, PoppyArt, RymeArt, ScizorArt, ThundurusArt, ToedscruelexArt, TownStoreArt, VaroomArt, VengefulPunchArt } from './card-images';
+import { AbsolexArt, ArvenArt, BarboachArt, BelliboltArt, CharizardexArt, CharmanderArt, CharmeleonArt, CleffaArt, DragonairArt, DragoniteexArt, DratiniArt, EnteiArt, FinizenArt, LetterOfEncouragementArt, NinetalesArt, OddishArt, PalafinArt, PidgeotexArt, PidgeottoArt, PidgeyArt, PokemonLeagueHeadquartersArt, PoppyArt, RymeArt, ScizorArt, ThundurusArt, ToedscruelexArt, TownStoreArt, VaroomArt, VengefulPunchArt, WhiscashArt } from './card-images';
 import { ArtazonHR, BelliboltIR, CharizardexFA, CharizardexHR, CharizardexSIR, CleffaIR, FireEnergyHR, PidgeotexFA, PidgeotexSIR, PidgeottoIR, PidgeyIR, PoppyFA, PoppySIR, ScizorIR, VaroomIR } from './full-arts';
 
 
@@ -8,6 +8,7 @@ export const setObsidianFlames: Card[] = [
 
   new AbsolexArt(),
   new ArvenArt(),
+  new BarboachArt(),
   new CharizardexArt(),
   new CharmanderArt(),
   new CharmeleonArt(),
@@ -34,6 +35,7 @@ export const setObsidianFlames: Card[] = [
   new VengefulPunchArt(),
   new BelliboltArt(),
   new VaroomArt(),
+  new WhiscashArt(),
 
   //Alt-Arts
 
