@@ -14,14 +14,14 @@ class Joltik extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [{
-                name: 'Battery Charge',
+                name: 'Jolting Charge',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 0,
-                text: 'Search your deck for up to 2 Basic Grass Energy and up to 2 Basic Lightning Energy and attach them to your Pokémon in play any way you want. Then shuffle your deck.'
+                text: 'Search your deck for up to 2 Basic [G] Energy cards and up to 2 Basic [L] Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.'
             }];
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.regulationMark = 'H';
-        this.setNumber = '32';
+        this.setNumber = '50';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Joltik';
         this.fullName = 'Joltik SV7';

@@ -14,9 +14,9 @@ class Drednaw extends game_1.PokemonCard {
         this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
         this.evolvesFrom = 'Chewtle';
         this.powers = [{
-                name: 'Iron Shell',
+                name: 'Impervious Shell',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'If an attack from your opponent\'s Pokémon does 200 or more damage to this Pokémon, prevent that damage.'
+                text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Pokémon if that damage is 200 or more.'
             }];
         this.attacks = [{
                 name: 'Hard Crunch',
@@ -26,11 +26,11 @@ class Drednaw extends game_1.PokemonCard {
                 text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 80 more damage.'
             }];
         this.regulationMark = 'H';
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.name = 'Drednaw';
         this.fullName = 'Drednaw SV7';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '26';
+        this.setNumber = '44';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.cards.includes(this) && effect.damage >= 200) {

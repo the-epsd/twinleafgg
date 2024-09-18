@@ -21,11 +21,11 @@ class Zeraora extends game_1.PokemonCard {
                 text: 'This attack does 20 more damage for each of your opponent\'s Benched Pokémon.'
             }
         ];
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.name = 'Zeraora';
         this.fullName = 'Zeraora SV7';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '37';
+        this.setNumber = '55';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

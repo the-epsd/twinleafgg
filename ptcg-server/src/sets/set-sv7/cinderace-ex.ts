@@ -31,9 +31,9 @@ export class Cinderaceex extends PokemonCard {
   ];
 
   public regulationMark = 'H';
-  public set: string = 'SV7';
+  public set: string = 'SCR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '18';
+  public setNumber: string = '28';
   public name: string = 'Cinderace ex';
   public fullName: string = 'Cinderace ex SV7';
 

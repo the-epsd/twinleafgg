@@ -31,7 +31,7 @@ export class Medichamex extends PokemonCard {
       name: 'Chi-Atsu',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
-      text: 'Put damage counters on your opponent\'s Active Pokemon until its remaining HP is 50.'
+      text: 'Put damage counters on your opponent\'s Active Pokémon until its remaining HP is 50.'
     },
     {
       name: 'Yoga Kick',
@@ -41,11 +41,11 @@ export class Medichamex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '54';
+  public setNumber: string = '80';
 
   public name: string = 'Medicham ex';
 

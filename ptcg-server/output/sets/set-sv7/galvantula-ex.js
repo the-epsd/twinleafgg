@@ -21,7 +21,7 @@ class Galvantulaex extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Upper Thread',
+                name: 'Charged Web',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
                 damage: 110,
                 damageCalculation: '+',
@@ -35,9 +35,9 @@ class Galvantulaex extends pokemon_card_1.PokemonCard {
             },
         ];
         this.regulationMark = 'H';
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '33';
+        this.setNumber = '51';
         this.name = 'Galvantula ex';
         this.fullName = 'Galvantula ex SV7';
         this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';

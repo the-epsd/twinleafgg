@@ -23,10 +23,10 @@ export class Bouffalant extends PokemonCard {
     text: 'During your next turn, this Pokémon can\'t attack.'
   }];
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
   public regulationMark = 'H';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '81';
+  public setNumber: string = '119';
   public name: string = 'Bouffalant';
   public fullName: string = 'Bouffalant SV7';
 

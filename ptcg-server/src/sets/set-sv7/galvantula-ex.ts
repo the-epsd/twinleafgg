@@ -19,7 +19,7 @@ export class Galvantulaex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Upper Thread',
+      name: 'Charged Web',
       cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 110,
       damageCalculation: '+',
@@ -35,11 +35,11 @@ export class Galvantulaex extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '33';
+  public setNumber: string = '51';
 
   public name: string = 'Galvantula ex';
 

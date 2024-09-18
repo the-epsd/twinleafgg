@@ -9,11 +9,11 @@ export class AreaZeroUnderdepths extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
 
-  public set: string = 'SV6a';
+  public set: string = 'SCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '56';
+  public setNumber: string = '131';
 
   public regulationMark = 'H';
 
@@ -22,9 +22,9 @@ export class AreaZeroUnderdepths extends TrainerCard {
   public fullName: string = 'Area Zero Underdepths SV6a';
 
   public text =
-    'Players with a Tera Pokémon in play may have up to 8 Benched Pokémon.' +
+    'Each player who has any Tera Pokémon in play can have up to 8 Pokémon on their Bench.' +
     '' +
-    '(If this card gets discarded, or if a player has no Tera Pokémon in play anymore, they discard Benched Pokémon until they have 5. If both players discard, this card\'s owner chooses first)';
+    'If a player no longer has any Tera Pokémon in play, that player discards Pokémon from their Bench until they have 5. When this card leaves play, both players discard Pokémon from their Bench until they have 5, and the player who played this card discards first.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckTableStateEffect && StateUtils.getStadiumCard(state) === this) {

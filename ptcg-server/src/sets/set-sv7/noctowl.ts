@@ -21,9 +21,9 @@ export class Noctowl extends PokemonCard {
   public retreat = [CardType.COLORLESS];
 
   public powers = [{
-    name: 'Jewel Hunt',
+    name: 'Jewel Seeker',
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, when you play this card from your hand to evolve one of your Pokémon, if you have any Tera Pokémon in play, you may search your deck for up to 2 Trainer cards, reveal them, and put them into your hand. Shuffle your deck.'
+    text: 'Once during your turn, when you play this Pokémon from your hand to evolve 1 of your Pokémon, if you have any Tera Pokémon in play, you may search your deck for up to 2 Trainer cards, reveal them, and put them into your hand. Then, shuffle your deck.'
   }];
 
   public attacks = [
@@ -37,11 +37,11 @@ export class Noctowl extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '77';
+  public setNumber: string = '115';
 
   public name: string = 'Noctowl';
 

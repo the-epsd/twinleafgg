@@ -16,9 +16,9 @@ class Noctowl extends game_1.PokemonCard {
         this.resistance = [{ type: game_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [game_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Jewel Hunt',
+                name: 'Jewel Seeker',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your turn, when you play this card from your hand to evolve one of your Pokémon, if you have any Tera Pokémon in play, you may search your deck for up to 2 Trainer cards, reveal them, and put them into your hand. Shuffle your deck.'
+                text: 'Once during your turn, when you play this Pokémon from your hand to evolve 1 of your Pokémon, if you have any Tera Pokémon in play, you may search your deck for up to 2 Trainer cards, reveal them, and put them into your hand. Then, shuffle your deck.'
             }];
         this.attacks = [
             {
@@ -29,9 +29,9 @@ class Noctowl extends game_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '77';
+        this.setNumber = '115';
         this.name = 'Noctowl';
         this.fullName = 'Noctowl SV7';
         this.JEWEL_HUNT_MARKER = 'JEWEL_HUNT_MARKER';

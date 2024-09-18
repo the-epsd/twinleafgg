@@ -16,15 +16,15 @@ export class Drifblim extends PokemonCard {
     cost: [CardType.PSYCHIC],
     damage: 50,
     damageCalculation: 'x',
-    text: 'This attack does 50 damage for each of your Drifloon and Drifblim in play. This attack also does 30 damage to each of your Drifloon and Drifblim in play. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+    text: 'This attack does 50 damage for each of your Drifloon and Drifblim in play. This attack also does 30 damage to each of your Drifloon and Drifblim. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
   public regulationMark = 'H';
-  public set: string = 'SV7';
+  public set: string = 'SCR';
   public name: string = 'Drifblim';
   public fullName: string = 'Drifblim SV7';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '41';
+  public setNumber: string = '61';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

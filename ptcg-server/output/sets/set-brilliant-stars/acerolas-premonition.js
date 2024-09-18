@@ -12,6 +12,7 @@ class AcerolasPremonition extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
+        this.regulationMark = 'E';
         this.set = 'BRS';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '129';

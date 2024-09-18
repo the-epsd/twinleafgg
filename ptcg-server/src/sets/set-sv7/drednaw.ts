@@ -13,9 +13,9 @@ export class Drednaw extends PokemonCard {
   public evolvesFrom = 'Chewtle';
 
   public powers = [{
-    name: 'Iron Shell',
+    name: 'Impervious Shell',
     powerType: PowerType.ABILITY,
-    text: 'If an attack from your opponent\'s Pokémon does 200 or more damage to this Pokémon, prevent that damage.'
+    text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Pokémon if that damage is 200 or more.'
   }];
 
   public attacks = [{
@@ -27,11 +27,11 @@ export class Drednaw extends PokemonCard {
   }];
 
   public regulationMark = 'H';
-  public set: string = 'SV7';
+  public set: string = 'SCR';
   public name: string = 'Drednaw';
   public fullName: string = 'Drednaw SV7';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '26';
+  public setNumber: string = '44';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

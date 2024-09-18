@@ -20,21 +20,21 @@ class Hydrappleex extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.evolvesFrom = 'Dipplin';
         this.powers = [{
-                name: 'Ripe Charge',
+                name: 'Ripening Charge',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your turn, you may attach 1 Basic [G] Energy from your hand to 1 of your Pokemon. If you do, heal 30 damage from that Pokemon.'
+                text: 'Once during your turn, you may attach a Basic [G] Energy card from your hand to 1 of your Pokémon. If you attached Energy to a Pokémon in this way, heal 30 damage from that Pokémon.'
             }];
         this.attacks = [{
                 name: 'Syrup Storm',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 30,
                 damageCalculation: '+',
-                text: 'This attack does 30 more damage for each [G] energy attached to your Pokemon.'
+                text: 'This attack does 30 more damage for each [G] Energy attached to all of your Pokémon.'
             }];
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '12';
+        this.setNumber = '14';
         this.name = 'Hydrapple ex';
         this.fullName = 'Hydrapple ex SV7';
         this.RIPE_CHARGE_MARKER = 'RIPE_CHARGE_MARKER';

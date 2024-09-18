@@ -23,9 +23,9 @@ class Orthwormex extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Pummel Back',
+                name: 'Pummeling Payback',
                 powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'If this Pokémon is damaged by an opponent\'s attack, put 2 damage counters on the attacking Pokémon for each Metal Energy on this Pokémon.'
+                text: 'If this Pokémon is damaged by an attack from your opponent\'s Pokémon(even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon for each [M] Energy attached to this Pokémon.'
             }];
         this.attacks = [{
                 name: 'Rock Tomb',
@@ -34,9 +34,9 @@ class Orthwormex extends pokemon_card_1.PokemonCard {
                 text: 'During your opponent\'s next turn, the Defending Pokémon ' +
                     'can\'t retreat.'
             }];
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '74';
+        this.setNumber = '110';
         this.name = 'Orthworm ex';
         this.fullName = 'Orthworm ex SV7';
         this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';

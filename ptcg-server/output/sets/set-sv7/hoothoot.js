@@ -22,9 +22,9 @@ class Hoothoot extends game_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '76';
+        this.setNumber = '114';
         this.name = 'Hoothoot';
         this.fullName = 'Hoothoot SV7';
     }

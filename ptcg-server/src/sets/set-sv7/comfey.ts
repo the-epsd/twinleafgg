@@ -26,11 +26,11 @@ export class Comfey extends PokemonCard {
   ];
 
   public regulationMark = 'H';
-  public set: string = 'SV7';
+  public set: string = 'SCR';
   public name: string = 'Comfey';
   public fullName: string = 'Comfey SV7';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '42  ';
+  public setNumber: string = '63';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

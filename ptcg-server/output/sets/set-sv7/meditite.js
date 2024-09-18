@@ -28,9 +28,9 @@ class Meditite extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '53';
+        this.setNumber = '77';
         this.name = 'Meditite';
         this.fullName = 'Meditite SV7';
     }

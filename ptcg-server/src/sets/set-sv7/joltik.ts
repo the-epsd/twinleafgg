@@ -12,15 +12,15 @@ export class Joltik extends PokemonCard {
   public retreat = [CardType.COLORLESS];
 
   public attacks = [{
-    name: 'Battery Charge',
+    name: 'Jolting Charge',
     cost: [CardType.COLORLESS],
     damage: 0,
-    text: 'Search your deck for up to 2 Basic Grass Energy and up to 2 Basic Lightning Energy and attach them to your Pokémon in play any way you want. Then shuffle your deck.'
+    text: 'Search your deck for up to 2 Basic [G] Energy cards and up to 2 Basic [L] Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.'
   }];
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
   public regulationMark: string = 'H';
-  public setNumber: string = '32';
+  public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Joltik';
   public fullName: string = 'Joltik SV7';

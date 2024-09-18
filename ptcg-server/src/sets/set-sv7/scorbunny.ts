@@ -19,9 +19,9 @@ export class Scorbunny extends PokemonCard {
     text: 'Flip a coin. If heads, this attack does 10 more damage.'
   }];
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '16';
+  public setNumber: string = '26';
   public name: string = 'Scorbunny';
   public fullName: string = 'Scorbunny SV7';
 

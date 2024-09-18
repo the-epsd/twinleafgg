@@ -18,11 +18,11 @@ class Chewtle extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.regulationMark = 'H';
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.name = 'Chewtle';
         this.fullName = 'Chewtle SV7';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '25';
+        this.setNumber = '43';
     }
 }
 exports.Chewtle = Chewtle;

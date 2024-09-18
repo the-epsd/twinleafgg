@@ -32,9 +32,9 @@ class Cinderaceex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '18';
+        this.setNumber = '28';
         this.name = 'Cinderace ex';
         this.fullName = 'Cinderace ex SV7';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

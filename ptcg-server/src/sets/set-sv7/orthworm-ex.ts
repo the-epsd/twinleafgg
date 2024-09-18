@@ -31,9 +31,9 @@ export class Orthwormex extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
-    name: 'Pummel Back',
+    name: 'Pummeling Payback',
     powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is damaged by an opponent\'s attack, put 2 damage counters on the attacking Pokémon for each Metal Energy on this Pokémon.'
+    text: 'If this Pokémon is damaged by an attack from your opponent\'s Pokémon(even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon for each [M] Energy attached to this Pokémon.'
   }];
 
   public attacks = [{
@@ -44,11 +44,11 @@ export class Orthwormex extends PokemonCard {
       'can\'t retreat.'
   }];
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '74';
+  public setNumber: string = '110';
 
   public name: string = 'Orthworm ex';
 
