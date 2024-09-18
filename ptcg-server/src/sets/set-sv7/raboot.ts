@@ -24,9 +24,9 @@ export class Raboot extends PokemonCard {
     }
   ];
   public regulationMark = 'H';
-  public set: string = 'SV7';
+  public set: string = 'SCR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '17';
+  public setNumber: string = '27';
   public name: string = 'Raboot';
   public fullName: string = 'Raboot SV7';
 }

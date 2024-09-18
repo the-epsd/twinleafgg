@@ -23,7 +23,7 @@ class Medichamex extends pokemon_card_1.PokemonCard {
                 name: 'Chi-Atsu',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 0,
-                text: 'Put damage counters on your opponent\'s Active Pokemon until its remaining HP is 50.'
+                text: 'Put damage counters on your opponent\'s Active Pokémon until its remaining HP is 50.'
             },
             {
                 name: 'Yoga Kick',
@@ -32,9 +32,9 @@ class Medichamex extends pokemon_card_1.PokemonCard {
                 text: 'This attack\'s damage isn\'t affected by Weakness or Resistance.'
             }
         ];
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '54';
+        this.setNumber = '80';
         this.name = 'Medicham ex';
         this.fullName = 'Medicham ex SV7';
     }

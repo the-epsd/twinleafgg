@@ -23,10 +23,10 @@ class Bouffalant extends game_1.PokemonCard {
                 damage: 130,
                 text: 'During your next turn, this Pokémon can\'t attack.'
             }];
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '81';
+        this.setNumber = '119';
         this.name = 'Bouffalant';
         this.fullName = 'Bouffalant SV7';
     }

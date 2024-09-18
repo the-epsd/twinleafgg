@@ -30,17 +30,17 @@ export class Laprasex extends PokemonCard {
       name: 'Larimar Rain',
       cost: [CardType.WATER, CardType.PSYCHIC, CardType.METAL],
       damage: 0,
-      text: 'Look at the top 20 cards of your deck and attach any number of Energy cards you found there to your Pokémon in any way you like. Shuffle the remaining cards back into your deck.'
+      text: 'Look at the top 20 cards of your deck and attach any number of Energy cards you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck.'
     }
   ];
 
   public regulationMark = 'H';
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '134';
+  public setNumber: string = '32';
 
   public name: string = 'Lapras ex';
 

@@ -18,7 +18,7 @@ class Archaludon extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Steel Bridge',
+                name: 'Metal Bridge',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'All of your Pokémon that have [M] Energy attached have no Retreat Cost.'
             }];
@@ -31,11 +31,11 @@ class Archaludon extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV6a';
+        this.set = 'SCR';
         this.name = 'Archaludon';
         this.fullName = 'Archaludon SV6a';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '73';
+        this.setNumber = '107';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
         this.OPPONENT_CANNOT_PLAY_STADIUMS_MARKER = 'OPPONENT_CANNOT_PLAY_STADIUMS_MARKER';

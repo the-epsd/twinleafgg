@@ -28,11 +28,11 @@ export class Hoothoot extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '76';
+  public setNumber: string = '114';
 
   public name: string = 'Hoothoot';
 

@@ -23,7 +23,7 @@ export class Archaludon extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
-    name: 'Steel Bridge',
+    name: 'Metal Bridge',
     powerType: PowerType.ABILITY,
     text: 'All of your Pokémon that have [M] Energy attached have no Retreat Cost.'
   }];
@@ -39,7 +39,7 @@ export class Archaludon extends PokemonCard {
 
   public regulationMark: string = 'H';
 
-  public set: string = 'SV6a';
+  public set: string = 'SCR';
 
   public name: string = 'Archaludon';
 
@@ -47,7 +47,7 @@ export class Archaludon extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '73';
+  public setNumber: string = '107';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
@@ -55,34 +55,34 @@ export class Archaludon extends PokemonCard {
   public readonly OPPONENT_CANNOT_PLAY_STADIUMS_MARKER = 'OPPONENT_CANNOT_PLAY_STADIUMS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
-      
+
       if (owner !== player) {
         return state;
       }
-      
+
       const checkPokemonType = new CheckPokemonTypeEffect(effect.player.active);
       store.reduceEffect(state, checkPokemonType);
 
       if (!checkPokemonType.cardTypes.includes(CardType.METAL)) {
         return state;
       }
-      
+
       try {
         const stub = new PowerEffect(player, {
-        name: 'test',
-        powerType: PowerType.ABILITY,
-        text: ''
-      }, this);
-      store.reduceEffect(state, stub);
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
       } catch {
         return state;
       }
-      
+
       let inPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
@@ -91,7 +91,7 @@ export class Archaludon extends PokemonCard {
       });
 
       if (inPlay) {
-        effect.cost = [];        
+        effect.cost = [];
       }
     }
 
@@ -100,7 +100,7 @@ export class Archaludon extends PokemonCard {
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
-  
+
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
@@ -114,7 +114,7 @@ export class Archaludon extends PokemonCard {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
-    
+
     return state;
   }
 }

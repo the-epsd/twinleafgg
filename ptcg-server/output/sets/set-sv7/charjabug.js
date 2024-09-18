@@ -43,9 +43,9 @@ class Charjabug extends pokemon_card_1.PokemonCard {
                 text: 'Search your deck for up to 3 Charjabug and put them onto your Bench. Then, shuffle your deck.'
             }
         ];
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '60';
+        this.setNumber = '52';
         this.name = 'Charjabug';
         this.fullName = 'Charjabug SV7';
     }

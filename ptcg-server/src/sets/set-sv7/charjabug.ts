@@ -67,11 +67,11 @@ export class Charjabug extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '60';
+  public setNumber: string = '52';
 
   public name: string = 'Charjabug';
 

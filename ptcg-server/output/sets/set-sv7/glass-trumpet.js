@@ -12,14 +12,14 @@ class GlassTrumpet extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.regulationMark = 'H';
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '89';
+        this.setNumber = '135';
         this.name = 'Glass Trumpet';
         this.fullName = 'Glass Trumpet SV7';
         this.text = 'You can use this card only if you have any Tera Pokémon in play.' +
             '' +
-            'Choose up to 2 of your Benched[C] Pokémon and attach a Basic Energy card from your discard pile to each of them.';
+            'Choose up to 2 of your Benched [C] Pokémon and attach a Basic Energy card from your discard pile to each of them.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

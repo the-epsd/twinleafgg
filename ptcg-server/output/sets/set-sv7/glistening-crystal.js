@@ -9,13 +9,13 @@ class GlisteningCrystal extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.tags = [card_types_1.CardTag.ACE_SPEC];
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '94';
+        this.setNumber = '142';
         this.regulationMark = 'H';
-        this.name = 'Glistening Crystal';
+        this.name = 'Sparkling Crystal';
         this.fullName = 'Glistening Crystal SV7';
-        this.text = 'Attacks of the Terastal Pokémon this card is attached to cost 1 Energy less of any type.';
+        this.text = 'When the Tera Pokémon this card is attached to uses an attack, that attack costs 1 Energy less. (The Energy can be of any type.)';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.player.active.tool === this) {

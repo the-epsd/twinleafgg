@@ -14,11 +14,11 @@ export class GlassTrumpet extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '89';
+  public setNumber: string = '135';
 
   public name: string = 'Glass Trumpet';
 
@@ -27,7 +27,7 @@ export class GlassTrumpet extends TrainerCard {
   public text: string =
     'You can use this card only if you have any Tera Pokémon in play.' +
     '' +
-    'Choose up to 2 of your Benched[C] Pokémon and attach a Basic Energy card from your discard pile to each of them.';
+    'Choose up to 2 of your Benched [C] Pokémon and attach a Basic Energy card from your discard pile to each of them.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

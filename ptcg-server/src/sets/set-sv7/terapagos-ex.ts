@@ -27,7 +27,7 @@ export class Terapagosex extends PokemonCard {
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
       damageCalculation: 'x',
-      text: 'You can\'t use this attack during your first turn going second. This attack does 30 damage for each of your Benched Pokémon.'
+      text: 'If you go second, you can\'t use this attack during your first turn.This attack does 30 damage for each of your Benched Pokémon.'
     },
     {
       name: 'Crown Opal',
@@ -38,11 +38,11 @@ export class Terapagosex extends PokemonCard {
     },
   ];
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '88';
+  public setNumber: string = '128';
 
   public name: string = 'Terapagos ex';
 

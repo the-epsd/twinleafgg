@@ -19,10 +19,10 @@ export class Hydrappleex extends PokemonCard {
   public evolvesFrom = 'Dipplin';
 
   public powers = [{
-    name: 'Ripe Charge',
+    name: 'Ripening Charge',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may attach 1 Basic [G] Energy from your hand to 1 of your Pokemon. If you do, heal 30 damage from that Pokemon.'
+    text: 'Once during your turn, you may attach a Basic [G] Energy card from your hand to 1 of your Pokémon. If you attached Energy to a Pokémon in this way, heal 30 damage from that Pokémon.'
   }];
 
   public attacks = [{
@@ -30,12 +30,12 @@ export class Hydrappleex extends PokemonCard {
     cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 30,
     damageCalculation: '+',
-    text: 'This attack does 30 more damage for each [G] energy attached to your Pokemon.'
+    text: 'This attack does 30 more damage for each [G] Energy attached to all of your Pokémon.'
   }];
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '12';
+  public setNumber: string = '14';
   public name: string = 'Hydrapple ex';
   public fullName: string = 'Hydrapple ex SV7';
 

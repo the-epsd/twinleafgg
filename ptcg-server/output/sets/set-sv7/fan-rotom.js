@@ -17,20 +17,20 @@ class FanRotom extends game_1.PokemonCard {
                 name: 'Fan Call',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your first turn, you may search your deck for up to 3 Colorless Pkmn with 100 HP or less and put them into your hand. You can\'t use more than one Fan Call Ability during your turn'
+                text: 'Once during your first turn, you may search your deck for up to 3 [C] Pokémon with 100 HP or less, reveal them, and put them into your hand. Then, shuffle your deck. You can\'t use more than 1 Fan Call Ability during your turn.'
             }];
         this.attacks = [
             {
-                name: 'Crash Landing',
+                name: 'Assault Landing',
                 cost: [game_1.CardType.COLORLESS],
                 damage: 70,
-                text: 'If there\'s no Stadium in play, this attack does nothing.'
+                text: 'If there is no Stadium in play, this attack does nothing.'
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '80';
+        this.setNumber = '118';
         this.name = 'Fan Rotom';
         this.fullName = 'Fan Rotom SV7';
     }

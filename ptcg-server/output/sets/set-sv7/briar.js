@@ -9,9 +9,9 @@ class Briar extends game_1.TrainerCard {
         super(...arguments);
         this.trainerType = game_1.TrainerType.SUPPORTER;
         this.regulationMark = 'H';
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '100';
+        this.setNumber = '132';
         this.name = 'Briar';
         this.fullName = 'Briar SV7';
         this.extraPrizes = false;

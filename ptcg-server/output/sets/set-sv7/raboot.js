@@ -27,9 +27,9 @@ class Raboot extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '17';
+        this.setNumber = '27';
         this.name = 'Raboot';
         this.fullName = 'Raboot SV7';
     }

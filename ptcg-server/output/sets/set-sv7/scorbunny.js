@@ -19,9 +19,9 @@ class Scorbunny extends game_1.PokemonCard {
                 damageCalculation: '+',
                 text: 'Flip a coin. If heads, this attack does 10 more damage.'
             }];
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '16';
+        this.setNumber = '26';
         this.name = 'Scorbunny';
         this.fullName = 'Scorbunny SV7';
     }

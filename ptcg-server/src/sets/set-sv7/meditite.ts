@@ -35,11 +35,11 @@ export class Meditite extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '53';
+  public setNumber: string = '77';
 
   public name: string = 'Meditite';
 

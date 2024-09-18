@@ -10,12 +10,12 @@ class Crispin extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '97';
+        this.setNumber = '133';
         this.name = 'Crispin';
         this.fullName = 'Crispin SV7';
-        this.text = 'Search your deck for up to 2 Basic Energy cards of different types, reveal them, put 1 in your hand, and attach the remaining Energy to your Pokémon in play. Then shuffle your deck.';
+        this.text = 'Search your deck for up to 2 Basic Energy cards of different types, reveal them, and put 1 of them into your hand. Attach the other to 1 of your Pokémon. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

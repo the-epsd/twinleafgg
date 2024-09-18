@@ -22,7 +22,7 @@ class Terapagosex extends pokemon_card_1.PokemonCard {
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 30,
                 damageCalculation: 'x',
-                text: 'You can\'t use this attack during your first turn going second. This attack does 30 damage for each of your Benched Pokémon.'
+                text: 'If you go second, you can\'t use this attack during your first turn.This attack does 30 damage for each of your Benched Pokémon.'
             },
             {
                 name: 'Crown Opal',
@@ -32,9 +32,9 @@ class Terapagosex extends pokemon_card_1.PokemonCard {
                 text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Basic non-[C] Pokémon.'
             },
         ];
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '88';
+        this.setNumber = '128';
         this.name = 'Terapagos ex';
         this.fullName = 'Terapagos ex SV7';
         this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';

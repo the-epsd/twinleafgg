@@ -12,18 +12,18 @@ export class Crispin extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '97';
+  public setNumber: string = '133';
 
   public name: string = 'Crispin';
 
   public fullName: string = 'Crispin SV7';
 
   public text: string =
-    'Search your deck for up to 2 Basic Energy cards of different types, reveal them, put 1 in your hand, and attach the remaining Energy to your Pokémon in play. Then shuffle your deck.';
+    'Search your deck for up to 2 Basic Energy cards of different types, reveal them, and put 1 of them into your hand. Attach the other to 1 of your Pokémon. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

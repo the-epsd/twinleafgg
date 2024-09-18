@@ -9,11 +9,11 @@ export class Briar extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV7';
+  public set: string = 'SCR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '100';
+  public setNumber: string = '132';
 
   public name: string = 'Briar';
 

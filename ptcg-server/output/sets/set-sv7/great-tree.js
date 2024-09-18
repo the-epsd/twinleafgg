@@ -104,13 +104,13 @@ class GreatTree extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.tags = [card_types_1.CardTag.ACE_SPEC];
-        this.set = 'SV7';
+        this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '101';
+        this.setNumber = '136';
         this.regulationMark = 'H';
-        this.name = 'Great Tree';
+        this.name = 'Grand Tree';
         this.fullName = 'Great Tree SV7';
-        this.text = 'Once during each player\'s turn, they may search their deck for a Stage 1 Pokémon that evolves from 1 of their Basic Pokémon in play and put it on that Pokémon to evolve it.If they do, they can then search for a Stage 2 Pokémon that evolves from that same Pokémon and evolve it.Then that player shuffles their deck. (You can\'t use this effect if it\'s your first turn and you can\'t choose a Basic Pokémon that was played this turn)';
+        this.text = 'Once during each player\'s turn, that player may search their deck for a Stage 1 Pokémon that evolves from 1 of their Basic Pokémon and put it onto that Pokémon to evolve it.If that Pokémon was evolved in this way, that player may search their deck for a Stage 2 Pokémon that evolves from that Pokémon and put it onto that Pokémon to evolve it.Then, that player shuffles their deck. (Players can\'t evolve a Basic Pokémon during their first turn or a Basic Pokémon that was put into play this turn.)';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.UseStadiumEffect && game_1.StateUtils.getStadiumCard(state) === this) {

@@ -16,9 +16,9 @@ export class Chewtle extends PokemonCard {
   }];
 
   public regulationMark = 'H';
-  public set: string = 'SV7';
+  public set: string = 'SCR';
   public name: string = 'Chewtle';
   public fullName: string = 'Chewtle SV7';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '25';
+  public setNumber: string = '43';
 }

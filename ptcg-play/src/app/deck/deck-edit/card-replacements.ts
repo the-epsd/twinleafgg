@@ -199,6 +199,36 @@ export const cardReplacements = [
 
   //SFA
   { from: 'Bloodmoon Ursaluna SFA 25', to: 'Bloodmoon Ursaluna SV6a 25' },
+
+  //SCR
+  { from: 'Archaludon SCR 107', to: 'Archaludon SV6a 107' },
+  { from: 'Area Zero Underdepths SCR 131', to: 'Area Zero Underdepths SV6a 131' },
+  { from: 'Bouffalant SCR 119', to: 'Bouffalant SV7 119' },
+  { from: 'Briar SCR 132', to: 'Briar SV7 132' },
+  { from: 'Charjabug SCR 52', to: 'Charjabug SV7 52' },
+  { from: 'Chewtle SCR 43', to: 'Chewtle SV7 43' },
+  { from: 'Cinderace ex SCR 28', to: 'Cinderace ex SV7 28' },
+  { from: 'Comfey SCR 63', to: 'Comfey SV7 63' },
+  { from: 'Crispin SCR 133', to: 'Crispin SV7 133' },
+  { from: 'Drednaw SCR 44', to: 'Drednaw SV7 44' },
+  { from: 'Drifblim SCR 61', to: 'Drifblim SV7 61' },
+  { from: 'Fan Rotom SCR 118', to: 'Fan Rotom SV7 118' },
+  { from: 'Galvantula ex SCR 51', to: 'Galvantula ex SV7 51' },
+  { from: 'Glass Trumpet SCR 135', to: 'Glass Trumpet SV7 135' },
+  { from: 'Sparkling Crystal SCR 142', to: 'Glistening Crystal SV7 142' },
+  { from: 'Grand Tree SCR 136', to: 'Great Tree SV7 136' },
+  { from: 'Hoothoot SCR 114', to: 'Hoothoot SV7 114' },
+  { from: 'Hydrapple ex SCR 14', to: 'Hydrapple ex SV7 14' },
+  { from: 'Joltik SCR 50', to: 'Joltik SV7 50' },
+  { from: 'Lapras ex SCR 32', to: 'Lapras ex SV7 32' },
+  { from: 'Medicham ex SCR 80', to: 'Medicham ex SV7 80' },
+  { from: 'Meditite SCR 77', to: 'Meditite SV7 77' },
+  { from: 'Noctowl SCR 115', to: 'Noctowl SV7 115' },
+  { from: 'Orthworm ex SCR 110', to: 'Orthworm ex SV7 110' },
+  { from: 'Raboot SCR 27', to: 'Raboot SV7 27' },
+  { from: 'Scorbunny SCR 26', to: 'Scorbunny SV7 26' },
+  { from: 'Terapagos ex SCR 128', to: 'Terapagos ex SV7 128' },
+  { from: 'Zeraora SCR 55', to: 'Zeraora SV7 55' }
 ];
 
 export const exportReplacements = [
@@ -390,4 +420,35 @@ export const exportReplacements = [
 
   //SFA
   { from: 'Bloodmoon Ursaluna SV6a 25', to: 'Bloodmoon Ursaluna SFA 25' },
+
+  //SCR
+  { from: 'Archaludon SV6a 107', to: 'Archaludon SCR 107' },
+  { from: 'Area Zero Underdepths SV6a 131', to: 'Area Zero Underdepths SCR 131' },
+  { from: 'Bouffalant SV7 119', to: 'Bouffalant SCR 119' },
+  { from: 'Briar SV7 132', to: 'Briar SCR 132' },
+  { from: 'Charjabug SV7 52', to: 'Charjabug SCR 52' },
+  { from: 'Chewtle SV7 43', to: 'Chewtle SCR 43' },
+  { from: 'Cinderace ex SV7 28', to: 'Cinderace ex SCR 28' },
+  { from: 'Comfey SV7 63', to: 'Comfey SCR 63' },
+  { from: 'Crispin SV7 133', to: 'Crispin SCR 133' },
+  { from: 'Drednaw SV7 44', to: 'Drednaw SCR 44' },
+  { from: 'Drifblim SV7 61', to: 'Drifblim SCR 61' },
+  { from: 'Fan Rotom SV7 118', to: 'Fan Rotom SCR 118' },
+  { from: 'Galvantula ex SV7 51', to: 'Galvantula ex SCR 51' },
+  { from: 'Glass Trumpet SV7 135', to: 'Glass Trumpet SCR 135' },
+  { from: 'Glistening Crystal SV7 142', to: 'Sparkling Crystal SCR 142' },
+  { from: 'Great Tree SV7 136', to: 'Grand Tree SCR 136' },
+  { from: 'Hoothoot SV7 114', to: 'Hoothoot SCR 114' },
+  { from: 'Hydrapple ex SV7 14', to: 'Hydrapple ex SCR 14' },
+  { from: 'Joltik SV7 50', to: 'Joltik SCR 50' },
+  { from: 'Lapras ex SV7 32', to: 'Lapras ex SCR 32' },
+  { from: 'Medicham ex SV7 80', to: 'Medicham ex SCR 80' },
+  { from: 'Meditite SV7 77', to: 'Meditite SCR 77' },
+  { from: 'Noctowl SV7 115', to: 'Noctowl SCR 115' },
+  { from: 'Orthworm ex SV7 110', to: 'Orthworm ex SCR 110' },
+  { from: 'Raboot SV7 27', to: 'Raboot SCR 27' },
+  { from: 'Scorbunny SV7 26', to: 'Scorbunny SCR 26' },
+  { from: 'Terapagos ex SV7 128', to: 'Terapagos ex SCR 128' },
+  { from: 'Zeraora SV7 55', to: 'Zeraora SCR 55' },
 ];
+
